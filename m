@@ -2,108 +2,95 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB3DC433E0
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:33:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C94DFC433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:45:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 365F3206D4
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:33:47 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hN4xATtB"
+	by mail.kernel.org (Postfix) with ESMTP id 9A93E2082E
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1596051915;
+	bh=dLh6Q+HSyi1wyFuxupa7Vg0L7fnXCo0taizAyhS1GgA=;
+	h=From:Date:Subject:To:Cc:List-ID:From;
+	b=crfwfD66JlfULjKXlYnOArDX4YU4HC5yl5Z0UNdo3HQCJvW4Q3hVuFuL/32cZqhd1
+	 yorUIp1klx7oNidca7GdS83CgcLcISK0W7yE7/F+V9z039xVjuXIHljrkf66djaA47
+	 ntBEfucHsbh4pr8KlvgSSL/So1HZrx/3vzgmSeZY=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726606AbgG2Tdq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 15:33:46 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54068 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726365AbgG2Tdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 15:33:46 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 31F7CE48CB;
-        Wed, 29 Jul 2020 15:33:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PU9beMKIUWXQnwpeM9ux5DPbXdI=; b=hN4xAT
-        tBaK0rV5UVkAsnWhXyhY709Mb/vXExATt2B58sMOgL75K7V7CW0/tDXliaMtO6Ex
-        kv+ATtZJzWIB1njSH2SE3mqGFS61CGzWF9LbXr1a/EwQ+wS+VFHVPMFo4dIPJyLL
-        d2glrPYCseRS/V0pisMeb3bWrAUAda6Sl5OYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NXy4IspnoEec8NINLVKiE/Dy9LOGJwLd
-        j8QSZ9XvjTf1mCe2JAw8/ebMWIEmRJGI2uMW1euI4GY+IfbgDUgXIJH9kNGQMp9l
-        zjD8flh0wLYLvhXkBMyePHrQS1WQQTnw8sZnrNdnmcqjxjA9rL/EcFtY3YFxxYjC
-        xlf373TNys0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A20AE48CA;
-        Wed, 29 Jul 2020 15:33:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 631CFE48C8;
-        Wed, 29 Jul 2020 15:33:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH v3 5/6] parse-options: parse into argv_array
-References: <20200728222455.3023400-1-emilyshaffer@google.com>
-        <20200728222455.3023400-6-emilyshaffer@google.com>
-Date:   Wed, 29 Jul 2020 12:33:39 -0700
-In-Reply-To: <20200728222455.3023400-6-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Tue, 28 Jul 2020 15:24:54 -0700")
-Message-ID: <xmqqmu3i9kvg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726710AbgG2TpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 15:45:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52160 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbgG2TpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 15:45:14 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E744BC061794
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:45:13 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id q7so26359441ljm.1
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:45:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=hZayYGqdabUcEOOrGc9wNwF/Ij3PuDS3VRuTkhuYxcs=;
+        b=QlzMR3mpluHyDcz8miSxki0O56wK4Is99pvuWzyQjEh9qh7AavPu8fqWAY/sokdqUT
+         /R/MwQ+MQTl+UvOu3npXv7gYkg08DD0jvZJMnSg1vv85OFWpK8QFEhFmiAJ9sJzm3H9P
+         5uyo/VlfIUtttddjnHFoHaQykioNvXslk9Hqc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=hZayYGqdabUcEOOrGc9wNwF/Ij3PuDS3VRuTkhuYxcs=;
+        b=okhVv0ElPj5BHtSBSsHtqyixLmkH6XXlPvRw4Qf0FJ8wXiXDpc4BYxVl5zYWIn5gdE
+         VQjXpXYIWacxNNOyMrqeUqGrnOCAQUukewznKwhIDy3Wg8y5siDzCvYV8TjUzy8nJfiG
+         eIjYUOtagdikXu2PgIr1OuR1kGs1iYwbU/70wjpFUUPxReS/fv0JP6Yoi4bfqdzbOxJM
+         qkpgw2jL0z3PiHgYYPH8AmcuaGe+nrU4zo2rMKAowiY/C7rRtyeH8+1kka/kN0xCHP3B
+         InZryJHmSzwjplIOnTOzNPcWpYYqjvBNK+1KwU9q34aoQbMBFD5SYeCj8Wm2CD5Nv6UP
+         w5oA==
+X-Gm-Message-State: AOAM533l7X8h+NJGhQIbeQz/cuhxjwC4ako/Mc6sqTWxMcZa07VNNTW0
+        KM3ejUvpli07Scz8ejnvwZSk3UTwii4=
+X-Google-Smtp-Source: ABdhPJy7kTSOUIDzX9S3Icd342hFHK90vFDcqgiByG1QW6+4TRhictKhiSSBcw93eg6ZLU7FACDYdg==
+X-Received: by 2002:a2e:9bc1:: with SMTP id w1mr21696ljj.288.1596051911374;
+        Wed, 29 Jul 2020 12:45:11 -0700 (PDT)
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com. [209.85.167.45])
+        by smtp.gmail.com with ESMTPSA id b18sm800132lfp.36.2020.07.29.12.45.10
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jul 2020 12:45:10 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id b11so13698721lfe.10
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:45:10 -0700 (PDT)
+X-Received: by 2002:a19:408d:: with SMTP id n135mr8641583lfa.192.1596051910327;
+ Wed, 29 Jul 2020 12:45:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 68774C0C-D1D2-11EA-91E9-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 29 Jul 2020 12:44:54 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgutLH=mPdJkLU_E6gO4q0FcG+=EEQJVVQeb+OxG9CfgQ@mail.gmail.com>
+Message-ID: <CAHk-=wgutLH=mPdJkLU_E6gO4q0FcG+=EEQJVVQeb+OxG9CfgQ@mail.gmail.com>
+Subject: Avoiding 'master' nomenclature
+To:     Junio Hamano C <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git List Mailing <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+It turns out that commit 489947cee5 ("fmt-merge-msg: stop treating
+`master` specially") has the exact opposite effect of what the
+intention must have been.
 
-> parse-options already knows how to read into a string_list, and it knows
-> how to read into an argv_array as a passthrough (that is, including the
-> argument as well as its value). string_list and argv_array serve similar
-> purposes but are somewhat painful to convert between; so, let's teach
-> parse-options to read values of string arguments directly into an
-> argv_array without preserving the argument name.
->
-> This is useful if collecting generic arguments to pass through to
-> another command, for example, 'git hook run --arg "--quiet" --arg
-> "--format=pretty" some-hook'. The resulting argv_array would contain
-> { "--quiet", "--format=pretty" }.
->
-> The implementation is based on that of OPT_STRING_LIST.
+It may remove "master" from git, but what it does is then make it much
+more visible everywhere else.
 
-Be it argv_array or strvec, I think this is a useful thing to do.
+In fact, it doesn't even remove "master" from git itself. It just adds
+more of it into the test suite etc.
 
-I grepped for the users of OPT_STRING_LIST() to see if some of them
-are better served by this, but none of them stood out as candidates
-that are particularly good match.
+So that commit is doubly stupid. If the intent was to try to avoid
+"master" as a word, it failed on every single possible level.
 
-> +int parse_opt_argv_array(const struct option *opt, const char *arg, int unset)
-> +{
-> +	struct argv_array *v = opt->value;
-> +
-> +	if (unset) {
-> +		argv_array_clear(v);
-> +		return 0;
-> +	}
-> +
-> +	if (!arg)
-> +		return -1;
+The code that it removed was the code that actively _avoided_ using
+"master" naming, for chrissake.
 
-I think the calling parse_options() loop would catch this negative
-return and raise an error, but is it better for this code to stay
-silent or would it be better to say that opt->long_name/short_name 
-is not a boolean?
-
-> +	argv_array_push(v, arg);
-> +	return 0;
-> +}
+                   Linus
