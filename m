@@ -2,108 +2,108 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AEDCC433DF
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB3DC433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:33:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4542D2068F
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:30:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 365F3206D4
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:33:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AEWNXFNI"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hN4xATtB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726711AbgG2TaA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 15:30:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49826 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726476AbgG2TaA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 15:30:00 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE6DDC061794
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:29:59 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id f24so5029509ejx.6
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:29:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hcp0gY1OzLuXWIiwvhpZpMdmk5ObLJuqnHMvu/qPtgA=;
-        b=AEWNXFNI6/yyxbxxKn2yMgSG3K3avd7TTNN9mXPDDBWtsgNF1kD7J3tjOl8kfoqXr1
-         RvBV4q2ffJC6Bk4zGD9LrFp2+4/LJLpTnSMhIm+fUfAueM83E9bmtTIAwTviYTSi6q0R
-         4A86h7BZ9XLYianSk1OZ5ScwamuQN4ZZMI5CuPkNHPZz5TlZSc5L8kY/xqTRzoJGDHDg
-         hpcqrwNq1rbk3TFPjexumnQ9QXfXYaTYlOxd8no73p9UFlBbbAjfarwuv8YWeG2dt3Lr
-         S1a0dPPZJ4lfZJlUfi8oAVMsolmw99jTmXzzXsJypNB2Lrai5WZI0CqQMxFAg+xbtmMa
-         E9/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hcp0gY1OzLuXWIiwvhpZpMdmk5ObLJuqnHMvu/qPtgA=;
-        b=g7r9MwW0R8jIfwgq/G4L1evAuPpb+sSJ/GHNt0Ii1QDCmjeA1JwWLmg/UqzoTzbCk4
-         jslCJNRbYoaye+ATEyZMCdDB19eqsBs7yfOiiYfJLq9DmImpTNX7qRYT36r7uQJ2ZKbk
-         1FpaQ8Otwq0DAor0wMmklzmyHU/mfCRIY23ISHiiKCVWyRgATW74mexfZ2++RDICfcJI
-         d/Pq6H1cofagH3GZyPZ+G8R1tbGipmwBDpqOkz/RIobJIebtPqqZKuo1rczG7TAhCG9l
-         e24WX+DYhhYy2PZQCz0cmUzZOyEOQSpJ5qzL0JPZ4+499B5Cnbq8wATQhRNukwghWUVW
-         Zf3g==
-X-Gm-Message-State: AOAM532v/NmsjMceCP4a2VXlLg4xCbb6oU07frJ4NbOXkNQ725TyZ2G0
-        dheBAkOpSwnYgzFQKy7xjSiY3zkV1KFsZvLKkOSTbQ==
-X-Google-Smtp-Source: ABdhPJx3WstGPCQCXYJIgwLafOLlA/gXcplUUY8BGsDUhOCa9bdPAljGkxNKfIQ6f/Ok7dr7CSfJa0m81ysjtzmrUhs=
-X-Received: by 2002:a17:907:408c:: with SMTP id nt20mr23986586ejb.503.1596050998047;
- Wed, 29 Jul 2020 12:29:58 -0700 (PDT)
+        id S1726606AbgG2Tdq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 15:33:46 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54068 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbgG2Tdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 15:33:46 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 31F7CE48CB;
+        Wed, 29 Jul 2020 15:33:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PU9beMKIUWXQnwpeM9ux5DPbXdI=; b=hN4xAT
+        tBaK0rV5UVkAsnWhXyhY709Mb/vXExATt2B58sMOgL75K7V7CW0/tDXliaMtO6Ex
+        kv+ATtZJzWIB1njSH2SE3mqGFS61CGzWF9LbXr1a/EwQ+wS+VFHVPMFo4dIPJyLL
+        d2glrPYCseRS/V0pisMeb3bWrAUAda6Sl5OYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NXy4IspnoEec8NINLVKiE/Dy9LOGJwLd
+        j8QSZ9XvjTf1mCe2JAw8/ebMWIEmRJGI2uMW1euI4GY+IfbgDUgXIJH9kNGQMp9l
+        zjD8flh0wLYLvhXkBMyePHrQS1WQQTnw8sZnrNdnmcqjxjA9rL/EcFtY3YFxxYjC
+        xlf373TNys0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A20AE48CA;
+        Wed, 29 Jul 2020 15:33:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 631CFE48C8;
+        Wed, 29 Jul 2020 15:33:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH v3 5/6] parse-options: parse into argv_array
+References: <20200728222455.3023400-1-emilyshaffer@google.com>
+        <20200728222455.3023400-6-emilyshaffer@google.com>
+Date:   Wed, 29 Jul 2020 12:33:39 -0700
+In-Reply-To: <20200728222455.3023400-6-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Tue, 28 Jul 2020 15:24:54 -0700")
+Message-ID: <xmqqmu3i9kvg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CA+TwhoKBYwUKmtQTyiocPWJD=KeZQryS+6Q8JKxKgLEy0qJwAw@mail.gmail.com>
- <20200726040226.GA19030@dcvr> <20200727151023.GB62919@syl.lan>
- <20200728100726.GA24408@dcvr> <20200728162528.GH87373@syl.lan>
- <6b4b3f77-a479-4d7b-d7c2-e3e35e658ac7@gmail.com> <CA+TwhoJqm-EB6OkLOr6+B4RZfaQ7aVde+hSrSeWV-jYkfBLGNg@mail.gmail.com>
- <xmqqzh7i9o11.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqzh7i9o11.fsf@gitster.c.googlers.com>
-From:   Carmen Andoh <candoh@google.com>
-Date:   Wed, 29 Jul 2020 15:29:47 -0400
-Message-ID: <CA+TwhoLrkf6Z1g0NxYN5OsRwV85ONQKY05J0fiQN6tKQR035gQ@mail.gmail.com>
-Subject: Re: 24 hours to respond with date/duration preferences for inclusion summit
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 68774C0C-D1D2-11EA-91E9-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 29, 2020 at 2:25 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carmen Andoh <candoh@google.com> writes:
->
-> > Hello All,
-> >
-> > Just a reminder that you have another day to respond to whenisgood
-> > [1].  Note that times are listed as 6AM-9PM (21:00) Pacific.  Please
-> > specify duration preferences ( half days, full days, etc)  in
-> > comments.  Hopefully we'll respond soon after that with date/s that
-> > works for most.
->
-> Sorry for sending this on the last day.
->
-> After re-reading the original announcement and the above part, I am
-> wondering if responding to the "when is the good time for you?" poll
-> is a requirement to be invited.  My tentative understanding is that
-> this is merely to help resolove scheduling conflicts, and those who
-> want to attend but have no particular time/date preference can just
-> stay silent and wait for the invitation to come, to which they are
-> required to respond via e-mail in order to attend.
->
-> I suspect many people are wondering about the same thing and
-> a bit of clarification may help.
->
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Thanks for the question Junio.  Yes, this initial solicitation is
-merely to get a feeling for what the best times and durations would
-be.  It does not mean indication of attendance, registration, or
-functioning as an RSVP.  This will come in a subsequent communication,
-with a date/s and times chosen based on the survey.  ~C
+> parse-options already knows how to read into a string_list, and it knows
+> how to read into an argv_array as a passthrough (that is, including the
+> argument as well as its value). string_list and argv_array serve similar
+> purposes but are somewhat painful to convert between; so, let's teach
+> parse-options to read values of string arguments directly into an
+> argv_array without preserving the argument name.
+>
+> This is useful if collecting generic arguments to pass through to
+> another command, for example, 'git hook run --arg "--quiet" --arg
+> "--format=pretty" some-hook'. The resulting argv_array would contain
+> { "--quiet", "--format=pretty" }.
+>
+> The implementation is based on that of OPT_STRING_LIST.
 
-> Thanks.
+Be it argv_array or strvec, I think this is a useful thing to do.
+
+I grepped for the users of OPT_STRING_LIST() to see if some of them
+are better served by this, but none of them stood out as candidates
+that are particularly good match.
+
+> +int parse_opt_argv_array(const struct option *opt, const char *arg, int unset)
+> +{
+> +	struct argv_array *v = opt->value;
+> +
+> +	if (unset) {
+> +		argv_array_clear(v);
+> +		return 0;
+> +	}
+> +
+> +	if (!arg)
+> +		return -1;
+
+I think the calling parse_options() loop would catch this negative
+return and raise an error, but is it better for this code to stay
+silent or would it be better to say that opt->long_name/short_name 
+is not a boolean?
+
+> +	argv_array_push(v, arg);
+> +	return 0;
+> +}
