@@ -6,62 +6,52 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95B5DC433DF
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78B7BC433DF
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:06:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73D1C2076E
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:04:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FD14207FC
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730462AbgG2AEc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 20:04:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40734 "EHLO cloud.peff.net"
+        id S1730516AbgG2AGa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 20:06:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40744 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730247AbgG2AEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 20:04:32 -0400
-Received: (qmail 31707 invoked by uid 109); 29 Jul 2020 00:04:32 -0000
+        id S1730434AbgG2AG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 20:06:29 -0400
+Received: (qmail 31722 invoked by uid 109); 29 Jul 2020 00:06:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 Jul 2020 00:04:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 Jul 2020 00:06:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31572 invoked by uid 111); 29 Jul 2020 00:04:31 -0000
+Received: (qmail 31590 invoked by uid 111); 29 Jul 2020 00:06:29 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 20:04:31 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 20:06:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Jul 2020 20:04:30 -0400
+Date:   Tue, 28 Jul 2020 20:06:28 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 10/11] strvec: drop argv_array compatibility layer
-Message-ID: <20200729000430.GA1623001@coredump.intra.peff.net>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/11] renaming argv_array
+Message-ID: <20200729000628.GB1623001@coredump.intra.peff.net>
 References: <20200728202124.GA1021264@coredump.intra.peff.net>
- <20200728202709.GJ1021513@coredump.intra.peff.net>
- <xmqq5za7cm8e.fsf@gitster.c.googlers.com>
+ <CA+P7+xqrV7yvQ2XihDnjuuT5Ro0_qvb4WS6tNH2GGn5DQzoLNw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5za7cm8e.fsf@gitster.c.googlers.com>
+In-Reply-To: <CA+P7+xqrV7yvQ2XihDnjuuT5Ro0_qvb4WS6tNH2GGn5DQzoLNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 28, 2020 at 03:23:45PM -0700, Junio C Hamano wrote:
+On Tue, Jul 28, 2020 at 03:45:08PM -0700, Jacob Keller wrote:
 
-> It was more painful than I would have thought to merge this topic,
-> as we seem to have gained quite a few new calling sites (it shows
-> how popular and useful this API is).  Hopefully some of the merge
-> conflict resolutions would be resurrected automatically from the
-> rerere database ;-)
+> One thing I thought I would see but I guess we simply don't have one
+> is a technical doc that details the strvec. I guess we just never had
+> one for argv_array? Probably worth adding one at some point.
 
-I'm not too surprised; it made a little chaos with my personal topics,
-too. I'm happy to help with resolutions, but it looks like you've
-already merged it to "seen", which means the worst of it is mostly over.
-
-I did specifically wait on it until until after a release, but I think
-we pretty much always have topics in flight these days. There is no
-quiet time. :)
-
-If I swap out the final patch with "s/items/v/" that may cause a
-_little_ more trouble, but perhaps not quite as much (only some of the
-sites access the fields directly).
+It all got moved into the header file in 971b1f24a2 (argv-array: move
+doc to argv-array.h, 2019-11-17). It got the same s/argv_array/strvec/
+as the code in patch 2. I think what's there is pretty reasonable, but
+patches welcome if you have suggestions about what could be added. :)
 
 -Peff
