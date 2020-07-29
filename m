@@ -2,86 +2,82 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0430C433E0
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6B10C433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:14:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CE632065E
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:55:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 758302067D
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:14:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BgQ1T1Kz"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="K0xOziYc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727840AbgG2WzW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 18:55:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726876AbgG2WzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 18:55:22 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F719C061794
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:55:22 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id nl2so3198106pjb.7
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:55:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=CkAQiFBW8Snp2vSmOrIneG72Bo3wayn3mi8tldGtgd4=;
-        b=BgQ1T1KzWZn6eT1OeKyvqEDEUQt6d161Dtly+8pshCXerqfX5I/OmrLmSxBySr6eAo
-         lizlbblsJX2od9lG5fw5OF2Z+TYILiRzAdRWZHMcd5gnKu0g54VAM2rM6qvi0Gtmfd+L
-         RNA5Dt0JPpLwAO9kgQriNGmi6vsWnR04ADVAjz+MX7hwwg48FWXfvyu7cpbcs2yHHFTe
-         /Lyh2LysP8x/2+kmgfNbg5di5rOgmbSblXYomopP/f51RHEbBUqU2RGWROi2OnzagjSo
-         /QF1PU8fPsbk9gGCF4itieQncYG/WAu1cNtfscpLMUV5NvOaW1zdgcaI+WnHrZQGWTx8
-         9iuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=CkAQiFBW8Snp2vSmOrIneG72Bo3wayn3mi8tldGtgd4=;
-        b=BRwxHpRdSCxD24wMVjqoPkRx/funu48TXrwPQ7+RviaXz0gJeoPvZveCZvWwOB43FU
-         1YwuEyNPPSE4/DiBIkCYJ+ZVepwq2cNkiqblCYaSzXMuDnjiOmLSK+HAQc1wMMq4vGGt
-         azCR4nPlxbRMkLpZ814/NbITCClHUvWKrE9dYIeIYZQnW0kB+OS8at5AvEuZ36wMVWGd
-         I1jKA40etPOFWKchlNbvQAgRJCzGDiqH+GTqo01AUOmsNaKeqeSlJtAkJzn0DfRMHfWQ
-         kQ5k2x4ElamUdPo+h8kjUEnVCjuhVjyJAhmceHQXJjbXonf5w2rV27P/CZUvgoPjAJAm
-         3g3w==
-X-Gm-Message-State: AOAM5327kjgdpLFsRHfiYN409uHwBao158abqYWZ0j1F6g9E7jChOtwu
-        TXl9qWDLyTno7bh8DeR0stYtYL/IdeMjC0cd9aZo
-X-Google-Smtp-Source: ABdhPJx13lD2t21293B1HtdA53hSrjx7DB5UwEuG/4HZCJvuddv6Q6bi86w87W6N3FtGsru5t3YS1LHqz6uFoRd/yhds
-X-Received: by 2002:a17:902:be17:: with SMTP id r23mr29539210pls.284.1596063321699;
- Wed, 29 Jul 2020 15:55:21 -0700 (PDT)
-Date:   Wed, 29 Jul 2020 15:55:18 -0700
-In-Reply-To: <xmqqr1su9mbf.fsf@gitster.c.googlers.com>
-Message-Id: <20200729225518.700585-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqr1su9mbf.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-Subject: Re: [RFC PATCH] Modify fetch-pack to no longer die on error?
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     peff@peff.net, jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1727896AbgG2XOr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 19:14:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41032 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726718AbgG2XOr (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:14:47 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3A5D16079A;
+        Wed, 29 Jul 2020 23:14:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1596064486;
+        bh=Ni60BVyy3697LdUPCNff0L0kAJ2/erkulVYjnf5hQSc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=K0xOziYcFSYiV1OpRGUsvAqvxvFqPzkfBF/9egvEkDW+/ZXh4m/tQThWEap6OP+P1
+         TFEU8f5sJv7O4TZMVrbKIfADK+IDM4H8EGdjfFW0libBTYIVtfbGXC5LRiJuNmiEag
+         RsABurmdQVr3vkKg10DGnylI12wWVyN/HGtN5WJx/s43iuOvyegE2EqIAVNuDUtoPK
+         zqHNFS7Kdqv8nEbhob6px1yGZ7oa57V5wrKtavpVNQXhlcWOpfC+1wOHs1MXO4L0Df
+         m9/tb4Keek6rh+vloQpmUD857+HJXWAyZS/Tc5+6f3J7i7D3x8VFAWcglvjhJ372va
+         si+F5opbtFPhp4M2Bxocy3BX2ijwsygxYM3NmRHuigr0CKPIySVxaGW/VA3sT+Uk9e
+         BOe1hGlGqz7reH2i79mtbjSe9dkOlTPMTvEdgnbqCFW92r+I4BMv+tDwOFd4Bo63Ow
+         JO3N7LOfTjhxpoxnz39NBzRg8s+EohOg5SKz6s92ao7GqiEbk04
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v6 01/39] t: make test-bloom initialize repository
+Date:   Wed, 29 Jul 2020 23:13:50 +0000
+Message-Id: <20200729231428.3658647-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
+In-Reply-To: <20200729231428.3658647-1-sandals@crustytoothpaste.net>
+References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
+ <20200729231428.3658647-1-sandals@crustytoothpaste.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The "more naive and stupid way to run them as subprocesses, just
-> like we do for cURL based transport" was primarily because I thought
-> it would be easier to get right (as the transport API and interface
-> has long been established) than hunting down all the callers of
-> die() and touch all the functions involved in the callchain.  I
-> won't complain or block if a harder-but-more-correct approach is
-> taken ;-)
+The bloom filter code relies on reading object IDs using parse_oid_hex.
+In order to make that work with an appropriate size, we need to have
+initialized the repository's hash algorithm.  Since the values we're
+processing depend on the repository in use, let's set up the repository
+when we run the test helper.
 
-Well, I was prepared to do the harder approach (as you can see from my
-first email) but it will be harder not just for the author but also for
-the reviewer and future readers of the code; now I think that I should
-try the subprocess way first, especially since there is another part of
-Git that will do that too (the maintenance prefetch [1]). I'll try that
-and write back about how it goes.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/helper/test-bloom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-[1] https://lore.kernel.org/git/3165b8916d2d80bf72dac6596a42c871ccd4cbe6.1595527000.git.gitgitgadget@gmail.com/
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index f0aa80b98e..5e77d56f59 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -50,6 +50,8 @@ static const char *bloom_usage = "\n"
+ 
+ int cmd__bloom(int argc, const char **argv)
+ {
++	setup_git_directory();
++
+ 	if (argc < 2)
+ 		usage(bloom_usage);
+ 
