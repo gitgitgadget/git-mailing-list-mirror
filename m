@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 058C1C433E1
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 519AFC433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D980020809
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 311AC2067D
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QmQqFEP5"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yxl351vg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727996AbgG2XPg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 19:15:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41106 "EHLO
+        id S1728205AbgG2XPh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 19:15:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41116 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728076AbgG2XPA (ORCPT
+        by vger.kernel.org with ESMTP id S1728079AbgG2XPA (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:00 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B2F356101D;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 497116101A;
         Wed, 29 Jul 2020 23:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596064497;
-        bh=eTqVeOVIS5vfeTzqh2ut7sQmwkFSE34dvNVpjdO3LAo=;
+        s=default; t=1596064496;
+        bh=ZZWG9DyvfjyTh4cTXiXDoNJwuwpI2ozFPoVNewbeb9s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=QmQqFEP5QvKbYG0yykEBiZqBCTssKLq9T+2Jb7abfMuqP7C3rFQ8HZJgWeA/eBz/d
-         sQ7xGEYMNlL4Xo2yfGWe0R4uTUfiTWCQF18QTovsZZTWCT7UYzLSsYgOzlZP71k+f8
-         yRQM1U3vfADTsqw7TcIAiP7emj6V2FOjvSYplFArcHkNoYwuQwYkc5oInahAQtdSH6
-         caKebquZwOmHHmbKlLK9f0IMbShfJaWysE9STxajHVCs0A9B9MYIHCmk7s/AGwI6Vf
-         I+gebn0FMJREvYgUKEabVWcaNy3veXFpzqQP95R/bom0FBNvPZl/EQUZVJi30cuTL9
-         7Y0/gcYOYyVx4uY8X41Y6dbUrs3H+nDIPlSpz0y46IPI66PLAz1AgM+xJrHB5pKR2K
-         JgukKxr+in99DcCRlGmuD9DOMgEXnqoECvi3RKjxyhHICYPDmOHm6hxUBYdBtOT4Mp
-         5WTqgYE76jZS6d4WYMna8g/Z42vErrOl7x56aKuyP4m3MzKJAPm
+        b=yxl351vgK21mWrSMEJAN7dfECAJHaFZDzJmiixqAcJZaJAoqrazKAumc4qnGlveXD
+         bem/6POuESH+ukktQFk4qsILiv1HFkp8aDFyELv+TjsigGZLCwwQkdJUSRjrRIyDi/
+         l9cKlzmhNFjwNovevNKwi/XjNRnW8ddCdhJnrJAcWU6XXh6c9ylJyygQ60jer1L9Ms
+         jg33MEsuN4WedRlJOZtPi+OxtqZ5pLC/+4LbuBKYu7KY6S79FwE5T+VHZm3j9lxhAq
+         Lc3WjgceX/F3G8rhtxkb+88MBfKjpCyCwIafl9M6wLdsAR6NLawTEey8UHUgbIfLa6
+         1LiWQLhkzDHTNg5zf50RHCFuXocLBtykA9s9Wo34m+mTp8z8FsExnnxSTb0N7q5BHv
+         axP7CTaOvO+apzFHRsxUnmONgg9yKn8InYFsgnZXnrW3E3AWGpWHObw0gFcJT9Vdnp
+         MrakfnHfYWpWuFGw4++9WS+lQ5MgbLSmTZWJKLwnS+SxMtxxYYt
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 24/39] t9350: make hash size independent
-Date:   Wed, 29 Jul 2020 23:14:13 +0000
-Message-Id: <20200729231428.3658647-25-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 23/39] t9301: make hash size independent
+Date:   Wed, 29 Jul 2020 23:14:12 +0000
+Message-Id: <20200729231428.3658647-24-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200729231428.3658647-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -57,77 +57,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test checks for several commit object sizes to verify that objects
-are encoded as expected. However, the size of a commit object differs
-between SHA-1 and SHA-256, since each contains a hex representation of
-the tree's object ID. Since these are root commits, compute the size of
-each commit by using a constant plus the size of a single hex object ID.
-
-In addition, use $ZERO_OID instead of a hard-coded object ID.
+Instead of using a hard-coded all-zeros object ID, use $ZERO_OID.
+Compute the length of the object IDs in use and use this instead of
+hard-coding the constant 40.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9350-fast-export.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ t/t9301-fast-import-notes.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 690c90fb82..1372842559 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -132,12 +132,12 @@ test_expect_success 'reencoding iso-8859-7' '
- 	sed "s/wer/i18n/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--		 # The commit object, if not re-encoded, would be 240 bytes.
-+		 # The commit object, if not re-encoded, would be 200 bytes plus hash.
- 		 # Removing the "encoding iso-8859-7\n" header drops 20 bytes.
- 		 # Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
- 		 # to \xCF\x80 (\317\200) in UTF-8 adds a byte.  Check for
- 		 # the expected size.
--		 test 221 -eq "$(git cat-file -s i18n)" &&
-+		 test $(($(test_oid hexsz) + 181)) -eq "$(git cat-file -s i18n)" &&
- 		 # ...and for the expected translation of bytes.
- 		 git cat-file commit i18n >actual &&
- 		 grep $(printf "\317\200") actual &&
-@@ -164,12 +164,12 @@ test_expect_success 'preserving iso-8859-7' '
- 	sed "s/wer/i18n-no-recoding/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--		 # The commit object, if not re-encoded, is 240 bytes.
-+		 # The commit object, if not re-encoded, is 200 bytes plus hash.
- 		 # Removing the "encoding iso-8859-7\n" header would drops 20
- 		 # bytes.  Re-encoding the Pi character from \xF0 (\360) in
- 		 # iso-8859-7 to \xCF\x80 (\317\200) in UTF-8 adds a byte.
- 		 # Check for the expected size...
--		 test 240 -eq "$(git cat-file -s i18n-no-recoding)" &&
-+		 test $(($(test_oid hexsz) + 200)) -eq "$(git cat-file -s i18n-no-recoding)" &&
- 		 # ...as well as the expected byte.
- 		 git cat-file commit i18n-no-recoding >actual &&
- 		 grep $(printf "\360") actual &&
-@@ -192,7 +192,7 @@ test_expect_success 'encoding preserved if reencoding fails' '
- 		 grep ^encoding actual &&
- 		 # Verify that the commit has the expected size; i.e.
- 		 # that no bytes were re-encoded to a different encoding.
--		 test 252 -eq "$(git cat-file -s i18n-invalid)" &&
-+		 test $(($(test_oid hexsz) + 212)) -eq "$(git cat-file -s i18n-invalid)" &&
- 		 # ...and check for the original special bytes
- 		 grep $(printf "\360") actual &&
- 		 grep $(printf "\377") actual)
-@@ -694,7 +694,7 @@ test_expect_success 'delete ref because entire history excluded' '
- 	git fast-export to-delete ^to-delete >actual &&
- 	cat >expected <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index ca223dca98..14c1baa739 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -470,12 +470,13 @@ test_expect_success 'add lots of commits and notes' '
+ '
  
- 	EOF
- 	test_cmp expected actual
-@@ -704,7 +704,7 @@ test_expect_success 'delete refspec' '
- 	git fast-export --refspec :refs/heads/to-delete >actual &&
- 	cat >expected <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
+ test_expect_success 'verify that lots of notes trigger a fanout scheme' '
++	hexsz=$(test_oid hexsz) &&
  
- 	EOF
- 	test_cmp expected actual
+ 	# None of the entries in the top-level notes tree should be a full SHA1
+ 	git ls-tree --name-only refs/notes/many_notes |
+ 	while read path
+ 	do
+-		if test $(expr length "$path") -ge 40
++		if test $(expr length "$path") -ge $hexsz
+ 		then
+ 			return 1
+ 		fi
+@@ -518,7 +519,7 @@ test_expect_success 'verify that importing a notes tree respects the fanout sche
+ 	git ls-tree --name-only refs/notes/other_notes |
+ 	while read path
+ 	do
+-		if test $(expr length "$path") -ge 40
++		if test $(expr length "$path") -ge $hexsz
+ 		then
+ 			return 1
+ 		fi
+@@ -593,7 +594,7 @@ test_expect_success 'verify that changing notes respect existing fanout' '
+ 	git ls-tree --name-only refs/notes/many_notes |
+ 	while read path
+ 	do
+-		if test $(expr length "$path") -ge 40
++		if test $(expr length "$path") -ge $hexsz
+ 		then
+ 			return 1
+ 		fi
+@@ -616,7 +617,7 @@ i=$(($num_commits - $remaining_notes))
+ for sha1 in $(git rev-list -n $i refs/heads/many_commits)
+ do
+ 	cat >>input <<INPUT_END
+-N 0000000000000000000000000000000000000000 $sha1
++N $ZERO_OID $sha1
+ INPUT_END
+ done
+ 
+@@ -646,7 +647,6 @@ test_expect_success 'remove lots of notes' '
+ '
+ 
+ test_expect_success 'verify that removing notes trigger fanout consolidation' '
+-
+ 	# All entries in the top-level notes tree should be a full SHA1
+ 	git ls-tree --name-only -r refs/notes/many_notes |
+ 	while read path
+@@ -656,7 +656,7 @@ test_expect_success 'verify that removing notes trigger fanout consolidation' '
+ 		test "$path" = "deadbeef" && continue
+ 		test "$path" = "de/adbeef" && continue
+ 
+-		if test $(expr length "$path") -ne 40
++		if test $(expr length "$path") -ne $hexsz
+ 		then
+ 			return 1
+ 		fi
