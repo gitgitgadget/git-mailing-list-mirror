@@ -2,99 +2,106 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBA66C433E0
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D025FC433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:19:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D1492082E
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:02:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ABA442075F
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 19:19:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qWG6wSzw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJWCKwGf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726790AbgG2TCc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 15:02:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51779 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726502AbgG2TCc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 15:02:32 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 090D6800D9;
-        Wed, 29 Jul 2020 15:02:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tiV3bWMciI5Q130llhiW9kXLtwM=; b=qWG6wS
-        zwS7a+UqF/+4xjjGd4vesUY1g+IqJcCTw9xyPsO8rTLuxcfOm4mVRVrlbTyvk0SE
-        iRmmK/Qm2fPT8n7k5y6oYJfBXNheQH7esNySIXp2kIAG/oYCWOXLv1Xa30Vcry8a
-        w4JH5Fppu5yUctiAjuhNg9/KnGnj4r5Cp0GH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oWVulAUlhafUiqASrqA5hxyBaIXWvemo
-        55AObAk8rJZiLa7DJ8hFWAxd7J40Jg3KCPXqOJhRBlfaxYRzW8cMCtN2sfA7JxLr
-        s83COMR42bFtjivFG/9BQl4BjJFl4lr6tzMygS3RyJzZU2T8UkTy81NhSK5Os9M7
-        TFW7pd6tCwg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F4155800D8;
-        Wed, 29 Jul 2020 15:02:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4BD43800D7;
-        Wed, 29 Jul 2020 15:02:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Modify fetch-pack to no longer die on error?
-References: <xmqqft9fi4hm.fsf@gitster.c.googlers.com>
-        <20200728192350.352978-1-jonathantanmy@google.com>
-        <20200728200847.GA1019822@coredump.intra.peff.net>
-Date:   Wed, 29 Jul 2020 12:02:28 -0700
-In-Reply-To: <20200728200847.GA1019822@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 28 Jul 2020 16:08:47 -0400")
-Message-ID: <xmqqr1su9mbf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726606AbgG2TTf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 15:19:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48210 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbgG2TTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 15:19:35 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E09EEC061794
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:19:34 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id v22so12602888qtq.8
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 12:19:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=iGNbAihZTFX/hcDztNq9wlxOrg4wGS/xrxOokJLeVCw=;
+        b=SJWCKwGfkDUf6T9CAUNJxRjHPJ4FCXzwz7l9ZFFaVPg7ZWRcu4DNq28JbKSZG3itRI
+         sNa83IkOyFb2ZhVD4aOX5IbadqLd8zKItDGuFB2rjv/OQilCT9zGBrLG4UJnl7Y7EL2y
+         +Ic/+38xwRMPdK12JNFevN3jtl4/7eaqXy29a196YAdXiO28+3c8WybttVG6ttYmmwAb
+         51JZpQ53kDr2q+VLxyRLWm8x3jHNF0RJ41pphZAMz1JOCnrr0aHJ4nLMgETJHpE8c87o
+         spDLTl0FeHVX2HEKxmeIXRhNE6tooDRUhrULGjs3SDP3K0sYZ/Gk1QR0XuAlpHyNrfY+
+         yVzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=iGNbAihZTFX/hcDztNq9wlxOrg4wGS/xrxOokJLeVCw=;
+        b=WWs/5LB2gOZoB/PdYZZtMPLQtjjXzUTr7xSqv6Te0gS0mV3n0ee/IV9aCFrdndhQOk
+         h6x/X2z/cHa/TxCUiZhFiz/GW/JPvkZjlhunSLMrVOMyJgRhMNE8NNU58oxNOorKw5Yp
+         +2qz5GfAzMFVHIUjA4X1hEX6BjaycvdEfRtW/c64dK2UAdInD7IQ/nloZyJxiQOWTYbb
+         7aJ0MZKLDU9V62alm2IssCeGcUzZHkO8acLOikHkswVfb2dn32FGj/QlAEvJq7+2nkmw
+         mWVtLtLd0P8soBAydRaXuXYvCt3oKW2qIoqyMNTDJIiz6NbP6sNRB0E1fgfbm+3fy9hJ
+         FFSg==
+X-Gm-Message-State: AOAM5314Xcx/pYiJgeshbKHH7s9Ln0S/WoaClUbmaV9pQm8Z/q7J/02B
+        zn/yQbatf2SH7axopf5x1Is=
+X-Google-Smtp-Source: ABdhPJzN87ZYZN1HfznphoNGcXQYfx+dRUK5BQ3NakfVkgEJ2XZsLKF+lxEY0eNFoeYEqSc84+UHsw==
+X-Received: by 2002:ac8:198b:: with SMTP id u11mr14835786qtj.31.1596050374035;
+        Wed, 29 Jul 2020 12:19:34 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:7cc2:825e:4cec:e949? ([2600:1700:e72:80a0:7cc2:825e:4cec:e949])
+        by smtp.gmail.com with ESMTPSA id j31sm2386209qtb.63.2020.07.29.12.19.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jul 2020 12:19:32 -0700 (PDT)
+Subject: Re: [PATCH] comment: fix spelling mistakes inside comments
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Steve Kemp via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Steve Kemp <steve@steve.org.uk>
+References: <pull.685.git.1595993608886.gitgitgadget@gmail.com>
+ <571792b3-e65b-e6e8-34b9-56a87a47de8d@gmail.com>
+ <xmqq4kpqb301.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2eeff10b-38e3-5d6d-6805-ff7920d52244@gmail.com>
+Date:   Wed, 29 Jul 2020 15:19:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
+ Thunderbird/79.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0C9CA340-D1CE-11EA-B81C-01D9BED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqq4kpqb301.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 7/29/2020 2:16 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> I'll leave it to more experienced contributors to comment on how a
+>> comment-only patch fits with this section Documentation/CodingGuidelines:
+>>
+>>  - Fixing style violations while working on a real change as a
+>>    preparatory clean-up step is good, but otherwise avoid useless code
+>>    churn for the sake of conforming to the style.
+>>
+>> In my opinion, this change is not harmful, but also isn't super
+>> necessary. I could go either way.
+> 
+> Typofixes in comments has no chance of breaking things than a
+> carelessly done code churn made in the name of cleaning up, so
+> cost-benefit comparison is much more favourable.  I'm sure that I
+> won't be exhausted after reviewing comment-only patch as much as
+> after reviewing code-churn only patch.
 
-> Just to play devil's advocate for a moment...
->
->> (Also, I think that debugging within a process is easier than debugging
->> across processes, but that might not be a concern that other people
->> share.)
->
-> This is definitely true sometimes, but I think is sometimes the
-> opposite. When we push things out to a sub-process, then the interface
-> between the two processes has to be well-defined (e.g., writing results
-> to a file with a particular format).
+Thanks. I appreciate the context that provides more clarity.
 
-I agree that it forces us to be more disciplined to separate them
-into two processes and clearly define the way they communicate with
-each other.  When done poorly, it tends to make a bigger mess.
+Steve's patch with the de-duplicated sign-off has my full support.
 
-> That said, I think I could buy the argument that "fetch" works pretty
-> well as a basic building block for users. It's pretty rare to actually
-> use fetch-pack as a distinct operation. This is all a monolith vs module
-> tradeoff question, and the tradeoff around modularity for fetch isn't
-> that compelling.
+-Stolee
 
-Yup.  
-
-The "more naive and stupid way to run them as subprocesses, just
-like we do for cURL based transport" was primarily because I thought
-it would be easier to get right (as the transport API and interface
-has long been established) than hunting down all the callers of
-die() and touch all the functions involved in the callchain.  I
-won't complain or block if a harder-but-more-correct approach is
-taken ;-)
