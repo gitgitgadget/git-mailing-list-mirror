@@ -2,99 +2,105 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBC64C433DF
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 13:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7F76C433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 13:39:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C20EE20809
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 13:32:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E33C206D8
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 13:39:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NSO+w/07"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbgG2Nct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 09:32:49 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35602 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726336AbgG2Nct (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 09:32:49 -0400
-Received: by mail-wr1-f67.google.com with SMTP id f1so21110304wro.2
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 06:32:47 -0700 (PDT)
+        id S1727026AbgG2Njw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 09:39:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51972 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726480AbgG2Njw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 09:39:52 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B7DC061794
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 06:39:51 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a15so21672524wrh.10
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 06:39:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1O5YLrMD6UBAo8LidSc2ZKFcCsoXwe0b47LYbcJVrfU=;
+        b=NSO+w/07CgIUgpiPRaSmD/TXNT5/6GnCPvG71lk0Eqj2bqPIe1yiRMxoR4S+D8KLhl
+         wHivYqrBAb7n3ghMZxo8GYUrx7WYV0ox/UgFBWohzk5WxYyadmkB+BYWyTdoU7sBTWdy
+         xXZT518ShPsLrCHfA4vyjEWY5tmw4vsXTNzhbGbohgKOSDHaPzXcmawVDpRfkBy1KhnA
+         qEhy24D4kIn3sz8OQjP9gaXSkI7e8Y4g7dXv+abG/ma7vgnlTVirTwZm7gMZ1A0WNNPz
+         uiWJwI5qAUK6rvCEzXg8+4T+O2clrlpomjhaxR8swNGr6Bcla2Ky4uYAnkattn6ejtlT
+         NHUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dLYDNhK9mx1XPVLd6J7lOekm70yK0X27zFLqUFsV2ys=;
-        b=SfGtmHg6sZX2Xf93RP4ol94kBxawBEfOrLuJlN5BHVFfW7rrvVu+EZBmxLCVgBz4+D
-         UraMe9na3JHaZBEjatz61QO2jMouTHXVP1sq5W4tPA/2YqDkfQcLgFgWPfmTAIfOpa8V
-         CIqiF71GU9++zVguDd0D8JqkflHpjTMrrMGyXFYVahlj+IkxesXmS8FsuZGeclGXYrEo
-         lpP9GoluDgSnIWBUQy4vrPc4oP3+TFrnhfONBifm6oIucN4Zj3486+0bLNWkyq/jWLMI
-         YrlvTqayTBBrdAcb6gkm2q+KBvmyQ5V9BBNfY687l+MPUPu0CY67MgvwSJny7sMPozGf
-         pODg==
-X-Gm-Message-State: AOAM532emg9kJGdaiiKMABcWh0obplLIQkJAhfoy5SFpBHNZzjbqhBap
-        ftOVhs7RER6BIgnyVWSxGzw2E081m37jFbk7GJc=
-X-Google-Smtp-Source: ABdhPJw7FZFQt6IB413SgzOmSYr6jojmWsbEvvAgt1wyXeDcqd0opeWsZthWoqN4hM4s/2xjXfCC8qtx2HJzsDG8yzk=
-X-Received: by 2002:adf:ec45:: with SMTP id w5mr30233903wrn.415.1596029567032;
- Wed, 29 Jul 2020 06:32:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1O5YLrMD6UBAo8LidSc2ZKFcCsoXwe0b47LYbcJVrfU=;
+        b=t6W2hccrKbbNKhCwpF7GU0krnax63zet5GWoC/d2X9PEMfzLfDaQPnV3hnuqtbqvht
+         Rl5rEpOBvaSl/OhKRaU2/RGvRPMbXyRKQKcfOx3kz+iL+LRM3fHoCr5t3Re5atbBavL6
+         Sv7bzsXTMZPV0PgA+QDiVBUjjZAGat79DkZWoXOHA6UFqCQ++IEbnARk2ol/ommRpurX
+         9AdYYMUluYZwv6ugXfABocjNvUgtoacXZyJBQk1uzO2EBVdiEBUi/J3mvLA0e4kwe20J
+         GZXqjj1IfuqjaDLaTfrluNhjCaENBufkBL73KHKSeQMsjuUAtGApzPG/aXPZtcVI+pAf
+         KoyA==
+X-Gm-Message-State: AOAM530QjvOZMfciJ/gb2q7JgV1jFrBmIK6FguMubVjc4v/OqYxWHd9K
+        OO73quQlQLuGSJSOuPt28JGmeRjc
+X-Google-Smtp-Source: ABdhPJwQHzOeKc2Af0+W5d40zD3yXMLJOXA2jZ/h8FD0fqg0ofVcTQfwMr4OZGG/sWgruFqFc35/xA==
+X-Received: by 2002:adf:c986:: with SMTP id f6mr30291474wrh.168.1596029990348;
+        Wed, 29 Jul 2020 06:39:50 -0700 (PDT)
+Received: from rybak.office.devexperts.com (aftr-62-216-206-115.dynamic.mnet-online.de. [62.216.206.115])
+        by smtp.googlemail.com with ESMTPSA id o7sm5292619wrv.50.2020.07.29.06.39.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2020 06:39:49 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org, philipoakley@iee.email
+Subject: [PATCH] git-help.txt: fix mentions of option --guides
+Date:   Wed, 29 Jul 2020 15:39:48 +0200
+Message-Id: <20200729133948.538-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.28.0.windows.1
 MIME-Version: 1.0
-References: <20200728202124.GA1021264@coredump.intra.peff.net> <CAP8UFD26J6W50SeQqJiG0y04kcdNzr6RRT7ZeJmrQ2V-QTS3Lg@mail.gmail.com>
-In-Reply-To: <CAP8UFD26J6W50SeQqJiG0y04kcdNzr6RRT7ZeJmrQ2V-QTS3Lg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 29 Jul 2020 09:32:36 -0400
-Message-ID: <CAPig+cQEqhpu3-_wXUFjfokSuesu2a5QdiaT8ks4kPiYkUsOvw@mail.gmail.com>
-Subject: Re: [PATCH 0/11] renaming argv_array
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 29, 2020 at 2:16 AM Christian Couder
-<christian.couder@gmail.com> wrote:
-> I would expect after the above sentence that you would rename it to
-> "string_array" or "str_array".
-> [...]
-> Also we still use "array" in "oid_array" which is very similar to
-> this. And the implementation is based on the ALLOC_GROW macro which
-> uses the REALLOC_ARRAY macro.
->
-> We also use ALLOC_ARRAY, FLEX_ARRAY, CALLOC_ARRAY, COPY_ARRAY and
-> MOVE_ARRAY macros.
-> [...]
-> If you want to change only "argv_array" (and not also "oid_array",
-> "REALLOC_ARRAY" and perhaps other *_ARRAY macros) into something else,
-> then I think it would be better to be consistent with them.
+Fix typos introduced in commit a133737b80 ("doc: include --guide option
+description for "git help"", 2013-04-02).
 
-Dipping my toe into the bikeshed paint bucket...
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ Documentation/git-help.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Naming consistency is certainly a valid concern, and if this was a
-public API I might agree that such consistency should outweigh some
-other concerns, however, this is a private, project-specific API in
-which convenience and concision weigh more heavily in my opinion.
-There is value in succinctness, not just when writing code (by having
-to type less), but also when reading it, for the same reason that we
-use short and sweet variable and function names. To wit: short, well
-chosen, idiomatic names let the structure of the code show through
-(often) at-a-glance, whereas long names force us to laboriously read
-code, making it harder to discern the overall structure and logic.
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index f71db0daa2..69c0c5c34e 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -8,7 +8,7 @@ git-help - Display help information about Git
+ SYNOPSIS
+ --------
+ [verse]
+-'git help' [-a|--all [--[no-]verbose]] [-g|--guide]
++'git help' [-a|--all [--[no-]verbose]] [-g|--guides]
+ 	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
+ 
+ DESCRIPTION
+@@ -21,7 +21,7 @@ on the standard output.
+ If the option `--all` or `-a` is given, all available commands are
+ printed on the standard output.
+ 
+-If the option `--guide` or `-g` is given, a list of the useful
++If the option `--guides` or `-g` is given, a list of the useful
+ Git guides is also printed on the standard output.
+ 
+ If a command, or a guide, is given, a manual page for that command or
+-- 
+2.28.0.windows.1
 
-There is also value[1] in having "vec" (or "v") in the name as opposed
-to "array", specifically because this isn't just an array of strings;
-it is a NULL-terminated vector of strings. Thus, it is suitable for
-functions which accept such a datatype, which often have "v" in their
-names, as well (for instance, execv()).
-
-On the topic of a "terminated array": As a NULL-terminated array of
-strings, the name "strvec" provides naming consistency and fits nicely
-alongside the name "strbuf", a NUL-terminated array of characters,
-while also sharing the relative concision of that name.
-
-In my opinion, the name "strvec" is a good and reasonably succinct
-compromise between other names, such as "strv"[2] and "strs"[3],
-proposed previously. It gets my "+1".
-
-[1]: https://lore.kernel.org/git/20180227221808.GE11187@sigill.intra.peff.net/
-[2]: https://lore.kernel.org/git/20180227220443.GB11187@sigill.intra.peff.net/
-[3]: https://lore.kernel.org/git/CAPig+cS+G-xC51n-Ud0Wbmcc-zeHBM3-5WQQAFm9gwm9LNk3Gg@mail.gmail.com/
