@@ -2,145 +2,110 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C1CDC433E0
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA9AC433DF
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:22:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7D2D20656
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:22:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A39220829
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:22:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YtfM04uG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gSWp0H15"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727862AbgG2WWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 18:22:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
+        id S1727897AbgG2WWg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 18:22:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726947AbgG2WWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 18:22:33 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24E0C061794
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:22:33 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id m22so15263066pgv.9
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:22:33 -0700 (PDT)
+        with ESMTP id S1726947AbgG2WWg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 18:22:36 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4E5C061794
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:22:35 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id g19so12128133ejc.9
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ffMnYJTOTAvC3NpI4V5Ie1XX5Dou3uHtlunEWssojvY=;
-        b=YtfM04uGxMiUv5tXrjZW69LT54yCaL2qZB/80iV6vdXnqXrBl54lF8u4StlrU+xmxT
-         oZxCiUq+IhTy4AbbDDumQQP2WrIDmtCIHNSH4eWJW9l5RcFC3wPg4pHNdDO9RXewHBu+
-         sohmQvUYrl2X8WmKusz/jb90ePupqJWFCh6d1llEtntVGQtgPE1Lv5yhmFfanvNTeShs
-         KZnJqbs/qTzQNZOpf2esLF/DHj9BsYiVF2w+TUtnPgWmEwPX2ZA7B7F0KGuZu/hLDrlI
-         cINkue65DcX6FMgL8dBz8ka2RWJN202QEt510QYmviTiks537OFxhDkNiCFQtDEVgyDW
-         SdDQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=BuGRkY8A1Q9jHWyP2Zq6rMqGE+mjkSeVaIvFmaKQSDk=;
+        b=gSWp0H15BBme0ILTk1to/T/BYRSzRPk/Wbe3mr4LtiHBQl9FgqasK/Wg9NwaUXnt0d
+         Ig6SSRKm5vIoKxEF2sSR9asE9bSPXAFDIz7cCpMfMnS+etaSRsidb6/vxIQscxSodRI8
+         b8lBYdu8SiDDxKQhsqAleGUFapBwWyDh/ycWIiInY/DM7484KtqmBOytAvP01phDHlng
+         B0gxj7KJPxjPqrL9WBn5ic3BHud/UuaLLrvNecFUq91e5UN9isBNcTTE0MPApW2kzf9M
+         mmMSO6/wsreQDruugWZ2yfsJb/sYD3rRxq34W4rkd6eyL6lH2NAkjPajBH4aHr5RJPUa
+         /ryw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ffMnYJTOTAvC3NpI4V5Ie1XX5Dou3uHtlunEWssojvY=;
-        b=H9MdvuFddLtdy/wAhFGXLujZGDol9R9hwq5jr+wcYl0eL1Ymsl1ZG2fhW04l9VOL/e
-         JToplnGOYFHwYMIyRWGheuD8XMV0EDN6z30QJ+bYD8xqM46aYpq97ohi1kYORklZOF9v
-         cSq5RbarFqlDn4LhlYn2ksF/x0vQlOgsqmf1Dle568c8e6nS6NvcgLv5KxZKO0aEdGTn
-         U9piy9lBcpCkHTgBO3d+cb36jvUoQglDlTHmCoKc9JUvfd/vYm56EN7Nw5r33GM/ELw5
-         YUDhlewJpR/Ds2bYMGSYh8yRYcTPZ8X8XiWi5dUIT4jZAluD6FYSrtLO/Hep0+tzpHAd
-         uuxg==
-X-Gm-Message-State: AOAM533Un77dxxS/FEIk4IbyULVd/bG7GxQglZfSLnPj0TOWxB2K7Lsp
-        HFjAalVuX8M1i+Lgfnhtun3RcQ==
-X-Google-Smtp-Source: ABdhPJztHLXFyqeROPKyFPt8gHhMzhh1VmLb5k51kPdQzLnECZET6Bu/Ha/5L4b4+Re7CPfTlVe1qA==
-X-Received: by 2002:a63:5116:: with SMTP id f22mr8423603pgb.303.1596061353056;
-        Wed, 29 Jul 2020 15:22:33 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id y20sm3607808pfo.170.2020.07.29.15.22.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2020 15:22:32 -0700 (PDT)
-Date:   Wed, 29 Jul 2020 15:22:26 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 10/18] maintenance: add incremental-repack task
-Message-ID: <20200729222226.GD2965447@google.com>
-References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
- <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <b6328c210625e1ba98e2065208a2a478c2c64f94.1595527000.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=BuGRkY8A1Q9jHWyP2Zq6rMqGE+mjkSeVaIvFmaKQSDk=;
+        b=pNfbq9pxS5l+tnw+U2J40ktwbhn764AUl+0CIF3mFqENpY5x07szzQT+DbLJguXU1A
+         6RaGdYzF3k3zhbMSNkCaDEsgfC4sUEdQLazQ+q2v2ckAG9kpUhjOZ26h0GqTtkimt3jh
+         3F6vC2os2GwyDX1vXhddEm48JURdkBu/TO/JenxZwICGApcTbBCBk+1eTLoUhKP7zxoW
+         xK9a8thjlQsMcsGhmnKCCOhyqcIWcmsrOo8fG91gtNg5x9bGnncJ3UakWl5+AeBknLMV
+         2LA7cgoAO0voH6BVLjzuU0o/jfp+QddvgDOUKDCm9GhPbLKakvTqPoiVq8iMvMJ4Wwsx
+         wF5g==
+X-Gm-Message-State: AOAM530zvMvbehN3E5eouv1M+duAcW0GFJSt/yE+NplCOZA25esaWw+R
+        IPn6VoOjIzB/Xd9sa/6O7wvt+VYjSi/a900A2MW/cCqGFYg=
+X-Google-Smtp-Source: ABdhPJzw/vPR+4/z8JQ/n78r6JhqvBr3cDNxf2v5QZ9MQPLzhieXGKU8FvRw2AtOYcOlm7P9DX41aUTRTFJX+iIDFhA=
+X-Received: by 2002:a17:906:38d8:: with SMTP id r24mr448385ejd.341.1596061354115;
+ Wed, 29 Jul 2020 15:22:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b6328c210625e1ba98e2065208a2a478c2c64f94.1595527000.git.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 30 Jul 2020 00:22:23 +0200
+Message-ID: <CAP8UFD0DKCEtXBEzCNUUXsBQ3ZoKnqpR=p=4Zpoptvk-emFJAg@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 65
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>, lwn@lwn.net,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Garima Singh <garimasigit@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+        Taylor Blau <me@ttaylorr.com>,
+        Brooke Kuhlmann <brooke@alchemists.io>,
+        Liz Landau <lizzie.landau@gmail.com>,
+        Carmen Andoh <candoh@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Andrew Ardill <andrew.ardill@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Petr Baudis <pasky@suse.cz>,
+        Bastien Nocera <hadess@hadess.net>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 23, 2020 at 05:56:32PM +0000, Derrick Stolee via GitGitGadget wrote:
-> 1. 'git multi-pack-index write' creates a multi-pack-index file if
->    one did not exist, and otherwise will update the multi-pack-index
->    with any new pack-files that appeared since the last write. This
->    is particularly relevant with the background fetch job.
+Hi everyone,
 
-[emily shaffer] Will this use midx even if the user has disabled it in
-their config?
+The 65th edition of Git Rev News is now published:
 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 94bb493733..3ec813979a 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -103,4 +103,41 @@ test_expect_success 'loose-objects task' '
->  	test_cmp packs-between packs-after
->  '
+  https://git.github.io/rev_news/2020/07/29/edition-65/
 
-[emily shaffer] Can we include a test to prove that this task is or is
-not run if core.multipackindex is set or unset? That behavior is hard to
-deduce from the code... we might want to be cautious.
+Thanks a lot to Andrew Ardill, Jonathan Tan, Brooke Kuhlmann, Eric
+Sunshine, Carlo Marcelo Arenas Bel=C3=B3n and G=C3=A1bor Szeder who helped =
+this
+month!
 
->  
-> +test_expect_success 'incremental-repack task' '
-> +	packDir=.git/objects/pack &&
-> +	for i in $(test_seq 1 5)
-> +	do
-> +		test_commit $i || return 1
-> +	done &&
-> +
-> +	# Create three disjoint pack-files with size BIG, small, small.
-> +	echo HEAD~2 | git pack-objects --revs $packDir/test-1 &&
-> +	test_tick &&
-> +	git pack-objects --revs $packDir/test-2 <<-\EOF &&
-> +	HEAD~1
-> +	^HEAD~2
-> +	EOF
-> +	test_tick &&
-> +	git pack-objects --revs $packDir/test-3 <<-\EOF &&
-> +	HEAD
-> +	^HEAD~1
-> +	EOF
-> +	rm -f $packDir/pack-* &&
-> +	rm -f $packDir/loose-* &&
-> +	ls $packDir/*.pack >packs-before &&
-> +	test_line_count = 3 packs-before &&
-> +
-> +	# the job repacks the two into a new pack, but does not
-> +	# delete the old ones.
-> +	git maintenance run --task=incremental-repack &&
-> +	ls $packDir/*.pack >packs-between &&
-> +	test_line_count = 4 packs-between &&
-> +
-> +	# the job deletes the two old packs, and does not write
-> +	# a new one because only one pack remains.
-> +	git maintenance run --task=incremental-repack &&
-> +	ls .git/objects/pack/*.pack >packs-after &&
-> +	test_line_count = 1 packs-after
-> +'
-> +
->  test_done
-> -- 
-> gitgitgadget
-> 
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+https://github.com/git/git.github.io/issues/453
