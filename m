@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 185D2C433E1
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34FABC433DF
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E62E72067D
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07E402067D
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="g9v/pPnw"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="B7XyoX5T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728185AbgG2XPZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 19:15:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41162 "EHLO
+        id S1728189AbgG2XP0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 19:15:26 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41156 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728177AbgG2XPW (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:22 -0400
+        by vger.kernel.org with ESMTP id S1728160AbgG2XPT (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:19 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 53CE36100C;
-        Wed, 29 Jul 2020 23:14:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 85E5960CF6;
+        Wed, 29 Jul 2020 23:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596064491;
-        bh=zmmreqcVssM8fklRR8fjcy4ONQ0aizZ1+4lGjEODa9A=;
+        s=default; t=1596064488;
+        bh=YnqhRm5cXPRi/ZkOai5UFwRTufPby2S7+lcAS3bYyKE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=g9v/pPnwoW+E9mXpApADVOidz0ddYYYiiUZrZuiT/za7oe8C6+mha/X//qIacpGGS
-         iid5ptRlF2PIjeeFBo6sdAOt+FdzQNlVsqsXRPdeVbBweJtF1sxqpUV89v0Y6fHz37
-         CaTynwWCRVbTAeO/3HrhqJOclfbotqMY19LkYt26Ap6ecup+Ro4xhc+YGzeoDHikhB
-         9jeFv7WSMXYugNveOMJ1BZNOiHfD+2m6ZyqYyGZKcYwwZ3SbGSg57Ui7pM1WxGCn0F
-         5NlN8X7c12LuBmFJaM96ZAj1IYoTjK6PMFaWXHMnerFw5X6VLiW42kllF91EI9diG0
-         GSIx3uXnO9r3iegUUN8wfZODn/f4LODngxBtYDJypNI1+8LYVL0u6y1VM61jRV7Lw8
-         t7Ab7ZWpnHWZaQ2dg9Ot6nafFmmluDNp/4Mokl2IMKqqgE6Mcmnp6RBK8ChVrch913
-         GGgnLcwRTGoWWS26j7igl/gBekacg551pzRjZDFJ/Gfv/pqtYHJ
+        b=B7XyoX5TdyvcjgU8yjYtQqRpGbSGNRxwGxWlE2y7QtTS9Sf0AXZYqcyi3yygfYNBj
+         dELF/gT1BDSVg2mHWLFm+c7XodWj6/0/WdHLAvYqBlLfl9f6kVBKRgxC8bxVITv2Nj
+         b0VnsZYoKZTue/V236bAl88aEZ165LDrZe4rtorzi4fZpvliFrJq8tCWDGAQyM0/2R
+         MK9nAMhMX/3TjIxeZzMRCNbs2pqWQc9aWm3dHQJ9crzmoV7I8NlbJ/3magysJeqwyD
+         n+WzuvYRda8o9WMd1nP0BU7/W6AYXpnzVrZvttzzWr1bOcZQXfMzyDp9ai79doXubU
+         qGQebxVtsoUKXuDSosYKEZNQge8pMoraoKbG1D1312t3AHKBhLJY0uVAxyqsnm01Tr
+         wAtM4R9MVkaTtMnsK1BiFTcEnqLNU8DZ7XIkBHlI0Qss5ycJZWX5NVTxwxVO3GL4kD
+         uY2ASmBEPrfNk28CyPaELH2mWRHI8/ZpecZSROugFG2La74GfoO
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 12/39] t7201: abstract away SHA-1-specific constants
-Date:   Wed, 29 Jul 2020 23:14:01 +0000
-Message-Id: <20200729231428.3658647-13-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 06/39] t6101: make hash size independent
+Date:   Wed, 29 Jul 2020 23:13:55 +0000
+Message-Id: <20200729231428.3658647-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200729231428.3658647-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -57,39 +57,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for object IDs instead of
-using hard-coded hashes.
+Use $OID_REGEX instead of a hard-coded regular expression.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t7201-co.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t6101-rev-parse-parents.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index b696bae5f5..4d62b9b00f 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -230,9 +230,10 @@ test_expect_success 'switch to another branch while carrying a deletion' '
- test_expect_success 'checkout to detach HEAD (with advice declined)' '
+diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+index 7683e4a114..7531262a5e 100755
+--- a/t/t6101-rev-parse-parents.sh
++++ b/t/t6101-rev-parse-parents.sh
+@@ -34,7 +34,7 @@ test_expect_success 'setup' '
+ '
  
- 	git config advice.detachedHead false &&
-+	rev=$(git rev-parse --short renamer^) &&
- 	git checkout -f renamer && git clean -f &&
- 	git checkout renamer^ 2>messages &&
--	test_i18ngrep "HEAD is now at 7329388" messages &&
-+	test_i18ngrep "HEAD is now at $rev" messages &&
- 	test_line_count = 1 messages &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
-@@ -248,9 +249,10 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
+ test_expect_success 'start is valid' '
+-	git rev-parse start | grep "^[0-9a-f]\{40\}$"
++	git rev-parse start | grep "^$OID_REGEX$"
+ '
  
- test_expect_success 'checkout to detach HEAD' '
- 	git config advice.detachedHead true &&
-+	rev=$(git rev-parse --short renamer^) &&
- 	git checkout -f renamer && git clean -f &&
- 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
--	grep "HEAD is now at 7329388" messages &&
-+	grep "HEAD is now at $rev" messages &&
- 	test_line_count -gt 1 messages &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
+ test_expect_success 'start^0' '
