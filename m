@@ -6,90 +6,79 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA5E5C433E0
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACF4EC433EA
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:52:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5C352078E
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:47:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64531207E8
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 00:52:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="b3NnNpm8"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A4vZ0XeS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730869AbgG2Arw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 20:47:52 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60247 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730668AbgG2Arw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 20:47:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79A4DEBBD6;
-        Tue, 28 Jul 2020 20:47:50 -0400 (EDT)
+        id S1731023AbgG2AwJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 20:52:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53310 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730972AbgG2AwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 20:52:08 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2272979B7C;
+        Tue, 28 Jul 2020 20:52:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WVo9HS4xCl0otX0EfEH82JRK+Q0=; b=b3NnNp
-        m8EarX7Ia9tf1JwmwG3+N7jZY/FPSqkk9svvB0/6FsL0cQMi0/FOUgVr7gi0M+E0
-        OQPNFU+FwXd0A2cheRdD8p/H+MtdHuzOu1lY4J9Ff7HlvhKWYCkcxoTXBOcDrfp7
-        T0hbPHYX4m0WlhQn1F1T96qZsz16BPllk+oaE=
+        :content-type; s=sasl; bh=UcFugZXe1fRKsvbAJVtmz5+hiGI=; b=A4vZ0X
+        eSeTIEK6zEXqRn3CmznG3QGeEl4uyFIgmI/BWFhw/iJlAsaLr1PvEIDpyUh9hG61
+        ebwAGPNovf3v75mnKEI7dHminkubh/P1tsCbiuSndsA3CwFZHS+bvu+NUAwebMHS
+        IYS2iqWisahptMikstCEDOMAkq0ZNYenYAzEQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IQHWxt2XriimrtLy2KIA6Fnn6KGo7wfS
-        z0UkPX+UGHhcGwDYT8+iWgRfS7nLdd1hA4dfh8yB1bEEU/yah+xGelpMu1ZvrQuv
-        0xALDlRrFd2c/K2NmqeFaBVh1kIC6N4i8uDTw4/M83QqZWmVusQRvrGVlmhlc6fe
-        AjxvXlh2ZcU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7283AEBBD5;
-        Tue, 28 Jul 2020 20:47:50 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=JeRufEoW/zzEZtojC08kXW4I8iohvYg8
+        tiATODx53J10bqZ9uEtB7MnVZ0c5WehSq7PQbdDSpi8xMMHNpMlhWkzArz3kYQzZ
+        m1x58GnsF84r6jLW2WqsOwX066qOniTm6Zao2z0yRC5Wno/2Q/9VnSb847niA0LP
+        BGZAORYT9QY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 19AA079B7B;
+        Tue, 28 Jul 2020 20:52:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B243EBBCF;
-        Tue, 28 Jul 2020 20:47:46 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2CA2E79B7A;
+        Tue, 28 Jul 2020 20:52:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 10/11] strvec: drop argv_array compatibility layer
-References: <20200728202124.GA1021264@coredump.intra.peff.net>
-        <20200728202709.GJ1021513@coredump.intra.peff.net>
-        <xmqq5za7cm8e.fsf@gitster.c.googlers.com>
-        <20200729000430.GA1623001@coredump.intra.peff.net>
-        <20200729003720.GA1653374@coredump.intra.peff.net>
-        <20200729004009.GB1653374@coredump.intra.peff.net>
-Date:   Tue, 28 Jul 2020 17:47:45 -0700
-In-Reply-To: <20200729004009.GB1653374@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 28 Jul 2020 20:40:09 -0400")
-Message-ID: <xmqqlfj3b0zy.fsf@gitster.c.googlers.com>
+To:     "Jason Pyeron" <jpyeron@pdinc.us>
+Cc:     <git@vger.kernel.org>
+Subject: Re: I have gone and done a bad thing - malformed tree objects
+References: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us>
+Date:   Tue, 28 Jul 2020 17:52:04 -0700
+In-Reply-To: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us> (Jason Pyeron's
+        message of "Tue, 28 Jul 2020 20:47:18 -0400")
+Message-ID: <xmqqh7trb0sr.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1EAEF874-D135-11EA-8101-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B8CAB380-D135-11EA-AC7C-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Jason Pyeron" <jpyeron@pdinc.us> writes:
 
-> And here's a diff between your current "seen" tip and what I get by
-> merging in this updated version and then doing any necessary resolution
-> or fixups on top. I'll leave it as an exercise for how you might want to
-> pull the content across. :)
+> I was trying to "do stuff" using hash-object -t tree --stdin -w,
+> but I accidentally created trees where other trees were marked as
+> blobs. They were dangling and not connected to any actual commits
+> on my branches.
 >
-> I do note that most of the new call-sites are ones that would be better
-> off using child_process.args, and reviewers (myself and others) have
-> suggested that. So those direct uses of the "argv" member may go away
-> anyway.
+> After gc and fsck clean ups, everything reports well...
+>
+> Except:
+>
+> $ GIT_TRACE=1 git cat-file --batch-all-objects --batch=objecttype
 
-Yup, I do not think we should spend too much cycles on this at this
-point, as Stolee's topic and others that add new callsites are
-likely to be rerolled at least one more time.
+gc and fsck may not have pruned the dangling object yet, but
+--batch-all-objects is a request to enumerate objects that exist in
+the repository, regardless of their reachability from any ref.
 
-It is tempting to declare that these 11 patches are now perfect and
-we'll stop the world and fast-track it down to 'master', while
-discarding any and all topics in flight that changes anything
-related to argv-array, and then we ask authors of these discarded
-topics to send in a rebase on top of the 'master' with strvec API
-already in.  But I somehow think we do not have to take such a
-drastic measure to adjust the world around this topic ;-)
-
+Perhaps "git prune --expire=now" would get rid of it?
