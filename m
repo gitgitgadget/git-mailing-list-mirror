@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 719CBC433E1
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD25C433DF
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BEEA2067D
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4D9F2067D
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bAqR4e1t"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YC9JxOfh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728147AbgG2XPR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 19:15:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41116 "EHLO
+        id S1728200AbgG2XPe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 19:15:34 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41112 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728105AbgG2XPE (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:04 -0400
+        by vger.kernel.org with ESMTP id S1728100AbgG2XPD (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:03 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DD0B86101B;
-        Wed, 29 Jul 2020 23:15:01 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6ECA461016;
+        Wed, 29 Jul 2020 23:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596064502;
-        bh=Ycs0MjVExWRB3JGbxwKlzgmzDVKANOql4LGjdlhyZXI=;
+        s=default; t=1596064498;
+        bh=09rgrcCD/TLi0jQrtn9n+YVsuADBEadhXt5jrJbIyoU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=bAqR4e1tqOpviwhiGu16/JNDBMoy9riZpEkI4K6BQFOH9ugWLEtOeQo6WGsMbDJ0Y
-         /TzTxDHPnEvL8BlzAk4nu/N9E/tkKdK3bxwysKvUnixDy67LjbgDy8UdiXZzUiaezp
-         1Wl739pXVvG5zfS7jQ5k7TwMLHOifbdvOAuus8SVm2Po9gRqgI7fDvVm+XIKXKsEJ1
-         8aRHBRKLcg1IyqSyEoa9Oi/I0wDn/cle77IP8RCXW9eNpE6gdOJvmpKcNX4v4iyAxd
-         CnD0CmobtEuW1c6axgsQQgX38xSOJMySyrh1lmMB2zc9ccP/Pgdj6cOM5oXLsIQvnC
-         +dMyOUZWufM6xOit7sdFv5wF8A/9MzYgUqRpNWED/3wFRFaQ63/7L41rrkWu6/ccdU
-         mwAVWv9NDj76ip07WAIj6pFFjBPB4xkZju41TQiP9Vqsi7by4r/mcWAXPrlLyYvVWf
-         eNnMNNLwEM2ubJf4IdEoCYQzjmow5Ge1kbwUT/Rs2Y4pqjyT6dQ
+        b=YC9JxOfh1nKfWiFkXzcPTPbaBjzuExfhVBaxtDWmmlO5dFcmWrWdMFNlYYOBLTf2O
+         yzGa0PHwV2g+P/wsEv69l3LUA03SV9edYaGW9aYnhIjY0XX6nQ/M8mUZ4EIQ1ije1B
+         6zzSPeEgwhZRPfSjH9nNJXLF1V8FKpx1tDZpL/u2mHDQReGMFeidoNKDn0ai1psZQQ
+         mF0ebwz4UHKWJcuLzkprIKjcYhnd4wV5+6pJOcOdqzdAERPs1Q5ZkrMr49A7NLKcfx
+         JQw3s4VxDJZsfZQ1Mrgv76QcGFFbJL+5edWLzTyVwzL1m53J+BnuogAcA1c9uJ+WDx
+         oAV0taEjMOw/6NsEJeIV43BxUhLJkG2FaBReHngfdtSRx17LzjqovszsDSEsgYweTy
+         d0YlK81jf5sCmdnwkBvAgxIsu9x9JlAOGlGpM7sjfTsLK47EraMEv0kOAX3/wAyVQB
+         Fjdi6zJWmtQVk4wCZZQzt1piX818fvg9E/l58YqptaCWF2z2Lai
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 36/39] t: make SHA1 prerequisite depend on default hash
-Date:   Wed, 29 Jul 2020 23:14:25 +0000
-Message-Id: <20200729231428.3658647-37-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 28/39] t0410: mark test with SHA1 prerequisite
+Date:   Wed, 29 Jul 2020 23:14:17 +0000
+Message-Id: <20200729231428.3658647-29-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200729231428.3658647-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -57,34 +57,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, the SHA1 prerequisite depends on the output of git
-hash-object.  However, in order for that to produce sane behavior, we
-must be in a repository.  If we are not, the default will remain SHA-1,
-and we'll produce wrong results if we're using SHA-256 for the testsuite
-but the test assertion starts when we're not in a repository.
+These tests try to check that we behave properly if we encounter a
+repository with version 0 but an extension.  This is a laudable goal,
+but the test cannot work with SHA-256, since SHA-256 repositories always
+have an existing extension and are never version 0.
 
-Check the environment variable we use for this purpose, leaving it to
-default to SHA-1 if none is specified.
+Add a SHA1 prerequisite to these tests.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ t/t0410-partial-clone.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 307bb2207e..0483ed51e1 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1689,7 +1689,11 @@ test_lazy_prereq CURL '
- # which will not work with other hash algorithms and tests that work but don't
- # test anything meaningful (e.g. special values which cause short collisions).
- test_lazy_prereq SHA1 '
--	test $(git hash-object /dev/null) = e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+	case "$GIT_DEFAULT_HASH" in
-+	sha1) true ;;
-+	"") test $(git hash-object /dev/null) = e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 ;;
-+	*) false ;;
-+	esac
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 6aa0f313bd..a5ebdf9ff3 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -42,7 +42,7 @@ test_expect_success 'convert shallow clone to partial clone' '
+ 	test_cmp_config -C client 1 core.repositoryformatversion
  '
  
- test_lazy_prereq REBASE_P '
+-test_expect_success 'convert to partial clone with noop extension' '
++test_expect_success SHA1 'convert to partial clone with noop extension' '
+ 	rm -fr server client &&
+ 	test_create_repo server &&
+ 	test_commit -C server my_commit 1 &&
+@@ -53,7 +53,7 @@ test_expect_success 'convert to partial clone with noop extension' '
+ 	git -C client fetch --unshallow --filter="blob:none"
+ '
+ 
+-test_expect_success 'converting to partial clone fails with unrecognized extension' '
++test_expect_success SHA1 'converting to partial clone fails with unrecognized extension' '
+ 	rm -fr server client &&
+ 	test_create_repo server &&
+ 	test_commit -C server my_commit 1 &&
