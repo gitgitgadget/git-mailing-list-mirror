@@ -2,114 +2,163 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D93C3C433DF
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1271C433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:50:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E93020829
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:33:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A560D207E8
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 22:50:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qvWoDYOW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h6PhmlXt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726560AbgG2Wdy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 18:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49866 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726628AbgG2Wdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 18:33:54 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B43EC061794
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:33:54 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id q76so3248272wme.4
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 15:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=h2EFN2JS42UqCBiwa729Z1pjxAVko2PzTUfy8fmJBWE=;
-        b=qvWoDYOWm7Ng9VyfNdqB9QKu3isRV8cuTN061aKu/b2jGyk2ZON1pn2JM5j4rNM6CX
-         sdQl25QkjRhGAnbI1tMa+65Ubip9vDJomeVRxu5g1DZd1ylMFFJfdsPEZcZstetpJ4df
-         1D4wW35K5X7XrsQe8/gTXFUXzJ3dIYWiG3DnkZ7j4PS8L0vJLtYf8oo8YiDKKlHA6nUo
-         J9zCc+FM8xzNH1KJUOLbStKSUk21p/KV+tx6N/a0J1zS4SbvlS+1DfVQ8r/KrsUZ8JCy
-         QrciztP/jznB1nhAHc48vD8oWMnn45vMualqV73laMmWABuRQeYjH7E98CFFR++44fko
-         LE3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=h2EFN2JS42UqCBiwa729Z1pjxAVko2PzTUfy8fmJBWE=;
-        b=ro6vr3ou7Z3X49jIUCIOGPf6tbogl6bVYjbMsXi4dY9yt5cpGAWDDHocGfBqfZb9g/
-         uXHGvFnjKzA9M8uswzCUGHHps0btPOekhe22RCLzKKOmiqaUIUenw3/Qq0rUrxZZz8AZ
-         NtFR7kM0o9np3vHcE7Ifxu5zQJvrnFr7P49su6a7I/5vjnIP7ANYduj+FJpiwBE5dt5N
-         d/4cp2xl9zGQixBswat4KQ7o6afpt6s6S9LC1N+jXXbrg6ZnABN33GnvZpYL0tRgxauf
-         J8s2PywBtf5OhNY1Sf+JRNMeoff8CAcH5gR/D5cZgLduCoyMcpE9qiF2ZWb+6TZp8Xx/
-         M6aw==
-X-Gm-Message-State: AOAM530mLVW81ZXpOE+YRhji2XONFUGlDF7vLogf06yRNdEdRzGoWDq1
-        Bu9VCoSu/U34t+deQfZyyr9rv+9C
-X-Google-Smtp-Source: ABdhPJyXkSWR8zEKBm8CyfstJ5d6FRJGvqvaxxbTirKg0OwcXHdFGt5JOT/BAcspYhEwywltEdUWvg==
-X-Received: by 2002:a1c:7915:: with SMTP id l21mr11065183wme.50.1596062030374;
-        Wed, 29 Jul 2020 15:33:50 -0700 (PDT)
-Received: from [192.168.1.64] ([81.141.108.232])
-        by smtp.gmail.com with ESMTPSA id l10sm7535585wru.3.2020.07.29.15.33.49
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Jul 2020 15:33:49 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: Issue when adding new files to staged changes using interactive
- mode
-From:   Another Email <yetanotheroneemail@gmail.com>
-In-Reply-To: <C4JFF5L90V54.1FQKYQPIC3O43@ziyou.local>
-Date:   Wed, 29 Jul 2020 23:33:48 +0100
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3B809D01-D744-436E-98A5-73B4BE6351CC@gmail.com>
-References: <C4JFF5L90V54.1FQKYQPIC3O43@ziyou.local>
-To:     "Raymond E. Pasco" <ray@ameretat.dev>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        id S1727082AbgG2WuJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 18:50:09 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56548 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726709AbgG2WuJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 18:50:09 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 805FAE6896;
+        Wed, 29 Jul 2020 18:50:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rNt/LX10//c8ue5Nz6wv8j2D0cY=; b=h6Phml
+        XtqhraPA1Squ7MFc0hwy+VcOuFkluSNxP/o4KDQpuJ/WAd5mNJqnFuKt8zKmSjg5
+        8BQhT6X57zLB0CzoXqiEfhFWYpXSXLT9nFcJrQeNwxRq2RGBESK8V4Gkd2nSw5KA
+        mH21fR4sVrLzZPAOeoI063x9y49wA4LFJQUnM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WCo4ek4mf8ZzRdduJsrS8DeV12k7Goeb
+        MKwuHKVZ2vL6ru9OeIybYPpS1hMAPYw73OILTdl0A7q1Kc2QMgboeeZXChdudLIA
+        eoJfixAnOWZNuTf+wMydSsmPcBgfx/RCmofscmhEyT9VpawN8qi4CPmAsiDQjael
+        aqpedoyja0o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 78842E6895;
+        Wed, 29 Jul 2020 18:50:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 15D22E6892;
+        Wed, 29 Jul 2020 18:50:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List Mailing <git@vger.kernel.org>
+Subject: Re: Avoiding 'master' nomenclature
+References: <CAHk-=wgutLH=mPdJkLU_E6gO4q0FcG+=EEQJVVQeb+OxG9CfgQ@mail.gmail.com>
+        <xmqqime69jfc.fsf@gitster.c.googlers.com>
+        <CAHk-=wisOOrfEvab9S417MnPSY8dVkbDOKa6ccdi1Bg3X1PMaw@mail.gmail.com>
+        <CAHk-=wi2dsROeg=mij5C8O=UBVZGEpOUp=Bn-arQ7i+Wscynnw@mail.gmail.com>
+        <20200729205846.GA2992025@coredump.intra.peff.net>
+        <xmqqv9i6814y.fsf@gitster.c.googlers.com>
+Date:   Wed, 29 Jul 2020 15:50:01 -0700
+In-Reply-To: <xmqqv9i6814y.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 29 Jul 2020 14:25:17 -0700")
+Message-ID: <xmqqlfj27x7q.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D6E589AE-D1ED-11EA-8053-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Raymond,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for looking into this.
+> The fast-export side lifted the "single branch is special"; we
+> didn't do something similar for "fmt-merge-msg".
+>
+>> So I think a path forward is more like:
+>>
+>>   1. Add a new config option to shorten fmt-merge-msg's output when the
+>>      destination branch matches it (and this should perhaps not even be
+>>      a single name, but a set of globs, which supports more workflows).
+>>      Call it merge.suppressDest or something.
+>>
+>>   2. Optionally a repository created with "git init" could copy its
+>>      init.defaultBranch into merge.suppressDest. And likewise a clone
+>>      might copy the remote HEAD into that variable. I'm not sure if that
+>>      is worth doing or not, but it would restore the original behavior
+>>      for the most part.
+>
+> Yeah, that sounds like a good plan.
 
-> Before I continue rooting around in the source, though, I wonder if =
-the
-> real issue here isn't the fact that add -p fails to support new files
-> (requiring the intent-to-add workaround in the first place). I have
-> always thought it's a confusing user experience that git add -p on a
-> file that isn't yet tracked simply returns "No changes".
->=20
-> The underlying problem may be, and I say this without intimate =
-knowledge
-> of the subsystem, that we're now trying to force add-patch.c to do
-> something it doesn't actually support, namely new files, whereas =
-before
-> it was attempting to patch what it saw as an empty file.
+A rough outline I did while waiting for today's integration builds
+to finish looks like this, which does not look _too_ bad.  We can
+replace the literal 'master' with the default branch name determined
+at runtime, but I am not sure if that is needed.
 
-I cannot comment on the internals of git, but the typical use-case for =
-using git add -p on new files would be when you add them as part of the =
-changes that also involve existing files in the interactive mode, =
-therefore it's helpful to have support for both compared to having to =
-stage new files separately.
+ fmt-merge-msg.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
->=20
-> This (patch-adding new files) is real in my workflow; is there any
-> reason why git add -p with an explicit argument shouldn't attempt to =
-add
-> untracked files covered by the explicit argument? (In addition to =
-fixing
-> it for intent-to-adds.)
-
-If I get the question right, it's perfectly fine for me personally to =
-stage a single new file via git add -p. I agree, technically, it doesn't =
-make a lot of sense, probably rather a matter of muscle memory, when you =
-treat new files the same way as existing ones.
-
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index cfb8ff2f33..b99699eacc 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -10,6 +10,8 @@
+ #include "commit-reach.h"
+ 
+ static int use_branch_desc;
++static int suppress_dest_pattern_seen;
++static struct string_list suppress_dest_patterns = STRING_LIST_INIT_DUP;
+ 
+ int fmt_merge_msg_config(const char *key, const char *value, void *cb)
+ {
+@@ -22,6 +24,12 @@ int fmt_merge_msg_config(const char *key, const char *value, void *cb)
+ 			merge_log_config = DEFAULT_MERGE_LOG_LEN;
+ 	} else if (!strcmp(key, "merge.branchdesc")) {
+ 		use_branch_desc = git_config_bool(key, value);
++	} else if (!strcmp(key, "merge.suppressdest")) {
++		if (!value)
++			string_list_clear(&suppress_dest_patterns, 0);
++		else
++			string_list_append(&suppress_dest_patterns, value);
++		suppress_dest_pattern_seen = 1;
+ 	} else {
+ 		return git_default_config(key, value, cb);
+ 	}
+@@ -408,6 +416,8 @@ static void fmt_merge_msg_title(struct strbuf *out,
+ {
+ 	int i = 0;
+ 	char *sep = "";
++	struct string_list_item *item;
++	int suppress_merge_dest = 0;
+ 
+ 	strbuf_addstr(out, "Merge ");
+ 	for (i = 0; i < srcs.nr; i++) {
+@@ -451,7 +461,15 @@ static void fmt_merge_msg_title(struct strbuf *out,
+ 			strbuf_addf(out, " of %s", srcs.items[i].string);
+ 	}
+ 
+-	strbuf_addf(out, " into %s\n", current_branch);
++	for_each_string_list_item(item, &suppress_dest_patterns) {
++		if (!wildmatch(item->string, current_branch, WM_PATHNAME)) {
++			suppress_merge_dest = 1;
++			break;
++		}
++	}
++
++	if (!suppress_merge_dest)
++		strbuf_addf(out, " into %s\n", current_branch);
+ }
+ 
+ static void fmt_tag_signature(struct strbuf *tagbuf,
+@@ -596,6 +614,9 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 	void *current_branch_to_free;
+ 	struct merge_parents merge_parents;
+ 
++	if (!suppress_dest_pattern_seen)
++		string_list_append(&suppress_dest_patterns, "master");
++
+ 	memset(&merge_parents, 0, sizeof(merge_parents));
+ 
+ 	/* get current branch */
