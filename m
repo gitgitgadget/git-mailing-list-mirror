@@ -2,243 +2,81 @@ Return-Path: <SRS0=t8Cj=BJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57C2FC433E3
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 22:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7714C433DF
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 23:06:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3515020829
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 22:25:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FC5020809
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 23:06:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxEinOld"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bhsoPnT/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730547AbgG3WZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 18:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43916 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730412AbgG3WYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jul 2020 18:24:54 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74AF0C061757
-        for <git@vger.kernel.org>; Thu, 30 Jul 2020 15:24:54 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id a14so26304695wra.5
-        for <git@vger.kernel.org>; Thu, 30 Jul 2020 15:24:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=k5H7vskpbKfRG/gk39MiiO8RG5LEjWacblN8SAQ+xvg=;
-        b=KxEinOldZFr9KAvsSTO11J+vpoS0X9t4MCFcQzIGV94Xlo/vEiM12h4OTXYyk3A+Om
-         6kG5ZW6Lz7LIDjilREOFh6coff5m6Y2VuGLMmquUsR/gOV7GxlzIGucnsxG5Hlfu7mCQ
-         RyoiDWfEabQvBAfSc6GtIhhqGf5oPAApVmA606G6BKH/QE600eg18hh6f8UtbdPYsmeC
-         ieGatDiLgI4IrqXqBvHwBCzejcQgJ3VNi+1lvJO9JknFWkM7QiSguH+l+HEOJ5FZ3HXa
-         UrJjA5h2kVFfpGtwNdlc2tXp+5Ke3nes+XiWygZsNE/dW68xpzNHeAmvvBR9gBSwrxV6
-         xzOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=k5H7vskpbKfRG/gk39MiiO8RG5LEjWacblN8SAQ+xvg=;
-        b=iwW5A8wj6EXLGeXkyNGpW+Vle11k/+AfceQ449uYmqrnJBTQzqKUIsnme50wRNvN+f
-         x+40cujnzsLUH93+ETho+GEhZ2M2DvA09lFH1YnKwdGAXd4liMRnVy/5aCnzUphzO1HA
-         6MxxgCrSDUdL3rtpjgDYs8afFyevun0aAqjNtJZ/lFudqaeCjBvRJtetZPv/mF6LZkb3
-         mQmLLqDuyPpaJv1dpxs4J2sNEVFO+TcBM1iYe03g07hug4qMOmJ8P0+UI8Io7eHoKOdz
-         nfYHdrjQaBqoQVGEAIfb9Zc3bENzgH30eZTihW1PXIuA/u3iRBrkU5MeFl/hElNnfct0
-         LKyA==
-X-Gm-Message-State: AOAM532cDN+J0mDXYwD8Csfmzbtkt20xQB90j2M2a1g7mJcWZyq3yw5K
-        9JIGrzELM0evI6C4sJ9qTnGXXeQx
-X-Google-Smtp-Source: ABdhPJwyUVzxiIZ9ceOiLhowQYYDE2dAzZlY+9hkhDAgFMstpGUrl3zQsusHZBDlNg3nKDEIqIAppg==
-X-Received: by 2002:a05:6000:12c1:: with SMTP id l1mr672267wrx.270.1596147893016;
-        Thu, 30 Jul 2020 15:24:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j5sm10926978wmb.12.2020.07.30.15.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2020 15:24:52 -0700 (PDT)
-Message-Id: <ef3a85450800800357c4d4db8e3f0da86621a6bd.1596147867.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.671.v3.git.1596147867.gitgitgadget@gmail.com>
+        id S1730269AbgG3XGS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 19:06:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59800 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728588AbgG3XGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 19:06:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 97584E01B7;
+        Thu, 30 Jul 2020 19:06:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LIC1Oh/8GTVqZ4eq1iKf+gc6Dkc=; b=bhsoPn
+        T/nWxeLDsgviwvQjTcf08TWsOdvzOoAD4p0+baJnRPOnrIr1Yv28qjtxohLXTOc9
+        ddw2nFNeHCz4gicSiGoMwS4RsPnnk2b6L9FFQo0DEmjw7+Fm6Me/tYhQeqGCMKj8
+        ESAXp2f3fFh0/h3bF/JLTvWtChAGd/vklfo3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oqndJhWhZamk6D4TDUoFPG4aGVLvZJSq
+        7FBRx8Dp0/KAiY8qI0ZiS4qV1QKNpcO7D0FgkeNBFcABMQeEZSXfES+8Q2FtBV96
+        B4xWRCSLiQK8MWD3Ix3PV+ub+Q+5meqRIxN+8RoiYSVUU8Qxcc7/6GVg15IHgThI
+        KCw/+BXuykI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 69576E01B6;
+        Thu, 30 Jul 2020 19:06:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9A67FE01B2;
+        Thu, 30 Jul 2020 19:06:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 00/20] Maintenance builtin, allowing 'gc --auto' customization
 References: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
         <pull.671.v3.git.1596147867.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jul 2020 22:24:22 +0000
-Subject: [PATCH v3 16/20] maintenance: add auto condition for commit-graph
- task
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date:   Thu, 30 Jul 2020 16:06:09 -0700
+In-Reply-To: <pull.671.v3.git.1596147867.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Thu, 30 Jul 2020 22:24:06
+        +0000")
+Message-ID: <xmqq4kpo7gda.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 429B6878-D2B9-11EA-86AB-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Instead of writing a new commit-graph in every 'git maintenance run
---auto' process (when maintenance.commit-graph.enalbed is configured to
-be true), only write when there are "enough" commits not in a
-commit-graph file.
+>  * I added and updates Junio's patch from jc/no-update-fetch-head into the
+>    proper place before the 'prefetch' task. The 'prefetch' task now uses
+>    --no-write-fetch-head to avoid issues with FETCH_HEAD.
 
-This count is controlled by the maintenance.commit-graph.auto config
-option.
+The update to tests for "git pull" looks reasonable, too.
 
-To compute the count, use a depth-first search starting at each ref, and
-leaving markers using the PARENT1 flag. If this count reaches the limit,
-then terminate early and start the task. Otherwise, this operation will
-peel every ref and parse the commit it points to. If these are all in
-the commit-graph, then this is typically a very fast operation. Users
-with many refs might feel a slow-down, and hence could consider updating
-their limit to be very small. A negative value will force the step to
-run every time.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/config/maintenance.txt | 10 ++++
- builtin/gc.c                         | 76 ++++++++++++++++++++++++++++
- object.h                             |  1 +
- 3 files changed, 87 insertions(+)
-
-diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-index 370cbfb42f..9bd69b9df3 100644
---- a/Documentation/config/maintenance.txt
-+++ b/Documentation/config/maintenance.txt
-@@ -2,3 +2,13 @@ maintenance.<task>.enabled::
- 	This boolean config option controls whether the maintenance task
- 	with name `<task>` is run when no `--task` option is specified.
- 	By default, only `maintenance.gc.enabled` is true.
-+
-+maintenance.commit-graph.auto::
-+	This integer config option controls how often the `commit-graph` task
-+	should be run as part of `git maintenance run --auto`. If zero, then
-+	the `commit-graph` task will not run with the `--auto` option. A
-+	negative value will force the task to run every time. Otherwise, a
-+	positive value implies the command should run when the number of
-+	reachable commits that are not in the commit-graph file is at least
-+	the value of `maintenance.commit-graph.auto`. The default value is
-+	100.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 1c449b3776..c85813fffe 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -30,6 +30,7 @@
- #include "promisor-remote.h"
- #include "remote.h"
- #include "midx.h"
-+#include "refs.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -713,6 +714,80 @@ static struct maintenance_opts {
- 	int tasks_selected;
- } opts;
- 
-+/* Remember to update object flag allocation in object.h */
-+#define PARENT1		(1u<<16)
-+
-+static int num_commits_not_in_graph = 0;
-+static int limit_commits_not_in_graph = 100;
-+
-+static int dfs_on_ref(const char *refname,
-+		      const struct object_id *oid, int flags,
-+		      void *cb_data)
-+{
-+	int result = 0;
-+	struct object_id peeled;
-+	struct commit_list *stack = NULL;
-+	struct commit *commit;
-+
-+	if (!peel_ref(refname, &peeled))
-+		oid = &peeled;
-+	if (oid_object_info(the_repository, oid, NULL) != OBJ_COMMIT)
-+		return 0;
-+
-+	commit = lookup_commit(the_repository, oid);
-+	if (!commit)
-+		return 0;
-+	if (parse_commit(commit))
-+		return 0;
-+
-+	commit_list_append(commit, &stack);
-+
-+	while (!result && stack) {
-+		struct commit_list *parent;
-+
-+		commit = pop_commit(&stack);
-+
-+		for (parent = commit->parents; parent; parent = parent->next) {
-+			if (parse_commit(parent->item) ||
-+			    commit_graph_position(parent->item) != COMMIT_NOT_FROM_GRAPH ||
-+			    parent->item->object.flags & PARENT1)
-+				continue;
-+
-+			parent->item->object.flags |= PARENT1;
-+			num_commits_not_in_graph++;
-+
-+			if (num_commits_not_in_graph >= limit_commits_not_in_graph) {
-+				result = 1;
-+				break;
-+			}
-+
-+			commit_list_append(parent->item, &stack);
-+		}
-+	}
-+
-+	free_commit_list(stack);
-+	return result;
-+}
-+
-+static int should_write_commit_graph(void)
-+{
-+	int result;
-+
-+	git_config_get_int("maintenance.commit-graph.auto",
-+			   &limit_commits_not_in_graph);
-+
-+	if (!limit_commits_not_in_graph)
-+		return 0;
-+	if (limit_commits_not_in_graph < 0)
-+		return 1;
-+
-+	result = for_each_ref(dfs_on_ref, NULL);
-+
-+	clear_commit_marks_all(PARENT1);
-+
-+	return result;
-+}
-+
- static int run_write_commit_graph(void)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
-@@ -1123,6 +1198,7 @@ static struct maintenance_task tasks[] = {
- 	[TASK_COMMIT_GRAPH] = {
- 		"commit-graph",
- 		maintenance_task_commit_graph,
-+		should_write_commit_graph,
- 	},
- };
- 
-diff --git a/object.h b/object.h
-index 96a2105859..30d4e0f6a0 100644
---- a/object.h
-+++ b/object.h
-@@ -74,6 +74,7 @@ struct object_array {
-  * list-objects-filter.c:                                      21
-  * builtin/fsck.c:           0--3
-  * builtin/index-pack.c:                                     2021
-+ * builtin/maintenance.c:                           16
-  * builtin/pack-objects.c:                                   20
-  * builtin/reflog.c:                   10--12
-  * builtin/show-branch.c:    0-------------------------------------------26
--- 
-gitgitgadget
-
+Thanks.
