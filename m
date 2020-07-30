@@ -2,85 +2,91 @@ Return-Path: <SRS0=t8Cj=BJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0718BC433E0
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 13:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 562DBC433DF
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 15:17:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF23720829
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 13:59:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22419206F5
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 15:17:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOFH+7NP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DYjrCtQT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729306AbgG3N7Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 09:59:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50600 "EHLO
+        id S1728352AbgG3PRi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 11:17:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728868AbgG3N7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jul 2020 09:59:24 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C6E5C061574
-        for <git@vger.kernel.org>; Thu, 30 Jul 2020 06:59:24 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id 2so21512422qkf.10
-        for <git@vger.kernel.org>; Thu, 30 Jul 2020 06:59:24 -0700 (PDT)
+        with ESMTP id S1726353AbgG3PRf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 11:17:35 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 895D6C061574
+        for <git@vger.kernel.org>; Thu, 30 Jul 2020 08:17:35 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id l64so19110305qkb.8
+        for <git@vger.kernel.org>; Thu, 30 Jul 2020 08:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=y7vyk8enPI3gwr2ZHpGPyAUheqmL92CxjWlmxUk1rkM=;
-        b=fOFH+7NPXZRhgzwwOaA9enjgaFmX9+pPNHBRO0ZSJ9T9GX05YW+doGt0l0yvDxiQ2J
-         JKwJWMbptn9CmZu8nHONe8MWILqe724OEbg+xJTYIfLCrntXU4YJzfJUUIjVpol/JCmM
-         yvA+uckH/AWpgNNC/tWKMGg+l3ZO2VC4ybixed/ALisGrL+XxO2MHzweWROmU/hPZXOg
-         GP28lj2wR4g39JBdPt74zV4xiXY6lZOkQi8E6KePyoQpgowldRvIT0L0l3MD6Q6VA6aq
-         PEbTP8GVOIDGmSTPZ5EdxF/iX+UV63FP8KYtRdZkgmEPT7wBcUffMtsjPxtYpBLkobQN
-         De+g==
+        bh=5M3zJljPvuOH6MFf7ig1IOI5+7Egb1Nllvxveo9LGU8=;
+        b=DYjrCtQTJF5ignerWNI0gcPZQPWNL4QW1RFV6lPtpzTjhDUVIRrUeRBECTdv34WDlW
+         Dw2CA5uvHDEPmvyEO23YwdAnfFCXhhLsfqABmbEpJLmKgbU4ocZ6ZjmmxLKZBBSSLq4r
+         k3TGkj3cYOoBzdV0UiLkgzUTRvOmXI8Mh5fAdwSlPlmts9xmdTgD5oHjMATIpKqhawKD
+         l1Q5TUOv0cspi9b4jRTUvIzuWFaj+VUB1C0kkUWXQf5fnV4QSHIvmGXmdJnWOphP0+MM
+         ALitp9u/NU1h38xLoa8Db6OE6SMmVd2ov+a4eiP2M3sBD8mpBVeeQJwro5NEHuahREE1
+         x1IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=y7vyk8enPI3gwr2ZHpGPyAUheqmL92CxjWlmxUk1rkM=;
-        b=Kiv9YMQ/xjGmnApfvOaZG3P2jATkzt0mMpKMi0XlyKg2GgiwyPieyEukpcmDHnbpvP
-         Ul4j8lR11MHO7KhyX+scxM6SGFc9gwjclQm674h2SaPJyK2aKfYfeYpqRi4asdAMvQV2
-         2r0gpvM5HX4+wr5HapR1ujKlC+FW/jVcqx/Ur0yVeGbfGvuHkfkp+4comvLPfcvW421S
-         ki4ubw04+wIpzi4q3neG7hs8WVRMNkWG7ZCMlHXjqMvrmfzDbYT2ZYA1Bc1ebsFtUZ0c
-         qn6Aiz5xQbOBSV+QQ9I+fSTVn2xL7UVycKbGC6c/S6EYpsnMYLN0u4KlfRNft3Qlb8Wx
-         Aw1g==
-X-Gm-Message-State: AOAM532907ptk2Jo9C7YN5u78lGO4Ozzou/nvtDrdoeI7R85SB9lLHUY
-        fWrl2JxRb3yopvOsyxYMdFWvOxBw8fITIw==
-X-Google-Smtp-Source: ABdhPJw0wI+rGwQTKNkMuB9nBGXfPAfrj8qNbNd8T6L6h4rwgjM4FfKUvO5bLYiOZn9xjPI0BOVZjA==
-X-Received: by 2002:a37:e110:: with SMTP id c16mr37132528qkm.243.1596117563202;
-        Thu, 30 Jul 2020 06:59:23 -0700 (PDT)
+        bh=5M3zJljPvuOH6MFf7ig1IOI5+7Egb1Nllvxveo9LGU8=;
+        b=nQ/jD4DrhN1aSleQrTb2YxdyPSLsQoXWO6O0aDJE4c4eyPrp1RUPt9sX8acd5bTtLk
+         WREEZWTQ/D7DNm9QGpDmLwXMbVkzLza1271g0b4E5X4eCB2GukmyZZ4KV5ybVUwDNpCa
+         65FWiXX729DViT/hM1R6lwsjzd2PMbwqu/h/VkWVQCcdA9sg8w5+u6Rik8W1//o3Jv74
+         KpM+ctTzi269A2H4MOijTIWoM3T1zRn+lYc0VUZZ/PR6Nz97fOKhilPUXZDgfdtl0io5
+         t57hoZstLzOYGVrCiRccB0+1mIjNOBeYwploYTj/+LM9ZxtDAn/Uis6BKrkme6UjdhRH
+         3U/g==
+X-Gm-Message-State: AOAM531wu9y5g3E/v663W6whCpDM9oQbE08Aa+icxRurjESSWOTtKeaO
+        ZQkwOdx4haPB3VJjKY73do4=
+X-Google-Smtp-Source: ABdhPJw0/0hXihPVYaQVxjDQQOLRO8EF4aX/fA9/u5G5JUAEneH08xv44LtKY6l7k5oTpQao07d8sw==
+X-Received: by 2002:a05:620a:152d:: with SMTP id n13mr36608722qkk.43.1596122253500;
+        Thu, 30 Jul 2020 08:17:33 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:7cc2:825e:4cec:e949? ([2600:1700:e72:80a0:7cc2:825e:4cec:e949])
-        by smtp.gmail.com with ESMTPSA id f4sm4356776qtp.38.2020.07.30.06.59.21
+        by smtp.gmail.com with ESMTPSA id x13sm4522604qts.23.2020.07.30.08.17.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jul 2020 06:59:22 -0700 (PDT)
-Subject: Re: [PATCH v2 05/18] maintenance: add commit-graph task
-To:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Thu, 30 Jul 2020 08:17:32 -0700 (PDT)
+Subject: Re: [PATCH v2] fetch: optionally allow disabling FETCH_HEAD update
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBE?= =?UTF-8?Q?anh?= 
+        <congdanhqx@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Johannes.Schindelin@gmx.de,
         sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
+        jrnieder@gmail.com, peff@peff.net, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
  <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <04552b1d2ed751a11eb7c50f6898cbc078b552b4.1595527000.git.gitgitgadget@gmail.com>
- <xmqq4kpyq8wh.fsf@gitster.c.googlers.com>
- <b0bc5d89-52fa-e0f4-e3af-5eb6c76d312e@gmail.com>
- <xmqqy2n8lmq3.fsf@gitster.c.googlers.com> <20200725015240.GD35171@syl.lan>
+ <3165b8916d2d80bf72dac6596a42c871ccd4cbe6.1595527000.git.gitgitgadget@gmail.com>
+ <20200725013715.GA2436@danh.dev> <xmqqv9icicvd.fsf@gitster.c.googlers.com>
+ <421cb856-24fc-6aa0-6ab0-f513d34ddd1a@gmail.com>
+ <xmqqy2n5gcls.fsf@gitster.c.googlers.com>
+ <5f201690-b090-1716-b175-562801891ee6@gmail.com>
+ <xmqqr1svegt4.fsf_-_@gitster.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b20e2e46-ff71-b84f-19da-9d8873ef08c3@gmail.com>
-Date:   Thu, 30 Jul 2020 09:59:21 -0400
+Message-ID: <4b6f5458-f4f7-119f-ec8c-933f27dd3072@gmail.com>
+Date:   Thu, 30 Jul 2020 11:17:31 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
  Thunderbird/79.0
 MIME-Version: 1.0
-In-Reply-To: <20200725015240.GD35171@syl.lan>
+In-Reply-To: <xmqqr1svegt4.fsf_-_@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -89,119 +95,296 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/24/2020 9:52 PM, Taylor Blau wrote:
-> On Fri, Jul 24, 2020 at 12:47:00PM -0700, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>
->>> But you are discussing here how the _behavior_ can change when
->>> --auto is specified. And specifically, "git gc --auto" really
->>> meant "This is running after a foreground command, so only do
->>> work if necessary and do it quickly to minimize blocking time."
->>>
->>> I'd be happy to replace "--auto" with "--quick" in the
->>> maintenance builtin.
->>>
->>> This opens up some extra design space for how the individual
->>> tasks perform depending on "--quick" being specified or not.
->>> My intention was to create tasks that are already in "quick"
->>> mode:
->>>
->>> * loose-objects have a maximum batch size.
->>> * incremental-repack is capped in size.
->>> * commit-graph uses the --split option.
->>>
->>> But this "quick" distinction might be important for some of
->>> the tasks we intend to extract from the gc builtin.
->>
->> Yup.  To be honest, I came to this topic from a completely different
->> direction.  The field name "auto" alone (and no other field name)
->> had to have an extra cruft (i.e. "_flag") attached to it, which is
->> understandable but ugly.  Then I started thinking if 'auto(matic)'
->> is really the right word to describe what we want out of the option,
->> and came to the realization that there may be better words.
+On 7/28/2020 12:37 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 > 
-> I wonder what the quick and slow paths are here. For the commit-graph
-> code, what you wrote here seems to match what I'd expect with passing
-> '--auto' in the sense of running 'git gc'. That is, I'm leaving it up to
-> the commit-graph machinery's idea of the normal '--split' rules to
-> figure out when to roll up layers of a commit-graph, as opposed to
-> creating a new layer and extending the chain.
-
-I had intended all of my new tasks to be the "quick" version of their
-operations. The "slow" version would abandon hope of doing a small
-amount of work to create the best possible world for the repository.
-This would include:
-
- * The commit-graph would collapse all layers into one file.
- * The multi-pack-index repack would rewrite all object data into one
-   pack-file.
- * The loose-objects task would not stop at a maximum number of loose
-   objects (and would probably want to repack everything, anyway).
-
-I'm open to making this possibility more explicit by renaming "--auto"
-and just performing a translation to 'git gc --auto'. So, what should
-the name be? Here are a few options to consider:
-
- --quick
- --fast
- --limited
- --incremental
- -O[0|1|2...] (think GCC optimization flags, exposing granularity)
- --[non-]aggressive
-
-Regardless, this makes me rethink that the --[no-]maintenance option
-from PATCH 03/18 is better than --[no-]auto-maintenance, since we are
-really saying "run _some_ maintenance or _no_ maintenance" and the "how"
-of the maintenance is left intentionally vague. I've already made the
-change locally to add "auto-" so I'll wait for confirmation before
-reverting that change.
-
-> So, I think that makes sense if the caller gave '--auto'. But, I'm not
-> sure that it makes sense if they didn't, in which case I'd imagine
-> something quicker to happen. There, I'd expect something more like:
-> 
->   1. Run 'git commit-graph write --reachable --split=no-merge'.
->   2. Run 'git commit-graph verify'.
->   3. If 'git commit-graph verify' failed, drop the existing commit graph
->      and rebuild it with 'git commit-graph --reachable --split=replace'.
->   4. Otherwise, do nothing.
-> 
-> I'm biased, of course, but I think that that matches roughly what I'd
-> expect to happen in the fast/slow path. Granted, the steps to rebuild
-> the commit graph are going to be slow no matter what (depending on the
-> size of the repository), and so in that case maybe the commit-graph
-> should just be dropped. I'm not really sure what to do about that...
-
-I think this approach is the best we can do given the current behavior
-inside the commit-graph builtin. Perhaps in the future we could change
-the commit-graph builtin to include a "--verify" option so it could do
-the "git commit-graph verify --shallow" on the new layer before committing
-the new commit-graph-chain file and expiring old layers. That way, we
-would not need to delete and rewrite the whole thing when there is a
-problem writing the top layer.
-
->>> Since the tasks are frequently running subcommands, returning
->>> 0 for success and non-zero for error matches the error codes
->>> returned by those subcommands.
+>> On 7/27/2020 12:13 PM, Junio C Hamano wrote:
+>>> Derrick Stolee <stolee@gmail.com> writes:
+>>>
+>>>> I'll rebase onto jc/no-update-fetch-head for the next version, since
+>>>> that branch is based on v2.28.0-rc0, which is recent enough.
+>>>
+>>> I do not think it is wise to base a work on top of unfinished "you
+>>> could do it this way, perhaps?" demonstration patch the original
+>>> author does not have much inclination to finish, though.
+>>>
+>>> When I am really bored, I may go back to the topic to finish it, but
+>>> I wouldn't mind if you took ownership of it at all.
 >>
->> As long as these will _never_ be called from other helper functions
->> but from the cmd_foo() top-level and their return values are only
->> used directly as the top-level's return value, I do not mind too
->> much.
->>
->> But whenever I am writing such a code, I find myself not brave
->> enough to make such a bold promise (I saw other people call the
->> helpers I wrote in unintended ways and had to adjust the semantics
->> of them to accomodate the new callers too many times), so I'd rather
->> see the caller do "return !!helper_fn()" to allow helper_fn() to be
->> written more naturally (e.g. letting them return error(...)).
+>> Ah. I didn't understand the status of that branch. I'll pull it in
+>> to this topic.
+> 
+> So here is with one of the two things that I found missing in the
+> first iteration of the patch: documentation.
+> 
+> The other thing that I found iffy (and still missing from this
+> version) was what should be done when "git pull" is explicitly given
+> the "--no-write-fetch-head" option.
+> 
+> I think (but didn't check the recent code) that 'git pull' would
+> pass only known-to-make-sense command line options to underlying
+> 'git fetch', so it probably will barf with "unknown option", which
+> is the best case.  We might want to make it sure with a new test in
+> 5521.  On the other hand, if we get anything other than "no such
+> option", we may want to think if we want to "fix" it or just leave
+> it inside "if it hurts, don't do it" territory.
 
-I will try to be consistent here with the behavior:
+Here is the version I applied and updated. Please let me know what
+you think.
 
- * 0 is success
- * 1 is failure
+-->8--
 
-Which is what I think you are implying by "return !!helper_fn()".
+From 3f60a0f0fd388447aa9c2b805b5646039df98d0b Mon Sep 17 00:00:00 2001
+From: Junio C Hamano <gitster@pobox.com>
+Date: Tue, 28 Jul 2020 09:37:59 -0700
+Subject: [PATCH] fetch: optionally allow disabling FETCH_HEAD update
 
-Thanks,
--Stolee
+If you run fetch but record the result in remote-tracking branches,
+and either if you do nothing with the fetched refs (e.g. you are
+merely mirroring) or if you always work from the remote-tracking
+refs (e.g. you fetch and then merge origin/branchname separately),
+you can get away with having no FETCH_HEAD at all.
+
+Teach "git fetch" a command line option "--[no-]write-fetch-head"
+and "fetch.writeFetchHEAD" configuration variable.  Without either,
+the default is to write FETCH_HEAD, and the usual rule that the
+command line option defeats configured default applies.
+
+Note that under "--dry-run" mode, FETCH_HEAD is never written;
+otherwise you'd see list of objects in the file that you do not
+actually have.  Passing `--write-fetch-head` does not force `git
+fetch` to write the file.
+
+Also note that this option is explicitly passed when "git pull"
+internally invokes "git fetch", so that those who configured their
+"git fetch" not to write FETCH_HEAD would not be able to break the
+cooperation between these two commands.  "git pull" must see what
+"git fetch" got recorded in FETCH_HEAD to work correctly.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/config/fetch.txt  |  7 ++++++
+ Documentation/fetch-options.txt | 10 +++++++++
+ builtin/fetch.c                 | 19 +++++++++++++---
+ builtin/pull.c                  |  3 ++-
+ t/t5510-fetch.sh                | 39 +++++++++++++++++++++++++++++++--
+ t/t5521-pull-options.sh         | 16 ++++++++++++++
+ 6 files changed, 88 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
+index b20394038d1..0aaa05e8c0e 100644
+--- a/Documentation/config/fetch.txt
++++ b/Documentation/config/fetch.txt
+@@ -91,3 +91,10 @@ fetch.writeCommitGraph::
+ 	merge and the write may take longer. Having an updated commit-graph
+ 	file helps performance of many Git commands, including `git merge-base`,
+ 	`git push -f`, and `git log --graph`. Defaults to false.
++
++fetch.writeFetchHEAD::
++	Setting it to false tells `git fetch` not to write the list
++	of remote refs fetched in the `FETCH_HEAD` file directly
++	under `$GIT_DIR`.  Can be countermanded from the command
++	line with the `--[no-]write-fetch-head` option.  Defaults to
++	true.
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 495bc8ab5a1..6972ad2522c 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -64,6 +64,16 @@ documented in linkgit:git-config[1].
+ --dry-run::
+ 	Show what would be done, without making any changes.
+ 
++ifndef::git-pull[]
++--[no-]write-fetch-head::
++	Write the list of remote refs fetched in the `FETCH_HEAD`
++	file directly under `$GIT_DIR`.  This is the default unless
++	the configuration variable `fetch.writeFetchHEAD` is set to
++	false.  Passing `--no-write-fetch-head` from the command
++	line tells Git not to write the file.  Under `--dry-run`
++	option, the file is never written.
++endif::git-pull[]
++
+ -f::
+ --force::
+ 	When 'git fetch' is used with `<src>:<dst>` refspec it may
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index d8253f66e4c..1d7194aac26 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -56,6 +56,7 @@ static int prune_tags = -1; /* unspecified */
+ #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
+ 
+ static int all, append, dry_run, force, keep, multiple, update_head_ok;
++static int write_fetch_head = 1;
+ static int verbosity, deepen_relative, set_upstream;
+ static int progress = -1;
+ static int enable_auto_gc = 1;
+@@ -118,6 +119,10 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(k, "fetch.writefetchhead")) {
++		write_fetch_head = git_config_bool(k, v);
++		return 0;
++	}
+ 	return git_default_config(k, v, cb);
+ }
+ 
+@@ -162,6 +167,8 @@ static struct option builtin_fetch_options[] = {
+ 		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
+ 	OPT_BOOL(0, "dry-run", &dry_run,
+ 		 N_("dry run")),
++	OPT_BOOL(0, "write-fetch-head", &write_fetch_head,
++		 N_("write fetched references to the FETCH_HEAD file")),
+ 	OPT_BOOL('k', "keep", &keep, N_("keep downloaded pack")),
+ 	OPT_BOOL('u', "update-head-ok", &update_head_ok,
+ 		    N_("allow updating of HEAD ref")),
+@@ -895,7 +902,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 	const char *what, *kind;
+ 	struct ref *rm;
+ 	char *url;
+-	const char *filename = dry_run ? "/dev/null" : git_path_fetch_head(the_repository);
++	const char *filename = (!write_fetch_head
++				? "/dev/null"
++				: git_path_fetch_head(the_repository));
+ 	int want_status;
+ 	int summary_width = transport_summary_width(ref_map);
+ 
+@@ -1329,7 +1338,7 @@ static int do_fetch(struct transport *transport,
+ 	}
+ 
+ 	/* if not appending, truncate FETCH_HEAD */
+-	if (!append && !dry_run) {
++	if (!append && write_fetch_head) {
+ 		retcode = truncate_fetch_head();
+ 		if (retcode)
+ 			goto cleanup;
+@@ -1596,7 +1605,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
+ 	int i, result = 0;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 
+-	if (!append && !dry_run) {
++	if (!append && write_fetch_head) {
+ 		int errcode = truncate_fetch_head();
+ 		if (errcode)
+ 			return errcode;
+@@ -1797,6 +1806,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	if (depth || deepen_since || deepen_not.nr)
+ 		deepen = 1;
+ 
++	/* FETCH_HEAD never gets updated in --dry-run mode */
++	if (dry_run)
++		write_fetch_head = 0;
++
+ 	if (all) {
+ 		if (argc == 1)
+ 			die(_("fetch --all does not take a repository argument"));
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 8159c5d7c96..e988d92b535 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -527,7 +527,8 @@ static int run_fetch(const char *repo, const char **refspecs)
+ 	struct argv_array args = ARGV_ARRAY_INIT;
+ 	int ret;
+ 
+-	argv_array_pushl(&args, "fetch", "--update-head-ok", NULL);
++	argv_array_pushl(&args, "fetch", "--update-head-ok",
++			 "--write-fetch-head", NULL);
+ 
+ 	/* Shared options */
+ 	argv_push_verbosity(&args);
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 9850ecde5df..31c91d0ed2e 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -539,13 +539,48 @@ test_expect_success 'fetch into the current branch with --update-head-ok' '
+ 
+ '
+ 
+-test_expect_success 'fetch --dry-run' '
+-
++test_expect_success 'fetch --dry-run does not touch FETCH_HEAD' '
+ 	rm -f .git/FETCH_HEAD &&
+ 	git fetch --dry-run . &&
+ 	! test -f .git/FETCH_HEAD
+ '
+ 
++test_expect_success '--no-write-fetch-head does not touch FETCH_HEAD' '
++	rm -f .git/FETCH_HEAD &&
++	git fetch --no-write-fetch-head . &&
++	! test -f .git/FETCH_HEAD
++'
++
++test_expect_success '--write-fetch-head gets defeated by --dry-run' '
++	rm -f .git/FETCH_HEAD &&
++	git fetch --dry-run --write-fetch-head . &&
++	! test -f .git/FETCH_HEAD
++'
++
++test_expect_success 'fetch.writeFetchHEAD and FETCH_HEAD' '
++	rm -f .git/FETCH_HEAD &&
++	git -c fetch.writeFetchHEAD=no fetch . &&
++	! test -f .git/FETCH_HEAD
++'
++
++test_expect_success 'fetch.writeFetchHEAD gets defeated by --dry-run' '
++	rm -f .git/FETCH_HEAD &&
++	git -c fetch.writeFetchHEAD=yes fetch --dry-run . &&
++	! test -f .git/FETCH_HEAD
++'
++
++test_expect_success 'fetch.writeFetchHEAD and --no-write-fetch-head' '
++	rm -f .git/FETCH_HEAD &&
++	git -c fetch.writeFetchHEAD=yes fetch --no-write-fetch-head . &&
++	! test -f .git/FETCH_HEAD
++'
++
++test_expect_success 'fetch.writeFetchHEAD and --write-fetch-head' '
++	rm -f .git/FETCH_HEAD &&
++	git -c fetch.writeFetchHEAD=no fetch --write-fetch-head . &&
++	test -f .git/FETCH_HEAD
++'
++
+ test_expect_success "should be able to fetch with duplicate refspecs" '
+ 	mkdir dups &&
+ 	(
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index 159afa7ac81..1acae3b9a4f 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -77,6 +77,7 @@ test_expect_success 'git pull -q -v --no-rebase' '
+ 	test_must_be_empty out &&
+ 	test -s err)
+ '
++
+ test_expect_success 'git pull --cleanup errors early on invalid argument' '
+ 	mkdir clonedcleanup &&
+ 	(cd clonedcleanup && git init &&
+@@ -85,6 +86,21 @@ test_expect_success 'git pull --cleanup errors early on invalid argument' '
+ 	test -s err)
+ '
+ 
++test_expect_success 'git pull --no-write-fetch-head fails' '
++	mkdir clonedwfh &&
++	(cd clonedwfh && git init &&
++	test_must_fail git pull --no-write-fetch-head "../parent" >out 2>err &&
++	test_must_be_empty out &&
++	test_i18ngrep "no-write-fetch-head" err)
++'
++
++test_expect_success 'git pull succeeds with fetch.writeFetchHEAD=false' '
++	mkdir clonedwfhconfig &&
++	(cd clonedwfhconfig && git init &&
++	git config fetch.writeFetchHEAD false &&
++	git pull "../parent" >out 2>err &&
++	grep FETCH_HEAD err)
++'
+ 
+ test_expect_success 'git pull --force' '
+ 	mkdir clonedoldstyle &&
+-- 
+2.27.0.366.g34746c1d11e.dirty
+
+
+
