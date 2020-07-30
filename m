@@ -2,69 +2,69 @@ Return-Path: <SRS0=t8Cj=BJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91235C433E1
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 22:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0975C433E4
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 22:24:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AC9420829
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 22:24:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78C5820829
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 22:24:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OVt8RD9g"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CX/cBJTW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730419AbgG3WYt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 18:24:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43872 "EHLO
+        id S1730406AbgG3WYr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 18:24:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730378AbgG3WYp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jul 2020 18:24:45 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB66C061575
+        with ESMTP id S1730377AbgG3WYo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 18:24:44 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CC67C061574
         for <git@vger.kernel.org>; Thu, 30 Jul 2020 15:24:44 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id r2so21200128wrs.8
-        for <git@vger.kernel.org>; Thu, 30 Jul 2020 15:24:44 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id g10so5204967wmc.1
+        for <git@vger.kernel.org>; Thu, 30 Jul 2020 15:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sWYlfdDhdnxAyiX9S3sbgwmIEMoCljL5jXPkmla5wNg=;
-        b=OVt8RD9gLm0ZVZnfUWngrGG8PeU2BdbpDZ7ytbUqD2768N9nzw48+GjXQqlbtruIfu
-         u/NMuOoq/og5MvTDsASIezVBrUnmw9boNfX7t8w0YwXpHK9wBGZ7tkPY8aaVm5Zstpz3
-         m+C2aJccJo5kxNh89475oH/Yu0sn0iZF/N3fojUtax6c/ipGakMZfuVW99lQqhCoFbLr
-         MqVOq7y2exUVmkCiUEHZWhoWgm5g6bzzsSN5VuRhakt9a7Eai1Q/B7sDGyy7o6P52P3c
-         hiCk50ViPeuBtTfoWL1JaaN37HpVxxKe3PqYUShpDOPZnqEPisEWw1nVm1mgsNe5kCGW
-         qA4A==
+        bh=FO6eJ897hgJYdcvr8miOENffZqXcaswZeSgSb+9MS5w=;
+        b=CX/cBJTWG1jtRk54auIH0BdPoqN/AXTOQL7FkLv42E5MeT55OrERSt6LDiNc42Ae5w
+         4B0ZiNtYtGSH3l2ltwI9jQWSssomnMCRiEvT/abvKt+Kh0ARhVF2P1SUeLic/DhVB6x5
+         JBI1NN+4ygM8okxVNYz3X2uujC2OwRtJO1Mb61MtrhlwxAtzh/Hyb+ViDHqC+qdflF7M
+         yJTOM1F+GUqBEuWk3KAt+43QmowjNdJGws1DDz/Fir9VjhUguaXox4arX7oXbKmgWJEx
+         vrGsXlYbuJS7yTOnD8VsGQBsRP/vYPWpQa06O22Isthfee7M0R35SUL/XYXuUW120ENR
+         PbIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sWYlfdDhdnxAyiX9S3sbgwmIEMoCljL5jXPkmla5wNg=;
-        b=Sc/WdrlDK5qmFpWnZJfBxO0B/FWdG3lCG5+F/lGXH9nubuZ647MCLbuWr0DiEaN5z0
-         d7aFjJNP5Ooaq8bCdojzAhQpz9wSK7xKpK4zFYz7BGc4ra4MZXopphawcmyiB8NOi+dG
-         fIBb5+3NQxy54D/EywnsDrDNxEnn+kRJf2J7ueTOQMTeHECmqv8XL/+3NPahyEy4SyJE
-         AWIpP51yo1jxdJOMdySh4Uo6h3Xkyl2Uz/AtHtBqslN3y4NYLg4mpfqdH2CGK/yGCReK
-         8BliaMNBM1WKRO/QPxuXqYPEZZb6IS3ftV/bMIRRbpIwcOJhQ0vdmuaM1GIUFTpz0zMz
-         2hjg==
-X-Gm-Message-State: AOAM530dCvQnnALeUXCi/amjtFgWvNSxpIzJEJKMiRZHkofQZxTYEKII
-        qh50gl5UUF3sBTW4OaAs4Boqf+w8
-X-Google-Smtp-Source: ABdhPJywGpFU6ItLLGB47YmCdvkcvfj1lOtP5ey9C0/DK5DqSZo9AsrAbUIalHwHW/3w4gq6IS2DTg==
-X-Received: by 2002:adf:df06:: with SMTP id y6mr661955wrl.89.1596147883404;
-        Thu, 30 Jul 2020 15:24:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r22sm3349750wmh.45.2020.07.30.15.24.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=FO6eJ897hgJYdcvr8miOENffZqXcaswZeSgSb+9MS5w=;
+        b=FhD6Rf2rOHb+08L6KzGfwKg523pX9OfG1pItd0VV0etiZ80P4pJo2p1ThikG0GKHPp
+         Z2Hawlw4GJD7pnZCiuHCvlCUFG35bVdCDMQr9dXA3ZvtRU/Dj/ivwASdqECdVKWjT6Et
+         YiLAQy5mMHxQrWF0CcdHRgld3Yy8dO8DIQMZIeRbO5jiAQmuByuaKi41jT98bUFIepbB
+         Kn3aVMKQrDmNU0zs1fxRUHcjy6WG6q5GmG7ma0ifglcTPmnEaEVqwOU8XQPTgQ0LML2u
+         bzUHC5eemb/8frJGc4gBEDJeNIVboAfpuGQI70r1lN+t11xX0PksaPQFtstKe2SGn/aY
+         GQkw==
+X-Gm-Message-State: AOAM531zQU4ay9hsF5DtbgTCRJpofaC+MAMLl/+UbIBQ8ehqN9blnVV6
+        9P83sX6fyGnkgCs9BP9CysZ9ZJA3
+X-Google-Smtp-Source: ABdhPJz1Cjay5KLPRwQ1W52pUiiX7d3Yr/4Z11xyE78hBVosz++1QcnQ1RMLNqPtpYwSRcFPrmxm3w==
+X-Received: by 2002:a1c:2dc6:: with SMTP id t189mr1203518wmt.26.1596147882456;
         Thu, 30 Jul 2020 15:24:42 -0700 (PDT)
-Message-Id: <dafb0d9bbc4c8ddce82fa30dd0ad78439342ed66.1596147867.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a3sm10948361wme.34.2020.07.30.15.24.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jul 2020 15:24:41 -0700 (PDT)
+Message-Id: <a4d9836bed9a08f4ba716240a6fc18d5f13da3dc.1596147867.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.v3.git.1596147867.gitgitgadget@gmail.com>
 References: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
         <pull.671.v3.git.1596147867.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jul 2020 22:24:12 +0000
-Subject: [PATCH v3 06/20] maintenance: add --task option
+Date:   Thu, 30 Jul 2020 22:24:11 +0000
+Subject: [PATCH v3 05/20] maintenance: add commit-graph task
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,181 +84,245 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-A user may want to only run certain maintenance tasks in a certain
-order. Add the --task=<task> option, which allows a user to specify an
-ordered list of tasks to run. These cannot be run multiple times,
-however.
+The first new task in the 'git maintenance' builtin is the
+'commit-graph' job. It is based on the sequence of events in the
+'commit-graph' job in Scalar [1]. This sequence is as follows:
 
-Here is where our array of maintenance_task pointers becomes critical.
-We can sort the array of pointers based on the task order, but we do not
-want to move the struct data itself in order to preserve the hashmap
-references. We use the hashmap to match the --task=<task> arguments into
-the task struct data.
+1. git commit-graph write --reachable --split
+2. git commit-graph verify --shallow
+3. If the verify succeeds, stop.
+4. Delete the commit-graph-chain file.
+5. git commit-graph write --reachable --split
 
-Keep in mind that the 'enabled' member of the maintenance_task struct is
-a placeholder for a future 'maintenance.<task>.enabled' config option.
-Thus, we use the 'enabled' member to specify which tasks are run when
-the user does not specify any --task=<task> arguments. The 'enabled'
-member should be ignored if --task=<task> appears.
+By writing an incremental commit-graph file using the "--split"
+option we minimize the disruption from this operation. The default
+behavior is to merge layers until the new "top" layer is less than
+half the size of the layer below. This provides quick writes most
+of the time, with the longer writes following a power law
+distribution.
+
+Most importantly, concurrent Git processes only look at the
+commit-graph-chain file for a very short amount of time, so they
+will verly likely not be holding a handle to the file when we try
+to replace it. (This only matters on Windows.)
+
+If a concurrent process reads the old commit-graph-chain file, but
+our job expires some of the .graph files before they can be read,
+then those processes will see a warning message (but not fail).
+This could be avoided by a future update to use the --expire-time
+argument when writing the commit-graph.
+
+By using 'git commit-graph verify --shallow' we can ensure that
+the file we just wrote is valid. This is an extra safety precaution
+that is faster than our 'write' subcommand. In the rare situation
+that the newest layer of the commit-graph is corrupt, we can "fix"
+the corruption by deleting the commit-graph-chain file and rewrite
+the full commit-graph as a new one-layer commit graph. This does
+not completely prevent _that_ file from being corrupt, but it does
+recompute the commit-graph by parsing commits from the object
+database. In our use of this step in Scalar and VFS for Git, we
+have only seen this issue arise because our microsoft/git fork
+reverted 43d3561 ("commit-graph write: don't die if the existing
+graph is corrupt" 2019-03-25) for a while to keep commit-graph
+writes very fast. We dropped the revert when updating to v2.23.0.
+The verify still has potential for catching corrupt data across
+the layer boundary: if the new file has commit X with parent Y
+in an old file but the commit ID for Y in the old file had a
+bitswap, then we will notice that in the 'verify' command.
+
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/CommitGraphStep.cs
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-maintenance.txt |  4 +++
- builtin/gc.c                      | 59 +++++++++++++++++++++++++++++--
- t/t7900-maintenance.sh            | 23 ++++++++++++
- 3 files changed, 84 insertions(+), 2 deletions(-)
+ Documentation/git-maintenance.txt | 18 +++++++++
+ builtin/gc.c                      | 63 +++++++++++++++++++++++++++++++
+ commit-graph.c                    |  8 ++--
+ commit-graph.h                    |  1 +
+ t/t7900-maintenance.sh            |  2 +
+ 5 files changed, 88 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 35b0be7d40..9204762e21 100644
+index 089fa4cedc..35b0be7d40 100644
 --- a/Documentation/git-maintenance.txt
 +++ b/Documentation/git-maintenance.txt
-@@ -73,6 +73,10 @@ OPTIONS
- --quiet::
- 	Do not report progress or other information over `stderr`.
+@@ -35,6 +35,24 @@ run::
+ TASKS
+ -----
  
-+--task=<task>::
-+	If this option is specified one or more times, then only run the
-+	specified tasks in the specified order.
++commit-graph::
++	The `commit-graph` job updates the `commit-graph` files incrementally,
++	then verifies that the written data is correct. If the new layer has an
++	issue, then the chain file is removed and the `commit-graph` is
++	rewritten from scratch.
+++
++The verification only checks the top layer of the `commit-graph` chain.
++If the incremental write merged the new commits with at least one
++existing layer, then there is potential for on-disk corruption being
++carried forward into the new file. This will be noticed and the new
++commit-graph file will be clean as Git reparses the commit data from
++the object database.
+++
++The incremental write is safe to run alongside concurrent Git processes
++since it will not expire `.graph` files that were in the previous
++`commit-graph-chain` file. They will be deleted by a later run based on
++the expiration delay.
 +
- GIT
- ---
- Part of the linkgit:git[1] suite
+ gc::
+ 	Cleanup unnecessary files and optimize the local repository. "GC"
+ 	stands for "garbage collection," but this task performs many
 diff --git a/builtin/gc.c b/builtin/gc.c
-index ec1bbc3f9e..b7f64891cd 100644
+index 0f15162825..ec1bbc3f9e 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -708,6 +708,7 @@ static const char * const builtin_maintenance_usage[] = {
- static struct maintenance_opts {
- 	int auto_flag;
+@@ -710,6 +710,64 @@ static struct maintenance_opts {
  	int quiet;
-+	int tasks_selected;
  } opts;
  
- static int run_write_commit_graph(void)
-@@ -789,7 +790,9 @@ typedef int maintenance_task_fn(void);
- struct maintenance_task {
- 	const char *name;
- 	maintenance_task_fn *fn;
--	unsigned enabled:1;
-+	unsigned enabled:1,
-+		 selected:1;
-+	int selected_order;
- };
++static int run_write_commit_graph(void)
++{
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	child.git_cmd = 1;
++	strvec_pushl(&child.args, "commit-graph", "write",
++		     "--split", "--reachable", NULL);
++
++	if (opts.quiet)
++		strvec_push(&child.args, "--no-progress");
++
++	return !!run_command(&child);
++}
++
++static int run_verify_commit_graph(void)
++{
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	child.git_cmd = 1;
++	strvec_pushl(&child.args, "commit-graph", "verify",
++		     "--shallow", NULL);
++
++	if (opts.quiet)
++		strvec_push(&child.args, "--no-progress");
++
++	return !!run_command(&child);
++}
++
++static int maintenance_task_commit_graph(void)
++{
++	struct repository *r = the_repository;
++	char *chain_path;
++
++	close_object_store(r->objects);
++	if (run_write_commit_graph()) {
++		error(_("failed to write commit-graph"));
++		return 1;
++	}
++
++	if (!run_verify_commit_graph())
++		return 0;
++
++	warning(_("commit-graph verify caught error, rewriting"));
++
++	chain_path = get_commit_graph_chain_filename(r->objects->odb);
++	if (unlink(chain_path)) {
++		UNLEAK(chain_path);
++		die(_("failed to remove commit-graph at %s"), chain_path);
++	}
++	free(chain_path);
++
++	if (!run_write_commit_graph())
++		return 0;
++
++	error(_("failed to rewrite commit-graph"));
++	return 1;
++}
++
+ static int maintenance_task_gc(void)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+@@ -736,6 +794,7 @@ struct maintenance_task {
  
  enum maintenance_task_label {
-@@ -812,13 +815,29 @@ static struct maintenance_task tasks[] = {
+ 	TASK_GC,
++	TASK_COMMIT_GRAPH,
+ 
+ 	/* Leave as final value */
+ 	TASK__COUNT
+@@ -747,6 +806,10 @@ static struct maintenance_task tasks[] = {
+ 		maintenance_task_gc,
+ 		1,
  	},
++	[TASK_COMMIT_GRAPH] = {
++		"commit-graph",
++		maintenance_task_commit_graph,
++	},
  };
  
-+static int compare_tasks_by_selection(const void *a_, const void *b_)
-+{
-+	const struct maintenance_task *a, *b;
-+
-+	a = (const struct maintenance_task *)&a_;
-+	b = (const struct maintenance_task *)&b_;
-+
-+	return b->selected_order - a->selected_order;
-+}
-+
  static int maintenance_run(void)
- {
- 	int i;
- 	int result = 0;
- 
-+	if (opts.tasks_selected)
-+		QSORT(tasks, TASK__COUNT, compare_tasks_by_selection);
-+
- 	for (i = 0; i < TASK__COUNT; i++) {
--		if (!tasks[i].enabled)
-+		if (opts.tasks_selected && !tasks[i].selected)
-+			continue;
-+
-+		if (!opts.tasks_selected && !tasks[i].enabled)
- 			continue;
- 
- 		if (tasks[i].fn()) {
-@@ -830,6 +849,39 @@ static int maintenance_run(void)
- 	return result;
+diff --git a/commit-graph.c b/commit-graph.c
+index 1af68c297d..9705d237e4 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -172,7 +172,7 @@ static char *get_split_graph_filename(struct object_directory *odb,
+ 		       oid_hex);
  }
  
-+static int task_option_parse(const struct option *opt,
-+			     const char *arg, int unset)
-+{
-+	int i;
-+	struct maintenance_task *task = NULL;
-+
-+	BUG_ON_OPT_NEG(unset);
-+
-+	opts.tasks_selected++;
-+
-+	for (i = 0; i < TASK__COUNT; i++) {
-+		if (!strcasecmp(tasks[i].name, arg)) {
-+			task = &tasks[i];
-+			break;
-+		}
-+	}
-+
-+	if (!task) {
-+		error(_("'%s' is not a valid task"), arg);
-+		return 1;
-+	}
-+
-+	if (task->selected) {
-+		error(_("task '%s' cannot be selected multiple times"), arg);
-+		return 1;
-+	}
-+
-+	task->selected = 1;
-+	task->selected_order = opts.tasks_selected;
-+
-+	return 0;
-+}
-+
- int cmd_maintenance(int argc, const char **argv, const char *prefix)
+-static char *get_chain_filename(struct object_directory *odb)
++char *get_commit_graph_chain_filename(struct object_directory *odb)
  {
- 	static struct option builtin_maintenance_options[] = {
-@@ -837,6 +889,9 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
- 			 N_("run tasks based on the state of the repository")),
- 		OPT_BOOL(0, "quiet", &opts.quiet,
- 			 N_("do not report progress or other information over stderr")),
-+		OPT_CALLBACK_F(0, "task", NULL, N_("task"),
-+			N_("run a specific task"),
-+			PARSE_OPT_NONEG, task_option_parse),
- 		OPT_END()
- 	};
+ 	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", odb->path);
+ }
+@@ -521,7 +521,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 	struct stat st;
+ 	struct object_id *oids;
+ 	int i = 0, valid = 1, count;
+-	char *chain_name = get_chain_filename(odb);
++	char *chain_name = get_commit_graph_chain_filename(odb);
+ 	FILE *fp;
+ 	int stat_res;
  
+@@ -1619,7 +1619,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	}
+ 
+ 	if (ctx->split) {
+-		char *lock_name = get_chain_filename(ctx->odb);
++		char *lock_name = get_commit_graph_chain_filename(ctx->odb);
+ 
+ 		hold_lock_file_for_update_mode(&lk, lock_name,
+ 					       LOCK_DIE_ON_ERROR, 0444);
+@@ -1996,7 +1996,7 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 	if (ctx->split_opts && ctx->split_opts->expire_time)
+ 		expire_time = ctx->split_opts->expire_time;
+ 	if (!ctx->split) {
+-		char *chain_file_name = get_chain_filename(ctx->odb);
++		char *chain_file_name = get_commit_graph_chain_filename(ctx->odb);
+ 		unlink(chain_file_name);
+ 		free(chain_file_name);
+ 		ctx->num_commit_graphs_after = 0;
+diff --git a/commit-graph.h b/commit-graph.h
+index 28f89cdf3e..3c202748c3 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -25,6 +25,7 @@ struct commit;
+ struct bloom_filter_settings;
+ 
+ char *get_commit_graph_filename(struct object_directory *odb);
++char *get_commit_graph_chain_filename(struct object_directory *odb);
+ int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+ 
+ /*
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index ff646abf7c..3cdccb24df 100755
+index f08eee0977..ff646abf7c 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -20,4 +20,27 @@ test_expect_success 'run [--auto|--quiet]' '
- 	grep ",\"gc\",\"--quiet\"" run-quiet.txt
- '
+@@ -4,6 +4,8 @@ test_description='git maintenance builtin'
  
-+test_expect_success 'run --task=<task>' '
-+	GIT_TRACE2_EVENT="$(pwd)/run-commit-graph.txt" git maintenance run --task=commit-graph &&
-+	GIT_TRACE2_EVENT="$(pwd)/run-gc.txt" git maintenance run --task=gc &&
-+	GIT_TRACE2_EVENT="$(pwd)/run-commit-graph.txt" git maintenance run --task=commit-graph &&
-+	GIT_TRACE2_EVENT="$(pwd)/run-both.txt" git maintenance run --task=commit-graph --task=gc &&
-+	! grep ",\"gc\"" run-commit-graph.txt  &&
-+	grep ",\"gc\"" run-gc.txt  &&
-+	grep ",\"gc\"" run-both.txt  &&
-+	grep ",\"commit-graph\",\"write\"" run-commit-graph.txt  &&
-+	! grep ",\"commit-graph\",\"write\"" run-gc.txt  &&
-+	grep ",\"commit-graph\",\"write\"" run-both.txt
-+'
+ . ./test-lib.sh
+ 
++GIT_TEST_COMMIT_GRAPH=0
 +
-+test_expect_success 'run --task=bogus' '
-+	test_must_fail git maintenance run --task=bogus 2>err &&
-+	test_i18ngrep "is not a valid task" err
-+'
-+
-+test_expect_success 'run --task duplicate' '
-+	test_must_fail git maintenance run --task=gc --task=gc 2>err &&
-+	test_i18ngrep "cannot be selected multiple times" err
-+'
-+
- test_done
+ test_expect_success 'help text' '
+ 	test_expect_code 129 git maintenance -h 2>err &&
+ 	test_i18ngrep "usage: git maintenance run" err
 -- 
 gitgitgadget
 
