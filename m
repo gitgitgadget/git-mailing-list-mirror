@@ -2,119 +2,103 @@ Return-Path: <SRS0=t8Cj=BJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6194DC433E0
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 00:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB587C433DF
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 00:27:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DF5F2074B
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 00:24:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1596068660;
-	bh=GWnPR5zWmTmCsbDnlCGo50vKf9tCQ5N1eQI7V8uvhaA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:List-ID:From;
-	b=ufuMvTFcjjsNCl30+Pdbfb0ys+qdUddEu2b0cI7rVFVRAuFWE9VzT90IjHfQKmBbQ
-	 3IP5EbpXCpsini8+dR/A/MR03J/rPV9WC4hcCBnGnjwz9tJ9mKwG3Lm4gOLiAKhO2D
-	 9YOkAVEc4a9QS5+AubTwBFTp7vGgi887HmphgQl4=
+	by mail.kernel.org (Postfix) with ESMTP id BC1032074B
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 00:27:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s4sPM54f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727858AbgG3AYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 20:24:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38536 "EHLO
+        id S1727862AbgG3A1o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 20:27:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726709AbgG3AYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jul 2020 20:24:19 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91740C061794
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 17:24:18 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id g6so14366884ljn.11
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 17:24:18 -0700 (PDT)
+        with ESMTP id S1726709AbgG3A1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jul 2020 20:27:44 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339FFC061794
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 17:27:44 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id g26so24162670qka.3
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 17:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8JKu7PfrP2E+maNMYTXEeXqlUo9PohRSqD7KRy3PPQc=;
-        b=TGt6RY9c34lKKBDTbWjurAId6vA2Iw4m29rubZjpYGPwcCXPUnO+8lwnLWrCuGZ1Sd
-         SgV45y9no5SUCHHlZZAf5iLm9ujk7bI2DvB9l8l6YqZYWtKRf9QGQ91bm6X6TWmF+Whu
-         yLhY9RaetjVFK7ksdsZdoZuSXyX5nPjSXxvag=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=l04V7jprARTAZ9HPhd/PmhIHAI3lxcVJ23K7lRAgHp8=;
+        b=s4sPM54fDHpUSqHWlCdSmuV4kU2gHNXAnOrp0gNtYyen20WKrQUxp463Y2i+wTZH2d
+         oIoSOWiyWu5WpDoJIuI38n/MH1eocElKCgsEToTp/W+toGg13KfnyBlcneqKR638pTeD
+         uQMWDFKpX4aEyo+3yPdUUMLpXbAGXgrJGSp5fgepD/gtcv8V/4ich5kBLyLOIm0NOewz
+         xaKBAUffzCUly6BoDPGSiFVNdMKw11l9w9wKyKS+7VcE0paL+4KxaWEeivDH6zGwe2zz
+         jH5jvhTYBXOC9duZhuiiaHlOVusG0Y7HL+ynBK2xvWwCo83SCrPEdg9BhbLbWCRK0SOv
+         MNWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8JKu7PfrP2E+maNMYTXEeXqlUo9PohRSqD7KRy3PPQc=;
-        b=m0ITgdCEekYhmGYaAp/EqvxxMTgmagD3imIZOCSeaocvprWGm/QVZNxYD8WDteW80L
-         2smx9UnB0ZOnqOoycZJM9e9XKQzo1RYcGxVWDLwsLgriL9SalNM667Fg7HQI+Ql7brXP
-         DorJWWJ8q0ObNSulBVAa7qF/mP19YDWlSybHmdmpM49GeW+hBOWi/YVWO8rIfaISZZ+A
-         LrnUhcqOMHxZig6ja02d3OlC2Wgt0UdpxNRZX9WQzlW/RIGyqXzo6ck/G/rsTzp+lsVV
-         4Nd+m/vNoq4Lmce3NxDEgflvIMVqEj/ovpi/W8+/exJD2OJn2t+FkWvR/eTuqlp55LHb
-         l2lw==
-X-Gm-Message-State: AOAM531JwSp+XbYo8hmOA9wCym/03+o+QRNfA1QMOLgWbrrF57JG5muY
-        scMk/mQu1SbGt4RKKQktAdmKDaEHfUY=
-X-Google-Smtp-Source: ABdhPJwTXIy3mbzXeS+0YYnE+EWGOJzyDXiDiTHb4DgJGdjWU0xYRY74bcHGmDOaDB/gG35yE5r/UQ==
-X-Received: by 2002:a05:651c:110b:: with SMTP id d11mr181557ljo.245.1596068656604;
-        Wed, 29 Jul 2020 17:24:16 -0700 (PDT)
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com. [209.85.167.53])
-        by smtp.gmail.com with ESMTPSA id h5sm791132lfm.70.2020.07.29.17.24.15
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jul 2020 17:24:15 -0700 (PDT)
-Received: by mail-lf1-f53.google.com with SMTP id i19so14003087lfj.8
-        for <git@vger.kernel.org>; Wed, 29 Jul 2020 17:24:15 -0700 (PDT)
-X-Received: by 2002:a19:c206:: with SMTP id l6mr246107lfc.152.1596068655079;
- Wed, 29 Jul 2020 17:24:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=l04V7jprARTAZ9HPhd/PmhIHAI3lxcVJ23K7lRAgHp8=;
+        b=hLLNqQnW5KRmbybTZ5PFGmZwqiKUvw11vJWFM4x6XVbcHRiPrX/sIqw3HaebO6p30U
+         O128ciZG/PnRUWU/A3dOTtmVyN0rvSB6d7VkApL1CQfMto7ukYxkTAwXM1Rllo2BhYJX
+         KtjVIou9HfSMrS2hht9jMycPMC5xCkM1jbJIilLR5rJIDCXfP+FEaH17Qon24hY5PnLY
+         z8aKI4zESsn/5mEvHw3j/+1dJ3WaNu/m+fbL+GGzBYAV36aUfYR2jgXaZpjxK+as7qFk
+         3CVgkKOG7qNs31h1SRJwAJ+SWNVnleN2q7rx6osa8vFcxfelIxmcPDfJ3JsfVXlrwXS/
+         kfSA==
+X-Gm-Message-State: AOAM5311uJwAqFJFPakU7N8JsbIn2qiqzEhWDQzHBY6mgcfT0bGD7YF+
+        yW7y4wZqb3rou614J5H0pQAL8tJg6YQ=
+X-Google-Smtp-Source: ABdhPJxPz2WBYD28IA7IDKnkKHR1bGKFS3sR+7Q+7hsYnMa6795nP383cXUWsAcxDFyOv1vxJe+tFg==
+X-Received: by 2002:a05:620a:1469:: with SMTP id j9mr35626723qkl.216.1596068863092;
+        Wed, 29 Jul 2020 17:27:43 -0700 (PDT)
+Received: from localhost.localdomain (c-98-229-3-81.hsd1.vt.comcast.net. [98.229.3.81])
+        by smtp.gmail.com with ESMTPSA id m32sm3239391qtd.94.2020.07.29.17.27.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Jul 2020 17:27:42 -0700 (PDT)
+From:   Aaron Lipman <alipman88@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Aaron Lipman <alipman88@gmail.com>
+Subject: [PATCH v2 0/3] Introduce --first-parent flag for git bisect
+Date:   Wed, 29 Jul 2020 20:27:32 -0400
+Message-Id: <20200730002735.87655-1-alipman88@gmail.com>
+X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+In-Reply-To: <pull.686.git.1595951056.gitgitgadget@gmail.com>
+References: <pull.686.git.1595951056.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <CAHk-=wgutLH=mPdJkLU_E6gO4q0FcG+=EEQJVVQeb+OxG9CfgQ@mail.gmail.com>
- <xmqqime69jfc.fsf@gitster.c.googlers.com> <CAHk-=wisOOrfEvab9S417MnPSY8dVkbDOKa6ccdi1Bg3X1PMaw@mail.gmail.com>
- <CAHk-=wi2dsROeg=mij5C8O=UBVZGEpOUp=Bn-arQ7i+Wscynnw@mail.gmail.com>
- <20200729205846.GA2992025@coredump.intra.peff.net> <xmqqv9i6814y.fsf@gitster.c.googlers.com>
- <xmqqlfj27x7q.fsf@gitster.c.googlers.com> <20200730001442.GA2996059@coredump.intra.peff.net>
-In-Reply-To: <20200730001442.GA2996059@coredump.intra.peff.net>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 29 Jul 2020 17:23:59 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjN0o-+OAn5wXMcshLGQ4H+CLJwq8+wRnaqzKMuhbmZqw@mail.gmail.com>
-Message-ID: <CAHk-=wjN0o-+OAn5wXMcshLGQ4H+CLJwq8+wRnaqzKMuhbmZqw@mail.gmail.com>
-Subject: Re: Avoiding 'master' nomenclature
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List Mailing <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 29, 2020 at 5:14 PM Jeff King <peff@peff.net> wrote:
->
-> I'm on the fence on how magical to make the default. Having "master"
-> there gets Linus's case back where he wanted without having to configure
-> anything, which is probably reasonable. I'm not sure if people would
-> want their init.defaultBranch in addition / instead.
+Junio, thank you for the feedback and the explanation regarding
+count_distance(). I've gone ahead and implemented all your suggestions.
 
-Junio seemed to go for "instead", but I think it might be more natural
-to just have "master" as the initial entry, and anybody adding entries
-will add it to the list.
+> In chronological order, please.
+I submitted my initial patch through GitGitGadget. I don't see a way to
+control the order GitGitGadget sends emails, so I'm switching to
+git send-email for this iteration. Please continue to let me know if I'm
+missing a convention.
 
-I do think it might be a good idea to make "git init" just add the
-entry from whatever the default initial branch is.
+Aaron Lipman (3):
+  rev-list: allow bisect and first-parent flags
+  bisect: introduce first-parent flag
+  bisect: combine args passed to find_bisection()
 
-And then the "empty entry to clear" can be used to _force_ a clean
-slate, although I don't see why anybody would ever really want that.
-If you make your default branch name be "develop", and you really want
-to see the "into develop", you'd remove the entry that "git init"
-would hypothetically add, you wouldn't necessarily want to do a "clear
-list".
+ Documentation/git-bisect.txt       | 13 +++++++-
+ Documentation/rev-list-options.txt |  7 ++--
+ bisect.c                           | 51 ++++++++++++++++++++++--------
+ bisect.h                           |  7 +++-
+ builtin/bisect--helper.c           | 16 +++++++---
+ builtin/rev-list.c                 |  9 +++++-
+ revision.c                         |  3 --
+ t/t6000-rev-list-misc.sh           |  4 +--
+ t/t6002-rev-list-bisect.sh         | 45 ++++++++++++++++++++++++++
+ t/t6030-bisect-porcelain.sh        | 17 ++++++++++
+ 10 files changed, 142 insertions(+), 30 deletions(-)
 
-I assume that "clear list" was maybe done because somebody would put a
-list of entries into their global .gitconfig file, and then a
-particular repo would override it by clearing it? It might be better
-to make it clear that it's just a bad idea to make some global list,
-and this should normally just be a per-repo setting?
+-- 
+2.24.3 (Apple Git-128)
 
-Git hasn't had that "into master" for a long time, and I don't think
-anybody has ever asked for it, so I don't think that legacy entry is
-something you'd find people wanting to clear just to see that message.
-
-            Linus
