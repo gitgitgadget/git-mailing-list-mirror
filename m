@@ -2,184 +2,146 @@ Return-Path: <SRS0=t8Cj=BJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A781AC433E0
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 04:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61857C433E0
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 05:26:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83CF52074B
-	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 04:36:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 322EF20842
+	for <git@archiver.kernel.org>; Thu, 30 Jul 2020 05:26:36 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i6+Q7Gca"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbgG3EgZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 00:36:25 -0400
-Received: from aibo.runbox.com ([91.220.196.211]:42938 "EHLO aibo.runbox.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725765AbgG3EgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jul 2020 00:36:25 -0400
-X-Greylist: delayed 1416 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jul 2020 00:36:23 EDT
-Received: from [10.9.9.74] (helo=submission03.runbox)
-        by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <me@pluvano.com>)
-        id 1k0zvx-00023y-Gu
-        for git@vger.kernel.org; Thu, 30 Jul 2020 06:12:45 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated alias (964124)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1k0zvt-00045b-JL; Thu, 30 Jul 2020 06:12:44 +0200
-From:   Emma Brooks <me@pluvano.com>
-To:     git@vger.kernel.org
-Cc:     Emma Brooks <me@pluvano.com>
-Subject: [RFC PATCH] gitweb: Map names/emails with mailmap
-Date:   Thu, 30 Jul 2020 04:12:17 +0000
-Message-Id: <20200730041217.6893-1-me@pluvano.com>
-X-Mailer: git-send-email 2.28.0
+        id S1728528AbgG3F0f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 01:26:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbgG3F0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 01:26:34 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD42DC061794
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 22:26:34 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id w17so13143870ply.11
+        for <git@vger.kernel.org>; Wed, 29 Jul 2020 22:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RH6GcZpw1lmKzVxpdTz/etGQ4cXGp5oEHr+6r2BUl4s=;
+        b=i6+Q7Gcaz6qWoYCL9wu8rOUjbFmCWrVHjlfCunR+gYLTjV3gjQGwn9JkJ1PJQZBOXU
+         eYBv1azAp+Z7pFhClCQKKf9fvsvlDE4o0MXJZDsXjLC97iS/YQc9FzZOvfhSrvRixx8T
+         fJ67YnDOSwOFpPC0MWshUmN3GPllx/NCaYtiRBuB1kxuYL9UlvzrE5TtUVTvCkrN0xmZ
+         DeQN6pSC/9L2BXHAuuOJT9WLC75F+iipGXBv32S3/uxP7isUqMNIwgsXGu6XkibWlSws
+         Cp9WRsuMEfOZaz3ZTcqIpcVWXLdIdws2Q1Zi4Bm8tgnzbyh0Uy5uDP8I4A36G9U7P9h0
+         XURg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=RH6GcZpw1lmKzVxpdTz/etGQ4cXGp5oEHr+6r2BUl4s=;
+        b=Rk3dxHOJ59jZyT1TKanhTK6VjpAiHk1IVCiE1Gs3ye6j3zeLCNj3Xou8nACigvu36d
+         SQ/RQWBIZNl911FL0+r445c0U5qLt4gXufzxBgJeZ0yZgDPNMFjJlZMReZamOIhxwxDr
+         b8jMcJoc+isNjnf/p3Z97/NE2Nz4QKoSjDolU5DG4r68fV5Tl2fz6Fc6D/IBar90lbqt
+         lExgBrthfBo1L5c9Cq8kfWhhV8L5IAKDQOXyRMt3+1ThN0r1M/RWkDH6+AVXKNLU3j2u
+         61gihHdePr6CnSvaIYVUX+O1pX26Se8ZZMUtvhIsOhKxMOcwh06IAXyX8NkYH20LHA1c
+         /XxA==
+X-Gm-Message-State: AOAM5303rD7+zvZ0ifAaZbpt1VsL2hRqm9npmBIVNnJB1MMdIPVHF7Xm
+        VQtkcsifkxOfkNmZdjFUzS4=
+X-Google-Smtp-Source: ABdhPJwRkGclxDYoGcuKi/eMdDmTluPPOn8jnHyHoZ5HKaGBefgMY2vPRBmtq6tCExphFRWygEV3Wg==
+X-Received: by 2002:a17:90b:350f:: with SMTP id ls15mr1442828pjb.84.1596086794187;
+        Wed, 29 Jul 2020 22:26:34 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:208c:7cf0:d18:2f72:fb83:4831])
+        by smtp.gmail.com with ESMTPSA id x66sm4451575pgb.12.2020.07.29.22.26.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jul 2020 22:26:33 -0700 (PDT)
+Date:   Thu, 30 Jul 2020 10:54:29 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, abhishekkumar8222@gmail.com,
+        gitgitgadget@gmail.com, jnareb@gmail.com, stolee@gmail.com
+Subject: Re: [PATCH 1/6] commit-graph: fix regression when computing bloom
+ filter
+Message-ID: <20200730052429.GA50429@Abhishek-Arch>
+Reply-To: 20200728152844.GB87373@syl.lan
+References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
+ <91e6e97a66aff88e0b860e34659dddc3396c7f28.1595927632.git.gitgitgadget@gmail.com>
+ <20200728152844.GB87373@syl.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200728152844.GB87373@syl.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an option to map names and emails to their canonical forms via a
-.mailmap file. This is enabled by default, consistent with the behavior
-of Git itself.
+On Tue, Jul 28, 2020 at 11:28:44AM -0400, Taylor Blau wrote:
+> On Tue, Jul 28, 2020 at 09:13:46AM +0000, Abhishek Kumar via GitGitGadget wrote:
+> > From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> >
+> > With 3d112755 (commit-graph: examine commits by generation number), Git
+> > knew to sort by generation number before examining the diff when not
+> > using pack order. c49c82aa (commit: move members graph_pos, generation
+> > to a slab, 2020-06-17) moved generation number into a slab and
+> > introduced a helper which returns GENERATION_NUMBER_INFINITY when
+> > writing the graph. Sorting is no longer useful and essentially reverts
+> > the earlier commit.
+> 
+> This last sentence is slightly confusing. Do you think it would be more
+> clear if you said elaborated a bit? Perhaps something like:
+> 
+>   [...]
+> 
+>   commit_gen_cmp is used when writing a commit-graph to sort commits in
+>   generation order before computing Bloom filters. Since c49c82aa made
+>   it so that 'commit_graph_generation()' returns
+>   'GENERATION_NUMBER_INFINITY' during writing, we cannot call it within
+>   this function. Instead, access the generation number directly through
+>   the slab (i.e., by calling 'commit_graph_data_at(c)->generation') in
+>   order to access it while writing.
+> 
 
-Signed-off-by: Emma Brooks <me@pluvano.com>
----
+Thanks! That is clearer. Will change.
 
-This works, but needs some polish. The read_mailmap code is not
-particularly clever.
-
- Documentation/gitweb.conf.txt |  5 +++
- gitweb/gitweb.perl            | 79 +++++++++++++++++++++++++++++++++--
- 2 files changed, 80 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-index 7963a79ba9..2d7551a6a5 100644
---- a/Documentation/gitweb.conf.txt
-+++ b/Documentation/gitweb.conf.txt
-@@ -751,6 +751,11 @@ default font sizes or lineheights are changed (e.g. via adding extra
- CSS stylesheet in `@stylesheets`), it may be appropriate to change
- these values.
- 
-+mailmap::
-+	Use mailmap to find the canonical name/email for
-+	committers/authors (see linkgit:git-shortlog[1]). Enabled by
-+	default.
-+
- highlight::
- 	Server-side syntax highlight support in "blob" view.  It requires
- 	`$highlight_bin` program to be available (see the description of
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0959a782ec..00256704a7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -505,6 +505,12 @@ sub evaluate_uri {
- 		'override' => 0,
- 		'default' => ['']},
- 
-+	# Enable reading mailmap to determine canonical author
-+	# information. Enabled by default.
-+	'mailmap' => {
-+		'override' => 0,
-+		'default' => [1]},
-+
- 	# Enable displaying how much time and how many git commands
- 	# it took to generate and display page.  Disabled by default.
- 	# Project specific override is not supported.
-@@ -3490,6 +3496,61 @@ sub parse_tag {
- 	return %tag
- }
- 
-+# Contents of mailmap stored as a referance to a hash with keys in the format
-+# of "name <email>" or "<email>", and values that are hashes containing a
-+# replacement "name" and/or "email". If set (even if empty) the mailmap has
-+# already been read.
-+my $mailmap;
-+
-+sub read_mailmap {
-+	my %mailmap = ();
-+	open my $fd, '-|', git_cmd(), 'cat-file', 'blob', 'HEAD:.mailmap'
-+		or die_error(500, 'Failed to read mailmap');
-+	foreach (split '\n', <$fd>) {
-+		next if (/^#/);
-+		if (/(.*)\s+ <([^<>]+)>\s+ ((?:.*\s+)? <[^<>]+>) (?:\s+\#)/x ||
-+		    /(.*)\s+ <([^<>]+)>\s+ ((?:.*\s+)? <[^<>]+>)/x) {
-+			# New Name <new@email> <old@email>
-+			# New Name <new@email> Old Name <old@email>
-+			$mailmap{$3} = ();
-+			$mailmap{$3}{name} = $1;
-+			$mailmap{$3}{email} = $2;
-+		} elsif (/(?: <([^<>]+)>\s+ | (.+)\s+ ) (<[^<>]+>) (?:\s+\#)/x ||
-+		         /(?: <([^<>]+)>\s+ | (.+)\s+ ) (<[^<>]+>)/x) {
-+			# New Name <old@email>
-+			# <new@email> <old@email>
-+			$mailmap{$3} = ();
-+			if ($1) {
-+				$mailmap{$3}{email} = $1;
-+			} else {
-+				$mailmap{$3}{name} = $2;
-+			}
-+		}
-+	}
-+	return \%mailmap;
-+}
-+
-+# Map author name and email based on mailmap. A more specific match
-+# ("name <email>") is preferred to a less specific one ("<email>").
-+sub map_author {
-+	my $name = shift;
-+	my $email = shift;
-+
-+	if (!$mailmap) {
-+		$mailmap = read_mailmap;
-+	}
-+
-+	if ($mailmap->{"$name <$email>"}) {
-+		$name = $mailmap->{"$name <$email>"}{name} || $name;
-+		$email = $mailmap->{"$name <$email>"}{email} || $email;
-+	} elsif ($mailmap->{"<$email>"}) {
-+		$name = $mailmap->{"<$email>"}{name} || $name;
-+		$email = $mailmap->{"<$email>"}{email} || $email;
-+	}
-+
-+	return ($name, $email);
-+}
-+
- sub parse_commit_text {
- 	my ($commit_text, $withparents) = @_;
- 	my @commit_lines = split '\n', $commit_text;
-@@ -3517,8 +3578,13 @@ sub parse_commit_text {
- 			$co{'author_epoch'} = $2;
- 			$co{'author_tz'} = $3;
- 			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
--				$co{'author_name'}  = $1;
--				$co{'author_email'} = $2;
-+				my ($name, $email) = @_;
-+				if (gitweb_check_feature('mailmap')) {
-+					($name, $email) = map_author($1, $2);
-+					$co{'author'} = "$name <$email>";
-+				}
-+				$co{'author_name'}  = $name;
-+				$co{'author_email'} = $email;
- 			} else {
- 				$co{'author_name'} = $co{'author'};
- 			}
-@@ -3527,8 +3593,13 @@ sub parse_commit_text {
- 			$co{'committer_epoch'} = $2;
- 			$co{'committer_tz'} = $3;
- 			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
--				$co{'committer_name'}  = $1;
--				$co{'committer_email'} = $2;
-+				my ($name, $email) = @_;
-+				if (gitweb_check_feature('mailmap')) {
-+					($name, $email) = map_author($1, $2);
-+					$co{'committer'} = "$name <$email>";
-+				}
-+				$co{'committer_name'}  = $name;
-+				$co{'committer_email'} = $email;
- 			} else {
- 				$co{'committer_name'} = $co{'committer'};
- 			}
+> I think the above would be a good extra paragraph in the commit message
+> provided that you remove the sentence beginning with "Sorting is no
+> longer useful..."
+> 
+> > Let's fix this by accessing generation number directly through the slab.
+> >
+> > Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> > ---
+> >  commit-graph.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index 1af68c297d..5d3c9bd23c 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@ -144,8 +144,9 @@ static int commit_gen_cmp(const void *va, const void *vb)
+> >  	const struct commit *a = *(const struct commit **)va;
+> >  	const struct commit *b = *(const struct commit **)vb;
+> >
+> > -	uint32_t generation_a = commit_graph_generation(a);
+> > -	uint32_t generation_b = commit_graph_generation(b);
+> > +	uint32_t generation_a = commit_graph_data_at(a)->generation;
+> > +	uint32_t generation_b = commit_graph_data_at(b)->generation;
+> > +
+> 
+> Nit; this whitespace diff is extraneous, but it's not hurting anything
+> either. Since it looks like you're rerolling anyway, it would be good to
+> just get rid of it.
+> 
+> Otherwise this fix makes sense to me.
+> 
+> >  	/* lower generation commits first */
+> >  	if (generation_a < generation_b)
+> >  		return -1;
+> > --
+> > gitgitgadget
+> 
+> Thanks,
+> Taylor
