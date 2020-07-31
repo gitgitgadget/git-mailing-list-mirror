@@ -6,85 +6,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C427C433E0
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 23:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89345C433E0
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 23:15:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CDED206DA
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 23:09:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B33420672
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 23:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728040AbgGaXJA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jul 2020 19:09:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44616 "EHLO cloud.peff.net"
+        id S1726925AbgGaXPX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jul 2020 19:15:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44636 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728027AbgGaXI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jul 2020 19:08:59 -0400
-Received: (qmail 27421 invoked by uid 109); 31 Jul 2020 23:08:59 -0000
+        id S1726347AbgGaXPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jul 2020 19:15:23 -0400
+Received: (qmail 27454 invoked by uid 109); 31 Jul 2020 23:15:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 Jul 2020 23:08:59 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 Jul 2020 23:15:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2699 invoked by uid 111); 31 Jul 2020 23:08:58 -0000
+Received: (qmail 2732 invoked by uid 111); 31 Jul 2020 23:15:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 Jul 2020 19:08:58 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 Jul 2020 19:15:22 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 31 Jul 2020 19:08:58 -0400
+Date:   Fri, 31 Jul 2020 19:15:21 -0400
 From:   Jeff King <peff@peff.net>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-Message-ID: <20200731230858.GA1461090@coredump.intra.peff.net>
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
- <20200729201002.GA2989059@coredump.intra.peff.net>
- <871rku3soc.fsf@osv.gnss.ru>
+To:     "Jason Pyeron" <jpyeron@pdinc.us>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+Subject: Re: I have gone and done a bad thing - malformed tree objects
+Message-ID: <20200731231521.GB1461090@coredump.intra.peff.net>
+References: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us>
+ <xmqqh7trb0sr.fsf@gitster.c.googlers.com>
+ <19cab01d66544$ecb402d0$c61c0870$@pdinc.us>
+ <xmqq8sf2b3be.fsf@gitster.c.googlers.com>
+ <045701d6678f$1f03df20$5d0b9d60$@pdinc.us>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <871rku3soc.fsf@osv.gnss.ru>
+In-Reply-To: <045701d6678f$1f03df20$5d0b9d60$@pdinc.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 30, 2020 at 12:41:39AM +0300, Sergey Organov wrote:
+On Fri, Jul 31, 2020 at 07:05:42PM -0400, Jason Pyeron wrote:
 
-> > Here's a re-roll taking into account the discussion so far:
-> >
-> >   - the escape hatch option name is flipped to "--no-diff-merges" (with
-> >     "--diff-merges" matching "-m")
+> > If the cruft has already been stored in a packfile, then prune would
+> > not touch it.  "git repack -a -d && git prune --expire=now" would be
+> > the next thing to do.
 > 
-> Rather than being just a synonym for -m, is there a chance for
-> "--diff-merges" implementation to be turned to output diff to the first
-> parent only, no matter if --first-parent is active or not?
->
-> Alternatively, may it have a parameter such as "-m parent-number" of
-> "git cherry-pick" being set to "1" by default?
+> $ git repack -a -d && git prune --expire=now
+> Enumerating objects: 327236, done.
+> Counting objects: 100% (327125/327125), done.
+> Delta compression using up to 8 threads
+> Compressing objects: 100% (104728/104728), done.
+> Writing objects: 100% (327125/327125), done.
+> Total 327125 (delta 205244), reused 326116 (delta 204678), pack-reused 0
+> 
+> $ git cat-file --batch-all-objects --batch=objecttype
+> fatal: object 00009623a06b8dea7c151542fc789539599c07d0 changed type!?
 
-Yes, I agree that would be a useful feature, but I don't think it needs
-to be part of this series. It could be implemented as --diff-merges=1 to
-show only the one against the first parent, or as its own option. But we
-can add that on top.
+That should be dropping everything that isn't reachable. I'd suggest to
+expire reflogs, though it looks like you've also tried "git gc" with
+reflog expiration. Does removing .git/logs entirely help?
 
-> This -m output of diffs to all the parents is in fact primary source of
-> confusion for me, even over all these mind-blowing inter-dependencies
-> between --first-parent, --cc, -c, -m, -p and what not. Who ever needs
-> these (potentially huge) diffs against other parents, anyway?
+If not, are you sure it isn't actually reachable from your history? What
+does:
 
-I've used "-m" second-parent diffs occasionally for hunting down
-mismerges, etc, but I agree that most of the time you just want to see
-the diff against the first parent.
+  git rev-list --all --objects | grep 00009623a06
 
-> Introduction of this new option is a great opportunity for improvement
-> that would be a pity to miss.
+say? If no hits, does adding --reflogs to the command-line change it?
 
-Adding an optional value to the flag is something we can do later. We
-would miss the opportunity for "--diff-merges" to default to
-"--diff-merges=1", but I'm not sure I'd want to do that anyway. Having
-it be consistent with "-m" seems less confusing to me, and it is already
-too late to change that.
-
-If we want an option that defaults to "1", we can give it a new name.
-The only thing that is lost now is that --diff-merges would already be
-taken. :) But I think I'd probably call such an option "--diff-parents"
-or something like that anyway.
+We also consider blobs in the index reachable. I don't recall offhand
+whether that applies to trees mentioned by the cache-trees extension. I
+don't _think_ that would apply to your broken tree, since they'd have
+been generated by Git itself, but possibly removing .git/index (if this
+isn't a bare repo) would help?
 
 -Peff
