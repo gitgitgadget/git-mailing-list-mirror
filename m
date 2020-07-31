@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22CA0C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B52B5C433E0
 	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 16:52:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F389822B40
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 16:52:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92B65206D8
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 16:52:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BA9J6wTC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grwcUo2P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387426AbgGaQwS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jul 2020 12:52:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44504 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732474AbgGaQwR (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1733270AbgGaQwR (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 31 Jul 2020 12:52:17 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8710DC061574
-        for <git@vger.kernel.org>; Fri, 31 Jul 2020 09:52:17 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id r12so28543488wrj.13
-        for <git@vger.kernel.org>; Fri, 31 Jul 2020 09:52:17 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733184AbgGaQwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jul 2020 12:52:14 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB250C061574
+        for <git@vger.kernel.org>; Fri, 31 Jul 2020 09:52:13 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id f1so28041352wro.2
+        for <git@vger.kernel.org>; Fri, 31 Jul 2020 09:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Nmk/a46wDPiuPdytJXRv0WBj/NMxzrSWV7Y0q1I+K3Q=;
-        b=BA9J6wTCqymiAF3jFZfJdOsaOsHf0Cvp8EdZ5p7lQVezEKP31Chkz7IzVcpuM9Ta59
-         ffr4QiQT06X9UebYct/5Xt6ArVI5enbLWMTyS0D1fZfNMbatdpDBn+moCjcIqzQjYRFO
-         LEoEBWkKHqwb98EgjkE8ciLzuqgiYuM8ITCKZFoX9elQ+y7ajUR7Yk1Kp8srdAMsLGOb
-         ElxlrIu2DJp2lqFgT/ametR98/5vgf1rY6trhY8odVtfXehZBdXGPLiiqGIjoUZurOI2
-         XTXMhkaDtZ40fz/OSvlOTOjAN3pEeP0F1x+PYXMXQ/DVd0i+gNR3oMAEKjnG88v77BqN
-         KH6g==
+        bh=UUA0POsVVJ22ojoGFsyScNlZG8/SiQ8wYyZG/EocrrU=;
+        b=grwcUo2PlerU5iQobSJUdrV/3QezcSUPWQ1go85eAWDamctKphNxzaiqNDscN6ewFg
+         HOLvaFFhERK4V1a9QoNl5ISMZOHBSMb/1v7JsKPU05gS8iL9IiObyKhZ5ESdaa+fDhsn
+         /g9RnqoNt6izFH2ODgLKRZdyRfpjNDyDO+rlGrsY5w57FZnhsCTwNdrhmt1d3exbwxro
+         eBQLAe+2T+FBuixSmr/B8Iqi002OSR6WtUtUetwSndW8sjrzsogOdCMrt55ti3wRBByp
+         tD2yZCnGIXBgQ8f1n46oR0fh+7dbndM4QqUkHVvLZODMppod5iNHrjgNFx9bZCwthBh6
+         aeKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Nmk/a46wDPiuPdytJXRv0WBj/NMxzrSWV7Y0q1I+K3Q=;
-        b=Attw6D0bUYD3Ho7e2av1yvIoe3Tfwjmc0EqYcm24BTOCZW2jweVPFq4LiM6sfszXsg
-         YwKRD5avb2PjP2x0Vu6iriiGiqO7K2isZtRxnEwHAk5F57E9it3G/nRyts+NwsM9/RKW
-         xRA13ueEHNBuiuWwic76Qk6LyDYU2WCNlVbhVYXiLTQ/9H36q4A55k0lC+X+PTKUOVBq
-         qYzpThkCyFUtqO5p4hfcQbVGlstEJ2QQmkI9uPisM7MsFFoeaOVMxH4DBGguwvK9bv1W
-         D6z603MTeexgEir13VqwUEsZrfeWf2/nPrQ15HlZaaHaqoF+MZswqc++m0QH0g5PMCA5
-         RxlQ==
-X-Gm-Message-State: AOAM531ps21+Upz1hD9rVh5gVgro8tS6MlJ3c0Y+1EglwGUu7lLj3aCL
-        Hmx4p3E6GPK7PLu1Zfu0LLR+W9lb
-X-Google-Smtp-Source: ABdhPJygSFIfvzVAPJVNjrkj3EUGD5SEXgPAK0/DBHYFMT9I0WzOWKytKNCb7qDCqNYljleYSaD+ww==
-X-Received: by 2002:adf:df06:: with SMTP id y6mr4113292wrl.89.1596214335983;
-        Fri, 31 Jul 2020 09:52:15 -0700 (PDT)
+        bh=UUA0POsVVJ22ojoGFsyScNlZG8/SiQ8wYyZG/EocrrU=;
+        b=KiV3BulMYxEdmOlSxh1VNqEo1a7G0IY3i52SzRE6W8ihoKTiQml1IVgD1nhyRlLLqk
+         oxLRGQWHbo015znqBTYUi9OVWUm4GA4GB6CIECZdyWuFYXzWRquq0mOxP4iChBkRwHbv
+         Fxkz97wUUgu2e9vkcg4aEEV+8SClcFkTRaBGoQftMgLFKsPWSbv9Yf0xuQJiZz8bgODh
+         KqPL7flIaBZH5e6RQe0MXWq2tLUVqerSlIB4cv/b0OZi1GXjw1HRRqITU08+03iaKahw
+         rHL68+6RbSGM7hPEe7nn5Sv1bbiJd9jWEW39hHcC4h7KPV/j00TWskS74Sp59FsKPRaO
+         YHmg==
+X-Gm-Message-State: AOAM531QMPV0gw/fa4w1D9eJPKKjIP/tDeUoybYQSzQqYMVu/S2mqAYB
+        MPJ8+6y3IOzhYbgRvobzOJfFbfss
+X-Google-Smtp-Source: ABdhPJwlojeq3hGY8KB3nglbK5xzJgZTpC6zDi81UFpolGsSVKKbaX+Njnn1RAqdp/k2c+1aS27ynQ==
+X-Received: by 2002:a5d:6aca:: with SMTP id u10mr2605858wrw.365.1596214332135;
+        Fri, 31 Jul 2020 09:52:12 -0700 (PDT)
 Received: from ylate.lan (atoulouse-654-1-421-163.w2-6.abo.wanadoo.fr. [2.6.84.163])
-        by smtp.googlemail.com with ESMTPSA id t14sm15169134wrg.38.2020.07.31.09.52.13
+        by smtp.googlemail.com with ESMTPSA id t14sm15169134wrg.38.2020.07.31.09.52.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2020 09:52:15 -0700 (PDT)
+        Fri, 31 Jul 2020 09:52:11 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         Son Luong Ngoc <sluongng@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v3 5/6] stash: remove the second index in restore_untracked()
-Date:   Fri, 31 Jul 2020 18:51:39 +0200
-Message-Id: <20200731165140.29197-6-alban.gruin@gmail.com>
+Subject: [PATCH v3 3/6] stash: remove the second index in stash_patch()
+Date:   Fri, 31 Jul 2020 18:51:37 +0200
+Message-Id: <20200731165140.29197-4-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200731165140.29197-1-alban.gruin@gmail.com>
 References: <20200630151558.20975-1-alban.gruin@gmail.com>
@@ -78,118 +78,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This removes the second index used in restore_untracked().
+This removes the second index used in stash_patch().
 
-The call to `read-tree' is replaced by reset_tree() with the appropriate
-parameters (no update, no reset).  The environment of `checkout-index'
-is no longer modified, and the cache is discarded when it exits.
+This function starts by resetting the index (which is set at `i_tree')
+to HEAD, which has been stored in `b_commit' by do_create_stash(), and
+the call to `read-tree' is replaced by reset_tree().  The index is
+discarded after run_add_interactive(), but not `diff-tree' as this
+command should not change it.
 
-In do_apply_stash(), the changes are a bit more involved: to avoid
-conflicts with the merged index, restore_untracked() is moved after
-merge_recursive_generic().
-
-This introduces another problem: the files that were untracked once are
-now added to the index, and update_index() would add back those files in
-the index.  To avoid this, get_newly_staged() is moved before
-restore_untracked().
+Since the index has been changed, and subsequent code might be sensitive
+to this, it is reset to `i_tree' at the end of the function.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- builtin/stash.c | 47 +++++++++++++++++------------------------------
- 1 file changed, 17 insertions(+), 30 deletions(-)
+ builtin/stash.c | 47 ++++++++++-------------------------------------
+ 1 file changed, 10 insertions(+), 37 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index cbe37cd24b..d5077a27d9 100644
+index 2535335275..eaeb7bc8c4 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -359,29 +359,15 @@ static int restore_untracked(struct object_id *u_tree)
- 	int res;
- 	struct child_process cp = CHILD_PROCESS_INIT;
+@@ -995,51 +995,24 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 		       struct strbuf *out_patch, int quiet)
+ {
+ 	int ret = 0;
+-	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+ 	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
+-	struct index_state istate = { NULL };
+-	char *old_index_env = NULL, *old_repo_index_file;
  
--	/*
--	 * We need to run restore files from a given index, but without
--	 * affecting the current index, so we use GIT_INDEX_FILE with
--	 * run_command to fork processes that will not interfere.
--	 */
--	cp.git_cmd = 1;
--	argv_array_push(&cp.args, "read-tree");
--	argv_array_push(&cp.args, oid_to_hex(u_tree));
--	argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s",
--			 stash_index_path.buf);
--	if (run_command(&cp)) {
--		remove_path(stash_index_path.buf);
-+	if (reset_tree(u_tree, 0, 0))
- 		return -1;
--	}
- 
--	child_process_init(&cp);
- 	cp.git_cmd = 1;
- 	argv_array_pushl(&cp.args, "checkout-index", "--all", NULL);
--	argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s",
--			 stash_index_path.buf);
- 
- 	res = run_command(&cp);
 -	remove_path(stash_index_path.buf);
-+	discard_cache();
-+
- 	return res;
- }
- 
-@@ -395,6 +381,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 	struct object_id index_tree;
- 	struct commit *result;
- 	const struct object_id *bases[1];
-+	struct strbuf newly_staged = STRBUF_INIT;
- 
- 	read_cache_preload(NULL);
- 	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
-@@ -433,9 +420,6 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		}
- 	}
- 
--	if (info->has_u && restore_untracked(&info->u_tree))
--		return error(_("could not restore untracked files from stash"));
 -
- 	init_merge_options(&o, the_repository);
- 
- 	o.branch1 = "Updated upstream";
-@@ -463,24 +447,27 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		return ret;
- 	}
- 
-+	if (!has_index && get_newly_staged(&newly_staged, &c_tree)) {
-+		strbuf_release(&newly_staged);
+-	cp_read_tree.git_cmd = 1;
+-	argv_array_pushl(&cp_read_tree.args, "read-tree", "HEAD", NULL);
+-	argv_array_pushf(&cp_read_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (run_command(&cp_read_tree)) {
+-		ret = -1;
+-		goto done;
+-	}
++	if (reset_tree(&info->b_commit, 0, 1))
 +		return -1;
-+	}
-+
-+	if (info->has_u && restore_untracked(&info->u_tree)) {
-+		strbuf_release(&newly_staged);
-+		return error(_("could not restore untracked files from stash"));
-+	}
-+
- 	if (has_index) {
- 		if (reset_tree(&index_tree, 0, 0))
- 			return -1;
- 	} else {
--		struct strbuf out = STRBUF_INIT;
--
--		if (get_newly_staged(&out, &c_tree)) {
--			strbuf_release(&out);
--			return -1;
--		}
--
- 		if (reset_tree(&c_tree, 0, 1)) {
--			strbuf_release(&out);
-+			strbuf_release(&newly_staged);
- 			return -1;
- 		}
  
--		ret = update_index(&out);
--		strbuf_release(&out);
-+		ret = update_index(&newly_staged);
-+		strbuf_release(&newly_staged);
- 		if (ret)
- 			return -1;
+ 	/* Find out what the user wants. */
+-	old_repo_index_file = the_repository->index_file;
+-	the_repository->index_file = stash_index_path.buf;
+-	old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+-	setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
+-
+ 	ret = run_add_interactive(NULL, "--patch=stash", ps);
+ 
+-	the_repository->index_file = old_repo_index_file;
+-	if (old_index_env && *old_index_env)
+-		setenv(INDEX_ENVIRONMENT, old_index_env, 1);
+-	else
+-		unsetenv(INDEX_ENVIRONMENT);
+-	FREE_AND_NULL(old_index_env);
+-
+ 	/* State of the working tree. */
+-	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
+-				NULL)) {
+-		ret = -1;
+-		goto done;
+-	}
++	discard_cache();
++	if (write_cache_as_tree(&info->w_tree, 0, NULL))
++		return -1;
+ 
+ 	cp_diff_tree.git_cmd = 1;
+ 	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "-U1", "HEAD",
+ 			 oid_to_hex(&info->w_tree), "--", NULL);
+-	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
+-		ret = -1;
+-		goto done;
+-	}
++	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0))
++		return -1;
+ 
+ 	if (!out_patch->len) {
+ 		if (!quiet)
+@@ -1047,9 +1020,9 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 		ret = 1;
+ 	}
+ 
+-done:
+-	discard_index(&istate);
+-	remove_path(stash_index_path.buf);
++	if (reset_tree(&info->i_tree, 0, 1))
++		return -1;
++
+ 	return ret;
+ }
  
 -- 
 2.20.1
