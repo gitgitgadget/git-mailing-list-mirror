@@ -2,72 +2,85 @@ Return-Path: <SRS0=dkLL=BK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BB2BC433E0
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 20:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A568C433DF
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 20:43:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72A2821744
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 20:41:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DBB921744
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 20:43:46 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tTNjEH9e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729284AbgGaUk7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jul 2020 16:40:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44328 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729177AbgGaUk7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jul 2020 16:40:59 -0400
-Received: (qmail 24607 invoked by uid 109); 31 Jul 2020 20:40:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 Jul 2020 20:40:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31032 invoked by uid 111); 31 Jul 2020 20:40:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 Jul 2020 16:40:58 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 31 Jul 2020 16:40:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 3/3] ref-filter: add support for %(contents:size)
-Message-ID: <20200731204057.GA1440890@coredump.intra.peff.net>
-References: <20200710164739.6616-1-chriscool@tuxfamily.org>
- <20200716121940.21041-1-chriscool@tuxfamily.org>
- <20200716121940.21041-4-chriscool@tuxfamily.org>
- <21bb2dad-5845-8cee-8f6a-1089ef7cae3b@gmail.com>
- <20200731174547.GC843002@coredump.intra.peff.net>
- <CAP8UFD15+p+xKwJ=B9WVsrc+2TvLHKmu78SBCLUFZVSYoTtbbg@mail.gmail.com>
- <xmqqa6zf2zs4.fsf@gitster.c.googlers.com>
+        id S1727864AbgGaUnp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jul 2020 16:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727121AbgGaUnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jul 2020 16:43:45 -0400
+Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26DECC061574
+        for <git@vger.kernel.org>; Fri, 31 Jul 2020 13:43:45 -0700 (PDT)
+Received: by mail-vs1-xe31.google.com with SMTP id 125so2366668vsg.2
+        for <git@vger.kernel.org>; Fri, 31 Jul 2020 13:43:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hn42SDabsTSQCfxY4tasqYQWbK6EABiOLiqcauAgSKo=;
+        b=tTNjEH9e6FDwSSJri8+lYxIudB29tR9KdQE1R77SMoW4A3DYnBw1qAPbJknrxZ0DLw
+         VggfxccmAcSP1gxXoxwKKuK3NCb84lMCyf7mKIPyyIZUj6zo/JnjlGmmIfUU21iMjWcM
+         Nyulu8pl58wxzlzBZJGC3vig2blWw7fum0Qjs1u08Ru6hY0MXDIGiYuyM1CdWlBZFwIu
+         NwcunNHQWenoBalmUIQeyEHQ/tbrVe+1bo23MaSpjpdmROAque3MdbpIhCTuNReEVcdz
+         hqdZIDYDmwMBgHj3MAnjVo+Ge2y1yVhmT0G0hFGO+FkiUtzqh644PK1Tzlcx/9vkAcH6
+         gsZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hn42SDabsTSQCfxY4tasqYQWbK6EABiOLiqcauAgSKo=;
+        b=a2ETabvH/IOdiFkAWpvFDAickrWnJFuVaw5Kn/DWGgIyV0G3nkgdCAhHtmuekA/4Ha
+         y+6vQBzjruhIUyY/ZcewC08PdQUngKJGJFdIs34jryTbnUEVjrezFyoPmiG9RjjspUwq
+         mvwvTclNYKvGhSCbpPkUyV1xdn1h+u7XDlfPjxl+XNyHp2MHhTruBcdPjwgInIA8vMAl
+         gFFFdazyRERy/MjIQpFpT2ccvYGfBIW3zai1JA04UlELoJzLQB8K7grQgPw6x7Iz75dY
+         1BaHLO67+YfQzFFVLYmzFf6Ky6Y2XW8Nx7isYm5/VqpLurrjKQgxT2L5wWcMB2fA/jMM
+         TkPw==
+X-Gm-Message-State: AOAM533iDudBKugNhw1MyG6T4nOLU6G/XDHK5q1QUFhafNazngp7I6tQ
+        wECdizPd20Ww0UKZ1p+JZxX0y0C4lYNYuQ/0kFE=
+X-Google-Smtp-Source: ABdhPJyISOkntmRgb49RQF/0xhvGWVa1E47dfdLwOKxi2x/UOm8BjLdLEcaIMZNHHmRtfwodSTT4UdB0x8Ah5COiD/k=
+X-Received: by 2002:a67:f3cd:: with SMTP id j13mr4626803vsn.40.1596228224388;
+ Fri, 31 Jul 2020 13:43:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa6zf2zs4.fsf@gitster.c.googlers.com>
+References: <CAOjrSZtQPQ8Xxuz+7SGykR8Q-gFDEZANSE5yQASqKjpbUAq_5Q@mail.gmail.com>
+ <20200731174149.GB843002@coredump.intra.peff.net> <CAOjrSZskJRj+TVV35fEp-Mhd+proVV72rh3vAcVFnNfhRy2ayA@mail.gmail.com>
+ <xmqqeeor300w.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqeeor300w.fsf@gitster.c.googlers.com>
+From:   Matt Rogers <mattr94@gmail.com>
+Date:   Fri, 31 Jul 2020 16:43:33 -0400
+Message-ID: <CAOjrSZu7-KxgoxNTWiYF+_suDMo6S808L6iRWvK0HYZT8rqN7A@mail.gmail.com>
+Subject: Re: Diff --stat for files that differ only in whitespace
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 31, 2020 at 01:30:19PM -0700, Junio C Hamano wrote:
+On Fri, Jul 31, 2020 at 4:25 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+>
+> After re-reading the thread, I think it takes a bit more than just
+> re-reading and testing, because even the author of the patch said
+> (and I think I still agree with the assessment) that the patch does
+> one thing that is not exactly what we want it to do.  So we'd need
+> to tweak it more to do what we want to do, I would suspect.
 
-> > Yeah, I copied a suggestion from Junio in the last iteration without
-> > properly checking it. Sorry about that and thanks for spotting and
-> > fixing it.
-> 
-> I probably should stop giving "perhaps along the lines of this"
-> suggestion too lightly and/or when I do not have enough time to
-> apply and test myself.  Sorry for the gotcha.
+Got it, I'll try to look into this more over the weekend then if there's
+no problems with that
 
-I dunno. I appreciate getting them, especially in patch form. It's often
-a more precise description than hand-wavy English, and being a patch
-makes it easy to apply into my tree as a starting point. The real trick
-is that the receiver needs to know enough to distrust the suggestion and
-take ownership of it. Maybe you just need a bigger disclaimer. ;)
-
-(Only half-joking; I do try to say "not tested" or "not even compiled"
-when that is the case in stuff I sent out, but I'm sure I'm not
-consistent).
-
--Peff
+-- 
+Matthew Rogers
