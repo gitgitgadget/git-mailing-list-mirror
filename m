@@ -2,112 +2,96 @@ Return-Path: <SRS0=dkLL=BK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B474FC433DF
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AE93C433E0
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:58:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F088207F5
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:22:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6526D21775
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:58:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O2unLfx8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731117AbgGaCWS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 22:22:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43282 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730797AbgGaCWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jul 2020 22:22:18 -0400
-Received: (qmail 18146 invoked by uid 109); 31 Jul 2020 02:22:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 31 Jul 2020 02:22:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23351 invoked by uid 111); 31 Jul 2020 02:22:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Jul 2020 22:22:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 30 Jul 2020 22:22:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] fmt-merge-msg: selectively suppress "into
- <branch>"
-Message-ID: <20200731022217.GA825094@coredump.intra.peff.net>
-References: <xmqq5za596uo.fsf@gitster.c.googlers.com>
- <20200730180237.1392480-1-gitster@pobox.com>
- <20200731004202.GA240563@coredump.intra.peff.net>
- <xmqqy2n04ezk.fsf@gitster.c.googlers.com>
+        id S1731275AbgGaC6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 22:58:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61207 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731161AbgGaC6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 22:58:35 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AAD63E19D2;
+        Thu, 30 Jul 2020 22:58:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bSIwa/JVabdi80kzwTYNDIDgiqg=; b=O2unLf
+        x8c+/tgMZxYmiVEw6yLftvCkvaLatGrJLY+JRuJET7MVwxbot2Kct0FerocDEcpj
+        THvFisB4n7KUhYRR9bpF9gwrL1Hv34Y1GYbrOmsrdBLgxUCeCjupuKnVt0vxB5pA
+        2IrPrrUxB/VH4FTHq/fHz7Zn8z24RLu+BStXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rqb3V3sev/sgNy9OLsAn5JWGB10YeAst
+        JO192T8EoQGjDkrsB2IiHcsM2sfSQL95mJAQdtjLnvz76YI4/Kt8e9HRuDgrWYfg
+        3/3+JEBlqKwC4Q9bPVwNKmjKgX6qRdvkbYuvOAwDdMFmLgPBQEvZ+hGXwhMz/Ytt
+        ee2aGPZsMmU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A17BEE19D1;
+        Thu, 30 Jul 2020 22:58:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DFFCAE19D0;
+        Thu, 30 Jul 2020 22:58:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 00/20] Maintenance builtin, allowing 'gc --auto' customization
+References: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
+        <pull.671.v3.git.1596147867.gitgitgadget@gmail.com>
+        <xmqqzh7g60mk.fsf@gitster.c.googlers.com>
+Date:   Thu, 30 Jul 2020 19:58:29 -0700
+In-Reply-To: <xmqqzh7g60mk.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 30 Jul 2020 16:31:31 -0700")
+Message-ID: <xmqqlfj04ch6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy2n04ezk.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B711BAF2-D2D9-11EA-937C-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 30, 2020 at 07:04:15PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> You'd rather want to "lie" about the destination branch while
-> redoing these merges, perhaps with
-> 
-> 	$ git merge --pretend-dest=jch topic-name
-> 
-> with your HEAD detached, and tell fmt-merge-msg to pretend that the
-> merge is being made into jch branch.  And that is outside the scope
-> of this patch, though it might be a good #leftoverbits candidate.
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>>  * This series is now based on jk/strvec, as there are several places where
+>>    I was adding new callers to argv_array_push* and run_command_v_opt()
+>>    which have been replaced with strvec_push*() and run_command(), using a
+>>    'struct child_process'.
+>
+> It probably has been a good way to gain experience with the renamed
+> API for you to rebase this series, but I think we'd have to spend a
+> similar amount of effort yet again, as I expect that the jk/strvec
+> series would be rerolled at least once more, with the items[] array
+> renamed to something else, like v[].
+>
+> Let's see how it goes.
 
-Since nobody really asked for it, it may make sense to wait for such a
-feature. After all, this is the just the starting text we put into the
-merge message. You are always free to add the pretend branch yourself in
-the editor.
+So, ... jk/strvec got updated, and just applying these twenty
+patches on top no longer compiles, so I rebased them ;-)
 
-> >   - should "master" be in the list even if you configure a value? That
-> >     would do the wrong thing if you have a non-integration master, but
-> >     that seems unlikely. And it would do the right thing if somebody
-> >     later puts "main" in merge.suppressDest, but still occasionally
-> >     works with "master" repos (where "right" is defined as "what they
-> >     probably wanted", but it is perhaps a bit magical).
-> 
-> If you configure, you can configure it fully without manually
-> clearing first.  If you do not configure, you get a backward
-> compatible default.  I think that is the only sensible semantics.
-> 
-> Besides, I thought we were aiming to make 'master' less special.
-> When a user already has a concrete list of things to use shorter
-> merge title for, why should 'master' be magically added to the list
-> and force the user to explicitly clear it?  I do not think that
-> makes much sense.
+I also adjusted the merge-fix for the 6 patches on es/config-hooks
+topic before making tonight's final push-out of 'seen'.
 
-It's magic-ness would be purely for backwards compatibility. IMHO
-maintaining exact behavior with respect to this particular case was not
-a big deal, but clearly Linus disagrees. But the "do the right thing
-above" I mentioned above is "do the right thing even if the user _did_
-switch their config to a new name, but forgot that they sometimes are
-working with old repos". So it is perhaps an even weaker reason.
-
-To be clear, I'm OK with the behavior in your patch. I just wanted to
-make sure we thought through all of the implications.
-
-> >   - what's the plan if we do switch init.defaultBranch to "main"? Would
-> >     we add default_branch() to the list of defaults alongside "master",
-> >     or just add "main", or just leave it and let people configure
-> >     independently? It doesn't need to be decided now, but maybe worth
-> >     thinking about.
-> [...quite reasonable analysis that I agree with...]
-> 
-> In any case, I do not think I want to see more reliance of the
-> notion that there always is one and only one single special branch
-> in the repository, so if we can get away without it, that would be
-> more preferrable.
-
-Yeah, if the plan is to stop here then I'm OK with that. That makes
-"master" special for historical reasons, but "main" or whatever never
-got this special treatment by default. People have the ability to
-configure if they choose, or they may not care either way.
-
-We might get a feature request later that says "gee, I wish we did this
-for 'main' by default without me having to configure it", but we can
-cross that bridge when we come to it.
-
--Peff
+Thanks.
