@@ -2,117 +2,108 @@ Return-Path: <SRS0=dkLL=BK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F18D8C433E0
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 01:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33453C433DF
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 01:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C435220829
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 01:05:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EDE021744
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 01:27:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KRJ50Wjb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iZ5wZBUM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731015AbgGaBFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 21:05:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41276 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728080AbgGaBFr (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Jul 2020 21:05:47 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1730962AbgGaB1r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 21:27:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59578 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728080AbgGaB1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 21:27:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C040EE0A4B;
+        Thu, 30 Jul 2020 21:27:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JW0dzZIznX1EkW2Xu8J2atytVt8=; b=iZ5wZB
+        UM7QP+Tl4L9HyZL6mez6oOZpOwdBXj8wVhzNttxZcR1ignKTUv0TdEnABSYagX7g
+        qz8zFyRjzy9+0ZVLB4UfJ8E35a9hu2hw0u9RHi8D5J7aWQWvRnSQm6StBUYKnJuG
+        HS4neE9N66Gz2m65859a60N2NMIzJ9fH1xiNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=w9pSrwb0gajV3CUCcBp02oABQR11lCjw
+        zPdXFMGS+ue3JIQ4Vd7q7rE60s+u6dqlQoFDU5MJaNzbe52kutFQeMA1B+/o/n63
+        ewj+Oj7Pgz+YIAYL16e60qwRR9YqSC/QcTGExP7iNM1+zuDp5rUo2fhtEgojJdTh
+        FzpkUy8bYjA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B7B70E0A4A;
+        Thu, 30 Jul 2020 21:27:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1F44260479;
-        Fri, 31 Jul 2020 01:05:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596157546;
-        bh=Sh+pSRiAgwWraz5B+Zto92LVH4CBEQIKt2V79N75MAQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=KRJ50Wjbw+/7OyS7lCjP62t5kx965DOwS7VU3VDuQFGATd7E4sDHHdpKEZAMzny3t
-         8q+NqQ+k3fEA0Jg2/Xs/t5dkVCFI56+5PeuvTgrgtjBs8Jt2IVs2atLjcliDZK5qTG
-         RitpFlCrDnJU5Pyl7JZ+pdM1DZ9qeSsijN+Zi1FzwruRXYaEuwEFlZr47ydUTiiMrX
-         0kTZvUY25JzcFzNBWhTefabjGZ7WNnZI5qlMBkh3Bi+uDi5VITzIocyeOTfGSWKLxU
-         e3idKIrTIJ5udMxE2MWJrOoinPKRjKC21sekyT+Lz5Dc1YicCieu37pSXirGP1XkNB
-         YKySS4rzyyQ+YVrA2gzdLKkDjRIUjGaqz7hOr/a/rhsY+GZHkpofUyCc7qcQ+9ghEB
-         GqAzMMBK2KjK1hi84RaoVdkCWMtXw+bNa78a+rgbHx3Su5geGzX3+nRhGGlJPp1c1T
-         PWCvc0feYaOBniGX/CV4YRPyiiwAVx9GV9r10FzTT2MK/usQuNl
-Date:   Fri, 31 Jul 2020 01:05:41 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Bram Huenaerts <bramhuenaerts@me.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0F2EBE0A49;
+        Thu, 30 Jul 2020 21:27:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: Git union issue
-Message-ID: <20200731010541.GI6540@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bram Huenaerts <bramhuenaerts@me.com>, git@vger.kernel.org
-References: <A7C11212-1ECB-4D8D-B3B1-C7DB6673F3E6@me.com>
+Subject: Re: What's cooking in git.git (Jul 2020, #06; Thu, 30)
+References: <xmqqo8nw5zwn.fsf@gitster.c.googlers.com>
+        <20200731010307.GE240563@coredump.intra.peff.net>
+Date:   Thu, 30 Jul 2020 18:27:41 -0700
+In-Reply-To: <20200731010307.GE240563@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 30 Jul 2020 21:03:07 -0400")
+Message-ID: <xmqqk0yk5v8y.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="l06SQqiZYCi8rTKz"
-Content-Disposition: inline
-In-Reply-To: <A7C11212-1ECB-4D8D-B3B1-C7DB6673F3E6@me.com>
-User-Agent: Mutt/1.14.5 (2020-06-23)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 07E44B6E-D2CD-11EA-8165-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---l06SQqiZYCi8rTKz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Thu, Jul 30, 2020 at 04:47:04PM -0700, Junio C Hamano wrote:
+>
+>> * jk/strvec (2020-07-28) 11 commits
+>>  - strvec: rename struct fields
+>>  - strvec: drop argv_array compatibility layer
+>>  - strvec: update documention to avoid argv_array
+>>  - strvec: fix indentation in renamed calls
+>>  - strvec: convert remaining callers away from argv_array name
+>>  - strvec: convert more callers away from argv_array name
+>>  - strvec: convert builtin/ callers away from argv_array name
+>>  - quote: rename sq_dequote_to_argv_array to mention strvec
+>>  - strvec: rename files from argv-array to strvec
+>>  - argv-array: rename to strvec
+>>  - argv-array: use size_t for count and alloc
+>> 
+>>  The argv_array API is useful for not just managing argv but any
+>>  "vector" (NULL-terminated array) of strings, and has seen adoption
+>>  to a certain degree.  It has been renamed to "strvec" to reduce the
+>>  barrier to adoption.
+>> 
+>>  Will merge to 'next'.
+>
+> Do we want to do the s/items/v/ thing before it gets merged to next?
 
-On 2020-07-30 at 18:29:10, Bram Huenaerts wrote:
-> Goodafternoon,
->=20
-> while trying to reduce conflicts on a changelog file, i tried
-> eliminating conflicts using the .gitattributes with union defined for
-> the CHANGELOG_UPCOMING.md file. I included the steps to come to this
-> very strange issue. In the enclosed PDF, I tried to specify all the
-> commands so it is easy to reproduce this strange issue which I hope is
-> not a works as designed.
+I do want to get rid of that items[] thing.  An array with a plural
+name that is accessed one element at a time a lot more often than
+referred to as a collection as a whole is simply stupid.
 
-In general, folks on this list much prefer it if you include your text
-in the body of the message as plain text instead of using PDFs.  You may
-get more responses in the future if you include the text inline, since
-folks will be more likely to read your message.  (I was personally
-surprised to see the list accepted PDFs; I did not think it would.)
+> I already posted a replacement top patch in the thread:
+>
+>   https://lore.kernel.org/git/20200729003720.GA1653374@coredump.intra.peff.net/
+>
+> and I don't think anything else needed a re-roll.
 
-I'm not an expert on the merge machinery and especially not on the union
-algorithm, but I believe what you're seeing here is due to using a
-merge-based rebase.  In this case, your rebase is removing lines a and b
-on one side, but the other side has y, a, and b.  Instead of a conflict,
-you're getting the union: y, a, and b.  If you have an empty set of
-feature lines on one side, and a set with some items on the other, then
-the union is the latter set.
+I missed that one.  Will replace and adjust the conflict resolution
+but I'll have to wait for my attention/focus to be recharged before
+doing so.
 
-I agree this is not especially useful and probably not what you wanted.
-The documentation does state, "Do not use this if you do not understand
-the implications," implying that it's tricky to understand, so I'm not
-surprised that it's confusing or has unexpected behavior.
+Thanks for reminding.
 
-Of course, someone with more familiarity with the merge machinery or
-this option may have a better explanation for this than I do, or
-possibly a patch if I've misunderstood and this option is broken.
-Hopefully some such person will chime in.
---=20
-brian m. carlson: Houston, Texas, US
-
---l06SQqiZYCi8rTKz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXyNuYwAKCRB8DEliiIei
-gR1mAP9oV527ojY8U2hGzvQj7a/0P5bGmKCu74SAOKzbok9x+AD9HHCe66LdkHJn
-AHfYT2fD/tKpcMR4n8Q1cz8rAc6SfAc=
-=Qja4
------END PGP SIGNATURE-----
-
---l06SQqiZYCi8rTKz--
