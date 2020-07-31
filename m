@@ -2,112 +2,126 @@ Return-Path: <SRS0=dkLL=BK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE8F4C433DF
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 13:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E429FC433E0
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 15:27:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B65DE2245C
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 13:53:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B83E7208E4
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 15:27:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ilevmdf8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KGDRJ0Bq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730802AbgGaNxv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jul 2020 09:53:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
+        id S1728801AbgGaP1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jul 2020 11:27:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726318AbgGaNxv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jul 2020 09:53:51 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC91C061574
-        for <git@vger.kernel.org>; Fri, 31 Jul 2020 06:53:51 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id m20so12926926eds.2
-        for <git@vger.kernel.org>; Fri, 31 Jul 2020 06:53:51 -0700 (PDT)
+        with ESMTP id S1726497AbgGaP1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jul 2020 11:27:23 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D068BC061574
+        for <git@vger.kernel.org>; Fri, 31 Jul 2020 08:27:22 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id a14so28387594wra.5
+        for <git@vger.kernel.org>; Fri, 31 Jul 2020 08:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=K9U4bqezjC7M2JB/7GINNU9n3AbN/2biMkOX0Q3gHl0=;
-        b=ilevmdf8CeGDx2WXAsg6sgRoI0sC5NSMC9/xV6bi0H+4mR2W75vt34FFbJkDAydOL7
-         8hU/diwpIevav7MJ4JprG8h9wU9TKCvz4W36VZkIu/larEu1OFYyv0yd3u60Xnh9EWla
-         j5Y1zUwv7MAervf5jWoYHIACellySVhW50DzRmCros6Os3kS6HyU5ctco2sRq7KUGZTb
-         uJaKmF2QHzG1xLhBzLH7HENKrTYu9b5FBPOkzukV15LUWCv3/QlKud4eZO/O+U8BEkeA
-         ytbN7Kv1nEUxeoLOTz6n1MzzOHZzkhrbLiddDAHv2P7OFSsZkkV2qZNJMC3Qj/KBqrxk
-         cjvQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ZSCrgk5+sMFrmaVpehfL7VYDj4kraqL145ODGpjev7w=;
+        b=KGDRJ0BqrddWCJiItel+71tp+0KiZYnu2a1tLP+dCz2kHRd6FrL2D+A8HW4nFrRIh/
+         yVaTDoOZXoXnhdjlG1ntVeW+KZrdUzBSIcOBjaTKYv/7zKT28UE1Bsqta5CzK7YuV92b
+         jQ9V61ngBVKboT2fQWrPSYVqXz1D+2jR0bxtN1HWSGWybL4vNdgIsrCDigfT18n9bWgC
+         kePpDOSNkVXmtkc9VSw23Rhh/K8x2LuTErj4vKYRVQrig9osz0fVqZMyc1dDfrHORcVZ
+         ffZaRb9APs6dC3alHzhlbZKG9HoLXrL6V1gTEHdggrLmgvMXTLxcE5rM6j/Th8V+pLz0
+         QyFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=K9U4bqezjC7M2JB/7GINNU9n3AbN/2biMkOX0Q3gHl0=;
-        b=ABOFeiunnfJGhKlJJzcAXoGX+K2AuWe6P1IW7ab2fOw9YPzoCKf+bZ5IQ8+sjLxsHS
-         qpYBEds5Y5BGvokVRokBaXCHlU44wo+MJK39io8sghDy+tDVMgdcE4qGvn75UkyOR2dH
-         4U/feAnJxfvL/hwaZu75sguNRfBljxklc5SGAvCquk7H7sbhhaFjkqYBWm5oUXBIOGHa
-         +kOklB+k0AqsKxeQ8BedkFC06pnVIxHUDnswkCpj5VOjpNm6F9UDlOFDPBZaZLzCmBF3
-         3K88ATHYUYO2W1cjTO1O7wDhDRYYJX7wiA8fqAIY/t+elFHv4gXygcygANH2s6NxmD98
-         rfcQ==
-X-Gm-Message-State: AOAM532FXkPdd6TZM7i3/UnUwhhuNPMvs33z4+i+EU08EvKcuoBRTCAr
-        so0tbZHl2TNBs/wTGbQs22wX9J97Bt7ZA5c18RA=
-X-Google-Smtp-Source: ABdhPJxp/2Z2ncJanjPceRUuMWR20Db7O1gLY0Utuc5BCEJcZlQSG9+LGOknOLCaZgRtLlNsKiNT0qAhDpEX7LLYLrQ=
-X-Received: by 2002:a05:6402:16c2:: with SMTP id r2mr3873673edx.127.1596203629865;
- Fri, 31 Jul 2020 06:53:49 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ZSCrgk5+sMFrmaVpehfL7VYDj4kraqL145ODGpjev7w=;
+        b=Nd2/OoPN/0tepxW5FEM34BNw9n/kCL67tO9kbbAmUfesN49Xygs1kb6U31QspXLIhm
+         MCqLCt3DEAk1uj87hgP4cXMXQfu701xzzFgx9ST4lCCvR+1CmW5VoacdTFFIs39UPo1a
+         PYJbnt3yfILxnGcQmtzfFm7nSN81p2f0/2z0D9OjvEM8x5jwwat34fbBSfTUdSwF/a1G
+         DjAeeCC3ckl0vCwx25A+UcVC9y/Y9xqXUUqR43tnmTUvc6sCwCAkrv8c6efUZuG7m4Dp
+         PKnWbpyAP6JD3L4WWV8ns3WH2Ew7wc/VHbtverO0uwd8COiHOhcR+5FqfQtIGCL+6j3N
+         Df1Q==
+X-Gm-Message-State: AOAM530DMuWKzoUbXsEX4swGquvg395VmLCXbf9qCNWQunPs2eFAA+Qg
+        ccYHzrJcHYsdfskFkd6s32+5+sin
+X-Google-Smtp-Source: ABdhPJwYevJohmra88NhOB0slgTfWQyHVHGXQAbFkmhQJ7BrUytOmQ2hP9sIdcRbABzIT4+fRXeD+Q==
+X-Received: by 2002:adf:cd8f:: with SMTP id q15mr4412334wrj.347.1596209241234;
+        Fri, 31 Jul 2020 08:27:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 130sm14639767wme.26.2020.07.31.08.27.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jul 2020 08:27:20 -0700 (PDT)
+Message-Id: <05ced516832e55eb61c135ea26e95e4c83362ad2.1596209237.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.539.v20.git.1596209237.gitgitgadget@gmail.com>
+References: <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
+        <pull.539.v20.git.1596209237.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 31 Jul 2020 15:26:57 +0000
+Subject: [PATCH v20 01/21] refs: add \t to reflog in the files backend
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20200505104849.13602-1-alban.gruin@gmail.com> <20200630151558.20975-1-alban.gruin@gmail.com>
-In-Reply-To: <20200630151558.20975-1-alban.gruin@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 31 Jul 2020 15:53:38 +0200
-Message-ID: <CAP8UFD3ywqAG4qtc8mYUOE_DMN8HhpE1nZO=9cBYkt0kHZ+83A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] stash: drop usage of a second index
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 30, 2020 at 5:16 PM Alban Gruin <alban.gruin@gmail.com> wrote:
->
-> The old scripted `git stash' used to create a second index to save
-> modified and untracked files, and restore untracked files, without
-> affecting the main index.  This behaviour was carried on when it was
-> rewritten in C, and here, most operations performed on the second index
-> are done by forked commands (ie. `read-tree' instead of reset_tree(),
-> etc.).
->
-> The goal of this series is to modernise (a bit) builtin/stash.c.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-This patch series looks good to me. I found only a small nit or typo
-in the commit message of patch 5/6.
+commit 523fa69c3 (Jul 10, 2020) "reflog: cleanse messages in the
+refs.c layer" centralized reflog normalizaton.  However, the
+normalizaton added a leading "\t" to the message. This is an artifact
+of the reflog storage format in the files backend, so it should be
+added there.
 
-> Originally, this series was also meant to fix a bug reported by Son
-> Luong Ngoc [0], but as emphasized by G=C3=A1bor [1], the issue is not lim=
-ited
-> to `git stash', so this series is not a good fix for this particular
-> issue.
->
-> This series is based on a08a83db2b (The sixth batch, 2020-06-29).
+Routines that parse back the reflog (such as grab_nth_branch_switch)
+expect the "\t" to not be in the message, so without this fix, git
+with reftable cannot process the "@{-1}" syntax.
 
-It seems to apply without conflicts on top of current master.
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ refs.c               | 1 -
+ refs/files-backend.c | 4 +++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-> Changes since v1:
->
->  - Lots of rewording, following comments from Christian Couder and Son
->    Luong Ngoc.
->
->  - Removed a useless function call.
+diff --git a/refs.c b/refs.c
+index 89814c7be4..2dd851fe81 100644
+--- a/refs.c
++++ b/refs.c
+@@ -907,7 +907,6 @@ static void copy_reflog_msg(struct strbuf *sb, const char *msg)
+ 	char c;
+ 	int wasspace = 1;
+ 
+-	strbuf_addch(sb, '\t');
+ 	while ((c = *msg++)) {
+ 		if (wasspace && isspace(c))
+ 			continue;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index e0aba23eb2..985631f33e 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1628,8 +1628,10 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
+ 	int ret = 0;
+ 
+ 	strbuf_addf(&sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new_oid), committer);
+-	if (msg && *msg)
++	if (msg && *msg) {
++		strbuf_addch(&sb, '\t');
+ 		strbuf_addstr(&sb, msg);
++	}
+ 	strbuf_addch(&sb, '\n');
+ 	if (write_in_full(fd, sb.buf, sb.len) < 0)
+ 		ret = -1;
+-- 
+gitgitgadget
 
-[...]
-
->  builtin/stash.c | 156 +++++++++++++++---------------------------------
->  1 file changed, 48 insertions(+), 108 deletions(-)
-
-I like very much how it simplifies a lot of things.
-
-Thanks,
-Christian.
