@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3167C433DF
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7EF8C433E1
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:10:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C36CD2083E
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:04:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A8A820829
+	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 02:10:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dKMAyMMd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Do/KM6tJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731057AbgGaCEU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jul 2020 22:04:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58862 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730904AbgGaCEU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jul 2020 22:04:20 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F166E255F;
-        Thu, 30 Jul 2020 22:04:20 -0400 (EDT)
+        id S1731057AbgGaCKv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jul 2020 22:10:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53820 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731075AbgGaCKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jul 2020 22:10:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 470A064399;
+        Thu, 30 Jul 2020 22:10:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XasLZDr44JRJCwEMAoC/tT1yDnQ=; b=dKMAyM
-        Mdj+9O7tt2MBhKIfzBO2cMRlXs7t1QwtxZQoJZLd4UyO8UoVGE8UbLSXWfBTmd2Y
-        CU5iTl09p27nqMIkq2iRIH2op8Xv89TadFXg8ZVUrF1wuIrnvE2mH2cOi0oP3gQv
-        Z+UmFxumE1ucIHvinK5JSLwmiHepp2h9Y8DaA=
+        :content-type; s=sasl; bh=sNT2qRHyptLSM5KssaYtA3kI+As=; b=Do/KM6
+        tJaUk7knDcFTY52GbwKc+r6hgShmXgOghWcOecYi4taRCzp9WxVPbJVKlYaGzqEs
+        0R1j6xDmaZQsys6RntishZVJ4flANJ8vq8rLlOVFXJUvzlAVHSWvmQcIc1Ua4peI
+        +M/j/Wcm02GZZGm0ISXKMefg6aHyMotCOxQPQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tsN0uXUI6rd7FTgDMdvBa1lAT9oDpSU6
-        GjXWfVtOxZXlNZrTE8CB0D867q19zQapD5Y+lZTcCon8+9JAcwh5dzy3/ZBHFHQK
-        te//veb/S70SRMMr9HO2Iv7/Xx6o/fYayaysFKyO50SmpPH6PcbMANcUXXLEqRDo
-        Mzz97/Ks9pU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17DB0E255E;
-        Thu, 30 Jul 2020 22:04:20 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=AawMyp3KeIqTfVZqwQadEM4y1evWLqhD
+        GSNiqKko8pZFPCXbnpw4FFvqfdZEnMzGmXNCk+kHtLp+E8sC/XaNu3RcinFlImN0
+        PJKLBgmXJ6zbCIZf8CgwTKBvQxtRVGUEZNnkWdt9gpeAE0bdWZaOYjFusf0OVlYS
+        pV9UkebS2e0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E23264398;
+        Thu, 30 Jul 2020 22:10:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 62DD3E255D;
-        Thu, 30 Jul 2020 22:04:17 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B657764397;
+        Thu, 30 Jul 2020 22:10:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] fmt-merge-msg: selectively suppress "into <branch>"
-References: <xmqq5za596uo.fsf@gitster.c.googlers.com>
-        <20200730180237.1392480-1-gitster@pobox.com>
-        <20200731004202.GA240563@coredump.intra.peff.net>
-Date:   Thu, 30 Jul 2020 19:04:15 -0700
-In-Reply-To: <20200731004202.GA240563@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 30 Jul 2020 20:42:02 -0400")
-Message-ID: <xmqqy2n04ezk.fsf@gitster.c.googlers.com>
+Cc:     Emma Brooks <me@pluvano.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] gitweb: Map names/emails with mailmap
+References: <20200730041217.6893-1-me@pluvano.com>
+        <20200731010129.GD240563@coredump.intra.peff.net>
+Date:   Thu, 30 Jul 2020 19:10:44 -0700
+In-Reply-To: <20200731010129.GD240563@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 30 Jul 2020 21:01:29 -0400")
+Message-ID: <xmqqtuxo4eor.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 23D24736-D2D2-11EA-8F11-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 0AB30C58-D2D3-11EA-AB57-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,86 +68,34 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> This version looks OK to me. The remaining issues that came up in
-> earlier discussion but I didn't see you weigh in on are:
+> On Thu, Jul 30, 2020 at 04:12:17AM +0000, Emma Brooks wrote:
 >
->   - what should happen with a detached HEAD? We'd match HEAD in the
->     suppressDest config, which I think is quite reasonable. Not sure if
->     it's worth documenting or testing that specifically.
+>> Add an option to map names and emails to their canonical forms via a
+>> .mailmap file. This is enabled by default, consistent with the behavior
+>> of Git itself.
+>
+> I'm quite far from an expert in gitweb, but this seems like a good
+> feature to have.
+>
+> Having a separate implementation to read and apply mailmaps makes me
+> worried that it will behave slightly differently than the C code,
+> especially around corner cases. Is it possible for us to ask git
+> programs that are called by gitweb to do the conversion for us (e.g.,
+> by passing "--use-mailmap" or using "%aE" and "%aN" formatters)?
+> I won't be surprised if the answer is "no, we access commits using
+> lower-level plumbing". But it's worth looking into, I think, if you
+> didn't already.
 
-I think what the code with posted patch happens to do is just fine.
-If you say "git -c merge.suppressDest=HEA? merge $topic" while on a
-detached HEAD, you'll get "into HEAD" omitted.
+I briefly looked at tweaking "rev-list --header" but because it ends
+up calling pretty.c::pp_header() for obvious reasons since we are
+doing as little processing as possible in CMIT_FMT_RAW format, we do
+not get to pretty.c::pp_user_info() which is where the mailmap
+conversion happens for the normal "log" output.
 
-In a workflow where you'd do
-
-	$ git co master^0
-	... enumerate the topics merged in master..jch, and redo the
-	... merge, but with updated versions of these topics
-	$ git shortlog jch..HEAD
-	$ git range-diff jch...HEAD
-	$ git diff jch..HEAD
-	... after inspection, find the result satisfactory, and ...
-	$ git co -B jch
-
-I would strongly suspect that hiding "into HEAD" is not enough, so I
-do not think HEAD is all that relevant in the first place.
-
-You'd rather want to "lie" about the destination branch while
-redoing these merges, perhaps with
-
-	$ git merge --pretend-dest=jch topic-name
-
-with your HEAD detached, and tell fmt-merge-msg to pretend that the
-merge is being made into jch branch.  And that is outside the scope
-of this patch, though it might be a good #leftoverbits candidate.
-
->   - should "master" be in the list even if you configure a value? That
->     would do the wrong thing if you have a non-integration master, but
->     that seems unlikely. And it would do the right thing if somebody
->     later puts "main" in merge.suppressDest, but still occasionally
->     works with "master" repos (where "right" is defined as "what they
->     probably wanted", but it is perhaps a bit magical).
-
-If you configure, you can configure it fully without manually
-clearing first.  If you do not configure, you get a backward
-compatible default.  I think that is the only sensible semantics.
-
-Besides, I thought we were aiming to make 'master' less special.
-When a user already has a concrete list of things to use shorter
-merge title for, why should 'master' be magically added to the list
-and force the user to explicitly clear it?  I do not think that
-makes much sense.
-
->   - what's the plan if we do switch init.defaultBranch to "main"? Would
->     we add default_branch() to the list of defaults alongside "master",
->     or just add "main", or just leave it and let people configure
->     independently? It doesn't need to be decided now, but maybe worth
->     thinking about.
-
-My understanding is that much more instances of repositories come to
-exist by cloning than running "git init".  Hence, the value you set
-to the init.defaultBranch has no relevance to the name of the
-primary branch in majority of your repositories, whose primary branch
-is what their origin has designated before/when you cloned.
-
-And the latter, "what is the primary branch name for this particular
-repository?", is what we want to ask here.  The answer to "what is
-the first branch name for new repository I will create?" is not a
-good proxy for that.
-
-I do not mind too much, even though I doubt it will be all that
-useful, if we taught "init" and "clone" to record which branch is
-the primary one in the repository they created.  We'd need to add
-the repo_primary_branch_name() helper to allow this caller to
-replace the hardcoded 'master' in the patch with it, just like
-"init" and "clone" may ask the repo_default_branch_name() helper
-what the first branch name ought to be.
-
-In any case, I do not think I want to see more reliance of the
-notion that there always is one and only one single special branch
-in the repository, so if we can get away without it, that would be
-more preferrable.
-
-Thanks.
-
+It is tempting to split pp_user_info() into two parts (i.e. the
+first few lines up to where map_user() is optionally called, and the
+remainder), so that the CMIT_FMT_RAW users can optionally ask for
+mailmap to kick in, but I doubt that it is worth it, if the only
+potential benefitter is gitweb (which I consider is purely
+maintenance mode---I am surprised the world hasn't yet switched to
+gitiles, cgit and others).
