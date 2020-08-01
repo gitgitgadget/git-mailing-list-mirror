@@ -1,111 +1,105 @@
-Return-Path: <SRS0=dkLL=BK=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=89BL=BL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 551FBC433E0
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 23:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E22FBC433DF
+	for <git@archiver.kernel.org>; Sat,  1 Aug 2020 00:01:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2EAC920791
-	for <git@archiver.kernel.org>; Fri, 31 Jul 2020 23:33:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B80C220829
+	for <git@archiver.kernel.org>; Sat,  1 Aug 2020 00:01:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GanNvYsg"
+	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="Kx5XzEjl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727103AbgGaXdV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jul 2020 19:33:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49630 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbgGaXdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jul 2020 19:33:20 -0400
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41757C06174A
-        for <git@vger.kernel.org>; Fri, 31 Jul 2020 16:33:20 -0700 (PDT)
-Received: by mail-io1-xd44.google.com with SMTP id j8so20923970ioe.9
-        for <git@vger.kernel.org>; Fri, 31 Jul 2020 16:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KCMrxd5dz72w5zTffG6R4Mu6cpLfVn+LNnf+gEq8jyU=;
-        b=GanNvYsgN8SveB8C0dvTyvdJHgZUEe4VK8nZ6RzsP1loX9sKhWqCJlx4xV9WLUR0Fz
-         JbidLYSGRTzdU/AF+Wt6QATiXXnm6qFifR29tPGsl4RbBe601fZdpO0j4dz0c2kHwRvZ
-         c2rL/kl4ndlk8wgVPfXTWCleQBtfvZHHyIdfzilxyU/2mgv+mwhpu1r2JrcxgKT7fpgj
-         BAcY8yU/zmTLbp+ZTofHKFVAuzfIt1eW4OGnLQ9w7dRCgPL5/Jiz6N9g+8luqNuZNNV1
-         0iUiZy/v5RuIKT9odE5VK8oWLn3qE3NumADlXvG0GApuYeu/DGgCDJMdyyLwDOANBfUh
-         TFdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=KCMrxd5dz72w5zTffG6R4Mu6cpLfVn+LNnf+gEq8jyU=;
-        b=tSWGcEoql4vtk4rJM2aGJiSnOgBQyatJjW+3DL4svmxVvcqzYCT1qqtFvJZqXsY+v4
-         URvgZSOpsxjItzm+fwGLCyBr5YExbDd5xGyNt46h43q+w1LlDlhPW8RBvWT1RCzMUPZR
-         K0vM6SZo3o2OWyvKqE6utPpvOYyVpKH3bIhhRdPb1wQlhHfTAXbCbisX2aSs7FGyC8mG
-         OI2sUzsdFFc0KZSOcGmGdBaeSM5UrXZQ/r9tChiBYAk4nWOFmxI2133+M7YPPl4NwO7I
-         1CIdV0u2HUhaeZE/EyIjsgg00xdJjullc07MT6+SnloO+XB5TBFsrdf5YyKl106HpuGw
-         +MQA==
-X-Gm-Message-State: AOAM530sw/kgpug8L3Qwug5lotZqmCSe5EKtcQiBAO8puNMYSHZm28Ad
-        JGBJLDUy/0MfJWwEQlvAMEZ1gWqXBPM=
-X-Google-Smtp-Source: ABdhPJycMqNEWh29M5Bqv/Wb+FS+fhX97p5wMQaCYRxL6p/5hzw8IBOyqeRhtiFjif0D+BPpzVJBow==
-X-Received: by 2002:a6b:b7ce:: with SMTP id h197mr5984008iof.60.1596238399243;
-        Fri, 31 Jul 2020 16:33:19 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id t18sm3336758ild.46.2020.07.31.16.33.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Jul 2020 16:33:18 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Michael Rappazzo <rappazzo@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 1/4] worktree: drop pointless strbuf_release()
-Date:   Fri, 31 Jul 2020 19:32:11 -0400
-Message-Id: <20200731233214.22131-2-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.28.0.203.gce1f2e0ef1
-In-Reply-To: <20200731233214.22131-1-sunshine@sunshineco.com>
-References: <20200731233214.22131-1-sunshine@sunshineco.com>
+        id S1726826AbgHAABx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jul 2020 20:01:53 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:40000 "EHLO mail1.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726099AbgHAABx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jul 2020 20:01:53 -0400
+Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id 07101ons012688
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 31 Jul 2020 20:01:50 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail1.pdinc.us 07101ons012688
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1596240111; bh=rKyZMPlF1irZPngAF+8fmWTXuX2MpcSK6rMOahWDYOc=;
+        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
+        b=Kx5XzEjlLE4RVnGHD4bbNrtRq9/Y0LRdGOdqubfBVgjzCRTdmblMzxqWd7+MjSVx/
+         3nB+lRzHpKUcWxYFDzkBn1B8kcENdjdDY7BjKbVkxCN0kYQ0eV0HcEuFAweis+9NXE
+         GMlIme9cvV7RamYk3v6eAGDtso/yCMJcefjHyay7FYpaU5vKrT7dQmv/lOdVweDN7L
+         csl7F/xiUfoIBeSO/zkRQphoZfZE3OmYX4LqKWKIfU5jyBy7wrqvEHusnfLFDOA7FS
+         Z9rp4+S6S6Zoh1Y/Qj/coD2zJooMf6jAl/ox6ESI96sGofiCWTL0wzP5vFzo3Pvak8
+         R2aiFTee6O0aw==
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     "'Jeff King'" <peff@peff.net>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us> <xmqqh7trb0sr.fsf@gitster.c.googlers.com> <19cab01d66544$ecb402d0$c61c0870$@pdinc.us> <xmqq8sf2b3be.fsf@gitster.c.googlers.com> <045701d6678f$1f03df20$5d0b9d60$@pdinc.us> <20200731231521.GB1461090@coredump.intra.peff.net>
+In-Reply-To: <20200731231521.GB1461090@coredump.intra.peff.net>
+Subject: RE: I have gone and done a bad thing - malformed tree objects
+Date:   Fri, 31 Jul 2020 20:01:58 -0400
+Organization: PD Inc
+Message-ID: <046201d66796$fb575bd0$f2061370$@pdinc.us>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKHJ3iYXck3tZcTjZrfcxic8TWr/wHXy0UBAeX6BREByOzHDwNana1QAqebctinZJbKEA==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The content of this strbuf is unconditionally detached several lines
-before the strbuf_release() and the strbuf is never touched again after
-that point.
+> From: Jeff King
+> Sent: Friday, July 31, 2020 7:15 PM
+> 
+> On Fri, Jul 31, 2020 at 07:05:42PM -0400, Jason Pyeron wrote:
+> 
+> > > If the cruft has already been stored in a packfile, then prune would
+> > > not touch it.  "git repack -a -d && git prune --expire=now" would be
+> > > the next thing to do.
+> >
+> > $ git repack -a -d && git prune --expire=now
+> > Enumerating objects: 327236, done.
+> > Counting objects: 100% (327125/327125), done.
+> > Delta compression using up to 8 threads
+> > Compressing objects: 100% (104728/104728), done.
+> > Writing objects: 100% (327125/327125), done.
+> > Total 327125 (delta 205244), reused 326116 (delta 204678), pack-reused 0
+> >
+> > $ git cat-file --batch-all-objects --batch=objecttype
+> > fatal: object 00009623a06b8dea7c151542fc789539599c07d0 changed type!?
+> 
+> That should be dropping everything that isn't reachable. I'd suggest to
+> expire reflogs, though it looks like you've also tried "git gc" with
+> reflog expiration. Does removing .git/logs entirely help?
+> 
+> If not, are you sure it isn't actually reachable from your history? What
+> does:
+> 
+>   git rev-list --all --objects | grep 00009623a06
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+$ git rev-list --all --objects | grep 00009623a06
+00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
+(it is still running...)
 
-Notes:
-    I'm on the fence about this change. On the one hand, I spent extra
-    cycles studying the code to determine if the strbuf was used again
-    after being detached. On the other hand, the strbuf_release() at the
-    end of the function protects against a leak if someone ever inserts
-    code which re-uses the strbuf. So, I wouldn't be bothered if this
-    patch is dropped from the series.
+But that is an expected result, I will be back at work on Sunday.
 
- worktree.c | 2 --
- 1 file changed, 2 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index cba2e54598..c0df5e2c79 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -66,8 +66,6 @@ static struct worktree *get_main_worktree(void)
- 	worktree->is_bare = (is_bare_repository_cfg == 1) ||
- 		is_bare_repository();
- 	add_head_info(worktree);
--
--	strbuf_release(&worktree_path);
- 	return worktree;
- }
- 
--- 
-2.28.0.203.gce1f2e0ef1
+> 
+> say? If no hits, does adding --reflogs to the command-line change it?
+> 
+> We also consider blobs in the index reachable. I don't recall offhand
+> whether that applies to trees mentioned by the cache-trees extension. I
+> don't _think_ that would apply to your broken tree, since they'd have
+> been generated by Git itself, but possibly removing .git/index (if this
+> isn't a bare repo) would help?
+> 
+> -Peff
 
