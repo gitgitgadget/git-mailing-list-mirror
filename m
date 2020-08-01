@@ -2,128 +2,203 @@ Return-Path: <SRS0=89BL=BL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44F66C433E0
-	for <git@archiver.kernel.org>; Sat,  1 Aug 2020 22:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB5AC433E1
+	for <git@archiver.kernel.org>; Sat,  1 Aug 2020 23:33:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 129A2206E6
-	for <git@archiver.kernel.org>; Sat,  1 Aug 2020 22:06:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9999F20789
+	for <git@archiver.kernel.org>; Sat,  1 Aug 2020 23:33:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExFoPCbL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BHPYmt3w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726624AbgHAWGz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Aug 2020 18:06:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
+        id S1727788AbgHAXdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Aug 2020 19:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbgHAWGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Aug 2020 18:06:54 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44166C06174A
-        for <git@vger.kernel.org>; Sat,  1 Aug 2020 15:06:54 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id x9so35967894ljc.5
-        for <git@vger.kernel.org>; Sat, 01 Aug 2020 15:06:54 -0700 (PDT)
+        with ESMTP id S1725883AbgHAXdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Aug 2020 19:33:19 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66586C06174A
+        for <git@vger.kernel.org>; Sat,  1 Aug 2020 16:33:19 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id jp10so8442491ejb.0
+        for <git@vger.kernel.org>; Sat, 01 Aug 2020 16:33:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GOWO6ieaiXN3BgekwcAFZmdh/iTW7mlhT9giZgi2rDo=;
-        b=ExFoPCbLYvL2X/+ppIB9vDuEbw2M+71xT5Mqu5Iv4YZ8IfrtdJOAedCS8eTBHL2Vo8
-         04Uc1GvmaKRUaYWuEgMZ5rMbfGLN3OeG6R8WdWI0NsLgIHOkPzb4BU/+/Ge8TVqF56ia
-         kKRP+Sz1LoBlz4KWLdyL+bbdh/P75GH4tWmKouozb3AGSlQiDICA9hcNFYQqRpOpug2I
-         hL8Qw3yknaV4i4Y1PZfgBRG4nvdp96/P9X6jTB3Gh3Z19XWsUch//0FddJAYpVqip2l3
-         HCpKcpb//wTeImWbs4qg+XV81DaFtIyCV27THSGjCqG8xp5DkCGYy+jo71MTegz5tRZs
-         MXnA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=G/BMB0HBxfocsOLq+OVYWachPcOTI3U+OmfKEFu2JZU=;
+        b=BHPYmt3wlLCqJZ87H55tiucTfcVwv6LQDZzUrouSgMDbwJAfTPo9eU87/fXNheMN0p
+         o15iXz/ikAOz0cw+B0PWxELUFO9sOYCWEuyvFiGcvHKzdFNoYg3cOQWE1U+C0x6GSaTX
+         W2rBIbzTN0zXJ+TxZCsyw5jBL775R5x825b+xyVz70jdXosRXCeSwfsMU/DJsz3BHiCH
+         WkD4ir/S7fTUejNho4AWktBsr2SnWTWpd7j5EGKJtqjp0UgLkC4e/HeaO9Rk4GDvOvoj
+         pWDhrQyro9G1DGhqL+yHpu2S285gzvv1Qa52dKRNRvuSSy9ghOShozzCmNPqFmgBgmLn
+         /zUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GOWO6ieaiXN3BgekwcAFZmdh/iTW7mlhT9giZgi2rDo=;
-        b=Ug9Upj26q8iKr/wHhQ3Jqr9DGzfH5S9MMZSHrt0PeSvbWVg0yYRfFCWQrqCW1ue5U7
-         ed82lWo8LZXlgrd4Nj/Iax25Lkk1RoX9dyPlD2I7zv82hUMODiJWvYBQQRcb0gv1wso+
-         LUplz9IDoslVWs0CLFV5ATX+KBbOrKsg7dDqjZyR/dmq+g1at300JejJxFeBZ3heavHe
-         19q2hxBkWeo75U0CiEVmt5L2ok3+ipUmV6rBcTWNWC8Yrn/8TmsubnAqb+ybpKX9V4lO
-         tufGHHDwLxmqhSxWg9i4Z5RgXjiJFMiVSHS6zpqNCL+/frci2fCrIMVVZ8Cslduw4V9M
-         nuAQ==
-X-Gm-Message-State: AOAM532/5f8VN1GbqYmK1oxJFJ1jVSvyFL7bKEz5MLfF7q9K9FemmhKB
-        S2jPwh7odOnzo9Am9ApYTqy9ls0v
-X-Google-Smtp-Source: ABdhPJxl+HcPAsTdLvamYx0yAakaTndOg9Mz1A45OXdLv3lh6IdE0Se93aoe21GCr7Q2eDtr0BjEVw==
-X-Received: by 2002:a2e:9913:: with SMTP id v19mr4384756lji.292.1596319612331;
-        Sat, 01 Aug 2020 15:06:52 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id n3sm2608364ljc.114.2020.08.01.15.06.50
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=G/BMB0HBxfocsOLq+OVYWachPcOTI3U+OmfKEFu2JZU=;
+        b=IVDU6dbKrluXr0nFrCeJF3BwYdHwiOaCX6m7H1HD08gkRBYHl3No+drIyO0nz+iCxS
+         kylPIWTnFjNcXkkZdN3W94boFTDSEw5kgvoOeGEe3W8sCwOy5IOlGQKVNLqtBBjzQWsG
+         En5OjWL/kGwE2nbkBz2b2JS8GzBVd9netZAruBTcXsI5V9Hqasou57nXdBXjES1i0eDA
+         eb+FtpdgFS4J/lbvUPMjIJ7aw44/99/C5AIx7OqIQRj5V5KFOoDTngUWparqAJImnC4S
+         C7mnnXdBph/HDXs1UdY4YiA5i2XBaHSs0/ohLC1TxB1vbGfvv7mrx3UYGy9DJzwuop96
+         G9ew==
+X-Gm-Message-State: AOAM532RVVCv8NBMze7ADVz2dPN+qn8+M0ZBkLEIqH28UElvACLCIPQp
+        QWxL4fuKHkCFqBscTbZGAxFFmvLW
+X-Google-Smtp-Source: ABdhPJy4k86YopDi4Tw+LtnUTPskekaSKVgvhf+iBE/6kb6MLQtZzgBmQ3kSNRzc+T6eb//i/d9lZg==
+X-Received: by 2002:a17:906:70c:: with SMTP id y12mr9693893ejb.231.1596324797778;
+        Sat, 01 Aug 2020 16:33:17 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m6sm11971711ejq.85.2020.08.01.16.33.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Aug 2020 15:06:51 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] t1450: fix quoting of NUL byte when corrupting pack
-Date:   Sun,  2 Aug 2020 00:06:11 +0200
-Message-Id: <20200801220611.10453-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.81.ge8ab941b67
-MIME-Version: 1.0
+        Sat, 01 Aug 2020 16:33:17 -0700 (PDT)
+Message-Id: <pull.689.git.1596324796918.gitgitgadget@gmail.com>
+From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 01 Aug 2020 23:33:16 +0000
+Subject: [PATCH] diff: teach --stat to ignore uninteresting modifications
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, Matthew Rogers <mattr94@gmail.com>,
+        Matthew Rogers <mattr94@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We use
+From: Matthew Rogers <mattr94@gmail.com>
 
-  printf '\0'
+Sometimes when diffing, files may show as being momdified even when
+there are no interesting diffs to show.  This happens naturally when
+using options such as --ignore-space-change.  We don't want to prevent
+the display  of all files that have 0 effective diffs since they could
+be the result of a rename, permission change, or other similar operation
+that may still be of interest so we special case additions and deletions
+as they are always interesting.
 
-to generate a NUL byte which we then `dd` into the packfile to ensure
-that we modify the first byte of the first object, thereby
-(probabilistically) invalidating the checksum. Except the single quotes
-we're using are interpreted to match with the ones we enclose the whole
-test in. So we actually execute
-
-  printf \0
-
-and end up injecting the ASCII code for "0", 0x30, instead.
-
-The comment right above this `printf` invocation says that "at least one
-of [the type bits] is not zero, so setting the first byte to 0 is
-sufficient". Substituting "0x30" for "0" in that comment won't do: we'd
-need to reason about which bits go where and just what the packfile
-looks like that we're modifying in this test.
-
-Let's avoid all of that by actually executing
-
-  printf "\0"
-
-to generate a NUL byte, as intended.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Matthew Rogers <mattr94@gmail.com>
 ---
- If my reading is correct, when we substitute 0x30, the type will be 3
- (blob) and the size will be zero. So there might actually exist
- formally valid packfiles where this byte that we're modifying is
- already zero. What matters in the end is whether we might be using such
- a packfile in this exact test and from what I can tell, no, we won't be
- doing that.
+    diff: teach --stat to ignore uninteresting modifications
+    
+    This patch is based on the discussion these email threads:
+    
+    https://lore.kernel.org/git/1484704915.2096.16.camel@mattmccutchen.net/
+    https://lore.kernel.org/git/CAOjrSZtQPQ8Xxuz+7SGykR8Q-gFDEZANSE5yQASqKjpbUAq_5Q@mail.gmail.com/
+    
+    With the code mostly taken from this specific message:
+    https://lore.kernel.org/git/20170118111705.6bqzkklluikda3r5@sigill.intra.peff.net/
+    
+    The summary is that when running git diff --stat in combination with
+    --ignore-all-space or similar options, you'll see many lines of the
+    form:
+    
+    some-file.txt | 0
+    
+    which can be misleading when you are explicitly telling git to "ignore
+    all space" or something similar. To rectify this issue, this patch
+    categorizes all files that are modified but have no effective changes as
+    not fit to display to the user.
 
- t/t1450-fsck.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-689%2FROGERSM94%2Fzero-diffs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-689/ROGERSM94/zero-diffs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/689
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 344a2aad82..af2a2c4682 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -714,7 +714,7 @@ test_expect_success 'fsck fails on corrupt packfile' '
- 	# at least one of which is not zero, so setting the first byte to 0 is
- 	# sufficient.)
- 	chmod a+w .git/objects/pack/pack-$pack.pack &&
--	printf '\0' | dd of=.git/objects/pack/pack-$pack.pack bs=1 conv=notrunc seek=12 &&
-+	printf "\0" | dd of=.git/objects/pack/pack-$pack.pack bs=1 conv=notrunc seek=12 &&
+ diff.c                     | 36 +++++++++++++++++++++++++++++-------
+ t/t4015-diff-whitespace.sh |  8 +++++++-
+ 2 files changed, 36 insertions(+), 8 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index d24aaa3047..9868f82ece 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3153,16 +3153,19 @@ static void show_dirstat_by_line(struct diffstat_t *data, struct diff_options *o
+ 	gather_dirstat(options, &dir, changed, "", 0);
+ }
  
- 	test_when_finished "rm -f .git/objects/pack/pack-$pack.*" &&
- 	remove_object $hsh &&
--- 
-2.28.0.81.ge8ab941b67
++static void free_diffstat_file(struct diffstat_file *f)
++{
++	free(f->print_name);
++	free(f->name);
++	free(f->from_name);
++	free(f);
++}
++
+ void free_diffstat_info(struct diffstat_t *diffstat)
+ {
+ 	int i;
+-	for (i = 0; i < diffstat->nr; i++) {
+-		struct diffstat_file *f = diffstat->files[i];
+-		free(f->print_name);
+-		free(f->name);
+-		free(f->from_name);
+-		free(f);
+-	}
++	for (i = 0; i < diffstat->nr; i++)
++		free_diffstat_file(diffstat->files[i]);
+ 	free(diffstat->files);
+ }
+ 
+@@ -3718,6 +3721,25 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		if (xdi_diff_outf(&mf1, &mf2, discard_hunk_line,
+ 				  diffstat_consume, diffstat, &xpp, &xecfg))
+ 			die("unable to generate diffstat for %s", one->path);
++
++		if (DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two)) {
++			struct diffstat_file *file = 
++				diffstat->files[diffstat->nr - 1];
++			/*
++			 * Omit diffstats of modified files where nothing changed. 
++			 * Even if !same_contents, this might be the case due to
++			 * ignoring whitespace changes, etc.
++			 * 
++			 * But note that we special-case additions and deletions,
++			 * as adding an empty file, for example is still of interest.
++			 */
++			if (p->status == DIFF_STATUS_MODIFIED 
++				&& !file->added
++				&& !file->deleted) {
++				free_diffstat_file(file);
++				diffstat->nr--;
++			}
++		}
+ 	}
+ 
+ 	diff_free_filespec_data(one);
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 88d3026894..32c1b967f9 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -789,7 +789,7 @@ test_expect_success 'checkdiff allows new blank lines' '
+ 	git diff --check
+ '
+ 
+-test_expect_success 'whitespace-only changes not reported' '
++test_expect_success 'whitespace-only changes not reported (diff)' '
+ 	git reset --hard &&
+ 	echo >x "hello world" &&
+ 	git add x &&
+@@ -799,6 +799,12 @@ test_expect_success 'whitespace-only changes not reported' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'whitespace-only changes not reported (diffstat)' '
++	# reuse state from previous test
++	git diff --stat -b >actual &&
++	test_must_be_empty actual
++'
++
+ test_expect_success 'whitespace-only changes reported across renames' '
+ 	git reset --hard &&
+ 	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
 
+base-commit: e8ab941b671da6890181aea5b5755d1d9eea24ec
+-- 
+gitgitgadget
