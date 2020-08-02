@@ -2,176 +2,110 @@ Return-Path: <SRS0=XjWc=BM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F44FC433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 15:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4030EC433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 16:11:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE45E20738
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 15:20:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 207CD207BB
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 16:11:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rw4LSFf+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvPurM0f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726987AbgHBPU6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 11:20:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45870 "EHLO
+        id S1726676AbgHBQIU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 12:08:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726819AbgHBPUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 11:20:52 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13384C061757
-        for <git@vger.kernel.org>; Sun,  2 Aug 2020 08:20:52 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id c19so2248080wmd.1
-        for <git@vger.kernel.org>; Sun, 02 Aug 2020 08:20:52 -0700 (PDT)
+        with ESMTP id S1725768AbgHBQIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 12:08:20 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21E2CC06174A
+        for <git@vger.kernel.org>; Sun,  2 Aug 2020 09:08:20 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id r12so31960845wrj.13
+        for <git@vger.kernel.org>; Sun, 02 Aug 2020 09:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4ym1IzoRp2NjrKCQfPSxjzCBmGas+7GV3dRMTATrHus=;
-        b=rw4LSFf+UwiMaZ2skRe4V6jB8qX9wmuVfEB6mU1uTw3IcUYp3c/IuIk6gtVUTtOfxI
-         iQd3XdL266hIJ6BAXQz4oh9fxGXcNzmNoyhswAmU+5zhSGrSge4xJ3Homulk1CVkGB9l
-         yKNLsfsO5oipTqkD6YkftxmmnT5wZ18X4Cr1ii0DjAiM/i7mzuNH4ddkpY++RfbIJc7T
-         weTA1PsWBL64a90OAcjeUjT6UGwNhf7F4pbwe50egQ9+ECO3j9u1klowRp/8p/Pu3pGI
-         kaZ5Y3KKi+IU4Dlm7opObeLWEENm3yRi+In3/HrLUZp6GiTaODHqZoBBQ5dJN71sxqSB
-         5ZMQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vN/cANN1vgxuEq33zAHb0Y0/Spp5ooISs1tzUQf8aq8=;
+        b=JvPurM0f+xcTbm9xy55w74tolBGM6Gr4/AbkI5+2WlxiTMAvX1K5EXBhz2t4rq1dlA
+         svh6EtRUbyixZH2Ff3sEkgO8r2F9Q96D5m8jXHDWFWC0Wk/HopxbjYmPqXHRlRbw/bkz
+         +uTInsszcZDOIrJyGZlSo6MaUESkcXVaahDio1TbPdCBBVVjsa/Ip50h/ZGhAc46Z+F9
+         xBhjnVK1a4IOUCkumrDD/J3pHvLAUBLr66xVlq/bNGyWAwjsQ8Ozz1u/7cIQ4/BhYxcu
+         am1cFaftgMBth9XwQUROmV7f5L9JCzr4uyvfiYQ7GyX7s1keBhH5L7uFEUeMdhVTs2Jh
+         TgLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4ym1IzoRp2NjrKCQfPSxjzCBmGas+7GV3dRMTATrHus=;
-        b=jPbehssyKD7kC90vez9IDhZDRKfU0SEi6QY0oKaMY0jK/RXPPxipGZwM//vsRTpWWF
-         OfD4qGzz8JP8RWmYFO60pVT8afEtRBDhYuy74exWWW6b3n0ubxNAZinWWsjlcV7RNDtI
-         CoZgbvCvUp7yrlq+pkD/+Mn0set7TyVl1m5XLMhqiefT8kxDNNTA5Gj+I1yosdvHMpD2
-         hmV1BelJ854Gj/QzAreWtGKwi1iD+y8rg3iQr41M6WePjAEX2vEwswf+2b87gfHpyjVf
-         azGppEsbCnB9EkYqBmofeuy7KWRWj3OYQ0UT9zci2f6zzMnD7AmQKwy3pH3nDp3yeGXl
-         0i+A==
-X-Gm-Message-State: AOAM531pm3L+Hip0x5pFIWta1MqJozO1EpslaEfYldm5BVG65e/ivQwJ
-        ALqrKWhQ/hAagJeoHJgtoczxVk3w
-X-Google-Smtp-Source: ABdhPJwyw1g6R1rsBs8cTnsbMrDMMdzkYl4fegYjzUSePcV9XRnTQ4mXxrbZFcru5kE0ZHDakcfQRQ==
-X-Received: by 2002:a1c:bd04:: with SMTP id n4mr12863733wmf.83.1596381650702;
-        Sun, 02 Aug 2020 08:20:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14sm20420192wrg.96.2020.08.02.08.20.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2020 08:20:50 -0700 (PDT)
-Message-Id: <f49cf08f4f61d667633465903111675dd33e56e9.1596381647.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.691.git.1596381647.gitgitgadget@gmail.com>
-References: <pull.691.git.1596381647.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 02 Aug 2020 15:20:46 +0000
-Subject: [PATCH 2/3] help: drop usage of 'common' and 'useful' for guides
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vN/cANN1vgxuEq33zAHb0Y0/Spp5ooISs1tzUQf8aq8=;
+        b=TjxnFHAbkfdEwBurGX0FTzPkStQlHaQ+OOFMAEmt9XPqb3ruaP9MVvSkOB2LGNjfGt
+         Rmz6d0wkQrch0e76TanswOM+be18IcIWVzvSIhvVFhcVIhGYPa0mBJp7wnyh6FTLzIOX
+         J7twyRCHay9aEwdpRFRLYQ64B8gOtLU8zYoMi4uJTrV3R0eh8kXdPMqtrfRfjNIKOP5k
+         abDc53vg/UB37A7TgHZFvpKmEt2tNBWOskuaM/n8eTkP6Ywa4iuHm7+GjF7iOGQbTpOy
+         zjjdWOWkjFGTqbeVSm9Nek36vI6KDGkBn1dQGDnWePS4GbH9ehpCjKiNrBvNjfb3OlcJ
+         n1+g==
+X-Gm-Message-State: AOAM533aIJ9+8rrEa9qCqKrJ5vpq0n5OHhtYD2GHJw2Wbgt8c8XX86bE
+        3qck7yfGEQA2yhZMGGMe7xSIswQTu6nWLTbY3u4=
+X-Google-Smtp-Source: ABdhPJxqrRfl7D+MgNn5chAg1ZedRJB6tCZJFtJgVoayIwzERvaG8tgLglYigdpRZb02R9U46zkmJvLGp6fuoxdKAak=
+X-Received: by 2002:a05:6000:10c4:: with SMTP id b4mr10832494wrx.50.1596384498683;
+ Sun, 02 Aug 2020 09:08:18 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-        <pclouds@gmail.com>, Philip Oakley <philipoakley@iee.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <2e2907ac-3be9-c0ed-830a-f8aa28b471aa@web.de>
+In-Reply-To: <2e2907ac-3be9-c0ed-830a-f8aa28b471aa@web.de>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Sun, 2 Aug 2020 09:08:08 -0700
+Message-ID: <CAPx1Gvesmwf_CBj6D=YriFQgtEsDyUe7PHa6p9AvxG=fwAvHpA@mail.gmail.com>
+Subject: Re: [PATCH] connected: use buffered I/O to talk to rev-list
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Sun, Aug 2, 2020 at 7:39 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> @@ -135,16 +135,10 @@ int check_connected(oid_iterate_fn fn, void *cb_dat=
+a,
+>                 if (new_pack && find_pack_entry_one(oid.hash, new_pack))
+>                         continue;
+>
+> -               memcpy(commit, oid_to_hex(&oid), hexsz);
+> -               if (write_in_full(rev_list.in, commit, hexsz + 1) < 0) {
+> -                       if (errno !=3D EPIPE && errno !=3D EINVAL)
+> -                               error_errno(_("failed write to rev-list")=
+);
+> -                       err =3D -1;
+> -                       break;
+> -               }
+> +               fprintf(rev_list_in, "%s\n", oid_to_hex(&oid));
+>         } while (!fn(cb_data, &oid));
+>
+> -       if (close(rev_list.in))
+> +       if (fclose(rev_list_in))
+>                 err =3D error_errno(_("failed to close rev-list's stdin")=
+);
+>
+>         sigchain_pop(SIGPIPE);
+> --
+> 2.28.0
 
-Since 1b81d8cb19 (help: use command-list.txt for the source of guides,
-2018-05-20), all man5/man7 guides listed in command-list.txt appear in
-the output of 'git help -g'.
+The same ferror()-before-fclose() remarks apply here too,
+but this time the explicit errno checking (EPIPE) cannot
+be done -- it's too late, errno is probably overwritten.  I'm
+not sure how valuable the explicit errno tests are in the first
+place so I will leave that to others, but if we want to keep
+the explicit tests, use:
 
-However, 'git help -g' still prefixes this list with "The common Git
-guides are:", which makes one wonder if there are others!
+    if (fprintf(...) < 0)
 
-In the same spirit, the man page for 'git help' describes the '--guides'
-option as listing 'useful' guides, which is not false per se but can
-also be taken to mean that there are other guides that exist but are not
-useful.
+to check each fprintf(), and add a final fflush() call (with
+another check) before the fclose().
 
-Instead of 'common' and 'useful', use 'Git concept guides' in both
-places. To keep the code in line with this change, rename
-help.c::list_common_guides_help to list_guides_help.
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/git-help.txt | 6 +++---
- builtin/help.c             | 2 +-
- help.c                     | 4 ++--
- help.h                     | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index 69c0c5c34e..44fe8860b3 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -21,8 +21,8 @@ on the standard output.
- If the option `--all` or `-a` is given, all available commands are
- printed on the standard output.
- 
--If the option `--guides` or `-g` is given, a list of the useful
--Git guides is also printed on the standard output.
-+If the option `--guides` or `-g` is given, a list of the
-+Git concept guides is also printed on the standard output.
- 
- If a command, or a guide, is given, a manual page for that command or
- guide is brought up. The 'man' program is used by default for this
-@@ -58,7 +58,7 @@ OPTIONS
- 
- -g::
- --guides::
--	Prints a list of useful guides on the standard output. This
-+	Prints a list of the Git concept guides on the standard output. This
- 	option overrides any given command or guide name.
- 
- -i::
-diff --git a/builtin/help.c b/builtin/help.c
-index 299206eb57..bb339f0fc8 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -579,7 +579,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (show_guides)
--		list_common_guides_help();
-+		list_guides_help();
- 
- 	if (show_all || show_guides) {
- 		printf("%s\n", _(git_more_info_string));
-diff --git a/help.c b/help.c
-index 44cee69c11..d478afb2af 100644
---- a/help.c
-+++ b/help.c
-@@ -397,10 +397,10 @@ void list_cmds_by_config(struct string_list *list)
- 	}
- }
- 
--void list_common_guides_help(void)
-+void list_guides_help(void)
- {
- 	struct category_description catdesc[] = {
--		{ CAT_guide, N_("The common Git guides are:") },
-+		{ CAT_guide, N_("The Git concept guides are:") },
- 		{ 0, NULL }
- 	};
- 	print_cmd_by_category(catdesc, NULL);
-diff --git a/help.h b/help.h
-index 500521b908..dc02458855 100644
---- a/help.h
-+++ b/help.h
-@@ -21,7 +21,7 @@ static inline void mput_char(char c, unsigned int num)
- 
- void list_common_cmds_help(void);
- void list_all_cmds_help(void);
--void list_common_guides_help(void);
-+void list_guides_help(void);
- 
- void list_all_main_cmds(struct string_list *list);
- void list_all_other_cmds(struct string_list *list);
--- 
-gitgitgadget
-
+Chris
