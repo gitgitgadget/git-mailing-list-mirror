@@ -6,98 +6,150 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04AE8C433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 02:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 100ABC433E0
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 03:02:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E3C62067D
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 02:33:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE5BD2072A
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 03:02:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RNjJZyfu"
+	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="WV9Io6BS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbgHBCUZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Aug 2020 22:20:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64598 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbgHBCUZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Aug 2020 22:20:25 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B51FE032B;
-        Sat,  1 Aug 2020 22:20:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/4zCTIizDUkgtzBmjnSk+Y362rA=; b=RNjJZy
-        fuJNmRZAZCSsKUF/dAcX/5VU1ogONJ1oW6Nlo19pzyvtxW84afGV342Y4JVdLWBt
-        3jPGOnzlYJKmlJCZ6jE1H84gQ/FNylQIR3Mr3QBYeXzSgSV3Hg2gUQ1ZDzqLyR4O
-        CV6vC0zbq9nfmzKdorP29FG2YAOcWVQhNLmt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=T2jxbo27fL92dnvpny4xITFq6iOPiWjP
-        xPWupmBaR/59V52U1mAQs6GHpRa2Mu9BF2Z+3cfspZ02FZ1JlDTntgHN2Pm5DQTb
-        W7+JT3B1VGwPijFdq3aPEd+7mNpwceo/Nq0CUO34YLMb1Sho/r20SHYYpa9FMPdM
-        oioA+15P0kA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 137EFE032A;
-        Sat,  1 Aug 2020 22:20:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E4EBE0329;
-        Sat,  1 Aug 2020 22:20:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Subject: Re: [PATCH v3 2/6] stash: remove the second index in stash_working_tree()
-References: <20200630151558.20975-1-alban.gruin@gmail.com>
-        <20200731165140.29197-1-alban.gruin@gmail.com>
-        <20200731165140.29197-3-alban.gruin@gmail.com>
-        <xmqqy2mz35i6.fsf@gitster.c.googlers.com>
-Date:   Sat, 01 Aug 2020 19:20:18 -0700
-In-Reply-To: <xmqqy2mz35i6.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 31 Jul 2020 11:26:41 -0700")
-Message-ID: <xmqqime123h9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726676AbgHBCuF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Aug 2020 22:50:05 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:32962 "EHLO mail1.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725883AbgHBCuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Aug 2020 22:50:04 -0400
+Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id 0722nucA027414
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 1 Aug 2020 22:49:57 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail1.pdinc.us 0722nucA027414
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1596336597; bh=G7G1ssPUnapHzKmIsp43V5mcxJk7u0Rthddee6XOtJw=;
+        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
+        b=WV9Io6BSidzg3fEM63g/JxSwywTiJaJEfOY2TtKM2vD6LePk3mtP5JvPfXFU0DxFY
+         EoSUi0+1WP32B3ZOMV/AR4sizri7v3Iq8OZk6X1ArS7zW50zlV/hQvmMoKa1KXjvCj
+         iHFPxGr+FS0pyzi3Up7UpgVYhTToKXbhdZ+T/AMzXYA70d2f2XTOIB59qrzfadPtPL
+         Rsjk2rJzIe/NAB/c4fHT+IvpJ5/uNEYdawgdLWr9E6B192SgfQUkGftzix54DGLD2W
+         HZ622ebb8ZVMWweCrrRnXF2xBoOBQHSHmc9nZwKeyEss+FgCEy80WGTq2TVZF8ocrO
+         fsNtM/I/QW40A==
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     "'Jeff King'" <peff@peff.net>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us> <xmqqh7trb0sr.fsf@gitster.c.googlers.com> <19cab01d66544$ecb402d0$c61c0870$@pdinc.us> <xmqq8sf2b3be.fsf@gitster.c.googlers.com> <045701d6678f$1f03df20$5d0b9d60$@pdinc.us> <20200731231521.GB1461090@coredump.intra.peff.net> <046201d66796$fb575bd0$f2061370$@pdinc.us> <20200801014443.GA1464485@coredump.intra.peff.net>
+In-Reply-To: <20200801014443.GA1464485@coredump.intra.peff.net>
+Subject: RE: I have gone and done a bad thing - malformed tree objects
+Date:   Sat, 1 Aug 2020 22:50:04 -0400
+Organization: PD Inc
+Message-ID: <052601d66877$a191c450$e4b54cf0$@pdinc.us>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B6A143D8-D466-11EA-A59C-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKHJ3iYXck3tZcTjZrfcxic8TWr/wHXy0UBAeX6BREByOzHDwNana1QAqebctgB9F6vawIf/OR+p0WrZsA=
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> -----Original Message-----
+> From: Jeff King
+> Sent: Friday, July 31, 2020 9:45 PM
+>=20
+> On Fri, Jul 31, 2020 at 08:01:58PM -0400, Jason Pyeron wrote:
+>=20
+> > > That should be dropping everything that isn't reachable. I'd =
+suggest to
+> > > expire reflogs, though it looks like you've also tried "git gc" =
+with
+> > > reflog expiration. Does removing .git/logs entirely help?
+> > >
+> > > If not, are you sure it isn't actually reachable from your =
+history? What
+> > > does:
+> > >
+> > >   git rev-list --all --objects | grep 00009623a06
+> >
+> > $ git rev-list --all --objects | grep 00009623a06
+> > 00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
+> > (it is still running...)
 
->> @@ -1091,8 +1088,6 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
->>  	argv_array_pushl(&cp_upd_index.args, "update-index",
->>  			 "--ignore-skip-worktree-entries",
->>  			 "-z", "--add", "--remove", "--stdin", NULL);
->> -	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
->> -			 stash_index_path.buf);
->>  
->>  	if (pipe_command(&cp_upd_index, diff_output.buf, diff_output.len,
->>  			 NULL, 0, NULL, 0)) {
->
-> And then the new code now lets "update-index" work directly on the
-> main index (which does make an observable difference to the outside
-> world, but we are not letting any hook to look at this intermediate
-> state, so it might be OK---I cannot tell at this point in the code).
+$ git rev-list --all --objects | grep 00009623a06
+00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
 
-This changes the behaviour of the command a lot when a fatal happens
-anywhere after this point til we reset the index to match the HEAD,
-doesn't it, I wonder.  The original code refrained from touching the
-index so after such a "fatal:" error message, the user would have
-seen the original state (with previous "git add" etc. the user did)
-in the index.  New code now added all the working tree changes to
-the index, so the user would lose the work made so far in the main
-index, no?  With later patch in the series applied, we will end up
-having even untracked paths in the main index---I am not sure to
-what extent that step would make things even worse, but it cannot be
-harmless.
+$ git rev-list --all --objects --reflog | grep 00009623a06
+00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
 
-> How is the use of second on-disk index hurting us?  I must be
-> missing something obvious, but at this point, it is not clear what
-> we are gaining---I only see downsides.
+No unexpected results, just the correct tree pointing to the 00009623a06 =
+as a tree.
+
+> >
+> > But that is an expected result, I will be back at work on Sunday.
+>=20
+> So it sounds like it's still reachable, and you'd need to rewrite
+> history to get rid of it. Or is that object OK, and it's a containing
+> tree that mentions it with the wrong mode the problem? In that case,
+> same question: is the containing tree reachable?
+
+Backing up to the beginning.
+
+There has always been a tree with a tree entry for that blob - which is =
+reachable.
+
+I then created a tree manually, in it I added that tree id as a blob =
+reference when it should have been a tree. (e.g. 100644 blob =
+00009623a06b8dea7c151542fc789539599c07d0 =
+00009623a06b8dea7c151542fc789539599c07d0.blob)=20
+
+I realized my mistake, dropped the commit referring to my butchered tree =
+object (reset to new correct commit with correct tree).
+
+The tree I created should no longer be reachable.
+
+$ mv logs logs.bak
+
+$ git cat-file --batch-all-objects --batch=3Dobjecttype --unordered =
+--allow-unknown-type
+objecttype
+fatal: object 00009623a06b8dea7c151542fc789539599c07d0 changed type!?
+
+$ git cat-file -t 00009623a06b8dea7c151542fc789539599c07d0
+tree
+
+$ git cat-file -s 00009623a06b8dea7c151542fc789539599c07d0
+2375
+
+$ echo -e 'import zlib\nfrom hashlib import =
+sha1\ndecompressed_contents=3Dzlib.decompress(open("objects/00/009623a06b=
+8dea7c151542fc789539599c07d0", "rb").read())\nprint =
+sha1(decompressed_contents).hexdigest()\nprint =
+decompressed_contents[0:19]' | python | hexdump -C
+00000000  30 30 30 30 39 36 32 33  61 30 36 62 38 64 65 61  =
+|00009623a06b8dea|
+00000010  37 63 31 35 31 35 34 32  66 63 37 38 39 35 33 39  =
+|7c151542fc789539|
+00000020  35 39 39 63 30 37 64 30  0a 74 72 65 65 20 32 33  =
+|599c07d0.tree 23|
+00000030  37 35 00 31 30 30 36 34  34 20 2e 70 0a           |75.100644 =
+.p.|
+0000003d
+
+$ git cat-file -p 00009623a06b8dea7c151542fc789539599c07d0 | cut -c -55 =
+| head
+100644 blob e465d57c345e2dcb117b5a30f9272b7fc5ec77cd    .p
+100755 blob 7f16c1d4cbb75cf7bd635970a2588ced6ccea8ad    Ap
+040000 tree 5261c0a3f3b4c688a082c3c5eaf03f8039bf153c    CA
+100644 blob 188c0d0541523016352b6851e0f7200c18a372e6    CM
+100644 blob c8b040ec356b21fcc06911c544149dc6f5d5b861    CM
+100644 blob e441983f0fd4d57fb7bf640de31f728529f12c29    CM
+100644 blob fd06c9c6ad662e099341f4e0a05b272c6370e64b    CM
+100644 blob d433fb05ebca807f4487ae4cecf48ec3b66cce78    CM
+100755 blob 4b1b049b83bcc7821a7b62977124bfcaa024d960    CM
+040000 tree 150d60813c913ec9a178c4230b18fbda84edc2af    RE
+
+
+
