@@ -7,62 +7,64 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90969C433DF
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 16:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04A86C433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 16:20:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D49B206F6
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 16:13:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D311A20722
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 16:20:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbN/BIGU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="heNAYN2G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726900AbgHBQLb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 12:11:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53538 "EHLO
+        id S1725906AbgHBQUZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 12:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726775AbgHBQLa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 12:11:30 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC62C06174A
-        for <git@vger.kernel.org>; Sun,  2 Aug 2020 09:11:30 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id f7so32055381wrw.1
-        for <git@vger.kernel.org>; Sun, 02 Aug 2020 09:11:30 -0700 (PDT)
+        with ESMTP id S1725768AbgHBQUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 12:20:25 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39167C06174A
+        for <git@vger.kernel.org>; Sun,  2 Aug 2020 09:20:25 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id f7so32067509wrw.1
+        for <git@vger.kernel.org>; Sun, 02 Aug 2020 09:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=+WcJB3H/BYtM1sN+8yVYSh7V1eUPgPjzzfc0OtHhsHo=;
-        b=XbN/BIGUIArOZzQ/21d8u0wyO2eWOpMGNxLfNP40m2NvwWBjaOQ1iaJ4W034RLns27
-         iVHtnRFxeTJRbQYOHNBhJm1c426TSmbaUZjZaQHa6grZ3WCEYakSqZfpeNj4Om1skEax
-         ca4mu7JreJyWId0HwLLjF1hoWazSBuEGWhNMjgGwGwbwXM14cohBPtYMkc0oUDbaZk6B
-         mSUqnYDUWJ4EP+bcFcSRnJDYtrwnoJinLZ+ZUn3fT+K9dNy26P6zRjPH78K1q+531b0r
-         A1Lf7oYYbNWjKWG5Nh57fq3DaOIRFPKoFJz57ZfSqyQ5tYMXNgtBLJU1Vu+QjPKwkxZ3
-         vdjg==
+        bh=1pFc14e16szg5ifqYLL7SmN/hVQRUUfv94maloOFAxI=;
+        b=heNAYN2GgergDcfhP9oXwxAfGh0UQe2/Zvke0onhAsGdER+QGqsaGUlJCstKzFqxkR
+         wp0pWlnSCsXt+YBGu7vxAvj9vJAheaAnrfvx9Yevxv0r9qMNGhBRvRl1qZNIm09e6y6F
+         C0GQOx69QM5uwDsQ4c2ocxGqYMTwFG4aDVDyKMt2I7a0LlFUdyLY4cPx0YcYl58kX7Is
+         akGt4nioD7mvWcxUMChUX7R5zfZwcXwr9E32r30/HKvOVttQGdaDMVebc223piSZrDnG
+         Q1hWV9OKDokILp6z5XJo1+WPsg4eHaF8A1sR1NCz4XhtoyuNhBr6ICx7zorrOLP8/aVP
+         Jnnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+WcJB3H/BYtM1sN+8yVYSh7V1eUPgPjzzfc0OtHhsHo=;
-        b=GxusKPymxp9r7nVkvrpWrXV7/Dh4i+cJyozLeICoMJnExNf6+XxdtaalSn78XvpF8u
-         9QsPFFaYiH/j2nhDS0AnOC2OjdxP8KH7HsgKMP/h8DpNY2ZrzbQWN5fcw72U8wa652+e
-         LYkWZNpv52q9tL26fiKSlFZz260BiJb2NwHaFKA6HFiXFCkKkLaR0KDo4GYQpKHBEUxs
-         kmb9BPrE3S7fXWlRThPgJQSJunGpn3rzmZUnaKZ8t4plnFdX6HNRY0yvCd9FiHDGNa7D
-         JynYPvVyXFB7KKkaBT0DIxms+NcIRe9dGIG8xTJLGDGRutsRaBA42y7kpdHVqAl/k5ph
-         Sj7g==
-X-Gm-Message-State: AOAM533Vh85v/f+xlZzZ7NGTrHZodw82B3V6mydGfPkrlC2Gbno9Jn6j
-        goCmZK8sEY2GTTqARui3WCOzmXBwjdvJoeN0WNU=
-X-Google-Smtp-Source: ABdhPJwTAqo5ZkqljvxjEjV6OJN7GNhWL9mY5FHikNXcA3FWcg+sWvnJiNevx7BGjmjLuvSk7iKrA3YBNLS5Nfod3zw=
-X-Received: by 2002:adf:ed88:: with SMTP id c8mr10875445wro.233.1596384687563;
- Sun, 02 Aug 2020 09:11:27 -0700 (PDT)
+        bh=1pFc14e16szg5ifqYLL7SmN/hVQRUUfv94maloOFAxI=;
+        b=cYfSR6HsqRk4ZGQdG9eXlsDyu6iPh2Nnh+Ra4itXz0V6UZVYZvEyt2JzKp5exwm/cJ
+         SaMU/1H1HLbqftOnmZo1dvXXP55gNqW4TMsoMRrkdkzpOha37THWTwThuitAKfbd7XrX
+         ma5gysxgH7i5fwCr6FEsqmPM9paZ5SFLKJCfC0S55b6cuT0phHd3t2z/IPS9Tsmts/Ez
+         pPUtfGskm711qpMJGCrTJV35TM4z5g04E9nXkpkp9N7i81XEgd65HXh3tXwOGcS/oPLd
+         PFBg8E0EAihZYF2LQkmMkP52S26nzPN9OfCis5imOrb7vV5RqT8CPOiBUcV50Qw9zBj3
+         63gg==
+X-Gm-Message-State: AOAM532+C6OM6noFogybC1m8AJa9eAni4KhIv+CjZdV5osHpUK7P6JOM
+        /OeWyVF+GyM57dNDs7/tOdjXAVbsNjVRMjUeKgQ=
+X-Google-Smtp-Source: ABdhPJxPsSGSiHHP4KiFxwokus5DpGFZ5Dry5NXnHcct047FJVDT9V/sRWgO8rArpZZVbPuBugok2XbOvyO0Z0sM2wc=
+X-Received: by 2002:a05:6000:10c4:: with SMTP id b4mr10865636wrx.50.1596385224005;
+ Sun, 02 Aug 2020 09:20:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <c5920e08-b7dd-e870-f99e-225d0aafc663@web.de>
-In-Reply-To: <c5920e08-b7dd-e870-f99e-225d0aafc663@web.de>
+References: <20200801220611.10453-1-martin.agren@gmail.com>
+ <CAPx1GvcZFVfmP8aTdXu_epdSn1EDy_cP6-=hi65c_5DbNEq+FQ@mail.gmail.com>
+ <CAPx1GvcD80MfjZLiKBrH8BgsvVToZ90C057gk7b4BUzbLMNu2A@mail.gmail.com> <CAN0heSoYAJkZVG7_TPTo3Osz+FuR__AY5Ykc8OSwzARTotfwcQ@mail.gmail.com>
+In-Reply-To: <CAN0heSoYAJkZVG7_TPTo3Osz+FuR__AY5Ykc8OSwzARTotfwcQ@mail.gmail.com>
 From:   Chris Torek <chris.torek@gmail.com>
-Date:   Sun, 2 Aug 2020 09:11:17 -0700
-Message-ID: <CAPx1GveChRzsA=FayzhZRSQLPz+o1Po3-_9ZvAGLPztpH5Jg9w@mail.gmail.com>
-Subject: Re: [PATCH] midx: use buffered I/O to talk to pack-objects
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sun, 2 Aug 2020 09:20:13 -0700
+Message-ID: <CAPx1GvdZNeuQqmYm8G62Zr02k=B5GK69xPw84WnvMCeJU7_amQ@mail.gmail.com>
+Subject: Re: [PATCH] t1450: fix quoting of NUL byte when corrupting pack
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -70,35 +72,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 2, 2020 at 7:40 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> @@ -1443,10 +1446,15 @@ int midx_repack(struct repository *r, const char =
-*object_dir, size_t batch_size,
->                         continue;
->
->                 nth_midxed_object_oid(&oid, m, i);
-> -               xwrite(cmd.in, oid_to_hex(&oid), the_hash_algo->hexsz);
-> -               xwrite(cmd.in, "\n", 1);
-> +               fprintf(cmd_in, "%s\n", oid_to_hex(&oid));
-> +       }
-> +
-> +       if (fclose(cmd_in)) {
-> +               error_errno(_("could not close stdin of pack-objects"));
-> +               result =3D 1;
-> +               finish_command(&cmd);
-> +               goto cleanup;
->         }
-> -       close(cmd.in);
->
->         if (finish_command(&cmd)) {
->                 error(_("could not finish pack-objects"));
-> --
-> 2.28.0
+On Sun, Aug 2, 2020 at 7:35 AM Martin =C3=85gren <martin.agren@gmail.com> w=
+rote:
+> No worries! Thanks for having a look at the patch. Is there anything
+> that could be done to make this clearer in the commit message? (I find it
+> quite awkward to discuss quoting: will the reader understand which
+> quoting is part of my own formatting of the message vs which is part of
+> the quoting issue I want to get across!?)
 
-Here, we don't have any explicit errno checking, but
-of course error_errno() uses errno.  This too needs
-an ferror() (or fflush()) test before the final fclose(),
-and then we just need to use plain error().  Otherwise
-you'll need the clumsier test-after-each-fprintf() and
-an explicit final fflush()-and-test.
+This is indeed a problem...
+
+Perhaps something along these lines (generic boilerplate
+for any single-quote fixes, that should be adjusted for the
+actual fix):
+
+    In the test scripts, the recommended style is, e.g.:
+
+        test_expect_success 'name' '
+            multi-line test
+            goes here
+        '
+
+    When using this style, any single quote in the multi-line
+    test section is actually closing the lone single quotes
+    that surround it.  To avoid confusion, minimize and/or
+    eliminate the use of single quotes here.
 
 Chris
