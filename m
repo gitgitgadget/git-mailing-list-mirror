@@ -2,144 +2,137 @@ Return-Path: <SRS0=XjWc=BM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8BE1C433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 00:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD7A9C433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 00:45:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2AED20725
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 00:31:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91F1520789
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 00:45:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uJoQ6FOi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TL8DH2uI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727908AbgHBAbc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Aug 2020 20:31:32 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57872 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbgHBAbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Aug 2020 20:31:31 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 117D1DE99A;
-        Sat,  1 Aug 2020 20:31:30 -0400 (EDT)
+        id S1726807AbgHBApT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Aug 2020 20:45:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59454 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbgHBApT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Aug 2020 20:45:19 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E2679DCA14;
+        Sat,  1 Aug 2020 20:45:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sZ/43kfG7VWWGvgdsJEq3PBS9yw=; b=uJoQ6F
-        OinhvC3bEdXmdLnjfyajt8m8t2FlpPoeQ+gquqsvzZ6APxMwvPvWi8SAh45Lo2C1
-        DlkGvHbqiA5zZtekiWy6y8k6gf5XDdFSHBbvoBWfKFlCWm3QXj2jAUsZA4ghmmXR
-        hUusIqt74cbsWGg4pjG6ITNnhTQ5AsrO9fq0M=
+        :content-type:content-transfer-encoding; s=sasl; bh=3XkOXBmEx9kP
+        GBevCDmkb8FUqBk=; b=TL8DH2uIPDxu1zb4/V1mv8Fyq0M3bFkGtVSgO7nQvAJG
+        1581NRENbhk4FcjZf4hGyVsem8VH7+NhNlBXWu414hp/Iy4IiKgVBKjcgtF4ftG+
+        Pt2Bv1dmVzMGECDyfRaIlPpRY12RJ7MNK1fG2E2XZK4swl6j+vucEqvMhZJG/0g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Xxx8r3B7CoC/rgnXBAln8juByKBPf2WV
-        etETu+g/Ha2Zd5RSXU1r2Mrvx62GWqBbpwY7JbJHzZ8Ib3QH/rj54qN4bGCT3dS8
-        VtP0FTn8Obk49h9Qmc8WKWQzrl7Te5Xd86FJLpme4xnH3AChID0G9/BSwGhZL5Ab
-        u19k/Pj2D7Y=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 09B8FDE999;
-        Sat,  1 Aug 2020 20:31:30 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ZAAmQz
+        e3XOoPb26XT9oUy78KMqgr116oiUgb0f88m1wmTDsK6BB4nfmNUJDuRJT/aef1FW
+        Nvbw9m7mrjpQ/6+m0YETc1+I/oke7lbMIxdp+76Ld5e79OqSGVU5h1QfyntrljRt
+        IkHTAGlbZmjhlfELgzEPveLwcH44uM2vrTjQ0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DB01FDCA13;
+        Sat,  1 Aug 2020 20:45:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4D9E3DE998;
-        Sat,  1 Aug 2020 20:31:27 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 238AFDCA11;
+        Sat,  1 Aug 2020 20:45:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Matthew Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH] diff: teach --stat to ignore uninteresting modifications
-References: <pull.689.git.1596324796918.gitgitgadget@gmail.com>
-Date:   Sat, 01 Aug 2020 17:31:25 -0700
-In-Reply-To: <pull.689.git.1596324796918.gitgitgadget@gmail.com> (Matthew
-        Rogers via GitGitGadget's message of "Sat, 01 Aug 2020 23:33:16
-        +0000")
-Message-ID: <xmqqv9i128iq.fsf@gitster.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] t1450: fix quoting of NUL byte when corrupting pack
+References: <20200801220611.10453-1-martin.agren@gmail.com>
+Date:   Sat, 01 Aug 2020 17:45:11 -0700
+In-Reply-To: <20200801220611.10453-1-martin.agren@gmail.com> ("Martin
+ =?utf-8?Q?=C3=85gren=22's?=
+        message of "Sun, 2 Aug 2020 00:06:11 +0200")
+Message-ID: <xmqqmu3d27vs.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 809E8C6E-D457-11EA-81E8-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6CD9645E-D459-11EA-80D7-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> +		if (DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two)) {
-> +			struct diffstat_file *file = 
-> +				diffstat->files[diffstat->nr - 1];
-> +			/*
-> +			 * Omit diffstats of modified files where nothing changed. 
-> +			 * Even if !same_contents, this might be the case due to
-> +			 * ignoring whitespace changes, etc.
-> +			 * 
-> +			 * But note that we special-case additions and deletions,
-> +			 * as adding an empty file, for example is still of interest.
-> +			 */
-> +			if (p->status == DIFF_STATUS_MODIFIED 
-> +				&& !file->added
-> +				&& !file->deleted) {
-> +				free_diffstat_file(file);
-> +				diffstat->nr--;
-> +			}
-> +		}
->  	}
-> 
->  	diff_free_filespec_data(one);
+> We use
+>
+>   printf '\0'
+>
+> to generate a NUL byte which we then `dd` into the packfile to ensure
+> that we modify the first byte of the first object, thereby
+> (probabilistically) invalidating the checksum. Except the single quotes
+> we're using are interpreted to match with the ones we enclose the whole
+> test in. So we actually execute
+>
+>   printf \0
+>
+> and end up injecting the ASCII code for "0", 0x30, instead.
+>
+> The comment right above this `printf` invocation says that "at least on=
+e
+> of [the type bits] is not zero, so setting the first byte to 0 is
+> sufficient". Substituting "0x30" for "0" in that comment won't do: we'd
+> need to reason about which bits go where and just what the packfile
+> looks like that we're modifying in this test.
+>
+> Let's avoid all of that by actually executing
+>
+>   printf "\0"
+>
+> to generate a NUL byte, as intended.
 
-There are some "trailing whitespace" errors detected by "git am/apply".
+Thanks.  Very well explained.
 
-> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-> index 88d3026894..32c1b967f9 100755
-> --- a/t/t4015-diff-whitespace.sh
-> +++ b/t/t4015-diff-whitespace.sh
-> @@ -789,7 +789,7 @@ test_expect_success 'checkdiff allows new blank lines' '
->  	git diff --check
->  '
->  
-> -test_expect_success 'whitespace-only changes not reported' '
-> +test_expect_success 'whitespace-only changes not reported (diff)' '
->  	git reset --hard &&
->  	echo >x "hello world" &&
->  	git add x &&
-> @@ -799,6 +799,12 @@ test_expect_success 'whitespace-only changes not reported' '
->  	test_must_be_empty actual
->  '
->  
-> +test_expect_success 'whitespace-only changes not reported (diffstat)' '
-> +	# reuse state from previous test
-> +	git diff --stat -b >actual &&
-> +	test_must_be_empty actual
-> +'
-> +
-
-This is a "let's show off our shiny new toy" test, which shows that
-the code change covered the case you are interested in changing.
-We'd also need tests that makes sure that the effect of the code
-change is not seen when it should not trigger.
-
-For example, if we further change mode bits of file 'x' (which has a
-whitespace-only changes applied in the test in the previous hunk),
-e.g.
-
-	git update-index --chmod=+x x &&
-	git diff --stat -b --cached >actual
-
-should that be counted as a file with 0-line change that is worth
-reporting, or is it hidden?  I _think_ the new code will do a wrong
-thing here.  That is,
-
- - If the change truly is only mode bits and one and two have
-   "same_contents", the new code is bypassed, and we'll continue to
-   show "0 lines changed, but the file is worth reporting".
-
- - If the change is whitespace-only change plus mode bits, i.e. one
-   and two do not have "same_contents", the new code triggers and
-   the stat output is suppressed for the path.
+I wonder if it is an easy way to find similar problems without too
+much hand-parsing of the test scripts.  Inside a modern test_expect_*
+that begins and ends the test body with a single quote, any line
+that has a single quote that is not quoted could be suspect, but
+that would probably give us too many false positive.
 
 
-
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+>  If my reading is correct, when we substitute 0x30, the type will be 3
+>  (blob) and the size will be zero. So there might actually exist
+>  formally valid packfiles where this byte that we're modifying is
+>  already zero. What matters in the end is whether we might be using suc=
+h
+>  a packfile in this exact test and from what I can tell, no, we won't b=
+e
+>  doing that.
+>
+>  t/t1450-fsck.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> index 344a2aad82..af2a2c4682 100755
+> --- a/t/t1450-fsck.sh
+> +++ b/t/t1450-fsck.sh
+> @@ -714,7 +714,7 @@ test_expect_success 'fsck fails on corrupt packfile=
+' '
+>  	# at least one of which is not zero, so setting the first byte to 0 i=
+s
+>  	# sufficient.)
+>  	chmod a+w .git/objects/pack/pack-$pack.pack &&
+> -	printf '\0' | dd of=3D.git/objects/pack/pack-$pack.pack bs=3D1 conv=3D=
+notrunc seek=3D12 &&
+> +	printf "\0" | dd of=3D.git/objects/pack/pack-$pack.pack bs=3D1 conv=3D=
+notrunc seek=3D12 &&
+> =20
+>  	test_when_finished "rm -f .git/objects/pack/pack-$pack.*" &&
+>  	remove_object $hsh &&
