@@ -2,154 +2,162 @@ Return-Path: <SRS0=XjWc=BM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 100ABC433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 03:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB5D3C433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 03:14:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE5BD2072A
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 03:02:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A67612067D
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 03:14:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="WV9Io6BS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnWK0WWM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgHBCuF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Aug 2020 22:50:05 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:32962 "EHLO mail1.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725883AbgHBCuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Aug 2020 22:50:04 -0400
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id 0722nucA027414
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 1 Aug 2020 22:49:57 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail1.pdinc.us 0722nucA027414
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1596336597; bh=G7G1ssPUnapHzKmIsp43V5mcxJk7u0Rthddee6XOtJw=;
-        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=WV9Io6BSidzg3fEM63g/JxSwywTiJaJEfOY2TtKM2vD6LePk3mtP5JvPfXFU0DxFY
-         EoSUi0+1WP32B3ZOMV/AR4sizri7v3Iq8OZk6X1ArS7zW50zlV/hQvmMoKa1KXjvCj
-         iHFPxGr+FS0pyzi3Up7UpgVYhTToKXbhdZ+T/AMzXYA70d2f2XTOIB59qrzfadPtPL
-         Rsjk2rJzIe/NAB/c4fHT+IvpJ5/uNEYdawgdLWr9E6B192SgfQUkGftzix54DGLD2W
-         HZ622ebb8ZVMWweCrrRnXF2xBoOBQHSHmc9nZwKeyEss+FgCEy80WGTq2TVZF8ocrO
-         fsNtM/I/QW40A==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     "'Jeff King'" <peff@peff.net>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us> <xmqqh7trb0sr.fsf@gitster.c.googlers.com> <19cab01d66544$ecb402d0$c61c0870$@pdinc.us> <xmqq8sf2b3be.fsf@gitster.c.googlers.com> <045701d6678f$1f03df20$5d0b9d60$@pdinc.us> <20200731231521.GB1461090@coredump.intra.peff.net> <046201d66796$fb575bd0$f2061370$@pdinc.us> <20200801014443.GA1464485@coredump.intra.peff.net>
-In-Reply-To: <20200801014443.GA1464485@coredump.intra.peff.net>
-Subject: RE: I have gone and done a bad thing - malformed tree objects
-Date:   Sat, 1 Aug 2020 22:50:04 -0400
-Organization: PD Inc
-Message-ID: <052601d66877$a191c450$e4b54cf0$@pdinc.us>
+        id S1727932AbgHBDOb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Aug 2020 23:14:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbgHBDOb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Aug 2020 23:14:31 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03C63C06174A
+        for <git@vger.kernel.org>; Sat,  1 Aug 2020 20:14:31 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id x5so11511076wmi.2
+        for <git@vger.kernel.org>; Sat, 01 Aug 2020 20:14:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=mKFj9KsdyIVToWDv2SPNaRVDtav/tPPMJ9lRL1fyw3o=;
+        b=MnWK0WWMvN4vbJGXCsHcUeCzyUA7MogciCDDrcnLECsGd4eoiz90bmyWnHwMQtZCH5
+         HfxAWfbxQ5Wqatt9XPT4MXOZucLSDGLcvBRrwXD8wPTIC7fGh4iOsRYs/zOdAnq23eKv
+         8IYimxq5+4uoG+9nTe2NLrWzrvYQJWkkUo4Tot916d94GN3NjXe3ly8TukyvRSvdizDM
+         b/WWIgi43KEgSAoir/6O0SU5lxpmdh1ZIjJSaxbVNT1C4/MKPx4WL/L+LE2qt8U1e5aD
+         4WboPTuLQ1uM+Ltx6VDj3/oMcZQx2dsPZ09slyxFio5iUDFEUr8d0pwwEm1SvGeHDjTB
+         QNCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mKFj9KsdyIVToWDv2SPNaRVDtav/tPPMJ9lRL1fyw3o=;
+        b=oC3PJ0Bugmb8hSYkc/PL/qd+x+TnT8G4MUkjMqWiU7Pirv8sT5lZlMTongcBHvurlX
+         NXBIk5c4NdRiNKvyJf2G5t3/4nBj+m6KVDgUe1rWRK5DQy1BFjCxw3TGC0t0jbRHBff5
+         TKpqce40cZezD9+0XQYjT1KVG6kqIrfrWJKXVxUatEunn/HHsH9v44r1x4RN+7JkNeBc
+         nc6WFEiyK8Sz/bhkB9DfRvl10XYNWdBW186PY9sUuBDdZCR12bBNuLQnQregzBFWd9Wu
+         AiKuybrhan4GcVS65bLxnXFAjU6j3k1sgligBFeX297QX5DktHduggWTmggPEui+6v4g
+         Ty+A==
+X-Gm-Message-State: AOAM531dO8wOpD5iHiY8qbXV4OqoIioSymwT76XshfnOUBr5U8z+3cn5
+        iefwgcHyFCbK98f8Va5zn8egAvkm
+X-Google-Smtp-Source: ABdhPJxj94fEmcdgdwAw8W3MROG3O2SIfANR9V/+cb+en/qAkLQMT0wd4H6i9wZVY7iaC17kDHfHvA==
+X-Received: by 2002:a1c:18b:: with SMTP id 133mr10064280wmb.178.1596338069407;
+        Sat, 01 Aug 2020 20:14:29 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g25sm16544615wmh.35.2020.08.01.20.14.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Aug 2020 20:14:28 -0700 (PDT)
+Message-Id: <pull.826.git.git.1596338068072.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 02 Aug 2020 03:14:27 +0000
+Subject: [PATCH] merge-recursive: fix unclear and outright wrong comments
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKHJ3iYXck3tZcTjZrfcxic8TWr/wHXy0UBAeX6BREByOzHDwNana1QAqebctgB9F6vawIf/OR+p0WrZsA=
-Content-Language: en-us
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Jeff King
-> Sent: Friday, July 31, 2020 9:45 PM
->=20
-> On Fri, Jul 31, 2020 at 08:01:58PM -0400, Jason Pyeron wrote:
->=20
-> > > That should be dropping everything that isn't reachable. I'd =
-suggest to
-> > > expire reflogs, though it looks like you've also tried "git gc" =
-with
-> > > reflog expiration. Does removing .git/logs entirely help?
-> > >
-> > > If not, are you sure it isn't actually reachable from your =
-history? What
-> > > does:
-> > >
-> > >   git rev-list --all --objects | grep 00009623a06
-> >
-> > $ git rev-list --all --objects | grep 00009623a06
-> > 00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
-> > (it is still running...)
+From: Elijah Newren <newren@gmail.com>
 
-$ git rev-list --all --objects | grep 00009623a06
-00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
+Commits 7c0a6c8e47 ("merge-recursive: move some definitions around to
+clean up the header", 2019-08-17), and b4db8a2b76 ("merge-recursive:
+remove useless parameter in merge_trees()", 2019-08-17) added some
+useful documentation to the functions, but had a few places where the
+new comments were unclear or even misleading.  Fix those comments.
 
-$ git rev-list --all --objects --reflog | grep 00009623a06
-00009623a06b8dea7c151542fc789539599c07d0 src/htdocs
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    fix unclear and misleading comments in merge-recursive
 
-No unexpected results, just the correct tree pointing to the 00009623a06 =
-as a tree.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-826%2Fnewren%2Ffix-merge-recursive-comments-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-826/newren/fix-merge-recursive-comments-v1
+Pull-Request: https://github.com/git/git/pull/826
 
-> >
-> > But that is an expected result, I will be back at work on Sunday.
->=20
-> So it sounds like it's still reachable, and you'd need to rewrite
-> history to get rid of it. Or is that object OK, and it's a containing
-> tree that mentions it with the wrong mode the problem? In that case,
-> same question: is the containing tree reachable?
+ merge-recursive.c |  5 +++--
+ merge-recursive.h | 13 ++++++-------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-Backing up to the beginning.
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 36948eafb7..01c633d807 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3529,8 +3529,9 @@ static struct commit_list *reverse_commit_list(struct commit_list *list)
+ }
+ 
+ /*
+- * Merge the commits h1 and h2, return the resulting virtual
+- * commit object and a flag indicating the cleanness of the merge.
++ * Merge the commits h1 and h2, returning a flag (int) indicating the
++ * cleanness of the merge.  Also, if opt->priv->call_depth, create a
++ * virtual commit and write its location to *result.
+  */
+ static int merge_recursive_internal(struct merge_options *opt,
+ 				    struct commit *h1,
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 978847e672..0795a1d3ec 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -69,9 +69,8 @@ int parse_merge_opt(struct merge_options *opt, const char *s);
+  *
+  * Outputs:
+  *   - See RETURN VALUES above
+- *   - No commit is created
+  *   - opt->repo->index has the new index
+- *   - $GIT_INDEX_FILE is not updated
++ *   - new index NOT written to disk
+  *   - The working tree is updated with results of the merge
+  */
+ int merge_trees(struct merge_options *opt,
+@@ -81,7 +80,7 @@ int merge_trees(struct merge_options *opt,
+ 
+ /*
+  * merge_recursive is like merge_trees() but with recursive ancestor
+- * consolidation and, if the commit is clean, creation of a commit.
++ * consolidation.
+  *
+  * NOTE: empirically, about a decade ago it was determined that with more
+  *       than two merge bases, optimal behavior was found when the
+@@ -91,9 +90,9 @@ int merge_trees(struct merge_options *opt,
+  *
+  * Outputs:
+  *   - See RETURN VALUES above
+- *   - If merge is clean, a commit is created and its address written to *result
++ *   - *result is treated as scratch space for temporary recursive merges
+  *   - opt->repo->index has the new index
+- *   - $GIT_INDEX_FILE is not updated
++ *   - new index NOT written to disk
+  *   - The working tree is updated with results of the merge
+  */
+ int merge_recursive(struct merge_options *opt,
+@@ -109,9 +108,9 @@ int merge_recursive(struct merge_options *opt,
+  *
+  * Outputs:
+  *   - See RETURN VALUES above
+- *   - If merge is clean, a commit is created and its address written to *result
++ *   - *result is treated as scratch space for temporary recursive merges
+  *   - opt->repo->index has the new index
+- *   - $GIT_INDEX_FILE is updated
++ *   - new index also written to $GIT_INDEX_FILE on disk
+  *   - The working tree is updated with results of the merge
+  */
+ int merge_recursive_generic(struct merge_options *opt,
 
-There has always been a tree with a tree entry for that blob - which is =
-reachable.
-
-I then created a tree manually, in it I added that tree id as a blob =
-reference when it should have been a tree. (e.g. 100644 blob =
-00009623a06b8dea7c151542fc789539599c07d0 =
-00009623a06b8dea7c151542fc789539599c07d0.blob)=20
-
-I realized my mistake, dropped the commit referring to my butchered tree =
-object (reset to new correct commit with correct tree).
-
-The tree I created should no longer be reachable.
-
-$ mv logs logs.bak
-
-$ git cat-file --batch-all-objects --batch=3Dobjecttype --unordered =
---allow-unknown-type
-objecttype
-fatal: object 00009623a06b8dea7c151542fc789539599c07d0 changed type!?
-
-$ git cat-file -t 00009623a06b8dea7c151542fc789539599c07d0
-tree
-
-$ git cat-file -s 00009623a06b8dea7c151542fc789539599c07d0
-2375
-
-$ echo -e 'import zlib\nfrom hashlib import =
-sha1\ndecompressed_contents=3Dzlib.decompress(open("objects/00/009623a06b=
-8dea7c151542fc789539599c07d0", "rb").read())\nprint =
-sha1(decompressed_contents).hexdigest()\nprint =
-decompressed_contents[0:19]' | python | hexdump -C
-00000000  30 30 30 30 39 36 32 33  61 30 36 62 38 64 65 61  =
-|00009623a06b8dea|
-00000010  37 63 31 35 31 35 34 32  66 63 37 38 39 35 33 39  =
-|7c151542fc789539|
-00000020  35 39 39 63 30 37 64 30  0a 74 72 65 65 20 32 33  =
-|599c07d0.tree 23|
-00000030  37 35 00 31 30 30 36 34  34 20 2e 70 0a           |75.100644 =
-.p.|
-0000003d
-
-$ git cat-file -p 00009623a06b8dea7c151542fc789539599c07d0 | cut -c -55 =
-| head
-100644 blob e465d57c345e2dcb117b5a30f9272b7fc5ec77cd    .p
-100755 blob 7f16c1d4cbb75cf7bd635970a2588ced6ccea8ad    Ap
-040000 tree 5261c0a3f3b4c688a082c3c5eaf03f8039bf153c    CA
-100644 blob 188c0d0541523016352b6851e0f7200c18a372e6    CM
-100644 blob c8b040ec356b21fcc06911c544149dc6f5d5b861    CM
-100644 blob e441983f0fd4d57fb7bf640de31f728529f12c29    CM
-100644 blob fd06c9c6ad662e099341f4e0a05b272c6370e64b    CM
-100644 blob d433fb05ebca807f4487ae4cecf48ec3b66cce78    CM
-100755 blob 4b1b049b83bcc7821a7b62977124bfcaa024d960    CM
-040000 tree 150d60813c913ec9a178c4230b18fbda84edc2af    RE
-
-
-
+base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+-- 
+gitgitgadget
