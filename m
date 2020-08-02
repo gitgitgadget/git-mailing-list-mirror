@@ -3,99 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1F81C433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 01:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04AE8C433E0
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 02:33:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A11E20725
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 01:51:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E3C62067D
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 02:33:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5DkM6zG"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RNjJZyfu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727113AbgHBBvt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Aug 2020 21:51:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726433AbgHBBvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Aug 2020 21:51:49 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA6CBC06174A
-        for <git@vger.kernel.org>; Sat,  1 Aug 2020 18:51:48 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id 125so3570251vsg.2
-        for <git@vger.kernel.org>; Sat, 01 Aug 2020 18:51:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qVI3xh9mZmGlrQLlWR3JYsABK544Ns1OehuE8Oub40o=;
-        b=I5DkM6zGcbSOEfItsNUNqsegYbylwjxEWy1Z42kZFcGXRxHGvevDEtzY3B4n0SIiz2
-         gF06zjQ5rjLMwdo6XsT6sIcxB/ScQYYhBCbCK0A5D2Ofk3llZ17sm6DD8AaNdPYyBqS6
-         /r49RocH4kT+TvGhzwfyBlGmvn+S7Or391Hl5GsF7UsBJttMv350Zig4j+z+1ZV5t37s
-         QE4/N1mqtig6ClHQAGWYDRBEHEcIXDW7Rx1ACzkuuMD0lrceoqfOwkaHg7bYY7/W9kIY
-         GCHjPj27khvuPTVanpTR+7Y26gx0mQwW5MwII2PRFOYN/q8FGjPnAn+Murkjq5yqa6bk
-         uQWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qVI3xh9mZmGlrQLlWR3JYsABK544Ns1OehuE8Oub40o=;
-        b=PEeY/Fv5/roZB/UtiMPf7PLGDNzRSGwSKS+nqUR823HIE+42X4np3Moa0ZnxJSZ79A
-         GkBAaqy4a4OSo9nL8bZgB0ALilZKR3EaS1O7p9k2+THIhnyK5l/SAfYd6OPfnm9Vpe66
-         mE4b0FiqTW3/CK6b4vB/f0KSJeSllrqgRMq4e4cVfisK9CCqdWGL0Qtq7X6BWvxCddLi
-         xaNVoEyMOeCru2OLtnNmWsn83DOyDuLSnPmx7BPA18cpTiwNlUmwURb4pEayPHYXavUn
-         lpA5CWCn4ezrKEoLJVPp66VQQ0yXfk2Q2V/+UCKQRW+bANWvr+hSJt1+ltsWhvRXVwip
-         4Jqw==
-X-Gm-Message-State: AOAM531j01k2z2CTbvNV+gMP3/pKHoZfSqQy2BMhFs+VG0Gh2WeVjU3B
-        sCtQs+bbiljVuM3wvaJzCWpDWLfElow4OfER13A=
-X-Google-Smtp-Source: ABdhPJyZPgkGvbkoGGblldm96pwu667MAv6S2U46kCwFYCytlNTvRQrvJzKZ/wUMyYsaIrxrV5UBJmAVdfJodOgxtMk=
-X-Received: by 2002:a67:2cc5:: with SMTP id s188mr5944634vss.209.1596333107966;
- Sat, 01 Aug 2020 18:51:47 -0700 (PDT)
+        id S1726545AbgHBCUZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Aug 2020 22:20:25 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64598 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbgHBCUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Aug 2020 22:20:25 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B51FE032B;
+        Sat,  1 Aug 2020 22:20:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/4zCTIizDUkgtzBmjnSk+Y362rA=; b=RNjJZy
+        fuJNmRZAZCSsKUF/dAcX/5VU1ogONJ1oW6Nlo19pzyvtxW84afGV342Y4JVdLWBt
+        3jPGOnzlYJKmlJCZ6jE1H84gQ/FNylQIR3Mr3QBYeXzSgSV3Hg2gUQ1ZDzqLyR4O
+        CV6vC0zbq9nfmzKdorP29FG2YAOcWVQhNLmt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=T2jxbo27fL92dnvpny4xITFq6iOPiWjP
+        xPWupmBaR/59V52U1mAQs6GHpRa2Mu9BF2Z+3cfspZ02FZ1JlDTntgHN2Pm5DQTb
+        W7+JT3B1VGwPijFdq3aPEd+7mNpwceo/Nq0CUO34YLMb1Sho/r20SHYYpa9FMPdM
+        oioA+15P0kA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 137EFE032A;
+        Sat,  1 Aug 2020 22:20:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E4EBE0329;
+        Sat,  1 Aug 2020 22:20:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>
+Subject: Re: [PATCH v3 2/6] stash: remove the second index in stash_working_tree()
+References: <20200630151558.20975-1-alban.gruin@gmail.com>
+        <20200731165140.29197-1-alban.gruin@gmail.com>
+        <20200731165140.29197-3-alban.gruin@gmail.com>
+        <xmqqy2mz35i6.fsf@gitster.c.googlers.com>
+Date:   Sat, 01 Aug 2020 19:20:18 -0700
+In-Reply-To: <xmqqy2mz35i6.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 31 Jul 2020 11:26:41 -0700")
+Message-ID: <xmqqime123h9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.689.git.1596324796918.gitgitgadget@gmail.com> <xmqqv9i128iq.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqv9i128iq.fsf@gitster.c.googlers.com>
-From:   Matt Rogers <mattr94@gmail.com>
-Date:   Sat, 1 Aug 2020 21:51:35 -0400
-Message-ID: <CAOjrSZtbEJ5-tnU497r8jE2PYWhKR1Qu14SZRnqceRnLMSheiQ@mail.gmail.com>
-Subject: Re: [PATCH] diff: teach --stat to ignore uninteresting modifications
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: B6A143D8-D466-11EA-A59C-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> For example, if we further change mode bits of file 'x' (which has a
-> whitespace-only changes applied in the test in the previous hunk),
-> e.g.
->
->         git update-index --chmod=+x x &&
->         git diff --stat -b --cached >actual
->
-> should that be counted as a file with 0-line change that is worth
-> reporting, or is it hidden?  I _think_ the new code will do a wrong
-> thing here.  That is,
->
->  - If the change truly is only mode bits and one and two have
->    "same_contents", the new code is bypassed, and we'll continue to
->    show "0 lines changed, but the file is worth reporting".
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-This first one is the behavior I was going for, I think it's most reasonable
-
->  - If the change is whitespace-only change plus mode bits, i.e. one
->    and two do not have "same_contents", the new code triggers and
->    the stat output is suppressed for the path.
+>> @@ -1091,8 +1088,6 @@ static int stash_working_tree(struct stash_info *info, const struct pathspec *ps
+>>  	argv_array_pushl(&cp_upd_index.args, "update-index",
+>>  			 "--ignore-skip-worktree-entries",
+>>  			 "-z", "--add", "--remove", "--stdin", NULL);
+>> -	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
+>> -			 stash_index_path.buf);
+>>  
+>>  	if (pipe_command(&cp_upd_index, diff_output.buf, diff_output.len,
+>>  			 NULL, 0, NULL, 0)) {
 >
+> And then the new code now lets "update-index" work directly on the
+> main index (which does make an observable difference to the outside
+> world, but we are not letting any hook to look at this intermediate
+> state, so it might be OK---I cannot tell at this point in the code).
 
-I just ran some tests on my end, and you're correct here, I'll try to come
-up with a reroll that addresses this and adds this as a test condition.
+This changes the behaviour of the command a lot when a fatal happens
+anywhere after this point til we reset the index to match the HEAD,
+doesn't it, I wonder.  The original code refrained from touching the
+index so after such a "fatal:" error message, the user would have
+seen the original state (with previous "git add" etc. the user did)
+in the index.  New code now added all the working tree changes to
+the index, so the user would lose the work made so far in the main
+index, no?  With later patch in the series applied, we will end up
+having even untracked paths in the main index---I am not sure to
+what extent that step would make things even worse, but it cannot be
+harmless.
 
--- 
-Matthew Rogers
+> How is the use of second on-disk index hurting us?  I must be
+> missing something obvious, but at this point, it is not clear what
+> we are gaining---I only see downsides.
