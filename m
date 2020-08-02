@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87ADDC433DF
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 15:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F44FC433E0
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 15:21:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6331D2075B
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 15:20:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE45E20738
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 15:20:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AkBsd2xF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rw4LSFf+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726799AbgHBPU4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 11:20:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45876 "EHLO
+        id S1726987AbgHBPU6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 11:20:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726845AbgHBPUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 11:20:53 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72E0C06174A
+        with ESMTP id S1726819AbgHBPUw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 11:20:52 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13384C061757
         for <git@vger.kernel.org>; Sun,  2 Aug 2020 08:20:52 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id r12so31898298wrj.13
+Received: by mail-wm1-x341.google.com with SMTP id c19so2248080wmd.1
         for <git@vger.kernel.org>; Sun, 02 Aug 2020 08:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pY8MAimXC+Ydvva3KsJj/smjr9DDkvPQjhoULrp2DRE=;
-        b=AkBsd2xFZxHnOSS2X+WFFk92zhn9zVav02mvn4OKu7rGnVpyz2pocusiJuYUrzAmti
-         oVaNgEhwFCpXWChFiEvVC8RWk++KdKYTMi8t5VxawG2jwAuXpaZi+eppiwVO9hmN6sFp
-         dR7IokFFvuAoD5ntVD/Gf8ogc+ofXSJG+3CH/lZI3xksQRdNdxG8xYYePtzHzwoBagfN
-         PeoOZNMTT3JMe1drgdI4yKX+I1doQgv4OuKfYJh6fMqWmbVria3Y96yBIdFwIEuEGi85
-         Ir9cG6epRHy3GDWzQsOatIYAEEdD9k6LU8f4cpgKyBfQMqqKlaFlWqXds6TdwH+5KD78
-         PPxQ==
+        bh=4ym1IzoRp2NjrKCQfPSxjzCBmGas+7GV3dRMTATrHus=;
+        b=rw4LSFf+UwiMaZ2skRe4V6jB8qX9wmuVfEB6mU1uTw3IcUYp3c/IuIk6gtVUTtOfxI
+         iQd3XdL266hIJ6BAXQz4oh9fxGXcNzmNoyhswAmU+5zhSGrSge4xJ3Homulk1CVkGB9l
+         yKNLsfsO5oipTqkD6YkftxmmnT5wZ18X4Cr1ii0DjAiM/i7mzuNH4ddkpY++RfbIJc7T
+         weTA1PsWBL64a90OAcjeUjT6UGwNhf7F4pbwe50egQ9+ECO3j9u1klowRp/8p/Pu3pGI
+         kaZ5Y3KKi+IU4Dlm7opObeLWEENm3yRi+In3/HrLUZp6GiTaODHqZoBBQ5dJN71sxqSB
+         5ZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pY8MAimXC+Ydvva3KsJj/smjr9DDkvPQjhoULrp2DRE=;
-        b=Z6PMv54jkFt1E5EonbjHKjnhccIbO2k2PC86GCyUifbsL5YwXLoVJ6YcrqmOoNbDv6
-         a9niH3715jGYYD1fa/HlnmC0MCZ+rAXLW+q7wkkqRvSY7aakiXf2JVFRa0iFJjVsb3Li
-         O9E/7MKF8F7mdDkTnJXLn2TnKeD+itJ7egFKGxAN1zrdvipqBTrvt51L3ohkcTNqqqmr
-         TIPo7R8KTLUfTOpy+MoRKGqsCf9jbXvDb3J2f2G2nvKPbEokiLt7N+IY3Ymor7yP2vMb
-         jk5Rth8L6Wy3CbC3BE6PsHBTtkw7wn7cBkV8RjYbFw9RInXspCsv71oem6XNWOQMX+F0
-         SsQQ==
-X-Gm-Message-State: AOAM533WENh3gyA2PqkPya2EGh4gFhWT+x9DA8E+hIOQv0hi69g2G/V7
-        h0omwnx4UQPm08wMQDtKoWlPLgYI
-X-Google-Smtp-Source: ABdhPJxXrOy4T7qjOY/IaKBRsK1TmQPo5VDM3GOthu6mcAJEOPcP25KV5OV2x/JEMxO55GE5d/c4OA==
-X-Received: by 2002:a5d:6401:: with SMTP id z1mr11248081wru.272.1596381651405;
-        Sun, 02 Aug 2020 08:20:51 -0700 (PDT)
+        bh=4ym1IzoRp2NjrKCQfPSxjzCBmGas+7GV3dRMTATrHus=;
+        b=jPbehssyKD7kC90vez9IDhZDRKfU0SEi6QY0oKaMY0jK/RXPPxipGZwM//vsRTpWWF
+         OfD4qGzz8JP8RWmYFO60pVT8afEtRBDhYuy74exWWW6b3n0ubxNAZinWWsjlcV7RNDtI
+         CoZgbvCvUp7yrlq+pkD/+Mn0set7TyVl1m5XLMhqiefT8kxDNNTA5Gj+I1yosdvHMpD2
+         hmV1BelJ854Gj/QzAreWtGKwi1iD+y8rg3iQr41M6WePjAEX2vEwswf+2b87gfHpyjVf
+         azGppEsbCnB9EkYqBmofeuy7KWRWj3OYQ0UT9zci2f6zzMnD7AmQKwy3pH3nDp3yeGXl
+         0i+A==
+X-Gm-Message-State: AOAM531pm3L+Hip0x5pFIWta1MqJozO1EpslaEfYldm5BVG65e/ivQwJ
+        ALqrKWhQ/hAagJeoHJgtoczxVk3w
+X-Google-Smtp-Source: ABdhPJwyw1g6R1rsBs8cTnsbMrDMMdzkYl4fegYjzUSePcV9XRnTQ4mXxrbZFcru5kE0ZHDakcfQRQ==
+X-Received: by 2002:a1c:bd04:: with SMTP id n4mr12863733wmf.83.1596381650702;
+        Sun, 02 Aug 2020 08:20:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g18sm21717016wru.27.2020.08.02.08.20.50
+        by smtp.gmail.com with ESMTPSA id p14sm20420192wrg.96.2020.08.02.08.20.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2020 08:20:51 -0700 (PDT)
-Message-Id: <9374d80f0c37a6b6a7f5f76601ee757f89712d0c.1596381647.git.gitgitgadget@gmail.com>
+        Sun, 02 Aug 2020 08:20:50 -0700 (PDT)
+Message-Id: <f49cf08f4f61d667633465903111675dd33e56e9.1596381647.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.691.git.1596381647.gitgitgadget@gmail.com>
 References: <pull.691.git.1596381647.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 02 Aug 2020 15:20:47 +0000
-Subject: [PATCH 3/3] git.txt: add list of guides
+Date:   Sun, 02 Aug 2020 15:20:46 +0000
+Subject: [PATCH 2/3] help: drop usage of 'common' and 'useful' for guides
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,82 +81,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Not all guides are mentioned in the 'git(1)' documentation,
-which makes the missing ones somewhat hard to find.
+Since 1b81d8cb19 (help: use command-list.txt for the source of guides,
+2018-05-20), all man5/man7 guides listed in command-list.txt appear in
+the output of 'git help -g'.
 
-Add a list of the guides to git(1).
+However, 'git help -g' still prefixes this list with "The common Git
+guides are:", which makes one wonder if there are others!
 
-Tweak `Documentation/cmd-list.perl` so that it also generates
-a file `cmds-guide.txt` which gets included in git.txt.
+In the same spirit, the man page for 'git help' describes the '--guides'
+option as listing 'useful' guides, which is not false per se but can
+also be taken to mean that there are other guides that exist but are not
+useful.
 
-Also, do not hard-code the manual section '1'. Instead, use a regex so
-that the manual section is discovered from the first line of each
-`git*.txt` file.
-
-This addition was hinted at in 1b81d8cb19 (help: use command-list.txt for
-the source of guides, 2018-05-20).
+Instead of 'common' and 'useful', use 'Git concept guides' in both
+places. To keep the code in line with this change, rename
+help.c::list_common_guides_help to list_guides_help.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/cmd-list.perl | 10 ++++++++--
- Documentation/git.txt       |  7 +++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ Documentation/git-help.txt | 6 +++---
+ builtin/help.c             | 2 +-
+ help.c                     | 4 ++--
+ help.h                     | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 5aa73cfe45..99f01a0910 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -6,9 +6,14 @@ sub format_one {
- 	my ($out, $nameattr) = @_;
- 	my ($name, $attr) = @$nameattr;
- 	my ($state, $description);
-+	my $mansection;
- 	$state = 0;
- 	open I, '<', "$name.txt" or die "No such file $name.txt";
- 	while (<I>) {
-+		if (/^git[a-z0-9-]*\(([0-9])\)$/) {
-+			$mansection = $1;
-+			next;
-+		}
- 		if (/^NAME$/) {
- 			$state = 1;
- 			next;
-@@ -27,7 +32,7 @@ sub format_one {
- 		die "No description found in $name.txt";
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 69c0c5c34e..44fe8860b3 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -21,8 +21,8 @@ on the standard output.
+ If the option `--all` or `-a` is given, all available commands are
+ printed on the standard output.
+ 
+-If the option `--guides` or `-g` is given, a list of the useful
+-Git guides is also printed on the standard output.
++If the option `--guides` or `-g` is given, a list of the
++Git concept guides is also printed on the standard output.
+ 
+ If a command, or a guide, is given, a manual page for that command or
+ guide is brought up. The 'man' program is used by default for this
+@@ -58,7 +58,7 @@ OPTIONS
+ 
+ -g::
+ --guides::
+-	Prints a list of useful guides on the standard output. This
++	Prints a list of the Git concept guides on the standard output. This
+ 	option overrides any given command or guide name.
+ 
+ -i::
+diff --git a/builtin/help.c b/builtin/help.c
+index 299206eb57..bb339f0fc8 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -579,7 +579,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
  	}
- 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
--		print $out "linkgit:$name\[1\]::\n\t";
-+		print $out "linkgit:$name\[$mansection\]::\n\t";
- 		if ($attr =~ / deprecated /) {
- 			print $out "(deprecated) ";
- 		}
-@@ -60,7 +65,8 @@ sub format_one {
- 		synchingrepositories
- 		foreignscminterface
- 		purehelpers
--		synchelpers)) {
-+		synchelpers
-+		guide)) {
- 	my $out = "cmds-$cat.txt";
- 	open O, '>', "$out+" or die "Cannot open output file $out+";
- 	for (@{$cmds{$cat}}) {
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3e50065198..81349a84e7 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -304,6 +304,13 @@ users typically do not use them directly.
  
- include::cmds-purehelpers.txt[]
+ 	if (show_guides)
+-		list_common_guides_help();
++		list_guides_help();
  
-+Guides
-+------
-+
-+The following documentation pages are guides about Git concepts.
-+
-+include::cmds-guide.txt[]
-+
+ 	if (show_all || show_guides) {
+ 		printf("%s\n", _(git_more_info_string));
+diff --git a/help.c b/help.c
+index 44cee69c11..d478afb2af 100644
+--- a/help.c
++++ b/help.c
+@@ -397,10 +397,10 @@ void list_cmds_by_config(struct string_list *list)
+ 	}
+ }
  
- Configuration Mechanism
- -----------------------
+-void list_common_guides_help(void)
++void list_guides_help(void)
+ {
+ 	struct category_description catdesc[] = {
+-		{ CAT_guide, N_("The common Git guides are:") },
++		{ CAT_guide, N_("The Git concept guides are:") },
+ 		{ 0, NULL }
+ 	};
+ 	print_cmd_by_category(catdesc, NULL);
+diff --git a/help.h b/help.h
+index 500521b908..dc02458855 100644
+--- a/help.h
++++ b/help.h
+@@ -21,7 +21,7 @@ static inline void mput_char(char c, unsigned int num)
+ 
+ void list_common_cmds_help(void);
+ void list_all_cmds_help(void);
+-void list_common_guides_help(void);
++void list_guides_help(void);
+ 
+ void list_all_main_cmds(struct string_list *list);
+ void list_all_other_cmds(struct string_list *list);
 -- 
 gitgitgadget
+
