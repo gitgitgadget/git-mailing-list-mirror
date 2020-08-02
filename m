@@ -7,118 +7,99 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BD3EC433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 04:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E609C433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 06:33:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DBD02075B
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 04:17:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4233A2076B
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 06:33:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pq5D9+qm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vUHh78G0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725806AbgHBERu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 00:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58080 "EHLO
+        id S1726160AbgHBGdK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 02:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725770AbgHBERt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 00:17:49 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D7D6C06174A
-        for <git@vger.kernel.org>; Sat,  1 Aug 2020 21:17:49 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id g18so5822128ooa.0
-        for <git@vger.kernel.org>; Sat, 01 Aug 2020 21:17:49 -0700 (PDT)
+        with ESMTP id S1725882AbgHBGdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 02:33:09 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8ADC06174A
+        for <git@vger.kernel.org>; Sat,  1 Aug 2020 23:33:09 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id 184so12665526wmb.0
+        for <git@vger.kernel.org>; Sat, 01 Aug 2020 23:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=T16bq60pazTUExCpgSAIROyRM8VICV1bMIrL75kljyA=;
-        b=pq5D9+qmAsS7YvNEtJIcpM8fpvv2oxBCzyyjb4hVLJOd/jY4DbvO8pWhQAtEhQQIgr
-         ZNdd5NF2Q8sn0yeR0FQzESxUFf3ajTGr23HVglb6Ue5xgDUP3efGzA4+1kePvZxmZW3q
-         hHT5yWMFTwRYm/qL0u5rrjuoGmq26anv668MDRZRqKFGxJ8iMWH+vdJ7F5I76aOl4Vtg
-         QrFSmwdj2HAJH+VOyUJUTIKA2DZhBIYfeYGnwDlVQRtORUZv23UjQfHiWM5e/A0Wx9ZT
-         vNNz4Mc2o1gliyXNvk3X4ZkDBC3Sx2ZbAkR9uHb+hgLWG6CmXlqGiL1CB97iDCOEH7Jc
-         vc+Q==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=BNjfujnPglAO2EIpu8Q540juo/u+tsgEDm3yaYTo5nQ=;
+        b=vUHh78G08Se7uSXasKwGacxQvbCrxjACY4HwSylVcfVL8tC7NLP2G4qmvypb7A1Wg6
+         MqbvRudXlwMnhIUEQRtv7AitCIgx9xo6kTn/zFr9X7jcA2NQUC6fRP/8j4+TiJ7HtY81
+         7K3qZ+Gyu5GsRFJ90BHeyXpaprSW0Z7o0LJ3v2m8rxdSArvUEDUzD1XfCSgRhZAWDzoe
+         Zgg+1KGUREhFIcjUAP2sWJT0UpRi/9eaM1PPKwmqb/gWPZ8m1uKZTad0Fxt8x+6/MCiO
+         ySk1AJsvR2sYbb1wEYxpHZ6eR7hWCJbHZmxsF9QzxZ4PODdY4rUzpokNxuDHbhNqV4my
+         giVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=T16bq60pazTUExCpgSAIROyRM8VICV1bMIrL75kljyA=;
-        b=ZHEE49zuIYvXAkZKXh0oDvojSTHXjf8uUuxwua4Hfl6wKUiZXYMUKkr0cfEFxczTpQ
-         dSobDulHcOTuQ8NZqfuOelOF0oU+xt2O433B1dvDTG859w3AlSroGGQlDW/HqiSrtkJD
-         HktWnBeTkqVWTSmCAqY3nIu/G0QUj+/2BE7ngqq93iqXIfanHUSZhKu8GmZ4Bb0jhrML
-         O7NoEssDPIicasUmWKJSrzNenhuk81a9jTTZwmPNQeTW5NR3OrU61H30igGQ4WQwgPed
-         QngrTvQA7xnD1MT/uYK95a3NJKuxuEp7mjTSUqMRr7BCOje6Uf+KMmxENLLWx5qY1Dor
-         BUKw==
-X-Gm-Message-State: AOAM532pIdExjTLi1z4L15cA1IDXS8ABaHhzQCA6BJ1WalqRhfOONwEd
-        N29TRyj7PgzLgYpVroVdBrMveETBsczExDbTUCA=
-X-Google-Smtp-Source: ABdhPJxrrYMJk6lwjEJJSaaDYwl6stSRTvG0GeLADTwZ8ZWwuOqRQQlpo0QHNoCmHAuedyNZXjVzgSLqkFmZbG/6ndM=
-X-Received: by 2002:a4a:ab85:: with SMTP id m5mr9281784oon.66.1596341868896;
- Sat, 01 Aug 2020 21:17:48 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=BNjfujnPglAO2EIpu8Q540juo/u+tsgEDm3yaYTo5nQ=;
+        b=fwxJSnITQMjwvgqnb6cGbAd4BCZvKx4iJ/D2VLBqao+yEqBhgROjXgNVGdEEP3kfPX
+         j0hgVKV0WLv5AHyeJNb2+uAcrAKOCQV4OyFFtLc0IX6YkHH32QQunYD3K1aeb9A0dL6+
+         /1VZYq1gY8OrqP0ZOdQpyuYIAJNa6t4jsD21xCtNzIDiAJqcQPZwAwrRIwMhqbagDFcn
+         5VEqyg7sLxLtJqJv1dFMFSZXCPrLeG/0tTUV91NaKgJUXJ6NCSAF4ItnNJrCDQb5/yt1
+         EXwtgkgyeYquHk+fqKXRIQFmi3+lFYJYXGdLZF6/5q+ABZ7Uc84UyBqUXUPUlSCmTY0K
+         sx7g==
+X-Gm-Message-State: AOAM532rKsXQJYHVCnYqldjjpZYLxHJjyRapXb8L/lHNuaYaLTgXeSBN
+        Q6f22tuGu6LUH259oN3socr/nYiU
+X-Google-Smtp-Source: ABdhPJzwkb6Dnzwbj/XpAruejEsbRjFRmT/aJnOFguWje/HVJDFMDRHNqEy/yQdsOqlrhzaYb8ZwRQ==
+X-Received: by 2002:a1c:a9c6:: with SMTP id s189mr9968620wme.166.1596349987941;
+        Sat, 01 Aug 2020 23:33:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d11sm13039782wrw.77.2020.08.01.23.33.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Aug 2020 23:33:07 -0700 (PDT)
+Message-Id: <pull.825.git.git.1596349986.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 02 Aug 2020 06:33:02 +0000
+Subject: [PATCH 0/4] Attr fixes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAEcaDL=BrqFf7bwJ0cVWK-+vUKLmuihhKr8m0_w2CCSNfA9LEw@mail.gmail.com>
- <20200802012802.GK6540@camp.crustytoothpaste.net>
-In-Reply-To: <20200802012802.GK6540@camp.crustytoothpaste.net>
-From:   Nicholas Hsiang <xianghongai@gmail.com>
-Date:   Sun, 2 Aug 2020 12:17:37 +0800
-Message-ID: <CAEcaDL=DOn8d=L0Db41o--vOzjSzxVxsDTX9poXHTHHwBV0SCQ@mail.gmail.com>
-Subject: Re: Chinese characters are garbled, setting utf-8 is also garbled
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Nicholas Hsiang <xianghongai@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I submit an issue with them, Thanks for the tip!
-:)
---
-xiang hong ai: ChangSha, HuNan, CN
+This fixes a few issues surrounding .gitattributes files and usage of the
+merge machinery outside of "git merge". All were issues I found and fixed
+while working on merge-ort.
 
-brian m. carlson <sandals@crustytoothpaste.net> =E4=BA=8E2020=E5=B9=B48=E6=
-=9C=882=E6=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=889:28=E5=86=99=E9=81=93=
-=EF=BC=9A
->
-> On 2020-08-01 at 04:36:50, Nicholas Hsiang wrote:
-> > Hi,
-> >
-> > There are some problems here.
-> >
-> > I have configured the character encoding in .gitconfig:
-> >
-> > ```yaml
-> > [core]
-> >   quotepath =3D false
-> > [gui]
-> >   encoding =3D utf-8
-> > [i18n]
-> >   commitencoding =3D utf-8
-> >   logoutputencoding =3D utf-8
-> > ```
-> >
-> > and Git Bash configed: Options > Text > Locale: zh_CN, Character set: U=
-TF-8
-> >
-> > However, when executing `git pull/reset/status`, Chinese characters
-> > still appeared garbled.
-> >
-> > ```bash
-> > Xiang@Xiang MINGW64 /c/me/front-end-note (master)
-> > $ git reset --hard df576e2
-> > HEAD is now at df576e2 doc: =E7=90=9B=E3=83=A5=E5=8E=96 ES5 =E7=BC=81=
-=D1=84=E5=A3=99
-> > ```
->
-> Since this is a Windows issue, you'd be better off reporting this at the
-> Git for Windows issue tracker at
-> https://github.com/git-for-windows/git/issues/.  As far as what I've
-> seen in your email, the characters do appear to be in Chinese, although
-> since I don't speak or read that language, I don't know whether they
-> make any sense or are garbled.
-> --
-> brian m. carlson: Houston, Texas, US
+Patches 1, 3, and 4 are definitely fixes. Patch 2 only touches a testcase
+and might be a fix, or might just change it to a different kind of
+brokenness -- either way, it leaves the affected testcase as
+test_expect_failure. I'm kind of curious what is correct expected behavior
+for that and similar testcases. I probably won't implement it, and I'm
+worried it might be rife with multi-layered corner cases and no good way to
+define correct behavior for all cases.
+
+Elijah Newren (4):
+  t6038: make tests fail for the right reason
+  t6038: fix test with obviously incorrect expectations
+  merge: make merge.renormalize work for all uses of merge machinery
+  checkout: support renormalization with checkout -m <paths>
+
+ builtin/checkout.c         | 18 ++++++------------
+ builtin/merge.c            |  7 +++----
+ merge-recursive.c          |  3 +++
+ t/t6038-merge-text-auto.sh | 20 ++++++++++----------
+ 4 files changed, 22 insertions(+), 26 deletions(-)
 
 
-
---=20
-Live Long and Prosper.
+base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-825%2Fnewren%2Fattr-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-825/newren/attr-fixes-v1
+Pull-Request: https://github.com/git/git/pull/825
+-- 
+gitgitgadget
