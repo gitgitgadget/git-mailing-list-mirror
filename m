@@ -2,130 +2,137 @@ Return-Path: <SRS0=XjWc=BM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A75BAC433DF
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 17:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D035CC433E0
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 18:17:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8369E20738
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 17:57:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A064F2072A
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 18:17:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="H65AcZCY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gltrFoV0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgHBR5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 13:57:47 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63819 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725906AbgHBR5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 13:57:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6445BEC4F2;
-        Sun,  2 Aug 2020 13:57:45 -0400 (EDT)
+        id S1726806AbgHBSRu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 14:17:50 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64077 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725910AbgHBSRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 14:17:50 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 79C757BE77;
+        Sun,  2 Aug 2020 14:17:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/D2B/I907Z88
-        W4Z7Lv0zp23eX58=; b=H65AcZCYbR0Z22vLdeiIUvG9PG3aAtuqKwQlwZdhGwHk
-        v5yR6FVMaRygxURBmYLUDBQGLhcbaWTumqsXrj3qXwpwYdypgrChV1UXqM7dkzJa
-        bqi20ikoXpLKM/HnXqy1yIlBiFSRqEBRdbZDOcxwabWRUSO9pF5JPyk4psJxClI=
+        :content-type; s=sasl; bh=tiPSVGqUHFha+mCSn2egnVoDOwE=; b=gltrFo
+        V0DvW9mx0Hk+srHfJykhO8l1ro/Ga5SxZ4DGCuVUpWkwWCAjosvUK+X6G+lZqC3/
+        rsJpGd4XnSIIUZWGjqbFZz1LGMi5uaRe1858qfyBvIe6yMrV+qnx7wYfcZD+DWKf
+        +o35BHovSo6bkxsdn/1ItexO6gjyBPV4m6O/g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kfw6ib
-        zFUYZup0Z3GfQtaAGG0JE1wdKtOMIkrFyKJ6UWi4RZaRZdH/2jAHgpwaqmAgqUGJ
-        0+fEgqUZ3CRMchEf9bMqAhn185yCsfPpij4cwJhCBaABWxk8k8WuEqH4EgsN/vMf
-        io0IqvB7dP1lEne2Ue9QOvlPhqjDs2bpnbLDs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C869EC4F0;
-        Sun,  2 Aug 2020 13:57:45 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=dNU5UoqDuwQqA9g3gdeBg8uOl6kWyJJF
+        6hLM+xDryu3buXVCCEepWDOkq7nn86Z+p6RDMbIEXfTKj7NQinjweRGhOulAKPZV
+        dOPL6LfSjzOkQ/aRVLJxZe3FaG0skL3ecoS7ermXqBa2FJrn6M4I6+NdwlPcqvOP
+        8zae9fhOaoo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70F4D7BE76;
+        Sun,  2 Aug 2020 14:17:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5B07EC4EF;
-        Sun,  2 Aug 2020 13:57:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 01E0A7BE74;
+        Sun,  2 Aug 2020 14:17:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] t1450: fix quoting of NUL byte when corrupting pack
-References: <20200801220611.10453-1-martin.agren@gmail.com>
-        <CAPx1GvcZFVfmP8aTdXu_epdSn1EDy_cP6-=hi65c_5DbNEq+FQ@mail.gmail.com>
-        <CAPx1GvcD80MfjZLiKBrH8BgsvVToZ90C057gk7b4BUzbLMNu2A@mail.gmail.com>
-        <CAN0heSoYAJkZVG7_TPTo3Osz+FuR__AY5Ykc8OSwzARTotfwcQ@mail.gmail.com>
-        <CAPx1GvdZNeuQqmYm8G62Zr02k=B5GK69xPw84WnvMCeJU7_amQ@mail.gmail.com>
-Date:   Sun, 02 Aug 2020 10:57:40 -0700
-In-Reply-To: <CAPx1GvdZNeuQqmYm8G62Zr02k=B5GK69xPw84WnvMCeJU7_amQ@mail.gmail.com>
-        (Chris Torek's message of "Sun, 2 Aug 2020 09:20:13 -0700")
-Message-ID: <xmqqmu3drkvf.fsf@gitster.c.googlers.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/4] t6038: make tests fail for the right reason
+References: <pull.825.git.git.1596349986.gitgitgadget@gmail.com>
+        <361911817559104672d273e199221e8367e8d595.1596349986.git.gitgitgadget@gmail.com>
+Date:   Sun, 02 Aug 2020 11:17:48 -0700
+In-Reply-To: <361911817559104672d273e199221e8367e8d595.1596349986.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Sun, 02 Aug 2020
+        06:33:03 +0000")
+Message-ID: <xmqqime0syib.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A9A633CC-D4E9-11EA-8655-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 78AE1318-D4EC-11EA-A58B-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Chris Torek <chris.torek@gmail.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Sun, Aug 2, 2020 at 7:35 AM Martin =C3=85gren <martin.agren@gmail.co=
-m> wrote:
->> No worries! Thanks for having a look at the patch. Is there anything
->> that could be done to make this clearer in the commit message? (I find=
- it
->> quite awkward to discuss quoting: will the reader understand which
->> quoting is part of my own formatting of the message vs which is part o=
-f
->> the quoting issue I want to get across!?)
+> t6038 had a pair of tests that were expected to fail, but weren't
+> failing for the expected reason.  Both were meant to do a merge that
+> could be done cleanly after renormalization, but were supposed to fail
+> for lack of renormalization.  Unfortunately, both tests has staged
+> changes, and checkout -m would abort due to the presence of those staged
+> changes before even attempting a merge.
 >
-> This is indeed a problem...
->
-> Perhaps something along these lines (generic boilerplate
-> for any single-quote fixes, that should be adjusted for the
-> actual fix):
->
->     In the test scripts, the recommended style is, e.g.:
->
->         test_expect_success 'name' '
->             multi-line test
->             goes here
->         '
->
->     When using this style, any single quote in the multi-line
->     test section is actually closing the lone single quotes
->     that surround it.  To avoid confusion, minimize and/or
->     eliminate the use of single quotes here.
+> Fix this first issue by utilizing git-restore instead of git-checkout,
+> so that the index is left alone and just the working directory gets the
+> changes we want.
 
-Another thing that falls into the same class and probably be a good
-addition to the above "tip" is how $variables are interpolated, i.e.
+Nicely analysed.
 
-	test_expect_success 'test name' '
-		test-that-references $variable &&
-		another-test-that-references "$variable"
-	'
+> However, there is a second issue with these tests.  Technically, they
+> just wanted to verify that after renormalization, no conflicts would be
+> present.  This could have been checked for by grepping for a lack of
+> conflict markers, but the test instead tried to compare the working
+> directory files to an expected result.  Unfortunately, the setting of
+> "text=auto" without setting core.eol to any value meant that the content
+> of the file (in particular, the line endings) would be
+> platform-dependent and the tests could only pass on some platforms.
 
-are 99% of the time the right way to refer to variable that is
-assigned outside the test itself (e.g. the whole four lines shown
-above may be in a loop, "for variable in a b c; ... ;done").
+OK.
 
-	test_expect_success 'test name' '
-		test-that-references '$variable' &&
-		another-test-that-references '"$variable"'
-	'
+> Replace the existing comparison with a call to 'git diff --no-index
+> --ignore-cr-at-eol' to verify that the contents, other than possible
+> carriage returns in the file, match the expected results and in
+> particular that the file has no conflicts from the checkout -m
+> operation.
 
-is most likely a wrong way to write for the first one (i.e. what if
-the value in $variable has $IFS whitespace) and "not wrong per-se
-but unnecessary" for the second one.
-
-Same applies to $(command) substitution, but it is more important.
-"Step out of the quote, evaluate and step back into the quote"
-pattern would mean the command is evaluated while formulating the
-body of the test, not while running the test, which often is not
-what the author intended.
+Makes sense.
 
 Thanks.
+
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t6038-merge-text-auto.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
+> index 5e8d5fa50c..27cea15533 100755
+> --- a/t/t6038-merge-text-auto.sh
+> +++ b/t/t6038-merge-text-auto.sh
+> @@ -168,9 +168,9 @@ test_expect_failure 'checkout -m after setting text=auto' '
+>  	git rm -fr . &&
+>  	rm -f .gitattributes &&
+>  	git reset --hard initial &&
+> -	git checkout a -- . &&
+> +	git restore --source=a -- . &&
+>  	git checkout -m b &&
+> -	compare_files expected file
+> +	git diff --no-index --ignore-cr-at-eol expected file
+>  '
+>  
+>  test_expect_failure 'checkout -m addition of text=auto' '
+> @@ -183,9 +183,9 @@ test_expect_failure 'checkout -m addition of text=auto' '
+>  	git rm -fr . &&
+>  	rm -f .gitattributes file &&
+>  	git reset --hard initial &&
+> -	git checkout b -- . &&
+> +	git restore --source=b -- . &&
+>  	git checkout -m a &&
+> -	compare_files expected file
+> +	git diff --no-index --ignore-cr-at-eol expected file
+>  '
+>  
+>  test_expect_failure 'cherry-pick patch from after text=auto was added' '
