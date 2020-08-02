@@ -2,120 +2,100 @@ Return-Path: <SRS0=XjWc=BM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15694C433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 01:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1F81C433E0
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 01:51:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0FC32076A
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 01:28:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A11E20725
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 01:51:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XfeV6a/W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5DkM6zG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727889AbgHBB2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Aug 2020 21:28:12 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41294 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725883AbgHBB2L (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Aug 2020 21:28:11 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3680160799;
-        Sun,  2 Aug 2020 01:28:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596331690;
-        bh=mcJSo8xUrR6/3Js9+43TMnOfTKxCmk9pWnR1ZYcvNI0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XfeV6a/Wn2rD/sA/ZBeF8IoqS0bmGd7Xj4+mluDXDz3WjrfPbx7uEgzfxE9m73jOw
-         8E7g+0W/EbWoxDqT+sphKLZTqHd2a0OlIGR4iDzo+7eUWsPLZuJMgmc9w14dY3ISyO
-         ifStShWTBOSDFZUdZ752MMFB948HXNNBSAAgqG8ADG/zsoP82ZqDYF5USnWUcBjluy
-         MQi9AlGUVQcLnnvOS++eecLczMhOfrwOdph6ZqW5luBth+v/z3NkzsNmwy07pTTjwN
-         u+qqoigAu7yJ/OwNcsgb0M70bxkJzg33XSmhY2g4sNal/dBZY5nx6CqW3jKsmh/3Ev
-         dyNt0NjUN8CJdkbU8D5KjwZ6dsaQH9x+CV21yskJ+0uQ8d6mWViVcqf2YMs4wIt+bF
-         SnQp2eua3RalIT7HDGAG5SFnEvkiAnUTNbpsUIeChlCO1Vg54/eX79dR45qPmhKhWZ
-         fkoNUo/yk2xQkIcWNAbF9VM5AB4uQ4Q09gXy4I8j5PPp5DvNa3U
-Date:   Sun, 2 Aug 2020 01:28:02 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Nicholas Hsiang <xianghongai@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Chinese characters are garbled, setting utf-8 is also garbled
-Message-ID: <20200802012802.GK6540@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Nicholas Hsiang <xianghongai@gmail.com>, git@vger.kernel.org
-References: <CAEcaDL=BrqFf7bwJ0cVWK-+vUKLmuihhKr8m0_w2CCSNfA9LEw@mail.gmail.com>
+        id S1727113AbgHBBvt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Aug 2020 21:51:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35922 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726433AbgHBBvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Aug 2020 21:51:49 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA6CBC06174A
+        for <git@vger.kernel.org>; Sat,  1 Aug 2020 18:51:48 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id 125so3570251vsg.2
+        for <git@vger.kernel.org>; Sat, 01 Aug 2020 18:51:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qVI3xh9mZmGlrQLlWR3JYsABK544Ns1OehuE8Oub40o=;
+        b=I5DkM6zGcbSOEfItsNUNqsegYbylwjxEWy1Z42kZFcGXRxHGvevDEtzY3B4n0SIiz2
+         gF06zjQ5rjLMwdo6XsT6sIcxB/ScQYYhBCbCK0A5D2Ofk3llZ17sm6DD8AaNdPYyBqS6
+         /r49RocH4kT+TvGhzwfyBlGmvn+S7Or391Hl5GsF7UsBJttMv350Zig4j+z+1ZV5t37s
+         QE4/N1mqtig6ClHQAGWYDRBEHEcIXDW7Rx1ACzkuuMD0lrceoqfOwkaHg7bYY7/W9kIY
+         GCHjPj27khvuPTVanpTR+7Y26gx0mQwW5MwII2PRFOYN/q8FGjPnAn+Murkjq5yqa6bk
+         uQWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qVI3xh9mZmGlrQLlWR3JYsABK544Ns1OehuE8Oub40o=;
+        b=PEeY/Fv5/roZB/UtiMPf7PLGDNzRSGwSKS+nqUR823HIE+42X4np3Moa0ZnxJSZ79A
+         GkBAaqy4a4OSo9nL8bZgB0ALilZKR3EaS1O7p9k2+THIhnyK5l/SAfYd6OPfnm9Vpe66
+         mE4b0FiqTW3/CK6b4vB/f0KSJeSllrqgRMq4e4cVfisK9CCqdWGL0Qtq7X6BWvxCddLi
+         xaNVoEyMOeCru2OLtnNmWsn83DOyDuLSnPmx7BPA18cpTiwNlUmwURb4pEayPHYXavUn
+         lpA5CWCn4ezrKEoLJVPp66VQQ0yXfk2Q2V/+UCKQRW+bANWvr+hSJt1+ltsWhvRXVwip
+         4Jqw==
+X-Gm-Message-State: AOAM531j01k2z2CTbvNV+gMP3/pKHoZfSqQy2BMhFs+VG0Gh2WeVjU3B
+        sCtQs+bbiljVuM3wvaJzCWpDWLfElow4OfER13A=
+X-Google-Smtp-Source: ABdhPJyZPgkGvbkoGGblldm96pwu667MAv6S2U46kCwFYCytlNTvRQrvJzKZ/wUMyYsaIrxrV5UBJmAVdfJodOgxtMk=
+X-Received: by 2002:a67:2cc5:: with SMTP id s188mr5944634vss.209.1596333107966;
+ Sat, 01 Aug 2020 18:51:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="qD3brAgIG4LbUq6d"
-Content-Disposition: inline
-In-Reply-To: <CAEcaDL=BrqFf7bwJ0cVWK-+vUKLmuihhKr8m0_w2CCSNfA9LEw@mail.gmail.com>
-User-Agent: Mutt/1.14.5 (2020-06-23)
+References: <pull.689.git.1596324796918.gitgitgadget@gmail.com> <xmqqv9i128iq.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqv9i128iq.fsf@gitster.c.googlers.com>
+From:   Matt Rogers <mattr94@gmail.com>
+Date:   Sat, 1 Aug 2020 21:51:35 -0400
+Message-ID: <CAOjrSZtbEJ5-tnU497r8jE2PYWhKR1Qu14SZRnqceRnLMSheiQ@mail.gmail.com>
+Subject: Re: [PATCH] diff: teach --stat to ignore uninteresting modifications
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>
+> For example, if we further change mode bits of file 'x' (which has a
+> whitespace-only changes applied in the test in the previous hunk),
+> e.g.
+>
+>         git update-index --chmod=+x x &&
+>         git diff --stat -b --cached >actual
+>
+> should that be counted as a file with 0-line change that is worth
+> reporting, or is it hidden?  I _think_ the new code will do a wrong
+> thing here.  That is,
+>
+>  - If the change truly is only mode bits and one and two have
+>    "same_contents", the new code is bypassed, and we'll continue to
+>    show "0 lines changed, but the file is worth reporting".
+>
 
---qD3brAgIG4LbUq6d
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This first one is the behavior I was going for, I think it's most reasonable
 
-On 2020-08-01 at 04:36:50, Nicholas Hsiang wrote:
-> Hi,
->=20
-> There are some problems here.
->=20
-> I have configured the character encoding in .gitconfig:
->=20
-> ```yaml
-> [core]
->   quotepath =3D false
-> [gui]
->   encoding =3D utf-8
-> [i18n]
->   commitencoding =3D utf-8
->   logoutputencoding =3D utf-8
-> ```
->=20
-> and Git Bash configed: Options > Text > Locale: zh_CN, Character set: UTF=
--8
->=20
-> However, when executing `git pull/reset/status`, Chinese characters
-> still appeared garbled.
->=20
-> ```bash
-> Xiang@Xiang MINGW64 /c/me/front-end-note (master)
-> $ git reset --hard df576e2
-> HEAD is now at df576e2 doc: =E7=90=9B=E3=83=A5=E5=8E=96 ES5 =E7=BC=81=D1=
-=84=E5=A3=99
-> ```
+>  - If the change is whitespace-only change plus mode bits, i.e. one
+>    and two do not have "same_contents", the new code triggers and
+>    the stat output is suppressed for the path.
+>
 
-Since this is a Windows issue, you'd be better off reporting this at the
-Git for Windows issue tracker at
-https://github.com/git-for-windows/git/issues/.  As far as what I've
-seen in your email, the characters do appear to be in Chinese, although
-since I don't speak or read that language, I don't know whether they
-make any sense or are garbled.
---=20
-brian m. carlson: Houston, Texas, US
+I just ran some tests on my end, and you're correct here, I'll try to come
+up with a reroll that addresses this and adds this as a test condition.
 
---qD3brAgIG4LbUq6d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXyYWogAKCRB8DEliiIei
-gVYpAP9ExzSyi1LyFEW1/2wJimzKfc7rTrm602eAeMoKuKc3zwEAsH5ANf5adEeW
-8C1XuKFfoYvGl9iCqDBq6+Lj83GlCwY=
-=Hwrv
------END PGP SIGNATURE-----
-
---qD3brAgIG4LbUq6d--
+-- 
+Matthew Rogers
