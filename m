@@ -6,91 +6,126 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84650C433DF
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 17:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A75BAC433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 17:57:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 364EE2054F
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 17:35:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8369E20738
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 17:57:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sgtGvsQt"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="H65AcZCY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726963AbgHBRf3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 13:35:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61030 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725952AbgHBRf2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 13:35:28 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B99F16EDCC;
-        Sun,  2 Aug 2020 13:35:26 -0400 (EDT)
+        id S1727803AbgHBR5r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 13:57:47 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63819 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725906AbgHBR5r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 13:57:47 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6445BEC4F2;
+        Sun,  2 Aug 2020 13:57:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q//8XkBRMYjYUM8Y79TzkIX9mX8=; b=sgtGvs
-        Qt1bb1EzKWgct17FqTWI2+MT5oUc/XZXGLLecfRK6TbAXtA4O379G+gR/RtjpDrO
-        xauvjVbup/wQ8KrZgbJPBcDemdFL7oNHNVhuZMdx6WABezQyk3U+RtmProLXpJN2
-        IlujhvOhuDlZujwmkmY9utLcKKJET5uJ5rIzo=
+        :content-type:content-transfer-encoding; s=sasl; bh=/D2B/I907Z88
+        W4Z7Lv0zp23eX58=; b=H65AcZCYbR0Z22vLdeiIUvG9PG3aAtuqKwQlwZdhGwHk
+        v5yR6FVMaRygxURBmYLUDBQGLhcbaWTumqsXrj3qXwpwYdypgrChV1UXqM7dkzJa
+        bqi20ikoXpLKM/HnXqy1yIlBiFSRqEBRdbZDOcxwabWRUSO9pF5JPyk4psJxClI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dS8MnXQc9iD66ZqEnngouDygi2Y9MelA
-        BPGWuRrWMpvq/CNO2wf6TlmPSJapNS5+FbeKaZyRON5h9PPDxpm20YPGrcx/tWVW
-        gEXxbUuScXClE353mUXdtv680U3VSQ9FgWerXTTwANxLpNpDMyK4Xt0CzAhaEUYA
-        tUUE56nGTBE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC6516EDC9;
-        Sun,  2 Aug 2020 13:35:26 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kfw6ib
+        zFUYZup0Z3GfQtaAGG0JE1wdKtOMIkrFyKJ6UWi4RZaRZdH/2jAHgpwaqmAgqUGJ
+        0+fEgqUZ3CRMchEf9bMqAhn185yCsfPpij4cwJhCBaABWxk8k8WuEqH4EgsN/vMf
+        io0IqvB7dP1lEne2Ue9QOvlPhqjDs2bpnbLDs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C869EC4F0;
+        Sun,  2 Aug 2020 13:57:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 12ACC6EDC8;
-        Sun,  2 Aug 2020 13:35:26 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5B07EC4EF;
+        Sun,  2 Aug 2020 13:57:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru>
-Date:   Sun, 02 Aug 2020 10:35:25 -0700
-In-Reply-To: <87mu3drynx.fsf@osv.gnss.ru> (Sergey Organov's message of "Sun,
-        02 Aug 2020 15:59:46 +0300")
-Message-ID: <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] t1450: fix quoting of NUL byte when corrupting pack
+References: <20200801220611.10453-1-martin.agren@gmail.com>
+        <CAPx1GvcZFVfmP8aTdXu_epdSn1EDy_cP6-=hi65c_5DbNEq+FQ@mail.gmail.com>
+        <CAPx1GvcD80MfjZLiKBrH8BgsvVToZ90C057gk7b4BUzbLMNu2A@mail.gmail.com>
+        <CAN0heSoYAJkZVG7_TPTo3Osz+FuR__AY5Ykc8OSwzARTotfwcQ@mail.gmail.com>
+        <CAPx1GvdZNeuQqmYm8G62Zr02k=B5GK69xPw84WnvMCeJU7_amQ@mail.gmail.com>
+Date:   Sun, 02 Aug 2020 10:57:40 -0700
+In-Reply-To: <CAPx1GvdZNeuQqmYm8G62Zr02k=B5GK69xPw84WnvMCeJU7_amQ@mail.gmail.com>
+        (Chris Torek's message of "Sun, 2 Aug 2020 09:20:13 -0700")
+Message-ID: <xmqqmu3drkvf.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8CF990F0-D4E6-11EA-9422-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A9A633CC-D4E9-11EA-8655-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Chris Torek <chris.torek@gmail.com> writes:
 
-> What I in fact have in mind is something like:
+> On Sun, Aug 2, 2020 at 7:35 AM Martin =C3=85gren <martin.agren@gmail.co=
+m> wrote:
+>> No worries! Thanks for having a look at the patch. Is there anything
+>> that could be done to make this clearer in the commit message? (I find=
+ it
+>> quite awkward to discuss quoting: will the reader understand which
+>> quoting is part of my own formatting of the message vs which is part o=
+f
+>> the quoting issue I want to get across!?)
 >
->   --diff-merges[=<parent-number>|c|cc|all]
+> This is indeed a problem...
 >
-> to have a single point of definition of the needed format of merges
-> representation.
+> Perhaps something along these lines (generic boilerplate
+> for any single-quote fixes, that should be adjusted for the
+> actual fix):
+>
+>     In the test scripts, the recommended style is, e.g.:
+>
+>         test_expect_success 'name' '
+>             multi-line test
+>             goes here
+>         '
+>
+>     When using this style, any single quote in the multi-line
+>     test section is actually closing the lone single quotes
+>     that surround it.  To avoid confusion, minimize and/or
+>     eliminate the use of single quotes here.
 
-A command line option that takes _optional_ argument is evil; it
-hurts teachability (e.g. "why does this option always require
-"--opt=val" and refuses '--opt val'?").  Making the optional value
-configurable is even more so (e.g. "teacher said to use '--opt', but
-it does not behave the way she taught---ah, I have this config").
+Another thing that falls into the same class and probably be a good
+addition to the above "tip" is how $variables are interpolated, i.e.
 
-> Then comes the question of the default. "all" is what'd make it behave
-> as "-m" behaves now. If it's too late for --diff-merges to have
-> different default, could the default possibly be a configuration
-> option rather than yet another command-line option?
+	test_expect_success 'test name' '
+		test-that-references $variable &&
+		another-test-that-references "$variable"
+	'
 
-Introduce --diff-parent=(none|<parent-number>|c|cc|all) that is
-different from --diff-merges, and -m and --[no-]diff-merges can be
-defined in terms of that, at which point we can gradually deprecate
-them if we wanted to, no?
+are 99% of the time the right way to refer to variable that is
+assigned outside the test itself (e.g. the whole four lines shown
+above may be in a loop, "for variable in a b c; ... ;done").
 
+	test_expect_success 'test name' '
+		test-that-references '$variable' &&
+		another-test-that-references '"$variable"'
+	'
+
+is most likely a wrong way to write for the first one (i.e. what if
+the value in $variable has $IFS whitespace) and "not wrong per-se
+but unnecessary" for the second one.
+
+Same applies to $(command) substitution, but it is more important.
+"Step out of the quote, evaluate and step back into the quote"
+pattern would mean the command is evaluated while formulating the
+body of the test, not while running the test, which often is not
+what the author intended.
+
+Thanks.
