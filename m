@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDD14C433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 14:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05202C433DF
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 14:38:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD68320738
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 14:38:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D51DA20738
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 14:38:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Nj1z+p9l"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="kOK2h9Q7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726354AbgHBOin (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 10:38:43 -0400
-Received: from mout.web.de ([212.227.15.4]:44715 "EHLO mout.web.de"
+        id S1726370AbgHBOir (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 10:38:47 -0400
+Received: from mout.web.de ([212.227.15.4]:52645 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725778AbgHBOin (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 10:38:43 -0400
+        id S1725778AbgHBOiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 10:38:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1596379120;
-        bh=En6MY+fOFcQvkgmQrSYVvy0mPlZYrFgeAjBrexRKuJs=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=Nj1z+p9l9LD0K5aTv7BujSEgNQXYHUGbJwz9q/ewCvMIEfKRT1j8aUNcbt/IkBAsv
-         nljlPuLHE+Mv9MjeGFA68ycShPNiTgAI+9Qkzx7Wktn0r3WxvHS1xx1BjFYWMbcFLF
-         jX2unTYrGlLr1CWmp24hL7LpDe/Xjyvilb5Qrlj4=
+        s=dbaedf251592; t=1596379123;
+        bh=knUnYGQE2KSxj8IxUVCiCOzSx220n/U34PrfqAx30o4=;
+        h=X-UI-Sender-Class:To:From:Subject:Cc:Date;
+        b=kOK2h9Q77qNJVjmLrub8rTYCe9o5jRRwr/p78jdsCmppw6RVVSwJmmBlGJwID++Bk
+         jKbhG9S25L7BpTC11oYatTjVU5V3HV8Vk0z921ISA8bQh/Y3Z/7tSDGPEX40n5ujzC
+         ekfWXAHig1NYT5+GT/U5EmXg/zGkXd6aBG6vTTeY=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LrHMi-1kl9e02Cz6-0138lM; Sun, 02
- Aug 2020 16:38:40 +0200
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MTyEL-1kBHWc1H8r-00QiUb; Sun, 02
+ Aug 2020 16:38:43 +0200
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] midx: use buffered I/O to talk to pack-objects
-Message-ID: <c5920e08-b7dd-e870-f99e-225d0aafc663@web.de>
-Date:   Sun, 2 Aug 2020 16:38:40 +0200
+Subject: [PATCH] upload-pack: use buffered I/O to talk to rev-list
+Cc:     Junio C Hamano <gitster@pobox.com>
+Message-ID: <6722ade6-971e-7ecc-e8f0-7f595ca0b0ff@web.de>
+Date:   Sun, 2 Aug 2020 16:38:43 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:egOlXChcTtC5hW5JTS6v4BzcG0ykr1AFjYiqbEfdavx2LJ2uCG+
- EdHV+FjKdXtEUN8dFQrJwFwGpKMKytND7SG6i29wjKdqEDBNqIdNlkI+/sti6WDrZK7WFrA
- WKCkIwClKWv96vl+EqEV6cVM/e01sik5jTAC8Jnn37QEHG4xbxya9znwI1YvRHn0uDffk6L
- jelez6erJ+ocoOpvrQAjw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AS//6xAQSEI=:wBk90piKe8Dkz8d1uvTVUU
- fl+Xs5s4HBQwCxgBYMMsxWtfoYce8+VmTUYKWvT+jEzBaqVjgro9edCDTJCZ/LbYYx5rbDjgK
- ziibro7Do2T/9ZgRjmyM+3XFZZyIMQMUMLR8SIgWBwQIa3tQhdGKCqFy3KDTU0f2zFxkgpaef
- 4qOO4xyxUwUSh6T4T5ZJT4FvcMTEI8817d9ky1PL2ac5k3B8jzKeYSVm6y8uOl61naGL8JRaU
- Lf2dCFCpypGc4b7HSjoA40mf6aDzF4U2/OqfPCnxq0CTFuLKZkKJ8PdlaOs9qMOHIAz5lxeJb
- iB52Vu8L683qMt+83TjzRvKa6/uRyZvSfNGeWaja6XXafEzHF5Qm8QwAEEa5BojW1FuyWG1HM
- T1+c9/PqY4RhLQWmQ0Oiny/WZOYY2ReLvEKN7KLMdhxSi9fwZkGSBVlnKRWB1aqfygnmEdhXo
- YQ97qnzo8VPlv6c6/9VZ/JHhUxINsyp0rH/nQlbVI3fp/RhEkqTqQJCxdjVmxA/6nj4Lbf2E2
- yTn0MsBUfGorP2Xa59qxdaensOKtNb69tR/CgOGjarm2oRPj2ScNu1WDpBbBB+OmC6bqXS1r1
- uuTo/dtNYUuBvizIeQ88zW/8g/+1XA2FQNlbyq/Bm4HkqmE0CNyluP+erW6FIH+USI7wdG8BO
- WmO5k4jQUC+RdMpmltBJDXE3/IGLYWwL29btYHTJBJxaLq4MQSHsRL9mui3dXi+h1wIbOVUYl
- /tP7zpX2EtuYvfl8ovwgqk9rZ2KImGBkeCLhYpEWUdMxro3ofGKIdOEleKpBiUY4FWPxZShK2
- pxQCUtjYxPN8ljJmNi+1L9LWAYVLFZj6SiJVsjINh6rdLpsBvQ6nd1ey+JRebbTrL3QjD14x9
- 6FtxN9+cJs5yb9h6yLifUiALCEfI7Rb2zIJui16equC5crmZ2puspC6eG3oLNgXho5QcDNT2A
- 86puOij3ywFFqL6u3DnsMQHJUNB+aInMN/Wwa9NDiQqYG6okTDTCS1ahhSdP9EziqWbjypjN+
- 6qtWaoPM0FoMydpmAdhZwhpY+lQ9fWuh/QMd7Lch1AXPfzQNFxtBwwdVHgsgqKX0F8B2aO0xm
- 8PmSq2ESz3guN3tdi2PQf2HDDgSDs042cLIKu21LSYExh2f8+prsAvMR2bLEEO8hAq3FbNb0T
- f+nK13DPzsSxF732jWih9jiTyn6gAupA9yizVcHjxTbfZpNjaUEYBWboQMOPqt9RSVnEewzGj
- 4xNK4098hHsmBimt2
+X-Provags-ID: V03:K1:OnpEN1ZEvfFkcS9UD1MNR9OE7auFiTSbvvHyjAcsj3gpX9yaWNW
+ sz0jajcKbbBvcKWQ/0KTPpmx3za4bCPEi/H0Wq3lVpLx3yFJ0T73LpjPqE/swDL5pH4nD13
+ fl2/Zagj1Gj8Jv+bO1zT2SQvJTdlI7YP7NQzUbYw3m4HFgNF9FvFYX6Ja4WKEg47PO6yDf5
+ 5pq1Mj4PVg91N2ccQXyyw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rxdubdg7W5s=:4rYYoRRji4V7I/df8iYJSv
+ 4T1APrkAn23iQBa17MOSVdmArprT2/fD3Cig3JNZa7pZs6GQdPl96/YFO7XJ6EeWZIx++kNFP
+ CfefwOWhtE3kHg5txl2tom0M4dSqQPXeJSgGM+O2+NTGWqpZgIQTRAZJym94BXyXjy0eHizET
+ IWxLvs9iPpWZ5eMPQyRSRsUlG8UochKwo+ia/KPdWXBnUxb6zTcOA9ML2lH3mmG7SbBG4WH8m
+ 25zsDSCUpD7yybd0XdN6ZF99A1PEfFica1K97F2YZ+Y0cZ4Gvb8G5UKGbJol09nv7YebwuwGy
+ fQnHNsmZNzgm2YgK6SD1ZJVgsuDX+oJvW26/ISb2mI3tWMFJX7/7fquw8GiQXg/1r2Eolj6DZ
+ q4qvPEsTsnJMsAkKJeTuYa8QzIh+lJ2He06Fn2L//hLCybjMZ6U2DJzY9ers6RC9yM+2w/UtC
+ 8VgFmox0+YQXYJn5ZmHZ7igV7GRdPCRVXf/CBZueCs2AanT9E0X/KibWEdOPiEfHLKR3uYvO1
+ umvalBtetVL7GGGme98BFYU7DphfaB6B5nGfPt1ZYQcMIobs92hjjsvrR3N7NsRscvblUDQbR
+ K0O/B8x79dWbVIXhCiNqYzmWh3MfSe4EaZz80Rs1UwgzkUmh9qnIDFDswW3Tp6PVpuhjRTBv9
+ zL7Hxxxbw5ptpudFmbstqcq3nZjrxSbQBmyqrGJXWyS7ManqVxIl/YKpdCsZG39yXfmqY8+Wm
+ K77+d8VQdPGIJsSoRx4eT0P+HOkpmmsZJLaMJIuTxvtehiyu4SdRUo2f6418NDWxI9Auyx9EJ
+ HQ76OW4bcDSf80ii3uHNwAJYlBDHpWkAT/s86h0ZzzelCMbNi6SP92Tl2cJFBZh61lq6q7tRK
+ o21CbP9LlvwGo2Mx/do2HZeo+KBhFY+BDxKftj3wuZOIhFDbuwesjzEgV0B/+szOnQeiRl+uc
+ oaeRCKbwtBZhB2ulunxfU4dWhsK+Ph5gyEJ5lRk5wavnAsEKV3mSYGdeLV7HVx6PtlIPHLf3a
+ 8uu77TRMRQJoPQQuGtWXYwv704g/tm1olWD7hmmg1U4CbHCESYvZEtRL1a1erAoP44Ui0soZe
+ YznjGlNmpb6wAF9zxE/2962EZvJfy48dUxJvpAMNDGsW5ISZJOvXNmfJ1x+OwjnHNGZy8eNxM
+ DP230UlY3UuJwKiiYqaZ5ce8VxMsOsTh+upQc3FWcCGs+93IeFdb30EGzG092J/LLvsVxq0sQ
+ n/eP+OF3DNa3TR2GP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -75,56 +75,83 @@ X-Mailing-List: git@vger.kernel.org
 
 Like f0bca72dc77 (send-pack: use buffered I/O to talk to pack-objects,
 2016-06-08), significantly reduce the number of system calls and
-simplify the code for sending object IDs to pack-objects by using
-stdio's buffering and handling errors after the loop.
+simplify the code for sending object IDs to rev-list by using stdio's
+buffering and handling errors after the loops.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- midx.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ upload-pack.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/midx.c b/midx.c
-index 6d1584ca51d..742638c3e51 100644
-=2D-- a/midx.c
-+++ b/midx.c
-@@ -1383,6 +1383,7 @@ int midx_repack(struct repository *r, const char *ob=
-ject_dir, size_t batch_size,
- 	uint32_t i;
- 	unsigned char *include_pack;
- 	struct child_process cmd =3D CHILD_PROCESS_INIT;
+diff --git a/upload-pack.c b/upload-pack.c
+index 86737410709..9f616c2c6a6 100644
+=2D-- a/upload-pack.c
++++ b/upload-pack.c
+@@ -595,10 +595,9 @@ static int do_reachable_revlist(struct child_process =
+*cmd,
+ 	static const char *argv[] =3D {
+ 		"rev-list", "--stdin", NULL,
+ 	};
 +	FILE *cmd_in;
- 	struct strbuf base_name =3D STRBUF_INIT;
- 	struct multi_pack_index *m =3D load_multi_pack_index(object_dir, 1);
+ 	struct object *o;
+-	char namebuf[GIT_MAX_HEXSZ + 2]; /* ^ + hash + LF */
+ 	int i;
+-	const unsigned hexsz =3D the_hash_algo->hexsz;
 
-@@ -1435,6 +1436,8 @@ int midx_repack(struct repository *r, const char *ob=
-ject_dir, size_t batch_size,
- 		goto cleanup;
- 	}
+ 	cmd->argv =3D argv;
+ 	cmd->git_cmd =3D 1;
+@@ -616,8 +615,8 @@ static int do_reachable_revlist(struct child_process *=
+cmd,
+ 	if (start_command(cmd))
+ 		goto error;
 
-+	cmd_in =3D xfdopen(cmd.in, "w");
+-	namebuf[0] =3D '^';
+-	namebuf[hexsz + 1] =3D '\n';
++	cmd_in =3D xfdopen(cmd->in, "w");
 +
- 	for (i =3D 0; i < m->num_objects; i++) {
- 		struct object_id oid;
- 		uint32_t pack_int_id =3D nth_midxed_pack_int_id(m, i);
-@@ -1443,10 +1446,15 @@ int midx_repack(struct repository *r, const char *=
-object_dir, size_t batch_size,
+ 	for (i =3D get_max_object_index(); 0 < i; ) {
+ 		o =3D get_indexed_object(--i);
+ 		if (!o)
+@@ -626,11 +625,8 @@ static int do_reachable_revlist(struct child_process =
+*cmd,
+ 			o->flags &=3D ~TMP_MARK;
+ 		if (!is_our_ref(o, allow_uor))
  			continue;
-
- 		nth_midxed_object_oid(&oid, m, i);
--		xwrite(cmd.in, oid_to_hex(&oid), the_hash_algo->hexsz);
--		xwrite(cmd.in, "\n", 1);
-+		fprintf(cmd_in, "%s\n", oid_to_hex(&oid));
-+	}
-+
-+	if (fclose(cmd_in)) {
-+		error_errno(_("could not close stdin of pack-objects"));
-+		result =3D 1;
-+		finish_command(&cmd);
-+		goto cleanup;
+-		memcpy(namebuf + 1, oid_to_hex(&o->oid), hexsz);
+-		if (write_in_full(cmd->in, namebuf, hexsz + 2) < 0)
+-			goto error;
++		fprintf(cmd_in, "^%s\n", oid_to_hex(&o->oid));
  	}
--	close(cmd.in);
+-	namebuf[hexsz] =3D '\n';
+ 	for (i =3D 0; i < src->nr; i++) {
+ 		o =3D src->objects[i].item;
+ 		if (is_our_ref(o, allow_uor)) {
+@@ -640,12 +636,11 @@ static int do_reachable_revlist(struct child_process=
+ *cmd,
+ 		}
+ 		if (reachable && o->type =3D=3D OBJ_COMMIT)
+ 			o->flags |=3D TMP_MARK;
+-		memcpy(namebuf, oid_to_hex(&o->oid), hexsz);
+-		if (write_in_full(cmd->in, namebuf, hexsz + 1) < 0)
+-			goto error;
++		fprintf(cmd_in, "%s\n", oid_to_hex(&o->oid));
+ 	}
+-	close(cmd->in);
+ 	cmd->in =3D -1;
++	if (fclose(cmd_in))
++		goto error;
+ 	sigchain_pop(SIGPIPE);
 
- 	if (finish_command(&cmd)) {
- 		error(_("could not finish pack-objects"));
+ 	return 0;
+@@ -653,8 +648,6 @@ static int do_reachable_revlist(struct child_process *=
+cmd,
+ error:
+ 	sigchain_pop(SIGPIPE);
+
+-	if (cmd->in >=3D 0)
+-		close(cmd->in);
+ 	if (cmd->out >=3D 0)
+ 		close(cmd->out);
+ 	return -1;
 =2D-
 2.28.0
