@@ -7,133 +7,93 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 613B5C433E0
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 13:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAF2EC433E0
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 13:22:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C727207DF
-	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 13:00:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 707AE2075A
+	for <git@archiver.kernel.org>; Sun,  2 Aug 2020 13:22:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0Ojrg8W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FkBl6CcU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728197AbgHBM7u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Aug 2020 08:59:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
+        id S1728109AbgHBNWw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Aug 2020 09:22:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728020AbgHBM7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Aug 2020 08:59:49 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FEBEC06174A
-        for <git@vger.kernel.org>; Sun,  2 Aug 2020 05:59:49 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id v15so14551165lfg.6
-        for <git@vger.kernel.org>; Sun, 02 Aug 2020 05:59:49 -0700 (PDT)
+        with ESMTP id S1728014AbgHBNWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Aug 2020 09:22:51 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3266C06174A
+        for <git@vger.kernel.org>; Sun,  2 Aug 2020 06:22:51 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id ep8so692921pjb.3
+        for <git@vger.kernel.org>; Sun, 02 Aug 2020 06:22:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=skZcdwMENJq8W6TdZb5Pp1LBhMXOe1OPpNZebJZPzzw=;
-        b=R0Ojrg8Wz0Bi11CvEmVM2c6Vy7ejRIGSmDhWA9kGV3GoilywXZpNcgOGc6aq69M4eT
-         SRioVhBNyv3j/wxUrb+Wmo3T65pYZ7KSg2WAl+xgDaRvaeo0mZV5sjHKOoSqHWO4jPvZ
-         /upKEnmh/FHze9GsJadUCvkE89DgAtEyMyrLW+tUCRu2G5g2BRAQdXCVs6ZmGxBwB9A2
-         GADGF/FpCnccAvJtWsS0cj+RjhFRfCZ44EyqvIcZrlyKNMzO/KaRliLR9aHhGUEjJ8XT
-         LCmghEOMNg0OgmMgRKbxUVWYM77ArQcVbLlm7nytE+3Nwu04maFJ23uK112f6geYCGaQ
-         7+ZA==
+        h=content-transfer-encoding:from:mime-version:subject:message-id:date
+         :to;
+        bh=R3TUtOR7hmFQzKXdrZhKX+31caMu5mYqFUS2svXoHAU=;
+        b=FkBl6CcUPIFHgW5ireiWI1wYa4GyuPN6Mh2la0lKONC0xEbxOTsUULit3S9TAyN8ky
+         GlbMBcOUHSHt/ty3Qo9RDKjC4XF/B++N2dXOWVqcuo0Wx7Gy8K6LSUwaZdBqSiDwao3K
+         6drt3KarxTrUD2JWx7+IlHIb3QC+8OY9fOBnHkNyUybjRc+wadm6aYmcZNA/MkxzzjrY
+         LFdqLYFGeDwyArWcXnuHPbUCZc9NBW3H6ADRvgPfvVJRy38ajjLpJh/8RHbKiam899Qc
+         1dEPS0Ly0hUOUox208zHlySKkdimCdwXrKd3HQNRGpRu7ns3u+rOQoRj+FKxVQVE9qff
+         cBfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=skZcdwMENJq8W6TdZb5Pp1LBhMXOe1OPpNZebJZPzzw=;
-        b=hoFfaPSZ2YzQnurHV7c9eEVtZUYbextvPh2rgCd0LI44TjgR3Cqr6KXRKhY2qTnhKv
-         Vub2MUB5l+9Wz3GiietAYdGdO8DWPvBm87VcaMap2psRdt38XRMASqSAd2kVpUpqP99K
-         8kcZ5aAHl/7ciAqN5OPxoYVRs96F26GMmmW8NqeHiL9+Snnq4e7qrQ+moLzu2zmvlzp9
-         cGeXNwNsNm+HePe5CE4CXqXjnSPe6p58cSgeo8To6FdSEcSoLxz0wVl4ynn4wEXwuji6
-         +dLH9Lgm0F1ZBAoOOJezgT0X4gf/58Ax1JaPKEm8mQMAGho93bopiSE1Qsxac0ogAUv4
-         4RyA==
-X-Gm-Message-State: AOAM532gDjWHT4AWP+IbyM65zQvne+kQw50VDJdzh7OpP7lA7jg0Af5a
-        26MFN6S5FG94qdb5WHpLi2E=
-X-Google-Smtp-Source: ABdhPJzHXFgBgZbSC96LOmG0tEwIUEP5FUTvVZ+C4wIuwYdgbZRcVsjej5H5kRrth9g0TunGwpCYWw==
-X-Received: by 2002:ac2:51ac:: with SMTP id f12mr6083898lfk.6.1596373187783;
-        Sun, 02 Aug 2020 05:59:47 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id i26sm2957103ljj.102.2020.08.02.05.59.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Aug 2020 05:59:47 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-Date:   Sun, 02 Aug 2020 15:59:46 +0300
-In-Reply-To: <20200731230858.GA1461090@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 31 Jul 2020 19:08:58 -0400")
-Message-ID: <87mu3drynx.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:content-transfer-encoding:from:mime-version
+         :subject:message-id:date:to;
+        bh=R3TUtOR7hmFQzKXdrZhKX+31caMu5mYqFUS2svXoHAU=;
+        b=nCl1yBee3nTmVFUj5poyEYYQ1bZMC0G8K0Lh7pKNJpSwTbit3iPwnOt7dTPez0wQV3
+         YCYc9tEcSxp5vl/8pgJ8O4i4fNJx9+gdvWrTyAe4SD5VbbM2FJPVLafxx9vfJkuFCPo5
+         WrNEkOJJr7iYK8d1cRKqigr/aKZRZ3/SGD9wiG1OZCxDASQfyibZD45S9RRuvxps5mqC
+         LAZZUuMSlgvDn4Ec7rdWjIprYQKhhFtri3xk+p1+KELq3I1CefuVWGI4e9EiwfVoxwjB
+         2jdtDAkUly7jNa4qepUoltv/5F1j4PYLtG/9lXm+p9/VJYoMx+88XwLy+8ngkDAqDacX
+         pdzQ==
+X-Gm-Message-State: AOAM531YbR1cyV+Vq3E2R3t+MiOOP+TflBHnQqhFGD79oapyIBwYHmgu
+        vr7c+L5+ZRCy0S1NnhhbN8PIhiDz
+X-Google-Smtp-Source: ABdhPJxtcSkWSlpHGJHHdj75qxI0/NldiQ+jPFGzW77Dps+C03rkD0Xi77ukl0JqXLl4f6dx3Qx3xw==
+X-Received: by 2002:a17:90b:390f:: with SMTP id ob15mr12461094pjb.156.1596374571196;
+        Sun, 02 Aug 2020 06:22:51 -0700 (PDT)
+Received: from [192.168.0.150] (097-093-071-077.biz.spectrum.com. [97.93.71.77])
+        by smtp.gmail.com with ESMTPSA id y10sm16874269pfp.130.2020.08.02.06.22.50
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Aug 2020 06:22:50 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Andrea Wyss <andrea.wyss@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: amend param not available to the pre-commit hook
+Message-Id: <30DFCBF3-FEA8-4FF5-94ED-A81AB10B04A3@gmail.com>
+Date:   Sun, 2 Aug 2020 06:22:49 -0700
+To:     git@vger.kernel.org
+X-Mailer: iPhone Mail (17G68)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=EF=BB=BFIssue
+amend param not available to the pre-commit hook
 
-> On Thu, Jul 30, 2020 at 12:41:39AM +0300, Sergey Organov wrote:
->
->> > Here's a re-roll taking into account the discussion so far:
->> >
->> >   - the escape hatch option name is flipped to "--no-diff-merges" (with
->> >     "--diff-merges" matching "-m")
->> 
->> Rather than being just a synonym for -m, is there a chance for
->> "--diff-merges" implementation to be turned to output diff to the first
->> parent only, no matter if --first-parent is active or not?
->>
->> Alternatively, may it have a parameter such as "-m parent-number" of
->> "git cherry-pick" being set to "1" by default?
->
-> Yes, I agree that would be a useful feature, but I don't think it needs
-> to be part of this series. It could be implemented as --diff-merges=1 to
-> show only the one against the first parent, or as its own option. But we
-> can add that on top.
->
->> This -m output of diffs to all the parents is in fact primary source of
->> confusion for me, even over all these mind-blowing inter-dependencies
->> between --first-parent, --cc, -c, -m, -p and what not. Who ever needs
->> these (potentially huge) diffs against other parents, anyway?
->
-> I've used "-m" second-parent diffs occasionally for hunting down
-> mismerges, etc, but I agree that most of the time you just want to see
-> the diff against the first parent.
->
->> Introduction of this new option is a great opportunity for improvement
->> that would be a pity to miss.
->
-> Adding an optional value to the flag is something we can do later. We
-> would miss the opportunity for "--diff-merges" to default to
-> "--diff-merges=1", but I'm not sure I'd want to do that anyway. Having
-> it be consistent with "-m" seems less confusing to me, and it is already
-> too late to change that.
->
-> If we want an option that defaults to "1", we can give it a new name.
-> The only thing that is lost now is that --diff-merges would already be
-> taken. :) But I think I'd probably call such an option "--diff-parents"
-> or something like that anyway.
+Problem
+Cannot write a pre-commit hook that stops amending a commit that is present i=
+n other branches.
 
-Yeah, I see your point, thanks for considering!
+Steps to Reproduce (git version 2.21.1)
+1. Code in the pre-commit hook:
+  echo "DEBUG 0=3D'$0' 1=3D'$1'"
 
-What I in fact have in mind is something like:
+2. run:
+  git commit --amend
 
-  --diff-merges[=<parent-number>|c|cc|all]
+Current Result
+  DEBUG 0=3D'.git/hooks/pre-commit' 1=3D''
 
-to have a single point of definition of the needed format of merges
-representation.
+Expected Result
+  DEBUG 0=3D'.git/hooks/pre-commit' 1=3D'--amend'
 
-Then comes the question of the default. "all" is what'd make it behave
-as "-m" behaves now. If it's too late for --diff-merges to have
-different default, could the default possibly be a configuration
-option rather than yet another command-line option?
+Please, let me know if you need other info.
+I'm looking forward for a fix or workaround.
 
--- Sergey
+Thank you,
+Andrea Wyss
