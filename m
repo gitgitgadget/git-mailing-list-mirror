@@ -2,213 +2,323 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8157EC433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEDD8C433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:00:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8BC5922BEB
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:57:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3B3122B45
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:00:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igRixIyi"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="IluE0nYH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727012AbgHCR5j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 13:57:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37026 "EHLO
+        id S1727809AbgHCSAJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 14:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbgHCR5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 13:57:38 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A986C06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 10:57:38 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id v9so6150315ljk.6
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 10:57:38 -0700 (PDT)
+        with ESMTP id S1726806AbgHCSAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 14:00:09 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFC2C06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:00:09 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id l23so36017606qkk.0
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WhO1rhzunSAIM7Nd9k5QeMf9oDL8zvXfQ22y/dibB7w=;
-        b=igRixIyiUx+EVte1LRpFResvOkd8nQ9+elIQYsjBbzaFYz/7+2cpKHHEcGbIhURFFa
-         V/z+s77/7AEw5co0hN6iz9dFNdyAfi1WcmDtldLwcczH8O/uOD5ldD3/wzeJds0tkUX7
-         2fgZgr8V/9YX+gawIFf0+mObo2cRKuwhkUY8uKMwoxkP6dsXhXZzZ+LnX3eBHqAmeQ3O
-         a8FRJfwscD+/V+AlrT9/PgAhKysPBUEeh4S0/bxWdIsT2olbH47Y6+NuY/3KToQwkzjv
-         DC9k4NggiZYAW+5GMNDb5VNDr/ag20ir8zMSEYHPr32m0vGq2PhmyHeokjNcKzpMMcBB
-         yshQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+sjmD721QrNHnhCY8rSe24RwzYJ3ABmoahIj7GEAmOw=;
+        b=IluE0nYHT0eKgG8CzRPyc/gAD0v0VwzIuhgrrdiDnFdRF3pWVM2vwtkd+wi7tM1Ewa
+         pLbFdCC+DQYUkvpsNfaNqMCiz87AgHRBDDiuP5aqWSDA+jb3Sy+iT9YJR6tmK0Q4q282
+         5CCURizfqg8UgvRVArCwp5fNCLGnjlc+ANpgX7S0lgO5RFq9JCdAoOEzzqocgTYsEad8
+         Dn04712wT8lfFodXYO57Qwvm/f384acpumWJXDlXx38pmIv76Pyer7uNGDBNrTjMWdNM
+         tkZycm7yIeVxlgyIehLqh7wmEdS9S4p/hv73a7tJLQ8w171w5LBkOBy+FiFY9HtwDZ4+
+         GRcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WhO1rhzunSAIM7Nd9k5QeMf9oDL8zvXfQ22y/dibB7w=;
-        b=FGtTjON9NaQd0dpUNtSbswSJrg29ZNHYVDGZGHAsLCcoHSAhjVWUE2guVXdR8StoG2
-         JcDUNToYfHSRJb7k8IEgk1gzsiOcW/ik4kAfKvFU8iyuCMZxvVeZe0/uVum48EXJC4Hb
-         huiNirE/2oglj/vlTcRJSZIwgDBJ2B0noZex/UPozlYPrnfGfgVH4ehZtRoUjGDYCAiw
-         1wWc5IEOSCOesIj7OdTxF217Ws46bw9WDqxMVMuHmD1xzrQSfXEXeCHfyVnGLtsfZhBn
-         +ZAhOR8SG3Xhw2exb4+IkP3qCKdo4f4b+CtNS76osMkH9+xGsv0u3DBFE+em/HFhHhds
-         mRhg==
-X-Gm-Message-State: AOAM530Jyqq4EBZPIL6MOsvMtB4VKsAT3dvEdAAHRs1GbNflzO8gxPvV
-        UqCqGkpfXOAwkgymzUqMeCzoRH7T
-X-Google-Smtp-Source: ABdhPJyo5+oR4rSw47ds+w0M/XgFNfFh8gOMj+iifqeFcrebE48pfANRoqAgw40VJ59TrjgyJgPQ5Q==
-X-Received: by 2002:a2e:b306:: with SMTP id o6mr7536048lja.361.1596477456822;
-        Mon, 03 Aug 2020 10:57:36 -0700 (PDT)
-Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id q3sm4466281ljm.22.2020.08.03.10.57.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+sjmD721QrNHnhCY8rSe24RwzYJ3ABmoahIj7GEAmOw=;
+        b=PCl9upttG0ulTClSMAQtPqYjX4Igwa9xCqcZ/liLZ+2m+mNIqwIR6AhyLUYaNFDBwp
+         bRXSLl2lcj3IXjRNXdMGpv+PfW8iPk+Mu6akIrz8aFmjlQt5/8+FAs/exbCpF0357yWM
+         ELrrZzNq+7qpRROr/9I2hDaXlfXeXg7PmwrDTEw4xJkawEqmPnqlvpiDoO0Uf7cewr70
+         LHs7uFAL5/icuEIrMfQiHmcFX4NxAYOOgRF5Yg7MaXhjB2wUqhcVhtTxWsgwjgwac2sy
+         SCmh1S83gFbIeg8wgSz4wchQZYQmW0lnRxGUx/pv2BXt1RT7cFVYZqc85yZIxp1OiBej
+         f9vg==
+X-Gm-Message-State: AOAM5319Df4Q3yPu1au2psI4O0bVWui41/yZgVbzCNjuHOdbPx6KEpwV
+        sxxL1xTvFEhWHwO7aVDaaRx/p8IA7Br3vA==
+X-Google-Smtp-Source: ABdhPJz5YI77eYF93K5bLLDBBmz257ijSqK3C06LzlYarHF4lNrbeIW/aH3LHX2K03ia8L3uvf9EVg==
+X-Received: by 2002:a05:620a:62f:: with SMTP id 15mr16711184qkv.483.1596477607605;
+        Mon, 03 Aug 2020 11:00:07 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:3475:b417:c07c:c811])
+        by smtp.gmail.com with ESMTPSA id m3sm20161008qka.31.2020.08.03.11.00.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 10:57:35 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/4] git-worktree documentation cleanups
-Date:   Mon,  3 Aug 2020 19:57:17 +0200
-Message-Id: <20200803175717.7465-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200803053612.50095-1-sunshine@sunshineco.com>
-References: <20200803053612.50095-1-sunshine@sunshineco.com>
+        Mon, 03 Aug 2020 11:00:06 -0700 (PDT)
+Date:   Mon, 3 Aug 2020 14:00:04 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, chriscool@tuxfamily.org, gitster@pobox.com,
+        szeder.dev@gmail.com
+Subject: [PATCH v4 0/3] upload-pack: custom allowed object filters
+Message-ID: <cover.1596476928.git.me@ttaylorr.com>
+References: <cover.1595468657.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1595468657.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 3 Aug 2020 at 07:39, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> This series fixes some problems I ran across in the git-worktree
-> documentation while working on another worktree-related topic. Since
-> these fixes are distinct from that topic, I'm submitting them
-> separately.
+Hi,
 
-All of these look correct to me. Thanks for polishing the docs. Extra
-thanks for injecting a "$" where we talk about the actual value of an
-environment variable.
+Here's what I anticipate to be the final reroll of my series to teach
+the new 'uploadpackfilter' configuration section, which allows for more
+fine-grained control over which object filters upload-pack is willing to
+serve.
 
-I offer the following suggestions on top. If you agree with them, or
-some of them, you might want to squash them into the various patches.
-But it's not like these are critical, I don't think they need to block
-this.
+Two changes from last time:
 
-Martin
+  - I adopted Peff's suggestion in beginning in [1], but appropriately
+    split it over the existing patch structure.
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 260bfe9105..2000a08075 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -25,8 +25,8 @@ Manage multiple working trees attached to the same repository.
- A git repository can support multiple working trees, allowing you to check
- out more than one branch at a time.  With `git worktree add` a new working
- tree is associated with the repository.  This new working tree is called a
--"linked working tree" as opposed to the "main working tree" prepared by "git
--init" or "git clone".  A repository has one main working tree (if it's not a
-+"linked working tree" as opposed to the "main working tree" prepared by linkgit:git-init[1]
-+or linkgit:git-clone[1].  A repository has one main working tree (if it's not a
- bare repository) and zero or more linked working trees. When you are done
- with a linked working tree, remove it with `git worktree remove`.
- 
-@@ -48,7 +48,7 @@ add <path> [<commit-ish>]::
- 
- Create `<path>` and checkout `<commit-ish>` into it. The new working directory
- is linked to the current repository, sharing everything except working
--directory specific files such as HEAD, index, etc. As a convenience,
-+directory specific files such as `HEAD`, `index`, etc. As a convenience,
- `<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
- +
- If `<commit-ish>` is a branch name (call it `<branch>`) and is not found,
-@@ -72,7 +72,7 @@ linkgit:git-config[1].
- If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, the new working tree is associated with a branch
- (call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
--doesn't exist, a new branch based on HEAD is automatically created as
-+doesn't exist, a new branch based on `HEAD` is automatically created as
- if `-b <branch>` was given.  If `<branch>` does exist, it will be
- checked out in the new working tree, if it's not checked out anywhere
- else, otherwise the command will refuse to create the working tree (unless
-@@ -137,13 +137,13 @@ To remove a locked working tree, specify `--force` twice.
- -B <new-branch>::
- 	With `add`, create a new branch named `<new-branch>` starting at
- 	`<commit-ish>`, and check out `<new-branch>` into the new working tree.
--	If `<commit-ish>` is omitted, it defaults to HEAD.
-+	If `<commit-ish>` is omitted, it defaults to `HEAD`.
- 	By default, `-b` refuses to create a new branch if it already
- 	exists. `-B` overrides this safeguard, resetting `<new-branch>` to
- 	`<commit-ish>`.
- 
- --detach::
--	With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
-+	With `add`, detach `HEAD` in the new working tree. See "DETACHED HEAD"
- 	in linkgit:git-checkout[1].
- 
- --[no-]checkout::
-@@ -154,7 +154,7 @@ To remove a locked working tree, specify `--force` twice.
- 
- --[no-]guess-remote::
- 	With `worktree add <path>`, without `<commit-ish>`, instead
--	of creating a new branch from HEAD, if there exists a tracking
-+	of creating a new branch from `HEAD`, if there exists a tracking
- 	branch in exactly one remote matching the basename of `<path>`,
- 	base the new branch on the remote-tracking branch, and mark
- 	the remote-tracking branch as "upstream" from the new branch.
-@@ -166,7 +166,7 @@ This can also be set up as the default behaviour by using the
- 	When creating a new branch, if `<commit-ish>` is a branch,
- 	mark it as "upstream" from the new branch.  This is the
- 	default if `<commit-ish>` is a remote-tracking branch.  See
--	"--track" in linkgit:git-branch[1] for details.
-+	`--track` in linkgit:git-branch[1] for details.
- 
- --lock::
- 	Keep the working tree locked after creation. This is the
-@@ -185,14 +185,14 @@ This can also be set up as the default behaviour by using the
- 
- -q::
- --quiet::
--	With 'add', suppress feedback messages.
-+	With `add`, suppress feedback messages.
- 
- -v::
- --verbose::
- 	With `prune`, report all removals.
- 
- --expire <time>::
--	With `prune`, only expire unused working trees older than <time>.
-+	With `prune`, only expire unused working trees older than `<time>`.
- 
- --reason <string>::
- 	With `lock`, an explanation why the working tree is locked.
-@@ -209,12 +209,12 @@ then `ghi` or `def/ghi` is enough to point to the former working tree.
- REFS
- ----
- In multiple working trees, some refs may be shared between all working
--trees and some refs are local. One example is HEAD which is different for each
-+trees and some refs are local. One example is `HEAD` which is different for each
- working tree. This section is about the sharing rules and how to access
- refs of one working tree from another.
- 
- In general, all pseudo refs are per working tree and all refs starting
--with `refs/` are shared. Pseudo refs are ones like HEAD which are
-+with `refs/` are shared. Pseudo refs are ones like `HEAD` which are
- directly under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are
- exceptions, however: refs inside `refs/bisect` and `refs/worktree` are not
- shared.
-@@ -225,7 +225,7 @@ former gives access to per-working tree refs of the main working tree,
- while the latter to all linked working trees.
- 
- For example, `main-worktree/HEAD` or `main-worktree/refs/bisect/good`
--resolve to the same value as the main working tree's HEAD and
-+resolve to the same value as the main working tree's `HEAD` and
- `refs/bisect/good` respectively. Similarly, `worktrees/foo/HEAD` or
- `worktrees/bar/refs/bisect/bad` are the same as
- `$GIT_COMMON_DIR/worktrees/foo/HEAD` and
-@@ -243,7 +243,7 @@ already present in the config file, they will be applied to the main
- working trees only.
- 
- In order to have configuration specific to working trees, you can turn
--on "worktreeConfig" extension, e.g.:
-+on the "worktreeConfig" extension, e.g.:
- 
- ------------
- $ git config extensions.worktreeConfig true
--- 
-2.28.0
+  - I dropped the old patch 3/4, since it really should have never been
+    there in the first place, and just made the refactoring more noisy
+    than necessary.
 
+    (For the curious, this patch was written as a preparatory step
+    within GitHub's fork in order to add the
+    'uploadpackfilter.tree.maxDepth' configuration. This was after the
+    initial work when I hadn't yet considered adding such a thing. Now
+    that we know the full arc, it makes sense to just pass the right
+    parameters from the get-go).
+
+Thanks again for all of the review!
+
+[1] :https://lore.kernel.org/git/20200731210114.GC1440890@coredump.intra.peff.net/
+
+Taylor Blau (3):
+  list_objects_filter_options: introduce
+    'list_object_filter_config_name'
+  upload-pack.c: allow banning certain object filter(s)
+  upload-pack.c: introduce 'uploadpackfilter.tree.maxDepth'
+
+ Documentation/config/uploadpack.txt |  18 +++++
+ list-objects-filter-options.c       |  23 ++++++
+ list-objects-filter-options.h       |   6 ++
+ t/t5616-partial-clone.sh            |  33 +++++++++
+ upload-pack.c                       | 104 ++++++++++++++++++++++++++++
+ 5 files changed, 184 insertions(+)
+
+Range-diff against v3:
+-:  ---------- > 1:  21531927e4 Revert "fmt-merge-msg: stop treating `master` specially"
+-:  ---------- > 2:  6e6029a82a fmt-merge-msg: allow merge destination to be omitted again
+-:  ---------- > 3:  25429fed5c refs: move the logic to add \t to reflog to the files backend
+-:  ---------- > 4:  3db796c1c0 t6300: fix issues related to %(contents:size)
+-:  ---------- > 5:  85b4e0a6dc Third batch
+1:  b1b3dd7de9 = 6:  f4c7771875 list_objects_filter_options: introduce 'list_object_filter_config_name'
+2:  a0a0427757 ! 7:  b34f4eaed9 upload-pack.c: allow banning certain object filter(s)
+    @@ Commit message
+         'uploadpack.allowfilter', which controls whether or not the 'filter'
+         capability is advertised.
+
+    +    Helped-by: Jeff King <peff@peff.net>
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+
+      ## Documentation/config/uploadpack.txt ##
+    @@ t/t5616-partial-clone.sh: test_expect_success 'implicitly construct combine: fil
+     +	test_config -C srv.bare uploadpackfilter.blob:none.allow false &&
+     +	test_must_fail ok=sigpipe git clone --no-checkout --filter=blob:none \
+     +		"file://$(pwd)/srv.bare" pc3 2>err &&
+    -+	test_i18ngrep "filter '\''blob:none'\'' not supported" err
+    ++	grep "filter '\''blob:none'\'' not supported" err
+     +'
+     +
+     +test_expect_success 'upload-pack fails banned combine object filters' '
+    @@ t/t5616-partial-clone.sh: test_expect_success 'implicitly construct combine: fil
+     +	test_config -C srv.bare uploadpackfilter.blob:none.allow false &&
+     +	test_must_fail ok=sigpipe git clone --no-checkout --filter=tree:1 \
+     +		--filter=blob:none "file://$(pwd)/srv.bare" pc3 2>err &&
+    -+	test_i18ngrep "filter '\''blob:none'\'' not supported" err
+    ++	grep "filter '\''blob:none'\'' not supported" err
+     +'
+     +
+     +test_expect_success 'upload-pack fails banned object filters with fallback' '
+     +	test_config -C srv.bare uploadpackfilter.allow false &&
+     +	test_must_fail ok=sigpipe git clone --no-checkout --filter=blob:none \
+     +		"file://$(pwd)/srv.bare" pc3 2>err &&
+    -+	test_i18ngrep "filter '\''blob:none'\'' not supported" err
+    ++	grep "filter '\''blob:none'\'' not supported" err
+     +'
+     +
+      test_expect_success 'partial clone fetches blobs pointed to by refs even if normally filtered out' '
+    @@ upload-pack.c: static int process_deepen_not(const char *line, struct string_lis
+      	return 0;
+      }
+
+    -+static int allows_filter_choice(struct upload_pack_data *data,
+    -+				enum list_objects_filter_choice c)
+    ++NORETURN __attribute__((format(printf,2,3)))
+    ++static void send_err_and_die(struct upload_pack_data *data,
+    ++			     const char *fmt, ...)
+     +{
+    -+	const char *key = list_object_filter_config_name(c);
+    ++	struct strbuf buf = STRBUF_INIT;
+    ++	va_list ap;
+    ++
+    ++	va_start(ap, fmt);
+    ++	strbuf_vaddf(&buf, fmt, ap);
+    ++	va_end(ap);
+    ++
+    ++	packet_writer_error(&data->writer, "%s", buf.buf);
+    ++	die("%s", buf.buf);
+    ++}
+    ++
+    ++static void check_one_filter(struct upload_pack_data *data,
+    ++			     struct list_objects_filter_options *opts)
+    ++{
+    ++	const char *key = list_object_filter_config_name(opts->choice);
+     +	struct string_list_item *item = string_list_lookup(&data->allowed_filters,
+     +							   key);
+    ++	int allowed;
+    ++
+     +	if (item)
+    -+		return (intptr_t) item->util;
+    -+	return data->allow_filter_fallback;
+    ++		allowed = (intptr_t)item->util;
+    ++	else
+    ++		allowed = data->allow_filter_fallback;
+    ++
+    ++	if (!allowed)
+    ++		send_err_and_die(data, "filter '%s' not supported", key);
+     +}
+     +
+    -+static struct list_objects_filter_options *banned_filter(
+    -+	struct upload_pack_data *data,
+    -+	struct list_objects_filter_options *opts)
+    ++static void check_filter_recurse(struct upload_pack_data *data,
+    ++				 struct list_objects_filter_options *opts)
+     +{
+     +	size_t i;
+     +
+    -+	if (!allows_filter_choice(data, opts->choice))
+    -+		return opts;
+    -+
+    -+	if (opts->choice == LOFC_COMBINE)
+    -+		for (i = 0; i < opts->sub_nr; i++) {
+    -+			struct list_objects_filter_options *sub = &opts->sub[i];
+    -+			if (banned_filter(data, sub))
+    -+				return sub;
+    -+		}
+    -+	return NULL;
+    -+}
+    -+
+    -+static void die_if_using_banned_filter(struct upload_pack_data *data)
+    -+{
+    -+	struct list_objects_filter_options *banned = banned_filter(data,
+    -+								   &data->filter_options);
+    -+	struct strbuf buf = STRBUF_INIT;
+    -+	if (!banned)
+    ++	check_one_filter(data, opts);
+    ++	if (opts->choice != LOFC_COMBINE)
+     +		return;
+     +
+    -+	strbuf_addf(&buf, "git upload-pack: filter '%s' not supported",
+    -+		    list_object_filter_config_name(banned->choice));
+    ++	for (i = 0; i < opts->sub_nr; i++)
+    ++		check_filter_recurse(data, &opts->sub[i]);
+    ++}
+     +
+    -+	packet_writer_error(&data->writer, "%s\n", buf.buf);
+    -+	die("%s", buf.buf);
+    ++static void die_if_using_banned_filter(struct upload_pack_data *data)
+    ++{
+    ++	check_filter_recurse(data, &data->filter_options);
+     +}
+     +
+      static void receive_needs(struct upload_pack_data *data,
+3:  ad3f0cce56 < -:  ---------- upload-pack.c: pass 'struct list_objects_filter_options *'
+4:  c9d71809f4 ! 8:  a0e7731a55 upload-pack.c: introduce 'uploadpackfilter.tree.maxDepth'
+    @@ Commit message
+
+         which allows '--filter=tree:0', but no other values.
+
+    -    Unfortunately, since the tree depth is an unsigned long, we can't use,
+    -    say, -1 as a sentinel value, and so we must also keep track of "have we
+    -    set this" as well as "to what value".
+    -
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+
+      ## Documentation/config/uploadpack.txt ##
+    @@ Documentation/config/uploadpack.txt: uploadpackfilter.<filter>.allow::
+
+      ## t/t5616-partial-clone.sh ##
+     @@ t/t5616-partial-clone.sh: test_expect_success 'upload-pack fails banned object filters with fallback' '
+    - 	test_i18ngrep "filter '\''blob:none'\'' not supported" err
+    + 	grep "filter '\''blob:none'\'' not supported" err
+      '
+
+     +test_expect_success 'upload-pack limits tree depth filters' '
+    @@ t/t5616-partial-clone.sh: test_expect_success 'upload-pack fails banned object f
+     +	test_config -C srv.bare uploadpackfilter.tree.maxDepth 0 &&
+     +	test_must_fail ok=sigpipe git clone --no-checkout --filter=tree:1 \
+     +		"file://$(pwd)/srv.bare" pc3 2>err &&
+    -+	test_i18ngrep "filter '\''tree'\'' not supported (maximum depth: 0, but got: 1)" err
+    ++	grep "tree filter allows max depth 0, but got 1" err
+     +'
+     +
+      test_expect_success 'partial clone fetches blobs pointed to by refs even if normally filtered out' '
+    @@ upload-pack.c: static void upload_pack_data_init(struct upload_pack_data *data)
+      	packet_writer_init(&data->writer, 1);
+
+      	data->keepalive = 5;
+    -@@ upload-pack.c: static int allows_filter_choice(struct upload_pack_data *data,
+    - 	const char *key = list_object_filter_config_name(opts->choice);
+    - 	struct string_list_item *item = string_list_lookup(&data->allowed_filters,
+    - 							   key);
+    -+	int allowed = -1;
+    - 	if (item)
+    --		return (intptr_t) item->util;
+    -+		allowed = (intptr_t) item->util;
+    +@@ upload-pack.c: static void check_one_filter(struct upload_pack_data *data,
+    +
+    + 	if (!allowed)
+    + 		send_err_and_die(data, "filter '%s' not supported", key);
+     +
+    -+	if (allowed != 0 &&
+    -+	    opts->choice == LOFC_TREE_DEPTH &&
+    ++	if (opts->choice == LOFC_TREE_DEPTH &&
+     +	    opts->tree_exclude_depth > data->tree_filter_max_depth)
+    -+		return 0;
+    -+
+    -+	if (allowed > -1)
+    -+		return allowed;
+    - 	return data->allow_filter_fallback;
+    ++		send_err_and_die(data,
+    ++				 "tree filter allows max depth %lu, but got %lu",
+    ++				 data->tree_filter_max_depth,
+    ++				 opts->tree_exclude_depth);
+      }
+
+    -@@ upload-pack.c: static void die_if_using_banned_filter(struct upload_pack_data *data)
+    -
+    - 	strbuf_addf(&buf, "git upload-pack: filter '%s' not supported",
+    - 		    list_object_filter_config_name(banned->choice));
+    -+	if (banned->choice == LOFC_TREE_DEPTH &&
+    -+	    data->tree_filter_max_depth != ULONG_MAX)
+    -+		strbuf_addf(&buf, _(" (maximum depth: %lu, but got: %lu)"),
+    -+			    data->tree_filter_max_depth,
+    -+			    banned->tree_exclude_depth);
+    -
+    - 	packet_writer_error(&data->writer, "%s\n", buf.buf);
+    - 	die("%s", buf.buf);
+    + static void check_filter_recurse(struct upload_pack_data *data,
+     @@ upload-pack.c: static int parse_object_filter_config(const char *var, const char *value,
+      	if (!strcmp(key, "allow"))
+      		string_list_insert(&data->allowed_filters, buf.buf)->util =
+--
+2.28.0.rc1.13.ge78abce653
