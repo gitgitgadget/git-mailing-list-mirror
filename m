@@ -2,113 +2,128 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE879C433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 19:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48130C433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 19:07:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 231EA207DF
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 19:02:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E4B920A8B
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 19:07:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="DKl5kXpP"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lZYsLGJE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbgHCTCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 15:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46996 "EHLO
+        id S1727809AbgHCTHb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 15:07:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgHCTCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 15:02:14 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6FECC06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 12:02:13 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id j10so11158838qvo.13
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 12:02:13 -0700 (PDT)
+        with ESMTP id S1726007AbgHCTHb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 15:07:31 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 391DDC06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 12:07:31 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id i129so2420099vsi.3
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 12:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GWIAjSuLk7YDImUx1SgdM+zVO0L7gmsIr0gnhI4p22M=;
-        b=DKl5kXpPY3PEnlnq3uonjkeFF7uiBK7qUFWD+I2KalEw8oEhMetrqMflXGZc3c8ots
-         /sTu3AT+NiD/Dt9zsGzNNEOEY0cbcK8I7Q1v9paP9ME2GshbYSOGP94+Jpr1j3y+Xe2X
-         EM5waFyic9kajM0ow8yiHPB7TD7jk/d6vH+Rj298hIrBPYJs7OLw5ZbRErrErrB94LNg
-         MUHREKa5xIVc42GViK54+MQTHZ09S+7iF4Lvf/sUCI3g0b5P7b8/5ZDTRQ6BcHQL1jJ4
-         fjdBC+hv+qfvwHHs6mwl9DXuftJO7qlocTCF5Oa+dPlyEkOCJeUCjCyqEz+Md3sJ6q53
-         TgVA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=93tFTORx7rvZuwQ/fx7FzXpPfdWTR692zSH47sKGQ6Y=;
+        b=lZYsLGJEAblD5UuAFwHUtOt7NLJhM9fk1xqVwVKJN4lSD/dYXsTGhkAgSBaLyHXkoS
+         uneDqL2Vw8jowYgGUTEp/PVLXW7pEr7iOgItgWVNS5c6pK7F8m0UIjp1ovKrdog1/H3A
+         EvtNS7pbc/2AAvufbzL8ZeylveX6T4cw17pLyD8uhklvJDoOIV3CzBkWa4/mH7KqXxio
+         kx1x2s3bdIigV2wl87L9byG2rlxucUKWk7z3zamD4VPF+f1funJoaa7Uqh66X5e2HfGw
+         TWGJvCiR2RfMK3d7rgwLfGb6v3LTzKzV7zdPzDn7cu2g8oLhbV+Yy1guOlmamREGv9Jp
+         68ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GWIAjSuLk7YDImUx1SgdM+zVO0L7gmsIr0gnhI4p22M=;
-        b=t23yqUyhDre0Rj5sTI2TIzTv8h0AtSp5ylFtw2f1DLEe9ThBzBgeAZ5wfBVwiJW6pE
-         jZ0G6VPD9D90l/962r8PBc+32xi6EKtXRak+0YIV9BkywQVYEm9vA+9jcuxgBlzerw2z
-         5H856G4qA0l16RTP168rXXAIl7H4yVBjDe3QSUtMGBQ5T7H7iJ5NTQuRJZY8q4lXmsUm
-         uPoYn2+MYLaKKMQF+Zz1ZflCu4z83/BLUIAG3cjpQswDaOnmK2Faajnn6d9QEC3eW6UV
-         fC3eDn8/qyIv8ZJNafxeNH3/5cUS2KGPMFDKOZ866jkhg07PNm3zbzD25Vdk4NxCiD2S
-         mxzg==
-X-Gm-Message-State: AOAM532XmH2YzZZA760djsJr2w1GfVfjXsW7h6zhVUKTcZZ21kp+x2F0
-        aBHv30azmjox7CNCjY+F0vGWhw==
-X-Google-Smtp-Source: ABdhPJwG7o7agzAxLXBMcQuIFU7xogoxjKGAO0KcN4VHJmbNzfexRM7THkxhLLLSToK+qwJeArGiDQ==
-X-Received: by 2002:a0c:bd8d:: with SMTP id n13mr9463680qvg.199.1596481333100;
-        Mon, 03 Aug 2020 12:02:13 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:3475:b417:c07c:c811])
-        by smtp.gmail.com with ESMTPSA id d15sm18970277qka.91.2020.08.03.12.02.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 12:02:12 -0700 (PDT)
-Date:   Mon, 3 Aug 2020 15:02:11 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
-Subject: Re: [PATCH 0/3] commit-graph: introduce 'core.useBloomFilters'
-Message-ID: <20200803190211.GA67539@syl.lan>
-References: <cover.1593536481.git.me@ttaylorr.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=93tFTORx7rvZuwQ/fx7FzXpPfdWTR692zSH47sKGQ6Y=;
+        b=amab/coFHK3ZHhesgimyQngTrLxL2H12ly7D29yN2CZRfXykQO3mnzPFoDwEfEEYdn
+         jhXi13tTz8ez2DCZBjvqK63hmmk6ns/U0fmcZXCnUpH+sLB7srxCCU7xif8DN5ikX69H
+         b3VPRCQv8dg/fUt0Zg6NtJAwJTlbkKSsuq+iOOWP7RihrUXJ/Rz76NMIScUWN7VkX0ri
+         69NoBf9HUSXQbhzIqpS14i8XROXFFPN8FRIhf73D4sx0/t6Z7J6fHBVfJJgdNeJJB2L1
+         oXW1UmasU6msqCsLxe2vBz17Ombx1MRjjORcItgDy6iVNM4vyITGipIURAQeoFfJQGY0
+         ijqg==
+X-Gm-Message-State: AOAM532FbmBSOYpkSkZuShjuZwy5Vpi/Bc+vpjwoOyYUBugdFZHgnayx
+        zpHitK21n+QO7xLxA3udPPPOFX1iZCglmRDfoagA1A==
+X-Google-Smtp-Source: ABdhPJzhjYcRYqe7vgSj1DTvg+sNhQJ8wU1IRESt7vjttt+q0/s+FA7c+dnO0mMRnlAONs3zgegf1pKrFqvrH3925A8=
+X-Received: by 2002:a67:61c1:: with SMTP id v184mr9023526vsb.56.1596481650247;
+ Mon, 03 Aug 2020 12:07:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1593536481.git.me@ttaylorr.com>
+References: <pull.673.v2.git.1594329108.gitgitgadget@gmail.com>
+ <pull.673.v3.git.1594925141.gitgitgadget@gmail.com> <xmqqwo33f6xb.fsf@gitster.c.googlers.com>
+ <CAFQ2z_P+L5ystTA8MjSjnUJQyEoH5Q3QtnMd0ezJpKPv_ntrgA@mail.gmail.com> <xmqqpn8hgca7.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqpn8hgca7.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 3 Aug 2020 21:07:18 +0200
+Message-ID: <CAFQ2z_O1sRm-_SNP=-GvgNLqB+qgf6k9YVfbF1XCAmFWdeX6Ew@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Remove special casing for PSEUDOREF updates
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 30, 2020 at 01:17:36PM -0400, Taylor Blau wrote:
-> Hi,
+On Mon, Jul 27, 2020 at 6:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > On Fri, Jul 17, 2020 at 12:10 AM Junio C Hamano <gitster@pobox.com> wro=
+te:
+> >> I reviewed some codepaths that deal with FETCH_HEAD recently.
+> >>
+> >> As the file is quite different from all the other pseudo references
+> >> in that it needs to store more than one object name and in that each
+> >> ref in it needs more than just the object name, I doubt that it
+> >> makes much sense to enhance the refs API so that its requirements
+> >> can be covered.
+> >
+> > I agree. Do we ever pretend that FETCH_HEAD is a ref today?
 >
-> Here are some patches that we have been using at GitHub to control
-> whether or not Bloom filters stored in commit-graphs are read during
-> normal operation.
+> "git rev-parse FETCH_HEAD", "git show FETCH_HEAD" etc. all should keep
+> working, so in that sense, it is treated as a ref.
 
-I took the suggestions raised here and incorporated them into a
-much-larger series that contains updated versions of these patches here:
+I added this to the last version of the full reftable patch series
+that I posted,  as patches
+"Split off reading loose ref data in separate function" and "Read
+FETCH_HEAD as loose ref".
 
-  https://lore.kernel.org/git/20200803185947.GA67482@syl.lan/
+Which other refs that aren't really refs should also be supported? The
+JGit source code suggests that MERGE_HEAD should also be special
+cased?
 
-This thread should be discarded, and future discussion redirected above.
+It's not pretty, though. The entry point is read_raw_ref(), which gets
+a ref_store as argument. ref_store doesn't have generic API to get at
+the repository directory, so the implementation of reading the
+FETCH_HEAD file has to be pushed down to the ref backend (which does
+know the directory).
 
-Thanks.
+> It does not
+> protect the history leading to the objects listed in it from being
+> collected, though.
 
+Is there documented agreement of how pseudo refs and GC should interact?
+
+> "git merge FETCH_HEAD" is an interesting case---I haven't thought it
+> through.
 >
-> -Taylor
->
-> Taylor Blau (3):
->   commit-graph: pass a 'struct repository *' in more places
->   t4216: fix broken '&&'-chain
->   commit-graph: respect 'core.useBloomFilters'
->
->  Documentation/config/core.txt |  5 +++++
->  builtin/commit-graph.c        |  2 +-
->  commit-graph.c                | 17 ++++++++++-------
->  commit-graph.h                |  4 +++-
->  fuzz-commit-graph.c           |  5 +++--
->  repo-settings.c               |  3 +++
->  repository.h                  |  1 +
->  t/helper/test-read-graph.c    |  3 ++-
->  t/t4216-log-bloom.sh          |  6 ++++--
->  9 files changed, 32 insertions(+), 14 deletions(-)
->
-> --
-> 2.27.0.224.g4cfa086e50
+> What should happen after "git pull origin foo bar" attempts to grab
+> two branches and make an octopus merge into the branch currently
+> checked out, and then "git reset --hard && git merge FETCH_HEAD" is
+> given?
 
-Thanks,
-Taylor
+I don't understand this question.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
