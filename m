@@ -2,116 +2,170 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE31BC433DF
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E85E2C433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:46:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF5DE22BF3
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:43:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E098022B45
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:46:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Li2BK2Im"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jtWjji+Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726356AbgHCRnM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 13:43:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34816 "EHLO
+        id S1726767AbgHCRq6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 13:46:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725945AbgHCRnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 13:43:12 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D08C06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 10:43:12 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id dd12so12693564qvb.0
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 10:43:12 -0700 (PDT)
+        with ESMTP id S1726276AbgHCRq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 13:46:58 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58EBBC06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 10:46:58 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id f9so323766pju.4
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 10:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pA4GsbNK4NT8+xfpnGuX7RDxrw25xceDeUTz7+6wYs0=;
-        b=Li2BK2Im/E4/asg5Tzxkbk/GSIy9SDw6Jn2bQ9h40bjXWWGNwLSCItqbJdTDT19JhL
-         JFge6hqwk+e8R72j2sNDbBVPMRPvLXQQs90ImnWTnzOYODY3yCtwbEJs78buI7d0po5J
-         Sw3XH8JOmrw2JMyV6gcOQu8CT95i1r6uYavKSxhWrXisDOkehnnDfwVkBcTZ21ROny8W
-         2YwQGE9XDnigbQCDfZOOZwLGpEebal0pIJ/jFboFcVHL4VkRn9zB4KKa2PGJ8FBh4quA
-         z202lM0sd3NAbpwxLitUq55w9K0F1Jw+mQUwoioqCDcrHOfwbdrupsgZk149qzxxnFMY
-         MYYw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zqjDRqlewtM8k2J/tIlreWgTXW1PxuLrvZTaxrsrxp0=;
+        b=jtWjji+QYCXa+CMYTxJYQSD3BJLP1va6692SAei1+MTuNo60+u/eivQREvDO/rYgEj
+         I1skw4JNoVSIS2oNul1W9QPp36OIONX/8jaD4q2KVAQ3EyooV7Dg/8poEtjQ3tcpt2nV
+         yODFCiYYAgNy0SmWNGJrIL2XPW9bKkhomPiCz2W1IogqQKMfkEd3acXyoZffDYlsJ/nC
+         oXqGxagSAF1S8LKVJg+/UiCOfS6+QBxZb+Bn54Sb6rDewHVo7C5XZ9zR3Ric2LJuVmXV
+         JPxtwf+p17MFdEH5+yOkMFiqBooO7EVUEZakuETQ1GYvNg1ANwKXLzQlm/8Bds0y96Jd
+         +KgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pA4GsbNK4NT8+xfpnGuX7RDxrw25xceDeUTz7+6wYs0=;
-        b=AyS8ParPoB+AGP1kqhzTGeXXby7g+erVUIiyhMFPuQPuDRyZDA5bQ2WLAIlmlRt2cO
-         WAHzP3t3+HkrqBXKIpaIIHvyyKgqd4EWejDcHQ8yBikVmi/LbyoxiJVHBiSyQUytw+ZQ
-         Q94Qnvxkbm0J9EKMLyjw5is40nNmuh2ZQt81yEgiRXMnfnBDfLdk6aGw1LC+feOXoNI/
-         7QCR+PcnOSWu2HyfVf4ty4karjjeI2lgDdLJT9E41j4iVJSxDnDSDfBdeesso0WJM1M0
-         yE5umq8WuUbj4MNsBV21rN2Q2rFSDxjkiSZrs9Ge+CNcwzvum+abek8E2L/BpAPbUrep
-         xutQ==
-X-Gm-Message-State: AOAM531WOnHQlYLiai1ZfuajesgZqS0kfVa2/UmnBS8qTJKvt2XUz21h
-        nX9/ho0uPZx8ZAwgxAQsnGw=
-X-Google-Smtp-Source: ABdhPJw1JuaTporFi/VUnmAn1eDAc/BDBm2ac6I4jEa3ms94fCdesL/1L9JLcWinvTPN5SWqJK2xFg==
-X-Received: by 2002:a0c:8f12:: with SMTP id z18mr2375302qvd.153.1596476591440;
-        Mon, 03 Aug 2020 10:43:11 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:bdad:2336:408b:dfdf? ([2600:1700:e72:80a0:bdad:2336:408b:dfdf])
-        by smtp.gmail.com with ESMTPSA id y3sm23069174qtj.55.2020.08.03.10.43.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Aug 2020 10:43:10 -0700 (PDT)
-Subject: Re: [PATCH v3 13/20] maintenance: auto-size incremental-repack batch
-To:     Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Josh Steadmon <steadmon@google.com>, jrnieder@gmail.com,
-        Jeff King <peff@peff.net>, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, Emily Shaffer <emilyshaffer@google.com>,
-        sluongng@gmail.com, Jonathan Tan <jonathantanmy@google.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zqjDRqlewtM8k2J/tIlreWgTXW1PxuLrvZTaxrsrxp0=;
+        b=glfvVRR9Ah1JgV7zX+wI2HyRdR3dDguAL0MwJKC5/LBMZeSk2H04/25hEDlj/ZYhZ/
+         ri/OFFuCIxGDPbog2xiev4GBjvRT9gon3pBtFGGe/HC6Nln81wrHFLJHdJ0r57iX15d3
+         JBLxBlxFqfVkth4t5soJB9xhVXFWDVN4DG2FvVQ9/6lSnrc1sRdRVFZoZOl1ijFViSJO
+         oR5Wa15TOUy5Gy2CnIji/6Tvkd16QiUfnz8oPEiRyOfStwgSFuR5ez8m4zVE0Sklsdwy
+         /6nwcc6KBlZU8B3/KQhy6nx0diXPyFGSZaYLHWObqmVykADp0+9HU7MKjnqVUwLuBtDI
+         rNfw==
+X-Gm-Message-State: AOAM533LBzyEbYWlO+a1mv1mmnbwZB6LNVV2jwuExKUEATXUTXwmHVwp
+        PyA/qET0Py2xymyvkB8nzdc=
+X-Google-Smtp-Source: ABdhPJxBr5JvAQ9t2rLTbbAmLkcj2yb+Tlb5cDGBDCpZizwntvsiApKQi2k3W73oPTC2Hy8L53TaAw==
+X-Received: by 2002:a17:902:7281:: with SMTP id d1mr15057761pll.247.1596476817743;
+        Mon, 03 Aug 2020 10:46:57 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id x6sm10226975pge.61.2020.08.03.10.46.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Aug 2020 10:46:56 -0700 (PDT)
+Date:   Mon, 3 Aug 2020 10:46:54 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com, peff@peff.net,
+        congdanhqx@gmail.com, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <pull.671.v3.git.1596147867.gitgitgadget@gmail.com>
- <ef2a2319565939bfbdbd2e898a980c61ecc39c6a.1596147867.git.gitgitgadget@gmail.com>
- <CAPx1GvcpOC2jeeB=CNR5cGh=q59j6J09J2+vRz4+8aH1_cQocQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <aead1ca7-0477-f46a-e2a6-f5b98c774d20@gmail.com>
-Date:   Mon, 3 Aug 2020 13:43:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
- Thunderbird/79.0
+Subject: Re: [PATCH v2 01/18] maintenance: create basic maintenance runner
+Message-ID: <20200803174654.GA2473576@google.com>
+References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
+ <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
+ <63ec602a07756a41f8ccddd745562c567a4b3ed7.1595527000.git.gitgitgadget@gmail.com>
+ <20200729221905.GB519065@google.com>
+ <5cbdb559-3897-961f-4dd3-0bab11848c5b@gmail.com>
+ <20200731003022.GA1029866@google.com>
+ <a176ddf5-b45b-fb25-8740-96efbd324edf@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAPx1GvcpOC2jeeB=CNR5cGh=q59j6J09J2+vRz4+8aH1_cQocQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a176ddf5-b45b-fb25-8740-96efbd324edf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/30/2020 7:36 PM, Chris Torek wrote:
-> On Thu, Jul 30, 2020 at 3:26 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> index 99ab1f5e9d..d94eb3e6ad 100644
->> --- a/builtin/gc.c
->> +++ b/builtin/gc.c
->> @@ -988,6 +988,46 @@ static int multi_pack_index_expire(void)
->>         return 0;
->>  }
+Derrick Stolee wrote:
+> On 7/30/2020 8:30 PM, Jonathan Nieder wrote:
+>> Derrick Stolee wrote:
+>>> On 7/29/2020 6:19 PM, Jonathan Nieder wrote:
+
+>>>> [jrnieder] How do I supply the tasks on the command line?  Are they
+>>>> parameters to this subcommand?  If so, it could make sense for this to
+>>>> say something like
+>>>>
+>>>> 	run <task>...::
+>>>
+>>> Hopefully this is documented to your satisfaction when the ability
+>>> to customize the tasks is implemented.
+[...]
+> I mean that there is only one task right now. Until the commit-graph
+> task is implemented, there is no need to have a --task=<task> option.
+
+Ah, that wasn't clear to me from the docs.
+
+You're saying that "git maintenance run" runs the "gc" task?  Can the
+documentation say so?
+
+[...]
+>>>>> +static struct maintenance_opts {
+>>>>> +	int auto_flag;
+>>>>> +} opts;
+>>>>
+>>>> Packing this in a struct feels a bit unusual.  Is the struct going to
+>>>> be passed somewhere, or could these be individual locals in
+>>>> cmd_maintenance?
+>>>
+>>> This will grow, and I'd rather have one global struct than many
+>>> individual global items. It makes it clearer when I use
+>>> "opts.auto_flag" that this corresponds to whether "--auto" was
+>>> provided as a command-line option.
 >>
->> +#define TWO_GIGABYTES (0x7FFF)
-> 
-> You meant (0x7FFFFFFF) here, right?
+>> That doesn't seem idiomatic within the Git codebase.
+>>
+>> Can they be locals instead?
+>
+> Which part do you want to be idiomatic? The fact that the parse-options
+> library typically refers to static global values or the fact that the
+> data is not organized in a struct?
 
-Ugh. Of course. Thanks for being diligent here. I hadn't pulled
-this branch into microsoft/git for testing with Scalar yet, where
-I would have noticed this.
+parse-options has no requirement about the values being global.  Some
+older code does that, but newer code tends to use locals when
+appropriate.
 
-I'm tempted to create an EXPENSIVE test that actually checks this
-condition. Let's see what I can do.
+Putting it in a struct is fine as long as that struct is being passed
+around.  What isn't idiomatic in Git is using a global struct for
+namespacing.
+
+[...]
+> The natural thing to do to "fix" that situation is to create a struct
+> that holds the information from the parsed command-line arguments. But
+> then why is it a local parameter that is passed through all of the
+> local methods instead of a global (as presented here in this patch)?
+
+I'm having trouble parsing that last sentence.  You're saying a global
+is preferable over passing around a pointer to a local "opts" struct?
+
+[...]
+>>> If there is a better way to ask "Did my command call 'git gc' (with
+>>> no arguments|with these arguments)?" then I'm happy to consider it.
+>>
+>> My proposal was just to factor this out into a function in
+>> test-lib-functions.sh so it's easy to evolve over time in one place.
+>
+> This is a valuable suggestion, but this series is already too large
+> to make such a change in addition to the patches already here.
+
+Hm, it's not clear to me that this would make the series significantly
+larger.
+
+And on the contrary, it would make the code less fragile.  I think this
+is important.
+
+https://chromium.googlesource.com/chromium/src/+/master/docs/cl_respect.md#remember-communication-can-be-hard:
+if you'd like to meet out of band, let me know, and I'd be happy to go
+into this further.
 
 Thanks,
--Stolee
-
+Jonathan
