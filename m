@@ -2,110 +2,139 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC67C433E3
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 05:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0588C433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 12:16:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 561F7206DA
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 05:37:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95F70204EC
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 12:16:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nb8TUGVq"
+	dkim=pass (1024-bit key) header.d=mattmccutchen.net header.i=@mattmccutchen.net header.b="qCT/xuYj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728094AbgHCFhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 01:37:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35642 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728078AbgHCFhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 01:37:19 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E10A3C06174A
-        for <git@vger.kernel.org>; Sun,  2 Aug 2020 22:37:18 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id t15so28422840iob.3
-        for <git@vger.kernel.org>; Sun, 02 Aug 2020 22:37:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=sxkJq1fPygNutclk3vXYb2bpp8vYuwuURln7k0NDtlw=;
-        b=nb8TUGVqe+u8z4Y/pSR8oiC6oBlMBfxl15XJNcSVXVlpSLPUolbs3l73ndLHBtGcct
-         1c5QuxTBCo350wLIbo0eJwb9LYOAEyE/igaAWBAMnUxTng1fhrCnHWrazNGOerhj9Czu
-         p4JKtvKETjS6ZqhRFf+x7P2bCob4pYcSFXVKCX29XgVyUg+s7THmlOHr6kaOFE2gNBmf
-         dwLnqNtHYtw1rraJ9UHZn0uwq/je2k470DQWHda35Yx2MRsAwF4Fti2vgqkUBPP+9B6m
-         yUqJKKgkeBwBbv9AGcwY2kvZfGw2MnAMertKAgJX71Qo+HmmAPrF5IWbpsTrWVATGOTr
-         3qDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=sxkJq1fPygNutclk3vXYb2bpp8vYuwuURln7k0NDtlw=;
-        b=srNSad/OLpoz8R7eRwZV0pJv5ZYBsdqMvs4kzxrPH0bawBU03/fHEcVNZLa2bUr0ro
-         lC427ltmjPhQ8k+jFu+Zy8vU5Q9HbYY8jvR9uEMisXE+spsKvxMKgpTpZuVDd+hgedOt
-         QvNHRm+F+YEURFt7s6jWQzAzaeuaJOin5hWevFuuT0+opEM7KFXleH/0QPOkYJb+BcY5
-         DBw4n6Mq9IGWTYclNoGwVQLmFrkgqoozshsyk6vkZRk8S7xWwUapbPLtL922wANowzvV
-         O6dRm149Rjdj2/Wfw4eqnIW1fcuV3ZIr5ofyKDBdJPEbtas3m0TOykZV18oNjd+55xJO
-         ewtw==
-X-Gm-Message-State: AOAM533fBafSQugxplJGvNPx3EOjlDwODvZWyTx1mFqaAxqylHc6vba1
-        5bTrywmA60ZFpDtLNU1XP9DNCLVYvHo=
-X-Google-Smtp-Source: ABdhPJyY4Y0OAZuiIJj4ZtyiD8J4VdH6nPFOj+NXbhTFpAU06rAY6sVLRj8Q506xxlLs5UTw9oKlgw==
-X-Received: by 2002:a6b:5c17:: with SMTP id z23mr15352993ioh.67.1596433038010;
-        Sun, 02 Aug 2020 22:37:18 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id r6sm8183114iod.7.2020.08.02.22.37.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Aug 2020 22:37:17 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
+        id S1726007AbgHCMQM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 08:16:12 -0400
+Received: from lavender.maple.relay.mailchannels.net ([23.83.214.99]:11358
+        "EHLO lavender.maple.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725945AbgHCMQF (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Aug 2020 08:16:05 -0400
+X-Sender-Id: dreamhost|x-authsender|matt@mattmccutchen.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id 308EB1E038F
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 12:16:03 +0000 (UTC)
+Received: from pdx1-sub0-mail-a73.g.dreamhost.com (100-96-22-23.trex.outbound.svc.cluster.local [100.96.22.23])
+        (Authenticated sender: dreamhost)
+        by relay.mailchannels.net (Postfix) with ESMTPA id 7501A1E016A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 12:16:02 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|matt@mattmccutchen.net
+Received: from pdx1-sub0-mail-a73.g.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
+        by 0.0.0.0:2500 (trex/5.18.8);
+        Mon, 03 Aug 2020 12:16:03 +0000
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|matt@mattmccutchen.net
+X-MailChannels-Auth-Id: dreamhost
+X-Belong-Quick: 12a030e17a0092ca_1596456962910_2106795365
+X-MC-Loop-Signature: 1596456962910:2574089114
+X-MC-Ingress-Time: 1596456962910
+Received: from pdx1-sub0-mail-a73.g.dreamhost.com (localhost [127.0.0.1])
+        by pdx1-sub0-mail-a73.g.dreamhost.com (Postfix) with ESMTP id 29982A7F71
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 05:16:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
+        message-id:subject:from:to:date:content-type:mime-version
+        :content-transfer-encoding; s=mattmccutchen.net; bh=hC+avWJ4fF/P
+        bg/rZQYMWl4c+Gw=; b=qCT/xuYjjwbxZPyI3Qu3FVHU12RklADwdoxKl2zHBWzx
+        CpwdhOSrK938BeiDU2z0/PK8LxHju4FyA0wa7xX86EdJcrQG7K+Zt0DXVatEBTTo
+        liAgAiAZsI7r/ZNx8QXw//Ui+igeTu8cUUPr0gWTgYKU6QFDvTI7WCdVVGyG6cI=
+Received: from main (pool-100-15-89-198.washdc.fios.verizon.net [100.15.89.198])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: matt@mattmccutchen.net)
+        by pdx1-sub0-mail-a73.g.dreamhost.com (Postfix) with ESMTPSA id 8FA6CA7F59
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 05:16:01 -0700 (PDT)
+Message-ID: <ec960483f5008e9948271c678d51876920ab62c9.camel@mattmccutchen.net>
+Subject: Renaming the "master" branch without breaking existing clones
+X-DH-BACKEND: pdx1-sub0-mail-a73
+From:   Matt McCutchen <matt@mattmccutchen.net>
 To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 4/4] git-worktree.txt: make start of new sentence more obvious
-Date:   Mon,  3 Aug 2020 01:36:12 -0400
-Message-Id: <20200803053612.50095-5-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.28.0.236.gb10cc79966
-In-Reply-To: <20200803053612.50095-1-sunshine@sunshineco.com>
-References: <20200803053612.50095-1-sunshine@sunshineco.com>
+Date:   Mon, 03 Aug 2020 08:15:58 -0400
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.3 (3.36.3-1.fc32) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-VR-OUT-STATUS: OK
+X-VR-OUT-SCORE: 50
+X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduiedrjeeggdehtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucggtfgfnhhsuhgsshgtrhhisggvpdfftffgtefojffquffvnecuuegrihhlohhuthemuceftddtnecuogfvvgigthfqnhhlhidqqdetfeejfedqtdegucdlhedtmdenucfjughrpefkuffhvffftggfggfgsehtjeertddtreejnecuhfhrohhmpeforghtthcuofgtvehuthgthhgvnhcuoehmrghtthesmhgrthhtmhgttghuthgthhgvnhdrnhgvtheqnecuggftrfgrthhtvghrnhepgfegvedtvdeijedufeejteefkeejudelvdeufeetgfduieeiveegtdelkeefteejnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfkphepuddttddrudehrdekledrudelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdphhgvlhhopehmrghinhdpihhnvghtpedutddtrdduhedrkeelrdduleekpdhrvghtuhhrnhdqphgrthhhpeforghtthcuofgtvehuthgthhgvnhcuoehmrghtthesmhgrthhtmhgttghuthgthhgvnhdrnhgvtheqpdhmrghilhhfrhhomhepmhgrthhtsehmrghtthhmtggtuhhttghhvghnrdhnvghtpdhnrhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When reading the rendered description of `add`, it's easy to trip over
-and miss the end of one sentence and the start of the next, making it
-seem as if they are part of the same statement, separated only by a
-dash:
+[Apologies if there is an existing thread about this; I searched hard
+and wasn't able to find one.]
 
-    ... specific files such as HEAD, index, etc. - may also be
-    specified as <commit-ish>; it is synonymous with...
+I've just become aware of the discussion that the name of the "master"
+branch should be changed.  I'm not taking a position on this now, but
+it seems enough people want to make the change that we should resolve
+the technical problems, of which I see several:
 
-This can be particularly confusing since the thoughts expressed by the
-two sentences are unrelated. Reduce the likelihood of confusion by
-making it obvious that the two sentences are distinct.
+1. Allowing tools to be configured to change the default name for new
+repositories.  Work on this appears to be well underway with no
+fundamental obstacles.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- Documentation/git-worktree.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+2. Renaming the branch in existing repositories.  I've seen a number of
+guides for how to do it in the central repository, and they all seem to
+expect users with existing clones to manually reconfigure them all at
+once.  To me, that amount of disruption would be unacceptable for
+central repositories I'm in charge of (admittedly few with few users,
+so I imagine some will argue I should leave it to the bigger players to
+complain about this), whether or not one believes that the social
+justice benefit of changing the branch name in personal clones merits
+the work at all.  I found only one guide that addresses this problem:
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 49422454d1..260bfe9105 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -48,8 +48,8 @@ add <path> [<commit-ish>]::
- 
- Create `<path>` and checkout `<commit-ish>` into it. The new working directory
- is linked to the current repository, sharing everything except working
--directory specific files such as HEAD, index, etc. `-` may also be
--specified as `<commit-ish>`; it is synonymous with `@{-1}`.
-+directory specific files such as HEAD, index, etc. As a convenience,
-+`<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
- +
- If `<commit-ish>` is a branch name (call it `<branch>`) and is not found,
- and neither `-b` nor `-B` nor `--detach` are used, but there does
--- 
-2.28.0.236.gb10cc79966
+https://github.com/chancancode/branch-rename#gradual-migration
+
+It includes a procedure to mirror the "master" branch from the new
+default branch so that readers of the central repository don't need to
+reconfigure anything.  Writers need to be reconfigured.  That seems
+reasonable to me.
+
+Unfortunately, the mirroring method seems to be specific to the
+repository hosting service being used.  If services supported standard
+git hooks, that would probably work, but I can understand if the
+services don't because it's unwieldy to execute shell scripts without
+introducing security risks.
+
+This guide seems well thought out to me on a first read, but I suspect
+there may be aspects that could benefit from a lot more scrutiny from
+experts, and I want to encourage them to provide it.
+
+3. Ensuring that tools detect the default branch of a given repository
+in an appropriate way rather than assuming "master".  Where applicable,
+the remote HEAD symref is probably the best thing to use.  See for
+example:
+
+https://github.com/chancancode/branch-rename#packages-considerations
+
+This category would also include git's feature of leaving the target
+branch name out of the merge message, for example.  I believe the
+necessary work on git itself is underway; other tools may lag.
+
+For read-only tools, this mainly matters for central repositories that
+eventually delete their "master" branch, which may not be all of them,
+but again, it sounds like there will be enough such repositories that
+we should consider the problem.  I don't see any fundamental obstacle,
+but this may benefit from more scrutiny as well.
+
+I'm aware that asking others to do work is often poorly received.  This
+message is just to get people's attention so they can do the work if
+they wish.
+
+Thanks for reading.
+
+Matt
 
