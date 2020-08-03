@@ -2,122 +2,104 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71C9DC433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 23:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1DA2C433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 23:54:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C35320775
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 23:52:16 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UU9ROmqu"
+	by mail.kernel.org (Postfix) with ESMTP id E5745206F8
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 23:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728541AbgHCXwP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 19:52:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35320 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726757AbgHCXwO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 19:52:14 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA188C06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 16:52:14 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id l60so995448pjb.3
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 16:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CpDH3LxBInC02kwAoOoTPw8+6oP4P0XEZht5kPF1/Lw=;
-        b=UU9ROmquz1HZqPCuCx3n6Qd4uBagFgW/1rTsbI06ns7g5Xu49VOR5DRGf7HIwMmswZ
-         /BaX+WbKmYwK7EZDk4Dl7fi3s1wYQiXiUtE1SIv+RL3BxBGfo8B0bYlHwEb5794juNlG
-         CVPM3ZFIUcywFJxSgdB9zPnxBSiBUe2hFkZb508ke89H7jM3cjwx/wQ6fCxejhwpjGg+
-         bKszLM5VEo1mNCOXMWb50hwyvZv4576IuSCejfNUGB5jyArPfOkU4EQlxFV2oTuaV6bg
-         lzcwps0pokh6WJq+tnksMXbUnR2HHk1L6CoP7e+i1mkyM4Pve0V0kZ5RK+ZBRuuCCE/X
-         p/Mw==
+        id S1728750AbgHCXyh convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 3 Aug 2020 19:54:37 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45447 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726718AbgHCXyh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 19:54:37 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z18so32150822wrm.12
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 16:54:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CpDH3LxBInC02kwAoOoTPw8+6oP4P0XEZht5kPF1/Lw=;
-        b=WsHZThMnrIvmFXoWjx0UIylg3Phxy0RyA//AaDn1pTAaZ9nZqvbeaYdzUzJ/H2ZK6H
-         zRGAFbVZyOvVJAQDNiUsoqjlVVbxGUlefd0gV+YrFw/rCucfPZ/0HC3oIOKo1frNeRKR
-         LuVdQ/rMPBbMjmw19gtervksS17u4AxC5q7cPTrZr/lUKbx1XHbMhojI5rsH78NYqrC9
-         6UbOa9XSyF4QDJXEr+QoYYOD6pBWWCmC4iCzr+iec+4DwobRXq21uOp0OtSugBBMpKiX
-         /ROh6HdiPGINrndi+Q/l3LTodA8ZcBX0dKIkJhaxBhdwZYK5G15ecQrQ4DC9WyIP+dD8
-         f/yg==
-X-Gm-Message-State: AOAM532ERcMpQbcqyCtNxqd+j9eU4dTj5pEKRqwVd+k4RZfOFvSKGEhx
-        nZ0D7M+04wKjR9ZbGDxRsmI=
-X-Google-Smtp-Source: ABdhPJx+wkTYPDtKvac9NgpB9uh+rvU2JSuW41iuBz7WUt9F9Eg+kVG08FVPSzIgsXCWdKwOLTdhqg==
-X-Received: by 2002:a17:90b:283:: with SMTP id az3mr1714920pjb.10.1596498734192;
-        Mon, 03 Aug 2020 16:52:14 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id n13sm544973pjb.20.2020.08.03.16.52.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 16:52:13 -0700 (PDT)
-Date:   Mon, 3 Aug 2020 16:52:11 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 01/18] maintenance: create basic maintenance runner
-Message-ID: <20200803235211.GC58587@google.com>
-References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
- <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <63ec602a07756a41f8ccddd745562c567a4b3ed7.1595527000.git.gitgitgadget@gmail.com>
- <20200729221905.GB519065@google.com>
- <5cbdb559-3897-961f-4dd3-0bab11848c5b@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qbq8HYui7qhnDMXxyVFNGvrtzI3lXklbAk0fb7GM9is=;
+        b=HjT/AQ3hTSGR2Ic/xilrxSVOMm+OG/G5+E1kpTwYLwz8/EpOZ7F6XcZW/poh+W2gwl
+         ARE8SIeyOeXvOYLCcUC3fl9akJyneOkLlyGZsLp57K6UdxJLwaxLMrMR6eEbWqiBnP0E
+         TOAbOMn0GejSjYW0A9d+8kU/10lvrm3+4mOCag+Qap0byK6od/rcSXAN8PIgotn1BBJq
+         j2BeGQJHZ891rWYY5v970YMBjmQ/7AUmFE8T7bMJOR5Im6JWumrm0+qHXay8T1a8F4Ww
+         eZCSuD6fNUBdKUADhsTv647T/tSsWfktfD9oNtNgT3nO/W6W12CLILgtLZIo3g/K+ngQ
+         XdQg==
+X-Gm-Message-State: AOAM530fNTvsVQttNmxq7v8AdGbopDTj13FGGCL8zwu7rudtzsOw8bNg
+        fCnK8UFaI1voDTeWRjBjO05brqcelLAB2M2v1rQ=
+X-Google-Smtp-Source: ABdhPJw7mcc5co7hzW4AB+2WBAqHC6s8iMHcKJ5IqIBSok9XhLQp5XFLgAqUqIkVZzlMPBaWk0yidMmKPOTpO3XsK08=
+X-Received: by 2002:a05:6000:11c1:: with SMTP id i1mr17121662wrx.277.1596498875765;
+ Mon, 03 Aug 2020 16:54:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5cbdb559-3897-961f-4dd3-0bab11848c5b@gmail.com>
+References: <20200803053612.50095-1-sunshine@sunshineco.com> <20200803175717.7465-1-martin.agren@gmail.com>
+In-Reply-To: <20200803175717.7465-1-martin.agren@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 3 Aug 2020 19:54:24 -0400
+Message-ID: <CAPig+cQtcxqQDAQ5bO6ica+Z7dd2+r8B+kXm0RK7qhpsAiX_xg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] git-worktree documentation cleanups
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 7/29/2020 6:19 PM, Jonathan Nieder wrote:
+On Mon, Aug 3, 2020 at 1:57 PM Martin Ågren <martin.agren@gmail.com> wrote:
+> I offer the following suggestions on top. If you agree with them, or
+> some of them, you might want to squash them into the various patches.
 
->> Perhaps this is suggesting that we need some central test helper for
->> parsing traces so we can do this reliably in one place.  What do you
->> think?
->
-> I'm specifically using GIT_TRACE2_EVENT, which is intended for
-> consumption by computer, not humans. Adding whitespace or otherwise
-> changing the output format would be an unnecessary disruption that
-> is more likely to have downstream effects with external tools.
->
-> In some way, adding extra dependencies like this in our own test
-> suite can help ensure the output format is more stable.
+Thanks for the review and suggestions for additional changes. See a
+few minor comments below...
 
-I've discussed this a bit more at [1]: I do think this is output that
-we cannot promise to keep stable.  Can you say a little more about why
-extracting a helper would be problematic?  For example, would doing
-that in a separate patch at the end of the series be workable for you?
+> -"linked working tree" as opposed to the "main working tree" prepared by "git
+> -init" or "git clone".  A repository has one main working tree (if it's not a
+> +"linked working tree" as opposed to the "main working tree" prepared by linkgit:git-init[1]
+> +or linkgit:git-clone[1].  A repository has one main working tree (if it's not a
 
-More generally, one theme I'm sensing in the responses to the code
-review comments I sent is that the series may have gotten too long to
-be able to easily amend the beginning of it.  To that end, I'm happy
-to make a reroll or make this easier in any other way I can.  This
-also suggests to me that it may make sense to split off an early part
-of the series and get that into a shape you're comfortable with before
-rebasing the rest of the series on top as a separate topic (a tried
-and true method, used recently for the "git bugreport" command, for
-example).
+Good idea, though this could just go atop this series.
 
-Thoughts?
+> -directory specific files such as HEAD, index, etc. As a convenience,
+> +directory specific files such as `HEAD`, `index`, etc. As a convenience,
 
-Thanks,
-Jonathan
+I intentionally left HEAD as-is because it consistently lacks quotes
+in this document, and I didn't feel strongly about it being quoted or
+not. Such a change could easily go atop this series.
 
-[1] https://lore.kernel.org/git/20200803231745.GB58587@google.com/
+I did see and consider adding backticks around "index" here but
+likewise didn't feel strongly about it at the time. But upon
+reconsideration, as a literal filename, you're right that it ought to
+be typeset specially.
+
+> @@ -166,7 +166,7 @@ This can also be set up as the default behaviour by using the
+> -       "--track" in linkgit:git-branch[1] for details.
+> +       `--track` in linkgit:git-branch[1] for details.
+
+I missed this one.
+
+> -       With 'add', suppress feedback messages.
+> +       With `add`, suppress feedback messages.
+
+And this.
+
+> -       With `prune`, only expire unused working trees older than <time>.
+> +       With `prune`, only expire unused working trees older than `<time>`.
+
+Ditto.
+
+> -on "worktreeConfig" extension, e.g.:
+> +on the "worktreeConfig" extension, e.g.:
+
+In addition to the grammo you spotted, the quotes around
+worktreeConfig should be backticks.
+
+I'll think go ahead and re-roll, adding a couple new patches,
+respectively, for the linkgit:'s you pointed out and typesetting
+`HEAD` specially.
