@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C30C433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A14CC433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88AC022B45
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A0B7207DF
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ahk8D3Nc"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="hkz9kYFw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726881AbgHCS5a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 14:57:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46250 "EHLO
+        id S1726942AbgHCS5d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 14:57:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgHCS53 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 14:57:29 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59281C06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:57:29 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id x69so36171726qkb.1
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:57:29 -0700 (PDT)
+        with ESMTP id S1726130AbgHCS5d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 14:57:33 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5465CC06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:57:33 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id l13so11482632qvt.10
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=N0zqsq6o//WQWC8IODzWqdojyNhjf7P9OwKi320vYn4=;
-        b=ahk8D3NcTZT5hhnmYptZXDAYNBXzT1DG8nKg5El1LPTzO+DyMbhDkdYAMXos24m7Dl
-         csdGin89w7ZuMYCaSDb/rSLktxXJfIVKF/m/83O1jFz0WxWmbWyYhZdWOB3/4LSTDVKz
-         5fGhGhY1/huu0RKtRbT+l9aVEDB8GBwCEk+dPBvMZvhhYxGnt5B8TGjyYCktEzdTXukU
-         ykFyN5UyaZqO+jHp6uSNnKwU52OSSmNbwv+e83BomBTiPSNZm5N2MtBUApEYbYG3Nbin
-         wUnj77mr/AruloO0kD+RuFcEbSmHFz2smSzc5sV9BaqTODBfFmVDGzJLFUOePdsiyi/j
-         dxHw==
+        bh=XySvQ/33jS+7MSIqB0IzojUu84o+bNSIGkfxH8mq4q0=;
+        b=hkz9kYFwAntxayUlguONG9SvGm26Q1RainmBFX2pI7wHNXC9Gxly4ZEKOdDNXrGJ2i
+         klm7qwDEdsc5vewSp+bhtWTww5rQjp9fh99iWY0WRx6Vwyx5ydYUzQqdAhHnQkAC7doP
+         GAJ4Eto9BFVexrbrisxdwPQK0aW1qlRg5dS4lR0ZViuLqVdEdwNOnsJOym5KakVtP2H3
+         Fz8VqVqFmuvSnP3htsrFtLrYDmfCpWRJfrjCjYNMSE+hmGWpG8yv7pW2UU7Gd/lz2akj
+         h1GQMIklHK3zboF2kxTRFHguJn5xfXpJrSS+r1YL0IEQ93YxHstl2wJKfzRDDuUT5QpP
+         qskA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=N0zqsq6o//WQWC8IODzWqdojyNhjf7P9OwKi320vYn4=;
-        b=rFv3okZHyxBphQOlcWJmgreowFUuv4ao8qV9ImBJ1CJhB18bGjRAJNXK2xADDluGiR
-         NhuWkgZYT+ahwnaTBbarO/gz5tpxMwPYCY7JNPYEPpXZ3dUfrQFs95Q7ICNsnCs/Q/OM
-         GRGm9WGl+rntfTyed9P6psKPrxiOiHZRVw3kWLoGiUnQ7t4C5WaIdtxcVX03+2zAceMw
-         tPRExkGmlb/kREXdW8ooQRn93VN1PPm7mi+VoLSxSzFzSWiAmHPjBAFctcUyEsF/bGab
-         jI3tQdEj3zkSzUhGK5SaZi58NLv3o0MSyTs9SAjyAdfAm4Y85jQX/D5u6yEYQ41wn0aA
-         0nAA==
-X-Gm-Message-State: AOAM532olGw0WP06zJTko3uvogY4PMQg09z3/LN6rpDbk2Je7+o3GkfC
-        GPmEt1+LuOYLWfxSOYk559zdbY5LWnTpWg==
-X-Google-Smtp-Source: ABdhPJwyfNhHULzEI/+6dpUuTfb2GNAzw2VfoXDjd3wLAp3qNXXxZZQw2c3xnwt0sNzH3XgpsPaI3w==
-X-Received: by 2002:a37:d201:: with SMTP id f1mr17554589qkj.188.1596481048165;
-        Mon, 03 Aug 2020 11:57:28 -0700 (PDT)
+        bh=XySvQ/33jS+7MSIqB0IzojUu84o+bNSIGkfxH8mq4q0=;
+        b=UJ8JU7QoKl0duwlHD656QJyg60STe26I0m/AFi+lCDUbWWpe/u7UscYfqeAETtlaMA
+         pXz4iuoiwMNEvfhYw9+pgy/RvxRECNabzo/vmUXS/oRqMdAcJK9pE1ryZgqd/LxZ3bwM
+         eoPMygIOVzAxr1zt5JIMRiqQ8O2epnojQCeNpMaM/wABWIcoCVXIwMXj3+txNQa/4YZd
+         I3xjt9BLjGq6BpmW+Bt5bAsaZM/ppB34AaWgOshT1BqiEHuFtyYbrs+GETqc9VuiLVTn
+         D+b0AVUO/Ujly+gEVC7QkraTf7maUGvI2+nWd2wWw842fj0V+ONDQeAk9sNkzAij9n04
+         aMWQ==
+X-Gm-Message-State: AOAM531nq8IUVzVpq5j1cG4aeWbdIZ7Wm2mo5cJpoLJJXofW11SGLRUu
+        Xe0W9yV7Up9u/HLsJHoUeOKuanbdLXcX7g==
+X-Google-Smtp-Source: ABdhPJypusE8kpE2dCoZ9xf9TxiT6dRAwtvxhPgHcVpnNDXBvkQ4FJ2Qup9uBtzHR1HNRBEGef/7rw==
+X-Received: by 2002:a0c:a342:: with SMTP id u60mr7563845qvu.48.1596481052197;
+        Mon, 03 Aug 2020 11:57:32 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:3475:b417:c07c:c811])
-        by smtp.gmail.com with ESMTPSA id g61sm22242058qtd.65.2020.08.03.11.57.27
+        by smtp.gmail.com with ESMTPSA id s184sm21372495qkf.50.2020.08.03.11.57.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 11:57:27 -0700 (PDT)
-Date:   Mon, 3 Aug 2020 14:57:26 -0400
+        Mon, 03 Aug 2020 11:57:31 -0700 (PDT)
+Date:   Mon, 3 Aug 2020 14:57:30 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 05/10] commit-graph: respect 'commitgraph.readChangedPaths'
-Message-ID: <e61507728336ecd9de9cce3c9a74dd418e4a4215.1596480582.git.me@ttaylorr.com>
+Subject: [PATCH 06/10] commit-graph.c: sort index into commits list
+Message-ID: <b31c60d71266c40ae23a619d5ac5fd99148e1649.1596480582.git.me@ttaylorr.com>
 References: <cover.1596480582.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,138 +73,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git uses the 'core.commitGraph' configuration value to control whether
-or not the commit graph is used when parsing commits or performing a
-traversal.
+For locality, 'compute_bloom_filters()' sorts the commits for which it
+wants to compute Bloom filters in a preferred order (cf., 3d11275505
+(commit-graph: examine commits by generation number, 2020-03-30) for
+details).
 
-Now that commit-graphs can also contain a section for changed-path Bloom
-filters, administrators that already have commit-graphs may find it
-convenient to use those graphs without relying on their changed-path
-Bloom filters. This can happen, for example, during a staged roll-out,
-or in the event of an incident.
+The subsequent patch will want to recover the new graph position of each
+commit. Since the 'packed_commit_list' already stores a double-pointer,
+avoid a 'COPY_ARRAY' and instead keep track of an index into the
+original list. (Use an integer index instead of a memory address, since
+this involves a needlessly confusing triple-pointer).
 
-Introduce 'commitgraph.readChangedPaths' to control whether or not Bloom
-filters are read. Note that this configuration is independent from both:
+Alter the two sorting routines 'commit_pos_cmp' and 'commit_gen_cmp' to
+take into account the packed_commit_list they are sorting with respect
+to. Since 'compute_bloom_filters()' is the only caller for each of those
+comparison functions, no other call-sites need updating.
 
-  - 'core.commitGraph', to allow flexibility in using all parts of a
-    commit-graph _except_ for its Bloom filters.
-
-  - The '--changed-paths' option for 'git commit-graph write', to allow
-    reading and writing Bloom filters to be controlled independently.
-
-When the variable is set, pretend as if no Bloom data was specified at
-all. This avoids adding additional special-casing outside of the
-commit-graph internals.
-
-Suggested-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config.txt             | 2 ++
- Documentation/config/commitgraph.txt | 4 ++++
- commit-graph.c                       | 6 ++++--
- repo-settings.c                      | 3 +++
- repository.h                         | 1 +
- t/t4216-log-bloom.sh                 | 4 +++-
- 6 files changed, 17 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/config/commitgraph.txt
+ commit-graph.c | 44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ef0768b91a..78883c6e63 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -340,6 +340,8 @@ include::config/column.txt[]
- 
- include::config/commit.txt[]
- 
-+include::config/commitgraph.txt[]
-+
- include::config/credential.txt[]
- 
- include::config/completion.txt[]
-diff --git a/Documentation/config/commitgraph.txt b/Documentation/config/commitgraph.txt
-new file mode 100644
-index 0000000000..bb78e72f1b
---- /dev/null
-+++ b/Documentation/config/commitgraph.txt
-@@ -0,0 +1,4 @@
-+commitgraph.readChangedPaths::
-+	If true, then git will use the changed-path Bloom filters in the
-+	commit-graph file (if it exists, and they are present). Defaults to
-+	true. See linkgit:git-commit-graph[1] for more information.
 diff --git a/commit-graph.c b/commit-graph.c
-index 81a6f2a8ce..cb9d7fea04 100644
+index cb9d7fea04..d6ea556649 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -320,6 +320,8 @@ struct commit_graph *parse_commit_graph(struct repository *r,
- 		return NULL;
- 	}
+@@ -79,10 +79,18 @@ static void set_commit_pos(struct repository *r, const struct object_id *oid)
+ 	*commit_pos_at(&commit_pos, commit) = max_pos++;
+ }
  
-+	prepare_repo_settings(r);
+-static int commit_pos_cmp(const void *va, const void *vb)
++struct packed_commit_list {
++	struct commit **list;
++	int nr;
++	int alloc;
++};
 +
- 	graph = alloc_commit_graph();
++static int commit_pos_cmp(const void *va, const void *vb, void *ctx)
+ {
+-	const struct commit *a = *(const struct commit **)va;
+-	const struct commit *b = *(const struct commit **)vb;
++	struct packed_commit_list *commits = ctx;
++
++	const struct commit *a = commits->list[*(int *)va];
++	const struct commit *b = commits->list[*(int *)vb];
+ 	return commit_pos_at(&commit_pos, a) -
+ 	       commit_pos_at(&commit_pos, b);
+ }
+@@ -139,10 +147,12 @@ static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
+ 	return data;
+ }
  
- 	graph->hash_len = the_hash_algo->rawsz;
-@@ -396,14 +398,14 @@ struct commit_graph *parse_commit_graph(struct repository *r,
- 		case GRAPH_CHUNKID_BLOOMINDEXES:
- 			if (graph->chunk_bloom_indexes)
- 				chunk_repeated = 1;
--			else
-+			else if (r->settings.commit_graph_read_changed_paths)
- 				graph->chunk_bloom_indexes = data + chunk_offset;
- 			break;
+-static int commit_gen_cmp(const void *va, const void *vb)
++static int commit_gen_cmp(const void *va, const void *vb, void *ctx)
+ {
+-	const struct commit *a = *(const struct commit **)va;
+-	const struct commit *b = *(const struct commit **)vb;
++	struct packed_commit_list *commits = ctx;
++
++	const struct commit *a = commits->list[*(int *)va];
++	const struct commit *b = commits->list[*(int *)vb];
  
- 		case GRAPH_CHUNKID_BLOOMDATA:
- 			if (graph->chunk_bloom_data)
- 				chunk_repeated = 1;
--			else {
-+			else if (r->settings.commit_graph_read_changed_paths) {
- 				uint32_t hash_version;
- 				graph->chunk_bloom_data = data + chunk_offset;
- 				hash_version = get_be32(data + chunk_offset);
-diff --git a/repo-settings.c b/repo-settings.c
-index 0918408b34..9e551bc03d 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -17,9 +17,12 @@ void prepare_repo_settings(struct repository *r)
+ 	uint32_t generation_a = commit_graph_generation(a);
+ 	uint32_t generation_b = commit_graph_generation(b);
+@@ -923,12 +933,6 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
+ 	return get_commit_tree_in_graph_one(r, r->objects->commit_graph, c);
+ }
  
- 	if (!repo_config_get_bool(r, "core.commitgraph", &value))
- 		r->settings.core_commit_graph = value;
-+	if (!repo_config_get_bool(r, "commitgraph.readchangedpaths", &value))
-+		r->settings.commit_graph_read_changed_paths = value;
- 	if (!repo_config_get_bool(r, "gc.writecommitgraph", &value))
- 		r->settings.gc_write_commit_graph = value;
- 	UPDATE_DEFAULT_BOOL(r->settings.core_commit_graph, 1);
-+	UPDATE_DEFAULT_BOOL(r->settings.commit_graph_read_changed_paths, 1);
- 	UPDATE_DEFAULT_BOOL(r->settings.gc_write_commit_graph, 1);
+-struct packed_commit_list {
+-	struct commit **list;
+-	int nr;
+-	int alloc;
+-};
+-
+ struct packed_oid_list {
+ 	struct object_id *list;
+ 	int nr;
+@@ -1389,7 +1393,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ {
+ 	int i;
+ 	struct progress *progress = NULL;
+-	struct commit **sorted_commits;
++	int *sorted_commits;
  
- 	if (!repo_config_get_int(r, "index.version", &value))
-diff --git a/repository.h b/repository.h
-index 3c1f7d54bd..81759b7d27 100644
---- a/repository.h
-+++ b/repository.h
-@@ -29,6 +29,7 @@ struct repo_settings {
- 	int initialized;
+ 	init_bloom_filters();
  
- 	int core_commit_graph;
-+	int commit_graph_read_changed_paths;
- 	int gc_write_commit_graph;
- 	int fetch_write_commit_graph;
+@@ -1399,15 +1403,15 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 			ctx->commits.nr);
  
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index fe19f6a60c..b3d1f596f8 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -90,7 +90,9 @@ do
- 		      "--ancestry-path side..master"
- 	do
- 		test_expect_success "git log option: $option for path: $path" '
--			test_bloom_filters_used "$option -- $path"
-+			test_bloom_filters_used "$option -- $path" &&
-+			test_config commitgraph.readChangedPaths false &&
-+			test_bloom_filters_not_used "$option -- $path"
- 		'
- 	done
- done
+ 	ALLOC_ARRAY(sorted_commits, ctx->commits.nr);
+-	COPY_ARRAY(sorted_commits, ctx->commits.list, ctx->commits.nr);
+-
+-	if (ctx->order_by_pack)
+-		QSORT(sorted_commits, ctx->commits.nr, commit_pos_cmp);
+-	else
+-		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
++	for (i = 0; i < ctx->commits.nr; i++)
++		sorted_commits[i] = i;
++	QSORT_S(sorted_commits, ctx->commits.nr,
++		ctx->order_by_pack ? commit_pos_cmp : commit_gen_cmp,
++		&ctx->commits);
+ 
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+-		struct commit *c = sorted_commits[i];
++		int pos = sorted_commits[i];
++		struct commit *c = ctx->commits.list[pos];
+ 		struct bloom_filter *filter = get_bloom_filter(ctx->r, c, 1);
+ 		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
+ 		display_progress(progress, i + 1);
 -- 
 2.28.0.rc1.13.ge78abce653
 
