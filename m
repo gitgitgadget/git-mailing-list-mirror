@@ -2,79 +2,85 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29821C433DF
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7244AC433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:10:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79F4622BED
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:08:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE57822BED
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbgHCSI0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 14:08:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46342 "EHLO cloud.peff.net"
+        id S1727768AbgHCSKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 14:10:52 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:5898 "EHLO bsmtp.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726130AbgHCSI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 14:08:26 -0400
-Received: (qmail 28114 invoked by uid 109); 3 Aug 2020 18:08:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Aug 2020 18:08:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2187 invoked by uid 111); 3 Aug 2020 18:08:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Aug 2020 14:08:25 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 Aug 2020 14:08:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-Message-ID: <20200803180824.GA2711830@coredump.intra.peff.net>
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
- <20200729201002.GA2989059@coredump.intra.peff.net>
- <871rku3soc.fsf@osv.gnss.ru>
- <20200731230858.GA1461090@coredump.intra.peff.net>
- <87mu3drynx.fsf@osv.gnss.ru>
- <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
- <87o8nrybnb.fsf@osv.gnss.ru>
+        id S1726130AbgHCSKw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 14:10:52 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 4BL5Xn3Yblz5tlJ;
+        Mon,  3 Aug 2020 20:10:49 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 16168496C;
+        Mon,  3 Aug 2020 20:10:49 +0200 (CEST)
+Subject: Re: [PATCH] midx: use buffered I/O to talk to pack-objects
+To:     Chris Torek <chris.torek@gmail.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <c5920e08-b7dd-e870-f99e-225d0aafc663@web.de>
+ <CAPx1GveChRzsA=FayzhZRSQLPz+o1Po3-_9ZvAGLPztpH5Jg9w@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <1fd18b0c-8c2c-54ab-89aa-357b046eb403@kdbg.org>
+Date:   Mon, 3 Aug 2020 20:10:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <CAPx1GveChRzsA=FayzhZRSQLPz+o1Po3-_9ZvAGLPztpH5Jg9w@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87o8nrybnb.fsf@osv.gnss.ru>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 03, 2020 at 06:47:20PM +0300, Sergey Organov wrote:
-
-> > A command line option that takes _optional_ argument is evil; it
-> > hurts teachability (e.g. "why does this option always require
-> > "--opt=val" and refuses '--opt val'?").
+Am 02.08.20 um 18:11 schrieb Chris Torek:
+> On Sun, Aug 2, 2020 at 7:40 AM René Scharfe <l.s.r@web.de> wrote:
+>> @@ -1443,10 +1446,15 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+>>                         continue;
+>>
+>>                 nth_midxed_object_oid(&oid, m, i);
+>> -               xwrite(cmd.in, oid_to_hex(&oid), the_hash_algo->hexsz);
+>> -               xwrite(cmd.in, "\n", 1);
+>> +               fprintf(cmd_in, "%s\n", oid_to_hex(&oid));
+>> +       }
+>> +
+>> +       if (fclose(cmd_in)) {
+>> +               error_errno(_("could not close stdin of pack-objects"));
+>> +               result = 1;
+>> +               finish_command(&cmd);
+>> +               goto cleanup;
+>>         }
+>> -       close(cmd.in);
+>>
+>>         if (finish_command(&cmd)) {
+>>                 error(_("could not finish pack-objects"));
+>> --
+>> 2.28.0
 > 
-> Yeah, I sympathize.
+> Here, we don't have any explicit errno checking, but
+> of course error_errno() uses errno.  This too needs
+> an ferror() (or fflush()) test before the final fclose(),
+> and then we just need to use plain error().  Otherwise
+> you'll need the clumsier test-after-each-fprintf() and
+> an explicit final fflush()-and-test.
 
-Sorry, the optional argument was my suggestion. I don't think they're
-that evil, but I agree they require extra knowledge for the user. I
-don't mind avoiding them when possible (and it's definitely possible
-here).
+We need this explicit test after each fprintf anyway because SIGPIPE may
+be ignored, and then writing fails with EPIPE. On Windows, this is
+doubly important because we do not have SIGPIPE at all (and always see
+EPIPE), but we see EPIPE only on the first failed write; subsequent
+writes produce EINVAL.
 
-> > Introduce --diff-parent=(none|<parent-number>|c|cc|all) that is
-> > different from --diff-merges, and -m and --[no-]diff-merges can be
-> > defined in terms of that, at which point we can gradually deprecate
-> > them if we wanted to, no?
-> 
-> Sounds great, I only hoped we can do it right now, with this new
-> --diff-merges option, maybe as a pre-requisite to the patches in
-> question, but Jeff said it's too late, dunno why.
-
-It's too late for "-m" to change semantics (we could do a long
-deprecation, but I don't see much point in doing so). But --diff-merges
-is definitely still changeable until we release v2.29. My resistance was
-mostly that I didn't want to complicate my series by adding new
-elements. But we could do something on top.
-
--Peff
+-- Hannes
