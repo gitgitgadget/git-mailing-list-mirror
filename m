@@ -3,81 +3,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CFD2C433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 21:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2589C433DF
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 21:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1782A22BF3
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 21:19:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E392D207FC
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 21:38:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+dKkM1b"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XkDZWuhf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726825AbgHCVTB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 17:19:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39852 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgHCVTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 17:19:00 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B20FC06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 14:19:00 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id 140so21216867lfi.5
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 14:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EqDlD1FrQqbf2GAlWVompwjVXgJVX3yMG4TwiUMWayA=;
-        b=V+dKkM1bJETxe1yNBoEsSUDw6gMjX1sV41igX8auyCe2VpgHvoMxb+YltWhLlR4qJb
-         g7YOl7a6yJ4tX5712dzpRlWMBo329BiO/PXqpF41+mrwd0ZgsoagH5Sl8BQE9c0OSnaG
-         7CW6xrp9IiE+JGHY3XZtnJuqKtEJAKMxnISnXEefpnCXBv+3J1RorzVP6SzffhgojFIf
-         BaywbnCFPYiKc0T/DwCxzO4ScJeFJVf3ytLhHklS/1ujlcigEtIRKqs2WTZoQGkdbq8r
-         JhiDUHnSRww//Je2mH+eEYgxvyO3CoolXhpDoF7f6CTOYzvhkYST35FGdMpyDNsCdqLn
-         8BkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=EqDlD1FrQqbf2GAlWVompwjVXgJVX3yMG4TwiUMWayA=;
-        b=ZPYjUUy4bynzmWBXr0kop6TI6FTBLp+/QynBHxSu4TwAHbrpt9pUpm9UqDUhW+Bwtg
-         8cTu1hqALDcMKP34FG+YuIzZFFJCIOB3fRLQA2HMW/XUuiO40Jnqk9n1eQdVlOV4rVQi
-         x/dxJ53X1p1ScD2YkMAKZTZgucoZY8CcizEloynQ2uucwGFWQUwnA/csSLMRT3V1/6TF
-         ndh2F2LCeHvhK3GPO285I/klUOuA4GzXeyZZnh8u27LsmZZhQvfgdbHpNMgrOKTRMqqB
-         j0AjKrx/g8LQJgnLCEz6+0MvfkIb6yAcjzpF++OHIfqYioegszwjsWEcsJppNW3ugS9G
-         FUng==
-X-Gm-Message-State: AOAM530xQS5jsP9cffFVQMZbn5XpRhHTo6jWxYE5kK/pE4LC9wUzEexv
-        L2TX7Nz2leZzUsVqJi17vj+w6xmD
-X-Google-Smtp-Source: ABdhPJy+thPIp7nAGeW1SsrYd48orQnABaCqFh/1fthiW4mwtlfyXt1AFgK4aWSRIaeFAm84F/M86g==
-X-Received: by 2002:a19:848d:: with SMTP id g135mr9373264lfd.1.1596489538787;
-        Mon, 03 Aug 2020 14:18:58 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id o16sm4654260ljc.66.2020.08.03.14.18.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 14:18:57 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
+        id S1727780AbgHCViX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 17:38:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64646 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726130AbgHCViX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 17:38:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 40B00856ED;
+        Mon,  3 Aug 2020 17:38:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ewqzviCbJ9PY6XkBMdsL+N3CSSc=; b=XkDZWu
+        hfqvT9yYw6S5DN7h2DG9nfAjPtuHWKQv4sndoVK99YAIHlsLa41dT56l574wzVSC
+        T2HrNLOfzQlUzlT+fATAqLwhzj8DLmUWP/GA6JCfjiDctZJqpntByigXgXn7Lm8L
+        JF+PCc4JbZUUxU0cT/NNrDNdwKSab9xFIHWhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=m1o+pP4GP+bNI4hLQTh+FpLkyGwWDn1d
+        WVuIcKpTMNZZWkfmULq/ZjOWIxD+lD6KATCk+qO3vRsioQ66zj6CBvHhqBdW4for
+        Xz00PJztzMkU/Xu/cUESSzk60sQz7VwIsLVHCHDjrTQClP6DN/SGCWvR+j15f5sa
+        l86+Fn9k/WQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36C6F856EC;
+        Mon,  3 Aug 2020 17:38:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF025856EB;
+        Mon,  3 Aug 2020 17:38:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <871rknsdo4.fsf@osv.gnss.ru>
-        <20200803205532.GC2715275@coredump.intra.peff.net>
-Date:   Tue, 04 Aug 2020 00:18:56 +0300
-In-Reply-To: <20200803205532.GC2715275@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 3 Aug 2020 16:55:32 -0400")
-Message-ID: <87lfivqvgf.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Matt McCutchen <matt@mattmccutchen.net>, git@vger.kernel.org
+Subject: Re: Renaming the "master" branch without breaking existing clones
+References: <ec960483f5008e9948271c678d51876920ab62c9.camel@mattmccutchen.net>
+        <20200803160051.GA50799@syl.lan>
+        <20200803194006.GA2715275@coredump.intra.peff.net>
+        <20200803204503.GB2715275@coredump.intra.peff.net>
+        <xmqq1rknv3xl.fsf@gitster.c.googlers.com>
+        <20200803211112.GA2720049@coredump.intra.peff.net>
+Date:   Mon, 03 Aug 2020 14:38:20 -0700
+In-Reply-To: <20200803211112.GA2720049@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 3 Aug 2020 17:11:12 -0400")
+Message-ID: <xmqqwo2ftnoz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: A68CB10A-D5D1-11EA-B6B4-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -85,38 +73,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Mon, Aug 03, 2020 at 11:00:11PM +0300, Sergey Organov wrote:
->
->> > It's too late for "-m" to change semantics (we could do a long
->> > deprecation, but I don't see much point in doing so).
->> 
->> I thought not of changing semantics of -m. Suppose we introduce
->> 
->>   --diff-merges=(none|<parent-number>|c|cc|all)
->> 
->> before your patch(es). Then your patch would read: "making --first-parent
->> imply --diff-merges=1" and it'd miss that --[no-]diff-merges part, no?
->
-> Sure, that would be OK with me. You'd have --diff-merges=none to get
-> the current behavior, and probably make --no-diff-merges an alias for
-> that.
+> But I do think a "branch renaming" helper like this might be useful for
+> projects undergoing this rename. I don't think it makes sense to have as
+> a first-class Git command, but I wouldn't be opposed to carrying
+> something like it in contrib/ if somebody wanted to polish it up.
 
-Yes, keeping --no-diff-merges as an alias might make sense, especially
-if it's on top of yours.
+Absolutely.  
 
->
->> > But --diff-merges is definitely still changeable until we release
->> > v2.29. My resistance was mostly that I didn't want to complicate my
->> > series by adding new elements. But we could do something on top.
->> 
->> Can't we do yours on top instead? I'd expect it'd then be even simpler.
->
-> Mine is in 'next', so there is no rebuilding it on top of anything else
-> without a revert. But I don't see any particular reason to do that
-> versus just changing the behavior on top. What's in 'next' is generally
-> not rewound, but the behaviors are not cemented with respect to
-> backwards compatibility.
+I think we three are on the same page now ;-)
 
-Ah, now I see, thanks!
+cf. <20200803163958.GD50799@syl.lan>
+cf. <xmqqlfivwvtw.fsf@gitster.c.googlers.com>
 
--- Sergey
+Now one issue I am not so sure about is if the only thing that needs
+adjusting is branch.*.remote + branch.*.merge.
+
+The open-ended nature of our design means it is _possible_ to be
+reasonably sure to have covered everything we do in the core part of
+Git, but it is certain for us to miss third-party enhancements.
+
+An inevitable "why not do all that when 'git branch -r -m old new'
+is given?" posed by those who are not aware of the design needs to
+be shot down, which is unfortunate.
+
+
+
