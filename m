@@ -2,101 +2,108 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 804AFC433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 16:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 189A4C433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:04:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53996207DF
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 16:41:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB42A20792
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 17:04:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DGEb08+u"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EoiYniHa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726548AbgHCQlE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 12:41:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53404 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725945AbgHCQlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 12:41:04 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C955BC06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 09:41:03 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id w25so4916228ljo.12
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 09:41:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FSO+c+qU3XE6ZrUeFYDmIGCl0uFuSjMQABfwGB635L8=;
-        b=DGEb08+upabQ5hT9DBnV+kQVxO4QU5TGn9axOP8i8ZNcbWiIU372uKoRg2j72JLgi6
-         QXTahSmj1ALoTMqaimQ3KusFlWbWxH48rNe0ySo5EIMUBlewNrAQyEdjyHjsFYASOcLJ
-         TpL/ZxI+T4eslj/xwUfmeABGWI44nTxMwKDWJT0rb4H1B2GUbwV1gytcaLjBAgnqOKeM
-         ADQP7Ii/nAVZIFCtYXrVcAFsapjbqV/tlTjravDqyypyCFCjv7pPHLJRdT8YrXHdqPyE
-         JRhkmnv4Hvsti8JPzTTSFNHPlR4Q9qVURO72+V3nByUPnacvN5eiu4W0JjGqpO0Bmn6+
-         TqgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=FSO+c+qU3XE6ZrUeFYDmIGCl0uFuSjMQABfwGB635L8=;
-        b=jFMVQSPDpwWsQuh/7+qo6xjXrON/IZFHE5wkjbEatM3Oj3w2//lGpf3M0BIvS2YIR9
-         sRvzdCWT4U+ofz+tZD3c970tt7GScxSTeRZb/5F4khpLPVF6shn5vbk9iVRjfu4smhSe
-         /dnTG26eoWkxq4woGd6QdiEeFQEjY1c7EtEQ4fVz1ucMeS5Acv685qssJ9ulMNwfO/CO
-         LB9FLaPtK7bKn7cBrdUMIGzVeHx9icoyxdckFmpsCwgQhKLZPqi4aCf4TOm4PsV3A1YG
-         LQTuUSfw0CUDKbCN6reqOAZtAqozwXRm21ZJ5kimPyMMKfU2Qt3FhtAzsv0Tv2l0E3XF
-         k7WA==
-X-Gm-Message-State: AOAM533hQ1CLHM6+33QMp4QNMdS+pZytfwG55dhunTf+Fu29uWm9zSuv
-        k6RaNh7key72TXrV74hBNuM=
-X-Google-Smtp-Source: ABdhPJy46nlWPPzHC42IyJ78sryH6Dp9cKFn9ez7I7m/qDFLcDl+n4AfUywO4f/MBTxOyDjjMhsOtw==
-X-Received: by 2002:a2e:9b4a:: with SMTP id o10mr8224578ljj.199.1596472862329;
-        Mon, 03 Aug 2020 09:41:02 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 9sm5035798lff.82.2020.08.03.09.41.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 09:41:01 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru> <xmqqd047wuuh.fsf@gitster.c.googlers.com>
-Date:   Mon, 03 Aug 2020 19:41:00 +0300
-In-Reply-To: <xmqqd047wuuh.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 03 Aug 2020 09:35:34 -0700")
-Message-ID: <87pn87smw3.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1727823AbgHCREU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 13:04:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56407 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726878AbgHCRES (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 13:04:18 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CD1083914;
+        Mon,  3 Aug 2020 13:04:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vsLyElSyl2hUxGY7dyh+a84pXY0=; b=EoiYni
+        HaE3ZNfkuqNtwph6w6Kavu9sW1K3+oVh998eRuOn3qXVQmfRrg77kUm/EmOf2ili
+        2nbiUq6OrI9SpEKNkcBq367TUEXQVNndW2/utoXv0PXXUiBveCG/DKPhbcWfuvzZ
+        +IirLs6m8XXF8bypfc+Aou2Q9AgF+GFtc57IU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XiKQxQLbT9X3WE6LmqAaCfmJ7r2GZOdO
+        ++/+2ghOssEnsTdKA/r09JUub/5rY55tlU8H4nDYw+obtFugtPGObtorrtzQ4wzq
+        Ffka+LyoRHtUu+GhH0wdURVz1O1Vf/uro2FOHBiRVSSJEqyLUMC4sx4HBZdHLY3L
+        TGBIbCqAVMI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 931F083913;
+        Mon,  3 Aug 2020 13:04:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F93A83912;
+        Mon,  3 Aug 2020 13:04:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Noam Yorav-Raphael via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Noam Yorav-Raphael <noamraph@gmail.com>
+Subject: Re: [PATCH] docs: improve the example that illustrates git-notes path names
+References: <pull.692.git.1596465817121.gitgitgadget@gmail.com>
+        <20200803154852.GA48612@syl.lan>
+Date:   Mon, 03 Aug 2020 10:04:15 -0700
+In-Reply-To: <20200803154852.GA48612@syl.lan> (Taylor Blau's message of "Mon,
+        3 Aug 2020 11:48:52 -0400")
+Message-ID: <xmqq7dufwtio.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 5CD012B2-D5AB-11EA-A58C-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+>> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+>> index ced2e8280e..9fc1979531 100644
+>> --- a/Documentation/git-notes.txt
+>> +++ b/Documentation/git-notes.txt
+>> @@ -223,7 +223,7 @@ are taken from notes refs.  A notes ref is usually a branch which
+>>  contains "files" whose paths are the object names for the objects
+>>  they describe, with some directory separators included for performance
+>>  reasons footnote:[Permitted pathnames have the form
+>> -'ab'`/`'cd'`/`'ef'`/`'...'`/`'abcdef...': a sequence of directory
+>> +'12'`/`'34'`/`'56'`/`'...'`/`'789abc...': a sequence of directory
 >
->> Sounds great, I only hoped we can do it right now, with this new
->> --diff-merges option, maybe as a pre-requisite to the patches in
->> question, but Jeff said it's too late, dunno why.
->
-> A follow-up patch or two to remove the "--diff-merges" option and
-> add the "--diff-parents=(none|<number>|c|cc|all)" option on top of
-> the jk/log-fp-implies-m topic BEFORE it graduates to 'master' is a
-> possibility.
->
-> But is it worth the delay?  I dunno.
+> I had to read this twice to figure out why the first 'ab' changed to
+> '12'. It appears that this is to avoid having to use 'gh...' in the
+> last directory, since 'g', 'h' and so on aren't hexadecimal digits.
 
-I don't think it's worth the delay, provided yet another new
---diff-parents is to be implemented rather that using --diff-merges for
-that.
+You can wrap-around to '0' after counting up to 'f', no ;-)?
 
--- Sergey
+Having '/.../' between '56' and '789' to indicate "there are more
+levels possible here" is somewhat misleading with the new example.
+We could argue that the original objectname does not have to be
+"123456789abc.." but then the whole exercise becomes somewhat
+pointless as the objectname could have been 'abcdef...abcdef...'.
+
+Another minor nit: it probably makes it read more natural to start
+counting from '0' when writing hexadecimal, if we really want to
+use sequence of ascending hexdigits.
+
+Using a seemingly random example 85/b4/.../808d9ee6debdf167ced3
+might be less confusing, because ...
+
+>>  names of two hexadecimal digits each followed by a filename with the
+>>  rest of the object ID.].
+
+... I think these two lines is pleanty clear than any example, so I
+am OK with either the old or the updated example, but I think a
+seemingly random example as long as the leaf level does not share
+the leading hexdigits as the pathname would work the best.
+
