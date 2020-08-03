@@ -5,66 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63691C433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A89C433DF
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:41:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31CB220738
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:41:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 961F8206D4
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:41:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vCKUMmI3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+FB/o+H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728813AbgHCSlZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 14:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43784 "EHLO
+        id S1728821AbgHCSl2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 14:41:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728741AbgHCSlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 14:41:24 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F4DAC061756
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:41:24 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id k8so551726wma.2
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:41:24 -0700 (PDT)
+        with ESMTP id S1728814AbgHCSl1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 14:41:27 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C85FDC061757
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:41:26 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id y3so35142333wrl.4
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fvsCY/LQLBO1naRThY5dZ2dM+VjRgURHHXEDtpLNsMI=;
-        b=vCKUMmI3IQTTrw7Y8gAVYIX/3JQbXhPKL4kewmrnN1Sc3DVPas9M8U15562VRZAlEf
-         2S9sRoBeLvRq8/wZ42pLUHHBBwU/srUbfood3wJ8WWh0Yg4+ZRobGgyXb+oYnXqo+SQq
-         9dwb+03HSxgA8lsKHdU3fAUqN36bWH29RjFyUMU2DVB/r/tCSq796oy3+EmsqRwTjRaa
-         WkK/Y8Wmax2g/ozeufFyWHs4Y21w7H6jmnn8hwoVZETlqHlbfa0AVPX1y8Jed63VbeT6
-         s+2sEJlF/2MpvQHnpmE/5ePpww7GlR6ip2RJdSYYMjhZqNTDjDK9noVpDeUWTgznrnzn
-         R6YA==
+        bh=x7mt8q9mrmBv6ufF03Gh1PR5EdY4MRfFqXa2dOXs0tE=;
+        b=F+FB/o+HIFdvLRon1iM5wyFD13Rhzvbdey0hxjT99MNdTdxkC29jI4CezyIe4x2Xy1
+         Kd8ZbXvg1obUeapdnz9j2GMQVfsEU5IsKJyQEXdt0q7d7kuZXDs9NlcLFfW98v0jSAX6
+         ZS8/7AdV6kR2Myzjpg5DLgBV4xdS5zvJhC1ewqGgn2JBGkTURWX/O9y35tS9xCgln2HG
+         1t5OWhiiB6UAjezINQE1LBzugDwMcfnBL4fRvd1yliVlsN/5rDkRi7/tFl4cSiRRsgof
+         688tINWfaVNvobMprXWbT1B2artPSWCQDtdVLVOzkNZH8VLUyTqod/sDfnnEBjGrRPhp
+         JI/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fvsCY/LQLBO1naRThY5dZ2dM+VjRgURHHXEDtpLNsMI=;
-        b=g4eYI+7t1n1kUEYY9BBO6IxU5jGIumgyfgzFvRfLbrbD3l9BH1jv4UCdiQRwbO8bm+
-         udhHx231dX3vxwr9NFELjhQnPiAo/UQkE0JrQogOR1osW/0BvMXnzQ6ZBnR5Sxd5xIuR
-         OQnn0WYc4T4TqDDGYNjSDSzChCsmFb8VRg42H5gMBRXfsax8Qppg1yuG7aRI7/Xn89wL
-         sNYWFg0kABIIjZb0H/yEb5o+/hZJP3l34BcJyqsVvHtVW4NKs1iqgTi53Sqh3MoQxfSK
-         R8Bt28iEJVVnZPvFkycNsJessmbUA9fwIjv00uB6Tdj4EjxXrF/NEdl1zSZ3BMTkztIp
-         hPFQ==
-X-Gm-Message-State: AOAM530FbZDHKpcWvORajEZpwRnXMBtG19XsIQ4MDGtnaUJEH3OOFFz+
-        5xFw9bvpLsTLxtHGqADcAzHWg77y
-X-Google-Smtp-Source: ABdhPJyTXRy9FQdaKt4Zb28lpps8HQJ1oXPmPEjGl3g6ikLYkGwPPEg7s82lPsAhKlrEcHMDNraETQ==
-X-Received: by 2002:a1c:32c3:: with SMTP id y186mr477086wmy.15.1596480082741;
-        Mon, 03 Aug 2020 11:41:22 -0700 (PDT)
+        bh=x7mt8q9mrmBv6ufF03Gh1PR5EdY4MRfFqXa2dOXs0tE=;
+        b=VJJG2ceoBuQxdI0dgmJLOIDsNypLEl+nk6jIU/U/ZPfi/CpnBW/++ik0qM/vm/fzmI
+         Qz5WnZ5vULAy25cDHqInreXn9Mtj2HXSu+5gredNnmkEwrrO3bFCw/N18AkHTCYnleWm
+         NMnK3o+hQDgZe4cT+Yd/dud/XOp0CmDgK0c50sYaR/Q9ptcm+tMBH7h+vQUAsKfD9rM4
+         aOwOhzx7LFC7W5RnlNXXrcoA3gO9Oh4BtMvpGua2LguatVErdCogoUf9xQLNxodcjI5h
+         cOP9IOSgMvS8G69UahTWvn//6RoFxe9+hw11/cxaTLNlxL5c6cPbNPrORMdBCbdYW3BY
+         xsLA==
+X-Gm-Message-State: AOAM5308Gy9seacjuARIb35pqIIMylurQAqCJAEk0FwuLfPmv6VQMb7v
+        GTBMniOWemsEp4pQKDTggUG7mNNY
+X-Google-Smtp-Source: ABdhPJxlWJ8Cx63q8g7LbVON609bF3F5Pcr/rf7mFyI2yXSwtSIfRJEVBSebcZl7XXuHiA0p+FY/SQ==
+X-Received: by 2002:a5d:6a41:: with SMTP id t1mr6772571wrw.388.1596480085364;
+        Mon, 03 Aug 2020 11:41:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t13sm25274077wru.65.2020.08.03.11.41.22
+        by smtp.gmail.com with ESMTPSA id j24sm29049007wrb.49.2020.08.03.11.41.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 11:41:22 -0700 (PDT)
-Message-Id: <21033c4c1455bb1e0bd996a5861cc9414912768f.1596480080.git.gitgitgadget@gmail.com>
+        Mon, 03 Aug 2020 11:41:24 -0700 (PDT)
+Message-Id: <36e08a75a3b9fdb0d5ca643f214fe4524578716f.1596480080.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.825.v2.git.git.1596480080.gitgitgadget@gmail.com>
 References: <pull.825.git.git.1596349986.gitgitgadget@gmail.com>
         <pull.825.v2.git.git.1596480080.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 03 Aug 2020 18:41:17 +0000
-Subject: [PATCH v2 1/4] t6038: make tests fail for the right reason
+Date:   Mon, 03 Aug 2020 18:41:20 +0000
+Subject: [PATCH v2 4/4] checkout: support renormalization with checkout -m
+ <paths>
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,64 +78,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-t6038 had a pair of tests that were expected to fail, but weren't
-failing for the expected reason.  Both were meant to do a merge that
-could be done cleanly after renormalization, but were supposed to fail
-for lack of renormalization.  Unfortunately, both tests had staged
-changes, and checkout -m would abort due to the presence of those staged
-changes before even attempting a merge.
-
-Fix this first issue by utilizing git-restore instead of git-checkout,
-so that the index is left alone and just the working directory gets the
-changes we want.
-
-However, there is a second issue with these tests.  Technically, they
-just wanted to verify that after renormalization, no conflicts would be
-present.  This could have been checked for by grepping for a lack of
-conflict markers, but the test instead tried to compare the working
-directory files to an expected result.  Unfortunately, the setting of
-"text=auto" without setting core.eol to any value meant that the content
-of the file (in particular, the line endings) would be
-platform-dependent and the tests could only pass on some platforms.
-Replace the existing comparison with a call to 'git diff --no-index
---ignore-cr-at-eol' to verify that the contents, other than possible
-carriage returns in the file, match the expected results and in
-particular that the file has no conflicts from the checkout -m
-operation.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6038-merge-text-auto.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/checkout.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
-index 5e8d5fa50c..27cea15533 100755
---- a/t/t6038-merge-text-auto.sh
-+++ b/t/t6038-merge-text-auto.sh
-@@ -168,9 +168,9 @@ test_expect_failure 'checkout -m after setting text=auto' '
- 	git rm -fr . &&
- 	rm -f .gitattributes &&
- 	git reset --hard initial &&
--	git checkout a -- . &&
-+	git restore --source=a -- . &&
- 	git checkout -m b &&
--	compare_files expected file
-+	git diff --no-index --ignore-cr-at-eol expected file
- '
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 18c49034c4..2837195491 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -239,6 +239,8 @@ static int checkout_merged(int pos, const struct checkout *state, int *nr_checko
+ 	mmbuffer_t result_buf;
+ 	struct object_id threeway[3];
+ 	unsigned mode = 0;
++	struct ll_merge_options ll_opts;
++	int renormalize = 0;
  
- test_expect_failure 'checkout -m addition of text=auto' '
-@@ -183,9 +183,9 @@ test_expect_failure 'checkout -m addition of text=auto' '
- 	git rm -fr . &&
- 	rm -f .gitattributes file &&
- 	git reset --hard initial &&
--	git checkout b -- . &&
-+	git restore --source=b -- . &&
- 	git checkout -m a &&
--	compare_files expected file
-+	git diff --no-index --ignore-cr-at-eol expected file
- '
+ 	memset(threeway, 0, sizeof(threeway));
+ 	while (pos < active_nr) {
+@@ -259,13 +261,12 @@ static int checkout_merged(int pos, const struct checkout *state, int *nr_checko
+ 	read_mmblob(&ours, &threeway[1]);
+ 	read_mmblob(&theirs, &threeway[2]);
  
- test_expect_failure 'cherry-pick patch from after text=auto was added' '
+-	/*
+-	 * NEEDSWORK: re-create conflicts from merges with
+-	 * merge.renormalize set, too
+-	 */
++	memset(&ll_opts, 0, sizeof(ll_opts));
++	git_config_get_bool("merge.renormalize", &renormalize);
++	ll_opts.renormalize = renormalize;
+ 	status = ll_merge(&result_buf, path, &ancestor, "base",
+ 			  &ours, "ours", &theirs, "theirs",
+-			  state->istate, NULL);
++			  state->istate, &ll_opts);
+ 	free(ancestor.ptr);
+ 	free(ours.ptr);
+ 	free(theirs.ptr);
 -- 
 gitgitgadget
-
