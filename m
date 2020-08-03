@@ -7,62 +7,63 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F34FC433DF
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F1EC433E0
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9902A22BF3
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2578207DF
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 18:57:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="rcF1PLRu"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="0jb+iYI5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726764AbgHCS5P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 14:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46198 "EHLO
+        id S1726770AbgHCS5S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 14:57:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgHCS5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 14:57:14 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6A79C06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:57:12 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id x7so1551856qvi.5
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:57:12 -0700 (PDT)
+        with ESMTP id S1726130AbgHCS5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 14:57:17 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54C1DC06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 11:57:16 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id e5so15018264qth.5
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 11:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zUM4DdQvNAfC0jqSwbQhkZMTy0Goa44IBJQwjfO6bpw=;
-        b=rcF1PLRuWMuVKrFO3YY5QJgQofDGZHF/LUz5hCDeuafEo868piezCIOiQdeFAx1HQx
-         DmogCEh3TAnNRIIpMADAWXybZUv/IaMr6JcLimgXOp6xa1113bEVdlqPZczln02DhlVi
-         pAUQYesRdVl3me9r10cmBQPxgt9klVx5spmNU9Zw3vUiW2SmEDbcvvp0gp9+U6RqpMBh
-         DcXt3RaE9XnI9Dnorgr0iJ7jDiUL18WKXosw5gGm4tAYvR2qCOZLPjqAqfotyYV82mvX
-         ltWTHnrZ5wG8No5BXPdanCMdM30R7C8t//2tZhuVezsG3ZQGZiowYwpFPJnytMS/q+PP
-         lw+Q==
+        bh=L5XHEvTDrEK98ejT2znG00tQPN0JOZt0+wPibc7SDdU=;
+        b=0jb+iYI5a7MhXlkqksKGPkYFQM+cnOON9Vs2fM0xKFTPI26bNFWpLpByydOVQcUdBB
+         Sn8VHPKuDBvTm9r/zSc+ihs1jDMhscABy0MXXilVlVn8WuALkDvGoPDCJI2u6lQZLmke
+         kwjafTl+i35R8gBzsMMpJhCy4jEYxqqyJ/WgqyNhqkcRO0DR/4NtIH9b5l+mGPniTIhP
+         kndBHmumfW3Ta+oXv9CJHdxqs2ko0NuGCnSwHORUpxsmwbFYnRlzfIokkG4hsNaZwfyV
+         apmL8ec7Nd8wIlEnzhs+TNYpaC6Cee8D22Um6MJNQYJmHjPlc3wGj6jTwhfBRHTBdnsN
+         6syg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zUM4DdQvNAfC0jqSwbQhkZMTy0Goa44IBJQwjfO6bpw=;
-        b=i2EKm9ExXbo1QuexWTOC3zI4MpTU/2XgAGdvBfd98NiGiRrayMfUm3Kt6bo+fuDURO
-         YI+gPwHbNbBGyUvnc20iPBFhoLE2CddkaL6W1jSnBPvQO3FZZ3UkDkAFyEy9TmUF80Mc
-         086DZEegzq/ALfrXno7MfRWkbfeey/x5+Ub1IbefBZrdm97obhjrQ1z7RUhh5uA02d7/
-         jWq8Lofx2tJ4ULGkl/t9x3CfgvCX+5vJ9OExvtVCcQCrmafL+Jm96KMBS3LxdXzc24e2
-         J4OAk1ituYH3s5rrvfOGTuuNJDbE/s+meDBq9eCY175M1oPrbTj3MyxdJjS6J6t7fKDN
-         kB/g==
-X-Gm-Message-State: AOAM531dTvbdCA2fDVojzr57BFkkS3Zocb3E2bly9ManmUoxlfrs7kM5
-        //8dme6MnRtRM/+KJ5lrAbjERcp1LOTfyA==
-X-Google-Smtp-Source: ABdhPJwG1GRgs7lVnxQ/5kPhHbTYd2gd9wZ5B1hwdjNI2BsvFU2ZPk2RMyvio+56WyMOSRtdFgJiig==
-X-Received: by 2002:a05:6214:612:: with SMTP id z18mr7973952qvw.25.1596481031550;
-        Mon, 03 Aug 2020 11:57:11 -0700 (PDT)
+        bh=L5XHEvTDrEK98ejT2znG00tQPN0JOZt0+wPibc7SDdU=;
+        b=HlKZOumegBdubAod5LwUT03TzXskpd3iX6Dp8yxpK7EogWvUQzqM5k50arV5WOwtt4
+         4Ut7L3zxZTtOTLMtD5uTkx4Jzy5JYN5oJRBY68a9Im0PVAsHMefuvJS1Ja52nKcMh46w
+         3Zu1spne6wGUpS62Bpbmi1xDXZXP/kstKuM6lzjHQy47Iu3LqCxV8wgoL0Ee++qnTm1h
+         Q6nFkodAZ5onCPUQxU7tW8nqQ+kIj5TG8APQ931l96+qgcwksRbPG+Hx3OtOymZQ1ePW
+         YgRveOAH050tlLXcWyok46Fu9eUdSDew5AEZkgZCl3btq8N/DiKI7VC3JV5DiTDGCsA+
+         /Ykw==
+X-Gm-Message-State: AOAM530UcnH/nTMO/ReZG5YMa+NG4e7lG0OCWfX7BZsB2zBIjQ8DuUt7
+        3fxiGgjSUhVwrBiiSkyEUw2YIg0IDcmEng==
+X-Google-Smtp-Source: ABdhPJw0YFpyreaPvVGZDMD/Nb+iUUJaigu1sB6kRoVHvVXwkO8AIMSdruBBrycUhrwC7Jbi2Kl2Ag==
+X-Received: by 2002:ac8:73d1:: with SMTP id v17mr18187280qtp.51.1596481035200;
+        Mon, 03 Aug 2020 11:57:15 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:3475:b417:c07c:c811])
-        by smtp.gmail.com with ESMTPSA id h24sm19517288qkk.72.2020.08.03.11.57.10
+        by smtp.gmail.com with ESMTPSA id y7sm23447052qta.36.2020.08.03.11.57.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 11:57:10 -0700 (PDT)
-Date:   Mon, 3 Aug 2020 14:57:09 -0400
+        Mon, 03 Aug 2020 11:57:14 -0700 (PDT)
+Date:   Mon, 3 Aug 2020 14:57:13 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 01/10] commit-graph: introduce 'get_bloom_filter_settings()'
-Message-ID: <08479793c1274d5ee0f063578bb0f4d93c910fa9.1596480582.git.me@ttaylorr.com>
+Subject: [PATCH 02/10] commit-graph: pass a 'struct repository *' in more
+ places
+Message-ID: <52f8f7424eddc04b01882d73c39552e8e22a7178.1596480582.git.me@ttaylorr.com>
 References: <cover.1596480582.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,199 +74,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many places in the code often need a pointer to the commit-graph's
-'struct bloom_filter_settings', in which case they often take the value
-from the top-most commit-graph.
+In a future commit, some commit-graph internals will want access to
+'r->settings', but we only have the 'struct object_directory *'
+corresponding to that repository.
 
-In the non-split case, this works as expected. In the split case,
-however, things get a little tricky. Not all layers in a chain of
-incremental commit-graphs are required to themselves have Bloom data,
-and so whether or not some part of the code uses Bloom filters depends
-entirely on whether or not the top-most level of the commit-graph chain
-has Bloom filters.
+Add an additional parameter to pass the repository around in more
+places. In the next patch, we will remove the object directory (and
+instead reference it with 'r->odb').
 
-This has been the behavior since Bloom filters were introduced, and has
-been codified into the tests since a759bfa9ee (t4216: add end to end
-tests for git log with Bloom filters, 2020-04-06). In fact, t4216.130
-requires that Bloom filters are not used in exactly the case described
-earlier.
-
-There is no reason that this needs to be the case, since it is perfectly
-valid for commits in an earlier layer to have Bloom filters when commits
-in a newer layer do not.
-
-Since Bloom settings are guaranteed to be the same for any layer in a
-chain that has Bloom data, it is sufficient to traverse the
-'->base_graph' pointer until either (1) a non-null 'struct
-bloom_filter_settings *' is found, or (2) until we are at the root of
-the commit-graph chain.
-
-Introduce a 'get_bloom_filter_settings()' function that does just this,
-and use it instead of purely dereferencing the top-most graph's
-'->bloom_filter_settings' pointer.
-
-While we're at it, add an additional test in t5324 to guard against code
-in the commit-graph writing machinery that doesn't correctly handle a
-NULL 'struct bloom_filter *'.
-
-Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- blame.c                       |  6 ++++--
- bloom.c                       |  6 +++---
- commit-graph.c                | 11 +++++++++++
- commit-graph.h                |  2 ++
- revision.c                    |  2 +-
- t/t4216-log-bloom.sh          |  9 ++++++---
- t/t5324-split-commit-graph.sh | 13 +++++++++++++
- 7 files changed, 40 insertions(+), 9 deletions(-)
+ builtin/commit-graph.c |  2 +-
+ commit-graph.c         | 18 +++++++++++-------
+ commit-graph.h         |  6 ++++--
+ fuzz-commit-graph.c    |  5 +++--
+ 4 files changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 82fa16d658..3e5f8787bc 100644
---- a/blame.c
-+++ b/blame.c
-@@ -2891,16 +2891,18 @@ void setup_blame_bloom_data(struct blame_scoreboard *sb,
- 			    const char *path)
- {
- 	struct blame_bloom_data *bd;
-+	struct bloom_filter_settings *bs;
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 523501f217..ba5584463f 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -106,7 +106,7 @@ static int graph_verify(int argc, const char **argv)
+ 	FREE_AND_NULL(graph_name);
  
- 	if (!sb->repo->objects->commit_graph)
- 		return;
+ 	if (open_ok)
+-		graph = load_commit_graph_one_fd_st(fd, &st, odb);
++		graph = load_commit_graph_one_fd_st(the_repository, fd, &st, odb);
+ 	else
+ 		graph = read_commit_graph_one(the_repository, odb);
  
--	if (!sb->repo->objects->commit_graph->bloom_filter_settings)
-+	bs = get_bloom_filter_settings(sb->repo);
-+	if (!bs)
- 		return;
- 
- 	bd = xmalloc(sizeof(struct blame_bloom_data));
- 
--	bd->settings = sb->repo->objects->commit_graph->bloom_filter_settings;
-+	bd->settings = bs;
- 
- 	bd->alloc = 4;
- 	bd->nr = 0;
-diff --git a/bloom.c b/bloom.c
-index 1a573226e7..cd9380ac62 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -38,7 +38,7 @@ static int load_bloom_filter_from_graph(struct commit_graph *g,
- 	while (graph_pos < g->num_commits_in_base)
- 		g = g->base_graph;
- 
--	/* The commit graph commit 'c' lives in doesn't carry bloom filters. */
-+	/* The commit graph commit 'c' lives in doesn't carry Bloom filters. */
- 	if (!g->chunk_bloom_indexes)
- 		return 0;
- 
-@@ -195,8 +195,8 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 	if (!filter->data) {
- 		load_commit_graph_info(r, c);
- 		if (commit_graph_position(c) != COMMIT_NOT_FROM_GRAPH &&
--			r->objects->commit_graph->chunk_bloom_indexes)
--			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c);
-+			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c))
-+				return filter;
- 	}
- 
- 	if (filter->data)
 diff --git a/commit-graph.c b/commit-graph.c
-index e51c91dd5b..d4b06811be 100644
+index d4b06811be..81a6f2a8ce 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -660,6 +660,17 @@ int generation_numbers_enabled(struct repository *r)
- 	return !!first_generation;
+@@ -224,7 +224,8 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
+ 	return 1;
  }
  
-+struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
-+{
-+	struct commit_graph *g = r->objects->commit_graph;
-+	while (g) {
-+		if (g->bloom_filter_settings)
-+			return g->bloom_filter_settings;
-+		g = g->base_graph;
-+	}
-+	return NULL;
-+}
-+
- static void close_commit_graph_one(struct commit_graph *g)
+-struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
++struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
++						 int fd, struct stat *st,
+ 						 struct object_directory *odb)
  {
- 	if (!g)
+ 	void *graph_map;
+@@ -240,7 +241,7 @@ struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
+ 	}
+ 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+-	ret = parse_commit_graph(graph_map, graph_size);
++	ret = parse_commit_graph(r, graph_map, graph_size);
+ 
+ 	if (ret)
+ 		ret->odb = odb;
+@@ -280,7 +281,8 @@ static int verify_commit_graph_lite(struct commit_graph *g)
+ 	return 0;
+ }
+ 
+-struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size)
++struct commit_graph *parse_commit_graph(struct repository *r,
++					void *graph_map, size_t graph_size)
+ {
+ 	const unsigned char *data, *chunk_lookup;
+ 	uint32_t i;
+@@ -445,7 +447,9 @@ struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size)
+ 	return NULL;
+ }
+ 
+-static struct commit_graph *load_commit_graph_one(const char *graph_file,
++
++static struct commit_graph *load_commit_graph_one(struct repository *r,
++						  const char *graph_file,
+ 						  struct object_directory *odb)
+ {
+ 
+@@ -457,7 +461,7 @@ static struct commit_graph *load_commit_graph_one(const char *graph_file,
+ 	if (!open_ok)
+ 		return NULL;
+ 
+-	g = load_commit_graph_one_fd_st(fd, &st, odb);
++	g = load_commit_graph_one_fd_st(r, fd, &st, odb);
+ 
+ 	if (g)
+ 		g->filename = xstrdup(graph_file);
+@@ -469,7 +473,7 @@ static struct commit_graph *load_commit_graph_v1(struct repository *r,
+ 						 struct object_directory *odb)
+ {
+ 	char *graph_name = get_commit_graph_filename(odb);
+-	struct commit_graph *g = load_commit_graph_one(graph_name, odb);
++	struct commit_graph *g = load_commit_graph_one(r, graph_name, odb);
+ 	free(graph_name);
+ 
+ 	return g;
+@@ -550,7 +554,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 		valid = 0;
+ 		for (odb = r->objects->odb; odb; odb = odb->next) {
+ 			char *graph_name = get_split_graph_filename(odb, line.buf);
+-			struct commit_graph *g = load_commit_graph_one(graph_name, odb);
++			struct commit_graph *g = load_commit_graph_one(r, graph_name, odb);
+ 
+ 			free(graph_name);
+ 
 diff --git a/commit-graph.h b/commit-graph.h
-index 09a97030dc..0677dd1031 100644
+index 0677dd1031..d9acb22bac 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -87,6 +87,8 @@ struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size);
-  */
- int generation_numbers_enabled(struct repository *r);
+@@ -75,11 +75,13 @@ struct commit_graph {
+ 	struct bloom_filter_settings *bloom_filter_settings;
+ };
  
-+struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r);
-+
- enum commit_graph_write_flags {
- 	COMMIT_GRAPH_WRITE_APPEND     = (1 << 0),
- 	COMMIT_GRAPH_WRITE_PROGRESS   = (1 << 1),
-diff --git a/revision.c b/revision.c
-index 6de29cdf7a..e244beed05 100644
---- a/revision.c
-+++ b/revision.c
-@@ -684,7 +684,7 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	if (!revs->repo->objects->commit_graph)
- 		return;
+-struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
++struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
++						 int fd, struct stat *st,
+ 						 struct object_directory *odb);
+ struct commit_graph *read_commit_graph_one(struct repository *r,
+ 					   struct object_directory *odb);
+-struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size);
++struct commit_graph *parse_commit_graph(struct repository *r,
++					void *graph_map, size_t graph_size);
  
--	revs->bloom_filter_settings = revs->repo->objects->commit_graph->bloom_filter_settings;
-+	revs->bloom_filter_settings = get_bloom_filter_settings(revs->repo);
- 	if (!revs->bloom_filter_settings)
- 		return;
+ /*
+  * Return 1 if and only if the repository has a commit-graph
+diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
+index 430817214d..e7cf6d5b0f 100644
+--- a/fuzz-commit-graph.c
++++ b/fuzz-commit-graph.c
+@@ -1,7 +1,8 @@
+ #include "commit-graph.h"
+ #include "repository.h"
  
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index c21cc160f3..c9f9bdf1ba 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -60,7 +60,7 @@ setup () {
+-struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size);
++struct commit_graph *parse_commit_graph(struct repository *r,
++					void *graph_map, size_t graph_size);
  
- test_bloom_filters_used () {
- 	log_args=$1
--	bloom_trace_prefix="statistics:{\"filter_not_present\":0,\"maybe\""
-+	bloom_trace_prefix="statistics:{\"filter_not_present\":${2:-0},\"maybe\""
- 	setup "$log_args" &&
- 	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" &&
- 	test_cmp log_wo_bloom log_w_bloom &&
-@@ -134,8 +134,11 @@ test_expect_success 'setup - add commit-graph to the chain without Bloom filters
- 	test_line_count = 2 .git/objects/info/commit-graphs/commit-graph-chain
- '
+ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
  
--test_expect_success 'Do not use Bloom filters if the latest graph does not have Bloom filters.' '
--	test_bloom_filters_not_used "-- A/B"
-+test_expect_success 'use Bloom filters even if the latest graph does not have Bloom filters' '
-+	# Ensure that the number of empty filters is equal to the number of
-+	# filters in the latest graph layer to prove that they are loaded (and
-+	# ignored).
-+	test_bloom_filters_used "-- A/B" 3
- '
+@@ -10,7 +11,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+ 	struct commit_graph *g;
  
- test_expect_success 'setup - add commit-graph to the chain with Bloom filters' '
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index 9b850ea907..5bdfd53ef9 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -425,4 +425,17 @@ done <<\EOF
- 0600 -r--------
- EOF
+ 	initialize_the_repository();
+-	g = parse_commit_graph((void *)data, size);
++	g = parse_commit_graph(the_repository, (void *)data, size);
+ 	repo_clear(the_repository);
+ 	free_commit_graph(g);
  
-+test_expect_success '--split=replace with partial Bloom data' '
-+	rm -rf $graphdir $infodir/commit-graph &&
-+	git reset --hard commits/3 &&
-+	git rev-list -1 HEAD~2 >a &&
-+	git rev-list -1 HEAD~1 >b &&
-+	git commit-graph write --split=no-merge --stdin-commits --changed-paths <a &&
-+	git commit-graph write --split=no-merge --stdin-commits <b &&
-+	git commit-graph write --split=replace --stdin-commits --changed-paths <c &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 1 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
-+
- test_done
 -- 
 2.28.0.rc1.13.ge78abce653
 
