@@ -2,146 +2,200 @@ Return-Path: <SRS0=/7R8=BN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 127EDC433E0
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 14:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7668BC433DF
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 14:16:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E334020775
-	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 14:01:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 502A920781
+	for <git@archiver.kernel.org>; Mon,  3 Aug 2020 14:16:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ajDPHg8Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AsHPulQQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728185AbgHCOBD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 10:01:03 -0400
-Received: from mout.web.de ([212.227.15.14]:57621 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726785AbgHCOBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 10:01:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1596463256;
-        bh=UDCxAUVPqXw7dY8uGzksSJ8n82ZDRiTTgFFGoB4FnlM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ajDPHg8ZCf9CTBEyRiDBzCa8MQL7aTTpU4+qDYkgJtYavbbGgJ5cLVlE5p7r7gtkq
-         fMdkj82DkkqF/wEH06DgLMvlLZfqWWrRdv6g2q5wmgrRVMAAk1IdakSXpjrcFFogH9
-         YDI/oongUtiSxOZECWn5/apbk6+NxWoVKYDtV2i4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MUU68-1kBV0K215s-00QQle; Mon, 03
- Aug 2020 16:00:56 +0200
-Subject: Re: [PATCH] upload-pack: use buffered I/O to talk to rev-list
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <6722ade6-971e-7ecc-e8f0-7f595ca0b0ff@web.de>
- <CAPx1GvdJ-4Yyf7Vm1OdhaW2TZp77HOfGxoGw0R2fKfEuHQkqOg@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <87c4ab84-8db5-bd62-af66-fd88f788827b@web.de>
-Date:   Mon, 3 Aug 2020 16:00:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <CAPx1GvdJ-4Yyf7Vm1OdhaW2TZp77HOfGxoGw0R2fKfEuHQkqOg@mail.gmail.com>
+        id S1728348AbgHCOQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 10:16:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59260 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726767AbgHCOQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 10:16:27 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0248C06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 07:16:26 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id x7so1078962qvi.5
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 07:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QdMfaD8VGblc9QZeqRPNfcclzx8t98KZiCcsBkhvAic=;
+        b=AsHPulQQPoRPqC8BPUW5e3LmXkbJwQq9tnoeA+ZmCr3dhtB++AXT3no0IaKdr9PFd8
+         qSjMAMQ2XtyFtDbXlHKCbScvFw3zYsq9cLcQXq+AQa6HIJgAd7dX1FQxpSGFXZtXNZVx
+         tyuVu2zepA08ixQpouD1SvA7+12ZLkAqEk0j1WxvawfK3Ugl6V8Rx3z9y5BlZOkrDvv9
+         EKTxIrb/8wou1MaFr1p1ka74YKM3PmWm2xapbW3LfVC2k/tkT0q0uoVdeFC5jcB49jeO
+         Z1/stlY3vY+JDM+no2X2oD8We0g+SFpvER0pmhpU2hitENSWcPlbcFly2dyCn5to3mnq
+         nI9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QdMfaD8VGblc9QZeqRPNfcclzx8t98KZiCcsBkhvAic=;
+        b=KZ4CywhTPKqtaKFBjxbiBJ4oYvpo3MzBaXVPCJt32TBqgTW1AucV3IvgyL1XIHEfWt
+         Mz1amGrSm4jervlu2BrtlTPlF8Xa1keNS1VIFlay33e8Kw1bQs6cw3D1lQJePL7Ye00u
+         aLnaGSVjIBt2nPafqJAhcruRGEhAyP+Kj/cdgoX5CefNmXgU9fpK9xFL1nh0bAQcWXHc
+         iBYjUmgQ7VQhmBjf644Xa09NDwVo8t0Xe08OaUVFZZtdqlII0+kGMtCp2aswWPlBRbFL
+         rbyflGHFg/2zHb9AaIqjk+aY6LlnOsu1qYIsLI+oRFHr4jkwTRsXiJ6wz/usX9cPtfdS
+         iVyg==
+X-Gm-Message-State: AOAM530j2FDleESubbbMNPIatxrT/BQ3pCocsWwRtT7k35M3i9tGX04c
+        AkZtYVwv7bptBR0Lz0Beobk=
+X-Google-Smtp-Source: ABdhPJy86rzV8S+sAMF9zgzGqZsJvqW9oYJz0B74eBBa9vVeEo5Tsc7MhqyrR9wGVxV4Des68F8e6Q==
+X-Received: by 2002:ad4:54ce:: with SMTP id j14mr17306611qvx.185.1596464186079;
+        Mon, 03 Aug 2020 07:16:26 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id 84sm10947586qkl.11.2020.08.03.07.16.24
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 03 Aug 2020 07:16:25 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 3/3] git.txt: add list of guides
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <xmqqv9i0wvoz.fsf@gitster.c.googlers.com>
+Date:   Mon, 3 Aug 2020 10:16:20 -0400
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zwueUrGevI9ipbiiaDKPis8CimchMZ++5QGTDjlwSZinCat3uWX
- RkEek6U56Y3P6vuk9hGK2lfRU6SXv9ooGa1khE58vQad99fhtvu05QNtMU2MAiXZ8sxJ06r
- iWrcgZvWL5IuhbC2WfGIsSaCWCY1N+gGh3CS4wcbLr2GPOsslCdkf/rdtLyWQjtv+tJsjv+
- HXxAIBNOzhKuFbYEJfC7w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5SxNEyMYI9I=:7q7ISNwbaSEYAfLwds/I7D
- QhL+qh8JZliuvhTY5omWJO0rhfkRD5MPW6zdxM/Nr0+nyL9LBE/zUaVIJQzjZ/hbsOnF9kXKu
- YNtNNakDXpBSE6VSXPCVITrRjU4tdqrkIYq2f1+aXye56tZR1mQdFwzkwSmOhtJ7wGzesZ4/4
- itanRBv984RQXAkSmItTtCVhrQZHrR4QpryHfLhCfK9/bJduQQpA/LfLpmNJFk4HDx1bftE7q
- tDP5TQuVy+rjX2/I4u2fG6UfiCeqRviL53PoEa/oTVPhQ8ZjuejFb13fRY1AxPt6xAIvzlshT
- 0vzYYDgS87SM9A7Ug0eT3Z7vF7le6FnoJmmavcnuJDmhAIYiFsG0VYTWvJdmQSNkqSt2kIECp
- iImsikovhPcsagZMNwm2x6Sl767nV6nmUBfPQasFe1+F8dG131h1786AW+TMkYlNRf7dFS6hr
- z7l2xW51o4bmSGueSno2ECUEmzDk8xrJyaK1hxUm5ogvUuLUjiIB1AG3gLxje086UQx8+BsTM
- yrtzNHFPDiD+DYi3hdrwp6bHQFsx7ILCdHuEQfqYF1u+3/PArPb2sJ8DvpBc01qHyADiFDSN/
- If1G/dQbRzo9hMaz7hj1/njyYvDdVc7zqjTa/y4muzzbrvlP0PzSw8XBWc6MJJmKEZPNfKD/p
- /7hBiefo/1PCL15XThMs41WhqEZg/208L+isFCdw0cBypHPK1f+b0OI6lQmSI1FdJbSI0HIPU
- PAxAbb1nbogvs/mLb0ZZPx/LDrXVuV7LmmxKl+i4qUgEjPeYWoXuhAkMa1mNpsxQB1+wC3/tq
- 0ag2nqgGzdu/ohHZ1rcLxjBbs8RGfETSxHTOJVqURRWaDfJ6pTpwyTVGggNMyT54kDD3bdnfo
- EGxYt3Hpbtgh58NLuj/FY1a6StV1v30KdP8UveXeREnApjw1NHtfkXcTMGZ9BWkHx+8ZikE/I
- WB0X9iIAX9E6KpYiFFx+WJflE8lrurRM/hpoW7aV02GShhHDRoV6t/VL0sTmoQCfaKMBDHGC0
- ege2ddh60dg/cGYggi1vEaPJJMC5q9lw+vhEtTt/c5ro7pLbFCy3VC6fc9+PlOwR+Vr9eYrVl
- 27RSlBDbepriikk1lgtgRHhvr3GqaRZYmdYkOxlX8aNaRLtYhJD+PapKlxPGuZEYWCBxYvp0S
- ogCxpuq7DwAVTtIuVej52XNNcKvU1NYWOBmpz8K7NEmp4hY7MQGVRFBCgu5PaPMg/timgyY7W
- uYZx9NuePgtXv/hAO
+Message-Id: <6C571F33-0ACE-4C1C-805C-7E8ADE50D18D@gmail.com>
+References: <pull.691.git.1596381647.gitgitgadget@gmail.com> <9374d80f0c37a6b6a7f5f76601ee757f89712d0c.1596381647.git.gitgitgadget@gmail.com> <xmqqsgd4rad8.fsf@gitster.c.googlers.com> <xmqqv9i0wvoz.fsf@gitster.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.08.20 um 18:03 schrieb Chris Torek:
-> One suggestion here:
->
-> On Sun, Aug 2, 2020 at 7:41 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->> Like f0bca72dc77 (send-pack: use buffered I/O to talk to pack-objects,
->> 2016-06-08), significantly reduce the number of system calls and
->> simplify the code for sending object IDs to rev-list by using stdio's
->> buffering and handling errors after the loops.
->>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->>  upload-pack.c | 21 +++++++--------------
->>  1 file changed, 7 insertions(+), 14 deletions(-)
->>
->> diff --git a/upload-pack.c b/upload-pack.c
->> index 86737410709..9f616c2c6a6 100644
->> --- a/upload-pack.c
->> +++ b/upload-pack.c
->
-> [snip]
->
->> @@ -640,12 +636,11 @@ static int do_reachable_revlist(struct child_proc=
-ess *cmd,
->>                 }
->>                 if (reachable && o->type =3D=3D OBJ_COMMIT)
->>                         o->flags |=3D TMP_MARK;
->> -               memcpy(namebuf, oid_to_hex(&o->oid), hexsz);
->> -               if (write_in_full(cmd->in, namebuf, hexsz + 1) < 0)
->> -                       goto error;
->> +               fprintf(cmd_in, "%s\n", oid_to_hex(&o->oid));
->
-> The fprintf() call here *can* return an error, e.g., if the
-> connection has died.  If it does, it should set things up so that
-> a later ferror(cmd_in) returns true.
->
->>         }
->> -       close(cmd->in);
->>         cmd->in =3D -1;
->> +       if (fclose(cmd_in))
->> +               goto error;
->
-> The fclose() call doesn't necessarily check ferror().  (The
-> FreeBSD stdio in particular definitely does not.)  It might
-> be better to use:
->
->     failure =3D ferror(cmd_in);
->     failure |=3D fclose(cmd_in);
->     if (failure) ...
->
-> here, or similar.  (The temporary variable is not needed,
-> but someone might assume `if (ferror(fp) | fclose(fp))` is
-> a typo for `if (ferror(fp) || fclose(fp))`.)
+Hi Junio,=20
 
-Thanks, didn't know that.  That's awful.  So the sentence "The fclose()
-and fdclose() functions may also fail and set errno for any of the
-errors specified for fflush(3)." from the FreeBSD manpage for fclose(3)
-actually means that while it will flush, it is free to ignore any
-flush errors?
+> Le 2 ao=C3=BBt 2020 =C3=A0 18:05, Junio C Hamano <gitster@pobox.com> a =
+=C3=A9crit :
+>=20
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+>> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>=20
+>>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>>=20
+>>> Not all guides are mentioned in the 'git(1)' documentation,
+>>> which makes the missing ones somewhat hard to find.
+>>>=20
+>>> Add a list of the guides to git(1).
+>>>=20
+>>> Tweak `Documentation/cmd-list.perl` so that it also generates
+>>> a file `cmds-guide.txt` which gets included in git.txt.
+>>=20
+>> Who cleans this?  Do we need a change to Makefile?
 
-Or do you mean that fflush() can succeed on a stream that has its error
-indicator set?
+Oups! I checked /.gitignore, but forgot to thoroughly check the =
+Makefile.
 
-In any case, we'd then better add a function that flushes the buffer,
-closes the stream and reports errors in its return code and errno --
-i.e. a sane fclose().
+>=20
+> A band-aid patch would look like this, BUT.
+>=20
+>    diff --git a/Documentation/Makefile b/Documentation/Makefile
+>    index 39f6fc8de7..616449da88 100644
+>    --- a/Documentation/Makefile
+>    +++ b/Documentation/Makefile
+>    @@ -295,6 +295,7 @@ cmds_txt =3D cmds-ancillaryinterrogators.txt \
+>            cmds-plumbingmanipulators.txt \
+>            cmds-synchingrepositories.txt \
+>            cmds-synchelpers.txt \
+>    +       cmds-guide.txt \
+>            cmds-purehelpers.txt \
+>            cmds-foreignscminterface.txt
+>=20
+> I think with a bit more work, we can be at a lot better place.  How
+> about something along the following line (untested)?
+>=20
+> Documentation/Makefile      |  3 ++-
+> Documentation/cmd-list.perl | 21 ++++++++-------------
+> 2 files changed, 10 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 39f6fc8de7..80d1908a44 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -295,6 +295,7 @@ cmds_txt =3D cmds-ancillaryinterrogators.txt \
+> 	cmds-plumbingmanipulators.txt \
+> 	cmds-synchingrepositories.txt \
+> 	cmds-synchelpers.txt \
+> +	cmds-guide.txt \
+> 	cmds-purehelpers.txt \
+> 	cmds-foreignscminterface.txt
+>=20
+> @@ -302,7 +303,7 @@ $(cmds_txt): cmd-list.made
+>=20
+> cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+> 	$(QUIET_GEN)$(RM) $@ && \
+> -	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(QUIET_STDERR) =
+&& \
+> +	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) =
+$(QUIET_STDERR) && \
+> 	date >$@
+>=20
+> mergetools_txt =3D mergetools-diff.txt mergetools-merge.txt
+> diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
+> index 99f01a0910..af5da45d28 100755
+> --- a/Documentation/cmd-list.perl
+> +++ b/Documentation/cmd-list.perl
+> @@ -43,12 +43,15 @@ sub format_one {
+> 	}
+> }
+>=20
+> -while (<>) {
+> +my ($input, @categories) =3D @ARGV;
+> +
+> +open IN, "<$input";
+> +while (<IN>) {
+> 	last if /^### command list/;
+> }
+>=20
+> my %cmds =3D ();
+> -for (sort <>) {
+> +for (sort <IN>) {
+> 	next if /^#/;
+>=20
+> 	chomp;
+> @@ -56,18 +59,10 @@ sub format_one {
+> 	$attr =3D '' unless defined $attr;
+> 	push @{$cmds{$cat}}, [$name, " $attr "];
+> }
+> +close IN;
+>=20
+> -for my $cat (qw(ancillaryinterrogators
+> -		ancillarymanipulators
+> -		mainporcelain
+> -		plumbinginterrogators
+> -		plumbingmanipulators
+> -		synchingrepositories
+> -		foreignscminterface
+> -		purehelpers
+> -		synchelpers
+> -		guide)) {
+> -	my $out =3D "cmds-$cat.txt";
+> +for my $out (@categories) {
+> +	my ($cat) =3D $out =3D~ /^cmds-(.*)\.txt$/;
+> 	open O, '>', "$out+" or die "Cannot open output file $out+";
+> 	for (@{$cmds{$cat}}) {
+> 		format_one(\*O, $_);
 
-Ren=C3=A9
+Thanks for the suggestion. I tested it and it works correctly.=20
+I've incorporated it to v2.
+
+
+Philippe.
 
