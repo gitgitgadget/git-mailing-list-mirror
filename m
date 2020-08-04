@@ -2,98 +2,139 @@ Return-Path: <SRS0=W4Po=BO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 646BEC433E0
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 408C7C433DF
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:44:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E0EC2076E
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:43:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47F662076C
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:44:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mattmccutchen.net header.i=@mattmccutchen.net header.b="QS8UI0Lf"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YAjLSYFS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726548AbgHDAnk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 20:43:40 -0400
-Received: from lavender.maple.relay.mailchannels.net ([23.83.214.99]:47066
-        "EHLO lavender.maple.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726130AbgHDAnj (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Aug 2020 20:43:39 -0400
-X-Sender-Id: dreamhost|x-authsender|matt@mattmccutchen.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 6782218161E;
-        Tue,  4 Aug 2020 00:43:38 +0000 (UTC)
-Received: from pdx1-sub0-mail-a94.g.dreamhost.com (100-96-22-23.trex.outbound.svc.cluster.local [100.96.22.23])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id C3298181456;
-        Tue,  4 Aug 2020 00:43:37 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|matt@mattmccutchen.net
-Received: from pdx1-sub0-mail-a94.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.18.8);
-        Tue, 04 Aug 2020 00:43:38 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|matt@mattmccutchen.net
-X-MailChannels-Auth-Id: dreamhost
-X-Shelf-Society: 67b9564111c04d35_1596501818261_4206545087
-X-MC-Loop-Signature: 1596501818261:1570177411
-X-MC-Ingress-Time: 1596501818261
-Received: from pdx1-sub0-mail-a94.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a94.g.dreamhost.com (Postfix) with ESMTP id 856A1B2B9F;
-        Mon,  3 Aug 2020 17:43:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=mattmccutchen.net; h=
-        message-id:subject:from:to:cc:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=
-        mattmccutchen.net; bh=+qfjgX3+g67En8cfIuGL2lh7Mds=; b=QS8UI0Lfge
-        /WdEmsA4fjvlELV8Bnn6s1l7Ejbu5k/4/iE9+7+5rqQv+0soEy0BrWiQSwbcfJ0D
-        3Hr3cfaa5X4Ec6nyOIstC6GP6tAi9Nfzqv23Y/gBvf5lumVkvePqjm3T1D42fCxB
-        8Si5T3sA+0yF5ZQsKS9fjipPBLbyTc80A=
-Received: from main (pool-100-15-89-198.washdc.fios.verizon.net [100.15.89.198])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726766AbgHDAoa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 20:44:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41324 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726130AbgHDAo3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Aug 2020 20:44:29 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: matt@mattmccutchen.net)
-        by pdx1-sub0-mail-a94.g.dreamhost.com (Postfix) with ESMTPSA id E7247B2B91;
-        Mon,  3 Aug 2020 17:43:36 -0700 (PDT)
-Message-ID: <0f1c557657b46ec4124ca37816a3e0aa4bd83501.camel@mattmccutchen.net>
-Subject: Re: Renaming the "master" branch without breaking existing clones
-X-DH-BACKEND: pdx1-sub0-mail-a94
-From:   Matt McCutchen <matt@mattmccutchen.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Date:   Mon, 03 Aug 2020 20:43:34 -0400
-In-Reply-To: <20200803160051.GA50799@syl.lan>
-References: <ec960483f5008e9948271c678d51876920ab62c9.camel@mattmccutchen.net>
-         <20200803160051.GA50799@syl.lan>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.3 (3.36.3-1.fc32) 
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 71A4160799;
+        Tue,  4 Aug 2020 00:44:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1596501868;
+        bh=lMKzpHdUTkC0dHzuimX7JeanH14yvHFlhyusDKiFgmI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=YAjLSYFSXiKyUbHkS9C3CZI5Mi0ZBQVMOQDhOEqghrDD3igeFFE6Dc8Ge5qFqD9gI
+         w+0RBzqHJfC3sCKYFXIuVHtkb7Az3iz50QYsc9hHYYF6iAYUopA8IzrqJ9v1Wibycr
+         BkKulAPRL61e0PvyxNEiRq+uKHWSrYN4U6l8GFzV5uvK2cWLQokT9nsTw8rWvcgxZl
+         RfjTVxeADVd5FwbsPe4VB2uA0k4xoMlTiadgp80RcsFFLh70fap5ehhsBnp/T6RUw/
+         sepTZ8DRCjwxNMlXED4aFlSbnVoc4/CKK5MrLIuFx9EzrwZ0RruloVgeom7RpMRibi
+         +EUev6n58jRMFZgQuMrYslt9HUx8rQ7vTtkkDfyIeBUwAVJ48KEwkzWf430Hy2pCHu
+         WThi25w+3Ke/bXSohDbNH1IH9QMejIAslfr9eVCaIZvXlakvnzh1lSWjEmN49SrIst
+         NdZwH3/3QGTNYVz0jp06JX9JJBlzsttvHh9usBnyXP5ox3Thlnb
+Date:   Tue, 4 Aug 2020 00:44:23 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 14/14] git-cvsexportcommit: port to SHA-256
+Message-ID: <20200804004423.GO6540@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Wong <e@80x24.org>, Andreas Schwab <schwab@linux-m68k.org>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20200619223947.947067-1-sandals@crustytoothpaste.net>
+ <20200622180418.2418483-1-sandals@crustytoothpaste.net>
+ <20200622180418.2418483-15-sandals@crustytoothpaste.net>
+ <87zh7bo9so.fsf@igel.home>
+ <20200803235007.GN6540@camp.crustytoothpaste.net>
+ <20200804001315.GA4899@dcvr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduiedrjeehgdefkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucggtfgfnhhsuhgsshgtrhhisggvpdfftffgtefojffquffvnecuuegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepofgrthhtucfotgevuhhttghhvghnuceomhgrthhtsehmrghtthhmtggtuhhttghhvghnrdhnvghtqeenucggtffrrghtthgvrhhnpeeuudfhtddthfduteeghfdvheeuledtveehteeiuefgkeetkeffgfdvgeejvdeuudenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedutddtrdduhedrkeelrdduleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhppdhhvghlohepmhgrihhnpdhinhgvthepuddttddrudehrdekledrudelkedprhgvthhurhhnqdhprghthhepofgrthhtucfotgevuhhttghhvghnuceomhgrthhtsehmrghtthhmtggtuhhttghhvghnrdhnvghtqedpmhgrihhlfhhrohhmpehmrghtthesmhgrthhtmhgttghuthgthhgvnhdrnhgvthdpnhhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="VLAOICcq5m4DWEYr"
+Content-Disposition: inline
+In-Reply-To: <20200804001315.GA4899@dcvr>
+User-Agent: Mutt/1.14.5 (2020-06-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2020-08-03 at 12:00 -0400, Taylor Blau wrote:
-> On Mon, Aug 03, 2020 at 08:15:58AM -0400, Matt McCutchen wrote:
-> > 3. Ensuring that tools detect the default branch of a given repository
-> > in an appropriate way rather than assuming "master". [...]
-> 
-> I'm less qualified to talk about what's going on here, but my
-> understanding is that providers and tool-makers are quite aware of this.
 
-I'm not so sure about that.  Recently I've been the most active
-contributor to Braid (https://github.com/cristibalan/braid/), and I
-only learned about this today when I stumbled on news about a similar
-change to the Linux kernel and immediately wondered if git was doing
-the same thing.  I filed an issue (t
-https://github.com/cristibalan/braid/issues/87) and will develop a fix
-when I have time.
+--VLAOICcq5m4DWEYr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Matt
+On 2020-08-04 at 00:13:26, Eric Wong wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> > On 2020-08-03 at 18:37:27, Andreas Schwab wrote:
+> > > On Jun 22 2020, brian m. carlson wrote:
+> > >=20
+> > > > diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+> > > > index fc00d5946a..6483d792d3 100755
+> > > > --- a/git-cvsexportcommit.perl
+> > > > +++ b/git-cvsexportcommit.perl
+> > > > @@ -22,6 +22,10 @@
+> > > >  my $repo =3D Git->repository();
+> > > >  $opt_w =3D $repo->config('cvsexportcommit.cvsdir') unless defined =
+$opt_w;
+> > > > =20
+> > > > +my $tmpdir =3D File::Temp->newdir;
+> > >=20
+> > > File::Temp in perl 5.10 doesn't have the newdir method.
+> >=20
+> > That method was added in File::Temp 0.19, which was added in 2007.  Does
+>=20
+> 5.10.0 doesn't have ->newdir, but 5.10.1 does.  I figure nobody
+> used 5.10.0 anymore since 5.10.1 exists and (IIRC) fixed many
+> things wrong in 5.10.0.
 
+Technically we support 5.8.8, I believe, which means this probably does
+need to be fixed.  I'll let Andreas verify the proposed solution works
+for him, and then send a patch.
+
+> > For the record, I plan to propose that we drop support for Perl versions
+> > earlier than 5.14 on December 2, since CentOS 6 will be dead at that
+> > point.  I think a ten-year lifespan for an OS is quite generous and
+> > we're still considering Perl 5.8.8, which nobody is publicly supporting
+> > anymore.
+>=20
+> That's probably fine.  I haven't looked at 5.12 and 5.14 changes
+> enough to comment, but just moving rom 5.8 to 5.10.1 last year
+> made my life considerably better (e.g. `//', `//=3D')
+
+5.14 has nice things like s///r:
+
+   # 5.12
+   # We have to make a copy since s/// modifies its left side.
+   my $foo =3D $ARGV[0];
+   $foo =3D~ s/a/b/;
+
+   # 5.14
+   # Now we have non-destructive substitution.
+   my $foo =3D $ARGV[0] =3D~ s/a/b/r;
+--=20
+brian m. carlson: Houston, Texas, US
+
+--VLAOICcq5m4DWEYr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXyivZgAKCRB8DEliiIei
+gVRmAP9LpofWg9qUbYobBIHYsmV67hdGRUdy8LweRQVn3hVyhAEA0+y5pFm3CV47
+/T1eZ+3IvvNlrFUI1YwvNUH63g6upgE=
+=SKUn
+-----END PGP SIGNATURE-----
+
+--VLAOICcq5m4DWEYr--
