@@ -3,53 +3,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C81C433E0
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7AC9C433DF
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:54:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E582320842
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:49:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83B6920792
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:54:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D04KFsn0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjLJWl1f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbgHDWtX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 18:49:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54553 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726222AbgHDWtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 18:49:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2D446D71C2;
-        Tue,  4 Aug 2020 18:49:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JAOzz1NgvM0B6rlBlCuPwr45nn8=; b=D04KFs
-        n0kB7n8Ze2AsmiafJCdzprPAqb6ix+Z8TduQyKKV4e/02I/tXBp6ycdumNBy7bVA
-        jUgD7MLfp25iBT2/+nuVxGzkBGkp+/F+dAhTAujrS6l7c49nu0A8ZUBGjiJSbIGY
-        biNGAUErTpxNdnQy/KuUmcIoTPV6rK5ZI8JzE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IkxG1TYIGYV1AoeeK0hjrGnPHy08+eME
-        RtBMg6UE+2Ws5eFwI2eYm3lrmo4WdEu321LrJMrg8y0S9aM8yiwWillGTtnvFJRI
-        HHWQWszL4kCcRDraEImXkOIpIXr/O6rBma9D2Yp6zVV1ueoNowZK5b54fpEvVj1r
-        ZKtaY3k44UE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 260A5D71C1;
-        Tue,  4 Aug 2020 18:49:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 675C0D71BF;
-        Tue,  4 Aug 2020 18:49:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1726752AbgHDWx7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 18:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50308 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726222AbgHDWx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 18:53:58 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91967C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 15:53:57 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id d2so17618376lfj.1
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 15:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=5jld3FemBjmCrVAANVvQWf5hjJE6N5ewaTW2pMJyuSs=;
+        b=WjLJWl1fuDpMJa6sw+n653E7KVXQQrhGUyYuMysWEKSLCcN//gEjMnBFZKv9Ux9Nk7
+         ZDrcFRNl1ulFk8BcdBDgRlOHx43GG8pcuCgGdOQnoI8k1NeNa9yBAzIC8B5BfyFFgxAM
+         oo7eT21m8cfZ9LYpr5OXLZhmJs+1SwhE9jK3bFhb6zADjceeLpZyDDzNlRHxTEgxeU7a
+         fek4J7/NoAZ76H5mgRtL8DDCc1h/UDhMwtJI7+WZ53WYEX7kjVoUpJ7DSqlizx73cZEm
+         /wocfHJi9QqfMH6rfg2km/R/K95ggJ4RTE8jcGI6asO5+w5G7y9gtHuZYI0Xcy1X7qQX
+         IDvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=5jld3FemBjmCrVAANVvQWf5hjJE6N5ewaTW2pMJyuSs=;
+        b=rSGh8eWyAtCGUSLTUl7sNNwONK7tCqPj/31ml94T9TWuu0cpqnLQJVRKGramXqrJl0
+         5kPWtjtgxle9E1HvAqSAFkFZGMXq7wzaFmwiEpjMbUHRanOAkIJl+oSbz4oTRlXdfSG9
+         4SQUmrtECQR6/nj5H9qTK4LmS9a+wTYtRImCfeBaS4zfXoXaf4KyzkGKbHH9pN7olOGR
+         PAf7vHdrCVsckZX6nVFiXoCdd9Fmyj5dO7dQOQ2Wd7BnG0V5ug1CczE2D8tWcqJhT61J
+         8Slth4vGOmj5KwStPcsUaOkSETO3QOTJbpjPeM7Ju7yJ8wv2bP387pMzTvZ+CLiHGfYi
+         rC5w==
+X-Gm-Message-State: AOAM530QG40RNwpactt1ZfYUVkT/hg6kED/AtbxpLccE5TyKK5UZc/er
+        mZ0NsP4UkJ53Hue3SDGGdiQAVkxv
+X-Google-Smtp-Source: ABdhPJzk98yeY6e62dyx5lk3GIjJRWn6z1B5d/gbmYAf8h8dX1prpELySHaduXLdYCEq2QqUj6yqQA==
+X-Received: by 2002:ac2:5335:: with SMTP id f21mr192449lfh.114.1596581635132;
+        Tue, 04 Aug 2020 15:53:55 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id a27sm22548ljd.41.2020.08.04.15.53.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Aug 2020 15:53:54 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Chris Torek <chris.torek@gmail.com>
 Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
 References: <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
@@ -61,14 +71,13 @@ References: <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
         <20200804212201.GA2020725@coredump.intra.peff.net>
         <xmqq3652rs84.fsf@gitster.c.googlers.com> <878seuxdz8.fsf@osv.gnss.ru>
         <20200804221440.GC2022650@coredump.intra.peff.net>
-Date:   Tue, 04 Aug 2020 15:49:17 -0700
+Date:   Wed, 05 Aug 2020 01:53:53 +0300
 In-Reply-To: <20200804221440.GC2022650@coredump.intra.peff.net> (Jeff King's
         message of "Tue, 4 Aug 2020 18:14:40 -0400")
-Message-ID: <xmqqpn86qb6a.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Message-ID: <87d046vx8e.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BB5921D0-D6A4-11EA-8A42-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,34 +85,75 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
+> On Wed, Aug 05, 2020 at 01:06:51AM +0300, Sergey Organov wrote:
+>
+>> > For now, "off" is OK, but then we'll regret when "all" comes,
+>> > because "off" would not exactly sit opposite to "all".
+>> 
+>> IMHO, "off" does not need to be opposite for "all", as it suppresses
+>> diff output altogether. I read --diff-merge=off as "turn /off/ diff
+>> output for merge commits".
+>> 
+>> Besides, "all", that I don't like either, is among "c" and "cc", all 3
+>> being different versions of diffs against all the parents, no?
+>
+> I think "all-parents" is much more descriptive than "all" (which might
+> make you think "all merges", but it has nothing to do with that). It
+> would make more sense if we later add the building to say "diff against
+> parent 1" or "diff against parents 1 and 3".
+>
 > You might also consider whether "combined" is actually mutually
 > exclusive with parent selection. We have focused on which parents you'd
 > want to "-m" against. But in the most general case, you could ask for a
 > combined-diff between parents 1 and 3 of an octopus merge.
-
-Yeah, we want to specify a possibly empty set of integers
-(1..<num-parents>) to combine the diff; if it is empty set, we won't
-see any diff.  If it is full set, we'd get the current c/cc behavior.
-Anything in between we cannot currently express.  Fun ;-)
-
+>
 > That's just coming from the angle of "what is the most general and
 > orthogonal set of features". I think the vast majority of what anyone
 > would want to do would be covered by doing a diff against only a single
 > parent, and then it would almost always be the first parent. And
 > certainly you'd need to add a bunch of code to the combined diff
 > machinery to make it support arbitrary sets of parents. So this probably
-> isn't that interesting a direction to go, at least for now. 
-
-Yeah, it is mostly for fun--I do not see an immediate practical use
-case, either.
-
-> I'm just
+> isn't that interesting a direction to go, at least for now. I'm just
 > raising the issue now because we'll be locked into the semantics of this
 > option, which may not be able to express the full set of what's possible
 > (so we'd be stuck adding another option later).
 
-Yeah, but a good thing is that we won't have to worry about this
-until much later, as long as we would just be introducing "diff
-against no parents" and nothing else (or together with "diff against
-all parents", which would make it easier to explain "-m").
+Makes sense, and I got an idea.
 
+--diff-merges=<parent> will still give diff against one specific parent.
+
+In case of combined/separate diffs, it will produce diffs against all
+the parents that, if happens to be needed, could later be refined by a
+new --diff-parents option that defaults to 'all'.
+
+Then, for example,
+
+--diff-merges=1
+
+would finally be just a short-cut for
+
+--diff-merges=separate --diff-parents=1
+
+while
+
+--diff-merges=separate --diff-parents=all
+
+would be the same as
+
+--diff-merges=separate (what we called "all" so far)
+
+and then we may have
+
+--diff-merges=condensed-combined --diff-parents=1-3,8
+
+for the bravest ;-)
+
+This would lead us, currently to:
+
+--diff-merges=(off,separate,combined,condensed-combined,<parent>)
+
+and leave us ability to implement advanced parents selection, in an
+unlikely case it's needed, in a separate new option.
+
+Thanks,
+-- Sergey
