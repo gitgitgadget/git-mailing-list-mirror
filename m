@@ -7,139 +7,127 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B50FFC433E0
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A23B2C433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:46:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C30F322B40
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:43:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0F3D22B40
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:46:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729629AbgHDHny (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 03:43:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47368 "EHLO cloud.peff.net"
+        id S1728112AbgHDHqx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 03:46:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47374 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726808AbgHDHny (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 03:43:54 -0400
-Received: (qmail 578 invoked by uid 109); 4 Aug 2020 07:43:53 -0000
+        id S1727887AbgHDHqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 03:46:53 -0400
+Received: (qmail 598 invoked by uid 109); 4 Aug 2020 07:46:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Aug 2020 07:43:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Aug 2020 07:46:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9657 invoked by uid 111); 4 Aug 2020 07:43:53 -0000
+Received: (qmail 9689 invoked by uid 111); 4 Aug 2020 07:46:52 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Aug 2020 03:43:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Aug 2020 03:46:52 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 4 Aug 2020 03:43:53 -0400
+Date:   Tue, 4 Aug 2020 03:46:52 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 1/3] config: work around gcc-10 -Wstringop-overflow warning
-Message-ID: <20200804074353.GA284046@coredump.intra.peff.net>
+Subject: [PATCH 2/3] revision: avoid out-of-bounds read/write on empty
+ pathspec
+Message-ID: <20200804074652.GB284046@coredump.intra.peff.net>
 References: <20200804074146.GA190027@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20200804074146.GA190027@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compiling with gcc-10, -O2, and -fsanitize=undefined results in a
-compiler warning:
+Running t4216 with ASan results in it complaining of an out-of-bounds
+read in prepare_to_use_bloom_filter(). The issue is this code to strip a
+trailing slash:
 
-  config.c: In function ‘git_config_copy_or_rename_section_in_file’:
-  config.c:3170:17: error: writing 1 byte into a region of size 0 [-Werror=stringop-overflow=]
-   3170 |       output[0] = '\t';
-        |       ~~~~~~~~~~^~~~~~
-  config.c:3076:7: note: at offset -1 to object ‘buf’ with size 1024 declared here
-   3076 |  char buf[1024];
-        |       ^~~
+  last_index = pi->len - 1;
+  if (pi->match[last_index] == '/') {
 
-This is a false positive. The interesting lines of code are:
+because we have no guarantee that pi->len isn't zero. This can happen if
+the pathspec is ".", as we translate that to an empty string. And if
+that read of random memory does trigger the conditional, we'd then do an
+out-of-bounds write:
 
-  int i;
-  char *output = buf;
-  ...
-  for (i = 0; buf[i] && isspace(buf[i]); i++)
-          ; /* do nothing */
-  ...
-  int offset;
-  offset = section_name_match(&buf[i], old_name);
-  if (offset > 0) {
-          ...
-          output += offset + i;
-          if (strlen(output) > 0) {
-		  /*
-		   * More content means there's
-		   * a declaration to put on the
-		   * next line; indent with a
-		   * tab
-		   */
-		  output -= 1;
-		  output[0] = '\t';
-	  }
-  }
+  path_alloc = xstrdup(pi->match);
+  path_alloc[last_index] = '\0';
 
-So we do assign output to buf initially. Later we increment it based on
-"offset" and "i" and then subtract "1" from it. That latter step is what
-the compiler is complaining about; it could lead to going off the left
-side of the array if "output == buf" at the moment of the subtraction.
-For that to be the case, then "offset + i" would have to be 0. But that
-can't happen:
+Let's make sure to check the length before subtracting. Note that for an
+empty pathspec, we'd end up bailing from the function a few lines later,
+which makes it tempting to just:
 
-  - we know that "offset" is at least 1, since we're in a conditional
-    block that checks that
+  if (!pi->len)
+          return;
 
-  - we know that "i" is not negative, since it started at 0 and only
-    incremented over whitespace
+early here. But our code here is stripping a trailing slash, and we need
+to check for emptiness after stripping that slash, too. So we'd have two
+blocks, which would require repeating some cleanup code.
 
-So the sum must be at least 1, and therefore it's OK to subtract one
-from "output".
+Instead, just skip the trailing-slash for an empty string. Setting
+last_index at all in the case is awkward since it will have a nonsense
+value (and it uses an "int", which is a too-small type for a string
+anyway). So while we're here, let's:
 
-But that's not quite the whole story. Since "i" is an int, it could in
-theory be possible to overflow to negative (when counting whitespace on
-a very large string). But we know that's impossible because we're
-counting the 1024-byte buffer we just fed to fgets(), so it can never be
-larger than that.
+  - drop last_index entirely; it's only used in two spots right next to
+    each other and writing out "pi->len - 1" in both is actually easier
+    to follow
 
-Switching the type of "i" to "unsigned" makes the warning go away, so
-let's do that.
-
-Arguably size_t is an even better type (for this and for the other
-length fields), but switching to it produces a similar but distinct
-warning:
-
-  config.c: In function ‘git_config_copy_or_rename_section_in_file’:
-  config.c:3170:13: error: array subscript -1 is outside array bounds of ‘char[1024]’ [-Werror=array-bounds]
-   3170 |       output[0] = '\t';
-        |       ~~~~~~^~~
-  config.c:3076:7: note: while referencing ‘buf’
-   3076 |  char buf[1024];
-        |       ^~~
-
-If we were to ever switch off of fgets() to strbuf_getline() or similar,
-we'd probably need to use size_t to avoid other overflow problems. But
-for now we know we're safe because of the small fixed size of our
-buffer.
+  - use xmemdupz() to duplicate the string. This is slightly more
+    efficient, but more importantly makes the intent more clear by
+    allocating the correct-sized substring in the first place. It also
+    eliminates any question of whether path_alloc is as long as
+    pi->match (which it would not be if pi->match has any embedded NULs,
+    though in practice this is probably impossible).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Another variant is to actually stop assigning revs->bloom_filter_settings
+so early, so that we don't have to clean it up. And then once we're sure
+we're going to use it and have passed all of our early-return checks,
+then assign it. But that conflicts with the get_bloom_filter_settings()
+patch in:
 
-diff --git a/config.c b/config.c
-index 8db9c77098..2b79fe76ad 100644
---- a/config.c
-+++ b/config.c
-@@ -3115,7 +3115,7 @@ static int git_config_copy_or_rename_section_in_file(const char *config_filename
- 	}
+  https://lore.kernel.org/git/08479793c1274d5ee0f063578bb0f4d93c910fa9.1596480582.git.me@ttaylorr.com/
+
+so I didn't go that way.
+
+ revision.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 6de29cdf7a..5ed86e4524 100644
+--- a/revision.c
++++ b/revision.c
+@@ -669,7 +669,6 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 	struct pathspec_item *pi;
+ 	char *path_alloc = NULL;
+ 	const char *path, *p;
+-	int last_index;
+ 	size_t len;
+ 	int path_component_nr = 1;
  
- 	while (fgets(buf, sizeof(buf), config_file)) {
--		int i;
-+		unsigned i;
- 		int length;
- 		int is_section = 0;
- 		char *output = buf;
+@@ -692,12 +691,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 		return;
+ 
+ 	pi = &revs->pruning.pathspec.items[0];
+-	last_index = pi->len - 1;
+ 
+ 	/* remove single trailing slash from path, if needed */
+-	if (pi->match[last_index] == '/') {
+-		path_alloc = xstrdup(pi->match);
+-		path_alloc[last_index] = '\0';
++	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
++		path_alloc = xmemdupz(pi->match, pi->len - 1);
+ 		path = path_alloc;
+ 	} else
+ 		path = pi->match;
 -- 
 2.28.0.536.ga4d8134877
 
