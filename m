@@ -2,180 +2,164 @@ Return-Path: <SRS0=W4Po=BO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E82EC433E0
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 16:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F89AC433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 16:33:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14B7B22B42
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 16:30:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41C042177B
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 16:33:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FRD5mzYe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lc4JPcMb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729533AbgHDQaZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 12:30:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53733 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbgHDQaV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 12:30:21 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7D46D41BF;
-        Tue,  4 Aug 2020 12:30:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=HsqzJGrpFMEg
-        nO2bcXpiHh0w6r8=; b=FRD5mzYeb0H8ynWYd9zu/pGx6dcKpd76uFSpLkhEygwG
-        oLmEeS6IwmLigrsrQR73A/Nq5U/lN3ax8qf8Re468d9EU5ZXvrLr8GT8DAE+t0QO
-        2zdHKVedVS1NDj/StqQdbUpCI/auj5NEwEOhad6YYM7ifz/8CXw+mV5MI+qPp7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OnDthv
-        uUkOGLnvmVN+nF3emX6nr2CClOuf+mqaGPBxUkxzwdPUbwZBLJH/w8zfp/VZHUqD
-        g9H6qonC4Yc/RYIOHKsBQeSY1f0zmrK85dj8tucQHeTaGvLtwhyFzTfwgba0KeZI
-        25nINQ5Fj8+PPCvNNhS18CDGNk+waGWxIQuqI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BEBB6D41BE;
-        Tue,  4 Aug 2020 12:30:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0600CD41BC;
-        Tue,  4 Aug 2020 12:30:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/3] config: work around gcc-10 -Wstringop-overflow warning
-References: <20200804074146.GA190027@coredump.intra.peff.net>
-        <20200804074353.GA284046@coredump.intra.peff.net>
-Date:   Tue, 04 Aug 2020 09:30:15 -0700
-In-Reply-To: <20200804074353.GA284046@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 4 Aug 2020 03:43:53 -0400")
-Message-ID: <xmqqv9hys7ag.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729746AbgHDQdA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 12:33:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48166 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726027AbgHDQc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 12:32:59 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FD86C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 09:32:59 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id o22so31125188qtt.13
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 09:32:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kD0S4WP9gGnw7HdR/rhVY2MML6Edrp+iUuQdMWiEZLM=;
+        b=Lc4JPcMbhwOeAUT9nF2nxnm6tBvP7XAEyQpyO0KuPA/JhDuonGG56NPU9YuKq+MGLF
+         G4JNi7c1JPll5nsll44LLaVUIswcIPqnGyx82N/73377RxUqrCYqULP8CxnG9Ic74ADq
+         oGZZogoX8dQXuPipZ2jKQizvFxenjgBak8PwljEJ6mKZ7Y0sv6+nuFM5v27QxSxERYGR
+         EaxsX7Sj30WfWq7W+9CPv++cETb5NtVvV4SPMsS8lUgSKLmLES4IQW4HFQ+Ky1Rm26kQ
+         8WrrC9Klq3Wgaz1br58mBkbw8+HIS9VxejgLcRJWJHT3QVr1fCy984ryZu7DS43xejLi
+         GxiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kD0S4WP9gGnw7HdR/rhVY2MML6Edrp+iUuQdMWiEZLM=;
+        b=rivTqagISLabtL7RPVy8kr8WBUBs6ys/MSQEc7Bx86Oy0RlxSFOjJ/24oz80LfIRgM
+         sFH4ZpjCdorL1YdEOFucHwViYhYF16AklA7aiekMBosCWa2x0FRGH4i0+t+3RTJkCH0D
+         sL6uja2XjvjWn636seeYbBPZ1aOhXNWEJsk5fwg76tNYo1U38HCh+BeZvnIJ+g+FKZrx
+         Q0Nn+nCmsv3hbbVttBRcyYUXCO4FV0Jm2BO2riMWwzKgDrp+Reai+AZOYL6QlrLs+NYH
+         RXYod7M8uzbRWZOPsHfuw952rpe5LPrLhyG7YZaJFGWKUwG5SjZX6zyHtzCfg5RDjDse
+         UW+w==
+X-Gm-Message-State: AOAM531QCiALfYtxYKOvarh5ShfYcNSEFwXgopp26Ina0+PfK4IIuXbL
+        W6r7JkFzXtLNFk6Y9Zvd4SA=
+X-Google-Smtp-Source: ABdhPJz1Wxapw6B4BjjBGVXBIugVgV2U92yxnuitaXEuFrbvEYOQr2agmZvymT4SYXD2RMPytAPFMQ==
+X-Received: by 2002:ac8:6901:: with SMTP id e1mr22499177qtr.352.1596558778197;
+        Tue, 04 Aug 2020 09:32:58 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:359e:33e7:c1bc:799? ([2600:1700:e72:80a0:359e:33e7:c1bc:799])
+        by smtp.gmail.com with ESMTPSA id f189sm21222564qke.15.2020.08.04.09.32.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Aug 2020 09:32:57 -0700 (PDT)
+Subject: Re: [PATCH v2 01/18] maintenance: create basic maintenance runner
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com, peff@peff.net,
+        congdanhqx@gmail.com, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20200729221905.GB519065@google.com>
+ <5cbdb559-3897-961f-4dd3-0bab11848c5b@gmail.com>
+ <20200731003022.GA1029866@google.com>
+ <a176ddf5-b45b-fb25-8740-96efbd324edf@gmail.com>
+ <20200803174654.GA2473576@google.com> <20200803224631.GA73022@syl.lan>
+ <20200803230134.GA58587@google.com> <20200803230814.GA73765@syl.lan>
+ <20200803231745.GB58587@google.com>
+ <aac90dbd-e885-f366-1056-0824b8b8b8fe@gmail.com>
+ <20200804144208.GA227292@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2b6da345-d004-1d83-78cd-3f1ceaf278d9@gmail.com>
+Date:   Tue, 4 Aug 2020 12:32:56 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
+In-Reply-To: <20200804144208.GA227292@google.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C7D250D8-D66F-11EA-8DAD-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 8/4/2020 10:42 AM, Jonathan Nieder wrote:
+> Derrick Stolee wrote:
+> 
+>> What is seems like you are asking instead is for me to create a tool
+>> in the test suite that parses each JSON line, extracts a specific
+>> member from that JSON object, reconstructs a command-line invocation
+>> from the JSON array, and reports whether that process worked for any
+>> line in the event output.
+> 
+> No, that isn't what I'm asking.
+> 
+> I'm asking for this patch series to take the existing "grep" lines
+> and put them in a function in test-lib-functions.sh, so that we can
+> change them in one place when the trace emitter changes.
 
-> Compiling with gcc-10, -O2, and -fsanitize=3Dundefined results in a
-> compiler warning:
->
->   config.c: In function =E2=80=98git_config_copy_or_rename_section_in_f=
-ile=E2=80=99:
->   config.c:3170:17: error: writing 1 byte into a region of size 0 [-Wer=
-ror=3Dstringop-overflow=3D]
->    3170 |       output[0] =3D '\t';
->         |       ~~~~~~~~~~^~~~~~
->   config.c:3076:7: note: at offset -1 to object =E2=80=98buf=E2=80=99 w=
-ith size 1024 declared here
->    3076 |  char buf[1024];
->         |       ^~~
->
-> This is a false positive. The interesting lines of code are:
->
->   int i;
->   char *output =3D buf;
->   ...
->   for (i =3D 0; buf[i] && isspace(buf[i]); i++)
->           ; /* do nothing */
->   ...
->   int offset;
->   offset =3D section_name_match(&buf[i], old_name);
->   if (offset > 0) {
->           ...
->           output +=3D offset + i;
->           if (strlen(output) > 0) {
-> 		  /*
-> 		   * More content means there's
-> 		   * a declaration to put on the
-> 		   * next line; indent with a
-> 		   * tab
-> 		   */
-> 		  output -=3D 1;
-> 		  output[0] =3D '\t';
-> 	  }
->   }
->
-> So we do assign output to buf initially. Later we increment it based on
-> "offset" and "i" and then subtract "1" from it. That latter step is wha=
-t
-> the compiler is complaining about; it could lead to going off the left
-> side of the array if "output =3D=3D buf" at the moment of the subtracti=
-on.
-> For that to be the case, then "offset + i" would have to be 0. But that
-> can't happen:
->
->   - we know that "offset" is at least 1, since we're in a conditional
->     block that checks that
->
->   - we know that "i" is not negative, since it started at 0 and only
->     incremented over whitespace
->
-> So the sum must be at least 1, and therefore it's OK to subtract one
-> from "output".
->
-> But that's not quite the whole story. Since "i" is an int, it could in
-> theory be possible to overflow to negative (when counting whitespace on
-> a very large string). But we know that's impossible because we're
-> counting the 1024-byte buffer we just fed to fgets(), so it can never b=
-e
-> larger than that.
->
-> Switching the type of "i" to "unsigned" makes the warning go away, so
-> let's do that.
->
-> Arguably size_t is an even better type (for this and for the other
-> length fields), but switching to it produces a similar but distinct
-> warning:
->
->   config.c: In function =E2=80=98git_config_copy_or_rename_section_in_f=
-ile=E2=80=99:
->   config.c:3170:13: error: array subscript -1 is outside array bounds o=
-f =E2=80=98char[1024]=E2=80=99 [-Werror=3Darray-bounds]
->    3170 |       output[0] =3D '\t';
->         |       ~~~~~~^~~
->   config.c:3076:7: note: while referencing =E2=80=98buf=E2=80=99
->    3076 |  char buf[1024];
->         |       ^~~
->
-> If we were to ever switch off of fgets() to strbuf_getline() or similar=
-,
-> we'd probably need to use size_t to avoid other overflow problems. But
-> for now we know we're safe because of the small fixed size of our
-> buffer.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+Thanks for clarifying, clearing up my misinterpretation of your
+request. I'm coming around to this idea.
 
-Thanks.  80 lines of informative log message to explain a one liner
-was surprisingly pleasnt to read.  Nicely done.
+> [...]
+>> If this is to truly be a hard requirement for these tests to move
+>> forward,
+> 
+> Yes, from my point of view it really is.
+> 
+> But that "is this truly a hard requirement?" comes up tells me I have
+> not done a good job of communicating in this review.  A review is
+> about participants in the project working together to improve a patch,
+> not people making demands at each other.
 
->  config.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/config.c b/config.c
-> index 8db9c77098..2b79fe76ad 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -3115,7 +3115,7 @@ static int git_config_copy_or_rename_section_in_f=
-ile(const char *config_filename
->  	}
-> =20
->  	while (fgets(buf, sizeof(buf), config_file)) {
-> -		int i;
-> +		unsigned i;
->  		int length;
->  		int is_section =3D 0;
->  		char *output =3D buf;
+It's also about a balance. A patch author and a reviewer can have
+disagreements, and it is important to discover exactly how hard each
+is holding to their opinion.
+
+> [...]
+>> If I'm to spend time engineering something more complicated just to
+>> check "did this subcommand run with these arguments?" then
+> 
+> I don't see why this is more complicated than what is in patch 1.  In
+> fact, I think it would be a little more simple.
+
+My interpretation (parsing JSON) _was_ more complicated, hence my
+reservations. The helper still requires non-trivial script-fu (for
+someone like me who is bad at scripting languages) but centralizing
+the grep has value.
+
+Here is my attempt so far:
+
+trace2_subcommand_data () {
+	command="$1" &&
+	commas=$(echo $command | sed s/\ /\",\"/g) &&
+	printf "[\"$commas\"]"
+}
+
+test_subcommand_called () {
+	data=$(trace2_subcommand_data $1) &&
+	grep $data $2
+}
+
+test_subcommand_not_called () {
+	! test_subcommand_called $1 $2
+}
+
+with callers looking like
+
+	test_subcommand_called "gc" run-no-auto.txt &&
+	test_subcommand_not_called "gc --auto" run-auto.txt &&
+	test_subcommand_called "gc --quiet" run-quiet.txt
+
+Thanks,
+-Stolee
