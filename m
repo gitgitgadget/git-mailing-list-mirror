@@ -2,170 +2,135 @@ Return-Path: <SRS0=W4Po=BO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF28BC433DF
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 13:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0823C433DF
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 13:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF03B208C7
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 13:32:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C10302075D
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 13:44:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UuXqnRdA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YEhf3BEh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbgHDNcj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 09:32:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48590 "EHLO
+        id S1726356AbgHDNoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 09:44:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725921AbgHDNci (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 09:32:38 -0400
+        with ESMTP id S1725826AbgHDNoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 09:44:44 -0400
 Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BCA2C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 06:32:36 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id 77so6034502qkm.5
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 06:32:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35189C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 06:44:43 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id d14so38351523qke.13
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 06:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gAwHIUTrDfFaEVmLKGo9YgFQ3yeEO4DyFegb0qiPFM0=;
-        b=UuXqnRdA4JIO+fHhUPUhFZysmEQOBZwBPf9Ug3A8NALxKj7ygBcxan8+ZwVMowNNIx
-         A2wpgHrFq5u+B8Y9s0QBnQbtFXF02Us3dm6DnetnYLzmWU+JWhhT65LwkMt8mtSREpms
-         z67/RvoLd/JunywmPr0NuHAQUfosPIvmUqBQEMNpPM6JPGxJOaZz4gbS2SvT5Gdeja5Y
-         nZOxM6rsE2/ZF+sxbgW8coVUvUDmQb/J9t/aEwuWrcJbLRkL/FWpn2kzlU2JXDgE2Uls
-         ALroKtn4eEiEpksWC8oqn46NzzA4nQubqAQAgcBI1BMhYjXXQNKsmoZ4fX6c0K+8pYKJ
-         TMcA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9VMs2dNSv+0ply14yUEJoPJYPm2nq16rSVBpTqvQVxQ=;
+        b=YEhf3BEhYoFIxR6XTwfDTxmAjH9n93NA+TX6RnI9Nk2OiKymnTCJsa+TolzVJUHiTP
+         sWU+M6mCto/u1uaBmFmpSavmpURwQmhrHJA0/9tYowPmNVz6f77+g1x/TEnJZ4e+0G7u
+         LRPH/RwiIVwbHbUUgBRfkLHwddTUQZ/uKlzKQxbq8H1Qdjw20fL5UhsCNBSGC8uvM/hV
+         6ennp8AVw4XbI9lET0tHm/84fC9QUay8jkLLvYI/lRbCOlSqhOW6w91if1xCu6x1hwgF
+         D6/uhYtomGTB3xcbbRv3JVDA7EH6G6NDx1+YQxRvaErlFjPtUqG96AXK9cus1K0bc3Hr
+         FV9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gAwHIUTrDfFaEVmLKGo9YgFQ3yeEO4DyFegb0qiPFM0=;
-        b=h/wc23CLXJXgv6borm6E0RFODaCyaFsPJF2aCYLo4P0/A4oLQDkqlfmgdB41SDdpBA
-         cm/IlCiuLeeX9RrihE7LOlRNShdbvxbs6JR9tLkWpk7rkGJMuDTZ5Gd5gLJrtZifSBGw
-         mqSF03t/qGRQHFRnjjU1L2IxfVoJgrQqOz3vJdeJEV5FXQxpad/nlwnPoVGGh3Gpzf+g
-         8rtKzRFEEg1q4WmfCMO7a5qn2K8oQHKkU+NiNZCmnv/VNKisB6YYc0xI5Iu+EF2Yfr5q
-         wCEh3XLVefzGBbjBRhW0YUsw3MuYElU+tswad0jxZPFNYYW/oMjt0sBo5hYNNqoUnGI2
-         LopQ==
-X-Gm-Message-State: AOAM530gGoOxHGAi97RZmidA5Zj9fNz+Ruh2JxJI3CNfv3Jb7OS8jURr
-        rwOYe2FihxdKlK6ymFTKoxw=
-X-Google-Smtp-Source: ABdhPJxut5chtAcr0gx3DMwCM4DIqATBvzqgahXa/rqo4tGRMdHsAbEqSrLFzXwklumzzLXtIPkPfQ==
-X-Received: by 2002:a37:6783:: with SMTP id b125mr20266062qkc.465.1596547954860;
-        Tue, 04 Aug 2020 06:32:34 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:359e:33e7:c1bc:799? ([2600:1700:e72:80a0:359e:33e7:c1bc:799])
-        by smtp.gmail.com with ESMTPSA id c21sm21311569qka.9.2020.08.04.06.32.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Aug 2020 06:32:33 -0700 (PDT)
-Subject: Re: [PATCH v2 01/18] maintenance: create basic maintenance runner
-To:     Jonathan Nieder <jrnieder@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <63ec602a07756a41f8ccddd745562c567a4b3ed7.1595527000.git.gitgitgadget@gmail.com>
- <20200729221905.GB519065@google.com>
- <5cbdb559-3897-961f-4dd3-0bab11848c5b@gmail.com>
- <20200731003022.GA1029866@google.com>
- <a176ddf5-b45b-fb25-8740-96efbd324edf@gmail.com>
- <20200803174654.GA2473576@google.com> <20200803224631.GA73022@syl.lan>
- <20200803230134.GA58587@google.com> <20200803230814.GA73765@syl.lan>
- <20200803231745.GB58587@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <aac90dbd-e885-f366-1056-0824b8b8b8fe@gmail.com>
-Date:   Tue, 4 Aug 2020 09:32:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
-MIME-Version: 1.0
-In-Reply-To: <20200803231745.GB58587@google.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9VMs2dNSv+0ply14yUEJoPJYPm2nq16rSVBpTqvQVxQ=;
+        b=ASggvn+mG7dgQN5fTHdxGOAmmEDTGsIioCfu+7A28QNzD1c/RuDrn97t/bJvJ1SM60
+         t06Slhg49xnceu63kjirtGPlgPHIUFjMtvDg+V4lqCgiF39QripH53RHjuSb0T/MheRl
+         Qq6vSp4SMc1Q126ZKU1dCvy0K7WbemSZYZTEtn6hggKILi/lnzgXg8/MQoHdZqVEWPUh
+         q/o0irNpZ9QNVpurqp3qu+97PhsGxaGYA9usascVMmu/Evj3h7XzmSrpQJ/VXE69UW0s
+         Zb8eO58Hu2Kr4sYN2f7J8BqOu/ZcaPeQwi3CPXJsLTROlKQYRx4ayRzS33FfnVKD9bEf
+         m8ow==
+X-Gm-Message-State: AOAM532ScTh6A8tbb3Zyo+VDVNW90DekEIUulJVCb5deXp5c/yOJxyWJ
+        IEkCf6l1ZqgUc0A53x6a4cIRK54Tp8Q=
+X-Google-Smtp-Source: ABdhPJyJPxUAD4CABoE2X6X5JK4A3fBQYSgQ2M2MMJ2yu8yA/uBdS7SwfU/YT/m80WCNk0h0w+8Yyg==
+X-Received: by 2002:a37:4f07:: with SMTP id d7mr22436482qkb.144.1596548682459;
+        Tue, 04 Aug 2020 06:44:42 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id i7sm20963171qtb.27.2020.08.04.06.44.41
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 04 Aug 2020 06:44:41 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v2 0/3] List all guides in git(1)
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <xmqqh7tjtfx6.fsf@gitster.c.googlers.com>
+Date:   Tue, 4 Aug 2020 09:44:39 -0400
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Philip Oakley <philipoakley@iee.email>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4174B93F-AE21-4F63-A847-06EBF28199DD@gmail.com>
+References: <pull.691.git.1596381647.gitgitgadget@gmail.com> <pull.691.v2.git.1596500459.gitgitgadget@gmail.com> <xmqqh7tjtfx6.fsf@gitster.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/3/2020 7:17 PM, Jonathan Nieder wrote:
-> Taylor Blau wrote:
-> 
->> I still only partially buy into this, though. I had to deal with some
->> rather fragile grepping through trace2 JSON in t4216 (? or something,
->> the log-bloom tests) recently, and found it a little fragile, but not
->> overly so.
->>
->> I'd rather just move forward,
-> 
-> This means we're promising to never change the JSON serialization, or
-> that we're willing to pay with time in the future to update all tests
-> that assume the current JSON serialization.
-> 
-> I do not want to make that promise.  I've lived through the same work
-> of updating tests that assumed particular sha1s and having to change
-> them to be more generic and do not want to have to do that again.
-> 
-> If you're saying that you are willing to do that work when the time
-> comes, then that counts for a lot.  If you're saying that we should
-> not change the JSON serialization, then it makes me worry that we made
-> a mistake in choosing JSON as a format, since using a well defined
-> format with an ecosystem of serialization + deserialization libraries
-> was the whole point.
 
-The benefit of JSON is that it is simple to be _additive_. We can
-always jam more data into the format.
+> Le 3 ao=C3=BBt 2020 =C3=A0 20:26, Junio C Hamano <gitster@pobox.com> a =
+=C3=A9crit :
+>=20
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>> Changes since v1:
+>>=20
+>> * Incorporated Junio's suggestion to reduce duplication.
+>>=20
+>> v1: This series adds a list of the guides to git(1).
+>>=20
+>> The first commit adds the misssing guides 'gitcredentials' and
+>> 'gitremote-helpers' to command-list.txt. The only missing guide after =
+this
+>> change is 'gitweb.conf', but I think this one is obscure anough, and =
+already
+>> linked to in 'gitweb.txt', that it does not matter much.
+>>=20
+>> The second commit drops the usage of 'common' and 'useful' for =
+guides. This
+>> was suggested as one of two ways forward by Duy in [1] but was not =
+commented
+>> on. I'm CC'ing the people that were CC'ed on that message.
+>>=20
+>> The third commit tweaks 'Documentation/cmd-list.perl' so that it also
+>> generates a list of the guides, which gets included in 'git.txt'. I =
+chose to
+>> put this list just after the end of the list of commands.
+>>=20
+>> [1]=20
+>> =
+https://lore.kernel.org/git/CACsJy8ADj-bTMYDHxRNLOMppOEdPbVwL49u3XCfNBCmoL=
+LZo+A@mail.gmail.com/
+>>=20
+>> Philippe Blain (3):
+>>  command-list.txt: add missing 'gitcredentials' and =
+'gitremote-helpers'
+>>  help: drop usage of 'common' and 'useful' for guides
+>>  git.txt: add list of guides
+>=20
+> I think the "dedup the list of cmds-$category.txt" is logically a
+> separate step from "we forgot to add guide category so add it", so
+> either (1) "add guide twice, and then refactor" or (2) "refactor
+> before adding guide, and then add guide only in one place" would be
+> more appropriate than (3) "add guide while refactoring".  IMHO, (2)
+> would make the most sense.
+>=20
 
-What I'm doing is making the following assumptions:
+I agree that (2) makes the most sense, I've split it for v3. (Your =
+"SQUASH???" message on pb/guide-docs=20
+may have mislead me :)
 
-1. There will always be an event line corresponding to launching a
-   subcommand.
+Philippe.
 
-2. This line will contain the list of arguments used for that
-   subcommand in a JSON array.
-
-3. We don't add extra whitespace in that JSON array.
-
-The first two items are important promises made by the trace2 event
-output. By depending on them, I'm only adding more places where we
-expect the JSON *schema* to remain consistent. Rather, I only require
-that the JSON schema does not _remove_ that data which is expected
-by tools that are reading and reporting that data.
-
-Only the third item is something that adds an additional restriction
-on the JSON format. But also: why would we ever add extraneous
-whitespace characters to the output intended for computer parsing?
-This concern raises a giant "YAGNI" warning in my head.
-
-What is seems like you are asking instead is for me to create a tool
-in the test suite that parses each JSON line, extracts a specific
-member from that JSON object, reconstructs a command-line invocation
-from the JSON array, and reports whether that process worked for any
-line in the event output.
-
-That seems overly complicated and puts even more requirements on the
-JSON schema than I have placed in my current implementation.
-
-If this is to truly be a hard requirement for these tests to move
-forward, then I would rather do an alternate approach that would be
-a better test mechanism than scraping trace data: mock the subcommands.
-
-I would create a new directory, "t/mock", and create a new 'git'
-executable there. By setting --exec-path in our test commands, we
-would launch this mocked version of Git instead of our built version.
-The mock could report each set of command-line arguments to a known
-file. With some care, we could even provide an instructions file to
-tell it which error code to return or whether it should write data
-to stdout. This would allow testing things like the "rewrite after
-verify fails" behavior already in the maintenance builtin.
-
-If I'm to spend time engineering something more complicated just to
-check "did this subcommand run with these arguments?" then I'd
-rather do it this way.
-
-Thanks,
--Stolee
