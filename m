@@ -6,123 +6,99 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B55C7C433DF
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 20:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A4DC433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 20:14:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B4B8207FC
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 20:12:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CA2621744
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 20:14:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ONKml080"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="w5+3sCwI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726585AbgHDUMu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 16:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53794 "EHLO
+        id S1726854AbgHDUOH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 16:14:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbgHDUMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 16:12:50 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CF9C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 13:12:50 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id a19so13687377qvy.3
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 13:12:49 -0700 (PDT)
+        with ESMTP id S1725981AbgHDUOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 16:14:06 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC9CC06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 13:14:06 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id a19so13689488qvy.3
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 13:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=fWZzzJKrJegaPQGxkFCrEtMYcQzfmJNDdkz3A7Cnqg4=;
-        b=ONKml080HwvbZWx/jUZProav/z6mpybWNqxizOih+my0uBstt35B7rm5kwmWjKyehe
-         38hoXQ6rCm1WWFeNH41WAGa/WZUXhEVwTi03vhlxknDlmIa7mkVYFRGJ+ZfwjS50WqB0
-         lVSKNo64Jldrxc0WhPoaxr0kYIqd4VAtxLQrxVA91pb2ZOwUYGYsEFrS4IIDcUx9SBXd
-         EXhg4YpxBpjkPduuW9UxlpCW8U1bK+D+4fcZKRyNtqhx5FyvKhXl4Gq91SDONSwY722V
-         4doTNBuTuVgGz+xtm3yEOicL0m3N5heeLSV98vhgDPp5CNU8wSFCqnA5r/H/ss63NdL+
-         uyzA==
+        bh=2pqd8vSw/D6TArMMJbdHD7Iu6c6slgFWyFSulkBjTmw=;
+        b=w5+3sCwI4HaBw0E3En7OiAt8pym1RrQvrnywL5EhMmJAUpwn0D7AXIYtYzfUCHfUHb
+         YZ48XVyGbuuBRLvksOdGqQmgCxbOhRuP9SDFNpV9N8g9QV5oGhwgaASdkQKuZSnqC+EB
+         bbGhUMjg7L7alZFnN49M76C0y+DrO2QQvqw6qYZmzXVhcPZSSXExDJ+5ok5utAhIrhpp
+         Gbz6CwgpJDZWQEbq8BW1Hz2dmUZoiO95b3+H1dwSAthd1xd7shLDY2RqBQEpP8GswHIK
+         y32bjdUbelRmTExkBiuD0KpT6mSk+e0MJhtMCxlOz3N0icQpw2NoYDjY3Dtspkb5Wa08
+         w+Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=fWZzzJKrJegaPQGxkFCrEtMYcQzfmJNDdkz3A7Cnqg4=;
-        b=sl9TL3jM0pmfH9Sot7YJ9luTBABW/zxATkfqvgTDwTfRJXqVI77akZn9OZfalKum1+
-         i+NKPMmdZuDxsCFcftbnizyW1XNpEOqOkqbRFiPRX+NoZCeH5iRZ5WF0/ZQJw8V4sitm
-         FV5ynpkHw3K1fZwofKrtg46NH/avOcnA6eJvfjer5VJDdabrfjIrmWidSaolGXFtb0L+
-         1sPnuTPbSmKyvx9lqxkS+iX+rFCR7V571EFYoeHUbH1R5Y95wYl8smcpkpj1YPd0CWWv
-         8cobWfEbt0SKEL3tscY2FOatVN/UbZof0Iq+ISaO/+ZwHIq0iE545GYnwWBqEm1LzrMu
-         5gfw==
-X-Gm-Message-State: AOAM531Ki0xBgWt+X+vs9zzGDXAejdillGDfjg1OUk/LBi1W2pHxuWpQ
-        EYmPBvmPdpUXRNYQk5YVQ9fNxQ==
-X-Google-Smtp-Source: ABdhPJymw9mhVK0a8/dqCrdNy3hf+ypxiPsScuM7b44qR2fuZsR3F7WGqui9UJlZj0i+dCKT4nL4Aw==
-X-Received: by 2002:a0c:9e4e:: with SMTP id z14mr72130qve.71.1596571969142;
-        Tue, 04 Aug 2020 13:12:49 -0700 (PDT)
+        bh=2pqd8vSw/D6TArMMJbdHD7Iu6c6slgFWyFSulkBjTmw=;
+        b=OGYpcL8RiqTec9KUa6bcKUkFRPr1x7QGKSZn2YqI8JJaR9v9gF61X52/ChsxYeHlms
+         nTOau07MpTag2MkNVcShmj5C0XwgzygIVWQPmBAGzuAe5KmHKywSrJK0viSuBdR0tFTS
+         NONWYabmK1UMl071bJV6NjXJNdtvU/oV1Ms/nZaCwqQRcFKs2aJng1iGQtoRKsR4UFj9
+         W1ZAdbgAabsAJRAnQVTRX7QnOTuvk4NPkYXHL8yi3W9qYJg6Mg60NX8fkhlsmOAvzQMI
+         GNw7gV56lPsVxBTTtSRHGaVYEMhL9XWN8L6qJktHZ/psCF3XipA1va4rmazyWENWEQzD
+         mxSA==
+X-Gm-Message-State: AOAM532yarOn1TiuSWULJm068+Rt8SfbG6JjQte2JQ3fCCoJV4ImxYWu
+        8zIT5UUIY013mbq78XMUkPkbGw==
+X-Google-Smtp-Source: ABdhPJw51zlbfMt3TbwvjTcuLEyUMS5yloeUGWTOe71gB7x45jvaYW9PAX9zeCP+Efhh8NpppzWPCg==
+X-Received: by 2002:ad4:444e:: with SMTP id l14mr69705qvt.111.1596572045350;
+        Tue, 04 Aug 2020 13:14:05 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:4176:744b:cf1a:a7e1])
-        by smtp.gmail.com with ESMTPSA id d20sm21145136qkk.84.2020.08.04.13.12.47
+        by smtp.gmail.com with ESMTPSA id c133sm25267902qkb.111.2020.08.04.13.14.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2020 13:12:48 -0700 (PDT)
-Date:   Tue, 4 Aug 2020 16:12:47 -0400
+        Tue, 04 Aug 2020 13:14:04 -0700 (PDT)
+Date:   Tue, 4 Aug 2020 16:14:02 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
         dstolee@microsoft.com
-Subject: Re: [PATCH 08/10] bloom: split 'get_bloom_filter()' in two
-Message-ID: <20200804201247.GD89277@syl.lan>
+Subject: Re: [PATCH 10/10] builtin/commit-graph.c: introduce
+ '--max-new-filters=<n>'
+Message-ID: <20200804201402.GE89277@syl.lan>
 References: <cover.1596480582.git.me@ttaylorr.com>
- <a494094c10f9bddca5743973409ccb4540841116.1596480582.git.me@ttaylorr.com>
- <c54cc9a8-322c-6235-4170-228354c1ff33@gmail.com>
+ <8b670571dc24973cc5e894b866a68236d8fbfa4f.1596480582.git.me@ttaylorr.com>
+ <1c2e841b-4b04-30ba-6c94-96f8bf0cf449@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c54cc9a8-322c-6235-4170-228354c1ff33@gmail.com>
+In-Reply-To: <1c2e841b-4b04-30ba-6c94-96f8bf0cf449@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 04, 2020 at 09:00:31AM -0400, Derrick Stolee wrote:
+On Tue, Aug 04, 2020 at 09:03:36AM -0400, Derrick Stolee wrote:
 > On 8/3/2020 2:57 PM, Taylor Blau wrote:
-> > 'get_bloom_filter' takes a flag to control whether it will compute a
-> > Bloom filter if the requested one is missing. In the next patch, we'll
-> > add yet another flag to this method, which would force all but one
-> > caller to specify an extra 'NULL' parameter at the end.
+> > Introduce a command-line flag and configuration variable to fill in the
+> > 'max_new_filters' variable introduced by the previous patch.
 > >
-> > Instead of doing this, split 'get_bloom_filter' into two functions:
-> > 'get_bloom_filter' and 'get_or_compute_bloom_filter'. The former only
-> > looks up a Bloom filter (and does not compute one if it's missing,
-> > thus dropping the 'compute_if_not_present' flag). The latter does
-> > compute missing Bloom filters, with an additional parameter to store
-> > whether or not it needed to do so.
-> >
-> > This simplifies many call-sites, since the majority of existing callers
-> > to 'get_bloom_filter' do not want missing Bloom filters to be computed
-> > (so they can drop the parameter entirely and use the simpler version of
-> > the function).
+> > The command-line option '--max-new-filters' takes precedence over
+> > 'graph.maxNewFilters', which is the default value.
 >
-> > +struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
-> > +						 struct commit *c,
-> > +						 int compute_if_not_present,
-> > +						 int *computed)
->
-> Could we further simplify this by letting "computed" be the indicator
-> for whether we should compute the filter? If "computed" is NULL, then
-> we won't compute it directly. This allows us to reduce the "1, NULL)"
-> to "NULL)" in these callers:
+> commitGraph.maxNewFilters?
 
-I like what you're getting at--that is, that we shouldn't make calling
-this more complicated than necessary, and right now lots of callers
-always pass "1, NULL)" as the last two arguments--but I'm not sure that
-I like this suggestion.
+Nice catch. There are some other places that I made this typo, but I
+fixed those up locally, too.
 
-I could imagine a future caller would want to compute the Bloom filters
-if missing, but not care about whether or not they were computed from
-scratch. In that case, they'd need a dummy variable. Not the worst thing
-in the world, but I think it's less clear.
+> > '--no-max-new-filters' can also be provided, which sets the value back
+> > to '-1', indicating that an unlimited number of new Bloom filters may be
+> > generated. (OPT_INTEGER only allows setting the '--no-' variant back to
+> > '0', hence a custom callback was used instead).
+>
+> Other than the commit message typo above, this is a good patch.
 
-By the way, I think that this suggestion only helps for "0, NULL" into
-just "NULL", not "1, NULL" (which requires a dummy variable with your
-suggestion).
+Thanks, and thanks for the good suggestion to write it in the first
+place ;).
 
->
-> > +			struct bloom_filter *filter = get_or_compute_bloom_filter(ctx->r, c, 1, NULL);
->
-> > +	filter = get_or_compute_bloom_filter(the_repository, c, 1, NULL);
->
 > Thanks,
 > -Stolee
 
