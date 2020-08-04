@@ -2,79 +2,88 @@ Return-Path: <SRS0=W4Po=BO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EED7C433E4
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D568C433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:25:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A2F822B42
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:22:23 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="Aq69KNb4"
+	by mail.kernel.org (Postfix) with ESMTP id 8688222B42
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727815AbgHDVWW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 17:22:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36286 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbgHDVWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 17:22:17 -0400
-X-Greylist: delayed 17313 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 04 Aug 2020 14:22:17 PDT
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91E8DC06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 14:22:17 -0700 (PDT)
-Content-Transfer-Encoding: quoted-printable
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-        s=default; t=1596576135;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:  in-reply-to:in-reply-to;
-        bh=rdJ0FAxDxbo6YkIPt61a6ZRYR+Xdbq4ghIr3YXZUhRM=;
-        b=Aq69KNb4UI9PPli+zG9n4tAVLsBsNwZp6qwN57UX4/dIRWpoX2tOb3CH6qKOizJFiI9jRJ
-        UJr9YA5HlzmIN4wxyn9NrSJx0V4swxE2Zc7RG5G8ERyoIM2SxcWB1aCww2TmNH/zl+Ybm2
-        U/mgMG8g3jofsRzQNol/xmN39XIbZl4=
-Content-Type: text/plain; charset=UTF-8
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH] apply: Allow "new file" patches on i-t-a entries
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   "Raymond E. Pasco" <ray@ameretat.dev>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Date:   Tue, 04 Aug 2020 16:59:03 -0400
-Message-Id: <C4OIIFOZ357K.38YZE7TJFUCV8@ziyou.local>
-In-Reply-To: <xmqqlfiuryym.fsf@gitster.c.googlers.com>
+        id S1726962AbgHDVZT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 17:25:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48212 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725922AbgHDVZT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 17:25:19 -0400
+Received: (qmail 6116 invoked by uid 109); 4 Aug 2020 21:25:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Aug 2020 21:25:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16425 invoked by uid 111); 4 Aug 2020 21:25:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Aug 2020 17:25:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 4 Aug 2020 17:25:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+Message-ID: <20200804212518.GB2020725@coredump.intra.peff.net>
+References: <20200729201002.GA2989059@coredump.intra.peff.net>
+ <871rku3soc.fsf@osv.gnss.ru>
+ <20200731230858.GA1461090@coredump.intra.peff.net>
+ <87mu3drynx.fsf@osv.gnss.ru>
+ <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
+ <87o8nrybnb.fsf@osv.gnss.ru>
+ <20200803180824.GA2711830@coredump.intra.peff.net>
+ <874kpi47xj.fsf@osv.gnss.ru>
+ <20200804195830.GA2014743@coredump.intra.peff.net>
+ <873652166e.fsf@osv.gnss.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <873652166e.fsf@osv.gnss.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue Aug 4, 2020 at 3:30 PM EDT, Junio C Hamano wrote:
-> How often do we pass ok_if_exists, I have to wonder. If it is often
-> enough, then we can check that first way before we even check to see
-> if a cache entry for the path even exists or what its i-t-a flag
-> says. Something along the lines of this untested code:
->
-> if (state->check_index && !ok_if_exists) {
-> int pos =3D index_name_pos(state->repo->index, new_name,
-> strlen(new_name));
-> if (pos >=3D 0 &&
-> !(state->repo->index->cache[pos]->ce_flags & CE_INTENT_TO_ADD))
-> return EXISTS_IN_INDEX;
-> }
->
-> That is, only if we are told to make sure the path does not already
-> exist,
-> we see if the path is in the index, and if the cache entry for the
-> path in the index is a real entry (as opposed to i-t-a aka "not
-> added yet"), we complain. Otherwise we'd happily take the patch.
->
-> Whether ok_if_exists is frequently used or not, the resulting code
-> may be easier to understand, but I am of course biased, as I just
-> wrote it ;-)
+On Tue, Aug 04, 2020 at 11:56:25PM +0300, Sergey Organov wrote:
 
-ok_if_exists gets passed in cases where a real entry does exist but
-we're okay with a new file diff anyway due to other patches in the set
-being applied making it valid (type-change diffs and rename diffs) - for
-this reason, I didn't pass ok_if_exists, but instead checked here. I
-think we're in agreement on this and your logic makes sense in that
-light. I'll send an updated patch.
+> >> diff --git a/revision.c b/revision.c
+> >> index 669bc856694f..dcdff59bc36a 100644
+> >> --- a/revision.c
+> >> +++ b/revision.c
+> >> @@ -2323,10 +2323,31 @@ static int handle_revision_opt(struct
+> >> rev_info *revs, int argc, const char **arg
+> >>  		revs->diff = 1;
+> >>  		revs->diffopt.flags.recursive = 1;
+> >>  		revs->diffopt.flags.tree_in_recursive = 1;
+> >> -	} else if (!strcmp(arg, "-m") || !strcmp(arg, "--diff-merges")) {
+> >> +	} else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
+> >>  		revs->ignore_merges = 0;
+> >> +		if (!strcmp(optarg, "off")) {
+> >> +			revs->ignore_merges = 1;
+> >> +		} else if (!strcmp(optarg, "all")) {
+> >> +			revs->diff = 0;
+> >
+> > Should this be revs->ignore_merges = 0?
+> 
+> It's 4 lines above, as it's in fact common for all the cases but the
+> first one.
+
+Ah, I missed that. That raises more questions, though. ;)
+
+For "-m" we do not need to set revs->diff; why do we need to do so
+here?
+
+For "--cc", we do not need to set revs->ignore_merges. Why do we need to
+do so here? We do need it set eventually, but I think setup_revisions()
+later handles that, and wants ignore_merges untouched to decide whether
+the user asked for it or not.
+
+-Peff
