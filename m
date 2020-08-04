@@ -3,106 +3,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7960C433DF
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89E5EC433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:32:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA3BF2086A
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:26:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FB662086A
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 22:32:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="punM9f6d"
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="bcWf0scR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbgHDW0e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 18:26:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726282AbgHDW0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 18:26:34 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DA77C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 15:26:34 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id t6so32469957ljk.9
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 15:26:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wib1dcx1M3fypPs0BHb2LVYLYYpDW1bn+f6NfGyGczA=;
-        b=punM9f6dlb+cAIFPpJL7D0yyEcFzqQqPCLUaNJdU7yHtkmkefdMcvHL6N8ruQnRQWM
-         /znCN9LKJm3hTwhyzGtG403ZkLde3LFnluODGdwZvyqmrgLcdfMzvPMfap+M6sl9a7j2
-         8nN6zxNn2/ZodXV6DKpTiNfvQ0GsSTWlhzA2hu0UqGfEJzuF+cDZQVi1o7erigTiDF7x
-         drgP/9StN2me2IQcWCpBX6RwtZ48drQUqnzP3JLAq9JcqkOmX8IjFZUTmtPZy3i2VjHH
-         OqGbkae2hDmOFb/BOiozW6AVwaev5y59cpqlLdGhWgOhyvpXmpBV+hiVvrhRczlDqxxJ
-         cKOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=wib1dcx1M3fypPs0BHb2LVYLYYpDW1bn+f6NfGyGczA=;
-        b=RlGv1QfwtMZjhGsEhSKHRK8V45UnZsgUIqrnM4OuQE6DAKZlyWoi2JeLNrovPg3S/t
-         GUEC+vtrUlSybqQxgqhj8eUWNScBLO7jjiD30jQdfyCZ07XQos0NJRx33Q7cxMPJNGf6
-         +JnyrmThV2sECcmPwMzFPg9e1aJnNtEpVA/WhQ6EM6hYnH+0r8ZTDEoqFSoXSmWK8B7P
-         4phyFprwksIk6KUn4DKzGMPR3FATMlE0CDBtDMZEGMqMK/2EA6vSRBAy+Ls2jnSNlJY7
-         83YUc0Xhi5zT3Wda5ks7Z33o86jkbbfwkzQ/Vw1gwYOgRZ3e8oXDXJpVIbhouT/zyrIx
-         EoHQ==
-X-Gm-Message-State: AOAM5306POnlimsNA6350FvdqvSs64tQ+MEOGsKIs+l4iByfYuZifmak
-        mDwVchALPKeKiRFqHjJncXTmZh+4
-X-Google-Smtp-Source: ABdhPJxdQqqBuwnrSYl0GD2TnHtkaD3zYWYm+PYDfzRelAmUu59H8k1847wwcOhG/D5D9ifPWtNp1Q==
-X-Received: by 2002:a05:651c:31b:: with SMTP id a27mr10643193ljp.455.1596579992132;
-        Tue, 04 Aug 2020 15:26:32 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 9sm146797lff.82.2020.08.04.15.26.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2020 15:26:31 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH] revision: fix die() message for "--unpacked="
-References: <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru>
-        <20200804195830.GA2014743@coredump.intra.peff.net>
-        <87imdyxedw.fsf@osv.gnss.ru>
-        <20200804220833.GB2022650@coredump.intra.peff.net>
-Date:   Wed, 05 Aug 2020 01:26:30 +0300
-In-Reply-To: <20200804220833.GB2022650@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 4 Aug 2020 18:08:33 -0400")
-Message-ID: <87sgd2vyi1.fsf_-_@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1726688AbgHDWco (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 18:32:44 -0400
+Received: from out1.migadu.com ([91.121.223.63]:64590 "EHLO out1.migadu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726282AbgHDWco (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 18:32:44 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
+        s=default; t=1596580359;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=gQJ+a3xcLjMVog/B8K9xGGHrAE0yKgZzHSErC+5nE6E=;
+        b=bcWf0scR6BIx3HMPdwbzcsHeAp3OkUk8EnBQ8kHY4tFIlxRZldkv+qEAqxGzt+0rnd/3Vr
+        Tx7NixzgtYSwOw+yd77rA97HnEt4NAjmIJ+mgd7aSep12URF2Nnde3W1NR6EsHJkc02igj
+        5RzEHrHSURLVcf3v8FoBpm3Mse7A0BA=
+From:   "Raymond E. Pasco" <ray@ameretat.dev>
+To:     git@vger.kernel.org
+Cc:     "Raymond E. Pasco" <ray@ameretat.dev>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] apply: allow "new file" patches on i-t-a entries
+Date:   Tue,  4 Aug 2020 18:31:55 -0400
+Message-Id: <20200804223155.7727-1-ray@ameretat.dev>
+In-Reply-To: <xmqqlfiuryym.fsf@gitster.c.googlers.com>
+References: <xmqqlfiuryym.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+diff-files recently changed to treat "intent to add" entries as new file
+diffs rather than diffs from the empty blob. However, apply refuses to
+apply new file diffs on top of existing index entries, except in the
+case of renames. This causes "git add -p", which uses apply, to fail
+when attempting to stage hunks from a file when intent to add has been
+recorded.
 
-Get rid of the trailing dot and mark for translation.
+This changes the logic in check_to_create() which checks if an entry
+already exists in an index in two ways: first, we only search for an
+index entry at all if ok_if_exists is false; second, we check for the
+CE_INTENT_TO_ADD flag on any index entries we find and allow the apply
+to proceed if it is set.
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
 ---
- revision.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ apply.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 669bc856694f..d08cb5c0e9cd 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2315,7 +2315,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--unpacked")) {
- 		revs->unpacked = 1;
- 	} else if (starts_with(arg, "--unpacked=")) {
--		die("--unpacked=<packfile> no longer supported.");
-+		die(_("--unpacked=<packfile> no longer supported"));
- 	} else if (!strcmp(arg, "-r")) {
- 		revs->diff = 1;
- 		revs->diffopt.flags.recursive = 1;
+diff --git a/apply.c b/apply.c
+index 8bff604dbe..4cba4ce71a 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3747,10 +3747,13 @@ static int check_to_create(struct apply_state *state,
+ {
+ 	struct stat nst;
+ 
+-	if (state->check_index &&
+-	    index_name_pos(state->repo->index, new_name, strlen(new_name)) >= 0 &&
+-	    !ok_if_exists)
+-		return EXISTS_IN_INDEX;
++	if (state->check_index && !ok_if_exists) {
++		int pos = index_name_pos(state->repo->index, new_name, strlen(new_name));
++		if (pos >= 0 &&
++		    !(state->repo->index->cache[pos]->ce_flags & CE_INTENT_TO_ADD))
++			return EXISTS_IN_INDEX;
++	}
++
+ 	if (state->cached)
+ 		return 0;
+ 
 -- 
-2.20.1
+2.28.0.1.g70e0b8363a
+
