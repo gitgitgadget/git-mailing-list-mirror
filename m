@@ -3,103 +3,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3785CC433DF
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07798C433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:55:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1803122B42
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:53:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9716207FC
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 21:55:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ftuZfUV1"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MKEiq+ma"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727124AbgHDVxq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 17:53:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbgHDVxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 17:53:45 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C31C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 14:53:44 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id q68so10273389uaq.0
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 14:53:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=DcaSPqn0RDkp1MmZxNeg+65Ko+lUjijWc9yFtCiLzE4=;
-        b=ftuZfUV1QnXZoALrGvqEvbHzdsxKz7/KYSnLLplcHHQs1lKRglO5leCcStZ9YVGenA
-         otQRprpnFiLGd/ZVm57ofFHg9W3brgf5UOGhflV+Kx9IQwJ3rCWJ9xNnatpUwyoDC1qj
-         lRbqzUhyvqalzjwpJaF0UblzJ6Jt0ZA5LCUMMKRqgcLLOUCXfimoip0hEdmBL7UoNaQf
-         pqOblpaDV58ui3WrmBBGs4DeyNaytKwbEQ/eaPcHiKyLdAh2Ftd9g+VwzJSmPi7DFicF
-         DmN/tbJeM1I5n2cUwonDTwYL8FOZMcMRjKVnC34Oks04m++BMe1RxOEtwuyq/CD1I1Pa
-         dwMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=DcaSPqn0RDkp1MmZxNeg+65Ko+lUjijWc9yFtCiLzE4=;
-        b=OHjlJqp78H7UTFLRfiRf4Bh8dQFtt6fDKrcvsatqSrdWkfFr4GqRVac3taKnmoAHio
-         JX4NWDrR0CcqsWse4I3WBDN7OKQA/gL2ktY1/RAsaEaAezMpIpAjIqlw30Xsxs2zN8B3
-         eVIvZMoIHsXZ3hQdeBOL4PcTZ5egUVq3Uopab71RVYoZUK2LSsqu1Kid2tAvHiNHr6bp
-         V5WAurXgPJOm1Q1ViyorvOrOdEUHZpCDntX8rdlrRDubhityilxAsnq/cGI4WF4HU2Yp
-         jbVcJhu7f1z3MPbdQsEENkWpveFOm1ICTXux1EPDKdM6qhDnXfRYtQ8sAL5gIsOsfa3f
-         Ba7A==
-X-Gm-Message-State: AOAM53148yeN+owxX3VHGj3HLwF4MAZXacnW+ZWr+oZnoJcGJC9BXWGL
-        P4X6oIAtXLZJm7LXvClKIvev/jsWCjDULrlTrxaLmdfH
-X-Google-Smtp-Source: ABdhPJxneDNe5BCH9WTv/bmlHNJoh4pOK+JWCft7gelhkbqNnpmEqpsyU3qGclgmrj6a3KhIJem0BzXungF2J8lbUhM=
-X-Received: by 2002:ab0:4264:: with SMTP id i91mr31696uai.27.1596578021523;
- Tue, 04 Aug 2020 14:53:41 -0700 (PDT)
+        id S1727821AbgHDVzm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 17:55:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50238 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727015AbgHDVzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 17:55:42 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 334C46E3E8;
+        Tue,  4 Aug 2020 17:55:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KTed02Ppt4dTjiPJY3rC41O+YtY=; b=MKEiq+
+        ma575Q95CSPDDCeoqzeNvIlmYCWLYothr6oTh9nWXlPbScQDgyEBKQD2Dfhqtx9e
+        aCYQ9wCmlfGQXxj/55B7zkw0HlmyIMcPaiK7nbzzxWI6aORf4fPB8qvAvAJSW31j
+        S+k+YL3zZ45rY9loLrzn+B5YT/QMdHRRhEYho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kgRoKvAQ3WfZgf6XkAxjkwmMclJsgM2N
+        m7M2FcOeUJ8Ro4MXzCiq6EErAUUeAP7nbgodhyvNA3xzg1AeQ7WeaQZBgkBp/9tv
+        hYGheM1mGNE99nleVU9lwsxYuxZ/eCY10olmPqNZu/WMw91cKVA+bFJ3rEoL+lSy
+        8H7wrKxeKiA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A4586E3E7;
+        Tue,  4 Aug 2020 17:55:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A89FB6E3E6;
+        Tue,  4 Aug 2020 17:55:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+References: <871rku3soc.fsf@osv.gnss.ru>
+        <20200731230858.GA1461090@coredump.intra.peff.net>
+        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
+        <87o8nrybnb.fsf@osv.gnss.ru>
+        <20200803180824.GA2711830@coredump.intra.peff.net>
+        <874kpi47xj.fsf@osv.gnss.ru> <xmqqbljqrydm.fsf@gitster.c.googlers.com>
+        <20200804200018.GB2014743@coredump.intra.peff.net>
+        <877due1688.fsf@osv.gnss.ru>
+        <20200804212201.GA2020725@coredump.intra.peff.net>
+Date:   Tue, 04 Aug 2020 14:55:39 -0700
+In-Reply-To: <20200804212201.GA2020725@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 4 Aug 2020 17:22:01 -0400")
+Message-ID: <xmqq3652rs84.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 4 Aug 2020 14:53:30 -0700
-Message-ID: <CA+P7+xpokJ3Z4xZ9ibCBpBO65D1v-AD6_JknprGUsEDxEvMGGw@mail.gmail.com>
-Subject: avoiding fetching specific refs from a remote
-To:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3C3D42E8-D69D-11EA-86DF-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-I've recently had a few repositories switch their default branch from
-master to main. Currently, for backwards compatibility these
-repositories have kept master around as a synonym for main. It's
-unclear when this will be removed.
+> On Tue, Aug 04, 2020 at 11:55:19PM +0300, Sergey Organov wrote:
+>
+>> I only don't like --diff-merges=none (even though it sounds great for
+>> --diff-parents=none) and used --diff-merges=off instead. It's not a
+>> strong feeling though, and I'm fine with whatever we decide.
+>
+> I think that is fine. I took "none" to be "diff against none of the
+> parents", which is the opposite of "all". But "off" conveys that, too.
 
-This results in the annoying completion behavior where:
+For now, "off" is OK, but then we'll regret when "all" comes,
+because "off" would not exactly sit opposite to "all".  On the other
+hand, "none" would: Compare with all parents?  Compare with none of
+the parents?
 
-$git checkout ma<TAB>
-main
-master
+Thanks.
 
-Essentially, because both main and master have similar names, tab
-completion requires remembering to type one additional character than
-I am used to.
-
-I'd like to be able to customize my pull so that I either (a) exclude
-the reference when performing a fetch, or (b) exclude the reference
-when tab completing.
-
-I don't know if there is any mechanism already in place to do this, so
-I'm trying to figure out which one would be most preferable on the
-list?
-
-something like adding a remote.<name>.excludeRefs which would allow
-specifying a set of references to exclude from matching the refspec..
-
-I realize I could customize the refspec to list the set of things I
-want, but then I would miss any potential future branches until I
-updated my remote config again.
-
-I would like to be able to remove this annoyance for myself and colleagues.
-
-It seems to me the easiest solution would be the sort of exclude
-option, as this enables generally skipping out on specific refs, and
-could be useful beyond just this initial impetus.
-
-Thanks,
-Jake
