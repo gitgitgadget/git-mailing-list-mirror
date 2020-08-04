@@ -2,124 +2,384 @@ Return-Path: <SRS0=W4Po=BO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D8FC433DF
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 14:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F64C433DF
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 14:47:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0556F208A9
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 14:42:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E91D208A9
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 14:47:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MlEVb6GG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nx/A7bfV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728903AbgHDOmQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 10:42:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59348 "EHLO
+        id S1729342AbgHDOrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 10:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725904AbgHDOmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 10:42:13 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D733C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 07:42:12 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z188so12542530pfc.6
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 07:42:12 -0700 (PDT)
+        with ESMTP id S1729303AbgHDOre (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 10:47:34 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2AAFC061756
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 07:47:33 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id a21so42726381ejj.10
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 07:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QTwFInuGt+nEc9ER8UIcduxvG5ZXFaPT4Ns4lJNSC10=;
-        b=MlEVb6GGw1YK8lnXHmXabQGkiH6o/xgoIwpdco8jgPyKxoMLHhDG3VoECROAaYez0q
-         QHAs/IiPFXSjC/caqJDVJoCihUH677g+7onNfE378kTSpKgSv+BxMs8Y0/uQeehyIGAH
-         Nn9WZICgbmZHi9t/ckwa3NYMRemiQiunGXeM9EpjASptNf2pJpVtOUdy+zz4Q/mH3CQB
-         J163cT1a0IhpVibANf9rsiQZDopJMEBRIxU6U+rIgNZiZ5gk25rLaVGFYcYtT71UwMz5
-         J9+WGLPuGNtWNvkqYV9uyKfE85I/MPqoTFVLnWCAGc+/MoO4r+f+ZrmIMbS8Kxj204HI
-         ZM1Q==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=FvBfltD5PKqCFsuc3BHaSWeg0YLfde9jOjmgpH/cPY0=;
+        b=Nx/A7bfVYyf2RW9RuC1ZC6Wi5wVwDFZqcsoBE/8SwKhjTnEcpj/Il3NhzfBQiP4GxV
+         Hr5+R8n/4Ix6WhT1d6q+zt1LClRkd/5Vwml3K28U82GfABKiyN7qGGV8rKc0CF+7VYgF
+         ct/m6v6KutVYZJO4Mo0glIRMX2cCO5XfqrLHZfkXPiGZksJv1tfeWh5K4Qm9CHxGrRy6
+         HAh/C/TsfaV2O9TeIRV0ZJZsbRSSkfkkOI54nuxuiMo0s66+KxvQq3HISyEnlpdOJSnv
+         7o6+ac9A4zSPgfV2FbzYbPpGUP1e3P45O9d3GhHwxUS3r+Wy3SIaERo4J22uTjDRp3me
+         cSHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QTwFInuGt+nEc9ER8UIcduxvG5ZXFaPT4Ns4lJNSC10=;
-        b=mmRd/NLJ8ShVioUYvM2e+hxIZkHpVensUFI9x2Q/EUDhVNR01/Jb8V7GzFFb2QT7GZ
-         zWi6z1SKLzvAKhdCi5dnWqrJCb49iiwNhPDvPVXcNM9AyUxciKVyZGm/K7mVTXsuvQVR
-         lzTKKwEJ/h32JDJrnNfSp7efV6zV3lgodKJHo/GmJZwigKU9pObAmXRIdgcmlIDfGLI8
-         Pv4KnJelD4iExLO00r+il+fYCZuovh8tczMnx6YhZUOiSPCJbDftg7Tjff9WG60RVjoq
-         o8cQqqNOWWMXVfr+Ks7aP7EKnTeKn7U0ljgHSWuXRTBKqZsfR5gMPGsMuL48L6bmfSDH
-         +PGw==
-X-Gm-Message-State: AOAM531yW9WG9R73aU28xCwMUPCoekpPEOeRM5/sODiFTjiupPCnBfbq
-        SkkieeYwRqYiMMzngoZcBlA=
-X-Google-Smtp-Source: ABdhPJzsk3/7nW/dLX22D4RDP4SyoVJT4dJpP/KI1JXfKHKwZfNJ5QY96g0qUtm8AktqNwJhweJmbA==
-X-Received: by 2002:aa7:92d7:: with SMTP id k23mr13078722pfa.295.1596552131651;
-        Tue, 04 Aug 2020 07:42:11 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id z1sm2908414pjn.34.2020.08.04.07.42.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2020 07:42:10 -0700 (PDT)
-Date:   Tue, 4 Aug 2020 07:42:08 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=FvBfltD5PKqCFsuc3BHaSWeg0YLfde9jOjmgpH/cPY0=;
+        b=SHoxn743NC3wbQu4QikB78ykhlrZ/Pr6Rbf0CrsGkeKf5U4b9jl/Gkz7TtTz8QtZPE
+         1Or+Vl6tW3Rxp1hRHZhhZHGzDDMpF5YxEfWAQ6mgFnMwdXdQXN1Lh4PCl+2zZo0w/5gb
+         4L8SNduXAAnQXcxP1ipneOdbV0XNQY6/BcRBRtXdTLXleGu76xMdOnsG9Y8gjgTBVRXh
+         oTZGM5Ypq1Ui/N3dUZtRyLqchbnhr0JoKMCBV6zRGPKTy73JkzozhY1JePhjcR5S9/NQ
+         mY3DXdo6U72XajwlnSCxX0ZG9P5c1YdWn3mf0F6XKirCz31dhdVFZnFDsHPHmNFLNA5u
+         R49g==
+X-Gm-Message-State: AOAM531fFu9h+BsXQ3fzip2Y2urQtpo5QmrJdn4stpJcmweFHanf3fcb
+        m4KX5AmzI59tzU8iSxboSSs=
+X-Google-Smtp-Source: ABdhPJzPIheUmMxrxKk3G5ScoYgjxDUYOAMtSLJLLMWhn5J/1h2MeN5H06gJb2QBer1ef5jLLRMK2A==
+X-Received: by 2002:a17:906:d159:: with SMTP id br25mr21307847ejb.16.1596552452700;
+        Tue, 04 Aug 2020 07:47:32 -0700 (PDT)
+Received: from szeder.dev (94-21-29-171.pool.digikabel.hu. [94.21.29.171])
+        by smtp.gmail.com with ESMTPSA id b18sm18770094ejc.41.2020.08.04.07.47.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 04 Aug 2020 07:47:31 -0700 (PDT)
+Date:   Tue, 4 Aug 2020 16:47:24 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, jonathantanmy@google.com,
+        Garima Singh <garima.singh@microsoft.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 01/18] maintenance: create basic maintenance runner
-Message-ID: <20200804144208.GA227292@google.com>
-References: <20200729221905.GB519065@google.com>
- <5cbdb559-3897-961f-4dd3-0bab11848c5b@gmail.com>
- <20200731003022.GA1029866@google.com>
- <a176ddf5-b45b-fb25-8740-96efbd324edf@gmail.com>
- <20200803174654.GA2473576@google.com>
- <20200803224631.GA73022@syl.lan>
- <20200803230134.GA58587@google.com>
- <20200803230814.GA73765@syl.lan>
- <20200803231745.GB58587@google.com>
- <aac90dbd-e885-f366-1056-0824b8b8b8fe@gmail.com>
+Subject: Re: [PATCH v4 05/15] diff: halt tree-diff early after max_changes
+Message-ID: <20200804144724.GA25052@szeder.dev>
+References: <pull.497.v3.git.1585528298.gitgitgadget@gmail.com>
+ <pull.497.v4.git.1586192395.gitgitgadget@gmail.com>
+ <2d4c0b2da38632424c8bd31ccb2037e0676c3c74.1586192395.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aac90dbd-e885-f366-1056-0824b8b8b8fe@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2d4c0b2da38632424c8bd31ccb2037e0676c3c74.1586192395.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
+On Mon, Apr 06, 2020 at 04:59:45PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> When computing the changed-paths bloom filters for the commit-graph,
+> we limit the size of the filter by restricting the number of paths
+> in the diff. Instead of computing a large diff and then ignoring the
+> result, it is better to halt the diff computation early.
+> 
+> Create a new "max_changes" option in struct diff_options. If non-zero,
+> then halt the diff computation after discovering strictly more changed
+> paths. This includes paths corresponding to trees that change.
+> 
+> Use this max_changes option in the bloom filter calculations. This
+> reduces the time taken to compute the filters for the Linux kernel
+> repo from 2m50s to 2m35s. On a large internal repository with ~500
+> commits that perform tree-wide changes, the time reduced from
+> 6m15s to 3m48s.
+> 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+> ---
+>  bloom.c     | 4 +++-
+>  diff.h      | 5 +++++
+>  tree-diff.c | 6 ++++++
+>  3 files changed, 14 insertions(+), 1 deletion(-)
+> 
+> diff --git a/bloom.c b/bloom.c
+> index 881a9841ede..a16eee92331 100644
+> --- a/bloom.c
+> +++ b/bloom.c
+> @@ -133,6 +133,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+>  	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+>  	int i;
+>  	struct diff_options diffopt;
+> +	int max_changes = 512;
+>  
+>  	if (bloom_filters.slab_size == 0)
+>  		return NULL;
+> @@ -141,6 +142,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+>  
+>  	repo_diff_setup(r, &diffopt);
+>  	diffopt.flags.recursive = 1;
+> +	diffopt.max_changes = max_changes;
+>  	diff_setup_done(&diffopt);
+>  
+>  	if (c->parents)
+> @@ -149,7 +151,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+>  		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
+>  	diffcore_std(&diffopt);
+>  
+> -	if (diff_queued_diff.nr <= 512) {
+> +	if (diff_queued_diff.nr <= max_changes) {
+>  		struct hashmap pathmap;
+>  		struct pathmap_hash_entry *e;
+>  		struct hashmap_iter iter;
+> diff --git a/diff.h b/diff.h
+> index 6febe7e3656..9443dc1b003 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -285,6 +285,11 @@ struct diff_options {
+>  	/* Number of hexdigits to abbreviate raw format output to. */
+>  	int abbrev;
+>  
+> +	/* If non-zero, then stop computing after this many changes. */
+> +	int max_changes;
+> +	/* For internal use only. */
+> +	int num_changes;
 
-> What is seems like you are asking instead is for me to create a tool
-> in the test suite that parses each JSON line, extracts a specific
-> member from that JSON object, reconstructs a command-line invocation
-> from the JSON array, and reports whether that process worked for any
-> line in the event output.
+"For internal use only", understood.
 
-No, that isn't what I'm asking.
+> +
+>  	int ita_invisible_in_index;
+>  /* white-space error highlighting */
+>  #define WSEH_NEW (1<<12)
+> diff --git a/tree-diff.c b/tree-diff.c
+> index 33ded7f8b3e..f3d303c6e54 100644
+> --- a/tree-diff.c
+> +++ b/tree-diff.c
+> @@ -434,6 +434,9 @@ static struct combine_diff_path *ll_diff_tree_paths(
+>  		if (diff_can_quit_early(opt))
+>  			break;
+>  
+> +		if (opt->max_changes && opt->num_changes > opt->max_changes)
+> +			break;
+> +
+>  		if (opt->pathspec.nr) {
+>  			skip_uninteresting(&t, base, opt);
+>  			for (i = 0; i < nparent; i++)
+> @@ -518,6 +521,7 @@ static struct combine_diff_path *ll_diff_tree_paths(
+>  
+>  			/* t↓ */
+>  			update_tree_entry(&t);
+> +			opt->num_changes++;
+>  		}
+>  
+>  		/* t > p[imin] */
+> @@ -535,6 +539,7 @@ static struct combine_diff_path *ll_diff_tree_paths(
+>  		skip_emit_tp:
+>  			/* ∀ pi=p[imin]  pi↓ */
+>  			update_tp_entries(tp, nparent);
+> +			opt->num_changes++;
+>  		}
+>  	}
 
-I'm asking for this patch series to take the existing "grep" lines
-and put them in a function in test-lib-functions.sh, so that we can
-change them in one place when the trace emitter changes.
+This counter is basically broken, its value is wrong for over 98% of
+commits, and, worse, its value remains 0 for over 85% of commits in
+the repositories I usually use to test modified path Bloom filters.
+Consequently, a relatively large number of commits modifying more than
+512 paths get Bloom filters.
 
-[...]
-> If this is to truly be a hard requirement for these tests to move
-> forward,
+The makeshift tests in the patch below demonstrate these issues as
+most of them fail, most notably those two tests that demonstrate that
+modifying existing paths are not counted at all.
 
-Yes, from my point of view it really is.
 
-But that "is this truly a hard requirement?" comes up tells me I have
-not done a good job of communicating in this review.  A review is
-about participants in the project working together to improve a patch,
-not people making demands at each other.
+  ---  >8  ---
 
-[...]
-> If I'm to spend time engineering something more complicated just to
-> check "did this subcommand run with these arguments?" then
+diff --git a/bloom.c b/bloom.c
+index 9b86aa3f59..3db0fde734 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -203,7 +203,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 	repo_diff_setup(r, &diffopt);
+ 	diffopt.flags.recursive = 1;
+ 	diffopt.detect_rename = 0;
+-	diffopt.max_changes = max_changes;
++	diffopt.max_changes = 0;
+ 	diff_setup_done(&diffopt);
+ 
+ 	/* ensure commit is parsed so we have parent information */
+@@ -214,6 +214,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 	else
+ 		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
+ 	diffcore_std(&diffopt);
++	printf("%s  %d\n", oid_to_hex(&c->object.oid), diffopt.num_changes);
+ 
+ 	if (diffopt.num_changes <= max_changes) {
+ 		struct hashmap pathmap;
+diff --git a/t/t9999-test.sh b/t/t9999-test.sh
+new file mode 100755
+index 0000000000..8d2bd9f03f
+--- /dev/null
++++ b/t/t9999-test.sh
+@@ -0,0 +1,142 @@
++#!/bin/sh
++
++test_description='test'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_tick &&
++
++	echo 1 >file &&
++	mkdir -p dir/subdir &&
++	echo 1 >dir/subdir/file1 &&
++	echo 1 >dir/subdir/file2 &&
++	git add file dir &&
++	git commit -m setup &&
++
++	echo 2 >file &&
++	git commit -a -m "modify one path in root" &&
++	mod_one_path=$(git rev-parse HEAD) &&
++
++	echo 2 >dir/subdir/file1 &&
++	echo 2 >dir/subdir/file2 &&
++	git commit -a -m "modify two file two dirs deep" &&
++	mod_four_paths=$(git rev-parse HEAD) &&
++
++	>new-file &&
++	git add new-file &&
++	git commit -m "add new file in root" &&
++	new_file_in_root=$(git rev-parse HEAD) &&
++
++	git rm new-file &&
++	git commit -m "delete file in root" &&
++	delete_file_in_root=$(git rev-parse HEAD) &&
++
++	>dir/new-file &&
++	git add dir/new-file &&
++	git commit -m "add new file in dir" &&
++	new_file_in_dir=$(git rev-parse HEAD) &&
++
++	git rm dir/new-file &&
++	git commit -m "delete file in dir" &&
++	delete_file_in_dir=$(git rev-parse HEAD) &&
++
++	echo 1 >d-f &&
++	git add d-f &&
++	git commit -m foo &&
++	git rm d-f &&
++	mkdir d-f &&
++	echo 2 >d-f/file &&
++	git add d-f &&
++	git commit -m "replace file with dir" &&
++	file_to_dir=$(git rev-parse HEAD) &&
++
++	>d-f.c &&
++	git add d-f.c &&
++	git commit -m "add a file that sorts between d-f and d-f/" &&
++	git rm -r d-f &&
++	echo 3 >d-f &&
++	git add d-f &&
++	git commit -m "replace dir with file" &&
++	dir_to_file=$(git rev-parse HEAD) &&
++
++	bin_sha1=$(git rev-parse HEAD:dir/subdir | hex2oct) &&
++	# leading zero in mode: the content of the tree remains the same,
++	# but its oid does change!
++	printf "040000 subdir\0$bin_sha1" >rawtree &&
++	tree1=$(git hash-object -t tree -w rawtree) &&
++	git cat-file -p HEAD^{tree} >out &&
++	tree2=$(sed -e "s/$(git rev-parse HEAD:dir/)/$tree1/" out |git mktree) &&
++	different_but_same_tree=$(git commit-tree \
++		-m "leading zeros in mode" \
++		-p $(git rev-parse HEAD) $tree2) &&
++	git update-ref HEAD $different_but_same_tree &&
++
++	git commit-graph write --reachable --changed-paths >out &&
++	cat out  # debug
++'
++
++test_expect_success 'modify one path in root' '
++	git diff --name-status $mod_one_path^ $mod_one_path &&
++	echo "$mod_one_path  1" >expect &&
++	grep "$mod_one_path" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'modify two file two dirs deep' '
++	git diff --name-status $mod_four_paths^ $mod_four_paths &&
++	echo "$mod_four_paths  4" >expect &&
++	grep "$mod_four_paths" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add new file in root' '
++	git diff --name-status $new_file_in_root^ $new_file_in_root &&
++	echo "$new_file_in_root  1" >expect &&
++	grep "$new_file_in_root" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'delete file in root' '
++	git diff --name-status $delete_file_in_root^ $delete_file_in_root &&
++	echo "$delete_file_in_root  1" >expect &&
++	grep "$delete_file_in_root" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'add new file in dir' '
++	git diff --name-status $new_file_in_dir^ $new_file_in_dir &&
++	echo "$new_file_in_dir  2" >expect &&
++	grep "$new_file_in_dir" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'delete file in dir' '
++	git diff --name-status $delete_file_in_dir^ $delete_file_in_dir &&
++	echo "$delete_file_in_dir  2" >expect &&
++	grep "$delete_file_in_dir" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'replace file with dir' '
++	git diff --name-status $file_to_dir^ $file_to_dir &&
++	echo "$file_to_dir  2" >expect &&
++	grep "$file_to_dir" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'replace dir with file' '
++	git diff --name-status $dir_to_file^ $dir_to_file &&
++	echo "$dir_to_file  2" >expect &&
++	grep "$dir_to_file" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'leading zeros in mode' '
++	git diff --name-status $different_but_same_tree^ $different_but_same_tree &&
++	echo "$different_but_same_tree  0" >expect &&
++	grep "$different_but_same_tree" out >actual &&
++	test_cmp expect actual
++'
++
++test_done
 
-I don't see why this is more complicated than what is in patch 1.  In
-fact, I think it would be a little more simple.
+  ---  >8  ---
 
-Jonathan
+
+> @@ -552,6 +557,7 @@ struct combine_diff_path *diff_tree_paths(
+>  	const struct object_id **parents_oid, int nparent,
+>  	struct strbuf *base, struct diff_options *opt)
+>  {
+> +	opt->num_changes = 0;
+>  	p = ll_diff_tree_paths(p, oid, parents_oid, nparent, base, opt);
+>  
+>  	/*
+> -- 
+> gitgitgadget
+> 
