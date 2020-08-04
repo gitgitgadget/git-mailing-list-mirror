@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A23B2C433E0
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63334C433E0
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:50:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0F3D22B40
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:46:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 652192064B
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 07:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728112AbgHDHqx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 03:46:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47374 "EHLO cloud.peff.net"
+        id S1729409AbgHDHuT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 03:50:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47386 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727887AbgHDHqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 03:46:53 -0400
-Received: (qmail 598 invoked by uid 109); 4 Aug 2020 07:46:52 -0000
+        id S1725932AbgHDHuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 03:50:19 -0400
+Received: (qmail 614 invoked by uid 109); 4 Aug 2020 07:50:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Aug 2020 07:46:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Aug 2020 07:50:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9689 invoked by uid 111); 4 Aug 2020 07:46:52 -0000
+Received: (qmail 9744 invoked by uid 111); 4 Aug 2020 07:50:18 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Aug 2020 03:46:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Aug 2020 03:50:18 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 4 Aug 2020 03:46:52 -0400
+Date:   Tue, 4 Aug 2020 03:50:17 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 2/3] revision: avoid out-of-bounds read/write on empty
- pathspec
-Message-ID: <20200804074652.GB284046@coredump.intra.peff.net>
+Subject: [PATCH 3/3] revision: avoid leak when preparing bloom filter for "/"
+Message-ID: <20200804075017.GC284046@coredump.intra.peff.net>
 References: <20200804074146.GA190027@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -44,90 +42,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running t4216 with ASan results in it complaining of an out-of-bounds
-read in prepare_to_use_bloom_filter(). The issue is this code to strip a
-trailing slash:
+If we're given an empty pathspec, we refuse to set up bloom filters, as
+described in f3c2a36810 (revision: empty pathspecs should not use Bloom
+filters, 2020-07-01).
 
-  last_index = pi->len - 1;
-  if (pi->match[last_index] == '/') {
-
-because we have no guarantee that pi->len isn't zero. This can happen if
-the pathspec is ".", as we translate that to an empty string. And if
-that read of random memory does trigger the conditional, we'd then do an
-out-of-bounds write:
-
-  path_alloc = xstrdup(pi->match);
-  path_alloc[last_index] = '\0';
-
-Let's make sure to check the length before subtracting. Note that for an
-empty pathspec, we'd end up bailing from the function a few lines later,
-which makes it tempting to just:
-
-  if (!pi->len)
-          return;
-
-early here. But our code here is stripping a trailing slash, and we need
-to check for emptiness after stripping that slash, too. So we'd have two
-blocks, which would require repeating some cleanup code.
-
-Instead, just skip the trailing-slash for an empty string. Setting
-last_index at all in the case is awkward since it will have a nonsense
-value (and it uses an "int", which is a too-small type for a string
-anyway). So while we're here, let's:
-
-  - drop last_index entirely; it's only used in two spots right next to
-    each other and writing out "pi->len - 1" in both is actually easier
-    to follow
-
-  - use xmemdupz() to duplicate the string. This is slightly more
-    efficient, but more importantly makes the intent more clear by
-    allocating the correct-sized substring in the first place. It also
-    eliminates any question of whether path_alloc is as long as
-    pi->match (which it would not be if pi->match has any embedded NULs,
-    though in practice this is probably impossible).
+But before the empty string check, we drop any trailing slash by
+allocating a new string without it. So a pathspec consisting only of "/"
+will allocate that string, but then still cause us to bail, leaking the
+new string. Let's make sure to free it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Another variant is to actually stop assigning revs->bloom_filter_settings
-so early, so that we don't have to clean it up. And then once we're sure
-we're going to use it and have passed all of our early-return checks,
-then assign it. But that conflicts with the get_bloom_filter_settings()
-patch in:
+Just noticed while reading the function to fix the previous patch.
 
-  https://lore.kernel.org/git/08479793c1274d5ee0f063578bb0f4d93c910fa9.1596480582.git.me@ttaylorr.com/
+I'm not even sure if it's possible to get here with a pathspec of "/",
+since we'd probably give a "/ is outside repository" error before then.
 
-so I didn't go that way.
+So maybe this case doesn't even matter. If it doesn't, then it might
+simplify the function a bit to do the empty-pathspec check before
+handling trailing slashes. But handling it does help make it more clear
+this function is doing the right thing no matter what input it is given,
+so that's what I went with here.
 
- revision.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ revision.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/revision.c b/revision.c
-index 6de29cdf7a..5ed86e4524 100644
+index 5ed86e4524..b80868556b 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -669,7 +669,6 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	struct pathspec_item *pi;
- 	char *path_alloc = NULL;
- 	const char *path, *p;
--	int last_index;
- 	size_t len;
- 	int path_component_nr = 1;
- 
-@@ -692,12 +691,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+@@ -702,6 +702,7 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 	len = strlen(path);
+ 	if (!len) {
+ 		revs->bloom_filter_settings = NULL;
++		free(path_alloc);
  		return;
+ 	}
  
- 	pi = &revs->pruning.pathspec.items[0];
--	last_index = pi->len - 1;
- 
- 	/* remove single trailing slash from path, if needed */
--	if (pi->match[last_index] == '/') {
--		path_alloc = xstrdup(pi->match);
--		path_alloc[last_index] = '\0';
-+	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
-+		path_alloc = xmemdupz(pi->match, pi->len - 1);
- 		path = path_alloc;
- 	} else
- 		path = pi->match;
 -- 
 2.28.0.536.ga4d8134877
-
