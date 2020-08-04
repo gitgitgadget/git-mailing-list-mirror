@@ -2,141 +2,245 @@ Return-Path: <SRS0=W4Po=BO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C72C433E0
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B80C433DF
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:56:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38A3E2076C
-	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:47:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A026020781
+	for <git@archiver.kernel.org>; Tue,  4 Aug 2020 00:56:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R9i4/fZM"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dNEInTwL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728620AbgHDArA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Aug 2020 20:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43768 "EHLO
+        id S1727083AbgHDA41 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Aug 2020 20:56:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726548AbgHDAq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Aug 2020 20:46:59 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52239C06174A
-        for <git@vger.kernel.org>; Mon,  3 Aug 2020 17:46:59 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id w14so11822196ljj.4
-        for <git@vger.kernel.org>; Mon, 03 Aug 2020 17:46:59 -0700 (PDT)
+        with ESMTP id S1726130AbgHDA41 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Aug 2020 20:56:27 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F69C06174A
+        for <git@vger.kernel.org>; Mon,  3 Aug 2020 17:56:27 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id g19so28446336ioh.8
+        for <git@vger.kernel.org>; Mon, 03 Aug 2020 17:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Nkm9AbYWOeboxAuGjIrEGc9C4ShcE/7k027Zxj2wj+M=;
-        b=R9i4/fZMicpkOP2eK6eZuKOll9VHyIvWyDtOt/D6TzI3gjxx9C+/9P5q79EhU0RSew
-         wpuwNviGCjYqG1+avDfqdfMTu65jOJVdBJ2mVF+ihXoMc5JjxeSnXnWUVqDML0cfej0X
-         qLoms0xxOE84rVq29xtJizxUnhvSbD8OseAMucDpb3WzVkS0V+E+O2/gx28+8WBzrGGe
-         n0shsl02SEDXmc17MzE0ec06qz3IAUKraZ0Kdph1O33gexdKVcyiQXoCyLKtey1BT5CF
-         BtuG1PXTJNBvsAp+wqk7hFQwIFcEhwtja4eUhVV2jtCv1n8Ido1nYAjmdvmBKr6cQvnT
-         +pNw==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kdhTo9Spni/rvfOlsm8efpUz+8QEbGejshuMF/PJKuc=;
+        b=dNEInTwLoD5Tibh8kILWPo3LylGeBcnarMEdCN9S20SV1wEdRUhOty3oqXA1TgaGYJ
+         y8wErg7C/H04BDHajC6/wkaON/IOptlbZyqqDx7zNRrtHE3RDm8YoMBTzM+XmCll68wV
+         FF4oli9QNXniwdC211vJaOk3iiZgvesTEcgWLbBxxVc3pYk4joLqqn4LMeWsCanTOYlD
+         i91P3HxxchKibFdrHYLJJbKF7iNQmKdAFi9pSEFn471t1Gpar47rTJ9X+uhNW3EPglff
+         4ktHoAzyJcgQdhMrOW2Kc01A/1Hc64XPm4bFXiGHpaZLIOUhkH259D5I5dSvsuAlIleA
+         6fGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=Nkm9AbYWOeboxAuGjIrEGc9C4ShcE/7k027Zxj2wj+M=;
-        b=P/uIsMi59RrtIigjaFxvdLERQNPxtuVtPwFy7o2SC416D0D7Zc4M+Wvrn4UnV/q8bO
-         axZ2XNg4bjTHAu0yQRJbo+sqlKUUfZKibIjNlIQD18BwsKFPfyiXtot9RcDu/CdVlCA5
-         O6RTtGCuJtv8hrXvZQ/JyHmBTzmSVWQ1+UnDpLLbO/z5D9G2N+9ibAGm7no4Dmu4lwav
-         bTxn4N5mWmZA4yUlaPpNnAEwn3RGpDY8wU7EENg87AWZweDS70TO69b8GPUfnE6ZzXDt
-         bbJoSWVWaCkAfVZwjFpdw9/Y0nU7hlcbJpxTz1EJtPTvmnvQDb6o+segf6GmOcSBvb2p
-         t28A==
-X-Gm-Message-State: AOAM533hfrfcogtIziLYqC4/1qtQsdDc3RZh4FFOWVv9SHHcSNtKbbtl
-        xcTZXCukhNnDjzofdP04E30=
-X-Google-Smtp-Source: ABdhPJzXDKZhEBuU0ZAnAowjNRSxoSfxX8RFXu7k6QOJbNA19xuqED9YS+eIoXhpoZlzlD0gLyQIgw==
-X-Received: by 2002:a2e:d19:: with SMTP id 25mr8004501ljn.217.1596502017679;
-        Mon, 03 Aug 2020 17:46:57 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id i26sm4672065ljj.102.2020.08.03.17.46.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2020 17:46:56 -0700 (PDT)
-From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
-To:     "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/6] commit-graph: fix regression when computing bloom filter
-References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
-        <91e6e97a66aff88e0b860e34659dddc3396c7f28.1595927632.git.gitgitgadget@gmail.com>
-Date:   Tue, 04 Aug 2020 02:46:55 +0200
-In-Reply-To: <91e6e97a66aff88e0b860e34659dddc3396c7f28.1595927632.git.gitgitgadget@gmail.com>
-        (Abhishek Kumar via GitGitGadget's message of "Tue, 28 Jul 2020 09:13:46
-        +0000")
-Message-ID: <85eeonutj4.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=kdhTo9Spni/rvfOlsm8efpUz+8QEbGejshuMF/PJKuc=;
+        b=kLfv9BlmqbIaSBLHwtsrbioEoq5xOvN3EWobmXHdJoALpKKbc72zbhIcnmKoTB+KX3
+         KB+CnlwxUfj0Fn5cOiGh9kVT7L/NFvsS/v4iVTAqfI3DgSdNJeLuidRs52MKiznfSUWE
+         g0OrQv6hvi6/uNGMsBTuOcXGgSi05qf8b44y8P/uLXAaRIUSPH20F3vtRs9hocH9i1L8
+         zDn9GZTkC54w+/QJjACwS0uC15zroHqSWlBj8AE8QQj+nfXBQ/RUm6/QmTbMVwQkrlaK
+         TNKweKVd6qPv5O+V7vtO+K+yYVYeiUlGrGWPAE4ulV8HElulMpnITceohepvqqgDewh9
+         68HA==
+X-Gm-Message-State: AOAM5332vZ9MD60BLbn9V1wpzrWlOudV9O0JL6bBY1sd6whH1uGXzdRu
+        OY2wy5AUCsY70Tc68pt4J6t1dGwnl9U=
+X-Google-Smtp-Source: ABdhPJz62sm3/I+swmruT1TFDCgtiN6HAPktxMmbY+e0fDnAHBpl0TKbA900yIDr1QdFzJrq+5mSeQ==
+X-Received: by 2002:a02:8806:: with SMTP id r6mr2776319jai.88.1596502585647;
+        Mon, 03 Aug 2020 17:56:25 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id e84sm11878453ill.60.2020.08.03.17.56.24
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Aug 2020 17:56:25 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/5] git-worktree documentation cleanups
+Date:   Mon,  3 Aug 2020 20:55:30 -0400
+Message-Id: <20200804005535.5126-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.28.0.236.gb10cc79966
+In-Reply-To: <20200803053612.50095-1-sunshine@sunshineco.com>
+References: <20200803053612.50095-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This is a re-roll of [1] which fixes some problems I ran across in the
+git-worktree documentation while working on another worktree-related
+topic.
 
-> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
->
-> With 3d112755 (commit-graph: examine commits by generation number), Git
-> knew to sort by generation number before examining the diff when not
-> using pack order. c49c82aa (commit: move members graph_pos, generation
-> to a slab, 2020-06-17) moved generation number into a slab and
-> introduced a helper which returns GENERATION_NUMBER_INFINITY when
-> writing the graph. Sorting is no longer useful and essentially reverts
-> the earlier commit.
->
-> Let's fix this by accessing generation number directly through the slab.
+This version adds some `linkgit:` invocations, typesets `HEAD` as
+fixed-width, and covers a few additional places where backticks should
+have been applied in place of other quotes, as suggested by Martin[2],
+as well as a few more I noticed beyond those found by him. Although I
+had planned on adding backticks around `HEAD` in a separate patch, I
+ended up folding that change into patch 1 since there are relatively few
+such instances, and since, upon reflection, such a change didn't seem to
+warrant its own patch.
 
-It looks like unfortunate and unforeseen consequence of putting together
-graph position and generation number in the commit_graph_data struct.
-During writing of the commit-graph file generation number is computed,
-but graph position is undefined (yet), and commit_graph_generation()
-uses graph_pos field to find if the data for commit is initialized;
-in this case wrongly.
+I omitted Taylor's Reviewed-by:[4] since the patches have changed since
+he reviewed them, but he's welcome to give it again.
 
-Anyway, when writing the commit graph we first compute generation
-number, then (if requested) the changed-paths Bloom filter.  Skipping
-the unnecessary check is a good thing... assuming that commit_gen_cmp()
-is used only when writing the commit graph, and not when traversing it
-(because then some commits may not have generation number set, and maybe
-even do not have any data on the commit slab) - which is the case.
+[1]: https://lore.kernel.org/git/20200803053612.50095-1-sunshine@sunshineco.com/
+[2]: https://lore.kernel.org/git/20200803175717.7465-1-martin.agren@gmail.com/
+[3]: https://lore.kernel.org/git/CAPig+cQtcxqQDAQ5bO6ica+Z7dd2+r8B+kXm0RK7qhpsAiX_xg@mail.gmail.com/
+[4]: https://lore.kernel.org/git/20200803161102.GB50799@syl.lan/
 
->
-> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> ---
->  commit-graph.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 1af68c297d..5d3c9bd23c 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
+Eric Sunshine (5):
+  git-worktree.txt: employ fixed-width typeface consistently
+  git-worktree.txt: consistently use term "working tree"
+  git-worktree.txt: fix minor grammatical issues
+  git-worktree.txt: make start of new sentence more obvious
+  git-wortkree.txt: link to man pages when citing other Git commands
 
-We might want to add function comment either here or in the header that
-this comparisonn function is to be used only for `git commit-graph
-write`, and not for graph traversal (even if similar funnction exists in
-other modules).
+ Documentation/git-worktree.txt | 123 +++++++++++++++++----------------
+ 1 file changed, 62 insertions(+), 61 deletions(-)
 
-> @@ -144,8 +144,9 @@ static int commit_gen_cmp(const void *va, const void =
-*vb)
->  	const struct commit *a =3D *(const struct commit **)va;
->  	const struct commit *b =3D *(const struct commit **)vb;
->
-> -	uint32_t generation_a =3D commit_graph_generation(a);
-> -	uint32_t generation_b =3D commit_graph_generation(b);
-> +	uint32_t generation_a =3D commit_graph_data_at(a)->generation;
-> +	uint32_t generation_b =3D commit_graph_data_at(b)->generation;
-> +
->  	/* lower generation commits first */
->  	if (generation_a < generation_b)
->  		return -1;
+Interdiff against v1:
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 260bfe9105..6ee6ec7982 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -25,8 +25,9 @@ Manage multiple working trees attached to the same repository.
+ A git repository can support multiple working trees, allowing you to check
+ out more than one branch at a time.  With `git worktree add` a new working
+ tree is associated with the repository.  This new working tree is called a
+-"linked working tree" as opposed to the "main working tree" prepared by "git
+-init" or "git clone".  A repository has one main working tree (if it's not a
++"linked working tree" as opposed to the "main working tree" prepared by
++linkgit:git-init[1] or linkgit:git-clone[1].
++A repository has one main working tree (if it's not a
+ bare repository) and zero or more linked working trees. When you are done
+ with a linked working tree, remove it with `git worktree remove`.
+ 
+@@ -48,7 +49,7 @@ add <path> [<commit-ish>]::
+ 
+ Create `<path>` and checkout `<commit-ish>` into it. The new working directory
+ is linked to the current repository, sharing everything except working
+-directory specific files such as HEAD, index, etc. As a convenience,
++directory specific files such as `HEAD`, `index`, etc. As a convenience,
+ `<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
+ +
+ If `<commit-ish>` is a branch name (call it `<branch>`) and is not found,
+@@ -66,13 +67,13 @@ one for the purposes of disambiguation, even if the `<branch>` isn't
+ unique across all remotes. Set it to
+ e.g. `checkout.defaultRemote=origin` to always checkout remote
+ branches from there if `<branch>` is ambiguous but exists on the
+-'origin' remote. See also `checkout.defaultRemote` in
++`origin` remote. See also `checkout.defaultRemote` in
+ linkgit:git-config[1].
+ +
+ If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
+ then, as a convenience, the new working tree is associated with a branch
+ (call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
+-doesn't exist, a new branch based on HEAD is automatically created as
++doesn't exist, a new branch based on `HEAD` is automatically created as
+ if `-b <branch>` was given.  If `<branch>` does exist, it will be
+ checked out in the new working tree, if it's not checked out anywhere
+ else, otherwise the command will refuse to create the working tree (unless
+@@ -137,13 +138,13 @@ To remove a locked working tree, specify `--force` twice.
+ -B <new-branch>::
+ 	With `add`, create a new branch named `<new-branch>` starting at
+ 	`<commit-ish>`, and check out `<new-branch>` into the new working tree.
+-	If `<commit-ish>` is omitted, it defaults to HEAD.
++	If `<commit-ish>` is omitted, it defaults to `HEAD`.
+ 	By default, `-b` refuses to create a new branch if it already
+ 	exists. `-B` overrides this safeguard, resetting `<new-branch>` to
+ 	`<commit-ish>`.
+ 
+ --detach::
+-	With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
++	With `add`, detach `HEAD` in the new working tree. See "DETACHED HEAD"
+ 	in linkgit:git-checkout[1].
+ 
+ --[no-]checkout::
+@@ -154,7 +155,7 @@ To remove a locked working tree, specify `--force` twice.
+ 
+ --[no-]guess-remote::
+ 	With `worktree add <path>`, without `<commit-ish>`, instead
+-	of creating a new branch from HEAD, if there exists a tracking
++	of creating a new branch from `HEAD`, if there exists a tracking
+ 	branch in exactly one remote matching the basename of `<path>`,
+ 	base the new branch on the remote-tracking branch, and mark
+ 	the remote-tracking branch as "upstream" from the new branch.
+@@ -166,7 +167,7 @@ This can also be set up as the default behaviour by using the
+ 	When creating a new branch, if `<commit-ish>` is a branch,
+ 	mark it as "upstream" from the new branch.  This is the
+ 	default if `<commit-ish>` is a remote-tracking branch.  See
+-	"--track" in linkgit:git-branch[1] for details.
++	`--track` in linkgit:git-branch[1] for details.
+ 
+ --lock::
+ 	Keep the working tree locked after creation. This is the
+@@ -185,14 +186,14 @@ This can also be set up as the default behaviour by using the
+ 
+ -q::
+ --quiet::
+-	With 'add', suppress feedback messages.
++	With `add`, suppress feedback messages.
+ 
+ -v::
+ --verbose::
+ 	With `prune`, report all removals.
+ 
+ --expire <time>::
+-	With `prune`, only expire unused working trees older than <time>.
++	With `prune`, only expire unused working trees older than `<time>`.
+ 
+ --reason <string>::
+ 	With `lock`, an explanation why the working tree is locked.
+@@ -209,12 +210,12 @@ then `ghi` or `def/ghi` is enough to point to the former working tree.
+ REFS
+ ----
+ In multiple working trees, some refs may be shared between all working
+-trees and some refs are local. One example is HEAD which is different for each
++trees and some refs are local. One example is `HEAD` which is different for each
+ working tree. This section is about the sharing rules and how to access
+ refs of one working tree from another.
+ 
+ In general, all pseudo refs are per working tree and all refs starting
+-with `refs/` are shared. Pseudo refs are ones like HEAD which are
++with `refs/` are shared. Pseudo refs are ones like `HEAD` which are
+ directly under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are
+ exceptions, however: refs inside `refs/bisect` and `refs/worktree` are not
+ shared.
+@@ -225,7 +226,7 @@ former gives access to per-working tree refs of the main working tree,
+ while the latter to all linked working trees.
+ 
+ For example, `main-worktree/HEAD` or `main-worktree/refs/bisect/good`
+-resolve to the same value as the main working tree's HEAD and
++resolve to the same value as the main working tree's `HEAD` and
+ `refs/bisect/good` respectively. Similarly, `worktrees/foo/HEAD` or
+ `worktrees/bar/refs/bisect/bad` are the same as
+ `$GIT_COMMON_DIR/worktrees/foo/HEAD` and
+@@ -237,13 +238,13 @@ which will handle refs correctly.
+ 
+ CONFIGURATION FILE
+ ------------------
+-By default, the repository "config" file is shared across all working
++By default, the repository `config` file is shared across all working
+ trees. If the config variables `core.bare` or `core.worktree` are
+ already present in the config file, they will be applied to the main
+ working trees only.
+ 
+ In order to have configuration specific to working trees, you can turn
+-on "worktreeConfig" extension, e.g.:
++on the `worktreeConfig` extension, e.g.:
+ 
+ ------------
+ $ git config extensions.worktreeConfig true
+-- 
+2.28.0.236.gb10cc79966
 
-Best,
---
-Jakub Nar=C4=99bski
