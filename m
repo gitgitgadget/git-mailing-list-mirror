@@ -2,89 +2,204 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A81DDC433E0
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71F7BC433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:17:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 856022076E
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:16:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 491802076E
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:17:36 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="lNyAHMVh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726209AbgHEVQL convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 5 Aug 2020 17:16:11 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51328 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725920AbgHEVQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 17:16:10 -0400
-Received: by mail-wm1-f68.google.com with SMTP id p14so7030834wmg.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:16:09 -0700 (PDT)
+        id S1726130AbgHEVRe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 17:17:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60854 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbgHEVRd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 17:17:33 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5D9C061575
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 14:17:33 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id 77so10795063qkm.5
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=o5KC1Bos6uiN5uLM6VXqM6B+K2+o69WHUKxNoyliCyU=;
+        b=lNyAHMVhonrGpKemxt8In2TC2qTbWLPhcJKwxTGkTCECuOI2H2Uc+YSChwNDGjiDPp
+         jSKGofnEpreySIhytvvhgzZPuO0CWgRaE+ewZfEheF475lzN4fTxIRUBLL80kLVrlq2N
+         1p8FPsUyWeFHK8fKEo97muRsN4/cd40ZY/d8zBWa9BWZcyZv3UVMK/u80V9ZnPEQZvO2
+         cFK+EwigL0ndxPR8v8zAaAwCIrhprMkP299NSh7Xh5yo2knM5Gw4Hcww+vaTB+uicgF/
+         RsyaOrPzLIVTNsYtEnmLFWqdjXuRucCZa2cjk75JpU1AadeHwBbELxTyQFvpulnlq37W
+         3NdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SeCjFiPzu1WZgk+B3woTQQtv2Y+CvoXfusvvPUyD8X8=;
-        b=ohI1tKixDnL4aFQOSMhtCzCyHmmrlbKCLS3OdcpQTWT5bhEU9LDaqK5ihesQojOl5y
-         AXV75a3pxTnkHIjDrSQ9uugJhhiHHG89TTPmwix9dV5yC7KJseOVpx/CJksi0SdWijGP
-         TsEgv44l1/hkSldOPql22UOsaowSjubxtOz1NMPp+uX1JgNGD2PporwBMRO0HxyA4yGN
-         V75JN+Q6PSMW1RRWn6pwDF4D60qckl35Bb6dqw7X3eta3qLIQz9m3zEDdqvxBiqu+71M
-         c7wmmFL29Iv1rm18mvuqumf9DR1i6DzcenX446xLySjK6e9TZsbYM8a6rzUC6VOOFute
-         LqOQ==
-X-Gm-Message-State: AOAM531rSD/wyLlje4wNSster5IX8sItDInYiRYfuxQ/hR1hXJM6z0QR
-        uG9suAuPkwUsuwG1oL0YMKS1w0Nyijddw/d+1FWYIGaAHWk=
-X-Google-Smtp-Source: ABdhPJyEQj3oJsK/7jXWsbWvHDVYHCttdbX+atBczgGkJnciog6tiPpxFBNeinVXpXPcY///l9Zf5yb7TyWbNsfR4Kc=
-X-Received: by 2002:a1c:740c:: with SMTP id p12mr4748241wmc.53.1596662168700;
- Wed, 05 Aug 2020 14:16:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=o5KC1Bos6uiN5uLM6VXqM6B+K2+o69WHUKxNoyliCyU=;
+        b=OcG3YM5BUAf0Chyc4LC1UtAs8xDcjamPRIvK/cmSejDD9ejrs5dKWvNcH2oqtb2+a3
+         bbMnucKJKxqlk6wUoON4lAFjeuZ6RGBOjCiw0b4iW//UaM9DIEAjyAX5SLhFwxUCsBHo
+         cuWssYH7pNu1WZtXL2AK/3zxwwp2HI+s98UY6Yo1UDohVAylO0g/PZuaza6Ik9FF3W1H
+         2qW8o8rcmumPzWG8IY9lEo5T1ybmQ9R5UmxTLh6+OfWdHjs5OgotWgY8Ko49k3f9iAxL
+         ah351UcZ9wJ6gg8v/TVBlK7hqUrUHpRHvuFJXPv2sQy0BbHUaCMIOqibPLa302+j1A2h
+         Znkw==
+X-Gm-Message-State: AOAM533/+pmJvHxQiWdUuBvnBh+UpTSkSRCLLPV2i+7Rdx4x1/wM4vCV
+        bP8w4e7kLBFBDAjs/VvNIQfuFA==
+X-Google-Smtp-Source: ABdhPJyIXs11YS9nvlGl23E/4cZJUiKBInAffrjCWbRlL8nmkjWCxoIBQiBcsv+h+H8ZKjuK+R+mug==
+X-Received: by 2002:a05:620a:5f8:: with SMTP id z24mr5534549qkg.372.1596662252798;
+        Wed, 05 Aug 2020 14:17:32 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:d118:9acc:fdba:dee7])
+        by smtp.gmail.com with ESMTPSA id k2sm2734166qkf.127.2020.08.05.14.17.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2020 14:17:32 -0700 (PDT)
+Date:   Wed, 5 Aug 2020 17:17:30 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
+        dstolee@microsoft.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v2 12/14] commit-graph: add large-filters bitmap chunk
+Message-ID: <20200805211730.GJ9546@syl.lan>
+References: <cover.1596480582.git.me@ttaylorr.com>
+ <cover.1596646576.git.me@ttaylorr.com>
+ <100b26d7c8a5e7ce21a950f33791eadab74e8e70.1596646576.git.me@ttaylorr.com>
+ <xmqqbljoolhy.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.693.git.1596634463.gitgitgadget@gmail.com> <37090d232221415b227c165bd44f6711d21f376b.1596634463.git.gitgitgadget@gmail.com>
-In-Reply-To: <37090d232221415b227c165bd44f6711d21f376b.1596634463.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 5 Aug 2020 17:15:57 -0400
-Message-ID: <CAPig+cSn7pGzr+PYBMAgbp9V0z+OVUGgW=SDWV33HbqjMiiKhA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] mergetool-lib: give kdiff3 prioirty in KDE environments
-To:     =?UTF-8?Q?Marco_Trevisan_=28Trevi=C3=B1o=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Marco_Trevisan_=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbljoolhy.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 5, 2020 at 4:02 PM Marco Trevisan (Treviño) via
-GitGitGadget <gitgitgadget@gmail.com> wrote:
-> mergetool-lib: give kdiff3 prioirty in KDE environments
+On Wed, Aug 05, 2020 at 02:01:29PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > @@ -71,6 +72,10 @@ struct commit_graph {
+> >  	const unsigned char *chunk_base_graphs;
+> >  	const unsigned char *chunk_bloom_indexes;
+> >  	const unsigned char *chunk_bloom_data;
+> > +	const unsigned char *chunk_bloom_large_filters;
+> > +
+> > +	size_t bloom_large_to_alloc;
+> > +	struct bitmap bloom_large;
+>
+> Hmph, is the API rich enough to allow users to release the resource
+> used by such an embedded bitmap?  I ask becuase...
+>
+> > @@ -2503,6 +2577,7 @@ void free_commit_graph(struct commit_graph *g)
+> >  	}
+> >  	free(g->filename);
+> >  	free(g->bloom_filter_settings);
+> > +	bitmap_free(g->bloom_large);
+> >  	free(g);
+> >  }
+>
+> ... this hunk cannot be possibly correct as-is, and cannot be made
+> correct without changing g->bloom_large to a pointer into a heap
+> allocated bitmap, because bitmap_free() wants to not just release
+> the resource held by the bitmap but the bitmap itself.
 
-s/prioirty/priority/
+Yuck, that's definitely wrong. Serves me right for sneaking this in
+after I had run `git rebase -x 'make -j40 DEVELOPER=1 test'
+upstream/master` ;-).
 
-> Signed-off-by: Marco Trevisan (Treviño) <mail@3v1n0.net>
-> ---
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> @@ -288,12 +288,15 @@ list_merge_tool_candidates () {
-> -               cross_desktop_tools="opendiff kdiff3 tkdiff xxdiff"
-> +               cross_desktop_tools="opendiff tkdiff xxdiff"
->                 if is_desktop "GNOME"
->                 then
-> -                       tools="meld $cross_desktop_tools $tools"
-> +                       tools="meld $cross_desktop_tools kdiff3 $tools"
-> +               elif is_desktop "KDE"
-> +               then
-> +                       tools="kdiff3 $cross_desktop_tools meld $tools"
->                 else
-> -                       tools="$cross_desktop_tools meld $tools"
-> +                       tools="$cross_desktop_tools kdiff3 meld $tools"
->                 fi
+Below the scissors line should do the trick. It should apply cleanly at
+this point in the series, but it'll produce a compilation failure on the
+very last patch (fixing it is straightforward and looks like the
+following diff):
 
-Wouldn't this change the behavior for people running old KDE which
-doesn't have XDG_CURRENT_DESKTOP, giving "kdiff3" much lower priority
-than it had before?
+diff --git a/bloom.c b/bloom.c
+index d0c0fd049d..8d07209c6b 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -52,7 +52,7 @@ static int load_bloom_filter_from_graph(struct commit_graph *g,
+                start_index = 0;
 
-This change also illustrates why I wasn't convinced that patch 2/3 was
-necessarily a good idea. When you touch 'cross_desktop_tools' here,
-you end up having to touch all the other 'tools=' lines anyhow, so the
-introduction of 'cross_desktop_tools' didn't buy much in terms of
-reduced maintenance cost.
+        if ((start_index == end_index) &&
+-           (g->bloom_large.word_alloc && !bitmap_get(&g->bloom_large, lex_pos))) {
++           (g->bloom_large && !bitmap_get(g->bloom_large, lex_pos))) {
+                /*
+                 * If the filter is zero-length, either (1) the filter has no
+                 * changes, (2) the filter has too many changes, or (3) it
+
+In either case, this will fix the bad free():
+
+--- >8 ---
+
+Subject: [PATCH] fixup! commit-graph: add large-filters bitmap chunk
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ commit-graph.c | 18 ++++++++++--------
+ commit-graph.h |  2 +-
+ 2 files changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 1fee49d171..add76f1824 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -438,7 +438,10 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 				graph->bloom_large_to_alloc = get_be64(chunk_lookup + 4)
+ 							      - chunk_offset - sizeof(uint32_t);
+
+-				graph->bloom_large.word_alloc = 0; /* populate when necessary */
++				/*
++				 * leave 'bloom_large' uninitialized, and
++				 * populate when necessary
++				 */
+ 				graph->chunk_bloom_large_filters = data + chunk_offset + sizeof(uint32_t);
+ 				graph->bloom_filter_settings->max_changed_paths = get_be32(data + chunk_offset);
+ 			}
+@@ -960,17 +963,15 @@ static int get_bloom_filter_large_in_graph(struct commit_graph *g,
+ 	if (!g || !g->bloom_large_to_alloc)
+ 		return 0;
+
+-	if (!g->bloom_large.word_alloc) {
++	if (!g->bloom_large) {
+ 		size_t i;
+-		g->bloom_large.word_alloc = g->bloom_large_to_alloc;
+-		g->bloom_large.words = xmalloc(g->bloom_large_to_alloc * sizeof(eword_t));
+-
++		g->bloom_large = bitmap_word_alloc(g->bloom_large_to_alloc);
+ 		for (i = 0; i < g->bloom_large_to_alloc; i++)
+-			g->bloom_large.words[i] = get_be64(g->chunk_bloom_large_filters
+-							   + i * sizeof(eword_t));
++			g->bloom_large->words[i] = get_be64(g->chunk_bloom_large_filters
++							    + i * sizeof(eword_t));
+ 	}
+
+-	return bitmap_get(&g->bloom_large, graph_pos - g->num_commits_in_base);
++	return bitmap_get(g->bloom_large, graph_pos - g->num_commits_in_base);
+ }
+
+ struct packed_oid_list {
+@@ -2360,6 +2361,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	free(ctx->graph_name);
+ 	free(ctx->commits.list);
+ 	free(ctx->oids.list);
++	free(ctx->bloom_large);
+
+ 	if (ctx->commit_graph_filenames_after) {
+ 		for (i = 0; i < ctx->num_commit_graphs_after; i++) {
+diff --git a/commit-graph.h b/commit-graph.h
+index f4fb996dd5..b1ab86a3c8 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -75,7 +75,7 @@ struct commit_graph {
+ 	const unsigned char *chunk_bloom_large_filters;
+
+ 	size_t bloom_large_to_alloc;
+-	struct bitmap bloom_large;
++	struct bitmap *bloom_large;
+
+ 	struct bloom_filter_settings *bloom_filter_settings;
+ };
+--
+2.28.0.rc1.13.ge78abce653
+
