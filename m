@@ -2,125 +2,104 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 940F6C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 02:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D1F8C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 05:56:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D9B520678
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 02:00:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6528820842
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 05:56:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HNAuOk3k"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OxrDhpxD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726230AbgHECAQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 22:00:16 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41350 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725864AbgHECAP (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 4 Aug 2020 22:00:15 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5360160799;
-        Wed,  5 Aug 2020 01:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596592784;
-        bh=oFlhixbVOh+2Fu7dIJjQzEV5DpIqnetiHAhmJ9pSegY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=HNAuOk3kULOHhWf/TBcqaUNaapxaTRk1DcgrAy/cCTt5+b4k8h33mQifK3s0WjccB
-         1hQYUlR60QqFDL/IYSw1IQ+nQZ5MIo/99W7VBmoLKAXlHbQxJWU0S9B3XUuF5rVTcC
-         Mc9/DAJCveqNOfIv14ZOHJW9/ohcOwr4g4qC9RT53sgUzZlFJURBDa6CNyUACm1feV
-         4nwy6R25eMVFIL4wzpFpeQhPDT0CClWtVEpbx11yefBEE7uLCUv/qRA5RREeFCJsVe
-         A8cqwPw14Tv8AJ1EvViiCXS7NalTfl4aktJ8eBzpi3ZWe3JO45RW9O6+4wHBz1Vj2d
-         AzYh0lqDjmfj8dAeyn/08eUJF9GlpLQUUEchwAFk3thjIfpZNdGX2dvC1ZkjsCfyvX
-         jOzjQ7C8+dMKrkJtcckmr9iaKxzbcXbpgTq2nsbqHX4aSw9z0KtkDvJ2cNLU5yru4u
-         sgKVGa+HCzOL3mRk4LqcuoA/ED4ZHHCqwh0V21mt0nVnGtryfin
-Date:   Wed, 5 Aug 2020 01:59:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?16DXotedINeh15XXnNeV15HXmdemJ9eZ16c=?= 
-        <inoamsol@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Why is AuthorDate displayed on git-blame?
-Message-ID: <20200805015939.GQ6540@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?16DXotedINeh15XXnNeV15HXmdemJ9eZ16c=?= <inoamsol@gmail.com>,
-        git@vger.kernel.org
-References: <CAAWR3A9po-zMVFdQfDs6R5F_rf0UvSyfByLj-vYZiXLb8+j4Ug@mail.gmail.com>
+        id S1725963AbgHEF4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 01:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58494 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725904AbgHEF4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 01:56:06 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CE7C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 22:56:06 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id qc22so30238067ejb.4
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 22:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xrVNi0QLDJybGXDPwmWYnASAr4TAN3C3MkhawBdHVcc=;
+        b=OxrDhpxDXr/3LgJzrPuGDMb0FmH5+8QtYBBQnHPLpKiAfNnjam1M9aWGmJIKCesCn6
+         sYXzqJT9vLiaa4JXV/uEzaE97m1J1S+fa2q8Fvn0/1XGtYxkBKigoC/5jk8FYZ8vUX33
+         MM1KEqG9clHeL0ZD8dK6LpjWGkzqSmgm6VtI/KO+qj++64A6843xHRkXo/xhFlzwWLB/
+         wDscBN08Cbjl3ZE4ZEUkDZJcuLRsiFQJHHDCDxk7eiCoQxwhoCZrqSIazgecyNiL+pP5
+         I31+8q+tLJHzZ1+gIUZw8E95a4pGa0ICRKUVtW9L6e2vglEpu2m12zWGacG6wE9jx+SM
+         n6rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xrVNi0QLDJybGXDPwmWYnASAr4TAN3C3MkhawBdHVcc=;
+        b=kemK9ob8fK/RigddA1TmbF95M3EvIH3ODQl3Jgh4jXfH3xRSUC2+Fjmf36tmyI0kFv
+         P0dU+egZ5cJzYwPYjUbRBDwZg9AYvPVU4U4VWh7AusgtJEMncU76nhr5hXx0hLe6RTuR
+         SE8cdbIaTJsI/1v7cp3kBMc5xBzhV3VkIStHZcrPEDX2WaLtAiN2L2OUiFmGBMPnne8v
+         gHGpHOCl8VgojCpv4QueXgyPXU49xDchNKLm0x75mpAEWLJLeVyXsHZBa6v3iEjOSQc9
+         yRRs0B7Iaag6IskHFBPVVZ9v8B10YRSOmAYb7Fh8MEog5T8P+Ew2r0MgsYZ/U+ErT493
+         ZpSw==
+X-Gm-Message-State: AOAM531iBBL9DRdaN0CX3NxmPtDYrOXl8KwdsoNTPjWxcYnfNwA0snJi
+        n69+A0sGq5oGJcgR5RwMvUAXleWddoY2HQIc/uU=
+X-Google-Smtp-Source: ABdhPJwElr+wS2FjW5BzvAI7Mon3wi179FdTVq+PFe+Kur6e/obQaiBvrSAJQMnwukHP1/b9LzxNtG+IUaGPKwz4JYE=
+X-Received: by 2002:a17:906:1ec3:: with SMTP id m3mr1635651ejj.197.1596606964832;
+ Tue, 04 Aug 2020 22:56:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="1bhFRg6vL9BT9osV"
-Content-Disposition: inline
-In-Reply-To: <CAAWR3A9po-zMVFdQfDs6R5F_rf0UvSyfByLj-vYZiXLb8+j4Ug@mail.gmail.com>
-User-Agent: Mutt/1.14.5 (2020-06-23)
+References: <20200801175840.1877-1-alipman88@gmail.com> <20200804220113.5909-1-alipman88@gmail.com>
+In-Reply-To: <20200804220113.5909-1-alipman88@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 5 Aug 2020 07:55:53 +0200
+Message-ID: <CAP8UFD1Z1V6+iPO2CMOqdHhUGkmTdvCK+TDNtoOcX8QvC4coNQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] Introduce --first-parent flag for git bisect
+To:     Aaron Lipman <alipman88@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Aug 5, 2020 at 12:04 AM Aaron Lipman <alipman88@gmail.com> wrote:
+>
+> OK, here's take 4! Responding to Junio's feedback, first:
 
---1bhFRg6vL9BT9osV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[...]
 
-On 2020-08-05 at 00:18:43, =D7=A0=D7=A2=D7=9D =D7=A1=D7=95=D7=9C=D7=95=D7=
-=91=D7=99=D7=A6'=D7=99=D7=A7 wrote:
-> Hey everybody, I wonder about the decision behind git-blame and
-> git-annotate date that is being shown.
->=20
-> If I understand correctly, the AuthorDate is displayed, and I'd like
-> to challenge that decision. Consider the following case:
->=20
-> A feature branch having commits authored last week, but merged to the
-> main branch just today. And to the sake of discussion, let's say that
-> the branch has a bug.
->=20
-> When someone encounters the bug on the main branch, he would probably
-> want to know when it was introduced - the date when the bug started
-> to affect him. However, git-blame only shows him when the bug was
-> originally authored, in our case - *last-week*, which is confusing
-> since the main branch was working just fine back then.
->=20
-> So I wonder why was AuthorDate the date chosen to be displayed under
-> git-blame?
+> Martin, thanks for your suggestions
 
-I can't speak for the original author of this, and I think Junio's
-answer explains this well, but I'd like to add an additional thought on
-why the current behavior is useful.
+[...]
 
-For me, I am primarily interested in using blame to find information
-about the party most knowledgable about the subsystem or area, or to
-find a commit that introduced a change (possibly so I can read its
-commit message or pull request).  I'm less likely to use blame to, well,
-blame people.  Consequently, it's often helpful for me to know about
-when the code was written, since that tells me more about the author and
-their situation than the committer information does.
+It's better to have the people you are replying to as recipients of
+your emails (in the "To:" field). I have added them into "Cc:".
 
-For a project like Git, the committer information would not be very
-interesting to me, since Junio, while very competent, is not the expert
-for every line in the codebase.  Since we're displaying the author name,
-we might as well display the author timestamp as well.
+> > (Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>, FWIW.)
+>
+> I'm still getting used to the conventions - should I add your name as
+> a signed-off-by tag, a thanks-to tag, or both?
 
-I'm in favor of an option for this, though.
---=20
-brian m. carlson: Houston, Texas, US
+We often use the following trailers:
 
---1bhFRg6vL9BT9osV
-Content-Type: application/pgp-signature; name="signature.asc"
+- "Helped-by:" when someone helped you
+- "Suggested-by:" when someone suggested the main idea in the patch
+- "Reported-by:" when someone reported an issue fixed by the patch
+- "Acked-by:" when someone explicitly acked the patch
+- "Reviewed-by:" when someone explicitly gave their "Reviewed-by:"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+If your patch is based on a patch from someone else, you can also keep
+the "Signed-off-by:" and other trailers that the person already put in
+the commit message. If you haven't made a lot of changes to a patch
+initially from someone else you can also keep them as the author.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXyoSiwAKCRB8DEliiIei
-gTBWAP9+q3I3LVG8QPcyK7Bw9OaB9Qe5nHJZI0rwTQNrWwmaEQD+NqTYZsslsEj1
-6ncFn6fStPDAWiqgjciELxsmZz1qKwc=
-=VSvh
------END PGP SIGNATURE-----
-
---1bhFRg6vL9BT9osV--
+Thanks,
+Christian.
