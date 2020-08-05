@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B065C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27EC8C433DF
 	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD65E206F6
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 061F622CAF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LaB41Hmg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xp8lQbmA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726629AbgHEVwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 17:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37896 "EHLO
+        id S1726624AbgHEVwG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 17:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726547AbgHEVv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 17:51:57 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5CA0C06179F
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 14:51:56 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id p14so7093753wmg.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:51:56 -0700 (PDT)
+        with ESMTP id S1726551AbgHEVv7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 17:51:59 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D62EC0617A0
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 14:51:57 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id p14so7093782wmg.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=H7l2w2s3HhCb+5oejFFtuQYCJu1bxocpCZKJxQqgaLA=;
-        b=LaB41Hmg4JKLn7V6qgGLqVRbsKSnyJVJ/brpDFxacAEPcYnZ9neydxArXqeve9JKgQ
-         lJz8VbL6/ARaOtkqVMS8oAxBRTj9d8a4lpPAXb0ulOsQJEK0RlX+3j8TWumjZXX1mcdT
-         faYsSgnv/InDe5AYArSrC51lll7sxv4+XyFyfpcHPwAcGzlnU2B3n5/lEdmdPN+cr/oY
-         y/F6pCpOU0qbYfsju8yAHLHFvMw8lmI7F1bGm5rkf3HCfTEVhitCtkoO2deFjxcwAihZ
-         urDxrfLtLGBBj5D/eYRiJfI017ylw6682VFXbSm4oDyyGfj56WISXVak29QsHM0vvAwn
-         CeWA==
+        bh=eayZ8iqKjfrVZq20Nn41q2KGBtxB2MvtcvFO0SPVCGM=;
+        b=Xp8lQbmAtIPdT31KdCWMqlK0bQk+6tNO8xSzvfSllUI33lx8PvSDY2VUV2b/IcAhvm
+         vdBkQqyglHss+bEpmtBmsi4Wr3AS3UPD0fXQcxsvvWQivjZVbL1XhfR7A8Rpx9xvVciP
+         Y8zJgIGtzqg8/ObgMXnsPdDYFC1GBygAGhr58wwuKXgqiOGVYef0iFNNLMtmbBuFCzet
+         icZyx1YHNouvmLKTQrednw9m7OHEHGSaXjBFyt7VT/ejlkgUytgVCfG3TPta5g+jo5+d
+         xO+DKVKLrhvF0Ze3mtyzCEz/P/enhPAc2XE+ghPLivDYZKv22Z4kjdszp3kTjo+CyDwP
+         1MxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=H7l2w2s3HhCb+5oejFFtuQYCJu1bxocpCZKJxQqgaLA=;
-        b=JeFsrmUG1NkpbZi51ScHz8AUAe0mag++t9GVFyePCXXU1dIi5WnfMzLi7CJhGi/J9W
-         Ej/xChU9Vjcr6h1Z62WTFYu12Z6Q42eH43imwgrxw26J9KyT5UeRA7bBrFy58WMnHMvy
-         h/xfJjumInBzaxIgd8NpoZcbUjMm32pBLsMWjYZvepxMDSfwlX+z9fSkL1nwEncP7WcA
-         X0PJTXqE3qKBsR6WLhvvVZ6z7pj9kJOr0IQrhfwrdLkmjb6tjUT7iBsmiPfoHC/aGfdn
-         reyeOaPjgnHt348ulKKtGMyKFvJqsaCWAOjPGga7eGpCAkuFhWRjT6rtnF9Tta8gedPn
-         xPKw==
-X-Gm-Message-State: AOAM530D++hrKHXGrP9PoMQ2hU/ZgCi9nhGrH+dCuGcrOdn8dyoPdG6a
-        46wvhJUZx8ff5q3h8FCca+BiYZy0
-X-Google-Smtp-Source: ABdhPJyA3SOtC4wZlkYK14pnCMVfIQJicN0nbD1heAHgOGbayOT1BZP85CUA48IwYggZEPx7+fw+QQ==
-X-Received: by 2002:a7b:c7c6:: with SMTP id z6mr5330322wmk.17.1596664315348;
-        Wed, 05 Aug 2020 14:51:55 -0700 (PDT)
+        bh=eayZ8iqKjfrVZq20Nn41q2KGBtxB2MvtcvFO0SPVCGM=;
+        b=cf3h8Mq+4EeSHUOiEG5Nej5RdMK1qfAGmGNSsZQeqaSoxU+z56mzPzghqwD8Hi0211
+         4BCj98nTN2rjNSmFEBJQTf2G80Eht4DZ/bbTvzvB/JIk7xpiNZr4IJJohaW5InOuGXPE
+         IxWBRgWgrWpcBSgdvqyW7v3/wCopNt7m/ePOIFJvFvSvYD+zEgmr70+7vpsZ9U2SLAA2
+         jDudOvleUa9ztaNRxW4cvidsfN8aUraX/sFQ/Ou+H/SboE9P0hQNlo3oTWUpu42knfvd
+         1WKf/5Xm6xJh2A8LXW25lynNVTiJS4TGUNcTpYKpnzp7UXTYA55NwP7VCUltBXSAgo55
+         xH/A==
+X-Gm-Message-State: AOAM5326EjSUbpuzhLMIyi2+lJIZV+7/JDwhKbOmPfcyE3qvi2dYGQWq
+        Lm2q91WfUZb67K+wJZhHUjS/eDj1
+X-Google-Smtp-Source: ABdhPJwu4ZVeuQVZw9mGDcY/mXkWY/KS4QzSBcubiQPlUXpcrS9l2l0rCt9bOGCmMpUjn6+PAxdm4g==
+X-Received: by 2002:a7b:c24e:: with SMTP id b14mr5355200wmj.128.1596664316144;
+        Wed, 05 Aug 2020 14:51:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g18sm4389642wru.27.2020.08.05.14.51.54
+        by smtp.gmail.com with ESMTPSA id e16sm4201978wrx.30.2020.08.05.14.51.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 05 Aug 2020 14:51:55 -0700 (PDT)
-Message-Id: <1c43f55d7c1d5a16031115d5de56b5a5302b5597.1596664306.git.gitgitgadget@gmail.com>
+Message-Id: <feace82752199aea87e728c340e9a7c9f0b2a2fa.1596664306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
 References: <pull.684.git.1595882588.gitgitgadget@gmail.com>
         <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Aug 2020 21:51:44 +0000
-Subject: [PATCH v2 8/9] format-support: move `format_sanitized_subject()` from
- pretty
+Date:   Wed, 05 Aug 2020 21:51:45 +0000
+Subject: [PATCH v2 9/9] ref-filter: add `sanitize` option for 'subject' atom
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,156 +79,160 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-In hope of some new features in `subject` atom, move funtion
-`format_sanitized_subject()` and all the function it uses
-to new file format-support.{c,h}.
+Currently, subject does not take any arguments. This commit introduce
+`sanitize` formatting option to 'subject' atom.
 
-Consider this new file as a common interface between functions that
-pretty.c and ref-filter.c shares.
+`subject:sanitize` - print sanitized subject line, suitable for a filename.
+
+e.g.
+%(subject): "the subject line"
+%(subject:sanitize): "the-subject-line"
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- Makefile         |  1 +
- format-support.c | 43 +++++++++++++++++++++++++++++++++++++++++++
- format-support.h |  6 ++++++
- pretty.c         | 40 +---------------------------------------
- 4 files changed, 51 insertions(+), 39 deletions(-)
- create mode 100644 format-support.c
- create mode 100644 format-support.h
+ Documentation/git-for-each-ref.txt |  3 +++
+ ref-filter.c                       | 24 ++++++++++++++++--------
+ t/t6300-for-each-ref.sh            |  7 +++++++
+ 3 files changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 372139f1f2..4dfc384b49 100644
---- a/Makefile
-+++ b/Makefile
-@@ -882,6 +882,7 @@ LIB_OBJS += exec-cmd.o
- LIB_OBJS += fetch-negotiator.o
- LIB_OBJS += fetch-pack.o
- LIB_OBJS += fmt-merge-msg.o
-+LIB_OBJS += format-support.o
- LIB_OBJS += fsck.o
- LIB_OBJS += fsmonitor.o
- LIB_OBJS += gettext.o
-diff --git a/format-support.c b/format-support.c
-new file mode 100644
-index 0000000000..d693aa1744
---- /dev/null
-+++ b/format-support.c
-@@ -0,0 +1,43 @@
-+#include "diff.h"
-+#include "log-tree.h"
-+#include "color.h"
-+#include "format-support.h"
-+
-+static int istitlechar(char c)
-+{
-+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
-+		(c >= '0' && c <= '9') || c == '.' || c == '_';
-+}
-+
-+void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len)
-+{
-+	char *r = xmemdupz(msg, len);
-+	size_t trimlen;
-+	size_t start_len = sb->len;
-+	int space = 2;
-+	int i;
-+
-+	for (i = 0; i < len; i++) {
-+		if (r[i] == '\n')
-+			r[i] = ' ';
-+		if (istitlechar(r[i])) {
-+			if (space == 1)
-+				strbuf_addch(sb, '-');
-+			space = 0;
-+			strbuf_addch(sb, r[i]);
-+			if (r[i] == '.')
-+				while (r[i+1] == '.')
-+					i++;
-+		} else
-+			space |= 1;
-+	}
-+	free(r);
-+
-+	/* trim any trailing '.' or '-' characters */
-+	trimlen = 0;
-+	while (sb->len - trimlen > start_len &&
-+		(sb->buf[sb->len - 1 - trimlen] == '.'
-+		|| sb->buf[sb->len - 1 - trimlen] == '-'))
-+		trimlen++;
-+	strbuf_remove(sb, sb->len - trimlen, trimlen);
-+}
-diff --git a/format-support.h b/format-support.h
-new file mode 100644
-index 0000000000..c344ccbc33
---- /dev/null
-+++ b/format-support.h
-@@ -0,0 +1,6 @@
-+#ifndef FORMAT_SUPPORT_H
-+#define FORMAT_SUPPORT_H
-+
-+void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len);
-+
-+#endif /* FORMAT_SUPPORT_H */
-diff --git a/pretty.c b/pretty.c
-index 8d08e8278a..2de01b7115 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -12,6 +12,7 @@
- #include "reflog-walk.h"
- #include "gpg-interface.h"
- #include "trailer.h"
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index dd09763e7d..616ce46087 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -247,6 +247,9 @@ contents:subject::
+ 	The first paragraph of the message, which typically is a
+ 	single line, is taken as the "subject" of the commit or the
+ 	tag message.
++	Instead of `contents:subject`, field `subject` can also be used to
++	obtain same results. `:sanitize` can be appended to `subject` for
++	subject line suitable for filename.
+ 
+ contents:body::
+ 	The remainder of the commit or the tag message that follows
+diff --git a/ref-filter.c b/ref-filter.c
+index 6d5bbb14a2..016a03ef20 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -23,6 +23,7 @@
+ #include "worktree.h"
+ #include "hashmap.h"
+ #include "argv-array.h"
 +#include "format-support.h"
  
- static char *user_format;
- static struct cmt_fmt_map {
-@@ -833,45 +834,6 @@ static void parse_commit_header(struct format_commit_context *context)
- 	context->commit_header_parsed = 1;
+ static struct ref_msg {
+ 	const char *gone;
+@@ -127,8 +128,8 @@ static struct used_atom {
+ 			unsigned int nobracket : 1, push : 1, push_remote : 1;
+ 		} remote_ref;
+ 		struct {
+-			enum { C_BARE, C_BODY, C_BODY_DEP, C_LENGTH,
+-			       C_LINES, C_SIG, C_SUB, C_TRAILERS } option;
++			enum { C_BARE, C_BODY, C_BODY_DEP, C_LENGTH, C_LINES,
++			       C_SIG, C_SUB, C_SUB_SANITIZE, C_TRAILERS } option;
+ 			struct process_trailer_options trailer_opts;
+ 			unsigned int nlines;
+ 		} contents;
+@@ -301,9 +302,12 @@ static int body_atom_parser(const struct ref_format *format, struct used_atom *a
+ static int subject_atom_parser(const struct ref_format *format, struct used_atom *atom,
+ 			       const char *arg, struct strbuf *err)
+ {
+-	if (arg)
+-		return strbuf_addf_ret(err, -1, _("%%(subject) does not take arguments"));
+-	atom->u.contents.option = C_SUB;
++	if (!arg)
++		atom->u.contents.option = C_SUB;
++	else if (!strcmp(arg, "sanitize"))
++		atom->u.contents.option = C_SUB_SANITIZE;
++	else
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(subject) argument: %s"), arg);
+ 	return 0;
  }
  
--static int istitlechar(char c)
--{
--	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
--		(c >= '0' && c <= '9') || c == '.' || c == '_';
--}
--
--static void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len)
--{
--	char *r = xmemdupz(msg, len);
--	size_t trimlen;
--	size_t start_len = sb->len;
--	int space = 2;
--	int i;
--
--	for (i = 0; i < len; i++) {
--		if (r[i] == '\n')
--			r[i] = ' ';
--		if (istitlechar(r[i])) {
--			if (space == 1)
--				strbuf_addch(sb, '-');
--			space = 0;
--			strbuf_addch(sb, r[i]);
--			if (r[i] == '.')
--				while (r[i+1] == '.')
--					i++;
--		} else
--			space |= 1;
--	}
--	free(r);
--
--	/* trim any trailing '.' or '-' characters */
--	trimlen = 0;
--	while (sb->len - trimlen > start_len &&
--		(sb->buf[sb->len - 1 - trimlen] == '.'
--		|| sb->buf[sb->len - 1 - trimlen] == '-'))
--		trimlen++;
--	strbuf_remove(sb, sb->len - trimlen, trimlen);
--}
--
- const char *format_subject(struct strbuf *sb, const char *msg,
- 			   const char *line_separator)
- {
+@@ -1282,8 +1286,8 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 			continue;
+ 		if (deref)
+ 			name++;
+-		if (strcmp(name, "subject") &&
+-		    strcmp(name, "body") &&
++		if (strcmp(name, "body") &&
++		    !starts_with(name, "subject") &&
+ 		    !starts_with(name, "trailers") &&
+ 		    !starts_with(name, "contents"))
+ 			continue;
+@@ -1295,7 +1299,11 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 
+ 		if (atom->u.contents.option == C_SUB)
+ 			v->s = copy_subject(subpos, sublen);
+-		else if (atom->u.contents.option == C_BODY_DEP)
++		else if (atom->u.contents.option == C_SUB_SANITIZE) {
++			struct strbuf sb = STRBUF_INIT;
++			format_sanitized_subject(&sb, subpos, sublen);
++			v->s = strbuf_detach(&sb, NULL);
++		} else if (atom->u.contents.option == C_BODY_DEP)
+ 			v->s = xmemdupz(bodypos, bodylen);
+ 		else if (atom->u.contents.option == C_LENGTH)
+ 			v->s = xstrfmt("%"PRIuMAX, (uintmax_t)strlen(subpos));
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 79d5b29387..220ff5c3c2 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -150,6 +150,7 @@ test_atom head taggerdate ''
+ test_atom head creator 'C O Mitter <committer@example.com> 1151968723 +0200'
+ test_atom head creatordate 'Tue Jul 4 01:18:43 2006 +0200'
+ test_atom head subject 'Initial'
++test_atom head subject:sanitize 'Initial'
+ test_atom head contents:subject 'Initial'
+ test_atom head body ''
+ test_atom head contents:body ''
+@@ -207,6 +208,7 @@ test_atom tag taggerdate 'Tue Jul 4 01:18:45 2006 +0200'
+ test_atom tag creator 'C O Mitter <committer@example.com> 1151968725 +0200'
+ test_atom tag creatordate 'Tue Jul 4 01:18:45 2006 +0200'
+ test_atom tag subject 'Tagging at 1151968727'
++test_atom tag subject:sanitize 'Tagging-at-1151968727'
+ test_atom tag contents:subject 'Tagging at 1151968727'
+ test_atom tag body ''
+ test_atom tag contents:body ''
+@@ -619,6 +621,7 @@ test_expect_success 'create tag with subject and body content' '
+ 	git tag -F msg subject-body
+ '
+ test_atom refs/tags/subject-body subject 'the subject line'
++test_atom refs/tags/subject-body subject:sanitize 'the-subject-line'
+ test_atom refs/tags/subject-body body 'first body line
+ second body line
+ '
+@@ -639,6 +642,7 @@ test_expect_success 'create tag with multiline subject' '
+ 	git tag -F msg multiline
+ '
+ test_atom refs/tags/multiline subject 'first subject line second subject line'
++test_atom refs/tags/multiline subject:sanitize 'first-subject-line-second-subject-line'
+ test_atom refs/tags/multiline contents:subject 'first subject line second subject line'
+ test_atom refs/tags/multiline body 'first body line
+ second body line
+@@ -671,6 +675,7 @@ sig='-----BEGIN PGP SIGNATURE-----
+ 
+ PREREQ=GPG
+ test_atom refs/tags/signed-empty subject ''
++test_atom refs/tags/signed-empty subject:sanitize ''
+ test_atom refs/tags/signed-empty contents:subject ''
+ test_atom refs/tags/signed-empty body "$sig"
+ test_atom refs/tags/signed-empty contents:body ''
+@@ -678,6 +683,7 @@ test_atom refs/tags/signed-empty contents:signature "$sig"
+ test_atom refs/tags/signed-empty contents "$sig"
+ 
+ test_atom refs/tags/signed-short subject 'subject line'
++test_atom refs/tags/signed-short subject:sanitize 'subject-line'
+ test_atom refs/tags/signed-short contents:subject 'subject line'
+ test_atom refs/tags/signed-short body "$sig"
+ test_atom refs/tags/signed-short contents:body ''
+@@ -686,6 +692,7 @@ test_atom refs/tags/signed-short contents "subject line
+ $sig"
+ 
+ test_atom refs/tags/signed-long subject 'subject line'
++test_atom refs/tags/signed-long subject:sanitize 'subject-line'
+ test_atom refs/tags/signed-long contents:subject 'subject line'
+ test_atom refs/tags/signed-long body "body contents
+ $sig"
 -- 
 gitgitgadget
-
