@@ -2,143 +2,244 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DC0CC433E1
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EBFDC433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 19:06:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 272CE2250E
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:58:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 342D52064B
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 19:06:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ecWhOFl4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TngxwqfH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728458AbgHER6k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:58:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
+        id S1727789AbgHETGo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 15:06:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728276AbgHERzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:55:41 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4D4C061575
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:55:21 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id v15so20194380lfg.6
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:55:21 -0700 (PDT)
+        with ESMTP id S1728291AbgHETFt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 15:05:49 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04723C061756
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 12:05:49 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z18so38142484wrm.12
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 12:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=IQXfEkScQe/hH7jg1HbjgZ1TqZrWsygEvI0vXfubQew=;
-        b=ecWhOFl4OsqUSvtT+YLVGHLuJZVC8dpQ0Fy522S8YV+zyj6HD4PN7cWqkImXjaXazW
-         BA0pJzH9udRKCXDAMmRoKHeXPQffWpoGUNUc6saD8Zt7Xm16wtEbwqVwYytMo0ZRNISW
-         WTdA0dYZVyPtzP0tUAkVxtRZTVbq4pb3hxok19Wt4CgqFKrCVE+RARXD1sxh6dbi2X50
-         V2So4aoCbeU9Ue57TnvKl4VeLwkRNQuc4PMjolpx6fix/Euxr2m+hazuf5JwmjPSi/Dg
-         BRiLEud5lDNcx7y5bkqP706tCnIHw5FzCh+yObvWzAyxT/sPlEHGoGKeh8wasibbMlIm
-         BnKA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=6S+PdLUOfIR15iYUghOaFay92qW9JUqXCMzHAihWRT4=;
+        b=TngxwqfHI4NlXb9UoMVINV+x4lDJK/VZGkaaP/DTcL/CRa33J0rTHyyUkjHftu4Pun
+         ZlulIP2lzRQMzQLCAOOqxcE07qUKxBksyLuVOGvbCo7XXnaudCJzTs4A1zv5JsRsQYA4
+         d3AjQ/FkSHHNqWhXAxUADHUkQqNP/RY+r/Lsp14Qwqh9is7qAh44OD9pnEvCDDTdQhoV
+         E2Z9LpCSObvGkI6xn21Sf2MzkhBlTChzqo5CLmiJ8Ii6wjP88EorgZEzhZdx8WXEpEO2
+         XewhAVQGAwNrf4zomkhYxOACQpXMr5qVx6DadV9QWAXPskaHQKrb2PtcYF+GBwgXBbbY
+         ZUQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=IQXfEkScQe/hH7jg1HbjgZ1TqZrWsygEvI0vXfubQew=;
-        b=ZEaLdkoAvF8whNCRp/d2TSMSRwxqKhIQFi/r8EYJkkPI+roTq9SSGxW7COQRBoS1z3
-         brUCYwfYLa6xannVL3FVU+8zFAM1eepfixK/W/z4XPLqy/ZQ3mDvAUoEHLYj+m166jCw
-         4hN+Gzb+Bn9GHBqk5R9nJank3zPe4Tx6SMnw3zbLPonJrcu+lsGpXLswhdiozhi3e7KD
-         vOGMHY1ve8QJ1ffQnX4s7RqnyFvXqn1KQ4wjrdCQftXHQy1rl/1+Qy2sHMB5C42gtcDq
-         ufN3eh6dAwXUM1O2eqxWVOMpMF50AChHmMbghMWfo+zdDgtzbtaTYgF1ldZ2DbWPLBNi
-         dyZg==
-X-Gm-Message-State: AOAM5317sdEBLgXHuXIKJaC8BJHsYM/ZStZMPH8mlSio/drXsE7BTk2g
-        P0rCRNm6Ru3DwHh0SbeZ6Ng=
-X-Google-Smtp-Source: ABdhPJxVvldTFtivYeWQ6wEK6rAKSXkrJcrMFEr/2lzzwuFzuEJvkRBgIDoLvWCeUvErUvalqetShQ==
-X-Received: by 2002:ac2:5338:: with SMTP id f24mr2134432lfh.5.1596650119649;
-        Wed, 05 Aug 2020 10:55:19 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id p1sm1179842lji.93.2020.08.05.10.55.17
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6S+PdLUOfIR15iYUghOaFay92qW9JUqXCMzHAihWRT4=;
+        b=R0GqlsWmdsg5K/W6ICY3bSLu9+IZwG3J1tzzOpbrXM25vfsgfl7pk9w3E2Nn7TYLSL
+         PbcoYFHRbsj2fVnS2xGiuoQIs7iB+5L1vkKVZ32ZPOKPXbLxOHBQXm7jDU8Nr3Cuccgl
+         m+OIPlpzPjHeCN00kmFB//o6Wzv22mDLEAw9sr0tFQ/0Zz7mFpdnY8+hUQ8uV9QUJv/F
+         5z0/yLsvZylnOcUoM8I/SblZWN/0f3gSQjp3RIxdG4cBJeKNbWK7UUUIvuZHwUNA23Mg
+         2uwQaj/+Dn0fLwa0HXWjXcngWbHZjT3bz79GUJWeaQJI0heUcgcpEjT9lS/HQmhTY6Y5
+         Vo3w==
+X-Gm-Message-State: AOAM532rz2w4yDoUnoHbnuXCH0aDLkkFgGjr7snapR7hml7ZCArG4Ons
+        pDFq6Fr8cyVAJkiStzgriZVJ4qKw
+X-Google-Smtp-Source: ABdhPJw7Z+9E3FioWlxmPujhi96yWknhkPgJDn6LJlBD2g5IM2Jt4TIyVFkxfg/OiUsq98LGTB5mag==
+X-Received: by 2002:adf:f207:: with SMTP id p7mr4022008wro.292.1596654347435;
+        Wed, 05 Aug 2020 12:05:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r3sm3854611wro.1.2020.08.05.12.05.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:55:18 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru>
-        <20200804195830.GA2014743@coredump.intra.peff.net>
-        <87k0ydp0hc.fsf@osv.gnss.ru> <xmqqeeoloz74.fsf@gitster.c.googlers.com>
-Date:   Wed, 05 Aug 2020 20:55:17 +0300
-In-Reply-To: <xmqqeeoloz74.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 05 Aug 2020 09:05:35 -0700")
-Message-ID: <87d045nfju.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Wed, 05 Aug 2020 12:05:46 -0700 (PDT)
+Message-Id: <pull.828.git.git.1596654345718.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 05 Aug 2020 19:05:45 +0000
+Subject: [PATCH] sequencer: avoid garbled merge machinery messages due to
+ commit labels
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Jeff King <peff@peff.net> writes:
->> ...
->> In this case your original test:
->>
->> git log --no-diff-merges -p --first-parent [--diff-merges=1: implied] master
->>
->> would fail, as implied --diff-merges=1 then wins.
->
-> IMHO, I think this is an absolutely wrong thing to do.  At least to
-> me (and I suspect it would be to many users), what "--first-parent
-> implies 'when showing a diff, compare only with the first parent'"
-> means is that it should do so unless told to do otherwise.
->
->     git log --no-diff-merges -p --first-parent
->
-> explicitly tells the command that the user does not want to see
-> patches for merge commits.  I do not see any reason why
-> "--first-parent", which merely *implies* a specific diff generation
-> preference for merges, countermand it.  IOW the implication is
-> conditional.
->
-> It is like saying
->
->     git log --first-parent
->
-> should show patches because it *implies* comparing only with the
-> first parent, but you can see why it is wrong.  It is because that
-> implication is conditional---it kicks in only when the command is
-> told to compare with any parent (i.e. "-p").  
->
-> I.e. the implication is "compare only with the first parent if told
-> to compare, and if not told what to compare with explicitly".
+sequencer's get_message() exists to provide good labels on conflict
+hunks; see commits
+  d68565402a ("revert: clarify label on conflict hunks", 2010-03-20)
+  bf975d379d ("cherry-pick, revert: add a label for ancestor", 2010-03-20)
+  043a4492b3 ("sequencer: factor code out of revert builtin", 2012-01-11).
+for background on this function.  These labels are of the form
+  <commitID>... <commit summary>
+or
+  parent of <commitID>... <commit summary>
+These labels are then passed as branch names to the merge machinery.
+However, these labels, as formatted, often also serve to confuse.  For
+example, if we have a rename involved in a content merge, then it
+results in text such as the following:
 
-I believe my approach is more straightforward and is free from
-interpretations.
+    <<<<<<<< HEAD:foo.c
+      int j;
+    ========
+      int counter;
+    >>>>>>>> b01dface... Removed unnecessary stuff:bar.c
 
-To make my point let's get back to the subject (for a moment :-)).
+Or in various conflict messages, it can make it very difficult to read:
 
-To me "--first-parent implies -m" is simple and unambiguous:
+    CONFLICT (rename/delete): foo.c deleted in b01dface... Removed
+    unnecessary stuff and renamed in HEAD.  Version HEAD of foo.c left
+    in tree.
 
-(git log [*] --first-parent [*]) == (git log [*] --first-parent -m [*])
+    CONFLICT (file location): dir1/foo.c added in b01dface... Removed
+    unnecessary stuff inside a directory that was renamed in HEAD,
+    suggesting it should perhaps be moved to dir2/foo.c.
 
-No further explanations are needed.
+Make a minor change to remove the ellipses and add parentheses around
+the commit summary; this makes all three examples much easier to read:
 
-The consequence is that an option that is supposed to override -m must
-follow -m, and thus --first-parent, not precede it, period.
+    <<<<<<<< HEAD:foo.c
+      int j;
+    ========
+      int counter;
+    >>>>>>>> b01dface (Removed unnecessary stuff):bar.c
 
-Yes, we can invent the rule that implied options don't participate in
-overriding of explicit options, or that explicit option always overrides
-all the implicit, or some such, but I see absolutely no reason to
-complicate the model.
+    CONFLICT (rename/delete): foo.c deleted in b01dface (Removed
+    unnecessary stuff) and renamed in HEAD.  Version HEAD of foo.c left
+    in tree.
 
-Thanks,
--- Sergey
+    CONFLICT (file location): dir1/foo.c added in b01dface (Removed
+    unnecessary stuff) inside a directory that was renamed in HEAD,
+    suggesting it should perhaps be moved to dir2/foo.c.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    sequencer: avoid garbled merge machinery messages due to commit labels
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-828%2Fnewren%2Fsequencer-merge-messages-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-828/newren/sequencer-merge-messages-v1
+Pull-Request: https://github.com/git/git/pull/828
+
+ sequencer.c                     |  2 +-
+ t/t3404-rebase-interactive.sh   |  2 +-
+ t/t3507-cherry-pick-conflict.sh | 20 ++++++++++----------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index fd7701c88a..e988c12ad2 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -355,7 +355,7 @@ static int get_message(struct commit *commit, struct commit_message *out)
+ 	subject_len = find_commit_subject(out->message, &subject);
+ 
+ 	out->subject = xmemdupz(subject, subject_len);
+-	out->label = xstrfmt("%s... %s", abbrev, out->subject);
++	out->label = xstrfmt("%s (%s)", abbrev, out->subject);
+ 	out->parent_label = xstrfmt("parent of %s", out->label);
+ 
+ 	return 0;
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 4a7d21f898..1d0a656ebd 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -256,7 +256,7 @@ test_expect_success 'stop on conflicting pick' '
+ 	D
+ 	=======
+ 	G
+-	>>>>>>> $commit... G
++	>>>>>>> $commit (G)
+ 	EOF
+ 	git tag new-branch1 &&
+ 	test_must_fail git rebase -i master &&
+diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+index 752bc43487..152ea11dc9 100755
+--- a/t/t3507-cherry-pick-conflict.sh
++++ b/t/t3507-cherry-pick-conflict.sh
+@@ -283,12 +283,12 @@ test_expect_success 'failed cherry-pick describes conflict in work tree' '
+ 	a
+ 	=======
+ 	c
+-	>>>>>>> objid picked
++	>>>>>>> objid (picked)
+ 	EOF
+ 
+ 	test_must_fail git cherry-pick picked &&
+ 
+-	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
++	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -298,16 +298,16 @@ test_expect_success 'diff3 -m style' '
+ 	cat <<-EOF >expected &&
+ 	<<<<<<< HEAD
+ 	a
+-	||||||| parent of objid picked
++	||||||| parent of objid (picked)
+ 	b
+ 	=======
+ 	c
+-	>>>>>>> objid picked
++	>>>>>>> objid (picked)
+ 	EOF
+ 
+ 	test_must_fail git cherry-pick picked &&
+ 
+-	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
++	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -319,7 +319,7 @@ test_expect_success 'revert also handles conflicts sanely' '
+ 	a
+ 	=======
+ 	b
+-	>>>>>>> parent of objid picked
++	>>>>>>> parent of objid (picked)
+ 	EOF
+ 	{
+ 		git checkout picked -- foo &&
+@@ -345,7 +345,7 @@ test_expect_success 'revert also handles conflicts sanely' '
+ 	test_must_fail git update-index --refresh -q &&
+ 	test_must_fail git diff-index --exit-code HEAD &&
+ 	test_cmp expected-stages actual-stages &&
+-	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
++	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -429,16 +429,16 @@ test_expect_success 'revert conflict, diff3 -m style' '
+ 	cat <<-EOF >expected &&
+ 	<<<<<<< HEAD
+ 	a
+-	||||||| objid picked
++	||||||| objid (picked)
+ 	c
+ 	=======
+ 	b
+-	>>>>>>> parent of objid picked
++	>>>>>>> parent of objid (picked)
+ 	EOF
+ 
+ 	test_must_fail git revert picked &&
+ 
+-	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
++	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+ 	test_cmp expected actual
+ '
+ 
+
+base-commit: dc04167d378fb29d30e1647ff6ff51dd182bc9a3
+-- 
+gitgitgadget
