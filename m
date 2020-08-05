@@ -6,93 +6,110 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25BBDC433E0
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD85C433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:45:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1B7520792
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:37:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3000120792
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:45:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="oxobjKiJ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rwQQ/NiO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725981AbgHEBh1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 21:37:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47034 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbgHEBh0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 21:37:26 -0400
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A14C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 18:37:26 -0700 (PDT)
-Content-Transfer-Encoding: quoted-printable
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-        s=default; t=1596591444;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:  in-reply-to:in-reply-to;
-        bh=BAmoUwaoe64BfNbhkVjgatAKchT/AeQpA+uOCa3um8o=;
-        b=oxobjKiJDqwZFf8aZ5ZEiAhzCe6C8jiS2eAc72fA6PpWojiGrXZQIqz+qAT+OJXi1XiLk+
-        3ojZob/1WHTX8OIqTfEnTIAMU6u9Vt34bHJIPW8i6j5V51rIONVBm3SPPeYHCYtofemBkg
-        EYjx7Ve7XOHr5vRt0r4+YWFMXz3LOQw=
-Content-Type: text/plain; charset=UTF-8
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH v2] apply: allow "new file" patches on i-t-a entries
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   "Raymond E. Pasco" <ray@ameretat.dev>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Date:   Tue, 04 Aug 2020 20:32:48 -0400
-Message-Id: <C4ON23BIKMVK.2ZESQJ1FB5PVA@ziyou.local>
-In-Reply-To: <xmqqeeomq8dr.fsf@gitster.c.googlers.com>
+        id S1726282AbgHEBpX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 21:45:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50445 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725950AbgHEBpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 21:45:22 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE5578388B;
+        Tue,  4 Aug 2020 21:45:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MM/tZQCHhXFTcZFb3DpmnWlgC7k=; b=rwQQ/N
+        iOZ3WSo9YuuBOrK7PEdblp5zKmMn0G38OHCGYWmjrl7GKUHspAK2o1Y3lA/pby66
+        8SZK/JMihwPoDiGL6PSmJ7bc7bJuJBj8wOj1krfl5FjcDwo1e01WRUzhmsFRkD54
+        4SYs9QZ4a9/S1sE+mInNKTDQE452ByhEfslpE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AabYzin4zm3qG5pPBkGbSYLfHpot8Vsk
+        h5QJBDM4dHdo7AKJV5YQeKWpyxrmx7ZBLYNzySdaNugBfYcP8dt2RrGuHNGZ+K/q
+        htCjAQ21Zbhrw72fr3y9nKi08TDR5sKR0AW2HfXYTPKa6oeKoB2T2jdPtnB1ia6Z
+        xStyzjux7ZU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5F9383889;
+        Tue,  4 Aug 2020 21:45:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D76683888;
+        Tue,  4 Aug 2020 21:45:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v3 0/3] Remove special casing for PSEUDOREF updates
+References: <pull.673.v2.git.1594329108.gitgitgadget@gmail.com>
+        <pull.673.v3.git.1594925141.gitgitgadget@gmail.com>
+        <xmqqwo33f6xb.fsf@gitster.c.googlers.com>
+        <CAFQ2z_P+L5ystTA8MjSjnUJQyEoH5Q3QtnMd0ezJpKPv_ntrgA@mail.gmail.com>
+        <xmqqpn8hgca7.fsf@gitster.c.googlers.com>
+        <CAFQ2z_O1sRm-_SNP=-GvgNLqB+qgf6k9YVfbF1XCAmFWdeX6Ew@mail.gmail.com>
+        <xmqqh7tjv6hb.fsf@gitster.c.googlers.com>
+Date:   Tue, 04 Aug 2020 18:45:17 -0700
+In-Reply-To: <xmqqh7tjv6hb.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 03 Aug 2020 13:07:12 -0700")
+Message-ID: <xmqq1rklrhle.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 50F0D310-D6BD-11EA-9D23-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue Aug 4, 2020 at 7:49 PM EDT, Junio C Hamano wrote:
-> How exactly does "git add -p" fail for such a patch? What operation
-> does it exactly want to do ("apply --cached"???) and is it "apply"
-> that is wrong, or is it "git add -p" that fails to remove the i-t-a
-> entry from the index before running "git apply" that is at fault?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes, "add -p" uses "apply --cached". I do believe this belongs in apply,
-both because all "add -p" really does is assemble things to be fed to
-apply and also for the more detailed reasons below.
+>> Which other refs that aren't really refs should also be supported? The
+>> JGit source code suggests that MERGE_HEAD should also be special
+>> cased?
+>
+> I'd think all .git/${SOMETHING}_HEAD are of transitory nature that
+> can be left as simple on-disk files that are read (and preferrably
+> written---except for FETCH_HEAD for obvious reasons) as if they are
+> loose refs handled by files backend.
 
-The index and the filesystem are both able to represent "no file" and "a
-file exists" states, but the index has an additional state (i-t-a) with
-no direct representation in the worktree. By (correctly) emitting "new
-file" patches when comparing a file to an i-t-a index entry, we are
-setting down the rule that a "new file" patch is not merely the diff
-between "no file" and "a file exists", but also the diff between i-t-a
-and "a file exists".
+Sorry for flipping and flopping.  The above goes directly against
+the spirit of 09743417 (Modify pseudo refs through ref backend
+storage, 2020-07-27).  I still think .git/${SOMETHING}_HEAD except
+for FETCH_HEAD should be written and read via the ref subsystem, but
+I was wrong to say that it should always be done via the files
+backend.  There is no reason to insist on the use of files backend
+here.
 
-Similarly, "deleted file" patches are the diff between "a file exists"
-and "no file exists", but they are also the diff between i-t-a and "no
-file exists" - if you add -N a file and then delete it from the
-worktree, "deleted file" is what git diff (correctly) shows. As a
-consequence of these rules, "new file" and "deleted file" diffs are now
-the only diffs that validly apply to an i-t-a entry. So apply needs to
-handle them (in "--cached" mode, anyway).
+> It probably makes sense not to
+> even write reflog entries for them---it is not like the MERGE_HEAD
+> I see now in .git/ directory is an updated version of MERGE_HEAD I
+> had there yesterday. "git log -g MERGE_HEAD" gives no interesting
+> information.
 
-But the worktree lives in the filesystem, where there are no i-t-a
-entries. So the question seems to me to be whether "no file" in the
-worktree matches an i-t-a entry in the index for the purposes of "add
---index". I count a couple options here:
+This still is true, but that is pretty much orthogonal to which
+backend is used.
 
-- Nothing on the filesystem can accurately match an i-t-a entry in the
-  index, so all attempts at "apply --index" when there is an i-t-a in
-  the index fail with "file: does not match index". "apply --cached",
-  which "add -p" uses, applies only to the index and continues to work.
-  I think I prefer this one; additionally, the comment in read-cache.c
-  indicate that this is supposed to be the case already, so I just need
-  to make sure this check is not skipped on "new file" patches.
+> If the octopus merge does not finish correctly (e.g. due to
+> conflicts), with "git reset --hard", we can recover to the original
+> state and re-attempt the opeation with "git merge FETCH_HEAD".  Such
+> a merge using FETCH_HEAD will produce an octopus merge.
+>
+> Which means that at least "git merge", FETCH_HEAD is not just a
+> regular ref where you can ask what object it points at and it gives
+> you a single object name back.
+>
+> But to other commands like "git log master..FETCH_HEAD", it acts as
+> if there is only one object recorded.
 
-- The current (as of this patch) behavior: a "new file" patch applies
-  both to an i-t-a in the index, and to the lack of a file in the
-  worktree. This may seem strange, but it may also seem strange that an
-  identical new file patch, which can be applied either to just the
-  worktree or just the index successfully, fails when applied to both at
-  the same time with "apply --index". However, this is precisely what is
-  done anyway by "apply --index" when there are no i-t-a entries
-  involved, so I lean towards i-t-a entries never matching the worktree.
-
-Patch for the first option in progress.
+All of which means FETCH_HEAD is special and we may not want to
+burden the special casing of it to newer backends.
