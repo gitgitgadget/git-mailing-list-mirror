@@ -2,154 +2,124 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F80C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2993C433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:21:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B6262075D
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:19:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C9D020842
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:21:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aHTc2Epw"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AzalCoza"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727772AbgHEBTZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 21:19:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44244 "EHLO
+        id S1726987AbgHEBU7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 21:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727051AbgHEBTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 21:19:16 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA760C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 18:19:15 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id a14so39095158wra.5
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 18:19:15 -0700 (PDT)
+        with ESMTP id S1726891AbgHEBU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 21:20:56 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F348C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 18:20:56 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id oc8so3619183pjb.4
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 18:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NohGUJkTNz8tQXtFpefX4F1oprCF9XsxPxI3ZjPbScI=;
-        b=aHTc2Epw9WkbpEoYDPnjxhya/2MmJrgEnnY2xBhoxcJCeEf4UbF8E+HLWT+XkoHPos
-         MFVCPtwkWAd9zmyjPqToXR17eD0P+w9bG4PeVpA00WXM+9miclbAn7zJRyMJmvWBsUGE
-         fZC3QAb/kZCLxtaD7cpgEgL5NJ3qRCf5XcnYGuDW7CgzkJZH2UpE58AoL3HwpG/a9X0d
-         8TSApG3OKw+EJUftkLomOzHPLRTDk73fRLcmOIG9D36sgxSWbp+UrDSSLo5u9md4Tvdl
-         DEdWLTt3Top5l4PntpX0P0FmMKnkkXJy9RtV8X3qeDYv0v5H5FyUaQmk//g0SW3/+Rnb
-         GX1A==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8RG+AJeDR2XAqHqxw/ffLwxdh9GBnIFmI50dSTPWFqg=;
+        b=AzalCozaDMRPwB3D8DRYKqUPSkfuA+NhC/9HH/42HsMx1JqVwXlRAH5uelrJ/EcUNl
+         g8iLfBbekm+W7KUu1b+49ykfrcIcG1HsNSwcbat1U+39tBqb6PpqELaVF1vKILEO4ywy
+         jExcqKjd9emGs3Cg3sZlIDe/0rvajYUobO0U2oyv7ZhYU9OwzGKOOMlqhQDGL1Dr9Rs8
+         9Gjmd9pfjP6u94RUT14opzu5RR62IrFAyL6sJ3cBTZ3iZZi6UP/oUXb4i7BrKlUIR260
+         xn7kfJhhcWOmGFx0oNi/AQZwuJqIpEfUlO5Fao0rxWSKHLsD0fwNKzW01c3vKApTdhZW
+         YcMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NohGUJkTNz8tQXtFpefX4F1oprCF9XsxPxI3ZjPbScI=;
-        b=XSXBXHN9EpFB+j3gM++3ifaVGly3NZPLPMDKosz7HChfEDpqXkRWZqUChz01H3z/l9
-         60Fp9TNtpf3yRmht1EGnMv9+dha50EBPqFbkdHCh5zVoJcnu7Bar6rtvi41RVXMvPVNY
-         aVwJFTZ8KTAN8zu91lYN1henucAw5yYDLuoJtK8kE2vYdfYpf9e48BBhLYWRWYc9EwWC
-         eSbruD3BVXFwhWu1kPROKHOz8pg3XYDbuGfp41OOh7/5TYP1CK6Ywa9SL0LoLfL0QRLE
-         6rn9P3MjsrI2iBfA+4nA2w0XaAgodaSgWwvThNp4rfp7bpC4lPUrJvY8fDK+18T1EBud
-         Y0oQ==
-X-Gm-Message-State: AOAM5311bBPlyTsiJUOeoMOPQgnUvK3e+mrkl+Mvftrqq2N3k5BLKb3U
-        h0P+X978BdtKAdmwvdwSMFssZeVi
-X-Google-Smtp-Source: ABdhPJzDf8e1Z6IBQ9VzKnBZFhnHnOxQjzfQPuaUfJJnxj2Wr5udhjkZbilIy8vSFkwAu0/6jtRtHg==
-X-Received: by 2002:adf:e382:: with SMTP id e2mr506333wrm.306.1596590352045;
-        Tue, 04 Aug 2020 18:19:12 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t189sm575489wmf.47.2020.08.04.18.19.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2020 18:19:11 -0700 (PDT)
-Message-Id: <552444a84241d280640c4700f17477a9c297fb73.1596590347.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.691.v3.git.1596590347.gitgitgadget@gmail.com>
-References: <pull.691.v2.git.1596500459.gitgitgadget@gmail.com>
-        <pull.691.v3.git.1596590347.gitgitgadget@gmail.com>
-From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Aug 2020 01:19:06 +0000
-Subject: [PATCH v3 3/4] Documentation: don't hardcode command categories twice
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8RG+AJeDR2XAqHqxw/ffLwxdh9GBnIFmI50dSTPWFqg=;
+        b=rCJBDgYslZsyjXo0HtjbVbwz4s3fJJXsvVMDQ90xM+uykW0NO1TbeR1x4bBjYFfshe
+         TSsjwXCMmUaTaj1AGGkFZI5gw4ffkCF3hVAdM0LDGfFWbs1LN5HVGEWqk5CStV+hOMlb
+         pUwCscpCKnKOWC2Bpp9Jp543U+I6Wec7mp5ththAFuUaryVJd8j0ZlswnyG2Fp9rQ3N1
+         FL8kLsL5MhE1ORzHRw7qTccl4/N/0wNqfjXKSjNig+wlsyiCvin2bWQLB1SiZ0ID+PvP
+         7jpARiDSJ5N840N+EuhheaP+lKSf8vwm3uqk1wOn6yFrp5NmWFO3JoJcqqdLkhbnbf43
+         SaJw==
+X-Gm-Message-State: AOAM532Nc9x0JqCa4Hwp0aEs/woKnOik5wEMRMq4URzaRFlHvMGND493
+        0X+noEeJi3enjm7G//CqdiV61JhDr/3gaBt0CI90k+dLgOZ2N3hD7bLyfXs+0VOykKSPFaEekoG
+        dg06OKgSCsheAZ/2X/VhRKEaLNLGJgPyNKmYniNWGqQ6aC31tqa98WXUpTKZX/AzYKMnae5d4H5
+        GN
+X-Google-Smtp-Source: ABdhPJwARoQIcX3Bhy/4GPIbxOmZDOqVbH5qCTAmu/2pNrC8sHrCyO41/c79HIu8vItg8fKGeOC+Cb8rZbJ4mo+O4ERM
+X-Received: by 2002:aa7:9422:: with SMTP id y2mr1021452pfo.211.1596590455707;
+ Tue, 04 Aug 2020 18:20:55 -0700 (PDT)
+Date:   Tue,  4 Aug 2020 18:20:43 -0700
+In-Reply-To: <20200724223844.2723397-1-jonathantanmy@google.com>
+Message-Id: <cover.1596590295.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20200724223844.2723397-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6-goog
+Subject: [RFC PATCH 0/7] Lazy fetch with subprocess
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-        <pclouds@gmail.com>, Philip Oakley <philipoakley@iee.email>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+Here's some code that performs the lazy fetch in a subprocess. It was
+more involved than I thought it would be, but here it is.
 
-Instead of hard-coding the list of command categories in both
-`Documentation/Makefile` and `Documentation/cmd-list.perl`, make the
-Makefile the authoritative source and tweak `cmd-list.perl` so that it
-receives the list of command categories as argument.
+My main concern is the user-facing interface for the null fetch
+negotiator. It not only does not negotiate at all but affects the
+everything_local() check, so I wonder if it should be exposed
+differently. More information is in the commit message for the 2nd
+patch.
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/Makefile      |  2 +-
- Documentation/cmd-list.perl | 20 ++++++++------------
- 2 files changed, 9 insertions(+), 13 deletions(-)
+I know that the following still needs to be done, but I thought I'd send
+out the patches for early feedback first since the main design and code
+is already done:
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 39f6fc8de7..eb9c7e2b0e 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -302,7 +302,7 @@ $(cmds_txt): cmd-list.made
- 
- cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
- 	$(QUIET_GEN)$(RM) $@ && \
--	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(QUIET_STDERR) && \
-+	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
- 	date >$@
- 
- mergetools_txt = mergetools-diff.txt mergetools-merge.txt
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 5aa73cfe45..ee96de53db 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -38,12 +38,15 @@ sub format_one {
- 	}
- }
- 
--while (<>) {
-+my ($input, @categories) = @ARGV;
-+
-+open IN, "<$input";
-+while (<IN>) {
- 	last if /^### command list/;
- }
- 
- my %cmds = ();
--for (sort <>) {
-+for (sort <IN>) {
- 	next if /^#/;
- 
- 	chomp;
-@@ -51,17 +54,10 @@ sub format_one {
- 	$attr = '' unless defined $attr;
- 	push @{$cmds{$cat}}, [$name, " $attr "];
- }
-+close IN;
- 
--for my $cat (qw(ancillaryinterrogators
--		ancillarymanipulators
--		mainporcelain
--		plumbinginterrogators
--		plumbingmanipulators
--		synchingrepositories
--		foreignscminterface
--		purehelpers
--		synchelpers)) {
--	my $out = "cmds-$cat.txt";
-+for my $out (@categories) {
-+	my ($cat) = $out =~ /^cmds-(.*)\.txt$/;
- 	open O, '>', "$out+" or die "Cannot open output file $out+";
- 	for (@{$cmds{$cat}}) {
- 		format_one(\*O, $_);
+ - Commit messages
+ - User-facing documentation
+ - A way to prevent a promisor-remote fetch from invoking another
+   promisor-remote fetch (use a file as a lock?)
+ - Remove no_dependents code (fetch-pack, transport)
+
+Jonathan Tan (7):
+  fetch-pack: allow NULL negotiator->add_tip
+  fetch-pack: allow NULL negotiator->known_common
+  negotiator/null: add null fetch negotiator
+  fetch: --stdin
+  fetch: submodule config
+  fetch: only populate existing_refs if needed
+  promisor-remote: use subprocess to fetch
+
+ Documentation/config/fetch.txt   |  5 +++-
+ Makefile                         |  1 +
+ builtin/fetch.c                  | 42 +++++++++++++++++++++++------
+ fetch-negotiator.c               |  5 ++++
+ fetch-pack.c                     | 23 +++++++++++-----
+ negotiator/null.c                | 34 +++++++++++++++++++++++
+ negotiator/null.h                |  8 ++++++
+ promisor-remote.c                | 46 +++++++++++++++-----------------
+ repo-settings.c                  |  2 ++
+ repository.h                     |  1 +
+ submodule-config.c               |  5 ++--
+ t/t0410-partial-clone.sh         |  2 +-
+ t/t4067-diff-partial-clone.sh    |  8 +++---
+ t/t5554-null-fetch-negotiator.sh | 22 +++++++++++++++
+ t/t5601-clone.sh                 |  2 +-
+ 15 files changed, 157 insertions(+), 49 deletions(-)
+ create mode 100644 negotiator/null.c
+ create mode 100644 negotiator/null.h
+ create mode 100755 t/t5554-null-fetch-negotiator.sh
+
 -- 
-gitgitgadget
+2.28.0.163.g6104cc2f0b6-goog
 
