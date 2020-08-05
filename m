@@ -2,121 +2,143 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92784C433E1
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DC0CC433E1
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:58:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67FE62073E
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:54:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 272CE2250E
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:58:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DfVCKDd4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ecWhOFl4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729037AbgHERyI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56726 "EHLO
+        id S1728458AbgHER6k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 13:58:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728614AbgHERtr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:49:47 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD483C061575
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:49:46 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id t6so24889523pgq.1
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:49:46 -0700 (PDT)
+        with ESMTP id S1728276AbgHERzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 13:55:41 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4D4C061575
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:55:21 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id v15so20194380lfg.6
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1AqctvIVBAJrQVFUfuYAWZcPb+Z3k8ZfyiHWkSAt2hs=;
-        b=DfVCKDd4uan6hElUjz0271zdd4cnAntMao7F0M2AEherwxzR5lUhtWcPSRzay2VbM0
-         DhcvABnCjF0Udoido+yz55eF11rIfpfoOO4BQ4t5u4xxgd5HMTJ6N/iUV0oBR3ABaHeQ
-         jWC6qa3v9YOMrVWTeWNe8fm++odX5TcsvxXrIv006/3ZZce6GgOJLd1+3eHm4w9N9cIG
-         2jRcC0o65JGiI+pQ6SBsfmdmqGql+knote/QBdTXJjaGWug2RE3D7jH5S2ld1bV8Yj/1
-         +A+BmORWhY7Vvlny5Y8pYHe+4zNcMRb5EHyFELw/J1icHAHqGmyEnYiM8RLs1OvgHcHJ
-         A2Gg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IQXfEkScQe/hH7jg1HbjgZ1TqZrWsygEvI0vXfubQew=;
+        b=ecWhOFl4OsqUSvtT+YLVGHLuJZVC8dpQ0Fy522S8YV+zyj6HD4PN7cWqkImXjaXazW
+         BA0pJzH9udRKCXDAMmRoKHeXPQffWpoGUNUc6saD8Zt7Xm16wtEbwqVwYytMo0ZRNISW
+         WTdA0dYZVyPtzP0tUAkVxtRZTVbq4pb3hxok19Wt4CgqFKrCVE+RARXD1sxh6dbi2X50
+         V2So4aoCbeU9Ue57TnvKl4VeLwkRNQuc4PMjolpx6fix/Euxr2m+hazuf5JwmjPSi/Dg
+         BRiLEud5lDNcx7y5bkqP706tCnIHw5FzCh+yObvWzAyxT/sPlEHGoGKeh8wasibbMlIm
+         BnKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1AqctvIVBAJrQVFUfuYAWZcPb+Z3k8ZfyiHWkSAt2hs=;
-        b=NXQLxj/mgXET/JxKNCgi+LhzU9HtmUxxL3u2N1G1mMNrYCunSyzt0kEiWQ0dFHiarZ
-         Sb5/3G/PDEqRuJMrqp/oCv7iVqNH0c7g6VTFamVZn7O4TCB+eQwNhWP0dvqOgGfLZlSo
-         Ss7U34t9CgTrz0qmgxenrA9ZAbmOP7o3tmK/OECX9AZzsoWTgK5YF51nyMZKVn9YboSs
-         kbwifFS3EBUajV6UM63TXfQ9OpysebxrTdNUjuuiTRhDC1g4/6riHg7WtYxYMQOAVido
-         NOHzBbBSCX3S864/D9MainWb64O/6GLP8ud9k/+EZe4syWyuQo8lgkcd5ocYGS4c91R4
-         QkHw==
-X-Gm-Message-State: AOAM532zIiYaLNZ3QBLPY5lcgHtkJ1RnIB+T6FwLgbktVFv1kvBumO7t
-        1y8YhkPF9DEwpWxLxI0C4xe/N2fRnd8=
-X-Google-Smtp-Source: ABdhPJwHaMnrpxGA09UQ6NxhrYlesnsSByE6kPC38vFBD2fQWWR/2Gr1Vt8i+Am046Q8ro88CiBOyQ==
-X-Received: by 2002:a65:68c3:: with SMTP id k3mr4035900pgt.14.1596649785523;
-        Wed, 05 Aug 2020 10:49:45 -0700 (PDT)
-Received: from localhost.localdomain ([45.127.46.185])
-        by smtp.gmail.com with ESMTPSA id z77sm4765150pfc.199.2020.08.05.10.49.41
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=IQXfEkScQe/hH7jg1HbjgZ1TqZrWsygEvI0vXfubQew=;
+        b=ZEaLdkoAvF8whNCRp/d2TSMSRwxqKhIQFi/r8EYJkkPI+roTq9SSGxW7COQRBoS1z3
+         brUCYwfYLa6xannVL3FVU+8zFAM1eepfixK/W/z4XPLqy/ZQ3mDvAUoEHLYj+m166jCw
+         4hN+Gzb+Bn9GHBqk5R9nJank3zPe4Tx6SMnw3zbLPonJrcu+lsGpXLswhdiozhi3e7KD
+         vOGMHY1ve8QJ1ffQnX4s7RqnyFvXqn1KQ4wjrdCQftXHQy1rl/1+Qy2sHMB5C42gtcDq
+         ufN3eh6dAwXUM1O2eqxWVOMpMF50AChHmMbghMWfo+zdDgtzbtaTYgF1ldZ2DbWPLBNi
+         dyZg==
+X-Gm-Message-State: AOAM5317sdEBLgXHuXIKJaC8BJHsYM/ZStZMPH8mlSio/drXsE7BTk2g
+        P0rCRNm6Ru3DwHh0SbeZ6Ng=
+X-Google-Smtp-Source: ABdhPJxVvldTFtivYeWQ6wEK6rAKSXkrJcrMFEr/2lzzwuFzuEJvkRBgIDoLvWCeUvErUvalqetShQ==
+X-Received: by 2002:ac2:5338:: with SMTP id f24mr2134432lfh.5.1596650119649;
+        Wed, 05 Aug 2020 10:55:19 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id p1sm1179842lji.93.2020.08.05.10.55.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:49:44 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, johannes.schindelin@gmx.de,
-        liu.denton@gmail.com, Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [GSoC][RESEND][PATCH 0/4] t7401: modernize, cleanup and warn
-Date:   Wed,  5 Aug 2020 23:19:17 +0530
-Message-Id: <20200805174921.16000-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.28.0
+        Wed, 05 Aug 2020 10:55:18 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+References: <20200728163617.GA2649887@coredump.intra.peff.net>
+        <20200729201002.GA2989059@coredump.intra.peff.net>
+        <871rku3soc.fsf@osv.gnss.ru>
+        <20200731230858.GA1461090@coredump.intra.peff.net>
+        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
+        <87o8nrybnb.fsf@osv.gnss.ru>
+        <20200803180824.GA2711830@coredump.intra.peff.net>
+        <874kpi47xj.fsf@osv.gnss.ru>
+        <20200804195830.GA2014743@coredump.intra.peff.net>
+        <87k0ydp0hc.fsf@osv.gnss.ru> <xmqqeeoloz74.fsf@gitster.c.googlers.com>
+Date:   Wed, 05 Aug 2020 20:55:17 +0300
+In-Reply-To: <xmqqeeoloz74.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 05 Aug 2020 09:05:35 -0700")
+Message-ID: <87d045nfju.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings,
+Junio C Hamano <gitster@pobox.com> writes:
 
-The current phase of my GSoC project involves porting
-'git submodule summary' from shell to C. While doing so, I, along with
-my mentors Christian and Kaartic noticed some discrepancies in the test
-script when trying to add a couple of tests to it. Though the test works
-perfectly for my C port of 'summary', there were some unexpected behaviours
-when trying to some tests to it. This patch series addresses these
-issues in the test script by modernizing it, cleaning it up and warning
-about some other issues.
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Jeff King <peff@peff.net> writes:
+>> ...
+>> In this case your original test:
+>>
+>> git log --no-diff-merges -p --first-parent [--diff-merges=1: implied] master
+>>
+>> would fail, as implied --diff-merges=1 then wins.
+>
+> IMHO, I think this is an absolutely wrong thing to do.  At least to
+> me (and I suspect it would be to many users), what "--first-parent
+> implies 'when showing a diff, compare only with the first parent'"
+> means is that it should do so unless told to do otherwise.
+>
+>     git log --no-diff-merges -p --first-parent
+>
+> explicitly tells the command that the user does not want to see
+> patches for merge commits.  I do not see any reason why
+> "--first-parent", which merely *implies* a specific diff generation
+> preference for merges, countermand it.  IOW the implication is
+> conditional.
+>
+> It is like saying
+>
+>     git log --first-parent
+>
+> should show patches because it *implies* comparing only with the
+> first parent, but you can see why it is wrong.  It is because that
+> implication is conditional---it kicks in only when the command is
+> told to compare with any parent (i.e. "-p").  
+>
+> I.e. the implication is "compare only with the first parent if told
+> to compare, and if not told what to compare with explicitly".
 
-Chiefly about patch 4/4 (t7401: add a WARNING and a NEEDSWORK),
-when trying to write a test for verifying the summary output of
-deinitialized submodule, doing a 'git submodule deinit <path>' did not
-bear any fruit since the submodule never really got deinitialized. 
-The deinit documentation states that:
+I believe my approach is more straightforward and is free from
+interpretations.
 
-	Unregister the given submodules, i.e. remove the whole
-	submodule.$name section from .git/config together with
-	their work tree.
+To make my point let's get back to the subject (for a moment :-)).
 
-Something which was not actually happening in the test. It appeared
-that the reason for the deinit issue is that the test script uses
-'git add' to add submodules instead of the command 'git submodule add'.
+To me "--first-parent implies -m" is simple and unambiguous:
 
-This behaviour also prompted the need to design a new test script to
-have a testing of some niche cases such as those stated before, but
-this is something that will be covered in the patch series responsible
-for porting the 'summary' subcommand to C.
+(git log [*] --first-parent [*]) == (git log [*] --first-parent -m [*])
 
-Comments and reviews are appreciated.
+No further explanations are needed.
+
+The consequence is that an option that is supposed to override -m must
+follow -m, and thus --first-parent, not precede it, period.
+
+Yes, we can invent the rule that implied options don't participate in
+overriding of explicit options, or that explicit option always overrides
+all the implicit, or some such, but I see absolutely no reason to
+complicate the model.
 
 Thanks,
-Shourya Shukla
-
-Shourya Shukla (4):
-  t7401: modernize style
-  t7401: change test_i18ncmp syntax for clarity
-  t7401: ensure uniformity in the '--for-status' test
-  t7401: add a WARNING and a NEEDSWORK
-
- t/t7401-submodule-summary.sh | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
-
--- 
-2.27.0
-
+-- Sergey
