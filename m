@@ -2,100 +2,83 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1107C433E0
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F23C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:19:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80618206D4
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:03:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA0E3207FC
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:19:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gYgXG7k6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFBvT12j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727787AbgHEADd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 20:03:33 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58783 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726011AbgHEADd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 20:03:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D13DDEBDA;
-        Tue,  4 Aug 2020 20:03:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SDgBCIV5cy2KKBxNgAh9pEt84hU=; b=gYgXG7
-        k6QQ1bZ/fxPjycyLMugmv89ces1lMd/Q6wVdGk4uCsysDa9NXyQfNbiE6JisyiLl
-        LUwIGQoPaPDmfAOj6CzgwykQfReBAizFcR91DOcCt00hfpNSo61oTSdXXoxwluKF
-        /3QgCdLzI+tIuhgxV3YpjRwBdsxDyPRO6dN9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S4irq/WIi6Q8X/2fL60RabbQf2UVFF0U
-        isLl2zYCx6fowl80ji9M36C5EqRjV7C64Q9Wl7hwp/0EDjBiOTPBSuny3lCL2VKQ
-        FuxHQtHIR6lghSnG7nyaOJ3cOjszXzv0yicxB6lWvv2BB3GdBKJnh6YR6HoYlgA0
-        cj0jCcJo4/8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 66361DEBD9;
-        Tue,  4 Aug 2020 20:03:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E207DEBD7;
-        Tue,  4 Aug 2020 20:03:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] revision: fix die() message for "--unpacked="
-References: <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru>
-        <20200804195830.GA2014743@coredump.intra.peff.net>
-        <87imdyxedw.fsf@osv.gnss.ru>
-        <20200804220833.GB2022650@coredump.intra.peff.net>
-        <87sgd2vyi1.fsf_-_@osv.gnss.ru>
-Date:   Tue, 04 Aug 2020 17:03:26 -0700
-In-Reply-To: <87sgd2vyi1.fsf_-_@osv.gnss.ru> (Sergey Organov's message of
-        "Wed, 05 Aug 2020 01:26:30 +0300")
-Message-ID: <xmqqa6zaq7qp.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728067AbgHEATB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 20:19:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726925AbgHEATA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 20:19:00 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EB5C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 17:19:00 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id w25so10183119ljo.12
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 17:19:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ba9TW4zuagjRa3TOwQ2uJyxheUyPiKWhRH8DDS+bsbc=;
+        b=CFBvT12jWHpBs3WAdeFMUaJvPCLEOcAWtHj9M4XgxIsCtNU2rgmCxVKwlHHLqtx0IH
+         XqCLSIQ1e6+mPLVLnYJayf8rnbbAmHfz5EOpd/wGvVwFT0pbyxylRTNbRaRklcuamL4C
+         uQdNXvuaLCDLrKDIEABr4+x4VA4TEZrlzZLvexptJItdRvq1cmBDDyyG2fhY3F/5N/nl
+         w2SP+I8/MPlgbwKptPcUdWjAbAsbQyVHiaoVenMOpU6DBV892pgoijPxGjbq9w6V3mv5
+         gNbzoKNLxGF3/hUo18IZy2lZwiqbcvRcNCSl3h6d01eUzqNO6ZX4uaQDunxqfnfEHcz8
+         EXzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ba9TW4zuagjRa3TOwQ2uJyxheUyPiKWhRH8DDS+bsbc=;
+        b=VaQ402aQB/DEbQfMkUuTUievB9yvOyUCenOPWiTUTTKDyRG9a1+mf/aUSa72HfQMPE
+         bsVsy2UGAwMb24dhElu8q1X45nB0fjwiZPdhP30NcW6FIAzkWZtI71SFvfZHhe9/rz/w
+         9BS3oqQzPv6hzXezjdpAh2c8lFvdZ44QS8FbDEEgsj6Jq0sjd/rF8Mf+dGsVIm2yZQ4l
+         qNKEB4MrizWO/X0ZrLgev1nk62icaN3689P8wVjGKiBok08BvUB0Cu7cNbZ1Ohpw2w7f
+         BHlzVxoXObdcCvHLTmOIbtWJlBtCakxF0i/J8jeSAStqc3iOV/juBf8k2QVfRMN/u7Fe
+         uulg==
+X-Gm-Message-State: AOAM531kxFV716ShpsHPl0487uxTrZBFI6P1PGoafQTnNi1pWOvfQh0D
+        F89GHRHbgsbHWxMVlmT3MeM4//dfGtVcP1AxaoSlvXYw
+X-Google-Smtp-Source: ABdhPJwXMOnuAFBBbL9l5/8WAeMtSMg/pU/o++Ozy2MH6rU40TGjukoy24S7KgEkH2w3DmSgVhWjFhrh6jt7yUq/2eI=
+X-Received: by 2002:a2e:9946:: with SMTP id r6mr151221ljj.127.1596586738145;
+ Tue, 04 Aug 2020 17:18:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 174B0C42-D6AF-11EA-9DC0-843F439F7C89-77302942!pb-smtp21.pobox.com
+From:   =?UTF-8?B?16DXotedINeh15XXnNeV15HXmdemJ9eZ16c=?= 
+        <inoamsol@gmail.com>
+Date:   Wed, 5 Aug 2020 03:18:43 +0300
+Message-ID: <CAAWR3A9po-zMVFdQfDs6R5F_rf0UvSyfByLj-vYZiXLb8+j4Ug@mail.gmail.com>
+Subject: Why is AuthorDate displayed on git-blame?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Hey everybody, I wonder about the decision behind git-blame and
+git-annotate date that is being shown.
 
-> Get rid of the trailing dot and mark for translation.
->
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  revision.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/revision.c b/revision.c
-> index 669bc856694f..d08cb5c0e9cd 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2315,7 +2315,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  	} else if (!strcmp(arg, "--unpacked")) {
->  		revs->unpacked = 1;
->  	} else if (starts_with(arg, "--unpacked=")) {
-> -		die("--unpacked=<packfile> no longer supported.");
-> +		die(_("--unpacked=<packfile> no longer supported"));
->  	} else if (!strcmp(arg, "-r")) {
->  		revs->diff = 1;
->  		revs->diffopt.flags.recursive = 1;
+If I understand correctly, the AuthorDate is displayed, and I'd like
+to challenge that decision. Consider the following case:
 
-Makes sense.  Will queue.  thanks.
+A feature branch having commits authored last week, but merged to the
+main branch just today. And to the sake of discussion, let's say that
+the branch has a bug.
+
+When someone encounters the bug on the main branch, he would probably
+want to know when it was introduced - the date when the bug started
+to affect him. However, git-blame only shows him when the bug was
+originally authored, in our case - *last-week*, which is confusing
+since the main branch was working just fine back then.
+
+So I wonder why was AuthorDate the date chosen to be displayed under
+git-blame?
