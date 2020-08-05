@@ -2,177 +2,109 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B7E2C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 15:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 770C0C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 16:20:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4DCC2342C
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 15:58:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FCD1206DA
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 16:20:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="axPFZRTe"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nzCEbIm3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726507AbgHEPut (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 11:50:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37022 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725998AbgHEPsi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 11:48:38 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08107C0D942B
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 08:17:18 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id l6so41964900qkc.6
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 08:17:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Gcilrel7c901gSbI9L68V4cz33r0GYlgRBWtqDNZE90=;
-        b=axPFZRTeWtZOn77aAbroKUTlh29EYCibg6yBkSGkJxVg7II7Jgfy7q2YviV8QKbywx
-         ByidccZcFTn2do0hxMqmGDUjPtXw2+OxL0CXIflGdpu2gvRHbVQhJiAN/46ewTA+h2Ta
-         2g2NUrCkR5jNMSOKVIOtFgds4z1XngNpdRq4Rkl1DBYQmlWNv93Q9QK7fggApQwiAm3S
-         ++A79FhkSOZxG0AfhUYDJrg4lOvfWGa9obH4QdCNc/a5+6OpQ+SDtP35mn1v2chc3OvV
-         WFcT8VHLxUVKrbC+7rx3t9KtHCXysBjBWmdm8WlmzmUM9IE5LBoHTzQdkfy7CjQqMFkm
-         Ik5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Gcilrel7c901gSbI9L68V4cz33r0GYlgRBWtqDNZE90=;
-        b=VX0BoTVcQnYWru7cqB12z6Bu9lPh0n7DcB1d4pg2E3AH9Tv+BrOfGAZIozEcr6Y/kI
-         dV2QlhmBYKNvTuYobXsaZfzhbsLzKht5WGgPSfZspOZ03644VBYDpxuoCHzVjwxqNLla
-         cWg7fvBzZamGOtSkpywGlyBDLHNwa9LYSC0bDhw6x/Ccvz6GvnONfgezHG3UeDxxEQfw
-         saFBEZAeyOu5lEetki2wIMsdPpg+gUrtFVcsQD0oErHICCbsIk5Ls6NyT1yEWvRE3vyN
-         CiIudm4TuEu4SoqEm441zHhO8ZqSkwSKOAmSEA1wmpVLeVfFdzSYhy9T2/+EH60vyW0y
-         ZZtQ==
-X-Gm-Message-State: AOAM5335rUO/fE9O2A2CwBOSlGy2tWfK66hvD1Pybn3IPBa7kORq7lbN
-        KdwGQvFcNF2XMMHng5Bg2S4NJA==
-X-Google-Smtp-Source: ABdhPJwwGJ4h9uC3p6YDA9V4lACTO3fII9urX5XjrIC+1UYDU1P7gagNFRBC94kWOSnZcZ13bvRnHg==
-X-Received: by 2002:a37:a495:: with SMTP id n143mr3807112qke.330.1596640633735;
-        Wed, 05 Aug 2020 08:17:13 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:d118:9acc:fdba:dee7])
-        by smtp.gmail.com with ESMTPSA id z24sm1725886qki.57.2020.08.05.08.17.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 08:17:13 -0700 (PDT)
-Date:   Wed, 5 Aug 2020 11:17:12 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 2/3] revision: avoid out-of-bounds read/write on empty
- pathspec
-Message-ID: <20200805151712.GD9546@syl.lan>
-References: <20200804074146.GA190027@coredump.intra.peff.net>
- <20200804074652.GB284046@coredump.intra.peff.net>
+        id S1726515AbgHEQUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 12:20:24 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64141 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbgHEQS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 12:18:58 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C4D6BDD60D;
+        Wed,  5 Aug 2020 12:05:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FfwEkqDze27Hsq5E7yFQ1X8iG9I=; b=nzCEbI
+        m3quzgeaeTjfvl0fdsSSgIVrTqOVfsxA90InmmsPfEsDDUcYb9AmuWbmjkqwC62p
+        jxM+lhQsLj0T/L3R61BFe1OrLwJFIlIn+Xj8viqvgccmDrFPs3uhfTZZbU/t4Moq
+        3+7O3ZJIaQ7k/0RDrP4ZM248zIszIBXf3MSKM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DbONHlkMKevuVM0Su8wtwD6aj+Jg35k/
+        FoS9/7gOOBRkC4V662P3xafxUlYuhkrUXkurE0TMrmhLoRbdhEdWNwi4RA9oHjtM
+        TxaAbqtHfceT/5PUZNoMLiW+OCe/1y4AOyZHIrFL3YaDLPSDQIBUKGbo4hzaGEHG
+        6LavOadJPPo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3DEFDD60C;
+        Wed,  5 Aug 2020 12:05:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E83E8DD60B;
+        Wed,  5 Aug 2020 12:05:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+References: <20200728163617.GA2649887@coredump.intra.peff.net>
+        <20200729201002.GA2989059@coredump.intra.peff.net>
+        <871rku3soc.fsf@osv.gnss.ru>
+        <20200731230858.GA1461090@coredump.intra.peff.net>
+        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
+        <87o8nrybnb.fsf@osv.gnss.ru>
+        <20200803180824.GA2711830@coredump.intra.peff.net>
+        <874kpi47xj.fsf@osv.gnss.ru>
+        <20200804195830.GA2014743@coredump.intra.peff.net>
+        <87k0ydp0hc.fsf@osv.gnss.ru>
+Date:   Wed, 05 Aug 2020 09:05:35 -0700
+In-Reply-To: <87k0ydp0hc.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+        05 Aug 2020 18:37:51 +0300")
+Message-ID: <xmqqeeoloz74.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200804074652.GB284046@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 800AC624-D735-11EA-ADBC-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 04, 2020 at 03:46:52AM -0400, Jeff King wrote:
-> Running t4216 with ASan results in it complaining of an out-of-bounds
-> read in prepare_to_use_bloom_filter(). The issue is this code to strip a
-> trailing slash:
->
->   last_index = pi->len - 1;
->   if (pi->match[last_index] == '/') {
->
-> because we have no guarantee that pi->len isn't zero. This can happen if
-> the pathspec is ".", as we translate that to an empty string. And if
-> that read of random memory does trigger the conditional, we'd then do an
-> out-of-bounds write:
->
->   path_alloc = xstrdup(pi->match);
->   path_alloc[last_index] = '\0';
->
-> Let's make sure to check the length before subtracting. Note that for an
-> empty pathspec, we'd end up bailing from the function a few lines later,
-> which makes it tempting to just:
->
->   if (!pi->len)
->           return;
->
-> early here. But our code here is stripping a trailing slash, and we need
-> to check for emptiness after stripping that slash, too. So we'd have two
-> blocks, which would require repeating some cleanup code.
->
-> Instead, just skip the trailing-slash for an empty string. Setting
-> last_index at all in the case is awkward since it will have a nonsense
-> value (and it uses an "int", which is a too-small type for a string
-> anyway). So while we're here, let's:
->
->   - drop last_index entirely; it's only used in two spots right next to
->     each other and writing out "pi->len - 1" in both is actually easier
->     to follow
->
->   - use xmemdupz() to duplicate the string. This is slightly more
->     efficient, but more importantly makes the intent more clear by
->     allocating the correct-sized substring in the first place. It also
->     eliminates any question of whether path_alloc is as long as
->     pi->match (which it would not be if pi->match has any embedded NULs,
->     though in practice this is probably impossible).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Another variant is to actually stop assigning revs->bloom_filter_settings
-> so early, so that we don't have to clean it up. And then once we're sure
-> we're going to use it and have passed all of our early-return checks,
-> then assign it. But that conflicts with the get_bloom_filter_settings()
-> patch in:
->
->   https://lore.kernel.org/git/08479793c1274d5ee0f063578bb0f4d93c910fa9.1596480582.git.me@ttaylorr.com/
->
-> so I didn't go that way.
+Sergey Organov <sorganov@gmail.com> writes:
 
-Good, I was going to ask about that. Thanks for thinking of those
-patches and avoiding introducing a conflicting patch (of course, I
-implemented this other approach in github/git, and so will pay the price
-when I deal with the conflict myself ;-)).
-
+> Jeff King <peff@peff.net> writes:
+> ...
+> In this case your original test:
 >
->  revision.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
+> git log --no-diff-merges -p --first-parent [--diff-merges=1: implied] master
 >
-> diff --git a/revision.c b/revision.c
-> index 6de29cdf7a..5ed86e4524 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -669,7 +669,6 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
->  	struct pathspec_item *pi;
->  	char *path_alloc = NULL;
->  	const char *path, *p;
-> -	int last_index;
->  	size_t len;
->  	int path_component_nr = 1;
->
-> @@ -692,12 +691,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
->  		return;
->
->  	pi = &revs->pruning.pathspec.items[0];
-> -	last_index = pi->len - 1;
->
->  	/* remove single trailing slash from path, if needed */
-> -	if (pi->match[last_index] == '/') {
-> -		path_alloc = xstrdup(pi->match);
-> -		path_alloc[last_index] = '\0';
-> +	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
-> +		path_alloc = xmemdupz(pi->match, pi->len - 1);
+> would fail, as implied --diff-merges=1 then wins.
 
-Looks correct. Thanks.
+IMHO, I think this is an absolutely wrong thing to do.  At least to
+me (and I suspect it would be to many users), what "--first-parent
+implies 'when showing a diff, compare only with the first parent'"
+means is that it should do so unless told to do otherwise.
 
->  		path = path_alloc;
->  	} else
->  		path = pi->match;
-> --
-> 2.28.0.536.ga4d8134877
+    git log --no-diff-merges -p --first-parent
 
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+explicitly tells the command that the user does not want to see
+patches for merge commits.  I do not see any reason why
+"--first-parent", which merely *implies* a specific diff generation
+preference for merges, countermand it.  IOW the implication is
+conditional.
 
-Thanks,
-Taylor
+It is like saying
+
+    git log --first-parent
+
+should show patches because it *implies* comparing only with the
+first parent, but you can see why it is wrong.  It is because that
+implication is conditional---it kicks in only when the command is
+told to compare with any parent (i.e. "-p").  
+
+I.e. the implication is "compare only with the first parent if told
+to compare, and if not told what to compare with explicitly".
