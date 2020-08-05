@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF76EC433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8267C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:59:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 890D22250E
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:49:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9306F20823
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:59:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="szhAbQyq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v95iQp0p";
+	dkim=pass (1024-bit key) header.d=kyleam.com header.i=@kyleam.com header.b="vg+kgk0G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725996AbgHEXou (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 19:44:50 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52331 "EHLO
+        id S1726026AbgHEX7l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 19:59:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52892 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725779AbgHEXou (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 19:44:50 -0400
+        with ESMTP id S1725969AbgHEX7k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 19:59:40 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D9E79E76D6;
-        Wed,  5 Aug 2020 19:44:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0B01FE78FD;
+        Wed,  5 Aug 2020 19:59:39 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+F6BWowi8nDBSSYyhTg6guLR6/c=; b=szhAbQ
-        yqo7+3yTBXAbGJ+ol5mWzZwLefqveUVPNcNHH8VUTkIViWyv0Fslr/o4Baaws+gz
-        Csu+buFrGW7RQODReP6buQZGjs168h/cyhcrzfPEgKT0LyfvVWg2iFbiH/7/LA3p
-        0UT9mrqL5COkK7GM1q0JwfZ704Ug0pFHcviHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=a1dVJJuHODTvVjM/01MqajlAQOFVKZWD
-        +7LqoTNaQlSFGa+9f+yAx2sk36upLsxFriqFv/QTLkULp13UMi/n3jUvpnmhrTuE
-        Vp5Y33QX8IyHl6jHDYc1oH3f6aoRyDDRrRWRrHp30uXnig/b35IfdWmhI0WYKJi4
-        bJcg/MFdOYs=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=7jFT9NwXvGXcBhfjAtmG8YU9IRE=; b=v95iQp
+        0pmkPbOes7JB4qI7UKcKX9j3uc1/WMQDdhrqRuDiVBC7roVHkXWmAEzY0STPBUSW
+        oOm5WMDFwxIBQh3X5CucEfTzElrzXgh70iKVreek3U0YsH64CGvh9TD+MYsmpr7t
+        PA46WiFlyQ8/5WwcXJtbtFCVAW8/A32q1+bmo=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D2381E76D5;
-        Wed,  5 Aug 2020 19:44:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03530E78FA;
+        Wed,  5 Aug 2020 19:59:39 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=7uehjs9my11xQsA5HKCEMzKamUGqcaV3cUr1O2winME=; b=vg+kgk0GFC4+Foh9j25hAxsiEsXZn6qN/K1vr+LDTSb6DKhcRvJEB0tRHck5bRMimyYw93Ur/TTqz8EHZzbl0opI/BAQRAqSE3WxoK2YG1LgFzJcieTFQW0tssFkIq/846BqjJ2pF9iP9NhRlBw2JFBA7c3AQ6en131ush5zu14=
+Received: from localhost (unknown [45.33.91.115])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B2A6E76D4;
-        Wed,  5 Aug 2020 19:44:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH  3/3] t/t4013: add test for --diff-merges=off
-References: <20200805220832.3800-1-sorganov@gmail.com>
-        <20200805220832.3800-4-sorganov@gmail.com>
-        <xmqq3650n2rc.fsf@gitster.c.googlers.com> <87lfisk915.fsf@osv.gnss.ru>
-        <xmqqy2msllz0.fsf@gitster.c.googlers.com>
-Date:   Wed, 05 Aug 2020 16:44:45 -0700
-In-Reply-To: <xmqqy2msllz0.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 05 Aug 2020 16:19:31 -0700")
-Message-ID: <xmqqtuxglksy.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9AC55E78F9;
+        Wed,  5 Aug 2020 19:59:36 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     christian w <usebees@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: ls-files bug report
+In-Reply-To: <CADjceoQxoL932W4mkfhG6VOgrQBhs9k6tXkWSkraKVPmUP+uCw@mail.gmail.com>
+References: <CADjceoQxoL932W4mkfhG6VOgrQBhs9k6tXkWSkraKVPmUP+uCw@mail.gmail.com>
+Date:   Wed, 05 Aug 2020 19:59:33 -0400
+Message-ID: <878ses4pay.fsf@kyleam.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A55F3154-D775-11EA-B639-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B769FE4A-D777-11EA-8B67-843F439F7C89-24757444!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+christian w writes:
 
->> Dunno, why original Jeff series didn't need 
->>
->>      log --first-parent --no-diff-merges -p master
->>
->> then?
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 >
-> Who said it didn't need it?
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> git ls-files --others 'some/path/*.some.extension'
+>
+> What did you expect to happen? (Expected behavior)
+>
+> only list files under some/path/ that had .some.extension
+>
+> What happened instead? (Actual behavior)
+>
+> It listed those files and also all untracked folders underneath some/path/
 
-To elaborate a bit more, we are all humans, and even reviewers
-should be given the second chance to suggest improvements to things
-that can use them, which s/he previously missed.  If we keep saying
-"you say this is wrong, but the other guy did the same wrong thing
-last week", we can never make the world better.
+I tried to follow your description, and I don't see this on my end.  In
+a fresh repository:
 
+    $ mkdir -p some/path/d0
+    $ mkdir -p some/path/d1
+    $ touch some/path/f0 some/path/d0/f0 some/path/f1.some.extension
+    
+    $ git ls-files --others
+    some/path/d0/f0
+    some/path/f0
+    some/path/f1.some.extension
+    
+    $ git ls-files --others 'some/path/*.some.extension'
+    some/path/f1.some.extension
+    
+    $ git version
+    git version 2.28.0
+
+Could you provide a more detailed recipe to reproduce the issue?
+
+> [System Info]
+> git version:
+> git version 2.28.0
