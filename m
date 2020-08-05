@@ -2,83 +2,98 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F23C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 976F2C433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:38:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA0E3207FC
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:19:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFBvT12j"
+	by mail.kernel.org (Postfix) with ESMTP id 7303E206D4
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 00:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728067AbgHEATB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 20:19:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726925AbgHEATA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 20:19:00 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EB5C06174A
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 17:19:00 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id w25so10183119ljo.12
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 17:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ba9TW4zuagjRa3TOwQ2uJyxheUyPiKWhRH8DDS+bsbc=;
-        b=CFBvT12jWHpBs3WAdeFMUaJvPCLEOcAWtHj9M4XgxIsCtNU2rgmCxVKwlHHLqtx0IH
-         XqCLSIQ1e6+mPLVLnYJayf8rnbbAmHfz5EOpd/wGvVwFT0pbyxylRTNbRaRklcuamL4C
-         uQdNXvuaLCDLrKDIEABr4+x4VA4TEZrlzZLvexptJItdRvq1cmBDDyyG2fhY3F/5N/nl
-         w2SP+I8/MPlgbwKptPcUdWjAbAsbQyVHiaoVenMOpU6DBV892pgoijPxGjbq9w6V3mv5
-         gNbzoKNLxGF3/hUo18IZy2lZwiqbcvRcNCSl3h6d01eUzqNO6ZX4uaQDunxqfnfEHcz8
-         EXzg==
+        id S1726130AbgHEAib (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 20:38:31 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34075 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725950AbgHEAib (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 20:38:31 -0400
+Received: by mail-wr1-f65.google.com with SMTP id f7so39048173wrw.1
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 17:38:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ba9TW4zuagjRa3TOwQ2uJyxheUyPiKWhRH8DDS+bsbc=;
-        b=VaQ402aQB/DEbQfMkUuTUievB9yvOyUCenOPWiTUTTKDyRG9a1+mf/aUSa72HfQMPE
-         bsVsy2UGAwMb24dhElu8q1X45nB0fjwiZPdhP30NcW6FIAzkWZtI71SFvfZHhe9/rz/w
-         9BS3oqQzPv6hzXezjdpAh2c8lFvdZ44QS8FbDEEgsj6Jq0sjd/rF8Mf+dGsVIm2yZQ4l
-         qNKEB4MrizWO/X0ZrLgev1nk62icaN3689P8wVjGKiBok08BvUB0Cu7cNbZ1Ohpw2w7f
-         BHlzVxoXObdcCvHLTmOIbtWJlBtCakxF0i/J8jeSAStqc3iOV/juBf8k2QVfRMN/u7Fe
-         uulg==
-X-Gm-Message-State: AOAM531kxFV716ShpsHPl0487uxTrZBFI6P1PGoafQTnNi1pWOvfQh0D
-        F89GHRHbgsbHWxMVlmT3MeM4//dfGtVcP1AxaoSlvXYw
-X-Google-Smtp-Source: ABdhPJwXMOnuAFBBbL9l5/8WAeMtSMg/pU/o++Ozy2MH6rU40TGjukoy24S7KgEkH2w3DmSgVhWjFhrh6jt7yUq/2eI=
-X-Received: by 2002:a2e:9946:: with SMTP id r6mr151221ljj.127.1596586738145;
- Tue, 04 Aug 2020 17:18:58 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3O1AjzHY3Q18aby2BsYgYA+tZ2+NpUInheUSjNDTu74=;
+        b=JJiulkS5qbPAmSFEipuGw+pyuT38ths450bTi0jiL7WfDRX/T8RuX5lk+0Xa28Ndm2
+         /tUtQOYhSqLOgao6Kq1qVtTZu5K25BorTdY/FO/c5ZDf4D7QSmhMumghYCXRB3MhoA4i
+         5Sr0RYsshab5t0tSahWUEENey5yi9857LvL3/zLS6LcD+zTSfPX/O5pU4YcdkOoD5wlX
+         ARhT8FB1mO8pLjR3TuSWLT1V8JcOyPZfVjeR3iRQXdDOuNMXQEBUi4HN2FEYFIfNy/O0
+         iCToYrIuMG88+yXeFjiLObOx+3q44AyyDLe60fQ5ahmfV3R8e9J+589sKxQ8iyODLt4y
+         YJjQ==
+X-Gm-Message-State: AOAM531qnx8gdGVcbPxHQoh4dY/ColXlLTZ+sTcDKUp8eeDd9WIB9M0N
+        1an9BTyINuAdGtta8Q3BrxFKbG4PKCBPAYo+BWd0c24vHfI=
+X-Google-Smtp-Source: ABdhPJxnUbfatGzb6RI1Gp4REQIslEsnu6g5MVSAgcYpr5KEYM+0YBD0oqGpBGbwpw4D8LyESsszZmJLAuqsM7hxaJw=
+X-Received: by 2002:a05:6000:11c1:: with SMTP id i1mr399215wrx.277.1596587909201;
+ Tue, 04 Aug 2020 17:38:29 -0700 (PDT)
 MIME-Version: 1.0
-From:   =?UTF-8?B?16DXotedINeh15XXnNeV15HXmdemJ9eZ16c=?= 
-        <inoamsol@gmail.com>
-Date:   Wed, 5 Aug 2020 03:18:43 +0300
-Message-ID: <CAAWR3A9po-zMVFdQfDs6R5F_rf0UvSyfByLj-vYZiXLb8+j4Ug@mail.gmail.com>
-Subject: Why is AuthorDate displayed on git-blame?
-To:     git@vger.kernel.org
+References: <20200801175840.1877-1-alipman88@gmail.com> <20200804220113.5909-1-alipman88@gmail.com>
+ <20200804220113.5909-3-alipman88@gmail.com>
+In-Reply-To: <20200804220113.5909-3-alipman88@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 4 Aug 2020 20:38:18 -0400
+Message-ID: <CAPig+cQumRSCQA3Et5=h7SD7zqMm_Z6LJVUTonkewR=hNR55Ug@mail.gmail.com>
+Subject: Re: [PATCH v4 2/5] rev-list: allow bisect and first-parent flags
+To:     Aaron Lipman <alipman88@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey everybody, I wonder about the decision behind git-blame and
-git-annotate date that is being shown.
+On Tue, Aug 4, 2020 at 6:01 PM Aaron Lipman <alipman88@gmail.com> wrote:
+> Add first_parent_only parameter to find_bisection(), removing the
+> barrier that prevented combining the --bisect and --first-parent flags
+> when using git rev-list
+>
+> Signed-off-by: Aaron Lipman <alipman88@gmail.com>
+> ---
+> diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+> @@ -263,4 +263,49 @@ test_expect_success 'rev-parse --bisect can default to good/bad refs' '
+> +test_output_expect_success "--bisect --first-parent" 'git rev-list --bisect --first-parent E ^F' <<EOF
 
-If I understand correctly, the AuthorDate is displayed, and I'd like
-to challenge that decision. Consider the following case:
+Custom is to use single quotes around the test title, not double
+quotes (unless you need to interpolate a variable). Same comment
+applies to other tests introduced by this patch.
 
-A feature branch having commits authored last week, but merged to the
-main branch just today. And to the sake of discussion, let's say that
-the branch has a bug.
+> +test_expect_success "--bisect-all --first-parent" '
+> +cat > expect.unsorted <<EOF &&
+> +$(git rev-parse E) (tag: E, dist=0)
+> +[...]
+> +$(git rev-parse e8) (tag: e8, dist=1)
+> +EOF
+> +
+> +# expect results to be ordered by distance (descending),
+> +# commit hash (ascending)
+> +sort -k4,4r -k1,1 expect.unsorted > expect &&
+> +git rev-list --bisect-all --first-parent E ^F > actual &&
+> +test_cmp actual expect
+> +'
 
-When someone encounters the bug on the main branch, he would probably
-want to know when it was introduced - the date when the bug started
-to affect him. However, git-blame only shows him when the bug was
-originally authored, in our case - *last-week*, which is confusing
-since the main branch was working just fine back then.
+Indent this test body with TAB rather than having it sit at the left
+margin. You can use <<-EOF for the here-doc to allow its content to be
+indented, as well.
 
-So I wonder why was AuthorDate the date chosen to be displayed under
-git-blame?
+Swap the arguments to test_cmp.
+
+Also, for style consistency, no whitespace following redirect:
+
+    cat >expect.unsorted <<-EOF
+    ...
+    EOF
+    ...
+    sort ... >expect &&
+    git rev-list ... >actual &&
+    test_cmp expect actual
