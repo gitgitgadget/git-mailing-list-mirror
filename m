@@ -2,131 +2,133 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E30FCC433E4
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 19:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D2CBC433E1
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 19:50:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C00E92250E
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 19:49:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73BDD22CA0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 19:50:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gR3AZMGi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="miMc7r7E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728748AbgHETtI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 15:49:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47326 "EHLO
+        id S1728308AbgHETuU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 15:50:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728202AbgHEQzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 12:55:40 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A21DC001FC4
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 08:37:54 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id h8so24485613lfp.9
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 08:37:54 -0700 (PDT)
+        with ESMTP id S1728265AbgHEQxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 12:53:52 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8522C0A54D6
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 06:34:43 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id 184so6384454wmb.0
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 06:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=9FfCXNwBxiE9hVGMig+HdI31Kd4rkFIzImEZG6WKSPY=;
-        b=gR3AZMGi8E4JpfuzQE++Lgm5OFanz0N3iS5mFAnE69j+LppKTKCrpnHYmxBT65H551
-         pK4+4OOrPPDv3Ra98jW9T/vbAclx9oDyeYtvdh1tj/aMNo0pSy+NjvVSzFt4Ad8yyTFb
-         xMd124vY0UqQ9nOpwQ3Au37Ao413v1UCCfxD6AvmQ1aCUk1bTVqCHidbqLlHFdpFtqnB
-         jlvtOwEiGDL4KqYpYKC4jsfyQe8+Xi60Y3AB79T0vd16G9Y+cWzMGsI0M9K9pwRNmBfB
-         NIjiFj8+y+fEXdu0NHb/Z6PjQldXiZOTt4lggESotaPICW9Oo7lJtvI/ZEa+4qMhwqGh
-         7DLw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=GTth7ZlgfEQKOaHMOM4OTwa7f0ezvsrKyYbwytkK8Xg=;
+        b=miMc7r7EyAQ1pNLDMOoaBMqRAWIPuMn6rcBrR3kLiahzW4MydJPl3j1CPuShRKdEFB
+         2YcQDN6m32MNHvbkp7vAsyzwSNcmookuz/dET1PgiwU0ih6+lIFo6fNQgVljxVx5TmeP
+         pQx5IL7v/EkK4840m109a+7hss8ksONVAQrbxPg1/kD/6ByFimgRaWpZ4g3J/WW2e3Cx
+         3hfvWiIUan5qztWUXM1A/+wkTqdeUh2Z3O61g3E3FuU8beI2EK25/banmtxK9i6yKdzY
+         YqiJ5w+w9STeIA8ikSVYC/ae7UkF3n3kgvt0L2OY1mmdfh+XDll7fxZFPu8csYZQ/6eu
+         eKKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=9FfCXNwBxiE9hVGMig+HdI31Kd4rkFIzImEZG6WKSPY=;
-        b=VJT4o0ePwVieGlx4vh0yFJIF+AdMhTyjrJxQoLC3Bbayw9VLjCzi+HeRgItuylTIvv
-         baiw4wW3nRUWqfFTvmKSUKrabi7MWdiPLwb8zGV+Um2lRilPe5SA+gzqIO8PcbB9RNnO
-         0vS3yrurwA9Le0xinzb7KkWHPyqevVguZEkTk7zdiu0kBh4mpMcofh/lylNO3JqqdonV
-         INIYiQWPSPonpyeX8DdgBBLmDFDP4X+PAGupZhVZnqiZC/dnbnYlzLbQtelFeG+W1uzR
-         lzHN1OnDmbMUxQ0Ji03gPWUGiFrlmJvlM7K0FQrqtSuGNZ9UUTR0ND0/T8iA4nP+Dqza
-         vEwg==
-X-Gm-Message-State: AOAM53156WCFiBHkpQvoRaN2hYncDPieS4C1j84kYvbmlA0rUIQm75Pd
-        wJcPab/Zj1zP8KYXsx4FpPc=
-X-Google-Smtp-Source: ABdhPJzeolBs72ZImfaeFA8VJE0CAYuCt0Y4NJ272pq9FHbrYFTXuMPADlPgaUXHi7Eo3QDYvIokSA==
-X-Received: by 2002:a05:6512:3b7:: with SMTP id v23mr1892990lfp.10.1596641872972;
-        Wed, 05 Aug 2020 08:37:52 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id s22sm1013805lji.122.2020.08.05.08.37.51
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=GTth7ZlgfEQKOaHMOM4OTwa7f0ezvsrKyYbwytkK8Xg=;
+        b=CXpOGeg8eHLv+4xUyB9pYlHRvyhzD+89FgtpVTX3GSZ+iV8i4c/HMIDNh9s1ueSor3
+         1+Xiylhlr7KXIoQHHdCirxC9WiIb9M03fOcIYqNoQxuNteF82H/W4G9np8JM/6l9oNmV
+         geDkGs3gF+u5KQLDmVF4aqukdJccF2D7ukmX8S2h01Hnt7WXXG86/J9KaQzBFlcOTAwm
+         ESNlMoM9tDuUIbbNo2fuOhr3whuhLq8Y7GD4Lp5+HPwGilRrNjP/1HS0XbQUFeHRsttV
+         G3j68I61YMrMO6kMzDPi8ce6CDICtnckzkYRKCtam1KHlDp5vEZAiOG7hT7bUkaRJk5t
+         fkaA==
+X-Gm-Message-State: AOAM5313JITbo3goCM/kXcw3mFI9l1wn7CXt9wg4JPvR+sMNB+HMh7Zy
+        kjAe703AwkFtM0UY+GynwzNv8pZC
+X-Google-Smtp-Source: ABdhPJzDkUvQTSRubF2DHSE4SQy87svbuzezCN8oUXRrEKd1RwBNxLG3Z3aBgCBN4K43qYQsIJ+l+A==
+X-Received: by 2002:a05:600c:220b:: with SMTP id z11mr3294876wml.48.1596634466100;
+        Wed, 05 Aug 2020 06:34:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m16sm2619557wrr.71.2020.08.05.06.34.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 08:37:51 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru>
-        <20200804195830.GA2014743@coredump.intra.peff.net>
-Date:   Wed, 05 Aug 2020 18:37:51 +0300
-In-Reply-To: <20200804195830.GA2014743@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 4 Aug 2020 15:58:30 -0400")
-Message-ID: <87k0ydp0hc.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Wed, 05 Aug 2020 06:34:25 -0700 (PDT)
+Message-Id: <66a026ae678341fe7e93a89e22f76e24282cebaa.1596634463.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.693.git.1596634463.gitgitgadget@gmail.com>
+References: <pull.693.git.1596634463.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?Marco=20Trevisan=20=28Trevi=C3=B1o=29?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 05 Aug 2020 13:34:21 +0000
+Subject: [PATCH 1/3] mergetool-lib: use $XDG_CURRENT_DESKTOP to check GNOME
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Marco Trevisan <mail@3v1n0.net>,
+        =?UTF-8?q?Marco=20Trevisan=20=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From: =?UTF-8?q?Marco=20Trevisan=20=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
 
-> On Tue, Aug 04, 2020 at 08:50:16PM +0300, Sergey Organov wrote:
->
->> Attached is rather minimal incompatible change to --diff-merges that'd
->> allow extensions in the future, to get out of urge for the discussed
->> changes. I'm going to follow-up with actual improvements and I'm aware
->> it lacks documentation changes.
->
-> Thanks, I like the direction here. Definitely it would need
-> documentation, but also tests (probably in t4013 alongside the ones my
-> series added; in fact you'd probably need to adjust my tests for the
-> non-optional argument).
+To list merge tool candidates we used to use a private GNOME env
+variable (GNOME_DESKTOP_SESSION_ID) that has been deprecated for long time ago
+and removed as part of GNOME 3.30.0 release [1].
 
-I turned to tests, and found that I have a doubt about the test
-you've added:
+So, git should instead check the XDG_CURRENT_DESKTOP env variable, that
+is supported by all the desktop environments.
 
-git log --no-diff-merges -p --first-parent master
+Since the variable is actually a colon-separated list of names that the current
+desktop is known as, we need to go through all the values to ensure
+we're using GNOME.
 
-In modified tests, I'd like to move --no-diff-merges to the end, for the
-test to be less restrictive:
+[1] https://gitlab.gnome.org/GNOME/gnome-session/-/commit/00e0e6226371d53f65
 
-git log -p --first-parent --no-diff-merges master
+Signed-off-by: Marco Trevisan (Treviño) <mail@3v1n0.net>
+---
+ git-mergetool--lib.sh | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-It should change nothing for now, but it will allow us in the future to
-get rid of mutual dependencies between in -m and --first-parent in favor
-of --first-parent to imply --diff-merges=1. We then will need to
-override the latter by subsequent --no-diff-merges:
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 204a5acd66..be28fe375f 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -266,6 +266,19 @@ run_merge_cmd () {
+ 	fi
+ }
+ 
++is_desktop () {
++	IFS=':'
++	for desktop in ${XDG_CURRENT_DESKTOP}
++	do
++		if test "$desktop" = "$1"
++		then
++			return 0
++		fi
++	done
++
++	return 1
++}
++
+ list_merge_tool_candidates () {
+ 	if merge_mode
+ 	then
+@@ -275,7 +288,7 @@ list_merge_tool_candidates () {
+ 	fi
+ 	if test -n "$DISPLAY"
+ 	then
+-		if test -n "$GNOME_DESKTOP_SESSION_ID"
++		if is_desktop "GNOME"
+ 		then
+ 			tools="meld opendiff kdiff3 tkdiff xxdiff $tools"
+ 		else
+-- 
+gitgitgadget
 
-git log -p --first-parent [--diff-merges=1: implied] --no-diff-merges master
-
-In this case your original test:
-
-git log --no-diff-merges -p --first-parent [--diff-merges=1: implied] master
-
-would fail, as implied --diff-merges=1 then wins.
-
-Then I'm going to add a copy:
-
-git log -p --first-parent --diff-merges=off master
-
-to check that this form works as well.
-
-What do you think?
-
-Thanks,
--- Sergey
