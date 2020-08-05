@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED966C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B853DC433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:53:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C770E21D95
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:52:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 947D02073E
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:53:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZSkqnsZo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q9JV4kpY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728915AbgHERwa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56750 "EHLO
+        id S1728890AbgHERxd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 13:53:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728854AbgHERt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:49:56 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8D9C0617A0
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:49:55 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id i92so3467822pje.0
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:49:55 -0700 (PDT)
+        with ESMTP id S1728846AbgHERtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 13:49:50 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC58C06174A
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:49:50 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id kr4so4957300pjb.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=C1JuxiEFbBgSuA8iGZ0RpKI2x/jJRiy3MfqRBbgyn/Q=;
-        b=ZSkqnsZo1UlwCZiHl6dLPCIezaQVGtRHmvsmJGTx/ifi9kdeJdOq0+b5YFlKNHEQ3R
-         a88CdxopT6LfEPl1DPGdI4u1WPCpGtENDo9JHX3SmDCOdZd/+pSWJmLvJlg3s4CbsPsI
-         /lLLitOxD8MF9CVrbcvOCQFbWlh+YMr1UbsIffmPO9k1/8Pgq+tLL2sZbVR6OFz4LRS4
-         e4e/BfTRSKmAvTawVq7cUdylB9t7Sfshzckn683bqSww5KvpwIUx57Z04W88xfgKbL46
-         nQGyvHRifRYNemGQuBySoiZmahfVsj9fxubfetUEM83sIg9xxf0mHf+7i0NFkM4o4NQ2
-         jzMw==
+        bh=I2x4nvf5u7YHLs/rvuQ2DKG/frGYuFxUPbbH8Ur2AHA=;
+        b=Q9JV4kpY6x7rr59uNFknHTktXpZHrdBEwVgs+pj6+tYbhXtD+8Vq1jpB/CE8Rtrq01
+         yw00178LCzj72/VhQ8kxltmhrJLUabo5c0ZBaKhD4q0YRTZbiSsgXK3uzf8DMxz2br0z
+         29f7LNQHVjlyR8Cvg1XCtXYSGWssp3eeqBwNaLtZi5wkBV35Wvst1QZKEiS7ndrC8eBx
+         BhqWqm0u016gQVy/eJAcsY5ugtuzwf9sqtWaIXnZcXMxR1/w+AYBNWgLyGnE701FEekH
+         Q836879ssjjMrVB3vY0p62ZC4x2N5wJjgTDmFASgpayL7Tlhqojx5VJ1tG3ZkOpgo4Dg
+         jrNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=C1JuxiEFbBgSuA8iGZ0RpKI2x/jJRiy3MfqRBbgyn/Q=;
-        b=l7osxsCARPyfYklfpVpNKWB+fiGoVAElkr2ddLo+VtFfh/LOZEwGP3C5Wjx0ET26Bv
-         09Cm8zu3GuzAkSRV+fY8ChxYvNhQONR4gEuOZ4lHVaxWnOMqIDuJw027Es3gXqBlqutz
-         oGbMqEgcq5eAhxxBzgY2ZCOGTzV2rxB6TK09IdhnOaKFqj29ipKHIneeDEsPVM2jMLLh
-         k/MKppBivV0Yhr48EIiAOI1tfJW2Zai3Pkr84t3tjq4oe+GAkaES5xAUwT+jh9hnXi4D
-         Qc09zWYF0GRTgGRWUxuJvaiXHtQfKFfuA50pSPQiZ+vJvNgyyjoyDFr6cAfqPH1gyS0I
-         ISYg==
-X-Gm-Message-State: AOAM532lsQbYHCJnW9P//sJcFmYfveamLbNRtujy0J8fWcpy/IaOp2A/
-        CsORk6cQabMWfW5Cjxa8wHv4/NQ03Sc=
-X-Google-Smtp-Source: ABdhPJwAUPUOpXjh6Fm0q1brexieUYu+s9WwH71m52Qtl+vfqk/4lXQ2QzlDjCfVAEJwbtVzas+M+g==
-X-Received: by 2002:a17:90a:9f44:: with SMTP id q4mr4587514pjv.66.1596649793104;
-        Wed, 05 Aug 2020 10:49:53 -0700 (PDT)
+        bh=I2x4nvf5u7YHLs/rvuQ2DKG/frGYuFxUPbbH8Ur2AHA=;
+        b=KxoxhxyMgmvspQQFP1nucawUSOhQYSswUvGzmgGsFHQH3o2irYqKHcKa/JZhU04sFd
+         5hX3UWZdCA6uDYYnLwFXQb4dfjqW+rJI/9bI06tzS76Y5X5GSfz3oQdyCilKGqQ67OT1
+         w2uudGmg2EGiYoIuhR7kyW2J2RrgYQ7yfewFGDvquwT3RBAat0GG8layDJkd748lULUO
+         2HC1B6jfyJPzUnSPvW55mmTeS/ypQVIBe3NIcon0E7q5RaVxInaXA6XUto6sdyZd1Jpb
+         f42nTfdrwmjWnW6HXWDCBrCg5l7IeE8hFHkZGkvxujV22h2QbTOl68z7hN2QF0Y4vSSP
+         Ye2Q==
+X-Gm-Message-State: AOAM531SAHCfGU/JF6MI1VOX6DBRKR5s0l+SCsQElZrBRZYElP7ug5na
+        TsZXdQfmu2eoyNWABIHHxL+/F7MC2PM=
+X-Google-Smtp-Source: ABdhPJxfwwMkBIF1+5vLBRuEbMmCW6fEBxC03R+3/Pm+Kg/L8z5R8VFNrKIvHPZwWE9lHNf2nMLI4Q==
+X-Received: by 2002:a17:90a:f313:: with SMTP id ca19mr4575429pjb.226.1596649789229;
+        Wed, 05 Aug 2020 10:49:49 -0700 (PDT)
 Received: from localhost.localdomain ([45.127.46.185])
-        by smtp.gmail.com with ESMTPSA id z77sm4765150pfc.199.2020.08.05.10.49.49
+        by smtp.gmail.com with ESMTPSA id z77sm4765150pfc.199.2020.08.05.10.49.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:49:52 -0700 (PDT)
+        Wed, 05 Aug 2020 10:49:48 -0700 (PDT)
 From:   Shourya Shukla <shouryashukla.oo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com,
         kaartic.sivaraam@gmail.com, johannes.schindelin@gmx.de,
         liu.denton@gmail.com, Shourya Shukla <shouryashukla.oo@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/4] t7401: change test_i18ncmp syntax for clarity
-Date:   Wed,  5 Aug 2020 23:19:19 +0530
-Message-Id: <20200805174921.16000-3-shouryashukla.oo@gmail.com>
+Subject: [PATCH 1/4] t7401: modernize style
+Date:   Wed,  5 Aug 2020 23:19:18 +0530
+Message-Id: <20200805174921.16000-2-shouryashukla.oo@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200805174921.16000-1-shouryashukla.oo@gmail.com>
 References: <20200805174921.16000-1-shouryashukla.oo@gmail.com>
@@ -77,57 +77,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the test_i18ncmp syntax from 'test_i18ncmp actual expected' to
-'test_i18ncmp expected actual' to align it with the convention followed
-by other tests in the test script.
+The tests in 't7401-submodule-summary.sh' were written a long time ago
+and have some violations with respect to our CodingGuidelines such as
+incorrect spacing in usages of the redirection operator and absence
+of line feed between statements in case of the '|' (pipe) operator.
+Update it to match the CodingGuidelines.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 ---
- t/t7401-submodule-summary.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t7401-submodule-summary.sh | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
-index 4439fb7c17..18fefdb0ba 100755
+index 9bc841d085..4439fb7c17 100755
 --- a/t/t7401-submodule-summary.sh
 +++ b/t/t7401-submodule-summary.sh
-@@ -183,7 +183,7 @@ test_expect_success 'typechanged submodule(submodule->blob), --cached' "
-   < Add foo5
+@@ -16,12 +16,13 @@ add_file () {
+ 	owd=$(pwd)
+ 	cd "$sm"
+ 	for name; do
+-		echo "$name" > "$name" &&
++		echo "$name" >"$name" &&
+ 		git add "$name" &&
+ 		test_tick &&
+ 		git commit -m "Add $name"
+ 	done >/dev/null
+-	git rev-parse --verify HEAD | cut -c1-7
++	git rev-parse --verify HEAD |
++	cut -c1-7
+ 	cd "$owd"
+ }
+ commit_file () {
+@@ -125,7 +126,8 @@ commit_file sm1 &&
+ head3=$(
+ 	cd sm1 &&
+ 	git reset --hard HEAD~2 >/dev/null &&
+-	git rev-parse --verify HEAD | cut -c1-7
++	git rev-parse --verify HEAD |
++	cut -c1-7
+ )
  
- EOF
--	test_i18ncmp actual expected
-+	test_i18ncmp expected actual
- "
- 
- test_expect_success 'typechanged submodule(submodule->blob), --files' "
-@@ -193,7 +193,7 @@ test_expect_success 'typechanged submodule(submodule->blob), --files' "
-   > Add foo5
- 
- EOF
--	test_i18ncmp actual expected
-+	test_i18ncmp expected actual
- "
- 
- rm -rf sm1 &&
-@@ -204,7 +204,7 @@ test_expect_success 'typechanged submodule(submodule->blob)' "
- * sm1 $head4(submodule)->$head5(blob):
- 
- EOF
--	test_i18ncmp actual expected
-+	test_i18ncmp expected actual
- "
- 
- rm -f sm1 &&
-@@ -217,7 +217,7 @@ test_expect_success 'nonexistent commit' "
-   Warn: sm1 doesn't contain commit $head4_full
- 
- EOF
--	test_i18ncmp actual expected
-+	test_i18ncmp expected actual
- "
- 
- commit_file
+ test_expect_success 'modified submodule(backward)' "
 -- 
 2.27.0
 
