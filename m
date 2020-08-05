@@ -3,108 +3,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 770C0C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 16:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 662E4C433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 16:44:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FCD1206DA
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 16:20:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F63C22CF7
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 16:44:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nzCEbIm3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vEZyM2bc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726515AbgHEQUY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 12:20:24 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64141 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbgHEQS6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 12:18:58 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C4D6BDD60D;
-        Wed,  5 Aug 2020 12:05:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FfwEkqDze27Hsq5E7yFQ1X8iG9I=; b=nzCEbI
-        m3quzgeaeTjfvl0fdsSSgIVrTqOVfsxA90InmmsPfEsDDUcYb9AmuWbmjkqwC62p
-        jxM+lhQsLj0T/L3R61BFe1OrLwJFIlIn+Xj8viqvgccmDrFPs3uhfTZZbU/t4Moq
-        3+7O3ZJIaQ7k/0RDrP4ZM248zIszIBXf3MSKM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DbONHlkMKevuVM0Su8wtwD6aj+Jg35k/
-        FoS9/7gOOBRkC4V662P3xafxUlYuhkrUXkurE0TMrmhLoRbdhEdWNwi4RA9oHjtM
-        TxaAbqtHfceT/5PUZNoMLiW+OCe/1y4AOyZHIrFL3YaDLPSDQIBUKGbo4hzaGEHG
-        6LavOadJPPo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3DEFDD60C;
-        Wed,  5 Aug 2020 12:05:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E83E8DD60B;
-        Wed,  5 Aug 2020 12:05:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru>
-        <20200804195830.GA2014743@coredump.intra.peff.net>
-        <87k0ydp0hc.fsf@osv.gnss.ru>
-Date:   Wed, 05 Aug 2020 09:05:35 -0700
-In-Reply-To: <87k0ydp0hc.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
-        05 Aug 2020 18:37:51 +0300")
-Message-ID: <xmqqeeoloz74.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726996AbgHEQny (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 12:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727913AbgHEQmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 12:42:12 -0400
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C53EC034601
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 04:35:51 -0700 (PDT)
+Received: by mail-vs1-xe34.google.com with SMTP id 125so8430480vsg.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 04:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hws1USB0shfBCwcOHeyIFz1CeCVQyD9W3NB3949ceU8=;
+        b=vEZyM2bcI/P/+9adQZ/CiO7V1H2fchHc2gcjP02MebTFj38TMlzVVHTNm7UKPcL87K
+         53F/ZYrm0n9xXtMYpUmThNo4Orc7dUvEW79KmuxlQLmx57EwXaoN0gVMVYsm3/t+fdrR
+         VJvysUNi41yICOfwy0j259NCJYBmcraQX2r+qdB7aa/GB8e8u99n4NDUDX+lNwG3Aw3k
+         qvopbOt87Z/okktgM1P+wsqSGlSJxJpegD2hztE49lIEp2wl0owrKAxqhl5cJTOV4A64
+         wbCMyot9K2Bb2bcQ2uk/+sjjibpXgcaqxObc458hbhH7lWXdbCli4grLnwJcfF3MWG9e
+         F9Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hws1USB0shfBCwcOHeyIFz1CeCVQyD9W3NB3949ceU8=;
+        b=kLxwhdZlZgZ7KaWtj7UD75uaIfyJYFhll4vAPNpkVZHnwxCf68HZu6+qkj/XJQc/5h
+         kiVeGb+QrW/8gsC3GrwA5LTQ59dYqltKELWuZMAcfHkWHOB7IotAGnGZA1R9N5+O3Gjj
+         pwMulWQVVPX6XSTkQkDZ6dBHEsR9O6PZS0VZVmCCq1BrzwFBU7W1CdW0TH3yh2x4HsMn
+         8tRzpg86I3wZaZ8NFMps0CXLp/ttqtDDmLef0gX2GGZ9Df+UrTLh3OGXV/HgS9By8dDM
+         yYvCJLurNPLA49IUrd56BMRgnEaTAS93vW7cQvbuqCRJixulH+igXWUDOZLuC018qHLq
+         N/jg==
+X-Gm-Message-State: AOAM530wKwrDOma0j/sPHSo5XbFmanh/iAS+NHNipPm61TbksISTk5sQ
+        OeE0omXcvTApoJjxY//vIMWIaZ/5ITGFw6B9cB0=
+X-Google-Smtp-Source: ABdhPJzFy4eOCwyzpuxJS9CcEoRSg9xqaxtfiVGJ+ztf6qkYIAkH/1D2rrEhWxtX9WJSPn45WBZ0Y923v98pThnVW6M=
+X-Received: by 2002:a05:6102:2373:: with SMTP id o19mr1516417vsa.118.1596627340445;
+ Wed, 05 Aug 2020 04:35:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 800AC624-D735-11EA-ADBC-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+References: <20200805084240.GA1802257@coredump.intra.peff.net>
+ <CAN0heSqsHGL2Pb37d2dWL+RCWac4z8mjpM-v6v6zsxH_8cWQjQ@mail.gmail.com> <20200805100351.GA2126375@coredump.intra.peff.net>
+In-Reply-To: <20200805100351.GA2126375@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 5 Aug 2020 13:35:28 +0200
+Message-ID: <CAN0heSqmsrvf8-Xq6TNqfGONLJir2w9+4QA3_6KKkFiVH2Rc9w@mail.gmail.com>
+Subject: Re: racy test failure in tb/upload-pack-filters
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
-
-> Jeff King <peff@peff.net> writes:
-> ...
-> In this case your original test:
+On Wed, 5 Aug 2020 at 12:03, Jeff King <peff@peff.net> wrote:
 >
-> git log --no-diff-merges -p --first-parent [--diff-merges=1: implied] master
+> On Wed, Aug 05, 2020 at 11:27:22AM +0200, Martin =C3=85gren wrote:
 >
-> would fail, as implied --diff-merges=1 then wins.
+> > > -       grep "tree filter allows max depth 0, but got 1" err
+> > > +       test_i18ngrep "tree filter allows max depth 0, but got 1" err
+> >
+> > This one isn't translated, so this hunk could be dropped. Or maybe you
+> > wanted to knowingly cast a slightly wider net? (And this does fit the
+> > subject of your patch.)
+>
+> Neither message is translated in itself, but the bug can happen with
+> either of them (because of the translation of the "remote error"
+> string). The tree-depth one was actually in the first failure I saw, but
+> when I re-ran it to produce output for the commit message, I got one of
+> the other tests.
 
-IMHO, I think this is an absolutely wrong thing to do.  At least to
-me (and I suspect it would be to many users), what "--first-parent
-implies 'when showing a diff, compare only with the first parent'"
-means is that it should do so unless told to do otherwise.
+Braino! Thanks for (re-)explaining so patiently. I even tried dropping
+that hunk and running a fair amount of "--stress" -- never failed.
+Without the other hunks, "--stress" hit the failure pretty much
+instantly. Oh well, brute force doesn't always beat actual thinking.
 
-    git log --no-diff-merges -p --first-parent
-
-explicitly tells the command that the user does not want to see
-patches for merge commits.  I do not see any reason why
-"--first-parent", which merely *implies* a specific diff generation
-preference for merges, countermand it.  IOW the implication is
-conditional.
-
-It is like saying
-
-    git log --first-parent
-
-should show patches because it *implies* comparing only with the
-first parent, but you can see why it is wrong.  It is because that
-implication is conditional---it kicks in only when the command is
-told to compare with any parent (i.e. "-p").  
-
-I.e. the implication is "compare only with the first parent if told
-to compare, and if not told what to compare with explicitly".
+Martin
