@@ -7,108 +7,128 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 029B9C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10EB8C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:32:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8D6922B42
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:27:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6B3922B42
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:32:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7fcF4za"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GFZLWGap"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726150AbgHEU1r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 16:27:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
+        id S1726545AbgHEUcK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 16:32:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725999AbgHEU1q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 16:27:46 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F2FC061575
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 13:27:46 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id m15so24283233lfp.7
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 13:27:46 -0700 (PDT)
+        with ESMTP id S1726204AbgHEUcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 16:32:08 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864A8C061575
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 13:32:08 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id 4so17015963vsf.11
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 13:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HOGzHpKMm05ce8jario53d5xhoMDX+3u7tGxdH7HWI0=;
-        b=Q7fcF4zam0JPVq0/RtLJKygP+0D9/sF95ZhPlzSgJBoJytZB/Wvp2R78Eu1AtaPEtm
-         jFclGjxFrSsJ+leep4UwB1k+4ubIbimMDfVw3KPOsSIc7+D/jRp3o96HTzAcQWiENqgf
-         S49ZMCmakusBYSz+I6zNnBvMAKsvCI8VFONbm29H54F158ZVPst09jSQ72CUrw37viho
-         IVyIgWlHALwYArwtb6bpqHIvc7Fu6vS+piKrYbaHBEHOEXA9lzYjZNcaqHsclrPoL7wG
-         9bPzl5o4jRFtIDnxf/wTcPrnfNZnWa70sfPliWZ462uY5dAjRM3xr6LmSv1F6m2uHCxh
-         vxCw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m4lUGcGYZ0nTZO2d6fRNL0StS8kO+nlkccgKWsSEUMo=;
+        b=GFZLWGapss/aTcPJo/3llRxc9JAJ4+fNliL6h/jADKSjSkO8gv2XS6umTcGk+v7kdj
+         /VZfLgLueGs7aZO1GiBYgYZ34s8U/83M9ovIn1EqUxsU7+7fNQefhZ7iY/KEfz6o+hHD
+         Q0X8h8WtsmjOxzph/DFpi1xfeONVDzRsn4GaTOOyHYgzRiHKeoRQi9QDifRIWLTVzKrS
+         q1u12IB4JnHyZylpRJWu7MqodQbbXqO8Cw4PmXVL1SHqquYbYoUDUcNw77A82TSbKcXC
+         WYhtVrdP2EHHWMQbvbU1udTVSqKuICtF+ZibxmzbM2/+MDdMIm2qYISbT0JB2ag0cuL1
+         RBew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=HOGzHpKMm05ce8jario53d5xhoMDX+3u7tGxdH7HWI0=;
-        b=no5nMA2Q/wPAAx2YIf5Z9KAFjTbtC+JvdIUkS2J4xHBGOuXQ1QM/bOTVX8Vk0YuB5J
-         S23fdRnQvJg9bcRmYe2Uw0Ze7W1KTRlUWGEOVd36+J8eHsruboM9yf06aCwrZ581pxB1
-         tY9axE2CniHsltgE5qwQQrpOB+A0ZxjEKy9h9s/BVvZ02fZbdSCwvptNaSlSESGEa4wc
-         BWz+6rAvVaCJW70mJeMdbf6RhgqtniChm08FKpUQWzddYpbM5RAWUaJhcp1nk9bcpK2W
-         CMIAra4ISKBvvg0mY2VuftCXA05AZSTSZ7QB+hTqMR2nSclTcDqnAuxZkVJLwhYPdLYS
-         rLBA==
-X-Gm-Message-State: AOAM533HKJy1WKiWV3afOAZquN/Qt4p5gEtabasUb0K0YTsa8J2voL2a
-        /53+am2TU/pLnl3BL2XrTDip8r+9
-X-Google-Smtp-Source: ABdhPJyOjNQIFt9fyLvEPL1DklvfpZwL8r8gLmiorI2uK2UD1RIFdIQU+NqoTFoDyp1FX8CtXBBd1g==
-X-Received: by 2002:a05:6512:312b:: with SMTP id p11mr2352742lfd.202.1596659263673;
-        Wed, 05 Aug 2020 13:27:43 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id r14sm1592671lfe.29.2020.08.05.13.27.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 13:27:42 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
-        <20200729201002.GA2989059@coredump.intra.peff.net>
-        <871rku3soc.fsf@osv.gnss.ru>
-        <20200731230858.GA1461090@coredump.intra.peff.net>
-        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
-        <87o8nrybnb.fsf@osv.gnss.ru>
-        <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru>
-        <20200804195830.GA2014743@coredump.intra.peff.net>
-        <87k0ydp0hc.fsf@osv.gnss.ru> <xmqqeeoloz74.fsf@gitster.c.googlers.com>
-        <87d045nfju.fsf@osv.gnss.ru> <xmqqsgd0opzd.fsf@gitster.c.googlers.com>
-Date:   Wed, 05 Aug 2020 23:27:42 +0300
-In-Reply-To: <xmqqsgd0opzd.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 05 Aug 2020 12:24:38 -0700")
-Message-ID: <877ducltxd.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m4lUGcGYZ0nTZO2d6fRNL0StS8kO+nlkccgKWsSEUMo=;
+        b=bmtW9hQ+WFRSeatj4pkzXAdgKlCEX8k6oaDGnmzuYlbr7+M8albZdoXe2mOIuUP7+m
+         y19wS0Lv4R+Qix9aJVC2YtsfwGeO6X5KqSXk69PwyZhyRgdCVXXf+aPLRgk25CNWs4mj
+         jLP8a0xoSLVWJBrKASucZFuDpNpGIHOvH+4wwA12qe08BhkimESOO169KRKmPnOYDJn7
+         98zwVyFB9dzH7KEe7lhXL1DspnLD19kpLbEOBS0Bv27pnNktjvQpl0ej1VJ3RwsxlwwL
+         FImMLiZM73fEuh2XHYFB6kGUlwgs+Ekt9Dxrws0db7StZ6VdnCKYig2Q9z3ijE57VnR5
+         RcSQ==
+X-Gm-Message-State: AOAM531FsPBFUCn1WF/3SmpVzNNwHyRn3msuRmcRG6AHDQqslh+ms/pR
+        x1cBVNSqHZZw+IIfJfAAgtu66SjGyfxrmuy5MUHE+zrk
+X-Google-Smtp-Source: ABdhPJwsHWjya8Vp32DhnCrmEVq3NG7XFIhrxvjpY7IJrT5PBw11TowsSbLFxOUcjbllzWvJeL6Ww9bm8bn7k5GMo18=
+X-Received: by 2002:a67:1702:: with SMTP id 2mr3790252vsx.153.1596659527274;
+ Wed, 05 Aug 2020 13:32:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+P7+xpokJ3Z4xZ9ibCBpBO65D1v-AD6_JknprGUsEDxEvMGGw@mail.gmail.com>
+ <20200805063704.GA2690083@coredump.intra.peff.net>
+In-Reply-To: <20200805063704.GA2690083@coredump.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 5 Aug 2020 13:31:55 -0700
+Message-ID: <CA+P7+xofEHdvVOy-9RLUF=kXCjNEXrs0M3Mp6h8RgehY2KHaaw@mail.gmail.com>
+Subject: Re: avoiding fetching specific refs from a remote
+To:     Jeff King <peff@peff.net>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Aug 4, 2020 at 11:37 PM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Aug 04, 2020 at 02:53:30PM -0700, Jacob Keller wrote:
+>
+> > This results in the annoying completion behavior where:
+> >
+> > $git checkout ma<TAB>
+> > main
+> > master
+> >
+> > Essentially, because both main and master have similar names, tab
+> > completion requires remembering to type one additional character than
+> > I am used to.
+>
+> Heh, I didn't think anybody considered that implication so far; the fact
+> that they were similar names has generally been considered a positive. I
+> agree it would be annoying.
+>
+> > I'd like to be able to customize my pull so that I either (a) exclude
+> > the reference when performing a fetch, or (b) exclude the reference
+> > when tab completing.
+>
+> Not quite (b), but if you:
+>
+>   - delete any local "master" branch, if you haven't already
+>
+>   - set $GIT_COMPLETION_CHECKOUT_NO_GUESS to "1"
+>
+> then it shouldn't complete "master". The second is necessary because
+> we'd try to complete the magic "git checkout master" that auto-creates
+> the branch from the remote version.
+>
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Yes, we can invent the rule that implied options don't ...
->
-> "invent"?  It is nothing new, isn't it?  IIRC, Peff's "first-parent
-> implies 'm' but can be countermanded with --no-diff-merges" defines
-> "implication" exactly that way.  I do not think that is a recent
-> invention but it is just following the patterns set by other options
-> that has conditional implications.
->
-> IOW,
->
-> 	$ git log --no-diff-merges --first-parent -p next
-> 	$ git log --first-parent -p --no-diff-merges next
->
-> should both mean the same thing.  The user said no patch is wanted
-> for merge commits with --no-diff-merges and --first-parent does not
-> affect it.
+I don't like this approach because I like having the guessing options
+available in most repositories.
 
-I disagree, but I drop the issue for now for the goal of making sensible
-progress with --diff-merges. I'll do the patches without this
-modifications of the tests.
+> > something like adding a remote.<name>.excludeRefs which would allow
+> > specifying a set of references to exclude from matching the refspec..
+> >
+> > I realize I could customize the refspec to list the set of things I
+> > want, but then I would miss any potential future branches until I
+> > updated my remote config again.
+>
+> This is definitely a reasonable thing to want, and it has come up off
+> and on over the years. One search term for the list archive is "negative
+> refspecs", though it turns up a lot of useless hits when the two words
+> are not directly adjacent.
+>
+> This old thread might be worth reading:
+>
+>   https://lore.kernel.org/git/20140124090104.GA396@x4/
+>
+> and there is even a patch in there:
+>
+>   https://lore.kernel.org/git/20140125013433.GA22336@sigill.intra.peff.net/
+>
+> but I didn't go over it carefully enough to know whether it is utter
+> trash, or something that could be used as a starting point.
+>
 
-Thanks,
--- Sergey.
+Thanks, it looks like this is at least sensible.
+
+> -Peff
