@@ -3,66 +3,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LOTS_OF_MONEY,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7EEBC433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40071C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:06:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A603C22D00
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:06:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17ADD22D6D
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:06:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="G7yN9MVf"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="aIjN3++Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728488AbgHERFk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:05:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49314 "EHLO
+        id S1728493AbgHERGD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 13:06:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728103AbgHERCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:02:46 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 900C4C0617A1
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:02:45 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id p25so1843563qkp.2
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:02:45 -0700 (PDT)
+        with ESMTP id S1728186AbgHERDL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 13:03:11 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA05C0617A5
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:03:01 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id 77so10033979qkm.5
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=XxGYE6AhgiSWhnfGqWbnFIHNGIk0jQ+QaGHE5qSqdW0=;
-        b=G7yN9MVfkSc7R4xHI2aa8qC2Lsi0x4j0F/QnacjUk/IBPFyiy/fP2OPPbd3Qt2M/OB
-         VQ6e5F3Q4JxkrFHTOgAg9klwttU9quDPOZOfxup9u+XoXfHcLqyz6AM26hMr8VbmeUzV
-         QsNsAc450/SNyNccc3JZp05hHm/qI01iFUnj7DDuIs+7dKvi1aOso9GsmHJSU5uEI7NC
-         CzbZwVXQNv1/hBq/Kx1nqS/aDqDieKpzsSvDRksmYy3Yr6RVTVEAvcikEyfVv88gdZjb
-         XrNBjR5lzzKboBz73f06/ezWQzK6Pk1xS6kteKqbAva10wgp17OlOjubdquxADQ2x0Fr
-         WOeA==
+        bh=dfZPKLJ6r3UEWyGZR3vKueGNOUl/lW3q87JIhDFzLg8=;
+        b=aIjN3++YoJkfU9/RG+X9A5G7gri5HG+/j3rs2rdk8g7lco1HeZWNU8oBH2wH/gnyLQ
+         j5dPPLOPe4JYVaBsw4bCvrQEV0a3vMdyMU2oyuVtn5p6XN5hcKwRwxf3OZH/OX+lVWNv
+         QWh/7q06QbstFS7mUdeByxtiomJ/07j9ZU14FobslCNQ+Tg8lBlUhs1impmRpHyYjPV8
+         h5oiTMvzuEMESMbqpgnbfGBEnzBaIc1si29OrsuQTb92fu6sQNOWUeziwFba7ncFiGdv
+         RHm1IcrukYntJJnP6cS+6ghkHWhPmn6X578lUWOHYs9jgMaOcf3VCMzxsA33GKa0XLP0
+         +TQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=XxGYE6AhgiSWhnfGqWbnFIHNGIk0jQ+QaGHE5qSqdW0=;
-        b=OGcagy7Vtld65PxITOMMP+DAx+FB8gfNKkLvPdM9eqluo1iQnMgMMEnACVT4QEOYGd
-         guTGhTrIwXetE6ncFha3CXUJ+nq/OLyuhw65IDzaWRmgSOD4aUCzCIkqb17gE0nLuBWp
-         E/YGaDA3hj9FwSaqu5MM/F0xSu/PUMonJzhDVa4oaQNy8xvyydhapTTWjBU4B64dWtvb
-         uWiYmFTCajdI0PW+0Eoyd20qmlZX1jreyyK15gPS223wISnqC6qCuZ4HiNRNhYwiKDwJ
-         kCnjrn2f8A8MmQX9GLQbGssvwiHGbJNd6STTPTH8u4LEOA6jELhNNdi4t6uVNdRE60p2
-         brvg==
-X-Gm-Message-State: AOAM530AamIJfSLuHrTHUJtpQiUyk5s5viGBE2VNLY4N2tKsjHIa59dd
-        EsJkHpgUWKikky04/8tIK+suDd4yBNKX0g==
-X-Google-Smtp-Source: ABdhPJzHTuw140ab2fpleGbfGQqzNKr/tRewpnlsmBMsvdeLG7qv7NyZeoGiKqfvPPRUarb9zrUBkA==
-X-Received: by 2002:a37:a503:: with SMTP id o3mr4214761qke.162.1596646961228;
-        Wed, 05 Aug 2020 10:02:41 -0700 (PDT)
+        bh=dfZPKLJ6r3UEWyGZR3vKueGNOUl/lW3q87JIhDFzLg8=;
+        b=OZycNibSr6C3v3mfVOxVwemxaKxgENC30wpkzZFlMZmaFXsbFtIdKd0xDEl8jcqaC6
+         /jQAMXKTkhZfadKtSwNU122fNrdcO1/tPeUL0+wVCDHqiFJ5lH7o8CcszePis078tQUv
+         G6Oxq6zUq6o5JPwVcHX9QKXq+kvjRbKEd4m5lm7PenS8xKAET09TToubNHi29VQCkH21
+         3+32iStHLFPYyhHbSCcozBKR1eVwyL5sEOmmI3IgT7YQFusSOn2MfGpDa2jQbpDgclHY
+         MPiXdYxXnvw/d5qt6BDW/cOqN7BPLjQXeZ3kGKzHRs2jgNWZOesBxGCTtZFC2KVPzRXk
+         Dx+g==
+X-Gm-Message-State: AOAM5312QHI0eI+53eSppSz5qwf/MY/ftQXF9YGlw06h/J2U2s3vIFNJ
+        KJ65PaZkPMGONL5bREpEB2kG497gZZwglA==
+X-Google-Smtp-Source: ABdhPJxZpbsk+tX1kS1D7DRcO92uh1DxCabMBNkrbF8Gn1tHtP+qMMCwvMFnWyDFCcZoct9BuP2uhQ==
+X-Received: by 2002:a37:9a46:: with SMTP id c67mr4506879qke.85.1596646979826;
+        Wed, 05 Aug 2020 10:02:59 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:d118:9acc:fdba:dee7])
-        by smtp.gmail.com with ESMTPSA id l45sm1105974qtf.11.2020.08.05.10.02.39
+        by smtp.gmail.com with ESMTPSA id m17sm2311399qkn.45.2020.08.05.10.02.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:02:40 -0700 (PDT)
-Date:   Wed, 5 Aug 2020 13:02:39 -0400
+        Wed, 05 Aug 2020 10:02:58 -0700 (PDT)
+Date:   Wed, 5 Aug 2020 13:02:58 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, szeder.dev@gmail.com
-Subject: [PATCH v2 07/14] bloom: split 'get_bloom_filter()' in two
-Message-ID: <23525947c8c3bf9fc5faf59d9a7b6da65cec4e12.1596646576.git.me@ttaylorr.com>
+Subject: [PATCH v2 12/14] commit-graph: add large-filters bitmap chunk
+Message-ID: <100b26d7c8a5e7ce21a950f33791eadab74e8e70.1596646576.git.me@ttaylorr.com>
 References: <cover.1596480582.git.me@ttaylorr.com>
  <cover.1596646576.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -74,238 +74,368 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'get_bloom_filter' takes a flag to control whether it will compute a
-Bloom filter if the requested one is missing. In the next patch, we'll
-add yet another parameter to this method, which would force all but one
-caller to specify an extra 'NULL' parameter at the end.
+When a commit has more than a certain number of changed paths (commonly
+512), the commit-graph machinery represents it as a zero-length filter.
+This is done since having many entries in the Bloom filter has
+undesirable effects on the false positivity rate.
 
-Instead of doing this, split 'get_bloom_filter' into two functions:
-'get_bloom_filter' and 'get_or_compute_bloom_filter'. The former only
-looks up a Bloom filter (and does not compute one if it's missing,
-thus dropping the 'compute_if_not_present' flag). The latter does
-compute missing Bloom filters, with an additional parameter to store
-whether or not it needed to do so.
+In addition to these too-large filters, the commit-graph machinery also
+represents commits with no filter and commits with no changed paths in
+the same way.
 
-This simplifies many call-sites, since the majority of existing callers
-to 'get_bloom_filter' do not want missing Bloom filters to be computed
-(so they can drop the parameter entirely and use the simpler version of
-the function).
+When writing a commit-graph that aggregates several incremental
+commit-graph layers (eg., with '--split=replace'), the commit-graph
+machinery first computes all of the Bloom filters that it wants to write
+but does not already know about from existing graph layers. Because we
+overload the zero-length filter in the above fashion, this leads to
+recomputing large filters over and over again.
 
-While we're at it, instrument the new 'get_or_compute_bloom_filter()'
-with two counters in the 'write_commit_graph_context' struct which store
-the number of filters that we computed, and the number of those which
-were too large to store.
+This is already undesirable, since it means that we are wasting
+considerable effort to discover that a commit with too many changed
+paths, only to throw that effort away (and then repeat the process the
+next time a roll-up is performed).
 
-It would be nice to drop the 'compute_if_not_present' flag entirely,
-since all remaining callers of 'get_or_compute_bloom_filter' pass it as
-'1', but this will change in a future patch and hence cannot be removed.
+In a subsequent patch, we will add a '--max-new-filters=<n>' option,
+which specifies an upper-bound on the number of new filters we are
+willing to compute from scratch. Suppose that there are 'N' too-large
+filters, and we specify '--max-new-filters=M'. If 'N >= M', it is
+unlikely that any filters will be generated, since we'll spend most of
+our effort on filters that we ultimately throw away. If 'N < M', filters
+will trickle in over time, but only at most 'M - N' per-write.
+
+To address this, add a new chunk which encodes a bitmap where the ith
+bit is on iff the ith commit has zero or at least 512 changed paths.
+Likewise store the maximum number of changed paths we are willing to
+store in order to prepare for eventually making this value more easily
+customizable. When computing Bloom filters, first consult the relevant
+bitmap (in the case that we are rolling up existing layers) to see if
+computing the Bloom filter from scratch would be a waste of time.
+
+This patch implements a new chunk instead of extending the existing BIDX
+and BDAT chunks because modifying these chunks would confuse old
+clients. (Eg., setting the most-significant bit in the BIDX chunk would
+confuse old clients and require a version bump).
+
+To allow using the existing bitmap code with 64-bit words, we write the
+data in network byte order from the 64-bit words. This means we also
+need to read the array from the commit-graph file by translating each
+word from network byte order using get_be64() upon first use of the
+bitmap. This is only used when writing the commit-graph, so this is a
+relatively small operation compared to the other writing code.
+
+By avoiding the need to move to new versions of the BDAT and BIDX chunk,
+we can give ourselves more time to consider whether or not other
+modifications to these chunks are worthwhile without holding up this
+change.
+
+Another approach would be to introduce a new BIDX chunk (say, one
+identified by 'BID2') which is identical to the existing BIDX chunk,
+except the most-significant bit of each offset is interpreted as "this
+filter is too big" iff looking at a BID2 chunk. This avoids having to
+write a bitmap, but forces older clients to rewrite their commit-graphs
+(as well as reduces the theoretical largest Bloom filters we couldl
+write, and forces us to maintain the code necessary to translate BIDX
+chunks to BID2 ones). Separately from this patch, I implemented this
+alternate approach and did not find it to be advantageous.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- blame.c               |  2 +-
- bloom.c               | 13 ++++++++++---
- bloom.h               | 11 ++++++++---
- commit-graph.c        | 38 +++++++++++++++++++++++++++++++++++---
- line-log.c            |  2 +-
- revision.c            |  2 +-
- t/helper/test-bloom.c |  3 ++-
- 7 files changed, 58 insertions(+), 13 deletions(-)
+ .../technical/commit-graph-format.txt         |  12 +++
+ bloom.h                                       |   2 +-
+ commit-graph.c                                | 101 +++++++++++++++---
+ commit-graph.h                                |   5 +
+ t/t4216-log-bloom.sh                          |  25 ++++-
+ 5 files changed, 130 insertions(+), 15 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 3e5f8787bc..756285fca7 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1275,7 +1275,7 @@ static int maybe_changed_path(struct repository *r,
- 	if (commit_graph_generation(origin->commit) == GENERATION_NUMBER_INFINITY)
- 		return 1;
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index 440541045d..5f2d9ab4d7 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -123,6 +123,18 @@ CHUNK DATA:
+       of length zero.
+     * The BDAT chunk is present if and only if BIDX is present.
  
--	filter = get_bloom_filter(r, origin->commit, 0);
-+	filter = get_bloom_filter(r, origin->commit);
- 
- 	if (!filter)
- 		return 1;
-diff --git a/bloom.c b/bloom.c
-index cd9380ac62..a8a21762f4 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -177,9 +177,10 @@ static int pathmap_cmp(const void *hashmap_cmp_fn_data,
- 	return strcmp(e1->path, e2->path);
- }
- 
--struct bloom_filter *get_bloom_filter(struct repository *r,
--				      struct commit *c,
--				      int compute_if_not_present)
-+struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
-+						 struct commit *c,
-+						 int compute_if_not_present,
-+						 int *computed)
- {
- 	struct bloom_filter *filter;
- 	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
-@@ -187,6 +188,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 	struct diff_options diffopt;
- 	int max_changes = 512;
- 
-+	if (computed)
-+		*computed = 0;
++  Large Bloom Filters (ID: {'B', 'F', 'X', 'L'}) [Optional]
++    * It starts with a 32-bit unsigned integer specifying the maximum number of
++      changed-paths that can be stored in a single Bloom filter.
++    * It then contains a list of 64-bit words (the length of this list is
++      determined by the width of the chunk) which is a bitmap. The 'i'th bit is
++      set exactly when the 'i'th commit in the graph has a changed-path Bloom
++      filter with zero entries (either because the commit is empty, or because
++      it contains more than 512 changed paths).
++    * The BFXL chunk is present only when the BIDX and BDAT chunks are
++      also present.
 +
- 	if (!bloom_filters.slab_size)
- 		return NULL;
- 
-@@ -273,6 +277,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 		filter->len = 0;
- 	}
- 
-+	if (computed)
-+		*computed = 1;
 +
- 	free(diff_queued_diff.queue);
- 	DIFF_QUEUE_CLEAR(&diff_queued_diff);
- 
+   Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
+       This list of H-byte hashes describe a set of B commit-graph files that
+       form a commit-graph chain. The graph position for the ith commit in this
 diff --git a/bloom.h b/bloom.h
-index 0b9b59a6fe..c4107a6415 100644
+index 2353c74a24..73238276bc 100644
 --- a/bloom.h
 +++ b/bloom.h
-@@ -89,9 +89,14 @@ void add_key_to_filter(const struct bloom_key *key,
- 
- void init_bloom_filters(void);
- 
--struct bloom_filter *get_bloom_filter(struct repository *r,
--				      struct commit *c,
--				      int compute_if_not_present);
-+struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
-+						 struct commit *c,
-+						 int compute_if_not_present,
-+						 int *computed);
-+
-+#define DEFAULT_BLOOM_MAX_CHANGES 512
-+#define get_bloom_filter(r, c) get_or_compute_bloom_filter( \
-+	(r), (c), 0, NULL)
- 
- int bloom_filter_contains(const struct bloom_filter *filter,
- 			  const struct bloom_key *key,
+@@ -33,7 +33,7 @@ struct bloom_filter_settings {
+ 	 * The maximum number of changed paths per commit
+ 	 * before declaring a Bloom filter to be too-large.
+ 	 *
+-	 * Not written to the commit-graph file.
++	 * Written to the 'BFXL' chunk (instead of 'BDAT').
+ 	 */
+ 	uint32_t max_changed_paths;
+ };
 diff --git a/commit-graph.c b/commit-graph.c
-index 86dd4b979e..ba2a2cfb22 100644
+index 8964453433..1fee49d171 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -964,6 +964,9 @@ struct write_commit_graph_context {
- 	const struct split_commit_graph_opts *split_opts;
+@@ -41,8 +41,9 @@ void git_test_write_commit_graph_or_die(void)
+ #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
+ #define GRAPH_CHUNKID_BLOOMINDEXES 0x42494458 /* "BIDX" */
+ #define GRAPH_CHUNKID_BLOOMDATA 0x42444154 /* "BDAT" */
++#define GRAPH_CHUNKID_BLOOMLARGE 0x4246584c /* "BFXL" */
+ #define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
+-#define MAX_NUM_CHUNKS 7
++#define MAX_NUM_CHUNKS 8
+ 
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+ 
+@@ -429,6 +430,19 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 				graph->bloom_filter_settings->bits_per_entry = get_be32(data + chunk_offset + 8);
+ 			}
+ 			break;
++
++		case GRAPH_CHUNKID_BLOOMLARGE:
++			if (graph->chunk_bloom_large_filters)
++				chunk_repeated = 1;
++			else if (r->settings.commit_graph_read_changed_paths) {
++				graph->bloom_large_to_alloc = get_be64(chunk_lookup + 4)
++							      - chunk_offset - sizeof(uint32_t);
++
++				graph->bloom_large.word_alloc = 0; /* populate when necessary */
++				graph->chunk_bloom_large_filters = data + chunk_offset + sizeof(uint32_t);
++				graph->bloom_filter_settings->max_changed_paths = get_be32(data + chunk_offset);
++			}
++			break;
+ 		}
+ 
+ 		if (chunk_repeated) {
+@@ -443,6 +457,7 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 		/* We need both the bloom chunks to exist together. Else ignore the data */
+ 		graph->chunk_bloom_indexes = NULL;
+ 		graph->chunk_bloom_data = NULL;
++		graph->chunk_bloom_large_filters = NULL;
+ 		FREE_AND_NULL(graph->bloom_filter_settings);
+ 	}
+ 
+@@ -932,6 +947,31 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
+ 	return get_commit_tree_in_graph_one(r, r->objects->commit_graph, c);
+ }
+ 
++static int get_bloom_filter_large_in_graph(struct commit_graph *g,
++					   const struct commit *c)
++{
++	uint32_t graph_pos = commit_graph_position(c);
++	if (graph_pos == COMMIT_NOT_FROM_GRAPH)
++		return 0;
++
++	while (g && graph_pos < g->num_commits_in_base)
++		g = g->base_graph;
++
++	if (!g || !g->bloom_large_to_alloc)
++		return 0;
++
++	if (!g->bloom_large.word_alloc) {
++		size_t i;
++		g->bloom_large.word_alloc = g->bloom_large_to_alloc;
++		g->bloom_large.words = xmalloc(g->bloom_large_to_alloc * sizeof(eword_t));
++
++		for (i = 0; i < g->bloom_large_to_alloc; i++)
++			g->bloom_large.words[i] = get_be64(g->chunk_bloom_large_filters
++							   + i * sizeof(eword_t));
++	}
++
++	return bitmap_get(&g->bloom_large, graph_pos - g->num_commits_in_base);
++}
+ 
+ struct packed_oid_list {
+ 	struct object_id *list;
+@@ -970,8 +1010,10 @@ struct write_commit_graph_context {
  	size_t total_bloom_filter_data_size;
  	const struct bloom_filter_settings *bloom_settings;
-+
-+	int count_bloom_filter_found_large;
-+	int count_bloom_filter_computed;
+ 
++	int count_bloom_filter_known_large;
+ 	int count_bloom_filter_found_large;
+ 	int count_bloom_filter_computed;
++	struct bitmap *bloom_large;
  };
  
  static int write_graph_chunk_fanout(struct hashfile *f,
-@@ -1175,7 +1178,7 @@ static int write_graph_chunk_bloom_indexes(struct hashfile *f,
- 	uint32_t cur_pos = 0;
- 
- 	while (list < last) {
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
- 		size_t len = filter ? filter->len : 0;
- 		cur_pos += len;
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
-@@ -1215,7 +1218,7 @@ static int write_graph_chunk_bloom_data(struct hashfile *f,
- 	hashwrite_be32(f, ctx->bloom_settings->bits_per_entry);
- 
- 	while (list < last) {
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
- 		size_t len = filter ? filter->len : 0;
- 
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
-@@ -1385,6 +1388,22 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 	stop_progress(&ctx->progress);
+@@ -1235,6 +1277,23 @@ static int write_graph_chunk_bloom_data(struct hashfile *f,
+ 	return 0;
  }
  
-+static void trace2_bloom_filter_write_statistics(struct write_commit_graph_context *ctx)
++static int write_graph_chunk_bloom_large(struct hashfile *f,
++					 struct write_commit_graph_context *ctx)
 +{
-+	struct json_writer jw = JSON_WRITER_INIT;
++	size_t i, alloc = ctx->commits.nr / BITS_IN_EWORD;
++	if (ctx->commits.nr % BITS_IN_EWORD)
++		alloc++;
++	if (alloc > ctx->bloom_large->word_alloc)
++		BUG("write_graph_chunk_bloom_large: bitmap not large enough");
 +
-+	jw_object_begin(&jw, 0);
-+	jw_object_intmax(&jw, "filter_found_large",
-+			 ctx->count_bloom_filter_found_large);
-+	jw_object_intmax(&jw, "filter_computed",
-+			 ctx->count_bloom_filter_computed);
-+	jw_end(&jw);
-+
-+	trace2_data_json("commit-graph", the_repository, "bloom_statistics", &jw);
-+
-+	jw_release(&jw);
++	trace2_region_enter("commit-graph", "bloom_large", ctx->r);
++	hashwrite_be32(f, ctx->bloom_settings->max_changed_paths);
++	for (i = 0; i < ctx->bloom_large->word_alloc; i++)
++		hashwrite_be64(f, ctx->bloom_large->words[i]);
++	trace2_region_leave("commit-graph", "bloom_large", ctx->r);
++	return 0;
 +}
 +
- static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ static int oid_compare(const void *_a, const void *_b)
  {
- 	int i;
-@@ -1407,12 +1426,25 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
+ 	const struct object_id *a = (const struct object_id *)_a;
+@@ -1398,6 +1457,8 @@ static void trace2_bloom_filter_write_statistics(struct write_commit_graph_conte
+ 	struct json_writer jw = JSON_WRITER_INIT;
+ 
+ 	jw_object_begin(&jw, 0);
++	jw_object_intmax(&jw, "filter_known_large",
++			 ctx->count_bloom_filter_known_large);
+ 	jw_object_intmax(&jw, "filter_found_large",
+ 			 ctx->count_bloom_filter_found_large);
+ 	jw_object_intmax(&jw, "filter_computed",
+@@ -1416,6 +1477,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 	int *sorted_commits;
+ 
+ 	init_bloom_filters();
++	ctx->bloom_large = bitmap_word_alloc(ctx->commits.nr / BITS_IN_EWORD + 1);
+ 
+ 	if (ctx->report_progress)
+ 		progress = start_delayed_progress(
+@@ -1430,21 +1492,28 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 		&ctx->commits);
  
  	for (i = 0; i < ctx->commits.nr; i++) {
-+		int computed = 0;
- 		struct commit *c = sorted_commits[i];
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, c, 1);
-+		struct bloom_filter *filter = get_or_compute_bloom_filter(
-+			ctx->r,
-+			c,
-+			1,
-+			&computed);
-+		if (computed) {
-+			ctx->count_bloom_filter_computed++;
-+			if (filter && !filter->len)
-+				ctx->count_bloom_filter_found_large++;
-+		}
- 		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
+-		int computed = 0;
+ 		int pos = sorted_commits[i];
+ 		struct commit *c = ctx->commits.list[pos];
+-		struct bloom_filter *filter = get_or_compute_bloom_filter(
+-			ctx->r,
+-			c,
+-			1,
+-			ctx->bloom_settings,
+-			&computed);
+-		if (computed) {
+-			ctx->count_bloom_filter_computed++;
+-			if (filter && !filter->len)
+-				ctx->count_bloom_filter_found_large++;
++		if (get_bloom_filter_large_in_graph(ctx->r->objects->commit_graph, c)) {
++			bitmap_set(ctx->bloom_large, pos);
++			ctx->count_bloom_filter_known_large++;
++		} else {
++			int computed = 0;
++			struct bloom_filter *filter = get_or_compute_bloom_filter(
++				ctx->r,
++				c,
++				1,
++				ctx->bloom_settings,
++				&computed);
++			if (computed) {
++				ctx->count_bloom_filter_computed++;
++				if (filter && !filter->len) {
++					bitmap_set(ctx->bloom_large, pos);
++					ctx->count_bloom_filter_found_large++;
++				}
++			}
++			ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
+ 		}
+-		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
  		display_progress(progress, i + 1);
  	}
  
-+	if (trace2_is_enabled())
-+		trace2_bloom_filter_write_statistics(ctx);
+@@ -1764,6 +1833,11 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 					  + ctx->total_bloom_filter_data_size;
+ 		chunks[num_chunks].write_fn = write_graph_chunk_bloom_data;
+ 		num_chunks++;
++		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMLARGE;
++		chunks[num_chunks].size = sizeof(eword_t) * ctx->bloom_large->word_alloc
++					+ sizeof(uint32_t);
++		chunks[num_chunks].write_fn = write_graph_chunk_bloom_large;
++		num_chunks++;
+ 	}
+ 	if (ctx->num_commit_graphs_after > 1) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BASE;
+@@ -2503,6 +2577,7 @@ void free_commit_graph(struct commit_graph *g)
+ 	}
+ 	free(g->filename);
+ 	free(g->bloom_filter_settings);
++	bitmap_free(g->bloom_large);
+ 	free(g);
+ }
+ 
+diff --git a/commit-graph.h b/commit-graph.h
+index d9acb22bac..f4fb996dd5 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -4,6 +4,7 @@
+ #include "git-compat-util.h"
+ #include "object-store.h"
+ #include "oidset.h"
++#include "ewah/ewok.h"
+ 
+ #define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
+ #define GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE "GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE"
+@@ -71,6 +72,10 @@ struct commit_graph {
+ 	const unsigned char *chunk_base_graphs;
+ 	const unsigned char *chunk_bloom_indexes;
+ 	const unsigned char *chunk_bloom_data;
++	const unsigned char *chunk_bloom_large_filters;
 +
- 	free(sorted_commits);
- 	stop_progress(&progress);
- }
-diff --git a/line-log.c b/line-log.c
-index c53692834d..9e58fd185a 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1159,7 +1159,7 @@ static int bloom_filter_check(struct rev_info *rev,
- 		return 1;
++	size_t bloom_large_to_alloc;
++	struct bitmap bloom_large;
  
- 	if (!rev->bloom_filter_settings ||
--	    !(filter = get_bloom_filter(rev->repo, commit, 0)))
-+	    !(filter = get_bloom_filter(rev->repo, commit)))
- 		return 1;
+ 	struct bloom_filter_settings *bloom_filter_settings;
+ };
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index 21b67677ef..6859d85369 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -33,7 +33,7 @@ test_expect_success 'setup test - repo, commits, commit graph, log outputs' '
+ 	git commit-graph write --reachable --changed-paths
+ '
+ graph_read_expect () {
+-	NUM_CHUNKS=5
++	NUM_CHUNKS=6
+ 	cat >expect <<- EOF
+ 	header: 43475048 1 1 $NUM_CHUNKS 0
+ 	num_commits: $1
+@@ -262,5 +262,28 @@ test_expect_success 'correctly report changes over limit' '
+ 		done
+ 	)
+ '
++test_bloom_filters_computed () {
++	commit_graph_args=$1
++	bloom_trace_prefix="{\"filter_known_large\":$2,\"filter_found_large\":$3,\"filter_computed\":$4"
++	rm -f "$TRASH_DIRECTORY/trace.event" &&
++	GIT_TRACE2_EVENT="$TRASH_DIRECTORY/trace.event" git commit-graph write $commit_graph_args &&
++	grep "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.event"
++}
++
++test_expect_success 'Bloom generation does not recompute too-large filters' '
++	(
++		cd limits &&
++
++		# start from scratch and rebuild
++		rm -f .git/objects/info/commit-graph &&
++		GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS=10 \
++			git commit-graph write --reachable --changed-paths \
++			--split=replace &&
++		test_commit c1 filter &&
++
++		test_bloom_filters_computed "--reachable --changed-paths --split=replace" \
++			2 0 1
++	)
++'
  
- 	if (!range)
-diff --git a/revision.c b/revision.c
-index c45ed1076e..b7ec712755 100644
---- a/revision.c
-+++ b/revision.c
-@@ -753,7 +753,7 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 	if (commit_graph_generation(commit) == GENERATION_NUMBER_INFINITY)
- 		return -1;
- 
--	filter = get_bloom_filter(revs->repo, commit, 0);
-+	filter = get_bloom_filter(revs->repo, commit);
- 
- 	if (!filter) {
- 		count_bloom_filter_not_present++;
-diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index f0aa80b98e..531af439c2 100644
---- a/t/helper/test-bloom.c
-+++ b/t/helper/test-bloom.c
-@@ -39,7 +39,8 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
- 	struct bloom_filter *filter;
- 	setup_git_directory();
- 	c = lookup_commit(the_repository, commit_oid);
--	filter = get_bloom_filter(the_repository, c, 1);
-+	filter = get_or_compute_bloom_filter(the_repository, c, 1,
-+					     NULL);
- 	print_bloom_filter(filter);
- }
- 
+ test_done
 -- 
 2.28.0.rc1.13.ge78abce653
 
