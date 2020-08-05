@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90146C433E1
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 940B4C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:51:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6740B22CAF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:51:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E1CE206F6
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:51:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UiItR4w2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVqCIc3I"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726514AbgHEVvx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 17:51:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37862 "EHLO
+        id S1726545AbgHEVv4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 17:51:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbgHEVvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 17:51:51 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F63AC061756
+        with ESMTP id S1726158AbgHEVvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 17:51:52 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3628C061757
         for <git@vger.kernel.org>; Wed,  5 Aug 2020 14:51:51 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id c15so5849191wrs.11
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:51:50 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id 3so7771630wmi.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uNUsuTHd76WaG7QGyi2UOuWlYlIFt0ajBuAczYpj/+I=;
-        b=UiItR4w29RAFQGiih51bCf2ym3hnm5vUv3t9SSEMuyIkllsekTKzPfyjL9V4pG9Zqa
-         5ymmfehxCqfUpEGctTJ9JQE/OczZAdN+RK+pl9exZdu8jIkgAqOB3GW4HoVc3lGm3l6a
-         yKB2GEU0tdzXUSEjlWmf/0ofPWmO9kezw4VCLdOzp19LH2iXwPlK7BZjdZZmp6mnBm6v
-         ctxQFSLesYl7s/DXPp2vPPklnoYj4zIRl32gbVVElfuPo6itnQNtIIDQ7rpVaK2Fv7VU
-         8y8t79dBjOvpMlBWvO2uwdb8YI+yQtyMxVsPiGnp5whvpqBwdEeSA/FfLw2ee0+8MtTR
-         cy0g==
+        bh=zh/SM7bEToiUSBKDmzJ3iJ6Bqe83IxresQCCJLW6RrI=;
+        b=XVqCIc3ISKW+GwV8LiQU64utTEB9xBjgdzDSiSnpg3n9XZBKkpI2jNbOnp2fIKtKVR
+         0opOKJIygTFmBAXeVhQhdCcPtdSR+noNw2IkBqA0XxOV34gFcqHmxfm+sd8VPUj5cftC
+         jFqpMLZJl7R8Mvqo+/3n2roUaRiDqrtPKvyJsQKpfpgXjXK4ru1NczLZZZI0uiNzysRh
+         Rb8b/afaV1Y5jMameGlCwA9gEJ95uBky4dTYc0Hs4ZV/hZi1DbK5y5kwZPJ9Aa+6Ka8o
+         0PWFbmBNi3T0sdGNFQtd7654ZHEHVASGUtys7MNxZxkjQZb+GS5++etqJUgcVjwj0bQh
+         UKrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uNUsuTHd76WaG7QGyi2UOuWlYlIFt0ajBuAczYpj/+I=;
-        b=q24xGh/E5nd8kSSP4XQ44AyqOWwp1Vz1n4AkPT1LviRQHBksBnURq4s5EvrI1rJDRF
-         sufTW5ARjMqK+7zY0brfjqRU0X6U8hz3hoe1iOSgE/npg1Ve8AhjLNCIF55xwviKG0yl
-         viQpVOc99YfeMqsc8ysiYt1r5qs/vPOa4klKSwOlU9WYIrVRqQOMjpII07VY/QZXCjlX
-         nCxRtUEB9VGHq6X9zn2ETs2dto3COTzS36aXdxHSM2D/z8SDN1H0u0RbUZirVPA50BAH
-         968DDkek6SCkpQ9XbKvSqA6a6WyCrcpDYBu/2JVHIqPvEXFg/Zypx1Zr+/rtdTjMTChu
-         JDtw==
-X-Gm-Message-State: AOAM531ZsOGBP3uEMOOAEhFefyjD/76vlneDqinRDFvuEpm5vbNO+hnq
-        K0Xw63wGDXrruLkwgqPgnXA8nRUS
-X-Google-Smtp-Source: ABdhPJzRHetvUSHFs8Qek8SNgltXvXuZwoVrYa2y1hpT1zZMxVepS0sZr8pU2yYnQGFhRsIPVtp4tA==
-X-Received: by 2002:adf:fd41:: with SMTP id h1mr4755793wrs.124.1596664309476;
-        Wed, 05 Aug 2020 14:51:49 -0700 (PDT)
+        bh=zh/SM7bEToiUSBKDmzJ3iJ6Bqe83IxresQCCJLW6RrI=;
+        b=o0V/6p55CqnZBUwbVz9m2P/IDDtHpbWjIdVm7JtGnRkEE0kxzn8aMjH/GCM+pwEKPR
+         0dYuGr04HdabmCZb8/PVKCjS8oSGOU995585Rr6Vdh60lPj8wPCsosvtMjYHyh+teNhh
+         Slrxf0ZPNIC5WvXNApnwsTpGlmx5atbwjJ32XhdE15RQkm3JHGB/SKJFZwtOaq+enojm
+         9Igpt2Nt0htrc7LDIRwP0gnkKX7Vb+cnRX2eXEM9JuZDJzhAi0q5AoP5+3bHXoUmUVFu
+         IFGtt8EsmcETMUCERBNm6RUW6u6dlVMHnl3t0acMeeXtOuwMr+It8rLYnw+K2/Als/58
+         m2ZA==
+X-Gm-Message-State: AOAM533uqgYg7B/6Sw08jMDmkQInJ7mzVxKrVboDJ8FDeRpOscramTEI
+        ctnHELGtpsmiZlK8aU/rtUaJymiX
+X-Google-Smtp-Source: ABdhPJw6qrEst2B/XNZV0B9VxLC3AgMOLrhE7gYuhcIAtdLVPpYs6cELKVhowQRp0g+rFwm6SbYQkA==
+X-Received: by 2002:a1c:2e4e:: with SMTP id u75mr3973458wmu.134.1596664310254;
+        Wed, 05 Aug 2020 14:51:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n5sm4067748wrx.22.2020.08.05.14.51.48
+        by smtp.gmail.com with ESMTPSA id 15sm3888335wmo.33.2020.08.05.14.51.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 14:51:48 -0700 (PDT)
-Message-Id: <78e69032df68f8edd0f88798936a3e85e5ddf34c.1596664306.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2020 14:51:49 -0700 (PDT)
+Message-Id: <b6b6acab9af222c4c2b43836c357addd6e7e239d.1596664306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
 References: <pull.684.git.1595882588.gitgitgadget@gmail.com>
         <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Aug 2020 21:51:37 +0000
-Subject: [PATCH v2 1/9] ref-filter: support different email formats
+Date:   Wed, 05 Aug 2020 21:51:38 +0000
+Subject: [PATCH v2 2/9] ref-filter: refactor `grab_objectname()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,213 +79,80 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-Currently, ref-filter only supports printing email with angle brackets.
-
-Let's add support for two more email options.
-- trim : for email without angle brackets.
-- localpart : for the part before the @ sign out of trimmed email
+Prepares `grab_objectname()` for more generic usage.
+This change will allow us to reuse `grab_objectname()` for
+the `tree` and `parent` atoms in a following commit.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  5 ++-
- ref-filter.c                       | 54 +++++++++++++++++++++++++-----
- t/t6300-for-each-ref.sh            | 16 +++++++++
- 3 files changed, 65 insertions(+), 10 deletions(-)
+ ref-filter.c | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 2ea71c5f6c..e6ce8af612 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -230,7 +230,10 @@ These are intended for working on a mix of annotated and lightweight tags.
- 
- Fields that have name-email-date tuple as its value (`author`,
- `committer`, and `tagger`) can be suffixed with `name`, `email`,
--and `date` to extract the named component.
-+and `date` to extract the named component.  For email fields (`authoremail`,
-+`committeremail` and `taggeremail`), `:trim` can be appended to get the email
-+without angle brackets, and `:localpart` to get the part before the `@` symbol
-+out of the trimmed email.
- 
- The message in a commit or a tag object is `contents`, from which
- `contents:<part>` can be used to extract various parts out of:
 diff --git a/ref-filter.c b/ref-filter.c
-index f2b078db11..307069219f 100644
+index 307069219f..d078f893ff 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -140,6 +140,9 @@ static struct used_atom {
- 			enum { O_FULL, O_LENGTH, O_SHORT } option;
- 			unsigned int length;
- 		} objectname;
-+		struct email_option {
-+			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
-+		} email_option;
- 		struct refname_atom refname;
- 		char *head;
- 	} u;
-@@ -377,6 +380,20 @@ static int objectname_atom_parser(const struct ref_format *format, struct used_a
+@@ -918,21 +918,27 @@ int verify_ref_format(struct ref_format *format)
  	return 0;
  }
  
-+static int person_email_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+				    const char *arg, struct strbuf *err)
+-static int grab_objectname(const char *name, const struct object_id *oid,
++static const char *do_grab_objectname(const char *field, const struct object_id *oid,
++				      struct used_atom *atom)
 +{
-+	if (!arg)
-+		atom->u.email_option.option = EO_RAW;
-+	else if (!strcmp(arg, "trim"))
-+		atom->u.email_option.option = EO_TRIM;
-+	else if (!strcmp(arg, "localpart"))
-+		atom->u.email_option.option = EO_LOCALPART;
-+	else
-+		return strbuf_addf_ret(err, -1, _("unrecognized email option: %s"), arg);
-+	return 0;
++	switch (atom->u.objectname.option) {
++	case O_FULL:
++		return oid_to_hex(oid);
++	case O_LENGTH:
++		return find_unique_abbrev(oid, atom->u.objectname.length);
++	case O_SHORT:
++		return find_unique_abbrev(oid, DEFAULT_ABBREV);
++	default:
++		BUG("unknown %%(%s) option", field);
++	}
 +}
 +
- static int refname_atom_parser(const struct ref_format *format, struct used_atom *atom,
- 			       const char *arg, struct strbuf *err)
++static int grab_objectname(const char *name, const char *field, const struct object_id *oid,
+ 			   struct atom_value *v, struct used_atom *atom)
  {
-@@ -488,15 +505,15 @@ static struct {
- 	{ "tag", SOURCE_OBJ },
- 	{ "author", SOURCE_OBJ },
- 	{ "authorname", SOURCE_OBJ },
--	{ "authoremail", SOURCE_OBJ },
-+	{ "authoremail", SOURCE_OBJ, FIELD_STR, person_email_atom_parser },
- 	{ "authordate", SOURCE_OBJ, FIELD_TIME },
- 	{ "committer", SOURCE_OBJ },
- 	{ "committername", SOURCE_OBJ },
--	{ "committeremail", SOURCE_OBJ },
-+	{ "committeremail", SOURCE_OBJ, FIELD_STR, person_email_atom_parser },
- 	{ "committerdate", SOURCE_OBJ, FIELD_TIME },
- 	{ "tagger", SOURCE_OBJ },
- 	{ "taggername", SOURCE_OBJ },
--	{ "taggeremail", SOURCE_OBJ },
-+	{ "taggeremail", SOURCE_OBJ, FIELD_STR, person_email_atom_parser },
- 	{ "taggerdate", SOURCE_OBJ, FIELD_TIME },
- 	{ "creator", SOURCE_OBJ },
- 	{ "creatordate", SOURCE_OBJ, FIELD_TIME },
-@@ -1037,16 +1054,35 @@ static const char *copy_name(const char *buf)
- 	return xstrdup("");
- }
- 
--static const char *copy_email(const char *buf)
-+static const char *copy_email(const char *buf, struct used_atom *atom)
- {
- 	const char *email = strchr(buf, '<');
- 	const char *eoemail;
- 	if (!email)
- 		return xstrdup("");
--	eoemail = strchr(email, '>');
-+	switch (atom->u.email_option.option) {
-+	case EO_RAW:
-+		eoemail = strchr(email, '>');
-+		if (eoemail)
-+			eoemail++;
-+		break;
-+	case EO_TRIM:
-+		email++;
-+		eoemail = strchr(email, '>');
-+		break;
-+	case EO_LOCALPART:
-+		email++;
-+		eoemail = strchr(email, '@');
-+		if (!eoemail)
-+			eoemail = strchr(email, '>');
-+		break;
-+	default:
-+		BUG("unknown email option");
-+	}
-+
- 	if (!eoemail)
- 		return xstrdup("");
--	return xmemdupz(email, eoemail + 1 - email);
-+	return xmemdupz(email, eoemail - email);
- }
- 
- static char *copy_subject(const char *buf, unsigned long len)
-@@ -1116,7 +1152,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
- 			continue;
- 		if (name[wholen] != 0 &&
- 		    strcmp(name + wholen, "name") &&
--		    strcmp(name + wholen, "email") &&
-+		    !starts_with(name + wholen, "email") &&
- 		    !starts_with(name + wholen, "date"))
- 			continue;
- 		if (!wholine)
-@@ -1127,8 +1163,8 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
- 			v->s = copy_line(wholine);
- 		else if (!strcmp(name + wholen, "name"))
- 			v->s = copy_name(wholine);
--		else if (!strcmp(name + wholen, "email"))
--			v->s = copy_email(wholine);
-+		else if (starts_with(name + wholen, "email"))
-+			v->s = copy_email(wholine, &used_atom[i]);
- 		else if (starts_with(name + wholen, "date"))
- 			grab_date(wholine, v, name);
+-	if (starts_with(name, "objectname")) {
+-		if (atom->u.objectname.option == O_SHORT) {
+-			v->s = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
+-			return 1;
+-		} else if (atom->u.objectname.option == O_FULL) {
+-			v->s = xstrdup(oid_to_hex(oid));
+-			return 1;
+-		} else if (atom->u.objectname.option == O_LENGTH) {
+-			v->s = xstrdup(find_unique_abbrev(oid, atom->u.objectname.length));
+-			return 1;
+-		} else
+-			BUG("unknown %%(objectname) option");
++	if (starts_with(name, field)) {
++		v->s = xstrdup(do_grab_objectname(field, oid, atom));
++		return 1;
  	}
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index a83579fbdf..64fbc91146 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -125,15 +125,21 @@ test_atom head '*objecttype' ''
- test_atom head author 'A U Thor <author@example.com> 1151968724 +0200'
- test_atom head authorname 'A U Thor'
- test_atom head authoremail '<author@example.com>'
-+test_atom head authoremail:trim 'author@example.com'
-+test_atom head authoremail:localpart 'author'
- test_atom head authordate 'Tue Jul 4 01:18:44 2006 +0200'
- test_atom head committer 'C O Mitter <committer@example.com> 1151968723 +0200'
- test_atom head committername 'C O Mitter'
- test_atom head committeremail '<committer@example.com>'
-+test_atom head committeremail:trim 'committer@example.com'
-+test_atom head committeremail:localpart 'committer'
- test_atom head committerdate 'Tue Jul 4 01:18:43 2006 +0200'
- test_atom head tag ''
- test_atom head tagger ''
- test_atom head taggername ''
- test_atom head taggeremail ''
-+test_atom head taggeremail:trim ''
-+test_atom head taggeremail:localpart ''
- test_atom head taggerdate ''
- test_atom head creator 'C O Mitter <committer@example.com> 1151968723 +0200'
- test_atom head creatordate 'Tue Jul 4 01:18:43 2006 +0200'
-@@ -170,15 +176,21 @@ test_atom tag '*objecttype' 'commit'
- test_atom tag author ''
- test_atom tag authorname ''
- test_atom tag authoremail ''
-+test_atom tag authoremail:trim ''
-+test_atom tag authoremail:localpart ''
- test_atom tag authordate ''
- test_atom tag committer ''
- test_atom tag committername ''
- test_atom tag committeremail ''
-+test_atom tag committeremail:trim ''
-+test_atom tag committeremail:localpart ''
- test_atom tag committerdate ''
- test_atom tag tag 'testtag'
- test_atom tag tagger 'C O Mitter <committer@example.com> 1151968725 +0200'
- test_atom tag taggername 'C O Mitter'
- test_atom tag taggeremail '<committer@example.com>'
-+test_atom tag taggeremail:trim 'committer@example.com'
-+test_atom tag taggeremail:localpart 'committer'
- test_atom tag taggerdate 'Tue Jul 4 01:18:45 2006 +0200'
- test_atom tag creator 'C O Mitter <committer@example.com> 1151968725 +0200'
- test_atom tag creatordate 'Tue Jul 4 01:18:45 2006 +0200'
-@@ -564,10 +576,14 @@ test_atom refs/tags/taggerless tag 'taggerless'
- test_atom refs/tags/taggerless tagger ''
- test_atom refs/tags/taggerless taggername ''
- test_atom refs/tags/taggerless taggeremail ''
-+test_atom refs/tags/taggerless taggeremail:trim ''
-+test_atom refs/tags/taggerless taggeremail:localpart ''
- test_atom refs/tags/taggerless taggerdate ''
- test_atom refs/tags/taggerless committer ''
- test_atom refs/tags/taggerless committername ''
- test_atom refs/tags/taggerless committeremail ''
-+test_atom refs/tags/taggerless committeremail:trim ''
-+test_atom refs/tags/taggerless committeremail:localpart ''
- test_atom refs/tags/taggerless committerdate ''
- test_atom refs/tags/taggerless subject 'Broken tag'
+ 	return 0;
+ }
+@@ -960,7 +966,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
+ 		} else if (!strcmp(name, "deltabase"))
+ 			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
+ 		else if (deref)
+-			grab_objectname(name, &oi->oid, v, &used_atom[i]);
++			grab_objectname(name, "objectname", &oi->oid, v, &used_atom[i]);
+ 	}
+ }
  
+@@ -1740,7 +1746,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 				v->s = xstrdup(buf + 1);
+ 			}
+ 			continue;
+-		} else if (!deref && grab_objectname(name, &ref->objectname, v, atom)) {
++		} else if (!deref && grab_objectname(name, "objectname", &ref->objectname, v, atom)) {
+ 			continue;
+ 		} else if (!strcmp(name, "HEAD")) {
+ 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
 -- 
 gitgitgadget
 
