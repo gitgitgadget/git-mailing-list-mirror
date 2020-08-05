@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 753BFC433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3970FC433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:05:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C2F022CF7
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:05:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0622522CF7
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 17:05:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Tgw7z+R1"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="DHp+dJyQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728419AbgHERFZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 13:05:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49342 "EHLO
+        id S1728481AbgHERFd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 13:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728361AbgHERCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 13:02:54 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D02B9C0617A3
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:02:53 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id g26so42377453qka.3
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:02:53 -0700 (PDT)
+        with ESMTP id S1728268AbgHERCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 13:02:46 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86527C0617A2
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 10:02:46 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id b2so10482335qvp.9
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 10:02:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=VnfpCipl9Slkz8EUOG39zqbhG2/9zqI8fjgty/iURK8=;
-        b=Tgw7z+R1pP1CmrXus4Gw+lxVj8kmxi65zPlw/u/KvDjsc9q9jVsVS3oQpilF4Uop/D
-         VCFwZjEHRQlaCbaScAVmFFCxa9jK6ahuYp3FHRo8ReWvgkbNOdn1wK3zV3s2O1/XYZyx
-         6osPRnG1fxJn8RnosECwS4zCMVcqsmpryAZwQ11E227v+RfFkEwR9rNHJ18W4OCulB+5
-         JE/UzBLntEob5Cgqn6KBl8Zh1OCsI2NbUPrxkVduuUlAlzPC9ZicRK+xFmYtU+Tmf6wD
-         pU0ub5/kqbHOitmOzZItycIdUg0YeJCkZuUPVEStPN7Bj/ucXNRkCZAm1dFBG9WWEDD2
-         jGgA==
+        bh=1eU3I9uZzpxdnR2nm0s+2T/AjhX9gGIMEwKMBanKHvY=;
+        b=DHp+dJyQqSHAhGvB0MZ8lMEhw4kyuup7hbh1TcAaMElIjeNDeP779CMAoXdEKXicHy
+         yXEvrbgNUuR/D4OBSD5EpszmwT6NBrSGMpHUdg76mdKYe2VeRSV1THMxj3E/J24cRSHu
+         u2xdFCVSeGsRbYodnjI07aINk62lAsUxY1WY6eBgZ40W3p+x/tnl4RGyxUMF77ZNxMZY
+         s/OljxENOtz+HhH894OKToBbKQl0NRQeBvLs7uUvIpEkCX2W5sm4KViXgM8R8p2rcO/i
+         okghpUaWf8x07/Ut5OdU3jgK2iv473tut2wGblX7fYc3Ga9ifXoy9oFXAQk1fxtXIUZi
+         RUgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=VnfpCipl9Slkz8EUOG39zqbhG2/9zqI8fjgty/iURK8=;
-        b=o23J8m13Pkk0yd+HgmtBGExH/eMla3gnG4UnHuP+16ck0/LDSEdplP6BVng1WBMdGb
-         b6QWaVf3cbJOauSIzFy50aBNgU4E4Ellj59WJIalKVeJ3V6iTHP5ZTVtteFQ4qIzsaP3
-         PH91UM96uWwcdHb35X0nKmIXu7trk8cFhpqAnDfsrx9DTCupVDbeajbkqRCXEH0Mt1l4
-         poAUYTEImT/TGf1B6MynmIn/V0w6ebLLWPLYTK9ju/xcNeBG9EwDYBjocBRG+8tTx+yC
-         DSR2ll1x/wfAnDa359XipI5XPcw8yvfbqmf31I4vNF+bSsElZF5z4OWwxi90MYuJf0Wp
-         +WHQ==
-X-Gm-Message-State: AOAM5317hpM3KEwTu3QsTOUJSNNpUg03G4Zi5i4rNLl8SOuI8tC8bgES
-        dT8YOoqk9ztkxDqlOsWbb0wwNbgeGyrJeg==
-X-Google-Smtp-Source: ABdhPJwEM7a0bZATGsA9auO68PNPkidpwwRF5w400obsVYgVdBWaf+LMRq+/VNXnN1Qj3EcGPGmTJg==
-X-Received: by 2002:a05:620a:12af:: with SMTP id x15mr4124305qki.441.1596646972568;
-        Wed, 05 Aug 2020 10:02:52 -0700 (PDT)
+        bh=1eU3I9uZzpxdnR2nm0s+2T/AjhX9gGIMEwKMBanKHvY=;
+        b=aJ6ZCovl/jtXfojq+VnNKJWRltCzZBhxIm2lVr0MLs4Yw4s/6pJjm7Qs/w8yZmPDe9
+         3FhiPhYS6ysRsUSg2nHcEBwZ1x1NKuzPybYOCfuMD7sZZ3J7MYrr/vstyJWq+yiB5+QI
+         vfX6tiXMS6VaqJVYg7/QIIXtIDkmp2Uim++HZqunZKpZkvV58AdfPPtIzSwYqZqk6awB
+         GaYlRzDRLz3AdFjyeTR9KixcGkrG+HANhnbiiVM8mZMpi44re+Ns3eHb0sda9P3PgP6D
+         U6KxSOXrOjq8pC3HaY2+ZV9SPDK7yFHPBPHmQ8tmqRdvhTzCZa+lOFnmB4JqMQX1rkRv
+         FZvw==
+X-Gm-Message-State: AOAM530DYgvMjy9M0UL7EEgsfjKHYcaeYvKUV5lwxz9WgUmqoduCoHy+
+        jxNQj3TT9DNh0+0a6OZe3FvF9uWx7AvchA==
+X-Google-Smtp-Source: ABdhPJwiNh/al1VcZYRQbPAHAEceeGwfo/zzDgNhFpXakykjk1GadZgf4Ony8BJajwOj89fPLJipmw==
+X-Received: by 2002:ad4:5748:: with SMTP id q8mr4776114qvx.217.1596646965127;
+        Wed, 05 Aug 2020 10:02:45 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:d118:9acc:fdba:dee7])
-        by smtp.gmail.com with ESMTPSA id k134sm1980868qke.60.2020.08.05.10.02.51
+        by smtp.gmail.com with ESMTPSA id e129sm1983527qkf.132.2020.08.05.10.02.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 10:02:51 -0700 (PDT)
-Date:   Wed, 5 Aug 2020 13:02:50 -0400
+        Wed, 05 Aug 2020 10:02:44 -0700 (PDT)
+Date:   Wed, 5 Aug 2020 13:02:42 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, szeder.dev@gmail.com
-Subject: [PATCH v2 10/14] commit-graph.c: sort index into commits list
-Message-ID: <e92ccafcf7e0efe6e7e1b3af8f2e2e8634a1816b.1596646576.git.me@ttaylorr.com>
+Subject: [PATCH v2 08/14] bloom: use provided 'struct bloom_filter_settings'
+Message-ID: <4deb724fc13e580430628f0ac408685394c8689f.1596646576.git.me@ttaylorr.com>
 References: <cover.1596480582.git.me@ttaylorr.com>
  <cover.1596646576.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -74,114 +74,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For locality, 'compute_bloom_filters()' sorts the commits for which it
-wants to compute Bloom filters in a preferred order (cf., 3d11275505
-(commit-graph: examine commits by generation number, 2020-03-30) for
-details).
+When 'get_or_compute_bloom_filter()' needs to compute a Bloom filter
+from scratch, it looks to the default 'struct bloom_filter_settings' in
+order to determine the maximum number of changed paths, number of bits
+per entry, and so on.
 
-A future patch will want to recover the new graph position of each
-commit. Since the 'packed_commit_list' already stores a double-pointer,
-avoid a 'COPY_ARRAY' and instead keep track of an index into the
-original list. (Use an integer index instead of a memory address, since
-this involves a needlessly confusing triple-pointer).
+All of these values have so far been constant, and so there was no need
+to pass in a pointer from the caller (eg., the one that is stored in the
+'struct write_commit_graph_context').
 
-Alter the two sorting routines 'commit_pos_cmp' and 'commit_gen_cmp' to
-take into account the packed_commit_list they are sorting with respect
-to. Since 'compute_bloom_filters()' is the only caller for each of those
-comparison functions, no other call-sites need updating.
+Start passing in a 'struct bloom_filter_settings *' instead of using the
+default values to respect graph-specific settings (eg., in the case of
+setting 'GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS').
+
+In order to have an initialized value for these settings, move its
+initialization to earlier in the commit-graph write.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 43 ++++++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ bloom.c               | 13 ++++++-------
+ bloom.h               |  3 ++-
+ commit-graph.c        | 21 ++++++++++-----------
+ t/helper/test-bloom.c |  1 +
+ 4 files changed, 19 insertions(+), 19 deletions(-)
 
+diff --git a/bloom.c b/bloom.c
+index a8a21762f4..0cf1962dc5 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -180,13 +180,12 @@ static int pathmap_cmp(const void *hashmap_cmp_fn_data,
+ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 						 struct commit *c,
+ 						 int compute_if_not_present,
++						 const struct bloom_filter_settings *settings,
+ 						 int *computed)
+ {
+ 	struct bloom_filter *filter;
+-	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+ 	int i;
+ 	struct diff_options diffopt;
+-	int max_changes = 512;
+ 
+ 	if (computed)
+ 		*computed = 0;
+@@ -211,7 +210,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 	repo_diff_setup(r, &diffopt);
+ 	diffopt.flags.recursive = 1;
+ 	diffopt.detect_rename = 0;
+-	diffopt.max_changes = max_changes;
++	diffopt.max_changes = settings->max_changed_paths;
+ 	diff_setup_done(&diffopt);
+ 
+ 	/* ensure commit is parsed so we have parent information */
+@@ -223,7 +222,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
+ 	diffcore_std(&diffopt);
+ 
+-	if (diffopt.num_changes <= max_changes) {
++	if (diffopt.num_changes <= settings->max_changed_paths) {
+ 		struct hashmap pathmap;
+ 		struct pathmap_hash_entry *e;
+ 		struct hashmap_iter iter;
+@@ -260,13 +259,13 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 			diff_free_filepair(diff_queued_diff.queue[i]);
+ 		}
+ 
+-		filter->len = (hashmap_get_size(&pathmap) * settings.bits_per_entry + BITS_PER_WORD - 1) / BITS_PER_WORD;
++		filter->len = (hashmap_get_size(&pathmap) * settings->bits_per_entry + BITS_PER_WORD - 1) / BITS_PER_WORD;
+ 		filter->data = xcalloc(filter->len, sizeof(unsigned char));
+ 
+ 		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
+ 			struct bloom_key key;
+-			fill_bloom_key(e->path, strlen(e->path), &key, &settings);
+-			add_key_to_filter(&key, filter, &settings);
++			fill_bloom_key(e->path, strlen(e->path), &key, settings);
++			add_key_to_filter(&key, filter, settings);
+ 		}
+ 
+ 		hashmap_free_entries(&pathmap, struct pathmap_hash_entry, entry);
+diff --git a/bloom.h b/bloom.h
+index c4107a6415..2353c74a24 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -92,11 +92,12 @@ void init_bloom_filters(void);
+ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 						 struct commit *c,
+ 						 int compute_if_not_present,
++						 const struct bloom_filter_settings *settings,
+ 						 int *computed);
+ 
+ #define DEFAULT_BLOOM_MAX_CHANGES 512
+ #define get_bloom_filter(r, c) get_or_compute_bloom_filter( \
+-	(r), (c), 0, NULL)
++	(r), (c), 0, NULL, NULL)
+ 
+ int bloom_filter_contains(const struct bloom_filter *filter,
+ 			  const struct bloom_key *key,
 diff --git a/commit-graph.c b/commit-graph.c
-index 48d4697f54..0d70545149 100644
+index ba2a2cfb22..48d4697f54 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -79,10 +79,18 @@ static void set_commit_pos(struct repository *r, const struct object_id *oid)
- 	*commit_pos_at(&commit_pos, commit) = max_pos++;
- }
- 
--static int commit_pos_cmp(const void *va, const void *vb)
-+struct packed_commit_list {
-+	struct commit **list;
-+	int nr;
-+	int alloc;
-+};
-+
-+static int commit_pos_cmp(const void *va, const void *vb, void *ctx)
- {
--	const struct commit *a = *(const struct commit **)va;
--	const struct commit *b = *(const struct commit **)vb;
-+	struct packed_commit_list *commits = ctx;
-+
-+	const struct commit *a = commits->list[*(int *)va];
-+	const struct commit *b = commits->list[*(int *)vb];
- 	return commit_pos_at(&commit_pos, a) -
- 	       commit_pos_at(&commit_pos, b);
- }
-@@ -139,10 +147,12 @@ static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
- 	return data;
- }
- 
--static int commit_gen_cmp(const void *va, const void *vb)
-+static int commit_gen_cmp(const void *va, const void *vb, void *ctx)
- {
--	const struct commit *a = *(const struct commit **)va;
--	const struct commit *b = *(const struct commit **)vb;
-+	struct packed_commit_list *commits = ctx;
-+
-+	const struct commit *a = commits->list[*(int *)va];
-+	const struct commit *b = commits->list[*(int *)vb];
- 
- 	uint32_t generation_a = commit_graph_generation(a);
- 	uint32_t generation_b = commit_graph_generation(b);
-@@ -922,11 +932,6 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
- 	return get_commit_tree_in_graph_one(r, r->objects->commit_graph, c);
- }
- 
--struct packed_commit_list {
--	struct commit **list;
--	int nr;
--	int alloc;
--};
- 
- struct packed_oid_list {
- 	struct object_id *list;
-@@ -1408,7 +1413,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- {
- 	int i;
- 	struct progress *progress = NULL;
--	struct commit **sorted_commits;
-+	int *sorted_commits;
- 
- 	init_bloom_filters();
- 
-@@ -1418,16 +1423,16 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 			ctx->commits.nr);
- 
- 	ALLOC_ARRAY(sorted_commits, ctx->commits.nr);
--	COPY_ARRAY(sorted_commits, ctx->commits.list, ctx->commits.nr);
--
--	if (ctx->order_by_pack)
--		QSORT(sorted_commits, ctx->commits.nr, commit_pos_cmp);
--	else
--		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
-+	for (i = 0; i < ctx->commits.nr; i++)
-+		sorted_commits[i] = i;
-+	QSORT_S(sorted_commits, ctx->commits.nr,
-+		ctx->order_by_pack ? commit_pos_cmp : commit_gen_cmp,
-+		&ctx->commits);
- 
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		int computed = 0;
--		struct commit *c = sorted_commits[i];
-+		int pos = sorted_commits[i];
-+		struct commit *c = ctx->commits.list[pos];
- 		struct bloom_filter *filter = get_or_compute_bloom_filter(
+@@ -1432,6 +1432,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
  			ctx->r,
  			c,
+ 			1,
++			ctx->bloom_settings,
+ 			&computed);
+ 		if (computed) {
+ 			ctx->count_bloom_filter_computed++;
+@@ -1688,17 +1689,6 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	int num_chunks = 3;
+ 	uint64_t chunk_offset;
+ 	struct object_id file_hash;
+-	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+-
+-	if (!ctx->bloom_settings) {
+-		bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
+-							      bloom_settings.bits_per_entry);
+-		bloom_settings.num_hashes = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_NUM_HASHES",
+-							  bloom_settings.num_hashes);
+-		bloom_settings.max_changed_paths = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS",
+-							  bloom_settings.max_changed_paths);
+-		ctx->bloom_settings = &bloom_settings;
+-	}
+ 
+ 	if (ctx->split) {
+ 		struct strbuf tmp_file = STRBUF_INIT;
+@@ -2144,6 +2134,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	uint32_t i, count_distinct = 0;
+ 	int res = 0;
+ 	int replace = 0;
++	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+ 
+ 	if (!commit_graph_compatible(the_repository))
+ 		return 0;
+@@ -2157,6 +2148,14 @@ int write_commit_graph(struct object_directory *odb,
+ 	ctx->split_opts = split_opts;
+ 	ctx->total_bloom_filter_data_size = 0;
+ 
++	bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
++						      bloom_settings.bits_per_entry);
++	bloom_settings.num_hashes = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_NUM_HASHES",
++						  bloom_settings.num_hashes);
++	bloom_settings.max_changed_paths = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS",
++							 bloom_settings.max_changed_paths);
++	ctx->bloom_settings = &bloom_settings;
++
+ 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+ 		ctx->changed_paths = 1;
+ 	if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index 531af439c2..4af949164c 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -40,6 +40,7 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
+ 	setup_git_directory();
+ 	c = lookup_commit(the_repository, commit_oid);
+ 	filter = get_or_compute_bloom_filter(the_repository, c, 1,
++					     &settings,
+ 					     NULL);
+ 	print_bloom_filter(filter);
+ }
 -- 
 2.28.0.rc1.13.ge78abce653
 
