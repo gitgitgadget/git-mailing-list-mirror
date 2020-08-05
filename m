@@ -3,101 +3,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B570FC433E1
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 029B9C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9542A22B42
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:14:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8D6922B42
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:27:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CkMOcgfV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7fcF4za"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726899AbgHEUNr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 16:13:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54834 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726769AbgHEQX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 12:23:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7243074C2A;
-        Wed,  5 Aug 2020 12:22:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mFi7tDS+H9jwuA3x7tgFyI1UAnY=; b=CkMOcg
-        fVKiFKz8Vd4inTh3HRVe4UTiA7OHyEwDiGlH4Fz4g5EQ9gd+dDpm9DJX8sVxe/Gr
-        iJ2a/D4XH9eFfvYKB0N+MzTHhk0LHFXgudtJ9JZccf6+0QPdb/kWLJMoE9cpLNxq
-        8mh75Pqdm29XPCD2qBYeiSjoNASqlC8zoljWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Yp3gNlp5rrSryBYRWma3+fAs0EedbmLH
-        dE3XKfo0BJpJBN9QkHRorzEJph9xakkw5a5x/KezHUO6ME/CRxmyFsTeG10fkEA1
-        /tr8UqEXq3Xc+ZO8CDy8M2vj6DFb7bain0T1IwZsm/Y8YGRXiGoc0f7PqBC2GCP4
-        kZfF6bcvYEg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 69F5474C29;
-        Wed,  5 Aug 2020 12:22:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE21D74C28;
-        Wed,  5 Aug 2020 12:22:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: avoiding fetching specific refs from a remote
-References: <CA+P7+xpokJ3Z4xZ9ibCBpBO65D1v-AD6_JknprGUsEDxEvMGGw@mail.gmail.com>
-        <20200805063704.GA2690083@coredump.intra.peff.net>
-Date:   Wed, 05 Aug 2020 09:22:47 -0700
-In-Reply-To: <20200805063704.GA2690083@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 5 Aug 2020 02:37:04 -0400")
-Message-ID: <xmqq1rkloyeg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726150AbgHEU1r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 16:27:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725999AbgHEU1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 16:27:46 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F2FC061575
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 13:27:46 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id m15so24283233lfp.7
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 13:27:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HOGzHpKMm05ce8jario53d5xhoMDX+3u7tGxdH7HWI0=;
+        b=Q7fcF4zam0JPVq0/RtLJKygP+0D9/sF95ZhPlzSgJBoJytZB/Wvp2R78Eu1AtaPEtm
+         jFclGjxFrSsJ+leep4UwB1k+4ubIbimMDfVw3KPOsSIc7+D/jRp3o96HTzAcQWiENqgf
+         S49ZMCmakusBYSz+I6zNnBvMAKsvCI8VFONbm29H54F158ZVPst09jSQ72CUrw37viho
+         IVyIgWlHALwYArwtb6bpqHIvc7Fu6vS+piKrYbaHBEHOEXA9lzYjZNcaqHsclrPoL7wG
+         9bPzl5o4jRFtIDnxf/wTcPrnfNZnWa70sfPliWZ462uY5dAjRM3xr6LmSv1F6m2uHCxh
+         vxCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=HOGzHpKMm05ce8jario53d5xhoMDX+3u7tGxdH7HWI0=;
+        b=no5nMA2Q/wPAAx2YIf5Z9KAFjTbtC+JvdIUkS2J4xHBGOuXQ1QM/bOTVX8Vk0YuB5J
+         S23fdRnQvJg9bcRmYe2Uw0Ze7W1KTRlUWGEOVd36+J8eHsruboM9yf06aCwrZ581pxB1
+         tY9axE2CniHsltgE5qwQQrpOB+A0ZxjEKy9h9s/BVvZ02fZbdSCwvptNaSlSESGEa4wc
+         BWz+6rAvVaCJW70mJeMdbf6RhgqtniChm08FKpUQWzddYpbM5RAWUaJhcp1nk9bcpK2W
+         CMIAra4ISKBvvg0mY2VuftCXA05AZSTSZ7QB+hTqMR2nSclTcDqnAuxZkVJLwhYPdLYS
+         rLBA==
+X-Gm-Message-State: AOAM533HKJy1WKiWV3afOAZquN/Qt4p5gEtabasUb0K0YTsa8J2voL2a
+        /53+am2TU/pLnl3BL2XrTDip8r+9
+X-Google-Smtp-Source: ABdhPJyOjNQIFt9fyLvEPL1DklvfpZwL8r8gLmiorI2uK2UD1RIFdIQU+NqoTFoDyp1FX8CtXBBd1g==
+X-Received: by 2002:a05:6512:312b:: with SMTP id p11mr2352742lfd.202.1596659263673;
+        Wed, 05 Aug 2020 13:27:43 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id r14sm1592671lfe.29.2020.08.05.13.27.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2020 13:27:42 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+References: <20200728163617.GA2649887@coredump.intra.peff.net>
+        <20200729201002.GA2989059@coredump.intra.peff.net>
+        <871rku3soc.fsf@osv.gnss.ru>
+        <20200731230858.GA1461090@coredump.intra.peff.net>
+        <87mu3drynx.fsf@osv.gnss.ru> <xmqqsgd5rlwi.fsf@gitster.c.googlers.com>
+        <87o8nrybnb.fsf@osv.gnss.ru>
+        <20200803180824.GA2711830@coredump.intra.peff.net>
+        <874kpi47xj.fsf@osv.gnss.ru>
+        <20200804195830.GA2014743@coredump.intra.peff.net>
+        <87k0ydp0hc.fsf@osv.gnss.ru> <xmqqeeoloz74.fsf@gitster.c.googlers.com>
+        <87d045nfju.fsf@osv.gnss.ru> <xmqqsgd0opzd.fsf@gitster.c.googlers.com>
+Date:   Wed, 05 Aug 2020 23:27:42 +0300
+In-Reply-To: <xmqqsgd0opzd.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 05 Aug 2020 12:24:38 -0700")
+Message-ID: <877ducltxd.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E6952950-D737-11EA-93DE-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Essentially, because both main and master have similar names, tab
->> completion requires remembering to type one additional character than
->> I am used to.
+> Sergey Organov <sorganov@gmail.com> writes:
 >
-> Heh, I didn't think anybody considered that implication so far; the fact
-> that they were similar names has generally been considered a positive. I
-> agree it would be annoying.
+>> Yes, we can invent the rule that implied options don't ...
+>
+> "invent"?  It is nothing new, isn't it?  IIRC, Peff's "first-parent
+> implies 'm' but can be countermanded with --no-diff-merges" defines
+> "implication" exactly that way.  I do not think that is a recent
+> invention but it is just following the patterns set by other options
+> that has conditional implications.
+>
+> IOW,
+>
+> 	$ git log --no-diff-merges --first-parent -p next
+> 	$ git log --first-parent -p --no-diff-merges next
+>
+> should both mean the same thing.  The user said no patch is wanted
+> for merge commits with --no-diff-merges and --first-parent does not
+> affect it.
 
-FWIW, I've been saying that 'maint' will become harder to type all
-along ever since I heard 'main'.
+I disagree, but I drop the issue for now for the goal of making sensible
+progress with --diff-merges. I'll do the patches without this
+modifications of the tests.
 
-https://lore.kernel.org/git/xmqqtuz9tq30.fsf@gitster.c.googlers.com/
-
-> This is definitely a reasonable thing to want, and it has come up off
-> and on over the years. One search term for the list archive is "negative
-> refspecs", though it turns up a lot of useless hits when the two words
-> are not directly adjacent.
->
-> This old thread might be worth reading:
->
->   https://lore.kernel.org/git/20140124090104.GA396@x4/
->
-> and there is even a patch in there:
->
->   https://lore.kernel.org/git/20140125013433.GA22336@sigill.intra.peff.net/
->
-> but I didn't go over it carefully enough to know whether it is utter
-> trash, or something that could be used as a starting point.
-
-I think the idea is interesting.  I sometimes find negative
-pathspecs quite useful, and I suspect negative refspecs would also
-be.
+Thanks,
+-- Sergey.
