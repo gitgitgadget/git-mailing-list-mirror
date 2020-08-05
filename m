@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47BDEC433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B065C433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 236EF22CBB
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD65E206F6
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 21:52:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jN7J0FK7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LaB41Hmg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726609AbgHEVwE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 17:52:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37882 "EHLO
+        id S1726629AbgHEVwH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 17:52:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726533AbgHEVvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 17:51:55 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25BAC061757
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 14:51:54 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id 184so7778764wmb.0
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:51:54 -0700 (PDT)
+        with ESMTP id S1726547AbgHEVv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 17:51:57 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5CA0C06179F
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 14:51:56 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id p14so7093753wmg.1
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 14:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=L08+yYfUa4/4fG9INuh22rKNPpKoqshaYos5skwuxCo=;
-        b=jN7J0FK701TnzVFpk24xPMk95jPrxvkDO8o+YhHpXEDVDI3AXgB/yQSQ524+rj63tu
-         J9wRrFmqjRBaJUjdkyoImjNpACNsmdUojdwacTEehlg4Ztp40AjQfDmDGwOrXk0eHKSL
-         1HOOvqtE0Yf8lmjelC/m8P6J6JXiavB519xeyVSLK7ZSMlsmC3qikBc6NW5ZlQf3j+uv
-         beW8MFjhm7/XDAf+VcqJdQByT/mTlNZA2Pg7oZ1tDAJOVsO84QWR36tVMx3zIxBtgefG
-         zKT3vgqIaiqdi5+exebc9rpFoWMTUZG59a9Vn5Ct2MCnZ943HhbTSCTQOzh829pFsdSj
-         fQVQ==
+        bh=H7l2w2s3HhCb+5oejFFtuQYCJu1bxocpCZKJxQqgaLA=;
+        b=LaB41Hmg4JKLn7V6qgGLqVRbsKSnyJVJ/brpDFxacAEPcYnZ9neydxArXqeve9JKgQ
+         lJz8VbL6/ARaOtkqVMS8oAxBRTj9d8a4lpPAXb0ulOsQJEK0RlX+3j8TWumjZXX1mcdT
+         faYsSgnv/InDe5AYArSrC51lll7sxv4+XyFyfpcHPwAcGzlnU2B3n5/lEdmdPN+cr/oY
+         y/F6pCpOU0qbYfsju8yAHLHFvMw8lmI7F1bGm5rkf3HCfTEVhitCtkoO2deFjxcwAihZ
+         urDxrfLtLGBBj5D/eYRiJfI017ylw6682VFXbSm4oDyyGfj56WISXVak29QsHM0vvAwn
+         CeWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=L08+yYfUa4/4fG9INuh22rKNPpKoqshaYos5skwuxCo=;
-        b=EgtDpzrmxDvW1pKKOXLai8OEM7mULvzfvwGdI8m7scFGVFZGLbavQEJmcH79jdVdcf
-         bXLi4FCngwcuEUIsCfb2BYvWR1zoiUvPlls6KXbvIX0YENt8oMyhGcUAqtGPxNqjn/nF
-         IOZXYe/t1jLyhEjh9Y3OACtxIp//isw1LLbrP1H9Od1n72WVriknmJHBuvZHpfV5CX+q
-         cMA4IP+I2yhQEwGzCqVsNnsmF36xOk37OTHmJtDdx5mBOJCG3r0Q1yZziu0vO5vUpmki
-         eOataA/BK34pOxC62A6Gi3MWETnrxhUF8KT7+k8fhxedAwccg88mrBo4I3yTvVt4//hF
-         Bpzw==
-X-Gm-Message-State: AOAM530LYRo7Lr8P0Qe4ptKtbaCrKczMSChnEAhr1BDnLDdCYOfqcb6v
-        eTujGpGm8aKwcg538BkCGcjkqTRy
-X-Google-Smtp-Source: ABdhPJzEe/nHpbTfmTDvHtyzjItHzJ1oASRIUqwnLD+SQYZNr77a6mvsw3zAd2QuO6Cg5j7Ygoz2Ow==
-X-Received: by 2002:a7b:ce83:: with SMTP id q3mr4906935wmj.5.1596664313487;
-        Wed, 05 Aug 2020 14:51:53 -0700 (PDT)
+        bh=H7l2w2s3HhCb+5oejFFtuQYCJu1bxocpCZKJxQqgaLA=;
+        b=JeFsrmUG1NkpbZi51ScHz8AUAe0mag++t9GVFyePCXXU1dIi5WnfMzLi7CJhGi/J9W
+         Ej/xChU9Vjcr6h1Z62WTFYu12Z6Q42eH43imwgrxw26J9KyT5UeRA7bBrFy58WMnHMvy
+         h/xfJjumInBzaxIgd8NpoZcbUjMm32pBLsMWjYZvepxMDSfwlX+z9fSkL1nwEncP7WcA
+         X0PJTXqE3qKBsR6WLhvvVZ6z7pj9kJOr0IQrhfwrdLkmjb6tjUT7iBsmiPfoHC/aGfdn
+         reyeOaPjgnHt348ulKKtGMyKFvJqsaCWAOjPGga7eGpCAkuFhWRjT6rtnF9Tta8gedPn
+         xPKw==
+X-Gm-Message-State: AOAM530D++hrKHXGrP9PoMQ2hU/ZgCi9nhGrH+dCuGcrOdn8dyoPdG6a
+        46wvhJUZx8ff5q3h8FCca+BiYZy0
+X-Google-Smtp-Source: ABdhPJyA3SOtC4wZlkYK14pnCMVfIQJicN0nbD1heAHgOGbayOT1BZP85CUA48IwYggZEPx7+fw+QQ==
+X-Received: by 2002:a7b:c7c6:: with SMTP id z6mr5330322wmk.17.1596664315348;
+        Wed, 05 Aug 2020 14:51:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t25sm3924389wmj.18.2020.08.05.14.51.52
+        by smtp.gmail.com with ESMTPSA id g18sm4389642wru.27.2020.08.05.14.51.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 14:51:53 -0700 (PDT)
-Message-Id: <764bb23b5974214335cc6a93fb4eab46e8f2a49b.1596664306.git.gitgitgadget@gmail.com>
+        Wed, 05 Aug 2020 14:51:55 -0700 (PDT)
+Message-Id: <1c43f55d7c1d5a16031115d5de56b5a5302b5597.1596664306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
 References: <pull.684.git.1595882588.gitgitgadget@gmail.com>
         <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Aug 2020 21:51:42 +0000
-Subject: [PATCH v2 6/9] ref-filter: add `short` modifier to 'parent' atom
+Date:   Wed, 05 Aug 2020 21:51:44 +0000
+Subject: [PATCH v2 8/9] format-support: move `format_sanitized_subject()` from
+ pretty
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,91 +80,156 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-Sometimes while using 'parent' atom, user might want to see abbrev hash
-instead of full 40 character hash.
+In hope of some new features in `subject` atom, move funtion
+`format_sanitized_subject()` and all the function it uses
+to new file format-support.{c,h}.
 
-Just like 'objectname', it might be convenient for users to have the
-`:short` and `:short=<length>` option for printing 'parent' hash.
-
-Let's introduce `short` option to 'parent' atom.
+Consider this new file as a common interface between functions that
+pretty.c and ref-filter.c shares.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- Documentation/git-for-each-ref.txt | 2 +-
- ref-filter.c                       | 8 ++++----
- t/t6300-for-each-ref.sh            | 6 ++++++
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ Makefile         |  1 +
+ format-support.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ format-support.h |  6 ++++++
+ pretty.c         | 40 +---------------------------------------
+ 4 files changed, 51 insertions(+), 39 deletions(-)
+ create mode 100644 format-support.c
+ create mode 100644 format-support.h
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 40ebdfcc41..dd09763e7d 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -222,7 +222,7 @@ worktreepath::
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
--Field `tree` can also be used with modifier `:short` and
-+Fields `tree` and `parent` can also be used with modifier `:short` and
- `:short=<length>` just like `objectname`.
+diff --git a/Makefile b/Makefile
+index 372139f1f2..4dfc384b49 100644
+--- a/Makefile
++++ b/Makefile
+@@ -882,6 +882,7 @@ LIB_OBJS += exec-cmd.o
+ LIB_OBJS += fetch-negotiator.o
+ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fmt-merge-msg.o
++LIB_OBJS += format-support.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += fsmonitor.o
+ LIB_OBJS += gettext.o
+diff --git a/format-support.c b/format-support.c
+new file mode 100644
+index 0000000000..d693aa1744
+--- /dev/null
++++ b/format-support.c
+@@ -0,0 +1,43 @@
++#include "diff.h"
++#include "log-tree.h"
++#include "color.h"
++#include "format-support.h"
++
++static int istitlechar(char c)
++{
++	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
++		(c >= '0' && c <= '9') || c == '.' || c == '_';
++}
++
++void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len)
++{
++	char *r = xmemdupz(msg, len);
++	size_t trimlen;
++	size_t start_len = sb->len;
++	int space = 2;
++	int i;
++
++	for (i = 0; i < len; i++) {
++		if (r[i] == '\n')
++			r[i] = ' ';
++		if (istitlechar(r[i])) {
++			if (space == 1)
++				strbuf_addch(sb, '-');
++			space = 0;
++			strbuf_addch(sb, r[i]);
++			if (r[i] == '.')
++				while (r[i+1] == '.')
++					i++;
++		} else
++			space |= 1;
++	}
++	free(r);
++
++	/* trim any trailing '.' or '-' characters */
++	trimlen = 0;
++	while (sb->len - trimlen > start_len &&
++		(sb->buf[sb->len - 1 - trimlen] == '.'
++		|| sb->buf[sb->len - 1 - trimlen] == '-'))
++		trimlen++;
++	strbuf_remove(sb, sb->len - trimlen, trimlen);
++}
+diff --git a/format-support.h b/format-support.h
+new file mode 100644
+index 0000000000..c344ccbc33
+--- /dev/null
++++ b/format-support.h
+@@ -0,0 +1,6 @@
++#ifndef FORMAT_SUPPORT_H
++#define FORMAT_SUPPORT_H
++
++void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len);
++
++#endif /* FORMAT_SUPPORT_H */
+diff --git a/pretty.c b/pretty.c
+index 8d08e8278a..2de01b7115 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -12,6 +12,7 @@
+ #include "reflog-walk.h"
+ #include "gpg-interface.h"
+ #include "trailer.h"
++#include "format-support.h"
  
- For commit and tag objects, the special `creatordate` and `creator`
-diff --git a/ref-filter.c b/ref-filter.c
-index f9d85661eb..6d5bbb14a2 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -498,7 +498,7 @@ static struct {
- 	{ "objectname", SOURCE_OTHER, FIELD_STR, oid_atom_parser },
- 	{ "deltabase", SOURCE_OTHER, FIELD_STR, deltabase_atom_parser },
- 	{ "tree", SOURCE_OBJ, FIELD_STR, oid_atom_parser },
--	{ "parent", SOURCE_OBJ },
-+	{ "parent", SOURCE_OBJ, FIELD_STR, oid_atom_parser },
- 	{ "numparent", SOURCE_OBJ, FIELD_ULONG },
- 	{ "object", SOURCE_OBJ },
- 	{ "type", SOURCE_OBJ },
-@@ -1011,14 +1011,14 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 			v->value = commit_list_count(commit->parents);
- 			v->s = xstrfmt("%lu", (unsigned long)v->value);
- 		}
--		else if (!strcmp(name, "parent")) {
-+		else if (starts_with(name, "parent")) {
- 			struct commit_list *parents;
- 			struct strbuf s = STRBUF_INIT;
- 			for (parents = commit->parents; parents; parents = parents->next) {
--				struct commit *parent = parents->item;
-+				struct object_id *oid = &parents->item->object.oid;
- 				if (parents != commit->parents)
- 					strbuf_addch(&s, ' ');
--				strbuf_addstr(&s, oid_to_hex(&parent->object.oid));
-+				strbuf_addstr(&s, do_grab_oid("parent", oid, &used_atom[i]));
- 			}
- 			v->s = strbuf_detach(&s, NULL);
- 		}
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index e30bbff6d9..79d5b29387 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -120,6 +120,9 @@ test_atom head tree:short $(git rev-parse --short refs/heads/master^{tree})
- test_atom head tree:short=1 $(git rev-parse --short=1 refs/heads/master^{tree})
- test_atom head tree:short=10 $(git rev-parse --short=10 refs/heads/master^{tree})
- test_atom head parent ''
-+test_atom head parent:short ''
-+test_atom head parent:short=1 ''
-+test_atom head parent:short=10 ''
- test_atom head numparent 0
- test_atom head object ''
- test_atom head type ''
-@@ -174,6 +177,9 @@ test_atom tag tree:short ''
- test_atom tag tree:short=1 ''
- test_atom tag tree:short=10 ''
- test_atom tag parent ''
-+test_atom tag parent:short ''
-+test_atom tag parent:short=1 ''
-+test_atom tag parent:short=10 ''
- test_atom tag numparent ''
- test_atom tag object $(git rev-parse refs/tags/testtag^0)
- test_atom tag type 'commit'
+ static char *user_format;
+ static struct cmt_fmt_map {
+@@ -833,45 +834,6 @@ static void parse_commit_header(struct format_commit_context *context)
+ 	context->commit_header_parsed = 1;
+ }
+ 
+-static int istitlechar(char c)
+-{
+-	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+-		(c >= '0' && c <= '9') || c == '.' || c == '_';
+-}
+-
+-static void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len)
+-{
+-	char *r = xmemdupz(msg, len);
+-	size_t trimlen;
+-	size_t start_len = sb->len;
+-	int space = 2;
+-	int i;
+-
+-	for (i = 0; i < len; i++) {
+-		if (r[i] == '\n')
+-			r[i] = ' ';
+-		if (istitlechar(r[i])) {
+-			if (space == 1)
+-				strbuf_addch(sb, '-');
+-			space = 0;
+-			strbuf_addch(sb, r[i]);
+-			if (r[i] == '.')
+-				while (r[i+1] == '.')
+-					i++;
+-		} else
+-			space |= 1;
+-	}
+-	free(r);
+-
+-	/* trim any trailing '.' or '-' characters */
+-	trimlen = 0;
+-	while (sb->len - trimlen > start_len &&
+-		(sb->buf[sb->len - 1 - trimlen] == '.'
+-		|| sb->buf[sb->len - 1 - trimlen] == '-'))
+-		trimlen++;
+-	strbuf_remove(sb, sb->len - trimlen, trimlen);
+-}
+-
+ const char *format_subject(struct strbuf *sb, const char *msg,
+ 			   const char *line_separator)
+ {
 -- 
 gitgitgadget
 
