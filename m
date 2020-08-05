@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB564C433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F80C433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:19:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CA6F2075D
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:19:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B6262075D
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 01:19:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L8sgVgCF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aHTc2Epw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727116AbgHEBTR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Aug 2020 21:19:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44238 "EHLO
+        id S1727772AbgHEBTZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Aug 2020 21:19:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbgHEBTO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Aug 2020 21:19:14 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D97DC061756
-        for <git@vger.kernel.org>; Tue,  4 Aug 2020 18:19:14 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id a15so39059721wrh.10
-        for <git@vger.kernel.org>; Tue, 04 Aug 2020 18:19:14 -0700 (PDT)
+        with ESMTP id S1727051AbgHEBTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Aug 2020 21:19:16 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA760C06174A
+        for <git@vger.kernel.org>; Tue,  4 Aug 2020 18:19:15 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id a14so39095158wra.5
+        for <git@vger.kernel.org>; Tue, 04 Aug 2020 18:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=g09DkUyyJitxKLSoaRxuNVFbdB7QVX7Nn2DMOu3eqko=;
-        b=L8sgVgCFXNrAW27B4enJpLkk1aKLM4RdyWIxfrjXLZpJtMPsSA4vDXdL4jaXSO/M32
-         2KZAztUIgj7+5xO/DEVoYm/BakmjXeTUJKPPzphoa5MowFfs+DnTGYn2Hfdczt3IIv99
-         cuLBftxtsCEvKKgrXf9a3dPFdKvXZckIkxRv67CaWVK+mkUc5O1hLPfEcHURNjDr5FeB
-         cIyzsilL+DMjPb/tfJh6JUWgmZ5OHkemcBhde6qAgo6gHdQ3MTwjFiQ5UNWsrbo7PBmn
-         eXmlu39GQcG46bEIffJln5OerUJDfrAwWNpvJTxYsuv499vff7qagvdQh9pzJ3/duQbi
-         zQtQ==
+        bh=NohGUJkTNz8tQXtFpefX4F1oprCF9XsxPxI3ZjPbScI=;
+        b=aHTc2Epw9WkbpEoYDPnjxhya/2MmJrgEnnY2xBhoxcJCeEf4UbF8E+HLWT+XkoHPos
+         MFVCPtwkWAd9zmyjPqToXR17eD0P+w9bG4PeVpA00WXM+9miclbAn7zJRyMJmvWBsUGE
+         fZC3QAb/kZCLxtaD7cpgEgL5NJ3qRCf5XcnYGuDW7CgzkJZH2UpE58AoL3HwpG/a9X0d
+         8TSApG3OKw+EJUftkLomOzHPLRTDk73fRLcmOIG9D36sgxSWbp+UrDSSLo5u9md4Tvdl
+         DEdWLTt3Top5l4PntpX0P0FmMKnkkXJy9RtV8X3qeDYv0v5H5FyUaQmk//g0SW3/+Rnb
+         GX1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=g09DkUyyJitxKLSoaRxuNVFbdB7QVX7Nn2DMOu3eqko=;
-        b=H/bBDdCsT9LFlpoCeap2oSrY9At3v+tgKO8k92/L4T9957MKc/BETSxdj4juwtRVYq
-         GA+tBUu/90evAozU0xQWQvAdTgSzBq+iFgKwVfwVQrD+mz4fVGm7HnlPuSm3GC9HHgfQ
-         ygDaK/HPM4J24gdl+Srxz8nghxiVZIJlkGuZ/t8N02Q5bZPVeZnpvLDaWDvl2CCC8kfX
-         64CIFhs6WrDKqDHb4vEiBaCpjuSZVh3kmKHwweIIIQLj77xWzRer3MAEJ9bggwV8iybf
-         enHrQfCK7RJ998k7/Bu/pbG8EnCRaqdxc1TaKt7SvMQk8D/3duOEgi/Rt7nKDEEoDbUH
-         OouA==
-X-Gm-Message-State: AOAM532X9dbTqmdCBmZkAGpNpda//a/PKDjUj2F0f7lfIY8RunWBiGcv
-        hlgTEvqfGiGleCZ+npuJdAQuwX6G
-X-Google-Smtp-Source: ABdhPJxLXQG0P2ktSOt5NY1pOu5z7Z/80CqYFKTGXj7SF+hk2qqJX4MMO6n0lyrpaW8iy+repr+27g==
-X-Received: by 2002:adf:f247:: with SMTP id b7mr542041wrp.128.1596590352761;
+        bh=NohGUJkTNz8tQXtFpefX4F1oprCF9XsxPxI3ZjPbScI=;
+        b=XSXBXHN9EpFB+j3gM++3ifaVGly3NZPLPMDKosz7HChfEDpqXkRWZqUChz01H3z/l9
+         60Fp9TNtpf3yRmht1EGnMv9+dha50EBPqFbkdHCh5zVoJcnu7Bar6rtvi41RVXMvPVNY
+         aVwJFTZ8KTAN8zu91lYN1henucAw5yYDLuoJtK8kE2vYdfYpf9e48BBhLYWRWYc9EwWC
+         eSbruD3BVXFwhWu1kPROKHOz8pg3XYDbuGfp41OOh7/5TYP1CK6Ywa9SL0LoLfL0QRLE
+         6rn9P3MjsrI2iBfA+4nA2w0XaAgodaSgWwvThNp4rfp7bpC4lPUrJvY8fDK+18T1EBud
+         Y0oQ==
+X-Gm-Message-State: AOAM5311bBPlyTsiJUOeoMOPQgnUvK3e+mrkl+Mvftrqq2N3k5BLKb3U
+        h0P+X978BdtKAdmwvdwSMFssZeVi
+X-Google-Smtp-Source: ABdhPJzDf8e1Z6IBQ9VzKnBZFhnHnOxQjzfQPuaUfJJnxj2Wr5udhjkZbilIy8vSFkwAu0/6jtRtHg==
+X-Received: by 2002:adf:e382:: with SMTP id e2mr506333wrm.306.1596590352045;
         Tue, 04 Aug 2020 18:19:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 130sm594429wme.26.2020.08.04.18.19.12
+        by smtp.gmail.com with ESMTPSA id t189sm575489wmf.47.2020.08.04.18.19.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2020 18:19:12 -0700 (PDT)
-Message-Id: <840371fb4b7ec5ae5c5876be25f27008359dab9e.1596590347.git.gitgitgadget@gmail.com>
+        Tue, 04 Aug 2020 18:19:11 -0700 (PDT)
+Message-Id: <552444a84241d280640c4700f17477a9c297fb73.1596590347.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.691.v3.git.1596590347.gitgitgadget@gmail.com>
 References: <pull.691.v2.git.1596500459.gitgitgadget@gmail.com>
         <pull.691.v3.git.1596590347.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Aug 2020 01:19:07 +0000
-Subject: [PATCH v3 4/4] git.txt: add list of guides
+From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 05 Aug 2020 01:19:06 +0000
+Subject: [PATCH v3 3/4] Documentation: don't hardcode command categories twice
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,93 +75,81 @@ Cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy
         Eric Sunshine <sunshine@sunshineco.com>,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 
-Not all man5/man7 guides are mentioned in the 'git(1)' documentation,
-which makes the missing ones somewhat hard to find.
+Instead of hard-coding the list of command categories in both
+`Documentation/Makefile` and `Documentation/cmd-list.perl`, make the
+Makefile the authoritative source and tweak `cmd-list.perl` so that it
+receives the list of command categories as argument.
 
-Add a list of the guides to git(1) by leveraging the existing
-`Documentation/cmd-list.perl` script to generate a file `cmds-guide.txt`
-which gets included in git.txt.
-
-Also, do not hard-code the manual section '1'. Instead, use a regex so
-that the manual section is discovered from the first line of each
-`git*.txt` file.
-
-This addition was hinted at in 1b81d8cb19 (help: use command-list.txt
-for the source of guides, 2018-05-20).
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/Makefile      | 1 +
- Documentation/cmd-list.perl | 7 ++++++-
- Documentation/git.txt       | 7 +++++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ Documentation/Makefile      |  2 +-
+ Documentation/cmd-list.perl | 20 ++++++++------------
+ 2 files changed, 9 insertions(+), 13 deletions(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index eb9c7e2b0e..80d1908a44 100644
+index 39f6fc8de7..eb9c7e2b0e 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -295,6 +295,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
- 	cmds-plumbingmanipulators.txt \
- 	cmds-synchingrepositories.txt \
- 	cmds-synchelpers.txt \
-+	cmds-guide.txt \
- 	cmds-purehelpers.txt \
- 	cmds-foreignscminterface.txt
+@@ -302,7 +302,7 @@ $(cmds_txt): cmd-list.made
  
+ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+ 	$(QUIET_GEN)$(RM) $@ && \
+-	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(QUIET_STDERR) && \
++	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
+ 	date >$@
+ 
+ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
 diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index ee96de53db..af5da45d28 100755
+index 5aa73cfe45..ee96de53db 100755
 --- a/Documentation/cmd-list.perl
 +++ b/Documentation/cmd-list.perl
-@@ -6,9 +6,14 @@ sub format_one {
- 	my ($out, $nameattr) = @_;
- 	my ($name, $attr) = @$nameattr;
- 	my ($state, $description);
-+	my $mansection;
- 	$state = 0;
- 	open I, '<', "$name.txt" or die "No such file $name.txt";
- 	while (<I>) {
-+		if (/^git[a-z0-9-]*\(([0-9])\)$/) {
-+			$mansection = $1;
-+			next;
-+		}
- 		if (/^NAME$/) {
- 			$state = 1;
- 			next;
-@@ -27,7 +32,7 @@ sub format_one {
- 		die "No description found in $name.txt";
+@@ -38,12 +38,15 @@ sub format_one {
  	}
- 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
--		print $out "linkgit:$name\[1\]::\n\t";
-+		print $out "linkgit:$name\[$mansection\]::\n\t";
- 		if ($attr =~ / deprecated /) {
- 			print $out "(deprecated) ";
- 		}
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3e50065198..81349a84e7 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -304,6 +304,13 @@ users typically do not use them directly.
+ }
  
- include::cmds-purehelpers.txt[]
+-while (<>) {
++my ($input, @categories) = @ARGV;
++
++open IN, "<$input";
++while (<IN>) {
+ 	last if /^### command list/;
+ }
  
-+Guides
-+------
-+
-+The following documentation pages are guides about Git concepts.
-+
-+include::cmds-guide.txt[]
-+
+ my %cmds = ();
+-for (sort <>) {
++for (sort <IN>) {
+ 	next if /^#/;
  
- Configuration Mechanism
- -----------------------
+ 	chomp;
+@@ -51,17 +54,10 @@ sub format_one {
+ 	$attr = '' unless defined $attr;
+ 	push @{$cmds{$cat}}, [$name, " $attr "];
+ }
++close IN;
+ 
+-for my $cat (qw(ancillaryinterrogators
+-		ancillarymanipulators
+-		mainporcelain
+-		plumbinginterrogators
+-		plumbingmanipulators
+-		synchingrepositories
+-		foreignscminterface
+-		purehelpers
+-		synchelpers)) {
+-	my $out = "cmds-$cat.txt";
++for my $out (@categories) {
++	my ($cat) = $out =~ /^cmds-(.*)\.txt$/;
+ 	open O, '>', "$out+" or die "Cannot open output file $out+";
+ 	for (@{$cmds{$cat}}) {
+ 		format_one(\*O, $_);
 -- 
 gitgitgadget
+
