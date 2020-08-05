@@ -2,52 +2,76 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E4BAC433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 07:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D60D2C433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 07:10:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F8BA21744
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 07:00:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A47D32245C
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 07:10:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qQyANups"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbgHEHAh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 03:00:37 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:52253 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725904AbgHEHAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 03:00:36 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 4BM2ZQ3hxNz1qs3X;
-        Wed,  5 Aug 2020 09:00:30 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 4BM2ZQ1CrQz1qr5L;
-        Wed,  5 Aug 2020 09:00:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id l0rFupu2_Zoc; Wed,  5 Aug 2020 09:00:28 +0200 (CEST)
-X-Auth-Info: m8KKhZJfop5T+/fwLy2WX6dQ7Uv5R62m5uM4YNm75aPvquhrjVS/8U2itFye9xaj
-Received: from hase.home (ppp-46-244-173-159.dynamic.mnet-online.de [46.244.173.159])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Wed,  5 Aug 2020 09:00:28 +0200 (CEST)
-Received: by hase.home (Postfix, from userid 1000)
-        id 5A76510386F; Wed,  5 Aug 2020 09:00:27 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        id S1728346AbgHEHKE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 03:10:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41872 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726574AbgHEHKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 03:10:02 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C34C4C06174A
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 00:10:01 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id 125so8156472vsg.2
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 00:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QigT6w88X4k0klwPEWauNSctEzVgMLup4AEQ0kJz5II=;
+        b=qQyANupsPHXvFiy8T3DKxs3S24cQb3Pg3krfhTG2ex0ys0IoZVADRAZTQV0XCOZ6yi
+         RW/0EiKrFxJsyKrMUTID4MKnKprselecqxF8RWR5EW7S/UH6ntzEG7TURA5i7APWTaBq
+         evB6fGmOZXRmjygrV9ZveipeO4wO3yOqK5oXzhhOvIPZoEv5oNrxjcVlrmk+Etwiz7pf
+         MvIuTgcDUuzPjcABTb0Yxjylle36U8eMhOzsDJKrW7eAgyuNUfoOiliiRPAws/FFysdR
+         cgC8Y/4rpfN7VriM7C9rk4CJZ94nljx12/z69L61CRZhT4JLCq45oUqKs+6h/R0TLEEm
+         jvZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QigT6w88X4k0klwPEWauNSctEzVgMLup4AEQ0kJz5II=;
+        b=rVPVpDoZeYpQxcG4NHNaREyR6QmMhfNJ42iyADgAfoA/rO/caJ0XMhP3BD6a/f1Xjv
+         CLNvQq/2OBii8B4xjhOxTUTqKbQSJr7N/NcoLOaDO/e1MAnMp9xqjqf1c5CsrBy0KyWe
+         JkYqNtjKSjIKRwvAQs8rghHw2V7yzzlX0TlI+LgPURUteSZ5brhLKDRX4zliYSWuQZ0M
+         WUM5xCQTbGDMxglfaj40yQFiG444yJZV8f8wE56OJeJCTG0utfu9P1GUSacNIW6az/8Z
+         GFBTUULtGiGcR/aRn55DtAmZfALc4ps7SqWhc4hMXZ6rETl/bIyRaPVloBzUbUJ9ZHEt
+         ZlFg==
+X-Gm-Message-State: AOAM533xdsiEgR/RwR94V1NaiSKBvSJ1RrOz+FqfFE5CEDc8w/DLuYcP
+        gbV4RklJnnFcA2hJjkOdKTO2etPaMs88rbcluXU=
+X-Google-Smtp-Source: ABdhPJwxW7QmzcL3XSkIL5QgXpjX4CENi/xd0yz5bl0cSHmgu2FA4oaqYd4YLZBQsiqrIwie5XdlyIANW5OMgKdykhg=
+X-Received: by 2002:a67:2d16:: with SMTP id t22mr965460vst.46.1596611400986;
+ Wed, 05 Aug 2020 00:10:00 -0700 (PDT)
+MIME-Version: 1.0
+References: <xmqqy2muqddg.fsf@gitster.c.googlers.com> <20200805065408.1242617-1-martin.agren@gmail.com>
+ <87eeolo9v9.fsf@linux-m68k.org>
+In-Reply-To: <87eeolo9v9.fsf@linux-m68k.org>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 5 Aug 2020 09:09:48 +0200
+Message-ID: <CAN0heSoa=Y1HMaZD=eQYD8uphrm+VRZe9yD+8voNuWPetHm83w@mail.gmail.com>
+Subject: Re: [PATCH RESEND] Update .mailmap
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
         Birger Skogeng Pedersen <birgersp@gmail.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         Brandon Williams <bwilliamseng@gmail.com>,
         Damien Robert <damien.olivier.robert+git@gmail.com>,
         Damien Robert <damien.olivier.robert@gmail.com>,
-        Ed Maste <emaste@FreeBSD.org>, Fangyi Zhou <me@fangyi.io>,
+        Ed Maste <emaste@freebsd.org>, Fangyi Zhou <me@fangyi.io>,
         Fangyi Zhou <fangyi.zhou@yuriko.moe>,
         Jiang Xin <worldhello.net@gmail.com>,
-        Jiang Xin <xin.jiang@huawei.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Kevin Willford <Kevin.Willford@microsoft.com>,
         Kevin Willford <kewillf@microsoft.com>,
@@ -55,41 +79,25 @@ Cc:     git@vger.kernel.org, Birger Skogeng Pedersen <birger.sp@gmail.com>,
         Peter Kaestle <peter.kaestle@nokia.com>,
         Sun Chao <sunchao9@huawei.com>, Sun Chao <16657101987@163.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH RESEND] Update .mailmap
-References: <xmqqy2muqddg.fsf@gitster.c.googlers.com>
-        <20200805065408.1242617-1-martin.agren@gmail.com>
-X-Yow:  SHHHH!!  I hear SIX TATTOOED TRUCK-DRIVERS tossing ENGINE BLOCKS
- into empty OIL DRUMS..
-Date:   Wed, 05 Aug 2020 09:00:26 +0200
-In-Reply-To: <20200805065408.1242617-1-martin.agren@gmail.com> ("Martin
-        =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 5 Aug 2020 08:54:08 +0200")
-Message-ID: <87eeolo9v9.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Aug 05 2020, Martin Ågren wrote:
+(Dropping Jiang Xin's huawei address. It bounces.)
 
-> diff --git a/.mailmap b/.mailmap
-> index bde7aba756..b4e6eb7dd7 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -18,6 +18,7 @@ Alexey Shumkin <alex.crezoff@gmail.com> <zapped@mail.ru>
->  Alexey Shumkin <alex.crezoff@gmail.com> <Alex.Crezoff@gmail.com>
->  Anders Kaseorg <andersk@MIT.EDU> <andersk@ksplice.com>
->  Anders Kaseorg <andersk@MIT.EDU> <andersk@mit.edu>
-> +Andreas Schwab <schwab@linux-m68k.org> <schwab@suse.de>
+On Wed, 5 Aug 2020 at 09:00, Andreas Schwab <schwab@linux-m68k.org> wrote:
+>
+> On Aug 05 2020, Martin =C3=85gren wrote:
+>
+> > --- a/.mailmap
+> > +++ b/.mailmap
+> > +Andreas Schwab <schwab@linux-m68k.org> <schwab@suse.de>
+>
+> Neither of them are more recent.
 
-Neither of them are more recent.
+Thanks, I'll take that as a Nak and drop your entry from the patch.
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Martin
