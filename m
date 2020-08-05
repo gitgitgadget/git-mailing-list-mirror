@@ -2,118 +2,124 @@ Return-Path: <SRS0=VMi1=BP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D9CC433DF
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D3CC433DF
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:06:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8098B2076E
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:04:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4637D22CAD
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 20:06:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mEUIINkw"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="UR8Ve8lh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728001AbgHEUEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 16:04:12 -0400
-Received: from pb-sasl-trial20.pobox.com ([173.228.157.50]:60717 "EHLO
-        pb-sasl-trial20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727797AbgHEQgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 12:36:37 -0400
-X-Greylist: delayed 1065 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Aug 2020 12:36:34 EDT
-Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
-        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 97AE12F0DC;
-        Wed,  5 Aug 2020 12:12:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=msThXjG0oDnb
-        VgpkGdxop9dfugQ=; b=mEUIINkwCcQhPq0hk/3aKCcWvGTVbHQcp0+x9wq4xwWk
-        WoYjRJH6Bk90VY02zMhjCZgbCtKD/DCaWOtPB/3GthqYBuMhqdl+cEWyp/dsjBg6
-        uMusWt8R712F0n1M1Hag5QSLQOFBY6seZI8OwD36Ui91Jt3EfxDx5Y8j8+pEe80=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xujXND
-        qFqnMj6aspev35gf3oFQr2t7qrkZ3OTYh89qkIo+Kq/hZw02QK8e4XfipwOi+wN8
-        jRPJCyXWOb0E0RoK/q3GTYMxQVMJ+h51AvlrSWCxgQV17pMvKHrCj05zcMbt3sXw
-        3Iv0jTdWL24JZxE0i9g7QiU/sh4LcpcWAMeKI=
-Received: from pb-smtp20.sea.icgroup.com (pb-smtp20.pobox.com [10.110.30.20])
-        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 7BA352F0DB;
-        Wed,  5 Aug 2020 12:12:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 984FCDD681;
-        Wed,  5 Aug 2020 12:12:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Birger Skogeng Pedersen <birger.sp@gmail.com>,
-        Birger Skogeng Pedersen <birgersp@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Brandon Williams <bwilliamseng@gmail.com>,
-        Damien Robert <damien.olivier.robert+git@gmail.com>,
-        Damien Robert <damien.olivier.robert@gmail.com>,
-        Ed Maste <emaste@freebsd.org>, Fangyi Zhou <me@fangyi.io>,
-        Fangyi Zhou <fangyi.zhou@yuriko.moe>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Kevin Willford <Kevin.Willford@microsoft.com>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Peter Kaestle <peter@piie.net>,
-        Peter Kaestle <peter.kaestle@nokia.com>,
-        Sun Chao <sunchao9@huawei.com>, Sun Chao <16657101987@163.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH RESEND] Update .mailmap
-References: <xmqqy2muqddg.fsf@gitster.c.googlers.com>
-        <20200805065408.1242617-1-martin.agren@gmail.com>
-        <87eeolo9v9.fsf@linux-m68k.org>
-        <CAN0heSoa=Y1HMaZD=eQYD8uphrm+VRZe9yD+8voNuWPetHm83w@mail.gmail.com>
-Date:   Wed, 05 Aug 2020 09:12:37 -0700
-In-Reply-To: <CAN0heSoa=Y1HMaZD=eQYD8uphrm+VRZe9yD+8voNuWPetHm83w@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 5 Aug 2020 09:09:48
- +0200")
-Message-ID: <xmqq5z9xoyve.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727095AbgHEUF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 16:05:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727076AbgHEQfG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 12:35:06 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81126C0086BE
+        for <git@vger.kernel.org>; Wed,  5 Aug 2020 08:10:21 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id j187so41901099qke.11
+        for <git@vger.kernel.org>; Wed, 05 Aug 2020 08:10:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=9eH9RBcpsFjjykStnnGmwVXvRp/vtZXEwDaEuAlbgak=;
+        b=UR8Ve8lh6q+zhq9X40DSh21x5OoY6F1j136E0yP5QashmU5QEtZOjZeDfh9sLQKPX5
+         OG8aqvOK/Y8NNbHRiFL5zoHpZT/v/FAx3klERCju/H2DObh1unje5avZ49ycYaWRq/7u
+         8Dcq8EByYb6G9aNHEhuqgXtyVflnUvvB8y1e5//b6Oja4pklmbEuBqjmPt2wHuX5SD1s
+         2/Luv4QHcRPS5OzFGteqMkYdtrnaO7kL/QV7v6EHHAAV4eKyMQhbjvyLhaJkI+slq8sm
+         3e1oR32Y2aWFKewXCn3saSPUMsMGzklow0c8SvDsuzuzFXxgV82VNHgkzxomAPffjhLy
+         sO/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=9eH9RBcpsFjjykStnnGmwVXvRp/vtZXEwDaEuAlbgak=;
+        b=TTmsENb9y43p/j+ytEsWStp5gvrUIA0pyauxmxfGbSze3Yx9dX2bI65AT4rVxB5DQ3
+         uiTu+KOxQKRaNtpdrLHwsZcLUAgO1BsnQWebNN/nIJKwdNIjFWzq3Ucl6ivor0MM6sVH
+         5ggv3tHRBg02gmT4FblxeUYE0SgAFBavURgEeFqyhBefz56bNnUwsvapK11+5VoJeJ/a
+         GtxJnbyg8/93l0cQRcsAOFP3GPApmHx89+ALFYH8KxR2ILXK+iEglhFFG/yjmQ8ZQ5xI
+         PxasbfqdRnSmUSjPTX3B3byfvd4qV186iLIR3PaD+Ko581yrNFwEgYDU9kzhw93KfL5q
+         XQ/w==
+X-Gm-Message-State: AOAM533Pb7x/QKdU/dbsN+cjDbhZYDr8CjrY7X6YOCE06ZqdQd0KpgOr
+        TwjF0xgrNtyKV6pOea+dxNh0fg==
+X-Google-Smtp-Source: ABdhPJzH9qYeeAD0qEfLOYVUeSGthDHvC8Qml+VwcuV9FGEV4ijdJOLF/Pzo+Sb0sVZNOyTFIm4lwg==
+X-Received: by 2002:a37:a30b:: with SMTP id m11mr3833347qke.12.1596640214968;
+        Wed, 05 Aug 2020 08:10:14 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:d118:9acc:fdba:dee7])
+        by smtp.gmail.com with ESMTPSA id i75sm1698755qke.70.2020.08.05.08.10.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Aug 2020 08:10:13 -0700 (PDT)
+Date:   Wed, 5 Aug 2020 11:10:12 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: racy test failure in tb/upload-pack-filters
+Message-ID: <20200805151012.GB9546@syl.lan>
+References: <20200805084240.GA1802257@coredump.intra.peff.net>
+ <20200805090641.GR2898@szeder.dev>
+ <20200805092658.GA1803042@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7B6191D8-D736-11EA-A0CD-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200805092658.GA1803042@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
-
-> (Dropping Jiang Xin's huawei address. It bounces.)
+On Wed, Aug 05, 2020 at 05:26:58AM -0400, Jeff King wrote:
+> On Wed, Aug 05, 2020 at 11:06:41AM +0200, SZEDER Gábor wrote:
 >
-> On Wed, 5 Aug 2020 at 09:00, Andreas Schwab <schwab@linux-m68k.org> wro=
-te:
->>
->> On Aug 05 2020, Martin =C3=85gren wrote:
->>
->> > --- a/.mailmap
->> > +++ b/.mailmap
->> > +Andreas Schwab <schwab@linux-m68k.org> <schwab@suse.de>
->>
->> Neither of them are more recent.
+> > > We can fix it by using test_i18ngrep, which just makes this grep a noop
+> > > in the poison mode.
+> >
+> > I wonder whether changing that die to
+> >
+> >   die("%s: %s", _("remote error"), buffer + 4)
+> >
+> > would be better.
 >
-> Thanks, I'll take that as a Nak and drop your entry from the patch.
+> That would definitely work, but it seems sad to have to make our code
+> uglier. Plus I think it would hurt translations that want to format
+> differently (e.g., would an RTL language want to swap the order?).
+
+This is reason enough to not do this; I know that we are pretty averse
+to translation lego, and even though this one seems innocuous, I think
+it may be a deal breaker for such languages.
+
+> It also wouldn't help other poison uses that could be expecting a "%s"
+> to be filled.  Another option would be to make our poison code more
+> realistic by copying placeholders like "%s" into the poison string. That
+> would fix this problem, and allow some tests to relax a bit (e.g., if
+> I'm looking for an error message that contains a filename, I _could_
+> grep for just that filename, which would never actually be translated).
 >
-> Martin
+> But I think that gets pretty tricky, as we'd have to understand the
+> whole set of placeholders (e.g., that "%s" is complete after two bytes,
+> but "%lu" needs three bytes).
 
-FWIW, I do not know the reason why Andreas said the above, but there
-are folks who contribute to the same project (not limited to this
-one) sometimes as an individual and sometimes as an employee of a
-corporation, and want to differenciate which commit is which by
-using different author names.  So migrating old and defunct
-addresses to the current and working one may be appreciated by the
-contributors, but we shouldn't make it a goal to have only one
-canonical form per one physical person.  That won't work.
+Might be a good direction to go in, but I agree it's outside of the
+scope of this patch.
 
-Thanks.
+> Anyway, it seemed like limiting the damage to the tests themselves was
+> the least bad thing.
+>
+> By the way, grepping for "remote error:" shows that when we get an error
+> over sideband 3 we produce the same message but _don't_ translate it.
+> That seems inconsistent.
+>
+> -Peff
+
+Thanks,
+Taylor
