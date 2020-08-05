@@ -3,122 +3,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F1C4C433E0
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F5BC433E0
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:19:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB8E52177B
-	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:16:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0B992177B
+	for <git@archiver.kernel.org>; Wed,  5 Aug 2020 23:19:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZYA/ynTE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h+JR/XIa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgHEXQR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Aug 2020 19:16:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726166AbgHEXQP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Aug 2020 19:16:15 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC57BC061574
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 16:16:14 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id w14so19789692ljj.4
-        for <git@vger.kernel.org>; Wed, 05 Aug 2020 16:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=kPHEsR1e8ZqMOt1MMKS6khbhMJtJnx+6rBpIliAdf+o=;
-        b=ZYA/ynTEEjbvp6rhAJaNqHc2RuUTWDFZ35hkik7BPSO5KMXUMyJZLS5TDZVW0hWXWH
-         OB2IXW4/LVgCIXRfs7tXMCLyLsJb2VUW0WtU62Ijsm4M3gw7qHt8viG9pj/ysihNkkql
-         Tkueq3ynnmYygqYbn4PiyTBGMDVBBP/53vtveCcYHgPAf22ZYJwvcBWT+0AhK6beCAn9
-         hSNjlMJeHbUXNMMa6Y/c2p1ODvYnYfaHEmRrRntec6+CwLzJZzdCoaTSeUqS9so2h5PF
-         y6U9RPhTnMChH30ZKA/CEh2yf4DoeViw+SBnXTDAgLDaU6e8nt5X/nYAUC452ayyn935
-         S3Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=kPHEsR1e8ZqMOt1MMKS6khbhMJtJnx+6rBpIliAdf+o=;
-        b=aMH616WRlj04xTjTWje75aDkng/4nltYQTlIxXwORyJ95aSUs6UGTAU9TdtzXG8OZe
-         XumBPclSeWrURJZrBhDz8oXp3R59Ycyvd2sPfWk4L03BiFiblMvR7WJG0Z8wRs1nWlGE
-         e/dxkEhdxb5aulrpVxhDG0uMF3a5qHxFBrZVpP9T3Tg7kKcu12G8L1oue3WSDM551DXp
-         wRLRqZyBNcTMkf/bXdEBnuQP2XbIF1rtVGM/oUmH9vVfZFg1bOUeQpO3nPXuea/bk+wU
-         kpaPbJU2rOIbhKJz+bJb6v2L0bsON7k9E8JzSqRRl494/LE8mBFwZezCfKucBmQ7PQJP
-         H3fw==
-X-Gm-Message-State: AOAM530lNl2un2TRfC98pawdGrAF+okEWAopMuQxQvFOl12pFH1Bcl0a
-        Vfn1F7HOeRrTCtFhocZpeVg=
-X-Google-Smtp-Source: ABdhPJzpc4VapM1ddk1YxzHIVQMSM+yBAQ697tYMtbuEy5sKyj1hZFkuqOFNF3I5IJAbvhBjrTwgrw==
-X-Received: by 2002:a2e:81cc:: with SMTP id s12mr2410243ljg.232.1596669373181;
-        Wed, 05 Aug 2020 16:16:13 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id a2sm1501750ljj.40.2020.08.05.16.16.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Aug 2020 16:16:12 -0700 (PDT)
-From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
-To:     "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-Subject: Re: [PATCH 2/6] revision: parse parent in indegree_walk_step()
-References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
-        <d23f67dc80b85abe4eba9a9dfc39d50188e23bb7.1595927632.git.gitgitgadget@gmail.com>
-Date:   Thu, 06 Aug 2020 01:16:10 +0200
-In-Reply-To: <d23f67dc80b85abe4eba9a9dfc39d50188e23bb7.1595927632.git.gitgitgadget@gmail.com>
-        (Abhishek Kumar via GitGitGadget's message of "Tue, 28 Jul 2020 09:13:47
-        +0000")
-Message-ID: <85pn84u1j9.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        id S1726055AbgHEXTk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Aug 2020 19:19:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56457 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725996AbgHEXTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Aug 2020 19:19:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E26A2E74F3;
+        Wed,  5 Aug 2020 19:19:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4rrBqm5eDRJni2nN1bGVSRehyOY=; b=h+JR/X
+        IaN/hAQnoZjGHN55clAOu7Y8FKVkTbd8DElsNfO84aECRzDI9z6xSFXnlJOl+WWQ
+        /T3TM+rVH9OSU3ah5YR1EOWaSrNcrX8e87kGMnpvh1n3OymN+eSlpCa9zKjoZqeo
+        1KryZl9tAnwTmNNyI1GFhfRudMizZasYBhQE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UR6Q5RUWiawRX9oo1ccqXkSyB9Z1TlBc
+        PqINwt4Jmva7swO4zDyekIPZ0PvuFjQlCwshotD/9oypfI6uSW122VFTueRw6Puy
+        ShrQ1U7cpA9nS8jHW7Vtb3WiNoDiuy7e3h9Iw2wdjVcQkYTQ/C1jOEQPdCexIEwF
+        +FumZPlvYF4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DAADDE74F2;
+        Wed,  5 Aug 2020 19:19:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 23272E74EE;
+        Wed,  5 Aug 2020 19:19:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH  3/3] t/t4013: add test for --diff-merges=off
+References: <20200805220832.3800-1-sorganov@gmail.com>
+        <20200805220832.3800-4-sorganov@gmail.com>
+        <xmqq3650n2rc.fsf@gitster.c.googlers.com> <87lfisk915.fsf@osv.gnss.ru>
+Date:   Wed, 05 Aug 2020 16:19:31 -0700
+In-Reply-To: <87lfisk915.fsf@osv.gnss.ru> (Sergey Organov's message of "Thu,
+        06 Aug 2020 01:44:22 +0300")
+Message-ID: <xmqqy2msllz0.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1ED2DFBC-D772-11EA-B1A8-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Sergey Organov <sorganov@gmail.com> writes:
 
-> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> In indegree_walk_step(), we add unvisited parents to the indegree queue.
-> However, parents are not guaranteed to be parsed. As the indegree queue
-> sorts by generation number, let's parse parents before inserting them to
-> ensure the correct priority order.
+>> Sergey Organov <sorganov@gmail.com> writes:
+>>
+>>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>>> ---
+>>>  t/t4013-diff-various.sh                       |  1 +
+>>>  ...--diff-merges=off_-p_--first-parent_master | 78 +++++++++++++++++++
+>>>  2 files changed, 79 insertions(+)
+>>>  create mode 100644
+>>> t/t4013/diff.log_--diff-merges=off_-p_--first-parent_master
+>>>
+>>> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+>>> index 40e222c94520..86fb11cecc61 100755
+>>> --- a/t/t4013-diff-various.sh
+>>> +++ b/t/t4013-diff-various.sh
+>>> @@ -298,6 +298,7 @@ log --root -c --patch-with-stat --summary master
+>>>  # improved by Timo's patch
+>>>  log --root --cc --patch-with-stat --summary master
+>>>  log --no-diff-merges -p --first-parent master
+>>> +log --diff-merges=off -p --first-parent master
+>>
+>> I think we want to also test it in a different order, e.g.
+>>
+>>     log --first-parent --diff-merges=off -p master
 >
-> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> ---
->  revision.c | 3 +++
->  1 file changed, 3 insertions(+)
+> Dunno, why original Jeff series didn't need 
 >
-> diff --git a/revision.c b/revision.c
-> index 6aa7f4f567..23287d26c3 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -3343,6 +3343,9 @@ static void indegree_walk_step(struct rev_info *rev=
-s)
->  		struct commit *parent =3D p->item;
->  		int *pi =3D indegree_slab_at(&info->indegree, parent);
+>      log --first-parent --no-diff-merges -p master
 >
-> +		if (parse_commit_gently(parent, 1) < 0)
+> then?
 
-All right, parse_commit_gently() avoids re-parsing objects, and makes
-use of the commit-graph data.  If parents are not guaranteed to be
-parsed, this is a correct thing to do.
-
-Though I do wonder how this issue got missed by the test suite, just
-like other reviewers...
-
-> +			return ;
-
-Why this need to be 'return' and not 'continue'?
-
-> +
->  		if (*pi)
->  			(*pi)++;
->  		else
-
-Best,
---=20
-Jakub Nar=C4=99bski
+Who said it didn't need it?
