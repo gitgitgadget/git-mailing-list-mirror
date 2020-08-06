@@ -2,186 +2,128 @@ Return-Path: <SRS0=sa20=BQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B45AFC433E0
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ACE1C433DF
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:23:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19A062311C
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:23:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 879172311A
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:23:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=lufia-org.20150623.gappssmtp.com header.i=@lufia-org.20150623.gappssmtp.com header.b="DMOtOnsB"
+	dkim=pass (1024-bit key) header.d=3v1n0.net header.i=@3v1n0.net header.b="C9SsBUfO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729989AbgHFRWu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 13:22:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45092 "EHLO
+        id S1729956AbgHFRXB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 13:23:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729975AbgHFRF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 13:05:28 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5050EC0A3BDC
-        for <git@vger.kernel.org>; Thu,  6 Aug 2020 06:50:03 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bh1so14457911plb.12
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 06:50:03 -0700 (PDT)
+        with ESMTP id S1729962AbgHFRFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 13:05:18 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C38C061A2D
+        for <git@vger.kernel.org>; Thu,  6 Aug 2020 05:29:16 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id a14so18044034edx.7
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 05:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lufia-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=yha7tWopbSUXoC00qnJSk4icNdvRhXJ4VEvajshUoHY=;
-        b=DMOtOnsBryEN+be4zFL74f3B0lwTEPZ5YUnq/UXCXYXGe7creJxFUxbA4PGsb4FwtX
-         UsiP2u3HEtKPmSzG0SJjbnui0sxNQWBmyKHJ2w1g2gwAH0SOegneyGkWQqCNY8y2gyA3
-         FCr9qfW/I5ChdF4CYBJHnIuDdou3gIxpQLCSJud2lg+Aa4wjHKsxGtLcix+5Z/DoInsK
-         ntgBg9Z9mJa9N7sh9Z65ZeGg5XPfMUaQW35gjQ/AuK85lfiCbxa8WEaPp10FWNt3yJud
-         UST4PpKYViRLKWGqIZjNZ+kJL0grWL3IkpwZAa9sfS8NkwaSh8fEKLUq6ugtKMa57rpm
-         7Kyw==
+        d=3v1n0.net; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=p7T5YxGNW7W6rGfJxpX81PBJsKeVHGG18OV2oUr9UTs=;
+        b=C9SsBUfOGE133l4g6XIAptERdDNwtzGemf9nlqJuG3DO0jqCg+cA6dhSCWGRkFqVbp
+         KBbdq+vXrBdKEfbqQokK9nzRh4N0CslJk9MmsFj6Mv5BZNNyt6sLuNWqD2vr22fztTNb
+         9Qz6d8PpQa8TfBsnoWRw4e1U/O9/p/wyqH9U4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=yha7tWopbSUXoC00qnJSk4icNdvRhXJ4VEvajshUoHY=;
-        b=YOmaRFok2dd/KasoAwJILU+OL+LwR8JwCmvsTryQxH0Ff07vNhUGPKjuH5kB1lIPyx
-         e3jyl0Yk3fmUbomE37vlmbuFdb5PouPU0pc9nYfrK5egystoUrESiXjkuCyQ/D1FXxYs
-         wzNMJ1RprvjdK/gEphfZm4v2Cg3R36xIWMyCLAdCAoE3ZTotTIkSU5lC3FAip2bRWvfp
-         tB9e+i3D+aLyz/+rDkNu+vDiNT0x3uD8SzLhJ998KjdeJhG/T3qYj41rjuMRZh35D46m
-         OBCCge4QEYl5NSFe2Vs9WAvG+PsColQbZz3MIQgHn+AdAj5tdgX1LL+p37mkSrZF+Anm
-         N6bQ==
-X-Gm-Message-State: AOAM530o9c4bYLN7gWS41GUTqK6KcEm2xb6K4Pp0WYY2g0Adk/+tqsZv
-        EriejlrruE4bzfdiMYJvRpFbR9QECly8myBW+UsnhxY4hSgpQA==
-X-Google-Smtp-Source: ABdhPJwkfX1sVKiBDmYxSlzB+KFEGVZU30ED4LxqKDxpocrrZ84z0jBrsEm6N4vGPtGUgbUfj2tKkaYTjATX9zEwpsQ=
-X-Received: by 2002:a17:902:868a:: with SMTP id g10mr7781822plo.156.1596721795706;
- Thu, 06 Aug 2020 06:49:55 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=p7T5YxGNW7W6rGfJxpX81PBJsKeVHGG18OV2oUr9UTs=;
+        b=Z8SlnQh2RDwFvJ2tlaOOuHIbCSYB8uaUz9OhhnOWeVIFtlcoH6S+3XCBltphfhqfj+
+         2288dvVqGa9gF8Ur8EJGnILgwjW8b5a/CN+x8Iq7jdOobbT81+k+HpWlYWtWg+OP4B5d
+         rKdX0ZWJJK5aqOZKEv0dXNhDkBZnxMHT2MOUPrq5lpfpBULQix5G2FaW2m9sTI3D2msk
+         u+pEg0hpCMvcfpxOnpuzRzpM4nU+OCCeLdsPcj5KJx15hir2RkCa/EbneybKs56+taOj
+         6wP/bbTTYRacxuywqkmngqOSpYWcf4UWQOTIDbLKo8YnmurgMTHCTTrZ9YgrvKGdATit
+         s3iw==
+X-Gm-Message-State: AOAM533GPtkREUp7RpbbcxCl5PJbIKkbdyrxEpbnsKvit6rgxQs2nDOh
+        yHmIc/B6aSmyFaETtlbmMU7UViFVWECTyg==
+X-Google-Smtp-Source: ABdhPJzZrzhdr27Xctff8m7aiFarGZtaXLiC46amVRli/L8FdKa6LjGFyxl/bR1k8Pmq0QviS4teuQ==
+X-Received: by 2002:a05:6402:12c4:: with SMTP id k4mr3795236edx.358.1596716954340;
+        Thu, 06 Aug 2020 05:29:14 -0700 (PDT)
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
+        by smtp.gmail.com with ESMTPSA id g5sm3633595ejk.52.2020.08.06.05.29.13
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Aug 2020 05:29:13 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id m20so25522839eds.2
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 05:29:13 -0700 (PDT)
+X-Received: by 2002:aa7:d1cc:: with SMTP id g12mr3910515edp.385.1596716952812;
+ Thu, 06 Aug 2020 05:29:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.694.git.1596675905.gitgitgadget@gmail.com>
- <d15ed626de65c51ef2ba31020eeb2111fb8e091f.1596675905.git.gitgitgadget@gmail.com>
- <20200806020407.GR6540@camp.crustytoothpaste.net>
-In-Reply-To: <20200806020407.GR6540@camp.crustytoothpaste.net>
-From:   Kyohei Kadota <lufia@lufia.org>
-Date:   Thu, 6 Aug 2020 22:49:43 +0900
-Message-ID: <CAFMepcn-yWtke7eE006a5RGO6uaScWb2xZe4H5M8X4F_T4Rhbw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] Fit to Plan 9's ANSI/POSIX compatibility layer
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        lufia via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "KADOTA, Kyohei" <lufia@lufia.org>
+References: <pull.693.git.1596634463.gitgitgadget@gmail.com>
+ <fc0d2b103ec080fa38e5d51bf2205b7360c1b601.1596634463.git.gitgitgadget@gmail.com>
+ <CAPig+cRX3_ArTYQwc1jWHznBxLf+j0McYSo=nPq4C319J=DBvg@mail.gmail.com>
+In-Reply-To: <CAPig+cRX3_ArTYQwc1jWHznBxLf+j0McYSo=nPq4C319J=DBvg@mail.gmail.com>
+From:   =?UTF-8?Q?Marco_Trevisan_=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
+Date:   Thu, 6 Aug 2020 14:28:45 +0200
+X-Gmail-Original-Message-ID: <CAALaScmKT44snh-5zTqe=Y2gjXjpo3fxRrbzotsXnr=+3Ap9ew@mail.gmail.com>
+Message-ID: <CAALaScmKT44snh-5zTqe=Y2gjXjpo3fxRrbzotsXnr=+3Ap9ew@mail.gmail.com>
+Subject: Re: [PATCH 2/3] mergetool-lib: keep a list of cross desktop merge tools
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?Q?Marco_Trevisan_=28Trevi=C3=B1o=29_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On 2020-08-06 at 01:05:03, lufia via GitGitGadget wrote:
-> > From: lufia <lufia@lufia.org>
+Il giorno mer 5 ago 2020 alle ore 23:08 Eric Sunshine
+<sunshine@sunshineco.com> ha scritto:
+>
+> On Wed, Aug 5, 2020 at 3:53 PM Marco Trevisan (Trevi=C3=B1o) via
+> GitGitGadget <gitgitgadget@gmail.com> wrote:
+> > Instead of repeating the same tools multiple times, let's just keep the=
+m
+> > in another variable and list them depending the current desktop
 > >
-> > That haven't any commands: cut, expr and printf.
+> > Signed-off-by: Marco Trevisan (Trevi=C3=B1o) <mail@3v1n0.net>
+> > ---
+> > diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> > @@ -288,11 +288,12 @@ list_merge_tool_candidates () {
+> >         if test -n "$DISPLAY"
+> >         then
+> > +               cross_desktop_tools=3D"opendiff kdiff3 tkdiff xxdiff"
+> >                 if is_desktop "GNOME"
+> >                 then
+> > -                       tools=3D"meld opendiff kdiff3 tkdiff xxdiff $to=
+ols"
+> > +                       tools=3D"meld $cross_desktop_tools $tools"
+> >                 else
+> > -                       tools=3D"opendiff kdiff3 tkdiff xxdiff meld $to=
+ols"
+> > +                       tools=3D"$cross_desktop_tools meld $tools"
+> >                 fi
 >
-> Is this ANSI/POSIX environment the one mentioned at [0]?  That page
-> describes it as supporting POSIX 1003.1-1990, which is a bit dated.  I
-> think we generally assume one has the 2001 edition or later, so you'll
-> have your work cut out for you.
+> I have mixed feelings about this change. On the one hand, I see the
+> reason for doing it if the list of tools remains substantially the
+> same in each case, but it also seems like it could become a burden,
+> possibly requiring factoring the list into more pieces, as new
+> platforms or tools are added.
 
-Yes, the layer I told is APE.
-I guess originally APE might be introduced for porting Ghostscript to Plan 9.
+I kind of agree on that, so it was mostly a proposal but I can withdraw it.
 
-> > And its sed(1)'s label is limited to maximum seven characters.
-> > Therefore I replaced some labels to drop a character.
-> >
-> > * close -> cl
-> > * continue -> cont (cnt is used for count)
-> > * line -> ln
-> > * hered -> hdoc
-> > * shell -> sh
-> > * string -> str
-> >
-> > Signed-off-by: lufia <lufia@lufia.org>
->
-> I will note that usually the project prefers to have a human's personal
-> name here and in the commit metadata instead of a username.  Junio may
-> chime in here with an opinion.
+> What I might find more compelling is creation of a table of tools and
+> the platforms for which they are suitable. It doesn't seem like it
+> would be too difficult to express such a table in shell and to extract
+> the desired rows (but that might be overkill). At any rate, I'm rather
+> "meh" on this change, though I don't oppose it strongly.
 
-I see. I will rename them.
+Yeah, I was thinking the same, but also could be a bit complicated to
+maintain especially when it comes using something that needs to be
+supported by pure sh.
 
-> >  command_list () {
-> > -     eval "grep -ve '^#' $exclude_programs" <"$1"
-> > +     eval "grep -v -e '^#' $exclude_programs" <"$1"
->
-> Is it really the case that Plan 9's grep cannot deal with bundled short
-> options?  That seems to be a significant departure from POSIX and Unix
-> behavior.  Regardless, this should be explained in the commit message.
-
-This is awful.
-But now, APE's grep (/bin/ape/grep) is a simple wrapper for native
-grep (/bin/grep),
-its option parser is a very rough implementation.
-https://github.com/0intro/plan9-contrib/blob/master/rc/bin/ape/grep
-
-> >  get_categories () {
-> > -     tr ' ' '\n'|
-> > +     tr ' ' '\012'|
->
-> Okay, I guess.  Is this something we need to handle elsewhere as well?
-> The commit message should tell us why this is necessary, and what Plan 9
-> does and doesn't support.
-
-Yeah. I will edit the message.
-Plan 9's tr(1) handles only \(16 bit octal) and \x(16 bit hexadecimal)
-escape sequences.
-If another character after leading backslash, tr(1) will replace \c to c.
-
-> >       grep -v '^$' |
-> >       sort |
-> >       uniq
-> > @@ -18,13 +18,13 @@ get_categories () {
-> >
-> >  category_list () {
-> >       command_list "$1" |
-> > -     cut -c 40- |
-> > +     awk '{ print substr($0, 40) }' |
->
-> I can tell that you haven't gotten the test suite working because I've
-> added a large number of cut invocations there.  I suspect you're going
-> to need to provide a portability wrapper there that implements it using
-> awk, sed, or perl.
-
-I see. If I'd like to put those wrappers to the repository, is there
-the best place for them?
-
-> > +if test -z "$(echo -n)"
-> > +then
-> > +     alias print='echo -n'
-> > +else
-> > +     alias print='printf %s'
-> > +fi
->
-> Let's avoid an alias here (especially with a common builtin name) and
-> instead use a shell function.  Maybe like this (not tab-indented):
->
->   print_nonl () {
->     if command -v printf >/dev/null 2>&1
->     then
->       printf "%s" "$@"
->     else
->       echo -n "$@"
->     fi
->   }
->
-> Notice also that we prefer the standard form and fall back to the
-> nonstandard form if the system is less capable.  I don't know if Plan 9
-> supports "command -v"; "type" may be preferable, but isn't supported by
-> some other shells (e.g., posh).  For portability reasons, we may need to
-> try to run printf and see if it fails.
->
-> This is also going to need some patching in the testsuite, since we use
-> printf extensively (more than 1300 times).  I do hope you have perl
-> available.
-
-In fact, Plan 9's ape/sh is pdksh, so it supports "command -v".
-However I think, like the above comment, it might be better to create
-the printf(1) wrapper.
-
----
-kadota
-
-> [0] http://doc.cat-v.org/plan_9/4th_edition/papers/ape
-> --
-> brian m. carlson: Houston, Texas, US
+--=20
+Trevi=C3=B1o's World - Life and Linux
+http://www.3v1n0.net
