@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26CBFC433DF
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06357C433DF
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:56:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7010C206B2
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:53:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5584E221E2
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:56:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVmxzbVw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rD+eQZ8c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730320AbgHFRxc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 13:53:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40180 "EHLO
+        id S1728016AbgHFRzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 13:55:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728350AbgHFQbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 12:31:03 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B60AC002168
-        for <git@vger.kernel.org>; Thu,  6 Aug 2020 09:30:29 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id f12so8763719wru.13
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 09:30:28 -0700 (PDT)
+        with ESMTP id S1728012AbgHFQSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 12:18:43 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B4A5C0F26CC
+        for <git@vger.kernel.org>; Thu,  6 Aug 2020 08:48:46 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id r2so39385054wrs.8
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 08:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KGkoFrtpNu2YTXlCaOU2P1B4inNdkFDcA2g/l2ql2p4=;
-        b=AVmxzbVwUDjZA7h5AuDDiYZFPuOHd0JaagXQAks6VMtE4cItfZ4dtGm4Lr0s9p3rqf
-         I9IyNUDT+wrGiDrojqQkzmOtGbcXI4toMddofWChrMoxWz6Fqn+DNPhf0nodz7llrjOm
-         qzNTbBdksTAggbDCSknl6wKf43WqVWb/Uj8/GyrzNPtarcVrAkoda0TgCFeWwtGtHTdO
-         NEyN2wAaBz6Bm9MW8OzzmY+cFinxM5WhZ3+J2ivhr5JYCXdvtwAajc91a3aTKVFF9qmh
-         AO57vjdWpVAwghpCgjYin6Y+cHzmO/7S2py+Zji87YnQv8BH3/3ryKp0SKRAFVLYdeNH
-         1NzQ==
+        bh=esMNGJkQluoXLB0Pzy2j+iWmXD3pMw8Y0EySjVmWBhU=;
+        b=rD+eQZ8cA5KCns6b4AGtswuS+ZrxADVhYVVDbf2SUxbjXJnmzF7lIEbD5GYqjbv5wv
+         IeY+lUSy7QOtQpIRVVCk4yFzjXboNgyT+m8vaY5oCjoISbusB2LCnQ/KVpm8Z6fiuYj2
+         fR4ZH5goQQVl3vnDzw5jnya44FeyGyJGW76wtzDjwqL40mYzRrAXsuAGzsre2ABG9JiF
+         Wi/D0GlUF4OpRIyt0JHY6TVy1RtrHSxcVh/j+YSAWAn5RjUAolBZrDENU6wCaeJD3FRo
+         JuZ8zCmGR7NI8yWDwz0Sv04ffAJ7w93HCIs04nUO9RaXsO5f9D8gYn1abK8DbSbFps7B
+         21RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KGkoFrtpNu2YTXlCaOU2P1B4inNdkFDcA2g/l2ql2p4=;
-        b=hs46emqrti1iUsGUyMBAUn7yrTIy+hg7I93+m4yva6Xk1aKwp9PjAkrDV8e5d8dlBg
-         yjPUyA21BqDV30x398uZT8joOZexA1B1NS3H0JJBpIDimOlYjbp3v3ZNxrQFpfiahRHz
-         YTW62ilkj0FVQH65bjD5DVFLAuu0FJU8I4J42flNQoRqWxP5F1WiEtqjBCKUnfz+UTDz
-         kkyXjwXEefiVffNgcot+TbbEKIUn6Xd46HDyh7Pv7DImF0WbCT6KLR0Dd9PbZwjpC8xy
-         7LS8BWMrfsDLbt/AaNhVAM1/4CkIPMj/OkelPt8ZTD8DAPByE/1nTvy87m6RgJoQQutV
-         XKRg==
-X-Gm-Message-State: AOAM530Gtf37N/VH+v2W2xu36+7oIk6LtTk4trunXqjmJEIkElTW/DRU
-        bV2/GZlR66s2o3A+o4ViKuw73CX2
-X-Google-Smtp-Source: ABdhPJwEFqJ4suEZ45nsL6O1r2cIeJHexX1uw31vieFWieuBiFtwlAnAHP2plvLLKhdpdxY7SbkG6A==
-X-Received: by 2002:adf:ba83:: with SMTP id p3mr8385392wrg.246.1596731427095;
-        Thu, 06 Aug 2020 09:30:27 -0700 (PDT)
+        bh=esMNGJkQluoXLB0Pzy2j+iWmXD3pMw8Y0EySjVmWBhU=;
+        b=aVUJQXJ1av3lhujkrj4iGFkHUixndNSTkSntGH/zaobGkyMiuRv/2oGRMEuCnf7Pt2
+         gDfvlMkBhXYh3o7BTnhp5hb8ULwV8k0IltXxdsspDBXKaN9IPTVmBHOn8cuajZeYGsyd
+         Ve9QLyvk1d6ZnCOAGH5by2Ldo52Si+wxdS6Gf6Oi3ziUcVH2CzRjBz9Q29jVIyYt9o4k
+         37KvW/2tNFak+NWSWpdnyB6rdtyuOTKLjfQ/1nwfqneJZV6zzanwg4umreZWoeZ/djgv
+         bnTpKFG0oBctNzCL2UYzYAqlGUMHB3D230axHJ21sNXLjq41lSgP0k3znCE8s3YZZUC5
+         xNcg==
+X-Gm-Message-State: AOAM530PFeJq+D4mFwjNMXDsDrPA+vO6uTjODdYvqd/NIHGIt/Uf0vnA
+        2x1aRMd87epUFq6l66cFevmU9Z0y
+X-Google-Smtp-Source: ABdhPJzD8+pU1qu9oAHtKS8hwdBBXjCVmzE2+egYfqulEOF8t39kInlWwnuch8L0h3jivhCMHQCQ/Q==
+X-Received: by 2002:a5d:4401:: with SMTP id z1mr7787657wrq.305.1596728924126;
+        Thu, 06 Aug 2020 08:48:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q19sm6857122wrf.48.2020.08.06.09.30.26
+        by smtp.gmail.com with ESMTPSA id b142sm7286267wmd.19.2020.08.06.08.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 09:30:26 -0700 (PDT)
-Message-Id: <83401c52002716084b9c53a77c9d57b6009f84e2.1596731424.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.696.git.1596731424.gitgitgadget@gmail.com>
-References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
-From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 06 Aug 2020 16:30:16 +0000
-Subject: [PATCH 1/9] fetch: optionally allow disabling FETCH_HEAD update
+        Thu, 06 Aug 2020 08:48:43 -0700 (PDT)
+Message-Id: <2b9deb6d6a23e53bec75e109f2e3ef9217420425.1596728921.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.695.git.1596728921.gitgitgadget@gmail.com>
+References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 06 Aug 2020 15:48:31 +0000
+Subject: [PATCH 01/11] maintenance: create basic maintenance runner
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,258 +74,285 @@ Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
         phillip.wood123@gmail.com, emilyshaffer@google.com,
         sluongng@gmail.com, jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-If you run fetch but record the result in remote-tracking branches,
-and either if you do nothing with the fetched refs (e.g. you are
-merely mirroring) or if you always work from the remote-tracking
-refs (e.g. you fetch and then merge origin/branchname separately),
-you can get away with having no FETCH_HEAD at all.
+The 'gc' builtin is our current entrypoint for automatically maintaining
+a repository. This one tool does many operations, such as repacking the
+repository, packing refs, and rewriting the commit-graph file. The name
+implies it performs "garbage collection" which means several different
+things, and some users may not want to use this operation that rewrites
+the entire object database.
 
-Teach "git fetch" a command line option "--[no-]write-fetch-head"
-and "fetch.writeFetchHEAD" configuration variable.  Without either,
-the default is to write FETCH_HEAD, and the usual rule that the
-command line option defeats configured default applies.
+Create a new 'maintenance' builtin that will become a more general-
+purpose command. To start, it will only support the 'run' subcommand,
+but will later expand to add subcommands for scheduling maintenance in
+the background.
 
-Note that under "--dry-run" mode, FETCH_HEAD is never written;
-otherwise you'd see list of objects in the file that you do not
-actually have.  Passing `--write-fetch-head` does not force `git
-fetch` to write the file.
+For now, the 'maintenance' builtin is a thin shim over the 'gc' builtin.
+In fact, the only option is the '--auto' toggle, which is handed
+directly to the 'gc' builtin. The current change is isolated to this
+simple operation to prevent more interesting logic from being lost in
+all of the boilerplate of adding a new builtin.
 
-Also note that this option is explicitly passed when "git pull"
-internally invokes "git fetch", so that those who configured their
-"git fetch" not to write FETCH_HEAD would not be able to break the
-cooperation between these two commands.  "git pull" must see what
-"git fetch" got recorded in FETCH_HEAD to work correctly.
+Use existing builtin/gc.c file because we want to share code between the
+two builtins. It is possible that we will have 'maintenance' replace the
+'gc' builtin entirely at some point, leaving 'git gc' as an alias for
+some specific arguments to 'git maintenance run'.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Create a new test_subcommand helper that allows us to test if a certain
+subcommand was run. It requires storing the GIT_TRACE2_EVENT logs in a
+file. A negation mode is available that will be used in later tests.
+
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/fetch.txt  |  7 ++++++
- Documentation/fetch-options.txt | 10 +++++++++
- builtin/fetch.c                 | 19 +++++++++++++---
- builtin/pull.c                  |  3 ++-
- t/t5510-fetch.sh                | 39 +++++++++++++++++++++++++++++++--
- t/t5521-pull-options.sh         | 16 ++++++++++++++
- 6 files changed, 88 insertions(+), 6 deletions(-)
+ .gitignore                        |  1 +
+ Documentation/git-maintenance.txt | 57 +++++++++++++++++++++++++++++++
+ builtin.h                         |  1 +
+ builtin/gc.c                      | 57 +++++++++++++++++++++++++++++++
+ git.c                             |  1 +
+ t/t7900-maintenance.sh            | 19 +++++++++++
+ t/test-lib-functions.sh           | 33 ++++++++++++++++++
+ 7 files changed, 169 insertions(+)
+ create mode 100644 Documentation/git-maintenance.txt
+ create mode 100755 t/t7900-maintenance.sh
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index b20394038d..0aaa05e8c0 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -91,3 +91,10 @@ fetch.writeCommitGraph::
- 	merge and the write may take longer. Having an updated commit-graph
- 	file helps performance of many Git commands, including `git merge-base`,
- 	`git push -f`, and `git log --graph`. Defaults to false.
+diff --git a/.gitignore b/.gitignore
+index ee509a2ad2..a5808fa30d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -90,6 +90,7 @@
+ /git-ls-tree
+ /git-mailinfo
+ /git-mailsplit
++/git-maintenance
+ /git-merge
+ /git-merge-base
+ /git-merge-index
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+new file mode 100644
+index 0000000000..34cd2b4417
+--- /dev/null
++++ b/Documentation/git-maintenance.txt
+@@ -0,0 +1,57 @@
++git-maintenance(1)
++==================
 +
-+fetch.writeFetchHEAD::
-+	Setting it to false tells `git fetch` not to write the list
-+	of remote refs fetched in the `FETCH_HEAD` file directly
-+	under `$GIT_DIR`.  Can be countermanded from the command
-+	line with the `--[no-]write-fetch-head` option.  Defaults to
-+	true.
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 495bc8ab5a..6972ad2522 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -64,6 +64,16 @@ documented in linkgit:git-config[1].
- --dry-run::
- 	Show what would be done, without making any changes.
- 
-+ifndef::git-pull[]
-+--[no-]write-fetch-head::
-+	Write the list of remote refs fetched in the `FETCH_HEAD`
-+	file directly under `$GIT_DIR`.  This is the default unless
-+	the configuration variable `fetch.writeFetchHEAD` is set to
-+	false.  Passing `--no-write-fetch-head` from the command
-+	line tells Git not to write the file.  Under `--dry-run`
-+	option, the file is never written.
-+endif::git-pull[]
++NAME
++----
++git-maintenance - Run tasks to optimize Git repository data
 +
- -f::
- --force::
- 	When 'git fetch' is used with `<src>:<dst>` refspec it may
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c8b9366d3c..42ca774ad1 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -56,6 +56,7 @@ static int prune_tags = -1; /* unspecified */
- #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
++
++SYNOPSIS
++--------
++[verse]
++'git maintenance' run [<options>]
++
++
++DESCRIPTION
++-----------
++Run tasks to optimize Git repository data, speeding up other Git commands
++and reducing storage requirements for the repository.
+++
++Git commands that add repository data, such as `git add` or `git fetch`,
++are optimized for a responsive user experience. These commands do not take
++time to optimize the Git data, since such optimizations scale with the full
++size of the repository while these user commands each perform a relatively
++small action.
+++
++The `git maintenance` command provides flexibility for how to optimize the
++Git repository.
++
++SUBCOMMANDS
++-----------
++
++run::
++	Run one or more maintenance tasks.
++
++TASKS
++-----
++
++gc::
++	Cleanup unnecessary files and optimize the local repository. "GC"
++	stands for "garbage collection," but this task performs many
++	smaller tasks. This task can be rather expensive for large
++	repositories, as it repacks all Git objects into a single pack-file.
++	It can also be disruptive in some situations, as it deletes stale
++	data.
++
++OPTIONS
++-------
++--auto::
++	When combined with the `run` subcommand, run maintenance tasks
++	only if certain thresholds are met. For example, the `gc` task
++	runs when the number of loose objects exceeds the number stored
++	in the `gc.auto` config setting, or when the number of pack-files
++	exceeds the `gc.autoPackLimit` config setting.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/builtin.h b/builtin.h
+index a5ae15bfe5..17c1c0ce49 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -167,6 +167,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix);
+ int cmd_ls_remote(int argc, const char **argv, const char *prefix);
+ int cmd_mailinfo(int argc, const char **argv, const char *prefix);
+ int cmd_mailsplit(int argc, const char **argv, const char *prefix);
++int cmd_maintenance(int argc, const char **argv, const char *prefix);
+ int cmd_merge(int argc, const char **argv, const char *prefix);
+ int cmd_merge_base(int argc, const char **argv, const char *prefix);
+ int cmd_merge_index(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index aafa0946f5..e4f0ce1c86 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -699,3 +699,60 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
  
- static int all, append, dry_run, force, keep, multiple, update_head_ok;
-+static int write_fetch_head = 1;
- static int verbosity, deepen_relative, set_upstream;
- static int progress = -1;
- static int enable_auto_gc = 1;
-@@ -118,6 +119,10 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "fetch.writefetchhead")) {
-+		write_fetch_head = git_config_bool(k, v);
-+		return 0;
-+	}
- 	return git_default_config(k, v, cb);
+ 	return 0;
  }
- 
-@@ -162,6 +167,8 @@ static struct option builtin_fetch_options[] = {
- 		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
- 	OPT_BOOL(0, "dry-run", &dry_run,
- 		 N_("dry run")),
-+	OPT_BOOL(0, "write-fetch-head", &write_fetch_head,
-+		 N_("write fetched references to the FETCH_HEAD file")),
- 	OPT_BOOL('k', "keep", &keep, N_("keep downloaded pack")),
- 	OPT_BOOL('u', "update-head-ok", &update_head_ok,
- 		    N_("allow updating of HEAD ref")),
-@@ -895,7 +902,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	const char *what, *kind;
- 	struct ref *rm;
- 	char *url;
--	const char *filename = dry_run ? "/dev/null" : git_path_fetch_head(the_repository);
-+	const char *filename = (!write_fetch_head
-+				? "/dev/null"
-+				: git_path_fetch_head(the_repository));
- 	int want_status;
- 	int summary_width = transport_summary_width(ref_map);
- 
-@@ -1329,7 +1338,7 @@ static int do_fetch(struct transport *transport,
- 	}
- 
- 	/* if not appending, truncate FETCH_HEAD */
--	if (!append && !dry_run) {
-+	if (!append && write_fetch_head) {
- 		retcode = truncate_fetch_head();
- 		if (retcode)
- 			goto cleanup;
-@@ -1596,7 +1605,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
- 	int i, result = 0;
- 	struct strvec argv = STRVEC_INIT;
- 
--	if (!append && !dry_run) {
-+	if (!append && write_fetch_head) {
- 		int errcode = truncate_fetch_head();
- 		if (errcode)
- 			return errcode;
-@@ -1797,6 +1806,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (depth || deepen_since || deepen_not.nr)
- 		deepen = 1;
- 
-+	/* FETCH_HEAD never gets updated in --dry-run mode */
-+	if (dry_run)
-+		write_fetch_head = 0;
 +
- 	if (all) {
- 		if (argc == 1)
- 			die(_("fetch --all does not take a repository argument"));
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 015f6ded0b..5ef3434e1f 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -527,7 +527,8 @@ static int run_fetch(const char *repo, const char **refspecs)
- 	struct strvec args = STRVEC_INIT;
- 	int ret;
- 
--	strvec_pushl(&args, "fetch", "--update-head-ok", NULL);
-+	strvec_pushl(&args, "fetch", "--update-head-ok",
-+		     "--write-fetch-head", NULL);
- 
- 	/* Shared options */
- 	argv_push_verbosity(&args);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 9850ecde5d..31c91d0ed2 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -539,13 +539,48 @@ test_expect_success 'fetch into the current branch with --update-head-ok' '
- 
- '
- 
--test_expect_success 'fetch --dry-run' '
--
-+test_expect_success 'fetch --dry-run does not touch FETCH_HEAD' '
- 	rm -f .git/FETCH_HEAD &&
- 	git fetch --dry-run . &&
- 	! test -f .git/FETCH_HEAD
- '
- 
-+test_expect_success '--no-write-fetch-head does not touch FETCH_HEAD' '
-+	rm -f .git/FETCH_HEAD &&
-+	git fetch --no-write-fetch-head . &&
-+	! test -f .git/FETCH_HEAD
++static const char * const builtin_maintenance_usage[] = {
++	N_("git maintenance run [<options>]"),
++	NULL
++};
++
++struct maintenance_opts {
++	int auto_flag;
++};
++
++static int maintenance_task_gc(struct maintenance_opts *opts)
++{
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	child.git_cmd = 1;
++	strvec_push(&child.args, "gc");
++
++	if (opts->auto_flag)
++		strvec_push(&child.args, "--auto");
++
++	close_object_store(the_repository->objects);
++	return run_command(&child);
++}
++
++static int maintenance_run(struct maintenance_opts *opts)
++{
++	return maintenance_task_gc(opts);
++}
++
++int cmd_maintenance(int argc, const char **argv, const char *prefix)
++{
++	static struct maintenance_opts opts;
++	static struct option builtin_maintenance_options[] = {
++		OPT_BOOL(0, "auto", &opts.auto_flag,
++			 N_("run tasks based on the state of the repository")),
++		OPT_END()
++	};
++
++	memset(&opts, 0, sizeof(opts));
++
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_maintenance_usage,
++				   builtin_maintenance_options);
++
++	argc = parse_options(argc, argv, prefix,
++			     builtin_maintenance_options,
++			     builtin_maintenance_usage,
++			     PARSE_OPT_KEEP_UNKNOWN);
++
++	if (argc == 1) {
++		if (!strcmp(argv[0], "run"))
++			return maintenance_run(&opts);
++	}
++
++	usage_with_options(builtin_maintenance_usage,
++			   builtin_maintenance_options);
++}
+diff --git a/git.c b/git.c
+index 8bd1d7551d..24f250d29a 100644
+--- a/git.c
++++ b/git.c
+@@ -529,6 +529,7 @@ static struct cmd_struct commands[] = {
+ 	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
+ 	{ "mailinfo", cmd_mailinfo, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "mailsplit", cmd_mailsplit, NO_PARSEOPT },
++	{ "maintenance", cmd_maintenance, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "merge-base", cmd_merge_base, RUN_SETUP },
+ 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+new file mode 100755
+index 0000000000..c4b9b4a6fe
+--- /dev/null
++++ b/t/t7900-maintenance.sh
+@@ -0,0 +1,19 @@
++#!/bin/sh
++
++test_description='git maintenance builtin'
++
++. ./test-lib.sh
++
++test_expect_success 'help text' '
++	test_expect_code 129 git maintenance -h 2>err &&
++	test_i18ngrep "usage: git maintenance run" err
 +'
 +
-+test_expect_success '--write-fetch-head gets defeated by --dry-run' '
-+	rm -f .git/FETCH_HEAD &&
-+	git fetch --dry-run --write-fetch-head . &&
-+	! test -f .git/FETCH_HEAD
++test_expect_success 'run [--auto]' '
++	GIT_TRACE2_EVENT="$(pwd)/run-no-auto.txt" git maintenance run &&
++	GIT_TRACE2_EVENT="$(pwd)/run-auto.txt" git maintenance run --auto &&
++	test_subcommand git gc <run-no-auto.txt &&
++	test_subcommand git gc --auto <run-auto.txt
 +'
 +
-+test_expect_success 'fetch.writeFetchHEAD and FETCH_HEAD' '
-+	rm -f .git/FETCH_HEAD &&
-+	git -c fetch.writeFetchHEAD=no fetch . &&
-+	! test -f .git/FETCH_HEAD
-+'
++test_done
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 3103be8a32..0adf2b85f8 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1561,3 +1561,36 @@ test_path_is_hidden () {
+ 	case "$("$SYSTEMROOT"/system32/attrib "$1")" in *H*?:*) return 0;; esac
+ 	return 1
+ }
 +
-+test_expect_success 'fetch.writeFetchHEAD gets defeated by --dry-run' '
-+	rm -f .git/FETCH_HEAD &&
-+	git -c fetch.writeFetchHEAD=yes fetch --dry-run . &&
-+	! test -f .git/FETCH_HEAD
-+'
++# Check that the given command was invoked as part of the
++# trace2-format trace on stdin.
++#
++#	test_subcommand [!] <command> <args>... < <trace>
++#
++# For example, to look for an invocation of "git upload-pack
++# /path/to/repo"
++#
++#	GIT_TRACE2_EVENT=event.log git fetch ... &&
++#	test_subcommand git upload-pack "$PATH" <event.log
++#
++# If the first parameter passed is !, this instead checks that
++# the given command was not called.
++#
++test_subcommand () {
++	local negate=
++	if test "$1" = "!"
++	then
++		negate=t
++		shift
++	fi
 +
-+test_expect_success 'fetch.writeFetchHEAD and --no-write-fetch-head' '
-+	rm -f .git/FETCH_HEAD &&
-+	git -c fetch.writeFetchHEAD=yes fetch --no-write-fetch-head . &&
-+	! test -f .git/FETCH_HEAD
-+'
++	local expr=$(printf '"%s",' "$@")
++	expr="${expr%,}"
 +
-+test_expect_success 'fetch.writeFetchHEAD and --write-fetch-head' '
-+	rm -f .git/FETCH_HEAD &&
-+	git -c fetch.writeFetchHEAD=no fetch --write-fetch-head . &&
-+	test -f .git/FETCH_HEAD
-+'
-+
- test_expect_success "should be able to fetch with duplicate refspecs" '
- 	mkdir dups &&
- 	(
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 159afa7ac8..1acae3b9a4 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -77,6 +77,7 @@ test_expect_success 'git pull -q -v --no-rebase' '
- 	test_must_be_empty out &&
- 	test -s err)
- '
-+
- test_expect_success 'git pull --cleanup errors early on invalid argument' '
- 	mkdir clonedcleanup &&
- 	(cd clonedcleanup && git init &&
-@@ -85,6 +86,21 @@ test_expect_success 'git pull --cleanup errors early on invalid argument' '
- 	test -s err)
- '
- 
-+test_expect_success 'git pull --no-write-fetch-head fails' '
-+	mkdir clonedwfh &&
-+	(cd clonedwfh && git init &&
-+	test_must_fail git pull --no-write-fetch-head "../parent" >out 2>err &&
-+	test_must_be_empty out &&
-+	test_i18ngrep "no-write-fetch-head" err)
-+'
-+
-+test_expect_success 'git pull succeeds with fetch.writeFetchHEAD=false' '
-+	mkdir clonedwfhconfig &&
-+	(cd clonedwfhconfig && git init &&
-+	git config fetch.writeFetchHEAD false &&
-+	git pull "../parent" >out 2>err &&
-+	grep FETCH_HEAD err)
-+'
- 
- test_expect_success 'git pull --force' '
- 	mkdir clonedoldstyle &&
++	if test -n "$negate"
++	then
++		! grep "\[$expr\]"
++	else
++		grep "\[$expr\]"
++	fi
++}
 -- 
 gitgitgadget
 
