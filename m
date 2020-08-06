@@ -5,64 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D558C433E3
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F9FC433DF
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:53:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64075206B2
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:52:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3E43206B2
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:53:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oNh+139r"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CaYQ2WzM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728391AbgHFRwc (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730231AbgHFRwc (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 6 Aug 2020 13:52:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40226 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728412AbgHFQbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 12:31:19 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5A0C00217F
-        for <git@vger.kernel.org>; Thu,  6 Aug 2020 09:30:33 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id 184so10292134wmb.0
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 09:30:33 -0700 (PDT)
+        with ESMTP id S1728428AbgHFQbW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 12:31:22 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF856C0F26C2
+        for <git@vger.kernel.org>; Thu,  6 Aug 2020 09:30:34 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id t14so10277100wmi.3
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 09:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xhHyMPCS+Bkr8AVPcmA1SDmyfDPL8Ap9sHZ0eLhZcd4=;
-        b=oNh+139ruN91+fwMmoVKNAA3gjeVXlHiTbZ+l+t90iEWVlVsjggSveMso8RQe3NBnn
-         Mh7eLbpeEJJkNk980SyKs72NtyjSVTforuQIp+T1v6NIXnnQ0+yMqaID+T+PhfzQk7b2
-         ex/w/xmgBjwv+EjZDH5szkU3MNr1ZZvo7hZDYk0VQVHizEAUt0kE+ZElsNB7CZURzPaL
-         6DtC3c+Raz9BbLz9snOM9JKMzkrzyYXqBrbTAxcu5EvLkgp5MRYsazH3W/qAFjxKGNnj
-         I846fKX6qqxYs4hVfQakrXALAcUAeWIHYaFhWhaQRKI983YORcEm5zW7tq0XMGflfzir
-         zrTg==
+        bh=znxVoAdJfaAN6WSfdYuvp8HvqqaQsi1fwwahAzmgASU=;
+        b=CaYQ2WzMw8e72tdjERrik6Y/mKWEDbV+Qr94xpOAyZQZlf1otydEHdSwd3eG10lI2X
+         Zb3lCDHiQHLzcm7H8pW0s5Z0wiexuQnYsvLKb5F4ZgInULhKemSL9O3NK2JT+aYmh7pk
+         1y+TlQ8xGBXTV9gKRnB4s9j9ejdENl9NuoaC97WVzIufsBnlG4/H4Cunhvd6drQMQAqc
+         akIuqHxmtWjArQgJqFwG78kFuo8mX0+Ic/H6EfOxwSlIsY2nYj+ky+89wc4BdpnfGzJs
+         3J/ty07QNqumG1175KgITuMUtRZ9cMagyqhkPolNuY9bU3EnO8IGm9JLsbZFHmHgEL4n
+         vRNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xhHyMPCS+Bkr8AVPcmA1SDmyfDPL8Ap9sHZ0eLhZcd4=;
-        b=jPsyvHDHAViQwo5IOboRpuBvFx0FT7bppY7pYksIxQYoOPLgkJd7ru1k4F9qyRsHiq
-         eAgHJchvJDiwgw1PbytJ7VVR5XAfCJms3NBUVmxUXwUlzhT/VMReNmi20RPen7/iSdkQ
-         Fvcppgj3RJ5NZXyy+A5jTFYNjP40dfMRu2nWyTBcOEXiD/KuLMlqZEYSsu833Gs3AYk3
-         57poz2oLSu/Oolrsx8CqHWmlBMCTyqzZ/ZTa71DFeY+YWEm7XXxn4BZewcZV/Nlun/mc
-         OEqVwI000niYhPm1JdD04Cbfk51cOOb1EZ6sf1etVu7tjbG3apI3H3MZXhA7WbT9YWN/
-         0MuA==
-X-Gm-Message-State: AOAM532oLNz7NHoib6hVDteZOW4DvfKZrtUX5V6bp65ZHTCulsEbYb7f
-        Jax4jG0jf5b3bUNvI41js/iPpZ1t
-X-Google-Smtp-Source: ABdhPJzcdfaM6eG6dMM3vFswk5ElHqNXBUE4TYaFPY5hvoy53/2BiqfgXcL21X/R+UOr2S9Q81JDTA==
-X-Received: by 2002:a1c:3983:: with SMTP id g125mr8207572wma.64.1596731430820;
-        Thu, 06 Aug 2020 09:30:30 -0700 (PDT)
+        bh=znxVoAdJfaAN6WSfdYuvp8HvqqaQsi1fwwahAzmgASU=;
+        b=DFattL/dk5TI0n2LYiVe1+mCdl80BRobE5O8GUJK4JVGpPGgB8NgrkG84JA7utPTD/
+         iL0UGF5I8KVsVgibE8IXk+EdiPDhGlnFzvkZsP4gxf4iPDUHVpsGtg7HNPX4dyfvL5Rr
+         wFufpRuGQJkyY/Gquv8LRqhoOFaHrtqGpY2woFD5qxDXaFNsnHwNpwUVXlH0LbbH7SsT
+         IjdVMdQGM84Rcbp58786zVE4Ca+Sr3lF5xuTfupDPlrEu3shpD6evSpKqptqRySd4LQZ
+         a9GQmo5ToLIHU4lQpU1dbTgjeWdZINLqXpsgY+h6errPaNKkNYRLo17ty0zCoaRuuVF3
+         weeA==
+X-Gm-Message-State: AOAM533NT5tBDCZU5PKSMAmUfLD+Do0/9iuas8MmT/pD4fmKoVBT5IDE
+        UooIwCDGXMvyIOZxeu9lINYmgnXS
+X-Google-Smtp-Source: ABdhPJxbfg3zm3sRGg8HMK+hJHxzEWMiHZZvGic04wvQjak4i2dgHMpz2OzrLtI1O5rMdCikxK3dLQ==
+X-Received: by 2002:a1c:6087:: with SMTP id u129mr8453180wmb.157.1596731433198;
+        Thu, 06 Aug 2020 09:30:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d23sm7056846wmd.27.2020.08.06.09.30.30
+        by smtp.gmail.com with ESMTPSA id y145sm7245787wmd.48.2020.08.06.09.30.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 09:30:30 -0700 (PDT)
-Message-Id: <aba087f663de382463585db83fe0530cded0fa94.1596731425.git.gitgitgadget@gmail.com>
+        Thu, 06 Aug 2020 09:30:32 -0700 (PDT)
+Message-Id: <407c123c519f473f303c5d0316e1b5e67d6b94ad.1596731425.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.696.git.1596731424.gitgitgadget@gmail.com>
 References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 06 Aug 2020 16:30:21 +0000
-Subject: [PATCH 6/9] midx: use start_delayed_progress()
+Date:   Thu, 06 Aug 2020 16:30:24 +0000
+Subject: [PATCH 9/9] maintenance: add incremental-repack auto condition
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,126 +82,147 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Now that the multi-pack-index may be written as part of auto maintenance
-at the end of a command, reduce the progress output when the operations
-are quick. Use start_delayed_progress() instead of start_progress().
+The incremental-repack task updates the multi-pack-index by deleting pack-
+files that have been replaced with new packs, then repacking a batch of
+small pack-files into a larger pack-file. This incremental repack is faster
+than rewriting all object data, but is slower than some other
+maintenance activities.
 
-Update t5319-multi-pack-index.sh to use GIT_PROGRESS_DELAY=0 now that
-the progress indicators are conditional.
+The 'maintenance.incremental-repack.auto' config option specifies how many
+pack-files should exist outside of the multi-pack-index before running
+the step. These pack-files could be created by 'git fetch' commands or
+by the loose-objects task. The default value is 10.
+
+Setting the option to zero disables the task with the '--auto' option,
+and a negative value makes the task run every time.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c                      | 10 +++++-----
- t/t5319-multi-pack-index.sh | 14 +++++++-------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ Documentation/config/maintenance.txt |  9 ++++++++
+ builtin/gc.c                         | 31 +++++++++++++++++++++++++++
+ t/t7900-maintenance.sh               | 32 ++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+)
 
-diff --git a/midx.c b/midx.c
-index ef499cf504..aa37d5da86 100644
---- a/midx.c
-+++ b/midx.c
-@@ -832,7 +832,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
+index a9442dd260..22229e7174 100644
+--- a/Documentation/config/maintenance.txt
++++ b/Documentation/config/maintenance.txt
+@@ -21,3 +21,12 @@ maintenance.loose-objects.auto::
+ 	positive value implies the command should run when the number of
+ 	loose objects is at least the value of `maintenance.loose-objects.auto`.
+ 	The default value is 100.
++
++maintenance.incremental-repack.auto::
++	This integer config option controls how often the `incremental-repack`
++	task should be run as part of `git maintenance run --auto`. If zero,
++	then the `incremental-repack` task will not run with the `--auto`
++	option. A negative value will force the task to run every time.
++	Otherwise, a positive value implies the command should run when the
++	number of pack-files not in the multi-pack-index is at least the value
++	of `maintenance.incremental-repack.auto`. The default value is 10.
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c09bc1381c..dbf8080d3b 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -31,6 +31,7 @@
+ #include "refs.h"
+ #include "remote.h"
+ #include "midx.h"
++#include "object-store.h"
  
- 	packs.pack_paths_checked = 0;
- 	if (flags & MIDX_PROGRESS)
--		packs.progress = start_progress(_("Adding packfiles to multi-pack-index"), 0);
-+		packs.progress = start_delayed_progress(_("Adding packfiles to multi-pack-index"), 0);
- 	else
- 		packs.progress = NULL;
+ #define FAILED_RUN "failed to run %s"
  
-@@ -969,7 +969,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	}
+@@ -1030,6 +1031,35 @@ static int maintenance_task_loose_objects(struct maintenance_opts *opts)
+ 	return prune_packed(opts) || pack_loose(opts);
+ }
  
- 	if (flags & MIDX_PROGRESS)
--		progress = start_progress(_("Writing chunks to multi-pack-index"),
-+		progress = start_delayed_progress(_("Writing chunks to multi-pack-index"),
- 					  num_chunks);
- 	for (i = 0; i < num_chunks; i++) {
- 		if (written != chunk_offsets[i])
-@@ -1104,7 +1104,7 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
- 		return 0;
- 
- 	if (flags & MIDX_PROGRESS)
--		progress = start_progress(_("Looking for referenced packfiles"),
-+		progress = start_delayed_progress(_("Looking for referenced packfiles"),
- 					  m->num_packs);
- 	for (i = 0; i < m->num_packs; i++) {
- 		if (prepare_midx_pack(r, m, i))
-@@ -1225,7 +1225,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 	count = xcalloc(m->num_packs, sizeof(uint32_t));
- 
- 	if (flags & MIDX_PROGRESS)
--		progress = start_progress(_("Counting referenced objects"),
-+		progress = start_delayed_progress(_("Counting referenced objects"),
- 					  m->num_objects);
- 	for (i = 0; i < m->num_objects; i++) {
- 		int pack_int_id = nth_midxed_pack_int_id(m, i);
-@@ -1235,7 +1235,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 	stop_progress(&progress);
- 
- 	if (flags & MIDX_PROGRESS)
--		progress = start_progress(_("Finding and deleting unreferenced packfiles"),
-+		progress = start_delayed_progress(_("Finding and deleting unreferenced packfiles"),
- 					  m->num_packs);
- 	for (i = 0; i < m->num_packs; i++) {
- 		char *pack_name;
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 7214cab36c..12f41dfc18 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -172,12 +172,12 @@ test_expect_success 'write progress off for redirected stderr' '
++static int incremental_repack_auto_condition(void)
++{
++	struct packed_git *p;
++	int enabled;
++	int incremental_repack_auto_limit = 10;
++	int count = 0;
++
++	if (git_config_get_bool("core.multiPackIndex", &enabled) ||
++	    !enabled)
++		return 0;
++
++	git_config_get_int("maintenance.incremental-repack.auto",
++			   &incremental_repack_auto_limit);
++
++	if (!incremental_repack_auto_limit)
++		return 0;
++	if (incremental_repack_auto_limit < 0)
++		return 1;
++
++	for (p = get_packed_git(the_repository);
++	     count < incremental_repack_auto_limit && p;
++	     p = p->next) {
++		if (!p->multi_pack_index)
++			count++;
++	}
++
++	return count >= incremental_repack_auto_limit;
++}
++
+ static int multi_pack_index_write(struct maintenance_opts *opts)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+@@ -1220,6 +1250,7 @@ static struct maintenance_task tasks[] = {
+ 	[TASK_INCREMENTAL_REPACK] = {
+ 		"incremental-repack",
+ 		maintenance_task_incremental_repack,
++		incremental_repack_auto_condition,
+ 	},
+ 	[TASK_GC] = {
+ 		"gc",
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 1c5f44f2b3..e1e802e543 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -187,6 +187,7 @@ test_expect_success 'incremental-repack task' '
  '
  
- test_expect_success 'write force progress on for stderr' '
--	git multi-pack-index --object-dir=$objdir --progress write 2>err &&
-+	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --progress write 2>err &&
- 	test_file_not_empty err
+ test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
++
+ 	for i in $(test_seq 1 5)
+ 	do
+ 		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
+@@ -217,4 +218,35 @@ test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
+ 		 --no-progress --batch-size=2147483647 <run-2g.txt
  '
  
- test_expect_success 'write with the --no-progress option' '
--	git multi-pack-index --object-dir=$objdir --no-progress write 2>err &&
-+	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --no-progress write 2>err &&
- 	test_line_count = 0 err
- '
- 
-@@ -334,17 +334,17 @@ test_expect_success 'git-fsck incorrect offset' '
- '
- 
- test_expect_success 'repack progress off for redirected stderr' '
--	git multi-pack-index --object-dir=$objdir repack 2>err &&
-+	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack 2>err &&
- 	test_line_count = 0 err
- '
- 
- test_expect_success 'repack force progress on for stderr' '
--	git multi-pack-index --object-dir=$objdir --progress repack 2>err &&
-+	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --progress repack 2>err &&
- 	test_file_not_empty err
- '
- 
- test_expect_success 'repack with the --no-progress option' '
--	git multi-pack-index --object-dir=$objdir --no-progress repack 2>err &&
-+	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir --no-progress repack 2>err &&
- 	test_line_count = 0 err
- '
- 
-@@ -488,7 +488,7 @@ test_expect_success 'expire progress off for redirected stderr' '
- test_expect_success 'expire force progress on for stderr' '
- 	(
- 		cd dup &&
--		git multi-pack-index --progress expire 2>err &&
-+		GIT_PROGRESS_DELAY=0 git multi-pack-index --progress expire 2>err &&
- 		test_file_not_empty err
- 	)
- '
-@@ -496,7 +496,7 @@ test_expect_success 'expire force progress on for stderr' '
- test_expect_success 'expire with the --no-progress option' '
- 	(
- 		cd dup &&
--		git multi-pack-index --no-progress expire 2>err &&
-+		GIT_PROGRESS_DELAY=0 git multi-pack-index --no-progress expire 2>err &&
- 		test_line_count = 0 err
- 	)
- '
++test_expect_success 'maintenance.incremental-repack.auto' '
++	git repack -adk &&
++	git config core.multiPackIndex true &&
++	git multi-pack-index write &&
++	GIT_TRACE2_EVENT="$(pwd)/midx-init.txt" git \
++		-c maintenance.incremental-repack.auto=1 \
++		maintenance run --auto --task=incremental-repack 2>/dev/null &&
++	test_subcommand ! git multi-pack-index write --no-progress <midx-init.txt &&
++	for i in 1 2
++	do
++		test_commit A-$i &&
++		git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
++		HEAD
++		^HEAD~1
++		EOF
++		GIT_TRACE2_EVENT=$(pwd)/trace-A-$i git \
++			-c maintenance.incremental-repack.auto=2 \
++			maintenance run --auto --task=incremental-repack 2>/dev/null &&
++		test_subcommand ! git multi-pack-index write --no-progress <trace-A-$i &&
++		test_commit B-$i &&
++		git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
++		HEAD
++		^HEAD~1
++		EOF
++		GIT_TRACE2_EVENT=$(pwd)/trace-B-$i git \
++			-c maintenance.incremental-repack.auto=2 \
++			maintenance run --auto --task=incremental-repack 2>/dev/null &&
++		test_subcommand git multi-pack-index write --no-progress <trace-B-$i || return 1
++	done
++'
++
+ test_done
 -- 
 gitgitgadget
-
