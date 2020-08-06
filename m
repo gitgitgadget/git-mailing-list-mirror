@@ -7,38 +7,38 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AD11C43446
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 480B8C43457
 	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 11:04:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 164AD204FD
+	by mail.kernel.org (Postfix) with ESMTP id 3474922D05
 	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 11:04:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="MsrbKUtB"
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="xT4uH2y9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728118AbgHFGBz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 02:01:55 -0400
-Received: from out0.migadu.com ([94.23.1.103]:34842 "EHLO out0.migadu.com"
+        id S1728127AbgHFGB6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 02:01:58 -0400
+Received: from out0.migadu.com ([94.23.1.103]:34854 "EHLO out0.migadu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728079AbgHFGBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 02:01:53 -0400
+        id S1728101AbgHFGBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 02:01:55 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-        s=default; t=1596693712;
+        s=default; t=1596693713;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=Nukpke5y28ILOWZ5GLqVB9hTaMKKcPJO23ZATCLcsYU=;
-        b=MsrbKUtBQey0hpPP7XynRB5AMxLMbV9gUoOcTEDsGKRQ4+UK18z70F43faLgeR56jPP0nK
-        0n7XA2tI58fQ6wQT010HH0DiDF9VjutaAxG70KZl05O1T+LefUrD08E6uGO+D3kO8C1Pvj
-        xV9AIqul7wUYElyvEeya/sV+JRVWSE8=
+        bh=+tmuT1szU3pxeSptWRo2Hv/j0RZfmkjx5br/wKhJnwk=;
+        b=xT4uH2y9+O6EYDS+HiOdsSrenLGd/kxQS1zWFIjc+4aMjTjMKtKAM/vosstU37MRFHHNOk
+        lqju4C7Kn3F/tO3sxtIqBEe4GVMGX3s0jsN2zHq/pDhoJkR55DB9XbNsrgp4+6Rl9nm7qD
+        9KX6BQbIbPHUSik2sTi/tYKgfl2/gFs=
 From:   "Raymond E. Pasco" <ray@ameretat.dev>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "Raymond E. Pasco" <ray@ameretat.dev>
-Subject: [PATCH v4 2/3] apply: make i-t-a entries never match worktree
-Date:   Thu,  6 Aug 2020 02:01:18 -0400
-Message-Id: <20200806060119.74587-3-ray@ameretat.dev>
+Subject: [PATCH v4 3/3] t4140: test apply with i-t-a paths
+Date:   Thu,  6 Aug 2020 02:01:19 -0400
+Message-Id: <20200806060119.74587-4-ray@ameretat.dev>
 In-Reply-To: <20200806060119.74587-1-ray@ameretat.dev>
 References: <C4ON23BIKMVK.2ZESQJ1FB5PVA@ziyou.local>
  <20200806060119.74587-1-ray@ameretat.dev>
@@ -49,47 +49,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By definition, an intent-to-add index entry can never match the
-worktree, because worktrees have no concept of intent-to-add entries.
-Therefore, "apply --index" should always fail on intent-to-add paths.
+apply --cached (as used by add -p) should accept creation and deletion
+patches to intent-to-add paths in the index. apply --index, however,
+should always fail because an intent-to-add path never matches the
+worktree (by definition).
 
-Because check_preimage() calls verify_index_match(), it already fails
-for patches other than creation patches, which check_preimage() ignores.
-This patch adds a check to check_preimage()'s rough equivalent for
-creation patches, check_to_create().
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Based-on-patch-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
 ---
- apply.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ t/t4140-apply-ita.sh | 56 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+ create mode 100644 t/t4140-apply-ita.sh
 
-diff --git a/apply.c b/apply.c
-index 4cba4ce71a..6328591489 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3754,6 +3754,21 @@ static int check_to_create(struct apply_state *state,
- 			return EXISTS_IN_INDEX;
- 	}
- 
-+	/* If the new path to be added has an intent-to-add entry, then
-+	 * by definition it does not match what is in the work tree. So
-+	 * "apply --index" should always fail in this case. Patches other
-+	 * than creation patches are already held to this standard by
-+	 * check_preimage() calling verify_index_match().
-+	 */
-+	if (state->check_index && !state->cached) {
-+		int pos = index_name_pos(state->repo->index, new_name,
-+					 strlen(new_name));
-+		if (pos >= 0 &&
-+		    state->repo->index->cache[pos]->ce_flags & CE_INTENT_TO_ADD)
-+			return error(_("%s: does not match index"), new_name);
-+	}
+diff --git a/t/t4140-apply-ita.sh b/t/t4140-apply-ita.sh
+new file mode 100644
+index 0000000000..c614eaf04c
+--- /dev/null
++++ b/t/t4140-apply-ita.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
 +
++test_description='git apply of i-t-a file'
 +
- 	if (state->cached)
- 		return 0;
- 
++. ./test-lib.sh
++
++test_expect_success setup '
++	test_write_lines 1 2 3 4 5 >blueprint &&
++
++	cat blueprint >test-file &&
++	git add -N test-file &&
++	git diff >creation-patch &&
++	grep "new file mode 100644" creation-patch &&
++
++	rm -f test-file &&
++	git diff >deletion-patch &&
++	grep "deleted file mode 100644" deletion-patch
++'
++
++test_expect_success 'apply creation patch to ita path (--cached)' '
++	git rm -f test-file &&
++	cat blueprint >test-file &&
++	git add -N test-file &&
++
++	git apply --cached creation-patch &&
++	git cat-file blob :test-file >actual &&
++	test_cmp blueprint actual
++'
++
++test_expect_success 'apply creation patch to ita path (--index)' '
++	git rm -f test-file &&
++	cat blueprint >test-file &&
++	git add -N test-file &&
++	rm -f test-file &&
++
++	test_must_fail git apply --index creation-patch
++'
++
++test_expect_success 'apply deletion patch to ita path (--cached)' '
++	git rm -f test-file &&
++	cat blueprint >test-file &&
++	git add -N test-file &&
++
++	git apply --cached deletion-patch &&
++	test_must_fail git ls-files --stage --error-unmatch test-file
++'
++
++test_expect_success 'apply deletion patch to ita path (--index)' '
++	cat blueprint >test-file &&
++	git add -N test-file &&
++
++	test_must_fail git apply --index deletion-patch &&
++	git ls-files --stage --error-unmatch test-file
++'
++
++test_done
 -- 
 2.28.0.2.g72bf77540a.dirty
 
