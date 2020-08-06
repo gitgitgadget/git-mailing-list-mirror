@@ -2,161 +2,185 @@ Return-Path: <SRS0=sa20=BQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC143C433E0
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 809ACC433DF
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:09:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13CBF20786
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:03:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF6BA2311B
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 17:09:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=3v1n0.net header.i=@3v1n0.net header.b="NPVobwhL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kuxbq2nG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729820AbgHFRDO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 13:03:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44908 "EHLO
+        id S1729998AbgHFRJQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 13:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729552AbgHFRB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 13:01:57 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0006AC061A1E
-        for <git@vger.kernel.org>; Thu,  6 Aug 2020 05:13:29 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id f24so29558779ejx.6
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 05:13:29 -0700 (PDT)
+        with ESMTP id S1730034AbgHFRGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 13:06:02 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37FB5C0617A2
+        for <git@vger.kernel.org>; Thu,  6 Aug 2020 10:02:34 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id qc22so36305489ejb.4
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 10:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=3v1n0.net; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3aNmwnszpPZknUedyDn6T2Bcas+O3oRxyJtcWAbOf1s=;
-        b=NPVobwhL/LqUDK9W5pI/5zUeJo8gFLwvL9AqZiuGA9+ITp7973NhFxwNKnjJG2pvi1
-         RTSrAyJNhLmhexdX6cafGGWrc8iYtex+ZSeGQsdC8mwWRaSCXCSz2rVg3nbpXrXdoqMt
-         lukpxIIXMcXCyomqCIBAJqahwzT2OOy06G9hg=
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RdiEwoccOGLtRxK6FMvgDW3uw1i9JkIpVv5IFqqfAEs=;
+        b=Kuxbq2nGIc2mORvyKV+w1XGWj4wt3LIi/owqB2WOWC6FVFzBuIPQEswUMFT9FKZUOa
+         iHBkTIRoNtBJt1xCv3KX5eAxpVmGVrHxo7GtM+lVb3Y5OrVIJmXdcC1+kS5Jgzd25kXv
+         nOgWPqYnQqQZ6FprA1yVWi6ZRuK2kD599WbUaTSM0KR3V4lRfSxYRw6q5KvlfesFexKD
+         /HhVPNB+kBH/vJDyTg55uCLAEM3w/pNDfm6mpKY8RtwUksYFvesg4wF47uxjXCbEg1eD
+         o6qGmUsofd3A5U//FHxSYY9yH2QSICILtcrnWDI60DSJ0uVZZd2eb7tVlxR22rRyHmXo
+         l1nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3aNmwnszpPZknUedyDn6T2Bcas+O3oRxyJtcWAbOf1s=;
-        b=fA4JMZB7t8SbcwnDehv6wbFPnyGbbo3f1QiezBlTAbHVEeuE90OCmUCVPUA6Cy4cS/
-         ZxZ+ZzQypXCOMMJci3LXX2fl1f0CYvLma47NbMEPVnCA21rFj+WyvbzEcuLbz+w7qNT1
-         eCGFCksmfPYSlXOROJDtHSQVmtQ4eYJJEMhqN8cyxM3cu3WDLSMdFNozfTncWuXnjYRs
-         meXRrOIyq8LRz+LRR8Wsa++ZaZh4pS80JkLHfwfcVrIbPDOfgxAuLzloOcK6X1cHdqOY
-         PxzOvamrY4pMPkFstpW4ruta76JMnxazOVVjuqtn7LI5fylqLlor/+t8gA73/VD+cNoe
-         RNZA==
-X-Gm-Message-State: AOAM532ezsLMMzX7V93FR4wkAezY2niqekUuXvgKXrposYo7pMaPkcEg
-        5kxPK4+C8Z0tHmzqt7j9lm/y/fspV10=
-X-Google-Smtp-Source: ABdhPJzVynvy8jrDl+B6FGA2IJoFcCaoYsvT3FTAuMaz2RVVGgpMV2a+3ITZS2Vc8tZMupQdQTlyOQ==
-X-Received: by 2002:a17:906:1cd4:: with SMTP id i20mr3944213ejh.480.1596715997255;
-        Thu, 06 Aug 2020 05:13:17 -0700 (PDT)
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com. [209.85.218.44])
-        by smtp.gmail.com with ESMTPSA id w12sm3382129edj.47.2020.08.06.05.13.16
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2020 05:13:16 -0700 (PDT)
-Received: by mail-ej1-f44.google.com with SMTP id m22so6944093eje.10
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 05:13:16 -0700 (PDT)
-X-Received: by 2002:a17:906:1f08:: with SMTP id w8mr4192475ejj.535.1596715995861;
- Thu, 06 Aug 2020 05:13:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.693.git.1596634463.gitgitgadget@gmail.com>
- <66a026ae678341fe7e93a89e22f76e24282cebaa.1596634463.git.gitgitgadget@gmail.com>
- <CAPig+cR_04fL85nH1tJnbWYbwk3Bn5fRqzr2JReB2xXu9iUGAQ@mail.gmail.com>
-In-Reply-To: <CAPig+cR_04fL85nH1tJnbWYbwk3Bn5fRqzr2JReB2xXu9iUGAQ@mail.gmail.com>
-From:   =?UTF-8?Q?Marco_Trevisan_=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
-Date:   Thu, 6 Aug 2020 14:12:49 +0200
-X-Gmail-Original-Message-ID: <CAALaSckL5sKynGDRoqN7vd6cuXAvGwaDSyB4tVGXxZWGkNG_gw@mail.gmail.com>
-Message-ID: <CAALaSckL5sKynGDRoqN7vd6cuXAvGwaDSyB4tVGXxZWGkNG_gw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] mergetool-lib: use $XDG_CURRENT_DESKTOP to check GNOME
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?UTF-8?Q?Marco_Trevisan_=28Trevi=C3=B1o=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RdiEwoccOGLtRxK6FMvgDW3uw1i9JkIpVv5IFqqfAEs=;
+        b=oErK7oEZn7uWHL7j9pF+zQhJ//5YhEnD089C2xLzJstI/noi6mZ8/bu71ZsfvbrOD/
+         i3bTmMpcOT8hyg112O5kVe/GmWMg2e7HPlOzys5q4HJTIAnickdXmTAWpGcxRK2lrNm8
+         Ww9oyhJYXntlYiAA8UF+YiEPJ+I4Gi0b/MD/Wbix+zzU4N/sqwmj2GwHC1AAw+kaOgha
+         jJSrSzIKAovYrzKdFl346R30qtmtrVV5Qm7UWh/i/kiUvLtd8cmliIHOVKFjyoPTcEVY
+         Y1cy40MPQdIRF3NIMqYxl65hcLf13kVKYk3NWjYmt6T/vC/qafk3+zS8eJ4eb9dFFwaX
+         C6Rg==
+X-Gm-Message-State: AOAM533PHya5q2hpKRjGL+XtymI/dGzzScpONcgYN18v2dq81qYpAZvc
+        BROTLGq90bYH92s0znkuz50=
+X-Google-Smtp-Source: ABdhPJzXDImN3yPbd0tSza2pfxYVvNFM+rWmca2xhMiGImmjnZZyTtfvYOPZ/7w7TPqNoNWfXwJdOg==
+X-Received: by 2002:a17:906:1104:: with SMTP id h4mr5291663eja.456.1596733352917;
+        Thu, 06 Aug 2020 10:02:32 -0700 (PDT)
+Received: from ?IPv6:2a02:a210:ca2:9c00:6810:6f57:8109:3b42? ([2a02:a210:ca2:9c00:6810:6f57:8109:3b42])
+        by smtp.gmail.com with ESMTPSA id z10sm4075762eje.122.2020.08.06.10.02.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Aug 2020 10:02:32 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: [PATCH 8/9] maintenance: auto-size incremental-repack batch
+From:   Son Luong Ngoc <sluongng@gmail.com>
+In-Reply-To: <c3487fb8e3e72949080f51f341655f37b5f2f03f.1596731425.git.gitgitgadget@gmail.com>
+Date:   Thu, 6 Aug 2020 19:02:30 +0200
+Cc:     git <git@vger.kernel.org>, sandals@crustytoothpaste.net,
+        steadmon@google.com, jrnieder@gmail.com, Jeff King <peff@peff.net>,
+        congdanhqx@gmail.com, phillip.wood123@gmail.com,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <6FA8F54A-C92D-497B-895F-AC6E8287AACD@gmail.com>
+References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
+ <c3487fb8e3e72949080f51f341655f37b5f2f03f.1596731425.git.gitgitgadget@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Derrick,
 
-Il giorno mer 5 ago 2020 alle ore 22:58 Eric Sunshine
-<sunshine@sunshineco.com> ha scritto:
->
-> On Wed, Aug 5, 2020 at 3:51 PM Marco Trevisan (Trevi=C3=B1o) via
-> GitGitGadget <gitgitgadget@gmail.com> wrote:
-> > To list merge tool candidates we used to use a private GNOME env
-> > variable (GNOME_DESKTOP_SESSION_ID) that has been deprecated for long t=
-ime ago
-> > and removed as part of GNOME 3.30.0 release [1].
-> >
-> > So, git should instead check the XDG_CURRENT_DESKTOP env variable, that
-> > is supported by all the desktop environments.
-> >
-> > Since the variable is actually a colon-separated list of names that the=
- current
-> > desktop is known as, we need to go through all the values to ensure
-> > we're using GNOME.
-> >
-> > Signed-off-by: Marco Trevisan (Trevi=C3=B1o) <mail@3v1n0.net>
-> > ---
-> > diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> > @@ -266,6 +266,19 @@ run_merge_cmd () {
-> > +is_desktop () {
-> > +       IFS=3D':'
->
-> We usually want to restore the value of IFS after we're done with it.
-> For instance:
->
->     OLDIFS=3D$IFS
->     IFS=3D:
->
-> and then restore it before returning:
->
->     IFS=3D$OLDIFS
+> On Aug 6, 2020, at 18:30, Derrick Stolee via GitGitGadget =
+<gitgitgadget@gmail.com> wrote:
+>=20
+> From: Derrick Stolee <dstolee@microsoft.com>
+>=20
+> When repacking during the 'incremental-repack' task, we use the
+> --batch-size option in 'git multi-pack-index repack'. The initial =
+setting
+> used --batch-size=3D0 to repack everything into a single pack-file. =
+This is
+> not sustainable for a large repository. The amount of work required is
+> also likely to use too many system resources for a background job.
+>=20
+> Update the 'incremental-repack' task by dynamically computing a
+> --batch-size option based on the current pack-file structure.
+>=20
+> The dynamic default size is computed with this idea in mind for a =
+client
+> repository that was cloned from a very large remote: there is likely =
+one
+> "big" pack-file that was created at clone time. Thus, do not try
+> repacking it as it is likely packed efficiently by the server.
+>=20
+> Instead, we select the second-largest pack-file, and create a batch =
+size
+> that is one larger than that pack-file. If there are three or more
+> pack-files, then this guarantees that at least two will be combined =
+into
+> a new pack-file.
 
-Yeah, that's true and always a good practice, but it was never
-happening in this file, so I followed the style.
+I have been using this strategy with git-care.sh [1] with large success.
+However it worth to note that there are still edge case where I observed =
+that
+pack count keep increasing because using =
+'--batch-size=3D<second-biggest-pack>+1'
+did not resulted in any repacking.
+In one case, I have observed a local copy went up to 160+ packs without =
+being able
+to repack.
 
-> > +       for desktop in ${XDG_CURRENT_DESKTOP}
-> > +       do
-> > +               if test "$desktop" =3D "$1"
-> > +               then
-> > +                       return 0
-> > +               fi
-> > +       done
-> > +
-> > +       return 1
-> > +}
->
-> Rather than looping and mucking with IFS, even easier would be:
->
-> is_desktop () {
->     case ":$XDG_CURRENT_DESKTOP:" in
->     *:$1:*) return 0 ;;
->     *) return 1 ;;
->     esac
-> }
->
-> But perhaps that's too magical for people?
+I have been considering whether a strategy such as falling back to the =
+'(3rd biggest
+pack size) + 1' and 4th and 5th and so on... when midx repack call =
+resulted in no-op,
+as that was how I fixed my repo when the edge case happen.
 
-Ok, fair enough, this is fine as well.
+Such strategy would require a way to detect midx repack to signal when =
+no-op happen,
+so something like 'git multi-pack-index repack --batch-size=3D123456 =
+--exit-code' would
+be much desirable.
 
-> > @@ -275,7 +288,7 @@ list_merge_tool_candidates () {
-> > -               if test -n "$GNOME_DESKTOP_SESSION_ID"
-> > +               if is_desktop "GNOME"
->
-> Why do we need to retire the $GNOME_DESKTOP_SESSION_ID check here,
-> thus penalizing people who might still be on an old version of GNOME?
-> It doesn't seem like it would be a maintenance burden to continue
-> checking it while also taking advantage of $XDG_CURRENT_DESKTOP:
->
->     if test -n "$GNOME_DESKTOP_SESSION_ID" || is_desktop GNOME
+>=20
+> Of course, this means that the second-largest pack-file size is likely
+> to grow over time and may eventually surpass the initially-cloned
+> pack-file. Recall that the pack-file batch is selected in a greedy
+> manner: the packs are considered from oldest to newest and are =
+selected
+> if they have size smaller than the batch size until the total selected
+> size is larger than the batch size. Thus, that oldest "clone" pack =
+will
+> be first to repack after the new data creates a pack larger than that.
+>=20
+> We also want to place some limits on how large these pack-files =
+become,
+> in order to bound the amount of time spent repacking. A maximum
+> batch-size of two gigabytes means that large repositories will never =
+be
+> packed into a single pack-file using this job, but also that repack is
+> rather expensive. This is a trade-off that is valuable to have if the
+> maintenance is being run automatically or in the background. Users who
+> truly want to optimize for space and performance (and are willing to =
+pay
+> the upfront cost of a full repack) can use the 'gc' task to do so.
+>=20
+> Create a test for this two gigabyte limit by creating an EXPENSIVE =
+test
+> that generates two pack-files of roughly 2.5 gigabytes in size, then
+> performs an incremental repack. Check that the --batch-size argument =
+in
+> the subcommand uses the hard-coded maximum.
+>=20
+> Helped-by: Chris Torek <chris.torek@gmail.com>
+> Reported-by: Son Luong Ngoc <sluongng@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 
-Ok, keeping this as well, it's even true that most people won't be in
-gnome 2 these days, but not a problem to keep it around.
+Generally, I have found working with '--batch-size' to be a bit =
+unpredictable.
+I wonder if we could tweak the behavior somewhat so that its more =
+consistent
+to use and test?
 
---=20
-Trevi=C3=B1o's World - Life and Linux
-http://www.3v1n0.net
+Thanks a lot for making this happen.
+Hope this patch would make it in stable soon
+
+Cheers,
+Son Luong.
+
+[1]: https://github.com/sluongng/git-care=
