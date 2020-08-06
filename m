@@ -2,157 +2,160 @@ Return-Path: <SRS0=sa20=BQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8997AC433DF
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 16:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB9C9C433E3
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 16:52:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7DB223119
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 16:50:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 397112086A
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 16:52:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="soSaiPCD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kXauzGEB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728369AbgHFQt5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 12:49:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41850 "EHLO
+        id S1729618AbgHFQwB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 12:52:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728485AbgHFQlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 12:41:18 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E864C0A8939
-        for <git@vger.kernel.org>; Thu,  6 Aug 2020 09:41:18 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id u10so18426475plr.7
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 09:41:18 -0700 (PDT)
+        with ESMTP id S1729562AbgHFQvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 12:51:05 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BFE3C002141
+        for <git@vger.kernel.org>; Thu,  6 Aug 2020 08:48:48 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id f7so44502202wrw.1
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 08:48:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=q9dnXzWj3uH+B7A14K52gX/1lSMGIABjfODAH/v6+Lw=;
-        b=soSaiPCD3kkUkr8WdO2xkYSX6Xw03uewQTrKSY6Fs14cq8I076o0v+u/mbeM9NTngc
-         gbxBzfCUPzJcvLX40fGX7W/YntD3m8sXERImN3PRAmH368IYNyY/WCV6TDaZCFB6A8fY
-         wK0mTfBhPIGZiP671x6LFoSK9+S2K9WzjC8yjGTfawzkKJn/Fn7dh3uZqIaNd/q9PYOQ
-         mzUEpkRTMGvMpnocriAAIVMrr3ZsGrU71LV5grIFvszHV9UvF8d8m8vR8AZE2dZLa6kE
-         mRc+rUCAIDnq+tr6IMoVawBFB1jJscv7l5gTUtMSax0GlXxycbt9Rn+xgl6E2gjobcor
-         tKdQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XnWOKAq/9nd+xoGuHVxK9oDozWhfGFERuP9RHAy5J0s=;
+        b=kXauzGEBbzlzsICunbz3vi9vLVesg5rEP+0wz4NP6eSKf2EVZu2bBxdJzMOhIdkoKe
+         Vf0ZQyorhB2QTOLPE+KlKcm4Zi85WuS6vWSeIokvAp/1tuv6DT7VRKhfIHoiPMgDVimk
+         GB01of+kU5WetPzk3SrJKTtQ+wiEKgxT3S30xiNmZefKLqx7rIyJbZ1zw3FKxFFhoUiy
+         b+lcaFxCQ9JGgjNnnk4uP35uRJq3bRrHBCcBpJEcyMX4WMdc8ve3eNpWPe90nUT73yj7
+         uXONqoczLzUw7KlpFNYm0WUJU44Tb/hrNOnfG98eC/IUZ8yFmXYgJSeLBNUH543EIKWo
+         xAdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=q9dnXzWj3uH+B7A14K52gX/1lSMGIABjfODAH/v6+Lw=;
-        b=E3f34hL03uTo7OXy8/eAxM56xFlJzhn36SjXB8v2H83pz2+1ne5srFsO9C/7h6JH0H
-         jgxS41xKI4OiqzeiLwOyd3qLz2vcgJOe7ARi/Q9a28aDfMwMA61XPsxA2NyM7hDjEO2q
-         b3cxHRELHHAtyknRyo5uK7N0o7RRfFYvCm+YqAEZw+jLMcAce02HDTSym/wRYTEcNSq0
-         aXIe6Rts7kj+gREAT50UrK11lbWfcyMVDP7hy2ITG819FhYTi6QvDbgIwnyiRo+lH2p2
-         S/VXBRF+rLFIgTzfQ0BasRCdcA0Cp5FWYXypE5iLjIt24DyghUXyYosYIft/kzGP6xIR
-         OboQ==
-X-Gm-Message-State: AOAM532Jx35zTy0oLOBU9A8ega/lyYFU5Bhv6502ZCOctHq0Ar9UInVi
-        LjJ6qLvvBc8FB7AnfZ1jlVz40ohBAxA=
-X-Google-Smtp-Source: ABdhPJyRrgzVsj9R9lIW/7XGphl5FyAnV3ElvxETiOcZw/B2nDoj8tUZ8tn7YGgf2idcy2mQKCmEPg==
-X-Received: by 2002:a17:902:9f82:: with SMTP id g2mr8783902plq.254.1596732077101;
-        Thu, 06 Aug 2020 09:41:17 -0700 (PDT)
-Received: from localhost.localdomain ([45.127.46.60])
-        by smtp.gmail.com with ESMTPSA id w16sm8008381pjd.50.2020.08.06.09.41.13
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=XnWOKAq/9nd+xoGuHVxK9oDozWhfGFERuP9RHAy5J0s=;
+        b=tzhMqvyEzc7Z0SgBVkwDMg32Kre2oDTzRuT7zHJP/qVLiky8r9nGpoWSEUZd/SIKpA
+         K+TFL/57gGbUdy/MZwFMOyJD1cqMAQGO9QUqlXsFpAVnSoJ+PU3TuT6z9HFvm6/gXIpj
+         oUkKGcnQD1tFqzUpnxGOjGUvpD2BZGFPyDq5OSj7mXjd3bXySYt2pycRVWrvonrkpaMD
+         i+b+RdRTmTYCKTP+nyrKDVAGvzbfBcn5RbORySexSgPguVWHzTHjFoBraBoN7WvB4o/4
+         ALUN61vqA8hN2r1Tlsw+zPjfqbvmlkkkfTGfQfgmuTdeFx/0lMG+wfidqm7sqSFesHSY
+         1vpg==
+X-Gm-Message-State: AOAM531/F+DR96A4KCsi5+E/HI6NHtfiVpIwI0vewkL598OcXCJNOE25
+        fc36cbbJFYQyAxJ7YxLIF4ozUtxM
+X-Google-Smtp-Source: ABdhPJzRpPIHChfaHnLZR8mLd8INA4orY5MJ/87oEsh8uvJxK/nCVyiNDFPHOyICERX081/2ph2t3w==
+X-Received: by 2002:adf:e904:: with SMTP id f4mr7978128wrm.300.1596728927078;
+        Thu, 06 Aug 2020 08:48:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o3sm7002965wru.64.2020.08.06.08.48.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 09:41:16 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, johannes.schindelin@gmx.de,
-        liu.denton@gmail.com, Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/5] submodule: expose the '--for-status' option of summary
-Date:   Thu,  6 Aug 2020 22:10:58 +0530
-Message-Id: <20200806164102.6707-2-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
-References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
-MIME-Version: 1.0
+        Thu, 06 Aug 2020 08:48:46 -0700 (PDT)
+Message-Id: <7efa23abc85bead9713c34d5f56b2f308dde7bf8.1596728921.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.695.git.1596728921.gitgitgadget@gmail.com>
+References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 06 Aug 2020 15:48:34 +0000
+Subject: [PATCH 04/11] maintenance: initialize task array
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'for-status' option is used to compute the summary of submodule(s)
-in a superproject by skipping the ignored submdules i.e., those with
-'submodule.<name>.ignore' set to 'all' in the '.gitmodules' or
-'.git/config', with the latter taking precedence over the former.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The option was introduced in d0f64dd44d (git-submodule summary:
---for-status option, 2008-04-12), refined in 3ba7407b8b (submodule
-summary: ignore --for-status option, 2013-09-06) and finally perfected
-in 927b26f87a (submodule: don't print status output with ignore=all,
-2013-09-01). But, it was not mentioned in the 'git submodule'
-Documentation.
+In anticipation of implementing multiple maintenance tasks inside the
+'maintenance' builtin, use a list of structs to describe the work to be
+done.
 
-Expose the '--for-status' option accepted by the command 'git submodule
-summary'.
+The struct maintenance_task stores the name of the task (as given by a
+future command-line argument) along with a function pointer to its
+implementation and a boolean for whether the step is enabled.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+A list these structs are initialized with the full list of implemented
+tasks along with a default order. For now, this list only contains the
+"gc" task. This task is also the only task enabled by default.
+
+The run subcommand will return a nonzero exit code if any task fails.
+However, it will attempt all tasks in its loop before returning with the
+failure. Also each failed task will send an error message.
+
+Helped-by: Taylor Blau <me@ttaylorr.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-submodule.txt        | 8 +++++++-
- contrib/completion/git-completion.bash | 2 +-
- git-submodule.sh                       | 2 +-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ builtin/gc.c | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 7e5f995f77..d944e4c817 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -190,7 +190,7 @@ set-url [--] <path> <newurl>::
- 	automatically synchronize the submodule's new remote URL
- 	configuration.
+diff --git a/builtin/gc.c b/builtin/gc.c
+index a060ba8424..150dce4301 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -728,9 +728,45 @@ static int maintenance_task_gc(struct maintenance_opts *opts)
+ 	return run_command(&child);
+ }
  
--summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
-+summary [--cached|--files] [--for-status] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
- 	Show commit summary between the given commit (defaults to HEAD) and
- 	working tree/index. For a submodule in question, a series of commits
- 	in the submodule between the given super project commit and the
-@@ -309,6 +309,12 @@ OPTIONS
- 	compares the commit in the index with that in the submodule HEAD
- 	when this option is used.
- 
-+--for-status::
-+	This option is only valid for the summary command. This command
-+	skips the submodules with `submodule.<name>.ignore` set to `all`
-+	in the `.gitmodules` or `.git/config`. The configuration in
-+	`.git/config` overrides the configuration in `.gitmodules`.
++typedef int maintenance_task_fn(struct maintenance_opts *opts);
 +
- -n::
- --summary-limit::
- 	This option is only valid for the summary command.
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0fdb5da83b..2b7b033c17 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3059,7 +3059,7 @@ _git_submodule ()
- 		__gitcomp "--default --branch"
- 		;;
- 	summary,--*)
--		__gitcomp "--cached --files --summary-limit"
-+		__gitcomp "--cached --files --for-status --summary-limit"
- 		;;
- 	foreach,--*|sync,--*)
- 		__gitcomp "--recursive"
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 43eb6051d2..dda3fee167 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -13,7 +13,7 @@ USAGE="[--quiet] [--cached]
-    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--[no-]single-branch] [--] [<path>...]
-    or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
-    or: $dashless [--quiet] set-url [--] <path> <newurl>
--   or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-+   or: $dashless [--quiet] summary [--cached|--files] [--for-status] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] absorbgitdirs [--] [<path>...]"
++struct maintenance_task {
++	const char *name;
++	maintenance_task_fn *fn;
++	unsigned enabled:1;
++};
++
++enum maintenance_task_label {
++	TASK_GC,
++
++	/* Leave as final value */
++	TASK__COUNT
++};
++
++static struct maintenance_task tasks[] = {
++	[TASK_GC] = {
++		"gc",
++		maintenance_task_gc,
++		1,
++	},
++};
++
+ static int maintenance_run(struct maintenance_opts *opts)
+ {
+-	return maintenance_task_gc(opts);
++	int i;
++	int result = 0;
++
++	for (i = 0; i < TASK__COUNT; i++) {
++		if (!tasks[i].enabled)
++			continue;
++
++		if (tasks[i].fn(opts)) {
++			error(_("task '%s' failed"), tasks[i].name);
++			result = 1;
++		}
++	}
++
++	return result;
+ }
+ 
+ int cmd_maintenance(int argc, const char **argv, const char *prefix)
 -- 
-2.28.0
+gitgitgadget
 
