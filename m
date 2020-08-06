@@ -2,47 +2,46 @@ Return-Path: <SRS0=sa20=BQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF665C433FE
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 11:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B881C43445
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 11:04:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C106C22D3E
+	by mail.kernel.org (Postfix) with ESMTP id ED45A23118
 	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 11:04:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="P7zp3JXv"
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="PVUWiYtj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728112AbgHFGBy (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728092AbgHFGBy (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 6 Aug 2020 02:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56454 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728071AbgHFGBw (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from out0.migadu.com ([94.23.1.103]:34820 "EHLO out0.migadu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726051AbgHFGBw (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 6 Aug 2020 02:01:52 -0400
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3382AC061574
-        for <git@vger.kernel.org>; Wed,  5 Aug 2020 23:01:49 -0700 (PDT)
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-        s=default; t=1596693705;
+        s=default; t=1596693710;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=yKAKkogOnXyY9GnL8pooL3CBofrPuEg4dnI6n/+oOB8=;
-        b=P7zp3JXvSuoMqsPkC1QmoH0e+h1e/xtO5OT7Ktxr4k46ekeBt1N5XWn3+/FqFlnZpIU9ro
-        jhYWWFgMoITct+hGAYTaOKpgl17V2X/Gm1GaYcr/TRcxhjLWWugUhT8b7QwEaQtUeDNs5a
-        5KEB9IBw/hzmlLjY5tt50Man9t1SQO4=
+        bh=VW1YjAA4eLza7hxs7rPM/fmW8OW7fW3DiLKg+zcrBdM=;
+        b=PVUWiYtjhqL1mfRzHl3WTRr32vsJo2Uh+UFsIv9vzDjlt79A21HoxiK8ElTB3oQUsY1RRc
+        W1VU0fpp3dR4+8foON0J1pM79/q5d4UZ9yntAAfC32GGxhDr/TzSNWUqXsNDUJ8fiWvpP7
+        xpOn2XaVyovd500kB9OFA8f1obKWwck=
 From:   "Raymond E. Pasco" <ray@ameretat.dev>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "Raymond E. Pasco" <ray@ameretat.dev>
-Subject: [PATCH v4 0/3] apply: handle i-t-a entries in index
-Date:   Thu,  6 Aug 2020 02:01:16 -0400
-Message-Id: <20200806060119.74587-1-ray@ameretat.dev>
-In-Reply-To: <C4ON23BIKMVK.2ZESQJ1FB5PVA@ziyou.local>
+Subject: [PATCH v4 1/3] apply: allow "new file" patches on i-t-a entries
+Date:   Thu,  6 Aug 2020 02:01:17 -0400
+Message-Id: <20200806060119.74587-2-ray@ameretat.dev>
+In-Reply-To: <20200806060119.74587-1-ray@ameretat.dev>
 References: <C4ON23BIKMVK.2ZESQJ1FB5PVA@ziyou.local>
+ <20200806060119.74587-1-ray@ameretat.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -50,20 +49,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've finished this up and completed the tests as well. Just as
-read-cache.c says, i-t-a entries should never match the worktree -
-therefore, apply --index always fails.
+diff-files recently changed to treat changes to paths marked "intent to
+add" in the index as new file diffs rather than diffs from the empty
+blob.  However, apply refuses to apply new file diffs on top of existing
+index entries, except in the case of renames. This causes "git add -p",
+which uses apply, to fail when attempting to stage hunks from a file
+when intent to add has been recorded.
 
-Raymond E. Pasco (3):
-  apply: allow "new file" patches on i-t-a entries
-  apply: make i-t-a entries never match worktree
-  t4140: test apply with i-t-a paths
+This changes the logic in check_to_create() which checks if an entry
+already exists in an index in two ways: first, we only search for an
+index entry at all if ok_if_exists is false; second, we check for the
+CE_INTENT_TO_ADD flag on any index entries we find and allow the apply
+to proceed if it is set.
 
- apply.c              | 26 ++++++++++++++++----
- t/t4140-apply-ita.sh | 56 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 4 deletions(-)
- create mode 100644 t/t4140-apply-ita.sh
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
+---
+ apply.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
+diff --git a/apply.c b/apply.c
+index 8bff604dbe..4cba4ce71a 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3747,10 +3747,13 @@ static int check_to_create(struct apply_state *state,
+ {
+ 	struct stat nst;
+ 
+-	if (state->check_index &&
+-	    index_name_pos(state->repo->index, new_name, strlen(new_name)) >= 0 &&
+-	    !ok_if_exists)
+-		return EXISTS_IN_INDEX;
++	if (state->check_index && !ok_if_exists) {
++		int pos = index_name_pos(state->repo->index, new_name, strlen(new_name));
++		if (pos >= 0 &&
++		    !(state->repo->index->cache[pos]->ce_flags & CE_INTENT_TO_ADD))
++			return EXISTS_IN_INDEX;
++	}
++
+ 	if (state->cached)
+ 		return 0;
+ 
 -- 
 2.28.0.2.g72bf77540a.dirty
 
