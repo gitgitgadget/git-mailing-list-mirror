@@ -2,220 +2,140 @@ Return-Path: <SRS0=sa20=BQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97444C433DF
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 20:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FD9DC433E0
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 20:24:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88F11221E3
-	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 20:24:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D392221E3
+	for <git@archiver.kernel.org>; Thu,  6 Aug 2020 20:24:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jRkIAMWq"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="BKE0uZPr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbgHFUYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 16:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48316 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725272AbgHFUYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 16:24:12 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA2E8C061574
-        for <git@vger.kernel.org>; Thu,  6 Aug 2020 13:24:11 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id t6so40291553ljk.9
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 13:24:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pJy3kCWTz9+FoOL8fv7AqsDFZqglP+rZFfMjCbUHvY0=;
-        b=jRkIAMWqPHPpplAvSom5gCnsOC0720DhQIm6OMwJsMlbgKPBZHXRRw9UT6omA97PQ2
-         ft2IllcFY4BwDNTvmEhgHXuMXBqimP7eCmcDi4Kln+jeKHA0lqZ989E1fvnh2LmhfEog
-         tUQuzGDDrEgtPzFLGRFjmwLAhbEYQ8Fe3+EG07XVNCGEVGbZEdmkMsojZmyGcdSKtaDt
-         4FHL1/bm/9SuyJH/+8tBZD0Ev617RKbyHanJxL7P+O/E6SKGqdWpQDHppt4hx9cC9ADM
-         FbI8MqI6wHeDIKjMRUV9WF4E7dc8HLad1FNQ3rz2Mpy0IPvl+HFi9sPeQkoV25Epk5C/
-         IAdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pJy3kCWTz9+FoOL8fv7AqsDFZqglP+rZFfMjCbUHvY0=;
-        b=JS/IjetaCKNsm7k36Smgf9Sbp1dKHt41s7B4MlIH3kUMM+m7GTNVIhB6fu2c+jG2hv
-         +/OP2x01bjEpZ7GA+9PvFgsnq9aelNfj5J92VQdx9JyWQR6eXP2+HGJRdEyJrSUtdgOw
-         +xh27VORkyRPUBPVyvoUvinlfjjLpX6Ub3K6ZAaj/0TADm7GO+1a1ds+i8oq2GumI8cO
-         NuHe0Oi4NNlPfVfM0Cknh8iv9hIO4yAW413Sjqd4F7NoIJJAwB8gm4Ejl1Ry0NX3C20u
-         F5/+/eJDoMu2wDomitM7L4LP1KCfWC/UoupxAfzR8V4lOvvnmnyGUGNRaKaW7VFcAGUo
-         EMnQ==
-X-Gm-Message-State: AOAM530CfTWWiZPGa9T96WNqClmGjdKq4M9RAJ0b+75bGvGyGfH3UDF9
-        G3X/i/+W6FI1rdPuIh+JSKLj8Uf3
-X-Google-Smtp-Source: ABdhPJzoZLCS4Nxtk+U4AhSLgL4g3cqLZjlandQUApxLwSbA/splAhnB5G1vsF6hfEaXDijW4lpDtQ==
-X-Received: by 2002:a05:651c:155:: with SMTP id c21mr4999403ljd.453.1596745448995;
-        Thu, 06 Aug 2020 13:24:08 -0700 (PDT)
-Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id a23sm2837859ljp.121.2020.08.06.13.24.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2020 13:24:08 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] Documentation: mark `--object-format=sha256` as experimental
-Date:   Thu,  6 Aug 2020 22:23:58 +0200
-Message-Id: <20200806202358.2265705-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.199.g4234a9100e
+        id S1726514AbgHFUYT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 16:24:19 -0400
+Received: from mout.web.de ([212.227.17.11]:51369 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725272AbgHFUYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 16:24:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1596745456;
+        bh=C2vroHKYyGan04NivBx7qa8GgunvGcyPrXuGZgmeLiQ=;
+        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
+        b=BKE0uZPrJLnFCBm3vetjiQgP1HeLHLjRJWhhXDkGoOQ/tOL+4AN8hu7b7su05+BxP
+         1U5jqKufWp75MSl3ZWQhJGoGJorUyPpINYIhPenigxBOSUzdjK/uIWK55S+KyIsh0j
+         uWWrS7oP/VVSs5c8aAcBQB6eOtTOCulVP/YTh6tI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LoYX0-1kft8c372Q-00gZFx; Thu, 06
+ Aug 2020 22:24:16 +0200
+Subject: Re: git bug
+To:     PANEL Christian <ch.panel@free.fr>, git@vger.kernel.org
+References: <1596725319.6764.7.camel@free.fr>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <5387a5b7-4551-53a0-abdb-e26cc2702536@web.de>
+Date:   Thu, 6 Aug 2020 22:23:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1596725319.6764.7.camel@free.fr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:uTM8+j69i+ZI/MU9cuFJVMue2sWc2RoojWjDsQaUc4+sFtMyTAM
+ Tb79a79RE8y94UVsk4jUSFQLLhD8PsUJmvzEfpPUKGLShraKv5mq46mhgGm94aheT2qOarW
+ /0rsVALLOe4P6G18ek0HxlUIEeX/MC5rmLv9E6WQA4QbHp3QzW1b6mB3mrJwKre2k8kn5pF
+ YEvbV0Dg7VCdYQCI8bWgQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QQLAKUHWx1w=:63d23BSTtfpx6AqKXvCM/k
+ 5VDAFHal/oXqrS0PPwEHrHgSbkmqWR6e3oAt3SWdI0qChHmxJfAw8DQITRUXtTt4qk6asl4X9
+ uCFOKVS2v4N9GEEj/CC42MKUiTxKseKpk2exGuYSzpvxARLHRv9QXW6T3XwK+jmbhK5VKxvs2
+ Plp+15mgRAb3I/bb8A1cuVvtp5cMvlA9P/EfENvC3+yjcyjBire6n1a4xfeeM4q+9CnrIt/oG
+ Hk4l2SfAankshxS1AMIjqjyVsisLM5UYmzhnNvo3A8mwP6CPJmlnA8puCQPQwtbjSrhbTg5Vr
+ TMamB8A/kcVL2hW/+1rpo6zB2N3ipfyof0YKQz8N/nMVdKDDq+QZ9enun6Iciu39Dr0APVrlB
+ RfxLbIdYIaRW8O3cHM41IB/J2alq0NMyz++lZG6bH7KmBuMsDmzVmaQvO3m7p6n90fP6stpJc
+ ZsFsyNjw6H9VxzUE3ZAzLbW2l60g9t8GcywfA9NY2/BcD0Hi0ApIkFWegJV/lYNda3a+zwz0/
+ FWXgeg87MXwo9rMU9C5f+I+IrVB39c8mkEL1/4XFM8DnKyNo64mJ0rx6jTPBw7twADtoRnbN4
+ U05mykAtP6iZZy1W5HiSH1sk/iYqKYlMGQY5K8z9UOCExjX2wbn2lcKDnTIFiFC4c1DCZTVwi
+ 4UywaYmU5GMvneHxk6+uPN4Sy9gh2WD0VCitg2IL28PwWaoJD4kBtcJhoYbduaCi666DwYS2O
+ y7qNGFOZoj/Hytjq9a28RumhpFnbXxwx6TCgWzMkNcjI1T+bjXcyIjnRan5EcAHQarBR505OX
+ dC8Zx8LNqI0rWpdGQgvnGarVs0kk3KTmOvt3v5EAYHrvwRiJDIeF6iESQE+3midlTXZEjkemI
+ j5bMkUrh3EcM0+ZfYpruhDkDYYhVsetzem8yYozi49gbSKU1IdHBmiXGYtIkkyLhe10DyuVta
+ IaMlIQlKJsMCNQKLXCGPv/ccEmued4MRO+tl/QsLa9vHUGHQwCFYJIKqORqp6mE3ynRPXzILT
+ mso22lnTGlfJHLXrP/4bKyX/W6ICXAtjluycSoKaxiUehErbf9hXf4T5I+rvgBxaP0pDqo1uo
+ bXOYSKfcxgd8kzpkrskDex0PxCaWBRZ2y9+AR8Usrd65/d94HSTVJLH1WVGhKoi3puFUVniJd
+ Mp/HTqYPmcec7I19k7mVJDenNoF4045ZBgSqCpXtOkxFiQ2gTzc7CXv46NmxT+ZuRYFf3vXkJ
+ nCleDIhu433K2YHOz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After eff45daab8 ("repository: enable SHA-256 support by default",
-2020-07-29), vanilla builds of Git enable the user to run, e.g.,
+Am 06.08.20 um 16:48 schrieb PANEL Christian:
+> someting is not logical in the behaviour of git :
+>
+> suppose I have a project and a file in it I don't want to include initia=
+lly in.
+> so I put this file name in .gitignore
+> now all is OK when I write "git status" : the file is ignored.
 
-  git init --object-format=sha256
+Like this, right?
 
-and hack away. This can be a good way to gain experience with the
-SHA-256 world, e.g., to find bugs that
+  $ git init a
+  Initialized empty Git repository in /tmp/a/.git/
+  $ cd a
+  $ echo ignore for now >file
+  $ echo file >.gitignore
+  $ git add .gitignore
+  $ git commit -m initial
+  [master (root-commit) 2df5d68] initial
+   1 file changed, 1 insertion(+)
+   create mode 100644 .gitignore
+  $ git status
+  On branch master
+  nothing to commit, working tree clean
 
-  GIT_TEST_DEFAULT_HASH=sha256 make test
+> but later I want this one be a part of my project.
+> I delete in .gitignore the line that named this file.
+> but now a "git status" command ignore always this file.
+>
+> what is wrong ?
+> did I missed something ?
 
-doesn't spot.
+This seems to work as expected for me (continued from above):
 
-But it really is a separate world: Such SHA-256 repos will live entirely
-separate from the (by now fairly large) set of SHA-1 repos. Interacting
-across the border is possible in principle, e.g., through "diff + apply"
-(or "format-patch + am"), but even that has its limitations: Applying a
-SHA-256 diff in a SHA-1 repo works in the simple case, but if you need
-to resort to `-3`, you're out of luck.
+  $ >.gitignore
+  $ git status
+  On branch master
+  Changes not staged for commit:
+    (use "git add <file>..." to update what will be committed)
+    (use "git restore <file>..." to discard changes in working directory)
+  	modified:   .gitignore
 
-Similarly, "push + pull" should work, but you really will be operating
-mostly offset from the rest of the world. That might be ok by the time
-you initialize your repository, and it might be ok for several months
-after that, but there might come a day when you're starting to regret
-your use of `git init --object-format=sha256` and have dug yourself into
-a fairly deep hole.
+  Untracked files:
+    (use "git add <file>..." to include in what will be committed)
+  	file
 
-Workflows aside, let's consider a more technical aspect. Pack index
-files (pack-*.idx) exist in two flavours: v1 and v2. The hash transition
-document foresees a v3, which we do not yet support (and for all we
-know, the final v3 might end up different from the one sketched in the
-hash transition document).
+  no changes added to commit (use "git add" and/or "git commit -a")
 
-When the test suite is run with SHA-1 as the default hash algo, it
-creates and consumes v2 pack files. But with SHA-256, we use an
-undocumented, hybrid format where the header looks like v2, but where
-the payload is not only "not correct SHA1", but where even the data
-sizes are different. The trailing checksum is different, meaning no-one
-(except us!) should/would try to interpret this file as a proper v2 pack
-index.
+So "file" is no longer ignored.  Committing the .gitignore change
+doesn't change that:
 
-We could certainly (re)define v2 to match our SHA-256 behavior, but we
-do foresee v3 for a reason. And that would still just fix this specific
-issue. And even when everything around SHA-256 is well-defined and we
-have SHA-1--SHA-256 interoperability, there's a risk, at least
-initially, that somewhere we'd be permeating buggy data that we'd then
-feel responsible for and need to be able to handle for a long time to
-come.
+  $ git add .gitignore
+  $ git commit -m 2nd
+  [master d4c95a1] 2nd
+   1 file changed, 1 deletion(-)
+  $ git status
+  On branch master
+  Untracked files:
+    (use "git add <file>..." to include in what will be committed)
+  	file
 
-In short: we need some time and leeway.
+  nothing added to commit but untracked files present (use "git add" to tr=
+ack)
 
-Wherever `--object-format` is mentioned in our documentation, let's make
-it clear that using it with "sha256" is experimental. If we later need
-to explain why we can't handle data we generated back in 2020, we can
-always point to this paragraph we're adding here.
+Which steps did you take to arrive at a different result?
 
-By "include::"-ing a small blurb, we should be able to be consistent
-throughout the documentation and can eventually gradually tone down the
-severity of this text. One day, we might even use it to start phasing
-out `--object-format=sha1`, but let's not get ahead of ourselves...
-
-There's also `extensions.objectFormat`, but it's only mentioned three
-times. Twice where we're adding this new disclaimer and in the third
-spot we already have a "do not edit" warning. From there, interested
-readers should eventually find this new one that we're adding here.
-
-Because `GIT_DEFAULT_HASH` provides another entry point to this
-functionality, document the experimental nature of it too.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/git-index-pack.txt           | 2 ++
- Documentation/git-init.txt                 | 2 ++
- Documentation/git-show-index.txt           | 2 ++
- Documentation/git.txt                      | 3 ++-
- Documentation/object-format-disclaimer.txt | 6 ++++++
- 5 files changed, 14 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/object-format-disclaimer.txt
-
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 9316d9a80b..139285dd0f 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -100,6 +100,8 @@ OPTIONS
- 	value is set or outside a repository.
- +
- This option cannot be used with --stdin.
-++
-+include::object-format-disclaimer.txt[]
- 
- NOTES
- -----
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index ddfe265da5..f35f70f13d 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -53,6 +53,8 @@ current working directory.
- 
- Specify the given object format (hash algorithm) for the repository.  The valid
- values are 'sha1' and (if enabled) 'sha256'.  'sha1' is the default.
-++
-+include::object-format-disclaimer.txt[]
- 
- --template=<template_directory>::
- 
-diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
-index 39b1d8eaa1..e49318a5a0 100644
---- a/Documentation/git-show-index.txt
-+++ b/Documentation/git-show-index.txt
-@@ -44,6 +44,8 @@ OPTIONS
- 	valid values are 'sha1' and (if enabled) 'sha256'.  The default is the
- 	algorithm for the current repository (set by `extensions.objectFormat`), or
- 	'sha1' if no value is set or outside a repository..
-++
-+include::object-format-disclaimer.txt[]
- 
- GIT
- ---
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3e50065198..e0a2690ba2 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -497,7 +497,8 @@ double-quotes and respecting backslash escapes. E.g., the value
- 	If this variable is set, the default hash algorithm for new
- 	repositories will be set to this value. This value is currently
- 	ignored when cloning; the setting of the remote repository
--	is used instead. The default is "sha1".
-+	is used instead. The default is "sha1". THIS VARIABLE IS
-+	EXPERIMENTAL! See `--object-format` in linkgit:git-init[1].
- 
- Git Commits
- ~~~~~~~~~~~
-diff --git a/Documentation/object-format-disclaimer.txt b/Documentation/object-format-disclaimer.txt
-new file mode 100644
-index 0000000000..4cb106f0d1
---- /dev/null
-+++ b/Documentation/object-format-disclaimer.txt
-@@ -0,0 +1,6 @@
-+THIS OPTION IS EXPERIMENTAL! SHA-256 support is experimental and still
-+in an early stage.  A SHA-256 repository will in general not be able to
-+share work with "regular" SHA-1 repositories.  It should be assumed
-+that, e.g., Git internal file formats in relation to SHA-256
-+repositories may change in backwards-incompatible ways.  Only use
-+`--object-format=sha256` for testing purposes.
--- 
-2.28.0.199.g4234a9100e
-
+Ren=C3=A9
