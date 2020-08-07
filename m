@@ -2,118 +2,121 @@ Return-Path: <SRS0=eX0j=BR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 833E2C433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 21:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53706C433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 21:10:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D0B522C9F
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 21:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C93322CA1
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 21:10:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AL3TIsd2"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LGtSbgr9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbgHGVIt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Aug 2020 17:08:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50250 "EHLO
+        id S1726542AbgHGVKc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 17:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725934AbgHGVIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Aug 2020 17:08:49 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1DE0C061756
-        for <git@vger.kernel.org>; Fri,  7 Aug 2020 14:08:48 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id m15so1687582lfp.7
-        for <git@vger.kernel.org>; Fri, 07 Aug 2020 14:08:48 -0700 (PDT)
+        with ESMTP id S1725934AbgHGVKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 17:10:32 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C598C061756
+        for <git@vger.kernel.org>; Fri,  7 Aug 2020 14:10:32 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id s60so7849607pjc.1
+        for <git@vger.kernel.org>; Fri, 07 Aug 2020 14:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uAnsYdalw2gp4r+hQpagHth85MExTKxDuHdAarANdzA=;
-        b=AL3TIsd2PrUxZd4tHLW7MjEBN7co8zsV4QK8axpDfaN6utDOWUCCGIzutcVOtg4s8G
-         eqcsMdWY845Drtp195Gw+wPeW0M9PpFCtzORhE8GmgbXTL5OO/tIt7VQRH2KTOvravot
-         muh+wc8qK4e2rUM7aQiRLU9tIOLWadv29pYnzq8UMNVHSGjj9bC6cQZWyBv0mGwf+Fq/
-         MFgOIJIAPBiC+qhjKRibuByRis1O9PvL785IF96hH1HBzU77mLJAHa8Pwi+8SCg6I4cL
-         EPEmsEKAb9ewJcvRP57DBqeVWhRtqqijy56JeTxJvhl7hgyerb8F+xQdINlU+SjLqds4
-         2bcA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=sGp/gXAUeeZD06/AE2rUBaCd71Uz3ulOGgNnjxRv258=;
+        b=LGtSbgr94zBUYXwuHaT2dzhsrPLGt6SSafp6t2cwEqG5fndVqzxPSgoQf27JUQ9ez+
+         dSNIn1cU8kS8IyLzfqnic61ksoy93pC1FTvUv2uInQPGyTTfLqGNivMW3+UttvXAp6+h
+         HbNCzal4nVJt9IRpsFan6NxQ4elF3UZML5I3ja4IV+z2wJ/4jh/y+CK/wgp/b7LcQI/H
+         tMmk3ZNnwHWLatpPgg+yj+LexGYhvsm6tyRmJ+3bXATyox9jG/1Rnodon0ucOzHOSA4i
+         7xlrgRI+qLbTX2+29dhYUIADK1HUtZzCrRV64Cq23Hqhr9FS7T6Tbv7KNKtQCb0bUrVV
+         wVMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=uAnsYdalw2gp4r+hQpagHth85MExTKxDuHdAarANdzA=;
-        b=Q3G95Xt24fWYLNTiAbzuZcIqKpCe69LwcIgbJv0gU7Vv0PO3al4Y0NeZUUQJZ75+t7
-         VmerUktB6ErI7LahJWX/q0IjB3lihaJ4gkP4p+eHQJ9BR6pArPdwOAGncitsSUrzW0Ko
-         P0f4HdJY/JWIDJ5LuR4kUEIR1efP7bI1VJuL+dx3MOC+LNKdnVQ76/4urNKbmZCzecLw
-         9wJyXysVTvfwVj2iB1IBISCvkMcNkwT2QRV0LMdMlx+7zJ8ELXV54YjNad9ZDd8bc11H
-         CAT3En+90rUxrrua4nH0DNE/S4xtjq2S1zMa/HpVZKx5KpIuPZlgJfqIu7uqV5x5ip6j
-         ++vA==
-X-Gm-Message-State: AOAM532frhkHa2Os/Cqd8RjB5sdpfgnmD8yu8u43MW4Qw2yDmCJ4xUsF
-        KnyvYWhDIFX93OE0uslandE=
-X-Google-Smtp-Source: ABdhPJzMJ+TnCHymWDAXYdlGtd2gSaJX2Qfx2yqIwHfsjywDw3hEVx8++H8Wm/J+tC5Byp3oQ5Zovw==
-X-Received: by 2002:a19:c7d7:: with SMTP id x206mr7115897lff.67.1596834526638;
-        Fri, 07 Aug 2020 14:08:46 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id x4sm4239527ljd.34.2020.08.07.14.08.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Aug 2020 14:08:45 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
-References: <20200803180824.GA2711830@coredump.intra.peff.net>
-        <874kpi47xj.fsf@osv.gnss.ru> <xmqqbljqrydm.fsf@gitster.c.googlers.com>
-        <20200804200018.GB2014743@coredump.intra.peff.net>
-        <877due1688.fsf@osv.gnss.ru>
-        <20200804212201.GA2020725@coredump.intra.peff.net>
-        <xmqq3652rs84.fsf@gitster.c.googlers.com> <878seuxdz8.fsf@osv.gnss.ru>
-        <20200804221440.GC2022650@coredump.intra.peff.net>
-        <xmqqpn86qb6a.fsf@gitster.c.googlers.com>
-        <20200807082643.GA34012@coredump.intra.peff.net>
-        <xmqqlfiqgxn7.fsf@gitster.c.googlers.com> <87364ymji7.fsf@osv.gnss.ru>
-        <xmqqh7tegu0m.fsf@gitster.c.googlers.com> <87tuxel17m.fsf@osv.gnss.ru>
-        <xmqq8seqgrx3.fsf@gitster.c.googlers.com> <87a6z6kxmm.fsf@osv.gnss.ru>
-        <xmqqv9hufaxc.fsf@gitster.c.googlers.com>
-Date:   Sat, 08 Aug 2020 00:08:44 +0300
-In-Reply-To: <xmqqv9hufaxc.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 07 Aug 2020 13:39:11 -0700")
-Message-ID: <87y2mqjh9f.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=sGp/gXAUeeZD06/AE2rUBaCd71Uz3ulOGgNnjxRv258=;
+        b=c/XCdaq2F1m59vAdWUUIOIgMMXSPJ+NTGVhpnXv0BijAIS8yNTOai0ngb5qKUsQd9v
+         kMUq4S6wso8aAkpHJi7Wf9dMHW2YTpYAXKl8jIRm/uXvsNl4Ma3y/ZY89bG9AovjIqOK
+         j9smqWIQu75lU5brtn3CcvpVEgdS/5Ovm+iH6ghgjGqltwkxot5lzJFNPFbSHmIQmZ3q
+         akQFOQwcUz2Vu91Pf5JCHoU+3gIyGylQZm9Z/ZbtcSlP7r9cfedrdcoPC+VMfymtyA7O
+         aVbgE6E5zBVFf0w2zIOAzQhOR3Fw5YyZIEeS2vVobgswsIWQoACj01pj2SxVPSJvTHk+
+         3kVQ==
+X-Gm-Message-State: AOAM530sQjLQp5Fn0tlJ7zXCHMrnysDeYmjrZRPX8UX3k8dYh++TX3ZZ
+        6bZibpTt597lrZnAN35lhxvBOzkRtM1t8avO5tjc
+X-Google-Smtp-Source: ABdhPJy/30IWs+1HN9bvAv8/F8g9gRl5gFQtO9N+Ar/wGURz3YMNV5br9bqYiE1b9TJxpKs+oOjtKwVsH+ltIztURtL+
+X-Received: by 2002:a17:90b:4385:: with SMTP id in5mr14036031pjb.16.1596834631141;
+ Fri, 07 Aug 2020 14:10:31 -0700 (PDT)
+Date:   Fri,  7 Aug 2020 14:10:28 -0700
+In-Reply-To: <xmqqft90omsw.fsf@gitster.c.googlers.com>
+Message-Id: <20200807211028.2736644-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqft90omsw.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.28.0.236.gb10cc79966-goog
+Subject: Re: [RFC PATCH 4/7] fetch: --stdin
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+> > @@ -1741,6 +1745,13 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
+> >  		}
+> >  	}
+> >  
+> > +	if (use_stdin_refspecs) {
+> > +		struct strbuf line = STRBUF_INIT;
+> > +		while (strbuf_getline_lf(&line, stdin) != EOF)
+> > +			refspec_append(&rs, line.buf);
+> > +		strbuf_release(&line);
+> > +	}
+> 
+> This will use refspecs both from the command line and the standard
+> input by appending?  IOW, these refspecs that came from the standard
+> input are treated otherwise identically to those that came from the
+> command line?
+> 
+> I do not particularly care whether it is "append to command line" or
+> "replace command line", as I do not think it makes much difference
+> in usability.  Just wanted to be sure you coded the behaviour you
+> wanted.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> I had no intention to introduce --diff-parents, at least for now, and
->> maybe never. What I said about it was theoretical discussion rather than
->> actual proposal.
->>
->> If we agree on the above, I intended to instead propose something like:
->>
->> --diff-merges=first-parent or just =first
->
-> OK, so the combined, combined-dense and split were meant to work
-> with all the parents, and off is the only one that means comparison
-> with no parents.  That makes sense.
+Yes, except that I didn't plan to support the "tag foo" format. (My aim
+with this is just to allow "git fetch" to take large numbers of
+refspecs, because when we lazy fetch, the number of objects we fetch
+might be large.)
 
-Yeah, exactly, thanks!
+> > @@ -1849,6 +1860,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+> >  			die(_("--filter can only be used with the remote "
+> >  			      "configured in extensions.partialclone"));
+> >  
+> > +		if (stdin_refspecs)
+> > +			die(_("--stdin can only be used when fetching "
+> > +			      "from one remote"));
+> 
+> Is that only because you happened to have implemented the reading in
+> fetch_one() that is designed to be called once per remote?  
+> 
+> You could read them here to a refspec for everybody, and then pass a
+> pointer to that refspec as the extra parameter to fetch_one(), and
+> fetch_one() can use that by duplicating and appending to its "rs",
+> if we wanted to, no?  I do not know how important to support such a
+> use case, though.  It just feels a bit of shame if this restriction
+> is purely imposed by the implementation, when lifting the refstiction
+> does not seem too involved.
 
-The only question regarding it I then have for now is what are
-preferences for names selection inside single option? Abbreviated yet
-somewhat sensible, or verbose? I mean:
-
---diff-merges=first vs --diff-merges=first-parent
-
---diff-merges=comb vs --diff-merges=combined
-
-etc. What's better?
-
-Thanks,
--- Sergey
+Yes, and I only implemented the reading in fetch_one() because
+fetch_multiple() does not read additional refspecs from the command-line
+(it does not take "argv"). Looking at the code, this seems to be on
+purpose - there is the error message "fetch --all does not make sense
+with refspecs", and when --multiple is set, all args are assumed to be
+remotes.
