@@ -2,174 +2,166 @@ Return-Path: <SRS0=eX0j=BR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B73A1C433DF
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 00:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C57C8C433E0
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 01:13:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B76D420855
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 00:23:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3FD421744
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 01:13:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vOy6joSB"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rit.edu header.i=@rit.edu header.b="XHt4DnAA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726149AbgHGAXL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 20:23:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65474 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbgHGAXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 20:23:10 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CAE3280C13;
-        Thu,  6 Aug 2020 20:23:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fZ/HwrntflL1kr6WqWnhVPzYm30=; b=vOy6jo
-        SBYpnsAv/8ytjVDeFzcka7FByxc5nDMeiv4z/13tHAt5nAdCJ2EhxHZtuSjAdfUI
-        Qs+Su1Qwtni4Im0VSUzENTypTwDLUCG8NoCRaxfQCp5w7TpQLyRG4HZbktuJ2/ee
-        HVjIZG+avm1rHkdqsjmJS0mdjo2HIaTBDYLJs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QUZCp92mgqlPasYdXpruwElX4Tdy9rOM
-        ByGHLCRIYayauuYv+mb6VFC1JH0FpXd34EmG8fT4MccD/ty+HQjr4XcAt4t7xfc9
-        vdrroLLBdL4gp+42yqjqGlt4Ec0JD8UT6geL/psdMqcnof1eD/z8sEP93la5qZH7
-        xGeKszexa3o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C32F180C12;
-        Thu,  6 Aug 2020 20:23:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AE8B80C10;
-        Thu,  6 Aug 2020 20:23:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: "#define precompose_argv(c,v) /* empty */" is evil
-References: <xmqqy2mribft.fsf@gitster.c.googlers.com>
-        <20200807000126.GC8085@camp.crustytoothpaste.net>
-Date:   Thu, 06 Aug 2020 17:23:07 -0700
-In-Reply-To: <20200807000126.GC8085@camp.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 7 Aug 2020 00:01:26 +0000")
-Message-ID: <xmqqpn83i9sk.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2B404DB6-D844-11EA-A227-01D9BED8090B-77302942!pb-smtp1.pobox.com
+        id S1726066AbgHGBNE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 21:13:04 -0400
+Received: from mx03b-out01ag.rit.edu ([129.21.3.135]:8365 "EHLO
+        mx03b-out01ag.rit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725998AbgHGBNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 21:13:04 -0400
+X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Aug 2020 21:13:03 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=rit.edu; i=@rit.edu; q=dns/txt; s=rit1608;
+  t=1596762782; x=1628298782;
+  h=from:to:subject:date:message-id:reply-to:mime-version:
+   content-transfer-encoding;
+  bh=gQ1DPaynmgM/1xIyuFEb5mFXm7SFPT6jrw+JtKt2XU8=;
+  b=XHt4DnAAxh2sFUTGXr6MM6vLZIBh6idb4kEYJYEnNNkTySvIy6r/vJNO
+   yUurTvVIiRCG3FqDgd/AvvHgbgMUU5dd4MFuDoHeivu8SOZKYvc2gCzCZ
+   49+hgnagN0xud4zYTMXa1O6bJjX1X3UWTMRap6Z1U3XkjjVb1vtUHRM3Q
+   0=;
+IronPort-SDR: 9VzvBqsRxB5zv5jOfwU6u5QTwXiGHrW9sUce8x2jBlkYy/ASLSMXvmEeJyAg6ZcnflRshM+KMX
+ dXTPxIUVCA6aMwTFFE5oOZtoS+nyFwosHuHCBiGOEZT5CRPmYcqXuExTVHNUw7YsrGRC61W4jB
+ S7eaLprvJkV4mHbwRwrkk32LH55xhSLt/UTyXjInMQ/dEbLjqHPJWXXRfFVM9L3SF3RxDC4I9f
+ /9Fy6RsIBzdMq5WZm9YGedYaCLkoZujbucubGdyiplMBxb3S5glcX2ICAoMXjQR01ghrXPXh+5
+ W+g=
+X-RIT-GSuite: Yes
+X-IronPort-AV: E=Sophos;i="5.75,443,1589256000"; 
+   d="scan'208";a="254671054"
+Received: from mail-qv1-f72.google.com ([209.85.219.72])
+  by smtp-server.rit.edu with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 06 Aug 2020 21:05:54 -0400
+Received: by mail-qv1-f72.google.com with SMTP id q12so312259qvm.19
+        for <git@vger.kernel.org>; Thu, 06 Aug 2020 18:05:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:reply-to
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=V8SAfV61y4xm0iKlLwpknvq4zo4CTJ6VW+EzoVt7L3E=;
+        b=gjc2JUxRaggPn8kP5Abn7tJb+5CFry8BRGnhmI5eCSEp7FFyipEi5V1hYchpSlPgMf
+         Dn5vqtRHe09kzz7kk2zDHCdhrMChB/kgr41DDwPdk6O2cK7mlGpv83Q8d2f7mHhwO+sI
+         OWOkU0UCb27r3+1iWmiGid2IOMd7BWeGLP2oq9i/X9pcMNsvN9TaBHSVpYp/mIHV/URN
+         CISRRSdVTry9i9RJ/f1nZO3wC6WBKCtXk82+0H5NnDKQxsFgY3s2LJbII5lBD0zO3I6H
+         dVlXUTuGoKp6nK0QBDITR4hPY62T8Cy/NY3mqh63eOp6X8Mt/AX0wUeqtRGv5Lddlq/a
+         v1pQ==
+X-Gm-Message-State: AOAM531Ha4FLPGfblzegSQKyMA88zT/hJVOA21yPgWjrlVTTNMCaVtTW
+        UVmNqpWjzsQE+zdVsSI3D8OfkquBODCHR7PSQlobqlEYLE/zJv2gYjoidR1AeuOhzJNj5T3NJlo
+        TWmTuCg8ZAAzCcRrzR9dnpZU=
+X-Received: by 2002:ac8:72cb:: with SMTP id o11mr12246347qtp.13.1596762354639;
+        Thu, 06 Aug 2020 18:05:54 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxigsgvfuaHw/tAy+96HmQ43ANIzFA4ZKOI0UR7gcD2KsLbwPYbKYohO8Ja29EAW4fqt5q2Iw==
+X-Received: by 2002:ac8:72cb:: with SMTP id o11mr12246318qtp.13.1596762354246;
+        Thu, 06 Aug 2020 18:05:54 -0700 (PDT)
+Received: from [192.168.0.7] (cpe-67-242-160-230.rochester.res.rr.com. [67.242.160.230])
+        by smtp.gmail.com with ESMTPSA id x23sm1611180qkj.4.2020.08.06.18.05.53
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Aug 2020 18:05:53 -0700 (PDT)
+From:   "Nuthan Munaiah" <nm6061@rit.edu>
+To:     git@vger.kernel.org
+Subject: `git blame` Line Number Off-by-one
+Date:   Fri, 07 Aug 2020 01:05:51 +0000
+Message-Id: <emc6590292-832a-4a35-8815-d5707731d605@sanctum>
+Reply-To: "Nuthan Munaiah" <nm6061@rit.edu>
+User-Agent: eM_Client/7.2.37929.0
+Mime-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> On 2020-08-06 at 23:47:34, Junio C Hamano wrote:
->> I am wondering if it is a good idea to use something like
->> 
->>     static inline void precompose_argv(int argc, const char **argv)
->>     {
->> 	; /* nothing */
->>     }
->> 
->> instead.  As long as the compiler is reasonable enough, this should
->> not result in any code change in the result, except that it would
->> still catch wrong arguments, even if these two parameters are unused
->> and optimized out.
->
-> Yes, this seems like a prudent approach.  I believe it's widely used by
-> the Linux kernel, so presumably compilers are capable enough to optimize
-> it out.  As you noted, it provides type checking for all platforms,
-> which is nice.
+  * Clone https://github.com/apache/tomcat
+  * Run `git blame --root -leftw -L 21,21 -L 23,23=20
+51844327d8613448bb0bf9667e1a61e462e2043c^ --=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java`
 
-So I hope the following (untested and not signed off yet) may lead
-us in the right direction?
+What did you expect to happen? (Expected behavior)
 
--- >8 --
-Subject: compat-util: type-check parameters of mocked functions
+`git blame` shows the last commit that modified lines 21 and 23 of=20
+`modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java`=20
+starting at the parent of `51844327d8613448bb0bf9667e1a61e462e2043c`.
 
-When there is no need to run a specific function on certain platforms,
-we often #define an empty function to swallow its parameters and
-make it into a no-op, e.g.
+```
+$ git blame --root -leftw -L 21,21 -L 23,23 =20
+51844327d8613448bb0bf9667e1a61e462e2043c^ --=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java
+c65a429f06f4e4a025a306e377211863d9ff2a0c=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
+(<fhanik@apache.org> 1226896977 +0000 21) import java.util.ArrayList;
+c65a429f06f4e4a025a306e377211863d9ff2a0c=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
+(<fhanik@apache.org> 1226896977 +0000 23) import java.util.List;
+```
 
-    #define precompose_argv(c,v) /* no-op */
+What happened instead? (Actual behavior)
 
-While this guarantees that no unneeded code is generated, it also
-discards type and other checks on these parameters, e.g. a new code
-written with the argv-array API (diff_args is of type "struct
-argv_array" that has .argc and .argv members):
+Line 23 is not shown in the `git blame` output. Instead, line 22 is=20
+shown.
 
-    precompose_argv(diff_args.argc, diff_args.argv);
+```
+$ git blame --root -leftw -L 21,21 -L 23,23 =20
+51844327d8613448bb0bf9667e1a61e462e2043c^ --=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java
+c65a429f06f4e4a025a306e377211863d9ff2a0c=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
+(<fhanik@apache.org> 1226896977 +0000 21) import java.util.ArrayList;
+c65a429f06f4e4a025a306e377211863d9ff2a0c=20
+modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
+(<fhanik@apache.org> 1226896977 +0000 22) import java.util.HashMap;
+```
 
-must be updated to use "struct strvec diff_args" with .nr and .v
-members, like so:
+What's different between what you expected and what actually happened?
 
-    precompose_argv(diff_args.nr, diff_args.v);
+Line 23 is not shown in the `git blame` output. Instead line 22 is=20
+shown.
 
-after the argv-array API has been updated to the strvec API.
-However, the "no oop" C preprocessor macro is too aggressive to
-discard what is unused, and did not catch such a call that was left
-unconverted.
+Anything else you want to add:
 
-Using a "static inline" function whose body is a no-op should still
-result in the same binary with decent compilers yet catch such a
-reference to a missing field or passing a value of a wrong type.
+  * The issue is reproducible on git versions 2.28.0 (on Ubuntu 18.04.4=20
+LTS), 2.24.0 (on Ubuntu 18.04.3 LTS), 2.17.0 (on Ubuntu 18.04.4 LTS),=20
+and 2.27.0.windows.1 (on Microsoft Windows 10 Enterprise 10.0.19041=20
+Build 19041).
+  * The addition of `--porcelain` does not resolve the issue.
+  * The issue is not specific to a particular repository. For instance,=20
+the output from `git blame -L 1466,1466 -L 1468,1468 =20
+35e69fc7cf9421ab04ffc9d52cb36d07fa12984a^ -- c/dec/decode.c` in a clone=20
+of https://github.com/google/brotli shows last commit that modified=20
+lines 1466 and 1467 (instead 1468).
+  * The issue seems to present itself only when there is exactly one line=
+=20
+in between two specifications of `-L`. For instance, `-L 20,20 -L 23,23`=20
+correctly blames lines 20 and 23, `-L 20,20 -L 21,21 -L 22,22 -L 23,23`=20
+correctly blames lines 20, 21, 22, and 23, `-L 23,23` correctly blames=20
+line 23, but `-L 21,21 -L 23,23` blames lines 21 and 22 (instead of 23).
 
-While at it, I notice that precompute_str() has never been used
-anywhere in the code, since it was introduced at 76759c7d (git on
-Mac OS and precomposed unicode, 2012-07-08).  Instead of turning it
-into a static inline, just remove it.
+[System Info]
+git version:
+git version 2.28.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 4.15.0-88-generic #88-Ubuntu SMP Tue Feb 11 20:11:34 UTC=20
+2020 x86_64
+compiler info: gnuc: 7.5
+libc info: glibc: 2.27
+$SHELL (typically, interactive shell): <unset>
 
----
- git-compat-util.h | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+[Enabled Hooks]
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 5637114b8d..7a0fb7a045 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -252,8 +252,10 @@ typedef unsigned long uintptr_t;
- #ifdef PRECOMPOSE_UNICODE
- #include "compat/precompose_utf8.h"
- #else
--#define precompose_str(in,i_nfd2nfc)
--#define precompose_argv(c,v)
-+static inline void precompose_argv(int argc, const char **argv)
-+{
-+	; /* nothing */
-+}
- #define probe_utf8_pathname_composition()
- #endif
- 
-@@ -270,7 +272,9 @@ struct itimerval {
- #endif
- 
- #ifdef NO_SETITIMER
--#define setitimer(which,value,ovalue)
-+static inline int setitimer(int which, const struct itimerval *value, struct itimerval *newvalue) {
-+	; /* nothing */
-+}
- #endif
- 
- #ifndef NO_LIBGEN_H
-@@ -1231,8 +1235,14 @@ int warn_on_fopen_errors(const char *path);
- #endif
- 
- #ifndef _POSIX_THREAD_SAFE_FUNCTIONS
--#define flockfile(fh)
--#define funlockfile(fh)
-+static inline void flockfile(FILE *fh)
-+{
-+	; /* nothing */
-+}
-+static inline void funlockfile(FILE *fh)
-+{
-+	; /* nothing */
-+}
- #define getc_unlocked(fh) getc(fh)
- #endif
- 
