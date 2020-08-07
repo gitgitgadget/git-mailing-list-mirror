@@ -3,171 +3,260 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BC65C433DF
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 09:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF1C7C433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 14:08:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3633B22CAF
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 09:49:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93FD822C9F
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 14:08:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c+nmsmU2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bOkCkb8R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bX/XFaxI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbgHGJtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Aug 2020 05:49:51 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42161 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727081AbgHGJtu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 Aug 2020 05:49:50 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 71B125C0199;
-        Fri,  7 Aug 2020 05:49:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 07 Aug 2020 05:49:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=px9HIFS7MX5H+hZkMr0+jiY8uOM
-        LuLkzxmmJK0Zj/Zw=; b=c+nmsmU2G5eBQ/270qmx3C+mMuu2woHLvuEMLyoi/ES
-        +HSHeJ04xSJLsr0P3YRt03xjGMdGcvlSq8kX5imVlQMuE2G0IQ8vDBzWuNNgvUIL
-        y8Y20Izy4MCtuXvlzQi9N6txurYUeSbHLtQcXY+7jTPcxjz+qUVPBHb0W32YuFrA
-        Ly9tw2c9tnIzi2vnbvwObMbCJZZuEkxchx7mlJTUCMb1ejX+9ye5OEc6DubAHwZt
-        hb7MJ1uAMjjkS6/UHHmj343pIqeCtJaTV+xTWPf33ZOUmLvKMq3dxPTkA5iKBSNl
-        EYk5YelRhsW9qwMEiESv3Q0hW5M1Ghm90VWGVeWiFPA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=px9HIF
-        S7MX5H+hZkMr0+jiY8uOMLuLkzxmmJK0Zj/Zw=; b=bOkCkb8RFfqTrJSLkDTXne
-        F9kie551i+8IXhVNL7xJ1sYBFfA1Y9qTWIDONbeZQCp2ivfT1H3LXLNhebPCuN6k
-        mim+0BPysHuKh4LiD+3A3hFxG10g3RNMun4ytDquAURzfcGt58sxHO4srcsdm1EX
-        PrNglPT055cs0W41A9Ryt3V3DyPA2kkxg8GVDNIH0vKV6k8YlozblKmwIfhRA96P
-        xYUYnF1xXijMdrLOnGOIbRb4MvMy5K/R/PVNbS3mGHZsQ+6MI1+ltVdVmqDNum9F
-        j3Dzv6T5BbU3xK/7ii1++/NMIWeye/y9TPtrvVjB0sfJ3tutTw2KdHJHyZfCO1iw
-        ==
-X-ME-Sender: <xms:vSMtX4IGNWjIQm-FjuaFRVLu0hdjWTZ7RSSnQqajfPLGGqwQN4fOwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrkedvgddvvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucfkphepjeejrddukeefrddviedrudegtdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:vSMtX4KtOgbkBIqYPKjTgieOZgkpG89qZe5_6OHwVTIBMuVM0tV2jA>
-    <xmx:vSMtX4sEFwbNzizbXvyHcBLH8NpohR7U336hi0e2arAzS5orNJ-Jww>
-    <xmx:vSMtX1Y96UQuzO74sSJyxuAETi-jLC9_wPwOOOhAv7X9YHvG9IFpfA>
-    <xmx:vSMtX4n_-ph40SFwpwNRiH0ioskulDcPsJgXAO42jMFiKCj4oc0Sew>
-Received: from vm-mail.pks.im (x4db71a8c.dyn.telefonica.de [77.183.26.140])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 6D5A0328005E;
-        Fri,  7 Aug 2020 05:49:48 -0400 (EDT)
-Received: from localhost (tanuki [10.192.0.23])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 55869c67 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 7 Aug 2020 09:49:47 +0000 (UTC)
-Date:   Fri, 7 Aug 2020 11:49:46 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] refs: fix interleaving hook calls with
- reference-transaction hook
-Message-ID: <20200807094946.GA1758126@tanuki.pks.im>
-References: <63fb363375b515b903ed1269d10124b727c1d1cc.1596783732.git.ps@pks.im>
- <20200807075837.GA32344@coredump.intra.peff.net>
- <20200807090412.GA1407904@tanuki.pks.im>
- <20200807093239.GA1228157@coredump.intra.peff.net>
+        id S1726518AbgHGOId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 10:08:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42206 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726030AbgHGOI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 10:08:28 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC755C061756
+        for <git@vger.kernel.org>; Fri,  7 Aug 2020 07:08:27 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id j188so482105vsd.2
+        for <git@vger.kernel.org>; Fri, 07 Aug 2020 07:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=bYJkNz6iOgCCNYWBap6lD12DJR71B+s3jSMzz8iCiUI=;
+        b=bX/XFaxI/naPsL3vyaK4lJ5y/+60rBw1WhZp5VpgNKQKCcYr67v1aP/A+MomFGJEUn
+         rNAyHd6CzolDeeC4fSsueXNVlUvu8/Bb1OFz7ZizCmcurRzvXC32b74ZqpEzRJL1G3WC
+         5FytitJv1zDkevQmGqRzbv7RP1ncEVtiAoeX1eJU3lXX6MvWM/R5tleynLgRfpX3+udj
+         8ZDsQcDOzUxal4rYYqMoFbDFpxQbreVIw8ZEK6fgcsq4M0RNG+g0Gk5cU1MN5Hypp5YM
+         KUrCtNsWshrrqav8SnfRq6WXRIPD+OxpSZmroRvalLnnzeej9VuCRcp72iOaeKYLI5xG
+         Pvjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=bYJkNz6iOgCCNYWBap6lD12DJR71B+s3jSMzz8iCiUI=;
+        b=HyuEQqrf4lQll9WsgvHhrNxgdNDy9jG0Z6DKjH+10u1cepQ+ijDdITrBw/xMlgXMIc
+         ak053mvC2g68zj3LJLqIDcEUR0Tj7TaWpdtEOZvHnIzCA15rsQSQ/1HZRsZyhegT6sD4
+         d5xFyvcB3VweEJx2Nw2qiwU00gbbzH0/2l72c2bDmIWc79BH4TrPAUgkC5pN3Uav5nv6
+         SNIYMjQ+cn3bWM3sLjWFlYKJyDJTYYNyaQz0BgS3cBTTCslwFkFB49MJV8JRXtbDGJHg
+         O/ez+dsNrM7QF/yqgRzPvIYGJOyLqX/5kVQF5i4cJEWBNCi54kKdwgdcpeUvoMXH6XFP
+         zyPA==
+X-Gm-Message-State: AOAM530fN7PztVWfC1kxRg37Esszv9VrSdqJBVHqCHHAaq6sgxOIccz3
+        5aFxtCgku2+GJeMTmHos/ruXuI72XBa249JqbD0=
+X-Google-Smtp-Source: ABdhPJz/P04ULN0zRjOddwEd0NluFgeQ+VSnkb3KkY5EBmT6Wf2NDCj4ig0So6Acq/cZMaQWN1CiWmCWxurk3TEdpuk=
+X-Received: by 2002:a67:7fc8:: with SMTP id a191mr10201449vsd.85.1596809303552;
+ Fri, 07 Aug 2020 07:08:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
-Content-Disposition: inline
-In-Reply-To: <20200807093239.GA1228157@coredump.intra.peff.net>
+References: <20200806202358.2265705-1-martin.agren@gmail.com> <20200806230837.GA8085@camp.crustytoothpaste.net>
+In-Reply-To: <20200806230837.GA8085@camp.crustytoothpaste.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 7 Aug 2020 16:08:10 +0200
+Message-ID: <CAN0heSptiJL9d86ZeNPMUaZeTA68juwTyf3K-uWR=K-vt=1Hrg@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: mark `--object-format=sha256` as experimental
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 7 Aug 2020 at 01:08, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2020-08-06 at 20:23:58, Martin =C3=85gren wrote:
+> > After eff45daab8 ("repository: enable SHA-256 support by default",
+> > 2020-07-29), vanilla builds of Git enable the user to run, e.g.,
+> >
+> >   git init --object-format=3Dsha256
+> >
+> > and hack away. [...]
+[...]
+> > Similarly, "push + pull" should work, but you really will be operating
+> > mostly offset from the rest of the world. That might be ok by the time
+> > you initialize your repository, and it might be ok for several months
+> > after that, but there might come a day when you're starting to regret
+> > your use of `git init --object-format=3Dsha256` and have dug yourself i=
+nto
+> > a fairly deep hole.
+>
+> I do agree that they don't interoperate right now, and that we'd like it
+> to in the future.  But there are definitely people who can use SHA-256
+> support for new projects without problems.  I'm aware of certain
+> government agencies who very much do not want to use SHA-1 at all (and
+> at some point will be legally prohibited from doing so), and they will
+> be completely fine with the status quo.  Some of those same
+> organizations are unhappy about prohibited algorithms even being linked
+> into the binaries they use.  These folks can use a suitably new version
+> of Git everywhere and not care about the lack of backwards
+> compatibility.
+>
+> I am, of course, in favor of abandoning SHA-1 as fast as practically
+> possible, but I understand that backwards compatibility is obviously a
+> concern.
 
---GvXjxJ+pjyke8COw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah, I'd prefer them to know that they are early adopters and that they
+should be prepared for a situation where there's some incompatibility
+across versions. I don't just mean "I can't read my old SHA-1 data any
+more", I mean "I used Git v2.29.0 to create a SHA-256 repo and now Git
+v3.15.0 won't read it". (Or v2.31.0?)
 
-On Fri, Aug 07, 2020 at 05:32:39AM -0400, Jeff King wrote:
-> On Fri, Aug 07, 2020 at 11:04:12AM +0200, Patrick Steinhardt wrote:
->=20
-> > > It's perhaps more justifiable when there isn't a hook (we're still ju=
-st
-> > > paying that one access(), but it's proportionally bigger). I kind of
-> > > doubt it's measurable, though, since a ref write requires a bunch of
-> > > syscalls anyway.
-> >=20
-> > Yeah, this really was done to not have to pay a performance penalty if
-> > updating thousands of refs if no reference-transaction hook exists. E.g.
-> > if doing a non-atomic push of n reference, we'd have n calls to
-> > access(3P). See [1] for reference.
-> >=20
-> > I've just did another quick benchmark without the cache, and it still
-> > consistently shows a non-zero performance hit without it:
-> >=20
-> > Test                         pks-reftx-hook-interleaving   no-cache
-> > -----------------------------------------------------------------------=
----------
-> > 1400.2: update-ref           2.82(2.13+0.81)               2.86(2.19+0.=
-78) +1.4%
-> > 1400.3: update-ref --stdin   0.22(0.07+0.15)               0.22(0.07+0.=
-15) +0.0%
->=20
-> I'm skeptical that those results are useful. In the first test, we're
-> running update-ref 1000 times, so:
->=20
->   - the cache shouldn't be helping at all, since we only have one ref to
->     update (well, I guess once for "prepare" and once for "commit", so
->     really it's saving one syscall total per process).
->=20
->   - I'd expect a lot of noise because we're spending most of our time in
->     starting up the process
->=20
-> In the second test, we run 1000 ref operations per update-ref process.
-> So we should be cutting down on our hook-lookup overhead by a factor of
-> 1000. Yet it shows no improvement.
->=20
-> That implies you're just seeing noise. And indeed, with the patch below
-> I get:
->=20
-> Test                         HEAD^             HEAD
-> --------------------------------------------------------------------
-> 1400.2: update-ref           1.93(1.57+0.42)   1.91(1.55+0.42) -1.0%
-> 1400.3: update-ref --stdin   0.07(0.02+0.05)   0.07(0.02+0.05) +0.0%
->=20
-> Running it a second time gets me +0.5%. :)
+I've followed the work on the commit graph functionality and file format
+mostly from the sidelines. It's been lots of good work with lots of good
+outcome, but there also seems to have been (of course) a few
+incompatibilities, bugs and "argh, if only we'd have done it like this
+from the beginning". I'd assume the effort -- and potential for bugs and
+"ooh, we should have done it that way" -- for SHA-256--SHA-1
+interoperability to be larger than what's been put into the commit graph
+so far.
 
-Yeah, it's also been my take that OS-level overhead is probably going to
-matter more than those access calls, and I argued such back when I
-proposed the hook. So I'm perfectly happy to see this caching mechanism
-go.
+> > Workflows aside, let's consider a more technical aspect. Pack index
+> > files (pack-*.idx) exist in two flavours: v1 and v2. [...]
+[...]
+> > We could certainly (re)define v2 to match our SHA-256 behavior, but we
+> > do foresee v3 for a reason. And that would still just fix this specific
+> > issue. And even when everything around SHA-256 is well-defined and we
+> > have SHA-1--SHA-256 interoperability, there's a risk, at least
+> > initially, that somewhere we'd be permeating buggy data that we'd then
+> > feel responsible for and need to be able to handle for a long time to
+> > come.
+>
+> These are valid index v1 and v2 files, just with a different hash
+> algorithm.
 
-Should I re-post a v2 with your patch and my test?
+I claim that they are not valid, precisely because they use a different
+hash algorithm.
 
-Patrick
+> v3 is there for the point where we do interoperate and need
+> to store hash values of multiple algorithms at once.  There's little to
+> no benefit to v3 if you don't need multiple algorithm support, other
+> than the fact that they declare the algorithms in them.
 
---GvXjxJ+pjyke8COw
-Content-Type: application/pgp-signature; name="signature.asc"
+One additional benefit: they'd correspond to a specification. :-)
 
------BEGIN PGP SIGNATURE-----
+> This is no different than saying that our commit or tree objects are in
+> a different form; they are syntactically identical, just with a
+> different hash algorithm.  That's how everything is in the .git
+> directory.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl8tI7kACgkQVbJhu7ck
-PpTZaxAAmRla9sYdXKbD+Vf05uptZUAYcQsGmdb5Ymvq7gvtpKf2AXdFKa2v63OF
-nw+lzA9Au9jgKClA/VCe9608mFmh/26ezM+s8XHeU6Bj+DZEAiw3/4vjaF2FBXj0
-/gI+pg07vBRwOL89aB2TPlu3/I0NT0iQ/TXcNuzhsiMY6y0KmksOPlkj4olQuklj
-grhmk7Nwui60hmEo8HWC781SFEPQsiLVlBHXgsiWdA19VJGCmIqJ7DXxmt4J4DiL
-gvYeQRzVgc4gW6gnAaVZcNs2SXjXNFx256GEdmQgsDdDMy2/TigVFAlD5jgHzwlL
-z9GaD1o/G6nHBOy82aSjw973ptldczI1X68q3gQ4V2RZyE2C8GEkUJu/pCNEGfvA
-1XmIX4/YCz5KPpCCr7hdOTsNtontmW8SA69RvhRQbxa8g+cKD5MMRSQi/sI3N5Mx
-K8vrDsuhWoYeqQKLnIJrqpXW7vtO2ZUQj2zVMHjUU5H8i0eDxlcAxCaXVwacoBdy
-md+wCaDSZ3kO99OVzPbEKyIgJP5h9elCIVa5p7fi4rIZq/Xfn99nK4CFuJ4skwj6
-Az5nAZiDhWr7sNznDRvbsFDLPVA5ockshppazOhNd7FdgGtnk0LL/DF2ahbaXkXQ
-GPytWvLCDGtgaEdUZyKXk/yphBGhXiomr0NQ65bVNIFSWvf4Dro=
-=GYh8
------END PGP SIGNATURE-----
+For objects, I could perhaps accept that the format outlined in the hash
+transition document is the specification.
 
---GvXjxJ+pjyke8COw--
+That document says that pack indices "use a new v3 format that supports
+multiple hash functions." It then goes on to draft such a format. (Maybe
+it's a specification, but until there exists at least one
+implementation, I'd rather see it as a draft.) No mention of v2 pack
+indices with SHA-256 data, neither in that document, nor anywhere else
+in our documentation that I could find.
+
+The "v2 but with SHA-256" packfile index format we're producing contains
+lots of 32 B SHA-256s instead of 20 B SHA-1s, ok, that much can be
+guessed in one try. The index file ends with a 32 B SHA-256, after
+referencing the 32 B packfile SHA-256. Ok, maybe that could also be
+guessed. If we're committed to maintaining that format, we should put it
+down in writing. And if we're not committed to it, we should make that
+clear.
+
+The hash transition document foresees a packfile index format v3.
+Notably, it uses a _20_ B SHA-256 checksum and references a _20_ B
+SHA-256 packfile SHA-256. In light of that, are we certain that the "v2
+with SHA-256" format outlined above is not a maintenance burden? Or that
+if there is any kind of cost, that it's worth it? Or, for that matter,
+that guessing the details of "v2 but with SHA-256" is trivial?
+
+I fully respect the effort that has gone into making the test suite
+run with 32 B SHA-256 instead of 20 B SHA-1. But do we really intend to
+support for many years to come the new file formats that such a test run
+produces and consumes?
+
+Bundles v3, yeah I guess so. Thanks for making that move!
+
+Pack index "v2 but with SHA-256", maybe. At the very least, we should
+set down our feet consciously.
+
+> > +THIS OPTION IS EXPERIMENTAL! SHA-256 support is experimental and still
+> > +in an early stage.  A SHA-256 repository will in general not be able t=
+o
+> > +share work with "regular" SHA-1 repositories.  It should be assumed
+> > +that, e.g., Git internal file formats in relation to SHA-256
+> > +repositories may change in backwards-incompatible ways.  Only use
+> > +`--object-format=3Dsha256` for testing purposes.
+>
+> I'm fine with marking the functionality experimental for a few releases,
+> since it is possible we have bugs people haven't found, and adding a
+> note about interoperability after that point, since I think that's a
+> fair and valuable issue.  I think if we go a few releases without any
+> major issues, we can change this to the following:
+>
+>   Note that a SHA-256 repository cannot yet share work with "regular"
+>   SHA-1 repositories.  Many tools do not yet understand SHA-256
+>   repositories, so users may wish to take this into account when
+>   creating new repositories.
+
+With respect, I think that's too aggressive. By that time, we may
+conclude that, e.g., the "v2 pack indices with SHA-256" file handling is
+robust. But I'd be surprised if using `git init --object-format=3Dsha256`
+in June 2021 won't cause *some* extra work for users or ourselves
+further down the line compared to using a regular SHA-1 `git init`.
+Pushing to a SHA-1 hosting service will become *possible* at some point,
+but maybe it won't be *efficient enough to be practical in the real
+world* until some time after that.
+
+All those other, *new* file formats outlined in the hash
+transition document won't exist at that time (at least not in master).
+
+Now would probably be a good time to update the hash transition
+documents, first of all to tick off what we've already done, and second,
+to reassess the rest. Quoting:
+
+  The first user-visible change is the introduction of the objectFormat
+  extension (without compatObjectFormat). This requires:
+  - implementing the loose-object-idx
+  - teaching fsck about this mode of operation
+  - using the hash function API (vtable) when computing object names
+  - signing objects and verifying signatures
+  - rejecting attempts to fetch from or push to an incompatible
+    repository
+
+I don't think we're there yet. Maybe, e.g., the new loose-object-idx
+isn't strictly needed, in which case this part of the plan could be
+updated. (Or maybe who wrote the above thought there'd be some value in
+knowing that *all* SHA-256 repos *always* have loose-object-idx tables
+to save us from some file-discovery dancing?) We do say elsewhere in the
+document that
+
+  Alongside the packfile, a SHA-256 repository stores a bidirectional
+  mapping between SHA-256 and SHA-1 object names.
+
+So at the time we do not seem to be producing correct, proper,
+as-specified (or at least as-drafted) SHA-256 repositories. Or maybe in
+2030, we can stop insisting on such a mapping, because everyone uses
+SHA-256 anyway, so then maybe it shouldn't be mandatory now, either.
+
+"Signing objects" is a bit vague, but under "Signed Commits", I see:
+
+  [...]
+
+  This means commits can be signed
+  1. using SHA-1 only, as in existing signed commit objects
+  2. using both SHA-1 and SHA-256, by using both gpgsig-sha256 and gpgsig
+     fields.
+  3. using only SHA-256, by only using the gpgsig-sha256 field.
+
+Right now, we can do either 1 or 3. Maybe that's enough. I do think
+there's a bug in git-replace where we'll only remove the last signature,
+but as we'll currently only create one signature, that's perhaps "ok".
+I still believe we should think hard before saying (even if we only say
+so by omission) that, e.g., file structures are known-good and will be
+supported for a long time to come.
+
+Martin
