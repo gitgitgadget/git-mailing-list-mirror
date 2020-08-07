@@ -2,166 +2,158 @@ Return-Path: <SRS0=eX0j=BR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C57C8C433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 01:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AB94C433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 01:33:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3FD421744
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 01:13:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 223EF2075A
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 01:33:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rit.edu header.i=@rit.edu header.b="XHt4DnAA"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="O09OO7c+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbgHGBNE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 21:13:04 -0400
-Received: from mx03b-out01ag.rit.edu ([129.21.3.135]:8365 "EHLO
-        mx03b-out01ag.rit.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725998AbgHGBNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Aug 2020 21:13:04 -0400
-X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Aug 2020 21:13:03 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=rit.edu; i=@rit.edu; q=dns/txt; s=rit1608;
-  t=1596762782; x=1628298782;
-  h=from:to:subject:date:message-id:reply-to:mime-version:
-   content-transfer-encoding;
-  bh=gQ1DPaynmgM/1xIyuFEb5mFXm7SFPT6jrw+JtKt2XU8=;
-  b=XHt4DnAAxh2sFUTGXr6MM6vLZIBh6idb4kEYJYEnNNkTySvIy6r/vJNO
-   yUurTvVIiRCG3FqDgd/AvvHgbgMUU5dd4MFuDoHeivu8SOZKYvc2gCzCZ
-   49+hgnagN0xud4zYTMXa1O6bJjX1X3UWTMRap6Z1U3XkjjVb1vtUHRM3Q
-   0=;
-IronPort-SDR: 9VzvBqsRxB5zv5jOfwU6u5QTwXiGHrW9sUce8x2jBlkYy/ASLSMXvmEeJyAg6ZcnflRshM+KMX
- dXTPxIUVCA6aMwTFFE5oOZtoS+nyFwosHuHCBiGOEZT5CRPmYcqXuExTVHNUw7YsrGRC61W4jB
- S7eaLprvJkV4mHbwRwrkk32LH55xhSLt/UTyXjInMQ/dEbLjqHPJWXXRfFVM9L3SF3RxDC4I9f
- /9Fy6RsIBzdMq5WZm9YGedYaCLkoZujbucubGdyiplMBxb3S5glcX2ICAoMXjQR01ghrXPXh+5
- W+g=
-X-RIT-GSuite: Yes
-X-IronPort-AV: E=Sophos;i="5.75,443,1589256000"; 
-   d="scan'208";a="254671054"
-Received: from mail-qv1-f72.google.com ([209.85.219.72])
-  by smtp-server.rit.edu with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 06 Aug 2020 21:05:54 -0400
-Received: by mail-qv1-f72.google.com with SMTP id q12so312259qvm.19
-        for <git@vger.kernel.org>; Thu, 06 Aug 2020 18:05:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:reply-to
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=V8SAfV61y4xm0iKlLwpknvq4zo4CTJ6VW+EzoVt7L3E=;
-        b=gjc2JUxRaggPn8kP5Abn7tJb+5CFry8BRGnhmI5eCSEp7FFyipEi5V1hYchpSlPgMf
-         Dn5vqtRHe09kzz7kk2zDHCdhrMChB/kgr41DDwPdk6O2cK7mlGpv83Q8d2f7mHhwO+sI
-         OWOkU0UCb27r3+1iWmiGid2IOMd7BWeGLP2oq9i/X9pcMNsvN9TaBHSVpYp/mIHV/URN
-         CISRRSdVTry9i9RJ/f1nZO3wC6WBKCtXk82+0H5NnDKQxsFgY3s2LJbII5lBD0zO3I6H
-         dVlXUTuGoKp6nK0QBDITR4hPY62T8Cy/NY3mqh63eOp6X8Mt/AX0wUeqtRGv5Lddlq/a
-         v1pQ==
-X-Gm-Message-State: AOAM531Ha4FLPGfblzegSQKyMA88zT/hJVOA21yPgWjrlVTTNMCaVtTW
-        UVmNqpWjzsQE+zdVsSI3D8OfkquBODCHR7PSQlobqlEYLE/zJv2gYjoidR1AeuOhzJNj5T3NJlo
-        TWmTuCg8ZAAzCcRrzR9dnpZU=
-X-Received: by 2002:ac8:72cb:: with SMTP id o11mr12246347qtp.13.1596762354639;
-        Thu, 06 Aug 2020 18:05:54 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxigsgvfuaHw/tAy+96HmQ43ANIzFA4ZKOI0UR7gcD2KsLbwPYbKYohO8Ja29EAW4fqt5q2Iw==
-X-Received: by 2002:ac8:72cb:: with SMTP id o11mr12246318qtp.13.1596762354246;
-        Thu, 06 Aug 2020 18:05:54 -0700 (PDT)
-Received: from [192.168.0.7] (cpe-67-242-160-230.rochester.res.rr.com. [67.242.160.230])
-        by smtp.gmail.com with ESMTPSA id x23sm1611180qkj.4.2020.08.06.18.05.53
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Aug 2020 18:05:53 -0700 (PDT)
-From:   "Nuthan Munaiah" <nm6061@rit.edu>
-To:     git@vger.kernel.org
-Subject: `git blame` Line Number Off-by-one
-Date:   Fri, 07 Aug 2020 01:05:51 +0000
-Message-Id: <emc6590292-832a-4a35-8815-d5707731d605@sanctum>
-Reply-To: "Nuthan Munaiah" <nm6061@rit.edu>
-User-Agent: eM_Client/7.2.37929.0
-Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S1726190AbgHGBdI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 21:33:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41418 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725947AbgHGBdH (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 6 Aug 2020 21:33:07 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5E39860129;
+        Fri,  7 Aug 2020 01:32:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1596763956;
+        bh=O9CUvbvBRmusfbNEn0KOfhvKovKMoX+H0xIXt62MEXM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=O09OO7c+UVk02oUf/5+akb8SP1KJd8U8Hs/mi95DQUYsokroyW/fyv3ziNZ2nL+4T
+         0mdo4UXFpLZe+ylRJhyNAFVepM+UWvbGP0do/2yMKnrGHVlYXMB7Q3FFP2aBzSUKu8
+         eNITYenptL/p/8NSVr0/dSrMaxS++2caY2fG6WfLXgC1/4xLSV1rjo96k80hUg9yJY
+         t+2cNkZVFFwFNN1w5NNrXjsQLd48mU0YUcuaghIIr3JD32o5HWfB8gck2h2XWgAHTA
+         O+KwlYqGgqcfroXh0pTfZnpUTLVoAl5WMtwnH9eGdTXyN688ESNhv4q4bDdLXVSPtf
+         584g9XeRThB7gAKsCehEqRzHaI7gK5C96JS0rLLaEZrsTrIJGNARvuC17a4tlHG5Pp
+         Hl8KlSHlTIjvvBGOUYNSwgVH895xD3L5ZDh/cZIlliUjaUhBK029wrL31Lw6cOGsOF
+         DFIFQIcUscYGGThHgb6aUf7leC7yNg+Jd6cNvIYx5oTntld6N8B
+Date:   Fri, 7 Aug 2020 01:32:30 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: "#define precompose_argv(c,v) /* empty */" is evil
+Message-ID: <20200807013230.GD8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqy2mribft.fsf@gitster.c.googlers.com>
+ <20200807000126.GC8085@camp.crustytoothpaste.net>
+ <xmqqpn83i9sk.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5p8PegU4iirBW1oA"
+Content-Disposition: inline
+In-Reply-To: <xmqqpn83i9sk.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
 
-  * Clone https://github.com/apache/tomcat
-  * Run `git blame --root -leftw -L 21,21 -L 23,23=20
-51844327d8613448bb0bf9667e1a61e462e2043c^ --=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java`
+--5p8PegU4iirBW1oA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What did you expect to happen? (Expected behavior)
+On 2020-08-07 at 00:23:07, Junio C Hamano wrote:
+> While this guarantees that no unneeded code is generated, it also
+> discards type and other checks on these parameters, e.g. a new code
+> written with the argv-array API (diff_args is of type "struct
+> argv_array" that has .argc and .argv members):
+>=20
+>     precompose_argv(diff_args.argc, diff_args.argv);
+>=20
+> must be updated to use "struct strvec diff_args" with .nr and .v
+> members, like so:
+>=20
+>     precompose_argv(diff_args.nr, diff_args.v);
+>=20
+> after the argv-array API has been updated to the strvec API.
+> However, the "no oop" C preprocessor macro is too aggressive to
 
-`git blame` shows the last commit that modified lines 21 and 23 of=20
-`modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java`=20
-starting at the parent of `51844327d8613448bb0bf9667e1a61e462e2043c`.
+Maybe "no op" or no-op?
 
-```
-$ git blame --root -leftw -L 21,21 -L 23,23 =20
-51844327d8613448bb0bf9667e1a61e462e2043c^ --=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java
-c65a429f06f4e4a025a306e377211863d9ff2a0c=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
-(<fhanik@apache.org> 1226896977 +0000 21) import java.util.ArrayList;
-c65a429f06f4e4a025a306e377211863d9ff2a0c=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
-(<fhanik@apache.org> 1226896977 +0000 23) import java.util.List;
-```
+> discard what is unused, and did not catch such a call that was left
+> unconverted.
+>=20
+> Using a "static inline" function whose body is a no-op should still
+> result in the same binary with decent compilers yet catch such a
+> reference to a missing field or passing a value of a wrong type.
+>=20
+> While at it, I notice that precompute_str() has never been used
+> anywhere in the code, since it was introduced at 76759c7d (git on
+> Mac OS and precomposed unicode, 2012-07-08).  Instead of turning it
+> into a static inline, just remove it.
 
-What happened instead? (Actual behavior)
+Great.  I was wondering about that when I looked at the patch.  If we're
+not using it, no point in keeping it.  I think the name should be
+"precompose_str", though.
 
-Line 23 is not shown in the `git blame` output. Instead, line 22 is=20
-shown.
+> ---
+>  git-compat-util.h | 20 +++++++++++++++-----
+>  1 file changed, 15 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5637114b8d..7a0fb7a045 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -252,8 +252,10 @@ typedef unsigned long uintptr_t;
+>  #ifdef PRECOMPOSE_UNICODE
+>  #include "compat/precompose_utf8.h"
+>  #else
+> -#define precompose_str(in,i_nfd2nfc)
+> -#define precompose_argv(c,v)
+> +static inline void precompose_argv(int argc, const char **argv)
+> +{
+> +	; /* nothing */
+> +}
+>  #define probe_utf8_pathname_composition()
+>  #endif
+> =20
+> @@ -270,7 +272,9 @@ struct itimerval {
+>  #endif
+> =20
+>  #ifdef NO_SETITIMER
+> -#define setitimer(which,value,ovalue)
+> +static inline int setitimer(int which, const struct itimerval *value, st=
+ruct itimerval *newvalue) {
 
-```
-$ git blame --root -leftw -L 21,21 -L 23,23 =20
-51844327d8613448bb0bf9667e1a61e462e2043c^ --=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java
-c65a429f06f4e4a025a306e377211863d9ff2a0c=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
-(<fhanik@apache.org> 1226896977 +0000 21) import java.util.ArrayList;
-c65a429f06f4e4a025a306e377211863d9ff2a0c=20
-modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/PoolProperties.java=20
-(<fhanik@apache.org> 1226896977 +0000 22) import java.util.HashMap;
-```
+The rest of the patch looks fine, but do we know that these structs will
+exist if NO_SETITIMER is defined?  If not, we may need to use a void *
+here, which would provide us worse type checking, but would work on
+platforms that lack the interval timers at all, such as NonStop.
 
-What's different between what you expected and what actually happened?
+That does kind of defeat the purpose of this patch, but I still think
+it's a win, since we end up with some type checking, even if it's not
+perfect, and almost every platform provides setitimer, so any errors
+will be caught quickly.
+--=20
+brian m. carlson: Houston, Texas, US
 
-Line 23 is not shown in the `git blame` output. Instead line 22 is=20
-shown.
+--5p8PegU4iirBW1oA
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Anything else you want to add:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-  * The issue is reproducible on git versions 2.28.0 (on Ubuntu 18.04.4=20
-LTS), 2.24.0 (on Ubuntu 18.04.3 LTS), 2.17.0 (on Ubuntu 18.04.4 LTS),=20
-and 2.27.0.windows.1 (on Microsoft Windows 10 Enterprise 10.0.19041=20
-Build 19041).
-  * The addition of `--porcelain` does not resolve the issue.
-  * The issue is not specific to a particular repository. For instance,=20
-the output from `git blame -L 1466,1466 -L 1468,1468 =20
-35e69fc7cf9421ab04ffc9d52cb36d07fa12984a^ -- c/dec/decode.c` in a clone=20
-of https://github.com/google/brotli shows last commit that modified=20
-lines 1466 and 1467 (instead 1468).
-  * The issue seems to present itself only when there is exactly one line=
-=20
-in between two specifications of `-L`. For instance, `-L 20,20 -L 23,23`=20
-correctly blames lines 20 and 23, `-L 20,20 -L 21,21 -L 22,22 -L 23,23`=20
-correctly blames lines 20, 21, 22, and 23, `-L 23,23` correctly blames=20
-line 23, but `-L 21,21 -L 23,23` blames lines 21 and 22 (instead of 23).
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXyyvLgAKCRB8DEliiIei
+gSUeAP0SGQU/5WhF82JcqskUdTJfXgH4qgqhsmo3tSE0yVc3ewD/fAJ8E254GeEQ
+A9+kdOuXM1809IRmiaN80ozRV2UQowI=
+=9HTo
+-----END PGP SIGNATURE-----
 
-[System Info]
-git version:
-git version 2.28.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 4.15.0-88-generic #88-Ubuntu SMP Tue Feb 11 20:11:34 UTC=20
-2020 x86_64
-compiler info: gnuc: 7.5
-libc info: glibc: 2.27
-$SHELL (typically, interactive shell): <unset>
-
-[Enabled Hooks]
-
+--5p8PegU4iirBW1oA--
