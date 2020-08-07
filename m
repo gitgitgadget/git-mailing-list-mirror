@@ -2,124 +2,90 @@ Return-Path: <SRS0=eX0j=BR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC96C433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 07:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35E3BC433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 07:58:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF7D7221E5
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 07:56:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="bZ+ndc+v"
+	by mail.kernel.org (Postfix) with ESMTP id 14EE72177B
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 07:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726459AbgHGH4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Aug 2020 03:56:55 -0400
-Received: from mout.web.de ([212.227.15.3]:38295 "EHLO mout.web.de"
+        id S1726584AbgHGH6k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 03:58:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51450 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725805AbgHGH4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Aug 2020 03:56:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1596787004;
-        bh=froZRVcmmOOQePibQqwHuSIsQKHt9bgXDxItiP7Vj+Q=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=bZ+ndc+vJ9suwEXvrDgVAmPcV8zHF6Na8IVQzncYaz/5nHB7euO8hGj5VXGlaLjhs
-         kpMQp5O1ovkN4oDjfuwinoLnLG/+5qMRU2APya3ABV1dF/usZwsMlEU3tVBTTwaDZT
-         Pnb9EgMVjp3ZLLKzkapkUyVZ/LA9x6ILUJzwN5QQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MI3t5-1jympY3VJv-00FCVR; Fri, 07
- Aug 2020 09:56:43 +0200
-Date:   Fri, 7 Aug 2020 09:56:43 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1725805AbgHGH6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 03:58:38 -0400
+Received: (qmail 29518 invoked by uid 109); 7 Aug 2020 07:58:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 Aug 2020 07:58:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11725 invoked by uid 111); 7 Aug 2020 07:58:37 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 Aug 2020 03:58:37 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 7 Aug 2020 03:58:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org
-Subject: Re: "#define precompose_argv(c,v) /* empty */" is evil
-Message-ID: <20200807075642.cw6zjym7xykxbsdm@tb-raspi4>
-References: <xmqqy2mribft.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH] refs: fix interleaving hook calls with
+ reference-transaction hook
+Message-ID: <20200807075837.GA32344@coredump.intra.peff.net>
+References: <63fb363375b515b903ed1269d10124b727c1d1cc.1596783732.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy2mribft.fsf@gitster.c.googlers.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:rbnxCtS4HoLWq4MZtMzGSJHxDG4lDuX9wEUx2+5u5Aw9Zu57MTT
- EggR2fOBsbLq77VQUI6TzF8aFV5e1fZHOUIxFzEgozjzOxa7QJWm14Dc49HhEJ/q4/BDMwj
- AanBgKSIsMjTsaJucYean5Z5fTYY4xf/781pfaho7KTOIazXgmSfwav6QKB6UvRKIY7pA57
- r0tuJdnoJqIL9I7Kj9YkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jpej8dbazcc=:+08jKpMDtPNcXUyCIZVhYp
- t0bWdRr0Cf3KjYyZKrQacEIu4eZzCuVX+aRLEaS38hTGCIFRlR2ihXKpBkHF2xIeVhylJqfKs
- JNkrjE8jBJsqLoFXId6DRx9oEkvcEv2aUYZ/t42oQ3NbZ1liWPkxthvwdkOmla8DUlHhDMhu5
- VNoZ69jz31d1ut0Bar7zXdheMgngffSvTniqoBz2rlju7bmrI+MU3DKG25rqRbazjyij1kKBq
- aXWi4VWM/b9BZEYR0KuNfMYVEdU/G2dTGLGnrtYSveD0gMQKkDmFlWR2XzwLeSugT13Ju8iCB
- 4uggTMgGJHyUQt1gUs8usfo5eB+mTY2sCsu24s0qd69ObIipHAfcMRCFluH0j03v+SCHRH+SJ
- XvJ4ezTJr762g5j9QUeU1L1ynF+D+i/syNnEjFJteso+qCN7Fgv7i2q4zO2+Iu9eOldCt4BPK
- XkanDxfSuexDLL2Ykq/PXwdaykiRKHwSUF602ZQL/ptPkGEleb2MXYfZGMx3wJH7Np9ns9/CG
- /OYcYNQdD/W1sdwNIilwMCODj94ko/NEnrC+pBHu28zndgRqDZVoon48bTroMHtpcgHi4yXNK
- /GOEqYRT2LO9XpVqIgLobLIEURSJM290tWz3F+nlYdmyGTMlhKmxTADbGjyTHm1dD8yQJCRfU
- 9IRYplZp3Sx6tjbL4E1i+Ln7GMvOzV/gdOx1tne96WilT8OjVGLzrU01VDSznMXBNRcXSbbct
- o3/aTEa+m2EHRYlbjlpSLbkm4jZZuzp7ZR7OqX/TrOKrXyF/75wsaf7dkOg7VpRfnVRckI3Jj
- fHJnBY4n+RqIFlbjEAPxtc2Bxm+iCGkO+7/Wj0h5c09HiamTqoA1NoVqSQCs/polopF94rXUU
- vNrUzfj9nY9KdWegVJwBVy5lfcgMqEHDD9LjskZaBxYnbDHmIIo6CN7K5Gt59NyuxNLmQohd/
- j1K5WDfd+mumxZ+6mSpunt8RdpLWqryqLoTBS+YlAD+VywdjQsF7FPmILnji/FhT42PJylw49
- 6baVE4GshqbOsaAE9D95Qxyu+tC39UyB41KzvR5LHQRM5arBzOotANh+SFJVAl4BRPNgs5qxO
- gPKxt9YqM9sfUCJ8dmunyu1F03QYrM9BJQkbK/dHNnpxjno7zc0i9YOcTt4ron65gSIy9ISJW
- WAiZasnSwHX01hIefRvgZJphVWJF6xktlEP/VDYLm5K14e+/Kn0W8PlnySUv+eQRu4K3jM5VJ
- RL37mFMP/qkDwERdX
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <63fb363375b515b903ed1269d10124b727c1d1cc.1596783732.git.ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 06, 2020 at 04:47:34PM -0700, Junio C Hamano wrote:
-> I had seen an interesting compilation breakage today.  A topic adds
-> many more uses of argv-array API so I resolved semantic conflict
-> patch until "make builtins/submodule-helper.o" passed.  I failed to
-> spot one remaining breakage until I saw
->
->     https://travis-ci.org/github/git/git/jobs/715668996
->
-> The problematic line was
->
->     precompose_argv(diff_args.argc, diff_args.argv);
->
-> where diff_args used to be an argv_array and is now a strvec.
->
-> Why didn't I catch this in my local test?
->
-> $ git grep -n -e precompose_argv -- \*.h
-> compat/precompose_utf8.h:31:void precompose_argv(int argc, const char **=
-argv);
-> git-compat-util.h:256:#define precompose_argv(c,v)
->
-> The problematic part is this one used on all platforms other than macOS:
->
->     /* used on Mac OS X */
->     #ifdef PRECOMPOSE_UNICODE
->     #include "compat/precompose_utf8.h"
->     #else
->     #define precompose_str(in,i_nfd2nfc)
->     #define precompose_argv(c,v)
->     #define probe_utf8_pathname_composition()
->     #endif
->
-> I am wondering if it is a good idea to use something like
->
->     static inline void precompose_argv(int argc, const char **argv)
->     {
-> 	; /* nothing */
->     }
->
-> instead.  As long as the compiler is reasonable enough, this should
-> not result in any code change in the result, except that it would
-> still catch wrong arguments, even if these two parameters are unused
-> and optimized out.
->
+On Fri, Aug 07, 2020 at 09:05:58AM +0200, Patrick Steinhardt wrote:
 
-In my every-day-live these kind of "late detection of breakage" is
-not uncommon.
-In other words: this patch allows early detection and is much better.
+> In order to not repeatedly search for the reference-transaction hook in
+> case it's getting called multiple times, we use a caching mechanism to
+> only call `find_hook()` once. What was missed though is that the return
+> value of `find_hook()` actually comes from a static strbuf, which means
+> it will get overwritten when calling `find_hook()` again. As a result,
+> we may call the wrong hook with parameters of the reference-transaction
+> hook.
+> 
+> This scenario was spotted in the wild when executing a git-push(1) with
+> multiple references, where there are interleaving calls to both the
+> update and the reference-transaction hook. While initial calls to the
+> reference-transaction hook work as expected, it will stop working after
+> the next invocation of the update hook. The result is that we now start
+> calling the update hook with parameters and stdin of the
+> reference-transaction hook.
 
-Thanks for cleaning up my mess.
+That makes sense. I think of push as a single transaction, but that's
+only if the caller sends the "atomic" capability. Otherwise get one per
+ref.
+
+> diff --git a/refs.c b/refs.c
+> index 2dd851fe81..17e515b288 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2044,7 +2044,7 @@ static int run_transaction_hook(struct ref_transaction *transaction,
+>  	if (hook == &hook_not_found)
+>  		return ret;
+>  	if (!hook)
+> -		hook = find_hook("reference-transaction");
+> +		hook = xstrdup_or_null(find_hook("reference-transaction"));
+>  	if (!hook) {
+>  		hook = &hook_not_found;
+>  		return ret;
+
+The fix here looks obviously correct, though I have to wonder if the
+caching is even worth it. It's saving us an access() call, but we're
+about to exec a whole sub-process.
+
+It's perhaps more justifiable when there isn't a hook (we're still just
+paying that one access(), but it's proportionally bigger). I kind of
+doubt it's measurable, though, since a ref write requires a bunch of
+syscalls anyway.
+
+-Peff
