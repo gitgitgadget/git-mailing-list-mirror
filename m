@@ -3,72 +3,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37FA0C433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 08:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C41EC433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 08:26:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20CFD20866
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 08:04:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2D51221E5
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 08:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726578AbgHGIEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Aug 2020 04:04:37 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45606 "EHLO dcvr.yhbt.net"
+        id S1726644AbgHGI0o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 04:26:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51502 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725805AbgHGIEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Aug 2020 04:04:36 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 83B321F990;
-        Fri,  7 Aug 2020 08:04:36 +0000 (UTC)
-Date:   Fri, 7 Aug 2020 08:04:36 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: avoiding fetching specific refs from a remote
-Message-ID: <20200807080436.GA21342@dcvr>
-References: <CA+P7+xpokJ3Z4xZ9ibCBpBO65D1v-AD6_JknprGUsEDxEvMGGw@mail.gmail.com>
- <20200805063704.GA2690083@coredump.intra.peff.net>
- <BE29FA64-5281-4D9E-B509-CA2C2B7BB87D@gmail.com>
+        id S1726382AbgHGI0o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 04:26:44 -0400
+Received: (qmail 30068 invoked by uid 109); 7 Aug 2020 08:26:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 Aug 2020 08:26:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12074 invoked by uid 111); 7 Aug 2020 08:26:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 Aug 2020 04:26:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 7 Aug 2020 04:26:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+Message-ID: <20200807082643.GA34012@coredump.intra.peff.net>
+References: <20200803180824.GA2711830@coredump.intra.peff.net>
+ <874kpi47xj.fsf@osv.gnss.ru>
+ <xmqqbljqrydm.fsf@gitster.c.googlers.com>
+ <20200804200018.GB2014743@coredump.intra.peff.net>
+ <877due1688.fsf@osv.gnss.ru>
+ <20200804212201.GA2020725@coredump.intra.peff.net>
+ <xmqq3652rs84.fsf@gitster.c.googlers.com>
+ <878seuxdz8.fsf@osv.gnss.ru>
+ <20200804221440.GC2022650@coredump.intra.peff.net>
+ <xmqqpn86qb6a.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <BE29FA64-5281-4D9E-B509-CA2C2B7BB87D@gmail.com>
+In-Reply-To: <xmqqpn86qb6a.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> wrote:
-> > Le 5 août 2020 à 02:37, Jeff King <peff@peff.net> a écrit :
-> > This is definitely a reasonable thing to want, and it has come up off
-> > and on over the years. One search term for the list archive is "negative
-> > refspecs", though it turns up a lot of useless hits when the two words
-> > are not directly adjacent.
+On Tue, Aug 04, 2020 at 03:49:17PM -0700, Junio C Hamano wrote:
+
+> > I'm just
+> > raising the issue now because we'll be locked into the semantics of this
+> > option, which may not be able to express the full set of what's possible
+> > (so we'd be stuck adding another option later).
 > 
-> I tried searching "negative refspecs" (*with* the double quotes) and I get 20 results so it 
-> seems to work. Although interestingly it doesn't find this message you wrote I'm responding to 
-> because "negative" and "refspec" are on separate lines... I'm CC-ing Eric in case he knows more
-> about this limitation.
+> Yeah, but a good thing is that we won't have to worry about this
+> until much later, as long as we would just be introducing "diff
+> against no parents" and nothing else (or together with "diff against
+> all parents", which would make it easier to explain "-m").
 
-Initially I thought it was phrase searching being disabled
-on lore (Xapian 1.2, "chert" backend).  However, I just
-tried on lore and it shows Jeff's message from
-2020-08-05 6:37 UTC:
+Agreed. My only question is whether the possibility of later having
+those other options might influence how we name the two options we add
+now. I think it's clear to all of us in this thread how those two easy
+options should behave, but if the intent is to eventually allow these to
+be mutually exclusive:
 
- https://lore.kernel.org/git/?q=%22negative+refspecs%22
+  - no diff
+  - combined
+  - dense combined
+  - individual diff against each parent
 
-So maybe it was a delay due to Xapian's MVCC mechanism;
-but that shouldn't be HOURS off (maybe minutes at most),
-assuming you tried to search shortly before you sent
-the message I'm replying to at 22:12 UTC...
+but orthogonal to the selection of the parent-set (none, all, or
+selected ones) then e.g. "all" makes less sense for "individual diff
+against each parent". I don't have a good succinct name suggestion,
+though.
 
-My v1 instance at public-inbox.org (which uses Xapian 1.4
-and the "glass" backend) shows it, too:
+TBH, I would be happy enough with any of the suggestions in the thread,
+so I am really just finishing the thought here, and not trying to derail
+progress. :)
 
- https://public-inbox.org/git/?q=%22negative+refspecs%22
-
-You could also try NEAR and ADJ (I don't have much experience
-with those): https://xapian.org/docs/queryparser.html
+-Peff
