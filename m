@@ -3,118 +3,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F2D9C433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 20:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C46C9C433E0
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 20:29:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08C082075A
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 20:18:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96FDA2224D
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 20:29:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qhQcKBy0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BU7C4B3b"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726045AbgHGUSx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Aug 2020 16:18:53 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61123 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbgHGUSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Aug 2020 16:18:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 90100F68A2;
-        Fri,  7 Aug 2020 16:18:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=22Q9YRv0lw63StNftWAJsA96NVM=; b=qhQcKB
-        y0FQf900V3z9Ed4Tt2J3Tv6Fkr37ta6yQRmcu5UDmv0NRraVYeMQqXcKWF30FyQz
-        8znNwZxeRgTh1iTlBMujhf30mnVn6L9uPHR1FqTPlb2nFy528GBo3Ib2tqrU70UR
-        7QokQTg850J94vWnUBRz/CGaq9aiwBj70JZuQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qUMC1ymFIKh0MNcH11QY01zb0YSRV5TN
-        JHYlcR1VVtERWJCuvaVaCauu8ThIxoolFzd4LAzQ37Iq1WL3rm+bON+XyzEBAr7R
-        eI1uoa9UeegaTLKXmEMQdabrz+EVFWtBUwb1UTjd2gE261xYScM1J13aoqYSaHZW
-        dA0mRcM2KU0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 88D20F68A1;
-        Fri,  7 Aug 2020 16:18:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D04C6F68A0;
-        Fri,  7 Aug 2020 16:18:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] sideband: mark "remote error:" prefix for translation
-References: <20200805084240.GA1802257@coredump.intra.peff.net>
-        <20200805090641.GR2898@szeder.dev>
-        <20200805092658.GA1803042@coredump.intra.peff.net>
-        <xmqqwo2dnjk5.fsf@gitster.c.googlers.com>
-        <20200807085649.GA34210@coredump.intra.peff.net>
-Date:   Fri, 07 Aug 2020 13:18:47 -0700
-In-Reply-To: <20200807085649.GA34210@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 7 Aug 2020 04:56:49 -0400")
-Message-ID: <xmqq4kpegqfs.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726825AbgHGU35 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 16:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44320 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725893AbgHGU35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 16:29:57 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D83DCC061756
+        for <git@vger.kernel.org>; Fri,  7 Aug 2020 13:29:56 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id m22so3451083ljj.5
+        for <git@vger.kernel.org>; Fri, 07 Aug 2020 13:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Ckk0HdkqEvMYHgdCh96jAvJArKqatYdf4Xvd6gLQXns=;
+        b=BU7C4B3bYC01Y8FO3LT5yfGF/P6Vvhjr7nW0WI14qIpp++rL/Yprl4cvVZnggFQqlj
+         c44edExB+GDhnWxbe7enQBVnOdJQvxeIWV1I8WcObAs8CZO14MfrmnuBkjlW3P4auny8
+         +RZoea4MqR1FpLK9Cu4K6fKTrljLhA6WvPqYK3BnkV3ypu4OT99aJXN214E39psSURhz
+         NafA+BPXr0RaLgeXjIHbQrnx2iiB2jTMWBiFMC2PFpU7wpXuSPZyVwbM05Bezk60UUD+
+         Qf3yExwQcgZJbFgdLI8hGTzzQTGTQWGFw3hYN26ifXfwKtp1otY5nwMFtf8kCPhPj1AH
+         Kq9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=Ckk0HdkqEvMYHgdCh96jAvJArKqatYdf4Xvd6gLQXns=;
+        b=DIbhdUHRmDJFeheRqo3FCCRR6KalZ/1PGU2N3Svf0UaWioezbLT6ikSfWJEES0U8YY
+         9o5VE0gMjkN+E8e9s3nzV8AP9AK+LCrRlPDnfGNvoa+mLOl/ztNvyDf8zA7vdhelRGw0
+         VfVA3f4LJIGujigkfo2mi4P7swCmfzz8oZRBjxw5S9yIrvVEnrEu7+R3giYmM6VFT6Mm
+         FFlDOXdMqgZBO/rP+mcSpHeoB4Gb4ZEHmFif4hZ3bdxWCKHayQ3vP8U6zbxoYuAjmdWi
+         56zSm2NjMxWi0GW3DKH5JScZwRoQnWw+ase/Cbvl5N6fAmQpDzo7+sn5eh236vEq1FJY
+         htcQ==
+X-Gm-Message-State: AOAM533jhn9sXAjFzLZHGJjqWh+AL3mkR9iB+GKotYSEMt9ejui2t6KR
+        x21jRHiCuE3dE3JTolBdcASbrH2h
+X-Google-Smtp-Source: ABdhPJyn/DksdLzQwuITyu7yKPyHo0mvv2PFO7buKSCKc73MDRS8t3Aj+cvTu2BCdd2NZm16ulhGdQ==
+X-Received: by 2002:a05:651c:1349:: with SMTP id j9mr6788271ljb.392.1596832195335;
+        Fri, 07 Aug 2020 13:29:55 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id n29sm5018697lfi.9.2020.08.07.13.29.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2020 13:29:54 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 0/7] making log --first-parent imply -m
+References: <20200803180824.GA2711830@coredump.intra.peff.net>
+        <874kpi47xj.fsf@osv.gnss.ru> <xmqqbljqrydm.fsf@gitster.c.googlers.com>
+        <20200804200018.GB2014743@coredump.intra.peff.net>
+        <877due1688.fsf@osv.gnss.ru>
+        <20200804212201.GA2020725@coredump.intra.peff.net>
+        <xmqq3652rs84.fsf@gitster.c.googlers.com> <878seuxdz8.fsf@osv.gnss.ru>
+        <20200804221440.GC2022650@coredump.intra.peff.net>
+        <xmqqpn86qb6a.fsf@gitster.c.googlers.com>
+        <20200807082643.GA34012@coredump.intra.peff.net>
+        <xmqqlfiqgxn7.fsf@gitster.c.googlers.com> <87364ymji7.fsf@osv.gnss.ru>
+        <xmqqh7tegu0m.fsf@gitster.c.googlers.com> <87tuxel17m.fsf@osv.gnss.ru>
+        <xmqq8seqgrx3.fsf@gitster.c.googlers.com>
+Date:   Fri, 07 Aug 2020 23:29:53 +0300
+In-Reply-To: <xmqq8seqgrx3.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 07 Aug 2020 12:46:48 -0700")
+Message-ID: <87a6z6kxmm.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 33F2C34C-D8EB-11EA-888F-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, Aug 05, 2020 at 09:28:42AM -0700, Junio C Hamano wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > By the way, grepping for "remote error:" shows that when we get an error
->> > over sideband 3 we produce the same message but _don't_ translate it.
->> > That seems inconsistent.
->> 
->> IOW
->> 
->>     die(_("remote error: %s"), buf + 1);
->> 
->> in sideband.c?  I think it makes sense.
+>>>> So, does
+>>>>
+>>>> --diff-merges=(off,none|comb|dense,dense-comb,comb-dense|sep,split)
+>>>>
+>>>> make sense as covering all the current features?
+>>>
+>>> If we are primarily interested in theoretical completeness, it may.
+>>> If we are interested more in practical usefulness, I am not sure if
+>>> such a "full flexibility" matrix is a good way to present the
+>>> feature to the end-users.
+>>
+>> I thought it's just a -c, -cc, and -m in better wording. No any
+>> matrix:
+>>
+>> -c  = --diff-merges=combined
+>> -cc = --diff-merges=dense
+>> -m  = --diff-merges=split
+>>
+>> Just separate mutually exclusive options assembled into one multi-value
+>> option, so it's explicit they are mutually exclusive. I don't see any
+>> matrix here.
 >
-> Yes. Patch is below so we don't forget about it. I'm not sure if we
-> ought to be going further, though. The "remote:" prefix for sideband 2
-> isn't translated either. It would be easy to do so, but it's much more
-> lego-like. We don't have "remote: %s" ever as a string. We just have
-> "remote:", and then we maybe_colorize_sideband() the result.
+> Oh, matrix comes from specifying the set of parents in a separate
+> parameter.  If we are not doing that, then you cannot even express
+> "when showing a merge, compare only with the first parent", no?
 >
-> Would that be annoying for translators, especially with RTL languages?
-> Do people actually want to see "remote:" (or "remote error:" for that
-> matter) translated, or does mixing translated and untranslated messages
-> on one line end up more confusing? I'm out of my element here, as I
-> wouldn't ever use the translations myself.
->
->> IIRC, the current thinking is to let the remote side localize their
->> message before sending them over the wire and we'll worry about how
->> we let the receiving end tell what l10n it wants later.  So "remote
->> error:" prefix may have to be translated on receiving end and the
->> remainder of the line, which is already localized, can just be
->> interpolated.
->
-> Yeah, that part makes sense. The local client shouldn't be translating
-> what it gets from the server (and won't, because it is filled in via the
-> %s). Adding a capability for preferred language would be easy, though I
-> imagine it might be irritating in practice.  As a server admin, I want
-> to see everything in the C locale; but what gets shown to users and what
-> might get dumped into server logs is not well specified in Git. I have a
-> feeling that just setting LANG based on the user's request would be a
-> bit broad.
->
-> Anyway, here's the patch. It doesn't seem to cause any test failures,
-> even with GETTEXT_POISON. :)
+> And when you add --diff-parents=1 (i.e. diff with first-parent), you
+> are opening the interface up so that it can express dubious
+> combinations like --diff-merges=dense-combined --diff-parents=1,3
+> (i.e. --cc but exclude the second parent as one of the preimages).
 
-;-)  Thanks.  Queued.
+I had no intention to introduce --diff-parents, at least for now, and
+maybe never. What I said about it was theoretical discussion rather than
+actual proposal.
+
+If we agree on the above, I intended to instead propose something like:
+
+--diff-merges=first-parent or just =first
+
+for a start.
+
+Thanks,
+-- Sergey
