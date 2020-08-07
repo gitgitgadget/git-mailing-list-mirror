@@ -2,99 +2,141 @@ Return-Path: <SRS0=eX0j=BR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA717C433DF
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 16:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE71AC433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 16:31:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C11C62075D
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 16:17:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A682020748
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 16:31:47 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BwTqymLS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbgHGQRg convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 7 Aug 2020 12:17:36 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42276 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726030AbgHGQRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Aug 2020 12:17:36 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r4so2176580wrx.9
-        for <git@vger.kernel.org>; Fri, 07 Aug 2020 09:17:34 -0700 (PDT)
+        id S1726787AbgHGQbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 12:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36036 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbgHGQbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 12:31:43 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B79ABC061756
+        for <git@vger.kernel.org>; Fri,  7 Aug 2020 09:31:43 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id l60so1134316pjb.3
+        for <git@vger.kernel.org>; Fri, 07 Aug 2020 09:31:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mKnXtYBnyVNPBzE9oOh0XhM3oJ+J8nK+2ZHcOsqA0dg=;
+        b=BwTqymLSHQVDkl1ZyN0XLHg5Fivmlf58rWL0S/2taIrlTmHoPaGiuqp8hB70vkal9c
+         LtDmENA0IHIZ2dNLRB7OEX3ek5iK67XO+AX4NBnVseKR9a+dBEfXvuOTfQ+5vEabSsnH
+         HcrlMMZlRDPgChMlx0+e8D86nSChxAdGcf1EY+5GyB/1d3a2PwoBjT9tfOowRi5LPq+V
+         XqFO/cF6k76fxYx9gq8GsnHGauJ2f8/sryBZA28fI0lThE0ihmQ2q9Zzjisiv7Fpt6oH
+         xScfy6o0g2a7eR93+NzfEXDLRfgepfxYUNxCwc8gzUO/Qy91qRbDelwWKYcnV3Rbi0Ow
+         16xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NBd/IizNkxTAtPWwmEpwlMM3L+8cRmOOvMhvUVsDUIA=;
-        b=RSUhCExAL/FqEhXyfw+ZhyU1x30l/aCsYeoNi8dGPuUte55QOq1G7yuivRGq8fVoO4
-         3u1BNGtON83jXqSOlvGKjrVEX3mvBFl5puPrq0LpGRkCG8PPfdHZlKmCg+MkUJxTFwWV
-         ezcxuwv0+d969XpbR7gb3eNBGwywtDH591TNl/PQbYliFx41J0vg4ySXrpfI/sY7Zo1W
-         fjTeRq3xBnR+XcXuo+PEJNiz5711M8Ws0Ln3zXn2g+CzpCBomtoEG2DLBMWbWFZ/Dohi
-         IWkhzfdXks9mCfH4RyUAEVBbrXcf2szAYPe0fmqn7wp8ka2GPikxU83gNhyPuAkicw4F
-         qMJw==
-X-Gm-Message-State: AOAM530B6E8ZfOWNVvHkbZX7HMjP+GjROiqCiCuM8OJMOQkShrVFa6wB
-        6DjFSM7ETNadl3sydEWqtg+su0k6/VSqBpnM/tU=
-X-Google-Smtp-Source: ABdhPJxlueTKi0cgd9ePxUbD2ByIEUVttYEvrzB0vv3MITViuB8ti8i7YWhWdSImB2ES8+0f2cIq85mK5fv+oHb6wMc=
-X-Received: by 2002:a5d:540c:: with SMTP id g12mr12438932wrv.120.1596817052938;
- Fri, 07 Aug 2020 09:17:32 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mKnXtYBnyVNPBzE9oOh0XhM3oJ+J8nK+2ZHcOsqA0dg=;
+        b=DsEv42dVWX+CnOvE12WFcvLnNukBQfuwQ6sbRO1qB4QdAOaxiZh/8ymwssM6Y6yUYo
+         kwa5yPeb37jnsCwXHzsx9gyLjX9i3I5duUZksoeWsCtCxpjSEi86XyWNMGdfVjTNmIuf
+         AJhvarmi9ySUvRF1Rhv5YhiMJ55bpoXEDFV4b7iSwiyT/M2qnd1PmRZlL8Lx4ELOM0sT
+         iO07Xv34X9q4iBsdZj+NlmS409ph7IRRWwoN8TKuAjNh7c9ishQjt3qaPplNMVA18lT8
+         a/IkOZzVTVAcaMeU1+IBNblPUt4hMnF+t/Cs9Yf+ptVgW7cES8dQH7D71nXt6S5cDNiU
+         MYmQ==
+X-Gm-Message-State: AOAM533Tmwd0LGjF2Ur2OADAxASwDBRRdMzje6Eqb+M9WA4qTlLElGqN
+        pJQqmTsEHgPNBPNfwORoXRrF6WrrZ5A=
+X-Google-Smtp-Source: ABdhPJz4v6RXiAzawPlPuNzsfMrqwhszQHHNO2sJXpu6MYyeSiRG/u/UBU+m+icwBm4oPR9zrEQhig==
+X-Received: by 2002:a17:902:d902:: with SMTP id c2mr12887783plz.71.1596817903173;
+        Fri, 07 Aug 2020 09:31:43 -0700 (PDT)
+Received: from konoha ([45.127.46.143])
+        by smtp.gmail.com with ESMTPSA id c27sm11092480pgn.86.2020.08.07.09.31.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2020 09:31:42 -0700 (PDT)
+Date:   Fri, 7 Aug 2020 22:01:35 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com, johannes.schindelin@gmx.de,
+        liu.denton@gmail.com, pc44800@gmail.com, chriscool@tuxfamily.org,
+        stefanbeller@gmail.com
+Subject: Re: [PATCH v2 5/5] submodule: port submodule subcommand 'summary'
+ from shell to C
+Message-ID: <20200807163135.GA12568@konoha>
+References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
+ <20200806164102.6707-6-shouryashukla.oo@gmail.com>
+ <xmqq5z9vjsvz.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <20200802143018.5501-1-martin.agren@gmail.com> <cover.1596742823.git.martin.agren@gmail.com>
- <c60416a111bada9624b8b64235ac5c4dd3dedac4.1596742823.git.martin.agren@gmail.com>
- <CAPig+cSjHg2-WYqdkZAS0ye1goj_=5RN3mdjt0-4kSBqNm6WLg@mail.gmail.com> <CAN0heSpjgc0GUHnebeBdtr6Yny3Y_jsjz5hTfJqw15bZiPc8HQ@mail.gmail.com>
-In-Reply-To: <CAN0heSpjgc0GUHnebeBdtr6Yny3Y_jsjz5hTfJqw15bZiPc8HQ@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 7 Aug 2020 12:17:22 -0400
-Message-ID: <CAPig+cR+JmQsj9qAALq6oxYQb9E94TAEqXHx+dAt=E0FZH6WwA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] t: don't spuriously close and reopen quotes
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Chris Torek <chris.torek@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5z9vjsvz.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 7, 2020 at 4:45 AM Martin Ågren <martin.agren@gmail.com> wrote:
-> On Thu, 6 Aug 2020 at 22:26, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Thu, Aug 6, 2020 at 4:09 PM Martin Ågren <martin.agren@gmail.com> wrote:
-> > > -    echo "$fifth      branch 'fifth' of ." |
-> > > +    echo "$fifth      branch fifth of ." |
-> >
-> > This one is a bit weird. It really seems as if the intent was to quote
-> > the word "fifth" in the merge message, so dropping the quotes
-> > altogether seems wrong. However, the file 'msg' is never even
-> > consulted in this test (or any other test), so is this just "dead
-> > code" (including the leading 'fifth=' assignment which also is
-> > otherwise unused outside the 'echo')?
->
-> Huh, good catch. [...] So I should be able to safely drop this
-> "dead code" entirely.
+On 06/08 03:45, Junio C Hamano wrote:
+> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> 
+> > ...
+> 
+> > +			argv_array_pushl(&cp_log.args, "--pretty=  %m %s",
+> > +					 "--first-parent", NULL);
+> > +			argv_array_pushf(&cp_log.args, "%s...%s",
+> > +					 src_abbrev,
+> > +					 dst_abbrev);
+> 
+> > ...
+> 
+> > +	diff_args.argc = setup_revisions(diff_args.argc, diff_args.argv,
+> > +					 &rev, NULL);
+> 
+> Peff's jk/strvec topic will soon be in 'master', and basing the
+> series on top of 'master' after that happens would make these lines
+> to read like
+> 
+> 			strvec_pushl(&cp_log.args, "--pretty=  %m %s",
+> 				     "--first-parent", NULL);
+> 			strvec_pushf(&cp_log.args, "%s...%s",
+> 				     src_abbrev,
+> 				     dst_abbrev);
+> 
+> 	diff_args.nr = setup_revisions(diff_args.nr, diff_args.v,
+> 				       &rev, NULL);
+> 
+> We may even be able to reduce line wrapping thanks to shortening a
+> few common words:
+> 
+>     argv_array => strvec
+>     argc       => nc
+>     argv       => v
+> 
+> For today's integration, I dealt with these as conflict resolution,
+> so let's keep review discussion going, and hope jk/strvec is in
+> 'master' by the time this topic becomes ready.
 
-That could be done atop this series if there is no other reason to
-re-roll.
+Understood. I will base this patch on the above series. Seems like a
+great series of  great change! BTW, I asked a couple of things in the
+cover-letter which I think you might have missed. Quoting them here:
+-----8<-----
+Also, I want to ask a couple of things:
 
-> > > -    git tag -a -m 'annotated' anno HEAD &&
-> > > +    git tag -a -m "annotated" anno HEAD &&
-> >
-> > There are a fair number of these quoted single-token arguments
-> > containing no special characters which don't actually need to be
-> > quoted at all, so an alternative would be simply to drop the quotes
-> > altogether, making the commands less syntactically noisy. However,
-> > that might be outside the intended scope of this change.
->
-> If we say that "don't use quotes if you don't need to" is a reasonable
-> thing to strive for, I can drop these in a reroll. I think I'll be
-> injecting a patch anyway for the "msg" you pointed out in t4200, so I
-> can certainly tweak this patch to be a bit more aggressive in dropping
-> unnecessary quotes.
+	1.Whether we can suppress the error message that we get when
+	  trying to find the summary of non-existent submodules?
+	  For example:
 
-No need. Matching the local convention makes sense, and I don't insist
-upon such a change at all. Mine was a non-actionable observation, and
-it's entirely subjective anyhow.
+	  fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or directory
+	   * my-subm 35b40f1...0000000:
 
-I don't feel strongly about whether the series should be re-rolled.
-It's true that dropping that dead code (mentioned above) would make more
-sense coming before the patch which fixes up the quoting, but it
-wouldn't bother me if the dead-code removal was done as a follow-on
-patch.
+	 Will it be OK to suppress the above error message?
+
+	2.Is it fine to document and expose the 'for-status' option in
+	  'git-submodule.txt'?
+----->8-----
+
+Regards,
+Shourya Shukla
