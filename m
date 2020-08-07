@@ -2,101 +2,174 @@ Return-Path: <SRS0=eX0j=BR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 760C5C433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 00:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B73A1C433DF
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 00:23:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E93A2075A
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 00:01:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B76D420855
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 00:23:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="auyq99Pg"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vOy6joSB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726104AbgHGABg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Aug 2020 20:01:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41410 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726027AbgHGABg (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 6 Aug 2020 20:01:36 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726149AbgHGAXL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Aug 2020 20:23:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65474 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbgHGAXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Aug 2020 20:23:10 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CAE3280C13;
+        Thu,  6 Aug 2020 20:23:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fZ/HwrntflL1kr6WqWnhVPzYm30=; b=vOy6jo
+        SBYpnsAv/8ytjVDeFzcka7FByxc5nDMeiv4z/13tHAt5nAdCJ2EhxHZtuSjAdfUI
+        Qs+Su1Qwtni4Im0VSUzENTypTwDLUCG8NoCRaxfQCp5w7TpQLyRG4HZbktuJ2/ee
+        HVjIZG+avm1rHkdqsjmJS0mdjo2HIaTBDYLJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QUZCp92mgqlPasYdXpruwElX4Tdy9rOM
+        ByGHLCRIYayauuYv+mb6VFC1JH0FpXd34EmG8fT4MccD/ty+HQjr4XcAt4t7xfc9
+        vdrroLLBdL4gp+42yqjqGlt4Ec0JD8UT6geL/psdMqcnof1eD/z8sEP93la5qZH7
+        xGeKszexa3o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C32F180C12;
+        Thu,  6 Aug 2020 20:23:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5B4ED60129;
-        Fri,  7 Aug 2020 00:01:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596758494;
-        bh=1g22xEyifFePCccW50EtuL85bPNMUbPMm3gB7tgbcpo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=auyq99PgEzpS1M9Cm4AQZz7p2mi9wdVb9/nHb+FEZKHzr879InfjQzA4inKPYusFA
-         7q0M/vsTUTMCucmUR/wAV5xxl2/X3laVtuTYHy2CdMfM79X8iOCI2nXaoP1EvAuepQ
-         MphODgg0Sag21bePouri/ZboZSu+mlb8oNjfIqRZtlj04UvtGd/n0uN05WXpmBf/gI
-         TKEQ8bxS9khzy1EXJqPOwotcBjKoXEm+m5vesmm7Dyveq3E97vHfOUaNCU4AFl0Xlv
-         E5HNHYxSXxm2c5jy1MndFcLswJyPPTEGP+8Ih8nRZfb5Fn5Q8IowRAxXBJNuVfPCt0
-         gPdo/z/Smibd7eYwCg5SqtP/muG29suhxj472xgv/U2Qa2kVGdwErDdYeit5GebZPi
-         dpkBOuZdNrV1/gYl2mFB7EcDDeHmtcZNLCs+f2ZE8dOmPvduQpKvOo50iX5Hq1BsAy
-         358tBHNt07amYruVvJB780g6uUMsQ5srtKsopXZ2y8piq08Ha7z
-Date:   Fri, 7 Aug 2020 00:01:26 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AE8B80C10;
+        Thu,  6 Aug 2020 20:23:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org
 Subject: Re: "#define precompose_argv(c,v) /* empty */" is evil
-Message-ID: <20200807000126.GC8085@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <xmqqy2mribft.fsf@gitster.c.googlers.com>
+        <20200807000126.GC8085@camp.crustytoothpaste.net>
+Date:   Thu, 06 Aug 2020 17:23:07 -0700
+In-Reply-To: <20200807000126.GC8085@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 7 Aug 2020 00:01:26 +0000")
+Message-ID: <xmqqpn83i9sk.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZmUaFz6apKcXQszQ"
-Content-Disposition: inline
-In-Reply-To: <xmqqy2mribft.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B404DB6-D844-11EA-A227-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---ZmUaFz6apKcXQszQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 2020-08-06 at 23:47:34, Junio C Hamano wrote:
+>> I am wondering if it is a good idea to use something like
+>> 
+>>     static inline void precompose_argv(int argc, const char **argv)
+>>     {
+>> 	; /* nothing */
+>>     }
+>> 
+>> instead.  As long as the compiler is reasonable enough, this should
+>> not result in any code change in the result, except that it would
+>> still catch wrong arguments, even if these two parameters are unused
+>> and optimized out.
+>
+> Yes, this seems like a prudent approach.  I believe it's widely used by
+> the Linux kernel, so presumably compilers are capable enough to optimize
+> it out.  As you noted, it provides type checking for all platforms,
+> which is nice.
 
-On 2020-08-06 at 23:47:34, Junio C Hamano wrote:
-> I am wondering if it is a good idea to use something like
->=20
->     static inline void precompose_argv(int argc, const char **argv)
->     {
-> 	; /* nothing */
->     }
->=20
-> instead.  As long as the compiler is reasonable enough, this should
-> not result in any code change in the result, except that it would
-> still catch wrong arguments, even if these two parameters are unused
-> and optimized out.
+So I hope the following (untested and not signed off yet) may lead
+us in the right direction?
 
-Yes, this seems like a prudent approach.  I believe it's widely used by
-the Linux kernel, so presumably compilers are capable enough to optimize
-it out.  As you noted, it provides type checking for all platforms,
-which is nice.
---=20
-brian m. carlson: Houston, Texas, US
+-- >8 --
+Subject: compat-util: type-check parameters of mocked functions
 
---ZmUaFz6apKcXQszQ
-Content-Type: application/pgp-signature; name="signature.asc"
+When there is no need to run a specific function on certain platforms,
+we often #define an empty function to swallow its parameters and
+make it into a no-op, e.g.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+    #define precompose_argv(c,v) /* no-op */
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXyyZ1gAKCRB8DEliiIei
-gU6/AQC0IlIPKKsClXoC0hW0eSMlcuTvSdSyYd7wUpwy0A5JUwD6Aqmktf1LaTtl
-VaNpbWY7oHpZnZ+F2doi1TL259+xag0=
-=hQ5P
------END PGP SIGNATURE-----
+While this guarantees that no unneeded code is generated, it also
+discards type and other checks on these parameters, e.g. a new code
+written with the argv-array API (diff_args is of type "struct
+argv_array" that has .argc and .argv members):
 
---ZmUaFz6apKcXQszQ--
+    precompose_argv(diff_args.argc, diff_args.argv);
+
+must be updated to use "struct strvec diff_args" with .nr and .v
+members, like so:
+
+    precompose_argv(diff_args.nr, diff_args.v);
+
+after the argv-array API has been updated to the strvec API.
+However, the "no oop" C preprocessor macro is too aggressive to
+discard what is unused, and did not catch such a call that was left
+unconverted.
+
+Using a "static inline" function whose body is a no-op should still
+result in the same binary with decent compilers yet catch such a
+reference to a missing field or passing a value of a wrong type.
+
+While at it, I notice that precompute_str() has never been used
+anywhere in the code, since it was introduced at 76759c7d (git on
+Mac OS and precomposed unicode, 2012-07-08).  Instead of turning it
+into a static inline, just remove it.
+
+---
+ git-compat-util.h | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5637114b8d..7a0fb7a045 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -252,8 +252,10 @@ typedef unsigned long uintptr_t;
+ #ifdef PRECOMPOSE_UNICODE
+ #include "compat/precompose_utf8.h"
+ #else
+-#define precompose_str(in,i_nfd2nfc)
+-#define precompose_argv(c,v)
++static inline void precompose_argv(int argc, const char **argv)
++{
++	; /* nothing */
++}
+ #define probe_utf8_pathname_composition()
+ #endif
+ 
+@@ -270,7 +272,9 @@ struct itimerval {
+ #endif
+ 
+ #ifdef NO_SETITIMER
+-#define setitimer(which,value,ovalue)
++static inline int setitimer(int which, const struct itimerval *value, struct itimerval *newvalue) {
++	; /* nothing */
++}
+ #endif
+ 
+ #ifndef NO_LIBGEN_H
+@@ -1231,8 +1235,14 @@ int warn_on_fopen_errors(const char *path);
+ #endif
+ 
+ #ifndef _POSIX_THREAD_SAFE_FUNCTIONS
+-#define flockfile(fh)
+-#define funlockfile(fh)
++static inline void flockfile(FILE *fh)
++{
++	; /* nothing */
++}
++static inline void funlockfile(FILE *fh)
++{
++	; /* nothing */
++}
+ #define getc_unlocked(fh) getc(fh)
+ #endif
+ 
