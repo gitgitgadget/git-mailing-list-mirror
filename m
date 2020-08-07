@@ -4,133 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E8CFC433E0
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 22:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9225C433E0
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 22:17:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D6DC2224D
-	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 22:15:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8105D2177B
+	for <git@archiver.kernel.org>; Fri,  7 Aug 2020 22:17:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H/6K+Ctr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A6Sko/Nr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbgHGWP3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Aug 2020 18:15:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60540 "EHLO
+        id S1726096AbgHGWRC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Aug 2020 18:17:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726015AbgHGWP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Aug 2020 18:15:28 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F42C061756
-        for <git@vger.kernel.org>; Fri,  7 Aug 2020 15:15:27 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id j23so1487075vsq.7
-        for <git@vger.kernel.org>; Fri, 07 Aug 2020 15:15:27 -0700 (PDT)
+        with ESMTP id S1726015AbgHGWRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Aug 2020 18:17:02 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C63C061756
+        for <git@vger.kernel.org>; Fri,  7 Aug 2020 15:17:02 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id i20so694318vkk.2
+        for <git@vger.kernel.org>; Fri, 07 Aug 2020 15:17:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jv5GgguYdS2Hgv4SRROZDKmrEzrUz0/Q3hatK9yyfEU=;
-        b=H/6K+Ctr/M30zossQsGRWwSbdHRwX2HhKg/yCMvIpip+BVc2ygtRc8M8vnt09ybj5d
-         tNaFxR5eUxuTInokj5tMJTndIH8+2jB1v7pigdgQgngAhvEpBWmbXfEG9MheN360ZSOB
-         R07EwiS26wtYxmc6rsyCz00cwRWYtH2PrFUvjiXcZTSKJBc1jT1eJEE+4bXICAppR7SR
-         q11hfsloG47fJCCYULQxXojR5847B5FFJ7y+VIyIgVx17JL9thtm6g08HPm6aqJmKPaX
-         A9yQuYEkWMt/5Fi17kuzMu6DErReLF0aSDFQkurcY6Gyl1K0JIYk8ULqgJs2MNB4tIYy
-         B63A==
+         :cc;
+        bh=JnYHsW8cyjvxYYBzAJX7y8Sy9kGOjG+iEw/rXLw99IA=;
+        b=A6Sko/Nrg0Xqtvums8yp9i2P5XKqc4xEc7LCop8HqzWxTRiJ4cdQOBUCcVXq5bijpo
+         j/rvSit7dcc79NGOCzmIye08Z2iqRBxgOXDrt9RokANhbS9iH+YRzSshJAnQ9dyfJ8Q5
+         BD+a15+C0CzM1f7PcuWHxN6st/Nbjag3V7V8N4BaksJbau464qJJx7dTr451RxswZiUI
+         d2+BMR7AFMSD1dLltmr3yE0KdejJoGVARDCf0Vf0zlEp649tmOd2Kfw14Cj7QYY4uUY+
+         dGVp3K96p0LFfJQ//14KY4UJVd8mjSGr2nm1H+bixzAScSrkAcJJ4mT2VizTAeaRSAoz
+         72eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jv5GgguYdS2Hgv4SRROZDKmrEzrUz0/Q3hatK9yyfEU=;
-        b=IV6jI3XXNveM+6qGBnIJDnqF0cLn22KoDiitFu/XREIpmjhRX53f+9mKRDm/I2DKZf
-         +HoAh0ifBP7BasWUwUdvc5s7pBhjQcn+XovF68JS2xh3cSolxxXNfQmIEroSmM7pk89l
-         bBNOAPHBAIeTM4tomZzYRw2KZAgmvk+MhhwjJ1Q0G3YtBDM2rAFf1mr8AEeB6KxLh1Ll
-         pacTe9LeUr97YriBaKwM/xwY1LOA784AeLElTzgMYzunPDd4yiv7ytdMZU3UFYM7DY3T
-         SFUk8wk5icdg8k6IryMRPE500GJApBLemim1Xxzl7+Yx9srAk/O+Rb4TLattTwr62QSw
-         965Q==
-X-Gm-Message-State: AOAM531S1ZkZ8i8uDB/aV9D7KvQYwV6aTgA7aWE+SoVRFyFj1409Q7ei
-        ibkVBzvYVGFNE2lnnxkBtZZy+lol0aKixUzga78=
-X-Google-Smtp-Source: ABdhPJyPKsb5ufu1yd15jVI0C1UFuOTKKKW9TIaRi726XwFFNDLa+w4KR0225CfLV7FUmPAyJe5N2OswjHTnf0Pudkk=
-X-Received: by 2002:a67:bb06:: with SMTP id m6mr13041912vsn.54.1596838526260;
- Fri, 07 Aug 2020 15:15:26 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=JnYHsW8cyjvxYYBzAJX7y8Sy9kGOjG+iEw/rXLw99IA=;
+        b=MnH5bfjRIqvrYwp7CH54tLjFQiRJ/l0bdxx4gPFd5NbQ6pE9InBr97/SwT1Wg6tMyV
+         T7x4AlCRJlc7T3VPXc6zBsPLmBdnhcOsAp75PqbiDWXSvTWwREz233yIbYj8NUmijqPs
+         l5zzc+vyQqVGBCvQvbenQjsjPlxwUdxyYdyvJx9zjFESas5xwhL/Dk1QE0Onf7bMDyRe
+         gBld5sMpjWyvAclsflZNl4EUlkI3qAV7vWQgKWEOj0RnDq65RJCAyqVr3B7uUq7tyClE
+         7Pi+olvBgHXfnU2nLzPy/33aWzfvhpiEk1ohWYWJajeM4OmZJoZqVsLJ39FCXtKD5X7t
+         D7xw==
+X-Gm-Message-State: AOAM533MBHzRjHh+2HQdHoQy2k2OzrB30n/EmznzQY866BkrgEMzhiFx
+        fLFWeUpT26yReVK0MeVtELBOD5Hl9ueUZ6my/9Y=
+X-Google-Smtp-Source: ABdhPJwMKB6vZhoOSG5evZo0mUpMhw5Cu+GvVIE2cQkraJNL1A0h/i0NldeaKDnPiDZpk9ynPs6m0iqmqBslfG+HR4c=
+X-Received: by 2002:a1f:320b:: with SMTP id y11mr13037251vky.57.1596838621207;
+ Fri, 07 Aug 2020 15:17:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200806202358.2265705-1-martin.agren@gmail.com>
- <20200806230837.GA8085@camp.crustytoothpaste.net> <CAN0heSptiJL9d86ZeNPMUaZeTA68juwTyf3K-uWR=K-vt=1Hrg@mail.gmail.com>
- <xmqqr1sifaeu.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1sifaeu.fsf@gitster.c.googlers.com>
+References: <pull.695.git.1596728921.gitgitgadget@gmail.com> <2b9deb6d6a23e53bec75e109f2e3ef9217420425.1596728921.git.gitgitgadget@gmail.com>
+In-Reply-To: <2b9deb6d6a23e53bec75e109f2e3ef9217420425.1596728921.git.gitgitgadget@gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 8 Aug 2020 00:15:13 +0200
-Message-ID: <CAN0heSqyBzW_+vWSAxV9O1XAJKmQgrhCms7mSa+hFFx35uU05w@mail.gmail.com>
-Subject: Re: [PATCH] Documentation: mark `--object-format=sha256` as experimental
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Sat, 8 Aug 2020 00:16:48 +0200
+Message-ID: <CAN0heSqZ=nQzHiuLVCYcNfm34DO=4aSpsNPL4scyTV=vK1ssOQ@mail.gmail.com>
+Subject: Re: [PATCH 01/11] maintenance: create basic maintenance runner
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Josh Steadmon <steadmon@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>, sluongng@gmail.com,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 7 Aug 2020 at 22:50, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, 6 Aug 2020 at 19:57, Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
-> >> I'm fine with marking the functionality experimental for a few release=
-s,
-> >> since it is possible we have bugs people haven't found, and adding a
-> >> note about interoperability after that point, since I think that's a
-> >> fair and valuable issue.  I think if we go a few releases without any
-> >> major issues, we can change this to the following:
-> >>
-> >>   Note that a SHA-256 repository cannot yet share work with "regular"
-> >>   SHA-1 repositories.  Many tools do not yet understand SHA-256
-> >>   repositories, so users may wish to take this into account when
-> >>   creating new repositories.
-> >
-> > With respect, I think that's too aggressive. By that time, we may
-> > conclude that, e.g., the "v2 pack indices with SHA-256" file handling i=
-s
-> > robust. But I'd be surprised if using `git init --object-format=3Dsha25=
-6`
-> > in June 2021 won't cause *some* extra work for users or ourselves
-> > further down the line compared to using a regular SHA-1 `git init`.
-> > Pushing to a SHA-1 hosting service will become *possible* at some point=
-,
-> > but maybe it won't be *efficient enough to be practical in the real
-> > world* until some time after that.
->
-> IOW, you question "if we go a few releases without any major issues"
-> part?  I tend to agree that for a large change like this, a few
-> releases may not be sufficiently long time for a feature that is
-> marked as experimental in big flashing red letters to get exercised
-> enough to get major issues noticed.
+> +DESCRIPTION
+> +-----------
+> +Run tasks to optimize Git repository data, speeding up other Git commands
+> +and reducing storage requirements for the repository.
+> ++
 
-Yeah, thanks for summarizing what I failed to express using so many
-words.
+This "+" and the one below render literally so you would want to drop
+them. (You're not in any kind of "list" here, so no need for a "list
+continuation".)
 
-I'm fully open to the idea that some people want to leave SHA-1 behind
-and that they can do it today, in some "local" sense. If those people
-are fully aware that they are guinea pigs, it might actually be ok for
-us to subject them to a few rounds of "oops, Git v2.32.0 produces data
-that v2.34.0 and later will barf on". Or at least it would be on our
-table whether we wanted to be that cavalier.
-
-Once SHA-256 repos as such are no longer experimental, I fear that we
-can only buy ourselves that leeway by introducing fiftyeleven different
-config flags for "please produce auxiliary files X even if you don't
-actually use them", "please do use X, and I'm fully expecting to trip on
-them if you decide to tweak them in backwards-incompatible ways", and so
-on. The alternative to buying such leeway might be to establish, pretty
-early on, a respectable set of things we support "for compatibility
-reasons".
-
-> > Now would probably be a good time to update the hash transition
-> > documents, first of all to tick off what we've already done, and second=
-,
-> > to reassess the rest.
->
-> Yes, it is a good idea to stop and see where in the overall large
-> picture we currently are.
+> +Git commands that add repository data, such as `git add` or `git fetch`,
+> +are optimized for a responsive user experience. These commands do not take
+> +time to optimize the Git data, since such optimizations scale with the full
+> +size of the repository while these user commands each perform a relatively
+> +small action.
+> ++
+> +The `git maintenance` command provides flexibility for how to optimize the
+> +Git repository.
 
 Martin
