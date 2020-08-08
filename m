@@ -7,89 +7,99 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A21EC433DF
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 08:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7347DC433DF
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 09:11:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0618F2075D
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 08:48:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D01620855
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 09:11:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mgTLg8LZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RmpmoOBQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbgHHIs4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 04:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44642 "EHLO
+        id S1726250AbgHHJLS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 05:11:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725957AbgHHIsz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 04:48:55 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 388E8C061756
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 01:48:55 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id u15so1072459uau.10
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 01:48:55 -0700 (PDT)
+        with ESMTP id S1725786AbgHHJLR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 05:11:17 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 024AFC061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 02:11:16 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id r2so3717609wrs.8
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 02:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wPDRb8zGbVm1JcOe67r9EyEaJovIdXQW6Gg+QeGL55M=;
-        b=mgTLg8LZh+8xC8vCFpv7Z8yRF8g8T2oCk58yQzzUrCMBDJ6PVCPYb7Sni9jo1I6M0A
-         9fSmn8pbW9mrqjEG3q1bANTMWtZCL9Te/F06I/mkBNl+wcWZ0cMQFMverRlSAx6fYdaC
-         r8Jw9ihD7TXRLozsQWMoNYfC+l6VB/Js6KfCr04YQv+eRHvbor9JBYMkNjf5auMEiWON
-         /mgj/NBxCPI1Ej5ivAoUeE2lrQuMP68yJlRqMBDaR0p3k7MgXmAopAzUGtjD4RD1Pkqu
-         dn1gPGLac9sCsC+yTz1+hisaX96+r/pGKEE+fR3Pqt3JgXTblaWJ4QPjXuklgp1vccZy
-         b8PA==
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=TTAzfsJQiVUJTw8cAKaN4Dn4PSJQ6AVPytpq3uhzCpE=;
+        b=RmpmoOBQzKAj2sleRckcj4WuXmfeczHv3QfpoNnyhnI3zSLxL6PMqiSs1Eo6W0zizO
+         aSheuCTXd7hc0CqnlYlhzToFLgmiOhOQX88HbMKT/p26SxTvDHNs7pQEz9Tbogdgv2jR
+         481Fvje84pMIxDRqR2UFWJqMt3QrrvokVctidsrPDy8v24xrFNTgbt9e9b8Sg6v4NbJP
+         k5VBPj5ViHD5v2pF2p2lnMyt5x2tVpxP/Y9GT0wRbT3xp7rSYGb/gOWOtvQzKoG5htn1
+         9SQilS5KgLuc4w83mebIqN9CQCrQbng6c6sABdDVlVwAm4DmIvOCP7wQJd9Fah/lfVAC
+         ZU5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wPDRb8zGbVm1JcOe67r9EyEaJovIdXQW6Gg+QeGL55M=;
-        b=aKEwmBAixBpv42D0wjL2tN+V1+Rk5CCNrn+Pw0AuXSaHnxBzDIlCPTEjzK7bwSkN7W
-         BawOuupePxx1gH1UQgLZcfH2QqnQPlcYuJAjZi5o5GqDFEAe66HZ/GLkKvAYoaNOpRnb
-         9TxpRPT7gKQU4mpy6mJgeckB6LDdoigEjgskoip1NUBHMJD9mE4dUxlD8DNdacpdcS0e
-         KgoONxUOrGXIY5dx1jFdd4JSKGGtOT87/S4+yB2NvV5G9gV7FGtBGi/vaI0QHaRQXsE3
-         eIZCtL6bnAumbPi9Va58+D4xG41buSgd/lJzQ7Ot2zREgJaDMrMo+qk1BIGsg6zQJw8O
-         m8Eg==
-X-Gm-Message-State: AOAM530+ShDzb7MhuqAvqp0ffnalbap3XuwiLIF8hyQwnAsnBPQz4u9G
-        fvpRnirs3TyCs6mqIuuyx5s5qd5L2MpuMp+VK/kgdR1wIlI=
-X-Google-Smtp-Source: ABdhPJzzLkWKCKYk443Zhr/l2zjdTtAfkebghzS8/6Edd98b6fjJoZ0fJoJJD/a+DmBDZu0I2FZhOsZnDHMPMkELZSg=
-X-Received: by 2002:ab0:7458:: with SMTP id p24mr9444838uaq.112.1596876532297;
- Sat, 08 Aug 2020 01:48:52 -0700 (PDT)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=TTAzfsJQiVUJTw8cAKaN4Dn4PSJQ6AVPytpq3uhzCpE=;
+        b=poSpkkqOdctI6QHRrKYQ0a9NqiwMfOI/opTKSu3HL50QnqKbHrSDGBT4gDVtRpmygZ
+         4C8HKkK8b1cRh3wBpg/PgXM9iYG3fzaUZUU5vjisQHsaEdjnKk4MzsP9Bcnu1LvEUKGC
+         er5p1d8NcTic38cUYrnn+WIVJnh+xp5zPHQ4tzAI8Ix9AIVN7S/+yn7WRaOezpRba7WM
+         l5GAPHbivdHTrfbIBSZsHXwM3i51yNA3KdqInoiujVLVBTM24+wMUCAHAMiGh7qXTeh+
+         ecauVZ1JDCC9cBdkp+u0IUbp7dF5Z1xqBM2+rJZuDpkbF2ayWHpl41PKZ4IGiB8qWa83
+         S6fQ==
+X-Gm-Message-State: AOAM533YMwv+zDzLsDIIlmwYKQSJLY2DkbHAPtA3bHc5z1aaIq0y23nB
+        Ryf8r5EKd6+WItHA5aTfbpU=
+X-Google-Smtp-Source: ABdhPJyY7pNSmX69LDnUAxE5ScyrEef/Qcjv6hWEvuUw1TLv8KIFduTnCGeNBP3KGqw5s9QegJTohA==
+X-Received: by 2002:adf:eecb:: with SMTP id a11mr16035926wrp.339.1596877874093;
+        Sat, 08 Aug 2020 02:11:14 -0700 (PDT)
+Received: from doriath (eth-east-parth2-46-193-68-89.wb.wifirst.net. [46.193.68.89])
+        by smtp.gmail.com with ESMTPSA id g14sm13124211wmk.37.2020.08.08.02.11.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Aug 2020 02:11:13 -0700 (PDT)
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+X-Google-Original-From: Damien Robert <damien.olivier.robert+git@gmail.com>
+Date:   Sat, 8 Aug 2020 11:11:03 +0200
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Andreas Schwab <schwab@linux-m68k.org>,
+        Andreas Schwab <schwab@suse.de>,
+        Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Birger Skogeng Pedersen <birgersp@gmail.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        Ed Maste <emaste@freebsd.org>, Fangyi Zhou <me@fangyi.io>,
+        Fangyi Zhou <fangyi.zhou@yuriko.moe>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Jiang Xin <xin.jiang@huawei.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Kevin Willford <Kevin.Willford@microsoft.com>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Peter Kaestle <peter@piie.net>,
+        Peter Kaestle <peter.kaestle@nokia.com>,
+        Sun Chao <sunchao9@huawei.com>, Sun Chao <16657101987@163.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH RESEND] Update .mailmap
+Message-ID: <20200808091103.rh5iur5sopgnlfcw@doriath>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Sat, 08 Aug 2020 11:07:50 +0200
+References: <xmqqy2muqddg.fsf@gitster.c.googlers.com>
+ <20200805065408.1242617-1-martin.agren@gmail.com>
 MIME-Version: 1.0
-References: <20200806060119.74587-1-ray@ameretat.dev> <20200808075323.36041-1-ray@ameretat.dev>
-In-Reply-To: <20200808075323.36041-1-ray@ameretat.dev>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 8 Aug 2020 10:48:40 +0200
-Message-ID: <CAN0heSoVs+ApvanSOGZJeOvy5DNEMrMAZ41BKUkchmfVE2kTjg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] diff-lib: use worktree mode in diffs from i-t-a entries
-To:     "Raymond E. Pasco" <ray@ameretat.dev>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200805065408.1242617-1-martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 8 Aug 2020 at 09:55, Raymond E. Pasco <ray@ameretat.dev> wrote:
->
-> When creating "new file" diffs against i-t-a index entries, diff-lib
-> erroneously used the mode of the cache entry rather than the mode of the
-> file in the worktree. This changes run_diff_files() to correctly use the
-> mode of the worktree file in this case.
+From Martin Ågren, Wed 05 Aug 2020 at 08:54:08 (+0200) :
+> Use the one from their "Signed-off-by":
+>  * Damien Robert
+> +Damien Robert <damien.olivier.robert+git@gmail.com> <damien.olivier.robert@gmail.com>
 
-Good catch!
+Ack.
 
-Describing the current state of affairs and using imperative mode, it
-could be something like:
-
-  When creating "new file" diffs against i-t-a index entries, diff-lib
-  erroneously uses the mode of the cache entry rather than the mode of
-  the file in the worktree. Change run_diff_files() to correctly use the
-  mode of the worktree file in this case.
-
-More importantly:
-
-I can confirm that the bug is there before your patch and that your
-patch fixes it. Could you add a test in this patch so we can trust that
-this stays fixed?
-
-Martin
+Thanks!
