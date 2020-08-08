@@ -2,183 +2,101 @@ Return-Path: <SRS0=OIeF=BS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A408DC433DF
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 21:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB29CC433E0
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 23:26:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8362E206B5
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 21:37:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90934206C0
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 23:26:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PhdwHcqa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726212AbgHHVhH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 17:37:07 -0400
-Received: from aibo.runbox.com ([91.220.196.211]:59116 "EHLO aibo.runbox.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726069AbgHHVhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 17:37:06 -0400
-Received: from [10.9.9.73] (helo=submission02.runbox)
-        by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <me@pluvano.com>)
-        id 1k4WWV-0003gg-Bf; Sat, 08 Aug 2020 23:37:03 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated alias (964124)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1k4WWD-0004h8-JV; Sat, 08 Aug 2020 23:36:46 +0200
-From:   Emma Brooks <me@pluvano.com>
-To:     git@vger.kernel.org
-Cc:     Emma Brooks <me@pluvano.com>,
-        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Map names/emails with mailmap
-Date:   Sat,  8 Aug 2020 21:34:58 +0000
-Message-Id: <20200808213457.13116-1-me@pluvano.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200730041217.6893-1-me@pluvano.com>
-References: <20200730041217.6893-1-me@pluvano.com>
+        id S1726040AbgHHX0W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 19:26:22 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58517 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725950AbgHHX0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 19:26:20 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 037D5DB269;
+        Sat,  8 Aug 2020 19:26:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=I8npYBbkaefemqg490UX5kmu5pE=; b=PhdwHc
+        qai9ZM1E71SJdVwf2Gmokl9MwEUvE3bUxo/RNKBfdoWxzuja+RTTiaHgCRdiVmPS
+        T+uhHC/qHRfw8foR6kxODldReaboQlWoLn9yhGTJ3AhNGDWCQVOMNPxWbTwwc76m
+        jGpRnkFuB3+XrnCiePOVxLvEBNRxMXJByGzIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=omRkK6nARpuw+9vy4uEc2lNkaZlMI/cx
+        vVyJ150SFXXh/lSBz6ADdGc8TCYPqL/5A1aMP2/XRFua04af0N2EhD6Z+8a1FkfY
+        zdDYtf3usT8br9ZQRNsoN8heRfUoUlo+ArBwf0pVVFyJ6YIXeduv8UIDduh94CJP
+        J5jhfAUdRc4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E2A67DB268;
+        Sat,  8 Aug 2020 19:26:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28DDCDB267;
+        Sat,  8 Aug 2020 19:26:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 1/5] submodule: expose the '--for-status' option of summary
+References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
+        <20200806164102.6707-2-shouryashukla.oo@gmail.com>
+        <831df9f2-0663-0dfc-0871-d34864d1ecde@gmail.com>
+        <CAP8UFD20ORozywSAV+Qayuf_vwve9A21ySAtTZVphwhv5nYWXg@mail.gmail.com>
+Date:   Sat, 08 Aug 2020 16:26:14 -0700
+In-Reply-To: <CAP8UFD20ORozywSAV+Qayuf_vwve9A21ySAtTZVphwhv5nYWXg@mail.gmail.com>
+        (Christian Couder's message of "Sat, 8 Aug 2020 22:25:10 +0200")
+Message-ID: <xmqqv9hsen3d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8E487FEC-D9CE-11EA-A7AB-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an option to map names and emails to their canonical forms via a
-.mailmap file. This is enabled by default, consistent with the behavior
-of Git itself.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Signed-off-by: Emma Brooks <me@pluvano.com>
----
- Documentation/gitweb.conf.txt |  5 +++
- gitweb/gitweb.perl            | 81 +++++++++++++++++++++++++++++++++--
- 2 files changed, 82 insertions(+), 4 deletions(-)
+> Yeah, I agree that finding a good name and a good use case for the
+> option would surely help.
 
-diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-index 7963a79ba9..2d7551a6a5 100644
---- a/Documentation/gitweb.conf.txt
-+++ b/Documentation/gitweb.conf.txt
-@@ -751,6 +751,11 @@ default font sizes or lineheights are changed (e.g. via adding extra
- CSS stylesheet in `@stylesheets`), it may be appropriate to change
- these values.
- 
-+mailmap::
-+	Use mailmap to find the canonical name/email for
-+	committers/authors (see linkgit:git-shortlog[1]). Enabled by
-+	default.
-+
- highlight::
- 	Server-side syntax highlight support in "blob" view.  It requires
- 	`$highlight_bin` program to be available (see the description of
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0959a782ec..1ca495b8b4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -505,6 +505,12 @@ sub evaluate_uri {
- 		'override' => 0,
- 		'default' => ['']},
- 
-+	# Enable reading mailmap to determine canonical author
-+	# information. Enabled by default.
-+	'mailmap' => {
-+		'override' => 0,
-+		'default' => [1]},
-+
- 	# Enable displaying how much time and how many git commands
- 	# it took to generate and display page.  Disabled by default.
- 	# Project specific override is not supported.
-@@ -3490,6 +3496,63 @@ sub parse_tag {
- 	return %tag
- }
- 
-+# Contents of mailmap stored as a referance to a hash with keys in the format
-+# of "name <email>" or "<email>", and values that are hashes containing a
-+# replacement "name" and/or "email". If set (even if empty) the mailmap has
-+# already been read.
-+my $mailmap;
-+
-+sub read_mailmap {
-+	my %mailmap = ();
-+	open my $fd, '-|', quote_command(
-+		git_cmd(), 'cat-file', 'blob', 'HEAD:.mailmap') . ' 2> /dev/null'
-+		or die_error(500, 'Failed to read mailmap');
-+	return \%mailmap if eof $fd;
-+	foreach (split '\n', <$fd>) {
-+		next if (/^#/);
-+		if (/(.*)\s+ <([^<>]+)>\s+ ((?:.*\s+)? <[^<>]+>) (?:\s+\#)/x ||
-+		    /(.*)\s+ <([^<>]+)>\s+ ((?:.*\s+)? <[^<>]+>)/x) {
-+			# New Name <new@email> <old@email>
-+			# New Name <new@email> Old Name <old@email>
-+			$mailmap{$3} = ();
-+			($mailmap{$3}{name} = $1) =~ s/^\s+|\s+$//g;
-+			$mailmap{$3}{email} = $2;
-+		} elsif (/(?: <([^<>]+)>\s+ | (.+)\s+ ) (<[^<>]+>) (?:\s+\#)/x ||
-+		         /(?: <([^<>]+)>\s+ | (.+)\s+ ) (<[^<>]+>)/x) {
-+			# New Name <old@email>
-+			# <new@email> <old@email>
-+			$mailmap{$3} = ();
-+			if ($1) {
-+				$mailmap{$3}{email} = $1;
-+			} else {
-+				($mailmap{$3}{name} = $2) =~ s/^\s+|\s+$//g;
-+			}
-+		}
-+	}
-+	return \%mailmap;
-+}
-+
-+# Map author name and email based on mailmap. A more specific match
-+# ("name <email>") is preferred to a less specific one ("<email>").
-+sub map_author {
-+	my $name = shift;
-+	my $email = shift;
-+
-+	if (!$mailmap) {
-+		$mailmap = read_mailmap;
-+	}
-+
-+	if ($mailmap->{"$name <$email>"}) {
-+		$name = $mailmap->{"$name <$email>"}{name} || $name;
-+		$email = $mailmap->{"$name <$email>"}{email} || $email;
-+	} elsif ($mailmap->{"<$email>"}) {
-+		$name = $mailmap->{"<$email>"}{name} || $name;
-+		$email = $mailmap->{"<$email>"}{email} || $email;
-+	}
-+
-+	return ($name, $email);
-+}
-+
- sub parse_commit_text {
- 	my ($commit_text, $withparents) = @_;
- 	my @commit_lines = split '\n', $commit_text;
-@@ -3517,8 +3580,13 @@ sub parse_commit_text {
- 			$co{'author_epoch'} = $2;
- 			$co{'author_tz'} = $3;
- 			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
--				$co{'author_name'}  = $1;
--				$co{'author_email'} = $2;
-+				my ($name, $email) = @_;
-+				if (gitweb_check_feature('mailmap')) {
-+					($name, $email) = map_author($1, $2);
-+					$co{'author'} = "$name <$email>";
-+				}
-+				$co{'author_name'}  = $name;
-+				$co{'author_email'} = $email;
- 			} else {
- 				$co{'author_name'} = $co{'author'};
- 			}
-@@ -3527,8 +3595,13 @@ sub parse_commit_text {
- 			$co{'committer_epoch'} = $2;
- 			$co{'committer_tz'} = $3;
- 			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
--				$co{'committer_name'}  = $1;
--				$co{'committer_email'} = $2;
-+				my ($name, $email) = @_;
-+				if (gitweb_check_feature('mailmap')) {
-+					($name, $email) = map_author($1, $2);
-+					$co{'committer'} = "$name <$email>";
-+				}
-+				$co{'committer_name'}  = $name;
-+				$co{'committer_email'} = $email;
- 			} else {
- 				$co{'committer_name'} = $co{'committer'};
- 			}
+That makes it sound like a solution looking for a problem.
+
+The option was added and discussed in [*1*], and it was quite clear
+that it was merely an implementation detail to show the same info as
+"git submodule summary" in a format that would fit better in the
+context of "git status".  I doubt that anything changed since then
+in the past 12 years to make the option deserve more attention by
+the end users, but what this patch (which is the first in a 5-patch
+series) does may be worth doing if a later patch in the series
+serves as that "good use case".
+
+On the other hand, if there is no such "good use case" example in
+the other changes in this series, the option can and should be kept
+as an implementation detail of "git status", I would think.
+
+Thanks.
+
+
+[Reference]
+
+*1*
+https://lore.kernel.org/git/1205416085-23431-1-git-send-email-pkufranky@gmail.com/
+
