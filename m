@@ -2,136 +2,116 @@ Return-Path: <SRS0=OIeF=BS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EAF6C433E0
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 13:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF1EDC433DF
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 14:21:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 793C120747
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 13:47:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C437120748
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 14:21:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gJjBu0En"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VFOdGJOd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726346AbgHHNrl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 09:47:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33736 "EHLO
+        id S1726238AbgHHOVn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 10:21:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726233AbgHHNrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 09:47:40 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5474C061756
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 06:47:38 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id f18so10451295wmc.0
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 06:47:38 -0700 (PDT)
+        with ESMTP id S1726202AbgHHOVm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 10:21:42 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F39C061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 07:21:41 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id a1so2147734vsp.4
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 07:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=57UwoMRKgAxjnPYgIn7ufJZZ8CJxDqUSXsb548WzLJM=;
-        b=gJjBu0EnC+DWMq8U8FaXuD7zXlzrGypgvtRAf5iauBh/wsF/Lf1XIK3Zstg+imqSX+
-         bgKpsi7F1l3bG4jF5aFktmKspQ33lBwoSFFaArBsO2r49d6eHx7u4VJgvCYKFeaYK234
-         d81DfzXKHc9Otg4fEnykyTp/OkimCY7hWIvwfhrqz+Cp3CoztEEDY0gx0i2Ao86lgRGh
-         C88viK/8ceQaWQij+s/iGzUwFw4oi1UcrtAWy9dZlHEf2yUNtAcRKDfgZEFSF1Q7xdZm
-         4P+s0r4IhBtoSj/c9QKHcPpty4Aho7TRiY+0lVH+HGFvvdusCadJRCW7FACwyZuAbWK2
-         DUeA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=iqsJsJmAGpPFrfQxuRGPao0Glf/PT5qijTPdRzg3Uic=;
+        b=VFOdGJOd0qfCKCDilDS0bBVqPcyh4PhyVjgbp1A74HhM7H+jiZKJPAt9T/J6/d0ZC0
+         6xRNTdN5J3uSIkZ/A4VYCi4dzE3MUwgN7ciOZeTDcsZDeSNQ1ZsGKCo4Ys10SbWe7awr
+         FNF9iGiM9fa5yKCCeC2Ku1sN0/FlJXnK1wPPjTmBi0xgoXxEiIrGc0mXmYd9JgEukHlr
+         VLkqPCg8um5nIr9kPIW1MKnWa6UlTGhLNleInMOK5HLxNwvcugVBstzBpZKgZ4JGR6iO
+         O1HbNC3FASItoKS//brqcE2/icOgo9RR70++0AL5Ny9/U1tin9usgV953Ye2uu93YvlK
+         5q5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=57UwoMRKgAxjnPYgIn7ufJZZ8CJxDqUSXsb548WzLJM=;
-        b=mPYCbX/OcILu32LKnuUm3EzyntbtT+cnCIBjG1ip/lcgouD/wFMTyEAqxJ5U3O59Sb
-         BVRD+CM9x4F1i/opnRIFhu1IUb2w3b5t9PvN4NkLZb9BsYtME0HXyoqOFt6GStrYRj4+
-         31iilKCAfXY+14d4//ZjQjVwWxHFlbmjcoFtMfgNKng6eDSaJQu/QL69ZmHjXJX5CYmI
-         ynjHYvQJ+SJme1gXZ2IwwxX6lOGbMKIYaIo7U/oAOCSgOUx2tY4AnDg5X36k2JVoPaBE
-         7K1oC0WRdbG/PVF1B8tvHoNPpNkMAvNX0y1MEj8dZAGCof9pkuvhoAsLGyMln8omL4ai
-         TQgA==
-X-Gm-Message-State: AOAM533xpsZ9UKitmGmcK6OLO2xtywI0HXYmf1tHZgbFIC4B22G1srft
-        IZNaBYqFxX/e/+4bsA4Bk5RlG/w2
-X-Google-Smtp-Source: ABdhPJwxVEL7iO1cnBTdTuJqxR89MJhNEOFhH/peFenbkS25rpDXmN7eEf+vtnGAAT8peSrgqZlZ8g==
-X-Received: by 2002:a1c:bc0b:: with SMTP id m11mr17579017wmf.83.1596894455368;
-        Sat, 08 Aug 2020 06:47:35 -0700 (PDT)
-Received: from [192.168.1.240] (161.252.189.80.dyn.plus.net. [80.189.252.161])
-        by smtp.gmail.com with ESMTPSA id f16sm12917033wro.34.2020.08.08.06.47.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Aug 2020 06:47:34 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 1/3] apply: allow "new file" patches on i-t-a entries
-To:     "Raymond E. Pasco" <ray@ameretat.dev>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20200806060119.74587-1-ray@ameretat.dev>
- <20200808074959.35943-1-ray@ameretat.dev>
- <20200808074959.35943-2-ray@ameretat.dev>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <ce8ba994-2b0c-ecb6-51f0-44b5058bb0b1@gmail.com>
-Date:   Sat, 8 Aug 2020 14:47:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iqsJsJmAGpPFrfQxuRGPao0Glf/PT5qijTPdRzg3Uic=;
+        b=ouV7VYag8zaumEB1iY0nvz+Lg4i8/zD8yX76HkJjK3TwVepb9IXH0yRvKs+g+9HaHL
+         /yn04swyQhIpZCpq3gItq7iuWljZv4UKrBUxStUt594ZeSEwzCJndumzuOcqbsdevQq4
+         V/r/D1jUSbromo/lV9Wvk7BBZ8Kl1NvfsCq9OEcWo4OB5WJGNTg40mGbVcwp+noWdbUE
+         yyL6GwxXwbGwNmhUpT+6KpZh3nba/f0fgRKkVtLzIlXqR/IAvKdV4I/pBx4/1fJjAbUw
+         veF5zIJpVu9OGpTTfHVQM4DGoWcOzT9CFABJY6Nw5Mft3HvtUcoKCCPb/K0vVbq5/G8S
+         y8tA==
+X-Gm-Message-State: AOAM531wugd+g7S3dlKLGhbeDNsX4XoFY9XPFhVa3084mT0gvJUui6Nf
+        dkWIVLJeWtx8WRZVeLOHcvmgUww5575+UQBrkXXsssC0yAY=
+X-Google-Smtp-Source: ABdhPJy+faXUPuUIRRPD2ir6lZFAHgpmLqAt8xtIi2ST/rvuYKjGih9L++yLNzmCPkE5M9fghktjEd9cYSIr3wSfAQw=
+X-Received: by 2002:a67:bb06:: with SMTP id m6mr14959651vsn.54.1596896501163;
+ Sat, 08 Aug 2020 07:21:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200808074959.35943-2-ray@ameretat.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <CAN0heSoVs+ApvanSOGZJeOvy5DNEMrMAZ41BKUkchmfVE2kTjg@mail.gmail.com>
+ <C4RJZM9BYO1C.21M5GRE871JIN@ziyou.local>
+In-Reply-To: <C4RJZM9BYO1C.21M5GRE871JIN@ziyou.local>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 8 Aug 2020 16:21:28 +0200
+Message-ID: <CAN0heSpY5w5n71C24bNSfJr3tThbVQgHxKS4Wb4PvEECCYHu-A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] diff-lib: use worktree mode in diffs from i-t-a entries
+To:     "Raymond E. Pasco" <ray@ameretat.dev>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Raymond
+On Sat, 8 Aug 2020 at 13:24, Raymond E. Pasco <ray@ameretat.dev> wrote:
+>
+> On Sat Aug 8, 2020 at 4:48 AM EDT, Martin =C3=85gren wrote:
+> > Describing the current state of affairs and using imperative mode, it
+> > could be something like:
+> >
+> > When creating "new file" diffs against i-t-a index entries, diff-lib
+> > erroneously uses the mode of the cache entry rather than the mode of
+> > the file in the worktree. Change run_diff_files() to correctly use the
+> > mode of the worktree file in this case.
+>
+> I see both styles around in the tree (past for the state of the world
+> before this patch, present for the state of the world as of this patch,
+> vs. present for the state of the world just before and just after
+> applying this patch). Neither is unreadable to me so I just want to do
+> whatever's the standard around here.
 
-On 08/08/2020 08:49, Raymond E. Pasco wrote:
-> diff-files recently changed to treat changes to paths marked "intent to
-> add" in the index as new file diffs rather than diffs from the empty
-> blob.  However, apply refuses to apply new file diffs on top of existing
-> index entries, except in the case of renames. This causes "git add -p",
-> which uses apply, to fail when attempting to stage hunks from a file
-> when intent to add has been recorded.
-> 
-> This changes the logic in check_to_create() which checks if an entry
-> already exists in an index in two ways: first, we only search for an
-> index entry at all if ok_if_exists is false; second, we check for the
-> CE_INTENT_TO_ADD flag on any index entries we find and allow the apply
-> to proceed if it is set.
+Yeah, there are all kinds of log messages in the history.
+SubmittingPatches (search for "imperative") recommends this way of
+writing.
 
-Thanks for working on this, I got stung by not being able to apply a 
-patch because the path was marked i-t-a recently
+> (I'm not convinced, as a matter of grammar, that the
+> commit-message-present verb form is really in the imperative mood; I
+> think the freeform nature of English grammar obscures that it's the
+> present active infinitive, analogous to, say, the fact that a French
+> software program with an "open file" button will say "ouvrir" and not
+> "ouvrez".)
 
-Best Wishes
+When you put it that way, I'm also not sure. :-)
 
-Phillip
+> The whole set of i-t-a diffing behaviors needs a test suite (unless I've
+> grepped very poorly), which will come in another patchset. t4140 in this
+> thread's main patchset assumes they work.
 
-> 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
-> ---
->   apply.c | 11 +++++++----
->   1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/apply.c b/apply.c
-> index 8bff604dbe..4cba4ce71a 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -3747,10 +3747,13 @@ static int check_to_create(struct apply_state *state,
->   {
->   	struct stat nst;
->   
-> -	if (state->check_index &&
-> -	    index_name_pos(state->repo->index, new_name, strlen(new_name)) >= 0 &&
-> -	    !ok_if_exists)
-> -		return EXISTS_IN_INDEX;
-> +	if (state->check_index && !ok_if_exists) {
-> +		int pos = index_name_pos(state->repo->index, new_name, strlen(new_name));
-> +		if (pos >= 0 &&
-> +		    !(state->repo->index->cache[pos]->ce_flags & CE_INTENT_TO_ADD))
-> +			return EXISTS_IN_INDEX;
-> +	}
-> +
->   	if (state->cached)
->   		return 0;
->   
-> 
+I did grep a little when I wrote my previous reply and I didn't find
+anything either.
+
+I guess you could add a very small testcase here and then base that
+future series on top of this commit. Or in lieu of a test, maybe this
+could be used:
+
+  Tested-by: Martin =C3=85gren <martin.agren@gmail.com>
+
+Martin
