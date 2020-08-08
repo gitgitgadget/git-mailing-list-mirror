@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00430C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8A37C433DF
 	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 17:01:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2A96206CD
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 17:01:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 991BA206CD
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 17:01:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QffX0iUb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dbj22Cu4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgHHRBs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 13:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34966 "EHLO
+        id S1726542AbgHHRBt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 13:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726418AbgHHRBa (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726200AbgHHRBa (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 8 Aug 2020 13:01:30 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7272CC061756
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1877CC061A28
         for <git@vger.kernel.org>; Sat,  8 Aug 2020 10:01:30 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id q76so4583989wme.4
+Received: by mail-wr1-x42d.google.com with SMTP id r4so4411521wrx.9
         for <git@vger.kernel.org>; Sat, 08 Aug 2020 10:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=R5WjzEx3d6LDRLe3qK/6OQvPeGsDYxYmhtGaQrPi7Ww=;
-        b=QffX0iUbSPIVNbYGVbpuUw5GRbA9NziK99r7gecWHiS8sniFDbURyEI9geIYMCZpx3
-         DOA4fztvd+qaliHLNrxiguLVTpi5mSm/RQlc7sJP4iXizG2l5bSToW2mP1HNJrK9D/Nz
-         51FtCrBxhocb2luFoiey8bGILKlDEuXoNBEmmgPrG3kiRVnk3QYAeGw+6FjKppkUC4Hk
-         LooemMYXL23fFREQDAV9EVJPyD0V9W/eyRowFgpG/HcznJ+PIEF4RFN6TA2YoZs3RN/o
-         oUX6061IQCXZykX84ycsb2byWedroT6jQjj51IFykcT1Mee+JES8ubS9r1H5Ci8lQtTV
-         KCmg==
+        bh=i00B2BT4Kn6NDWnpqeIIET1PxK/n8DZQOVdnCgauGS8=;
+        b=dbj22Cu4EBSr6LUvuG36aPzZAYeY/eHYtW5Di01VEEh9jsDFrMBP9vA3BFDBaWUwFL
+         Ub9MB7MJxt9eGdjeXhuycfL0jupABqApWddajrbt9pspTAgEtmEew4yyVy7x1X+tOj/h
+         WiSWqbJNHtnRxBaFsuDJcBsDa96U/RMV//oRXpkwEVCySdx+fA113Res0pmU9Noa781w
+         RFVBrrKm+903rPJcMPuOM2tkLkbzPvHyXd//eIttWvPEXKBdNJHAJeeYNjwHthtb+A78
+         H4UFb3Gz5RIo5jkHqO39yM4nLDB9zFMsytRTU63x6w8BOxLnWTvlfbz0e0+Ujg+4akmG
+         o3/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=R5WjzEx3d6LDRLe3qK/6OQvPeGsDYxYmhtGaQrPi7Ww=;
-        b=kw0mQrmjyYkhrrn1tMIQRxVf1x0S7pYr6VIc2YXEWq28DHP5Lx2xYYKJ9dNiN/69GB
-         8lxNMEtN2eJP/6sADuWtl5PoqYEEVHmk2CykvCXNXB8xsH2T/51Aznae4ps3xSF1oPGM
-         rUdzZ6TKFRma+qeEhQ7A4IE9azHTVx0wlIVyxJMw2kUaiHnZSpn43mBXse8fngkmHW8Z
-         wnTrTck3PzHI9RsFZREWdeOmyIB4kgIkrd1CyCf5e/dYo9fJfRxJPDvoAbE8hNwDKZrK
-         fWXu4ICNJNy/l+w/B6FZJwzXbm3IQlImqUYrQ8JvvLS5usUcuEcnpZAcNpNu3JtixnEp
-         tObg==
-X-Gm-Message-State: AOAM5307/mwzUbnd8W62StK3W7MUiWDQWgaPRh/4/pjaJbTSuN/nQhmu
-        C0WctEhfqkMUGO/o24XmCAUnL3ro
-X-Google-Smtp-Source: ABdhPJx+juckofQhLhkrf2karyjnWWT5ZvLtG06W61Xbc0SUYGRu1DJ/YpAFmst9QqCi5HdT4FhfFg==
-X-Received: by 2002:a1c:3c87:: with SMTP id j129mr17520543wma.176.1596906088890;
+        bh=i00B2BT4Kn6NDWnpqeIIET1PxK/n8DZQOVdnCgauGS8=;
+        b=GoVuxlWEm0r99l5c/FFj5sUOopiuUmUHw+MT8WIFBPn0OfSDkETr6aPhWL7Ri37QhM
+         y89DAXq7USRyGcJybAd0FtOFpe8AuX8AqrSiGi50mmEuCeb/MkYbfZveUAH9zcsqtW16
+         EXukxPg1/wTh/HqHx49SPDiL4KUQ3Az9DBqDW4nQhX6Jx6+RbxLu/jw5s+M7fFmv5rKA
+         L6fv0wRThuCs+oYrMa0jfyFRfqLf4WO/cM1iXGFjoAMxWthcd9GKSBYc8JZdGGwbGG8k
+         lns/iuzJcmfemeaR14aUUyHPXC+1xUtKgrsUjpLFoDlb2zX7mAJ7sc/5VIV917LacBLB
+         zCIg==
+X-Gm-Message-State: AOAM533NIxXMfiz+asu9tiXrbX/UjbgJ2Jjty/D7Zc2KaiAKPtPJeiH9
+        36zViiycBBfpCKWeheN6DhYzZocc
+X-Google-Smtp-Source: ABdhPJyCSbeV/ZZShAAltcW1zjG6d8kuYbwlx88FbVih0ZcWJ6YArdQYp/GUYy7qV+8PnMTut6+vNg==
+X-Received: by 2002:adf:9361:: with SMTP id 88mr18664386wro.403.1596906088038;
         Sat, 08 Aug 2020 10:01:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm15125840wrs.36.2020.08.08.10.01.28
+        by smtp.gmail.com with ESMTPSA id 31sm14516799wrj.94.2020.08.08.10.01.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2020 10:01:28 -0700 (PDT)
-Message-Id: <7b534d123ad77dd4905c0fc9cd5f583f3eb647a7.1596906081.git.gitgitgadget@gmail.com>
+        Sat, 08 Aug 2020 10:01:27 -0700 (PDT)
+Message-Id: <56e169b1d8e8b24c89f826c3efe7a4d3ca6ade05.1596906081.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.827.v2.git.git.1596906081.gitgitgadget@gmail.com>
 References: <pull.827.git.git.1596644952296.gitgitgadget@gmail.com>
         <pull.827.v2.git.git.1596906081.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 Aug 2020 17:01:16 +0000
-Subject: [PATCH v2 07/11] t6416, t6423: clarify some comments and fix some
- typos
+Date:   Sat, 08 Aug 2020 17:01:15 +0000
+Subject: [PATCH v2 06/11] t6422: fix multiple errors with the mod6 test
+ expectations
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,74 +79,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+This test had multiple issues causing it to fail for the wrong
+reason(s):
+
+  * rename/rename(1to2) conflicts have always left the original source
+    path present in the working directory and index (at stage 1).  Thus,
+    the triple rename/rename(1to2) should result in 9 unstaged files,
+    not 6.
+  * It messed up the three-way content merge for checking the results of
+    merging for one of the renames, accidentally turning it into a
+    two-way merge.
+  * It got the contents of the base files it was using to compare
+    against wrong, due to an off-by-one error, and overwrite-redirection
+    ('>') instead of append-redirection ('>>').
+  * It used slightly too-long conflict markers
+  * It didn't include filenames in the conflict marker hunks (granted,
+    that was a shortcoming of the merge-recursive backend for rename/add
+    and rename/rename(2to1) conflicts, but since it's
+    test_expect_failure anyway we might as well make it expect our
+    preferred behavior rather than some compromise that we can't yet
+    reach anyway).
+
+Fix these issues so that a merge backend which correctly handles these
+kinds of nested conflicts will pass the test.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6416-recursive-corner-cases.sh   |  2 +-
- t/t6423-merge-rename-directories.sh | 25 ++++++++++++-------------
- 2 files changed, 13 insertions(+), 14 deletions(-)
+ t/t6422-merge-rename-corner-cases.sh | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
-index d272b418e4..fd98989b14 100755
---- a/t/t6416-recursive-corner-cases.sh
-+++ b/t/t6416-recursive-corner-cases.sh
-@@ -452,7 +452,7 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete, rev
- #
- # So choice 5 at least provides some kind of conflict for the original case,
- # and can merge cleanly as expected with D1 and E3.  It also made things just
--# slightly funny for merging D1 and e$, where E4 is defined as:
-+# slightly funny for merging D1 and E4, where E4 is defined as:
- #   Commit E4: Merge B & C, modifying 'a' and renaming to 'a2', and deleting 'a/'
- # in this case, we'll get a rename/rename(1to2) conflict because a~$UNIQUE
- # gets renamed to 'a' in D1 and to 'a2' in E4.  But that's better than having
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index d227e15944..bd0f17a3be 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -2260,24 +2260,23 @@ test_expect_success '8d: rename/delete...or not?' '
- #   Commit B: w/{b,c}, z/d
- #
- # Possible Resolutions:
--#   w/o dir-rename detection: z/d, CONFLICT(z/b -> y/b vs. w/b),
--#                                  CONFLICT(z/c -> y/c vs. w/c)
--#   Currently expected:       y/d, CONFLICT(z/b -> y/b vs. w/b),
--#                                  CONFLICT(z/c -> y/c vs. w/c)
--#   Optimal:                  ??
-+#   if z not considered renamed: z/d, CONFLICT(z/b -> y/b vs. w/b),
-+#                                     CONFLICT(z/c -> y/c vs. w/c)
-+#   if z->y rename considered:   y/d, CONFLICT(z/b -> y/b vs. w/b),
-+#                                     CONFLICT(z/c -> y/c vs. w/c)
-+#   Optimal:                     ??
- #
- # Notes: In commit A, directory z got renamed to y.  In commit B, directory z
- #        did NOT get renamed; the directory is still present; instead it is
- #        considered to have just renamed a subset of paths in directory z
--#        elsewhere.  Therefore, the directory rename done in commit A to z/
--#        applies to z/d and maps it to y/d.
-+#        elsewhere.  However, this is much like testcase 6b (where commit B
-+#        moves all the original paths out of z/ but opted to keep d
-+#        within z/).  This makes it hard to judge where d should end up.
- #
- #        It's possible that users would get confused about this, but what
--#        should we do instead?  Silently leaving at z/d seems just as bad or
--#        maybe even worse.  Perhaps we could print a big warning about z/d
--#        and how we're moving to y/d in this case, but when I started thinking
--#        about the ramifications of doing that, I didn't know how to rule out
--#        that opening other weird edge and corner cases so I just punted.
-+#        should we do instead?  It's not at all clear to me whether z/d or
-+#        y/d or something else is a better resolution here, and other cases
-+#        start getting really tricky, so I just picked one.
+diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
+index c8ee033ad9..2413f517e7 100755
+--- a/t/t6422-merge-rename-corner-cases.sh
++++ b/t/t6422-merge-rename-corner-cases.sh
+@@ -1042,25 +1042,25 @@ test_expect_failure 'mod6-check: chains of rename/rename(1to2) and rename/rename
+ 		test_must_be_empty err &&
  
- test_setup_8e () {
- 	test_create_repo 8e &&
-@@ -4405,7 +4404,7 @@ test_expect_success '13b(info): messages for transitive rename with conflicted c
- #   Commit O: z/{b,c},   x/{d,e}
- #   Commit A: y/{b,c,d}, x/e
- #   Commit B: z/{b,c,d}, x/e
--#   Expected: y/{b,c,d}, with info or conflict messages for d (
-+#   Expected: y/{b,c,d}, x/e, with info or conflict messages for d
- #             A: renamed x/d -> z/d; B: renamed z/ -> y/ AND renamed x/d to y/d
- #             One could argue A had partial knowledge of what was done with
- #             d and B had full knowledge, but that's a slippery slope as
+ 		git ls-files -s >file_count &&
+-		test_line_count = 6 file_count &&
++		test_line_count = 9 file_count &&
+ 		git ls-files -u >file_count &&
+-		test_line_count = 6 file_count &&
++		test_line_count = 9 file_count &&
+ 		git ls-files -o >file_count &&
+ 		test_line_count = 3 file_count &&
+ 
+ 		test_seq 10 20 >merged-one &&
+ 		test_seq 51 60 >merged-five &&
+ 		# Determine what the merge of three would give us.
+-		test_seq 30 40 >three-side-A &&
++		test_seq 31 39 >three-base &&
++		test_seq 31 40 >three-side-A &&
+ 		test_seq 31 39 >three-side-B &&
+-		echo forty >three-side-B &&
+-		>empty &&
++		echo forty >>three-side-B &&
+ 		test_must_fail git merge-file \
+-			-L "HEAD" \
++			-L "HEAD:four" \
+ 			-L "" \
+-			-L "B^0" \
+-			three-side-A empty three-side-B &&
+-		sed -e "s/^\([<=>]\)/\1\1\1/" three-side-A >merged-three &&
++			-L "B^0:two" \
++			three-side-A three-base three-side-B &&
++		sed -e "s/^\([<=>]\)/\1\1/" three-side-A >merged-three &&
+ 
+ 		# Verify the index is as expected
+ 		git rev-parse >actual         \
+@@ -1075,6 +1075,7 @@ test_expect_failure 'mod6-check: chains of rename/rename(1to2) and rename/rename
+ 
+ 		git cat-file -p :2:two >expect &&
+ 		git cat-file -p :3:two >other &&
++		>empty &&
+ 		test_must_fail git merge-file    \
+ 			-L "HEAD"  -L ""  -L "B^0" \
+ 			expect     empty  other &&
 -- 
 gitgitgadget
 
