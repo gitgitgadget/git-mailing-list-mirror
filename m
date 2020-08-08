@@ -7,107 +7,150 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBF7C433DF
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 14:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3442BC433DF
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 15:53:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E94920748
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 14:41:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04AAF20748
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 15:53:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i7PgbhOI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BjZH15Pc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbgHHOkO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 10:40:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41704 "EHLO
+        id S1726293AbgHHPsK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 11:48:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgHHOkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 10:40:13 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1843AC061756
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 07:40:13 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bh1so2554566plb.12
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 07:40:13 -0700 (PDT)
+        with ESMTP id S1726238AbgHHPsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 11:48:09 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C95C061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 08:48:09 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id z18so4299921wrm.12
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 08:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Y05BMQ8WkWYgiSElI2f3qXzpiYO5vzwAp59WLznndkc=;
-        b=i7PgbhOIVN7VYsftuzym43DnF7Wwrm6mTP2wJtRLmgMuw0CGcls8TmQI5yBB3vAj3X
-         tmFmDTDW9t3TItqerPdDiI/ADp3PSAHQE5oRhdHCF9K1V7AdHFA8i6MtWG5b339nfi9b
-         CYe66XRav1LDDzF8sdejuL6oK6sha30AkjSOFsYk2l2BhZzVNh05uf2YBZMrfMSsnxOk
-         owtvhPWFatHY01b9LwlCJTtkXSeF40v3A/Bbq3lcJ7gBTguVwgd/8+7m1sDoihoD8hUE
-         pqObucYPU1rpIopVDc9/GBuXGlFLyEjm7UmLRwggZtAiqBlMdO/spIh1l0Yr/a4d8x1c
-         2VvQ==
+        bh=5/TwQD5VAjIEVi7Hv9HIOofi2qGt57xUGTU84GSXIp0=;
+        b=BjZH15Pch4/JzmynzAGZ+zxsgkfINbYNzsxZfD2crJi+LUMgKfsUCf8m1HQUm5oYow
+         NI6Em3HYSXs2sihsdBd0Mq6GnWgEQWDmjZiYv9KHHGSaFCEVC6avDcleyCkA7ROPVEk2
+         dJJ20gEosNVa2GZnM8QLsa6KCvDsIHOQk4199s9AREZfpXlrgm/2tvY1bPn1qMa/qHC0
+         WLWfrXUmjkfSV06Mk/A/E0dti5Sgu+XhVgrJUDUX2k8LOz4E6Tbk4S77HMf4YxtBoV0f
+         5jMIgta9c4NF+AWFj3/ElYnhvFkMAK8TGbNAEuSL8VAyMIHJAhrtwM+xVxbJmXU9UgIw
+         w3GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Y05BMQ8WkWYgiSElI2f3qXzpiYO5vzwAp59WLznndkc=;
-        b=M7AnEpVGuCpeTHMPgHXDn5ZNPW7K6NSZEJBCG6iEz8Fk5NorgSJHOiYGJBQZwqUZl/
-         k/Ed1Qew/sr4SaL4SGkSJgsxAwOQ1Q3eMn/tKbV7yz/x3uPsHRlJHZOpBQZfp/Jk6c6U
-         7Nfr+EDAAD0oJ6ZVZnoo2kizs/nbssi6+C6XHxcI//RodWHKq1wBywfkCYRV8aYDfixT
-         OSaqLXjvaHAb12lgLRML8e6aFUztI9uqwE/LlT72nScFL9R3FAUb41wvKZ8wXXDidCfm
-         batCcF/ZWRqkFKDmy54otfhzMRBBGmwVR8NlXv/M67ai6nXxzRKULDqN1kcCJt5TUIe+
-         JhGQ==
-X-Gm-Message-State: AOAM532muXWCRbt10lVTsR2Mcq/jrYLtVcI1dAE9nVZlGRXB/JuLGcer
-        igp4IpLizBXK4RhQv4qrnAU=
-X-Google-Smtp-Source: ABdhPJwqLseaEuKxUCFFQdqweGPpyQ0I81nYsyME7+/I6nmg09g15PGdLxX0t9/z4fXPexJyJ1TEow==
-X-Received: by 2002:a17:90a:9405:: with SMTP id r5mr489006pjo.74.1596897612660;
-        Sat, 08 Aug 2020 07:40:12 -0700 (PDT)
-Received: from [192.168.208.37] ([49.207.140.106])
-        by smtp.gmail.com with ESMTPSA id h1sm17621873pfr.39.2020.08.08.07.40.09
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=5/TwQD5VAjIEVi7Hv9HIOofi2qGt57xUGTU84GSXIp0=;
+        b=tGXXJAmc04GBci0ETw7EUYJl5gn28X+hGZXPN+Ow60fpEmRsAdqzwwBfl+te+VLyov
+         M9irmeuCLW4t5haB08wfi0ZQdWIziZL61E+ytPS5iWc21v16k+gSxGZxJsniWIjbkkbU
+         iIwCnMsEtRMmC24sXuhb4eo7iw0tbfz7TbF8/h0BZFXSEznfkAAK9IgB+tltET4E7IBe
+         hbHxSmRkG1k0yAQ85Ye7RFx225Ud27oJ6GBLwHYzetj1hJaJsPaUrZulfUBXIDGrAeUE
+         RdvIXdLpvJDq1DXh34xxvnmI1pKq9LND3VPZRHQYs/rBOQjhFjJIkSqj9+mi5WO+jK6N
+         UFRQ==
+X-Gm-Message-State: AOAM5300dD40KSCs9KAFYj92TFacVhQELsiZSyHagdEHq21thHdZo5HZ
+        0bQFLLULSNBeGfrf4sWqpvJKDabN
+X-Google-Smtp-Source: ABdhPJxn17ZPz3roHzdmxWyttkmKFQGzVzhQPd3Wz3mp4YUrXRI4DvbpNd/6ObzoIixc52r0kVGqEQ==
+X-Received: by 2002:a5d:630b:: with SMTP id i11mr17834374wru.95.1596901685123;
+        Sat, 08 Aug 2020 08:48:05 -0700 (PDT)
+Received: from [192.168.1.240] (161.252.189.80.dyn.plus.net. [80.189.252.161])
+        by smtp.gmail.com with ESMTPSA id m8sm14671294wro.75.2020.08.08.08.48.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Aug 2020 07:40:12 -0700 (PDT)
-Subject: Re: [PATCH v2 1/5] submodule: expose the '--for-status' option of
- summary
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, liu.denton@gmail.com,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
- <20200806164102.6707-2-shouryashukla.oo@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <831df9f2-0663-0dfc-0871-d34864d1ecde@gmail.com>
-Date:   Sat, 8 Aug 2020 20:10:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        Sat, 08 Aug 2020 08:48:04 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 2/3] apply: make i-t-a entries never match worktree
+To:     "Raymond E. Pasco" <ray@ameretat.dev>, phillip.wood@dunelm.org.uk,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <d81e79a9-7d7f-22a0-9d53-06fb92b0af48@gmail.com>
+Date:   Sat, 8 Aug 2020 16:48:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <20200806164102.6707-2-shouryashukla.oo@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06-08-2020 22:10, Shourya Shukla wrote:
-> The 'for-status' option is used to compute the summary of submodule(s)
-> in a superproject by skipping the ignored submdules i.e., those with
-> 'submodule.<name>.ignore' set to 'all' in the '.gitmodules' or
-> '.git/config', with the latter taking precedence over the former.
+Hi Raymond
+
+On 08/08/2020 15:07, Raymond E. Pasco wrote:
+> On Sat Aug 8, 2020 at 9:46 AM EDT, Phillip Wood wrote:
+>>> By definition, an intent-to-add index entry can never match the
+>>> worktree, because worktrees have no concept of intent-to-add entries.
+>>> Therefore, "apply --index" should always fail on intent-to-add paths.
+>>
+>> I'm not sure I understand the logic for this. If I run 'git add -N
+>> <path>' and <path> does not exist in the worktree what's the reason to
+>> stop a patch that creates <path> from applying?
 > 
-> The option was introduced in d0f64dd44d (git-submodule summary:
-> --for-status option, 2008-04-12), refined in 3ba7407b8b (submodule
-> summary: ignore --for-status option, 2013-09-06) and finally perfected
-> in 927b26f87a (submodule: don't print status output with ignore=all,
-> 2013-09-01). But, it was not mentioned in the 'git submodule'
-> Documentation.
+> "apply --index" requires the index and worktree to match, and applies
+> the same path to both to get the same result in both. I brainstormed the
+> logic a few emails upthread, and that's what's consistent with
+> everything else.
+
+I had a quick scan of the earlier email and found
+
+ > The index and the filesystem are both able to represent "no file"
+ > and "a file exists" states, but the index has an additional
+ > state (i-t-a) with no direct representation in the
+ > worktree. By (correctly) emitting "new file" patches when
+ > comparing a file to an i-t-a index entry, we are setting down the
+ > rule that a "new file" patch is not merely the diff between "no
+ > file" and "a file exists", but also the diff between i-t-a and "a
+ > file exists".
+ >
+ > Similarly, "deleted file" patches are the diff between "a file
+ > exists" and "no file exists", but they are also the diff between
+ > i-t-a and "no file exists" - if you add -N a file and then delete
+ > it from the worktree, "deleted file" is what git diff (correctly)
+ > shows. As a consequence of these rules, "new file" and "deleted
+ > file" diffs are now the only diffs that validly apply to an i-t-a
+ > entry. So apply needs to handle them (in "--cached" mode,
+ > anyway).
+
+If I've understood correctly an i-t-a entry in the index combined with 
+nothing in the worktree is a deletion and that is why we don't want 
+--index to succeed when applying a creation patch? If so an expanded 
+explanation in the commit message to this patch would help rather than 
+just saying 'by definition'. I'm still a bit confused as we don't count 
+it as a deletion when using --cached or applying to the worktree.
+
+>> I was relieved to see from the next patch that this does not affect
+>> --cached even though the documentation says it implies --index. It might
+>> be worth mentioning that in the commit message. Also it would be easier
+>> to follow if the tests were in the same patch (this is what we usually
+>> do).
 > 
-> Expose the '--for-status' option accepted by the command 'git submodule
-> summary'.
->
+> --cached doesn't really imply --index - the docs are wrong and should be
+> changed. If anything, --index is closer to implying --cached - but
+> really, [no flags], --cached, and --index are three different modes with
+> different behavior. (Just removing "this implies --index" would be
+> sufficient to make the docs correct.)
+> 
+>> How this does it affect --check? `git add -p` uses --check to verify
+>> that hunks that the user has edited still apply. It does not let the
+>> user edit the hunk for a newly added file at the moment but that is
+>> something I'm thinking of adding.
+> 
+> --check goes through all the same code, 
 
-I've had one concern about exposing '--for-status'. As of now, the name
-of the option has no relation with the behaviour that we get as a
-consequence. So long, the option has been internal and this wasn't a
-problem. Now that we're considering to expose it in the docs, usage and
-autocomplete, I would say it should be done after renaming it
-appropriately given that it's easy to do now than later. As to name
-suggestions, I really don't have any.
+The same code as --cached or --index? (I assume it's the former but 
+wanted to be sure)
 
-Also, as to whether exposing this would be useful at all, I really don't
-know.
+Thanks
 
--- 
-Sivaraam
+Phillip
+
+>it just doesn't actually touch
+> anything in the index or worktree. Splittable/editable new file patches
+> are a logical related feature, IMO. (This is just to squash an error
+> that shouldn't happen.)
+> 
