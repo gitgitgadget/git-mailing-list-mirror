@@ -2,155 +2,205 @@ Return-Path: <SRS0=OIeF=BS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3442BC433DF
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 15:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3F9CC433DF
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 17:01:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04AAF20748
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 15:53:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93268206CD
+	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 17:01:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BjZH15Pc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MqSNU+fo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbgHHPsK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 11:48:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52008 "EHLO
+        id S1726412AbgHHRBa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 13:01:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726238AbgHHPsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 11:48:09 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C95C061756
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 08:48:09 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id z18so4299921wrm.12
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 08:48:09 -0700 (PDT)
+        with ESMTP id S1726200AbgHHRBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 13:01:25 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B7CC061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 10:01:25 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a14so4418613wra.5
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 10:01:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5/TwQD5VAjIEVi7Hv9HIOofi2qGt57xUGTU84GSXIp0=;
-        b=BjZH15Pch4/JzmynzAGZ+zxsgkfINbYNzsxZfD2crJi+LUMgKfsUCf8m1HQUm5oYow
-         NI6Em3HYSXs2sihsdBd0Mq6GnWgEQWDmjZiYv9KHHGSaFCEVC6avDcleyCkA7ROPVEk2
-         dJJ20gEosNVa2GZnM8QLsa6KCvDsIHOQk4199s9AREZfpXlrgm/2tvY1bPn1qMa/qHC0
-         WLWfrXUmjkfSV06Mk/A/E0dti5Sgu+XhVgrJUDUX2k8LOz4E6Tbk4S77HMf4YxtBoV0f
-         5jMIgta9c4NF+AWFj3/ElYnhvFkMAK8TGbNAEuSL8VAyMIHJAhrtwM+xVxbJmXU9UgIw
-         w3GQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tYM6Z48tE1es4qqho5S1R8pWkhTPq5STOnsKYKK64dw=;
+        b=MqSNU+fospRYDkifwMyuqmSw+MyCuMwJuBxjatc/u3y9V6lgxpRfQwgnjVcV8SahCq
+         CiHpqQ5Qa/ScGdUyLa8yWnWYw/N13ECDXEb3cC3910z1994vEzXGKsCKEJt3Rw+2RObw
+         8sapjwJqOxlfHF42QEvWBM8HYJcWhPzcv0EK+lQG8/jbodUvAWmnv4ISoS31VGIPXzR7
+         SvV9wweeMpq8Je+7Tu3pMqd0iijjXYtdE4C1oTbPp5vOxBpyRf9XuAZJLWmkqZgoW2xQ
+         p6wihMXSv07r/HZPEWq5yC3S3uGV2EID4ZM3xKzurmJ/fRx0rAyHSQSjDwAIIMbFFCvo
+         NIMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=5/TwQD5VAjIEVi7Hv9HIOofi2qGt57xUGTU84GSXIp0=;
-        b=tGXXJAmc04GBci0ETw7EUYJl5gn28X+hGZXPN+Ow60fpEmRsAdqzwwBfl+te+VLyov
-         M9irmeuCLW4t5haB08wfi0ZQdWIziZL61E+ytPS5iWc21v16k+gSxGZxJsniWIjbkkbU
-         iIwCnMsEtRMmC24sXuhb4eo7iw0tbfz7TbF8/h0BZFXSEznfkAAK9IgB+tltET4E7IBe
-         hbHxSmRkG1k0yAQ85Ye7RFx225Ud27oJ6GBLwHYzetj1hJaJsPaUrZulfUBXIDGrAeUE
-         RdvIXdLpvJDq1DXh34xxvnmI1pKq9LND3VPZRHQYs/rBOQjhFjJIkSqj9+mi5WO+jK6N
-         UFRQ==
-X-Gm-Message-State: AOAM5300dD40KSCs9KAFYj92TFacVhQELsiZSyHagdEHq21thHdZo5HZ
-        0bQFLLULSNBeGfrf4sWqpvJKDabN
-X-Google-Smtp-Source: ABdhPJxn17ZPz3roHzdmxWyttkmKFQGzVzhQPd3Wz3mp4YUrXRI4DvbpNd/6ObzoIixc52r0kVGqEQ==
-X-Received: by 2002:a5d:630b:: with SMTP id i11mr17834374wru.95.1596901685123;
-        Sat, 08 Aug 2020 08:48:05 -0700 (PDT)
-Received: from [192.168.1.240] (161.252.189.80.dyn.plus.net. [80.189.252.161])
-        by smtp.gmail.com with ESMTPSA id m8sm14671294wro.75.2020.08.08.08.48.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Aug 2020 08:48:04 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 2/3] apply: make i-t-a entries never match worktree
-To:     "Raymond E. Pasco" <ray@ameretat.dev>, phillip.wood@dunelm.org.uk,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <d81e79a9-7d7f-22a0-9d53-06fb92b0af48@gmail.com>
-Date:   Sat, 8 Aug 2020 16:48:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tYM6Z48tE1es4qqho5S1R8pWkhTPq5STOnsKYKK64dw=;
+        b=dZ11wl3Sn55g/et78CMmh9zpj5Lf400kBY2SO94Lk8D8i6mFnf6BZGx2+RrR+CmXVJ
+         McV8rJSQWxY5KVzsJ6UMhAP9aqAFNgStVtgeVQfx9pJz4AG0mMMG+x4GhsJoH3MszS8R
+         trLs7dMlp8EEBeLzfcOosOkuwedCOag5+NDK0GUvQjtbcXkWusVpfL+cOb+5VYi2P612
+         Mubehkb9/GRqsnczuu2nCNShWnjBYcNB0M2vNMG1OqPyZwSRMhYgxuaj+l8QtVvC/Qul
+         cHhzoqn0DrG3ilSPH3s1CRKKo9hyP0fFHFMNXpbCoBD3KHoEPJD27l8hj4DsYfp87ZaD
+         PeNQ==
+X-Gm-Message-State: AOAM531tW6XAGqDstXUHp7kB2wzmCZpH6xq9/emokkClz4d+XkN8f2av
+        YiKg9pZAiD6bw3EcNoHuJoATvq84
+X-Google-Smtp-Source: ABdhPJzGaxrV6SIFzi4yKEuMHHhS448RKwy2teA5cJ94fw1Ru2vXzpjRPLZeywsGip+TbOEI8o6uKw==
+X-Received: by 2002:adf:e8ca:: with SMTP id k10mr16891105wrn.110.1596906082587;
+        Sat, 08 Aug 2020 10:01:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o3sm14730798wru.64.2020.08.08.10.01.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Aug 2020 10:01:22 -0700 (PDT)
+Message-Id: <pull.827.v2.git.git.1596906081.gitgitgadget@gmail.com>
+In-Reply-To: <pull.827.git.git.1596644952296.gitgitgadget@gmail.com>
+References: <pull.827.git.git.1596644952296.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 08 Aug 2020 17:01:09 +0000
+Subject: [PATCH v2 00/11] Start preparing merge-related tests to work with multiple merge backends
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Raymond
+This series starts preparing the merge related tests to work with multiple
+backends: merge-recursive or merge-ort. Further work will be coming.
 
-On 08/08/2020 15:07, Raymond E. Pasco wrote:
-> On Sat Aug 8, 2020 at 9:46 AM EDT, Phillip Wood wrote:
->>> By definition, an intent-to-add index entry can never match the
->>> worktree, because worktrees have no concept of intent-to-add entries.
->>> Therefore, "apply --index" should always fail on intent-to-add paths.
->>
->> I'm not sure I understand the logic for this. If I run 'git add -N
->> <path>' and <path> does not exist in the worktree what's the reason to
->> stop a patch that creates <path> from applying?
-> 
-> "apply --index" requires the index and worktree to match, and applies
-> the same path to both to get the same result in both. I brainstormed the
-> logic a few emails upthread, and that's what's consistent with
-> everything else.
+v1 of this series only had the first patch (which collected merge machinery
+related tests into t64*.sh). This series adds 10 more patches, which:
 
-I had a quick scan of the earlier email and found
+Changes since v1:
 
- > The index and the filesystem are both able to represent "no file"
- > and "a file exists" states, but the index has an additional
- > state (i-t-a) with no direct representation in the
- > worktree. By (correctly) emitting "new file" patches when
- > comparing a file to an i-t-a index entry, we are setting down the
- > rule that a "new file" patch is not merely the diff between "no
- > file" and "a file exists", but also the diff between i-t-a and "a
- > file exists".
- >
- > Similarly, "deleted file" patches are the diff between "a file
- > exists" and "no file exists", but they are also the diff between
- > i-t-a and "no file exists" - if you add -N a file and then delete
- > it from the worktree, "deleted file" is what git diff (correctly)
- > shows. As a consequence of these rules, "new file" and "deleted
- > file" diffs are now the only diffs that validly apply to an i-t-a
- > entry. So apply needs to handle them (in "--cached" mode,
- > anyway).
+ * tighten some testcases so they don't pass with completely wrong results
+ * fix various errors in causing many test_expect_failure tests to fail for
+   the wrong reasons
+ * add clarifying comments or fix various comments
+ * make some tests more flexible in handling console output messages
+   produced by either backend.
+ * I'm curious about portability of the second-to-last patch -- is it safe
+   to use backreferences with test_i18n_grep? If not, anyone have
+   alternative ideas for handling those needed changes?
 
-If I've understood correctly an i-t-a entry in the index combined with 
-nothing in the worktree is a deletion and that is why we don't want 
---index to succeed when applying a creation patch? If so an expanded 
-explanation in the commit message to this patch would help rather than 
-just saying 'by definition'. I'm still a bit confused as we don't count 
-it as a deletion when using --cached or applying to the worktree.
+The greater flexibility patches at the end of the series also previews some
+of the design changes being brought by merge-ort.
 
->> I was relieved to see from the next patch that this does not affect
->> --cached even though the documentation says it implies --index. It might
->> be worth mentioning that in the commit message. Also it would be easier
->> to follow if the tests were in the same patch (this is what we usually
->> do).
-> 
-> --cached doesn't really imply --index - the docs are wrong and should be
-> changed. If anything, --index is closer to implying --cached - but
-> really, [no flags], --cached, and --index are three different modes with
-> different behavior. (Just removing "this implies --index" would be
-> sufficient to make the docs correct.)
-> 
->> How this does it affect --check? `git add -p` uses --check to verify
->> that hunks that the user has edited still apply. It does not let the
->> user edit the hunk for a newly added file at the moment but that is
->> something I'm thinking of adding.
-> 
-> --check goes through all the same code, 
+Elijah Newren (11):
+  Collect merge-related tests to t64xx
+  t6418: tighten delete/normalize conflict testcase
+  t6422: fix bad check against missing file
+  t6416, t6422: fix incorrect untracked file count
+  t6423: fix test setup for a couple tests
+  t6422: fix multiple errors with the mod6 test expectations
+  t6416, t6423: clarify some comments and fix some typos
+  t6423: add an explanation about why one of the tests does not pass
+  t6422, t6426: be more flexible for add/add conflicts involving renames
+  t642[23]: be more flexible for add/add conflicts involving pair
+    renames
+  t6425: be more flexible with rename/delete conflict messages
 
-The same code as --cached or --index? (I assume it's the former but 
-wanted to be sure)
+ t/{t6020-merge-df.sh => t6400-merge-df.sh}    |  0
+ ...ss-cross.sh => t6401-merge-criss-cross.sh} |  0
+ ...-merge-rename.sh => t6402-merge-rename.sh} |  0
+ ...6023-merge-file.sh => t6403-merge-file.sh} |  0
+ ...sive-merge.sh => t6404-recursive-merge.sh} |  0
+ ...ge-symlinks.sh => t6405-merge-symlinks.sh} |  0
+ ...6026-merge-attr.sh => t6406-merge-attr.sh} |  0
+ ...-merge-binary.sh => t6407-merge-binary.sh} |  0
+ ...p-to-date.sh => t6408-merge-up-to-date.sh} |  0
+ ...erge-subtree.sh => t6409-merge-subtree.sh} |  0
+ ...ge-filemode.sh => t6411-merge-filemode.sh} |  0
+ ...-rename.sh => t6412-merge-large-rename.sh} |  0
+ ...6033-merge-crlf.sh => t6413-merge-crlf.sh} |  0
+ ...cruft.sh => t6414-merge-rename-nocruft.sh} |  0
+ ...mlink.sh => t6415-merge-dir-to-symlink.sh} |  0
+ ...ses.sh => t6416-recursive-corner-cases.sh} |  4 +-
+ ...s-theirs.sh => t6417-merge-ours-theirs.sh} |  0
+ ...-text-auto.sh => t6418-merge-text-auto.sh} |  3 +-
+ ...gnorecase.sh => t6419-merge-ignorecase.sh} |  0
+ ....sh => t6422-merge-rename-corner-cases.sh} | 68 +++++++++++--------
+ ...s.sh => t6423-merge-rename-directories.sh} | 39 +++++++----
+ ...=> t6424-merge-unrelated-index-changes.sh} |  0
+ ...delete.sh => t6425-merge-rename-delete.sh} |  3 +-
+ ...h => t6426-merge-skip-unneeded-updates.sh} |  2 +-
+ ...ers.sh => t6427-diff3-conflict-markers.sh} |  0
+ ...-recursive.sh => t6430-merge-recursive.sh} |  0
+ ...-criscross.sh => t6431-merge-criscross.sh} |  0
+ ...=> t6432-merge-recursive-space-options.sh} |  0
+ ...ge-toplevel.sh => t6433-merge-toplevel.sh} |  0
+ ...> t6434-merge-recursive-rename-options.sh} |  0
+ ...-merge-sparse.sh => t6435-merge-sparse.sh} |  0
+ ...-overwrite.sh => t6436-merge-overwrite.sh} |  0
+ ...dule-merge.sh => t6437-submodule-merge.sh} |  0
+ ...438-submodule-directory-file-conflicts.sh} |  0
+ ...r-msgs.sh => t6439-merge-co-error-msgs.sh} |  0
+ 35 files changed, 71 insertions(+), 48 deletions(-)
+ rename t/{t6020-merge-df.sh => t6400-merge-df.sh} (100%)
+ rename t/{t6021-merge-criss-cross.sh => t6401-merge-criss-cross.sh} (100%)
+ rename t/{t6022-merge-rename.sh => t6402-merge-rename.sh} (100%)
+ rename t/{t6023-merge-file.sh => t6403-merge-file.sh} (100%)
+ rename t/{t6024-recursive-merge.sh => t6404-recursive-merge.sh} (100%)
+ rename t/{t6025-merge-symlinks.sh => t6405-merge-symlinks.sh} (100%)
+ rename t/{t6026-merge-attr.sh => t6406-merge-attr.sh} (100%)
+ rename t/{t6027-merge-binary.sh => t6407-merge-binary.sh} (100%)
+ rename t/{t6028-merge-up-to-date.sh => t6408-merge-up-to-date.sh} (100%)
+ rename t/{t6029-merge-subtree.sh => t6409-merge-subtree.sh} (100%)
+ rename t/{t6031-merge-filemode.sh => t6411-merge-filemode.sh} (100%)
+ rename t/{t6032-merge-large-rename.sh => t6412-merge-large-rename.sh} (100%)
+ rename t/{t6033-merge-crlf.sh => t6413-merge-crlf.sh} (100%)
+ rename t/{t6034-merge-rename-nocruft.sh => t6414-merge-rename-nocruft.sh} (100%)
+ rename t/{t6035-merge-dir-to-symlink.sh => t6415-merge-dir-to-symlink.sh} (100%)
+ rename t/{t6036-recursive-corner-cases.sh => t6416-recursive-corner-cases.sh} (99%)
+ rename t/{t6037-merge-ours-theirs.sh => t6417-merge-ours-theirs.sh} (100%)
+ rename t/{t6038-merge-text-auto.sh => t6418-merge-text-auto.sh} (99%)
+ rename t/{t6039-merge-ignorecase.sh => t6419-merge-ignorecase.sh} (100%)
+ rename t/{t6042-merge-rename-corner-cases.sh => t6422-merge-rename-corner-cases.sh} (94%)
+ rename t/{t6043-merge-rename-directories.sh => t6423-merge-rename-directories.sh} (98%)
+ rename t/{t6044-merge-unrelated-index-changes.sh => t6424-merge-unrelated-index-changes.sh} (100%)
+ rename t/{t6045-merge-rename-delete.sh => t6425-merge-rename-delete.sh} (72%)
+ rename t/{t6046-merge-skip-unneeded-updates.sh => t6426-merge-skip-unneeded-updates.sh} (99%)
+ rename t/{t6047-diff3-conflict-markers.sh => t6427-diff3-conflict-markers.sh} (100%)
+ rename t/{t3030-merge-recursive.sh => t6430-merge-recursive.sh} (100%)
+ rename t/{t3031-merge-criscross.sh => t6431-merge-criscross.sh} (100%)
+ rename t/{t3032-merge-recursive-space-options.sh => t6432-merge-recursive-space-options.sh} (100%)
+ rename t/{t3033-merge-toplevel.sh => t6433-merge-toplevel.sh} (100%)
+ rename t/{t3034-merge-recursive-rename-options.sh => t6434-merge-recursive-rename-options.sh} (100%)
+ rename t/{t3035-merge-sparse.sh => t6435-merge-sparse.sh} (100%)
+ rename t/{t7607-merge-overwrite.sh => t6436-merge-overwrite.sh} (100%)
+ rename t/{t7405-submodule-merge.sh => t6437-submodule-merge.sh} (100%)
+ rename t/{t7613-merge-submodule.sh => t6438-submodule-directory-file-conflicts.sh} (100%)
+ rename t/{t7609-merge-co-error-msgs.sh => t6439-merge-co-error-msgs.sh} (100%)
 
-Thanks
 
-Phillip
+base-commit: dc04167d378fb29d30e1647ff6ff51dd182bc9a3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-827%2Fnewren%2Fmerge-test-rename-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-827/newren/merge-test-rename-v2
+Pull-Request: https://github.com/git/git/pull/827
 
->it just doesn't actually touch
-> anything in the index or worktree. Splittable/editable new file patches
-> are a logical related feature, IMO. (This is just to squash an error
-> that shouldn't happen.)
-> 
+Range-diff vs v1:
+
+  1:  3a2b7e9743 =  1:  3a2b7e9743 Collect merge-related tests to t64xx
+  -:  ---------- >  2:  621c9a159e t6418: tighten delete/normalize conflict testcase
+  -:  ---------- >  3:  7f408b7d40 t6422: fix bad check against missing file
+  -:  ---------- >  4:  9ce80f2f94 t6416, t6422: fix incorrect untracked file count
+  -:  ---------- >  5:  382d65649d t6423: fix test setup for a couple tests
+  -:  ---------- >  6:  56e169b1d8 t6422: fix multiple errors with the mod6 test expectations
+  -:  ---------- >  7:  7b534d123a t6416, t6423: clarify some comments and fix some typos
+  -:  ---------- >  8:  f2d7e744fc t6423: add an explanation about why one of the tests does not pass
+  -:  ---------- >  9:  b4e165eca4 t6422, t6426: be more flexible for add/add conflicts involving renames
+  -:  ---------- > 10:  a9a02a0ca5 t642[23]: be more flexible for add/add conflicts involving pair renames
+  -:  ---------- > 11:  38f6573511 t6425: be more flexible with rename/delete conflict messages
+
+-- 
+gitgitgadget
