@@ -2,78 +2,67 @@ Return-Path: <SRS0=dguO=BT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC49EC433E0
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 19:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA71DC433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:40:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB5E9206B5
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 19:35:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8906D206D8
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726299AbgHITfK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Aug 2020 15:35:10 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53064 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbgHITfK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Aug 2020 15:35:10 -0400
-Received: by mail-wm1-f66.google.com with SMTP id x5so5910545wmi.2
-        for <git@vger.kernel.org>; Sun, 09 Aug 2020 12:35:09 -0700 (PDT)
+        id S1726352AbgHIWjD convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 9 Aug 2020 18:39:03 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:35766 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726323AbgHIWjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Aug 2020 18:39:03 -0400
+Received: by mail-io1-f67.google.com with SMTP id s189so7113256iod.2
+        for <git@vger.kernel.org>; Sun, 09 Aug 2020 15:39:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UE1JR9JD8eyFUQOr4pHvA12VRJo7i4NLBL2TD09g4Bw=;
-        b=qGhA0HeO/Z6gczjrjp8qRDxrtGdMEo/TInm0JpZbyqOvZTI692K8BpilQUeoxLN38k
-         Cq15Gds0JHy8T9wq2xbVIELymDku5/rYIq3FcOQ0I5ebJBjk5awHcyeB+Qrr7njEUIbf
-         PD5KDM/9lNjGDImGEW/v2xxHj8ZkLA5cWsuT7Ealu+s/6qr9ZjRPxrKHOMrp/sjxWBnA
-         NyqPL8HwXFepatPa3ODxF3+7gkTgLwuY1rxPqYHFuWs6+FO+eq/kKE52tLyGj/m4WjF5
-         wOYzSlHRo5Ef+E/f7fOVg7DjqVAQM//oLWTLGQ0/ionG/jvtoLTUhf6oKfYxZckWA8Ku
-         lniw==
-X-Gm-Message-State: AOAM532QkrYm0g+FPOTaWBlr+Qj01NG5/u5Zs+89JkzMhPbyvgjPT7Ww
-        nmuing6Vo6MLvZgThHZIEkfmUbQYsr9UCeECDtA=
-X-Google-Smtp-Source: ABdhPJz7gfXUwpova9za/PTWX8WunkEI3WRKtUv98aVQyRAy+B9mEgN/z5VzDrBndWSgPV3zL06NAg6NBftHZk4odNo=
-X-Received: by 2002:a1c:39d4:: with SMTP id g203mr22742169wma.107.1597001707966;
- Sun, 09 Aug 2020 12:35:07 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zWe/sahL/E3tERdXFNSfE5sYC94SN+X8wnVp1JqHnic=;
+        b=taAjFvRJADUhM4JHS5W7T3vRZq/GPLOkUysOu6I6jwKn20omt984y++THbnddqbd+D
+         hSYDjrx+InWlN6xDsLXr77ZFjliW3qayAF7CqUjLQI5Os034lOnvSVmkNs2m2YpiW7Rs
+         lDKMJAPVGmIhXGTljMNhV6lOLOE5CR2qoDxjDSstvZCPpTY8b9YdgPQtjzvGmtI3ADRj
+         Psc4NZtYABdy+dQomRIDaTRssOr4a7s9gzyc4XkajeftB3KCvdW7dRzO+h7+8WYOjPzT
+         6eNqUr/q8+e7Aja1ZPo07EHnnMQut7nGIb8RxzFRryn3juxz0nSoDaE9cNBWSH3HFFz0
+         q7rw==
+X-Gm-Message-State: AOAM530K9f5TsX3bPJllxQxjOzDcPYw8jsF46Dq7pHxC2+ptLTE+TjsA
+        8G9wxfMjAHpgFfhhoyqaaHkTtmvz2ewPL4WYY70=
+X-Google-Smtp-Source: ABdhPJxTDNtBbd50beI2WJcDghhtxP6/NcEFAtZ3NPywBjSfvduIvpMiM8fIDlMNABDkL5VRqh3Cz9P/7AXE5mzX/D4=
+X-Received: by 2002:a6b:6c13:: with SMTP id a19mr15201317ioh.31.1597012742927;
+ Sun, 09 Aug 2020 15:39:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200809060810.31370-1-sunshine@sunshineco.com>
- <20200809174209.15466-1-sunshine@sunshineco.com> <xmqq7du7eiqi.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq7du7eiqi.fsf@gitster.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 9 Aug 2020 15:34:57 -0400
-Message-ID: <CAPig+cTA_BVz-bGcGY++g2RV-Zd3Gv_yTGjv=VeMeqhP4eZZrw@mail.gmail.com>
-Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
+References: <xmqqy2muqddg.fsf@gitster.c.googlers.com> <20200805065408.1242617-1-martin.agren@gmail.com>
+In-Reply-To: <20200805065408.1242617-1-martin.agren@gmail.com>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Sun, 9 Aug 2020 18:38:50 -0400
+Message-ID: <CAPyFy2BzVD3omAHJx+etucVkGt3KnmURrJVXvhmmW9_JkPXTuQ@mail.gmail.com>
+Subject: Re: [PATCH RESEND] Update .mailmap
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 9, 2020 at 3:12 PM Junio C Hamano <gitster@pobox.com> wrote:
-> The motivation makes quite a lot of sense.
+On Wed, 5 Aug 2020 at 02:55, Martin Ågren <martin.agren@gmail.com> wrote:
 >
-> I suspect that it is a bug to use "-", i.e. "read from the standard
-> input", for "$2", because
+> Similar to a35b13fce0 ("Update .mailmap", 2018-11-09), make the output
+> of `git shortlog -nse v2.10.0..master` duplicate-free by taking/guessing
+> the current and preferred addresses for authors that appear with more
+> than one address.
 >
->  (1) if it is used for the expected output, we got the comparison in
->      the wrong direction;
+...
+>  * Ed Maste
+...
+>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 
-I had the same concern that it didn't necessarily make sense to allow
-"-" for $2, but eventually thought of a case such as:
-
-    sed '...' actual | test_cmp expect - &&
-
-which massages 'actual' before test_cmp() sees it. True, we don't
-actually have such callers, but it theoretically is legitimate.
-
->  (2) if it is used for the actual output, we have a command whose
->      output we are interested in on the upstream side of a pipe to
->      discard its exit status.
-
-If the command upstream is a Git command, that could indeed be a
-reason for concern, but, as illustrated above, it could just be a
-system command.
+Acked-by: Ed Maste <emaste@FreeBSD.org>
