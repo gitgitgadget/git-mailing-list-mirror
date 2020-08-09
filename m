@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LOTS_OF_MONEY,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F077EC433E3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACACCC433E4
 	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5465206D8
+	by mail.kernel.org (Postfix) with ESMTP id 7E7B2206D8
 	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PuLrMSwq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kGo/D5vC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726399AbgHICyH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 22:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40446 "EHLO
+        id S1726412AbgHICyJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 22:54:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbgHICx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726200AbgHICx5 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 8 Aug 2020 22:53:57 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB03FC061A29
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96DE6C061A28
         for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:53:56 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id a5so5056136wrm.6
+Received: by mail-wr1-x441.google.com with SMTP id l2so5046660wrc.7
         for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0oCQKiZpvmFFQwrKwuo8n2v4wexVlGSS2JtelNy+Og8=;
-        b=PuLrMSwqP0PbEeWDglQj61rOeYq4KMCQS0nFl5lu+HZ9qXuDsipyBnlIuMzHYA0/oS
-         naddTT3+NT/riymBJeh2y9L1OUlSWbsJyXAp4Dy5YWBXgOIWJRIJdfSvQbKc6pmCMYtp
-         831ll76O3/r/UTKdfMELdPiX2LiZiZca5NrGvgku7HYQ8Ke7lr6iLcXHDQoF3jp1saen
-         JEvJpGP9FtfAnbylrD3XQt5q7Vzx5kCFEfiGTRk0WzeB2gK1eYtokvoI4b8hfIRxK0Og
-         1eSKeFg0KS4p53spamBy4ZNW0pF+7nY5Z4J6PsfSgAMJyQUFQvivtpcI6ge3SxwvDMt7
-         x+WQ==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=x+NMQmyEPyym9fv5eB5Ov1DQmnxpJwCo0d/JGwLDegM=;
+        b=kGo/D5vC19ET2T3eV9zeKBeAOkMGeC113BJ9b0J6lrKnkM8y9vXS90JlOvccqfZh4W
+         C+vMyHZYQrGwQlxhmc2tqn4V4MHQIzDlpiOK/oxIXXg0sQNC/rFCsZm8bGJeFKl6Wf9r
+         Z+bx9g4ApSJo3dMN1fH+NM/53/sL80PD5H5Ja2PH3dIT8YTei5KmTOKcbqj8ZJYFbJds
+         Acr2Os87SSOEH/uRyG0q/SxcsWrMwvq2wOs95G6P3+yUG6b3V9dnN28OsbqAqF3XBm0h
+         OAX02uZVK+FhQgiYj+07ocSagZSiIHCdETu3ESfnnCA6QyJoAS8s5Ez30nW+gX/pCLQ+
+         vdLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0oCQKiZpvmFFQwrKwuo8n2v4wexVlGSS2JtelNy+Og8=;
-        b=aI6qefvSMe9Eq/fsZmlTTEH5NAxoLbTozyI2hfhawcediSQ7NZMDc/+YPKggp3Q2LR
-         fd9K24yhUi/cRmHVim8yPuyjVCdAhS7nZxbFVuuolp/4bI6ZTWP6t+1lPk4OAb3mMwW+
-         yQSk9lBa/5hzBHHkTo/OMwfR2MgGi2mVjxvYWoLGIqPLAyAsx+6kPnXoOcT3sIJonFz3
-         PYpmCjmnP9/vxl/t2h1EvA/Yo4+aflsUTtBoN2QjIm+XakVeMpzaRymnXwTnleWB0Kd+
-         7RO92chv7Mt8FmTJ+hZjTtx7kR9cztUEBwXVRVe4T8iXufWdhql11ExT87/je/WgOlaz
-         SVFw==
-X-Gm-Message-State: AOAM533RWCwHELCZy6UZo+leHyFBKO/jBmxPlAAAutGYqY4UIdZ7tXke
-        MjR3BrxQVB8u7a5B2uoos7A1DDMO
-X-Google-Smtp-Source: ABdhPJwjG/iLFX5ujBERR8Z4exuX/xEi3LT2XduZiXIKCztMakFuL63Hzr+Hla5yZyPmiviByj1mcA==
-X-Received: by 2002:adf:fb01:: with SMTP id c1mr17805498wrr.119.1596941634099;
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=x+NMQmyEPyym9fv5eB5Ov1DQmnxpJwCo0d/JGwLDegM=;
+        b=fR7d7smwDlAVAZFu9hUtu7VH8quYDscICZS9hTdn1+XlzLcAry1AvxifHygRYuZfNX
+         Gi5FPBMFqYebXUpOKk+Gax6QRLgWGh8VVNXip48jLRNye7M2UQXHVSH9Elc1u2L6loaf
+         t62Xs7aon1+GjISEYor+vTD3mFK3UEZ2YJk8Uai3fRw+HZ2x2YwkBnLVnhMakHWoEgr2
+         dctcP7uLNAKh5NiPntLsW+vukstuIvCvtO3lpOz95gi48xXrS5YTvFr3/juRDqf2hnor
+         P6/WHhW42B4Fup1L/ViVrIm27z62KxIF2SgrDkEIwWHyc5/e+42ZXoyGo/9v2fH+uqsJ
+         ucAQ==
+X-Gm-Message-State: AOAM532SkrWayA+D9K278nX8W+CyevmH9JnMoCQSXc3ItiYg00wtO5pf
+        5ZOFZ3zAHdYXMLs0g9moBlimvZMG
+X-Google-Smtp-Source: ABdhPJy5o8yLuY6xcBug2bvDGow8I8ANKckSM6C09490YHZdjl3vJmfCEGyMVvPZuBESaU5c3+G8zg==
+X-Received: by 2002:adf:a4c8:: with SMTP id h8mr18365226wrb.262.1596941634828;
         Sat, 08 Aug 2020 19:53:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u66sm15967850wmu.37.2020.08.08.19.53.53
+        by smtp.gmail.com with ESMTPSA id i82sm16473742wmi.10.2020.08.08.19.53.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2020 19:53:53 -0700 (PDT)
-Message-Id: <b2547828585be24f779b7b0672a2984e6b883f3c.1596941624.git.gitgitgadget@gmail.com>
+        Sat, 08 Aug 2020 19:53:54 -0700 (PDT)
+Message-Id: <cb797e20d79e9dcd3e0b953e0db3ed1defb9aa7c.1596941625.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
         <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 09 Aug 2020 02:53:38 +0000
-Subject: [PATCH v2 04/10] commit-graph: consolidate compare_commits_by_gen
-Fcc:    Sent
+Date:   Sun, 09 Aug 2020 02:53:39 +0000
+Subject: [PATCH v2 05/10] commit-graph: implement generation data chunk
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
@@ -81,104 +82,595 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-Comparing commits by generation has been independently defined twice, in
-commit-reach and commit. Let's simplify the implementation by moving
-compare_commits_by_gen() to commit-graph.
+As discovered by Ævar, we cannot increment graph version to
+distinguish between generation numbers v1 and v2 [1]. Thus, one of
+pre-requistes before implementing generation number was to distinguish
+between graph versions in a backwards compatible manner.
+
+We are going to introduce a new chunk called Generation Data chunk (or
+GDAT). GDAT stores generation number v2 (and any subsequent versions),
+whereas CDAT will still store topological level.
+
+Old Git does not understand GDAT chunk and would ignore it, reading
+topological levels from CDAT. New Git can parse GDAT and take advantage
+of newer generation numbers, falling back to topological levels when
+GDAT chunk is missing (as it would happen with a commit graph written
+by old Git).
+
+We introduce a test environment variable 'GIT_TEST_COMMIT_GRAPH_NO_GDAT'
+which forces commit-graph file to be written without generation data
+chunk to emulate a commit-graph file written by old Git.
+
+[1]: https://lore.kernel.org/git/87a7gdspo4.fsf@evledraar.gmail.com/
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-Reviewed-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 15 +++++++++++++++
- commit-graph.h |  2 ++
- commit-reach.c | 15 ---------------
- commit.c       |  9 +++------
- 4 files changed, 20 insertions(+), 21 deletions(-)
+ commit-graph.c                | 40 +++++++++++++++++++---
+ commit-graph.h                |  2 ++
+ t/README                      |  3 ++
+ t/helper/test-read-graph.c    |  2 ++
+ t/t4216-log-bloom.sh          |  4 +--
+ t/t5318-commit-graph.sh       | 27 +++++++--------
+ t/t5324-split-commit-graph.sh | 12 +++----
+ t/t6600-test-reach.sh         | 62 +++++++++++++++++++----------------
+ 8 files changed, 99 insertions(+), 53 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index af8d9cc45e..fb6e2bf18f 100644
+index fb6e2bf18f..d5da1e8028 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -112,6 +112,21 @@ uint32_t commit_graph_generation(const struct commit *c)
- 	return data->generation;
+@@ -38,11 +38,12 @@ void git_test_write_commit_graph_or_die(void)
+ #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
+ #define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
+ #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
++#define GRAPH_CHUNKID_GENERATION_DATA 0x47444154 /* "GDAT" */
+ #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
+ #define GRAPH_CHUNKID_BLOOMINDEXES 0x42494458 /* "BIDX" */
+ #define GRAPH_CHUNKID_BLOOMDATA 0x42444154 /* "BDAT" */
+ #define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
+-#define MAX_NUM_CHUNKS 7
++#define MAX_NUM_CHUNKS 8
+ 
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+ 
+@@ -392,6 +393,13 @@ struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size)
+ 				graph->chunk_commit_data = data + chunk_offset;
+ 			break;
+ 
++		case GRAPH_CHUNKID_GENERATION_DATA:
++			if (graph->chunk_generation_data)
++				chunk_repeated = 1;
++			else
++				graph->chunk_generation_data = data + chunk_offset;
++			break;
++
+ 		case GRAPH_CHUNKID_EXTRAEDGES:
+ 			if (graph->chunk_extra_edges)
+ 				chunk_repeated = 1;
+@@ -758,7 +766,10 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+ 	date_low = get_be32(commit_data + g->hash_len + 12);
+ 	item->date = (timestamp_t)((date_high << 32) | date_low);
+ 
+-	graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
++	if (g->chunk_generation_data)
++		graph_data->generation = get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
++	else
++		graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
  }
  
-+int compare_commits_by_gen(const void *_a, const void *_b)
+ static inline void set_commit_tree(struct commit *c, struct tree *t)
+@@ -951,7 +962,8 @@ struct write_commit_graph_context {
+ 		 report_progress:1,
+ 		 split:1,
+ 		 changed_paths:1,
+-		 order_by_pack:1;
++		 order_by_pack:1,
++		 write_generation_data:1;
+ 
+ 	const struct split_commit_graph_opts *split_opts;
+ 	size_t total_bloom_filter_data_size;
+@@ -1105,8 +1117,21 @@ static int write_graph_chunk_data(struct hashfile *f,
+ 	return 0;
+ }
+ 
++static int write_graph_chunk_generation_data(struct hashfile *f,
++					      struct write_commit_graph_context *ctx)
 +{
-+	const struct commit *a = _a, *b = _b;
-+	const uint32_t generation_a = commit_graph_generation(a);
-+	const uint32_t generation_b = commit_graph_generation(b);
-+
-+	/* older commits first */
-+	if (generation_a < generation_b)
-+		return -1;
-+	else if (generation_a > generation_b)
-+		return 1;
++	int i;
++	for (i = 0; i < ctx->commits.nr; i++) {
++		struct commit *c = ctx->commits.list[i];
++		display_progress(ctx->progress, ++ctx->progress_cnt);
++		hashwrite_be32(f, commit_graph_data_at(c)->generation);
++	}
 +
 +	return 0;
 +}
 +
- static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
+ static int write_graph_chunk_extra_edges(struct hashfile *f,
+-					 struct write_commit_graph_context *ctx)
++					  struct write_commit_graph_context *ctx)
  {
- 	unsigned int i, nth_slab;
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1710,6 +1735,12 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	chunks[2].id = GRAPH_CHUNKID_DATA;
+ 	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
+ 	chunks[2].write_fn = write_graph_chunk_data;
++	if (ctx->write_generation_data) {
++		chunks[num_chunks].id = GRAPH_CHUNKID_GENERATION_DATA;
++		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
++		chunks[num_chunks].write_fn = write_graph_chunk_generation_data;
++		num_chunks++;
++	}
+ 	if (ctx->num_extra_edges) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_EXTRAEDGES;
+ 		chunks[num_chunks].size = 4 * ctx->num_extra_edges;
+@@ -2113,6 +2144,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
+ 	ctx->split_opts = split_opts;
+ 	ctx->total_bloom_filter_data_size = 0;
++	ctx->write_generation_data = !git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0);
+ 
+ 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+ 		ctx->changed_paths = 1;
 diff --git a/commit-graph.h b/commit-graph.h
-index 09a97030dc..701e3d41aa 100644
+index 701e3d41aa..cc232e0678 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -146,4 +146,6 @@ struct commit_graph_data {
-  */
- uint32_t commit_graph_generation(const struct commit *);
- uint32_t commit_graph_position(const struct commit *);
+@@ -6,6 +6,7 @@
+ #include "oidset.h"
+ 
+ #define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
++#define GIT_TEST_COMMIT_GRAPH_NO_GDAT "GIT_TEST_COMMIT_GRAPH_NO_GDAT"
+ #define GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE "GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE"
+ #define GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS "GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS"
+ 
+@@ -67,6 +68,7 @@ struct commit_graph {
+ 	const uint32_t *chunk_oid_fanout;
+ 	const unsigned char *chunk_oid_lookup;
+ 	const unsigned char *chunk_commit_data;
++	const unsigned char *chunk_generation_data;
+ 	const unsigned char *chunk_extra_edges;
+ 	const unsigned char *chunk_base_graphs;
+ 	const unsigned char *chunk_bloom_indexes;
+diff --git a/t/README b/t/README
+index 70ec61cf88..6647ef132e 100644
+--- a/t/README
++++ b/t/README
+@@ -379,6 +379,9 @@ GIT_TEST_COMMIT_GRAPH=<boolean>, when true, forces the commit-graph to
+ be written after every 'git commit' command, and overrides the
+ 'core.commitGraph' setting to true.
+ 
++GIT_TEST_COMMIT_GRAPH_NO_GDAT=<boolean>, when true, forces the
++commit-graph to be written without generation data chunk.
 +
-+int compare_commits_by_gen(const void *_a, const void *_b);
- #endif
-diff --git a/commit-reach.c b/commit-reach.c
-index efd5925cbb..c83cc291e7 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -561,21 +561,6 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
- 	return repo_is_descendant_of(the_repository, commit, list);
+ GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=<boolean>, when true, forces
+ commit-graph write to compute and write changed path Bloom filters for
+ every 'git commit-graph write', as if the `--changed-paths` option was
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 6d0c962438..1c2a5366c7 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -32,6 +32,8 @@ int cmd__read_graph(int argc, const char **argv)
+ 		printf(" oid_lookup");
+ 	if (graph->chunk_commit_data)
+ 		printf(" commit_metadata");
++	if (graph->chunk_generation_data)
++		printf(" generation_data");
+ 	if (graph->chunk_extra_edges)
+ 		printf(" extra_edges");
+ 	if (graph->chunk_bloom_indexes)
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index c21cc160f3..55c94e9ebd 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -33,11 +33,11 @@ test_expect_success 'setup test - repo, commits, commit graph, log outputs' '
+ 	git commit-graph write --reachable --changed-paths
+ '
+ graph_read_expect () {
+-	NUM_CHUNKS=5
++	NUM_CHUNKS=6
+ 	cat >expect <<- EOF
+ 	header: 43475048 1 1 $NUM_CHUNKS 0
+ 	num_commits: $1
+-	chunks: oid_fanout oid_lookup commit_metadata bloom_indexes bloom_data
++	chunks: oid_fanout oid_lookup commit_metadata generation_data bloom_indexes bloom_data
+ 	EOF
+ 	test-tool read-graph >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 2804b0dd45..fef05c33d7 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -72,7 +72,7 @@ graph_git_behavior 'no graph' full commits/3 commits/1
+ graph_read_expect() {
+ 	OPTIONAL=""
+ 	NUM_CHUNKS=3
+-	if test ! -z $2
++	if test ! -z "$2"
+ 	then
+ 		OPTIONAL=" $2"
+ 		NUM_CHUNKS=$((3 + $(echo "$2" | wc -w)))
+@@ -99,14 +99,14 @@ test_expect_success 'exit with correct error on bad input to --stdin-commits' '
+ 	# valid commit and tree OID
+ 	git rev-parse HEAD HEAD^{tree} >in &&
+ 	git commit-graph write --stdin-commits <in &&
+-	graph_read_expect 3
++	graph_read_expect 3 generation_data
+ '
+ 
+ test_expect_success 'write graph' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "3"
++	graph_read_expect "3" generation_data
+ '
+ 
+ test_expect_success POSIXPERM 'write graph has correct permissions' '
+@@ -215,7 +215,7 @@ test_expect_success 'write graph with merges' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "10" "extra_edges"
++	graph_read_expect "10" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'merge 1 vs 2' full merge/1 merge/2
+@@ -250,7 +250,7 @@ test_expect_success 'write graph with new commit' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "11" "extra_edges"
++	graph_read_expect "11" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'full graph, commit 8 vs merge 1' full commits/8 merge/1
+@@ -260,7 +260,7 @@ test_expect_success 'write graph with nothing new' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "11" "extra_edges"
++	graph_read_expect "11" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'cleared graph, commit 8 vs merge 1' full commits/8 merge/1
+@@ -270,7 +270,7 @@ test_expect_success 'build graph from latest pack with closure' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	cat new-idx | git commit-graph write --stdin-packs &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "9" "extra_edges"
++	graph_read_expect "9" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'graph from pack, commit 8 vs merge 1' full commits/8 merge/1
+@@ -283,7 +283,7 @@ test_expect_success 'build graph from commits with closure' '
+ 	git rev-parse merge/1 >>commits-in &&
+ 	cat commits-in | git commit-graph write --stdin-commits &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "6"
++	graph_read_expect "6" "generation_data"
+ '
+ 
+ graph_git_behavior 'graph from commits, commit 8 vs merge 1' full commits/8 merge/1
+@@ -293,7 +293,7 @@ test_expect_success 'build graph from commits with append' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git rev-parse merge/3 | git commit-graph write --stdin-commits --append &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "10" "extra_edges"
++	graph_read_expect "10" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'append graph, commit 8 vs merge 1' full commits/8 merge/1
+@@ -303,7 +303,7 @@ test_expect_success 'build graph using --reachable' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write --reachable &&
+ 	test_path_is_file $objdir/info/commit-graph &&
+-	graph_read_expect "11" "extra_edges"
++	graph_read_expect "11" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'append graph, commit 8 vs merge 1' full commits/8 merge/1
+@@ -324,7 +324,7 @@ test_expect_success 'write graph in bare repo' '
+ 	cd "$TRASH_DIRECTORY/bare" &&
+ 	git commit-graph write &&
+ 	test_path_is_file $baredir/info/commit-graph &&
+-	graph_read_expect "11" "extra_edges"
++	graph_read_expect "11" "generation_data extra_edges"
+ '
+ 
+ graph_git_behavior 'bare repo with graph, commit 8 vs merge 1' bare commits/8 merge/1
+@@ -421,8 +421,9 @@ test_expect_success 'replace-objects invalidates commit-graph' '
+ 
+ test_expect_success 'git commit-graph verify' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+-	git rev-parse commits/8 | git commit-graph write --stdin-commits &&
+-	git commit-graph verify >output
++	git rev-parse commits/8 | GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph write --stdin-commits &&
++	git commit-graph verify >output &&
++	graph_read_expect 9 extra_edges
+ '
+ 
+ NUM_COMMITS=9
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 9b850ea907..6b25c3d9ce 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -14,11 +14,11 @@ test_expect_success 'setup repo' '
+ 	graphdir="$infodir/commit-graphs" &&
+ 	test_oid_init &&
+ 	test_oid_cache <<-EOM
+-	shallow sha1:1760
+-	shallow sha256:2064
++	shallow sha1:2132
++	shallow sha256:2436
+ 
+-	base sha1:1376
+-	base sha256:1496
++	base sha1:1408
++	base sha256:1528
+ 	EOM
+ '
+ 
+@@ -29,9 +29,9 @@ graph_read_expect() {
+ 		NUM_BASE=$2
+ 	fi
+ 	cat >expect <<- EOF
+-	header: 43475048 1 1 3 $NUM_BASE
++	header: 43475048 1 1 4 $NUM_BASE
+ 	num_commits: $1
+-	chunks: oid_fanout oid_lookup commit_metadata
++	chunks: oid_fanout oid_lookup commit_metadata generation_data
+ 	EOF
+ 	test-tool read-graph >output &&
+ 	test_cmp expect output
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index 475564bee7..d14b129f06 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -55,10 +55,13 @@ test_expect_success 'setup' '
+ 	git show-ref -s commit-5-5 | git commit-graph write --stdin-commits &&
+ 	mv .git/objects/info/commit-graph commit-graph-half &&
+ 	chmod u+w commit-graph-half &&
++	GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph write --reachable &&
++	mv .git/objects/info/commit-graph commit-graph-no-gdat &&
++	chmod u+w commit-graph-no-gdat &&
+ 	git config core.commitGraph true
+ '
+ 
+-run_three_modes () {
++run_all_modes () {
+ 	test_when_finished rm -rf .git/objects/info/commit-graph &&
+ 	"$@" <input >actual &&
+ 	test_cmp expect actual &&
+@@ -67,11 +70,14 @@ run_three_modes () {
+ 	test_cmp expect actual &&
+ 	cp commit-graph-half .git/objects/info/commit-graph &&
+ 	"$@" <input >actual &&
++	test_cmp expect actual &&
++	cp commit-graph-no-gdat .git/objects/info/commit-graph &&
++	"$@" <input >actual &&
+ 	test_cmp expect actual
  }
  
--static int compare_commits_by_gen(const void *_a, const void *_b)
--{
--	const struct commit *a = *(const struct commit * const *)_a;
--	const struct commit *b = *(const struct commit * const *)_b;
--
--	uint32_t generation_a = commit_graph_generation(a);
--	uint32_t generation_b = commit_graph_generation(b);
--
--	if (generation_a < generation_b)
--		return -1;
--	if (generation_a > generation_b)
--		return 1;
--	return 0;
--}
--
- int can_all_from_reach_with_flag(struct object_array *from,
- 				 unsigned int with_flag,
- 				 unsigned int assign_flag,
-diff --git a/commit.c b/commit.c
-index 7128895c3a..bed63b41fb 100644
---- a/commit.c
-+++ b/commit.c
-@@ -731,14 +731,11 @@ int compare_commits_by_author_date(const void *a_, const void *b_,
- int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused)
- {
- 	const struct commit *a = a_, *b = b_;
--	const uint32_t generation_a = commit_graph_generation(a),
--		       generation_b = commit_graph_generation(b);
-+	int ret_val = compare_commits_by_gen(a_, b_);
+-test_three_modes () {
+-	run_three_modes test-tool reach "$@"
++test_all_modes () {
++	run_all_modes test-tool reach "$@"
+ }
  
- 	/* newer commits first */
--	if (generation_a < generation_b)
--		return 1;
--	else if (generation_a > generation_b)
--		return -1;
-+	if (ret_val)
-+		return -ret_val;
+ test_expect_success 'ref_newer:miss' '
+@@ -80,7 +86,7 @@ test_expect_success 'ref_newer:miss' '
+ 	B:commit-4-9
+ 	EOF
+ 	echo "ref_newer(A,B):0" >expect &&
+-	test_three_modes ref_newer
++	test_all_modes ref_newer
+ '
  
- 	/* use date as a heuristic when generations are equal */
- 	if (a->date < b->date)
+ test_expect_success 'ref_newer:hit' '
+@@ -89,7 +95,7 @@ test_expect_success 'ref_newer:hit' '
+ 	B:commit-2-3
+ 	EOF
+ 	echo "ref_newer(A,B):1" >expect &&
+-	test_three_modes ref_newer
++	test_all_modes ref_newer
+ '
+ 
+ test_expect_success 'in_merge_bases:hit' '
+@@ -98,7 +104,7 @@ test_expect_success 'in_merge_bases:hit' '
+ 	B:commit-8-8
+ 	EOF
+ 	echo "in_merge_bases(A,B):1" >expect &&
+-	test_three_modes in_merge_bases
++	test_all_modes in_merge_bases
+ '
+ 
+ test_expect_success 'in_merge_bases:miss' '
+@@ -107,7 +113,7 @@ test_expect_success 'in_merge_bases:miss' '
+ 	B:commit-5-9
+ 	EOF
+ 	echo "in_merge_bases(A,B):0" >expect &&
+-	test_three_modes in_merge_bases
++	test_all_modes in_merge_bases
+ '
+ 
+ test_expect_success 'is_descendant_of:hit' '
+@@ -118,7 +124,7 @@ test_expect_success 'is_descendant_of:hit' '
+ 	X:commit-1-1
+ 	EOF
+ 	echo "is_descendant_of(A,X):1" >expect &&
+-	test_three_modes is_descendant_of
++	test_all_modes is_descendant_of
+ '
+ 
+ test_expect_success 'is_descendant_of:miss' '
+@@ -129,7 +135,7 @@ test_expect_success 'is_descendant_of:miss' '
+ 	X:commit-7-6
+ 	EOF
+ 	echo "is_descendant_of(A,X):0" >expect &&
+-	test_three_modes is_descendant_of
++	test_all_modes is_descendant_of
+ '
+ 
+ test_expect_success 'get_merge_bases_many' '
+@@ -144,7 +150,7 @@ test_expect_success 'get_merge_bases_many' '
+ 		git rev-parse commit-5-6 \
+ 			      commit-4-7 | sort
+ 	} >expect &&
+-	test_three_modes get_merge_bases_many
++	test_all_modes get_merge_bases_many
+ '
+ 
+ test_expect_success 'reduce_heads' '
+@@ -166,7 +172,7 @@ test_expect_success 'reduce_heads' '
+ 			      commit-2-8 \
+ 			      commit-1-10 | sort
+ 	} >expect &&
+-	test_three_modes reduce_heads
++	test_all_modes reduce_heads
+ '
+ 
+ test_expect_success 'can_all_from_reach:hit' '
+@@ -189,7 +195,7 @@ test_expect_success 'can_all_from_reach:hit' '
+ 	Y:commit-8-1
+ 	EOF
+ 	echo "can_all_from_reach(X,Y):1" >expect &&
+-	test_three_modes can_all_from_reach
++	test_all_modes can_all_from_reach
+ '
+ 
+ test_expect_success 'can_all_from_reach:miss' '
+@@ -211,7 +217,7 @@ test_expect_success 'can_all_from_reach:miss' '
+ 	Y:commit-8-5
+ 	EOF
+ 	echo "can_all_from_reach(X,Y):0" >expect &&
+-	test_three_modes can_all_from_reach
++	test_all_modes can_all_from_reach
+ '
+ 
+ test_expect_success 'can_all_from_reach_with_flag: tags case' '
+@@ -234,7 +240,7 @@ test_expect_success 'can_all_from_reach_with_flag: tags case' '
+ 	Y:commit-8-1
+ 	EOF
+ 	echo "can_all_from_reach_with_flag(X,_,_,0,0):1" >expect &&
+-	test_three_modes can_all_from_reach_with_flag
++	test_all_modes can_all_from_reach_with_flag
+ '
+ 
+ test_expect_success 'commit_contains:hit' '
+@@ -250,8 +256,8 @@ test_expect_success 'commit_contains:hit' '
+ 	X:commit-9-3
+ 	EOF
+ 	echo "commit_contains(_,A,X,_):1" >expect &&
+-	test_three_modes commit_contains &&
+-	test_three_modes commit_contains --tag
++	test_all_modes commit_contains &&
++	test_all_modes commit_contains --tag
+ '
+ 
+ test_expect_success 'commit_contains:miss' '
+@@ -267,8 +273,8 @@ test_expect_success 'commit_contains:miss' '
+ 	X:commit-9-3
+ 	EOF
+ 	echo "commit_contains(_,A,X,_):0" >expect &&
+-	test_three_modes commit_contains &&
+-	test_three_modes commit_contains --tag
++	test_all_modes commit_contains &&
++	test_all_modes commit_contains --tag
+ '
+ 
+ test_expect_success 'rev-list: basic topo-order' '
+@@ -280,7 +286,7 @@ test_expect_success 'rev-list: basic topo-order' '
+ 		commit-6-2 commit-5-2 commit-4-2 commit-3-2 commit-2-2 commit-1-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-6-6
++	run_all_modes git rev-list --topo-order commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: first-parent topo-order' '
+@@ -292,7 +298,7 @@ test_expect_success 'rev-list: first-parent topo-order' '
+ 		commit-6-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --first-parent --topo-order commit-6-6
++	run_all_modes git rev-list --first-parent --topo-order commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: range topo-order' '
+@@ -304,7 +310,7 @@ test_expect_success 'rev-list: range topo-order' '
+ 		commit-6-2 commit-5-2 commit-4-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-3-3..commit-6-6
++	run_all_modes git rev-list --topo-order commit-3-3..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: range topo-order' '
+@@ -316,7 +322,7 @@ test_expect_success 'rev-list: range topo-order' '
+ 		commit-6-2 commit-5-2 commit-4-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-3-8..commit-6-6
++	run_all_modes git rev-list --topo-order commit-3-8..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: first-parent range topo-order' '
+@@ -328,7 +334,7 @@ test_expect_success 'rev-list: first-parent range topo-order' '
+ 		commit-6-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
++	run_all_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: ancestry-path topo-order' '
+@@ -338,7 +344,7 @@ test_expect_success 'rev-list: ancestry-path topo-order' '
+ 		commit-6-4 commit-5-4 commit-4-4 commit-3-4 \
+ 		commit-6-3 commit-5-3 commit-4-3 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
++	run_all_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: symmetric difference topo-order' '
+@@ -352,7 +358,7 @@ test_expect_success 'rev-list: symmetric difference topo-order' '
+ 		commit-3-8 commit-2-8 commit-1-8 \
+ 		commit-3-7 commit-2-7 commit-1-7 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-3-8...commit-6-6
++	run_all_modes git rev-list --topo-order commit-3-8...commit-6-6
+ '
+ 
+ test_expect_success 'get_reachable_subset:all' '
+@@ -372,7 +378,7 @@ test_expect_success 'get_reachable_subset:all' '
+ 			      commit-1-7 \
+ 			      commit-5-6 | sort
+ 	) >expect &&
+-	test_three_modes get_reachable_subset
++	test_all_modes get_reachable_subset
+ '
+ 
+ test_expect_success 'get_reachable_subset:some' '
+@@ -390,7 +396,7 @@ test_expect_success 'get_reachable_subset:some' '
+ 		git rev-parse commit-3-3 \
+ 			      commit-1-7 | sort
+ 	) >expect &&
+-	test_three_modes get_reachable_subset
++	test_all_modes get_reachable_subset
+ '
+ 
+ test_expect_success 'get_reachable_subset:none' '
+@@ -404,7 +410,7 @@ test_expect_success 'get_reachable_subset:none' '
+ 	Y:commit-2-8
+ 	EOF
+ 	echo "get_reachable_subset(X,Y)" >expect &&
+-	test_three_modes get_reachable_subset
++	test_all_modes get_reachable_subset
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
