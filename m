@@ -1,102 +1,108 @@
-Return-Path: <SRS0=OIeF=BS=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=dguO=BT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB29CC433E0
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 23:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E15BC433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:19:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90934206C0
-	for <git@archiver.kernel.org>; Sat,  8 Aug 2020 23:26:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47A64206B2
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:19:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PhdwHcqa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f49bxje2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726040AbgHHX0W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 19:26:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58517 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725950AbgHHX0U (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 19:26:20 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 037D5DB269;
-        Sat,  8 Aug 2020 19:26:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=I8npYBbkaefemqg490UX5kmu5pE=; b=PhdwHc
-        qai9ZM1E71SJdVwf2Gmokl9MwEUvE3bUxo/RNKBfdoWxzuja+RTTiaHgCRdiVmPS
-        T+uhHC/qHRfw8foR6kxODldReaboQlWoLn9yhGTJ3AhNGDWCQVOMNPxWbTwwc76m
-        jGpRnkFuB3+XrnCiePOVxLvEBNRxMXJByGzIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=omRkK6nARpuw+9vy4uEc2lNkaZlMI/cx
-        vVyJ150SFXXh/lSBz6ADdGc8TCYPqL/5A1aMP2/XRFua04af0N2EhD6Z+8a1FkfY
-        zdDYtf3usT8br9ZQRNsoN8heRfUoUlo+ArBwf0pVVFyJ6YIXeduv8UIDduh94CJP
-        J5jhfAUdRc4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E2A67DB268;
-        Sat,  8 Aug 2020 19:26:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28DDCDB267;
-        Sat,  8 Aug 2020 19:26:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 1/5] submodule: expose the '--for-status' option of summary
-References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
-        <20200806164102.6707-2-shouryashukla.oo@gmail.com>
-        <831df9f2-0663-0dfc-0871-d34864d1ecde@gmail.com>
-        <CAP8UFD20ORozywSAV+Qayuf_vwve9A21ySAtTZVphwhv5nYWXg@mail.gmail.com>
-Date:   Sat, 08 Aug 2020 16:26:14 -0700
-In-Reply-To: <CAP8UFD20ORozywSAV+Qayuf_vwve9A21ySAtTZVphwhv5nYWXg@mail.gmail.com>
-        (Christian Couder's message of "Sat, 8 Aug 2020 22:25:10 +0200")
-Message-ID: <xmqqv9hsen3d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726338AbgHICTc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 22:19:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725988AbgHICTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 22:19:31 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE174C061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:19:31 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id 74so3262990pfx.13
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l9ndQPNNkLs4BzkE1h2zTs58WXQE/L2OzLMhX9pcI28=;
+        b=f49bxje2k1Rw/DR0Q80fFawvomCjCHttuzqdvo4kabL1YUinBc37yzZsDtbcdAqvId
+         UufSwaXLh68JzWACXSJVy1oVbirv86R9BrhYXqcQM1exbn6z/sr5vwt+V38ZYCEKXXzb
+         c9qDePxlD4tJH7LwhP+DzgaCw23a2CB7NDa/mitDfn35tV1enY38/K0g3ohRFdmAC2/x
+         ZCotxj2gCb2VUGT23oTWXqWBge1iqhrXxfiY90Pf2ljNY8CP45Zw9TbTv/L9G16qTAvW
+         qp6IcEzvlgtUYq4oylkEZdFsRMDMgW4Acv2q4cX0iPp2MpxNjk93biPiSgWtSjFS+hId
+         xKFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=l9ndQPNNkLs4BzkE1h2zTs58WXQE/L2OzLMhX9pcI28=;
+        b=Zj1/4IaABBQ29LhxiSdQy64JgsJ93UjhMh379LoyKRKTJj40hjuYltS5QFkuQnkTKl
+         kixT/RHnb388XBwqIK3OTRyIETxSChOcWX16+peD5E/yfQIldMS5/n5RsySkdPMW/8sG
+         Qr4tu//k+AAIZTXA+KChDDXSFiI90Khq8p4CQEKfMeSPr9WuwCgLS95kv9VPNRUtA/bS
+         rcXhwT9Z4t5xjjmSIODBBDdVGN2iZSVbsvL6x1xk9Dv/vpqPNQrwypz0yCJijEcjaPvh
+         bgJrhtkMOqjwTPGQBRJh66YNieVncq7Uf1+CiWmjB6a2iN4adwO3JBF/3qlPr0G46zlh
+         F5CA==
+X-Gm-Message-State: AOAM533u9xaYWeiyu4ejLZOOyiHgrRiXbYNXE5hv+hJmWGN8bwCQeHXa
+        IbXUrDUor2kFNHn4ZT98ISwwY2XT
+X-Google-Smtp-Source: ABdhPJzuo5pCrRABELjctlg57HfzonMOS6wh1JOw39elLX1I1/q+5ATQk2AdYidRwfs9VGiFGNEefg==
+X-Received: by 2002:aa7:9535:: with SMTP id c21mr19826277pfp.322.1596939571096;
+        Sat, 08 Aug 2020 19:19:31 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:6375:ea17:7ad5:df16:a252:473b])
+        by smtp.gmail.com with ESMTPSA id g129sm17631235pfb.33.2020.08.08.19.19.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 08 Aug 2020 19:19:30 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [RFC PATCH 0/2] extend --abbrev support to diff-patch format
+Date:   Sun,  9 Aug 2020 09:19:03 +0700
+Message-Id: <cover.1596887883.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.28.0.215.g32ffa52ee0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8E487FEC-D9CE-11EA-A7AB-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+For some reason, projects tracks local copy of released version of other
+projects, and backports change to earlier version.
 
-> Yeah, I agree that finding a good name and a good use case for the
-> option would surely help.
+Due to lower number of object in simplified history,
+abbreviated object id has fewer characters, thus generate some noise
+when projects try to compare the backported patch with original patch
+if the file hunk is an exact match.
 
-That makes it sound like a solution looking for a problem.
+This series try to lower that noise.
+Since this is very localised use case,
+and the noise is not completely eliminated,
+other experienced developers may have better opinions.
 
-The option was added and discussed in [*1*], and it was quite clear
-that it was merely an implementation detail to show the same info as
-"git submodule summary" in a format that would fit better in the
-context of "git status".  I doubt that anything changed since then
-in the past 12 years to make the option deserve more attention by
-the end users, but what this patch (which is the first in a 5-patch
-series) does may be worth doing if a later patch in the series
-serves as that "good use case".
+Đoàn Trần Công Danh (2):
+  revision: differentiate if --no-abbrev asked explicitly
+  diff: extend --abbrev support to diff-patch format
 
-On the other hand, if there is no such "good use case" example in
-the other changes in this series, the option can and should be kept
-as an implementation detail of "git status", I would think.
+ Documentation/diff-options.txt                |  9 +++---
+ diff.c                                        |  5 +++-
+ revision.c                                    |  2 +-
+ t/t4013-diff-various.sh                       |  3 ++
+ ...ff.diff-tree_--root_-p_--abbrev=10_initial | 29 +++++++++++++++++++
+ ...--root_-p_--full-index_--abbrev=10_initial | 29 +++++++++++++++++++
+ ...f.diff-tree_--root_-p_--full-index_initial | 29 +++++++++++++++++++
+ 7 files changed, 100 insertions(+), 6 deletions(-)
+ create mode 100644 t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+ create mode 100644 t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+ create mode 100644 t/t4013/diff.diff-tree_--root_-p_--full-index_initial
 
-Thanks.
-
-
-[Reference]
-
-*1*
-https://lore.kernel.org/git/1205416085-23431-1-git-send-email-pkufranky@gmail.com/
+-- 
+2.28.0.215.g32ffa52ee0
 
