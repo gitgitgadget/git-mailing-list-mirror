@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B44C433E1
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFFB4C433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87FF7206DF
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1104206DF
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HCuCFKBR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ur35OWu4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726395AbgHICyD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 22:54:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40454 "EHLO
+        id S1726398AbgHICyF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 22:54:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgHICx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 22:53:58 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4B0C061A2B
+        with ESMTP id S1726212AbgHICx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 22:53:57 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FED5C061A2A
         for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:53:57 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id p20so5059181wrf.0
+Received: by mail-wr1-x442.google.com with SMTP id l2so5046671wrc.7
         for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pr2Zc/i+T1F6Y+cZHGY7FqZwxY9Ft3aIIPl4yRzi6Xs=;
-        b=HCuCFKBRnmsskT62haz6FS669ebg+MrRmKvpJu43FqGZOyvyX4PDtZK35rBgjnYWMN
-         6LXxonXLOctMRfr7OZeKMuHbqvCVwYHu9U8jKp44mHfHTqT8xSfohfzi1nFQEapHVUXW
-         ymUbb/inQW+EYvv7J8UfvaEd2tRewoVrEWcJ8G+n/TaPSNIpgjN/kcMrtY1YX+zRC7Cv
-         47cNvFPC4lI2UsIUyRJDsRVxepjG0BNTD58l4UNipzKzMneIU73ZD/LJaqVcOh1MN/f0
-         ljbUsSKnDpDZeXGYyM6tBlBtpiGPPveZrixGeymeztcN83sHkCYBWdhy8ANVEzTFaajn
-         Ur+g==
+        bh=4ArW47UXhDWLACISWKffd9HxQQpBFINq7O/wlB4NeZ4=;
+        b=ur35OWu4T4jqXyfZUJhi97XnRr+u//Y41J5a+Gfe61w6iHgii9UiQQk2+4UyWWaEfG
+         oSLHt7xdgl+/8mXjKYCeR9rO+gj7KXH8IGi+LQHQLeOOYt51wohgyrnWmM4mLV4z4WG4
+         th9/1jtV5Zg1AyfRFG2x8dTGIKvWa/klxORA0wMTDSsKlNk/lR5hGmdcf2QEsTX3NPZi
+         L9SvJ9+24PSh+JBUVclwt9oSrjxD/g/FbcvLmrsYzMiVIa5AvLlkOM8Iv7n5RfMiUCMq
+         XVjbHbTPA08aVWVTUYzyW1z7bTnEpiqzBMLTDPj6zogBpm3j7cZaXDvkwj92xyayVgCf
+         FjRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pr2Zc/i+T1F6Y+cZHGY7FqZwxY9Ft3aIIPl4yRzi6Xs=;
-        b=P24vuffd7E7A141jGo6QloaxzMGbTixhX7d4Cbbmljw9K3ZWKQEQRIj+AuWgtRB9ml
-         F2QT5+IJrF/h1sIUwyHqse5PoY9xRWjc3tr90QCyThKcFBmcr7VVwNMh3OzTikg15SiC
-         Map4iH8fQxLD71BaGm5Cypg06Gv/DUxzEKZDZAo4WYupUlkPAlvU/5QZgtd7oe7wmCwC
-         8zLn8415I5PTF03nj3HFfh5wmW63rGDiHJTiSs3S8pXQUfGuUmRGzcnniP4gYOASvRkq
-         DmtzIJYnP4GiTO8ZTWs3ApJVJ4FlVQ+Aq4EvY1dWxz/Hzmo2EOQ+izDraslAPgqK1w5J
-         qC6g==
-X-Gm-Message-State: AOAM531D+cbUYzHPm5eN7cvsFkqMoJyENmygscL7MTczIuLtYC8jt1Ro
-        CthsGm417PY/vP03NMf706jKVxXF
-X-Google-Smtp-Source: ABdhPJz+I14H6OjVwFQlCfC5hHP8n4rBIHheQcdxKUP2TRg7zrxsgflhg/UvIv7pcQIGYoewXCkX7g==
-X-Received: by 2002:a5d:5746:: with SMTP id q6mr18625136wrw.59.1596941636377;
-        Sat, 08 Aug 2020 19:53:56 -0700 (PDT)
+        bh=4ArW47UXhDWLACISWKffd9HxQQpBFINq7O/wlB4NeZ4=;
+        b=LOWLMbW9U+tl4YMbJQRzsKmbLHFYxZKQz8SnmFISdETNGxv9Vg9RD7URDAm5LnRWW1
+         PJR1FHLLw4EVyhl9ygN+nPQkP3kXL04SLvW4V/N7dcBgAQGhVcRLopqe3Tnao+5zF01O
+         aTFqkgzL7cV/krGUwelNHHaVszEZk7Qu0SSQgq7qb1rGaXBMjQGu2uq8fekulT+s0fAZ
+         dxKoOMJjSWT2LO2XdC4oLUA6q584EJS5ste2Nn3e6lxkXAK5AJdkGiOTfFzPuvtfF0w5
+         tM96sg94DZ/ujC0XxxpYd0QZKZQLluhD0/KYVTmdUEp+3HOkpbvrKjZtcQWIZH8SO59L
+         DQ+g==
+X-Gm-Message-State: AOAM533odN2OLiQCmJyoqwV/0yCs0jcFirlIObqEB2RHRqDX3AVWlidB
+        YRbdLtHzLu580PoFI1mYdjfoZLlc
+X-Google-Smtp-Source: ABdhPJz5LCJyYtKUUV9hYf011jY26e6+0uG4DFrNywYaFW3Hw4tl73qxoUBFdaIEM1oIfJ6J+M0DIQ==
+X-Received: by 2002:a5d:42c2:: with SMTP id t2mr18485749wrr.396.1596941635603;
+        Sat, 08 Aug 2020 19:53:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14sm17002984wrx.90.2020.08.08.19.53.55
+        by smtp.gmail.com with ESMTPSA id z15sm16278690wrn.89.2020.08.08.19.53.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 08 Aug 2020 19:53:55 -0700 (PDT)
-Message-Id: <bfe14732014807ff19f943cdf51068f0d3043c30.1596941625.git.gitgitgadget@gmail.com>
+Message-Id: <1aa2a00a7a2a0e4c884bf95261b5e308c3611fbc.1596941625.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
         <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 09 Aug 2020 02:53:41 +0000
-Subject: [PATCH v2 07/10] commit-graph: implement corrected commit date
+Date:   Sun, 09 Aug 2020 02:53:40 +0000
+Subject: [PATCH v2 06/10] commit-graph: return 64-bit generation number
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,232 +81,323 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-With most of preparations done, let's implement corrected commit date
-offset. We add a new commit-slab to store topogical levels while
-writing commit graph and upgrade the generation member in struct
-commit_graph_data to a 64-bit timestamp. We store topological levels to
-ensure that older versions of Git will still have the performance
-benefits from generation number v2.
+In a preparatory step, let's return timestamp_t values from
+commit_graph_generation(), use timestamp_t for local variables and
+define GENERATION_NUMBER_INFINITY as (2 ^ 63 - 1) instead.
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- commit-graph.c | 89 ++++++++++++++++++++++++++++----------------------
- commit.h       |  1 +
- 2 files changed, 51 insertions(+), 39 deletions(-)
+ commit-graph.c | 18 +++++++++---------
+ commit-graph.h |  4 ++--
+ commit-reach.c | 32 ++++++++++++++++----------------
+ commit-reach.h |  2 +-
+ commit.h       |  3 ++-
+ revision.c     | 10 +++++-----
+ upload-pack.c  |  2 +-
+ 7 files changed, 36 insertions(+), 35 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 42f3ec5460..d0f977852b 100644
+index d5da1e8028..42f3ec5460 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -65,6 +65,8 @@ void git_test_write_commit_graph_or_die(void)
- /* Remember to update object flag allocation in object.h */
- #define REACHABLE       (1u<<15)
- 
-+define_commit_slab(topo_level_slab, uint32_t);
-+
- /* Keep track of the order in which commits are added to our list. */
- define_commit_slab(commit_pos, int);
- static struct commit_pos commit_pos = COMMIT_SLAB_INIT(1, commit_pos);
-@@ -168,11 +170,6 @@ static int commit_gen_cmp(const void *va, const void *vb)
- 	else if (generation_a > generation_b)
- 		return 1;
- 
--	/* use date as a heuristic when generations are equal */
--	if (a->date < b->date)
--		return -1;
--	else if (a->date > b->date)
--		return 1;
- 	return 0;
+@@ -100,7 +100,7 @@ uint32_t commit_graph_position(const struct commit *c)
+ 	return data ? data->graph_pos : COMMIT_NOT_FROM_GRAPH;
  }
  
-@@ -767,7 +764,10 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
- 	item->date = (timestamp_t)((date_high << 32) | date_low);
+-uint32_t commit_graph_generation(const struct commit *c)
++timestamp_t commit_graph_generation(const struct commit *c)
+ {
+ 	struct commit_graph_data *data =
+ 		commit_graph_data_slab_peek(&commit_graph_data_slab, c);
+@@ -116,8 +116,8 @@ uint32_t commit_graph_generation(const struct commit *c)
+ int compare_commits_by_gen(const void *_a, const void *_b)
+ {
+ 	const struct commit *a = _a, *b = _b;
+-	const uint32_t generation_a = commit_graph_generation(a);
+-	const uint32_t generation_b = commit_graph_generation(b);
++	const timestamp_t generation_a = commit_graph_generation(a);
++	const timestamp_t generation_b = commit_graph_generation(b);
  
- 	if (g->chunk_generation_data)
--		graph_data->generation = get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
-+	{
-+		graph_data->generation = item->date +
-+			(timestamp_t) get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
-+	}
- 	else
- 		graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
- }
-@@ -948,6 +948,7 @@ struct write_commit_graph_context {
- 	struct progress *progress;
- 	int progress_done;
- 	uint64_t progress_cnt;
-+	struct topo_level_slab *topo_levels;
+ 	/* older commits first */
+ 	if (generation_a < generation_b)
+@@ -160,8 +160,8 @@ static int commit_gen_cmp(const void *va, const void *vb)
+ 	const struct commit *a = *(const struct commit **)va;
+ 	const struct commit *b = *(const struct commit **)vb;
  
- 	char *base_graph_name;
- 	int num_commit_graphs_before;
-@@ -1106,7 +1107,7 @@ static int write_graph_chunk_data(struct hashfile *f,
- 		else
- 			packedDate[0] = 0;
- 
--		packedDate[0] |= htonl(commit_graph_data_at(*list)->generation << 2);
-+		packedDate[0] |= htonl(*topo_level_slab_at(ctx->topo_levels, *list) << 2);
- 
- 		packedDate[1] = htonl((*list)->date);
- 		hashwrite(f, packedDate, 8);
-@@ -1123,8 +1124,13 @@ static int write_graph_chunk_generation_data(struct hashfile *f,
- 	int i;
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		struct commit *c = ctx->commits.list[i];
-+		timestamp_t offset = commit_graph_data_at(c)->generation - c->date;
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
--		hashwrite_be32(f, commit_graph_data_at(c)->generation);
-+
-+		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX)
-+			offset = GENERATION_NUMBER_V2_OFFSET_MAX;
-+
-+		hashwrite_be32(f, offset);
- 	}
- 
- 	return 0;
-@@ -1360,11 +1366,11 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 					_("Computing commit graph generation numbers"),
- 					ctx->commits.nr);
- 	for (i = 0; i < ctx->commits.nr; i++) {
--		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
-+		uint32_t topo_level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
+-	uint32_t generation_a = commit_graph_data_at(a)->generation;
+-	uint32_t generation_b = commit_graph_data_at(b)->generation;
++	const timestamp_t generation_a = commit_graph_data_at(a)->generation;
++	const timestamp_t generation_b = commit_graph_data_at(b)->generation;
+ 	/* lower generation commits first */
+ 	if (generation_a < generation_b)
+ 		return -1;
+@@ -1363,7 +1363,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+ 		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
  
  		display_progress(ctx->progress, i + 1);
--		if (generation != GENERATION_NUMBER_V1_INFINITY &&
--		    generation != GENERATION_NUMBER_ZERO)
-+		if (topo_level != GENERATION_NUMBER_V1_INFINITY &&
-+		    topo_level != GENERATION_NUMBER_ZERO)
+-		if (generation != GENERATION_NUMBER_INFINITY &&
++		if (generation != GENERATION_NUMBER_V1_INFINITY &&
+ 		    generation != GENERATION_NUMBER_ZERO)
  			continue;
  
- 		commit_list_insert(ctx->commits.list[i], &list);
-@@ -1372,29 +1378,38 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 			struct commit *current = list->item;
- 			struct commit_list *parent;
- 			int all_parents_computed = 1;
--			uint32_t max_generation = 0;
-+			uint32_t max_level = 0;
-+			timestamp_t max_corrected_commit_date = current->date - 1;
- 
+@@ -1377,7 +1377,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
  			for (parent = current->parents; parent; parent = parent->next) {
--				generation = commit_graph_data_at(parent->item)->generation;
-+				topo_level = *topo_level_slab_at(ctx->topo_levels, parent->item);
+ 				generation = commit_graph_data_at(parent->item)->generation;
  
--				if (generation == GENERATION_NUMBER_V1_INFINITY ||
--				    generation == GENERATION_NUMBER_ZERO) {
-+				if (topo_level == GENERATION_NUMBER_V1_INFINITY ||
-+				    topo_level == GENERATION_NUMBER_ZERO) {
+-				if (generation == GENERATION_NUMBER_INFINITY ||
++				if (generation == GENERATION_NUMBER_V1_INFINITY ||
+ 				    generation == GENERATION_NUMBER_ZERO) {
  					all_parents_computed = 0;
  					commit_list_insert(parent->item, &list);
- 					break;
--				} else if (generation > max_generation) {
--					max_generation = generation;
-+				} else {
-+					struct commit_graph_data *data = commit_graph_data_at(parent->item);
-+
-+					if (topo_level > max_level)
-+						max_level = topo_level;
-+
-+					if (data->generation > max_corrected_commit_date)
-+						max_corrected_commit_date = data->generation;
- 				}
- 			}
- 
- 			if (all_parents_computed) {
- 				struct commit_graph_data *data = commit_graph_data_at(current);
- 
--				data->generation = max_generation + 1;
--				pop_commit(&list);
-+				if (max_level > GENERATION_NUMBER_MAX - 1)
-+					max_level = GENERATION_NUMBER_MAX - 1;
-+
-+				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
-+				data->generation = max_corrected_commit_date + 1;
- 
--				if (data->generation > GENERATION_NUMBER_MAX)
--					data->generation = GENERATION_NUMBER_MAX;
-+				pop_commit(&list);
- 			}
- 		}
- 	}
-@@ -2132,6 +2147,7 @@ int write_commit_graph(struct object_directory *odb,
- 	uint32_t i, count_distinct = 0;
- 	int res = 0;
- 	int replace = 0;
-+	struct topo_level_slab topo_levels;
- 
- 	if (!commit_graph_compatible(the_repository))
- 		return 0;
-@@ -2146,6 +2162,9 @@ int write_commit_graph(struct object_directory *odb,
- 	ctx->total_bloom_filter_data_size = 0;
- 	ctx->write_generation_data = !git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0);
- 
-+	init_topo_level_slab(&topo_levels);
-+	ctx->topo_levels = &topo_levels;
-+
- 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
- 		ctx->changed_paths = 1;
- 	if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
-@@ -2387,8 +2406,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+@@ -2387,8 +2387,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
  	for (i = 0; i < g->num_commits; i++) {
  		struct commit *graph_commit, *odb_commit;
  		struct commit_list *graph_parents, *odb_parents;
--		timestamp_t max_generation = 0;
--		timestamp_t generation;
-+		timestamp_t max_parent_corrected_commit_date = 0;
-+		timestamp_t corrected_commit_date;
+-		uint32_t max_generation = 0;
+-		uint32_t generation;
++		timestamp_t max_generation = 0;
++		timestamp_t generation;
  
  		display_progress(progress, i + 1);
  		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-@@ -2427,9 +2446,9 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 					     oid_to_hex(&graph_parents->item->object.oid),
- 					     oid_to_hex(&odb_parents->item->object.oid));
+diff --git a/commit-graph.h b/commit-graph.h
+index cc232e0678..f89614ecd5 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -140,13 +140,13 @@ void disable_commit_graph(struct repository *r);
  
--			generation = commit_graph_generation(graph_parents->item);
--			if (generation > max_generation)
--				max_generation = generation;
-+			corrected_commit_date = commit_graph_generation(graph_parents->item);
-+			if (corrected_commit_date > max_parent_corrected_commit_date)
-+				max_parent_corrected_commit_date = corrected_commit_date;
+ struct commit_graph_data {
+ 	uint32_t graph_pos;
+-	uint32_t generation;
++	timestamp_t generation;
+ };
  
- 			graph_parents = graph_parents->next;
- 			odb_parents = odb_parents->next;
-@@ -2451,20 +2470,12 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 		if (generation_zero == GENERATION_ZERO_EXISTS)
+ /*
+  * Commits should be parsed before accessing generation, graph positions.
+  */
+-uint32_t commit_graph_generation(const struct commit *);
++timestamp_t commit_graph_generation(const struct commit *);
+ uint32_t commit_graph_position(const struct commit *);
+ 
+ int compare_commits_by_gen(const void *_a, const void *_b);
+diff --git a/commit-reach.c b/commit-reach.c
+index c83cc291e7..470bc80139 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -32,12 +32,12 @@ static int queue_has_nonstale(struct prio_queue *queue)
+ static struct commit_list *paint_down_to_common(struct repository *r,
+ 						struct commit *one, int n,
+ 						struct commit **twos,
+-						int min_generation)
++						timestamp_t min_generation)
+ {
+ 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 	struct commit_list *result = NULL;
+ 	int i;
+-	uint32_t last_gen = GENERATION_NUMBER_INFINITY;
++	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
+ 
+ 	if (!min_generation)
+ 		queue.compare = compare_commits_by_commit_date;
+@@ -58,10 +58,10 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 		struct commit *commit = prio_queue_get(&queue);
+ 		struct commit_list *parents;
+ 		int flags;
+-		uint32_t generation = commit_graph_generation(commit);
++		timestamp_t generation = commit_graph_generation(commit);
+ 
+ 		if (min_generation && generation > last_gen)
+-			BUG("bad generation skip %8x > %8x at %s",
++			BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
+ 			    generation, last_gen,
+ 			    oid_to_hex(&commit->object.oid));
+ 		last_gen = generation;
+@@ -177,12 +177,12 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
+ 		repo_parse_commit(r, array[i]);
+ 	for (i = 0; i < cnt; i++) {
+ 		struct commit_list *common;
+-		uint32_t min_generation = commit_graph_generation(array[i]);
++		timestamp_t min_generation = commit_graph_generation(array[i]);
+ 
+ 		if (redundant[i])
  			continue;
+ 		for (j = filled = 0; j < cnt; j++) {
+-			uint32_t curr_generation;
++			timestamp_t curr_generation;
+ 			if (i == j || redundant[j])
+ 				continue;
+ 			filled_index[filled] = j;
+@@ -321,7 +321,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
+ {
+ 	struct commit_list *bases;
+ 	int ret = 0, i;
+-	uint32_t generation, min_generation = GENERATION_NUMBER_INFINITY;
++	timestamp_t generation, min_generation = GENERATION_NUMBER_INFINITY;
  
--		/*
--		 * If one of our parents has generation GENERATION_NUMBER_MAX, then
--		 * our generation is also GENERATION_NUMBER_MAX. Decrement to avoid
--		 * extra logic in the following condition.
--		 */
--		if (max_generation == GENERATION_NUMBER_MAX)
--			max_generation--;
--
--		generation = commit_graph_generation(graph_commit);
--		if (generation != max_generation + 1)
--			graph_report(_("commit-graph generation for commit %s is %u != %u"),
-+		corrected_commit_date = commit_graph_generation(graph_commit);
-+		if (corrected_commit_date < max_parent_corrected_commit_date + 1)
-+			graph_report(_("commit-graph generation for commit %s is %"PRItime" < %"PRItime),
- 				     oid_to_hex(&cur_oid),
--				     generation,
--				     max_generation + 1);
-+				     corrected_commit_date,
-+				     max_parent_corrected_commit_date + 1);
+ 	if (repo_parse_commit(r, commit))
+ 		return ret;
+@@ -470,7 +470,7 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
+ static enum contains_result contains_test(struct commit *candidate,
+ 					  const struct commit_list *want,
+ 					  struct contains_cache *cache,
+-					  uint32_t cutoff)
++					  timestamp_t cutoff)
+ {
+ 	enum contains_result *cached = contains_cache_at(cache, candidate);
  
- 		if (graph_commit->date != odb_commit->date)
- 			graph_report(_("commit date for commit %s in commit-graph is %"PRItime" != %"PRItime),
+@@ -506,11 +506,11 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
+ {
+ 	struct contains_stack contains_stack = { 0, 0, NULL };
+ 	enum contains_result result;
+-	uint32_t cutoff = GENERATION_NUMBER_INFINITY;
++	timestamp_t cutoff = GENERATION_NUMBER_INFINITY;
+ 	const struct commit_list *p;
+ 
+ 	for (p = want; p; p = p->next) {
+-		uint32_t generation;
++		timestamp_t generation;
+ 		struct commit *c = p->item;
+ 		load_commit_graph_info(the_repository, c);
+ 		generation = commit_graph_generation(c);
+@@ -565,7 +565,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 				 unsigned int with_flag,
+ 				 unsigned int assign_flag,
+ 				 time_t min_commit_date,
+-				 uint32_t min_generation)
++				 timestamp_t min_generation)
+ {
+ 	struct commit **list = NULL;
+ 	int i;
+@@ -666,13 +666,13 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 	time_t min_commit_date = cutoff_by_min_date ? from->item->date : 0;
+ 	struct commit_list *from_iter = from, *to_iter = to;
+ 	int result;
+-	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
++	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
+ 
+ 	while (from_iter) {
+ 		add_object_array(&from_iter->item->object, NULL, &from_objs);
+ 
+ 		if (!parse_commit(from_iter->item)) {
+-			uint32_t generation;
++			timestamp_t generation;
+ 			if (from_iter->item->date < min_commit_date)
+ 				min_commit_date = from_iter->item->date;
+ 
+@@ -686,7 +686,7 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 
+ 	while (to_iter) {
+ 		if (!parse_commit(to_iter->item)) {
+-			uint32_t generation;
++			timestamp_t generation;
+ 			if (to_iter->item->date < min_commit_date)
+ 				min_commit_date = to_iter->item->date;
+ 
+@@ -726,13 +726,13 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+ 	struct commit_list *found_commits = NULL;
+ 	struct commit **to_last = to + nr_to;
+ 	struct commit **from_last = from + nr_from;
+-	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
++	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
+ 	int num_to_find = 0;
+ 
+ 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 
+ 	for (item = to; item < to_last; item++) {
+-		uint32_t generation;
++		timestamp_t generation;
+ 		struct commit *c = *item;
+ 
+ 		parse_commit(c);
+diff --git a/commit-reach.h b/commit-reach.h
+index b49ad71a31..148b56fea5 100644
+--- a/commit-reach.h
++++ b/commit-reach.h
+@@ -87,7 +87,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
+ 				 unsigned int with_flag,
+ 				 unsigned int assign_flag,
+ 				 time_t min_commit_date,
+-				 uint32_t min_generation);
++				 timestamp_t min_generation);
+ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
+ 		       int commit_date_cutoff);
+ 
 diff --git a/commit.h b/commit.h
-index bc0732a4fe..bb846e0025 100644
+index e901538909..bc0732a4fe 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -15,6 +15,7 @@
- #define GENERATION_NUMBER_V1_INFINITY 0xFFFFFFFF
+@@ -11,7 +11,8 @@
+ #include "commit-slab.h"
+ 
+ #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
+-#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
++#define GENERATION_NUMBER_INFINITY ((1ULL << 63) - 1)
++#define GENERATION_NUMBER_V1_INFINITY 0xFFFFFFFF
  #define GENERATION_NUMBER_MAX 0x3FFFFFFF
  #define GENERATION_NUMBER_ZERO 0
-+#define GENERATION_NUMBER_V2_OFFSET_MAX 0xFFFFFFFF
  
- struct commit_list {
- 	struct commit *item;
+diff --git a/revision.c b/revision.c
+index 4ec82ed5ab..bd7b39c806 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3292,7 +3292,7 @@ define_commit_slab(indegree_slab, int);
+ define_commit_slab(author_date_slab, timestamp_t);
+ 
+ struct topo_walk_info {
+-	uint32_t min_generation;
++	timestamp_t min_generation;
+ 	struct prio_queue explore_queue;
+ 	struct prio_queue indegree_queue;
+ 	struct prio_queue topo_queue;
+@@ -3338,7 +3338,7 @@ static void explore_walk_step(struct rev_info *revs)
+ }
+ 
+ static void explore_to_depth(struct rev_info *revs,
+-			     uint32_t gen_cutoff)
++			     timestamp_t gen_cutoff)
+ {
+ 	struct topo_walk_info *info = revs->topo_walk_info;
+ 	struct commit *c;
+@@ -3381,7 +3381,7 @@ static void indegree_walk_step(struct rev_info *revs)
+ }
+ 
+ static void compute_indegrees_to_depth(struct rev_info *revs,
+-				       uint32_t gen_cutoff)
++				       timestamp_t gen_cutoff)
+ {
+ 	struct topo_walk_info *info = revs->topo_walk_info;
+ 	struct commit *c;
+@@ -3439,7 +3439,7 @@ static void init_topo_walk(struct rev_info *revs)
+ 	info->min_generation = GENERATION_NUMBER_INFINITY;
+ 	for (list = revs->commits; list; list = list->next) {
+ 		struct commit *c = list->item;
+-		uint32_t generation;
++		timestamp_t generation;
+ 
+ 		if (parse_commit_gently(c, 1))
+ 			continue;
+@@ -3500,7 +3500,7 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
+ 	for (p = commit->parents; p; p = p->next) {
+ 		struct commit *parent = p->item;
+ 		int *pi;
+-		uint32_t generation;
++		timestamp_t generation;
+ 
+ 		if (parent->object.flags & UNINTERESTING)
+ 			continue;
+diff --git a/upload-pack.c b/upload-pack.c
+index 8673741070..18ee29db67 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -490,7 +490,7 @@ static int got_oid(struct upload_pack_data *data,
+ 
+ static int ok_to_give_up(struct upload_pack_data *data)
+ {
+-	uint32_t min_generation = GENERATION_NUMBER_ZERO;
++	timestamp_t min_generation = GENERATION_NUMBER_ZERO;
+ 
+ 	if (!data->have_obj.nr)
+ 		return 0;
 -- 
 gitgitgadget
 
