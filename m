@@ -2,146 +2,106 @@ Return-Path: <SRS0=dguO=BT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C14D5C433DF
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 06:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A265C433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 08:32:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CD0C20709
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 06:09:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69C5720658
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 08:32:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gKKyigyI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VXxZYOti"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726098AbgHIGJG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Aug 2020 02:09:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
+        id S1726207AbgHIIce (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Aug 2020 04:32:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbgHIGJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Aug 2020 02:09:06 -0400
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6B94C061756
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 23:09:05 -0700 (PDT)
-Received: by mail-io1-xd44.google.com with SMTP id u126so5797728iod.12
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 23:09:05 -0700 (PDT)
+        with ESMTP id S1726012AbgHIIce (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Aug 2020 04:32:34 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFD7DC061756
+        for <git@vger.kernel.org>; Sun,  9 Aug 2020 01:32:33 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id p8so3256576pgn.13
+        for <git@vger.kernel.org>; Sun, 09 Aug 2020 01:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=q6kykpUdDMEHTK70zz/yyCZ0oHxqsVGFP90X+Q8DfDk=;
-        b=gKKyigyIGizyMT5OJf9ttTaQNogOyYIdiJkYPlBvXkXWSpfJKKznKfs6v7hdeMdarB
-         CjsskvDecGpKvjXGgdpxk2jCf8cppF6Tibp8DrhiOHM5l/7AtnBrAec91aHS7y84+NqQ
-         evR/fUO2tGucFJP/TntnqpORSripwqylyd1mYMmtIurlwum5tkM3dWdy5vC8t0nvnSza
-         LK6EkPswWMH14fEp9wzFHcrDN2G23FouiUEYhthhDRAF7gEalaShWSR3V3JXTurIFiBg
-         h1mv+PifAXY3TDJrjLo4rIWjwCVQgz9EV/IDNZC3Wqtf6X+i0ZmqTp7a1xfyaKlJ6uXd
-         1CWw==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :in-reply-to;
+        bh=sgolpwDuvYgv0r39iYDrz8q8XC0ENE7HLjs/jhxsZeU=;
+        b=VXxZYOtiNSqhea4gxHO83VBd5adyr1VtrRoHw4Wc2OrKaQ+a65iRoXA+cQNVkilT1s
+         syVY7jnKJoDsJTsdjfLjg7l0uWHvWhpfcC8v1N+/yOLd4aRZF37+62K1U9sN5zUjOO1F
+         49DagmTLHdPRO6Zbf2SWTkleWt85R++AjXDE9i8pBClNvJ2akxA8q8EjHFTa/iQpugaM
+         wrQPukTs1a9JcLWkzpoYIpdDtF1nB4tqXvpLChSPC3oQ9yYZurCiLQqKGu5KGu67ta0C
+         1Ccqvv04X1AQ/RViPwdn5w5/eI5S6NqTS7D8erhGnR/6Noz1FGit5Yk8gTyoHJHzOifw
+         ZjTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=q6kykpUdDMEHTK70zz/yyCZ0oHxqsVGFP90X+Q8DfDk=;
-        b=BxCLVfZn15oV+FS7XInNcA8sn9HvSu1n5nIlDDB1ohrzZ0EIuhh80ZTmSyAidMmF41
-         1AE1jvaf/3qP+SeCliNMrYxtBqlxfbNqc8EYKy60eY1BgixCEEph7rUQYvcttCYqK5GR
-         J9Qu5gShnTd6oX8o6O/L+MIbPVsTl39V/2Li6HhJpT4/iQCmi1v2vxTbKUQuVNVKVWhE
-         dRrRGhULglTSzXAQKLLi39xkyYpmOCxoyWMdXmnDxidR4dIYIjNHipSUAPpBZIGDvb3M
-         er7at7EU1JIsobQHjpEGEeGTHVJIM7vwdNBRNJY6RTQPQzwTjsEX4PCp3+sjchmxB445
-         zR5Q==
-X-Gm-Message-State: AOAM531ww2Q6+y/lF4yeEGXTrzxysrNaiErtidPjfUqtUrVfXGKyxynt
-        hNmgmXxdPlkaxUGh953skpLUiNxS
-X-Google-Smtp-Source: ABdhPJz+fwzqcen35KPTzSX7AJABENAVpTdpWuhkBR/HvDZo9NUHfNbS830Tz97zKb+7Cb6ARcTR+Q==
-X-Received: by 2002:a05:6638:bc2:: with SMTP id g2mr13981548jad.21.1596953343689;
-        Sat, 08 Aug 2020 23:09:03 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id y8sm8709157iom.26.2020.08.08.23.09.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Aug 2020 23:09:03 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] test_cmp: diagnose incorrect arguments
-Date:   Sun,  9 Aug 2020 02:08:10 -0400
-Message-Id: <20200809060810.31370-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.28.0.213.gdd9653da77
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:in-reply-to;
+        bh=sgolpwDuvYgv0r39iYDrz8q8XC0ENE7HLjs/jhxsZeU=;
+        b=PoKpm4D+s6rpwUQaogDn0xB1Lmb3NSODT7UDiqNL94Z1Vx1g7IriMtG9PiWmByD3f+
+         aQAtRZ1ka0hLhVci73U8ik4VFZhFpFeQQXDvgoocuiBB+sQmr4gFIzqc7UMerABUc+dv
+         Y4eVAR1R4Flh5UyICozM9409e58L06P9gSgZ/6Tvm2nOYqYK+FG6wgSvQWTnIZNTXRIC
+         tN1UyMImhpKc5qQ+u1Cp6QrpwTF+lgOPHf3CAUw4yy7cgQr4rhNH66g8yxSqHyWJCgTO
+         UnodnlqrJp0oczyNqpgaJNazi5bDcTcVXesZ0sYeTq/nDaYdZic5LB3EOZbzn8UYxc3S
+         Vnpw==
+X-Gm-Message-State: AOAM53159bhbqESqsam8D5DL8h/ihNbgdXmSNfZtaYQHcg43HcRIK4Ae
+        0s7xMe3Fkj1Cs3Ah79wib9M=
+X-Google-Smtp-Source: ABdhPJx1Gnc1uWTKarHYFuwbsrvD1i7oSBqIl6Ca+Xk1xmjebpjinx5x2tnwkAfEgmDNYAJBXM/aTQ==
+X-Received: by 2002:a05:6a00:c9:: with SMTP id e9mr20528966pfj.224.1596961952937;
+        Sun, 09 Aug 2020 01:32:32 -0700 (PDT)
+Received: from konoha ([45.127.46.120])
+        by smtp.gmail.com with ESMTPSA id hi13sm15859210pjb.26.2020.08.09.01.32.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Aug 2020 01:32:32 -0700 (PDT)
+Date:   Sun, 9 Aug 2020 14:02:27 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     sunshine@sunshineco.com
+Cc:     git@vger.kernel.org, newren@gmail.com
+Subject: Re: [PATCH] test_cmp: diagnose incorrect arguments
+Message-ID: <20200809083227.GA11219@konoha>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200809060810.31370-1-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Under normal circumstances, if a test author misspells a filename passed
-to test_cmp(), the error is quickly discovered when the test fails
-unexpectedly due to test_cmp() being unable to find the file. However,
-if the test is expected to fail, as with test_expect_failure(), a
-misspelled filename as argument to test_cmp() will go unnoticed since
-the test will indeed fail, but for the wrong reason. Make it easier for
-test authors to discover such problems early by sanity-checking the
-arguments to test_cmp(). To avoid penalizing all clients of test_cmp()
-in the general case, only check for missing files if the comparison
-fails.
+Hello Eric,
 
-While at it, make test_cmp_bin() sanity-check its arguments, as well.
+>  test_cmp() {
+> -	eval "$GIT_TEST_CMP" '"$@"'
+> +	test $# -eq 2 || BUG "test_cmp requires two arguments"
+> +	if ! eval "$GIT_TEST_CMP" '"$@"'
+> +	then
+> +		test -e "$1" || BUG "test_cmp 'expect' file missing"
+> +		test -e "$2" || BUG "test_cmp 'actual' file missing"
+> +		return 1
+> +	fi
+>  }
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+I reckon we could be just a little bit more precise here by bugging out
+with the exact filename which is missing instead of 'expect' or 'actual'
+so that the user has more idea as to what happened. What do you think?
 
-Notes:
-    This change was motivated by seeing Elijah's patch[1] which fixed
-    several cases of bogus test_cmp() invocations which perhaps could
-    have been discovered earlier had test_cmp() done some
-    sanity-checking of its arguments. It turns out that the tests in
-    question[1] fail before test_cmp() is ever called, so this patch
-    would not have helped catch those mistakes after all. It also only
-    helps catch mistakes in test_expect_failure() cases, which are
-    relatively rare compared with test_expect_success() cases, thus may
-    not have a lot of value. Nevertheless, it's a relatively small and
-    simple change which only kicks in when test_cmp() fails, thus should
-    not penalize the typical case; there are a handful of `! test_cmp`
-    cases, however, which will trigger the additional argument sanity
-    checking but that cost is probably small enough to go unnoticed.
-    
-    [1]: https://lore.kernel.org/git/7f408b7d4069403b969d334f4940ebf87f1dc797.1596906081.git.gitgitgadget@gmail.com/
+BTW, I looked up the 'test_i18ncmp' function as well and if we have
+this small loophole you mentioned above, I think maybe we could make a
+similar fix for it too. What I mean is that in case of absence of the
+required locale, it should error out kind of like what we did above
 
- t/test-lib-functions.sh | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+    BUG "locale missing"
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index b791933ffd..8d77deebd2 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -952,7 +952,13 @@ test_expect_code () {
- # - not all diff versions understand "-u"
- 
- test_cmp() {
--	eval "$GIT_TEST_CMP" '"$@"'
-+	test $# -eq 2 || BUG "test_cmp requires two arguments"
-+	if ! eval "$GIT_TEST_CMP" '"$@"'
-+	then
-+		test -e "$1" || BUG "test_cmp 'expect' file missing"
-+		test -e "$2" || BUG "test_cmp 'actual' file missing"
-+		return 1
-+	fi
- }
- 
- # Check that the given config key has the expected value.
-@@ -981,7 +987,13 @@ test_cmp_config() {
- # test_cmp_bin - helper to compare binary files
- 
- test_cmp_bin() {
--	cmp "$@"
-+	test $# -eq 2 || BUG "test_cmp_bin requires two arguments"
-+	if ! cmp "$@"
-+	then
-+		test -e "$1" || BUG "test_cmp_bin 'expect' file missing"
-+		test -e "$2" || BUG "test_cmp_bin 'actual' file missing"
-+		return 1
-+	fi
- }
- 
- # Use this instead of test_cmp to compare files that contain expected and
--- 
-2.28.0.213.gdd9653da77
+
+so that the user it is clear to the user what was the failure point.
+Though I will be honest that I have not really encountered a locale related
+error or seen what the error looks like, so maybe we can ignore this
+suggestion.
+
+Regards,
+Shourya Shukla
 
