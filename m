@@ -2,68 +2,40 @@ Return-Path: <SRS0=dguO=BT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B783C433E0
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10C5CC433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 23:06:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0741E206C3
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:54:19 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PtRNsXMK"
+	by mail.kernel.org (Postfix) with ESMTP id E08D0206A2
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 23:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726350AbgHIWyL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Aug 2020 18:54:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54024 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726323AbgHIWyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Aug 2020 18:54:11 -0400
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF706C061756
-        for <git@vger.kernel.org>; Sun,  9 Aug 2020 15:54:10 -0700 (PDT)
-Received: by mail-il1-x143.google.com with SMTP id l7so1648194ils.2
-        for <git@vger.kernel.org>; Sun, 09 Aug 2020 15:54:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ybHGwOpwAgHHaUbfG7CPfyhnImpyxC70HuNjLhkJWhg=;
-        b=PtRNsXMKrzCh40OnqNn1pJXxcBe79KbOTGXJLsqcwrvnqNrXXJg5UXBj0sFzrHS8Cf
-         OG0kEUZLfrNzgvgus+0cyu3WPzMmVrKeL+VJ/xic0pfjvrjf/fi524XfLFtVAfDw545c
-         LWDQuDZGk6niCNx9kxAiGw3rxEvwSaS2YeSQZWXUJUJNjvyKGlT085rQyuXwNJpjbiLn
-         aBalfQuQxeQ5TFRV+C71dVZ272wS74BYwS2srcKzFvLth6XWnd1fwcpB6QUtz5S98fsa
-         am0tZ+b/TChgNN4POI9f0vKP7+Miztd6qRLwfXkehvFri+yB5YSLVZswyfQ/UYHuBoYe
-         twtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=ybHGwOpwAgHHaUbfG7CPfyhnImpyxC70HuNjLhkJWhg=;
-        b=YQVG6p1GemLfYkGtrXZOqze3dbDluhZyBBZzsCsLCU4X5lh58a/Xa7JaJ0/IsGLhga
-         Lut4mJiPHegsXrl8mCblirkoiOw7WV/3Wpv8NofIgtBNLXDE1mv9V3zBFzz3eKQkPIkO
-         LtImHDeGz22PBhq4f/KT8xEuI1q2VvlhM3Luu6PANctZk6pfcIo86QE2CeU9Oij56s31
-         Zp8lf2XX80haQerI970kuI8qScOQJc28KXufnA2YsmUQLHNbqm8flElZ02vXaIvTOMku
-         JmCtnezSXbBhd0tMl5ry629R7gwmkLLwsAGT6+Zq7Rq0dBSmppKY+HeJpfTDskK1073o
-         llDg==
-X-Gm-Message-State: AOAM530CZ0icz8TUl/wZqayEzagwOiUwnREVVBjVPMEv0wXp5z0QWfe9
-        pDq5Q8u6VAOhNYnWXi+tRL6YRdIw
-X-Google-Smtp-Source: ABdhPJxyJkuKvMpJq179fNpO41IZiOP6BjCZs/c0sDQ4Z9hDErgk5YgvnuRa/xXeajDfe2SXQVaANw==
-X-Received: by 2002:a92:9118:: with SMTP id t24mr14727002ild.220.1597013649562;
-        Sun, 09 Aug 2020 15:54:09 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id r2sm11031888ilc.58.2020.08.09.15.54.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Aug 2020 15:54:08 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
+        id S1726382AbgHIXGn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Aug 2020 19:06:43 -0400
+Received: from aibo.runbox.com ([91.220.196.211]:45030 "EHLO aibo.runbox.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726323AbgHIXGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Aug 2020 19:06:43 -0400
+Received: from [10.9.9.74] (helo=submission03.runbox)
+        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+        (envelope-from <me@pluvano.com>)
+        id 1k4uOm-0004uh-Om; Mon, 10 Aug 2020 01:06:40 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated alias (964124)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        id 1k4uOc-00048e-GM; Mon, 10 Aug 2020 01:06:32 +0200
+From:   Emma Brooks <me@pluvano.com>
 To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] init: disallow --separate-git-dir with bare repository
-Date:   Sun,  9 Aug 2020 18:53:16 -0400
-Message-Id: <20200809225316.19503-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.28.0.220.ged08abb693
+Cc:     Emma Brooks <me@pluvano.com>,
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: [PATCH v2] gitweb: map names/emails with mailmap
+Date:   Sun,  9 Aug 2020 23:04:37 +0000
+Message-Id: <20200809230436.2152-1-me@pluvano.com>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20200808213457.13116-1-me@pluvano.com>
+References: <20200808213457.13116-1-me@pluvano.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,91 +43,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The purpose of "git init --separate-git-dir" is to separate the
-repository from the worktree. This is true even when --separate-git-dir
-is used on an existing worktree, in which case, it moves the .git/
-subdirectory to a new location outside the worktree.
+Add an option to map names and emails to their canonical forms via a
+.mailmap file. This is enabled by default, consistent with the behavior
+of Git itself.
 
-However, an outright bare repository (such as one created by "git init
---bare"), has no worktree, so using --separate-git-dir to separate it
-from its non-existent worktree is nonsensical. Therefore, make it an
-error to use --separate-git-dir on a bare repository.
-
-Implementation note: "git init" considers a repository bare if told so
-explicitly via --bare or if it guesses it to be so based upon
-heuristics. In the explicit --bare case, a conflict with
---separate-git-dir is easy to detect early. In the guessed case,
-however, the conflict can only be detected once "bareness" is guessed,
-which happens after "git init" has begun creating the repository.
-Technically, we can get by with a single late check which would cover
-both cases, however, erroring out early, when possible, without leaving
-detritus provides a better user experience.
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Emma Brooks <me@pluvano.com>
 ---
 
-Notes:
-    I ran across this while working on a worktree-related topic dealing
-    with --separate-git-dir. Closing this loophole eliminates some
-    potentially strange and unworkable cases that the other topic might
-    otherwise encounter. Even though this change is tangentially related
-    to the other topic, it's also sufficiently standalone to post
-    separately; plus, I want to get feedback on it early since I'm not
-    100% happy with checking for the conflict between --separate-git-dir
-    and a bare repository in two separate places (though, I can live
-    with it).
+No code changes. I just fixed a typo in the commit subject (made "map"
+lower-case).
 
- builtin/init-db.c |  5 +++++
- t/t0001-init.sh   | 13 +++++++++++++
- 2 files changed, 18 insertions(+)
+ Documentation/gitweb.conf.txt |  5 +++
+ gitweb/gitweb.perl            | 81 +++++++++++++++++++++++++++++++++--
+ 2 files changed, 82 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index cee64823cb..60e5c14169 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -568,6 +568,9 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index 7963a79ba9..2d7551a6a5 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -751,6 +751,11 @@ default font sizes or lineheights are changed (e.g. via adding extra
+ CSS stylesheet in `@stylesheets`), it may be appropriate to change
+ these values.
  
- 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
- 
-+	if (real_git_dir && is_bare_repository_cfg == 1)
-+		die(_("--separate-git-dir and --bare are mutually exclusive"));
++mailmap::
++	Use mailmap to find the canonical name/email for
++	committers/authors (see linkgit:git-shortlog[1]). Enabled by
++	default.
 +
- 	if (real_git_dir && !is_absolute_path(real_git_dir))
- 		real_git_dir = real_pathdup(real_git_dir, 1);
+ highlight::
+ 	Server-side syntax highlight support in "blob" view.  It requires
+ 	`$highlight_bin` program to be available (see the description of
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0959a782ec..1ca495b8b4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -505,6 +505,12 @@ sub evaluate_uri {
+ 		'override' => 0,
+ 		'default' => ['']},
  
-@@ -663,6 +666,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 				   get_git_work_tree());
- 	}
- 	else {
-+		if (real_git_dir)
-+			die(_("--separate-git-dir incompatible with bare repository"));
- 		if (work_tree)
- 			set_git_work_tree(work_tree);
- 	}
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 6d2467995e..5c585f7fcb 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -316,6 +316,19 @@ test_expect_success 'init with separate gitdir' '
- 	test_path_is_dir realgitdir/refs
- '
++	# Enable reading mailmap to determine canonical author
++	# information. Enabled by default.
++	'mailmap' => {
++		'override' => 0,
++		'default' => [1]},
++
+ 	# Enable displaying how much time and how many git commands
+ 	# it took to generate and display page.  Disabled by default.
+ 	# Project specific override is not supported.
+@@ -3490,6 +3496,63 @@ sub parse_tag {
+ 	return %tag
+ }
  
-+test_expect_success 'explicit bare & --separate-git-dir incompatible' '
-+	test_must_fail git init --bare --separate-git-dir goop.git bare.git 2>err &&
-+	test_i18ngrep "mutually exclusive" err
-+'
++# Contents of mailmap stored as a referance to a hash with keys in the format
++# of "name <email>" or "<email>", and values that are hashes containing a
++# replacement "name" and/or "email". If set (even if empty) the mailmap has
++# already been read.
++my $mailmap;
 +
-+test_expect_success 'implicit bare & --separate-git-dir incompatible' '
-+	test_when_finished "rm -rf bare.git" &&
-+	mkdir -p bare.git &&
-+	test_must_fail env GIT_DIR=. \
-+		git -C bare.git init --separate-git-dir goop.git 2>err &&
-+	test_i18ngrep "incompatible" err
-+'
++sub read_mailmap {
++	my %mailmap = ();
++	open my $fd, '-|', quote_command(
++		git_cmd(), 'cat-file', 'blob', 'HEAD:.mailmap') . ' 2> /dev/null'
++		or die_error(500, 'Failed to read mailmap');
++	return \%mailmap if eof $fd;
++	foreach (split '\n', <$fd>) {
++		next if (/^#/);
++		if (/(.*)\s+ <([^<>]+)>\s+ ((?:.*\s+)? <[^<>]+>) (?:\s+\#)/x ||
++		    /(.*)\s+ <([^<>]+)>\s+ ((?:.*\s+)? <[^<>]+>)/x) {
++			# New Name <new@email> <old@email>
++			# New Name <new@email> Old Name <old@email>
++			$mailmap{$3} = ();
++			($mailmap{$3}{name} = $1) =~ s/^\s+|\s+$//g;
++			$mailmap{$3}{email} = $2;
++		} elsif (/(?: <([^<>]+)>\s+ | (.+)\s+ ) (<[^<>]+>) (?:\s+\#)/x ||
++		         /(?: <([^<>]+)>\s+ | (.+)\s+ ) (<[^<>]+>)/x) {
++			# New Name <old@email>
++			# <new@email> <old@email>
++			$mailmap{$3} = ();
++			if ($1) {
++				$mailmap{$3}{email} = $1;
++			} else {
++				($mailmap{$3}{name} = $2) =~ s/^\s+|\s+$//g;
++			}
++		}
++	}
++	return \%mailmap;
++}
 +
- test_lazy_prereq GETCWD_IGNORES_PERMS '
- 	base=GETCWD_TEST_BASE_DIR &&
- 	mkdir -p $base/dir &&
--- 
-2.28.0.220.ged08abb693
-
++# Map author name and email based on mailmap. A more specific match
++# ("name <email>") is preferred to a less specific one ("<email>").
++sub map_author {
++	my $name = shift;
++	my $email = shift;
++
++	if (!$mailmap) {
++		$mailmap = read_mailmap;
++	}
++
++	if ($mailmap->{"$name <$email>"}) {
++		$name = $mailmap->{"$name <$email>"}{name} || $name;
++		$email = $mailmap->{"$name <$email>"}{email} || $email;
++	} elsif ($mailmap->{"<$email>"}) {
++		$name = $mailmap->{"<$email>"}{name} || $name;
++		$email = $mailmap->{"<$email>"}{email} || $email;
++	}
++
++	return ($name, $email);
++}
++
+ sub parse_commit_text {
+ 	my ($commit_text, $withparents) = @_;
+ 	my @commit_lines = split '\n', $commit_text;
+@@ -3517,8 +3580,13 @@ sub parse_commit_text {
+ 			$co{'author_epoch'} = $2;
+ 			$co{'author_tz'} = $3;
+ 			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
+-				$co{'author_name'}  = $1;
+-				$co{'author_email'} = $2;
++				my ($name, $email) = @_;
++				if (gitweb_check_feature('mailmap')) {
++					($name, $email) = map_author($1, $2);
++					$co{'author'} = "$name <$email>";
++				}
++				$co{'author_name'}  = $name;
++				$co{'author_email'} = $email;
+ 			} else {
+ 				$co{'author_name'} = $co{'author'};
+ 			}
+@@ -3527,8 +3595,13 @@ sub parse_commit_text {
+ 			$co{'committer_epoch'} = $2;
+ 			$co{'committer_tz'} = $3;
+ 			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
+-				$co{'committer_name'}  = $1;
+-				$co{'committer_email'} = $2;
++				my ($name, $email) = @_;
++				if (gitweb_check_feature('mailmap')) {
++					($name, $email) = map_author($1, $2);
++					$co{'committer'} = "$name <$email>";
++				}
++				$co{'committer_name'}  = $name;
++				$co{'committer_email'} = $email;
+ 			} else {
+ 				$co{'committer_name'} = $co{'committer'};
+ 			}
