@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ECD1C433DF
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94FF1C433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:19:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E162D206B2
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:19:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E487206B2
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:19:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kg1CF5q6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rn4DbnAt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726361AbgHICTe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 22:19:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35208 "EHLO
+        id S1726382AbgHICTg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 22:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbgHICTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 22:19:33 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3FB4C061756
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:19:33 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id 2so2939253pjx.5
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:19:33 -0700 (PDT)
+        with ESMTP id S1725988AbgHICTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 22:19:35 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B78C061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:19:35 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id q17so3072447pls.9
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CxgPpPjNuZ14/rGw6+8yffC55Ttv/ZwEMVYE0Qo9yP4=;
-        b=kg1CF5q6TDOh2RKoDVtp/QCnylOzaIXsA9tjOpSa9XUvDncXdaFMrN+rTK4D0e4xoH
-         iWlKUwzf/S9SDmBZEwdr+4psRSbJBA+38zA9g2JbMir1soNyG9heZpFkchqlpA6mvEMm
-         KDq9OZTy7QymJRXCEEBFk9YLGLyls9+5cgukQ4HPfk3Lz3VFqI27SMzgCaO6hL3YqpUu
-         AriyMakOLy5ehbefbcEB4HacDUoSpf9X/8rjwwN/VwqsronhHM3NIOURa60hTLPOcuWK
-         JkimMM51VX54rGUs3kPjXc7ZJCMNd5txiEcPTxn+9Cf4eo9DwN0R/Zgrk2W9Z+CQFwJk
-         NUoQ==
+        bh=NPBx10nJqc5PzZE7PBKTZIQLLVy6CTiOZFoYtu8+T78=;
+        b=rn4DbnAtK9kTKhh69yzmahuomtYWYK4/WfsFld0Bc4LCGvdolMEtUO7Im3Y1RelUzS
+         a9qcyGETU/5Zymxi+SdHCq3KxpnTljjK2+79u2l8V0wVDVa7YCJspYERqw/olyjBDKiJ
+         Emc2QdUVZHoDMv5wX3xmta4LrhzNSOTFmNJzD3yyqqS2xDFUc3eO/WOLSrGMrV6YQaPd
+         DY2JaQOxn1MC2+vDze45ZRW4K0O24n7HV912qRHbiJLizr1n7fDpIPBP+zbZ0U/TBW2n
+         36URApPhnFmFPTQ7UfuTCgRKmm/lsDMhWdAZy3j6d32XgomILIPsKkbtz9fENFvUBJLz
+         HTSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CxgPpPjNuZ14/rGw6+8yffC55Ttv/ZwEMVYE0Qo9yP4=;
-        b=DhgiMHZvC0uHwhnh7n8sChGkt2a26Z3R78Q3W66UZVcA598j6JjVOOtyiBvrtu8Oaj
-         9ssNs9G+eMKtXrptH86HO6dpunjjNPi0Oy0pFHBnoEyXcfzgJffkMPkUa4AZIyl6he47
-         gNhnwufAhdOKbDTxWYMLco3lbREtpfrzAiXWgXZ7FjgWdNNbCnnvmx6vDxP4uodC3/aL
-         6JnLFbNR7uGWF7ijx/uhMpi8LxwmKmPKnunAPp8nJIR1c8Ak4nDK5RLEV7kJVcJc0ItZ
-         rWLM4RLVXtXEOANW/8cHfNC6vY1RvTK/tlUImSPekX3fMSOrrHc9uGyn7VNNLUI4/+Oq
-         EeNw==
-X-Gm-Message-State: AOAM530fzWwHVUnJImvLxtH+bv+HXlyPjFate6lWPTcW0xxuIMhalxxq
-        1F9XJYz36ffRncOrgFnvyWW2ZdeJ
-X-Google-Smtp-Source: ABdhPJzsAdbAX75fS/1gQcG3B3vqw72INd7dxog3HWouhhrwJlXYVZgKtsCYntP28kPm4a3WRxvrug==
-X-Received: by 2002:a17:902:fe10:: with SMTP id g16mr18960170plj.43.1596939572904;
-        Sat, 08 Aug 2020 19:19:32 -0700 (PDT)
+        bh=NPBx10nJqc5PzZE7PBKTZIQLLVy6CTiOZFoYtu8+T78=;
+        b=j8VF68lRq0sXtD6+WCkCWFxf8VAu6T5qMtlKz2Ce3Ug7tYwTbPGCNu0O9qgoC7Sd3/
+         X+/tYPALuqfx3vXYXtjkt92au+XyflPI7AvVk5F0f4IYtEFTGoznrvbny32oYFR3DLVA
+         akEHe7vAKt6wqhplZ/BB8I4ejb4iT9tNTUPmBz1JYmC4qUivlf+Ib2IN2Z44fPUm5p+u
+         oCRhSZSx1hA706dcqreo0nXAs/1Dt2ABgFdvrdmyPN1wSqdtGVP0uqWsSUDtJGsQ7feB
+         D4SJxWXrqXTih81sSvNgeUbs5RXyYzqV9bzZYT5WQfNNl7ZjuyfhU4KCmGg+h9w/pP5l
+         x0SQ==
+X-Gm-Message-State: AOAM531o5k3pkYLwZhDLGxS584NYp/E+aY84wn8iDdN1OzXrkp1rNLYO
+        NoSkhupMnro47AQsw+JbuLpuWL12
+X-Google-Smtp-Source: ABdhPJzcf0pX3eu+LbApOfFpir/hEnk8PndHilMGAuFYaNiTvkyKqm/iglsv8uv4J+MXnokg5ap3dA==
+X-Received: by 2002:a17:902:8490:: with SMTP id c16mr18721408plo.153.1596939574776;
+        Sat, 08 Aug 2020 19:19:34 -0700 (PDT)
 Received: from localhost.localdomain ([2402:800:6375:ea17:7ad5:df16:a252:473b])
-        by smtp.gmail.com with ESMTPSA id g129sm17631235pfb.33.2020.08.08.19.19.31
+        by smtp.gmail.com with ESMTPSA id g129sm17631235pfb.33.2020.08.08.19.19.33
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Aug 2020 19:19:32 -0700 (PDT)
+        Sat, 08 Aug 2020 19:19:34 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [RFC PATCH 1/2] revision: differentiate if --no-abbrev asked explicitly
-Date:   Sun,  9 Aug 2020 09:19:04 +0700
-Message-Id: <33c02761534f4e0a272f7bc9c7c9ac0218724ace.1596887883.git.congdanhqx@gmail.com>
+Subject: [RFC PATCH 2/2] diff: extend --abbrev support to diff-patch format
+Date:   Sun,  9 Aug 2020 09:19:05 +0700
+Message-Id: <36c46357e56ce91025c4e447eaf19d485dc997d7.1596887883.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.28.0.215.g32ffa52ee0
 In-Reply-To: <cover.1596887883.git.congdanhqx@gmail.com>
 References: <cover.1596887883.git.congdanhqx@gmail.com>
@@ -77,36 +77,181 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we see `--no-abbrev' in command's arguments, we reset `abbrev' of
-`diff_options` to 0, thus, on a later stage, the object id won't
-be shortened (by not set object_id[abbrev] to '\0').
-
-While not doing anything is very effective way to show full object id,
-we couldn't differentiate if --no-abbrev or not.
-
-In a later change, we want to extend --abbrev support to diff-patch
-format.
-
-Let's ask for full object id if we see --no-abbrev instead.
-
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- revision.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/revision.c b/revision.c
-index 6de29cdf7a..69cc834662 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2432,7 +2432,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--always")) {
- 		revs->always_show_header = 1;
- 	} else if (!strcmp(arg, "--no-abbrev")) {
--		revs->abbrev = 0;
-+		revs->abbrev = hexsz;
- 	} else if (!strcmp(arg, "--abbrev")) {
- 		revs->abbrev = DEFAULT_ABBREV;
- 	} else if (skip_prefix(arg, "--abbrev=", &optarg)) {
+Not sure if this part should go to the commit message or not:
+
+To preserve backward compatibility with old script that specify both
+--full-index and --abbrev, always shows full object id if --full-index
+is specified.
+
+ Documentation/diff-options.txt                |  9 +++---
+ diff.c                                        |  5 +++-
+ t/t4013-diff-various.sh                       |  3 ++
+ ...ff.diff-tree_--root_-p_--abbrev=10_initial | 29 +++++++++++++++++++
+ ...--root_-p_--full-index_--abbrev=10_initial | 29 +++++++++++++++++++
+ ...f.diff-tree_--root_-p_--full-index_initial | 29 +++++++++++++++++++
+ 6 files changed, 99 insertions(+), 5 deletions(-)
+ create mode 100644 t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+ create mode 100644 t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+ create mode 100644 t/t4013/diff.diff-tree_--root_-p_--full-index_initial
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 7987d72b02..c11efa7865 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -441,10 +441,11 @@ endif::git-format-patch[]
+ --abbrev[=<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+ 	name in diff-raw format output and diff-tree header
+-	lines, show only a partial prefix.  This is
+-	independent of the `--full-index` option above, which controls
+-	the diff-patch output format.  Non default number of
+-	digits can be specified with `--abbrev=<n>`.
++	lines, show only a partial prefix.
++	In diff-patch output format, `--full-index` takes higher
++	precedent, i.e. if `--full-index` is specified, full blob
++	names will be shown regardless of `--abbrev`.
++	Non default number of digits can be specified with `--abbrev=<n>`.
+ 
+ -B[<n>][/<m>]::
+ --break-rewrites[=[<n>][/<m>]]::
+diff --git a/diff.c b/diff.c
+index d24aaa3047..b5dedb0165 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4319,7 +4319,10 @@ static void fill_metainfo(struct strbuf *msg,
+ 	}
+ 	if (one && two && !oideq(&one->oid, &two->oid)) {
+ 		const unsigned hexsz = the_hash_algo->hexsz;
+-		int abbrev = o->flags.full_index ? hexsz : DEFAULT_ABBREV;
++		int abbrev = o->abbrev ? o->abbrev : DEFAULT_ABBREV;
++
++		if (o->flags.full_index)
++			abbrev = hexsz;
+ 
+ 		if (o->flags.binary) {
+ 			mmfile_t mf;
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 3f60f7d96c..e6eb4dd4c7 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -221,6 +221,9 @@ diff-tree --root -r --abbrev=4 initial
+ :noellipses diff-tree --root -r --abbrev=4 initial
+ diff-tree -p initial
+ diff-tree --root -p initial
++diff-tree --root -p --abbrev=10 initial
++diff-tree --root -p --full-index initial
++diff-tree --root -p --full-index --abbrev=10 initial
+ diff-tree --patch-with-stat initial
+ diff-tree --root --patch-with-stat initial
+ diff-tree --patch-with-raw initial
+diff --git a/t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial b/t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+new file mode 100644
+index 0000000000..7518a9044e
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+@@ -0,0 +1,29 @@
++$ git diff-tree --root -p --abbrev=10 initial
++444ac553ac7612cc88969031b02b3767fb8a353a
++diff --git a/dir/sub b/dir/sub
++new file mode 100644
++index 0000000000..35d242ba79
++--- /dev/null
+++++ b/dir/sub
++@@ -0,0 +1,2 @@
+++A
+++B
++diff --git a/file0 b/file0
++new file mode 100644
++index 0000000000..01e79c32a8
++--- /dev/null
+++++ b/file0
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++diff --git a/file2 b/file2
++new file mode 100644
++index 0000000000..01e79c32a8
++--- /dev/null
+++++ b/file2
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++$
+diff --git a/t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial b/t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+new file mode 100644
+index 0000000000..69f913fbe5
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+@@ -0,0 +1,29 @@
++$ git diff-tree --root -p --full-index --abbrev=10 initial
++444ac553ac7612cc88969031b02b3767fb8a353a
++diff --git a/dir/sub b/dir/sub
++new file mode 100644
++index 0000000000000000000000000000000000000000..35d242ba79ae89ac695e26b3d4c27a8e6f028f9e
++--- /dev/null
+++++ b/dir/sub
++@@ -0,0 +1,2 @@
+++A
+++B
++diff --git a/file0 b/file0
++new file mode 100644
++index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
++--- /dev/null
+++++ b/file0
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++diff --git a/file2 b/file2
++new file mode 100644
++index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
++--- /dev/null
+++++ b/file2
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++$
+diff --git a/t/t4013/diff.diff-tree_--root_-p_--full-index_initial b/t/t4013/diff.diff-tree_--root_-p_--full-index_initial
+new file mode 100644
+index 0000000000..1b0b6717fa
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_--root_-p_--full-index_initial
+@@ -0,0 +1,29 @@
++$ git diff-tree --root -p --full-index initial
++444ac553ac7612cc88969031b02b3767fb8a353a
++diff --git a/dir/sub b/dir/sub
++new file mode 100644
++index 0000000000000000000000000000000000000000..35d242ba79ae89ac695e26b3d4c27a8e6f028f9e
++--- /dev/null
+++++ b/dir/sub
++@@ -0,0 +1,2 @@
+++A
+++B
++diff --git a/file0 b/file0
++new file mode 100644
++index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
++--- /dev/null
+++++ b/file0
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++diff --git a/file2 b/file2
++new file mode 100644
++index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
++--- /dev/null
+++++ b/file2
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++$
 -- 
 2.28.0.215.g32ffa52ee0
 
