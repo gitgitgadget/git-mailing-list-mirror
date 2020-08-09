@@ -2,67 +2,160 @@ Return-Path: <SRS0=dguO=BT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA71DC433E0
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B783C433E0
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:54:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8906D206D8
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:40:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0741E206C3
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 22:54:19 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PtRNsXMK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbgHIWjD convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 9 Aug 2020 18:39:03 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:35766 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726323AbgHIWjD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Aug 2020 18:39:03 -0400
-Received: by mail-io1-f67.google.com with SMTP id s189so7113256iod.2
-        for <git@vger.kernel.org>; Sun, 09 Aug 2020 15:39:03 -0700 (PDT)
+        id S1726350AbgHIWyL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Aug 2020 18:54:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726323AbgHIWyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Aug 2020 18:54:11 -0400
+Received: from mail-il1-x143.google.com (mail-il1-x143.google.com [IPv6:2607:f8b0:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF706C061756
+        for <git@vger.kernel.org>; Sun,  9 Aug 2020 15:54:10 -0700 (PDT)
+Received: by mail-il1-x143.google.com with SMTP id l7so1648194ils.2
+        for <git@vger.kernel.org>; Sun, 09 Aug 2020 15:54:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ybHGwOpwAgHHaUbfG7CPfyhnImpyxC70HuNjLhkJWhg=;
+        b=PtRNsXMKrzCh40OnqNn1pJXxcBe79KbOTGXJLsqcwrvnqNrXXJg5UXBj0sFzrHS8Cf
+         OG0kEUZLfrNzgvgus+0cyu3WPzMmVrKeL+VJ/xic0pfjvrjf/fi524XfLFtVAfDw545c
+         LWDQuDZGk6niCNx9kxAiGw3rxEvwSaS2YeSQZWXUJUJNjvyKGlT085rQyuXwNJpjbiLn
+         aBalfQuQxeQ5TFRV+C71dVZ272wS74BYwS2srcKzFvLth6XWnd1fwcpB6QUtz5S98fsa
+         am0tZ+b/TChgNN4POI9f0vKP7+Miztd6qRLwfXkehvFri+yB5YSLVZswyfQ/UYHuBoYe
+         twtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zWe/sahL/E3tERdXFNSfE5sYC94SN+X8wnVp1JqHnic=;
-        b=taAjFvRJADUhM4JHS5W7T3vRZq/GPLOkUysOu6I6jwKn20omt984y++THbnddqbd+D
-         hSYDjrx+InWlN6xDsLXr77ZFjliW3qayAF7CqUjLQI5Os034lOnvSVmkNs2m2YpiW7Rs
-         lDKMJAPVGmIhXGTljMNhV6lOLOE5CR2qoDxjDSstvZCPpTY8b9YdgPQtjzvGmtI3ADRj
-         Psc4NZtYABdy+dQomRIDaTRssOr4a7s9gzyc4XkajeftB3KCvdW7dRzO+h7+8WYOjPzT
-         6eNqUr/q8+e7Aja1ZPo07EHnnMQut7nGIb8RxzFRryn3juxz0nSoDaE9cNBWSH3HFFz0
-         q7rw==
-X-Gm-Message-State: AOAM530K9f5TsX3bPJllxQxjOzDcPYw8jsF46Dq7pHxC2+ptLTE+TjsA
-        8G9wxfMjAHpgFfhhoyqaaHkTtmvz2ewPL4WYY70=
-X-Google-Smtp-Source: ABdhPJxTDNtBbd50beI2WJcDghhtxP6/NcEFAtZ3NPywBjSfvduIvpMiM8fIDlMNABDkL5VRqh3Cz9P/7AXE5mzX/D4=
-X-Received: by 2002:a6b:6c13:: with SMTP id a19mr15201317ioh.31.1597012742927;
- Sun, 09 Aug 2020 15:39:02 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=ybHGwOpwAgHHaUbfG7CPfyhnImpyxC70HuNjLhkJWhg=;
+        b=YQVG6p1GemLfYkGtrXZOqze3dbDluhZyBBZzsCsLCU4X5lh58a/Xa7JaJ0/IsGLhga
+         Lut4mJiPHegsXrl8mCblirkoiOw7WV/3Wpv8NofIgtBNLXDE1mv9V3zBFzz3eKQkPIkO
+         LtImHDeGz22PBhq4f/KT8xEuI1q2VvlhM3Luu6PANctZk6pfcIo86QE2CeU9Oij56s31
+         Zp8lf2XX80haQerI970kuI8qScOQJc28KXufnA2YsmUQLHNbqm8flElZ02vXaIvTOMku
+         JmCtnezSXbBhd0tMl5ry629R7gwmkLLwsAGT6+Zq7Rq0dBSmppKY+HeJpfTDskK1073o
+         llDg==
+X-Gm-Message-State: AOAM530CZ0icz8TUl/wZqayEzagwOiUwnREVVBjVPMEv0wXp5z0QWfe9
+        pDq5Q8u6VAOhNYnWXi+tRL6YRdIw
+X-Google-Smtp-Source: ABdhPJxyJkuKvMpJq179fNpO41IZiOP6BjCZs/c0sDQ4Z9hDErgk5YgvnuRa/xXeajDfe2SXQVaANw==
+X-Received: by 2002:a92:9118:: with SMTP id t24mr14727002ild.220.1597013649562;
+        Sun, 09 Aug 2020 15:54:09 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id r2sm11031888ilc.58.2020.08.09.15.54.08
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 09 Aug 2020 15:54:08 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] init: disallow --separate-git-dir with bare repository
+Date:   Sun,  9 Aug 2020 18:53:16 -0400
+Message-Id: <20200809225316.19503-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.28.0.220.ged08abb693
 MIME-Version: 1.0
-References: <xmqqy2muqddg.fsf@gitster.c.googlers.com> <20200805065408.1242617-1-martin.agren@gmail.com>
-In-Reply-To: <20200805065408.1242617-1-martin.agren@gmail.com>
-From:   Ed Maste <emaste@freebsd.org>
-Date:   Sun, 9 Aug 2020 18:38:50 -0400
-Message-ID: <CAPyFy2BzVD3omAHJx+etucVkGt3KnmURrJVXvhmmW9_JkPXTuQ@mail.gmail.com>
-Subject: Re: [PATCH RESEND] Update .mailmap
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 5 Aug 2020 at 02:55, Martin Ågren <martin.agren@gmail.com> wrote:
->
-> Similar to a35b13fce0 ("Update .mailmap", 2018-11-09), make the output
-> of `git shortlog -nse v2.10.0..master` duplicate-free by taking/guessing
-> the current and preferred addresses for authors that appear with more
-> than one address.
->
-...
->  * Ed Maste
-...
->
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+The purpose of "git init --separate-git-dir" is to separate the
+repository from the worktree. This is true even when --separate-git-dir
+is used on an existing worktree, in which case, it moves the .git/
+subdirectory to a new location outside the worktree.
 
-Acked-by: Ed Maste <emaste@FreeBSD.org>
+However, an outright bare repository (such as one created by "git init
+--bare"), has no worktree, so using --separate-git-dir to separate it
+from its non-existent worktree is nonsensical. Therefore, make it an
+error to use --separate-git-dir on a bare repository.
+
+Implementation note: "git init" considers a repository bare if told so
+explicitly via --bare or if it guesses it to be so based upon
+heuristics. In the explicit --bare case, a conflict with
+--separate-git-dir is easy to detect early. In the guessed case,
+however, the conflict can only be detected once "bareness" is guessed,
+which happens after "git init" has begun creating the repository.
+Technically, we can get by with a single late check which would cover
+both cases, however, erroring out early, when possible, without leaving
+detritus provides a better user experience.
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+
+Notes:
+    I ran across this while working on a worktree-related topic dealing
+    with --separate-git-dir. Closing this loophole eliminates some
+    potentially strange and unworkable cases that the other topic might
+    otherwise encounter. Even though this change is tangentially related
+    to the other topic, it's also sufficiently standalone to post
+    separately; plus, I want to get feedback on it early since I'm not
+    100% happy with checking for the conflict between --separate-git-dir
+    and a bare repository in two separate places (though, I can live
+    with it).
+
+ builtin/init-db.c |  5 +++++
+ t/t0001-init.sh   | 13 +++++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index cee64823cb..60e5c14169 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -568,6 +568,9 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
+ 
++	if (real_git_dir && is_bare_repository_cfg == 1)
++		die(_("--separate-git-dir and --bare are mutually exclusive"));
++
+ 	if (real_git_dir && !is_absolute_path(real_git_dir))
+ 		real_git_dir = real_pathdup(real_git_dir, 1);
+ 
+@@ -663,6 +666,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 				   get_git_work_tree());
+ 	}
+ 	else {
++		if (real_git_dir)
++			die(_("--separate-git-dir incompatible with bare repository"));
+ 		if (work_tree)
+ 			set_git_work_tree(work_tree);
+ 	}
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 6d2467995e..5c585f7fcb 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -316,6 +316,19 @@ test_expect_success 'init with separate gitdir' '
+ 	test_path_is_dir realgitdir/refs
+ '
+ 
++test_expect_success 'explicit bare & --separate-git-dir incompatible' '
++	test_must_fail git init --bare --separate-git-dir goop.git bare.git 2>err &&
++	test_i18ngrep "mutually exclusive" err
++'
++
++test_expect_success 'implicit bare & --separate-git-dir incompatible' '
++	test_when_finished "rm -rf bare.git" &&
++	mkdir -p bare.git &&
++	test_must_fail env GIT_DIR=. \
++		git -C bare.git init --separate-git-dir goop.git 2>err &&
++	test_i18ngrep "incompatible" err
++'
++
+ test_lazy_prereq GETCWD_IGNORES_PERMS '
+ 	base=GETCWD_TEST_BASE_DIR &&
+ 	mkdir -p $base/dir &&
+-- 
+2.28.0.220.ged08abb693
+
