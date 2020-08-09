@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFFB4C433E0
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DD2CC433DF
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1104206DF
-	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64183206DF
+	for <git@archiver.kernel.org>; Sun,  9 Aug 2020 02:54:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ur35OWu4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtbAV0/y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726398AbgHICyF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Aug 2020 22:54:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40448 "EHLO
+        id S1726401AbgHICyI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Aug 2020 22:54:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726212AbgHICx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Aug 2020 22:53:57 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FED5C061A2A
-        for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:53:57 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id l2so5046671wrc.7
-        for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:53:57 -0700 (PDT)
+        with ESMTP id S1726370AbgHICyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Aug 2020 22:54:01 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26AE8C061756
+        for <git@vger.kernel.org>; Sat,  8 Aug 2020 19:54:01 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 9so4778175wmj.5
+        for <git@vger.kernel.org>; Sat, 08 Aug 2020 19:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4ArW47UXhDWLACISWKffd9HxQQpBFINq7O/wlB4NeZ4=;
-        b=ur35OWu4T4jqXyfZUJhi97XnRr+u//Y41J5a+Gfe61w6iHgii9UiQQk2+4UyWWaEfG
-         oSLHt7xdgl+/8mXjKYCeR9rO+gj7KXH8IGi+LQHQLeOOYt51wohgyrnWmM4mLV4z4WG4
-         th9/1jtV5Zg1AyfRFG2x8dTGIKvWa/klxORA0wMTDSsKlNk/lR5hGmdcf2QEsTX3NPZi
-         L9SvJ9+24PSh+JBUVclwt9oSrjxD/g/FbcvLmrsYzMiVIa5AvLlkOM8Iv7n5RfMiUCMq
-         XVjbHbTPA08aVWVTUYzyW1z7bTnEpiqzBMLTDPj6zogBpm3j7cZaXDvkwj92xyayVgCf
-         FjRQ==
+        bh=ToI4nwdtL3GkFmibdyswuTEHfpGjEVUQmYdZnttMOF0=;
+        b=LtbAV0/yP2xhFfmtECUA7xa5DtvEGeYSrGUtc2xee16iEjiE79uJWy4pgjrmzhRKk/
+         I7Hxb6/4xvoA8GqyWizql/6K/Ez+8tNHAGGtjVGVH7EodQCgyjR10I3kbD5B2iTx9Fzt
+         1eiuEYI0ee/Y5gL58idqj6ChGCBwiA0TjFQ1ACjEhCdqzhr5WtS5/oWVNfazmUIZXzTb
+         SD6LZMWStvsHr4O8tl0+c5fHBIZL7CXmf4u/FMEiT9ZrAngaCQY8fP4InJb4qI2QArNJ
+         7yAVzShXUsXV7FhznvA5e5ygHQovXamCGHjlpRwHccv6jnAcrisWQuEdJYMUoDPJwnYe
+         GJ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4ArW47UXhDWLACISWKffd9HxQQpBFINq7O/wlB4NeZ4=;
-        b=LOWLMbW9U+tl4YMbJQRzsKmbLHFYxZKQz8SnmFISdETNGxv9Vg9RD7URDAm5LnRWW1
-         PJR1FHLLw4EVyhl9ygN+nPQkP3kXL04SLvW4V/N7dcBgAQGhVcRLopqe3Tnao+5zF01O
-         aTFqkgzL7cV/krGUwelNHHaVszEZk7Qu0SSQgq7qb1rGaXBMjQGu2uq8fekulT+s0fAZ
-         dxKoOMJjSWT2LO2XdC4oLUA6q584EJS5ste2Nn3e6lxkXAK5AJdkGiOTfFzPuvtfF0w5
-         tM96sg94DZ/ujC0XxxpYd0QZKZQLluhD0/KYVTmdUEp+3HOkpbvrKjZtcQWIZH8SO59L
-         DQ+g==
-X-Gm-Message-State: AOAM533odN2OLiQCmJyoqwV/0yCs0jcFirlIObqEB2RHRqDX3AVWlidB
-        YRbdLtHzLu580PoFI1mYdjfoZLlc
-X-Google-Smtp-Source: ABdhPJz5LCJyYtKUUV9hYf011jY26e6+0uG4DFrNywYaFW3Hw4tl73qxoUBFdaIEM1oIfJ6J+M0DIQ==
-X-Received: by 2002:a5d:42c2:: with SMTP id t2mr18485749wrr.396.1596941635603;
-        Sat, 08 Aug 2020 19:53:55 -0700 (PDT)
+        bh=ToI4nwdtL3GkFmibdyswuTEHfpGjEVUQmYdZnttMOF0=;
+        b=A3kVn2M5tblSAAjKOQsXmncKLgGaufK3l5jGTD8Uqy72Zf76CQG2yBIU8H1f55ap1A
+         iscjgFHDgmgpyCpq5VwnIgqDIoIJdtZE0UT6RlplvV873X89PVu+S4BtLDKDMmAhXVt7
+         5Kvlmf8brdYf4kAT8YOMPwrEXiatE5i3LSaBysDuTzvYhWS51H3c8EzKqn1ZWju/xYl2
+         4xSq9wmRBWt1E+l0suvzIusTJcpo/odSZN1tOB0NSac1+XsAKSkOBu4xiK7CFy5vRnG7
+         dUg65AWiFi/RHu36DU2fNKV4Is3otcV0mhyEXadFIpeP5mIw7u8AOayN+l9p9JcoxFYr
+         YM1Q==
+X-Gm-Message-State: AOAM531HRwFDJifT1IpA0sELTR1v8k4GPlzV+yIH9r6S82nyCzFYLg+7
+        UhfzntVwurSuZLV/CTdk5adZzUfe
+X-Google-Smtp-Source: ABdhPJxwnc6VvLeAYJEbFIldSZ5DodhweTIpis9eRJvnUAGprEQnNkuDk4PaJWesepltQmX4ucLoLA==
+X-Received: by 2002:a1c:4e0c:: with SMTP id g12mr19146401wmh.136.1596941639622;
+        Sat, 08 Aug 2020 19:53:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15sm16278690wrn.89.2020.08.08.19.53.55
+        by smtp.gmail.com with ESMTPSA id j5sm16520464wmb.12.2020.08.08.19.53.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2020 19:53:55 -0700 (PDT)
-Message-Id: <1aa2a00a7a2a0e4c884bf95261b5e308c3611fbc.1596941625.git.gitgitgadget@gmail.com>
+        Sat, 08 Aug 2020 19:53:58 -0700 (PDT)
+Message-Id: <4c34294602b23f4427b024bbd38e4403a397fc50.1596941625.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
         <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 09 Aug 2020 02:53:40 +0000
-Subject: [PATCH v2 06/10] commit-graph: return 64-bit generation number
+Date:   Sun, 09 Aug 2020 02:53:44 +0000
+Subject: [PATCH v2 10/10] doc: add corrected commit date info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,323 +81,130 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-In a preparatory step, let's return timestamp_t values from
-commit_graph_generation(), use timestamp_t for local variables and
-define GENERATION_NUMBER_INFINITY as (2 ^ 63 - 1) instead.
+With generation data chunk and corrected commit dates implemented, let's
+update the technical documentation for commit-graph.
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- commit-graph.c | 18 +++++++++---------
- commit-graph.h |  4 ++--
- commit-reach.c | 32 ++++++++++++++++----------------
- commit-reach.h |  2 +-
- commit.h       |  3 ++-
- revision.c     | 10 +++++-----
- upload-pack.c  |  2 +-
- 7 files changed, 36 insertions(+), 35 deletions(-)
+ .../technical/commit-graph-format.txt         | 12 ++---
+ Documentation/technical/commit-graph.txt      | 45 ++++++++++++-------
+ 2 files changed, 36 insertions(+), 21 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index d5da1e8028..42f3ec5460 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -100,7 +100,7 @@ uint32_t commit_graph_position(const struct commit *c)
- 	return data ? data->graph_pos : COMMIT_NOT_FROM_GRAPH;
- }
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index 440541045d..71c43884ec 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -4,11 +4,7 @@ Git commit graph format
+ The Git commit graph stores a list of commit OIDs and some associated
+ metadata, including:
  
--uint32_t commit_graph_generation(const struct commit *c)
-+timestamp_t commit_graph_generation(const struct commit *c)
- {
- 	struct commit_graph_data *data =
- 		commit_graph_data_slab_peek(&commit_graph_data_slab, c);
-@@ -116,8 +116,8 @@ uint32_t commit_graph_generation(const struct commit *c)
- int compare_commits_by_gen(const void *_a, const void *_b)
- {
- 	const struct commit *a = _a, *b = _b;
--	const uint32_t generation_a = commit_graph_generation(a);
--	const uint32_t generation_b = commit_graph_generation(b);
-+	const timestamp_t generation_a = commit_graph_generation(a);
-+	const timestamp_t generation_b = commit_graph_generation(b);
+-- The generation number of the commit. Commits with no parents have
+-  generation number 1; commits with parents have generation number
+-  one more than the maximum generation number of its parents. We
+-  reserve zero as special, and can be used to mark a generation
+-  number invalid or as "not computed".
++- The generation number of the commit.
  
- 	/* older commits first */
- 	if (generation_a < generation_b)
-@@ -160,8 +160,8 @@ static int commit_gen_cmp(const void *va, const void *vb)
- 	const struct commit *a = *(const struct commit **)va;
- 	const struct commit *b = *(const struct commit **)vb;
+ - The root tree OID.
  
--	uint32_t generation_a = commit_graph_data_at(a)->generation;
--	uint32_t generation_b = commit_graph_data_at(b)->generation;
-+	const timestamp_t generation_a = commit_graph_data_at(a)->generation;
-+	const timestamp_t generation_b = commit_graph_data_at(b)->generation;
- 	/* lower generation commits first */
- 	if (generation_a < generation_b)
- 		return -1;
-@@ -1363,7 +1363,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
+@@ -88,6 +84,12 @@ CHUNK DATA:
+       2 bits of the lowest byte, storing the 33rd and 34th bit of the
+       commit time.
  
- 		display_progress(ctx->progress, i + 1);
--		if (generation != GENERATION_NUMBER_INFINITY &&
-+		if (generation != GENERATION_NUMBER_V1_INFINITY &&
- 		    generation != GENERATION_NUMBER_ZERO)
- 			continue;
++  Generation Data (ID: {'G', 'D', 'A', 'T' }) (N * 4 bytes) [Optional]
++    * This list of 4-byte values store corrected commit date offsets for the
++      commits, arranged in the same order as commit data chunk.
++    * This list can be later modified to store future generation number related
++      data.
++
+   Extra Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
+       This list of 4-byte values store the second through nth parents for
+       all octopus merges. The second parent value in the commit data stores
+diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+index 808fa30b99..f27145328c 100644
+--- a/Documentation/technical/commit-graph.txt
++++ b/Documentation/technical/commit-graph.txt
+@@ -38,14 +38,27 @@ A consumer may load the following info for a commit from the graph:
  
-@@ -1377,7 +1377,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 			for (parent = current->parents; parent; parent = parent->next) {
- 				generation = commit_graph_data_at(parent->item)->generation;
+ Values 1-4 satisfy the requirements of parse_commit_gently().
  
--				if (generation == GENERATION_NUMBER_INFINITY ||
-+				if (generation == GENERATION_NUMBER_V1_INFINITY ||
- 				    generation == GENERATION_NUMBER_ZERO) {
- 					all_parents_computed = 0;
- 					commit_list_insert(parent->item, &list);
-@@ -2387,8 +2387,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	for (i = 0; i < g->num_commits; i++) {
- 		struct commit *graph_commit, *odb_commit;
- 		struct commit_list *graph_parents, *odb_parents;
--		uint32_t max_generation = 0;
--		uint32_t generation;
-+		timestamp_t max_generation = 0;
-+		timestamp_t generation;
+-Define the "generation number" of a commit recursively as follows:
++There are two definitions of generation number:
++1. Corrected committer dates
++2. Topological levels
++
++Define "corrected committer date" of a commit recursively as follows:
++
++  * A commit with no parents (a root commit) has corrected committer date
++    equal to its committer date.
++
++  * A commit with at least one parent has corrected committer date equal to
++    the maximum of its commiter date and one more than the largest corrected
++    committer date among its parents.
++
++Define the "topological level" of a commit recursively as follows:
  
- 		display_progress(progress, i + 1);
- 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-diff --git a/commit-graph.h b/commit-graph.h
-index cc232e0678..f89614ecd5 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -140,13 +140,13 @@ void disable_commit_graph(struct repository *r);
+  * A commit with no parents (a root commit) has generation number one.
  
- struct commit_graph_data {
- 	uint32_t graph_pos;
--	uint32_t generation;
-+	timestamp_t generation;
- };
+- * A commit with at least one parent has generation number one more than
+-   the largest generation number among its parents.
++ * A commit with at least one parent has topological level one more than
++   the largest topological level among its parents.
  
- /*
-  * Commits should be parsed before accessing generation, graph positions.
-  */
--uint32_t commit_graph_generation(const struct commit *);
-+timestamp_t commit_graph_generation(const struct commit *);
- uint32_t commit_graph_position(const struct commit *);
+-Equivalently, the generation number of a commit A is one more than the
++Equivalently, the topological level of a commit A is one more than the
+ length of a longest path from A to a root commit. The recursive definition
+ is easier to use for computation and observing the following property:
  
- int compare_commits_by_gen(const void *_a, const void *_b);
-diff --git a/commit-reach.c b/commit-reach.c
-index c83cc291e7..470bc80139 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -32,12 +32,12 @@ static int queue_has_nonstale(struct prio_queue *queue)
- static struct commit_list *paint_down_to_common(struct repository *r,
- 						struct commit *one, int n,
- 						struct commit **twos,
--						int min_generation)
-+						timestamp_t min_generation)
- {
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	struct commit_list *result = NULL;
- 	int i;
--	uint32_t last_gen = GENERATION_NUMBER_INFINITY;
-+	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
+@@ -67,17 +80,12 @@ numbers, the general heuristic is the following:
+     If A and B are commits with commit time X and Y, respectively, and
+     X < Y, then A _probably_ cannot reach B.
  
- 	if (!min_generation)
- 		queue.compare = compare_commits_by_commit_date;
-@@ -58,10 +58,10 @@ static struct commit_list *paint_down_to_common(struct repository *r,
- 		struct commit *commit = prio_queue_get(&queue);
- 		struct commit_list *parents;
- 		int flags;
--		uint32_t generation = commit_graph_generation(commit);
-+		timestamp_t generation = commit_graph_generation(commit);
+-This heuristic is currently used whenever the computation is allowed to
+-violate topological relationships due to clock skew (such as "git log"
+-with default order), but is not used when the topological order is
+-required (such as merge base calculations, "git log --graph").
+-
+ In practice, we expect some commits to be created recently and not stored
+ in the commit graph. We can treat these commits as having "infinite"
+ generation number and walk until reaching commits with known generation
+ number.
  
- 		if (min_generation && generation > last_gen)
--			BUG("bad generation skip %8x > %8x at %s",
-+			BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
- 			    generation, last_gen,
- 			    oid_to_hex(&commit->object.oid));
- 		last_gen = generation;
-@@ -177,12 +177,12 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
- 		repo_parse_commit(r, array[i]);
- 	for (i = 0; i < cnt; i++) {
- 		struct commit_list *common;
--		uint32_t min_generation = commit_graph_generation(array[i]);
-+		timestamp_t min_generation = commit_graph_generation(array[i]);
+-We use the macro GENERATION_NUMBER_INFINITY = 0xFFFFFFFF to mark commits not
++We use the macro GENERATION_NUMBER_INFINITY to mark commits not
+ in the commit-graph file. If a commit-graph file was written by a version
+ of Git that did not compute generation numbers, then those commits will
+ have generation number represented by the macro GENERATION_NUMBER_ZERO = 0.
+@@ -93,12 +101,11 @@ fully-computed generation numbers. Using strict inequality may result in
+ walking a few extra commits, but the simplicity in dealing with commits
+ with generation number *_INFINITY or *_ZERO is valuable.
  
- 		if (redundant[i])
- 			continue;
- 		for (j = filled = 0; j < cnt; j++) {
--			uint32_t curr_generation;
-+			timestamp_t curr_generation;
- 			if (i == j || redundant[j])
- 				continue;
- 			filled_index[filled] = j;
-@@ -321,7 +321,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- {
- 	struct commit_list *bases;
- 	int ret = 0, i;
--	uint32_t generation, min_generation = GENERATION_NUMBER_INFINITY;
-+	timestamp_t generation, min_generation = GENERATION_NUMBER_INFINITY;
+-We use the macro GENERATION_NUMBER_MAX = 0x3FFFFFFF to for commits whose
+-generation numbers are computed to be at least this value. We limit at
+-this value since it is the largest value that can be stored in the
+-commit-graph file using the 30 bits available to generation numbers. This
+-presents another case where a commit can have generation number equal to
+-that of a parent.
++We use the macro GENERATION_NUMBER_MAX for commits whose generation numbers
++are computed to be at least this value. We limit at this value since it is
++the largest value that can be stored in the commit-graph file using the
++available to generation numbers. This presents another case where a
++commit can have generation number equal to that of a parent.
  
- 	if (repo_parse_commit(r, commit))
- 		return ret;
-@@ -470,7 +470,7 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
- static enum contains_result contains_test(struct commit *candidate,
- 					  const struct commit_list *want,
- 					  struct contains_cache *cache,
--					  uint32_t cutoff)
-+					  timestamp_t cutoff)
- {
- 	enum contains_result *cached = contains_cache_at(cache, candidate);
+ Design Details
+ --------------
+@@ -267,6 +274,12 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
+ number of commits) could be extracted into config settings for full
+ flexibility.
  
-@@ -506,11 +506,11 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
- {
- 	struct contains_stack contains_stack = { 0, 0, NULL };
- 	enum contains_result result;
--	uint32_t cutoff = GENERATION_NUMBER_INFINITY;
-+	timestamp_t cutoff = GENERATION_NUMBER_INFINITY;
- 	const struct commit_list *p;
++We also merge commit-graph chains when we try to write a commit graph with
++two different generation number definitions as they cannot be compared directly.
++We overwrite the existing chain and create a commit-graph with the newer or more
++efficient defintion. For example, overwriting topological levels commit graph
++chain to create a corrected commit dates commit graph chain.
++
+ ## Deleting graph-{hash} files
  
- 	for (p = want; p; p = p->next) {
--		uint32_t generation;
-+		timestamp_t generation;
- 		struct commit *c = p->item;
- 		load_commit_graph_info(the_repository, c);
- 		generation = commit_graph_generation(c);
-@@ -565,7 +565,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 				 unsigned int with_flag,
- 				 unsigned int assign_flag,
- 				 time_t min_commit_date,
--				 uint32_t min_generation)
-+				 timestamp_t min_generation)
- {
- 	struct commit **list = NULL;
- 	int i;
-@@ -666,13 +666,13 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 	time_t min_commit_date = cutoff_by_min_date ? from->item->date : 0;
- 	struct commit_list *from_iter = from, *to_iter = to;
- 	int result;
--	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
-+	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
- 
- 	while (from_iter) {
- 		add_object_array(&from_iter->item->object, NULL, &from_objs);
- 
- 		if (!parse_commit(from_iter->item)) {
--			uint32_t generation;
-+			timestamp_t generation;
- 			if (from_iter->item->date < min_commit_date)
- 				min_commit_date = from_iter->item->date;
- 
-@@ -686,7 +686,7 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 
- 	while (to_iter) {
- 		if (!parse_commit(to_iter->item)) {
--			uint32_t generation;
-+			timestamp_t generation;
- 			if (to_iter->item->date < min_commit_date)
- 				min_commit_date = to_iter->item->date;
- 
-@@ -726,13 +726,13 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 	struct commit_list *found_commits = NULL;
- 	struct commit **to_last = to + nr_to;
- 	struct commit **from_last = from + nr_from;
--	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
-+	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
- 	int num_to_find = 0;
- 
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 
- 	for (item = to; item < to_last; item++) {
--		uint32_t generation;
-+		timestamp_t generation;
- 		struct commit *c = *item;
- 
- 		parse_commit(c);
-diff --git a/commit-reach.h b/commit-reach.h
-index b49ad71a31..148b56fea5 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -87,7 +87,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 				 unsigned int with_flag,
- 				 unsigned int assign_flag,
- 				 time_t min_commit_date,
--				 uint32_t min_generation);
-+				 timestamp_t min_generation);
- int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 		       int commit_date_cutoff);
- 
-diff --git a/commit.h b/commit.h
-index e901538909..bc0732a4fe 100644
---- a/commit.h
-+++ b/commit.h
-@@ -11,7 +11,8 @@
- #include "commit-slab.h"
- 
- #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
--#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
-+#define GENERATION_NUMBER_INFINITY ((1ULL << 63) - 1)
-+#define GENERATION_NUMBER_V1_INFINITY 0xFFFFFFFF
- #define GENERATION_NUMBER_MAX 0x3FFFFFFF
- #define GENERATION_NUMBER_ZERO 0
- 
-diff --git a/revision.c b/revision.c
-index 4ec82ed5ab..bd7b39c806 100644
---- a/revision.c
-+++ b/revision.c
-@@ -3292,7 +3292,7 @@ define_commit_slab(indegree_slab, int);
- define_commit_slab(author_date_slab, timestamp_t);
- 
- struct topo_walk_info {
--	uint32_t min_generation;
-+	timestamp_t min_generation;
- 	struct prio_queue explore_queue;
- 	struct prio_queue indegree_queue;
- 	struct prio_queue topo_queue;
-@@ -3338,7 +3338,7 @@ static void explore_walk_step(struct rev_info *revs)
- }
- 
- static void explore_to_depth(struct rev_info *revs,
--			     uint32_t gen_cutoff)
-+			     timestamp_t gen_cutoff)
- {
- 	struct topo_walk_info *info = revs->topo_walk_info;
- 	struct commit *c;
-@@ -3381,7 +3381,7 @@ static void indegree_walk_step(struct rev_info *revs)
- }
- 
- static void compute_indegrees_to_depth(struct rev_info *revs,
--				       uint32_t gen_cutoff)
-+				       timestamp_t gen_cutoff)
- {
- 	struct topo_walk_info *info = revs->topo_walk_info;
- 	struct commit *c;
-@@ -3439,7 +3439,7 @@ static void init_topo_walk(struct rev_info *revs)
- 	info->min_generation = GENERATION_NUMBER_INFINITY;
- 	for (list = revs->commits; list; list = list->next) {
- 		struct commit *c = list->item;
--		uint32_t generation;
-+		timestamp_t generation;
- 
- 		if (parse_commit_gently(c, 1))
- 			continue;
-@@ -3500,7 +3500,7 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
- 	for (p = commit->parents; p; p = p->next) {
- 		struct commit *parent = p->item;
- 		int *pi;
--		uint32_t generation;
-+		timestamp_t generation;
- 
- 		if (parent->object.flags & UNINTERESTING)
- 			continue;
-diff --git a/upload-pack.c b/upload-pack.c
-index 8673741070..18ee29db67 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -490,7 +490,7 @@ static int got_oid(struct upload_pack_data *data,
- 
- static int ok_to_give_up(struct upload_pack_data *data)
- {
--	uint32_t min_generation = GENERATION_NUMBER_ZERO;
-+	timestamp_t min_generation = GENERATION_NUMBER_ZERO;
- 
- 	if (!data->have_obj.nr)
- 		return 0;
+ After a new tip file is written, some `graph-{hash}` files may no longer
 -- 
 gitgitgadget
-
