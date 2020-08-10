@@ -2,142 +2,161 @@ Return-Path: <SRS0=S9iH=BU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EC6FC433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 959C0C433E0
 	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 22:29:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B69C2073E
+	by mail.kernel.org (Postfix) with ESMTP id 6C6FA20768
 	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 22:29:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rXFNRq6l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AsgHHb7D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726857AbgHJW3Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727936AbgHJW3Y (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 10 Aug 2020 18:29:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726705AbgHJW3X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 18:29:23 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C45C06174A
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:23 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id a15so9603379wrh.10
+        with ESMTP id S1726705AbgHJW3Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 18:29:24 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C828C06174A
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:24 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id z18so9622566wrm.12
         for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Qsr+0k0FdxfHS6wtIs2Amt2/HVLO+5yswaysguJ8B9Y=;
-        b=rXFNRq6lmwvbM0zkaBy5owj+352+C+gNPAEG0eIksPqcdFgdu+v/7syoU0vL7fK6iK
-         44p+eG2vU/7HrNLLdLT4YmWDkdtcO/2G2VsfqY4AO0d6ffTwqR77MFV9JduQdDWa0luc
-         oXpsQmBdYXBKB6FD1OIur2HmopFr2bDx61c69w7tRwyaX3DxCTm9wTmtrfdsPUrmTVbm
-         IipxpcxfO5voRSVZefFov7n76EAhI7AZiVZkVjxA/lNACUnFNQZaC17sxhtxGRD9LS30
-         mkNOTowDbjV76FPz9bWL7j9vweEL+Mg589GapXl1ihrxzaulwX3z3njks2UNjEMmLMUN
-         rDxw==
+        bh=vXcIDcErW5K6bwHt8cGbpSJBaXJwRTjPuHEfroX0Bv8=;
+        b=AsgHHb7DtO1Cq399KDP0+cbjZQTDIZRj0fxr4fY3A6RTsKgxpGaJRnKhO7m9HoQefM
+         6K8BaaWuc6KH6mhLI0xlxnrYCZqMct4HL3eqiux0eV4lM25XHPA9lIvAxH6L5UPyWtVZ
+         K3QKSFHID4A9fVytWe4+3EjbaRLvBatkZHBUN4IkeXHLWkamIEsDiRsNORTUUkAftNwB
+         do2kFsSBpII3WioSMwiBvdqnnDziQ31xBt2zBLrrngNJz9s/WjepZrHM/ElQn7zjPEFU
+         CXS9shjr/kU3XLw+uVZE9XpivhXdiLoelkaZOiCNlvquEgdOJJMOS4KkLH3RWaGLf9jc
+         7DSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Qsr+0k0FdxfHS6wtIs2Amt2/HVLO+5yswaysguJ8B9Y=;
-        b=i+XCVcH8dA/QJBsTPMYBH557p86DJTxj+Si6zIu2en0MaaoLcVDgZnAehSoBRrZ0Zk
-         jQ76ITOwYl/QXCAJhO9DRFhRp2bC8sKzcqxGnl++/w0Ss5LNymoyiv+DaApl029NbjHh
-         2/YaqfQt5qh3YqbyBdJ0jFH9vXwwgPi0K1keTwvNV+27WC8sX8FzGTOHficJuVR8k/uQ
-         1rILPo+1CIa0Rs9UbdVR00HA2ZSG05wlyjh5wo3ZIyUO8+PF6kIskOxReNRyOublaCiN
-         CiQl6szSzOjrmMWJixYeYOjPDLg1G/BDhV62sccr2zOgvCfW5leduuc3wnYNcnAYu6Jm
-         L5Vw==
-X-Gm-Message-State: AOAM533Uj3worPy5Qjgy0jNq/W2EsgoIKLjbuPxawPF1wBxXWrBcTCkm
-        nssHT20S2ZkDdOQwqUqF7YIt6jvM
-X-Google-Smtp-Source: ABdhPJwCXXoJGN3SWfk5Urit0sURyK5jkG85fJJ5aHdmPKHyugAHciqoxQEiz3Omf8phxCZMaQvbDg==
-X-Received: by 2002:a5d:4a41:: with SMTP id v1mr28833129wrs.371.1597098561076;
-        Mon, 10 Aug 2020 15:29:21 -0700 (PDT)
+        bh=vXcIDcErW5K6bwHt8cGbpSJBaXJwRTjPuHEfroX0Bv8=;
+        b=E+YvXWNHwGlGJOtZa8qcgrW6uaGEdiIAH4c0lpH/mHxIDts4V47qCtfyY/PdAzYyD2
+         63UHAUxxnM7ZEuxE0oY3N+EaC0rYpp4LMetes2i9eVRwUrb6oeadqU1wwU6vq/7dpQy/
+         YIRcJqSnuSdzj12zAtCrRAZdjCfAIKAUp+LNJJ39SX0fiwPfgLBUmYUtHG3UguKTrMPI
+         QjWKMmTdIlPlqDth1kB5xbU7CQeOOtockCw+54JCfI07xga4Qd7Q2XaXlVovGalR8PNm
+         gAFP88VvGs7Fe3RToW4cBpfDqbz0aGjnoP0SLZD3yM4ys9QVmb2I6x+ww26yVZN+RpdZ
+         H3nQ==
+X-Gm-Message-State: AOAM530AxaEwAsHZLIK5UI7GnAksSMDa2bC0vUJIaKjdD/TRT1pyKac5
+        DG5J3FQNV4+N806Bx3/ANZLmej9u
+X-Google-Smtp-Source: ABdhPJxMMpLywbxkPQCO4uITF7Cq1WW+KHh8gpGZgxA/PxIyvglwDnem34kUbhgRPe89LFWzTWWtPw==
+X-Received: by 2002:adf:ab46:: with SMTP id r6mr26535907wrc.260.1597098562325;
+        Mon, 10 Aug 2020 15:29:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i6sm22174203wrp.92.2020.08.10.15.29.20
+        by smtp.gmail.com with ESMTPSA id 6sm1736419wmf.4.2020.08.10.15.29.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2020 15:29:20 -0700 (PDT)
-Message-Id: <pull.827.v3.git.git.1597098559.gitgitgadget@gmail.com>
-In-Reply-To: <pull.827.v2.git.git.1596906081.gitgitgadget@gmail.com>
+        Mon, 10 Aug 2020 15:29:21 -0700 (PDT)
+Message-Id: <8fec657942267c0423c05de59e1867db88ebbc9b.1597098559.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.827.v3.git.git.1597098559.gitgitgadget@gmail.com>
 References: <pull.827.v2.git.git.1596906081.gitgitgadget@gmail.com>
+        <pull.827.v3.git.git.1597098559.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Aug 2020 22:29:08 +0000
-Subject: [PATCH v3 00/11] Start preparing merge-related tests to work with multiple merge backends
+Date:   Mon, 10 Aug 2020 22:29:09 +0000
+Subject: [PATCH v3 01/11] Collect merge-related tests to t64xx
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series starts preparing the merge related tests to work with multiple
-backends: merge-recursive or merge-ort. Further work will be coming.
+From: Elijah Newren <newren@gmail.com>
 
-Changes since v2:
+The tests for the merge machinery are spread over several places.
+Collect them into t64xx for simplicity.  Some notes:
 
- * fix typos pointed out by Eric
- * reworded another commit message for clarify
+t60[234]*.sh:
+  Merge tests started in t602*, overgrew bisect and remote tracking
+  tests in t6030, t6040, and t6041, and nearly overtook replace tests
+  in t6050.  This made picking out relevant tests that I wanted to run
+  in a tighter loop slightly more annoying for years.
 
-The greater flexibility patches at the end of the series also previews some
-of the design changes being brought by merge-ort.
+t303*.sh:
+  These started out as tests for the 'merge-recursive' toplevel command,
+  but did not restrict to that and had lots of overlap with the
+  underlying merge machinery.
+t7405, t7613:
+  submodule-specific merge logic started out in submodule.c but was
+  moved to merge-recursive.c in commit 18cfc08866 ("submodule.c: move
+  submodule merging to merge-recursive.c", 2018-05-15).  Since these
+  tests are about the logic found in the merge machinery, moving these
+  tests to be with the merge tests makes sense.
 
-Merges cleanly with next and seen, despite the pile of testcase renames.
+t7607, t7609:
+  Having tests spread all over the place makes it more likely that
+  additional tests related to a certain piece of logic grow in all those
+  other places.  Much like t303*.sh, these two tests were about the
+  underlying merge machinery rather than outer levels.
 
-Elijah Newren (11):
-  Collect merge-related tests to t64xx
-  t6418: tighten delete/normalize conflict testcase
-  t6422: fix bad check against missing file
-  t6416, t6422: fix incorrect untracked file count
-  t6423: fix test setup for a couple tests
-  t6422: fix multiple errors with the mod6 test expectations
-  t6416, t6423: clarify some comments and fix some typos
-  t6423: add an explanation about why one of the tests does not pass
-  t6422, t6426: be more flexible for add/add conflicts involving renames
-  t642[23]: be more flexible for add/add conflicts involving pair
-    renames
-  t6425: be more flexible with rename/delete conflict messages
+Tests that were NOT moved:
 
- t/{t6020-merge-df.sh => t6400-merge-df.sh}    |  0
- ...ss-cross.sh => t6401-merge-criss-cross.sh} |  0
- ...-merge-rename.sh => t6402-merge-rename.sh} |  0
- ...6023-merge-file.sh => t6403-merge-file.sh} |  0
- ...sive-merge.sh => t6404-recursive-merge.sh} |  0
- ...ge-symlinks.sh => t6405-merge-symlinks.sh} |  0
- ...6026-merge-attr.sh => t6406-merge-attr.sh} |  0
- ...-merge-binary.sh => t6407-merge-binary.sh} |  0
- ...p-to-date.sh => t6408-merge-up-to-date.sh} |  0
- ...erge-subtree.sh => t6409-merge-subtree.sh} |  0
- ...ge-filemode.sh => t6411-merge-filemode.sh} |  0
- ...-rename.sh => t6412-merge-large-rename.sh} |  0
- ...6033-merge-crlf.sh => t6413-merge-crlf.sh} |  0
- ...cruft.sh => t6414-merge-rename-nocruft.sh} |  0
- ...mlink.sh => t6415-merge-dir-to-symlink.sh} |  0
- ...ses.sh => t6416-recursive-corner-cases.sh} |  4 +-
- ...s-theirs.sh => t6417-merge-ours-theirs.sh} |  0
- ...-text-auto.sh => t6418-merge-text-auto.sh} |  3 +-
- ...gnorecase.sh => t6419-merge-ignorecase.sh} |  0
- ....sh => t6422-merge-rename-corner-cases.sh} | 68 +++++++++++--------
- ...s.sh => t6423-merge-rename-directories.sh} | 39 +++++++----
- ...=> t6424-merge-unrelated-index-changes.sh} |  0
- ...delete.sh => t6425-merge-rename-delete.sh} |  3 +-
- ...h => t6426-merge-skip-unneeded-updates.sh} |  2 +-
- ...ers.sh => t6427-diff3-conflict-markers.sh} |  0
- ...-recursive.sh => t6430-merge-recursive.sh} |  0
- ...-criscross.sh => t6431-merge-criscross.sh} |  0
- ...=> t6432-merge-recursive-space-options.sh} |  0
- ...ge-toplevel.sh => t6433-merge-toplevel.sh} |  0
- ...> t6434-merge-recursive-rename-options.sh} |  0
- ...-merge-sparse.sh => t6435-merge-sparse.sh} |  0
- ...-overwrite.sh => t6436-merge-overwrite.sh} |  0
- ...dule-merge.sh => t6437-submodule-merge.sh} |  0
- ...438-submodule-directory-file-conflicts.sh} |  0
- ...r-msgs.sh => t6439-merge-co-error-msgs.sh} |  0
- 35 files changed, 71 insertions(+), 48 deletions(-)
+t76[01]*.sh:
+  Other than the four tests mentioned above, the remaining tests in
+  t76[01]*.sh are related to non-recursive merge strategies, parameter
+  parsing, and other stuff associated with the highlevel builtin/merge.c
+  rather than the recursive merge machinery.
+
+t3[45]*.sh:
+  The rebase testcases in t34*.sh also test the merge logic pretty
+  heavily; sometimes changes I make only trigger failures in the rebase
+  tests.  The rebase tests are already nicely coupled together, though,
+  and I didn't want to mess that up.  Similar comments apply for the
+  cherry-pick tests in t35*.sh.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/{t6020-merge-df.sh => t6400-merge-df.sh}                        | 0
+ t/{t6021-merge-criss-cross.sh => t6401-merge-criss-cross.sh}      | 0
+ t/{t6022-merge-rename.sh => t6402-merge-rename.sh}                | 0
+ t/{t6023-merge-file.sh => t6403-merge-file.sh}                    | 0
+ t/{t6024-recursive-merge.sh => t6404-recursive-merge.sh}          | 0
+ t/{t6025-merge-symlinks.sh => t6405-merge-symlinks.sh}            | 0
+ t/{t6026-merge-attr.sh => t6406-merge-attr.sh}                    | 0
+ t/{t6027-merge-binary.sh => t6407-merge-binary.sh}                | 0
+ t/{t6028-merge-up-to-date.sh => t6408-merge-up-to-date.sh}        | 0
+ t/{t6029-merge-subtree.sh => t6409-merge-subtree.sh}              | 0
+ t/{t6031-merge-filemode.sh => t6411-merge-filemode.sh}            | 0
+ t/{t6032-merge-large-rename.sh => t6412-merge-large-rename.sh}    | 0
+ t/{t6033-merge-crlf.sh => t6413-merge-crlf.sh}                    | 0
+ ...6034-merge-rename-nocruft.sh => t6414-merge-rename-nocruft.sh} | 0
+ ...6035-merge-dir-to-symlink.sh => t6415-merge-dir-to-symlink.sh} | 0
+ ...-recursive-corner-cases.sh => t6416-recursive-corner-cases.sh} | 0
+ t/{t6037-merge-ours-theirs.sh => t6417-merge-ours-theirs.sh}      | 0
+ t/{t6038-merge-text-auto.sh => t6418-merge-text-auto.sh}          | 0
+ t/{t6039-merge-ignorecase.sh => t6419-merge-ignorecase.sh}        | 0
+ ...-rename-corner-cases.sh => t6422-merge-rename-corner-cases.sh} | 0
+ ...ge-rename-directories.sh => t6423-merge-rename-directories.sh} | 0
+ ...ed-index-changes.sh => t6424-merge-unrelated-index-changes.sh} | 0
+ t/{t6045-merge-rename-delete.sh => t6425-merge-rename-delete.sh}  | 0
+ ...p-unneeded-updates.sh => t6426-merge-skip-unneeded-updates.sh} | 0
+ ...-diff3-conflict-markers.sh => t6427-diff3-conflict-markers.sh} | 0
+ t/{t3030-merge-recursive.sh => t6430-merge-recursive.sh}          | 0
+ t/{t3031-merge-criscross.sh => t6431-merge-criscross.sh}          | 0
+ ...ve-space-options.sh => t6432-merge-recursive-space-options.sh} | 0
+ t/{t3033-merge-toplevel.sh => t6433-merge-toplevel.sh}            | 0
+ ...-rename-options.sh => t6434-merge-recursive-rename-options.sh} | 0
+ t/{t3035-merge-sparse.sh => t6435-merge-sparse.sh}                | 0
+ t/{t7607-merge-overwrite.sh => t6436-merge-overwrite.sh}          | 0
+ t/{t7405-submodule-merge.sh => t6437-submodule-merge.sh}          | 0
+ ...e-submodule.sh => t6438-submodule-directory-file-conflicts.sh} | 0
+ t/{t7609-merge-co-error-msgs.sh => t6439-merge-co-error-msgs.sh}  | 0
+ 35 files changed, 0 insertions(+), 0 deletions(-)
  rename t/{t6020-merge-df.sh => t6400-merge-df.sh} (100%)
  rename t/{t6021-merge-criss-cross.sh => t6401-merge-criss-cross.sh} (100%)
  rename t/{t6022-merge-rename.sh => t6402-merge-rename.sh} (100%)
@@ -153,15 +172,15 @@ Elijah Newren (11):
  rename t/{t6033-merge-crlf.sh => t6413-merge-crlf.sh} (100%)
  rename t/{t6034-merge-rename-nocruft.sh => t6414-merge-rename-nocruft.sh} (100%)
  rename t/{t6035-merge-dir-to-symlink.sh => t6415-merge-dir-to-symlink.sh} (100%)
- rename t/{t6036-recursive-corner-cases.sh => t6416-recursive-corner-cases.sh} (99%)
+ rename t/{t6036-recursive-corner-cases.sh => t6416-recursive-corner-cases.sh} (100%)
  rename t/{t6037-merge-ours-theirs.sh => t6417-merge-ours-theirs.sh} (100%)
- rename t/{t6038-merge-text-auto.sh => t6418-merge-text-auto.sh} (99%)
+ rename t/{t6038-merge-text-auto.sh => t6418-merge-text-auto.sh} (100%)
  rename t/{t6039-merge-ignorecase.sh => t6419-merge-ignorecase.sh} (100%)
- rename t/{t6042-merge-rename-corner-cases.sh => t6422-merge-rename-corner-cases.sh} (94%)
- rename t/{t6043-merge-rename-directories.sh => t6423-merge-rename-directories.sh} (98%)
+ rename t/{t6042-merge-rename-corner-cases.sh => t6422-merge-rename-corner-cases.sh} (100%)
+ rename t/{t6043-merge-rename-directories.sh => t6423-merge-rename-directories.sh} (100%)
  rename t/{t6044-merge-unrelated-index-changes.sh => t6424-merge-unrelated-index-changes.sh} (100%)
- rename t/{t6045-merge-rename-delete.sh => t6425-merge-rename-delete.sh} (72%)
- rename t/{t6046-merge-skip-unneeded-updates.sh => t6426-merge-skip-unneeded-updates.sh} (99%)
+ rename t/{t6045-merge-rename-delete.sh => t6425-merge-rename-delete.sh} (100%)
+ rename t/{t6046-merge-skip-unneeded-updates.sh => t6426-merge-skip-unneeded-updates.sh} (100%)
  rename t/{t6047-diff3-conflict-markers.sh => t6427-diff3-conflict-markers.sh} (100%)
  rename t/{t3030-merge-recursive.sh => t6430-merge-recursive.sh} (100%)
  rename t/{t3031-merge-criscross.sh => t6431-merge-criscross.sh} (100%)
@@ -174,59 +193,146 @@ Elijah Newren (11):
  rename t/{t7613-merge-submodule.sh => t6438-submodule-directory-file-conflicts.sh} (100%)
  rename t/{t7609-merge-co-error-msgs.sh => t6439-merge-co-error-msgs.sh} (100%)
 
-
-base-commit: 4f0a8be78499454eac3985b6e7e144b8376ab0a5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-827%2Fnewren%2Fmerge-test-rename-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-827/newren/merge-test-rename-v3
-Pull-Request: https://github.com/git/git/pull/827
-
-Range-diff vs v2:
-
-  1:  3a2b7e9743 =  1:  8fec657942 Collect merge-related tests to t64xx
-  2:  621c9a159e =  2:  b35b61007e t6418: tighten delete/normalize conflict testcase
-  3:  7f408b7d40 =  3:  d35d4b1922 t6422: fix bad check against missing file
-  4:  9ce80f2f94 !  4:  78df85aee5 t6416, t6422: fix incorrect untracked file count
-     @@ Metadata
-       ## Commit message ##
-          t6416, t6422: fix incorrect untracked file count
-      
-     -    Apparently I don't know how to count untracked files, and since the tests
-     -    in question were marked as test_expect_failure, no one every noticed it
-     -    until know.  Correct the count, as these tests clearly creates three
-     -    untracked files ('out', 'err', and 'file_count').
-     +    Apparently I don't know how to count untracked files, and since the
-     +    tests in question were marked as test_expect_failure, no one ever
-     +    noticed it until now.  Correct the count, as these tests clearly create
-     +    three untracked files ('out', 'err', and 'file_count').
-      
-          (I believe this problem arose because earlier incarnations counted lines
-          via a pipe to 'wc -l'.  Reviewers asked that it be replaced by writing
-  5:  382d65649d =  5:  8ac78dc71b t6423: fix test setup for a couple tests
-  6:  56e169b1d8 =  6:  6674ae9de4 t6422: fix multiple errors with the mod6 test expectations
-  7:  7b534d123a =  7:  783ebb6576 t6416, t6423: clarify some comments and fix some typos
-  8:  f2d7e744fc !  8:  82e1b0e696 t6423: add an explanation about why one of the tests does not pass
-     @@ Metadata
-       ## Commit message ##
-          t6423: add an explanation about why one of the tests does not pass
-      
-     -    While we're at it, document why one of the two tests doesn't pass (since
-     -    I had long since forgotten it)...though the reasoning makes me question
-     -    why it's considered a failure at all.  Maybe I had a good reason when I
-     -    introduced it, or maybe I just wasn't looking at it clearly?  Either
-     -    way, the explanation may help a future reader.
-     +    I had long since forgotten the idea behind this test and why it failed,
-     +    and took a little while to figure it out.  To prevent others from having
-     +    to spend a similar time on it, add an explanation in the comments.
-     +    However, the reasoning in the explanation makes me question why I
-     +    considered it a failure at all.  I'm not sure if I had a better reason
-     +    when I originally wrote it, but for now just add commentary about the
-     +    possible expectations and why it behaves the way it does right now.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-  9:  b4e165eca4 =  9:  42e3f699f1 t6422, t6426: be more flexible for add/add conflicts involving renames
- 10:  a9a02a0ca5 = 10:  456160f3a7 t642[23]: be more flexible for add/add conflicts involving pair renames
- 11:  38f6573511 = 11:  0c8dcbf01c t6425: be more flexible with rename/delete conflict messages
-
+diff --git a/t/t6020-merge-df.sh b/t/t6400-merge-df.sh
+similarity index 100%
+rename from t/t6020-merge-df.sh
+rename to t/t6400-merge-df.sh
+diff --git a/t/t6021-merge-criss-cross.sh b/t/t6401-merge-criss-cross.sh
+similarity index 100%
+rename from t/t6021-merge-criss-cross.sh
+rename to t/t6401-merge-criss-cross.sh
+diff --git a/t/t6022-merge-rename.sh b/t/t6402-merge-rename.sh
+similarity index 100%
+rename from t/t6022-merge-rename.sh
+rename to t/t6402-merge-rename.sh
+diff --git a/t/t6023-merge-file.sh b/t/t6403-merge-file.sh
+similarity index 100%
+rename from t/t6023-merge-file.sh
+rename to t/t6403-merge-file.sh
+diff --git a/t/t6024-recursive-merge.sh b/t/t6404-recursive-merge.sh
+similarity index 100%
+rename from t/t6024-recursive-merge.sh
+rename to t/t6404-recursive-merge.sh
+diff --git a/t/t6025-merge-symlinks.sh b/t/t6405-merge-symlinks.sh
+similarity index 100%
+rename from t/t6025-merge-symlinks.sh
+rename to t/t6405-merge-symlinks.sh
+diff --git a/t/t6026-merge-attr.sh b/t/t6406-merge-attr.sh
+similarity index 100%
+rename from t/t6026-merge-attr.sh
+rename to t/t6406-merge-attr.sh
+diff --git a/t/t6027-merge-binary.sh b/t/t6407-merge-binary.sh
+similarity index 100%
+rename from t/t6027-merge-binary.sh
+rename to t/t6407-merge-binary.sh
+diff --git a/t/t6028-merge-up-to-date.sh b/t/t6408-merge-up-to-date.sh
+similarity index 100%
+rename from t/t6028-merge-up-to-date.sh
+rename to t/t6408-merge-up-to-date.sh
+diff --git a/t/t6029-merge-subtree.sh b/t/t6409-merge-subtree.sh
+similarity index 100%
+rename from t/t6029-merge-subtree.sh
+rename to t/t6409-merge-subtree.sh
+diff --git a/t/t6031-merge-filemode.sh b/t/t6411-merge-filemode.sh
+similarity index 100%
+rename from t/t6031-merge-filemode.sh
+rename to t/t6411-merge-filemode.sh
+diff --git a/t/t6032-merge-large-rename.sh b/t/t6412-merge-large-rename.sh
+similarity index 100%
+rename from t/t6032-merge-large-rename.sh
+rename to t/t6412-merge-large-rename.sh
+diff --git a/t/t6033-merge-crlf.sh b/t/t6413-merge-crlf.sh
+similarity index 100%
+rename from t/t6033-merge-crlf.sh
+rename to t/t6413-merge-crlf.sh
+diff --git a/t/t6034-merge-rename-nocruft.sh b/t/t6414-merge-rename-nocruft.sh
+similarity index 100%
+rename from t/t6034-merge-rename-nocruft.sh
+rename to t/t6414-merge-rename-nocruft.sh
+diff --git a/t/t6035-merge-dir-to-symlink.sh b/t/t6415-merge-dir-to-symlink.sh
+similarity index 100%
+rename from t/t6035-merge-dir-to-symlink.sh
+rename to t/t6415-merge-dir-to-symlink.sh
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
+similarity index 100%
+rename from t/t6036-recursive-corner-cases.sh
+rename to t/t6416-recursive-corner-cases.sh
+diff --git a/t/t6037-merge-ours-theirs.sh b/t/t6417-merge-ours-theirs.sh
+similarity index 100%
+rename from t/t6037-merge-ours-theirs.sh
+rename to t/t6417-merge-ours-theirs.sh
+diff --git a/t/t6038-merge-text-auto.sh b/t/t6418-merge-text-auto.sh
+similarity index 100%
+rename from t/t6038-merge-text-auto.sh
+rename to t/t6418-merge-text-auto.sh
+diff --git a/t/t6039-merge-ignorecase.sh b/t/t6419-merge-ignorecase.sh
+similarity index 100%
+rename from t/t6039-merge-ignorecase.sh
+rename to t/t6419-merge-ignorecase.sh
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
+similarity index 100%
+rename from t/t6042-merge-rename-corner-cases.sh
+rename to t/t6422-merge-rename-corner-cases.sh
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+similarity index 100%
+rename from t/t6043-merge-rename-directories.sh
+rename to t/t6423-merge-rename-directories.sh
+diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
+similarity index 100%
+rename from t/t6044-merge-unrelated-index-changes.sh
+rename to t/t6424-merge-unrelated-index-changes.sh
+diff --git a/t/t6045-merge-rename-delete.sh b/t/t6425-merge-rename-delete.sh
+similarity index 100%
+rename from t/t6045-merge-rename-delete.sh
+rename to t/t6425-merge-rename-delete.sh
+diff --git a/t/t6046-merge-skip-unneeded-updates.sh b/t/t6426-merge-skip-unneeded-updates.sh
+similarity index 100%
+rename from t/t6046-merge-skip-unneeded-updates.sh
+rename to t/t6426-merge-skip-unneeded-updates.sh
+diff --git a/t/t6047-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
+similarity index 100%
+rename from t/t6047-diff3-conflict-markers.sh
+rename to t/t6427-diff3-conflict-markers.sh
+diff --git a/t/t3030-merge-recursive.sh b/t/t6430-merge-recursive.sh
+similarity index 100%
+rename from t/t3030-merge-recursive.sh
+rename to t/t6430-merge-recursive.sh
+diff --git a/t/t3031-merge-criscross.sh b/t/t6431-merge-criscross.sh
+similarity index 100%
+rename from t/t3031-merge-criscross.sh
+rename to t/t6431-merge-criscross.sh
+diff --git a/t/t3032-merge-recursive-space-options.sh b/t/t6432-merge-recursive-space-options.sh
+similarity index 100%
+rename from t/t3032-merge-recursive-space-options.sh
+rename to t/t6432-merge-recursive-space-options.sh
+diff --git a/t/t3033-merge-toplevel.sh b/t/t6433-merge-toplevel.sh
+similarity index 100%
+rename from t/t3033-merge-toplevel.sh
+rename to t/t6433-merge-toplevel.sh
+diff --git a/t/t3034-merge-recursive-rename-options.sh b/t/t6434-merge-recursive-rename-options.sh
+similarity index 100%
+rename from t/t3034-merge-recursive-rename-options.sh
+rename to t/t6434-merge-recursive-rename-options.sh
+diff --git a/t/t3035-merge-sparse.sh b/t/t6435-merge-sparse.sh
+similarity index 100%
+rename from t/t3035-merge-sparse.sh
+rename to t/t6435-merge-sparse.sh
+diff --git a/t/t7607-merge-overwrite.sh b/t/t6436-merge-overwrite.sh
+similarity index 100%
+rename from t/t7607-merge-overwrite.sh
+rename to t/t6436-merge-overwrite.sh
+diff --git a/t/t7405-submodule-merge.sh b/t/t6437-submodule-merge.sh
+similarity index 100%
+rename from t/t7405-submodule-merge.sh
+rename to t/t6437-submodule-merge.sh
+diff --git a/t/t7613-merge-submodule.sh b/t/t6438-submodule-directory-file-conflicts.sh
+similarity index 100%
+rename from t/t7613-merge-submodule.sh
+rename to t/t6438-submodule-directory-file-conflicts.sh
+diff --git a/t/t7609-merge-co-error-msgs.sh b/t/t6439-merge-co-error-msgs.sh
+similarity index 100%
+rename from t/t7609-merge-co-error-msgs.sh
+rename to t/t6439-merge-co-error-msgs.sh
 -- 
 gitgitgadget
+
