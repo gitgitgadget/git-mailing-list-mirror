@@ -2,145 +2,80 @@ Return-Path: <SRS0=S9iH=BU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A99A8C433E0
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 11:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 414D9C433E0
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 11:04:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CACB206C3
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 11:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE68B20729
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 11:04:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="XjZgQRYN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbgHJLBz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 07:01:55 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:41378 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726033AbgHJLBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 07:01:54 -0400
-Received: by mail-qt1-f193.google.com with SMTP id v22so6334349qtq.8
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 04:01:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Wv09eHUOmy1qoaoLNmBYCP6QAf1mFkQxqflyVE7Y+2w=;
-        b=mVRjndazWSB3SVL/uXLS9bAdqvtfgGG9rfwrK9qIkKEQWr+R+RxcPoBgk71FNGWvRc
-         vP44gnoO4LDmw6tQ7we7/65pXH8LDij+qZOoz4NkZaf8+BmPyauythxBaGyGecSdmO8A
-         jK037tevktDXSWPfmOtcoFI5epEk2I6SrW8n/ByuNForEsWRh5X84DgaiZ37In+vTb6u
-         u5OU0fl4B6m0O0pFD5fD8ojXD6XQa+s1TwfRH66Re7gZ7juRnSEWku/9ZbnQg5/mG393
-         5jRiK9h0N5nWFQE0M/5N4wmE1DITvo2JarFe6GTYiifXMn26mTz5iZ3RVgfGnlw8IMQE
-         OwoQ==
-X-Gm-Message-State: AOAM531NZBxOWvN/quGYo7zwPtYOZnQN7zKmWI+XZcT8jWRPW7S9YtPW
-        IS2qVWQlT4BTyDizRMxO+X5adpSCeuYy2g073OnyJWZE
-X-Google-Smtp-Source: ABdhPJywa7iowhE36qkeapyxkP5F8lJtKtMZeIS/N9kHLd2r06u87P15npVHSWtmIwfjT+S4fOI2VcCfXHHBzZrP7tU=
-X-Received: by 2002:aed:2793:: with SMTP id a19mr26817921qtd.168.1597057311091;
- Mon, 10 Aug 2020 04:01:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <2639321.dTF8K4C05n@alien.lan>
-In-Reply-To: <2639321.dTF8K4C05n@alien.lan>
-From:   Tilman Vogel <tilman.vogel@web.de>
-Date:   Mon, 10 Aug 2020 13:01:39 +0200
-Message-ID: <CAAbQbbBAjhgGLCJ4C_jxf3Byk+pL3Bh8CjUPaBngM25p38OkuA@mail.gmail.com>
-Subject: Re: [BUG] git-cherry false-positive on upstream new-line change at end-of-file
+        id S1726574AbgHJLEg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Aug 2020 07:04:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726146AbgHJLEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 07:04:31 -0400
+Received: from out1.migadu.com (out1.migadu.com [IPv6:2001:41d0:2:863f::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D883CC061756
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 04:04:30 -0700 (PDT)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
+        s=default; t=1597057468;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=zo4iWlBKBp3VPXvLfaG34BYI364W2ReIGdl4zt0owuk=;
+        b=XjZgQRYNt7rf5exvY0tmCQFqusV/JuiZjNvRy2a+MeGJB0lPCVnrjrkNjAtp8cN0P0g4D7
+        rLfMC6iE4R4BonUZnQmhrIfDeDByz1hXG4D4hDnKUYpFI5IYPO8J/6JZDbd9TNUQLqyeTn
+        0dhRPRRKb7KzK+ZCorRyeFt15VrOD9k=
+From:   "Raymond E. Pasco" <ray@ameretat.dev>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        "Raymond E. Pasco" <ray@ameretat.dev>
+Subject: [PATCH] git-apply.txt: correct description of --cached
+Date:   Mon, 10 Aug 2020 07:03:38 -0400
+Message-Id: <20200810110338.52203-1-ray@ameretat.dev>
+In-Reply-To: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
+References: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+The blurb for "--cached" says it implies "--index", but in reality
+"--cached" and "--index" are distinct modes with different behavior.
 
-Because there was not a single reply to my report, I wonder whether
-anybody read it. May I ping for attention, please?
+Remove the sentence "This implies `--index`." to make the description
+accurate.
 
-Best regards,
+Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
+---
+ Documentation/git-apply.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Tilman
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index b9aa39000f..373a9354b5 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -72,7 +72,7 @@ OPTIONS
+ --cached::
+ 	Apply a patch without touching the working tree. Instead take the
+ 	cached data, apply the patch, and store the result in the index
+-	without using the working tree. This implies `--index`.
++	without using the working tree.
+ 
+ --intent-to-add::
+ 	When applying the patch only to the working tree, mark new
+-- 
+2.28.0.10.gc1c9059842
 
-
-Am Do., 23. Juli 2020 um 16:42 Uhr schrieb Tilman Vogel <tilman.vogel@web.de>:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
-> I was working on two branches "master" and "feature". On "master" I
-> "git cherry-pick feature" in order to pick the latest commit from
-> "feature".
->
-> What did you expect to happen? (Expected behavior)
->
-> When I run "git cherry master feature" the picked commit is
-> marked with "-".
->
-> What happened instead? (Actual behavior)
->
-> When I run "git cherry master feature" the picked commit is
-> marked with "+".
->
-> What's different between what you expected and what actually happened?
->
-> Because the commit has just been picked, it should be marked as "-".
-> The actual behavior claims the commit had not been picked.
->
-> Anything else you want to add:
->
-> It is important to note that the only change, I did on master after
-> branching "feature", was to add a missing newline at the end of the
-> file that I changed on "feature".
->
-> If I replay the same scenario with a file that has a newline at the end
-> and I am only adding a newline at the beginning of it on master, cherry
-> gives the expected "-" after cherry-picking.
->
-> Please see this simple example:
->
-> > git clone https://github.com/tvogel/cherry-broken.git
-> > cd cherry-broken
->
-> # see broken behaviour:
-> > git cherry origin/master origin/feature
-> + 26f77def8f1380cc3fd08ebc3f70652da79f1a2e
->
-> # check that patch-id is actually the same:
-> > git show --patch origin/master | git patch-id
-> ca5d666a572ec32bff9cec17b97d611316f89236
-> 0725b090dd82f2e6f9949ce853778391e60b08d1
-> > git show --patch origin/feature | git patch-id
-> ca5d666a572ec32bff9cec17b97d611316f89236
-> 26f77def8f1380cc3fd08ebc3f70652da79f1a2e
->
-> # see OK behaviour:
-> > git cherry origin/master-ok origin/feature-ok
-> - 7ce2c0ecd3024c04bcf7b78d332841b2e791e06f
->
-> In the "*-ok" branches, the file has newline at the end from the beginning
-> and "master" only inserts a newline at the beginning of the file. "feature-ok"
-> has the same change as "feature" (content-wise).
->
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.27.0
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> uname: Linux 5.7.5-1-default #1 SMP Tue Jun 23 06:00:46 UTC 2020 (a1775d0)
-> x86_64
-> compiler info: gnuc: 10.1
-> libc info: glibc: 2.31
->
->
-> [Enabled Hooks]
-> not run from a git repository - no hooks to show
->
->
