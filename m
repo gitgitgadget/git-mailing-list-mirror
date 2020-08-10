@@ -2,145 +2,132 @@ Return-Path: <SRS0=S9iH=BU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38727C433E0
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 12:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B68C433E0
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 13:24:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1639D206C3
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 12:31:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B48920729
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 13:24:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yo1ORZuN"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="XHzvdnTA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726766AbgHJMby (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 08:31:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37354 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726450AbgHJMby (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 08:31:54 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D13C061756
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 05:31:54 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id ep8so4952873pjb.3
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 05:31:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=q4A/s01DSAl+OvlBzvirRhV68y0k3OK3GORN+mGoXq4=;
-        b=Yo1ORZuN9UHjBmgaGMurdLNKQA096pX/PbxJrTXjmbF35s/mlKqcl72Zj2EfEs36nj
-         xuqP9rxpGUs1uT50k2HeGriuhM7+jweqkD7BVd8lxzppeNparVs50fJPtLOGiX/soWVS
-         HGliffMwOwGSf/p8sEcx3n1jzeb90OavjoXrNx5rNK4qvi5Zodih/pBuheJFeel1KT0L
-         ufdwc//P4JZbPoQhYEKiDZA2mmMjNY3YUTB8za3QLVKsjOtrE6VZH+/Y7aaZarC+mod5
-         8KF8IWmpU+Fjaly8/BY/QAGbb/k4Ii+lNpJR2y2eL8S3N6hrpi5ejNCC5E83qFI5Ud0O
-         kqtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=q4A/s01DSAl+OvlBzvirRhV68y0k3OK3GORN+mGoXq4=;
-        b=j/9IRWNDlhueLKooQL4gZS2uwC+lu8PCXdSz+Wl+/mckIFZhld8ll2nSJJCgcJ82PK
-         XE+sAX/fIi53diCU7LkYH6eJWbMqZgmXuqLPJmbnpQXGG1kWKeCfjKQ06iNAQe0XYzWb
-         tYpI1ragJq53TLyfMo9uOrndKMxW66SI6Lk6JURkxjfkQUhmL9d22RKTFX6ovocUNMhF
-         MuYZh88ECAul/fKiMycGkk0N6zI7flUGtYEJxsYhgxJQVMKfFzIBTnaAqQBxH2GJAZhR
-         meFvnbnmeb1N0BG7oe2w+YsT+vpDqbosT1iAZK8qwSpIdBmOSnEoaWH6X1VTRcmyBlFz
-         CDrQ==
-X-Gm-Message-State: AOAM530SqaqQa9cAHGalBmLPiVv5O3S8aNOrPwQcMTylgnBDWL0qV6kE
-        RkXXIz6ntLryn1IqOToIHkM=
-X-Google-Smtp-Source: ABdhPJzGkaOlUG1oAX+bTwAvvgq5Z5uSm7w8qLOOIaET12M14scGhGWSQdg5vDCWuZ7f/Y6kArWuGw==
-X-Received: by 2002:a17:90a:c208:: with SMTP id e8mr26363063pjt.73.1597062711001;
-        Mon, 10 Aug 2020 05:31:51 -0700 (PDT)
-Received: from localhost ([2402:800:6375:ea17:7ad5:df16:a252:473b])
-        by smtp.gmail.com with ESMTPSA id c143sm3931894pfb.84.2020.08.10.05.31.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2020 05:31:50 -0700 (PDT)
-Date:   Mon, 10 Aug 2020 19:31:48 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/2] extend --abbrev support to diff-patch format
-Message-ID: <20200810123148.GB17119@danh.dev>
-References: <cover.1596887883.git.congdanhqx@gmail.com>
- <xmqqd03zej8w.fsf@gitster.c.googlers.com>
- <20200810100038.GB37030@coredump.intra.peff.net>
+        id S1726518AbgHJNYL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Aug 2020 09:24:11 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60559 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726330AbgHJNYK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 09:24:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1597065845;
+        bh=WNQufU1P+ltWgFcPRRGZACX/NM09ymPNPQePyV1KBoU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=XHzvdnTAUubq/8LhEbGbYGWLKCZM04xLv7nin3TKizAFVYqosulArNhWBytGbETR3
+         rVgUFUgl/zTkzKmAsnC0ssOVA6s2LC9M5yNnnANk264u6d/dQc3/5VvvCdexM6obgt
+         fPJl//DCeu960iMsVTKtDmLPDv3oxJs4J/48BDG4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.90.36] ([213.196.212.215]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMGNC-1kOJ3j2A0k-00JFdQ; Mon, 10
+ Aug 2020 15:24:05 +0200
+Date:   Mon, 10 Aug 2020 15:24:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
+        pc44800@gmail.com, stefanbeller@gmail.com
+Subject: Re: [PATCH 4/4] submodule: port submodule subcommand 'summary' from
+ shell to C
+In-Reply-To: <20200715184153.GA52607@konoha>
+Message-ID: <nycvar.QRO.7.76.6.2008101519090.50@tvgsbejvaqbjf.bet>
+References: <20200715184153.GA52607@konoha>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200810100038.GB37030@coredump.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zdxXxT5fa384rB62Ma3MeneypMmm/KgTX72bSIOs2Yli2zSbx09
+ JdXWlhWTb8iznFxSENdOqqmiNqkG2p4XnwTZRxe3SGRoNQ43V6/bSpkcWC+Z/lOk16Vn+Ec
+ dbMfUDgAbSULCbwaGrvntQZinXqMEUON3xnH3qJAlGq6Bc44fdI5XwFocAWyFkX32dtjqQm
+ IWTTTvaElff0/2U777W1w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:STNrt5dUiJo=:s5W/yJxnxhHCqQB+bCjs1h
+ 6WeeqVfwatwlEsIZG0NJMtaOHPxrNW48LaFEsG8CrOVHX8IZuLvA8K7RPrcUi2u1drtwy/9v+
+ wk4NTkzIZg2EUhizb1yBJ9KA2fhr09v2knH8Ae4p4fAtVgfnhUvA6zjBEyVI8iZCSB+3O1rhY
+ oLCS+KnLuE/DNlp3XILR3h9QqdvOYHryVmS/JayCpgDVUPrb9Np7utW5b2c3RyM1KetPwLPBl
+ bZa5kcjCOHY23SO8/BHAjZTA4QLgQzkt2FPYvAN/M9hTRcadMInfiK1llX6oyOfC0cxGLrMPs
+ h7avEjBwo4IGXzBL5kUB+m1ZaIeELgr6LgXw/8AUkL4GVM5a9jWSbSdQz/GayMfBxEzqzLHY5
+ 663ZKdwrekSptNwhS4c1CzjgVZkeolvZra9+hcLwxBRcD0h4+mKck8SwRSge8OIdQ53fL1m4g
+ UOdBFAyfNg34mtoG8vsXwJdjuV8SVk769rUcqbEKO6DdAASDXNKyRQHf6WrcN2KX8FJEF9qd8
+ +Dic1ehI5Mp5mg8kQLSsBKL7ASyjBnusKIkw/INsezOt6MS2C32E53uPT4ThaX3nNXdLleT0M
+ gKz4nuSlk2UaxqISDq5gcQFsdliZDsPEsV3XnVmPGE8hLSM/4ZkY3FlHEnqZjq3BCTUrWZRKG
+ yaflY2DgLwC2f3JbhvuPhIduHdFKqKKq0Gf4I/J3/SeguYJvBYUde1RHAEODyf3AUz5ADNXf3
+ ui6aBRAmstWuuTLacauEWG8X/81y4Pav305j/YT2kmLA37YOQ+5B+fV2HfTcf8pkRLQdOVCrm
+ zpIuzRAeEHo4RWQnd7j2tW1QGxbOJzxL07LDJ1w/e0gXVx+E7A69pfYRRrHrgWPBvb9sW3KLc
+ e5fyumFtVRX1jPUa7CFjadrsYbpEGhQs7SsXQX9OibKunFi7xxCT2j7/0eAq9Q9mwB/Pgs4hP
+ IEqpMAxzJtSC+pf0eLIbPqZzSU9Cc9X+omrx6X3zMHcOLbu6385DolObQ+KKUgeet4h1ELbi+
+ LJEz+krIJiqPi5mrQT6lkIxZOmEqV4neZUKzfyepk5g6L2OpdMhHmN9p9ucgvH4FMEwGvcN/c
+ 0RqRsJnpbWQJUtoxW0a6yPTgTV5ZtYhLhmmqWXasvPKdoOnmAGgxm09DBmICUVuXXSB4xWAra
+ ZItrwniixYEasSf0gGG0Z3jjyVz8ALex+sBK5NQ09mujraWifSp/x/6BvuIdbIq4Av0aeinoc
+ sWu4bbKbV/dxWitM1KL+r19c93youB9szZeH2/g==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-08-10 06:00:38-0400, Jeff King <peff@peff.net> wrote:
-> On Sun, Aug 09, 2020 at 12:01:35PM -0700, Junio C Hamano wrote:
-> 
-> > Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
-> > 
-> > > Đoàn Trần Công Danh (2):
-> > >   revision: differentiate if --no-abbrev asked explicitly
-> > >   diff: extend --abbrev support to diff-patch format
-> > 
-> > It was not clear, at least to me at all, what these patches are
-> > trying to achieve (i.e. what end-users appreciate) until I saw the
-> > code change X-<.
-> > 
-> > The changes to fill_metainfo() make sense to me.  It just needs log
-> > messages that explain the intent better.  They do not even make it
-> > clear that they want to make the abbreviation length of the object
-> > names on the "index $from..$to $mode" lines configurable.
-> 
-> After reading the original including cover letter, I'm still confused
-> using why --full-index is not the solution for most cases. Perhaps that
-> would be worth touching on, as well.
+Hi Shourya,
 
-At that time, I'm not really sure what should be written there.
-The commit message was inspired by --abbrev documentation.
+On Thu, 16 Jul 2020, Shourya Shukla wrote:
 
-Reading both of your two's emails, I think this one could be used:
-I'll resend this serie if this serie is deemed useful with this
-explaination.
+> BTW in your review of my patch,
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2007031712160.50@tvgsbejva=
+qbjf.bet/
+> you said this:
+> --------------->8--------------
+> > +			 */
+> > +			struct child_process cp_rev_parse =3D CHILD_PROCESS_INIT;
+> > +			struct strbuf sb_rev_parse =3D STRBUF_INIT;
+> > +
+> > +			cp_rev_parse.git_cmd =3D 1;
+> > +			cp_rev_parse.no_stderr =3D 1;
+> > +			cp_rev_parse.dir =3D p->sm_path;
+> > +			prepare_submodule_repo_env(&cp_rev_parse.env_array);
+> > +
+> > +			argv_array_pushl(&cp_rev_parse.args, "rev-parse",
+> > +					 "HEAD", NULL);
+> > +			if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
+> > +				strbuf_strip_suffix(&sb_rev_parse, "\n");
+> > +				get_oid_hex(sb_rev_parse.buf, &p->oid_dst);
+> > +			}
+> > +			strbuf_release(&sb_rev_parse);
+> > +		} else if (S_ISLNK(p->mod_dst) || S_ISREG(p->mod_dst)) {
+> > +			struct child_process cp_hash_object =3D CHILD_PROCESS_INIT;
+> > +			struct strbuf sb_hash_object =3D STRBUF_INIT;
+> > +
+> > +			cp_hash_object.git_cmd =3D 1;
+> > +			argv_array_pushl(&cp_hash_object.args, "hash-object",
+> > +					 p->sm_path, NULL);
+> > +			if (!capture_command(&cp_hash_object,
+> > +					     &sb_hash_object, 0)) {
+> > +				strbuf_strip_suffix(&sb_hash_object, "\n");
+> > +				get_oid_hex(sb_hash_object.buf, &p->oid_dst);
+> > +			}
+> > +			strbuf_release(&sb_hash_object);
+>
+> It would probably be shorter, less error-prone, and quicker to use
+> `index_fd()` directly.
+> --------------->8--------------
+>
+> What exactly did you mean here and where should the index_fd() be used?
 
-	diff: index-line: make object name's abbrev length configurable
+Well, `index_fd()` is the function that `git hash-object` uses to
+calculate the hash of a given file (in this case, specified via the path
+`p->sm_path`).
 
-	There are some projects that want to archive and track only
-	released version of other software projects. They also want
-	to backport some changes into those versions unsupported by
-	upstream. Most of git hosting services support some method to
-	download patches without cloning the full (potentially large)
-	repository and/or fiddling with git partial-clone or
-	sparse-checkout.
+You could open an fd to that file directly, use `index_fd()` to calculate
+the hash, and thereby avoid spawning another (totally unnecessary)
+process.
 
-	Most of those git hosting services generate those patches with
-	git-format-patch(1) or something alike. Due to its large
-	amount of objects, their object names' abbreviation in the
-	index-line is usually long but not full.
-
-	A lot of those patches couldn't be applied cleanly to old
-	versions of said software, thus requires some changes from
-	developer and they needs to be regenerated from their trimmed
-	tree. Because the archive tree has significantly fewer
-	objects, the abbreviation in the index line is usually shorter
-	than the original patch. Thus, it generates some noise when
-	said developers try to compare the new patch with the original
-	patch if there's an exact file-hunk match.
-
-	Make the object name's abbreviation length configurable to
-	lower those noise.
-
-	<Below is the  note in 2/2, I don't know if it's worth put
-	into commit message>
-
-	To preserve backward compatibility with old script that specify
-	both --full-index and --abbrev, always shows full object id
-	if --full-index is specified.
-
-
--- 
-Danh
+Ciao,
+Dscho
