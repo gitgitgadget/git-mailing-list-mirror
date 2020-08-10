@@ -2,126 +2,91 @@ Return-Path: <SRS0=S9iH=BU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39351C433E0
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 19:48:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDAC4C433DF
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 21:27:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D57222BF3
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 19:48:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PkHuY4qL"
+	by mail.kernel.org (Postfix) with ESMTP id B895920734
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 21:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728296AbgHJTsK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 15:48:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47816 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728235AbgHJTsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 15:48:09 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 432C1C061756
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 12:48:09 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id v9so10947305ljk.6
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 12:48:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NdE+5XtL58Z40jtNB8gBB2Zp8e3+1/1kRrqrx2W1Dn8=;
-        b=PkHuY4qLx8pob08GcyLnK9b02h2SmTRMPME1qXnJasfXkAPxUS9WKo4Y4mtTZzNwUT
-         adfgumgk82QknwZMwmd02CojfWO4yGZYNOeSdhUJYzfY398JuF8YPLYKB7Hbk06xXA47
-         gkSmZeNGEI6YmtF89rk3FwccIutpLxzFCY/PuFnmAipoTDRqDywiDSyZO0bBv88qJVNL
-         jdv4gqdedSpTzyLZuP/dC9rhaC47cwsuAdxKakaIGy6xHLCHDvndeSjg1o30o1c74iHW
-         jmx3jJf7nNcysXXrTftIcqZF6bYtxfHMhvLXTCezRn7/bdtsuA7mnqJPAwYQaFjRSJZy
-         rV1w==
+        id S1726825AbgHJV1M convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 10 Aug 2020 17:27:12 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44623 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbgHJV1M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 17:27:12 -0400
+Received: by mail-wr1-f67.google.com with SMTP id c15so9505541wrs.11
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 14:27:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NdE+5XtL58Z40jtNB8gBB2Zp8e3+1/1kRrqrx2W1Dn8=;
-        b=GwNkQnBeT5ZHpq7VNqqSdLmi3NvNgYc8QV2d2bfOvuu7Mw/1hXbuuwdDmJ0LoIAmux
-         LH4t7Gxq2vHBChSTxHMmeAdxpQE8vN7ti3fUzWbfx4HZdlZpsLV+DW9p2Xv4ntDYwNZS
-         zE65ZIEjElgnSz0fTZhYwdIPSmSIcEakWptMYQzrDpBk+EziInAskeEhelL8S1VD8j0P
-         FgdCwvR/r6r2sqpowLQhE19299xLxTK2unXyqcLAElmQVuEFVKxPBxg42VTXNjv/ek7f
-         Y1dTDT2fwG5KK/PD8FSNJrC4AHIOTl2872mgdygzz6/UCjRC1nLMxjOU3fBWQC1CHOIW
-         sn1Q==
-X-Gm-Message-State: AOAM532dBe4ivXTtFdZSONOgZDiXFaG+o5MJoUCGwKIM+IzzrCwthukW
-        vCM+/NC18ibgnGo3HzIzyif83TJP
-X-Google-Smtp-Source: ABdhPJxVFf9AChDslTwSqIokZltCffn6MycGig4yY0K6PL0MhGLugA0aSRh+HhnuMUfVvyYYLbDWqA==
-X-Received: by 2002:a2e:9913:: with SMTP id v19mr1235819lji.292.1597088886335;
-        Mon, 10 Aug 2020 12:48:06 -0700 (PDT)
-Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id t20sm9437389ljd.12.2020.08.10.12.48.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2020 12:48:05 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Subject: [PATCH] progress: don't dereference before checking for NULL
-Date:   Mon, 10 Aug 2020 21:47:48 +0200
-Message-Id: <20200810194748.1483784-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.220.ged08abb693
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KuRgMnSuo/FcZzL91TlJ4rtkAv9UytlNoSB9d1zgLSQ=;
+        b=d1Ls7jmJN4SKrhgQyJlOMJwBq9I2ZD4keC4Z8DRq+jJQI8IiWqOdQTFF5uwZ3mJKhA
+         cjI0LAYWQxQuOFoTlaJAKGMRz0iEXgiBHShqJSiu48GvEmfy1xg9LRKhB6HLlQGRWwaS
+         0zqWucXRto0FoqJzMwAOVnjJ8Z/bebuAjxnRYde+74nbxn3wZqO2CjVmyABr8ZZAwoQj
+         zuWJVDVpQTDDBgaZuSFx75ZBzHBeR1fpAU1nSK/yxSFrr5JqeUt60UXl/uG4HDUF+N5z
+         7xIWUcnYL4AqkYNtm/GlrdgC2amvaXUg7dVuynvMUwn3aGGJeHbyeWmMeyduusClJJs0
+         16Pg==
+X-Gm-Message-State: AOAM532MoXlsADXF+LFuKzv5KlNzjeAzV8b5EjwUSQKOAAITZ/BPF6qz
+        uw5PFbOu4G+N/p1dWgHyNfZ0/Bs1Vrua9/xYJ1g=
+X-Google-Smtp-Source: ABdhPJySYWEkRRJgGIHYoY0WuZ4qkUKJqAklkLqXaXb8K9COC/1VTpUORjQyOFr8upqagdGxEYWol5KgkJepfKpEuZw=
+X-Received: by 2002:adf:fc45:: with SMTP id e5mr28147165wrs.226.1597094829888;
+ Mon, 10 Aug 2020 14:27:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20200810194748.1483784-1-martin.agren@gmail.com>
+In-Reply-To: <20200810194748.1483784-1-martin.agren@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 10 Aug 2020 17:26:59 -0400
+Message-ID: <CAPig+cTsxAW=s1iXcK_-Kn+xiSNCm_u_o_Q2xm-0+a_v4qc5_w@mail.gmail.com>
+Subject: Re: [PATCH] progress: don't dereference before checking for NULL
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In `stop_progress()`, we're careful to check that `p_progress` is
-non-NULL before we dereference it, but by then we have already
-dereferenced it when calling `finish_if_sparse(*p_progress)`. And, for
-what it's worth, we'll go on to blindly dereference it again inside
-`stop_progress_msg()`.
+On Mon, Aug 10, 2020 at 3:48 PM Martin Ågren <martin.agren@gmail.com> wrote:
+> In `stop_progress()`, we're careful to check that `p_progress` is
+> non-NULL before we dereference it, but by then we have already
+> dereferenced it when calling `finish_if_sparse(*p_progress)`. And, for
+> what it's worth, we'll go on to blindly dereference it again inside
+> `stop_progress_msg()`.
+>
+> We could return early if we get a NULL-pointer, but let's go one step
+> further and BUG instead. The progress API handles NULL just fine, but
+> that's the NULL-ness of `*p_progress`, e.g., when running with
+> `--no-progress`. If `p_progress` is NULL, chances are that's a mistake.
+> For symmetry, let's do the same check in `stop_progress_msg()`, too.
+>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+> diff --git a/progress.c b/progress.c
+> @@ -319,9 +319,12 @@ static void finish_if_sparse(struct progress *progress)
+>  void stop_progress(struct progress **p_progress)
+>  {
+> +       if (!p_progress)
+> +               BUG("don't provide NULL to stop_progress");
+> +
+>         finish_if_sparse(*p_progress);
 
-We could return early if we get a NULL-pointer, but let's go one step
-further and BUG instead. The progress API handles NULL just fine, but
-that's the NULL-ness of `*p_progress`, e.g., when running with
-`--no-progress`. If `p_progress` is NULL, chances are that's a mistake.
-For symmetry, let's do the same check in `stop_progress_msg()`, too.
+I'm wondering what this really buys us over simply crashing due to the
+NULL dereference (aside from the slightly more informative diagnostic
+message). Either way, it's going to crash, as it should because
+passing NULL is indeed a programmer error for these two functions. I'm
+pretty sure that it is more common in this project simply to allow a
+programmer error like this simply to crash on its own rather than
+adding code to make it crash explicitly.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- progress.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+> -       if (p_progress && *p_progress) {
+> +       if (*p_progress) {
 
-diff --git a/progress.c b/progress.c
-index 3eda914518..31014e6fca 100644
---- a/progress.c
-+++ b/progress.c
-@@ -319,9 +319,12 @@ static void finish_if_sparse(struct progress *progress)
- 
- void stop_progress(struct progress **p_progress)
- {
-+	if (!p_progress)
-+		BUG("don't provide NULL to stop_progress");
-+
- 	finish_if_sparse(*p_progress);
- 
--	if (p_progress && *p_progress) {
-+	if (*p_progress) {
- 		trace2_data_intmax("progress", the_repository, "total_objects",
- 				   (*p_progress)->total);
- 
-@@ -338,7 +341,12 @@ void stop_progress(struct progress **p_progress)
- 
- void stop_progress_msg(struct progress **p_progress, const char *msg)
- {
--	struct progress *progress = *p_progress;
-+	struct progress *progress;
-+
-+	if (!p_progress)
-+		BUG("don't provide NULL to stop_progress_msg");
-+
-+	progress = *p_progress;
- 	if (!progress)
- 		return;
- 	*p_progress = NULL;
--- 
-2.28.0.220.ged08abb693
-
+In other words, I think the entire patch can be reduced to just this
+change here (and a simplified commit message).
