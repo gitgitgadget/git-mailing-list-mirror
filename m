@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7989BC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01AF7C433E4
 	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 22:29:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 496F02073E
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 22:29:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA6962075D
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 22:29:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSsE8ZdC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mrBzWdD8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726991AbgHJW3f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 18:29:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44570 "EHLO
+        id S1727955AbgHJW32 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Aug 2020 18:29:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727977AbgHJW3b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 18:29:31 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3456C06174A
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:30 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id a15so9603577wrh.10
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:30 -0700 (PDT)
+        with ESMTP id S1727942AbgHJW30 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 18:29:26 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33626C061787
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:26 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id 3so1025696wmi.1
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 15:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+9Lrw6sN2XIQeBtapPHDCsWzdsNThDKuXUCzgi0LJ+k=;
-        b=VSsE8ZdC31nQYZZcjqoIdEIJ434cQ4ilbRDaAGGt6nOE+L1o8EBDfVSHoijdOTGTtq
-         VALKVFC0Y4WiOA6eRKvq3VwK+ChAdU6S+AcqIoAOf6C61TC2Pvpa9LfreBHxgtjwC7a6
-         PVvDvb2VGvatTVzSAMrM5GOJ0h+xsL162sk38j+PQ1Hrape08wP9t8drRdQPHq8zkY0L
-         Wiz3CHQcBLcGElO+hYfZGhriTIQxgJtdHOJk/bVqF0A5eEAD3AsfWpTfzfJUV3JAN34i
-         YPikbGLlUJP02iHx1p0I6f1hODBCTVP4hq+D2cSciUTJRB0JSOFdeCibWrwew3xzfF91
-         2HYg==
+        bh=7LB9Gvzf99PL3pycT84UZuRRyFKy1dC7nI933Lle8sI=;
+        b=mrBzWdD87o+a2qQGS3iWkQdEtylf1pogphyAo+MWnoKD6D30kt9pIhQBRuKrryOwtr
+         Guu4r6HyGXNidOg3BCpCnfaud2OpPlhDvMKmrSSnE7O6agDVXqHs7wDfxFDYdcEAP+L3
+         xXfAp5r4vekD2LPadupStz/RnOupEFnsGxGViYM5jJwlXPfQJnNzODbFMz4pSg/ldYwU
+         Tf56sxaPPDpllaUXSpJszVZK7/ns0c3E7DoaEVStWFRJLPkdvkdIHKoIVsa4D/tHfhgy
+         8xH3S1p70b7zmNzNGj+a09ZO9VFUMflOLKaZ2uLuVbofFSSo4tdWcyOMIFzZclDXHT2W
+         /5VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+9Lrw6sN2XIQeBtapPHDCsWzdsNThDKuXUCzgi0LJ+k=;
-        b=aODhx7XjORLvgHP/QsuG5WEbekYUx55wBmI623kCqgi99zHA+3S7oKUBIEr1ESLeTk
-         kJDGbKoIdlmU4NMRq6PuHguof6a8rW2AT0vzZ7mZRuM66yiBRFW92d+IHXh/ghPosVSQ
-         eKQQPRj8meheGxGm3KhCK1HYkCkFvJbPwtv3RGU/oBU8vgYa8+TVsYkj6LVv6vdVzUvn
-         bbaJZ5+ptPQ59QZyI40v7elcVtTHeQYy/EhThVYfibkv1k8nb+hmqsVMGQnz/rs4ETJa
-         E72sXuhJZJzqxBTc0mjs/kLXsflOqRp8mlkekdi07BTObaZAxBnrVHpPF5O6n4mv5BKp
-         kb7w==
-X-Gm-Message-State: AOAM531n66iC+lRR5DbjtR8f84iPLrqkapAhLe12bGVNwW9AFgWnPc21
-        sfErsNkPiq/mfCgQlJXxpq8XTJey
-X-Google-Smtp-Source: ABdhPJxs72CiLRMcc/PE9N3oF8dQsR/xREXKgOXCj/TUQ5N58gmtRLD5Jb1XgwMNOREN/P3mPwHINw==
-X-Received: by 2002:adf:ef4d:: with SMTP id c13mr3576343wrp.198.1597098569401;
-        Mon, 10 Aug 2020 15:29:29 -0700 (PDT)
+        bh=7LB9Gvzf99PL3pycT84UZuRRyFKy1dC7nI933Lle8sI=;
+        b=Hgo66BIjsGBE+JAzxSYE/ZNEG7f0qZfJBeDD1R9XflqcgEdI9lR0Fucd0o2qQh6lzl
+         Ll3YEFX/jB1F9BB0RprHDxy2nxH97EEYoT2+NeId5A2D9RYqnz48wZ1T7MEZZ5n704H/
+         waT9ML+1CpXdo5EerpWR5loFNtho2Tk67LYYLK1Y7AszilE/cwIEMeRZjK8TZYUyJ/Zc
+         PngJ1gJ0qoQD1pcSy4jye0oTEI7y08+0NlAf4MBQBxCYCh6GQEOExomau1F8cFB8TOgR
+         R9/MZg+XlkG/QlZAX831U0tNZoZ5XDd/MBFhkARvBTPHYBx6xuAlLdU2R9dIrYUr70hX
+         y5VQ==
+X-Gm-Message-State: AOAM530AJEi0cN03CpjrJTUx6QmBD/uyj8GVkIWi384FGKBErLBy9nrj
+        XlJHDXSJ+uj4eLI0cSAVyGJv8JJy
+X-Google-Smtp-Source: ABdhPJy4toRjRie+crxe+6EekR5tFql/zDkmXNsSQJOdYBmjlr42dqmBlMp949OM1dgStkAhnHZNsg==
+X-Received: by 2002:a7b:c8da:: with SMTP id f26mr1251528wml.126.1597098563200;
+        Mon, 10 Aug 2020 15:29:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m126sm1707452wmf.3.2020.08.10.15.29.28
+        by smtp.gmail.com with ESMTPSA id i7sm23252218wrs.25.2020.08.10.15.29.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2020 15:29:28 -0700 (PDT)
-Message-Id: <456160f3a73bf33e3e696405019996efa99ae379.1597098559.git.gitgitgadget@gmail.com>
+        Mon, 10 Aug 2020 15:29:22 -0700 (PDT)
+Message-Id: <b35b61007e0184b8579c79bcc55ccf7a3964260a.1597098559.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.827.v3.git.git.1597098559.gitgitgadget@gmail.com>
 References: <pull.827.v2.git.git.1596906081.gitgitgadget@gmail.com>
         <pull.827.v3.git.git.1597098559.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Aug 2020 22:29:18 +0000
-Subject: [PATCH v3 10/11] t642[23]: be more flexible for add/add conflicts
- involving pair renames
+Date:   Mon, 10 Aug 2020 22:29:10 +0000
+Subject: [PATCH v3 02/11] t6418: tighten delete/normalize conflict testcase
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,76 +77,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Much like the last commit accepted 'add/add' and 'rename/add'
-interchangably, we also want to do the same for 'add/add' and
-'rename/rename'.  This also allows us to avoid the ambiguity in meaning
-with 'rename/rename' (is it two separate files renamed to the same
-location, or one file renamed on both sides but differently)?
+The testcase only required that the merge complete without conflict,
+without specifying what the correct resolution was.  Since normalization
+changed this from a modify/delete to a not-modified/delete, the correct
+resolution is to have the file be removed at the end.  Add a check for
+this resolution.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6422-merge-rename-corner-cases.sh | 18 ++++++++++++------
- t/t6423-merge-rename-directories.sh  |  4 ++--
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ t/t6418-merge-text-auto.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
-index f3929b65c0..3375eaf4e7 100755
---- a/t/t6422-merge-rename-corner-cases.sh
-+++ b/t/t6422-merge-rename-corner-cases.sh
-@@ -583,7 +583,7 @@ test_expect_success 'handle rename/rename (2to1) conflict correctly' '
- 		git checkout B^0 &&
+diff --git a/t/t6418-merge-text-auto.sh b/t/t6418-merge-text-auto.sh
+index 89c86d4e56..30983d18b1 100755
+--- a/t/t6418-merge-text-auto.sh
++++ b/t/t6418-merge-text-auto.sh
+@@ -197,7 +197,8 @@ test_expect_success 'Test delete/normalize conflict' '
+ 	git commit -m "remove file" &&
+ 	git checkout master &&
+ 	git reset --hard a^ &&
+-	git merge side
++	git merge side &&
++	test_path_is_missing file
+ '
  
- 		test_must_fail git merge -s recursive C^0 >out &&
--		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "CONFLICT (\(.*\)/\1)" out &&
- 
- 		git ls-files -s >out &&
- 		test_line_count = 2 out &&
-@@ -959,11 +959,17 @@ test_expect_failure 'rrdd-check: rename/rename(2to1)/delete/delete conflict' '
- 		git checkout A^0 &&
- 		test_must_fail git merge -s recursive B^0 >out 2>err &&
- 
--		# Not sure whether the output should contain just one
--		# "CONFLICT (rename/rename/delete/delete)" line, or if it
--		# should break it into three: "CONFLICT (rename/rename)" and
--		# two "CONFLICT (rename/delete)" lines; allow for either.
--		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		# Instead of requiring the output to contain one combined line
-+		#   CONFLICT (rename/rename/delete/delete)
-+		# or perhaps two lines:
-+		#   CONFLICT (rename/rename): ...
-+		#   CONFLICT (rename/delete): info about pair 1
-+		#   CONFLICT (rename/delete): info about pair 2
-+		# and instead of requiring "rename/rename" instead of "add/add",
-+		# be flexible in the type of console output message(s) reported
-+		# for this particular case; we will be more stringent about the
-+		# contents of the index and working directory.
-+		test_i18ngrep "CONFLICT (\(.*\)/\1)" out &&
- 		test_i18ngrep "CONFLICT (rename.*delete)" out &&
- 		test_must_be_empty err &&
- 
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 2b4a482277..f7ecbb886d 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -275,7 +275,7 @@ test_expect_success '1d: Directory renames cause a rename/rename(2to1) conflict'
- 		git checkout A^0 &&
- 
- 		test_must_fail git -c merge.directoryRenames=true merge -s recursive B^0 >out &&
--		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "CONFLICT (\(.*\)/\1)" out &&
- 
- 		git ls-files -s >out &&
- 		test_line_count = 8 out &&
-@@ -1686,7 +1686,7 @@ test_expect_success '7b: rename/rename(2to1), but only due to transitive rename'
- 		git checkout A^0 &&
- 
- 		test_must_fail git -c merge.directoryRenames=true merge -s recursive B^0 >out &&
--		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "CONFLICT (\(.*\)/\1)" out &&
- 
- 		git ls-files -s >out &&
- 		test_line_count = 4 out &&
+ test_done
 -- 
 gitgitgadget
 
