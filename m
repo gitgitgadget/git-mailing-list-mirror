@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A443C433DF
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 16:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9B66C433DF
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 16:22:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C0CF20838
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 16:18:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A727520855
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 16:22:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t3bjYNRs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i8xshplb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726815AbgHJQSt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 12:18:49 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50724 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725894AbgHJQSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 12:18:49 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 469EFEB726;
-        Mon, 10 Aug 2020 12:18:46 -0400 (EDT)
+        id S1726934AbgHJQWa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Aug 2020 12:22:30 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53350 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726338AbgHJQWa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 12:22:30 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B7ED3E9374;
+        Mon, 10 Aug 2020 12:22:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VAxruYglf0XymhlW2g943FDCexA=; b=t3bjYN
-        RsZ8xhAoGlXD/XV9bWaIudJcnln96XJEVcDPYffUPEn86b10geQA/fxjZGGuINdT
-        On3gLQMkC4BSlk+lbgsLK/ci+mGR+8bLByx8PumnuAiTwkYYd7zaSXEmx00tqOaG
-        xvHBnzggDyfU8n+6jjvFHAur9okgSSU5849ow=
+        :content-type; s=sasl; bh=9VhqnjlvvIJr3UMmNL9ZADVe2Bw=; b=i8xshp
+        lb3W7Smc96dIE63aTbStyyUbCKZKWM6eJ8yBnk8l6MOrBpxL4LjsbuOE6G0lK3xI
+        RJhW5sMgmsYwasZtguksG97YgFlA8OrNHc993j9d7f/pPwAxwnGL88AEa9seantF
+        BLoBt2PkZJ7ryMfA8KlGzT7yvXPJJ/+nD8FAQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Akddu6rANjpEzc+S67ouif6KL/FQQB6r
-        +Ur3QeRs4QqgR9p5an33/eO5Svr7aLHnMBJN/nP9/GOL5q/ytNtn6HZ2Sx1qTlwH
-        PtK/6NdWNGw2NG2XQD8NVz8w8ROwUOkvsmCZ9SWmUrmETvxC/3RbxTEe3JQaAV6P
-        /oRC8arlxSk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3EE24EB724;
-        Mon, 10 Aug 2020 12:18:46 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=efsKl9eFADTsROytSA2H1U6Kc7G6bGHp
+        xl+GXP3g3BJ3I1AHMPlxzuxmqZeTMqY0cuwq1wmD57ePPI6MVpXoPCmEnibS9fFy
+        b6x79yKaHPD1bgrVKZfPxCnM/bUzSpvuDzr8beapLqXal1ihY+KNz45BweCRF1nD
+        dlAi0dcm8vQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B1492E9373;
+        Mon, 10 Aug 2020 12:22:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 83B75EB723;
-        Mon, 10 Aug 2020 12:18:43 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F3FD1E9372;
+        Mon, 10 Aug 2020 12:22:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Raymond E. Pasco" <ray@ameretat.dev>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] git-apply.txt: correct description of --cached
-References: <C4RO9JSUGPKG.2UQX61X628B6P@ziyou.local>
-        <20200810110338.52203-1-ray@ameretat.dev>
-Date:   Mon, 10 Aug 2020 09:18:41 -0700
-In-Reply-To: <20200810110338.52203-1-ray@ameretat.dev> (Raymond E. Pasco's
-        message of "Mon, 10 Aug 2020 07:03:38 -0400")
-Message-ID: <xmqqeeoecw4e.fsf@gitster.c.googlers.com>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH] t4069: test diff behavior with i-t-a paths
+References: <20200808075323.36041-1-ray@ameretat.dev>
+        <20200810085343.43717-1-ray@ameretat.dev>
+Date:   Mon, 10 Aug 2020 09:22:22 -0700
+In-Reply-To: <20200810085343.43717-1-ray@ameretat.dev> (Raymond E. Pasco's
+        message of "Mon, 10 Aug 2020 04:53:43 -0400")
+Message-ID: <xmqqa6z2cvy9.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 28F395C0-DB25-11EA-8D3F-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: AC5B0D94-DB25-11EA-9547-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,70 +69,65 @@ X-Mailing-List: git@vger.kernel.org
 
 "Raymond E. Pasco" <ray@ameretat.dev> writes:
 
-> The blurb for "--cached" says it implies "--index", but in reality
-> "--cached" and "--index" are distinct modes with different behavior.
->
-> Remove the sentence "This implies `--index`." to make the description
-> accurate.
+> Add a small test suite to test the behavior of diff with intent-to-add
+> paths. Specifically, the diff between an i-t-a entry and a file in the
+> worktree should be a "new file" diff, and the diff between an i-t-a
+> entry and no file in the worktree should be a "deleted file" diff.
+> However, if --ita-visible-in-index is passed, the former should instead
+> be a diff from the empty blob.
 >
 > Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
 > ---
->  Documentation/git-apply.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> index b9aa39000f..373a9354b5 100644
-> --- a/Documentation/git-apply.txt
-> +++ b/Documentation/git-apply.txt
-> @@ -72,7 +72,7 @@ OPTIONS
->  --cached::
->  	Apply a patch without touching the working tree. Instead take the
->  	cached data, apply the patch, and store the result in the index
-> -	without using the working tree. This implies `--index`.
-> +	without using the working tree.
+>  t/t4069-diff-intent-to-add.sh | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+>  create mode 100644 t/t4069-diff-intent-to-add.sh
 
-The updated text is not wrong per-se, but I have a feeling that this
-is barking up a wrong tree.  The implication is probably referring
-to the fact that "--index" does certain verification and "--cached"
-does the same (i.e. the patch must be applicable to what is in the
-index).  We may want to update the description for both options.
+It indeed is that "add -N" appears only once in our test suite and
+tests around it is lacking, but I'd prefer to see i-t-a to be taken
+as just one of the normal things by not adding a special test for
+it.  I wonder if there is a reason why these are not part of say
+t4013 (diff-various)?
 
-How about simplifying them like this, perhaps?
+By adjusting and adding to existing test, we'd avoid a mistake of
+adding a test script that is not executable (didn't your "make
+DEVELOPER=1 test" catch the error?) ;-)
 
- Documentation/git-apply.txt | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+Thanks.
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index b9aa39000f..92b5f0ae22 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -58,21 +58,18 @@ OPTIONS
- --check::
- 	Instead of applying the patch, see if the patch is
- 	applicable to the current working tree and/or the index
--	file and detects errors.  Turns off "apply".
-+	file and detects errors.  Turns off `--apply`.
- 
- --index::
--	When `--check` is in effect, or when applying the patch
--	(which is the default when none of the options that
--	disables it is in effect), make sure the patch is
--	applicable to what the current index file records.  If
--	the file to be patched in the working tree is not
--	up to date, it is flagged as an error.  This flag also
--	causes the index file to be updated.
-+	Apply the patch to both the contents in the index and in the
-+	working tree.  It is an error if the patched file in the
-+	working tree is not up to date.
- 
- --cached::
--	Apply a patch without touching the working tree. Instead take the
--	cached data, apply the patch, and store the result in the index
--	without using the working tree. This implies `--index`.
-+	Apply the patch only to the contents in the index but not to
-+	the working tree.  It is OK if the contents in the index
-+	and in the working tree are different, as the latter is
-+	never looked at.
- 
- --intent-to-add::
- 	When applying the patch only to the working tree, mark new
+
+> diff --git a/t/t4069-diff-intent-to-add.sh b/t/t4069-diff-intent-to-add.sh
+> new file mode 100644
+> index 0000000000..85c1a35ca7
+> --- /dev/null
+> +++ b/t/t4069-diff-intent-to-add.sh
+> @@ -0,0 +1,30 @@
+> +#!/bin/sh
+> +
+> +test_description='behavior of diff with intent-to-add entries'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success setup '
+> +	test_write_lines 1 2 3 4 5 >blueprint
+> +'
+> +
+> +test_expect_success 'diff between i-t-a and file should be new file' '
+> +	cat blueprint >test-file &&
+> +	git add -N test-file &&
+> +	git diff >output &&
+> +	grep "new file mode 100644" output
+> +'
+> +
+> +test_expect_success 'diff between i-t-a and no file should be deletion' '
+> +	rm -f test-file &&
+> +	git diff >output &&
+> +	grep "deleted file mode 100644" output
+> +'
+> +
+> +test_expect_success '--ita-visible-in-index diff should be from empty blob' '
+> +	cat blueprint >test-file &&
+> +	git diff --ita-visible-in-index >output &&
+> +	grep "index e69de29" output
+> +'
+> +
+> +test_done
