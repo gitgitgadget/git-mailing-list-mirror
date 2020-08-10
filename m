@@ -2,104 +2,102 @@ Return-Path: <SRS0=S9iH=BU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE62C433DF
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 14:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E34C433E0
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 15:06:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 442A022B4E
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 14:46:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D9D720774
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 15:06:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Mx49pObH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sL8/dGgx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726966AbgHJOqz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 10:46:55 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50995 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726464AbgHJOqy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 10:46:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1597070810;
-        bh=ueTHsXLibL1hVqtSG4iB8H3GD6OlJU+j9GkLPblUeug=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Mx49pObH/ms+dGBLv2CQ59jh7cBdshHsH7JCI8H8BRv3SySwbJxSEpxqXpJqc+XHO
-         GF8CfFowz4sX9htNO/GTLf1lrFaAluci+7sPTZNC4JXNK6aYhBUl4A+EoQ7/IfLxx1
-         yhw0n/vF2PbPysqje7vxdExc0J6oEVdFhqjFfblo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.90.36] ([213.196.212.215]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1Hdq-1k7tA02k1a-002qb9; Mon, 10
- Aug 2020 16:46:50 +0200
-Date:   Mon, 10 Aug 2020 16:46:48 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Joel Marshall <joelmdev@gmail.com>
-cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: Possible issue with rebase's --rebase-merges option
-In-Reply-To: <CAK1xKQppM3oseB=vdXbDbPjDeFxd9kd0jULcaC=ASkMsKiDCmQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2008101645410.50@tvgsbejvaqbjf.bet>
-References: <CAK1xKQpUFCkv6fopEykKLxAEoG_Hf_Zz+oRR70mR3pWsN5YDDw@mail.gmail.com> <ac3a5871-b009-f84e-d1fe-af4bde1bbabe@gmail.com> <CAK1xKQr1_52n5rAhQh2awsb6SkgUYOMWoLichtBRLvtDXRQarQ@mail.gmail.com> <fc38a32f-91e2-fe49-a7b0-e2e6851271c4@gmail.com>
- <CAK1xKQppM3oseB=vdXbDbPjDeFxd9kd0jULcaC=ASkMsKiDCmQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726406AbgHJPGP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Aug 2020 11:06:15 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55777 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbgHJPGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 11:06:14 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8881EE89C6;
+        Mon, 10 Aug 2020 11:06:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=mspCXIeSo4Gg
+        uZhgv7fhAxUDjlM=; b=sL8/dGgxkZhwEBJZbRWAhiBQ9pKOa88ivG8M8MkfF0sN
+        8CKEIgGkrd34mSKw3Rq+iWPk5zX8JrAGbBChEYFzxsBuQ6gXJbmo0wssIz1s8oxV
+        QRR9C/0czIu8FK1boAMSZ2qhsvHtpgmTFJdBghSBeVgQu+CzZNw/Mq2WoeMrz6Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AQbgqb
+        2/m7o8GwDSkZwwDaKFI5kZoCDKlELieKA9obOIymkOdOp4SyF3KOUt6KJaRr3Otb
+        Jg2FIXfpIckK0+qYxuJtwCoGOnPJTr9B4i/c49vvSO39hDrWmZII4B2HWp9cDaqN
+        sAqt9aZi+jxtTIreJaZYJPKmeJjhAmBbjDMeg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CC02E89C5;
+        Mon, 10 Aug 2020 11:06:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9585FE89C4;
+        Mon, 10 Aug 2020 11:06:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] extend --abbrev support to diff-patch format
+References: <cover.1596887883.git.congdanhqx@gmail.com>
+        <xmqqd03zej8w.fsf@gitster.c.googlers.com>
+        <20200810100038.GB37030@coredump.intra.peff.net>
+Date:   Mon, 10 Aug 2020 08:06:07 -0700
+In-Reply-To: <20200810100038.GB37030@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 10 Aug 2020 06:00:38 -0400")
+Message-ID: <xmqq364uee1s.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yNJ0WowO6TrbbDqo/25ItLBW1i7LQyWv6sM70Q9umC805xl8MQA
- uyXQK46gSn3i/Hdrf1DeIR3sLslrdV8QMrPlNHly97qzlY7IoFk08omfXfAJdkQ3AxKDkyM
- GCTc7B1BZMSbWRhHDcSGG+E98F6NUXmCqexqWPzFale2zI0hMdPslaq2Kdi91Uto6F9/x5l
- rjCMnBG284LZjTqaWfk8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EaEdPbt2TZw=:1Qb0OUsJ22RcQO04yf87jb
- vc93KnoRbHxGpf73evBnRUF7RjJMZPypc8ZI9Rd0bfmBKQBXaCr1Rcs+sNYT4geXGg1FwuITC
- fPYaJqojDEvOevd1T/UjOWFpZ4GJqLIfnrtDpOO5i3Pg0Pw1jiBoKRy1Bv0yCNgN/qYpigJP1
- fKU9VIhL8AhvqW07/hqWHBEopZ21iO/x4b2DMMgEar6MwXopVAP9YHklzJH7kUV9ElAbSB7Wa
- nhSLanVAvhSSsYnqz1xyImm7NMhTyXtY+SRRlHzUaoeeLBjS++94UPmicKaE33fLm27axOcpo
- 9xgiWhWTeI82aQSnaibl3mP5sdy17cbdktm36Qy43i7+pTZqsV51IrcDE8vzK8ZKH67Ruyr0Q
- vVoi4nqZRO0Rx4bCI3z6QFXBkAtA+D/Vc3BE/Bg7CRx7Nb1uNHE1dkGHVZ+9oycpZr4zZAkyS
- 7S/ME5KAlACvXrAA5N1cCFbm+o6tW7aUqSHRnAjwwJVkpZF2jhJFK2zHOl8OloZ0VG32/2Wu8
- ROb6TIPSuHgMIk0uXEZztq6kRvTOTQYChWBk4qcOTeEfZ1CiLhLBsE0pQcnBEcH07JHSlhYPP
- PhmCP4GlTU1HjBWgphtSclAwSOAx7RLp5FkNiwszpvUMS6XEhD173EpuCcHFsPjjBbh0q/4ak
- Jq6rYzOdYA1NAQtoFj9iYbAYy0wJbsFj6V1fGmvz2YDWHnVjfHqeOlAZnGjeomkCjiiNtnb0N
- 4JPMqSEicH4l0KvGXQo6yq4gXfx8To8DSbWd/AjW/gLcmqeK1n+/1J2DRtpWGkv7+aWE7M8jv
- 7PvVSip0dntmz/2GR7zayd3iGdyXr1lIfustkU8tYGZff2JvuHsLOfuUwZqnHoJ39wsuSY3xN
- oIvqIvaW5XcnIeEF3CIr5KtxO8AGdF/qwpWBAz+jUKh+sN5t7qRI2N8ty9NX/1TGAYwFXWQnK
- TFJiMebrbV9eOMW+K5dlY7FnEIwaOkz7NZ22OHLdt9WfRT8GucR3mRrXjtjHVBCekNII02YU8
- h0CkwHZgsWi2jHtePLiUG3TBPNwrqIy/ftb0gPPshANWK/tvt0JdAcjG589DdEI9ArVG+e9p/
- aDmwWYPM8JIpblm0+nd6CdI098Y0aVf8lMyf2hFzqMIdlooq6Wp9u4tF5AFXoDDWN2G9uYEjo
- gszzxN+5z5VXO+HA1KCNgSOUWsgdCgaQ7d6qkWIUv0+1DfsWt0Bju1sMTjtDBv85mavD5Vo/Q
- DWuOw63l8i/+y5PtMh3uUkjW+4Cjo7/FqBajpCQ==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 05CEEF90-DB1B-11EA-BE01-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Joel,
+Jeff King <peff@peff.net> writes:
 
-On Thu, 23 Jul 2020, Joel Marshall wrote:
+> On Sun, Aug 09, 2020 at 12:01:35PM -0700, Junio C Hamano wrote:
+>
+>> =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> wri=
+tes:
+>>=20
+>> > =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh (2):
+>> >   revision: differentiate if --no-abbrev asked explicitly
+>> >   diff: extend --abbrev support to diff-patch format
+>>=20
+>> It was not clear, at least to me at all, what these patches are
+>> trying to achieve (i.e. what end-users appreciate) until I saw the
+>> code change X-<.
+>>=20
+>> The changes to fill_metainfo() make sense to me.  It just needs log
+>> messages that explain the intent better.  They do not even make it
+>> clear that they want to make the abbreviation length of the object
+>> names on the "index $from..$to $mode" lines configurable.
+>
+> After reading the original including cover letter, I'm still confused
+> using why --full-index is not the solution for most cases. Perhaps that
+> would be worth touching on, as well.
 
-> I saved the state of the repo in a copy so I could come back to it if
-> additional examples were needed but I had to clean up my live copy so
-> I could get back to work. I'll get you some additional screenshots in
-> the next few days. In the meantime, I'll try to give you some context
-> around what I'm doing here. The parent branch is my main dev branch
-> which consists of a series of clean branches and merges- the dev
-> branch basically looks like what you're seeing in the
-> --preserve-merges screenshot. I've also got a long running feature
-> branch that branches off of dev, and it also consists of many branches
-> and merges, each a subtask of the story related to the feature branch
-> as a whole. Occasionally to get the feature branch up to date with the
-> newest features I'll rebase the whole thing on top of dev, which
-> should result in an unbroken chain of branches and merges as seen in
-> the --preserve-merges screenshot. While you can't see it in the
-> --rebase-merges screenshot, those merges show no ancestors when viewed
-> in reverse chronological order- they just trail off into oblivion.
+True. =20
 
-I could imagine that you might want to try this rebase with
-`--rebase-merges=rebase-cousins`.
+Presumably you could force some stability without sacrificing line
+length limit by using --abbrev=3D12 instead of --full-index but I do
+not think it is such a big deal.  But it does look odd that we use
+a special/single-purpose option --full-index to control the length
+only for those two object names on the "index" line, when all the
+other object names we see are controlled with the --abbrev option.
 
-Otherwise, you might want to export your use case with `git fast-export
---anonymize` so that others (such as myself) have a chance of helping you.
-
-Ciao,
-Johannes
