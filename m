@@ -2,116 +2,104 @@ Return-Path: <SRS0=S9iH=BU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AA84C433E1
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 14:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE62C433DF
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 14:46:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A1B82078D
-	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 14:27:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 442A022B4E
+	for <git@archiver.kernel.org>; Mon, 10 Aug 2020 14:46:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="btxcQcxi"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Mx49pObH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbgHJO1Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Aug 2020 10:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725979AbgHJO1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Aug 2020 10:27:24 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11055C061756
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 07:27:23 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id i20so1899364vkk.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 07:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PJTDaOCh2CqXme/gDDU8KbouVTpcd5MKcarmT1ekhCY=;
-        b=btxcQcxinh5DXMUWX3aXJXw2jXCwVaPqQMGP4I1wML9DCd157nmq+JKIjmju0xSSYz
-         JzlDDbypmj4sD2tZAabEZYjFatXWyZXdkrsL0Be3xQrk0OqeNAczY9JN6inpj9b/tk3I
-         /M5LKuHOkMJKX90nE/QoI6zqYhbf5SQ/MkGVl4goV5Wk3niZHzHOWniARnVabE/HAqaO
-         R9n9e1PLi9CCU/CAUKXnu5lunoiTFio/wvWXooSLo74MRiJZFSZhtYhgMQb4T6AZFR4D
-         Ozj0rsxRJga2XPPjfn2kMFpHkmNSwj0mxgoPl5VTKZosKefesm4MyVpVSQIZ9JHCloXX
-         8EtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PJTDaOCh2CqXme/gDDU8KbouVTpcd5MKcarmT1ekhCY=;
-        b=hIWYcEG1tpy5EMEVpD4x9C47siB1KwnPf6BvpImQeLjn1mB8A3NtgfNs8dOxHBWQVH
-         WibMOHQcNcIKPqDLKJsG+8Ek/5skBYwgedGF/dpKL++T1B0jZWUVmtjQX3gBq1vwhEw2
-         8DsNLRPW//Pyq+8wNZXnJQZv1N4dVaMMCdmvUdlLX+daHXFENQFLppIP8q/TX+8GbbJG
-         +401suwvl0UC5Yyu+JCatb42AIf0Vx9iJGAmIloXRT+Dzfkv6oB7WN9WQj6Oe//PJhRj
-         uW8lKMBLvykWHSOPBNevwCp7q8J6dnwGOrVW/sRqnZp4fEVa68jy72q852ODE2KZxu/H
-         nFQg==
-X-Gm-Message-State: AOAM530l0SxfXWISA1kSVspBq6ewzz1Dpdla6Y7NLR/o20bSDng3CRo9
-        vqOwSL43BZEIVwEVvWAyEOAqtUkJLRdXLK6kzGwYnFmw
-X-Google-Smtp-Source: ABdhPJz93PfCTpcwSH1yGDClh9+F3z3LLiJdjiIR6H3lqukAhlfkyR1SmXahGnYmf1M2z3CVLXrTywooeHO3VQa9aQA=
-X-Received: by 2002:a1f:a0c3:: with SMTP id j186mr20021072vke.76.1597069639138;
- Mon, 10 Aug 2020 07:27:19 -0700 (PDT)
+        id S1726966AbgHJOqz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Aug 2020 10:46:55 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50995 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726464AbgHJOqy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Aug 2020 10:46:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1597070810;
+        bh=ueTHsXLibL1hVqtSG4iB8H3GD6OlJU+j9GkLPblUeug=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Mx49pObH/ms+dGBLv2CQ59jh7cBdshHsH7JCI8H8BRv3SySwbJxSEpxqXpJqc+XHO
+         GF8CfFowz4sX9htNO/GTLf1lrFaAluci+7sPTZNC4JXNK6aYhBUl4A+EoQ7/IfLxx1
+         yhw0n/vF2PbPysqje7vxdExc0J6oEVdFhqjFfblo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.90.36] ([213.196.212.215]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1Hdq-1k7tA02k1a-002qb9; Mon, 10
+ Aug 2020 16:46:50 +0200
+Date:   Mon, 10 Aug 2020 16:46:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Joel Marshall <joelmdev@gmail.com>
+cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: Possible issue with rebase's --rebase-merges option
+In-Reply-To: <CAK1xKQppM3oseB=vdXbDbPjDeFxd9kd0jULcaC=ASkMsKiDCmQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2008101645410.50@tvgsbejvaqbjf.bet>
+References: <CAK1xKQpUFCkv6fopEykKLxAEoG_Hf_Zz+oRR70mR3pWsN5YDDw@mail.gmail.com> <ac3a5871-b009-f84e-d1fe-af4bde1bbabe@gmail.com> <CAK1xKQr1_52n5rAhQh2awsb6SkgUYOMWoLichtBRLvtDXRQarQ@mail.gmail.com> <fc38a32f-91e2-fe49-a7b0-e2e6851271c4@gmail.com>
+ <CAK1xKQppM3oseB=vdXbDbPjDeFxd9kd0jULcaC=ASkMsKiDCmQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.673.v2.git.1594329108.gitgitgadget@gmail.com>
- <pull.673.v3.git.1594925141.gitgitgadget@gmail.com> <xmqqwo33f6xb.fsf@gitster.c.googlers.com>
- <CAFQ2z_P+L5ystTA8MjSjnUJQyEoH5Q3QtnMd0ezJpKPv_ntrgA@mail.gmail.com>
- <xmqqpn8hgca7.fsf@gitster.c.googlers.com> <CAFQ2z_O1sRm-_SNP=-GvgNLqB+qgf6k9YVfbF1XCAmFWdeX6Ew@mail.gmail.com>
- <xmqqh7tjv6hb.fsf@gitster.c.googlers.com> <xmqq1rklrhle.fsf@gitster.c.googlers.com>
- <CAFQ2z_NU4=WcUDvVY9PNs+p-WU4u5=QY+=DHonGyK29numhWoQ@mail.gmail.com> <xmqqk0ydozqe.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk0ydozqe.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 10 Aug 2020 16:27:08 +0200
-Message-ID: <CAFQ2z_OgNQKZ23gNB9=LqPn2M=WKL2vPQQpxm3drRWeN1sxH_A@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Remove special casing for PSEUDOREF updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yNJ0WowO6TrbbDqo/25ItLBW1i7LQyWv6sM70Q9umC805xl8MQA
+ uyXQK46gSn3i/Hdrf1DeIR3sLslrdV8QMrPlNHly97qzlY7IoFk08omfXfAJdkQ3AxKDkyM
+ GCTc7B1BZMSbWRhHDcSGG+E98F6NUXmCqexqWPzFale2zI0hMdPslaq2Kdi91Uto6F9/x5l
+ rjCMnBG284LZjTqaWfk8w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EaEdPbt2TZw=:1Qb0OUsJ22RcQO04yf87jb
+ vc93KnoRbHxGpf73evBnRUF7RjJMZPypc8ZI9Rd0bfmBKQBXaCr1Rcs+sNYT4geXGg1FwuITC
+ fPYaJqojDEvOevd1T/UjOWFpZ4GJqLIfnrtDpOO5i3Pg0Pw1jiBoKRy1Bv0yCNgN/qYpigJP1
+ fKU9VIhL8AhvqW07/hqWHBEopZ21iO/x4b2DMMgEar6MwXopVAP9YHklzJH7kUV9ElAbSB7Wa
+ nhSLanVAvhSSsYnqz1xyImm7NMhTyXtY+SRRlHzUaoeeLBjS++94UPmicKaE33fLm27axOcpo
+ 9xgiWhWTeI82aQSnaibl3mP5sdy17cbdktm36Qy43i7+pTZqsV51IrcDE8vzK8ZKH67Ruyr0Q
+ vVoi4nqZRO0Rx4bCI3z6QFXBkAtA+D/Vc3BE/Bg7CRx7Nb1uNHE1dkGHVZ+9oycpZr4zZAkyS
+ 7S/ME5KAlACvXrAA5N1cCFbm+o6tW7aUqSHRnAjwwJVkpZF2jhJFK2zHOl8OloZ0VG32/2Wu8
+ ROb6TIPSuHgMIk0uXEZztq6kRvTOTQYChWBk4qcOTeEfZ1CiLhLBsE0pQcnBEcH07JHSlhYPP
+ PhmCP4GlTU1HjBWgphtSclAwSOAx7RLp5FkNiwszpvUMS6XEhD173EpuCcHFsPjjBbh0q/4ak
+ Jq6rYzOdYA1NAQtoFj9iYbAYy0wJbsFj6V1fGmvz2YDWHnVjfHqeOlAZnGjeomkCjiiNtnb0N
+ 4JPMqSEicH4l0KvGXQo6yq4gXfx8To8DSbWd/AjW/gLcmqeK1n+/1J2DRtpWGkv7+aWE7M8jv
+ 7PvVSip0dntmz/2GR7zayd3iGdyXr1lIfustkU8tYGZff2JvuHsLOfuUwZqnHoJ39wsuSY3xN
+ oIvqIvaW5XcnIeEF3CIr5KtxO8AGdF/qwpWBAz+jUKh+sN5t7qRI2N8ty9NX/1TGAYwFXWQnK
+ TFJiMebrbV9eOMW+K5dlY7FnEIwaOkz7NZ22OHLdt9WfRT8GucR3mRrXjtjHVBCekNII02YU8
+ h0CkwHZgsWi2jHtePLiUG3TBPNwrqIy/ftb0gPPshANWK/tvt0JdAcjG589DdEI9ArVG+e9p/
+ aDmwWYPM8JIpblm0+nd6CdI098Y0aVf8lMyf2hFzqMIdlooq6Wp9u4tF5AFXoDDWN2G9uYEjo
+ gszzxN+5z5VXO+HA1KCNgSOUWsgdCgaQ7d6qkWIUv0+1DfsWt0Bju1sMTjtDBv85mavD5Vo/Q
+ DWuOw63l8i/+y5PtMh3uUkjW+4Cjo7/FqBajpCQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 5, 2020 at 5:54 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >> All of which means FETCH_HEAD is special and we may not want to
-> >> burden the special casing of it to newer backends.
-> >
-> > Can you confirm that FETCH_HEAD is the only thing that can store more
-> > than just a symref / SHA1 ? Based on the name, and a comment in the
-> > JGit source, I thought that MERGE_HEAD might contain more than one
-> > SHA1 at a time.
->
-> No I cannot.  I do not think MERGE_HEAD is something I added with as
-> deep a thought as I did with FETCH_HEAD.  If it mimics FETCH_HEAD,
-> then perhaps it does, but I somehow doubt it.
->
-> As can be seen in builtin/merge.c::collect_parents(), we do special
-> case FETCH_HEAD when grabbing what commit*S* to merge, but all
-> others are read with get_merge_parent() that makes a single call to
-> get_oid(), i.e. anything other than FETCH_HEAD cannot have more than
-> one object recorded.
+Hi Joel,
 
-Understood. Is there anything you'd like me to do with this patch
-series so it can be merged?
+On Thu, 23 Jul 2020, Joel Marshall wrote:
 
-Dealing with FETCH_HEAD generically isn't possible unless we extend
-the API of the ref backend: the generic ref_store instance doesn't
-offer a way to get at the path that corresponds to FETCH_HEAD, so we
-can't handle it in refs_read_raw_ref(). In the current reftable
-series, FETCH_HEAD is dealt with in the backends separately.
+> I saved the state of the repo in a copy so I could come back to it if
+> additional examples were needed but I had to clean up my live copy so
+> I could get back to work. I'll get you some additional screenshots in
+> the next few days. In the meantime, I'll try to give you some context
+> around what I'm doing here. The parent branch is my main dev branch
+> which consists of a series of clean branches and merges- the dev
+> branch basically looks like what you're seeing in the
+> --preserve-merges screenshot. I've also got a long running feature
+> branch that branches off of dev, and it also consists of many branches
+> and merges, each a subtask of the story related to the feature branch
+> as a whole. Occasionally to get the feature branch up to date with the
+> newest features I'll rebase the whole thing on top of dev, which
+> should result in an unbroken chain of branches and merges as seen in
+> the --preserve-merges screenshot. While you can't see it in the
+> --rebase-merges screenshot, those merges show no ancestors when viewed
+> in reverse chronological order- they just trail off into oblivion.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+I could imagine that you might want to try this rebase with
+`--rebase-merges=rebase-cousins`.
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Otherwise, you might want to export your use case with `git fast-export
+--anonymize` so that others (such as myself) have a chance of helping you.
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Ciao,
+Johannes
