@@ -2,108 +2,140 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E435C433DF
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 21:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE8CC433E0
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 21:27:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33F98205CB
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 21:26:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A66C205CB
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 21:27:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFozosnN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mYUFvVqg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726420AbgHKV0W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 17:26:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58716 "EHLO
+        id S1726173AbgHKV1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 17:27:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726114AbgHKV0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 17:26:22 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E33C06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 14:26:21 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id i19so30928lfj.8
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 14:26:21 -0700 (PDT)
+        with ESMTP id S1726114AbgHKV1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 17:27:23 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0784C06174A
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 14:27:22 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id w17so3114613edt.8
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 14:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=yhCoZ8hyoPfwqje5nbNq6Qbf9O1ZPMk7KQCZcP0k4J0=;
-        b=TFozosnNwta3QymymWkU8gEZrfEN6jQkW/ajsgWKncgHQSgi3HbUUSAQ+txS6GThZD
-         oyJlgNk/hUPxp/s/IZkHFa0X+75sXaZH04BNDIiABhPp1+tReJh9FTSayB+ISGN90tsV
-         61pqKfnOuNEoy7RCDVTsYUMaCYbkfEMD7NZNe4ndGgKADZe/kfV62XcHlvrbJbIIdPLr
-         qrATdElBV9oclIPPM1+AB8K68d2DJMxnYteOn4X/6VuT/YpW2DF1J4WALLzqTHF9EWyA
-         vU2PbR9m/r7XuJe1Jx3g9rYWjaptCvTk23bbKVVdeTqvwaNARJutuq4BfJesE9Rxe38Y
-         MPfw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=yVCrWk0E+3fFtSSCH1bX+jOJFhGXsTKpd2759j/1NIY=;
+        b=mYUFvVqgvzRSlYfnAENlPLJqnzm3nc5H9UiIeIvQsrlDhD8WgmH8mzFibnE782rWpT
+         jHcGv/RoyBaYOl+NQJT0vn50fCQRuqZkLzSuifqdHTtsYW8ky84o/ogKB2nLuZheQGRr
+         ap5sMJb6oEulx31hcjOXY88G3oXi+sFZVFgsWYtdWDmN7JK3smzYUws1RKJfcpnE5eyl
+         aeHp8RxpNEdSS8w1GBjArXEtrtQn0hGZPZfN7FaM1WeuYvvEfs/1pAaeBkagBZKPC2sM
+         HA5MdbdhWQi95mehWBSbITX46lhOiMW/aoZS+f4I+p6xay3zMPi+P9y1hD6teL7D/9AN
+         G3Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=yhCoZ8hyoPfwqje5nbNq6Qbf9O1ZPMk7KQCZcP0k4J0=;
-        b=FWUn/9AJRazNTl+Cex7Xsuwu1z/YbXk91oC0ug5769lcSNPBPSaCJxrPl5tsM/2mDp
-         MzWmrbZAwh+KjDW6O4lObdyeJe+rBagHlyjjxfwI1TvUwn9EKTbs4mhivtJq1eEQrRxk
-         FvbLs4O97liyQP7Jwg1Dup9vcOzj0CiIw5y37P/q8MmIaKH2D4YIvJeMbB9JajM5+yBN
-         /YOuBqy0F5bqVuyCLjaXpMafNfSMDQ+MKYK/xuv2YgvHyleSPhrrhTfWRPnuvWPkun/7
-         cXBoq3YfXky9SZvJUFR8B8AnR7pGuNMHaiHwoy9qR3WN0s3JymKkXwjRSFC9Ys5lE/cC
-         wnAQ==
-X-Gm-Message-State: AOAM530tFoE0WQS7025vjp/kxYlPTcoOHQIxAO32YsrPtpvGsoBFZmdy
-        CcKk64xj/9+L4A1osXyN6gf5Zapj
-X-Google-Smtp-Source: ABdhPJyuOr3giYAvFH5q2ernSs/fkq5H4vuWPPdB8nSmKflfrJxMVLRdNfYlJ7n8lxeIgiRgLYbkoA==
-X-Received: by 2002:a19:be87:: with SMTP id o129mr4067474lff.180.1597181180011;
-        Tue, 11 Aug 2020 14:26:20 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t16sm3977713ljo.27.2020.08.11.14.26.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 14:26:18 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2020, #02; Mon, 10)
-References: <xmqqsgcub811.fsf@gitster.c.googlers.com>
-        <874kp9biho.fsf@osv.gnss.ru> <xmqq7du59eb4.fsf@gitster.c.googlers.com>
-        <87364t563r.fsf@osv.gnss.ru> <xmqqy2ml7wrd.fsf@gitster.c.googlers.com>
-Date:   Wed, 12 Aug 2020 00:26:17 +0300
-In-Reply-To: <xmqqy2ml7wrd.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 11 Aug 2020 13:28:22 -0700")
-Message-ID: <87lfik50xy.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=yVCrWk0E+3fFtSSCH1bX+jOJFhGXsTKpd2759j/1NIY=;
+        b=JJ5YOf+tKIwTVq8Q04QY92z+a3+EvDaAl0GgUV8qx3NyP1QWr04GiBhg6Gkh6kYiJK
+         5OkAeNj/zULpcxecBCDD5uBt1rdHFwWT6vS0Q7m3iIvluWqWbOtcuTvTY6vGOl06VBUT
+         dbZK34THb7+LnWxGeX98b+bu2uT0Euzmc9EgaqDxmlU7qIdNzB+gEdBAXJxXBngDuoEm
+         tigtEflSw2ZKmERmTq8EQDrwu+Yn7SEjBoRvXjIxBR7QLJMhx4M0vobe87ySKgc1mxg6
+         NkR8cx9xPWeoYQRh3wvDVkjCA85s8CHkcqrtF//72oRrdOoe2pMKnCtZCw8Gk3hAP4bT
+         VsVA==
+X-Gm-Message-State: AOAM531yv3ar+BasJ98hw4Y3/VSS62b7Prn37zE5I0l1q30CSe1ArZJe
+        MC1nJtThlhmnplXVhdP5s1k=
+X-Google-Smtp-Source: ABdhPJx77l7cOdu9L3vLTdLkTs4l/hOjx4sBkOsjFkz1eHyyRohWIykw067Xe/3xnLV63ym0YSYfyw==
+X-Received: by 2002:a05:6402:b67:: with SMTP id cb7mr28008657edb.216.1597181241201;
+        Tue, 11 Aug 2020 14:27:21 -0700 (PDT)
+Received: from szeder.dev (94-21-37-143.pool.digikabel.hu. [94.21.37.143])
+        by smtp.gmail.com with ESMTPSA id r3sm122179ejy.95.2020.08.11.14.27.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Aug 2020 14:27:20 -0700 (PDT)
+Date:   Tue, 11 Aug 2020 23:27:16 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v3 01/14] commit-graph: introduce
+ 'get_bloom_filter_settings()'
+Message-ID: <20200811212716.GA13422@szeder.dev>
+References: <cover.1596480582.git.me@ttaylorr.com>
+ <cover.1597178914.git.me@ttaylorr.com>
+ <e714e54240bb339d1ecebcea157b734abf1c14ef.1597178915.git.me@ttaylorr.com>
+ <20200811211830.GS2898@szeder.dev>
+ <20200811212118.GA66447@syl.lan>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200811212118.GA66447@syl.lan>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Aug 11, 2020 at 05:21:18PM -0400, Taylor Blau wrote:
+> On Tue, Aug 11, 2020 at 11:18:30PM +0200, SZEDER Gábor wrote:
+> > On Tue, Aug 11, 2020 at 04:51:19PM -0400, Taylor Blau wrote:
+> > > Many places in the code often need a pointer to the commit-graph's
+> > > 'struct bloom_filter_settings', in which case they often take the value
+> > > from the top-most commit-graph.
+> > >
+> > > In the non-split case, this works as expected. In the split case,
+> > > however, things get a little tricky. Not all layers in a chain of
+> > > incremental commit-graphs are required to themselves have Bloom data,
+> > > and so whether or not some part of the code uses Bloom filters depends
+> > > entirely on whether or not the top-most level of the commit-graph chain
+> > > has Bloom filters.
+> > >
+> > > This has been the behavior since Bloom filters were introduced, and has
+> > > been codified into the tests since a759bfa9ee (t4216: add end to end
+> > > tests for git log with Bloom filters, 2020-04-06). In fact, t4216.130
+> > > requires that Bloom filters are not used in exactly the case described
+> > > earlier.
+> > >
+> > > There is no reason that this needs to be the case, since it is perfectly
+> > > valid for commits in an earlier layer to have Bloom filters when commits
+> > > in a newer layer do not.
+> > >
+> > > Since Bloom settings are guaranteed to be the same for any layer in a
+> > > chain that has Bloom data,
+> >
+> > Is it?  Where is that guaranteed?
+> 
+> There is no mechanism whatsoever to customize these settings that is
+> exposed to the user (except for the undocumented 'GIT_TEST' environment
+> variables).
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> And I asked you to postpone that in <875z9v7b0k.fsf@osv.gnss.ru> for
->> which I got no answer. I repeat it here for convenience:
->>
->> "
->> For now, can we leave these patches as-is and then add additional tests
->> on top, please? I'm afraid that adding them now will force me to rewrite
->> current descriptions, as the result won't be minimal anymore, and I
->> feel uneasy about writing commit messages for these permuted tests
->> anyway.
->> "
->
-> I was expecting just one case I mentioned in the first message and
-> nothing else, which is crucial to highlight how --first-parent's
-> "implication" works with explicit --diff-merges.
->
-> Full "permutated tests" was what you brought up in the discussion,
-> but I already said it was overkill to your response before you said
-> the above.  The "minimal" would be the posted patch plus a missing
-> "first-parent comes before --diff-merges=off" test filled in.
+Let me rephrase it, then: where is it written in the commit-graph
+format specification that these must be the same in all layers?
 
-I've sent the patch before I saw this, please see
-<87tux93pku.fsf@osv.gnss.ru>.
+Nowhere.
 
-Is it OK with you?
-
-Thanks,
--- Sergey
+> > > it is sufficient to traverse the
+> > > '->base_graph' pointer until either (1) a non-null 'struct
+> > > bloom_filter_settings *' is found, or (2) until we are at the root of
+> > > the commit-graph chain.
+> > >
+> > > Introduce a 'get_bloom_filter_settings()' function that does just this,
+> > > and use it instead of purely dereferencing the top-most graph's
+> > > '->bloom_filter_settings' pointer.
+> > >
+> > > While we're at it, add an additional test in t5324 to guard against code
+> > > in the commit-graph writing machinery that doesn't correctly handle a
+> > > NULL 'struct bloom_filter *'.
+> > >
+> > > Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
+> > > Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> Thanks,
+> Taylor
