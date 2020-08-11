@@ -2,211 +2,110 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCE70C433E0
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B693BC433DF
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 16:08:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B48F220756
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:50:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88D6320756
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 16:08:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="MpeDsSht"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="aosBsJ4w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728963AbgHKPuQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 11:50:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35048 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728879AbgHKPuQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 11:50:16 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AA8C06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:50:16 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id p4so12093932qkf.0
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:50:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=22tyaIwEo4M64bzqtvOxyD+jmQTztDlb6apKMiG2SwE=;
-        b=MpeDsSht/mfHfDZlmCg8mERmzTXisxKF7LIJcn+a11W2n1C5jhfQuZDicxml/4Y2Zo
-         EgLR4pR/7FolkLVoD/yGfqX/mzcZlsZoT4AQG14Xz1UmlcSlU5LwcAFboLDVX5PBoIPr
-         1vNocEG9MyLpZcKQqfSpuZvz1RJiMz5NCzveJizZme+hMhbjxTv6jz5fE4YEcdP4ELI6
-         RX1lwSe3kmaT628TIpORbh64H5ZgpWG5hYq7eZa08UF9Y8vm+ZRMmK0O0HC9WDzKvNBF
-         kmqh/80nUL5i4PXiDnOsmSYQPWogEcYweZpunsPu343/G2HzwEjWh6h4qzpW6O0UrRfg
-         zEZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=22tyaIwEo4M64bzqtvOxyD+jmQTztDlb6apKMiG2SwE=;
-        b=c6qxRofCTNyXC/Ja3qWD9sql5fgpTO0Y3SUhCJjQxx6MmiJ9C0YQSrTfZYMzSSLvHJ
-         QYb8GGo4EemOXz+VenHRS62SjwDEV1Is4J+PDqFYnqgGt/jwu43fkAaqcx8825tdt9g7
-         E71QExIgC5V08AyL8XfJ/Sk4O5WnwenjvcE3fn38Y/QOpecgPKmd7I9MRjXbPbOh9FLQ
-         aEzRkyEwU9fCVwsmIJzmIgWmzKQ0pYC4AfrsfNz1tfVTBfTVRJOLTjHZosIbqmtLXFks
-         /5Ft0xt8jRLC/6JtBEmVplIkJIBvGu4nsaySV3UfMg2WAItRjHpADqZ7irKrcdjZafRk
-         UWsA==
-X-Gm-Message-State: AOAM533y9rWLB77CWDE+HnDMjYhzmGeM2GyqdsfdD00ukmOnZAoy7dHB
-        X4/OkVTJmJ5w1AHRKzj36TiyJg==
-X-Google-Smtp-Source: ABdhPJzOUbPxDqtYp3GmNDo6ODvBKEV1S6wHYCWEa0poFguk3W9BvAbCpK1KqZm3MTUG7TAO3c557w==
-X-Received: by 2002:a05:620a:1105:: with SMTP id o5mr1787156qkk.434.1597161015173;
-        Tue, 11 Aug 2020 08:50:15 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:a92f:57be:59a6:7cb2])
-        by smtp.gmail.com with ESMTPSA id j72sm17659617qke.20.2020.08.11.08.50.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 08:50:14 -0700 (PDT)
-Date:   Tue, 11 Aug 2020 11:50:13 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sluongng@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] multi-pack-index: repack batches below --batch-size
-Message-ID: <20200811155013.GF19871@syl.lan>
-References: <pull.698.git.1597159818457.gitgitgadget@gmail.com>
+        id S1729107AbgHKQId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 12:08:33 -0400
+Received: from mout.web.de ([217.72.192.78]:52631 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728797AbgHKQIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 12:08:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1597162106;
+        bh=qZGkXpFwY1fDFI5H3n/VW02c0OM7N4JsdebVPrEVPo8=;
+        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
+        b=aosBsJ4wxyntvg2uwR6sRUWzmVAfjp+HwFzLP3HwmSMsoP3xaYea6HCXgL3o0xp8F
+         BsQEySOtR8/KOBirAgEnOdLFcNn2Ah7UOfiyeQAWzQIobQ993dHWMEaICAUPmSq8LA
+         3aOy6e9i6jTbft6O6JKJIyGNJDdzD5W7tBm6jVJI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lopa3-1kc8g643JL-00gmr9; Tue, 11
+ Aug 2020 18:08:26 +0200
+Subject: Re: [PATCH 0/11] renaming argv_array
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20200728202124.GA1021264@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <82991f30-fe37-d6d2-ffd5-8b0878f46c83@web.de>
+Date:   Tue, 11 Aug 2020 18:08:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
+In-Reply-To: <20200728202124.GA1021264@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.698.git.1597159818457.gitgitgadget@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:PjoKrQ5J2WwS6HJNu1wtiNPDS9gqATHgc4OlG+aHRxuQQB02DXG
+ GVVoCkevcoWmyxMuoNRgYG9daM5/TucEO8Qc1enci6gSoWR7cVv/YigUInoBi/gd4fFMc8J
+ qtdsKKPS4IlBkktqzipik1EnjRFOobCrrzkdelDzEOxx0tYnFnJs1DSjG5S75RGoZoxO1NR
+ yhx/tUGNXVSrp/THiPc3A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:73y8A8OjmLA=:dl+mkOjXtNyuhRnSz6Bzaf
+ sLy3XRNbFCgwIMnLksGK993MSIQq+o1LeZrRkOqcTCT6z4NsbwOLpqyYZXCwxVCZjjXGUQxIW
+ f2FMe09eyfukyB2hslpc8hJgCWn4d2t593wrw5YWiOf4mo8MKBx+MS2A8hZJ8P5KMH+rfs3RN
+ x4o/eLg6l1DfNdnTSo0xJAyrBjkc9qPPnDbylaSZfUlNMdoLHkSdh7yYHZjAlxWT7YWyGsj0w
+ hkl3b0s3B31zgi4BvSEPC38zLnMp0qqNKZO5cOPEWJUWf5vc53EpGUQCI4rzN9b3pDdwlEIi5
+ KHJcMGUjla5hQOIM+yGjstBHm/gUDEnvxP1wh9OFoOiQNo3/CUI4Of3RW/e2QQFqZZwuekdWJ
+ e9ha4iKdxeLkRlD+UTfBwvnZtj9GXgm7L26KJQrG0Zdmnpml6mMSCvqXEeGOpNC8/YPkVyczg
+ roiopg4sjQuf7j1f3hfwd+oMhGsEP4KMGiIIfhc8DWicyYUMlQsDsO4dSpxUMzS29dpdtcBZ1
+ 8DoJjE8/Ss5nqxsL234mWY7T15ovJ0ea/Y2by6Cuur/ZrIgNkFGGiuRDB3hOz/YBktX0u7TNV
+ QT/obSPHPyK+9q88Vg7M54/dfZeG0uqkiQ4HEjRI9/MX4pmrUYy4+Q2V6OReqfKST+ZJFkQix
+ i4E4/i4OH0m2AeWwqMOqeWAStPi0Ls4XdZ7RDOs3kzJp7rv8I98+65T1FTFXlAEnIZIvqB2yp
+ Y7bRt0yMH4AJc0ZSpdNywjPfiQEvVP+oPVAI/Zcj2YbcabVrPsGQ48rk3vEMTYiZh8fIAWHa7
+ 6ppZdPGhLdb0EKmDxPiOqOje8ZGYNRLOBpIOY2UPUSb04rPiOseIFk0VwaLvfuQ6e6rjATFhT
+ B4rAzUThD3/LDD0UdFYhf5G8MZcvTUXvpccUprJSOVxFY0NOLbqFPxTULjRJyZBg0vR4Zp4JQ
+ Zujac78XPUMrNX+JDrj60sZz4V81IGdNfbuVBlTZVsKzRFRzG06mpnvkJuugj4YeeftBXSLMD
+ BguuSl8UfTk7Ie+7mn7HiQlYDkv7VRX2o9yaJMSlEH/KSrysMDXwuK1iX9MOgHRBnGlJxLI6Z
+ MbskOaaBRjS2VwTgo1d+d7HYy+PC8KESGm5ug2RN6MkdeDZqUx4l44sQZPBJl9h9qTV/8HIps
+ OUStTdNFxd3Za5Mfagu1iR61N3wUfd5N1wmbg5VNyacthvqWfn0mIlEuON/r+JgSOJojALxUM
+ svnfkXTuE8vXaSJwZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 11, 2020 at 03:30:18PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+Am 28.07.20 um 22:21 schrieb Jeff King:
+> The argv_array data type has turned out to be useful in our code base,
+> but the name isn't very good. From patch 2 of this series:
 >
-> The --batch-size=<size> option of 'git multi-pack-index repack' is
-> intended to limit the amount of work done by the repack. In the case of
-> a large repository, this command should repack a number of small
-> pack-files but leave the large pack-files alone. Most often, the
-> repository has one large pack-file from a 'git clone' operation and
-> number of smaller pack-files from incremental 'git fetch' operations.
+>   The name "argv-array" isn't very good, because it describes what the
+>   data type can be used for (program argument arrays), not what it
+>   actually is (a dynamically-growing string array that maintains a
+>   NULL-terminator invariant). This leads to people being hesitant to use
+>   it for other cases where it would actually be a good fit. The existing
+>   name is also clunky to use. It's overly long, and the name often leads
+>   to saying things like "argv.argv" (i.e., the field names overlap with
+>   variable names, since they're describing the use, not the type). Let's
+>   give it a more neutral name.
 >
-> The issue with '--batch-size' is that it also _prevents_ the repack from
-> happening if the expected size of the resulting pack-file is too small.
-> This was intended as a way to avoid frequent churn of small pack-files,
-> but it has mostly caused confusion when a repository is of "medium"
-> size. That is, not enormous like the Windows OS repository, but also not
-> so small that this incremental repack isn't valuable.
->
-> The solution presented here is to collect pack-files for repack if their
-> expected size is smaller than the batch-size parameter until either the
-> total expected size exceeds the batch-size or all pack-files are
-> considered. If there are at least two pack-files, then these are
-> combined to a new pack-file whose size should not be too much larger
-> than the batch-size.
->
-> This new strategy should succeed in keeping the number of pack-files
-> small in these "medium" size repositories. The concern about churn is
-> likely not interesting, as the real control over that is the frequency
-> in which the repack command is run.
+> This has bugged me for a while, so I decided to finally fix it. It
+> wasn't _too_ painful, though I'm sure there will be a little fallout
+> with topics in flight.
 
-OK. This '--batch-size' parameter is a little magical to me, but the
-behavior you are describing seems sane. I think that your assessment of
-the down-side is reasonable, too.
+Just as this landed in master now, https://lobste.rs/ decided to link to
+http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2493.pdf, which is a
+paper about reserved identifiers in C.  It contains a nice overview.
 
-Looks fine to me.
+Anyway, 7.31 of C11 says: "All external names described below are
+reserved no matter what headers are included by the program."  And
+7.31.13 goes on: "Function names that begin with str, mem, or wcs and a
+lowercase letter may be added to the declarations in the <string.h>
+header."  So the names of the strvec functions are reserved.
 
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+Also how about using Coccinelle and patience to reduce the impact of
+such a change next time?  I.e. adding the new thing, providing a
+semantic patch for converting old code, waiting a reasonable amount of
+time after the last conversion was necessary and then removing the
+old thing.
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->     multi-pack-index: repack batches below --batch-size
->
->     As reported [1], the 'git multi-pack-index repack' command has some
->     unexpected behavior due to the nature of "expected size" for un-thinned
->     fetch packs and the fact that the batch size requires the total size to
->     be at least as large as that batch-size. By removing this minimum size
->     restriction, we will repack more frequently and prevent this "many
->     pack-file" problems.
->
->     [1]
->     https://lore.kernel.org/git/6FA8F54A-C92D-497B-895F-AC6E8287AACD@gmail.com/
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-698%2Fderrickstolee%2Fmidx-repack-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-698/derrickstolee/midx-repack-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/698
->
->  Documentation/git-multi-pack-index.txt | 11 ++++++-----
->  midx.c                                 |  2 +-
->  t/t5319-multi-pack-index.sh            | 18 ++++++++++++++++++
->  3 files changed, 25 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-> index 0c6619493c..eb0caa0439 100644
-> --- a/Documentation/git-multi-pack-index.txt
-> +++ b/Documentation/git-multi-pack-index.txt
-> @@ -51,11 +51,12 @@ repack::
->  	multi-pack-index, then divide by the total number of objects in
->  	the pack and multiply by the pack size. We select packs with
->  	expected size below the batch size until the set of packs have
-> -	total expected size at least the batch size. If the total size
-> -	does not reach the batch size, then do nothing. If a new pack-
-> -	file is created, rewrite the multi-pack-index to reference the
-> -	new pack-file. A later run of 'git multi-pack-index expire' will
-> -	delete the pack-files that were part of this batch.
-> +	total expected size at least the batch size, or all pack-files
-> +	are considered. If only one pack-file is selected, then do
-> +	nothing. If a new pack-file is created, rewrite the
-> +	multi-pack-index to reference the new pack-file. A later run of
-> +	'git multi-pack-index expire' will delete the pack-files that
-> +	were part of this batch.
->  +
->  If `repack.packKeptObjects` is `false`, then any pack-files with an
->  associated `.keep` file will not be selected for the batch to repack.
-> diff --git a/midx.c b/midx.c
-> index 6d1584ca51..38690b46c9 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -1371,7 +1371,7 @@ static int fill_included_packs_batch(struct repository *r,
->
->  	free(pack_info);
->
-> -	if (total_size < batch_size || packs_to_repack < 2)
-> +	if (packs_to_repack < 2)
->  		return 1;
->
->  	return 0;
-> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-> index 7214cab36c..b05190f500 100755
-> --- a/t/t5319-multi-pack-index.sh
-> +++ b/t/t5319-multi-pack-index.sh
-> @@ -643,6 +643,7 @@ test_expect_success 'expire respects .keep files' '
->  '
->
->  test_expect_success 'repack --batch-size=0 repacks everything' '
-> +	cp -r dup dup2 &&
->  	(
->  		cd dup &&
->  		rm .git/objects/pack/*.keep &&
-> @@ -662,4 +663,21 @@ test_expect_success 'repack --batch-size=0 repacks everything' '
->  	)
->  '
->
-> +test_expect_success 'repack --batch-size=<large> repacks everything' '
-> +	(
-> +		cd dup2 &&
-> +		rm .git/objects/pack/*.keep &&
-> +		ls .git/objects/pack/*idx >idx-list &&
-> +		test_line_count = 2 idx-list &&
-> +		git multi-pack-index repack --batch-size=2000000 &&
-> +		ls .git/objects/pack/*idx >idx-list &&
-> +		test_line_count = 3 idx-list &&
-> +		test-tool read-midx .git/objects | grep idx >midx-list &&
-> +		test_line_count = 3 midx-list &&
-> +		git multi-pack-index expire &&
-> +		ls -al .git/objects/pack/*idx >idx-list &&
-> +		test_line_count = 1 idx-list
-> +	)
-> +'
-> +
->  test_done
->
-> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
-> --
-> gitgitgadget
-Thanks,
-Taylor
+Ren=C3=A9
