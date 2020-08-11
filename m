@@ -3,77 +3,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E83EC433DF
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 04:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 670E9C433E0
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 05:01:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 060C92076B
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 04:55:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 343CB20756
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 05:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbgHKEzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 00:55:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54790 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725942AbgHKEzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 00:55:10 -0400
-Received: (qmail 26358 invoked by uid 109); 11 Aug 2020 04:55:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Aug 2020 04:55:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13123 invoked by uid 111); 11 Aug 2020 04:55:10 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Aug 2020 00:55:10 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 11 Aug 2020 00:55:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Emma Brooks <me@pluvano.com>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v2] gitweb: map names/emails with mailmap
-Message-ID: <20200811045509.GA81227@coredump.intra.peff.net>
-References: <20200808213457.13116-1-me@pluvano.com>
- <20200809230436.2152-1-me@pluvano.com>
- <20200810100249.GC37030@coredump.intra.peff.net>
- <20200811041728.GA1748@pluvano.com>
+        id S1726178AbgHKFBk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 01:01:40 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:33513 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726020AbgHKFBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 01:01:39 -0400
+Received: by mail-wr1-f47.google.com with SMTP id p20so10201585wrf.0
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 22:01:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uU80EhMpHUwhMNsF+nLOWwrb8xuL9pesmAZ80R0NVx4=;
+        b=JS6qpT805WjxF4WnOrtDYjpqOAwh4QHTE0WXlv8q/UHLdFAms+H6mOJyzLKKmD3Q2v
+         Xr+WJDWjA70I1JZdH1Rd4pcGF86rwm+GDUYI4wshX4b6ZKwr620H/laUcfIyeaaIHIUl
+         do9xaevLIh0P2foTUvabDk0/YEk3lUpQgRqtZ8N3RNyqfZhDgkWgtfy79qmZncpbjHtS
+         6QiBVXmzHprPf/E92gRBgUPqk4e6R0mqEuTLnZzreSvk8vEODjr2IYYktdKR+atlxZt7
+         Fo26PGoxg34OPf9+CMMUDJpPjXqagbLsju4GkSUTjux03mvjKAUfLlrWNyMeWrqEgQNW
+         e8ig==
+X-Gm-Message-State: AOAM530IhvlzRFxDs4XZ62M1G0gq0Q8MZH0LoZiWW8ap3jCesiTnZekn
+        6K1QkCpYxkm/TMfLENMdz1h4GdhuxmalP/IjRMQ=
+X-Google-Smtp-Source: ABdhPJyYTfilVyN5kSw3HepK5mm/Uv7QBKAhzEBKBesxxnN5fz2sllIFeROr5eC323H2je0JEB52V8UwqsSHsz3IRjg=
+X-Received: by 2002:a5d:540c:: with SMTP id g12mr26848464wrv.120.1597122098073;
+ Mon, 10 Aug 2020 22:01:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200811041728.GA1748@pluvano.com>
+References: <xmqqsgcub811.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqsgcub811.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 11 Aug 2020 01:01:27 -0400
+Message-ID: <CAPig+cRtS3iMp3zLRKBOvEchrDPrCmozndbFpWtjiosk5nqGew@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2020, #02; Mon, 10)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 11, 2020 at 04:17:28AM +0000, Emma Brooks wrote:
+On Mon, Aug 10, 2020 at 3:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+> * es/init-no-separate-git-dir-in-bare (2020-08-10) 1 commit
+> - init: disallow --separate-git-dir with bare repository
+>
+> "git init --separate-git-dir" can be used in an existing repository
+> with a working tree to move its .git/ directory away from the
+> working tree. Even though this re-init feature makes no sense in
+> an existing bare repository, it was not erroring out. Now it does.
 
-> On 2020-08-10 06:02:49-0400, Jeff King wrote:
-> > There was a little discussion in response to v1 on whether we could
-> > reuse the existing C mailmap code:
-> > 
-> >   https://lore.kernel.org/git/20200731010129.GD240563@coredump.intra.peff.net/
-> > 
-> > Did you have any thoughts on that?
-> 
-> I think it's probably not worth the effort to make the necessary changes
-> to "rev-list --header" Junio mentioned, just for gitweb.
+This description is a bit misleading since it focuses only on existing
+repositories, however, --separate-git-dir is intended for use with
+both new and existing repositories. So, perhaps the description could
+be rewritten something like this:
 
-Yeah, I agree that probably doesn't make sense to change "rev-list
---header". I wonder if git could be using "rev-list --format" instead,
-though, and asking for the specific things it wants. That could improve
-more than just this case, too (e.g., the C code would be parsing and
-normalizing author/committer idents, which could make handling of badly
-formatted ones more consistent with other Git tools).
-
-It may be a big change, though. I don't know the gitweb code very well.
-
-> I agree it's a bit worrisome to have a second parser that could
-> potentially behave slightly differently than the main implementation.
-> What if we added tests for gitweb's mailmap parsing based on the same
-> cases used for Git itself?
-
-That would certainly help, though I don't know how easy it would be to
-replicate all of the tests in a maintainable way.
-
--Peff
+    The purpose of "git init --separate-git-dir" is to initialize a
+    new project with the repository separate from the working tree,
+    or, in the case of an existing project, to move the repository
+    (the .git/ directory) out of the working tree. It does not make
+    sense to use --separate-git-dir with a bare repository for which
+    there is no working tree, so disallow its use with bare
+    repositories.
