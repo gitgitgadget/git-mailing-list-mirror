@@ -2,113 +2,132 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 605F5C433DF
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 13:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C8DDC433DF
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 14:10:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2182920782
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 13:49:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 784AA2076C
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 14:10:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Q9/juU1h"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=rbx.email header.i=@rbx.email header.b="Vfysh0NF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728766AbgHKNtA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 09:49:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44526 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728722AbgHKNs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 09:48:58 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A367AC06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 06:48:58 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id d14so11635726qke.13
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 06:48:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9rJjApmBf+XzQFVhEzwcZedQfZTQSWYvVDDrl/pbls0=;
-        b=Q9/juU1hvxSs4UmpvCIWoRmNgM0QIJMb7s9pdtazDYu2O/EOzuK+w+wG0/kBg14X2A
-         xtnHldciBebZMelBbfIU6AeF8/aszWUHlFhX8KXfsfWQs31fM6FaBIyWy0ODv6T3bV98
-         y6Kl0z+fc5Z/L+CyAhWjun9ijfBfRdVGQyIZH9HIqxDGKSFCBoA6ZrJpnhOOhbXsB2Hq
-         0rEMgIaIEBpNCV2F4G2aQ82amq8wWWbu/6iX8rC9k6nmhpaVz6JKdCoBK6S2oDnyVcbx
-         k4q6lFaTHLkIhbHWcn6UZ6AIUkWxdytWolz4xdXMs2LE/TLTb6GwuARSOQ93q88B+qqT
-         swdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9rJjApmBf+XzQFVhEzwcZedQfZTQSWYvVDDrl/pbls0=;
-        b=FgxJgc4mOi3Fr5UVT7gaA1+80cHNkftpf7BNiFRVzZ/7GfK+Z+3XlM+a6wUgiDW3sC
-         J6/c5lKUr7TTk+Z2G6NkrA84yDupz0ICc12R2IlhiM2CQcQZPho/oLLZrlc0uHnL88Od
-         5DBqIIOP/jrgGcb0FCCf6u+nRkhuT4PSRUttchMbVR4uwmse9DioCZGsNAyoTAM+e97E
-         Fm7+p4Pda8Z5x2FkKJZgXfuvhna3m6C0p2vCm5gL6B0sQ3xiNPEMsGS4sIR/fbnibeEU
-         YGuTfzatOmuFjfxUkKSmJdkj0qzLTnZGMl2RM/djXQOiz7MKYLzm2GRzwEkW1DF0a+S8
-         pObg==
-X-Gm-Message-State: AOAM531oQxCZ27r+hMWX2/hkdIjtcHrumG3DcBf/LN4f1ywfxmNMapZI
-        fYvl1DU6fudqCt3X4Z5cVlBAZlqeSapg6g==
-X-Google-Smtp-Source: ABdhPJyhZmq6hNk00G4aJEo3+dtLdRQXofsuylG/Otu76f0j2YM5eJG3nqFDgMbCrt9koh+ETq8CRA==
-X-Received: by 2002:a05:620a:22e8:: with SMTP id p8mr1237962qki.491.1597153736824;
-        Tue, 11 Aug 2020 06:48:56 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:a92f:57be:59a6:7cb2])
-        by smtp.gmail.com with ESMTPSA id g129sm17918640qkb.39.2020.08.11.06.48.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 06:48:56 -0700 (PDT)
-Date:   Tue, 11 Aug 2020 09:48:55 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2020, #02; Mon, 10)
-Message-ID: <20200811134855.GA19871@syl.lan>
-References: <xmqqsgcub811.fsf@gitster.c.googlers.com>
+        id S1728776AbgHKOKi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 10:10:38 -0400
+Received: from aibo.runbox.com ([91.220.196.211]:45528 "EHLO aibo.runbox.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728717AbgHKOKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 10:10:35 -0400
+X-Greylist: delayed 3335 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Aug 2020 10:10:33 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbx.email;
+         s=selector2; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From;
+        bh=yx1/RbJhL3UaAcrThEGX+p4nT09LmIzDO36giVyqRi4=; b=Vfysh0NFE5Va4VtB/s4Bivo2ZB
+        wYS2/2EkFQYvNSdXTwNEIfPNuNPO1/+FNSQFDazuWrICyNYoRKqd+Q9vhiLCzvxleaoP8cPF/shfq
+        WEELCc7GMERZMcxCIbALhpMJicCTYVFQcz4xFCue5TLp42Qge21Iz9tjneobU5rGmveLsDh5SU8vY
+        +CMzmNX0biCMB8KO0mODoQbII6J68oHTSODJED695lDKBHzYUryPrsOy2dWvo3QYVfwcp5hDc87Um
+        pJ/nYjNuuPvfYokOKIKILGc22xBSeACvIlWYNJEgWQtBE4lVTW/IycTr1anFyHiA1gGEKSmehBeWX
+        GVu26EqQ==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+        (envelope-from <detegr@rbx.email>)
+        id 1k5U7D-0001AL-T9; Tue, 11 Aug 2020 15:14:56 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated alias (932193)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        id 1k5U6u-00070R-OH; Tue, 11 Aug 2020 15:14:36 +0200
+From:   =?UTF-8?q?Antti=20Ker=C3=A4nen?= <detegr@rbx.email>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Antti=20Ker=C3=A4nen?= <detegr@rbx.email>,
+        =?UTF-8?q?Jussi=20Ker=C3=A4nen?= <jussike@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase -i: Fix possibly wrong onto hash in todo
+Date:   Tue, 11 Aug 2020 16:13:15 +0300
+Message-Id: <20200811131313.3349582-1-detegr@rbx.email>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsgcub811.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 10, 2020 at 12:44:26PM -0700, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with '-' are
-> only in 'seen' (formerly 'pu'---proposed updates) while commits prefixed
-> with '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+'todo_list_write_to_file' may overwrite the static buffer, originating
+from 'find_unique_abbrev', that was used to store the short commit hash
+'c' for "# Rebase a..b onto c" message in the todo editor.
 
-I noticed that you picked up 'tb/bloom-improvements' in your fork, but
-that it didn't make it into the list of cooking topics below. I suspect
-that this is because of [1], where I got bitten by trying to sneak in an
-extra 'bitmap_free()' at the last moment.
+Fix by duplicating the string before usage, so subsequent calls to
+'find_unique_abbrev' or other functions calling 'hash_to_hex_algop_r'
+can't overwrite the buffer.
 
-I have a fixup in [2] which needs to be squashed in at that point in the
-series, along with dropping a '&' in the last patch to squelch a
-compiler error introduced by the fixup.
+Found-by: Jussi Keränen <jussike@gmail.com>
+Signed-off-by: Antti Keränen <detegr@rbx.email>
+---
+ sequencer.c                   |  7 ++++---
+ t/t3404-rebase-interactive.sh | 13 +++++++++++++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-Do you want me to resend the whole series, or would you rather apply the
-fixups when queuing? Either is fine for me.
+diff --git a/sequencer.c b/sequencer.c
+index fd7701c88a..0679adb639 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5178,13 +5178,12 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		    struct string_list *commands, unsigned autosquash,
+ 		    struct todo_list *todo_list)
+ {
+-	const char *shortonto, *todo_file = rebase_path_todo();
++	const char *todo_file = rebase_path_todo();
+ 	struct todo_list new_todo = TODO_LIST_INIT;
+ 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+ 	struct object_id oid = onto->object.oid;
+ 	int res;
+-
+-	shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
++	char *shortonto;
+ 
+ 	if (buf->len == 0) {
+ 		struct todo_item *item = append_new_todo(todo_list);
+@@ -5206,8 +5205,10 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		return error(_("nothing to do"));
+ 	}
+ 
++	shortonto = xstrdup(find_unique_abbrev(&oid, DEFAULT_ABBREV));
+ 	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
+ 			     shortonto, flags);
++	free(shortonto);
+ 	if (res == -1)
+ 		return -1;
+ 	else if (res == -2) {
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 4a7d21f898..09af16753c 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1760,6 +1760,19 @@ test_expect_success 'correct error message for commit --amend after empty pick'
+ 	test_i18ngrep "middle of a rebase -- cannot amend." err
+ '
+ 
++test_expect_success 'todo has correct onto hash' '
++	write_script dump-raw.sh <<-\EOF &&
++		cat "$1"
++	EOF
++	git checkout branch1 &&
++	(
++		test_set_editor "$(pwd)/dump-raw.sh" &&
++		git rebase -i HEAD~5 >actual
++	) &&
++	onto=$(git rev-parse --short HEAD~5) &&
++	test_i18ngrep "^# Rebase ..* onto $onto .*" actual
++'
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
+-- 
+2.28.0
 
-> * tb/upload-pack-filters (2020-08-05) 4 commits
->   (merged to 'next' on 2020-08-05 at 918e7092fe)
->  + t5616: use test_i18ngrep for upload-pack errors
->   (merged to 'next' on 2020-08-04 at 3ae57cc90c)
->  + upload-pack.c: introduce 'uploadpackfilter.tree.maxDepth'
->  + upload-pack.c: allow banning certain object filter(s)
->  + list_objects_filter_options: introduce 'list_object_filter_config_name'
->
->  The component to respond to "git fetch" request is made more
->  configurable to selectively allow or reject object filtering
->  specification used for partial cloning.
->
->  Will merge to 'master'.
->  cf. <20200804003722.GA2726931@coredump.intra.peff.net>
-
-Thanks, I'm glad that this made it in.
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/xmqqbljoolhy.fsf@gitster.c.googlers.com/
-[2]: https://lore.kernel.org/git/20200811134807.GA26715@syl.lan/
