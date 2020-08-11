@@ -2,92 +2,96 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E0DDC433E0
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 19:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8467AC433DF
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 19:25:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CBFF20782
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 19:24:34 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jm5fed/D"
+	by mail.kernel.org (Postfix) with ESMTP id 639FD20782
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 19:25:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726127AbgHKTYd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 15:24:33 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64236 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbgHKTYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 15:24:33 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D7A8F5050;
-        Tue, 11 Aug 2020 15:24:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=M/jMJdNFyKF1Pd1ftA6TfKpH28s=; b=jm5fed
-        /DN8up7N/iY8wyq/q6eJcFsUsT3U0Gcbj5/jGe+x3UoGbBdr+ADQ43IHRajIT/jB
-        cvqHu6ImpmTdb+86+ygYS5rGQ61SFddx0FhHolwXVyFydte5z1dPoOCxNyqUCnuL
-        odWQekaWOFXAjmlaH+aFI4GAkMnfnVJUSHSY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fiYpmb/5JGY+FVXZL7HISxO2GFBpZFOR
-        Wid+4QCXT1r7kkE1ulmoPdtJNICH8N51lmS6WBz5i3bRp8SXsSJD/FpsI60AvWFD
-        iTO4w1E5E4EJWwRAlHsYQHI+B7NFq57LnD/6op7WTvTfgyd0yce0rt5g7/izpYIe
-        NuCQ/4dZJJU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 28CADF504F;
-        Tue, 11 Aug 2020 15:24:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 76919F504D;
-        Tue, 11 Aug 2020 15:24:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2020, #02; Mon, 10)
-References: <xmqqsgcub811.fsf@gitster.c.googlers.com>
-        <CAPig+cRtS3iMp3zLRKBOvEchrDPrCmozndbFpWtjiosk5nqGew@mail.gmail.com>
-Date:   Tue, 11 Aug 2020 12:24:26 -0700
-In-Reply-To: <CAPig+cRtS3iMp3zLRKBOvEchrDPrCmozndbFpWtjiosk5nqGew@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 11 Aug 2020 01:01:27 -0400")
-Message-ID: <xmqq364t9ead.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726468AbgHKTZR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 15:25:17 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38945 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725889AbgHKTZQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 15:25:16 -0400
+Received: by mail-wm1-f67.google.com with SMTP id g75so3485572wme.4
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 12:25:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3SwlXf2pWXGJ7sy14aVscafDMW2KVLaOVFYgYuxf4Ao=;
+        b=QTR+zj9nwmFZ1Wokrz6s8YWnS5q1+itcm/O/cH2Ij2jgeBsVRGaCybcciJOu6ku+s7
+         2Xzl8QWuS9PL6YfOEx8ej0ihef6feoGC8IYlHP+DhOrhj61nXXag7esEqtoid5ZR7E/w
+         A/kcU2rQLInxSpS/6nZPHyhG74rbUFXbSETfhjezJYGLU+mC3l+sHDh5TI7H5Xo+IAJ7
+         12NQZ5z1/l+mQ4ZSo+degMZCuUV74ZGA0MoH01bN12g7LVd3wuazNj1Ny4qk+t/9SpUO
+         5sBMHXsxcTvTizOh+Ea+My9n5SCoNZCovcgHPGP5NXkJuvxWOMkTUAcDzI24EFsVrEfC
+         OCow==
+X-Gm-Message-State: AOAM5322SJQ7uBwYniYXbt/peXghnbimUyKNSBeZAJD3CE1pexVBDd0r
+        3PPOzk+Ln1iGm9/s5xE7jo+jfd9e//7fYKqFCe8=
+X-Google-Smtp-Source: ABdhPJyaO8DoMu4bVbjwWZP8MKNJ1Mz2b26ECk5u85+h1NezgG6VTdTP7gVuEhTi4enCecj7TvD3VI1Zdana5vMOav8=
+X-Received: by 2002:a1c:740c:: with SMTP id p12mr5115478wmc.53.1597173914857;
+ Tue, 11 Aug 2020 12:25:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46454144-DC08-11EA-B32C-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+References: <20200809060810.31370-1-sunshine@sunshineco.com>
+ <20200809174209.15466-1-sunshine@sunshineco.com> <20200811183258.GB33865@syl.lan>
+In-Reply-To: <20200811183258.GB33865@syl.lan>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 11 Aug 2020 15:25:03 -0400
+Message-ID: <CAPig+cSroWZEoOL78COmPS4rkvKLE-yCiqh6Part+5gUgVon+A@mail.gmail.com>
+Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Mon, Aug 10, 2020 at 3:45 PM Junio C Hamano <gitster@pobox.com> wrote:
->> * es/init-no-separate-git-dir-in-bare (2020-08-10) 1 commit
->> - init: disallow --separate-git-dir with bare repository
->>
->> "git init --separate-git-dir" can be used in an existing repository
->> with a working tree to move its .git/ directory away from the
->> working tree. Even though this re-init feature makes no sense in
->> an existing bare repository, it was not erroring out. Now it does.
+On Tue, Aug 11, 2020 at 2:33 PM Taylor Blau <me@ttaylorr.com> wrote:
+> On Sun, Aug 09, 2020 at 01:42:09PM -0400, Eric Sunshine wrote:
+> > +             test "x$2" = x- || test -e "$2" || BUG "test_cmp '$2' missing"
 >
-> This description is a bit misleading since it focuses only on existing
-> repositories, however, --separate-git-dir is intended for use with
-> both new and existing repositories. So, perhaps the description could
-> be rewritten something like this:
->
->     The purpose of "git init --separate-git-dir" is to initialize a
->     new project with the repository separate from the working tree,
->     or, in the case of an existing project, to move the repository
->     (the .git/ directory) out of the working tree. It does not make
->     sense to use --separate-git-dir with a bare repository for which
->     there is no working tree, so disallow its use with bare
->     repositories.
+> Not related to your patch, but I've seen this style of "x$1" in a few
+> places in test-lib-functions.sh. Why can't this be written as 'test "$1"
+> = -'?
 
-Thanks.
+Short answer: To prevent 'test' from thinking that the argument is a switch.
+
+Longer answer:
+
+'test' can accept both switches (i.e. "-e") and non-switch arguments.
+Keep in mind, too, that all the quoting is stripped by the shell
+_before_ 'test' ever sees its arguments. Let's say that the caller has
+a filename whose name actually is "-e" and passes that in as $1. So,
+what does 'test' see?
+
+    test -e = -
+
+Rather than comparing literal string "-e" to literal string "-", it's
+instead (almost) asking if the file named "=" exists; I say "almost"
+because it's actually an error since switch -e only accepts one
+argument, but it's being given two arguments, "=" and "-".
+
+You might say that having a file named "-e" (or similar) is unlikely,
+however, what is not unlikely is a caller passing "-" for
+standard-input as $1. In this case, 'test' sees:
+
+    test - = -
+
+which may or may not be an error in a particular implementation of
+'test'. Some implementations may understand that "-" is not a valid
+switch, thus infer that you're actually asking for an equality
+comparison between arguments, but other implementations may complain
+either that there is no switch named "-" or that those arguments
+simply make no sense.
+
+This is why it's a very common idiom in shell programming with 'test'
+to see "x" prepended, thus ensuring that the argument can't be
+confused with a switch.
