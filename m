@@ -2,90 +2,199 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70066C433E0
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 14:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A5E8C433E0
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:28:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F94820756
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 14:27:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E76352078E
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:28:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="UL8yvcPF"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="g/N4fs5X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728730AbgHKO1V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 10:27:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50452 "EHLO
+        id S1728968AbgHKP2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 11:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728516AbgHKO1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 10:27:20 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E0CC06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 07:27:20 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id i80so6750576lfi.13
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 07:27:20 -0700 (PDT)
+        with ESMTP id S1728859AbgHKP2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 11:28:37 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033EBC06174A
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:28:35 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id n129so6329352qkd.6
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nlOSpVshPgRreZT561BVJcNqWMiu62S1SwGjACVin5c=;
-        b=UL8yvcPFEuZzqBAufPt9mxewCQyPNkuJNaY98v+9keqJsPlXn7hbdRl3Iy1f2iWfx4
-         JWN7F3sxoh9QL4LzeXQ2/PCKy3kBb65DNhnBRJJQVaSjfmIYPW2bEc/rCRIypzK8JDRg
-         BTa7xLfcWQzcDpApM7G6C7W8iBdvFrVJtB/Lau81EtB4NbRpr/NvCwNsAhFkArtrHg/y
-         y9zuLyz5Hy7qVYCbq3tMDCBM+7TwAU/dXUrmWGU9DRvLulKTA5dCHVhdASgg7QoYqGNy
-         odah0RkOO+8jDNrxJQVr4Ihny3rqLU0rm9rDfh/pj3ZdVU1RdVbf7WHjOhRb6z7vzgpn
-         WUfA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=MT15X7zyQv9hJSoLg0EfV8U5c6w+H5d5y8/jHNNMYrY=;
+        b=g/N4fs5X+L2K1P3gql28hDT6CoEgqph3I7xnEcAGg/1iJpAcGFBNY8wctD2FJmNN0s
+         FfKJaeXpsuc2Ft9XEMSd8rJn0K2Sy+0Btz2MnpalDvWjO69mG424g4kcJ1QCVrQhIdUc
+         0/LTIWQ06lH/T0iKi1jIhh9dC6ggWePQyqrO2EjtPpKXFXApEurffc/Rai448Rr9bK87
+         czKyNAj0ktp3sgwNlaO2djMfub1CZnO9p3hIqXY2szXybWMFqEK4+Ry1nWqgmkaqZe+w
+         2WylpiDU1snTKoFyXkrt8y6rz/OF0ORVmSlGIDfBDv9Hnf3rg8cfnuStSYnLKtpslqos
+         MLJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nlOSpVshPgRreZT561BVJcNqWMiu62S1SwGjACVin5c=;
-        b=FhdYmYpbyXvOWPqe6TPcKF5Qup3FhaKHfDHb88lEr8jOzhzFgBqgFiDTweEGuG4mbI
-         emVQIpJQ/1B/2hFzwSaBtuXhUKu150eM4nzuZlK0DUoTRQsZ46+Zo2mzPPrNKYrNRYLI
-         GtGCrpVE1t/GpDJRu65P3XlHTCwfJ7BuMhILy8KMGWFsNE1LdkGvgG2AueG6ecunA+OT
-         C/RTmLGnDvINjfl5uMUrp3pAxTJ+KtFt2eHUWGk2lVuAmn5ciu2n7Imk/XdsfxwJH7m8
-         xpMP2omS64t5eRRjVUEbJzez54rqBcuh3CEas8fqbOOQ6KuFHWSY0Mnsj3mGNqA/Kg62
-         Zx6g==
-X-Gm-Message-State: AOAM533ADYblojk7ifO6Nx13d1kTZtIkTQb72U/3Kr8COHze13uhrv8P
-        vzh2gcGQxgdS69vp8KdUJyS55nOAFlgR3U7yZA1ZhA==
-X-Google-Smtp-Source: ABdhPJxFWuvTnHySy2ddm1OLaGcECKz8joOO+hY1yhA8O4fjY452Iy66TECqsTxHD4h7hqJby9wIoKnDGiwCkHbZqWo=
-X-Received: by 2002:a05:6512:241:: with SMTP id b1mr3378992lfo.125.1597156036607;
- Tue, 11 Aug 2020 07:27:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=MT15X7zyQv9hJSoLg0EfV8U5c6w+H5d5y8/jHNNMYrY=;
+        b=QOosmHnN9GJcD8L+rwjElNPKEyjCOVe3f25d4/OKJfTe/yU4241SHq2HCXdLV/RffB
+         NgliWx/uepNOheUHtnyMN+y8lEryz/jw+wRJ10MgOl/+ZdJ7yqE/ukFuU9yIVSiY8eIC
+         tuEj6535hYC3EFZik6RRGFksSKuiQFN+L42Zb1ATAL9ukmQELJ8V2Uyrgt6cP5VIb+OW
+         qWw+NgIZROh6Oryqo+wzQZBc36l8lE5xieQtdAu+dSLZeb8tylUB+vp60Y0SgirAghw7
+         UtOTE4wTtHirZ26GoRVC/LOP4e9lTmPHzfLtNHlrYlwDvc5O+A9uMJYXtOvNahLFLSRw
+         Kneg==
+X-Gm-Message-State: AOAM53056m/Cc2SQYjurfv5B819ibR5u0xOL3pMQbd1DaT5OFT3cHYLz
+        C/CVvK3C7PsCc/b/Hwwe9iRdqQ==
+X-Google-Smtp-Source: ABdhPJwwXz3aMhNb+2VlVI6PfZhPNx2OUiYBYEUPmtoQee/2+UOLYXjjHy212Yz/Cfc1h2QFk8L6zQ==
+X-Received: by 2002:a05:620a:c88:: with SMTP id q8mr1659050qki.49.1597159714762;
+        Tue, 11 Aug 2020 08:28:34 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:a92f:57be:59a6:7cb2])
+        by smtp.gmail.com with ESMTPSA id y14sm20215997qtc.84.2020.08.11.08.28.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2020 08:28:33 -0700 (PDT)
+Date:   Tue, 11 Aug 2020 11:28:32 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Antti =?utf-8?Q?Ker=C3=A4nen?= <detegr@rbx.email>
+Cc:     git@vger.kernel.org,
+        Jussi =?utf-8?Q?Ker=C3=A4nen?= <jussike@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase -i: Fix possibly wrong onto hash in todo
+Message-ID: <20200811152832.GC19871@syl.lan>
+References: <20200811131313.3349582-1-detegr@rbx.email>
 MIME-Version: 1.0
-References: <xmqqsgcub811.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqsgcub811.fsf@gitster.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 11 Aug 2020 11:27:04 -0300
-Message-ID: <CAHd-oW7Wd8oSaMhPFeRcEeKTJ-k_hC7b6e28efhXT5LFu1E_Uw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2020, #02; Mon, 10)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200811131313.3349582-1-detegr@rbx.email>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio
+Hi Antti,
 
-On Mon, Aug 10, 2020 at 4:44 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> * mt/hash-to-hex-thread-safety (2020-06-26) 2 commits
->  - hex: make hash_to_hex_algop() and friends thread-safe
->  - compat/win32/pthread: add pthread_once()
->
->  hash_to_hex() used a set of rotating static buffers, which was not
->  safe to use in a threaded environment.  This has been made safer by
->  using thread-local storage.
->
->  Expecting a reroll.
->  cf. <CAHd-oW6A2aBHg80R9kyifvF7thwzam5EYYoN9d2TaBcHJrcKWw@mail.gmail.com>
+Thanks for working on this. I have a few thoughts below, but I think
+that this is on the right track.
 
-I think we can drop this one. Dscho suggested using a different
-approach for this conversion, with Coccinelle [1]. I won't be able to
-look at it right now, but if someone wants to give it a try, [2] would
-be a good starting point.
+On Tue, Aug 10, 2020 at 04:13:15PM +0300, Antti Keränen wrote:
+> 'todo_list_write_to_file' may overwrite the static buffer, originating
+> from 'find_unique_abbrev', that was used to store the short commit hash
+> 'c' for "# Rebase a..b onto c" message in the todo editor.
 
-[1]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.2007161214270.54@tvgsbejvaqbjf.bet/
-[2]: https://lore.kernel.org/git/a35a9334-6db2-d8e3-8ce5-15f15a9005e1@web.de/
+It would be great to know the commit that regressed, or if this has
+always been the case. I'm not sure if you'll have a ton of luck
+bisecting, since you indicate that this overwrite *may* occur (that
+makes me think that it doesn't always happen, so your efforts to bisect
+the change may be noisy).
+
+> Fix by duplicating the string before usage, so subsequent calls to
+> 'find_unique_abbrev' or other functions calling 'hash_to_hex_algop_r'
+> can't overwrite the buffer.
+>
+> Found-by: Jussi Keränen <jussike@gmail.com>
+> Signed-off-by: Antti Keränen <detegr@rbx.email>
+
+> ---
+>  sequencer.c                   |  7 ++++---
+>  t/t3404-rebase-interactive.sh | 13 +++++++++++++
+>  2 files changed, 17 insertions(+), 3 deletions(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index fd7701c88a..0679adb639 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5178,13 +5178,12 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>  		    struct string_list *commands, unsigned autosquash,
+>  		    struct todo_list *todo_list)
+>  {
+> -	const char *shortonto, *todo_file = rebase_path_todo();
+> +	const char *todo_file = rebase_path_todo();
+>  	struct todo_list new_todo = TODO_LIST_INIT;
+>  	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+>  	struct object_id oid = onto->object.oid;
+>  	int res;
+> -
+> -	shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
+> +	char *shortonto;
+
+A minor nit is that you could probably move this line up to below the
+'const char *' declaration (it makes sense why you have to drop the
+const qualifier, though).
+
+>
+>  	if (buf->len == 0) {
+>  		struct todo_item *item = append_new_todo(todo_list);
+> @@ -5206,8 +5205,10 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>  		return error(_("nothing to do"));
+>  	}
+>
+> +	shortonto = xstrdup(find_unique_abbrev(&oid, DEFAULT_ABBREV));
+>  	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
+>  			     shortonto, flags);
+> +	free(shortonto);
+
+OK. I think of two things here:
+
+  1. Why are we calling 'find_unique_abbrev()' instead of
+     'short_commit_name()'? We already have a commit pointer, so I don't
+     see any reason that we should be reimplementing that function (even
+     though it is a one-liner).
+
+  2. If we should indeed be calling 'short_commit_name()', are there
+     other callers that need to do the same duplication? In other words:
+     could you say a little bit more about what makes
+     'complete_action()' special in this regard?
+
+>  	if (res == -1)
+>  		return -1;
+>  	else if (res == -2) {
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 4a7d21f898..09af16753c 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1760,6 +1760,19 @@ test_expect_success 'correct error message for commit --amend after empty pick'
+>  	test_i18ngrep "middle of a rebase -- cannot amend." err
+>  '
+>
+> +test_expect_success 'todo has correct onto hash' '
+> +	write_script dump-raw.sh <<-\EOF &&
+> +		cat "$1"
+> +	EOF
+
+It's too bad that you have to write your own script here, since we
+already have 'set_cat_todo_editor()', but it makes sense since you want
+to retain the comments (something which set_cat_todo_editor explicitly
+does not do).
+
+So, this makes sense.
+
+> +	git checkout branch1 &&
+> +	(
+> +		test_set_editor "$(pwd)/dump-raw.sh" &&
+> +		git rebase -i HEAD~5 >actual
+> +	) &&
+> +	onto=$(git rev-parse --short HEAD~5) &&
+> +	test_i18ngrep "^# Rebase ..* onto $onto .*" actual
+> +'
+> +
+
+This all makes sense, too, and it leaves the below test as the last one
+in the file, which is the right thing to do.
+
+>  # This must be the last test in this file
+>  test_expect_success '$EDITOR and friends are unchanged' '
+>  	test_editor_unchanged
+> --
+> 2.28.0
+
+Thanks,
+Taylor
