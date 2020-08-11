@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBE1CC433E0
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 20:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D400AC433E0
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 20:51:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4AA520774
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 20:51:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 962542076C
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 20:51:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Vj/MC60O"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Cbjc4S2r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726479AbgHKUvs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 16:51:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53366 "EHLO
+        id S1726488AbgHKUvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 16:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgHKUvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 16:51:48 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6809FC06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 13:51:48 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id n129so164894qkd.6
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 13:51:48 -0700 (PDT)
+        with ESMTP id S1725987AbgHKUvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 16:51:53 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFC80C06174A
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 13:51:52 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id r19so23718qvw.11
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 13:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YDi48ppg/58iZSGrMm41yujADK+orXTZvhekbsxyFW0=;
-        b=Vj/MC60Osp62Jl9pG4V6Vui20qahtF8dBcR6wd7VYb2EYXq5GPpiYJ4ibHB/r39iG4
-         RRZGTK+5pFKmSl92JXE/lZpYNCs1MGt6rNEXgP3Dy6Kmbh4bAbFQj8S0QbsGiOnc3AIE
-         2L+RVnhOyXGhrah2TqlLRJbn1IM2y2zs7Y+SzH/oTBw5Ft9mJf6ubnPJguAE0mq5Hf2d
-         p14HCeSY4jvrLDJI4bCzUHqosDhWuNHB2cH0SdLDRztzcxhLYJclAp4drbY44t1tVAjp
-         6W1FFCu0TgKiMp7jIxGRM5M+izN2pqvpY1mPQ4+sUZL5phQPXgbWofYEZjRfts+EMj0m
-         Z6aA==
+        bh=cQ0YqZZa9lODCoFb9xpqUaBGz+eMOXt0L0kMZRhg/Ic=;
+        b=Cbjc4S2rukJm6KsQz1M/zTF0MUOITgoNiDRLcaLJnJu6W6CsE5EZexQjcwxDR9mO6T
+         V3j0BIQ9xLGS4ubrm52CCG2N08RUcamFPW+fVwQy3FKqU2/E3ZDMCCJBfpjMmPh3wCuF
+         Eni3pP3+MoPEVtvrc53L2FZmMw7RD4FNn+F7qqERi4UenkuBJmhOnGFjBkuicUNDH1Vd
+         +My/6BR70SNkhdXnw9hmNh4xpK049X9Pyxth/DBEG7R76OnQzNV9ey+yvpyKWOcEwc/o
+         JExKf1mi6mY+cIdPsRg//h0D0HQvE/B7ofp55Mcq2ElAdwOV+bchwnBiYYUTShaH20nY
+         mEAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YDi48ppg/58iZSGrMm41yujADK+orXTZvhekbsxyFW0=;
-        b=WGGI9zH4qI38H3gYXSLj945Iq4rHaPRorH8nLmecTTkWoEpqPIw5ZaeU34alWX/waG
-         6ikk5czBpmtwrT+SpTAwk0R2k1fIliWq/DFiO+uwJ10gEvblm5LH5yJo+0qeKR35pBzN
-         7twmdpU3XLpcxzXIYfMnrhZaBSX1jXN+pOSIeYv+EVLPLg+39rWbrUJFLNIWQVpT+ZqM
-         cwLgy/9dRWMvJxMHx3wERhbdunC7MWC3eipbwvydkgdRdmKC3S2mn1OJ4WPkQmMFyBsY
-         zXvRPXELWL8MDcQ+/fJ1sPDnW+SR2JqyH72LYhFCVaVCfmGDCPG2D7NDjBv1XJmkX/A5
-         63KQ==
-X-Gm-Message-State: AOAM533oIBGW8gI1pHXpQmor6t3vbydmRfN4RSPSmwbQCpk1kh1ttxTE
-        7MXAn7/9Sk9q4vf0t6VfNp9+F5V9MSX7l3Ld
-X-Google-Smtp-Source: ABdhPJxjMW/oFGSWH/Qt+amahKH2Rp4GrmdG67ovLN7B5a20lB+einF65gt0Ul28tvUySHA/cmcrLQ==
-X-Received: by 2002:a37:a187:: with SMTP id k129mr2906881qke.196.1597179107015;
-        Tue, 11 Aug 2020 13:51:47 -0700 (PDT)
+        bh=cQ0YqZZa9lODCoFb9xpqUaBGz+eMOXt0L0kMZRhg/Ic=;
+        b=I1/WuS+nbyO/FlMRsKCnbAiJLK+RtjSAodCgj1kv/T5dFOWzLvqcn2OfxLuZKRHpj/
+         l2J/GS/O1eoYWFhl6PP3AizWjUCIbPqE8Y7ebSnO0djHNvYRo7FRmDMHjVlnzOarhQXx
+         ejW0/uAgBpDXE05bhveoKacZ6dbLGwg+cNoDqUkmZa7D5ZOcVsRdVQd4xEXgzWhgdUKF
+         TARna8VqRYhpXnDeZLWZ42fYnHvPQXmc/chc5IYKpaXQ4I8wsUZ8DwOP/zXZxKeyI6LF
+         4x6r+er7f3L2OzrorDnloYuLXCcoSZkaXI9RIQrKRPRdl60FNd5ZcO+4g/XlXOT5JMDf
+         xgUg==
+X-Gm-Message-State: AOAM532OIM0R372dExx/AS6Ybq35Bnh5pfrr1qWXdZAp1hFLnRQwSR8X
+        ZMD0GvCZUk0Y73+FIXc+L0T/Wd3xQQk7y1A2
+X-Google-Smtp-Source: ABdhPJw8PWpJXMa/Ghx9FXftDjASUcJdiAX4GqMq7fcXj+udcnJeH0Qmx3XgGZpw5jck/V2bpwv21g==
+X-Received: by 2002:ad4:444e:: with SMTP id l14mr3160668qvt.111.1597179111461;
+        Tue, 11 Aug 2020 13:51:51 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:a92f:57be:59a6:7cb2])
-        by smtp.gmail.com with ESMTPSA id k31sm20175327qtd.60.2020.08.11.13.51.45
+        by smtp.gmail.com with ESMTPSA id s5sm18559863qke.120.2020.08.11.13.51.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 13:51:46 -0700 (PDT)
-Date:   Tue, 11 Aug 2020 16:51:45 -0400
+        Tue, 11 Aug 2020 13:51:50 -0700 (PDT)
+Date:   Tue, 11 Aug 2020 16:51:49 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, szeder.dev@gmail.com,
         gitster@pobox.com
-Subject: [PATCH v3 07/14] bloom: split 'get_bloom_filter()' in two
-Message-ID: <eba279487318137064eef776c779ca537a4a711d.1597178915.git.me@ttaylorr.com>
+Subject: [PATCH v3 11/14] csum-file.h: introduce 'hashwrite_be64()'
+Message-ID: <4800cd373eefb8d71094254d90fd0304067e464f.1597178915.git.me@ttaylorr.com>
 References: <cover.1596480582.git.me@ttaylorr.com>
  <cover.1597178914.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,237 +75,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'get_bloom_filter' takes a flag to control whether it will compute a
-Bloom filter if the requested one is missing. In the next patch, we'll
-add yet another parameter to this method, which would force all but one
-caller to specify an extra 'NULL' parameter at the end.
+A small handful of writers who wish to encode 64-bit values in network
+order have worked around the lack of such a helper by calling the 32-bit
+variant twice.
 
-Instead of doing this, split 'get_bloom_filter' into two functions:
-'get_bloom_filter' and 'get_or_compute_bloom_filter'. The former only
-looks up a Bloom filter (and does not compute one if it's missing,
-thus dropping the 'compute_if_not_present' flag). The latter does
-compute missing Bloom filters, with an additional parameter to store
-whether or not it needed to do so.
+The subsequent commit will add another caller who wants to write a
+64-bit value. To ease their (and the existing caller's) pain, introduce
+a helper to do just that, and convert existing call-sites.
 
-This simplifies many call-sites, since the majority of existing callers
-to 'get_bloom_filter' do not want missing Bloom filters to be computed
-(so they can drop the parameter entirely and use the simpler version of
-the function).
-
-While we're at it, instrument the new 'get_or_compute_bloom_filter()'
-with two counters in the 'write_commit_graph_context' struct which store
-the number of filters that we computed, and the number of those which
-were too large to store.
-
-It would be nice to drop the 'compute_if_not_present' flag entirely,
-since all remaining callers of 'get_or_compute_bloom_filter' pass it as
-'1', but this will change in a future patch and hence cannot be removed.
-
+Suggested-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- blame.c               |  2 +-
- bloom.c               | 13 ++++++++++---
- bloom.h               | 10 +++++++---
- commit-graph.c        | 38 +++++++++++++++++++++++++++++++++++---
- line-log.c            |  2 +-
- revision.c            |  2 +-
- t/helper/test-bloom.c |  3 ++-
- 7 files changed, 57 insertions(+), 13 deletions(-)
+ commit-graph.c | 8 ++------
+ csum-file.h    | 6 ++++++
+ midx.c         | 3 +--
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 3e5f8787bc..756285fca7 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1275,7 +1275,7 @@ static int maybe_changed_path(struct repository *r,
- 	if (commit_graph_generation(origin->commit) == GENERATION_NUMBER_INFINITY)
- 		return 1;
- 
--	filter = get_bloom_filter(r, origin->commit, 0);
-+	filter = get_bloom_filter(r, origin->commit);
- 
- 	if (!filter)
- 		return 1;
-diff --git a/bloom.c b/bloom.c
-index cd9380ac62..a8a21762f4 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -177,9 +177,10 @@ static int pathmap_cmp(const void *hashmap_cmp_fn_data,
- 	return strcmp(e1->path, e2->path);
- }
- 
--struct bloom_filter *get_bloom_filter(struct repository *r,
--				      struct commit *c,
--				      int compute_if_not_present)
-+struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
-+						 struct commit *c,
-+						 int compute_if_not_present,
-+						 int *computed)
- {
- 	struct bloom_filter *filter;
- 	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
-@@ -187,6 +188,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 	struct diff_options diffopt;
- 	int max_changes = 512;
- 
-+	if (computed)
-+		*computed = 0;
-+
- 	if (!bloom_filters.slab_size)
- 		return NULL;
- 
-@@ -273,6 +277,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 		filter->len = 0;
- 	}
- 
-+	if (computed)
-+		*computed = 1;
-+
- 	free(diff_queued_diff.queue);
- 	DIFF_QUEUE_CLEAR(&diff_queued_diff);
- 
-diff --git a/bloom.h b/bloom.h
-index 0b9b59a6fe..baa91926db 100644
---- a/bloom.h
-+++ b/bloom.h
-@@ -89,9 +89,13 @@ void add_key_to_filter(const struct bloom_key *key,
- 
- void init_bloom_filters(void);
- 
--struct bloom_filter *get_bloom_filter(struct repository *r,
--				      struct commit *c,
--				      int compute_if_not_present);
-+struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
-+						 struct commit *c,
-+						 int compute_if_not_present,
-+						 int *computed);
-+
-+#define get_bloom_filter(r, c) get_or_compute_bloom_filter( \
-+	(r), (c), 0, NULL)
- 
- int bloom_filter_contains(const struct bloom_filter *filter,
- 			  const struct bloom_key *key,
 diff --git a/commit-graph.c b/commit-graph.c
-index 86dd4b979e..ba2a2cfb22 100644
+index 0d70545149..8964453433 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -964,6 +964,9 @@ struct write_commit_graph_context {
- 	const struct split_commit_graph_opts *split_opts;
- 	size_t total_bloom_filter_data_size;
- 	const struct bloom_filter_settings *bloom_settings;
-+
-+	int count_bloom_filter_found_large;
-+	int count_bloom_filter_computed;
- };
+@@ -1784,12 +1784,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  
- static int write_graph_chunk_fanout(struct hashfile *f,
-@@ -1175,7 +1178,7 @@ static int write_graph_chunk_bloom_indexes(struct hashfile *f,
- 	uint32_t cur_pos = 0;
+ 	chunk_offset = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	for (i = 0; i <= num_chunks; i++) {
+-		uint32_t chunk_write[3];
+-
+-		chunk_write[0] = htonl(chunks[i].id);
+-		chunk_write[1] = htonl(chunk_offset >> 32);
+-		chunk_write[2] = htonl(chunk_offset & 0xffffffff);
+-		hashwrite(f, chunk_write, 12);
++		hashwrite_be32(f, chunks[i].id);
++		hashwrite_be64(f, chunk_offset);
  
- 	while (list < last) {
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
- 		size_t len = filter ? filter->len : 0;
- 		cur_pos += len;
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
-@@ -1215,7 +1218,7 @@ static int write_graph_chunk_bloom_data(struct hashfile *f,
- 	hashwrite_be32(f, ctx->bloom_settings->bits_per_entry);
- 
- 	while (list < last) {
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
-+		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list);
- 		size_t len = filter ? filter->len : 0;
- 
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
-@@ -1385,6 +1388,22 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 	stop_progress(&ctx->progress);
+ 		chunk_offset += chunks[i].size;
+ 	}
+diff --git a/csum-file.h b/csum-file.h
+index f9cbd317fb..b026ec7766 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -62,4 +62,10 @@ static inline void hashwrite_be32(struct hashfile *f, uint32_t data)
+ 	hashwrite(f, &data, sizeof(data));
  }
  
-+static void trace2_bloom_filter_write_statistics(struct write_commit_graph_context *ctx)
++static inline void hashwrite_be64(struct hashfile *f, uint64_t data)
 +{
-+	struct json_writer jw = JSON_WRITER_INIT;
-+
-+	jw_object_begin(&jw, 0);
-+	jw_object_intmax(&jw, "filter_found_large",
-+			 ctx->count_bloom_filter_found_large);
-+	jw_object_intmax(&jw, "filter_computed",
-+			 ctx->count_bloom_filter_computed);
-+	jw_end(&jw);
-+
-+	trace2_data_json("commit-graph", the_repository, "bloom_statistics", &jw);
-+
-+	jw_release(&jw);
++	hashwrite_be32(f, data >> 32);
++	hashwrite_be32(f, data & 0xffffffffUL);
 +}
 +
- static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- {
- 	int i;
-@@ -1407,12 +1426,25 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
+ #endif
+diff --git a/midx.c b/midx.c
+index a5fb797ede..51ca27cf34 100644
+--- a/midx.c
++++ b/midx.c
+@@ -775,8 +775,7 @@ static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_off
+ 		if (!(offset >> 31))
+ 			continue;
  
- 	for (i = 0; i < ctx->commits.nr; i++) {
-+		int computed = 0;
- 		struct commit *c = sorted_commits[i];
--		struct bloom_filter *filter = get_bloom_filter(ctx->r, c, 1);
-+		struct bloom_filter *filter = get_or_compute_bloom_filter(
-+			ctx->r,
-+			c,
-+			1,
-+			&computed);
-+		if (computed) {
-+			ctx->count_bloom_filter_computed++;
-+			if (filter && !filter->len)
-+				ctx->count_bloom_filter_found_large++;
-+		}
- 		ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
- 		display_progress(progress, i + 1);
- 	}
+-		hashwrite_be32(f, offset >> 32);
+-		hashwrite_be32(f, offset & 0xffffffffUL);
++		hashwrite_be64(f, offset);
+ 		written += 2 * sizeof(uint32_t);
  
-+	if (trace2_is_enabled())
-+		trace2_bloom_filter_write_statistics(ctx);
-+
- 	free(sorted_commits);
- 	stop_progress(&progress);
- }
-diff --git a/line-log.c b/line-log.c
-index bf73ea95ac..68eeb425f8 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1159,7 +1159,7 @@ static int bloom_filter_check(struct rev_info *rev,
- 		return 1;
- 
- 	if (!rev->bloom_filter_settings ||
--	    !(filter = get_bloom_filter(rev->repo, commit, 0)))
-+	    !(filter = get_bloom_filter(rev->repo, commit)))
- 		return 1;
- 
- 	if (!range)
-diff --git a/revision.c b/revision.c
-index be600186ee..7f58ecc411 100644
---- a/revision.c
-+++ b/revision.c
-@@ -751,7 +751,7 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 	if (commit_graph_generation(commit) == GENERATION_NUMBER_INFINITY)
- 		return -1;
- 
--	filter = get_bloom_filter(revs->repo, commit, 0);
-+	filter = get_bloom_filter(revs->repo, commit);
- 
- 	if (!filter) {
- 		count_bloom_filter_not_present++;
-diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index f0aa80b98e..531af439c2 100644
---- a/t/helper/test-bloom.c
-+++ b/t/helper/test-bloom.c
-@@ -39,7 +39,8 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
- 	struct bloom_filter *filter;
- 	setup_git_directory();
- 	c = lookup_commit(the_repository, commit_oid);
--	filter = get_bloom_filter(the_repository, c, 1);
-+	filter = get_or_compute_bloom_filter(the_repository, c, 1,
-+					     NULL);
- 	print_bloom_filter(filter);
- }
- 
+ 		nr_large_offset--;
 -- 
 2.28.0.rc1.13.ge78abce653
 
