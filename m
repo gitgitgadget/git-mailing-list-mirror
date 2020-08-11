@@ -2,199 +2,183 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06E33C433DF
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C86C433E0
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:32:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC6D82076C
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:30:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B3B62076C
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 15:32:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SgIdE8tk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KWphYWwH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728881AbgHKPaW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 11:30:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60208 "EHLO
+        id S1728946AbgHKPcl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 11:32:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728833AbgHKPaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 11:30:22 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E37C1C06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:30:21 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id t14so3248899wmi.3
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:30:21 -0700 (PDT)
+        with ESMTP id S1728859AbgHKPck (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 11:32:40 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71572C06174A
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:32:40 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id f12so11889460wru.13
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 08:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=udQfOSf4XdLqco47uAnE/JhCZ7HlkuphIpesPYnlO4I=;
-        b=SgIdE8tkeQSd1gXrT49aHSMde3ndXBy2Kkai5MOV9x5djie4hzo5Oh8RMSNauv5kzS
-         iELvrsSay33Izl82Mjt8ntfvsL+SB89ekDurguUOOYVMM0Zd98uLVI2C6LLo0U7uFg3x
-         zG4E+gjA/Q6gngteGDUw/7aJqPjpSerrBaz6qNR38hh4n+1wfOOxXPSPuMKSN4uFqK49
-         CUH20gjHM12Epm4eLB5prK+SaqCB6v+psplrGLcfdk94K6/fzooKn2TiUgNqC/vMVgWY
-         AydkEOokE8MxMh9eepP4uWuB7n1w9xx5SrU62nC8aHEfIU6oPdxqcrApoTwYW7YijIJi
-         6SZw==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=F9/08HFww7dXZpjXuJpktNgtGtjM1kU3DZnA1oYSfAY=;
+        b=KWphYWwHFwc090Nu7PYqFg+zgMwx/UQfJkngLAl9N2vb8HBbiEEcyEZUvVoCM/2pxz
+         1LjEu2tILtcTqFpRR/wq86FsmQGsPeaX9+IMJL2RiCVZffZPmLcmcsOda398H3XT2KIM
+         7crP16BTzAwOlLjbk4/2V8rAJ+vxlz1oEmtVcbgi5zbJppBZLRIDpRZQqw9hL8yOeUzH
+         4GYlhUxu9YFC1oB3oLTeabKSoNmBO/KlXM0i4QxjtH/t+7R04mVOW0kT2b2TcHmkTNYd
+         Azp6FWsOuPFYXJWXhYVfQn4yFJ9sZwqe/7KBcztvKO3smlsLcwgp5pvgJO9g7uFf9hbe
+         4E2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=udQfOSf4XdLqco47uAnE/JhCZ7HlkuphIpesPYnlO4I=;
-        b=b464v6T+rwxDaZWvThwkO8tdx6NqPT0c9EmYMEwVguHf/0MqVgqLpp6VPHZq3MpDIx
-         yrJY+NbD+EgOPx8YzfEaTQORrsbkVEoRWPhJue5UD5vN8MoyxtzD/H5SjWGi0Rn+J2S2
-         s8FZBmTlflb/bdzQTmWLq37lIh7YaBhecX7vvpxuBdv4Edn6VVdg0itMaE4gV9V8HgZf
-         tSjEIDoelL28QoqXUfjAxhUcdkcd2nBzkyP4HYRxn6XmdaXg6/1swAJ2QNkNnzlVjZ7i
-         03MAh6udfhTIW76PdmpLOBtt2TzNljnOD/bcl/fxtbopoz6GNb8A3U/h0royOG8kOEDZ
-         BzdQ==
-X-Gm-Message-State: AOAM530oQ/Z6/vgUPh1opb7qt4b55BjPMUQDGIuICuWtehV9GfRGGHY7
-        WjJ4Pl2eBtYQVK66eDVhL3xtrhgn
-X-Google-Smtp-Source: ABdhPJyinZEH/19/CTiQj062L2jfDxIeGkMNxiu1OuAW5TNTFAfM2Btb7PZKLp+jIL9+iPjzJaFmFg==
-X-Received: by 2002:a7b:c0cb:: with SMTP id s11mr4435805wmh.89.1597159819432;
-        Tue, 11 Aug 2020 08:30:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 6sm5922107wmf.4.2020.08.11.08.30.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 08:30:19 -0700 (PDT)
-Message-Id: <pull.698.git.1597159818457.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Aug 2020 15:30:18 +0000
-Subject: [PATCH] multi-pack-index: repack batches below --batch-size
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=F9/08HFww7dXZpjXuJpktNgtGtjM1kU3DZnA1oYSfAY=;
+        b=iJ/BgnTQmW0T92NYAbXbBLxcxDGofRaKx449iPxp198H0TiDZPWfEPeVO8ARJoUO1i
+         YQntOaCyZ7ocRYrYYhSTEkBYoTSTuv7FnpqpviO0UnZQ99wf5iGDY/K0T5iEpaE1snpn
+         jyNDebGYdaQoNL7W0Q7nfzlyTWUz2Lk8vgaQlQBLUAUOV8+M7+O5DgcSQEPejOwtxS1G
+         BFHgjChEW9fHoiTTXto9i6KwUPG5pcxV7o/yTrfXDUD0m7MpeuZZZAtWwNwqp3Opi0m7
+         H9QcLlA0Wd1CtNB4icKVMGJL0Ng4f9TK48jyNMFAUSoK/mecF75Jf8r7tFDy9S+iviaH
+         l8Ww==
+X-Gm-Message-State: AOAM530fDmcmieAhKdOmkEBdULyNUKT7C6HSEqZcKysUha84Mtqjs2U2
+        54aM+F2dERBdKItkC6tqzCQ=
+X-Google-Smtp-Source: ABdhPJx8vUWquSVY3gCOvnOpysw54apbhUxBC0BRqxIug7nTvjcCwed6VpOwR6gfNvon11JSmjSRPg==
+X-Received: by 2002:a5d:480b:: with SMTP id l11mr28507501wrq.85.1597159959040;
+        Tue, 11 Aug 2020 08:32:39 -0700 (PDT)
+Received: from [192.168.1.240] (161.252.189.80.dyn.plus.net. [80.189.252.161])
+        by smtp.gmail.com with ESMTPSA id q6sm5815399wma.22.2020.08.11.08.32.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Aug 2020 08:32:38 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase -i: Fix possibly wrong onto hash in todo
+To:     =?UTF-8?Q?Antti_Ker=c3=a4nen?= <detegr@rbx.email>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?Q?Jussi_Ker=c3=a4nen?= <jussike@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20200811131313.3349582-1-detegr@rbx.email>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <ebdc0bc7-f48e-9f38-328d-b1181ac974d7@gmail.com>
+Date:   Tue, 11 Aug 2020 16:32:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     sluongng@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <20200811131313.3349582-1-detegr@rbx.email>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Antti
 
-The --batch-size=<size> option of 'git multi-pack-index repack' is
-intended to limit the amount of work done by the repack. In the case of
-a large repository, this command should repack a number of small
-pack-files but leave the large pack-files alone. Most often, the
-repository has one large pack-file from a 'git clone' operation and
-number of smaller pack-files from incremental 'git fetch' operations.
+On 11/08/2020 14:13, Antti Keränen wrote:
+> 'todo_list_write_to_file' may overwrite the static buffer, originating
+> from 'find_unique_abbrev', that was used to store the short commit hash
+> 'c' for "# Rebase a..b onto c" message in the todo editor.
+> Fix by duplicating the string before usage, so subsequent calls to
+> 'find_unique_abbrev' or other functions calling 'hash_to_hex_algop_r'
+> can't overwrite the buffer.
+> 
+> Found-by: Jussi Keränen <jussike@gmail.com>
+> Signed-off-by: Antti Keränen <detegr@rbx.email>
 
-The issue with '--batch-size' is that it also _prevents_ the repack from
-happening if the expected size of the resulting pack-file is too small.
-This was intended as a way to avoid frequent churn of small pack-files,
-but it has mostly caused confusion when a repository is of "medium"
-size. That is, not enormous like the Windows OS repository, but also not
-so small that this incremental repack isn't valuable.
+Thanks for working on this
 
-The solution presented here is to collect pack-files for repack if their
-expected size is smaller than the batch-size parameter until either the
-total expected size exceeds the batch-size or all pack-files are
-considered. If there are at least two pack-files, then these are
-combined to a new pack-file whose size should not be too much larger
-than the batch-size.
+> ---
+>   sequencer.c                   |  7 ++++---
+>   t/t3404-rebase-interactive.sh | 13 +++++++++++++
+>   2 files changed, 17 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index fd7701c88a..0679adb639 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5178,13 +5178,12 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>   		    struct string_list *commands, unsigned autosquash,
+>   		    struct todo_list *todo_list)
+>   {
+> -	const char *shortonto, *todo_file = rebase_path_todo();
+> +	const char *todo_file = rebase_path_todo();
 
-This new strategy should succeed in keeping the number of pack-files
-small in these "medium" size repositories. The concern about churn is
-likely not interesting, as the real control over that is the frequency
-in which the repack command is run.
+I'm not sure it's worth rearranging these lines. It probably does not 
+matter but we could do
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    multi-pack-index: repack batches below --batch-size
-    
-    As reported [1], the 'git multi-pack-index repack' command has some
-    unexpected behavior due to the nature of "expected size" for un-thinned
-    fetch packs and the fact that the batch size requires the total size to
-    be at least as large as that batch-size. By removing this minimum size
-    restriction, we will repack more frequently and prevent this "many
-    pack-file" problems.
-    
-    [1] 
-    https://lore.kernel.org/git/6FA8F54A-C92D-497B-895F-AC6E8287AACD@gmail.com/
++	char shortonto[GIT_MAX_HEXSZ + 1];
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-698%2Fderrickstolee%2Fmidx-repack-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-698/derrickstolee/midx-repack-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/698
+and then later call find_unique_abbrev_r() instead so we don't have to 
+worry about freeing shortonto.
 
- Documentation/git-multi-pack-index.txt | 11 ++++++-----
- midx.c                                 |  2 +-
- t/t5319-multi-pack-index.sh            | 18 ++++++++++++++++++
- 3 files changed, 25 insertions(+), 6 deletions(-)
+>   	struct todo_list new_todo = TODO_LIST_INIT;
+>   	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+>   	struct object_id oid = onto->object.oid;
+>   	int res;
+> -
+> -	shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
+> +	char *shortonto;
+>   
+>   	if (buf->len == 0) {
+>   		struct todo_item *item = append_new_todo(todo_list);
+> @@ -5206,8 +5205,10 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>   		return error(_("nothing to do"));
+>   	}
+>   
+> +	shortonto = xstrdup(find_unique_abbrev(&oid, DEFAULT_ABBREV));
+>   	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
+>   			     shortonto, flags);
+> +	free(shortonto);
+>   	if (res == -1)
+>   		return -1;
+>   	else if (res == -2) {
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 4a7d21f898..09af16753c 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1760,6 +1760,19 @@ test_expect_success 'correct error message for commit --amend after empty pick'
+>   	test_i18ngrep "middle of a rebase -- cannot amend." err
+>   '
+>   
+> +test_expect_success 'todo has correct onto hash' '
+> +	write_script dump-raw.sh <<-\EOF &&
+> +		cat "$1"
+> +	EOF
+> +	git checkout branch1 &&
+> +	(
+> +		test_set_editor "$(pwd)/dump-raw.sh" &&
+> +		git rebase -i HEAD~5 >actual
+> +	) &&
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 0c6619493c..eb0caa0439 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -51,11 +51,12 @@ repack::
- 	multi-pack-index, then divide by the total number of objects in
- 	the pack and multiply by the pack size. We select packs with
- 	expected size below the batch size until the set of packs have
--	total expected size at least the batch size. If the total size
--	does not reach the batch size, then do nothing. If a new pack-
--	file is created, rewrite the multi-pack-index to reference the
--	new pack-file. A later run of 'git multi-pack-index expire' will
--	delete the pack-files that were part of this batch.
-+	total expected size at least the batch size, or all pack-files
-+	are considered. If only one pack-file is selected, then do
-+	nothing. If a new pack-file is created, rewrite the
-+	multi-pack-index to reference the new pack-file. A later run of
-+	'git multi-pack-index expire' will delete the pack-files that
-+	were part of this batch.
- +
- If `repack.packKeptObjects` is `false`, then any pack-files with an
- associated `.keep` file will not be selected for the batch to repack.
-diff --git a/midx.c b/midx.c
-index 6d1584ca51..38690b46c9 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1371,7 +1371,7 @@ static int fill_included_packs_batch(struct repository *r,
- 
- 	free(pack_info);
- 
--	if (total_size < batch_size || packs_to_repack < 2)
-+	if (packs_to_repack < 2)
- 		return 1;
- 
- 	return 0;
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 7214cab36c..b05190f500 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -643,6 +643,7 @@ test_expect_success 'expire respects .keep files' '
- '
- 
- test_expect_success 'repack --batch-size=0 repacks everything' '
-+	cp -r dup dup2 &&
- 	(
- 		cd dup &&
- 		rm .git/objects/pack/*.keep &&
-@@ -662,4 +663,21 @@ test_expect_success 'repack --batch-size=0 repacks everything' '
- 	)
- '
- 
-+test_expect_success 'repack --batch-size=<large> repacks everything' '
-+	(
-+		cd dup2 &&
-+		rm .git/objects/pack/*.keep &&
-+		ls .git/objects/pack/*idx >idx-list &&
-+		test_line_count = 2 idx-list &&
-+		git multi-pack-index repack --batch-size=2000000 &&
-+		ls .git/objects/pack/*idx >idx-list &&
-+		test_line_count = 3 idx-list &&
-+		test-tool read-midx .git/objects | grep idx >midx-list &&
-+		test_line_count = 3 midx-list &&
-+		git multi-pack-index expire &&
-+		ls -al .git/objects/pack/*idx >idx-list &&
-+		test_line_count = 1 idx-list
-+	)
-+'
-+
- test_done
+Thanks for taking the trouble to add a test, I think all the lines above 
+could be simplified to
 
-base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
--- 
-gitgitgadget
+	GIT_SEQUENCE_EDITOR=cat git rebase -i HEAD~5 branch1 >actual
+
+> +	onto=$(git rev-parse --short HEAD~5) &&
+> +	test_i18ngrep "^# Rebase ..* onto $onto .*" actual
+
+we could lose the final .*
+
+Many Thanks and Best Wishes
+
+Phillip
+
+> +'
+> +
+>   # This must be the last test in this file
+>   test_expect_success '$EDITOR and friends are unchanged' '
+>   	test_editor_unchanged
+> 
