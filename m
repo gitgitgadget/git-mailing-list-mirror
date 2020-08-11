@@ -2,361 +2,116 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59591C433DF
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 20:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A15BC433DF
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 21:01:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 273332076C
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 20:52:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2E03206DC
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 21:01:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="vcCJlIr+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mCc97V9g"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726529AbgHKUwV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 16:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53460 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbgHKUwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 16:52:20 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA4EAC06174A
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 13:52:20 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id y11so47536qvl.4
-        for <git@vger.kernel.org>; Tue, 11 Aug 2020 13:52:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+cZdRC8E7ZSQYMzb3tw3vk7oWazgBS1DHO6N5L/S2yQ=;
-        b=vcCJlIr+hZZqE0PYuUbVua8L7SF6eSeHq4XrKLPg6mY0QZYpWv1E/3kiwcZBUQf6w+
-         whusKhoN4x72Xxb5SSp/eoHTDVCp8FWeGhv7XhCvilNwCyL1Kh5DQIHOrWegC4RntGSG
-         osyNHBUln3kyB5gOsq8D6blLov/LSnBYKz7qp9/QP9uJMZQHyVLQdmxbJXRbYfazk4IH
-         nRmusMtqCtfpGlZ43WRoHe6GvxAPxh9FTj6ZtneEwMdC5WSTNSp3aXBYDU211GESNqkY
-         gHuqEcYM0/CxeP1C4tBBry09d/Y3nbsjU3zW2ciJiV1wAJoOwYRrNZ27QEIpnt4jrCXl
-         jqIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+cZdRC8E7ZSQYMzb3tw3vk7oWazgBS1DHO6N5L/S2yQ=;
-        b=eRtZtvi+Zm3TDkoFO0NYxWiUGIx0MAXRVqkP8dt+UI2MAaSRl0b5wfFH9krDliKtCD
-         QLtnclbSm0ze7r8R6iXHTv9vytSkA4ATxOqtP9dCfg4gRAE6c+v2tbquQDXLxoSF1+f+
-         ulBSr95yoBcUFb4ae3WZy1F86h32UqbPXhGxwK6AiQ6m7FVtkCuJwwQoh8eMkWliVstg
-         S+MsrCZMxaDrzHUDEFpgIAAKLzJ/3p5GiA9NkVfAtMnKwgmA6PbpK9pqv4nykSMZtwL+
-         0pdo/gkBpSjNizG0w0GOCOQ0ZfhA4LN1YYyzZFu7uQ4Y3mIa5H12YnwuuvJnYDH0iJDH
-         /TCw==
-X-Gm-Message-State: AOAM530vOb9y/cRZ4LCNWF+poKYtYh/nGVsMT4nArAVJEuIQt5zglKmv
-        7QR/7FZwBxQn7gehwglfh3LeJ6I5k/xTjWKz
-X-Google-Smtp-Source: ABdhPJyJyIM42vogVH+WYiFuzfeKkwCvVB/KWXxxv01cfekkC3u/t4/Iv0wu+547TDPIGevz5n72gg==
-X-Received: by 2002:a05:6214:10e8:: with SMTP id q8mr3191446qvt.59.1597179136557;
-        Tue, 11 Aug 2020 13:52:16 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:a92f:57be:59a6:7cb2])
-        by smtp.gmail.com with ESMTPSA id l10sm13766048qtl.72.2020.08.11.13.52.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2020 13:52:15 -0700 (PDT)
-Date:   Tue, 11 Aug 2020 16:52:14 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com, szeder.dev@gmail.com,
-        gitster@pobox.com
-Subject: [PATCH v3 14/14] builtin/commit-graph.c: introduce
- '--max-new-filters=<n>'
-Message-ID: <09f6871f66bff838c067a3e0d23cd4622171f3bd.1597178915.git.me@ttaylorr.com>
-References: <cover.1596480582.git.me@ttaylorr.com>
- <cover.1597178914.git.me@ttaylorr.com>
+        id S1726501AbgHKVBn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 17:01:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63534 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726164AbgHKVBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 17:01:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 105B084A98;
+        Tue, 11 Aug 2020 17:01:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=oeHYJ2cIh6S6
+        +B0fo/9yiRup76w=; b=mCc97V9g342ZdVUwchtxQas25HGUTlxadeG2fEN8PFvb
+        pxMGoHzYgAuIt3ep1NkgToN59cqpdAPBVBYxgM/PhlQLzFFr/U7Bf083sFGFrpuG
+        yVBvG8sufbdo0t6hrGeJ/gmlVVeGbTdc4bxweTcEw573l+wvT+dBdNV7XndAo0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=q7rcaD
+        NgImh/uINjNsCkMnvuWQs+w0lC7hMCAJ5WSo5ueLqgKWFr75OTh2M5s80f+yhEza
+        Vrj7O2/2uma/t0Srkd9E2hnmGbihtbEh1f9l+TfZyQycvQLhB4PjbqNYx/CKQFbO
+        +Dy8LBbTwKhSGHJVjtpOS7PKzjH1NOrAtVGnA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06A3E84A97;
+        Tue, 11 Aug 2020 17:01:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4573984A96;
+        Tue, 11 Aug 2020 17:01:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] upload-pack: remove superfluous sigchain_pop() call
+References: <29ac165c-8458-9bb1-7e59-e7c2c68a9f2a@web.de>
+        <20200811182603.GB33504@syl.lan>
+Date:   Tue, 11 Aug 2020 14:01:39 -0700
+In-Reply-To: <20200811182603.GB33504@syl.lan> (Taylor Blau's message of "Tue,
+        11 Aug 2020 14:26:03 -0400")
+Message-ID: <xmqqtux899sc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1597178914.git.me@ttaylorr.com>
+X-Pobox-Relay-ID: DA4B2F9A-DC15-11EA-9898-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a command-line flag and configuration variable to fill in the
-'max_new_filters' variable introduced by the previous patch.
+Taylor Blau <me@ttaylorr.com> writes:
 
-The command-line option '--max-new-filters' takes precedence over
-'commitGraph.maxNewFilters', which is the default value.
-'--no-max-new-filters' can also be provided, which sets the value back
-to '-1', indicating that an unlimited number of new Bloom filters may be
-generated. (OPT_INTEGER only allows setting the '--no-' variant back to
-'0', hence a custom callback was used instead).
+> On Tue, Aug 11, 2020 at 07:15:03PM +0200, Ren=C3=A9 Scharfe wrote:
+>> 2997178ee6 (upload-pack: split check_unreachable() in two, prep for
+>> get_reachable_list(), 2016-06-12) moved most code of has_unreachable()
+>> into the new function do_reachable_revlist().  The latter takes care t=
+o
+>> ignore SIGPIPE during its operations, and restores the original signal
+>> handler before returning.
+>>
+>> However, a sigchain_pop(SIGPIPE) call remained in the error handling
+>> code of has_unreachable(), which does nothing because the stack is
+>> empty after do_reachable_revlist() cleaned up after itself.  Remove it=
+.
+>
+> Thanks for noticing. Your analysis seems correct to me after a quick
+> inspection of the code, so this has my:
+>
+>   Reviewed-by: Taylor Blau <me@ttaylorr.com>
+>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> ---
+>>  upload-pack.c | 1 -
+>>  1 file changed, 1 deletion(-)
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/config/commitgraph.txt |  4 +++
- Documentation/git-commit-graph.txt   |  4 +++
- bloom.c                              | 15 +++++++++++
- builtin/commit-graph.c               | 39 +++++++++++++++++++++++++---
- commit-graph.c                       | 27 ++++++++++++++++---
- commit-graph.h                       |  1 +
- t/t4216-log-bloom.sh                 | 19 ++++++++++++++
- 7 files changed, 102 insertions(+), 7 deletions(-)
+Yeah, looks good to me, too.  Thanks, both.
 
-diff --git a/Documentation/config/commitgraph.txt b/Documentation/config/commitgraph.txt
-index cff0797b54..4582c39fc4 100644
---- a/Documentation/config/commitgraph.txt
-+++ b/Documentation/config/commitgraph.txt
-@@ -1,3 +1,7 @@
-+commitGraph.maxNewFilters::
-+	Specifies the default value for the `--max-new-filters` option of `git
-+	commit-graph write` (c.f., linkgit:git-commit-graph[1]).
-+
- commitGraph.readChangedPaths::
- 	If true, then git will use the changed-path Bloom filters in the
- 	commit-graph file (if it exists, and they are present). Defaults to
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 17405c73a9..9c887d5d79 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -67,6 +67,10 @@ this option is given, future commit-graph writes will automatically assume
- that this option was intended. Use `--no-changed-paths` to stop storing this
- data.
- +
-+With the `--max-new-filters=<n>` option, generate at most `n` new Bloom
-+filters (if `--changed-paths` is specified). If `n` is `-1`, no limit is
-+enforced. Overrides the `commitGraph.maxNewFilters` configuration.
-++
- With the `--split[=<strategy>]` option, write the commit-graph as a
- chain of multiple commit-graph files stored in
- `<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
-diff --git a/bloom.c b/bloom.c
-index ed54e96e57..8d07209c6b 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -51,6 +51,21 @@ static int load_bloom_filter_from_graph(struct commit_graph *g,
- 	else
- 		start_index = 0;
- 
-+	if ((start_index == end_index) &&
-+	    (g->bloom_large && !bitmap_get(g->bloom_large, lex_pos))) {
-+		/*
-+		 * If the filter is zero-length, either (1) the filter has no
-+		 * changes, (2) the filter has too many changes, or (3) it
-+		 * wasn't computed (eg., due to '--max-new-filters').
-+		 *
-+		 * If either (1) or (2) is the case, the 'large' bit will be set
-+		 * for this Bloom filter. If it is unset, then it wasn't
-+		 * computed. In that case, return nothing, since we don't have
-+		 * that filter in the graph.
-+		 */
-+		return 0;
-+	}
-+
- 	filter->len = end_index - start_index;
- 	filter->data = (unsigned char *)(g->chunk_bloom_data +
- 					sizeof(unsigned char) * start_index +
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 38f5f57d15..3500a6e1f1 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -13,7 +13,8 @@ static char const * const builtin_commit_graph_usage[] = {
- 	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
- 	N_("git commit-graph write [--object-dir <objdir>] [--append] "
- 	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
--	   "[--changed-paths] [--[no-]progress] <split options>"),
-+	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] "
-+	   "<split options>"),
- 	NULL
- };
- 
-@@ -25,7 +26,8 @@ static const char * const builtin_commit_graph_verify_usage[] = {
- static const char * const builtin_commit_graph_write_usage[] = {
- 	N_("git commit-graph write [--object-dir <objdir>] [--append] "
- 	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
--	   "[--changed-paths] [--[no-]progress] <split options>"),
-+	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] "
-+	   "<split options>"),
- 	NULL
- };
- 
-@@ -162,6 +164,23 @@ static int read_one_commit(struct oidset *commits, struct progress *progress,
- 	return 0;
- }
- 
-+static int write_option_max_new_filters(const struct option *opt,
-+					const char *arg,
-+					int unset)
-+{
-+	int *to = opt->value;
-+	if (unset)
-+		*to = -1;
-+	else {
-+		const char *s;
-+		*to = strtol(arg, (char **)&s, 10);
-+		if (*s)
-+			return error(_("%s expects a numerical value"),
-+				     optname(opt, opt->flags));
-+	}
-+	return 0;
-+}
-+
- static int graph_write(int argc, const char **argv)
- {
- 	struct string_list pack_indexes = STRING_LIST_INIT_NODUP;
-@@ -197,6 +216,9 @@ static int graph_write(int argc, const char **argv)
- 			N_("maximum ratio between two levels of a split commit-graph")),
- 		OPT_EXPIRY_DATE(0, "expire-time", &write_opts.expire_time,
- 			N_("only expire files older than a given date-time")),
-+		OPT_CALLBACK_F(0, "max-new-filters", &write_opts.max_new_filters,
-+			NULL, N_("maximum number of changed-path Bloom filters to compute"),
-+			0, write_option_max_new_filters),
- 		OPT_END(),
- 	};
- 
-@@ -205,6 +227,7 @@ static int graph_write(int argc, const char **argv)
- 	write_opts.size_multiple = 2;
- 	write_opts.max_commits = 0;
- 	write_opts.expire_time = 0;
-+	write_opts.max_new_filters = -1;
- 
- 	trace2_cmd_mode("write");
- 
-@@ -270,6 +293,16 @@ static int graph_write(int argc, const char **argv)
- 	return result;
- }
- 
-+static int git_commit_graph_config(const char *var, const char *value, void *cb)
-+{
-+	if (!strcmp(var, "commitgraph.maxnewfilters")) {
-+		write_opts.max_new_filters = git_config_int(var, value);
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value, cb);
-+}
-+
- int cmd_commit_graph(int argc, const char **argv, const char *prefix)
- {
- 	static struct option builtin_commit_graph_options[] = {
-@@ -283,7 +316,7 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_commit_graph_usage,
- 				   builtin_commit_graph_options);
- 
--	git_config(git_default_config, NULL);
-+	git_config(git_commit_graph_config, &opts);
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_commit_graph_options,
- 			     builtin_commit_graph_usage,
-diff --git a/commit-graph.c b/commit-graph.c
-index 6886f319a5..4aae5471e3 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -954,7 +954,8 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
- }
- 
- static int get_bloom_filter_large_in_graph(struct commit_graph *g,
--					   const struct commit *c)
-+					   const struct commit *c,
-+					   uint32_t max_changed_paths)
- {
- 	uint32_t graph_pos = commit_graph_position(c);
- 	if (graph_pos == COMMIT_NOT_FROM_GRAPH)
-@@ -965,6 +966,17 @@ static int get_bloom_filter_large_in_graph(struct commit_graph *g,
- 
- 	if (!(g && g->bloom_large))
- 		return 0;
-+	if (g->bloom_filter_settings->max_changed_paths != max_changed_paths) {
-+		/*
-+		 * Force all commits which are subject to a different
-+		 * 'max_changed_paths' limit to be recomputed from scratch.
-+		 *
-+		 * Note that this could likely be improved, but is ignored since
-+		 * all real-world graphs set the maximum number of changed paths
-+		 * at 512.
-+		 */
-+		return 0;
-+	}
- 	return bitmap_get(g->bloom_large, graph_pos - g->num_commits_in_base);
- }
- 
-@@ -1470,6 +1482,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 	int i;
- 	struct progress *progress = NULL;
- 	int *sorted_commits;
-+	int max_new_filters;
- 
- 	init_bloom_filters();
- 	ctx->bloom_large = bitmap_word_alloc(ctx->commits.nr / BITS_IN_EWORD + 1);
-@@ -1486,10 +1499,15 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 		ctx->order_by_pack ? commit_pos_cmp : commit_gen_cmp,
- 		&ctx->commits);
- 
-+	max_new_filters = ctx->opts->max_new_filters >= 0 ?
-+		ctx->opts->max_new_filters : ctx->commits.nr;
-+
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		int pos = sorted_commits[i];
- 		struct commit *c = ctx->commits.list[pos];
--		if (get_bloom_filter_large_in_graph(ctx->r->objects->commit_graph, c)) {
-+		if (get_bloom_filter_large_in_graph(ctx->r->objects->commit_graph,
-+						    c,
-+						    ctx->bloom_settings->max_changed_paths)) {
- 			bitmap_set(ctx->bloom_large, pos);
- 			ctx->count_bloom_filter_known_large++;
- 		} else {
-@@ -1497,7 +1515,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 			struct bloom_filter *filter = get_or_compute_bloom_filter(
- 				ctx->r,
- 				c,
--				1,
-+				ctx->count_bloom_filter_computed < max_new_filters,
- 				ctx->bloom_settings,
- 				&computed);
- 			if (computed) {
-@@ -1507,7 +1525,8 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 					ctx->count_bloom_filter_found_large++;
- 				}
- 			}
--			ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
-+			if (filter)
-+				ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
- 		}
- 		display_progress(progress, i + 1);
- 	}
-diff --git a/commit-graph.h b/commit-graph.h
-index af08c4505d..75ef83708b 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -114,6 +114,7 @@ struct commit_graph_opts {
- 	int max_commits;
- 	timestamp_t expire_time;
- 	enum commit_graph_split_flags flags;
-+	int max_new_filters;
- };
- 
- /*
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 6859d85369..3aab8ffbe3 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -286,4 +286,23 @@ test_expect_success 'Bloom generation does not recompute too-large filters' '
- 	)
- '
- 
-+test_expect_success 'Bloom generation is limited by --max-new-filters' '
-+	(
-+		cd limits &&
-+		test_commit c2 filter &&
-+		test_commit c3 filter &&
-+		test_commit c4 no-filter &&
-+		test_bloom_filters_computed "--reachable --changed-paths --split=replace --max-new-filters=2" \
-+			2 0 2
-+	)
-+'
-+
-+test_expect_success 'Bloom generation backfills previously-skipped filters' '
-+	(
-+		cd limits &&
-+		test_bloom_filters_computed "--reachable --changed-paths --split=replace --max-new-filters=1" \
-+			2 0 1
-+	)
-+'
-+
- test_done
--- 
-2.28.0.rc1.13.ge78abce653
+
+>> diff --git a/upload-pack.c b/upload-pack.c
+>> index d087113d23e..1b068da0d26 100644
+>> --- a/upload-pack.c
+>> +++ b/upload-pack.c
+>> @@ -731,7 +731,6 @@ static int has_unreachable(struct object_array *sr=
+c, enum allow_uor allow_uor)
+>>  	return 0;
+>>
+>>  error:
+>> -	sigchain_pop(SIGPIPE);
+>>  	if (cmd.out >=3D 0)
+>>  		close(cmd.out);
+>>  	return 1;
+>> --
+>> 2.28.0
+>
+> Thanks,
+> Taylor
