@@ -2,117 +2,77 @@ Return-Path: <SRS0=r8De=BV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E25A5C433E1
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 04:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC933C433DF
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 04:49:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C08D820772
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 04:30:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEjeH39M"
+	by mail.kernel.org (Postfix) with ESMTP id A3E4720678
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 04:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726170AbgHKE2q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 00:28:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725837AbgHKE2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 00:28:46 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F126DC06174A
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 21:28:45 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id i20so2354283vkk.2
-        for <git@vger.kernel.org>; Mon, 10 Aug 2020 21:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qZKOF8RShuTHiEaSrGS29vdyPyrBh2dgr2TqCv3ydao=;
-        b=OEjeH39MVeKCBHNc5h7/2S30Kp1tsBRah86vHpR9cUHp87L1CNke1fMAkCwOLpHqXf
-         HqMPIYaKc+AGSIjf+8HFmFalYWBl+BIlcD2LnKR7OcEv7iOSjMl0ZKsuO6To9zxWyfOg
-         Vx/wxn3VwuRCU7wCVywE4oWrKhgAOc7SrjiMIfBoB+x188xTu1HtafTiAjOC/ljUXGHE
-         SKg93Ypxxt1+2SNahWAT81SmXGIeZt3CsLNxWKbasOlThjTOyWF4xJ4CscPvkPOzgsif
-         pnVroqHnYXYxnuXTOe+n5QRtamf+nfl5o6nPPknt32ucmZCtgIvYXZgdtYB5FOGkxnoD
-         hnww==
+        id S1727971AbgHKEtH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 00:49:07 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37936 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726178AbgHKEtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 00:49:06 -0400
+Received: by mail-wm1-f68.google.com with SMTP id t14so1542574wmi.3
+        for <git@vger.kernel.org>; Mon, 10 Aug 2020 21:49:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qZKOF8RShuTHiEaSrGS29vdyPyrBh2dgr2TqCv3ydao=;
-        b=Kegm5WJ72p4ORSb8ElXiHxaqTXh47L6Of2FejiIqb5Q26wdlfRBKTqSBRiF4zXSUcs
-         n6yqx0fJz0XGFJVvOQ754J5PIvgj7OS0x8H+rDlFcCkwa2RNfGHXvOAyOZ3cBFcYCoU7
-         i3b0GHZX3CyNdvw7lsfyMrr9oE+z4x9nMW4ikeqQ965KSSN+ea3MZ06SIRMw15rv9F/h
-         btXSXRGHbJ53aNdSG64CTTHv+j+R2LHMOIk5KDy77grlIcjebb4bnUFjZ4+YKppfASZR
-         skbpJTZpyogaJgFapNhS4luQQ1Ff5MZaoqs9jCYqC6MDrhRs34rsgKri10Vxxa1Qi1dk
-         N0eg==
-X-Gm-Message-State: AOAM532e5f0ip+bId4qlD4q/yGnakjzakhFvyLW2tTUvPpn96rAWlw+G
-        cKnsm5Xizv506NvM4tK7mdoNu1AAsoK/UYD+fMk=
-X-Google-Smtp-Source: ABdhPJz3x7OyH3DwpIwgonYYW6KiwVXiZG2oxGgzuJvLKX3cGcQvCSD00V4lDV+19TbgptfJr3mzP0ZYR2G5sQmjedQ=
-X-Received: by 2002:a1f:93c1:: with SMTP id v184mr22675150vkd.62.1597120123230;
- Mon, 10 Aug 2020 21:28:43 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=wwwMD12Fd047gF1zdq1Tm0Il4rrTPCVcFlbJ3GyeLYY=;
+        b=D9KlaNWlnvJyP7/KNIPmcpdJXI3bKjiLOKl2gZyH+oyo6GPTTN+pA/YJ6/fTM0buh9
+         aYN2AVdHCJl8jzyixGEggn2QMT8V+OqqvtGI8Btfbtd5L9iYiJS5yFu3GKc4CgT+lEIX
+         BzUhict/0OEePf3LxW47ODcZb/SjX92ZqrWXVrdeIhgGMZOzsZJ0KTRovoTOKrSG9VCa
+         4QWd5PNVK1tzFNxLd4+Kb9AOTMrYHdrdM9R5LTqnT4utfN4f/msMHLXVaSo5NNat8uvJ
+         mebOkuEWBvv7+aEtZeMIicYbV73U4nfWuOD/wNUMSGjQRqb6bhfNH1nGlZtMngLSOvXm
+         ejZA==
+X-Gm-Message-State: AOAM532AIKvwscR6XOh1SvjxEx9ZONKJfkyhASDKfAF+GJ/yEss3Rn0j
+        XnHyD6Hi+HfYo40SFUFk27lOteAMQxDz7jnmvDI=
+X-Google-Smtp-Source: ABdhPJyQK6oHWyxRCrsU0sNPqsv+ktQZI9sHB/aOnBZjlokIsRY8Ll8cfBqwk72idIxEQxksWQLlU//8ACBNPjwkSq4=
+X-Received: by 2002:a1c:7405:: with SMTP id p5mr2138870wmc.130.1597121344778;
+ Mon, 10 Aug 2020 21:49:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200810194748.1483784-1-martin.agren@gmail.com> <CAPig+cTsxAW=s1iXcK_-Kn+xiSNCm_u_o_Q2xm-0+a_v4qc5_w@mail.gmail.com>
-In-Reply-To: <CAPig+cTsxAW=s1iXcK_-Kn+xiSNCm_u_o_Q2xm-0+a_v4qc5_w@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 11 Aug 2020 06:28:30 +0200
-Message-ID: <CAN0heSotdXH50ssd01b7fFuqEuOs+X0f1Zpj+nhxuO=TRNStUg@mail.gmail.com>
-Subject: Re: [PATCH] progress: don't dereference before checking for NULL
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>
+References: <20200808213457.13116-1-me@pluvano.com> <20200809230436.2152-1-me@pluvano.com>
+ <20200810100249.GC37030@coredump.intra.peff.net> <20200811041728.GA1748@pluvano.com>
+In-Reply-To: <20200811041728.GA1748@pluvano.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 11 Aug 2020 00:48:53 -0400
+Message-ID: <CAPig+cREqPM-hpbvRUxrZwiYRQ+k6Ca=FtY6vufy_Mb45jU9Og@mail.gmail.com>
+Subject: Re: [PATCH v2] gitweb: map names/emails with mailmap
+To:     Emma Brooks <me@pluvano.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 10 Aug 2020 at 23:27, Eric Sunshine <sunshine@sunshineco.com> wrote=
-:
+On Tue, Aug 11, 2020 at 12:17 AM Emma Brooks <me@pluvano.com> wrote:
+> On 2020-08-10 06:02:49-0400, Jeff King wrote:
+> > There was a little discussion in response to v1 on whether we could
+> > reuse the existing C mailmap code:
 >
-> On Mon, Aug 10, 2020 at 3:48 PM Martin =C3=85gren <martin.agren@gmail.com=
-> wrote:
-> >  void stop_progress(struct progress **p_progress)
-> >  {
-> > +       if (!p_progress)
-> > +               BUG("don't provide NULL to stop_progress");
-> > +
-> >         finish_if_sparse(*p_progress);
+> I think it's probably not worth the effort to make the necessary changes
+> to "rev-list --header" Junio mentioned, just for gitweb.
 >
-> I'm wondering what this really buys us over simply crashing due to the
-> NULL dereference (aside from the slightly more informative diagnostic
-> message). Either way, it's going to crash, as it should because
-> passing NULL is indeed a programmer error for these two functions. I'm
-> pretty sure that it is more common in this project simply to allow a
-> programmer error like this simply to crash on its own rather than
-> adding code to make it crash explicitly.
+> I agree it's a bit worrisome to have a second parser that could
+> potentially behave slightly differently than the main implementation.
+> What if we added tests for gitweb's mailmap parsing based on the same
+> cases used for Git itself?
 
-I'm not a big fan of undefined behavior. In general, I don't buy the
-"but in practice it will do what we want" argumentation.
-
-Before 98a1364740 ("trace2: log progress time and throughput",
-2020-05-12), we didn't check for NULL in this function. Then that commit
-tried to do so. It would feel wrong for me to say "that commit didn't
-get it quite right -- rip out the check". Then, to be honest, I'd much
-rather just leave it in place. At least that way, someone else might
-spot it a year from now.
-
-I could add an early return (instead of an early BUG). That would
-gracefully handle NULL. Grepping around suggests there are other `if (!p)
-BUG();`. Even Documentation/CodingGuidelines BUGs on a NULL-pointer,
-although in the context of checking for NULL (as opposed to "how to
-BUG").
-
-> > -       if (p_progress && *p_progress) {
-> > +       if (*p_progress) {
->
-> In other words, I think the entire patch can be reduced to just this
-> change here (and a simplified commit message).
-
-I started with this, but then I felt terrible for just sweeping the
-whole thing under the rug.
-
-Martin
+Another option which people probably won't like is to have gitweb
+start "git check-mailmap --stdin" in the background, leave it running,
+and just feed it author/commit info as needed and read back its
+replies. The benefit is that you get the .mailmap parsing and
+resolution built into Git itself without needing any extra
+parsing/resolution Perl code or tests. The downside is that people
+might balk at an extra process hanging around for the duration of
+gitweb itself. (You could also start up "git check-mailmap" repeatedly
+on-demand, but that would probably be too slow and resource intensive
+for real-world use.)
