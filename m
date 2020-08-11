@@ -5,107 +5,136 @@ X-Spam-Level:
 X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B693BC433DF
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 16:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70D37C433E0
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 16:08:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88D6320756
-	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 16:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42C5120756
+	for <git@archiver.kernel.org>; Tue, 11 Aug 2020 16:08:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="aosBsJ4w"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="LgrcGOdq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729107AbgHKQId (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 12:08:33 -0400
-Received: from mout.web.de ([217.72.192.78]:52631 "EHLO mout.web.de"
+        id S1729080AbgHKQIf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Aug 2020 12:08:35 -0400
+Received: from mout.web.de ([212.227.17.12]:51765 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728797AbgHKQIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 12:08:32 -0400
+        id S1729108AbgHKQIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Aug 2020 12:08:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1597162106;
-        bh=qZGkXpFwY1fDFI5H3n/VW02c0OM7N4JsdebVPrEVPo8=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=aosBsJ4wxyntvg2uwR6sRUWzmVAfjp+HwFzLP3HwmSMsoP3xaYea6HCXgL3o0xp8F
-         BsQEySOtR8/KOBirAgEnOdLFcNn2Ah7UOfiyeQAWzQIobQ993dHWMEaICAUPmSq8LA
-         3aOy6e9i6jTbft6O6JKJIyGNJDdzD5W7tBm6jVJI=
+        s=dbaedf251592; t=1597162109;
+        bh=0n/j15b6DSqKwdvx5H44U7XbgA9gbWhUDD5EUPGL10w=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=LgrcGOdqDU9Xfkrs0uwnRXMSxWY4DccqOUuy/FAaRoV3ke0IbH+66jBZMflEgcE1P
+         kTtV41NP9403GhhBg13XXR6JELlhV0zJKHQaGt92w/wjbADA/2jLMF5XCPldJcy3Cd
+         qte1WuBt9lpW2IcEqp7fdnMxLgrzcoMTYgMsp158=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lopa3-1kc8g643JL-00gmr9; Tue, 11
- Aug 2020 18:08:26 +0200
-Subject: Re: [PATCH 0/11] renaming argv_array
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20200728202124.GA1021264@coredump.intra.peff.net>
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MEEiK-1juaaD21DU-00FTTa; Tue, 11
+ Aug 2020 18:08:29 +0200
+Subject: Re: [PATCH] midx: use buffered I/O to talk to pack-objects
+To:     Derrick Stolee <stolee@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Chris Torek <chris.torek@gmail.com>
+References: <c5920e08-b7dd-e870-f99e-225d0aafc663@web.de>
+ <90541678-f412-89a1-2ee0-4cae30e26551@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <82991f30-fe37-d6d2-ffd5-8b0878f46c83@web.de>
-Date:   Tue, 11 Aug 2020 18:08:22 +0200
+Message-ID: <3655b3c8-9b60-daec-c3a2-6e3703ec5b3f@web.de>
+Date:   Tue, 11 Aug 2020 18:08:29 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <20200728202124.GA1021264@coredump.intra.peff.net>
+In-Reply-To: <90541678-f412-89a1-2ee0-4cae30e26551@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PjoKrQ5J2WwS6HJNu1wtiNPDS9gqATHgc4OlG+aHRxuQQB02DXG
- GVVoCkevcoWmyxMuoNRgYG9daM5/TucEO8Qc1enci6gSoWR7cVv/YigUInoBi/gd4fFMc8J
- qtdsKKPS4IlBkktqzipik1EnjRFOobCrrzkdelDzEOxx0tYnFnJs1DSjG5S75RGoZoxO1NR
- yhx/tUGNXVSrp/THiPc3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:73y8A8OjmLA=:dl+mkOjXtNyuhRnSz6Bzaf
- sLy3XRNbFCgwIMnLksGK993MSIQq+o1LeZrRkOqcTCT6z4NsbwOLpqyYZXCwxVCZjjXGUQxIW
- f2FMe09eyfukyB2hslpc8hJgCWn4d2t593wrw5YWiOf4mo8MKBx+MS2A8hZJ8P5KMH+rfs3RN
- x4o/eLg6l1DfNdnTSo0xJAyrBjkc9qPPnDbylaSZfUlNMdoLHkSdh7yYHZjAlxWT7YWyGsj0w
- hkl3b0s3B31zgi4BvSEPC38zLnMp0qqNKZO5cOPEWJUWf5vc53EpGUQCI4rzN9b3pDdwlEIi5
- KHJcMGUjla5hQOIM+yGjstBHm/gUDEnvxP1wh9OFoOiQNo3/CUI4Of3RW/e2QQFqZZwuekdWJ
- e9ha4iKdxeLkRlD+UTfBwvnZtj9GXgm7L26KJQrG0Zdmnpml6mMSCvqXEeGOpNC8/YPkVyczg
- roiopg4sjQuf7j1f3hfwd+oMhGsEP4KMGiIIfhc8DWicyYUMlQsDsO4dSpxUMzS29dpdtcBZ1
- 8DoJjE8/Ss5nqxsL234mWY7T15ovJ0ea/Y2by6Cuur/ZrIgNkFGGiuRDB3hOz/YBktX0u7TNV
- QT/obSPHPyK+9q88Vg7M54/dfZeG0uqkiQ4HEjRI9/MX4pmrUYy4+Q2V6OReqfKST+ZJFkQix
- i4E4/i4OH0m2AeWwqMOqeWAStPi0Ls4XdZ7RDOs3kzJp7rv8I98+65T1FTFXlAEnIZIvqB2yp
- Y7bRt0yMH4AJc0ZSpdNywjPfiQEvVP+oPVAI/Zcj2YbcabVrPsGQ48rk3vEMTYiZh8fIAWHa7
- 6ppZdPGhLdb0EKmDxPiOqOje8ZGYNRLOBpIOY2UPUSb04rPiOseIFk0VwaLvfuQ6e6rjATFhT
- B4rAzUThD3/LDD0UdFYhf5G8MZcvTUXvpccUprJSOVxFY0NOLbqFPxTULjRJyZBg0vR4Zp4JQ
- Zujac78XPUMrNX+JDrj60sZz4V81IGdNfbuVBlTZVsKzRFRzG06mpnvkJuugj4YeeftBXSLMD
- BguuSl8UfTk7Ie+7mn7HiQlYDkv7VRX2o9yaJMSlEH/KSrysMDXwuK1iX9MOgHRBnGlJxLI6Z
- MbskOaaBRjS2VwTgo1d+d7HYy+PC8KESGm5ug2RN6MkdeDZqUx4l44sQZPBJl9h9qTV/8HIps
- OUStTdNFxd3Za5Mfagu1iR61N3wUfd5N1wmbg5VNyacthvqWfn0mIlEuON/r+JgSOJojALxUM
- svnfkXTuE8vXaSJwZ
+X-Provags-ID: V03:K1:f9KsSrhw63NE0YCpyKgxB1z88T2Wa7rCpqNaiSUP+rLo9BX+KJC
+ rIhdXbZgqt8TGV04AZBYSei2/2lwNgSjxDh/avuNTRiApPiywReF1Y+9NINUAyZKz+IW+P1
+ S+wnGZkDzPv7KgOnIwhB9/fzPiM2KADQdVCvMpk2ay4be3UMzc/Yzwd2p2j/gOqEhXdWTml
+ FIC5TrD+bgdr0Qh0f8OBw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ooToIeEDus4=:5xe+l7kIq3McdZ60QH3p+r
+ RoKWF4KiULrDyWg9Rdp8yc9dV7P99rVHKC5Ty86N5kIi3StQ0O/NtNMEgMs1FhTtEEd67r+W3
+ caJqVmsCtY9j4AgwJ/Z1M37AO3NThVO304OltkJeClKcGWEFLMBP7ZrtAjiaymAZErqsCpo30
+ 3hSXsbk1TAb2SHwH/2gYB2Ic1O8cxyYY7pkxjYzMkJMtBdQypaUqNL/xIh/oVvEndtKUT9Tu8
+ EoPzucvQHX81b3od8ivd5Dqk2t4N0luXxuVlNphvykTvIWJmtAmqoxb5TDX7UWXAJvSLer92M
+ 4Qx+P2sUQNikJrvEIdZEDNhitThvH/cMXOp1rIap2/JAe1ad/y6r71hhh3YpALewHVorR1FHW
+ YTxrmxMCh7NkaPRFt4a9VEvICuZG18qnYRDm/CyvUVIJM3+/4YRV1UTWtBur7eYSqu1iyTZze
+ /C6p/FiXO8do8Pp6UhiXdyFVs4sXAYxWTbOPJpfO7NZTAkIPhK9WHqob2oZCHqTHBUq8rdld2
+ kR9eCqkOjyvOwiIoQO1bibAuSCKRFBmQCk/XFooupKhuTlXxeihc+J+bwMoEeH38wZYvemjNo
+ kwcEPc0Mx6NQCRTQb/rihE8i6e3PSAr1ArXKQSk76uoQGlco3UCT15nQxGbPbzHiR773SfiLP
+ zsPCgR4ZnLWdtroxK+7NZ7DH5o6aku/3iMIhDYKZ5akv1RCfVx+B0M1jESgtP694U4oojTKFE
+ zQ0gEE5j74fBl1O3YCmqgnx1T2vBAln9YUHe+E5lN+rdo0KWJBu0Z8yZ8CgEOVQxuYYpTMrfO
+ jNbl46UYAaHIcQj6ruEzaJlmUB4jwpitNNlW+2hyIvzsYJwzPsd2o9j+Hr38oN3Z+n9G8pt05
+ ztfHnlZH68fQYALKbGRSdz07uv9viOqBQmITea4GbFhsJirkGOneKqLhyaEE9DIoK2rmdcNK2
+ dlM50ECGhzi53gRtSlniw5BX2XIbhCCG0ng9PVA3hLa1kNEIYm8eKMVdlAjoR1Evb/oWPw2rs
+ /wWvkUVlU7tL7ACLJSU30mKIA08hZMl8FvkTf3ILf9qWAOnYSxrho9TrUbfN2BSRuhOYTdOOf
+ xm42onJrxQHmVCjekt+oSDF8rp48kJY5iESeS2rP2UB8/minfFvDuv27qGZY3EFzAYl7F1nis
+ sxynAETnA6BcmOlZRlzIvYG2aH6wJHJpjKrywtPu8gaiDjd/M/XmhCHCGYO6mlTPhtVN8dcHy
+ i1YH0vAp9vcH63Y39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.07.20 um 22:21 schrieb Jeff King:
-> The argv_array data type has turned out to be useful in our code base,
-> but the name isn't very good. From patch 2 of this series:
+Am 03.08.20 um 14:39 schrieb Derrick Stolee:
+> On 8/2/2020 10:38 AM, Ren=C3=A9 Scharfe wrote:
+>> Like f0bca72dc77 (send-pack: use buffered I/O to talk to pack-objects,
+>> 2016-06-08), significantly reduce the number of system calls and
+>> simplify the code for sending object IDs to pack-objects by using
+>> stdio's buffering and handling errors after the loop.
 >
->   The name "argv-array" isn't very good, because it describes what the
->   data type can be used for (program argument arrays), not what it
->   actually is (a dynamically-growing string array that maintains a
->   NULL-terminator invariant). This leads to people being hesitant to use
->   it for other cases where it would actually be a good fit. The existing
->   name is also clunky to use. It's overly long, and the name often leads
->   to saying things like "argv.argv" (i.e., the field names overlap with
->   variable names, since they're describing the use, not the type). Let's
->   give it a more neutral name.
+> Good find. Thanks for doing this important cleanup.
 >
-> This has bugged me for a while, so I decided to finally fix it. It
-> wasn't _too_ painful, though I'm sure there will be a little fallout
-> with topics in flight.
+> Outside of Chris's other feedback, this looks like an obviously
+> correct transformation.
 
-Just as this landed in master now, https://lobste.rs/ decided to link to
-http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2493.pdf, which is a
-paper about reserved identifiers in C.  It contains a nice overview.
+I spent a surprising amount of time trying to find a solution that is
+easy to use and allows precise error handling.  But now I get second
+thoughts.  The main selling point of buffering is better performance,
+which is achieved by reducing the number of system calls.  How much
+better actually?
 
-Anyway, 7.31 of C11 says: "All external names described below are
-reserved no matter what headers are included by the program."  And
-7.31.13 goes on: "Function names that begin with str, mem, or wcs and a
-lowercase letter may be added to the declarations in the <string.h>
-header."  So the names of the strvec functions are reserved.
+So I get this in my Git repo clone without this patch:
 
-Also how about using Coccinelle and patience to reduce the impact of
-such a change next time?  I.e. adding the new thing, providing a
-semantic patch for converting old code, waiting a reasonable amount of
-time after the last conversion was necessary and then removing the
-old thing.
+  $ strace --summary-only --trace=3Dwrite git multi-pack-index repack --no=
+-progress
+  % time     seconds  usecs/call     calls    errors syscall
+  ------ ----------- ----------- --------- --------- ----------------
+  100.00    2.237478           2    921650           write
+  ------ ----------- ----------- --------- --------- ----------------
+  100.00    2.237478                921650           total
+
+And here's the same with the patch:
+
+  % time     seconds  usecs/call     calls    errors syscall
+  ------ ----------- ----------- --------- --------- ----------------
+  100.00    0.013293           2      4613           write
+  ------ ----------- ----------- --------- --------- ----------------
+  100.00    0.013293                  4613           total
+
+Awesome, right?  write(2) calls are down by a factor of almost 200 and
+the time spent on them is reduced significantly, as advertised.  Let's
+ask hyperfine for a second opinion though.  Without this patch:
+
+  Benchmark #1: git multi-pack-index repack --no-progress
+    Time (mean =C2=B1 =CF=83):      1.652 s =C2=B1  0.206 s    [User: 1.38=
+3 s, System: 0.317 s]
+    Range (min =E2=80=A6 max):    1.426 s =E2=80=A6  1.890 s    10 runs
+
+And the same with this patch applied:
+
+    Time (mean =C2=B1 =CF=83):      1.635 s =C2=B1  0.199 s    [User: 1.36=
+3 s, System: 0.204 s]
+    Range (min =E2=80=A6 max):    1.430 s =E2=80=A6  1.871 s    10 runs
+
+OK, so system time is down by ca. 50%, but the total duration is
+basically unchanged.  It seems strace added quite some overhead to our
+measurement above.
+
+Anyway, now I wonder if adding our own buffer on top if the
+OS-internal pipe buffer is actually worth it.  The numbers above are
+from Debian testing , by the way.  Perhaps buffering still pays off on
+operating systems with slower pipes..
 
 Ren=C3=A9
