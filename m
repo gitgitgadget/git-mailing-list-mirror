@@ -2,144 +2,155 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FADFC433E0
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 22:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9685C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 23:03:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 383AD20771
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 22:51:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8F322076B
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 23:03:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XIg+7/On"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xxawV6TL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726523AbgHLWu7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 18:50:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38848 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726503AbgHLWu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 18:50:58 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23465C061383
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 15:50:58 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id d19so1784420pgl.10
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 15:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aqKaWD1SvaotC2G5FdIVLH6BcTqR4swf2FX/2iSK0iU=;
-        b=XIg+7/OnIH5EIr/I723+c3xzvjJ/zsnASIFBgsT0j52/md+eQXkcrkudVIlTrizCHM
-         s/LHBZ8C4Tneo35TgauPP6GtcaQYEEMTfzuGf7vt9ilRNteGpfIMl90NE4F+H65pYNsa
-         n1hN11nY7Xs6VBQB1oFVXupxSdQFPYhN3xQXwQUYFwEzSBIWKNp4T+XT3MMdoAtlyTDp
-         Q4SKhiMr2eZRryuddZKn0PjJ1ggmNnEKvBfr+a3NM0zT65wmbNMyLZMOs3AtWiGulKfX
-         B0f605Z70sJVu2vCtIur6SUxGlgHruqNWfQnKAg0LY+PFdICNrCHedVadn1Q8I7l4SRN
-         sAFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aqKaWD1SvaotC2G5FdIVLH6BcTqR4swf2FX/2iSK0iU=;
-        b=TevMUeY8okn1iDxN4TSShJ6/qvZk1/P1ar7aCC5lZJG+5k1kxummSZp/2qWVdaW7lm
-         Z/cKNHQFd4tClaGPmbG1h24QUtMfJ3C35SB3Vj8Xexsk7BgAJBHXKH+iIjSo1RIuRJLH
-         rdR+ntLaOo/tkZnsaGQeo5pLC5DWfWDFTyuCOhBVqHmBmUTtBzLE74vb/lrO+A7PkIQs
-         wRigvPnjLXBjU7p2CXLZ0A2Zj4FsFYhYyM/liP6kcNP0rFzUjFzIh6PqwBjfsh0sRlD4
-         4303Yh/b71R4RCNEe1C6nGsaWJrudKvlbeRBjd49ZrN/yhnBFkHTzPZTbVH5Ie5xLN6D
-         336Q==
-X-Gm-Message-State: AOAM531TAP1utA+VtGBbxi2U6lOD7o1THikVmd8TIW1vzIu1MXsLsQF7
-        KrNuhh4kWmdrjHQL+KT1fqI=
-X-Google-Smtp-Source: ABdhPJwB+gPxAH+g7CTsO+SPlNctgpzr5fvSWCdUF/DVq0jm4yk8Zlb6lZd/vcgv50o0/VI1ipvLXQ==
-X-Received: by 2002:aa7:9a09:: with SMTP id w9mr1648174pfj.206.1597272657304;
-        Wed, 12 Aug 2020 15:50:57 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id u15sm3249485pgm.10.2020.08.12.15.50.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2020 15:50:56 -0700 (PDT)
-Date:   Wed, 12 Aug 2020 15:50:54 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 01/11] maintenance: create basic maintenance runner
-Message-ID: <20200812225054.GB104953@google.com>
-References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
- <2b9deb6d6a23e53bec75e109f2e3ef9217420425.1596728921.git.gitgitgadget@gmail.com>
- <20200812210326.GA104953@google.com>
- <xmqqsgcr4ixo.fsf@gitster.c.googlers.com>
+        id S1726529AbgHLXDK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 19:03:10 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41470 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726510AbgHLXDK (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 12 Aug 2020 19:03:10 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1F70860456;
+        Wed, 12 Aug 2020 23:02:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1597273359;
+        bh=rH/EyflsX6aJgXaZSU8BzoaC25sWLmDwaTvB7TcKLJM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=xxawV6TLrU1k0sRFVW7tkXsSccUJMOA4KlSWccm/esC8RnIl89CNTEYk0Fc2eBhnD
+         3ZG2SbGZeqDT4YnF3re23HgNlzu9GyXzfwGWCxMhLDIv4B0jyUYx7OMumH+HU8FfXu
+         FQAdSvFA0qgMzxQ2e3Ikjuwxq6uAwa0cePUQlO8O1vidFD8adlqwnmccR8Hjbr0ueb
+         tKzZpZQh6VellxKPXPKU+5e8TuC54KTJH4l31fS5zf6/HmQsUXixc3ii/IEUWzyybn
+         Zwq4X3nfj/c4tpXXFcq3ue9cxcN27zO/3+xMxdU2goxsKGKs3M1PQSsuVyZ5Cl8QPj
+         Z03EOI9Ql/gSOjZdgeN1o7XjC4669DfdbMkAw0nYVeeQlkAPkjMpafEfKqt47p0/RC
+         YhAL0pWaSQskuvEsaN8oAzHq1mMRYlGwz/v/frHjKnd+PwVbCBkIjBWJbI4bxU5jmc
+         7WqyTYFOvpK7HKmNDzuB6BCGnRnKNxffe2ggNVOZspbyLc/6Zak
+Date:   Wed, 12 Aug 2020 23:02:31 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Viktor Hozhyi <viktor.hozhyi@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Files 'Test.txt' and 'test.txt' are different in Git database,
+ but are the same on Windows file system issue
+Message-ID: <20200812230231.GH8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Viktor Hozhyi <viktor.hozhyi@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <DA41ECC7-D5D4-4E85-A4C3-C55CC2A73D53@hxcore.ol>
+ <27608194-0D85-4D71-8D88-C1278D8DA173@hxcore.ol>
+ <CAAkwws_Y56QF8XnsBgG+HSF_mRpetJGh6TnTbjCgdwZ88kov=A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tT3UgwmDxwvOMqfu"
 Content-Disposition: inline
-In-Reply-To: <xmqqsgcr4ixo.fsf@gitster.c.googlers.com>
+In-Reply-To: <CAAkwws_Y56QF8XnsBgG+HSF_mRpetJGh6TnTbjCgdwZ88kov=A@mail.gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>> +static int maintenance_run(struct maintenance_opts *opts)
->>> +{
->>> +	return maintenance_task_gc(opts);
->>> +}
->>> +
->>> +int cmd_maintenance(int argc, const char **argv, const char *prefix)
->>> +{
->>> +	static struct maintenance_opts opts;
->>> +	static struct option builtin_maintenance_options[] = {
->>> +		OPT_BOOL(0, "auto", &opts.auto_flag,
->>> +			 N_("run tasks based on the state of the repository")),
->>> +		OPT_END()
->>> +	};
->>
->> optional: these could be local instead of static
->
-> Do we have preference?  I think it is more common in our codebase to
-> have these non-static but I do not think we've chosen which is more
-> preferable with technical reasoning behind it.  As the top-level
-> function in any callchain, cmd_foo() does not have multiple instances
-> running at the same time, or it does not have to be prepared to be
-> called twice, so they can afford to be static, but is there any upside
-> for them to be static?
+--tT3UgwmDxwvOMqfu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Code size, execution time:
+On 2020-08-12 at 19:58:55, Viktor Hozhyi wrote:
+> On Wed, Aug 12, 2020 at 10:56 PM Viktor <viktor.hozhyi@gmail.com> wrote:
+> >
+> > Hi,
+> >
+> >
+> >
+> > I=E2=80=99m not sure whether this behavior is on Windows only, so it=E2=
+=80=99s up to you guys.
 
-- benefit of static: can rely on automatic zero-initialization of
-  pages instead of spending cycles and text size on explicit
-  zero-initialization
+This behavior happens on any case-insensitive file system.  That means
+on Windows when the directory is not marked case-sensitive, on macOS if
+the file system is case-insensitive, and also in some other scenarios
+(e.g., case-insensitive JFS on Linux).
 
-- benefit of local: avoids wasting address space in bss when the
-  function isn't called
+Both Windows 10 and macOS are capable of using case-sensitive file
+systems or directories, so this is not exclusive to any one operating
+system.
 
-Neither of those seems important enough to care about. :)
+> > Repro steps:
+> >
+> > 1.         Having branch (let say) develop with empty working tree and =
+empty repository =E2=80=93 create 2 more branches (=E2=80=98foo=E2=80=99 an=
+d =E2=80=98bar=E2=80=99)
+> >
+> > 2.         Commit file =E2=80=98Test.txt=E2=80=99 with content =E2=80=
+=98Test=E2=80=99 to =E2=80=98foo=E2=80=99 branch
+> >
+> > 3.         Switch to =E2=80=98bar=E2=80=99  branch and commit file =E2=
+=80=98test.txt=E2=80=99 with content =E2=80=98test=E2=80=99 (pay attention =
+lower-case)
+> >
+> > 4.         Merge =E2=80=98foo=E2=80=99 to develop
+> >
+> > 5.         Merge =E2=80=98bar=E2=80=99 to develop
+> >
+> > After it when you switch to develop =E2=80=93 you always will have =E2=
+=80=98local changes=E2=80=99. You can perform stash, hard reset, commit =E2=
+=80=93 you always will have local changes (and many following errors on oth=
+er git operations due to local changes).
+> >
+> > Reason =E2=80=93 we have different files in Git DB (=E2=80=98Test.txt=
+=E2=80=99 and =E2=80=98test.txt=E2=80=99), but when git restores them onto =
+Windows file system =E2=80=93 it just will rewrite 1 file with another, bec=
+ause for Windows file system =E2=80=93 it is 2 equal names.
 
-Maintainability:
+Git was designed for Unix systems where files are case sensitive.  This
+is the only behavior that produces correct results for all languages and
+locales; it's impossible to correctly do locale-insensitive case
+folding.  That Git is case sensitive is very much by design.
 
-- benefit of static: address is determined at compile time, so can build
-  using C89 compilers that require struct initializers to be constant
-  (but Git already cannot be built with such compilers)
+If you're seeing this problem, you can do something like this:
 
-- benefit of local: less likely to accidentally move the static var into
-  a function that needs to be reentrant
+  git mv --cached Test.txt test.txt
 
-- benefit of local: allows readers and reviewers to build the habit of
-  seeing non-const "static" declarations within a function as the
-  unusual case.  When a "static" is declared in a function body, this
-  means we are caching something or have some other performance reason
-  to sacrifice reentrancy
+For a directory, you'd need to do this:
 
-It's mostly that last aspect (saving readers from having to think
-about it) that motivates my suggestion above.
+  git mv Test temp
+  git mv temp test
 
-Older Git code used static more because it was needed when building
-using C89 compilers.
+That will move Test.txt into test.txt, which will solve your problem by
+creating exactly one file.  If you prefer, you can do it the other way
+as well.
 
-Thanks,
-Jonathan
+That's the only possible solution if you're using a case-insensitive
+file system; the other choice is to use the Windows 10 tools to make the
+repository and its child directories case sensitive.
+--=20
+brian m. carlson: Houston, Texas, US
+
+--tT3UgwmDxwvOMqfu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXzR1BwAKCRB8DEliiIei
+gc16APwMrAIcsG3+HRrmP1y5pnxKv/vkofaovR9efGeOyWlEEQD/Z0eLyVHv4He7
+c5y0yZ3M5UbtqCuUIuz3YSfwXl6YfwI=
+=+okb
+-----END PGP SIGNATURE-----
+
+--tT3UgwmDxwvOMqfu--
