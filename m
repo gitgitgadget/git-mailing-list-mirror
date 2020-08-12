@@ -2,103 +2,171 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E151C433DF
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DF04C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:53:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70D24207F7
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:37:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 116BB2080C
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:53:17 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Br4SEEWX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbgHLPhG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 11:37:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56460 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726226AbgHLPhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 11:37:06 -0400
-Received: (qmail 9787 invoked by uid 109); 12 Aug 2020 15:37:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Aug 2020 15:37:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32306 invoked by uid 111); 12 Aug 2020 15:37:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Aug 2020 11:37:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 Aug 2020 11:37:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
-Message-ID: <20200812153705.GC33189@coredump.intra.peff.net>
-References: <20200809060810.31370-1-sunshine@sunshineco.com>
- <20200809174209.15466-1-sunshine@sunshineco.com>
- <20200811183258.GB33865@syl.lan>
- <CAPig+cSroWZEoOL78COmPS4rkvKLE-yCiqh6Part+5gUgVon+A@mail.gmail.com>
+        id S1726492AbgHLPxQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 11:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726447AbgHLPxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 11:53:15 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC82C061383
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 08:53:15 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id jp10so2828733ejb.0
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 08:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JUQCQuWn9CJ0kRdLuDGhjsO/XtgvAeB70VCLnx8pt94=;
+        b=Br4SEEWX/ZFJYHe14134I4wkbWEXSRzhTEzQTCbGdomKoIfUnZhoWPpDYPfG6g2O9S
+         XNOSRkbf8szH8NtHVhS9shgiU3iqAnbdY/ZkFaEiEpNAbNUMiweHxAohXvU6wKHAI7cT
+         E5FauWrsWkO7867KJvSqSagsht9wHMjFUHZcFxNvSLa9qNKdIuA0VNAtMUGmHxib1h9M
+         F2bS0FuMpZUPb0o6mjOUVgOVnHXMYKaL/VJ+fH8eOzjfni4E77eu85yAFRHsz4/BvWLW
+         m4gH9V5T6AjHWHiuRoeTZg44leG3ofdH6S2CAnDdgMQZafV1MkdG7Kfhf5Y45+woQg6o
+         +NTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JUQCQuWn9CJ0kRdLuDGhjsO/XtgvAeB70VCLnx8pt94=;
+        b=hRg33Qjwq6PG+Myt2WZf89zRbQOTgtRVE5BMOyCWze+HK2KmYxOjvbqvPI34L2sRP3
+         iOZ+jEN5yjwuryTGcfst8tqaHW8ZmUsAFXnoX4Rnf07E/V7qL51MZB93B8PiS3bx2LNM
+         cUksX3aiZ2PJX6l0bMccGqwFdKiAP4bNvb+MnyGJcycPAO94tolxjpI4IinRKLMRZDVV
+         T+mXDDwZAmp3FBIW8u7DPZqIGwV2pq1mjFvfpZ29ajxmVGRcXHXzYWO3XkxhwPAuSLl+
+         U86E1/KuaTf7wQWirYrRwHfv8wSnHgXtiSV44ona108/BsUWvj0CeiVLG5idBrrkbV1S
+         CfNg==
+X-Gm-Message-State: AOAM533ZuvgKQXVnLcchpWzg3rQWP5fQzXWXvBPs8GPNQCzZhqAEd8Fo
+        SHM67lwtK2MgqSN3YFi7EsWZ5g8S
+X-Google-Smtp-Source: ABdhPJzwDFVkSpj7hopAynSQQZuIzNoJhWOwDaygrQZK3ssyyFBh51+56g4JPm87UWFBjvqH06+3mw==
+X-Received: by 2002:a17:907:104a:: with SMTP id oy10mr408850ejb.267.1597247593794;
+        Wed, 12 Aug 2020 08:53:13 -0700 (PDT)
+Received: from szeder.dev (62-165-238-100.pool.digikabel.hu. [62.165.238.100])
+        by smtp.gmail.com with ESMTPSA id h18sm1670506edw.56.2020.08.12.08.53.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Aug 2020 08:53:13 -0700 (PDT)
+Date:   Wed, 12 Aug 2020 17:53:06 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v13 2/5] bugreport: add tool to generate debugging info
+Message-ID: <20200812155306.GA23524@szeder.dev>
+References: <20200416211807.60811-1-emilyshaffer@google.com>
+ <20200416211807.60811-3-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSroWZEoOL78COmPS4rkvKLE-yCiqh6Part+5gUgVon+A@mail.gmail.com>
+In-Reply-To: <20200416211807.60811-3-emilyshaffer@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 11, 2020 at 03:25:03PM -0400, Eric Sunshine wrote:
-
-> 'test' can accept both switches (i.e. "-e") and non-switch arguments.
-> Keep in mind, too, that all the quoting is stripped by the shell
-> _before_ 'test' ever sees its arguments. Let's say that the caller has
-> a filename whose name actually is "-e" and passes that in as $1. So,
-> what does 'test' see?
+On Thu, Apr 16, 2020 at 02:18:04PM -0700, Emily Shaffer wrote:
+> Teach Git how to prompt the user for a good bug report: reproduction
+> steps, expected behavior, and actual behavior. Later, Git can learn how
+> to collect some diagnostic information from the repository.
 > 
->     test -e = -
+> If users can send us a well-written bug report which contains diagnostic
+> information we would otherwise need to ask the user for, we can reduce
+> the number of question-and-answer round trips between the reporter and
+> the Git contributor.
 > 
-> Rather than comparing literal string "-e" to literal string "-", it's
-> instead (almost) asking if the file named "=" exists; I say "almost"
-> because it's actually an error since switch -e only accepts one
-> argument, but it's being given two arguments, "=" and "-".
+> Users may also wish to send a report like this to their local "Git
+> expert" if they have put their repository into a state they are confused
+> by.
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
 
-I don't think this is an error. The program can tell which you meant by
-the number of arguments. POSIX lays out some rules here (from "man
-1posix test" on my system, but I'm sure you can find it online):
+> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+> new file mode 100755
+> index 0000000000..2e73658a5c
+> --- /dev/null
+> +++ b/t/t0091-bugreport.sh
+> @@ -0,0 +1,61 @@
+> +#!/bin/sh
+> +
+> +test_description='git bugreport'
+> +
+> +. ./test-lib.sh
+> +
+> +# Headers "[System Info]" will be followed by a non-empty line if we put some
+> +# information there; we can make sure all our headers were followed by some
+> +# information to check if the command was successful.
+> +HEADER_PATTERN="^\[.*\]$"
+> +
+> +check_all_headers_populated () {
 
-  3 arguments:
-    *  If $2 is a binary primary, perform the binary test of $1 and $3.
+I'm afraid that this helper function doesn't do what it was supposed
+to.
 
-    *  If $1 is '!', negate the two-argument test of $2 and $3.
+> +	while read -r line
 
-    *  If $1 is '(' and $3 is ')', perform the unary test of $2.  On
-       systems that do not support the XSI option, the results are
-       unspecified if $1 is '(' and $3 is ')'.
+It iterates through each line of stdin, which is a file written by
+'git bugreport'.
 
-    *  Otherwise, produce unspecified results.
+> +	do
+> +		if test "$(grep "$HEADER_PATTERN" "$line")"
 
-So we'd see that "=" is a binary primary (the complete set is defined
-earlier). Likewise "! -e -" would hit the second rule. We wouldn't get
-fooled by trying to compare the string "!" because it knows that "=" is
-a binary operator and "-e" is a unary operator.
+This first tries to find a match in the _file_ called "$line", which never
+exists, resulting in trace output:
 
-It gets weird with "-a" joining expressions. There's some discussion in
-the Rationale section of the posix page, and it even warns explicitly
-against "-a" (in favor of "test expr1 && test expr1").
+  + check_all_headers_populated
+  + read -r line
+  + grep ^\[.*\]$ Thank you for filling out a Git bug report!
+  grep: Thank you for filling out a Git bug report!: No such file or directory
+  + test 
+  + read -r line
+  + grep ^\[.*\]$ Please answer the following questions to help us understand your issue.
+  grep: Please answer the following questions to help us understand your issue.: No such file or directory
+  + test
+  + read -r line
+  + grep ^\[.*\]$
+  grep: : No such file or directory
+  [...]
 
-> which may or may not be an error in a particular implementation of
-> 'test'. Some implementations may understand that "-" is not a valid
-> switch, thus infer that you're actually asking for an equality
-> comparison between arguments, but other implementations may complain
-> either that there is no switch named "-" or that those arguments
-> simply make no sense.
+Then, since 'grep' doesn't print any matches to its stdout, it invokes
 
-Yeah, historically I think there were shells that were not quite so
-clever. I have no idea which ones, or whether any are still around. I
-don't think we've generally been that concerned with this case in Git,
-and nobody has complained. I'd be totally unsurprised to hear that SunOS
-/bin/sh doesn't get this right, but we've already written it off as
-unusable (it doesn't even support $() expansion).
+  test ""
 
--Peff
+which always returns non-zero, so that if condition is never fulfilled.
+
+On first sight I thought that simply changing that 'grep' invocation
+to something like:
+
+  $(printf "%s\n" "$line" | grep "$HEADER_PATTERN")
+
+would be sufficient to fix it, but then the first test failed... and
+I'm not sure that I understand what this was supposed to check in the
+first place.
+
+> +		then
+> +			echo "$line"
+> +			read -r nextline
+> +			if test -z "$nextline"; then
+> +				return 1;
+> +			fi
+> +		fi
+> +	done
+> +}
+> +
+> +test_expect_success 'creates a report with content in the right places' '
+> +	test_when_finished rm git-bugreport-check-headers.txt &&
+> +	git bugreport -s check-headers &&
+> +	check_all_headers_populated <git-bugreport-check-headers.txt
+> +'
