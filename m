@@ -6,106 +6,70 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D26BAC433E0
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DFD8C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:10:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B395D2076C
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:08:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F31D20658
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:10:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726512AbgHLRIw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 13:08:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56678 "EHLO cloud.peff.net"
+        id S1726456AbgHLRKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 13:10:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56688 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726013AbgHLRIv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 13:08:51 -0400
-Received: (qmail 10484 invoked by uid 109); 12 Aug 2020 17:08:50 -0000
+        id S1725872AbgHLRKj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 13:10:39 -0400
+Received: (qmail 10527 invoked by uid 109); 12 Aug 2020 17:10:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Aug 2020 17:08:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Aug 2020 17:10:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 936 invoked by uid 111); 12 Aug 2020 17:08:50 -0000
+Received: (qmail 953 invoked by uid 111); 12 Aug 2020 17:10:38 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Aug 2020 13:08:50 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Aug 2020 13:10:38 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 Aug 2020 13:08:49 -0400
+Date:   Wed, 12 Aug 2020 13:10:38 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/11] renaming argv_array
-Message-ID: <20200812170849.GA43566@coredump.intra.peff.net>
-References: <20200728202124.GA1021264@coredump.intra.peff.net>
- <82991f30-fe37-d6d2-ffd5-8b0878f46c83@web.de>
- <20200812150611.GA33189@coredump.intra.peff.net>
- <20200812151038.GB33189@coredump.intra.peff.net>
- <045ea49b-7165-0f45-e670-a24bf648f880@web.de>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
+Message-ID: <20200812171038.GB43566@coredump.intra.peff.net>
+References: <20200809060810.31370-1-sunshine@sunshineco.com>
+ <20200809174209.15466-1-sunshine@sunshineco.com>
+ <20200811183258.GB33865@syl.lan>
+ <CAPig+cSroWZEoOL78COmPS4rkvKLE-yCiqh6Part+5gUgVon+A@mail.gmail.com>
+ <20200812153705.GC33189@coredump.intra.peff.net>
+ <CAPig+cQNvJ02fm82oBtyyxHUqfNk3oAZJW__Lu2Kn0Qt3VaDWw@mail.gmail.com>
+ <CAPig+cSzLcVdzjoacm6=7mDAhUn8j06Z0LXo7r1LMC7Dx_2JZA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <045ea49b-7165-0f45-e670-a24bf648f880@web.de>
+In-Reply-To: <CAPig+cSzLcVdzjoacm6=7mDAhUn8j06Z0LXo7r1LMC7Dx_2JZA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 12, 2020 at 06:23:01PM +0200, René Scharfe wrote:
+On Wed, Aug 12, 2020 at 12:39:14PM -0400, Eric Sunshine wrote:
 
-> > This seems to be related to setting SPATCH_BATCH_SIZE to "0". It used to make
-> > things go much faster (if you had enough memory), but now seems to just
-> > consume tons of CPU. Setting it to "1" finishes the whole thing in ~13
-> > minutes of CPU (~2m wall-clock).
+> On Wed, Aug 12, 2020 at 12:15 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > On Wed, Aug 12, 2020 at 11:37 AM Jeff King <peff@peff.net> wrote:
+> > > I don't think this is an error. The program can tell which you meant by
+> > > the number of arguments. POSIX lays out some rules here (from "man
+> > > 1posix test" on my system, but I'm sure you can find it online):
+> >
+> > I intentionally didn't focus on or mention POSIX in my response
+> > because I wanted to represent the Real World reason why "x$var" is
+> > such a common idiom. [...]
 > 
-> This bit me as well, and I settled with SPATCH_BATCH_SIZE = 10.  With
-> MAKEFLAGS += -j3 I get these number, which are quite similar to yours
-> (except I don't dare use more cores due to cooling issues..):
-> 
->   real	4m12,393s
->   user	12m15,447s
->   sys	0m10,418s
+> I probably should have done a better job in my original response to
+> Taylor to make it clear that I was talking about Real World (even if
+> old) rather than POSIX.
 
-Interestingly, that was slower for me (2m47s wall-clock, with 27m of
-CPU). Using "2" is slightly faster than "1". But "3" is a little less
-fast, and "4" is slower than "1". So...no clue what is going on.
-
-> > So that's at least a path forward, but in general I have been frustrated
-> > with operational aspects of coccinelle like this.
-> 
-> And I was a bit shocked when Coccinelle's testing package became
-> unmaintained for a while and I had to compile it from source.
-
-Yeah, I've had various issues with the packaging. For a long time they
-had 1.0.7 in experimental, but with no python support. I wonder if it's
-worth starting to use python scriptlets in our coccinelle rules, as
-described in 4d168e742a (coccinelle: use <...> for function exclusion,
-2018-08-28). They're faster and IMHO easier to understand.
-
-Of course I tried it out and got some inscrutable errors:
-
-  SPATCH contrib/coccinelle/object_id.cocci
-  init_defs_builtins: /usr/bin/../lib/coccinelle/standard.h
-  Python path configuration:
-    PYTHONHOME = '/lib/x86_64-linux-gnu/..'
-    PYTHONPATH = '/usr/bin/../lib/coccinelle/python'
-    program name = 'python3'
-    isolated = 0
-    environment = 1
-    user site = 1
-    import site = 1
-    sys._base_executable = '/usr/bin/python3'
-    sys.base_prefix = '/lib/x86_64-linux-gnu/..'
-    sys.base_exec_prefix = '/lib/x86_64-linux-gnu/..'
-    sys.executable = '/usr/bin/python3'
-    sys.prefix = '/lib/x86_64-linux-gnu/..'
-    sys.exec_prefix = '/lib/x86_64-linux-gnu/..'
-    sys.path = [
-      '/usr/bin/../lib/coccinelle/python',
-      '/lib/x86_64-linux-gnu/../lib/python38.zip',
-      '/lib/x86_64-linux-gnu/../lib/python3.8',
-      '/lib/x86_64-linux-gnu/../lib/python3.8/lib-dynload',
-    ]
-  Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
-  Python runtime state: core initialized
-  ModuleNotFoundError: No module named 'encodings'
-
-Fun.
+Yeah. I guess I'm questioning how current that Real World view is. It
+hasn't bitten us yet, though we do seem to do the "x" thing in some
+places. And most of our shell code is in the test suite, which sees
+pretty tame filenames.
 
 -Peff
