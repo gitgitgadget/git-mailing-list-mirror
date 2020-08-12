@@ -2,74 +2,92 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DFD8C433DF
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43759C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:29:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F31D20658
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:10:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 05C4E207DA
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 17:29:51 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rY7DnP10"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726456AbgHLRKk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 13:10:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56688 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725872AbgHLRKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 13:10:39 -0400
-Received: (qmail 10527 invoked by uid 109); 12 Aug 2020 17:10:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Aug 2020 17:10:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 953 invoked by uid 111); 12 Aug 2020 17:10:38 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Aug 2020 13:10:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 Aug 2020 13:10:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
-Message-ID: <20200812171038.GB43566@coredump.intra.peff.net>
-References: <20200809060810.31370-1-sunshine@sunshineco.com>
- <20200809174209.15466-1-sunshine@sunshineco.com>
- <20200811183258.GB33865@syl.lan>
- <CAPig+cSroWZEoOL78COmPS4rkvKLE-yCiqh6Part+5gUgVon+A@mail.gmail.com>
- <20200812153705.GC33189@coredump.intra.peff.net>
- <CAPig+cQNvJ02fm82oBtyyxHUqfNk3oAZJW__Lu2Kn0Qt3VaDWw@mail.gmail.com>
- <CAPig+cSzLcVdzjoacm6=7mDAhUn8j06Z0LXo7r1LMC7Dx_2JZA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSzLcVdzjoacm6=7mDAhUn8j06Z0LXo7r1LMC7Dx_2JZA@mail.gmail.com>
+        id S1726523AbgHLR3t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 13:29:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725993AbgHLR3t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 13:29:49 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2B3EC061383
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 10:29:48 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id r9so2273211qtp.7
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 10:29:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=elr+mSFK8taALdV4AXkZ90zo2rU9KKaT5HiyNaQPdXE=;
+        b=rY7DnP108HkqlP0NM1dZ7H2fhubzrS7JtCmhL5qfK8kYmSVTbSd7eKF5DYSqHVIQCS
+         HeHM4bJspuUwspw+W+uIqlc5R4arPqI6JGMu3YzS16IqjtRRCKUS1UTnkxPD/wucVRgq
+         0HmGVEasU2MeHiOE2ezCujGn6UNG50tpgK2amn50KWG6D8jeNbp39SKxeR5v5j9SSTGW
+         vLsenocDqTPTR4zL4y05ym62G3pfWSSQTno6BAxCZbG3qvfxKZZkG/Pf5ChrBqhE/Ocr
+         klmxOWukRyItGBID2JYJjkW8aOYETkAA6gbx68W7OJ9VOXzCQV+io143JBo04L9OHN8k
+         D8RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=elr+mSFK8taALdV4AXkZ90zo2rU9KKaT5HiyNaQPdXE=;
+        b=fJxzUR/Jz5dg6Xkjt+miNMjAhlYmAf85TB7n1/MRoNtm1ggso5mk2f74ekADXl4H5f
+         jZt5vJ1RWWd/bixtSq90XTEPMXO6GguBE9ojOPh4MAVgV6FvYolMHL5DtmjhCmRa+4PB
+         2Ox2mcenSTvfHq4JHzULw4tpaz0RPSTSnX1EQw+wn50j4YZ1INJq7cS2XVOE818/tcmu
+         mWYaBDQEQYk2s+bDSL5B9KobEpzwbnQOKLSYaqi6cSGW2phaEcHwssFivxIsic0QVuao
+         3RX56k4DumlVDSOcS+cTgiLD6q1hLD4zWdkcnPJfowsgzN6NLH+YmAwsT7go0ee3kyeC
+         EYHA==
+X-Gm-Message-State: AOAM530dNCQ95AqGIKVg555mlcg/ImVA8Og2ZZ8u/PRBve2leEa5nhEV
+        YDFNK+xpnLeDlnbDGAHkxgVsmdZ6YFaNmjTPu9FD
+X-Google-Smtp-Source: ABdhPJwlxRWvrPlAZd0P2h2fal0tmyR2tusso7neQ5khwQ9CIkFCK9TAwaDl7z6bbwblJb1sV8FOTiLlb/9ApDAqu3ZJ
+X-Received: by 2002:ad4:4942:: with SMTP id o2mr639135qvy.231.1597253387905;
+ Wed, 12 Aug 2020 10:29:47 -0700 (PDT)
+Date:   Wed, 12 Aug 2020 10:29:43 -0700
+In-Reply-To: <xmqqsgcr7r1p.fsf@gitster.c.googlers.com>
+Message-Id: <20200812172943.1253226-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqsgcr7r1p.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.28.0.236.gb10cc79966-goog
+Subject: Re: [PATCH v2 1/7] negotiator/null: add null fetch negotiator
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     stolee@gmail.com, jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 12, 2020 at 12:39:14PM -0400, Eric Sunshine wrote:
-
-> On Wed, Aug 12, 2020 at 12:15 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Wed, Aug 12, 2020 at 11:37 AM Jeff King <peff@peff.net> wrote:
-> > > I don't think this is an error. The program can tell which you meant by
-> > > the number of arguments. POSIX lays out some rules here (from "man
-> > > 1posix test" on my system, but I'm sure you can find it online):
-> >
-> > I intentionally didn't focus on or mention POSIX in my response
-> > because I wanted to represent the Real World reason why "x$var" is
-> > such a common idiom. [...]
+> Derrick Stolee <stolee@gmail.com> writes:
 > 
-> I probably should have done a better job in my original response to
-> Taylor to make it clear that I was talking about Real World (even if
-> old) rather than POSIX.
+> > On 8/11/2020 6:52 PM, Jonathan Tan wrote:
+> >> Add a null fetch negotiator. 
+> >
+> > I understand the value of this negotiator. I'm concerned about using
+> > "null" as the name, since it has a clear relationship to zero-valued
+> > pointers and that's not what is happening. (My gut feeling starting the
+> > patch was that some function pointers would be NULL or something.)
+> >
+> > Instead, might I recommend "noop" or "no_op" in place of "null" here?
+> 
+> Personally I am OK with null [*], but noop is also fine.
+> 
+> 	Side note.  I actually would find it good to establish the
+> 	pattern that something that does not use NULL pointer as its
+> 	implementation detail can be called null if "null-ness" of
+> 	its behaviour is its defining characteristics.
+> 
+> Thanks.
 
-Yeah. I guess I'm questioning how current that Real World view is. It
-hasn't bitten us yet, though we do seem to do the "x" thing in some
-places. And most of our shell code is in the test suite, which sees
-pretty tame filenames.
-
--Peff
+OK, in a future version I'll go with "noop".
