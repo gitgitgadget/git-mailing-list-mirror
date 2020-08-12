@@ -2,89 +2,157 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_SBL,URIBL_SBL_A,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F5BC433E0
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 16:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 245FEC433E0
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 16:52:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE4EE207DA
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 16:44:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E68662076C
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 16:52:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mf+A/PHb"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="E70pAN74"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726632AbgHLQoL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 12:44:11 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58508 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726518AbgHLQoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 12:44:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70587D4ED5;
-        Wed, 12 Aug 2020 12:44:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eQ9vKx/GfYR3xmnE6lPJ1KuApTs=; b=Mf+A/P
-        HbCLpqR3WWm4Af2pJAJLDJQf7l28SGljAdoc5IAN+kDAIAcP7WVbriiZNR25t/Oz
-        eM7JkNnB5wm92hrmzoUSpeCQ2el2NuecRXhtNiTtwzGb3gsrqYRkj1rMaYeRR7nK
-        eVBcvZXDNVUIJT7QgkxEOSQBed0Sr3IEuVTAo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=J3rA6Dp+wOEVszkXrVRrnDIipUOeqhuS
-        VDbKfMnAVvywBcCDLr8Ab4kH5r4I9wYWS6/dwoeEi0Q5fj2vnIwE180aDedym0rF
-        4kJPpI4/L3YsTJuN4HXPuLrHa+cADZSYYY/nbxab0IXDZESKEAqmfwZmpYB7i53m
-        XWqla+ea5m0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 692CED4ED4;
-        Wed, 12 Aug 2020 12:44:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B2B9FD4ED1;
-        Wed, 12 Aug 2020 12:44:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/7] negotiator/null: add null fetch negotiator
-References: <20200724223844.2723397-1-jonathantanmy@google.com>
-        <cover.1597184948.git.jonathantanmy@google.com>
-        <35bdd372ae3691f54775dd616576e8ed6d68f1d3.1597184949.git.jonathantanmy@google.com>
-        <2f6b3e7e-8f83-bfde-ab63-1eed08ff32b5@gmail.com>
-Date:   Wed, 12 Aug 2020 09:44:02 -0700
-In-Reply-To: <2f6b3e7e-8f83-bfde-ab63-1eed08ff32b5@gmail.com> (Derrick
-        Stolee's message of "Wed, 12 Aug 2020 08:55:14 -0400")
-Message-ID: <xmqqsgcr7r1p.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726521AbgHLQw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 12:52:57 -0400
+Received: from mout.web.de ([212.227.17.12]:41623 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726150AbgHLQwy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 12:52:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1597251169;
+        bh=wlLBmV3r0sqMzhPJRttgsQsVDMOBg5eXiMNGstcVS70=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=E70pAN74Jl5hVXK7KoniMsMCUOmZR6++9FmhldHVIhcMzcJ9pROIp9SYmmaDTpORL
+         /GmLSKG/LKU0QuhSTJVfNF4hohFQAha0s2bHKyDL0Mz9Cfl7yklR+l3SAghz+tCDGs
+         cI9obzL8fREgULxoxuAwh6EpZBAPN5gRidyIlF8o=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MREzO-1kI3412x64-00NdVb; Wed, 12
+ Aug 2020 18:52:49 +0200
+Subject: [PATCH v2] connected: use buffered I/O to talk to rev-list
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+References: <2e2907ac-3be9-c0ed-830a-f8aa28b471aa@web.de>
+Message-ID: <2e3ac6f7-77c2-4792-d6df-891ede6318ce@web.de>
+Date:   Wed, 12 Aug 2020 18:52:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 087AD3AC-DCBB-11EA-BEC9-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+In-Reply-To: <2e2907ac-3be9-c0ed-830a-f8aa28b471aa@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+Hm0nNMcWr8bVA72mohXK2nXZ5yi+Hl6QK1qnRD1PK7YxpHRhrm
+ sZr1sKoEuIHADOOqskL/FW1wBRcYutj77KBeC7mJXCJoXvhcu+hrSB6sLZYZ56dRFsnUwaS
+ 7xHUSRqrbuwZYiGUoNaYEVRdMVHRRMHU/6xbIX7Kc/RCUyCcbFSO40U1yaUlHvcCANo7VYF
+ PENdGIQoVGgz2CeeX8lWg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5ITbUrC9iFA=:51YE9om8ICrEil6hilkiRg
+ cqLc+O1QRo0LlKUHWMosDSrCtRPutKr4+z0wZfswK3QftyQu5+XEDVW8lMyb4yuXA7lvSHPPF
+ 9+fUR/h9c7nFrhH7tpiu8hlDQr63q7EHHOFE97/avNez3pi1Tcw/gMoxXsu9VR55SGcZJHafs
+ zmQZBpg3IOHBD98ymulyM32r3bJE+xRqG22jvH++QDrQqP+qUgb3BSNGFaipfnqQmQb2L+RTN
+ XPYJ2mgmyTyAxp3YyjictCkigJwruooV3YQwVPnIorBZlUH4TAUXBk4mfpH7b9sKSfZElmqty
+ ElE9Q3EWNKtsLsxYq4yU8RiI+glrhI0Bc7qSMu4VcdzCBKIRpGJW7K1ttvaTGOP0G3R0szXSc
+ e4AAq/qtnAbCi4wZVf1nvZnfqeHIpJb2R78L2kOECsLZYoIurLzcfB/U5e/l07HE3IPaA5E4c
+ cuEhX3ps0Mf62mpibBmf2eLkLVO22Sv66w5ekvlZk9Vv24scFwp43cZUBl4iUsY74+2sSTHnG
+ vfbtIeCqdqf8b+jd+iwH5SYb5WpRMn3yxjzLgjpcVYDOV3rDnj+s/UgAw/ZGklzyHNwxCYVvI
+ hUIUhJWDgRnyrN3Zw3352J9IkUST048A/4oOoRrQkdJD/NWeknlkh0AkNnwDKsG5dXtCr7mOA
+ 0zhoZ5nbgty+MXUDM36Oo9VVwQcIR0z1UJHPDbbpGj95TfeIvwksXRIS4A1aZeemoeXace27o
+ NuCQz/3oxuR3Ir+bexU/VgKnXQB8oh2kCHmrTGsz97uykcQQM/IPurgTRgHSENGR/rpqCWKVY
+ ubvpuw0GCHHblMW8Xleot+Ktvnq80Gfcs8TeuHkjIxYjbKj33HcP+TvG/APZM1pyVnrppTwiM
+ hNSWrIyTa3Ez/4eSApiGK/qKONswvjR++oK2M68ybMrHME6sEEfxlo9GLT2FDQq/Lkt5UAYMv
+ RKZP7MbcsCgF6aeGMIvIvVrrV3q4tEH2pZ+WdxAjX7mUpL7f14HK3qNSKRreST3Wt3QDiZ5IB
+ JG8ehd08jhUM6K0dtzFm7lcQ2GmfGhwfGIt/Bt0ewXMePNyUXX4d9fXeHTKo+KX5gvPAMqFh5
+ 0c7PnR6w4+suzxrQxXtaPGNYso3qP0NiP0IJYwxW1viGJ0z6Yv6dDjoBlE38wriYi/+wPY/AV
+ jUyp2bxaJPd7jrHfvhfE2K1aUdPRakd0t6fKNfcLBz2mRszPQAlFYClXgMXPffVXiTtieWGK7
+ ESgxYnhKPnlIw16Ib
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Like f0bca72dc77 (send-pack: use buffered I/O to talk to pack-objects,
+2016-06-08), significantly reduce the number of system calls and
+simplify the code for sending object IDs to rev-list by using stdio's
+buffering.
 
-> On 8/11/2020 6:52 PM, Jonathan Tan wrote:
->> Add a null fetch negotiator. 
->
-> I understand the value of this negotiator. I'm concerned about using
-> "null" as the name, since it has a clear relationship to zero-valued
-> pointers and that's not what is happening. (My gut feeling starting the
-> patch was that some function pointers would be NULL or something.)
->
-> Instead, might I recommend "noop" or "no_op" in place of "null" here?
+Take care to handle errors immediately to get the correct error code,
+and to flush the buffer explicitly before closing the stream in order to
+catch any write errors for these last bytes.
 
-Personally I am OK with null [*], but noop is also fine.
+Helped-by: Chris Torek <chris.torek@gmail.com>
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+=2D--
+Changes since v1:
+- Handle fprintf() errors immediately.
+- Call ferror() and fflush() explicitly before calling fclose().
+- Report write errors other than EPIPE and EINVAL, like the original
+  code does.
 
-	Side note.  I actually would find it good to establish the
-	pattern that something that does not use NULL pointer as its
-	implementation detail can be called null if "null-ness" of
-	its behaviour is its defining characteristics.
+ connected.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-Thanks.
+diff --git a/connected.c b/connected.c
+index 21c1ebe9fbf..b18299fdf0e 100644
+=2D-- a/connected.c
++++ b/connected.c
+@@ -22,14 +22,13 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		    struct check_connected_options *opt)
+ {
+ 	struct child_process rev_list =3D CHILD_PROCESS_INIT;
++	FILE *rev_list_in;
+ 	struct check_connected_options defaults =3D CHECK_CONNECTED_INIT;
+-	char commit[GIT_MAX_HEXSZ + 1];
+ 	struct object_id oid;
+ 	int err =3D 0;
+ 	struct packed_git *new_pack =3D NULL;
+ 	struct transport *transport;
+ 	size_t base_len;
+-	const unsigned hexsz =3D the_hash_algo->hexsz;
 
+ 	if (!opt)
+ 		opt =3D &defaults;
+@@ -122,7 +121,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+
+-	commit[hexsz] =3D '\n';
++	rev_list_in =3D xfdopen(rev_list.in, "w");
++
+ 	do {
+ 		/*
+ 		 * If index-pack already checked that:
+@@ -135,16 +135,17 @@ int check_connected(oid_iterate_fn fn, void *cb_data=
+,
+ 		if (new_pack && find_pack_entry_one(oid.hash, new_pack))
+ 			continue;
+
+-		memcpy(commit, oid_to_hex(&oid), hexsz);
+-		if (write_in_full(rev_list.in, commit, hexsz + 1) < 0) {
+-			if (errno !=3D EPIPE && errno !=3D EINVAL)
+-				error_errno(_("failed write to rev-list"));
+-			err =3D -1;
++		if (fprintf(rev_list_in, "%s\n", oid_to_hex(&oid)) < 0)
+ 			break;
+-		}
+ 	} while (!fn(cb_data, &oid));
+
+-	if (close(rev_list.in))
++	if (ferror(rev_list_in) || fflush(rev_list_in)) {
++		if (errno !=3D EPIPE && errno !=3D EINVAL)
++			error_errno(_("failed write to rev-list"));
++		err =3D -1;
++	}
++
++	if (fclose(rev_list_in))
+ 		err =3D error_errno(_("failed to close rev-list's stdin"));
+
+ 	sigchain_pop(SIGPIPE);
+=2D-
+2.28.0
