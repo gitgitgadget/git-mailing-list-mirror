@@ -2,96 +2,120 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81625C433DF
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8EF1C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:35:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A43720781
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:28:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D70422080C
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:35:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kyxQvA6j"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=rbx.email header.i=@rbx.email header.b="EYbltDll"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbgHLS2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 14:28:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51129 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726447AbgHLS2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 14:28:11 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D9176C54E;
-        Wed, 12 Aug 2020 14:28:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mcPoTfyZcdylkjWwDEDcZz/gnXk=; b=kyxQvA
-        6jtR4aQKSdrGVzbN+X5QO7pJn/+LkBP97QUqRIz9zU7TCK68Db6RiidRk5GVrsUF
-        Myfml2Ldl84pO6ZSO8ckU6vCQskMcCWqrnrqke114mJg5WM5GtJtLY1IGEaomX2r
-        3Gg7NWbcgHfGlg6P9zifjKMSESInwvZw4gQvM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=a/Enpl8aMrZUZymcbiGn0KZAJt3lveOr
-        ZuyLBTKF1TaBYL1PcquSMUgwrW50vXbNC0e9L+kqT4BN/Gr9EBkdD4eJoNG00tkH
-        q+OLxtvzTUxjS3cLwiW3D1r9br5Su/q6kCmHtK1adYV4AZMTPotGWlXqGPM90Nbf
-        PpVSRN/uPeU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54E946C54D;
-        Wed, 12 Aug 2020 14:28:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8AC0D6C54C;
-        Wed, 12 Aug 2020 14:28:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 6/7] promisor-remote: lazy-fetch objects in subprocess
-References: <20200724223844.2723397-1-jonathantanmy@google.com>
-        <cover.1597184948.git.jonathantanmy@google.com>
-        <55d2e5a4cccee0ae719f4210c2cbeeb6a691cf2f.1597184949.git.jonathantanmy@google.com>
-Date:   Wed, 12 Aug 2020 11:28:07 -0700
-In-Reply-To: <55d2e5a4cccee0ae719f4210c2cbeeb6a691cf2f.1597184949.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 11 Aug 2020 15:52:21 -0700")
-Message-ID: <xmqqbljf7m88.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726667AbgHLSfC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 14:35:02 -0400
+Received: from aibo.runbox.com ([91.220.196.211]:49956 "EHLO aibo.runbox.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726447AbgHLSfB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 14:35:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbx.email;
+         s=selector2; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From;
+        bh=yYlVbIegDHXF+39sMlqcHNq9xnzJyeOxHUp03vxjLVA=; b=EYbltDll6NV2mZEMuC1X7tydPt
+        gkGCbyqurOtTJdMKdDt2BqCbmtR31lGjewxiGgwB64ReaPYgBmX4or08tzj+VnwA6MHM++jI0hQF7
+        7sdmRDom8Q86IWmeCz5Em7GftRaysJifxrUEGwjal1NiQEsvPprgpewPlzR8ZMUMiWC65IqWib+Og
+        IJtfpWtKonCjjik99ecK7mg423DLxCRL/JdMIOq1lQ+SBsVqexyfnfBY6Wd9JaAsKNTa3qaZbBXrK
+        qxhkSsMNT4pBYeJRYxeaBzLxy7L1MbbWgZWVOhf99WNgGtWRp/7YDKNNE7xuHusFZjCa+F3MjVtkj
+        7UQHwfww==;
+Received: from [10.9.9.73] (helo=submission02.runbox)
+        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
+        (envelope-from <detegr@rbx.email>)
+        id 1k5vaT-0000Yx-V8; Wed, 12 Aug 2020 20:34:58 +0200
+Received: by submission02.runbox with esmtpsa  [Authenticated alias (932193)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        id 1k5vaK-0006Nn-Vl; Wed, 12 Aug 2020 20:34:49 +0200
+From:   =?UTF-8?q?Antti=20Ker=C3=A4nen?= <detegr@rbx.email>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?Antti=20Ker=C3=A4nen?= <detegr@rbx.email>,
+        =?UTF-8?q?Jussi=20Ker=C3=A4nen?= <jussike@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v2] rebase -i: Fix possibly wrong onto hash in todo
+Date:   Wed, 12 Aug 2020 21:33:27 +0300
+Message-Id: <20200812183326.224782-1-detegr@rbx.email>
+X-Mailer: git-send-email 2.27.0.395.g84249cff14
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 92192F9C-DCC9-11EA-9F36-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+'todo_list_write_to_file' may overwrite the static buffer, originating
+from 'find_unique_abbrev', that was used to store the short commit hash
+'c' for "# Rebase a..b onto c" message in the todo editor. This is
+because the buffer that is returned from 'find_unique_abbrev' is valid
+until 4 more calls to `find_unique_abbrev` are made.
 
-> Teach Git to lazy-fetch missing objects in a subprocess instead of doing
-> it in-process. This allows any fatal errors that occur during the fetch
-> to be isolated and converted into an error return value, instead of
-> causing the current command being run to terminate.
->
-> ...
->  static int fetch_objects(const char *remote_name,
->  			 const struct object_id *oids,
->  			 int oid_nr)
->  {
-> -	struct ref *ref = NULL;
-> +	struct child_process child = CHILD_PROCESS_INIT;
->  	int i;
-> +	FILE *child_in;
-> +
-> +	child.git_cmd = 1;
-> +	child.in = -1;
-> +	argv_array_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=null",
-> +			 "fetch", remote_name, "--no-tags",
-> +			 "--no-write-fetch-head", "--recurse-submodules=no",
-> +			 "--filter=blob:none", "--stdin", NULL);
+As 'todo_list_write_to_file' calls 'find_unique_abbrev' for each rebased
+commit, the hash for 'c' is overwritten if there are 4 or more commits
+in the rebase. This behavior has been broken since its introduction.
 
-Finally we get to use the new negotiator introduced earlier.  Nice.
+Fix by storing the short onto commit hash in a different buffer that
+remains valid, before calling 'todo_list_write_to_file'.
 
-> +	if (start_command(&child))
-> +		die(_("promisor-remote: unable to fork off fetch subprocess"));
-> +	child_in = xfdopen(child.in, "w");
+Found-by: Jussi Keränen <jussike@gmail.com>
+Signed-off-by: Antti Keränen <detegr@rbx.email>
+---
+ sequencer.c                   | 5 +++--
+ t/t3404-rebase-interactive.sh | 6 ++++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index fd7701c88a..e2007dbb8c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5178,13 +5178,14 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		    struct string_list *commands, unsigned autosquash,
+ 		    struct todo_list *todo_list)
+ {
+-	const char *shortonto, *todo_file = rebase_path_todo();
++	char shortonto[GIT_MAX_HEXSZ + 1];
++	const char *todo_file = rebase_path_todo();
+ 	struct todo_list new_todo = TODO_LIST_INIT;
+ 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+ 	struct object_id oid = onto->object.oid;
+ 	int res;
+ 
+-	shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
++	find_unique_abbrev_r(shortonto, &oid, DEFAULT_ABBREV);
+ 
+ 	if (buf->len == 0) {
+ 		struct todo_item *item = append_new_todo(todo_list);
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 4a7d21f898..1b4fa0843e 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1760,6 +1760,12 @@ test_expect_success 'correct error message for commit --amend after empty pick'
+ 	test_i18ngrep "middle of a rebase -- cannot amend." err
+ '
+ 
++test_expect_success 'todo has correct onto hash' '
++	GIT_SEQUENCE_EDITOR=cat git rebase -i no-conflict-branch~4 no-conflict-branch >actual &&
++	onto=$(git rev-parse --short HEAD~4) &&
++	test_i18ngrep "^# Rebase ..* onto $onto" actual
++'
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
+-- 
+2.27.0.395.g84249cff14
+
