@@ -2,92 +2,91 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92D7AC433E0
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 00:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF73C433E0
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 06:48:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D27D020756
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 00:48:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B0DD2076B
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 06:48:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="T9lJb7Hr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmXBHFMd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726472AbgHLAs2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Aug 2020 20:48:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65080 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726143AbgHLAs1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Aug 2020 20:48:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AA3A86144;
-        Tue, 11 Aug 2020 20:48:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Fds5FqZ0sFplkp5Rin7yQgCybBg=; b=T9lJb7
-        Hre1wgCipTXcpuCg2uXOMPCMl9nKYeDG1L6RUIkpX8cGe735Jgsg6NAvZKbioofg
-        xdQabWvjb4ObpUN4PwKxHVq/Akc/Kn1/p1eECyX8RNzZpm5ZKzEaVoIL4J/jRBR+
-        /Ra/748vFlyLzWvy1KWRyWC1+VPLMsnXJ98WQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TMYS38V1i0A0Eidm8MAxx+wk1L2l6qxU
-        k5/bcqDaNW1/DgEVm7IO25tulmJj2lSUSDbzyLp8L/X79YUWHigh7Px+slkS4OUA
-        0c+wo2NPKmpAjZ5AqGEmJ06drFj8X3OWOfqWgbSZICuj6/LQHDrgAQgGopY6DaDZ
-        Tmk5DxDPVPw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 226BE86143;
-        Tue, 11 Aug 2020 20:48:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4C8686142;
-        Tue, 11 Aug 2020 20:48:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH  2/3] doc/git-log: describe --diff-merges=off
-References: <20200805220832.3800-1-sorganov@gmail.com>
-        <20200805220832.3800-3-sorganov@gmail.com>
-        <xmqq8sek917j.fsf@gitster.c.googlers.com>
-Date:   Tue, 11 Aug 2020 17:48:22 -0700
-In-Reply-To: <xmqq8sek917j.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 11 Aug 2020 17:06:56 -0700")
-Message-ID: <xmqqzh707kq1.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726716AbgHLGsk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 02:48:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726629AbgHLGsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 02:48:39 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F378C06174A
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 23:48:39 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id m71so536860pfd.1
+        for <git@vger.kernel.org>; Tue, 11 Aug 2020 23:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=jOSMyAGITv/Mf2/B4Xls4G1Th9AA69T7/4PJXcwacog=;
+        b=WmXBHFMdPpR+rvQpTEeYm3nw1iInVF3Pwf0YQPfcNNNgeh7DKzsScgOXi3jVcPYm/W
+         QIxZmsV/xBqIO6eUa4b1Z7Whj8rrwOrq0c/o3KOgYaGKckiFxpljsf3e79u8cV4fjgsR
+         zOpEvskCVBaZwcZRIHjaRKWobToXtkvLbdTDOu5tfNpvOHrntkGUDJ9+/Drr1jUnkwmG
+         HO/XKMeBM53zczSj5AmSJbc2owVKZ4MklXJYUYULz7Bo87134sqYY4mwk7szDmBL4scb
+         LYrHgBihpa1pcu224y7W50YMQOBJSVGdLJNx4GsCvM4OMRIiJRWxQI3yDSKRzwbapxHE
+         oVvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=jOSMyAGITv/Mf2/B4Xls4G1Th9AA69T7/4PJXcwacog=;
+        b=QzZH3L1xMxCwvBnlOderw+J2bL3F385X4cduBqTTblDvSAeP5pG3Dlo1/5tiwhR+fF
+         t0baNPreC2WtpTBq5rjqoXW5fgLp4EuCcvPKZVlpLLO42Gzm1l6wXoM61hdTiv1f+Si1
+         xfqVhZ/zaU7EHg6lutfkNQeQCLqXNYZG+p9at9aRjP7m5UhUqTofUq3QVjM7Vsy4OJ8R
+         AD9hIoeHEkD0QGZ3C//CxmCSCuath7+tFFqoJ/c499F/Tp80vE4TlKHmb8gbVXncAmJl
+         9I29Df7Y4CjsfoNukfoDQLwNMPLH2daKpQDLVNyga6yV7fyxpSLj0QhE33Jn/zMq7Ta8
+         ur7Q==
+X-Gm-Message-State: AOAM530tobAptQcPYD06z5E3UIQhSVuwaEVY8wmg5zqo/BZPmUO34nze
+        tlj7mFxqYqwtcyRx0cXuGaj24iU2KcKIfw==
+X-Google-Smtp-Source: ABdhPJyVdcr9gs6oQeoaLyCD5BTN8AmPKhmnJ1Hvt7wq3xgIfw/oAz0ZzSPmGIWtxO3jxsU+PFFTew==
+X-Received: by 2002:a63:531e:: with SMTP id h30mr3735468pgb.165.1597214918791;
+        Tue, 11 Aug 2020 23:48:38 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:609:de5a:309a:8147:c746:a173])
+        by smtp.gmail.com with ESMTPSA id g15sm1173568pfh.70.2020.08.11.23.48.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2020 23:48:38 -0700 (PDT)
+Date:   Wed, 12 Aug 2020 12:16:27 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, jnareb@gmail.com, me@ttaylorr.com
+Subject: [GSoC] Blog about weeks 9, 10
+Message-ID: <20200812064627.GA40904@Abhishek-Arch>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 868C369A-DC35-11EA-A2DC-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello everyone!
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
->>  Documentation/git-log.txt | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
->> index 9ccba65469d7..f3727c786453 100644
->> --- a/Documentation/git-log.txt
->> +++ b/Documentation/git-log.txt
->> @@ -145,7 +145,6 @@ combined-diff option or with `--no-diff-merges`).
->>  	rename or copy detection have been requested).
->>  
->>  -m::
->> ---diff-merges::
->
-> Shouldn't this "--diff-merges" be removed from here?
+Over the last two weeks, I worked on handling mixed commit-graph chains
+and adding tests for the new premises - New Git can work with commit
+graph files without generation data chunk and New Git handle mixed
+commit-graph chains gracefully.
 
-Sorry, my eyes.  Yes, you are removing it from here.
+I apologize for the rather slow progress and missing out on the blog
+post for Week 9 - My college has re-commenced classes on 3rd August, and
+the transition to online learning has been chaotic and uncertain.
 
-All is well, then.
+Thanks to Dr. Stolee, Dr. Narębski, and Taylor for their continued
+reviews and guidance.
+
+https://abhishekkumar2718.github.io/gsoc/2020/08/09/gsoc-weeks-9-10.html
+
+Thanks
+- Abhishek
