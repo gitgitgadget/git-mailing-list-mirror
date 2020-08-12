@@ -7,63 +7,62 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE72BC433E1
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 07:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00BF2C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 07:12:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6008205CB
+	by mail.kernel.org (Postfix) with ESMTP id C818520656
 	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 07:12:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ltqbs3Hk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QCMsB+xn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726778AbgHLHMl (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726755AbgHLHMl (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 12 Aug 2020 03:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35744 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbgHLHMl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 03:12:41 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDFEAC061787
+        with ESMTP id S1726182AbgHLHMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 03:12:40 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A864C06174A
         for <git@vger.kernel.org>; Wed, 12 Aug 2020 00:12:40 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id d190so858329wmd.4
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 00:12:40 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id r2so1005169wrs.8
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 00:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Lgz2EB3gb3PdAPlp0LwhVrWsFb2apcv7Q9XTO5oDBLA=;
-        b=Ltqbs3HkjPH5Ek0NZFkuHJkMAOudf//Z6/Wzl1bTsah5ivcA+tr/jsKPrqainzZC71
-         CYS1PmgIl3om6Fk361j0Gc8lHgYON1JMEuP+MJbuyob/dsxkoQMd4+SHtxbddRdR/ZsJ
-         V64iHDAi8VCOl56ZEvqOcHTHbDfwMmq/sUltYt/0NcZl3F0/qrZKEwTGQC5jkvUvvAV5
-         EmDhYbo6nmaPWt+UIPvAXyZr2vXfigbIB7bgClnZtcF5F+05MY7rpSWNQkActEXU5qsg
-         SIbWk5nJq1GPc98+ZfOSRAhbVpvh+50pCBJRqydmZ0noRU4xXeanUFpbZ60Q5M4+doIc
-         YVPA==
+        bh=Yfqp4naPssX0mkUlMGbxkHmt1BKN/3mroQyInQ22IKY=;
+        b=QCMsB+xnUabPRAD0LkrgNQCkUpDdp91j/PlwQoqcWx0wM5DJ+X3AahN7frCfqBui4C
+         yrr6+s9Tdukex/TdiSJdOA6IOaRmjE8h7QRMY5pAcsNgurZITjfKPaLmWeysZqhx0GKp
+         rESIFwwTwmfC+y9ujbjjvHWCK7LNlnGsyxfAzqAWb3UtpyAF53ZxgOPTbePivJ+nk+YG
+         u2SFnXKDafsEJYyuZdukLhKRHbMEDa5IXBfvMKe/Hj6ANmalCi4ZQQtgjIbxTMdnWzF/
+         DFgH5yVbVs+R+folgc3P/Sfpbsx6fMMA32XI3LS2EummjSRKNoWOopwHgfVkEtFzazY8
+         cwJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Lgz2EB3gb3PdAPlp0LwhVrWsFb2apcv7Q9XTO5oDBLA=;
-        b=IM9voIta5l6j4bx44Tn1mSHZi6IC5xcjq/aT59OaXqf+uC5Gafz+9MswMwxddzvshv
-         zP+/nOSdA6a8R7Nsz1WfVybwYRj+oOPWU+Pe2KcqiA5NQSb1s6vYA5f/1DC7L7yXYrkz
-         bUQX6CuPsHO2iAjT8hkPjgGDWvrGt4jJUumuux9U6VYHXcSpUha/VfhwJSqY5LgceWcJ
-         b+XEC1lZb1SCP0/MzFnm0RbzcNu9gXKFpwXBJ9WKto+voQP4njZj3ZjzBQpY+x8rh+HI
-         HK/lX3dK5SoFve7QAAhbjvlvEdRvs5xWGaGSXM/v2uMW0cke5t/iN+iRHmnrZNLfxCSo
-         XMcQ==
-X-Gm-Message-State: AOAM532HyFjJoWk+mM3p+FcSdjIQgcIcnnyI6VGDHSsMaZAlxFPimQ4X
-        eqM2Uc9CL7Npr0JcejMY+t4W9S6f
-X-Google-Smtp-Source: ABdhPJz8NteYjTdDVyjeISSNT2aEtoV3H8pwrva2mhHoMK27lRSUxXo94CV2HChXzzxIJwo+M91MEg==
-X-Received: by 2002:a1c:b4c1:: with SMTP id d184mr7530218wmf.26.1597216359458;
-        Wed, 12 Aug 2020 00:12:39 -0700 (PDT)
+        bh=Yfqp4naPssX0mkUlMGbxkHmt1BKN/3mroQyInQ22IKY=;
+        b=BU6W7N8XQ1jp0nVnGGOAYGYoN90xWVIXoQlcljfc1TuF3S4+xFFZzNBKrndM/stFgH
+         WqzDqR9bhRMYNJWUDGi1YOHEVM5X0kVg5LCEFScQRL+iiFGov9Y54508xoMZP8pFldYU
+         UdN+M8khRbLtdaQ2q0tJMb9AuCyhhumPcjEIJi/N7OnZdyQO0YAdlE4BiUFgsH6VYMsB
+         InIa1wmoRm8uKntXdNrj7tzAdS717ZfY2PuwQqvGfNp+DCxjasq13oyo9Y/juq0MQDzZ
+         D217JgxFgn0sgOxPVtVI2659PIXIWJ2a6ibIFXgqw0ayTjAuD451xUbtwhYBG7lXDZ0l
+         Rr4Q==
+X-Gm-Message-State: AOAM531QOAfr/0YpMuujupjo3wXVTdftx97oWar5FJNl2KZ3bZi4mF8K
+        wUORe/opwBTgv08fbaDZy0IUChS3
+X-Google-Smtp-Source: ABdhPJx4ZmAIRkdayjCj4PscjuplXiYNRqEz/cLH4weX5UDcsLlS1SroVNJfad2sXjCOwaWUAq9oRg==
+X-Received: by 2002:a5d:6345:: with SMTP id b5mr35369970wrw.204.1597216358593;
+        Wed, 12 Aug 2020 00:12:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14sm2630510wrg.96.2020.08.12.00.12.38
+        by smtp.gmail.com with ESMTPSA id d14sm2621530wre.44.2020.08.12.00.12.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 12 Aug 2020 00:12:38 -0700 (PDT)
-Message-Id: <11a286b071ca8a6b96f4fba6658e9bafb9314be4.1597216356.git.gitgitgadget@gmail.com>
+Message-Id: <8a2a0b6c9adea54bd5d10c37bbc6965eb5cb120b.1597216356.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.829.git.git.1597216356.gitgitgadget@gmail.com>
 References: <pull.829.git.git.1597216356.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Aug 2020 07:12:36 +0000
-Subject: [PATCH 2/2] dir: avoid prematurely marking nonbare repositories as
- matches
+Date:   Wed, 12 Aug 2020 07:12:35 +0000
+Subject: [PATCH 1/2] t3000: fix some test description typos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,78 +76,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Nonbare repositories are special directories.  Unlike normal directories
-that we might recurse into to list the files they contain, nonbare
-repositories must themselves match and then we always report only on the
-nonbare repository directory itself and not on any of its contents.
+There is no such flag as --o; it is either --others or -o.
 
-Separately, when traversing directories to try to find untracked or
-excluded files, we often think in terms of paths either matching the
-specified pathspec, or not matching them.  However, there is a special
-value that do_match_pathspec() uses named
-MATCHED_RECURSIVELY_LEADING_PATHSPEC which means "this directory does
-not match any pathspec BUT it is possible a file or directory underneath
-it does."  That special value prevents us from prematurely thinking that
-some directory and everything under it is irrelevant, but also allows us
-to differentiate from "this is a match".
-
-The combination of these two special cases was previously uncovered.
-Add a test to the testsuite to cover it, and make sure that we return a
-nonbare repository as a non-match if the best match it got was
-MATCHED_RECURSIVELY_LEADING_PATHSPEC.
-
-Reported-by: christian w <usebees@gmail.com>
-Simplified-testcase-and-bisection-by: Kyle Meyer <kyle@kyleam.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c                      |  9 ++++++---
- t/t3000-ls-files-others.sh | 16 ++++++++++++++++
- 2 files changed, 22 insertions(+), 3 deletions(-)
+ t/t3000-ls-files-others.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 1045cc9c6f..b5082ca05f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1792,9 +1792,12 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 		nested_repo = is_nonbare_repository_dir(&sb);
- 		strbuf_release(&sb);
- 	}
--	if (nested_repo)
--		return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
--			(excluded ? path_excluded : path_untracked));
-+	if (nested_repo) {
-+		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-+		    (matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC))
-+			return path_none;
-+		return excluded ? path_excluded : path_untracked;
-+	}
- 
- 	if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES)) {
- 		if (excluded &&
 diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-index 1b9327b780..740ce56eab 100755
+index ffdfb16f58..1b9327b780 100755
 --- a/t/t3000-ls-files-others.sh
 +++ b/t/t3000-ls-files-others.sh
-@@ -212,4 +212,20 @@ test_expect_success 'ls-files -o --directory to get immediate paths under one di
+@@ -152,7 +152,7 @@ test_expect_success 'ls-files -o --directory with mix dir/file pathspecs' '
  	)
  '
  
-+test_expect_success 'ls-files -o avoids listing untracked non-matching gitdir' '
-+	test_when_finished "rm -rf nested/untracked/deep/empty" &&
-+	(
-+		cd nested &&
-+
-+		git init untracked/deep/empty &&
-+		git ls-files --others "untracked/*.c" >actual &&
-+
-+		cat <<-EOF >expect &&
-+		untracked/deep/foo.c
-+		EOF
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+-test_expect_success 'ls-files --o --directory with glob filetype match' '
++test_expect_success 'ls-files -o --directory with glob filetype match' '
+ 	(
+ 		cd nested &&
+ 
+@@ -168,7 +168,7 @@ test_expect_success 'ls-files --o --directory with glob filetype match' '
+ 	)
+ '
+ 
+-test_expect_success 'ls-files --o --directory with mix of tracked states' '
++test_expect_success 'ls-files -o --directory with mix of tracked states' '
+ 	(
+ 		cd nested &&
+ 
+@@ -184,7 +184,7 @@ test_expect_success 'ls-files --o --directory with mix of tracked states' '
+ 	)
+ '
+ 
+-test_expect_success 'ls-files --o --directory with glob filetype match only' '
++test_expect_success 'ls-files -o --directory with glob filetype match only' '
+ 	(
+ 		cd nested &&
+ 
+@@ -198,7 +198,7 @@ test_expect_success 'ls-files --o --directory with glob filetype match only' '
+ 	)
+ '
+ 
+-test_expect_success 'ls-files --o --directory to get immediate paths under one dir only' '
++test_expect_success 'ls-files -o --directory to get immediate paths under one dir only' '
+ 	(
+ 		cd nested &&
+ 
 -- 
 gitgitgadget
+
