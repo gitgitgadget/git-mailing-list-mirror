@@ -2,816 +2,96 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9964CC433E0
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 19:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C7BC433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 19:53:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55A4420866
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 19:44:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 027E82080C
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 19:53:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GG/GSTJT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zw3IKey0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbgHLToh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 15:44:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38522 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726593AbgHLToh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 15:44:37 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C64C061383
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 12:44:37 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 189so932302pgg.13
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 12:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9U+pWsrYjN3oGQNmxUoJ8rPd2c/g+jkN5YseQsMeCs8=;
-        b=GG/GSTJTCUXRFAtUVwqPSiQNPmAiKDY3l0ds7xYbmUmDHxnuTseOkN3Dd+o00ox6NW
-         gz+es2MUq7ynRTD++qY89Uuav6V1pjWv4ULslD3hD2w9K9eAv+kvoMIArJU/HghgnTOf
-         aeHDpMtNhUYVj5BFpjCNoNUULfCCGOxn/azZTqju7p/+kvHgsRzKj3lwFuUQHUIjFAZQ
-         ecEJWlvFHWto3WJAe6sKv6bX4IQg6y8SAfYVmChoySsd+piImIt0ZELGF9HwHtPYhD7K
-         y15/cfHdwbqofv+KZczFvNIiowlZ5O83ZhrAsAgsxATc8FfCHzTn0rKCt40pCrQZxe6Z
-         iEMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9U+pWsrYjN3oGQNmxUoJ8rPd2c/g+jkN5YseQsMeCs8=;
-        b=kRxZIWLK0Zf+y2znKqmYnxo0NpN4xSkvWlmRGXSvC7GWlFReZ+3PW22WmYEOVg+1i6
-         kdBuUAwCyTx4Z5qUPWrRAgLTN7HIVcYYBqOJGjScKQ9zqsTyPJBsdcJmQoqfvk2sMw71
-         htY0ME6suly0jOxIovDCp3BM6cPTfV2iqvMpZBRmGfhtef3eRzh6PZ7w++WEwYxVwrOA
-         nX/rcQ1MY7fNWUM8xpYGWI/vi7mabZ+ig5wKC4xo7xfU6oNWWRvbgm53YVxz0Ch6FFpN
-         BTrn5Ow01zQ6z7v8/Q7rSkTh8/VTXSRm6IG8m7/66Le2MEMAGggzVovm3ELT7tgZ9GUc
-         PNXw==
-X-Gm-Message-State: AOAM531bSyV54A/Z5kgrQQnHPkgjbxX2lWUMjKXA3+/cGCHZC5XXrA0s
-        RLqqibc2oUI4K2QkR9BEDkU=
-X-Google-Smtp-Source: ABdhPJyDlH0SSVSw4d0zQ6RtX7HlroDZE0/PhJubSco+Xr2NsROt+yE4Zapq+hr74FdveWHTtw7zQg==
-X-Received: by 2002:aa7:972f:: with SMTP id k15mr1054020pfg.209.1597261474713;
-        Wed, 12 Aug 2020 12:44:34 -0700 (PDT)
-Received: from localhost.localdomain ([45.127.46.132])
-        by smtp.gmail.com with ESMTPSA id q17sm3183965pfh.32.2020.08.12.12.44.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2020 12:44:34 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     shouryashukla.oo@gmail.com
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        Johannes.Schindelin@gmx.de, kaartic.sivaraam@gmail.com,
-        liu.denton@gmail.com, Prathamesh Chavan <pc44800@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH v3 4/4] submodule: port submodule subcommand 'summary' from shell to C
-Date:   Thu, 13 Aug 2020 01:14:04 +0530
-Message-Id: <20200812194404.17028-5-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200812194404.17028-1-shouryashukla.oo@gmail.com>
-References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
- <20200812194404.17028-1-shouryashukla.oo@gmail.com>
+        id S1726632AbgHLTxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 15:53:46 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64253 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726512AbgHLTxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 15:53:45 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8171AD3197;
+        Wed, 12 Aug 2020 15:53:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4fUZrhK4MSG1Qfofn9a7qQgxpp0=; b=Zw3IKe
+        y0KLCJSrx6j+5/ZPiGUscosKD581RM9zAthO1py8GIwW6qHOt2HNczxxWXjOgzb+
+        xRHzJ4dtCwdaEacw9Nf+2Tl573TW4FARFdvA7LtFQLQSU1Vtl1tSY6Upr0qsK7BX
+        D2zfqIvrgktFGiCIyCSSp2KcovB26RhreFmIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=M2NM/XbygnpPRxPxxRAWyBFFb0KmJCzH
+        Ov1hbnoAlMCZjjwWTUg1cWbDNxh6PABz/MDyvUnt2pUAIIur9GdcM4zzeKJ3XhpU
+        mfRj0DFkS4THdVpG0DcqoCAE9hsuwqoSbFgCewkem6L5m/XvFIsHIsrBA93fskqt
+        96ar6jHlTFc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7B14AD3196;
+        Wed, 12 Aug 2020 15:53:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C624FD3195;
+        Wed, 12 Aug 2020 15:53:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sibi Siddharthan <sibisiv.siddharthan@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2020, #01; Mon, 3)
+References: <xmqq8sevt1lf.fsf@gitster.c.googlers.com>
+        <20200804185057.GA1400256@coredump.intra.peff.net>
+        <xmqqr1sms0f0.fsf@gitster.c.googlers.com>
+        <20200804192053.GA1400936@coredump.intra.peff.net>
+        <nycvar.QRO.7.76.6.2008121516560.50@tvgsbejvaqbjf.bet>
+        <20200812141958.GA32453@coredump.intra.peff.net>
+        <CAKw82xxOZFcsMw47TSrD7-pXpqO7O0_m84o96iH6+ZVeN9j1uw@mail.gmail.com>
+        <20200812160653.GA42443@coredump.intra.peff.net>
+Date:   Wed, 12 Aug 2020 12:53:39 -0700
+In-Reply-To: <20200812160653.GA42443@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 12 Aug 2020 12:06:53 -0400")
+Message-ID: <xmqqlfij63p8.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 85265358-DCD5-11EA-8643-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Prathamesh Chavan <pc44800@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-Convert submodule subcommand 'summary' to a builtin and call it via
-'git-submodule.sh'.
+> Yeah, I know. My main beef was that because it fails CI, the urgency of
+> doing that fix gets pushed onto people working on their individual
+> topics (in fact there is nothing for you to fix yet because I haven't
+> even sent these topics upstream). I don't know how to solve that without
+> stopping its use in the vsbuild CI job, though.
 
-The shell version had to call $diff_cmd twice, once to find the modified
-modules cared by the user and then again, with that list of modules
-to do various operations for computing the summary of those modules.
-On the other hand, the C version does not need a second call to
-$diff_cmd since it reuses the module list from the first call to do the
-aforementioned tasks.
+What I am not getting is in what way it blocks you (or others who do
+not deeply care about Windows) to leave vsbuild CI job broken.  Do
+you have some automation that is gated by all the CI jobs to pass,
+or do you just dislike failing CI jobs out of principle?
 
-In the C version, we use the combination of setting a child process'
-working directory to the submodule path and then calling
-'prepare_submodule_repo_env()' which also sets the 'GIT_DIR' to '.git',
-so that we can be certain that those spawned processes will not access
-the superproject's ODB by mistake.
+I pretty much got used to seeing occasional failures and learned to
+ignore it (e.g. https://travis-ci.org/github/git/git/jobs/716661598
+that ends with
 
-A behavioural difference between the C and the shell version is that the
-shell version outputs two line feeds after the 'git log' output when run
-outside of the tests while the C version outputs one line feed in any
-case. The reason for this is that the shell version calls log with
-'--pretty=format:<fmt>' whose output is followed by two echo
-calls; 'format' does not have "terminator" semantics like its 'tformat'
-counterpart. So, the log output is terminated by a newline only when
-invoked by the user and not when invoked from the scripts. This results
-in the one & two line feed differences in the shell version.
-On the other hand, the C version calls log with '--pretty=<fmt>'
-which is equivalent to '--pretty:tformat:<fmt>' which is then
-followed by a 'printf("\n")'. Due to its "terminator" semantics the
-log output is always terminated by newline and hence one line feed in
-any case.
+    Makefile:2467: *** unterminated variable reference.  Stop.
+    make: *** Waiting for unfinished jobs....
 
-Also, when we try to pass an option-like argument after a non-option
-argument, for instance:
-
-    git submodule summary HEAD --foo-bar
-
-    (or)
-
-    git submodule summary HEAD --cached
-
-That argument would be treated like a path to the submodule for which
-the user is requesting a summary. So, the option ends up having no
-effect. Though, passing '--quiet' is an exception to this:
-
-    git submodule summary HEAD --quiet
-
-While 'summary' doesn't support '--quiet', we don't get an output for
-the above command as '--quiet' is treated as a path which means we get
-an output only if a submodule whose path is '--quiet' exists.
-
-The error message in case of computing a summary for non-existent
-submodules in the C version is different from that of the shell version.
-Since the new error message is not marked for translation, change the
-'test_i18ngrep' in t7421.4 to 'grep'.
-
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Stefan Beller <stefanbeller@gmail.com>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
----
- builtin/submodule--helper.c      | 429 +++++++++++++++++++++++++++++++
- git-submodule.sh                 | 186 +-------------
- t/t7421-submodule-summary-add.sh |   2 +-
- 3 files changed, 431 insertions(+), 186 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index a03dc84ea4..63ea39025d 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -927,6 +927,434 @@ static int module_name(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+struct module_cb {
-+	unsigned int mod_src;
-+	unsigned int mod_dst;
-+	struct object_id oid_src;
-+	struct object_id oid_dst;
-+	char status;
-+	const char *sm_path;
-+};
-+#define MODULE_CB_INIT { 0, 0, NULL, NULL, '\0', NULL }
-+
-+struct module_cb_list {
-+	struct module_cb **entries;
-+	int alloc, nr;
-+};
-+#define MODULE_CB_LIST_INIT { NULL, 0, 0 }
-+
-+struct summary_cb {
-+	int argc;
-+	const char **argv;
-+	const char *prefix;
-+	unsigned int cached: 1;
-+	unsigned int for_status: 1;
-+	unsigned int files: 1;
-+	int summary_limit;
-+};
-+#define SUMMARY_CB_INIT { 0, NULL, NULL, 0, 0, 0, 0 }
-+
-+enum diff_cmd {
-+	DIFF_INDEX,
-+	DIFF_FILES
-+};
-+
-+static char* verify_submodule_committish(const char *sm_path,
-+					 const char *committish)
-+{
-+	struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-+	struct strbuf result = STRBUF_INIT;
-+
-+	cp_rev_parse.git_cmd = 1;
-+	cp_rev_parse.dir = sm_path;
-+	prepare_submodule_repo_env(&cp_rev_parse.env_array);
-+	strvec_pushl(&cp_rev_parse.args, "rev-parse", "-q", "--short", NULL);
-+	strvec_pushf(&cp_rev_parse.args, "%s^0", committish);
-+	strvec_push(&cp_rev_parse.args, "--");
-+
-+	if (capture_command(&cp_rev_parse, &result, 0))
-+		return NULL;
-+
-+	strbuf_trim_trailing_newline(&result);
-+	return strbuf_detach(&result, NULL);
-+}
-+
-+static void print_submodule_summary(struct summary_cb *info, char* errmsg,
-+				    int total_commits, const char *displaypath,
-+				    const char *src_abbrev, const char *dst_abbrev,
-+				    int missing_src, int missing_dst,
-+				    struct module_cb *p)
-+{
-+	if (p->status == 'T') {
-+		if (S_ISGITLINK(p->mod_dst))
-+			printf(_("* %s %s(blob)->%s(submodule)"),
-+				 displaypath, src_abbrev, dst_abbrev);
-+		else
-+			printf(_("* %s %s(submodule)->%s(blob)"),
-+				 displaypath, src_abbrev, dst_abbrev);
-+	} else {
-+		printf("* %s %s...%s",
-+			displaypath, src_abbrev, dst_abbrev);
-+	}
-+
-+	if (total_commits < 0)
-+		printf(":\n");
-+	else
-+		printf(" (%d):\n", total_commits);
-+
-+	if (errmsg) {
-+		printf(_("%s"), errmsg);
-+	} else if (total_commits > 0) {
-+		struct child_process cp_log = CHILD_PROCESS_INIT;
-+
-+		cp_log.git_cmd = 1;
-+		cp_log.dir = p->sm_path;
-+		prepare_submodule_repo_env(&cp_log.env_array);
-+		strvec_pushl(&cp_log.args, "log", NULL);
-+
-+		if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst)) {
-+			if (info->summary_limit > 0)
-+				strvec_pushf(&cp_log.args, "-%d",
-+					     info->summary_limit);
-+
-+			strvec_pushl(&cp_log.args, "--pretty=  %m %s",
-+				     "--first-parent", NULL);
-+			strvec_pushf(&cp_log.args, "%s...%s",
-+				     src_abbrev, dst_abbrev);
-+		} else if (S_ISGITLINK(p->mod_dst)) {
-+			strvec_pushl(&cp_log.args, "--pretty=  > %s",
-+				     "-1", dst_abbrev, NULL);
-+		} else {
-+			strvec_pushl(&cp_log.args, "--pretty=  < %s",
-+				     "-1", src_abbrev, NULL);
-+		}
-+		run_command(&cp_log);
-+	}
-+	printf("\n");
-+}
-+
-+static void generate_submodule_summary(struct summary_cb *info,
-+				       struct module_cb *p)
-+{
-+	char *displaypath, *src_abbrev, *dst_abbrev;
-+	int missing_src = 0, missing_dst = 0;
-+	char *errmsg = NULL;
-+	int total_commits = -1;
-+
-+	if (!info->cached && oideq(&p->oid_dst, &null_oid)) {
-+		if (S_ISGITLINK(p->mod_dst)) {
-+			struct ref_store *refs = get_submodule_ref_store(p->sm_path);
-+			if (refs)
-+				refs_head_ref(refs, handle_submodule_head_ref, &p->oid_dst);
-+		} else if (S_ISLNK(p->mod_dst) || S_ISREG(p->mod_dst)) {
-+			struct stat st;
-+			int fd = open(p->sm_path, O_RDONLY);
-+
-+			if (fd < 0 || fstat(fd, &st) < 0 ||
-+			    index_fd(&the_index, &p->oid_dst, fd, &st, OBJ_BLOB,
-+				     p->sm_path, 0))
-+				error(_("couldn't hash object from '%s'"), p->sm_path);
-+		} else {
-+			/* for a submodule removal (mode:0000000), don't warn */
-+			if (p->mod_dst)
-+				warning(_("unexpected mode %d\n"), p->mod_dst);
-+		}
-+	}
-+
-+	if (S_ISGITLINK(p->mod_src)) {
-+		src_abbrev = verify_submodule_committish(p->sm_path,
-+							 oid_to_hex(&p->oid_src));
-+		if (!src_abbrev) {
-+			missing_src = 1;
-+			/*
-+			 * As `rev-parse` failed, we fallback to getting
-+			 * the abbreviated hash using oid_src. We do
-+			 * this as we might still need the abbreviated
-+			 * hash in cases like a submodule type change, etc.
-+			 */
-+			src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
-+		}
-+	} else {
-+		/*
-+		 * The source does not point to a submodule.
-+		 * So, we fallback to getting the abbreviation using
-+		 * oid_src as we might still need the abbreviated
-+		 * hash in cases like submodule add, etc.
-+		 */
-+		src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
-+	}
-+
-+	if (S_ISGITLINK(p->mod_dst)) {
-+		dst_abbrev = verify_submodule_committish(p->sm_path,
-+							 oid_to_hex(&p->oid_dst));
-+		if (!dst_abbrev) {
-+			missing_dst = 1;
-+			/*
-+			 * As `rev-parse` failed, we fallback to getting
-+			 * the abbreviated hash using oid_dst. We do
-+			 * this as we might still need the abbreviated
-+			 * hash in cases like a submodule type change, etc.
-+			 */
-+			dst_abbrev = xstrndup(oid_to_hex(&p->oid_dst), 7);
-+		}
-+	} else {
-+		/*
-+		 * The destination does not point to a submodule.
-+		 * So, we fallback to getting the abbreviation using
-+		 * oid_dst as we might still need the abbreviated
-+		 * hash in cases like a submodule removal, etc.
-+		 */
-+		dst_abbrev = xstrndup(oid_to_hex(&p->oid_dst), 7);
-+	}
-+
-+	displaypath = get_submodule_displaypath(p->sm_path, info->prefix);
-+
-+	if (!missing_src && !missing_dst) {
-+		struct child_process cp_rev_list = CHILD_PROCESS_INIT;
-+		struct strbuf sb_rev_list = STRBUF_INIT;
-+
-+		strvec_pushl(&cp_rev_list.args, "rev-list",
-+			     "--first-parent", "--count", NULL);
-+		if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst))
-+			strvec_pushf(&cp_rev_list.args, "%s...%s",
-+				     src_abbrev, dst_abbrev);
-+		else
-+			strvec_push(&cp_rev_list.args, S_ISGITLINK(p->mod_src) ?
-+				    src_abbrev : dst_abbrev);
-+		strvec_push(&cp_rev_list.args, "--");
-+
-+		cp_rev_list.git_cmd = 1;
-+		cp_rev_list.dir = p->sm_path;
-+		prepare_submodule_repo_env(&cp_rev_list.env_array);
-+
-+		if (!capture_command(&cp_rev_list, &sb_rev_list, 0))
-+			total_commits = atoi(sb_rev_list.buf);
-+
-+		strbuf_release(&sb_rev_list);
-+	} else {
-+		/*
-+		 * Don't give error msg for modification whose dst is not
-+		 * submodule, i.e., deleted or changed to blob
-+		 */
-+		if (S_ISGITLINK(p->mod_dst)) {
-+			struct strbuf errmsg_str = STRBUF_INIT;
-+			if (missing_src && missing_dst) {
-+				strbuf_addf(&errmsg_str, "  Warn: %s doesn't contain commits %s and %s\n",
-+					    displaypath, oid_to_hex(&p->oid_src),
-+					    oid_to_hex(&p->oid_dst));
-+			} else {
-+				strbuf_addf(&errmsg_str, "  Warn: %s doesn't contain commit %s\n",
-+					    displaypath, missing_src ?
-+					    oid_to_hex(&p->oid_src) :
-+					    oid_to_hex(&p->oid_dst));
-+			}
-+			errmsg = strbuf_detach(&errmsg_str, NULL);
-+		}
-+	}
-+
-+	print_submodule_summary(info, errmsg, total_commits,
-+				displaypath, src_abbrev,
-+				dst_abbrev, missing_src,
-+				missing_dst, p);
-+
-+	free(displaypath);
-+	free(src_abbrev);
-+	free(dst_abbrev);
-+}
-+
-+static void prepare_submodule_summary(struct summary_cb *info,
-+				      struct module_cb_list *list)
-+{
-+	int i;
-+	for (i = 0; i < list->nr; i++) {
-+		const struct submodule *sub;
-+		struct module_cb *p = list->entries[i];
-+		struct strbuf sm_gitdir = STRBUF_INIT;
-+
-+		if (p->status == 'D' || p->status == 'T') {
-+			generate_submodule_summary(info, p);
-+			continue;
-+		}
-+
-+		if (info->for_status && p->status != 'A' &&
-+		    (sub = submodule_from_path(the_repository,
-+					       &null_oid, p->sm_path))) {
-+			char *config_key = NULL;
-+			const char *value;
-+			int ignore_all = 0;
-+
-+			config_key = xstrfmt("submodule.%s.ignore",
-+					     sub->name);
-+			if (!git_config_get_string_const(config_key, &value))
-+				ignore_all = !strcmp(value, "all");
-+			else if (sub->ignore)
-+				ignore_all = !strcmp(sub->ignore, "all");
-+
-+			free(config_key);
-+			if (ignore_all)
-+				continue;
-+		}
-+
-+		/* Also show added or modified modules which are checked out */
-+		strbuf_addstr(&sm_gitdir, p->sm_path);
-+		if (is_nonbare_repository_dir(&sm_gitdir))
-+			generate_submodule_summary(info, p);
-+		strbuf_release(&sm_gitdir);
-+	}
-+}
-+
-+static void submodule_summary_callback(struct diff_queue_struct *q,
-+				       struct diff_options *options,
-+				       void *data)
-+{
-+	int i;
-+	struct module_cb_list *list = data;
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		struct module_cb *temp;
-+
-+		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
-+			continue;
-+		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
-+		temp->mod_src = p->one->mode;
-+		temp->mod_dst = p->two->mode;
-+		temp->oid_src = p->one->oid;
-+		temp->oid_dst = p->two->oid;
-+		temp->status = p->status;
-+		temp->sm_path = xstrdup(p->one->path);
-+
-+		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-+		list->entries[list->nr++] = temp;
-+	}
-+}
-+
-+static const char *get_diff_cmd(enum diff_cmd diff_cmd)
-+{
-+	switch (diff_cmd) {
-+	case DIFF_INDEX: return "diff-index";
-+	case DIFF_FILES: return "diff-files";
-+	default: BUG("bad diff_cmd value %d", diff_cmd);
-+	}
-+}
-+
-+static int compute_summary_module_list(struct object_id *head_oid,
-+				       struct summary_cb *info,
-+				       enum diff_cmd diff_cmd)
-+{
-+	struct strvec diff_args = STRVEC_INIT;
-+	struct rev_info rev;
-+	struct module_cb_list list = MODULE_CB_LIST_INIT;
-+
-+	strvec_push(&diff_args, get_diff_cmd(diff_cmd));
-+	if (info->cached)
-+		strvec_push(&diff_args, "--cached");
-+	strvec_pushl(&diff_args, "--ignore-submodules=dirty", "--raw", NULL);
-+	if (head_oid)
-+		strvec_push(&diff_args, oid_to_hex(head_oid));
-+	strvec_push(&diff_args, "--");
-+	if (info->argc)
-+		strvec_pushv(&diff_args, info->argv);
-+
-+	git_config(git_diff_basic_config, NULL);
-+	init_revisions(&rev, info->prefix);
-+	rev.abbrev = 0;
-+	precompose_argv(diff_args.nr, diff_args.v);
-+	setup_revisions(diff_args.nr, diff_args.v, &rev, NULL);
-+	rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = submodule_summary_callback;
-+	rev.diffopt.format_callback_data = &list;
-+
-+	if (!info->cached) {
-+		if (diff_cmd == DIFF_INDEX)
-+			setup_work_tree();
-+		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
-+			perror("read_cache_preload");
-+			return -1;
-+		}
-+	} else if (read_cache() < 0) {
-+		perror("read_cache");
-+		return -1;
-+	}
-+
-+	if (diff_cmd == DIFF_INDEX)
-+		run_diff_index(&rev, info->cached);
-+	else
-+		run_diff_files(&rev, 0);
-+	prepare_submodule_summary(info, &list);
-+	strvec_clear(&diff_args);
-+	return 0;
-+}
-+
-+static int module_summary(int argc, const char **argv, const char *prefix)
-+{
-+	struct summary_cb info = SUMMARY_CB_INIT;
-+	int cached = 0;
-+	int for_status = 0;
-+	int files = 0;
-+	int summary_limit = -1;
-+	enum diff_cmd diff_cmd = DIFF_INDEX;
-+	struct object_id head_oid;
-+	int ret;
-+
-+	struct option module_summary_options[] = {
-+		OPT_BOOL(0, "cached", &cached,
-+			 N_("use the commit stored in the index instead of the submodule HEAD")),
-+		OPT_BOOL(0, "files", &files,
-+			 N_("to compare the commit in the index with that in the submodule HEAD")),
-+		OPT_BOOL(0, "for-status", &for_status,
-+			 N_("skip submodules with 'ignore_config' value set to 'all'")),
-+		OPT_INTEGER('n', "summary-limit", &summary_limit,
-+			     N_("limit the summary size")),
-+		OPT_END()
-+	};
-+
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper summary [<options>] [commit] [--] [<path>]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_summary_options,
-+			     git_submodule_helper_usage, 0);
-+
-+	if (!summary_limit)
-+		return 0;
-+
-+	if (!get_oid(argc ? argv[0] : "HEAD", &head_oid)) {
-+		if (argc) {
-+			argv++;
-+			argc--;
-+		}
-+	} else if (!argc || !strcmp(argv[0], "HEAD")) {
-+		/* before the first commit: compare with an empty tree */
-+		oidcpy(&head_oid, the_hash_algo->empty_tree);
-+		if (argc) {
-+			argv++;
-+			argc--;
-+		}
-+	} else {
-+		if (get_oid("HEAD", &head_oid))
-+			die(_("could not fetch a revision for HEAD"));
-+	}
-+
-+	if (files) {
-+		if (cached)
-+			die(_("--cached and --files are mutually exclusive"));
-+		diff_cmd = DIFF_FILES;
-+	}
-+
-+	info.argc = argc;
-+	info.argv = argv;
-+	info.prefix = prefix;
-+	info.cached = !!cached;
-+	info.files = !!files;
-+	info.for_status = !!for_status;
-+	info.summary_limit = summary_limit;
-+
-+	ret = compute_summary_module_list((diff_cmd == DIFF_INDEX) ? &head_oid : NULL,
-+					  &info, diff_cmd);
-+	return ret;
-+}
-+
- struct sync_cb {
- 	const char *prefix;
- 	unsigned int flags;
-@@ -2341,6 +2769,7 @@ static struct cmd_struct commands[] = {
- 	{"print-default-remote", print_default_remote, 0},
- 	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
- 	{"deinit", module_deinit, 0},
-+	{"summary", module_summary, SUPPORT_SUPER_PREFIX},
- 	{"remote-branch", resolve_remote_submodule_branch, 0},
- 	{"push-check", push_check, 0},
- 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 43eb6051d2..6fb12585cb 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -59,31 +59,6 @@ die_if_unmatched ()
- 	fi
- }
- 
--#
--# Print a submodule configuration setting
--#
--# $1 = submodule name
--# $2 = option name
--# $3 = default value
--#
--# Checks in the usual git-config places first (for overrides),
--# otherwise it falls back on .gitmodules.  This allows you to
--# distribute project-wide defaults in .gitmodules, while still
--# customizing individual repositories if necessary.  If the option is
--# not in .gitmodules either, print a default value.
--#
--get_submodule_config () {
--	name="$1"
--	option="$2"
--	default="$3"
--	value=$(git config submodule."$name"."$option")
--	if test -z "$value"
--	then
--		value=$(git submodule--helper config submodule."$name"."$option")
--	fi
--	printf '%s' "${value:-$default}"
--}
--
- isnumber()
- {
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
-@@ -831,166 +806,7 @@ cmd_summary() {
- 		shift
- 	done
- 
--	test $summary_limit = 0 && return
--
--	if rev=$(git rev-parse -q --verify --default HEAD ${1+"$1"})
--	then
--		head=$rev
--		test $# = 0 || shift
--	elif test -z "$1" || test "$1" = "HEAD"
--	then
--		# before the first commit: compare with an empty tree
--		head=$(git hash-object -w -t tree --stdin </dev/null)
--		test -z "$1" || shift
--	else
--		head="HEAD"
--	fi
--
--	if [ -n "$files" ]
--	then
--		test -n "$cached" &&
--		die "$(gettext "The --cached option cannot be used with the --files option")"
--		diff_cmd=diff-files
--		head=
--	fi
--
--	cd_to_toplevel
--	eval "set $(git rev-parse --sq --prefix "$wt_prefix" -- "$@")"
--	# Get modified modules cared by user
--	modules=$(git $diff_cmd $cached --ignore-submodules=dirty --raw $head -- "$@" |
--		sane_egrep '^:([0-7]* )?160000' |
--		while read -r mod_src mod_dst sha1_src sha1_dst status sm_path
--		do
--			# Always show modules deleted or type-changed (blob<->module)
--			if test "$status" = D || test "$status" = T
--			then
--				printf '%s\n' "$sm_path"
--				continue
--			fi
--			# Respect the ignore setting for --for-status.
--			if test -n "$for_status"
--			then
--				name=$(git submodule--helper name "$sm_path")
--				ignore_config=$(get_submodule_config "$name" ignore none)
--				test $status != A && test $ignore_config = all && continue
--			fi
--			# Also show added or modified modules which are checked out
--			GIT_DIR="$sm_path/.git" git rev-parse --git-dir >/dev/null 2>&1 &&
--			printf '%s\n' "$sm_path"
--		done
--	)
--
--	test -z "$modules" && return
--
--	git $diff_cmd $cached --ignore-submodules=dirty --raw $head -- $modules |
--	sane_egrep '^:([0-7]* )?160000' |
--	cut -c2- |
--	while read -r mod_src mod_dst sha1_src sha1_dst status name
--	do
--		if test -z "$cached" &&
--			is_zero_oid $sha1_dst
--		then
--			case "$mod_dst" in
--			160000)
--				sha1_dst=$(GIT_DIR="$name/.git" git rev-parse HEAD)
--				;;
--			100644 | 100755 | 120000)
--				sha1_dst=$(git hash-object $name)
--				;;
--			000000)
--				;; # removed
--			*)
--				# unexpected type
--				eval_gettextln "unexpected mode \$mod_dst" >&2
--				continue ;;
--			esac
--		fi
--		missing_src=
--		missing_dst=
--
--		test $mod_src = 160000 &&
--		! GIT_DIR="$name/.git" git rev-parse -q --verify $sha1_src^0 >/dev/null &&
--		missing_src=t
--
--		test $mod_dst = 160000 &&
--		! GIT_DIR="$name/.git" git rev-parse -q --verify $sha1_dst^0 >/dev/null &&
--		missing_dst=t
--
--		display_name=$(git submodule--helper relative-path "$name" "$wt_prefix")
--
--		total_commits=
--		case "$missing_src,$missing_dst" in
--		t,)
--			errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commit \$sha1_src")"
--			;;
--		,t)
--			errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commit \$sha1_dst")"
--			;;
--		t,t)
--			errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commits \$sha1_src and \$sha1_dst")"
--			;;
--		*)
--			errmsg=
--			total_commits=$(
--			if test $mod_src = 160000 && test $mod_dst = 160000
--			then
--				range="$sha1_src...$sha1_dst"
--			elif test $mod_src = 160000
--			then
--				range=$sha1_src
--			else
--				range=$sha1_dst
--			fi
--			GIT_DIR="$name/.git" \
--			git rev-list --first-parent $range -- | wc -l
--			)
--			total_commits=" ($(($total_commits + 0)))"
--			;;
--		esac
--
--		sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src 2>/dev/null ||
--			echo $sha1_src | cut -c1-7)
--		sha1_abbr_dst=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_dst 2>/dev/null ||
--			echo $sha1_dst | cut -c1-7)
--
--		if test $status = T
--		then
--			blob="$(gettext "blob")"
--			submodule="$(gettext "submodule")"
--			if test $mod_dst = 160000
--			then
--				echo "* $display_name $sha1_abbr_src($blob)->$sha1_abbr_dst($submodule)$total_commits:"
--			else
--				echo "* $display_name $sha1_abbr_src($submodule)->$sha1_abbr_dst($blob)$total_commits:"
--			fi
--		else
--			echo "* $display_name $sha1_abbr_src...$sha1_abbr_dst$total_commits:"
--		fi
--		if test -n "$errmsg"
--		then
--			# Don't give error msg for modification whose dst is not submodule
--			# i.e. deleted or changed to blob
--			test $mod_dst = 160000 && echo "$errmsg"
--		else
--			if test $mod_src = 160000 && test $mod_dst = 160000
--			then
--				limit=
--				test $summary_limit -gt 0 && limit="-$summary_limit"
--				GIT_DIR="$name/.git" \
--				git log $limit --pretty='format:  %m %s' \
--				--first-parent $sha1_src...$sha1_dst
--			elif test $mod_dst = 160000
--			then
--				GIT_DIR="$name/.git" \
--				git log --pretty='format:  > %s' -1 $sha1_dst
--			else
--				GIT_DIR="$name/.git" \
--				git log --pretty='format:  < %s' -1 $sha1_src
--			fi
--			echo
--		fi
--		echo
--	done
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary ${prefix:+--prefix "$prefix"} ${files:+--files} ${cached:+--cached} ${for_status:+--for-status} ${summary_limit:+-n $summary_limit} -- "$@"
- }
- #
- # List all submodules, prefixed with:
-diff --git a/t/t7421-submodule-summary-add.sh b/t/t7421-submodule-summary-add.sh
-index 829fe26d6d..59a9b00467 100755
---- a/t/t7421-submodule-summary-add.sh
-+++ b/t/t7421-submodule-summary-add.sh
-@@ -58,7 +58,7 @@ test_expect_success 'submodule summary output for submodules with changed paths'
- 	git commit -m "change submodule path" &&
- 	rev=$(git -C sm rev-parse --short HEAD^) &&
- 	git submodule summary HEAD^^ -- my-subm >actual 2>err &&
--	test_i18ngrep "fatal:.*my-subm" err &&
-+	grep "fatal:.*my-subm" err &&
- 	cat >expected <<-EOF &&
- 	* my-subm ${rev}...0000000:
- 
--- 
-2.28.0
+).
 
