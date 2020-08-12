@@ -7,122 +7,103 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00BF2C433DF
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 07:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE5B4C433E0
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 08:08:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C818520656
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 07:12:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 849AB20768
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 08:08:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QCMsB+xn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QbZEfrjD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726755AbgHLHMl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 03:12:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35740 "EHLO
+        id S1726695AbgHLIIY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 04:08:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726182AbgHLHMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 03:12:40 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A864C06174A
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 00:12:40 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id r2so1005169wrs.8
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 00:12:39 -0700 (PDT)
+        with ESMTP id S1726479AbgHLIIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 04:08:23 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B139C06174A
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 01:08:23 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id t6so1206572ljk.9
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 01:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Yfqp4naPssX0mkUlMGbxkHmt1BKN/3mroQyInQ22IKY=;
-        b=QCMsB+xnUabPRAD0LkrgNQCkUpDdp91j/PlwQoqcWx0wM5DJ+X3AahN7frCfqBui4C
-         yrr6+s9Tdukex/TdiSJdOA6IOaRmjE8h7QRMY5pAcsNgurZITjfKPaLmWeysZqhx0GKp
-         rESIFwwTwmfC+y9ujbjjvHWCK7LNlnGsyxfAzqAWb3UtpyAF53ZxgOPTbePivJ+nk+YG
-         u2SFnXKDafsEJYyuZdukLhKRHbMEDa5IXBfvMKe/Hj6ANmalCi4ZQQtgjIbxTMdnWzF/
-         DFgH5yVbVs+R+folgc3P/Sfpbsx6fMMA32XI3LS2EummjSRKNoWOopwHgfVkEtFzazY8
-         cwJg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dY2BThUJUcgMwhk9lKQ1hLM46zrLJpdgSiv9BI4KMEk=;
+        b=QbZEfrjDHBgRDeogA5bAnpK+YMQRM1uw+w/uSmyr10Lc3niQxZJDRmUEtImKscjsnq
+         2213aEWBiDdxhbj0yKLHu3l+Bs+y9gG8cbJl02HWAvDFWc/CbT9mqReUHEbWh5LajTqV
+         dk8RpjzL3E6K3F9QC5BN5UelnGqSOhnPcgmfGfBtMmmOtfJbxTsNSkEJ2VCIdqzeQMFI
+         sR37AGZ62RKOblip3+XpLDau2slxgAM4pfC16lFD3Sz2Nzh78vW82bMqQQUtnD4jQUhV
+         2rmTFgcAiiW4jNA6Gw4EVdgiK1U01jjb11M5gEirLqpvdB3NZFy1Jy/ZtYUV2wZ+7Kfx
+         WQrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Yfqp4naPssX0mkUlMGbxkHmt1BKN/3mroQyInQ22IKY=;
-        b=BU6W7N8XQ1jp0nVnGGOAYGYoN90xWVIXoQlcljfc1TuF3S4+xFFZzNBKrndM/stFgH
-         WqzDqR9bhRMYNJWUDGi1YOHEVM5X0kVg5LCEFScQRL+iiFGov9Y54508xoMZP8pFldYU
-         UdN+M8khRbLtdaQ2q0tJMb9AuCyhhumPcjEIJi/N7OnZdyQO0YAdlE4BiUFgsH6VYMsB
-         InIa1wmoRm8uKntXdNrj7tzAdS717ZfY2PuwQqvGfNp+DCxjasq13oyo9Y/juq0MQDzZ
-         D217JgxFgn0sgOxPVtVI2659PIXIWJ2a6ibIFXgqw0ayTjAuD451xUbtwhYBG7lXDZ0l
-         Rr4Q==
-X-Gm-Message-State: AOAM531QOAfr/0YpMuujupjo3wXVTdftx97oWar5FJNl2KZ3bZi4mF8K
-        wUORe/opwBTgv08fbaDZy0IUChS3
-X-Google-Smtp-Source: ABdhPJx4ZmAIRkdayjCj4PscjuplXiYNRqEz/cLH4weX5UDcsLlS1SroVNJfad2sXjCOwaWUAq9oRg==
-X-Received: by 2002:a5d:6345:: with SMTP id b5mr35369970wrw.204.1597216358593;
-        Wed, 12 Aug 2020 00:12:38 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d14sm2621530wre.44.2020.08.12.00.12.38
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=dY2BThUJUcgMwhk9lKQ1hLM46zrLJpdgSiv9BI4KMEk=;
+        b=uZP+z9AAUHQSetN9sA2HQXk//nKfQ/3cSlJESL57YSdTZileNHa9C1Fp6U7SWc71eq
+         WPIsfWAKxMLrICP5klresy5lg9z5yv9A5oOxPGxB1ppABN2JGKlz2eogiQfJYktWEzfu
+         VLwl3lwpLxgxsMuOtdkrLDprZWJ9pA0lGvZbrCU//dSqQxF7iRuqRb9CRzs/bU5TDP2M
+         S+u1GHC7AyUbav0qs3mOkHagPPIr83g91LNACfEPmp4nRfFp2CCR52jX++6fqDw3SYjm
+         6wgST5uSZT/GtkTAtNeOaNeto0yD1tZVueF+5Iab4Fl55mJnzax7GB0LiLoUBKGJXSjU
+         aIoQ==
+X-Gm-Message-State: AOAM533pAIvRtoSslVdl8l6n2oEFmW732J0s3PIvpBQkxkOMCCJniVep
+        a2tjCEO4TFja03AqvZUFl3qwYyay
+X-Google-Smtp-Source: ABdhPJz5Taa4KOrLdPF/ygMXPylqxz+tCRrlWBH+Fh1+3URd0+tsAbihwLKtuNyCg+Nv2chT4167Nw==
+X-Received: by 2002:a2e:531c:: with SMTP id h28mr5050861ljb.322.1597219701516;
+        Wed, 12 Aug 2020 01:08:21 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 72sm288616lfh.97.2020.08.12.01.08.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Aug 2020 00:12:38 -0700 (PDT)
-Message-Id: <8a2a0b6c9adea54bd5d10c37bbc6965eb5cb120b.1597216356.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.829.git.git.1597216356.gitgitgadget@gmail.com>
-References: <pull.829.git.git.1597216356.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Aug 2020 07:12:35 +0000
-Subject: [PATCH 1/2] t3000: fix some test description typos
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 12 Aug 2020 01:08:20 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH  2/3] doc/git-log: describe --diff-merges=off
+References: <20200805220832.3800-1-sorganov@gmail.com>
+        <20200805220832.3800-3-sorganov@gmail.com>
+        <xmqq8sek917j.fsf@gitster.c.googlers.com>
+        <xmqqzh707kq1.fsf@gitster.c.googlers.com>
+Date:   Wed, 12 Aug 2020 11:08:20 +0300
+In-Reply-To: <xmqqzh707kq1.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 11 Aug 2020 17:48:22 -0700")
+Message-ID: <87imdoe16z.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-There is no such flag as --o; it is either --others or -o.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Sergey Organov <sorganov@gmail.com> writes:
+>>
+>>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>>> ---
+>>>  Documentation/git-log.txt | 6 +++++-
+>>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+>>> index 9ccba65469d7..f3727c786453 100644
+>>> --- a/Documentation/git-log.txt
+>>> +++ b/Documentation/git-log.txt
+>>> @@ -145,7 +145,6 @@ combined-diff option or with `--no-diff-merges`).
+>>>  	rename or copy detection have been requested).
+>>>  
+>>>  -m::
+>>> ---diff-merges::
+>>
+>> Shouldn't this "--diff-merges" be removed from here?
+>
+> Sorry, my eyes.  Yes, you are removing it from here.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t3000-ls-files-others.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Don't mention it, -- these "---" caught me as well when I first looked
+at the diff!
 
-diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-index ffdfb16f58..1b9327b780 100755
---- a/t/t3000-ls-files-others.sh
-+++ b/t/t3000-ls-files-others.sh
-@@ -152,7 +152,7 @@ test_expect_success 'ls-files -o --directory with mix dir/file pathspecs' '
- 	)
- '
- 
--test_expect_success 'ls-files --o --directory with glob filetype match' '
-+test_expect_success 'ls-files -o --directory with glob filetype match' '
- 	(
- 		cd nested &&
- 
-@@ -168,7 +168,7 @@ test_expect_success 'ls-files --o --directory with glob filetype match' '
- 	)
- '
- 
--test_expect_success 'ls-files --o --directory with mix of tracked states' '
-+test_expect_success 'ls-files -o --directory with mix of tracked states' '
- 	(
- 		cd nested &&
- 
-@@ -184,7 +184,7 @@ test_expect_success 'ls-files --o --directory with mix of tracked states' '
- 	)
- '
- 
--test_expect_success 'ls-files --o --directory with glob filetype match only' '
-+test_expect_success 'ls-files -o --directory with glob filetype match only' '
- 	(
- 		cd nested &&
- 
-@@ -198,7 +198,7 @@ test_expect_success 'ls-files --o --directory with glob filetype match only' '
- 	)
- '
- 
--test_expect_success 'ls-files --o --directory to get immediate paths under one dir only' '
-+test_expect_success 'ls-files -o --directory to get immediate paths under one dir only' '
- 	(
- 		cd nested &&
- 
--- 
-gitgitgadget
-
+Thanks,
+-- Sergey
