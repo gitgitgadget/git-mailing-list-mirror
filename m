@@ -2,171 +2,130 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DF04C433DF
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3137CC433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:56:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 116BB2080C
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:53:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE8BF207F7
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 15:56:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Br4SEEWX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8kQAi6R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726492AbgHLPxQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 11:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59436 "EHLO
+        id S1726518AbgHLP4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 11:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726447AbgHLPxP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 11:53:15 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC82C061383
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 08:53:15 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id jp10so2828733ejb.0
-        for <git@vger.kernel.org>; Wed, 12 Aug 2020 08:53:14 -0700 (PDT)
+        with ESMTP id S1726150AbgHLP4R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 11:56:17 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5375CC061383
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 08:56:17 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a15so2504753wrh.10
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 08:56:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JUQCQuWn9CJ0kRdLuDGhjsO/XtgvAeB70VCLnx8pt94=;
-        b=Br4SEEWX/ZFJYHe14134I4wkbWEXSRzhTEzQTCbGdomKoIfUnZhoWPpDYPfG6g2O9S
-         XNOSRkbf8szH8NtHVhS9shgiU3iqAnbdY/ZkFaEiEpNAbNUMiweHxAohXvU6wKHAI7cT
-         E5FauWrsWkO7867KJvSqSagsht9wHMjFUHZcFxNvSLa9qNKdIuA0VNAtMUGmHxib1h9M
-         F2bS0FuMpZUPb0o6mjOUVgOVnHXMYKaL/VJ+fH8eOzjfni4E77eu85yAFRHsz4/BvWLW
-         m4gH9V5T6AjHWHiuRoeTZg44leG3ofdH6S2CAnDdgMQZafV1MkdG7Kfhf5Y45+woQg6o
-         +NTQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5KwjmmZBpjd2llWnjXAm6719h/Addfal5B+CJJ2X+IA=;
+        b=X8kQAi6R23rcXn9HR2BsZeanwM0PJGYFBzqhwIjLLLznm27Hctj2iU96wUklqBesGj
+         AeLeE2e9P7F46RG8x7wQvXYW/9yHGuh0f6aNCiB9pGUd0iHgpQWqF4LhfLvEoR++EtIh
+         B/vs9wbo+AcanJt2mjkMNJhWjp7SDFOz/NNKTdZiHgMfYW+UBjqDwxR0v0GGdeD6hn8p
+         aKVlp7sgdUH0S0q4HJp3sqQdOiWTYOTwDMM6t6xvC7qFthversdR+oHzZzzTRedvM2Tv
+         RYopauCqvA2cHHUhfIM85RlIEU1B6eFHkmBUZbejzTP0dXf7X18qz3Gqb7dzH337yUf1
+         ODkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JUQCQuWn9CJ0kRdLuDGhjsO/XtgvAeB70VCLnx8pt94=;
-        b=hRg33Qjwq6PG+Myt2WZf89zRbQOTgtRVE5BMOyCWze+HK2KmYxOjvbqvPI34L2sRP3
-         iOZ+jEN5yjwuryTGcfst8tqaHW8ZmUsAFXnoX4Rnf07E/V7qL51MZB93B8PiS3bx2LNM
-         cUksX3aiZ2PJX6l0bMccGqwFdKiAP4bNvb+MnyGJcycPAO94tolxjpI4IinRKLMRZDVV
-         T+mXDDwZAmp3FBIW8u7DPZqIGwV2pq1mjFvfpZ29ajxmVGRcXHXzYWO3XkxhwPAuSLl+
-         U86E1/KuaTf7wQWirYrRwHfv8wSnHgXtiSV44ona108/BsUWvj0CeiVLG5idBrrkbV1S
-         CfNg==
-X-Gm-Message-State: AOAM533ZuvgKQXVnLcchpWzg3rQWP5fQzXWXvBPs8GPNQCzZhqAEd8Fo
-        SHM67lwtK2MgqSN3YFi7EsWZ5g8S
-X-Google-Smtp-Source: ABdhPJzwDFVkSpj7hopAynSQQZuIzNoJhWOwDaygrQZK3ssyyFBh51+56g4JPm87UWFBjvqH06+3mw==
-X-Received: by 2002:a17:907:104a:: with SMTP id oy10mr408850ejb.267.1597247593794;
-        Wed, 12 Aug 2020 08:53:13 -0700 (PDT)
-Received: from szeder.dev (62-165-238-100.pool.digikabel.hu. [62.165.238.100])
-        by smtp.gmail.com with ESMTPSA id h18sm1670506edw.56.2020.08.12.08.53.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Aug 2020 08:53:13 -0700 (PDT)
-Date:   Wed, 12 Aug 2020 17:53:06 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v13 2/5] bugreport: add tool to generate debugging info
-Message-ID: <20200812155306.GA23524@szeder.dev>
-References: <20200416211807.60811-1-emilyshaffer@google.com>
- <20200416211807.60811-3-emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5KwjmmZBpjd2llWnjXAm6719h/Addfal5B+CJJ2X+IA=;
+        b=WnoJAShDLrnyaDNuTfxXpAYirne/BQkYkAQIS9vxYHv6Ajfd4vvj5p+RbR+skaUxjR
+         y1eT0ODml7f38pJE+HWTvGp2hZG92LJ/MyCNBta41Cln2JMICtJAPjciY+yy1ltpgNY5
+         YOsChOsYCFlEwOk0pt7qtTgQWVheOMFrrQm9swOKs29dtabrqKWn1aTKPpQPCh+TutpU
+         ofBAmUzM+CwEupR3zLezBMF2FAvrh5y2zP6b0okFsO1bCq+HdfJ3/hsf7s1eMS+Ig3Wf
+         9ZaYJjGJwKikj41CCrKdSTkWXfBF54PSqG/ANFI8mi5diUvb26ytyAY1Uomrt9WbgVs3
+         x0Gg==
+X-Gm-Message-State: AOAM533Xklu12K0SYvok+In+fgTm+5G629nSn3WlpPRbF8fg9b4cM1rY
+        6Ci8+5IK45amjB9bUoAXB0xgc/acqdKxJ7KsEiE=
+X-Google-Smtp-Source: ABdhPJxcJNzENurJdM5T6nXwXJz90sIASvTTIf/QGuCIVTFv88MWbUd9H5kQwXXP9cXXhi6cseo5Eu/E3xMcC6r0zLk=
+X-Received: by 2002:adf:dfc8:: with SMTP id q8mr242899wrn.231.1597247776000;
+ Wed, 12 Aug 2020 08:56:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200416211807.60811-3-emilyshaffer@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <xmqq8sevt1lf.fsf@gitster.c.googlers.com> <20200804185057.GA1400256@coredump.intra.peff.net>
+ <xmqqr1sms0f0.fsf@gitster.c.googlers.com> <20200804192053.GA1400936@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2008121516560.50@tvgsbejvaqbjf.bet> <20200812141958.GA32453@coredump.intra.peff.net>
+In-Reply-To: <20200812141958.GA32453@coredump.intra.peff.net>
+From:   Sibi Siddharthan <sibisiv.siddharthan@gmail.com>
+Date:   Wed, 12 Aug 2020 21:26:05 +0530
+Message-ID: <CAKw82xxOZFcsMw47TSrD7-pXpqO7O0_m84o96iH6+ZVeN9j1uw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2020, #01; Mon, 3)
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 16, 2020 at 02:18:04PM -0700, Emily Shaffer wrote:
-> Teach Git how to prompt the user for a good bug report: reproduction
-> steps, expected behavior, and actual behavior. Later, Git can learn how
-> to collect some diagnostic information from the repository.
-> 
-> If users can send us a well-written bug report which contains diagnostic
-> information we would otherwise need to ask the user for, we can reduce
-> the number of question-and-answer round trips between the reporter and
-> the Git contributor.
-> 
-> Users may also wish to send a report like this to their local "Git
-> expert" if they have put their repository into a state they are confused
-> by.
-> 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
+On Wed, Aug 12, 2020 at 7:50 PM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Aug 12, 2020 at 03:35:06PM +0200, Johannes Schindelin wrote:
+>
+> > > That was my philosophy, too, but it's annoying in the meantime as I get
+> > > a notification for "your build is broken" every time I run CI. So it
+> > > becomes a game of chicken over who gets annoyed first. ;)
+> >
+> > I am a bit sad to read all this, as I thought that we had reached
+> > consensus that the `Makefile` _is_ the source of truth.
+> >
+> > But then, most of the source files that need to be compiled _are_ parsed
+> > from the Makefile.
+> >
+> > So I wonder what problems you ran into; Maybe we can come up with a
+> > strategy how to preempt future instances of the same nature?
+>
+> There are definitely a lot of lists that are copied from the Makefile
+> into CMakeLists. For some concrete data, here are the patches I needed
+> for two of my topics.
+>
+> This first one is for a topic that remotes git-remote-testsvn and
+> associated code.
 
-> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-> new file mode 100755
-> index 0000000000..2e73658a5c
-> --- /dev/null
-> +++ b/t/t0091-bugreport.sh
-> @@ -0,0 +1,61 @@
-> +#!/bin/sh
-> +
-> +test_description='git bugreport'
-> +
-> +. ./test-lib.sh
-> +
-> +# Headers "[System Info]" will be followed by a non-empty line if we put some
-> +# information there; we can make sure all our headers were followed by some
-> +# information to check if the command was successful.
-> +HEADER_PATTERN="^\[.*\]$"
-> +
-> +check_all_headers_populated () {
+The reason for verbosely specifying the test programs (test-tool,
+test-fake-ssh,etc)
+was that test-tool required all the objects specified by
+TEST_BUILTIN_OBJS, whereas
+test-fake-ssh requires only test-fake-ssh.o.
 
-I'm afraid that this helper function doesn't do what it was supposed
-to.
+> This second one is for a topic which moved some credential programs into
+> builtins (since they link libgit.a and nothing else, there's no reason
+> for them to take up extra space on disk). Even if we read more lists
+> from the Makefile, I think these hunks still would have needed to be
+> modified in CMakeLists because I changed the way they interact with
+> NO_UNIX_SOCKETS (instead of not building credential-cache in that case,
+> we get a builtin that says "sorry, this was built with
+> NO_UNIX_SOCKETS").
+>
 
-> +	while read -r line
+For git programs like git-bugreport, git-imap-send which are specified
+with PROGRAM_OBJS,
+we don't know which of them require to be linked with libcurl or
+libexpat. That was the reason
+these programs were specified verbosely in the CMakeLists. In the
+future if a new program would be added
+we need to add them to the PROGRAMS_BUILT list in CMakeLists as well
+and link it with its library dependencies.
 
-It iterates through each line of stdin, which is a file written by
-'git bugreport'.
+Changing the interaction with NO_UNIX_SOCKETS variable will require a
+change in the CMakeLists file as well.
 
-> +	do
-> +		if test "$(grep "$HEADER_PATTERN" "$line")"
+The CMake script was not intended to be a write once and forget
+situation, it tries to pull from the Makefile as much
+as possible. A few changes are needed, which I intend to do.
 
-This first tries to find a match in the _file_ called "$line", which never
-exists, resulting in trace output:
-
-  + check_all_headers_populated
-  + read -r line
-  + grep ^\[.*\]$ Thank you for filling out a Git bug report!
-  grep: Thank you for filling out a Git bug report!: No such file or directory
-  + test 
-  + read -r line
-  + grep ^\[.*\]$ Please answer the following questions to help us understand your issue.
-  grep: Please answer the following questions to help us understand your issue.: No such file or directory
-  + test
-  + read -r line
-  + grep ^\[.*\]$
-  grep: : No such file or directory
-  [...]
-
-Then, since 'grep' doesn't print any matches to its stdout, it invokes
-
-  test ""
-
-which always returns non-zero, so that if condition is never fulfilled.
-
-On first sight I thought that simply changing that 'grep' invocation
-to something like:
-
-  $(printf "%s\n" "$line" | grep "$HEADER_PATTERN")
-
-would be sufficient to fix it, but then the first test failed... and
-I'm not sure that I understand what this was supposed to check in the
-first place.
-
-> +		then
-> +			echo "$line"
-> +			read -r nextline
-> +			if test -z "$nextline"; then
-> +				return 1;
-> +			fi
-> +		fi
-> +	done
-> +}
-> +
-> +test_expect_success 'creates a report with content in the right places' '
-> +	test_when_finished rm git-bugreport-check-headers.txt &&
-> +	git bugreport -s check-headers &&
-> +	check_all_headers_populated <git-bugreport-check-headers.txt
-> +'
+Thank You,
+Sibi Siddharthan
