@@ -2,120 +2,123 @@ Return-Path: <SRS0=KdtI=BW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8EF1C433DF
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32B71C433DF
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:51:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D70422080C
-	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:35:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 136F420774
+	for <git@archiver.kernel.org>; Wed, 12 Aug 2020 18:51:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=rbx.email header.i=@rbx.email header.b="EYbltDll"
+	dkim=pass (2048-bit key) header.d=globallogic.com header.i=@globallogic.com header.b="FuaHg3WH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726667AbgHLSfC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 14:35:02 -0400
-Received: from aibo.runbox.com ([91.220.196.211]:49956 "EHLO aibo.runbox.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726447AbgHLSfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 14:35:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbx.email;
-         s=selector2; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-        Message-Id:Date:Subject:Cc:To:From;
-        bh=yYlVbIegDHXF+39sMlqcHNq9xnzJyeOxHUp03vxjLVA=; b=EYbltDll6NV2mZEMuC1X7tydPt
-        gkGCbyqurOtTJdMKdDt2BqCbmtR31lGjewxiGgwB64ReaPYgBmX4or08tzj+VnwA6MHM++jI0hQF7
-        7sdmRDom8Q86IWmeCz5Em7GftRaysJifxrUEGwjal1NiQEsvPprgpewPlzR8ZMUMiWC65IqWib+Og
-        IJtfpWtKonCjjik99ecK7mg423DLxCRL/JdMIOq1lQ+SBsVqexyfnfBY6Wd9JaAsKNTa3qaZbBXrK
-        qxhkSsMNT4pBYeJRYxeaBzLxy7L1MbbWgZWVOhf99WNgGtWRp/7YDKNNE7xuHusFZjCa+F3MjVtkj
-        7UQHwfww==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <detegr@rbx.email>)
-        id 1k5vaT-0000Yx-V8; Wed, 12 Aug 2020 20:34:58 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated alias (932193)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1k5vaK-0006Nn-Vl; Wed, 12 Aug 2020 20:34:49 +0200
-From:   =?UTF-8?q?Antti=20Ker=C3=A4nen?= <detegr@rbx.email>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?Antti=20Ker=C3=A4nen?= <detegr@rbx.email>,
-        =?UTF-8?q?Jussi=20Ker=C3=A4nen?= <jussike@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] rebase -i: Fix possibly wrong onto hash in todo
-Date:   Wed, 12 Aug 2020 21:33:27 +0300
-Message-Id: <20200812183326.224782-1-detegr@rbx.email>
-X-Mailer: git-send-email 2.27.0.395.g84249cff14
+        id S1726574AbgHLSvg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 14:51:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726456AbgHLSvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 14:51:35 -0400
+Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 793A1C061383
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 11:51:35 -0700 (PDT)
+Received: by mail-vk1-xa2c.google.com with SMTP id o2so735076vkn.9
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 11:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=globallogic.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=SdLdZ6OBNnZZVYa7mbaeilCgvz1rv/nOIPZ9uhrjzvk=;
+        b=FuaHg3WHqbOQYPU5U7LXbmuLhH7oAsUP+0Sl/aR6VXMIa/U9/uhiYbqbBIzZHfJsbV
+         gjbZX3ke2gtCpYuisW7Ot574iUBqHTJIPaso4QiVYtn3j7TDBlcVN9Sm9W9FtyLj9s7m
+         xmU2ptUaiC3dZGxajXN508bWxmxitQkhoy+ZHe+H3gGoGWTPZG7u3Uh9d7fwFAgn7qpb
+         To3mx99U9GCC7WXOUDqB3UqsZQfaLpLyRY0FrmZ7y3V755CLkQqCKOw4Ro6YDSLvrlK1
+         nffrq+Bn7lO8XECewD5wYGappYEmfCDE1thPTeeQlkW3Pxs2iZxjx6Ki2e7DNhIKREIZ
+         +olg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=SdLdZ6OBNnZZVYa7mbaeilCgvz1rv/nOIPZ9uhrjzvk=;
+        b=A4j+fcLJSAAgd99+o9q1nw903kUqz/w4PzUuSaYzgfnBBSxMdbRZF4PniZHvynpCpZ
+         ETAyHPQ04rzWhEjdun+2ZyPuDzIZeP9d3sXixmMMRTpPHdmXuh7n46qJ1jmKDmiffK4O
+         OV47L+QdwvMFHiAdyY7/IOgzvvp0iMhHVoGfQu3SXnaDDHAs1AbyPAIPrVjJBFzlmvJ6
+         XAmRxf1dr0ZD9kmAqjGh9BQKcCV81AGvfPAIVcVfRy6DjIj2tuuFX2jyK7dJ4FuWOt1F
+         AmGn2pnGfBnsx5RneJy7UykXjvdKqU/VYbVU20psmJHFRcXMZGUDEkPUhJwWbEIELlBg
+         9hgQ==
+X-Gm-Message-State: AOAM531G0c4OCAdPWMUr5qDKwp8J8Yh4aiToT+DtDD/OMxtdEE7DXzNC
+        xcK65M0uOshcrWldEbM8ivXHj/XYBPk1MjzjNrPQW92ZUCE=
+X-Google-Smtp-Source: ABdhPJxYobIlw9GLKXiOId6MYwd0U/5JWtnKsQA7Vzgwp0ppmUuIh3wFku4KAN6TpiWLu00a5odPaZhBxCVx0oKY8Ng=
+X-Received: by 2002:ac5:c925:: with SMTP id u5mr723603vkl.68.1597258293804;
+ Wed, 12 Aug 2020 11:51:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Sergii Shkarnikov <sergii.shkarnikov@globallogic.com>
+Date:   Wed, 12 Aug 2020 21:51:23 +0300
+Message-ID: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
+Subject: Possible bug with git restore
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'todo_list_write_to_file' may overwrite the static buffer, originating
-from 'find_unique_abbrev', that was used to store the short commit hash
-'c' for "# Rebase a..b onto c" message in the todo editor. This is
-because the buffer that is returned from 'find_unique_abbrev' is valid
-until 4 more calls to `find_unique_abbrev` are made.
+Hi.
 
-As 'todo_list_write_to_file' calls 'find_unique_abbrev' for each rebased
-commit, the hash for 'c' is overwritten if there are 4 or more commits
-in the rebase. This behavior has been broken since its introduction.
+I see some strange behavior of the "git restore" command. Here is a
+bug report template filled out:
 
-Fix by storing the short onto commit hash in a different buffer that
-remains valid, before calling 'todo_list_write_to_file'.
+*********************************************************************
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Found-by: Jussi Keränen <jussike@gmail.com>
-Signed-off-by: Antti Keränen <detegr@rbx.email>
----
- sequencer.c                   | 5 +++--
- t/t3404-rebase-interactive.sh | 6 ++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-diff --git a/sequencer.c b/sequencer.c
-index fd7701c88a..e2007dbb8c 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5178,13 +5178,14 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		    struct string_list *commands, unsigned autosquash,
- 		    struct todo_list *todo_list)
- {
--	const char *shortonto, *todo_file = rebase_path_todo();
-+	char shortonto[GIT_MAX_HEXSZ + 1];
-+	const char *todo_file = rebase_path_todo();
- 	struct todo_list new_todo = TODO_LIST_INIT;
- 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
- 	struct object_id oid = onto->object.oid;
- 	int res;
- 
--	shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
-+	find_unique_abbrev_r(shortonto, &oid, DEFAULT_ABBREV);
- 
- 	if (buf->len == 0) {
- 		struct todo_item *item = append_new_todo(todo_list);
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 4a7d21f898..1b4fa0843e 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1760,6 +1760,12 @@ test_expect_success 'correct error message for commit --amend after empty pick'
- 	test_i18ngrep "middle of a rebase -- cannot amend." err
- '
- 
-+test_expect_success 'todo has correct onto hash' '
-+	GIT_SEQUENCE_EDITOR=cat git rebase -i no-conflict-branch~4 no-conflict-branch >actual &&
-+	onto=$(git rev-parse --short HEAD~4) &&
-+	test_i18ngrep "^# Rebase ..* onto $onto" actual
-+'
-+
- # This must be the last test in this file
- test_expect_success '$EDITOR and friends are unchanged' '
- 	test_editor_unchanged
--- 
-2.27.0.395.g84249cff14
+    I tried to restore a couple of files from an earlier commit
+running the restore command with a wildcard:
 
+    git restore -s HEAD~ -- */filename.*
+
+    In my work tree those are .cpp and .hpp files stored in different folders.
+
+What did you expect to happen? (Expected behavior)
+
+    Both files are restored to what they were in HEAD~.
+
+What happened instead? (Actual behavior)
+
+    Both files were deleted (and got (delete) status).
+
+What's different between what you expected and what actually happened?
+
+    Files became deleted for no apparent reason instead of restoring
+to expected revision.
+
+Anything else you want to add:
+
+    Running this command without wildcards for each file separately
+works as expected.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.27.0.windows.1
+cpu: x86_64
+built from commit: 907ab1011dce9112700498e034b974ba60f8b407
+sizeof-long: 4
+sizeof-size_t: 8
+uname: Windows 10.0 18363
+compiler info: gnuc: 10.1
+libc info: no libc information available
+
+
+[Enabled Hooks]
+post-commit
+post-checkout
+post-merge
+pre-push
+***************************************************************
+Regards,
+Sergii Shkarnikov
