@@ -2,93 +2,101 @@ Return-Path: <SRS0=IFun=BX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E20B1C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B82C433DF
 	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 17:17:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C06D120774
+	by mail.kernel.org (Postfix) with ESMTP id 936E120855
 	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 17:17:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="YFicAEV2"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="L02WtK2X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbgHMRRf (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726531AbgHMRRf (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 13 Aug 2020 13:17:35 -0400
-Received: from mout.web.de ([212.227.17.11]:50299 "EHLO mout.web.de"
+Received: from mout.web.de ([217.72.192.78]:41543 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726248AbgHMRRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Aug 2020 13:17:30 -0400
+        id S1726384AbgHMRRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Aug 2020 13:17:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1597339040;
-        bh=DZFV0esfMz2ZmPI9cGAo1IFlCNCfURMtLZI2D282tsk=;
+        s=dbaedf251592; t=1597339041;
+        bh=gwz5YxlaaHp76LjWcZSBjIPJmTAbok+5PnN+eESf7Hs=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=YFicAEV2kkyS9Cfqas4RvBSgUsipqb/nroqnZP3ahuLypW0z//K4zYs9MNOThMU5X
-         YeD0Ldw2JbKs/9DBPMkimN9rou+w7TlrTnu4X2sB1gG5Xsc5bFDEP5DgdGhZFyJLsz
-         ZYvnTZLbFPDLZoWyGGr86I6Boi+gFToIiaOAlMjQ=
+        b=L02WtK2XT4cVNX+jSrqtAksOwPG9AnUNk8E785JVgjNTs7+qdKfABTO+xZpCv6gng
+         svZ12l6OaxohyNsu41Ey3uhvPjLpVOzHET9eFhG0GjTMW7AKbl9l1GEfwazi7fpDy1
+         KAqE0usFnMsVcYOB0OcKJzTWN34Y6c6/WMF51Hew=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MhUfW-1kJw7B3ieA-00MfAo; Thu, 13
- Aug 2020 19:17:19 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M5g0a-1kuvZR0WYS-00xeSD; Thu, 13
+ Aug 2020 19:17:21 +0200
 Subject: Re: [PATCH] fast-export: factor out print_oid()
-To:     Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 References: <1eb633f5-31ec-5d8d-69ac-35d0fb9772da@web.de>
- <20200813115815.GA3098633@coredump.intra.peff.net>
+ <20200813151856.GE2244@syl.lan>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <153a34a4-f0c9-6105-75d7-68f940a1cb39@web.de>
-Date:   Thu, 13 Aug 2020 19:17:18 +0200
+Message-ID: <3ddf0a14-77ac-7546-e03a-704432305bdb@web.de>
+Date:   Thu, 13 Aug 2020 19:17:20 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <20200813115815.GA3098633@coredump.intra.peff.net>
+In-Reply-To: <20200813151856.GE2244@syl.lan>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ZUYwBp/otjw0wYzcbhAUpnFzqACEFeLvhYYGjk2LL24tBv5sWBF
- 8HwhxdIkJS9OLmP/GlF1zOOzushYOWCPO2QrSPVdDVTx7gmUx4wAhqEpv0Q/BI/TQTb6ASJ
- nz72GlgOUSXnmpHEaazhdvBXHsHp7jofTl4EmulkIgnVDuvcoQHTb8UeoPXIt1iFEqq8DOg
- i+m4kCAgXpL2Ccpy8tREA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Mdsuc85Z9aE=:9rLuH0V21IelDVaFKP4jth
- wlaZp6mbkDShEiCrgsHCcbbIHhXbKuOzfc4SUWG2rz5Sv4XaeQ8Iwj2VNCK6U3nwM6N6IqgLl
- anqdDytXAp8+aAoXKZxqk3r58fLSsJDjllI2if6QiIiHEXvvk7XpDvFjOj0rVhf2FF9jHSlH4
- AoU7el8Sn9/IbJu2wRuilIFCnYfQcbBafIK9t03UEEJ+a5SUGNMGAhstMvkSloLwZU4PdA0w7
- gXe4Q5HPWMEbdF3s8UZVwHhJTNZpBA3hZLB+meoh+NJpRWfVsxqi+EW4xnw05VEdDDum5labK
- RZwiBi1VSl9LFaljPzORUim31/P2oNBuH+8KdTdx4J4KZ9D7pN2nS7btAvojal1AKl+/ckHvh
- wi6K+xQ8UptC0qE7lQh15kc5buzOd0YhRRPY2BXSWjtBku0Tb+M0dLbv0BMb9mqy6ISnroikq
- o+6YU3DTf3aOIpVLRH88F7TZC5B+HEqVgXlfs2q4TX+7RVIksU4vtmDO554KJXwWQzUPbUmv8
- SaFGXAKIa3Rv5153MyoCZBanbM6iOX4pxIiSJNRuZxo22vRBJ+jdHRRcTAlW7+Jk8zyA5HrDD
- zhfe66FUNl8l/tz+c3GF/pBa/vWl3HuAjek4AFzKBNhKlsVAB56syfCw/TO9iFU5BJXxUTrHQ
- jzKoIh5jQe/UP4LHBzwj9jgpKGngbvrmdwm+r9m/HAIZ/WSgPWAwQeZDd2sh5o9y4JlhcePZN
- 9/gbiI9LdW6ff1ecJzF8ZgEdveezmZlVZPfIthR8lvhthswnioK+/Q6MKqUDOzF2yZF51+xht
- kORAV3HK3DEmTBS7ytF//JqRQZMtcgRRmtX7GsD7C/hpzhyBk3C3miCTI/PriuACEwU8HIHFl
- +1S2g3s8BcduZmaruWY4Tf5cPFQG8prT1eJyJxghGTVVc5oPrEZLxPCowZGfnABr9hWRGJvsk
- MGfQw9+ffDNhK/+1TxEhN/w6kzXDDEbvnDhcrcBsshKWDWnRvctIsXZnE9CLId9l4XV2Xe2k0
- zPIyPgk8aTDMGmYrjJJK5/qGVP3jaNw4ou9cN7Xbai0OwxPg6GHU8vzyyyckp9kSg4wOflZPX
- 7A8Wpp5Z4iXmfvU5te0EjmyjjP+gCG6pW3Zi+VvD/DOWXmkNryHM4cNM4fFcf8Xroid+iGc9t
- Ag5QK75VKeIYLZ5UnymqpiRQgRMU27OkPlvnfqdKOnL+gZ0aLBUAxvW3AMu5h+st6RHw2pz3b
- Nz/nZzBxCw15Dr4Sl
+X-Provags-ID: V03:K1:HYHF1HEuKhaC9xtT7dXPUqYkF+gKsa0WEGcjNjSuIOl/zwT7X8L
+ KmdeqPiFQ1ZpKBVDx/TPc+fTswmDHrP6TN6ypE3uiRbU0ZlSfH+t/999iuix8jvajiG5NqP
+ Wsx+F+qfLafBUYoDOI1Un6Siy/5dTjbtjxvSJ2cGqh6Eq9YX9hntn8hgUCyx1wBn80x2es0
+ KvgfrIl6fOF5GbwTewY9Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xVF7X6mHlLk=:JWwtOrKFQIuxtzY5AbMnkg
+ aAEFXiqf7E5Lw/Um0ajVSTBLH/F6d+rQRuBYp5u1FPczOR0bRAVSfwvMplSGM0azIssCV9aH+
+ T0WdhmaviPCwyc61oiIHxAJlPq4Lv6L82A0BLKZCbgNkaD850YP0J3ZaJx3OYmwmpn345l9t2
+ tpFxLIC6kVaadCpRrEZnZDb+DjTfkkhsvr1fXTDcJbsxCvMIhQX9+Mpz4agNDZUPlkka/UVLv
+ hb9VmWm5FrMw1YRhJnqTbpUmH+VYhUk+UprjV0p5nHqJi1f+QEFK7miSC2CFATZ7mD+Hrmm/F
+ aJENXcdpBA5Bds6QzxlgJxCkr9kQtAD3nRfRJM8xgGMm80LxLdj44t+F5UdG7UnGelvzq7G0X
+ kTFRedjRAk5nn9cOAr6/0xC3F/oyD6ZOMw3jSj76Qd/PtGlp2klTEXnWsNjoBN5vPT8+RJ+kY
+ sAnoXaAbRaiGFqWK7Tt1Pf8rLvWRq6G9luD6lLymTq0sCkcu6sxgB7yM9ZzQDZk2Gt4f4g/oa
+ /RSeHRNyDCn1r4HqpQRAznSM/PFY6vX0gUDxSYhTeipVvw3pECtGZQfCvgFjnXPKWk5zXDyLx
+ L8xDGG1d/iOKego0Aa+Kj4mUfbe65ZVTNcXkHj6vvKtkCiYsd3tHNZtMO7MAgc07GVLDEbhfW
+ eRol/g5wQLVlOFwqnUEwZPBK6HnJIlw76+/giAIbynI5GfX+Dt5bwSZtw8ZOWoLI23f9Qw8s3
+ KFCSD1JSyb7LmzESJ+oztcaanJFmFV28pjPC9RAyUwTSPaaqLxYv0I42CbxBnam7KE0v+zqBd
+ jeR29F1tShuah3fU8FEwIwDmRWgqLaMjBHYUCjLdw6R2lpQDKpWPnTLxkk2wSgKnvwlD9pqvt
+ YcMpwOhZDMUU5+rfPEx3Cen0XLvPB1kHoeIGibO0ACEK8f27Kd0mQRRW48ynqA3ceuG9yRJfS
+ tgYrtn+ZDFblGm/Yu4FIP9QDwpkTIbtgds6mGfdflQQhvBMw3DYhqgLxRIhStgI6v8mR/3VqQ
+ oe7tmpMEVjISVnjfrd1igx/ph9Uqoi/lF3O8DntJ9CMg+ttv63Z1ql7NE4O1HU/g4zh9D1v7o
+ 3BTfQZMDG2ndQKMgrN0hk2vaDDHeFL5ffpIzYo5ViuNazYNePp1+fgOMLkbExjzPK0LsGAjFi
+ tkd4cZHDbs/eahOYGhL0ymD7sk3h13XEC08tBzTwbTIjZnFl/spUOx5eOeowE2WoDClbiYDyf
+ TM6Tr9KN12P4y4ovl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.08.20 um 13:58 schrieb Jeff King:
+Am 13.08.20 um 17:18 schrieb Taylor Blau:
 > On Thu, Aug 13, 2020 at 01:11:18PM +0200, Ren=C3=A9 Scharfe wrote:
->
 >> Simplify the output code by splitting it up and reducing duplication.
 >> Reuse the logic for printing object IDs -- anonymized if needed -- by
 >> moving it to its own function, print_oid().
->
-> Looks sane overall, though somehow we added 4 extra lines while reducing
-> duplication. ;)
-
-Yeah, but they are shorter. :)
-
->
+>>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> ---
+>>  builtin/fast-export.c | 26 +++++++++++++++-----------
+>>  1 file changed, 15 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+>> index 9f37895d4cf..49bb50634ab 100644
+>> --- a/builtin/fast-export.c
+>> +++ b/builtin/fast-export.c
+>> @@ -420,6 +420,14 @@ static const char *anonymize_oid(const char *oid_h=
+ex)
+>>  	return anonymize_str(&objs, generate_fake_oid, oid_hex, len, NULL);
+>>  }
+>>
 >> +static void print_oid(const struct object_id *oid, int anonymize)
 >> +{
 >> +	const char *oid_hex =3D oid_to_hex(oid);
@@ -96,42 +104,81 @@ Yeah, but they are shorter. :)
 >> +		oid_hex =3D anonymize_oid(oid_hex);
 >> +	fputs(oid_hex, stdout);
 >> +}
+>> +
 >
-> Would anyone ever pass anything except the global "anonymize" into this
-> function (certainly neither of the new callers does). I get that it
-> takes us on a possible road towards moving the globals to locals, but in
-> the meantime, shadowing the global name just seems more confusing to me.
-
-Good point.
-
+> The fact that this calls fputs makes this patch (in my own opinion)
+> noisier than it needs to be. This is because of all of the factoring out
+> of the other printfs. I'd expect that this looks something more like:
 >
->> @@ -470,21 +478,19 @@ static void show_filemodify(struct diff_queue_str=
-uct *q,
->>  		case DIFF_STATUS_TYPE_CHANGED:
->>  		case DIFF_STATUS_MODIFIED:
->>  		case DIFF_STATUS_ADDED:
->> +			printf("M %06o ", spec->mode);
+>   -				       anonymize ?
+>   -				       anonymize_oid(oid_to_hex(&spec->oid)) :
+>   -				       oid_to_hex(&spec->oid));
+>   +				       anonymize_oid(anonymize, &spec->oid));
 >
-> This makes the output a bit more lego-like (i.e., hard to see what the
-> full line will look like from the code), but it already was pretty
-> bad because of using print_path(). I think that's fine.
+> without moving around all of the other printf code.
 
-Yes, it was almost halfway to all-out lego style before, and the
-patch moves it further in that direction.
+Moving that part to anonymize_oid() would reduce the line count while
+still getting rid of the duplication.  But the function would need a
+new name.
 
->
->> @@ -724,12 +730,10 @@ static void handle_commit(struct commit *commit, =
-struct rev_info *rev,
->>  		else
->>  			printf("merge ");
->>  		if (mark)
->> -			printf(":%d\n", mark);
->> +			printf(":%d", mark);
->
-> This line gets repeated, too. I guess we could have a print_mark(), but
-> there is really no logic here except "put a colon in front of it", so
-> probably not worthwhile.
+=2D- >8 --
+Subject: [PATCH v2] fast-export: deduplicate anonymization handling
 
-Right.
+Move the code for converting an object_id to a hexadecimal string and
+for handling of the default (not anonymizing) case from its callers to
+anonymize_oid() and consequently rename it to anonymize_oid_if_needed().
+This reduces code duplication.
 
-Ren=C3=A9
+Suggested-by: Taylor Blau <me@ttaylorr.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/fast-export.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 9f37895d4cf..fcc3208727f 100644
+=2D-- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -413,10 +413,13 @@ static char *generate_fake_oid(void *data)
+ 	return hash_to_hex_algop_r(hex, out, the_hash_algo);
+ }
+
+-static const char *anonymize_oid(const char *oid_hex)
++static const char *anonymize_oid_if_needed(const struct object_id *oid)
+ {
+ 	static struct hashmap objs;
++	const char *oid_hex =3D oid_to_hex(oid);
+ 	size_t len =3D strlen(oid_hex);
++	if (!anonymize)
++		return oid_hex;
+ 	return anonymize_str(&objs, generate_fake_oid, oid_hex, len, NULL);
+ }
+
+@@ -476,9 +479,7 @@ static void show_filemodify(struct diff_queue_struct *=
+q,
+ 			 */
+ 			if (no_data || S_ISGITLINK(spec->mode))
+ 				printf("M %06o %s ", spec->mode,
+-				       anonymize ?
+-				       anonymize_oid(oid_to_hex(&spec->oid)) :
+-				       oid_to_hex(&spec->oid));
++				       anonymize_oid_if_needed(&spec->oid));
+ 			else {
+ 				struct object *object =3D lookup_object(the_repository,
+ 								      &spec->oid);
+@@ -726,10 +727,7 @@ static void handle_commit(struct commit *commit, stru=
+ct rev_info *rev,
+ 		if (mark)
+ 			printf(":%d\n", mark);
+ 		else
+-			printf("%s\n",
+-			       anonymize ?
+-			       anonymize_oid(oid_to_hex(&obj->oid)) :
+-			       oid_to_hex(&obj->oid));
++			printf("%s\n", anonymize_oid_if_needed(&obj->oid));
+ 		i++;
+ 	}
+
+=2D-
+2.28.0
