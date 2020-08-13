@@ -2,112 +2,138 @@ Return-Path: <SRS0=IFun=BX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B130C433E1
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 12:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 374E8C433E1
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 12:45:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DDAB2078D
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 12:26:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E30420675
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 12:45:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jiH5XMk6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cRJFV9Fm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726522AbgHMM0D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Aug 2020 08:26:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51486 "EHLO
+        id S1726292AbgHMMpd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Aug 2020 08:45:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726102AbgHMM0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Aug 2020 08:26:02 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5EC7C061757
-        for <git@vger.kernel.org>; Thu, 13 Aug 2020 05:26:01 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id h21so4092165qtp.11
-        for <git@vger.kernel.org>; Thu, 13 Aug 2020 05:26:01 -0700 (PDT)
+        with ESMTP id S1726100AbgHMMpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Aug 2020 08:45:30 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1709FC061757
+        for <git@vger.kernel.org>; Thu, 13 Aug 2020 05:45:30 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id x69so5058128qkb.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2020 05:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rADFX8mF82JatrysYPONnSiNQ+Qffv6zsEtQERPrF7I=;
-        b=jiH5XMk6CX4YXXQkcTz5UMN7Hx/ojBonnxguJf/5v+9iaaAeBNz4f+Zhl8pvtYDph7
-         Zl3E200uUsasPlLEnHDBoY5nZI10IxyjU1RHf54yChwmFySDVDcMwWcCpiKUJX+00fa2
-         eRuSu6OFBcVWjcJj1uL5DFuRF9b9NruJJQ9poHpW6qmij18Gt5tNb3GbMvhh/Y1hyyeq
-         r2UxwbCxHouTGkm9KMjFPv8JygHdQwrW3Uw3/dcEM+4h2+6UIgKGv02TGeObQQcVNEMG
-         cGDI1Qv7EnCliIw7TPcQZHNYG4DLVzNXeRv95iZfKCMkT65jLdd7pIUYxlOc+Z8LqUkA
-         bJ4Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=lXvs3Lrx8NbidzTirJAaMryKVSMHkkoM6nf6aJCSyi0=;
+        b=cRJFV9FmDsnlmrYOPIlpD94Y0yxlGsbT3mrYIgdfhGInJh2d6JwNPURoMFDM0cSMQX
+         7lyBoArDmTe2a0qCcbQhavm9Z9sxNmlSaNAZhQXhJzUexR9C8YUusdYLB3X5dePK9o7/
+         pSgbJoSgXGeYJjA34sFErN9UrelRefR3vzMSGw1wQifBDU/jdEKN9+0tAS27gDlKAXnv
+         tOXyq/M5bNwM2dtRR2QxN/47PmSikHP4ptxG0rV8nPa+6UvfAUTHwF1N8f4JAOdUNZ0O
+         TAZ8CeQn/zfUhtMMUbJZEz1qSTmI9mu3oNW6PJaB47hq9+AW4i/D8yilyDabAwAmYrNa
+         ZGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rADFX8mF82JatrysYPONnSiNQ+Qffv6zsEtQERPrF7I=;
-        b=GTejxT5XzuwYSm8Cv2wfnszCq9uixQTEPb0VfZxtKATciJ1h2ba/mtG6p8S04aInDf
-         ILK9++Oe2+hG2bgqDf/+Vh9jxy6X8mh8ESdOpN1CsHG5UQBrnRu3ueitjsWKTprQMRp5
-         aVTfxKxrauAv1PAZu1pQmn+pfWqfhjmz5AI4FY0ID7b9r0FGhFdHpydgap6hlMO/2NLW
-         KP7Bp1AX+U6kVbv+SO8SDjMH/XmYrAMkAabXVlX6KIwW6TMzL0MWWjPSccCtoT8rujF3
-         NYSqVyLrtoOI4qnBj83/3XESWpn4Zm8uB3unDPhvdcY+T5BRL4N8TGLbBFMgjhVAbU0F
-         Ydbw==
-X-Gm-Message-State: AOAM531t+Ih5QbmPYExldkApDmojsLBS47CUJvkxIQ2IpnPt4JyE/De5
-        PCsGrglKVXGEXScJG0IeLHvW7qtrVS0=
-X-Google-Smtp-Source: ABdhPJxGAmTxfQ8O8IsVjBJJy2+jIIvYND69XXFZMAM4sEBr1Fnv0HnuJxLmQW3Gun/C+Hb7TPerYw==
-X-Received: by 2002:ac8:4095:: with SMTP id p21mr5051337qtl.166.1597321560463;
-        Thu, 13 Aug 2020 05:26:00 -0700 (PDT)
-Received: from [192.168.0.103] (d-65-175-178-104.nh.cpe.atlanticbb.net. [65.175.178.104])
-        by smtp.gmail.com with ESMTPSA id x23sm4957987qkj.4.2020.08.13.05.25.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Aug 2020 05:25:59 -0700 (PDT)
-Subject: Re: [PATCH 0/3] blame: fix bug in coalescing non-adjacent "-L" chunks
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Nuthan Munaiah <nm6061@rit.edu>, git@vger.kernel.org
-References: <emc6590292-832a-4a35-8815-d5707731d605@sanctum>
- <20200807212159.GA1871940@coredump.intra.peff.net>
- <20200807213349.GB1871940@coredump.intra.peff.net>
- <xmqq7duaf6xk.fsf@gitster.c.googlers.com>
- <20200807222630.GA3750245@coredump.intra.peff.net>
- <20200807223522.GB3750245@coredump.intra.peff.net>
- <20200813052054.GA1962792@coredump.intra.peff.net>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <e63239f2-f121-97c3-7229-2c48d6aefcd0@google.com>
-Date:   Thu, 13 Aug 2020 08:25:59 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <20200813052054.GA1962792@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=lXvs3Lrx8NbidzTirJAaMryKVSMHkkoM6nf6aJCSyi0=;
+        b=I5nsoaQFdxebrJMSkRGr76qB3wLUqFuhU6jVA86mGf5uNCQ5xzPkG/8ASRcioayu5h
+         5KBauKqXTeScYKFuKIELPsURPBEK0LrMw9GvMU+xqSJMcK6UYBqKSYYPWJxrXzCiol+6
+         +mIdZIX205smSQpBOr945/7n2tM9SY9da3BNZvWKD4Q0g69uenQlMM5E96zbrFEqW+Ed
+         EjWynm+D5uBe6Zj/XqP1I40PU4Ggq4iwtxSLbMKzxjz30iUvm6kXpTiR0qbenjm0jDLk
+         mIdwAqctcujcrKgQ3EGEID+e1zlu7uOZAauxbGQWchxzJf0D6cotQ+geyEnibbEWKEoY
+         LvgQ==
+X-Gm-Message-State: AOAM53384cEeyGsbKh9B0EJ/loDUo3+qmY8pGM1SfEvi1tdzAO6EQZHd
+        4Z8kHgcpNV7Mvp+Z89koZ4Q=
+X-Google-Smtp-Source: ABdhPJyydl94oJr3TaxUt5LSfFPCRBg6V+J0xqlI9X/IQr3x8J8N1GddwzKSXjNa9Wbv5xiSGa4nOQ==
+X-Received: by 2002:a05:620a:2236:: with SMTP id n22mr4318108qkh.127.1597322728178;
+        Thu, 13 Aug 2020 05:45:28 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id o48sm7053706qtf.14.2020.08.13.05.45.27
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Thu, 13 Aug 2020 05:45:27 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 2/2] userdiff: improve Fortran xfuncname regex
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <CABPp-BENKdxqXjH07yCNojRWQ3XO+_mm8x+LSVLTBx36m6nSSw@mail.gmail.com>
+Date:   Thu, 13 Aug 2020 08:45:21 -0400
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Brandon Casey <drafnel@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8014D105-0957-4A45-B375-1027E070C74E@gmail.com>
+References: <pull.700.git.1597271429.gitgitgadget@gmail.com> <69fe977b66f9744c914cfdfa2da4b9be5e720e4f.1597271429.git.gitgitgadget@gmail.com> <CABPp-BENKdxqXjH07yCNojRWQ3XO+_mm8x+LSVLTBx36m6nSSw@mail.gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/13/20 1:20 AM, Jeff King wrote:
-> On Fri, Aug 07, 2020 at 06:35:22PM -0400, Jeff King wrote:
-> 
->>>> I think the only conceivable case is that in the middle of a single
->>>> block of text in an ancient version, another block of lines gets
->>>> inserted during the evolution of the file, but in the end these
->>>> intermediate edits all go away and the same original text remains.
->>>>
->>>> In such a case, without coalescing, we would not treat the original
->>>> single block of text as a single unit.
->>>
->>> Yeah, that makes sense, and it should be possible to construct a case
->>> based on that.
-> 
-> I started to add a test for this, and it turns out we already had one!
-> It just wasn't checking the output as carefully as it could. :)
-> 
-> So here's a series which actually checks that blame_coalesce() is doing
-> something useful, and then fixes Nuthan's bug on top (with a test case,
-> but I also confirmed it makes the original tomcat issue go away).
-> 
->    [1/3]: t8003: check output of coalesced blame
->    [2/3]: t8003: factor setup out of coalesce test
->    [3/3]: blame: only coalesce lines that are adjacent in result
-> 
+Hi Elijah,=20
 
-thanks for the fixes, looks good to me.
+> Le 12 ao=C3=BBt 2020 =C3=A0 22:10, Elijah Newren <newren@gmail.com> a =
+=C3=A9crit :
+>=20
+> On Wed, Aug 12, 2020 at 3:34 PM Philippe Blain via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>=20
+>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>=20
+>> The third part of the Fortran xfuncname regex wants to match the
+>> beginning of a subroutine or function, so it allows for all =
+characters
+>> except `'`, `"` or whitespace before the keyword 'function' or
+>> 'subroutine'. This is meant to match the 'recursive', 'elemental' or
+>> 'pure' keywords, as well as function return types, and to prevent
+>> matches inside strings.
+>>=20
+>> However, the negated set does not contain the `!` comment character,
+>> so a line with an end-of-line comment containing the keyword =
+'function' or
+>> 'subroutine' followed by another word is mistakenly chosen as a hunk =
+header.
+>>=20
+>> Improve the regex by adding `!` to the negated set.
+>>=20
+>> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>> ---
+>> t/t4018/fortran-comment-keyword | 1 -
+>> userdiff.c                      | 2 +-
+>> 2 files changed, 1 insertion(+), 2 deletions(-)
+>>=20
+>> diff --git a/t/t4018/fortran-comment-keyword =
+b/t/t4018/fortran-comment-keyword
+>> index c5dbdb4c61..e9206a5379 100644
+>> --- a/t/t4018/fortran-comment-keyword
+>> +++ b/t/t4018/fortran-comment-keyword
+>> @@ -8,7 +8,6 @@
+>>       real funcB  ! grid function b
+>>=20
+>>       real ChangeMe
+>> -      integer broken
+>>=20
+>>       end subroutine RIGHT
+>>=20
+>=20
+> This change seems orthogonal to the explanation in the commit message.
+> What is its purpose, and does it belong in this commit or a different
+> one?
+
+If you take a look at t/t4018/README, the way to mark t4018 tests as =
+"known failures"
+is to insert "broken" somewhere in the file. Since I'm fixing the regex =
+in this commit to be able=20
+to cope with the situation in t/t4018/fortran-comment-keyword, I'm =
+unmarking this test as broken.
+
+Cheers,
+
+Philippe.
 
