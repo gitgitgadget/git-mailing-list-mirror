@@ -2,140 +2,286 @@ Return-Path: <SRS0=IFun=BX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A21BAC433E1
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 14:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38C03C433DF
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 14:07:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 788FC20855
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 14:04:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1C0320771
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 14:07:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fp6Blwxn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aYisk8md"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726249AbgHMOEj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Aug 2020 10:04:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38582 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726106AbgHMOEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Aug 2020 10:04:38 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757FEC061757
-        for <git@vger.kernel.org>; Thu, 13 Aug 2020 07:04:37 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id v21so4838005otj.9
-        for <git@vger.kernel.org>; Thu, 13 Aug 2020 07:04:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Xb6kSpn5EZwYCBAFRPwLWxSzg8V8v8oSNoMLbo95p/Q=;
-        b=Fp6Blwxn7xRdGCVkhT1OEjePX7Q4fefswxr1qr+N+vdyIMF7KmQpY8TOVjE4aZxwXj
-         1rUE0OILFAWoT6oFJOcDI/RBGBSoL9hkcl9wpSWxLvgQWZt0Q1kiECFI8cpVavk4OjAX
-         OtHkpfGKdbtf5LeRekPRtql1zbRa7ZW6poQscW4tRJcmLwjZz4z14jlr/anQq9qKFpBl
-         fxHtJo3BNiuf2I9BaVh5LjgaOmh3YEsAfdvhBmVnUByfAzkDKofNOlw45GNkADO6ls8t
-         xNiTGEh8CaDMao01zvnhSF+ytwI6zYjRUQPrCCNbgnSlliPO8GS4XPsrtEKOgaK2ooTO
-         SgyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Xb6kSpn5EZwYCBAFRPwLWxSzg8V8v8oSNoMLbo95p/Q=;
-        b=Rs46bqJ3bzDznDL5zOVFD/WUsX3yxKIwaT+cs+znv7lq7A2QZouEIJDK9stciWi2Ye
-         2BIBnOHgveSGAujJg0wl+4cL/sXYQMUpcGbKNv8vDtK+iftlfKtEExSqfV8OFCfgAnlk
-         zuN1DeRktYqz5V2xoTcgjtIYnShYFTQpU/IxSNoPjBZoWZrU4gKSxaYooqzZ2dEWMyyn
-         CLDl6qDyojRWGe8CvjG7AqmzVgTDxJVfPzrNCymQibUTwFL8HkMbyFqKYlxOyJgybGUw
-         AxXQNSX3F1/3zSSWtRe1V0TvuJ6ZZl43yCxv3MyNWG0bU8s7mMWIdhn/2hHB3vrUpoon
-         Cf+w==
-X-Gm-Message-State: AOAM531CLXv6f2YP3SaZ6qMpTAboYoYSUBBZx2u/zfZ8Iv/q0yKktDUx
-        iyYg06XbUCQVHbO9HGGEP5LvOgM6s+oBJPCQRiM=
-X-Google-Smtp-Source: ABdhPJyukWf0sSj5CPpm8bHCduYKVeuiE+Syjcjc1aI4funbfbpBl9B47pBUGjVMFYwugS9YEClD2wu2Gybj4blhs2E=
-X-Received: by 2002:a05:6830:22c8:: with SMTP id q8mr4383880otc.345.1597327476235;
- Thu, 13 Aug 2020 07:04:36 -0700 (PDT)
+        id S1726224AbgHMOHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Aug 2020 10:07:52 -0400
+Received: from mout.gmx.net ([212.227.17.20]:37141 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726053AbgHMOHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Aug 2020 10:07:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1597327663;
+        bh=mKsmS+hM0IVcHz0NRVq7s1F4SY9yt40ede1c1JA0gNw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=aYisk8mdT9WQEG796F3YB2KaBy2MVwvkW5eLTqvPT0Mv4f1+POy8FM/tt1FpTclHu
+         K5p2cM1KuyW73BUv88vLqy9Ck4hH+GUfVK4n3QJDRCIJlbC6A8IcCnx3rWfiTBv5jm
+         byXrDvJeSeRLVMCsWyhwGH2JNvgXSZq6eFacMbtA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.231.116] ([89.1.213.40]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mnpnm-1kV9dt17qE-00pHvq; Thu, 13
+ Aug 2020 16:07:43 +0200
+Date:   Thu, 13 Aug 2020 16:07:41 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v7 4/5] rebase -i: support --ignore-date
+In-Reply-To: <20200716173221.103295-5-phillip.wood123@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2008131554180.54@tvgsbejvaqbjf.bet>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com> <20200716173221.103295-1-phillip.wood123@gmail.com> <20200716173221.103295-5-phillip.wood123@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.700.git.1597271429.gitgitgadget@gmail.com>
- <69fe977b66f9744c914cfdfa2da4b9be5e720e4f.1597271429.git.gitgitgadget@gmail.com>
- <CABPp-BENKdxqXjH07yCNojRWQ3XO+_mm8x+LSVLTBx36m6nSSw@mail.gmail.com> <8014D105-0957-4A45-B375-1027E070C74E@gmail.com>
-In-Reply-To: <8014D105-0957-4A45-B375-1027E070C74E@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 13 Aug 2020 07:04:25 -0700
-Message-ID: <CABPp-BFwX-m=BryaxkSyh-126O_0GQxyqRvFnKeOQ66Feiq4Kw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] userdiff: improve Fortran xfuncname regex
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Brandon Casey <drafnel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mv50uimeT8QEzEAy/KwcL+UREw/cUId5jpuXk0pbZ6bXIgeOXKQ
+ UbUH664BUqXVwq++I6wM7yEVKCFINCHgYdwfx/VnLo1Lqm4e86yDlJaxZ2QZ1q/7i1s/Tys
+ mUA7QnIf6LP79PgB3JBjENNBgfeot0QVmQKPfEzHeVf5B6SyXFa04eECQXC0CzrvRDmqMxT
+ XRgh+cZCgo5PXQGwweNUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6Vk1cyB0qCc=:4hMWwzobt9E3v/yYQsS/Ev
+ F81iFY0H0fJ27Hs6N7I967Xvw9hUoSdxtWNpwxpCXHMGJkTCCyB7aDrNPe2Adgease+U0DJXB
+ RhBhRegfYaRpVKjTzP0kN5HrvNApEJB/kJ8HD+3Cqt0g+5zkrydrQH5wTvSaR47ntqzxeMpft
+ plWlE00Co5Hhah1Zp4mJVV00C4gZASe6bhFmmFNxG082oN9rrmARcFAcX8SYWSop+N246DYEJ
+ NgN0y4LnM8VS+ghv3x8Ksjj8lsxBs+m+PcUJkqdqHm6CbhClq85sD5kAOZeGljh35AnYGvSXA
+ LJQVtGde0PtwZunFvC8qPcOfovJ++o8mClIWFLiFXU5UpBgVLfFru+d1JGSL5NG7BrRGxhtol
+ EY95XB2dZSU1TAZZUcH4z6e8EkTiz+cWSgYmYt7+abxDFcv0yg/pRrOv65jO36GN/XKchYbGU
+ lrvi8FSPHt+Auhwg1L6u8UMYHmczLTDRuHmehoOg+52+B9PGV46Ou/auUtCrrqDWGChdVI/dW
+ YMR8qb2jvs4CkNW3cNHRVINiFPOmyyuJ8mUGZH7Qnb2Y7qpNMZFZkD2bYcW1dTDjx4ab/bqIE
+ 8w44MfPyaVlN+x4rLNHE/jjvrCsKQt+HOIwvmDpirgs36OQrmLPUEVdDCd0QSwDKOOWjwg9o3
+ n9hVUgNr3H+ENSKkvzHQF9386IWeZ+xXooyJrN+xifXvzS4D1G1mWeQd47fuUBezdeWnehEjb
+ P0jzrBMRTZkx4SoXtjN63Cy9PCtQBnsszWLHs14hAzdP5IWOr2zIrEJdl5pE7W48/UN98hPYC
+ pC8ozvce7Z/nk5HIz1J3wx2FRIfCgPCUNoDfStQ+RqHbOJGmpzmDKza3fgB6WhRkWsHrTUEoL
+ YfDgeCAqloWrIJQwbNtgTrHMhc0y2RgOxVaHPPLeHz3pxaCicr6CxOZd9tp6PDHtTpb44MAMk
+ M0YKBiuP6uI2YSHzcI73uNtPz06cj940nSHS2qnMN1C+yjJY6ufdeDryOvKL4rkA9W3FUxFwl
+ TUrJV3aNv/v+i5OLXgVg6oKRdtMnx+JSu+7Fz6tj6ggQpZkpbpZjA/WzuLEM2bP+HJvDvgWGO
+ +hX27z8KapWLEZS+cOBgc1CHm1xZybtXTLN458CKbxPz2r5EGupUwSyVHn52A0FAHkJ7QCOmM
+ J+ouu8QVyAXJ8nQzL9bpS/1cPJy1w69uhd0DMbiHmUW6/76htvGJF++OdlRED2pejTN5VH9FB
+ Gc2vQUEPymrnpsx2cfb3E9+0cPrSA3kpDT3tgAw==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+Hi Phillip,
 
-On Thu, Aug 13, 2020 at 5:45 AM Philippe Blain
-<levraiphilippeblain@gmail.com> wrote:
->
-> Hi Elijah,
->
-> > Le 12 ao=C3=BBt 2020 =C3=A0 22:10, Elijah Newren <newren@gmail.com> a =
-=C3=A9crit :
-> >
-> > On Wed, Aug 12, 2020 at 3:34 PM Philippe Blain via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Philippe Blain <levraiphilippeblain@gmail.com>
-> >>
-> >> The third part of the Fortran xfuncname regex wants to match the
-> >> beginning of a subroutine or function, so it allows for all characters
-> >> except `'`, `"` or whitespace before the keyword 'function' or
-> >> 'subroutine'. This is meant to match the 'recursive', 'elemental' or
-> >> 'pure' keywords, as well as function return types, and to prevent
-> >> matches inside strings.
-> >>
-> >> However, the negated set does not contain the `!` comment character,
-> >> so a line with an end-of-line comment containing the keyword 'function=
-' or
-> >> 'subroutine' followed by another word is mistakenly chosen as a hunk h=
-eader.
-> >>
-> >> Improve the regex by adding `!` to the negated set.
-> >>
-> >> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> >> ---
-> >> t/t4018/fortran-comment-keyword | 1 -
-> >> userdiff.c                      | 2 +-
-> >> 2 files changed, 1 insertion(+), 2 deletions(-)
-> >>
-> >> diff --git a/t/t4018/fortran-comment-keyword b/t/t4018/fortran-comment=
--keyword
-> >> index c5dbdb4c61..e9206a5379 100644
-> >> --- a/t/t4018/fortran-comment-keyword
-> >> +++ b/t/t4018/fortran-comment-keyword
-> >> @@ -8,7 +8,6 @@
-> >>       real funcB  ! grid function b
-> >>
-> >>       real ChangeMe
-> >> -      integer broken
-> >>
-> >>       end subroutine RIGHT
-> >>
-> >
-> > This change seems orthogonal to the explanation in the commit message.
-> > What is its purpose, and does it belong in this commit or a different
-> > one?
->
-> If you take a look at t/t4018/README, the way to mark t4018 tests as "kno=
-wn failures"
-> is to insert "broken" somewhere in the file. Since I'm fixing the regex i=
-n this commit to be able
-> to cope with the situation in t/t4018/fortran-comment-keyword, I'm unmark=
-ing this test as broken.
+On Thu, 16 Jul 2020, Phillip Wood wrote:
 
-Ah, gotcha.  I guess that's what I get for trying to review a random
-patch outside my area of expertise.  :-)  Thanks for explaining how
-this works to me.
+> @@ -957,7 +976,11 @@ static int run_git_commit(struct repository *r,
+>
+>  	if (opts->committer_date_is_author_date)
+>  		argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=3D%s",
+> +				 opts->ignore_date ?
+> +				 "" :
+>  				 author_date_from_env_array(&cmd.env_array));
+> +	if (opts->ignore_date)
+> +		argv_array_push(&cmd.env_array, "GIT_AUTHOR_DATE=3D");
 
-Elijah
+Technically, if we switched those two `if` blocks, we would not have to
+edit the committer date one. But this way is much clearer.
+
+>
+>  	argv_array_push(&cmd.args, "commit");
+>
+> @@ -1388,7 +1411,8 @@ static int try_to_commit(struct repository *r,
+>  			    ident.date_begin,
+>  			    (int)(ident.tz_end - ident.tz_begin),
+>  			    ident.tz_begin);
+> -		res =3D setenv("GIT_COMMITTER_DATE", date.buf, 1);
+> +		res =3D setenv("GIT_COMMITTER_DATE",
+> +			     opts->ignore_date ? "" : date.buf, 1);
+
+Isn't this constructing the `date` string for nothing, if
+`opts->ignore_date` is set?
+
+I would much rather see it done this way:
+
+-	if (opts->committer_date_is_author_date) {
++	if (opts->committer_date_is_author_date && opts->ignore_date)
++		setenv("GIT_COMMITTER_DATE", "", 1);
++	else if (opts->committer_date_is_author_date) {
+
+Not enough of a reason to re-roll, though.
+
+>  		strbuf_release(&date);
+>
+>  		if (res)
+> @@ -1454,6 +1478,16 @@ static int try_to_commit(struct repository *r,
+>
+>  	reset_ident_date();
+>
+> +	if (opts->ignore_date) {
+> +		author =3D ignore_author_date(author);
+> +		if (!author) {
+> +			res =3D -1;
+> +			goto out;
+> +		}
+> +		free(author_to_free);
+
+A better cadence might be to first `free(author_to_free)`, then assign
+`author =3D author_to_free =3D ignore_author_date(author);` (at least in m=
+y
+perspective, it reads more naturally).
+
+But again, not a big reason for a re-roll.
+
+The rest of the patch looks good to me.
+
+Thank you,
+Dscho
+
+> +		author_to_free =3D (char *)author;
+
+> +	}
+> +
+>  	if (commit_tree_extended(msg->buf, msg->len, &tree, parents,
+>  				 oid, author, opts->gpg_sign, extra)) {
+>  		res =3D error(_("failed to write commit object"));
+> @@ -2583,6 +2617,11 @@ static int read_populate_opts(struct replay_opts =
+*opts)
+>  			opts->committer_date_is_author_date =3D 1;
+>  		}
+>
+> +		if (file_exists(rebase_path_ignore_date())) {
+> +			opts->allow_ff =3D 0;
+> +			opts->ignore_date =3D 1;
+> +		}
+> +
+>  		if (file_exists(rebase_path_reschedule_failed_exec()))
+>  			opts->reschedule_failed_exec =3D 1;
+>
+> @@ -2675,6 +2714,8 @@ int write_basic_state(struct replay_opts *opts, co=
+nst char *head_name,
+>  		write_file(rebase_path_keep_redundant_commits(), "%s", "");
+>  	if (opts->committer_date_is_author_date)
+>  		write_file(rebase_path_cdate_is_adate(), "%s", "");
+> +	if (opts->ignore_date)
+> +		write_file(rebase_path_ignore_date(), "%s", "");
+>  	if (opts->reschedule_failed_exec)
+>  		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
+>
+> @@ -3597,7 +3638,11 @@ static int do_merge(struct repository *r,
+>
+>  		if (opts->committer_date_is_author_date)
+>  			argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=3D%s",
+> +					 opts->ignore_date ?
+> +					 "" :
+>  					 author_date_from_env_array(&cmd.env_array));
+> +		if (opts->ignore_date)
+> +			argv_array_push(&cmd.env_array, "GIT_AUTHOR_DATE=3D");
+>
+>  		cmd.git_cmd =3D 1;
+>  		argv_array_push(&cmd.args, "merge");
+> @@ -3877,7 +3922,8 @@ static int pick_commits(struct repository *r,
+>  	if (opts->allow_ff)
+>  		assert(!(opts->signoff || opts->no_commit ||
+>  				opts->record_origin || opts->edit ||
+> -				opts->committer_date_is_author_date));
+> +				opts->committer_date_is_author_date ||
+> +				opts->ignore_date));
+>  	if (read_and_refresh_cache(r, opts))
+>  		return -1;
+>
+> diff --git a/sequencer.h b/sequencer.h
+> index 4ab94119ae..3587878e3b 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -46,6 +46,7 @@ struct replay_opts {
+>  	int quiet;
+>  	int reschedule_failed_exec;
+>  	int committer_date_is_author_date;
+> +	int ignore_date;
+>
+>  	int mainline;
+>
+> diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-option=
+s.sh
+> index 50a63d8ebe..0ede2b8900 100755
+> --- a/t/t3436-rebase-more-options.sh
+> +++ b/t/t3436-rebase-more-options.sh
+> @@ -108,6 +108,62 @@ test_expect_success '--committer-date-is-author-dat=
+e works when committing confl
+>  	test_ctime_is_atime -1
+>  '
+>
+> +# Checking for +0000 in the author date is sufficient since the
+> +# default timezone is UTC but the timezone used while committing is
+> +# +0530. The inverted logic in the grep is necessary to check all the
+> +# author dates in the file.
+> +test_ctime_is_ignored () {
+> +	git log $1 --format=3D%ai >authortime &&
+> +	! grep -v +0000 authortime
+> +}
+> +
+> +test_expect_success '--ignore-date works with apply backend' '
+> +	git commit --amend --date=3D"$GIT_AUTHOR_DATE" &&
+> +	git rebase --apply --ignore-date HEAD^ &&
+> +	test_ctime_is_ignored -1
+> +'
+> +
+> +test_expect_success '--ignore-date works with merge backend' '
+> +	git commit --amend --date=3D"$GIT_AUTHOR_DATE" &&
+> +	git rebase --ignore-date -m HEAD^ &&
+> +	test_ctime_is_ignored -1
+> +'
+> +
+> +test_expect_success '--ignore-date works after conflict resolution' '
+> +	test_must_fail git rebase --ignore-date -m \
+> +		--onto commit2^^ commit2^ commit2 &&
+> +	echo resolved >foo &&
+> +	git add foo &&
+> +	git rebase --continue &&
+> +	test_ctime_is_ignored -1
+> +'
+> +
+> +test_expect_success '--ignore-date works with rebase -r' '
+> +	git checkout side &&
+> +	git merge --no-ff commit3 &&
+> +	git rebase -r --root --ignore-date &&
+> +	test_ctime_is_ignored
+> +'
+> +
+> +test_expect_success '--ignore-date with --committer-date-is-author-date=
+ works' '
+> +	test_must_fail git rebase -m --committer-date-is-author-date \
+> +		--ignore-date --onto commit2^^ commit2^ commit3 &&
+> +	git checkout --theirs foo &&
+> +	git add foo &&
+> +	git rebase --continue &&
+> +	test_ctime_is_atime -2 &&
+> +	test_ctime_is_ignored -2
+> +'
+> +
+> +test_expect_success '--ignore-date --committer-date-is-author-date work=
+s when forking merge' '
+> +	GIT_SEQUENCE_EDITOR=3D"echo \"merge -C $(git rev-parse HEAD) commit3\"=
+>" \
+> +		PATH=3D"./test-bin:$PATH" git rebase -i --strategy=3Dtest \
+> +				--ignore-date --committer-date-is-author-date \
+> +				side side &&
+> +	test_ctime_is_atime -1 &&
+> +	test_ctime_is_ignored -1
+> + '
+> +
+>  # This must be the last test in this file
+>  test_expect_success '$EDITOR and friends are unchanged' '
+>  	test_editor_unchanged
+> --
+> 2.27.0
+>
+>
