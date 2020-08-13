@@ -2,219 +2,98 @@ Return-Path: <SRS0=IFun=BX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD84C433E1
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 04:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4E8BC433E1
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 05:17:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19852206A4
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 04:37:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81E7120829
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 05:17:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="texaG1qz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hhf+q5Oi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725915AbgHMEh2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Aug 2020 00:37:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59136 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgHMEh2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Aug 2020 00:37:28 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4329A70582;
-        Thu, 13 Aug 2020 00:37:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=etQQMDAroKPEoCbu87op8RJtW+g=; b=texaG1
-        qzTsrxRFFMFqKT6zCkWZwvX3O+rGjQMMtIfKwS+cyyOvrv+MQVZH/rjvaA8GDtJq
-        bDd2OLJ/I2STsJ7IFdlMWHwNfIAUjbPrlsFMtJfQLLASDlphc8duaMoTnB9kNt7a
-        z4kWg1kZ07rwXJgBMemmjIiVu8tYKrew5SmeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RZdWqqmsdBp2J5wu1zRTnzIqNnHbz9B9
-        FIDajdAltKXBkAMtdg59Xt592B72LxVCf1fStiCUFlT2jYGv74jaBxj0Om4fpXgF
-        Lnvhj6JEym2gIlQejxlzxakWW0RWUzU/HhGqcu9Ao6X0TCoL9lb6jLFP0TeTvCHo
-        vfan/lm51S0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3253E70581;
-        Thu, 13 Aug 2020 00:37:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B183070580;
-        Thu, 13 Aug 2020 00:37:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: [PATCH v3] fetch: optionally allow disabling FETCH_HEAD update
-References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
-        <83401c52002716084b9c53a77c9d57b6009f84e2.1596731424.git.gitgitgadget@gmail.com>
-        <20200812231021.GG2965447@google.com>
-        <xmqqo8nf4dkb.fsf@gitster.c.googlers.com>
-Date:   Wed, 12 Aug 2020 21:37:25 -0700
-In-Reply-To: <xmqqo8nf4dkb.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 12 Aug 2020 17:03:32 -0700")
-Message-ID: <xmqqh7t740vu.fsf_-_@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726112AbgHMFRt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Aug 2020 01:17:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725794AbgHMFRs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Aug 2020 01:17:48 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD3BC061757
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 22:17:47 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id t10so4760626ejs.8
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 22:17:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=6zdQ0xZIUGSdkcDHprxPPyHUI9UfdAeSkcRQI2rSAxo=;
+        b=Hhf+q5OiRGS9TCiB3QN6QpRq9RP8EOLK65YgTSUje4JElAU2IUZUOuPpY8YXTrh5Bp
+         L5A1NNODr0AKmUt8/lgTmrLN77xVkEGbuT7nyzltzzuL6cgYyMOeKkaL12pivEhDNg11
+         MxyrFjTBHizx93MKL5JAau+b0L550r0YMJfAmpr6wciZOsoVPrELtRW69T2xiXqcdIFn
+         Qpf9aMIFoVBNqVes12QuaXRhJCeSSwycIEwQ1EXF0jSEqMJGW3FIZEXze+7lhp4viQ9O
+         Y9tuBkozr9nsIeGhGjbuzz3h7DfWmqWrCb121wpqk0LkmM0eIR391qkK3d/a22s+tJcf
+         nXhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6zdQ0xZIUGSdkcDHprxPPyHUI9UfdAeSkcRQI2rSAxo=;
+        b=p/NeBuqkgM7vCLri6FDQ0IDqmolr1PUUOIZF5rsx31AugX/jJqlP7Gq6UDUd5/taZO
+         kaKyB20tSqw0Ak4iKQI8yfS/fjLjoJ8hxAHpGAHd4B58NXUybgdRh0b5DMDbmVBwKEZK
+         4TIsMJf0ZK7Kvdrl807snZvVO7ryAmZ7rpCT9rpj3pbcJj+i4/2fLSxyTkIYGD3THuve
+         h3K7BLwws3Op1uLa4X8u+MYehNqaOoGw/zkHUFibfYs4e74/UVwv3ytdwxr4loEQK6zJ
+         ss+W0mfI09QFZa+pSfx1zvpZnvrp0YHbS33PYFnNQvFM7BDJQ1eCzfOUTdOgTiZMMSym
+         JN3g==
+X-Gm-Message-State: AOAM530r7wmAQpPya7f5BZVIqdUqt9Mx5BhXCBaFpv+VmqY3tZPqgRTx
+        7zEDFuICzpJoH1Bfn2TodbBwCG1AoOhHiHg5P0E=
+X-Google-Smtp-Source: ABdhPJwvWR7HVsk1+XYNOwmE1rKfIpWwMotYzk80gsDZ1Y0bHlp5NZdEeq+skeGcMnVK9nKyyuilBZ57rLJ7vvKm/ec=
+X-Received: by 2002:a17:906:6146:: with SMTP id p6mr3246478ejl.211.1597295866499;
+ Wed, 12 Aug 2020 22:17:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AFDC6864-DD1E-11EA-8A04-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <6722ade6-971e-7ecc-e8f0-7f595ca0b0ff@web.de> <cf395005-af63-f698-fe19-6c4b6f1a8a4b@web.de>
+In-Reply-To: <cf395005-af63-f698-fe19-6c4b6f1a8a4b@web.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 13 Aug 2020 07:17:35 +0200
+Message-ID: <CAP8UFD1rDZOQSDWhc+xdEQVX+Umq-nE-sd-orgKZ3UWTWFHJhw@mail.gmail.com>
+Subject: Re: [PATCH v2] upload-pack: use buffered I/O to talk to rev-list
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If you run fetch but record the result in remote-tracking branches,
-and either if you do nothing with the fetched refs (e.g. you are
-merely mirroring) or if you always work from the remote-tracking
-refs (e.g. you fetch and then merge origin/branchname separately),
-you can get away with having no FETCH_HEAD at all.
+On Wed, Aug 12, 2020 at 6:54 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 
-Teach "git fetch" a command line option "--[no-]write-fetch-head".
-The default is to write FETCH_HEAD, and the option is primarily
-meant to be used with the "--no-" prefix to override this default,
-because there is no matching fetch.writeFetchHEAD configuration
-variable to flip the default to off (in which case, the positive
-form may become necessary to defeat it).
+> -       close(cmd->in);
+> +       if (ferror(cmd_in) || fflush(cmd_in))
+> +               goto error;
+> +       fclose(cmd_in);
+>         cmd->in =3D -1;
 
-Note that under "--dry-run" mode, FETCH_HEAD is never written;
-otherwise you'd see list of objects in the file that you do not
-actually have.  Passing `--write-fetch-head` does not force `git
-fetch` to write the file.
+I wonder if setting cmd->in to -1 is still useful...
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+>         sigchain_pop(SIGPIPE);
+>
+> @@ -660,8 +658,8 @@ static int do_reachable_revlist(struct child_process =
+*cmd,
+>  error:
+>         sigchain_pop(SIGPIPE);
+>
+> -       if (cmd->in >=3D 0)
+> -               close(cmd->in);
+> +       if (cmd_in)
+> +               fclose(cmd_in);
 
- * So, it becomes much smaller by punting the whole configuration
-   thing, as we do not need the extra code for config parsing and
-   there is no need for code to override the user configuration when
-   driving "git fetch" from "git pull".
-
- Documentation/fetch-options.txt |  9 +++++++++
- builtin/fetch.c                 | 15 ++++++++++++---
- t/t5510-fetch.sh                | 15 +++++++++++++--
- 3 files changed, 34 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 495bc8ab5a..b65a758661 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -64,6 +64,15 @@ documented in linkgit:git-config[1].
- --dry-run::
- 	Show what would be done, without making any changes.
- 
-+ifndef::git-pull[]
-+--[no-]write-fetch-head::
-+	Write the list of remote refs fetched in the `FETCH_HEAD`
-+	file directly under `$GIT_DIR`.  This is the default.
-+	Passing `--no-write-fetch-head` from the command line tells
-+	Git not to write the file.  Under `--dry-run` option, the
-+	file is never written.
-+endif::git-pull[]
-+
- -f::
- --force::
- 	When 'git fetch' is used with `<src>:<dst>` refspec it may
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c8b9366d3c..cb38e6f5ec 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -56,6 +56,7 @@ static int prune_tags = -1; /* unspecified */
- #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
- 
- static int all, append, dry_run, force, keep, multiple, update_head_ok;
-+static int write_fetch_head = 1;
- static int verbosity, deepen_relative, set_upstream;
- static int progress = -1;
- static int enable_auto_gc = 1;
-@@ -162,6 +163,8 @@ static struct option builtin_fetch_options[] = {
- 		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
- 	OPT_BOOL(0, "dry-run", &dry_run,
- 		 N_("dry run")),
-+	OPT_BOOL(0, "write-fetch-head", &write_fetch_head,
-+		 N_("write fetched references to the FETCH_HEAD file")),
- 	OPT_BOOL('k', "keep", &keep, N_("keep downloaded pack")),
- 	OPT_BOOL('u', "update-head-ok", &update_head_ok,
- 		    N_("allow updating of HEAD ref")),
-@@ -895,7 +898,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	const char *what, *kind;
- 	struct ref *rm;
- 	char *url;
--	const char *filename = dry_run ? "/dev/null" : git_path_fetch_head(the_repository);
-+	const char *filename = (!write_fetch_head
-+				? "/dev/null"
-+				: git_path_fetch_head(the_repository));
- 	int want_status;
- 	int summary_width = transport_summary_width(ref_map);
- 
-@@ -1329,7 +1334,7 @@ static int do_fetch(struct transport *transport,
- 	}
- 
- 	/* if not appending, truncate FETCH_HEAD */
--	if (!append && !dry_run) {
-+	if (!append && write_fetch_head) {
- 		retcode = truncate_fetch_head();
- 		if (retcode)
- 			goto cleanup;
-@@ -1596,7 +1601,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
- 	int i, result = 0;
- 	struct strvec argv = STRVEC_INIT;
- 
--	if (!append && !dry_run) {
-+	if (!append && write_fetch_head) {
- 		int errcode = truncate_fetch_head();
- 		if (errcode)
- 			return errcode;
-@@ -1797,6 +1802,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (depth || deepen_since || deepen_not.nr)
- 		deepen = 1;
- 
-+	/* FETCH_HEAD never gets updated in --dry-run mode */
-+	if (dry_run)
-+		write_fetch_head = 0;
-+
- 	if (all) {
- 		if (argc == 1)
- 			die(_("fetch --all does not take a repository argument"));
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 9850ecde5d..5bd1f953af 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -539,13 +539,24 @@ test_expect_success 'fetch into the current branch with --update-head-ok' '
- 
- '
- 
--test_expect_success 'fetch --dry-run' '
--
-+test_expect_success 'fetch --dry-run does not touch FETCH_HEAD' '
- 	rm -f .git/FETCH_HEAD &&
- 	git fetch --dry-run . &&
- 	! test -f .git/FETCH_HEAD
- '
- 
-+test_expect_success '--no-write-fetch-head does not touch FETCH_HEAD' '
-+	rm -f .git/FETCH_HEAD &&
-+	git fetch --no-write-fetch-head . &&
-+	! test -f .git/FETCH_HEAD
-+'
-+
-+test_expect_success '--write-fetch-head gets defeated by --dry-run' '
-+	rm -f .git/FETCH_HEAD &&
-+	git fetch --dry-run --write-fetch-head . &&
-+	! test -f .git/FETCH_HEAD
-+'
-+
- test_expect_success "should be able to fetch with duplicate refspecs" '
- 	mkdir dups &&
- 	(
--- 
-2.28.0-314-g35e3b9c6bd
-
-
+...as we don't check cmd->in anymore at the end of the function, but
+we now check cmd_in instead. So should cmd_in have been set to -1
+instead of cmd->in?
