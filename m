@@ -2,180 +2,115 @@ Return-Path: <SRS0=IFun=BX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51014C433E0
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 00:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF3FFC433E0
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 01:45:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD95E207F7
-	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 00:03:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF2F720756
+	for <git@archiver.kernel.org>; Thu, 13 Aug 2020 01:45:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cqPfDqu/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uklVgUe3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726523AbgHMADj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Aug 2020 20:03:39 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58429 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726078AbgHMADi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Aug 2020 20:03:38 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D1441D8448;
-        Wed, 12 Aug 2020 20:03:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f9UJguuzJF05/trRxu6rbOvGwO8=; b=cqPfDq
-        u/MnytltFyUIbw5YYidiYrEaPhtLnu1ZJa68hUI2twvkO+BdpglSqolUhxvIiPE8
-        pfiW4L+ZcTlNSJ+n13J4xs9/b0k0xTnJ6Xdii7HCs0Jn7Aul7+Uv9FdA3P2MWbPn
-        cNmLDd5/y3+IiuRVTmO0DH57o0JYfH1z6/Oc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gGqfSYWJwJMGg49aHj7vkagNbJkfFS6h
-        l+wpTcMqMqbEm7j+0DIPU1Iq6Vc/DFT2wnstSAqyk+gACDJgglFbvNp7tN57+YM2
-        Em0SBndY3nTBGckhEU5bk/s3zJZK12daNUSD0tfXFB0EQpV6yVoXcZm6hRzkY9f6
-        HzR5ZUKQgXc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C8A78D8447;
-        Wed, 12 Aug 2020 20:03:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1D91DD8446;
-        Wed, 12 Aug 2020 20:03:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Junio C Hamano via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1726419AbgHMBpg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Aug 2020 21:45:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726078AbgHMBpg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Aug 2020 21:45:36 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EDA9C061383
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 18:45:36 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id p1so1927385pls.4
+        for <git@vger.kernel.org>; Wed, 12 Aug 2020 18:45:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=b+Gz74ib0lkjbEacP99rP9QailG4g+tUGbX/nbXyyfo=;
+        b=uklVgUe3DhtH0tzBAkqee4HEorqADY45SabXzlAcSppoPyNBwTGMcH3717OH1PSna9
+         f6l7zqMelFcBHBiaDDuxAGzydmHWNEoaeeShPfJfOKYRdIPEJwIQt6c0oXzl6NAj65Eq
+         fBmtoXSlLVUpwGqJFsc3cCaNd8RtMzQhqnTMAK1OLtaeIRKtoKpvqP2UREiP/sJ1x9JP
+         dfA60+0GL+Z6gPEf8Dra15gmjOaVNiE5q4szvw5FI953N5QKWG2a38W5jAinSGfGHiVm
+         lIRYc5hTT7nkp1BmrHoeCIR8Pl/Zi28ACR7xi1nmSs4RaznqNv/DCeazFX/wx8yJ95qx
+         zI5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=b+Gz74ib0lkjbEacP99rP9QailG4g+tUGbX/nbXyyfo=;
+        b=AL59OLVDwJUKiG0tZ1//UPDbU/hDDcBM+Lexdu5qoL6O6oxUSPQQ1zjJ4B9yn8FeES
+         f2eEyN5mLDkNg1DW2Gm6I9QKvxV+mOeuseY66BP3oTUMbHw3XXBGCfbCw8idoawhXrpD
+         xoxGUaiH2Q1rlIBAPa9LJi41nLG6aOiq/bvmh6K4NHvdZLHyRW+tNWTMDxC9tzPx6IR1
+         Z1SD7E1FLjBmE0o7Azl/qozBRgSNzlqeBdEBXy9SBvq4DA7HaItkkZhxG2kBNqU9AmwO
+         5I6gyDqIHWDRRg35JEaBJ6fb2kql2WVpvgHNrZMPU3inrsmUt5Z7+iMFXb/XGBqE+nep
+         IDcg==
+X-Gm-Message-State: AOAM5306jDRfbxgBLnzpUOPpxsKfVKfWzDW2pFKvnBYZeqkII0x6VaWV
+        UVbMThFoTJb/Jf2BEoEWvPM=
+X-Google-Smtp-Source: ABdhPJxEX5SBQXRlDAMLN+ty8bQfeeHfASfNbFnIi1bmi5aRpyUeLP7OWIZEadJuMLQCSEI2X3VGcw==
+X-Received: by 2002:a17:90a:eb98:: with SMTP id o24mr2507704pjy.150.1597283135398;
+        Wed, 12 Aug 2020 18:45:35 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id y29sm3747929pfr.11.2020.08.12.18.45.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2020 18:45:34 -0700 (PDT)
+Date:   Wed, 12 Aug 2020 18:45:32 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>
+        steadmon@google.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, sluongng@gmail.com,
+        jonathantanmy@google.com, Derrick Stolee <derrickstolee@github.com>
 Subject: Re: [PATCH 1/9] fetch: optionally allow disabling FETCH_HEAD update
+Message-ID: <20200813014532.GC104953@google.com>
 References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
-        <83401c52002716084b9c53a77c9d57b6009f84e2.1596731424.git.gitgitgadget@gmail.com>
-        <20200812231021.GG2965447@google.com>
-Date:   Wed, 12 Aug 2020 17:03:32 -0700
-In-Reply-To: <20200812231021.GG2965447@google.com> (Emily Shaffer's message of
-        "Wed, 12 Aug 2020 16:10:21 -0700")
-Message-ID: <xmqqo8nf4dkb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <83401c52002716084b9c53a77c9d57b6009f84e2.1596731424.git.gitgitgadget@gmail.com>
+ <20200812231021.GG2965447@google.com>
+ <xmqqo8nf4dkb.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6DDCAD82-DCF8-11EA-9252-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo8nf4dkb.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Junio C Hamano wrote:
 
->> +fetch.writeFetchHEAD::
->> +	Setting it to false tells `git fetch` not to write the list
->> +	of remote refs fetched in the `FETCH_HEAD` file directly
->> +	under `$GIT_DIR`.  Can be countermanded from the command
->> +	line with the `--[no-]write-fetch-head` option.  Defaults to
->> +	true.
+> As the feature itself is primarily designed for scripts that want to
+> always disable writing of FETCH_HEAD, I can certainly understand a
+> short-term/sighted view of not wanting to add configuration, though.
+
+Yes, I think that since this feature is primarily designed for
+scripts, an option is more likely to be useful for them than a config
+setting.  An option kicks in when the calling script requests it; a
+config setting can kick in even when they didn't intend to request it.
+
+My opinion would change if we think that we're going to flip the
+default to --no-write-fetch-head some day, in which case a config
+setting would be a good way to request a preview of the future.  But I
+don't believe anyone's brought that up as a direction we want to
+pursue.
+
+[...]
+>>            If someone specifies both, then they probably want to say
+>> "show me what I would write to FETCH_HEAD but don't actually do that" -
+>> which isn't info that we print anyways, right now.
 >
-> [jrnieder] Is providing a config option creating more trouble than
-> benefit? Is this a burden on script authors that they need to check the
-> config state, when instead they could just pass the flag? Or rather,
-> because of the config, the script author has to pass the flag explicitly
-> anyways.
-> [emily] removing the config also clears up the confusion around 'git pull' +
-> 'fetch.writeFetchHEAD' I commented on later.
+> Do you mean "don't actually write but show it to standard output
+> instead" or something?
 
-[A meta comment, but I somehow find this format cumbersome to read
-and respond to.  Would it be possible to dedup and/or summarize
-comments on a single point?]
+My take is that the behavior that the patch implements for --dry-run
+--write-fetch-head is correct and what a user would want: it acts *as
+though* you passed --write-fetch-head (including producing the same
+console output), without producing mutations that the user might
+regret (such as updating FETCH_HEAD).
 
-I do not think "it becomes cumbersome to design interaction between
-command line option and configuration" is a valid reason not to add
-configuration variable.  It would be a valid reason not to, if we
-have a convincing argument why people won't pass the command line
-option very often, though, but you'd need to be prepared for a
-possible future in which somebody finds a good use case where a
-configuration is useful, which means you cannot forever depend on
-the lack of configurability to avoid making a proper design of the
-interaction between configuration and command line.
-
-As the feature itself is primarily designed for scripts that want to
-always disable writing of FETCH_HEAD, I can certainly understand a
-short-term/sighted view of not wanting to add configuration, though.
-
->> @@ -895,7 +902,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
->>  	const char *what, *kind;
->>  	struct ref *rm;
->>  	char *url;
->> -	const char *filename = dry_run ? "/dev/null" : git_path_fetch_head(the_repository);
->> +	const char *filename = (!write_fetch_head
->> +				? "/dev/null"
->> +				: git_path_fetch_head(the_repository));
->
-> [emily] Huh. so what does the dry_run codepath look like now? It looks
-> like it's been superseded by write_fetch_head but the option parse
-> doesn't tell dry_run to update write_fetch_head instead. (Found the
-> answer later, see below)
->
->> @@ -1797,6 +1806,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->>  	if (depth || deepen_since || deepen_not.nr)
->>  		deepen = 1;
->>  
->> +	/* FETCH_HEAD never gets updated in --dry-run mode */
->> +	if (dry_run)
->> +		write_fetch_head = 0;
->
-> [emily] Aha, here is where dry_run informs write_fetch_head. I wonder if
-> there's a way to instead tell the options struct that --dry-run ~=
-> --write-fetch-head?
-
-I do not know with what meaning you used the symbol "~=".  Dry-run
-tells the command to operate differently in a few ways, and one of
-the (smaller) ways is not to write the FETCH_HEAD file.  Did you
-mean "contains", "includes", etc.?
-
->> +test_expect_success '--write-fetch-head gets defeated by --dry-run' '
->> +	rm -f .git/FETCH_HEAD &&
->> +	git fetch --dry-run --write-fetch-head . &&
->> +	! test -f .git/FETCH_HEAD
->> +'
->
-> [emily] Would it make more sense to make these args mutually exclusive?
-
-At least, give a hint, if you cannot state in concrete words, why
-you suspect it might make sense to do things differently.  What use
-case do you think an alternative design would help better?  Without
-it, you can just get "no" and such an exchange would not be useful
-at all to improve the patch.
-
-> [jrnieder] If someone specifies both, then they probably want to say
-> "show me what I would write to FETCH_HEAD but don't actually do that" -
-> which isn't info that we print anyways, right now.
-
-Do you mean "don't actually write but show it to standard output
-instead" or something?  If we were designing --dry-run from scratch
-back when there were no "git fetch" command, that would have made
-tons of sense, I think ;-) To me, the "--write-fetch-head" option
-tells it to "write to the file", and not "write the info to unfixed
-destination that is not specified by this option but derived by the
-presense of other options".  While the "don't download and show what
-would be in FETCH_HEAD" might be a good feature to add, combining
-these two options may be a good way to invoke the feature.
-
->> +test_expect_success 'git pull --no-write-fetch-head fails' '
->> +	mkdir clonedwfh &&
->> +	(cd clonedwfh && git init &&
->> +	test_must_fail git pull --no-write-fetch-head "../parent" >out 2>err &&
->> +	test_must_be_empty out &&
->> +	test_i18ngrep "no-write-fetch-head" err)
->
-> Should this be shown as a usage error instead of a die()?
-
-As "pull" does and should not take "--[no-]write-fetch-head" as its
-option, I think the above command line deserves an usage error, just
-like "git pull --update-head-ok" does (or "git pull --no-such-option"
-for that matter).
-
+Thanks and hope that helps,
+Jonathan
