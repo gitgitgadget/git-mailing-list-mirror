@@ -7,62 +7,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F099C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFACC433DF
 	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 03:02:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A0B120716
+	by mail.kernel.org (Postfix) with ESMTP id 6C2792078B
 	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 03:02:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wo0jbEsY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDf8Nryy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726631AbgHNDCW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Aug 2020 23:02:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726604AbgHNDCV (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726621AbgHNDCV (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 13 Aug 2020 23:02:21 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C78E2C061757
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45298 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726567AbgHNDCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Aug 2020 23:02:20 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30814C061383
         for <git@vger.kernel.org>; Thu, 13 Aug 2020 20:02:20 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id bo3so8373182ejb.11
+Received: by mail-ej1-x62c.google.com with SMTP id m22so8375010eje.10
         for <git@vger.kernel.org>; Thu, 13 Aug 2020 20:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ms+Sz4Uhn67ieoWyWfXaUOw5+wXjv/qK6vxQpnPAkSo=;
-        b=Wo0jbEsYJO2DYKXQXyOEfl+11v8WHXVSL+Bp4yVCk49W6t+yZplLtDyOdOqaKPmLGt
-         IhjZ8fwjfAC9ikNfx2k9a27f/rzbk8Xpbssl3o/p0SwoRIVoGwAV3tqjx3Iv3OalE8sf
-         uGlFnmRdIDgxpf4q+Cjp1mKTy/pgONUmnGVYzn/g++m+aVeKstQx6T5Qxxr+7j07ovmY
-         WqqaPbcDfJHD1KbLbgyxQwtBKoDz55O6RsEd4CzeD5uUVhJBhnQFw/84mS+kD+Nkxluy
-         eyJpaCbDmc07WI7T8rNxMk2DrPiEbpsF9mleUG3+mcctqyxVJiH08bRwMbAqORDY5LT+
-         hf1A==
+        bh=iYrgsQPCqRRvg41wuz0WKoA7INv92D0AhW5p1p69vHQ=;
+        b=EDf8NryynNjHbJN/tHLe5jEleTbhJMU6epHyUypc0MfPfRMVToIbieI9drawDnfyWB
+         offeIinGy25MkOuOz3BNRXRxm1oYApgIICx0jKwf493NDNtuVeGBJnkSmey9zoutQ398
+         OW55bMmpNRukoZW0/UqS+NifPZ4lt9e1X90Kl5fmhYafvUuDHd4pMJOrAYqQxzoGymHh
+         BCztLAMRwUIIoW4CnmU9FtUyDPG9x7S60tdMMDYTPXHfL4QsSTRaiZ27tyZsSPZ/4QjR
+         GrTQdGSWZwPnGItxqhgBizDhBOzqL/ucewgDlfCiJYEJj0CJuJVskgLCmBfsuaDKK53e
+         Tl5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ms+Sz4Uhn67ieoWyWfXaUOw5+wXjv/qK6vxQpnPAkSo=;
-        b=mazi+xs6U8q7wTDA2ulVxBMxG2oH8xHBa0D6PVAGWdzACLq3oRH2XlKbsVsuxzRjPs
-         epvRgJ6ZsTHrBLb0I3icWAow/qyIVKOJfDqD/ypxWlwsjDpQ+SlnACuM+18KvVb0yXKX
-         PAIClIyU5YbLduq8CEnNDxPv5D+PeC7LztYc0Q2pepEYQ4hkSlUIm9O5jkvPZzsuoXx/
-         86Y8Mh3UubQ1gubDR8KDxNV1JQyKfSEhfNEnD7ALz21DA6TBtmoJrasKKqfu4R9pmj6N
-         L9EYZRbhvpJP3LI+SA0AtFTztD1Le8PWkW5ity4nNBVEoqTy0BiFZgGsOHlBTVhuI1v1
-         Ziug==
-X-Gm-Message-State: AOAM530B0Li3cGGe972JtxLvWmj5X3FaRadzZCF0TDRohL+49hknttQk
-        SlOn1mXROeUGFdPQ+MnSrfIhJP0Z
-X-Google-Smtp-Source: ABdhPJxhThYDslTSmX/mbhJYLZ3coa5zZWsK43iIfiTjmq7xO9aSuorBJipXfubcuVTDOBT/yDTUcQ==
-X-Received: by 2002:a17:906:8316:: with SMTP id j22mr488614ejx.20.1597374139339;
-        Thu, 13 Aug 2020 20:02:19 -0700 (PDT)
+        bh=iYrgsQPCqRRvg41wuz0WKoA7INv92D0AhW5p1p69vHQ=;
+        b=FY67KnvDg1vfuysqoNEvGbS5SFAJ2DLaJBN7bpKLJF2WrCvkguSOuVsNXXGBOl/Seb
+         sJlDD6HZa6BXLTAQFhfqAlkaGaYS6a3Hzz/SPO+fufaEyJiuY9X53GFjI06zUJFDpP2y
+         zphsmXXplPd106fa5mnoy/TeojPiXpeouXWCCVcq5QjrCe1jXb1eeERU42Prjxq+3FMl
+         DEt1SvCkuZ6e+2PhHfj7SwTvpnowTKojeDZAkycN5pQUtbCaubpzD/YKROImywvME9tP
+         xWt0loM2ho0fZ412a2JNDFfjRyPNTCFtHGmriZdmI2HLPRTisoNpwjgDPCr0IPVf22Wt
+         p+Ow==
+X-Gm-Message-State: AOAM532cd/HXbMRaKzZykOzB4DjMymkK8+UTcZy29hCFcjGCeLRCOul9
+        GyjV4KYteX2BMl1i6e+ZFc0E+Xr8
+X-Google-Smtp-Source: ABdhPJzbkXtDajYcwtNjV0zIqHNqu16GC0s/Nw1YH0zlhLAbuJbw/nyTIo6rSxCU/ieZOKYGtlq3/g==
+X-Received: by 2002:a17:906:1ccd:: with SMTP id i13mr497540ejh.424.1597374138623;
+        Thu, 13 Aug 2020 20:02:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id cc9sm5626237edb.14.2020.08.13.20.02.18
+        by smtp.gmail.com with ESMTPSA id ar2sm2692044ejc.61.2020.08.13.20.02.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 13 Aug 2020 20:02:18 -0700 (PDT)
-Message-Id: <62c2479fe6068f31c3cae1b1a13d67527121a15b.1597374135.git.gitgitgadget@gmail.com>
+Message-Id: <f13a52055cd975d457e0593cbabb70897e78024b.1597374135.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.830.git.git.1597374135.gitgitgadget@gmail.com>
 References: <pull.830.git.git.1597374135.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Aug 2020 03:02:15 +0000
-Subject: [PATCH 3/3] mem-pool: use consistent pool variable name
+Date:   Fri, 14 Aug 2020 03:02:14 +0000
+Subject: [PATCH 2/3] mem-pool: use more standard initialization and
+ finalization
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,169 +79,199 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-About half the function declarations in mem-pool.h used 'struct mem_pool
-*pool', while the other half used 'struct mem_pool *mem_pool'.  Make the
-code a bit more consistent by just using 'pool' in preference to
-'mem_pool' everywhere.
+A typical memory type, such as strbuf, hashmap, or string_list can be
+stored on the stack or embedded within another structure.  mem_pool
+cannot be, because of how mem_pool_init() and mem_pool_discard() are
+written.  mem_pool_init() does essentially the following (simplified
+for purposes of explanation here):
 
-No behavioral changes included; this is just a mechanical rename (though
-a line or two was rewrapped as well).
+    void mem_pool_init(struct mem_pool **pool...)
+    {
+        *pool = xcalloc(1, sizeof(*pool));
+
+It seems weird to require that mem_pools can only be accessed through a
+pointer.  It also seems slightly dangerous: unlike strbuf_release() or
+strbuf_reset() or string_list_clear(), all of which put the data
+structure into a state where it can be re-used after the call,
+mem_pool_discard(pool) will leave pool pointing at free'd memory.
+read-cache (and split-index) are the only current users of mem_pools,
+and they haven't fallen into a use-after-free mistake here, but it seems
+likely to be problematic for future users especially since several of
+the current callers of mem_pool_init() will only call it when the
+mem_pool* is not already allocated (i.e. is NULL).
+
+This type of mechanism also prevents finding synchronization
+points where one can free existing memory and then resume more
+operations.  It would be natural at such points to run something like
+    mem_pool_discard(pool...);
+and, if necessary,
+    mem_pool_init(&pool...);
+and then carry on continuing to use the pool.  However, this fails badly
+if several objects had a copy of the value of pool from before these
+commands; in such a case, those objects won't get the updated value of
+pool that mem_pool_init() overwrites pool with and they'll all instead
+be reading and writing from free'd memory.
+
+Modify mem_pool_init()/mem_pool_discard() to behave more like
+   strbuf_init()/strbuf_release()
+or
+   string_list_init()/string_list_clear()
+In particular: (1) make mem_pool_init() just take a mem_pool* and have
+it only worry about allocating struct mp_blocks, not the struct mem_pool
+itself, (2) make mem_pool_discard() free the memory that the pool was
+responsible for, but leave it in a state where it can be used to
+allocate more memory afterward (without the need to call mem_pool_init()
+again).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- mem-pool.c | 50 ++++++++++++++++++++++++++------------------------
- mem-pool.h |  6 +++---
- 2 files changed, 29 insertions(+), 27 deletions(-)
+ mem-pool.c    | 20 +++++++-------------
+ mem-pool.h    |  4 ++--
+ read-cache.c  | 21 +++++++++++++--------
+ split-index.c |  6 ++++--
+ 4 files changed, 26 insertions(+), 25 deletions(-)
 
 diff --git a/mem-pool.c b/mem-pool.c
-index b7d789823e..08039ed069 100644
+index 3a8c54d9df..b7d789823e 100644
 --- a/mem-pool.c
 +++ b/mem-pool.c
-@@ -12,11 +12,13 @@
-  * `insert_after`. If `insert_after` is NULL, then insert block at the
-  * head of the linked list.
-  */
--static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t block_alloc, struct mp_block *insert_after)
-+static struct mp_block *mem_pool_alloc_block(struct mem_pool *pool,
-+					     size_t block_alloc,
-+					     struct mp_block *insert_after)
- {
- 	struct mp_block *p;
- 
--	mem_pool->pool_alloc += sizeof(struct mp_block) + block_alloc;
-+	pool->pool_alloc += sizeof(struct mp_block) + block_alloc;
- 	p = xmalloc(st_add(sizeof(struct mp_block), block_alloc));
- 
- 	p->next_free = (char *)p->space;
-@@ -26,28 +28,28 @@ static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t b
- 		p->next_block = insert_after->next_block;
- 		insert_after->next_block = p;
- 	} else {
--		p->next_block = mem_pool->mp_block;
--		mem_pool->mp_block = p;
-+		p->next_block = pool->mp_block;
-+		pool->mp_block = p;
- 	}
- 
+@@ -33,21 +33,14 @@ static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t b
  	return p;
  }
  
--void mem_pool_init(struct mem_pool *mem_pool, size_t initial_size)
-+void mem_pool_init(struct mem_pool *pool, size_t initial_size)
+-void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
++void mem_pool_init(struct mem_pool *mem_pool, size_t initial_size)
  {
--	mem_pool->mp_block = NULL;
--	mem_pool->pool_alloc = 0;
--	mem_pool->block_alloc = BLOCK_GROWTH_SIZE;
-+	pool->mp_block = NULL;
-+	pool->pool_alloc = 0;
-+	pool->block_alloc = BLOCK_GROWTH_SIZE;
+-	struct mem_pool *pool;
+-
+-	if (*mem_pool)
+-		return;
+-
+-	pool = xcalloc(1, sizeof(*pool));
+-
+-	pool->block_alloc = BLOCK_GROWTH_SIZE;
++	mem_pool->mp_block = NULL;
++	mem_pool->pool_alloc = 0;
++	mem_pool->block_alloc = BLOCK_GROWTH_SIZE;
  
  	if (initial_size > 0)
--		mem_pool_alloc_block(mem_pool, initial_size, NULL);
-+		mem_pool_alloc_block(pool, initial_size, NULL);
+-		mem_pool_alloc_block(pool, initial_size, NULL);
+-
+-	*mem_pool = pool;
++		mem_pool_alloc_block(mem_pool, initial_size, NULL);
  }
  
--void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
-+void mem_pool_discard(struct mem_pool *pool, int invalidate_memory)
- {
- 	struct mp_block *block, *block_to_free;
- 
--	block = mem_pool->mp_block;
-+	block = pool->mp_block;
- 	while (block)
- 	{
- 		block_to_free = block;
-@@ -59,11 +61,11 @@ void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
+ void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
+@@ -66,7 +59,8 @@ void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
  		free(block_to_free);
  	}
  
--	mem_pool->mp_block = NULL;
--	mem_pool->pool_alloc = 0;
-+	pool->mp_block = NULL;
-+	pool->pool_alloc = 0;
+-	free(mem_pool);
++	mem_pool->mp_block = NULL;
++	mem_pool->pool_alloc = 0;
  }
  
--void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
-+void *mem_pool_alloc(struct mem_pool *pool, size_t len)
- {
- 	struct mp_block *p = NULL;
- 	void *r;
-@@ -72,15 +74,15 @@ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
- 	if (len & (sizeof(uintmax_t) - 1))
- 		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
- 
--	if (mem_pool->mp_block &&
--	    mem_pool->mp_block->end - mem_pool->mp_block->next_free >= len)
--		p = mem_pool->mp_block;
-+	if (pool->mp_block &&
-+	    pool->mp_block->end - pool->mp_block->next_free >= len)
-+		p = pool->mp_block;
- 
- 	if (!p) {
--		if (len >= (mem_pool->block_alloc / 2))
--			return mem_pool_alloc_block(mem_pool, len, mem_pool->mp_block);
-+		if (len >= (pool->block_alloc / 2))
-+			return mem_pool_alloc_block(pool, len, pool->mp_block);
- 
--		p = mem_pool_alloc_block(mem_pool, mem_pool->block_alloc, NULL);
-+		p = mem_pool_alloc_block(pool, pool->block_alloc, NULL);
- 	}
- 
- 	r = p->next_free;
-@@ -88,10 +90,10 @@ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
- 	return r;
- }
- 
--void *mem_pool_calloc(struct mem_pool *mem_pool, size_t count, size_t size)
-+void *mem_pool_calloc(struct mem_pool *pool, size_t count, size_t size)
- {
- 	size_t len = st_mult(count, size);
--	void *r = mem_pool_alloc(mem_pool, len);
-+	void *r = mem_pool_alloc(pool, len);
- 	memset(r, 0, len);
- 	return r;
- }
-@@ -119,12 +121,12 @@ char *mem_pool_xstrndup(struct mem_pool *pool, const char *str, size_t len)
- 	return memcpy(ret, str, minlen);
- }
- 
--int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
-+int mem_pool_contains(struct mem_pool *pool, void *mem)
- {
- 	struct mp_block *p;
- 
- 	/* Check if memory is allocated in a block */
--	for (p = mem_pool->mp_block; p; p = p->next_block)
-+	for (p = pool->mp_block; p; p = p->next_block)
- 		if ((mem >= ((void *)p->space)) &&
- 		    (mem < ((void *)p->end)))
- 			return 1;
+ void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
 diff --git a/mem-pool.h b/mem-pool.h
-index 30b7a8c03b..022b3097e9 100644
+index fcaa2d462b..30b7a8c03b 100644
 --- a/mem-pool.h
 +++ b/mem-pool.h
-@@ -24,12 +24,12 @@ struct mem_pool {
+@@ -24,10 +24,10 @@ struct mem_pool {
  /*
   * Initialize mem_pool with specified initial size.
   */
--void mem_pool_init(struct mem_pool *mem_pool, size_t initial_size);
-+void mem_pool_init(struct mem_pool *pool, size_t initial_size);
+-void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size);
++void mem_pool_init(struct mem_pool *mem_pool, size_t initial_size);
  
  /*
-  * Discard all the memory the memory pool is responsible for.
+- * Discard a memory pool and free all the memory it is responsible for.
++ * Discard all the memory the memory pool is responsible for.
   */
--void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory);
-+void mem_pool_discard(struct mem_pool *pool, int invalidate_memory);
+ void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory);
  
- /*
-  * Alloc memory from the mem_pool.
-@@ -58,6 +58,6 @@ void mem_pool_combine(struct mem_pool *dst, struct mem_pool *src);
-  * Check if a memory pointed at by 'mem' is part of the range of
-  * memory managed by the specified mem_pool.
-  */
--int mem_pool_contains(struct mem_pool *mem_pool, void *mem);
-+int mem_pool_contains(struct mem_pool *pool, void *mem);
+diff --git a/read-cache.c b/read-cache.c
+index 8ed1c29b54..fa291cdbee 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -89,8 +89,10 @@ static struct mem_pool *find_mem_pool(struct index_state *istate)
+ 	else
+ 		pool_ptr = &istate->ce_mem_pool;
  
- #endif
+-	if (!*pool_ptr)
+-		mem_pool_init(pool_ptr, 0);
++	if (!*pool_ptr) {
++		*pool_ptr = xmalloc(sizeof(**pool_ptr));
++		mem_pool_init(*pool_ptr, 0);
++	}
+ 
+ 	return *pool_ptr;
+ }
+@@ -2006,11 +2008,12 @@ static unsigned long load_all_cache_entries(struct index_state *istate,
+ {
+ 	unsigned long consumed;
+ 
++	istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
+ 	if (istate->version == 4) {
+-		mem_pool_init(&istate->ce_mem_pool,
++		mem_pool_init(istate->ce_mem_pool,
+ 				estimate_cache_size_from_compressed(istate->cache_nr));
+ 	} else {
+-		mem_pool_init(&istate->ce_mem_pool,
++		mem_pool_init(istate->ce_mem_pool,
+ 				estimate_cache_size(mmap_size, istate->cache_nr));
+ 	}
+ 
+@@ -2070,7 +2073,8 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
+ 	if (istate->name_hash_initialized)
+ 		BUG("the name hash isn't thread safe");
+ 
+-	mem_pool_init(&istate->ce_mem_pool, 0);
++	istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
++	mem_pool_init(istate->ce_mem_pool, 0);
+ 
+ 	/* ensure we have no more threads than we have blocks to process */
+ 	if (nr_threads > ieot->nr)
+@@ -2097,11 +2101,12 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
+ 		nr = 0;
+ 		for (j = p->ieot_start; j < p->ieot_start + p->ieot_blocks; j++)
+ 			nr += p->ieot->entries[j].nr;
++		istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
+ 		if (istate->version == 4) {
+-			mem_pool_init(&p->ce_mem_pool,
++			mem_pool_init(p->ce_mem_pool,
+ 				estimate_cache_size_from_compressed(nr));
+ 		} else {
+-			mem_pool_init(&p->ce_mem_pool,
++			mem_pool_init(p->ce_mem_pool,
+ 				estimate_cache_size(mmap_size, nr));
+ 		}
+ 
+@@ -2358,7 +2363,7 @@ int discard_index(struct index_state *istate)
+ 
+ 	if (istate->ce_mem_pool) {
+ 		mem_pool_discard(istate->ce_mem_pool, should_validate_cache_entries());
+-		istate->ce_mem_pool = NULL;
++		FREE_AND_NULL(istate->ce_mem_pool);
+ 	}
+ 
+ 	return 0;
+diff --git a/split-index.c b/split-index.c
+index e6154e4ea9..c0e8ad670d 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -79,8 +79,10 @@ void move_cache_to_base_index(struct index_state *istate)
+ 	if (si->base &&
+ 		si->base->ce_mem_pool) {
+ 
+-		if (!istate->ce_mem_pool)
+-			mem_pool_init(&istate->ce_mem_pool, 0);
++		if (!istate->ce_mem_pool) {
++			istate->ce_mem_pool = xmalloc(sizeof(struct mem_pool));
++			mem_pool_init(istate->ce_mem_pool, 0);
++		}
+ 
+ 		mem_pool_combine(istate->ce_mem_pool, istate->split_index->base->ce_mem_pool);
+ 	}
 -- 
 gitgitgadget
+
