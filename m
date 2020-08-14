@@ -3,102 +3,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85A52C433DF
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 20:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9560C433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:11:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 538322074D
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 20:47:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AA9520768
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:11:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PoqStWzj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjF9p7oB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726362AbgHNUrd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 16:47:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52050 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbgHNUrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 16:47:33 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C29A6C420;
-        Fri, 14 Aug 2020 16:47:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TAWVzz1euwqA
-        QLRHLum8Dh/EiRQ=; b=PoqStWzjWXIBBDwhiu6LCwo6YiXAy+FMhmqm1UFBUEta
-        eNTB8ipXy/NHy4e6TSb41mzMIY4m0g/h3AjPWypPImhSMp0MvcMxID9J+p4/qoMP
-        Sm9sIdIJEpbGO1U/WkYsQdGGAN+XUPJ4Sh3znLbv81K+THRMoYx7yFgkmTXdGc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SFqAxU
-        uzUGekkSMwdFAm09b8uZAANOzzB3XcMUeWxZwVQOsIstuEEKtLcM01IAKwrdwH6r
-        LFJ3EwjHAY2q3f62Z+23Cn8IJBL9N3ToUhat+AT+VdBvHub++nzGsDmtGIza3ju2
-        gKDkCSa3XrabujbmztCYCoIO4MaxrW8Ux4PyA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 533506C41F;
-        Fri, 14 Aug 2020 16:47:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D1E2B6C41D;
-        Fri, 14 Aug 2020 16:47:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/5] http-protocol.txt: document SHA-256 "want"/"have" format
-References: <20200813224901.2652387-1-sandals@crustytoothpaste.net>
-        <cover.1597406877.git.martin.agren@gmail.com>
-        <5590a68c5ba7081cd7e64c708b5c25db23f5e95b.1597406877.git.martin.agren@gmail.com>
-        <xmqqk0y1xhl0.fsf@gitster.c.googlers.com>
-        <20200814202347.GN8085@camp.crustytoothpaste.net>
-        <xmqqo8ndufli.fsf@gitster.c.googlers.com>
-Date:   Fri, 14 Aug 2020 13:47:30 -0700
-In-Reply-To: <xmqqo8ndufli.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 14 Aug 2020 13:39:37 -0700")
-Message-ID: <xmqqft8puf8d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728009AbgHNVLr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 17:11:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726285AbgHNVLr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 17:11:47 -0400
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19533C061385
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 14:11:47 -0700 (PDT)
+Received: by mail-vs1-xe29.google.com with SMTP id p8so5340816vsm.12
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 14:11:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=qElRhgFW6O3NLrFqH4Lp/T7sQbiF++pSvTBdt0cYgtc=;
+        b=WjF9p7oBKgerFnZtCf5pLMvVu2U+Oh7tmvGAxrIPeV83Yl03a+cKNljF9CrS2nkwTc
+         /Bw4nO5gtNFVr8VLWsK0eWV5qCwAcXZOWQE9KGZu9CJyDD1XUN7qUYb+v+nEcLWyzLSo
+         hXTqhNfAMI/KJ7j0jmX82siFQZpfgBztj1qmEMR7YuTfpp5esYzfiPTeTWVExW0RFJls
+         bD47R/UCktn+pZB1ACqlV6+bU06xejZDxJbY/oUVwF4dAqyhyhF4Fp16CsQt246/jiY8
+         UkbR4GaHR0twWdJw2d5UU6Vxt5zZ/8YqYLAUHnrnw6IZg96oxIBkpK2A04YV43enjn3B
+         t0LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=qElRhgFW6O3NLrFqH4Lp/T7sQbiF++pSvTBdt0cYgtc=;
+        b=jgskOHeEQp0SWVifC1XP0W/o+Et1NC2PKrXXwFg8uENZh7P9sSTURPlQpSQYpP5n0w
+         SSdWiCbP4q17/fqgYtEHD/t38uNq/41SMxXaPGSGnuiP1ppY+BC4/o9lBnQojb8pAACG
+         hg4I1keT76UJO9w57uFtjrmBS3eiYmGvVRE9xUXgd7/8vZbgykliaotTa8Yg3MSvRvbQ
+         +kZAw1EJH3Xv1rmc9h2XMIwMTnxnbrAIfgOF5Vaz39bdQKxyFVYqolcgBp0yCVekBbf9
+         LUpv0vOE7HfSIIblAnSQ4UTKc7+sJlLaajJRiFa/QVOIZlw5WoqkaOTmi0rPCknRH9yG
+         qKpw==
+X-Gm-Message-State: AOAM531dhL6C4l+gzdrvosvu6E6f9IQCwYlVs3XbjwXXoZtrRU9hqHB5
+        pojwt8QmCdBJbTSSh17TaIAeu3qu3CDhD2+Obw84kwo+EOs=
+X-Google-Smtp-Source: ABdhPJwqG7UQG24LIqg+6isWb81eSh2HD/dBzGLbw7IK5SSL7m9w1+SVPY00NpWEzCZE6s/qry0nxyunSljV74Hgmk8=
+X-Received: by 2002:a67:fe15:: with SMTP id l21mr2760389vsr.78.1597439505683;
+ Fri, 14 Aug 2020 14:11:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5F3D0376-DE6F-11EA-8853-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   jim.cromie@gmail.com
+Date:   Fri, 14 Aug 2020 15:11:19 -0600
+Message-ID: <CAJfuBxw2KudBPfpmVqU9VOfnvrKdczU6Us5FWvpj50T88BarHw@mail.gmail.com>
+Subject: git bisect enhancement request
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+please teach git bisect how to use 2 separate worktrees
+for the bisection, toggling between them as bisection progresses,
+so that the end result is 2 compiled kernels,
+one broken, one good.
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> On 2020-08-14 at 17:28:27, Junio C Hamano wrote:
->>> Martin =C3=85gren <martin.agren@gmail.com> writes:
->>>=20
->>> > Document that in SHA-1 repositories, we use SHA-1 for "want"s and
->>> > "have"s, and in SHA-256 repositories, we use SHA-256.
->>>=20
->>> Ehh, doesn't this directly contradict the transition plan of "on the
->>> wire everything will use SHA-1 version for now?"
->>
->> SHA-256 repositories interoperate currently using SHA-256 object IDs.
->> It was originally intended that we wouldn't update the protocol, but
->> that leads to much of the testsuite failing since it's impossible to
->> move objects from one place to another.
->>
->> If we wanted to be more pedantically correct and optimize for the
->> future, we could say that the values use the format negotiated by the
->> "object-format" protocol extension and SHA-1 otherwise.
+perhaps something like
 
-Yes, that's wonderful.  I was confused when I said about the
-evolution path.  We still would want to eventually do the on-the-fly
-migration over the wire to make SHA-1 and SHA-256 repositories
-interoperate, but at least we already can allow SHA-256 repositories
-safely attempt to talk to SHA-1 repositories and gracefully fail.
+git worktree add A
+git worktree add B
+git bisect worktrees A B
+git bisect start
 
-Thanks.
+# and maybe
+git worktree rename A ok
+git worktree rename B meh
 
+its a minor convenience, yes, but having it done once right,
+is better than ad-hoc scripts doing it, each subtly different.
