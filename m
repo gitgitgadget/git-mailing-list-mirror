@@ -3,139 +3,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 131C8C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B301C433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:31:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE03B20774
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:28:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4B6820838
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:31:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1aRJr/s"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="viaXrcRX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728127AbgHNQ2u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 12:28:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56258 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbgHNQ2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 12:28:49 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB4FC061384
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 09:28:49 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id u126so11233043iod.12
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 09:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+TFLXJJ6G5bDOyiWpMbaix4M/P0J0nNAaUlb0tvWh7M=;
-        b=e1aRJr/sYtMSXqXrhIo1dEmDnNFCgjuXL9h1F8ZCeua3cVQ0vBWB9JnmScWyvLUgcM
-         cL0tdVqWG5uqwg+/UCoyPf86y4ndORyU26/MoPVEaK8kbT8LTcHp//6nyrWfzP+fNnaZ
-         iJcJMw9LhePgbqVi4GxvMkwyjfcyctTSCkUyjHq222RWz++t9Rv7B8whoOo9SJSuZcls
-         zEIVxoJymJNu1cOnbcvbjKuqB3Qk+9jbTs2sXGc4FHb9Ft2LDYBBz5QAsBcsqijDcVKl
-         a+k0I2C5Gjp9wxhTvJk6l1Yh5BqRHCh57NFoj7/YNowydY18aYaVIt+oA5JCMaHnVwSS
-         SgBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+TFLXJJ6G5bDOyiWpMbaix4M/P0J0nNAaUlb0tvWh7M=;
-        b=nSF2s9ZiuMeLkvTWFjvW7SsTCl9UwWQYckKxmVbFFYBar7d+jtJYxOF58tUEO2/zf4
-         6hKfhCi+pnyqRkDUlRtrLkYerTDQZEfKm2+zZAEXMLeXlxS4XUp1tDmdCAX/n1VpUSm2
-         2bukGHewwDiY3nZ/z0xF9JiID1N7oA8zGwzCZlY6mbdIj+HWuJz0xT8txmcl5Qoi+BTw
-         12pH7GrYinezdAJ+K9s1aLrjC2Uh+WGwHvXq8aT1ch+Qcz3YT9PnQSnjT+o1+a53OFe8
-         3O5qbUgmDRzbrt3CQcCPR6DkY0QNsGVsQVjPQPUuLP/lMMe3smRIOVvpveWNnztY/aFl
-         DO7A==
-X-Gm-Message-State: AOAM532mdtMGHG3KQEjhSZR8tAsIruXPIqOnUlXynzX89Qd1f7dsD9/I
-        TDbnjafH3q/cILzKMqQyQbXHcp7FxFj/vumKmQzx+Kyovm1rwqkb
-X-Google-Smtp-Source: ABdhPJwx7IB81i+7Kh5PBiCzLIrG6CoQlkRYBEdIGvAMF4ypNdHG95WhJpB7uBe0X0Fp/70kP9uJFyoBJxtEN/KNXhI=
-X-Received: by 2002:a05:6602:2515:: with SMTP id i21mr2714457ioe.120.1597422528818;
- Fri, 14 Aug 2020 09:28:48 -0700 (PDT)
+        id S1727108AbgHNQb2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 12:31:28 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60783 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726196AbgHNQb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 12:31:27 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE8EFE547C;
+        Fri, 14 Aug 2020 12:31:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=esWiG9nyI1jhgXiRliPEFAc+hPk=; b=viaXrc
+        RXxiqJmjrTA4Ee/BodQWs8DqZEmgeJqLFb+edLDEtAwAqQOb33b/c5vdLakFnWir
+        pkXyBOS750BI7w1t6mdkRYKK9EM6sxN+szdMUsYEqlPxgRTJAXa6EEXPW5jO5FNL
+        U5I4y5FkNEScdknsYSg1JuY3iI8UrANDEfjyE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jnuEO+fkmx6jDHI65fUbQsDnpL+fkax0
+        hTznjL7eCfCMSXN1JsxitG7/ufBK5GStpDtKxSAllq6l3zEaURzpIIXFQu3Dfc6s
+        9WxL0jAsRXKx29qeo+1kAHvL+ahjH7xw71mL3HrSAdFj9QgNR+61hIFYfJnRZsqM
+        OLXoywMG388=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7519E547B;
+        Fri, 14 Aug 2020 12:31:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0677BE5479;
+        Fri, 14 Aug 2020 12:31:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] messages: avoid SHA-1 in end-user facing messages
+References: <xmqqy2miyr0f.fsf@gitster.c.googlers.com>
+        <ee61b773-91c0-4b30-1d5b-e941bba03867@gmail.com>
+        <xmqqlfihzvhu.fsf@gitster.c.googlers.com>
+        <CAPig+cTTr8VdzeaPewktdncvnTWHjieEnEPV+vbD=GVbK7zQNQ@mail.gmail.com>
+        <xmqqd03tzley.fsf@gitster.c.googlers.com>
+        <5e9805f4-81c0-39bc-463a-8c47872f6456@gmail.com>
+Date:   Fri, 14 Aug 2020 09:31:22 -0700
+In-Reply-To: <5e9805f4-81c0-39bc-463a-8c47872f6456@gmail.com> (Derrick
+        Stolee's message of "Fri, 14 Aug 2020 08:21:38 -0400")
+Message-ID: <xmqq8sehyysl.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAMbsUu5bYN9q34st8AhOCv8y5eJQpVpEKOO3ebTi+CxbYetgmQ@mail.gmail.com>
-In-Reply-To: <CAMbsUu5bYN9q34st8AhOCv8y5eJQpVpEKOO3ebTi+CxbYetgmQ@mail.gmail.com>
-From:   Danny Lin <danny0838@gmail.com>
-Date:   Sat, 15 Aug 2020 00:28:31 +0800
-Message-ID: <CAMbsUu47FUPCnW=EBm-tE9_g5NqKzvzjVQWM1TNdBnTj-TauaA@mail.gmail.com>
-Subject: Re: [BUG] Branches before "git subtree add --squash" are pushed via
- "git subtree push"
-To:     git develop <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "David A. Greene" <greened@obbligato.org>,
-        Dave Ware <davidw@realtimegenomics.com>, apenwarr@gmail.com,
-        Roger Strain <rstrain@swri.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Stephen R Guglielmo <srg@guglielmo.us>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 97E3D53E-DE4B-11EA-BA74-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sadly no one cares about this issue... This bug is especially obvious
-if we simply run `git subtree push` after a `git subtree add --squash`:
+Derrick Stolee <stolee@gmail.com> writes:
 
-If master is at commit D, which is generated by
-`git subtree add --squash -P sub Y`:
+> What about something as simple as:
+>
+> 	"Do not show object names of boundary commits (Default: off)"
+>
+> While this doesn't imply that the object name positions are filled with
+> whitespace, that is just a formatting concern.
 
-    A---B---C---D  master
-               /
-              Y'
+Nice.  I like messages that stick to simple and easy words.
 
-    X---Y  sub
-
-After running `git subtree push -P sub . sub`, we get:
-
-    A---B---C---D'  sub (after push, actual)
-               /
-          X---Y
-
-While the sub branch should not change at all!
-
-This bug, seemingly introduced by 933cfeb90b5d03b4096db6d60494a6eedea25d03
-critically makes --squash approach for `git subtree` almost unusable.
-Added related developers to CC list for better notice.
-
->
-> Say we have a repository with "master" and "sub" branches like below:
->
->     A---B---C---D---E---F  master
->                /
->           X---Y
->
->     X---Y  sub
->
-> where commits A and B include changes in subdirectory "sub", commit C
-> removes subdirectory "sub", commit D is generated by "git subtree add
-> -P sub Y", and commits E and F also include changes in subdirectory
-> "sub".
->
-> We'd get this if we run "git subtree push -P sub . sub" on master at F:
->
->     X---Y---E'--F'  sub (after push)
->
-> On the other hand, if we have simliar trees except that commit D is
-> generated by "git subtree add --squash -P sub Y":
->
->     A---B---C---D---E---F  master
->                /
->               Y'
->
->     X---Y  sub
->
-> We'd expect to get this when we run "git subtree push -P sub . sub" on
-> master at F:
->
->     X---Y---E'--F'  sub (after push, expected)
->
-> But actually we get this (in Git 2.22.0):
->
->     A---B---C---D'--E'--F'  sub (after push, actual)
->                /
->           X---Y
->
-> This seems to be a side effect of 2.7.0 -> 2.7.1 in which a change is
-> made to include merged branches in "git subtree push", but mistakenly
-> causes branches before "git subtree add --squash" be included.
+Thanks.
