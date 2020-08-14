@@ -2,136 +2,295 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 991A8C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0CFAC433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65E042087D
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:08:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1CFB20B1F
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:13:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DBFtGyQB"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ZTIEkP9G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728054AbgHNMIo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 08:08:44 -0400
-Received: from mout.gmx.net ([212.227.17.21]:48899 "EHLO mout.gmx.net"
+        id S1727041AbgHNMNB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 08:13:01 -0400
+Received: from mout.gmx.net ([212.227.15.18]:34025 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726185AbgHNMIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 08:08:43 -0400
+        id S1726735AbgHNMM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 08:12:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1597406910;
-        bh=zBqZwVXb7Je1LVlV7Z2GeKEixYrKfQWFe2UzO2o2jMQ=;
+        s=badeba3b8450; t=1597407176;
+        bh=gsEXP5u5o0PgB5RKEQMODv0WX1oLFVTTtLMu3fD/iRM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DBFtGyQBkTN+MFmM17Ykdg/EeLT6UOdvFf6fHwwLP21n/tOjpAL3Umce0UzVTzk5N
-         sIswOvC4H35PK+2o8f7cSl7pmMcbFzSKvAetrTwSvj8iHfZrlKnvLnnPfHAmHUjXGU
-         MWN0YjyWDvuIDFEoVdTKvOezNkDgnpsJt3YgPWQY=
+        b=ZTIEkP9GmH0g3jaowSMwLlzh1RCXsD/aj4VNXRKmu0k04+v8WJwTdsBlJlR6SxnI7
+         uedjCwTrreeOt6yK6O/QswFyAAXO55GxZ+rjTp+BuoMGE55UP/rkZCO6J+ylhmUcuq
+         m+zaC2XC0q9Fbs78TAfMKVHHqU7z2GG8VhEQfptE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.231.116] ([89.1.213.40]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MpDNf-1kTRys3z7n-00qf8M; Fri, 14
- Aug 2020 14:08:30 +0200
-Date:   Fri, 14 Aug 2020 14:08:28 +0200 (CEST)
+Received: from [172.30.231.116] ([89.1.213.40]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MsHs0-1kz3o21oja-00toN7; Fri, 14
+ Aug 2020 14:12:56 +0200
+Date:   Fri, 14 Aug 2020 14:12:55 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Sibi Siddharthan <sibisiv.siddharthan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2020, #01; Mon, 3)
-In-Reply-To: <20200812160653.GA42443@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2008141352430.54@tvgsbejvaqbjf.bet>
-References: <xmqq8sevt1lf.fsf@gitster.c.googlers.com> <20200804185057.GA1400256@coredump.intra.peff.net> <xmqqr1sms0f0.fsf@gitster.c.googlers.com> <20200804192053.GA1400936@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2008121516560.50@tvgsbejvaqbjf.bet>
- <20200812141958.GA32453@coredump.intra.peff.net> <CAKw82xxOZFcsMw47TSrD7-pXpqO7O0_m84o96iH6+ZVeN9j1uw@mail.gmail.com> <20200812160653.GA42443@coredump.intra.peff.net>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] sequencer: avoid garbled merge machinery messages
+ due to commit labels
+In-Reply-To: <pull.828.v2.git.git.1597243205137.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2008141412370.54@tvgsbejvaqbjf.bet>
+References: <pull.828.git.git.1596654345718.gitgitgadget@gmail.com> <pull.828.v2.git.git.1597243205137.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xEs5TYrw58FhZhODUv5zb6n7r3BK9Ey9R5xrmIeXiKwaSJWbYOp
- Okd6nCmZIzTCQsb4/4KSwdV29IIJ2Chp30d26YyRk8RBRoE/Qg57hmVAtF2uonkdDE8rDAA
- kQH+6yawY8eqGfD1zE/sh4nyyQZdnAaBC/IkoDCiiWwL99R6QQqWTyIUAuRlteVDiFH/U7o
- +tvz07l7U8w32rKSepX4Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MmTE32YlooY=:3tw4QSRSWzBXdUvBpMsBHL
- /0EmLwAHzaDbzEg3SuywbawTKBnimX38OjTq8Z88zjRndUZijllJQWCpyvr8Vw55Bxxjw+I81
- m4exvdaq/OVwH9Pr14604V8s//YfSp22jzqddCSUwSm2GNXT40MUECIxDlFELXqGYbQ8uoQdG
- cjAD6zIkIUjq4NBhwoNgTwazpp+VOaJH8b723uiZ6eKOYzMl1nnePAOIOIKW3a3OakzfozzxG
- P6+AH3YSwU1IrLdU3aAo8r0punDOkH9pO7H3xEuFjhnwNA9alpK/34/tw2SlB24cphaTK3uIF
- fk8Doq4bI8ADBjjod1ih+D6yQz72+ipgAAaYo2dyOX6nuDh0bER05P0jAMgCRe+rvzn9yfTDe
- QVHJyobDT5m9k33t6BciCFS4IpuqGEWxZSiSUi3wbzqlvrTr40AuvRKfdUJI2OK/odVPxO4k4
- sN9x8bVQpeA6OgwOVCC6LQhuczQLNuAXbLxv+tbL3VrOuhQ8bb9tG1ESmC40FUkn7niD4mtvO
- 0AhZrVAxpgcG3fr6m+nUM8k6/28kd2qUK99YjZA+3ISDYAd0731LAJBWzdL7LOG135CKoWIxP
- u3wRzK2YBNdGtYNei03MAEUi5AAogBOoCHNx/3KTsgn4nDv2Qr3bI7kTLZZH+OkUpCCY4vJyH
- MuUDNAlyinZQW23Hxe5g6Rop49ws8Os4CJDAVplgLwz/YmuOYTp4PBs1wvTvOoorLvzKiUKa7
- NGKFtyP4bjVpU2XqNi/wNteHQMVJ18xp5kotQvCn/JD+lNFyYpkImO6sGmQVS3E4755Kj5Yhx
- qt2OFMRmzZCWjIC1E4izaBqwdODd/+mo6c7nNRVBRLiJnjxP7dT6QMj1Bj7pBKdy3WTYztS6y
- mn02YDhPgBp5UGKVFaw7Lc6t4gnj8YvWHz6cCkVF2rxmwvAql8B+VeVQDDAAbbaw4HZ+oWq9g
- zbRJ9OPAFbL9qRW6Hbhtqn3yHjJs/dAafOppMh0vBPDyrUr6Vc/WfmVADMIthWnJhIIOLfGqM
- crgkRi9eGxxcE9AvkdffARJV2UJfYnd43A5OdOAcqtJLT0lRhiAGXVP2XxOLa1V/Ph6qmWbzO
- MN3p/GFrgPQy1rjv6pHEmaBnKNA2BxYGjW37S+oVQwd3XR1VotECV37PFK4OJweyr6W+sz6hr
- uez2Ea8QfZhVwNUx9ZTH+ngcQ/QivU4EQyRGpdiRCP6OUqQOfUUtykKT2SY8HkSvecmq75M5r
- 0J0T+oHEHGkuVzfoQCNLLsp7mr1SaV3ApSPyjRw==
+X-Provags-ID: V03:K1:dxzAl7BIoL4H+Gxu2WG50PbQRJlcfThhbbmgXlTK3fFf68XTRoj
+ npAN89hBheJyWQJtirDnvuBHpPpiePHBxXGExHYfqgP02SJ6isWXYUG1ZB3mXx8BNzVyTIn
+ 6okjQrnq00OEQrdHyQuOWawCLrzDbpnhNoEg1FPk6CJcHTo4m5aPWMQ90spkqxJKU6El61z
+ 9J9qOZ8/LCdmaaWD6zrJQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ngqWI2fz43c=:SG/DxXzsJPWNKjtBho1RZ7
+ A/CnW1PIGr/VlksqU7IGUryYYycbQRmq7oZfQ55p0MZQu/eNfmWxVOioU11MlJw+ccCPWEVhS
+ 1IfpeXX8iPsx/3qU3q4Hoqc2pbgDIreSkuoCQnt7qeBArVY04nDb7g+2wY1TdrCUqec8YQsWq
+ PzQjOQaZLHzTPDKfMBXhRDi8YfsMVt0ddQmbrzvf53jIM8S314KQ01kSxKGA1LpnWH1p9XNDw
+ ZSMGW8YoVsPLug3SUZEvT4PV5WvxSt0vCJVc3NTeR+R5I7eqTlWPnA9QRc1XkpTvDwM4Ywp+n
+ wiw8NNqUMFVreGq5bPC4EDilpUYyVG6sRlVYrE7meOKcZJoTUazQHxoNbnFM+MEjNzK1lZrHV
+ GjU6A9vx79yX2SoXQ2GxLZEeAgAdxaJ7IuSYRV8N9Jaearm+6QFJWFMDv0CQUQ28KmhHe7AlV
+ /eYJazYBm6e9EMZDYKeYssIkIzyNptw4e/CRLs4yIBnPTP11+vHeu33yamXOGEEOkI0rIXt4i
+ 4ii8GsvD2grSL+e0fBj7+DqOu5UAILBxwBSQGQcjvVc3rwKMyY6DTmoXu49qlY17jEkVJr2tA
+ I7CXLJvCxpN2Yyxyz7+f3lurg5D1WjVPOWVFwvncJx6ooxq9opY0TWeebu+IY6nbBr8ekk4FW
+ hbFATHqo7DkyTV4l0PdFSVLkD2hEtgPz4Sk6wlU0IGFYnpGUNf9V5vKEbzMm2cqmD+UjH/7HZ
+ yyhIZ1Yqxw5epLHBXzA3+4KI7W5vCkQ05SWg5CZNLY1abu52Wc68k+m+LpqxPJEfp5Cpi3b21
+ virUD7kCnvGH48HxzcuGrftSfV0HphUeVq2ec2hSSY+4FY+0qutTr1Z0LIK576IzSv0Qhtq2F
+ CUXVPRGSQVaeQGn5bz6JEwjskijmgYFPUy6q47+Uqz0VOGTStssbpt4lbdsKfz/fXLxUIqNL+
+ 7li4dvM9jdcLYOSfZ2CeJzUhHOvQGd7QvcrXIYyJDnv7WEw4p2pSSVcpH/t1l4jKjzbMZEdmY
+ M/qT/TfgA6BcjoT5xBjO8iTi2FqJ2vwWT55n1xc/JknbFqEB36/EPaMh1ZC0hHm+WoVnA0+S8
+ e5siRlxpjAMHM2T8v2dWFafCtVOrQGyUPiPxn1DYfHXCOn+uCca951GeGuxBpwNFUeWDj4DyQ
+ f2X4H26gHmRNjuc6f/494VuZw/JKKk7xOOiOZCp7KkWiLk8FN54zWkofD0NmOcKcfY34udKqe
+ UaDdmOHpz94F+62gACIwpzMaLlkfBWOg2KPXyyg==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Elijah,
 
-On Wed, 12 Aug 2020, Jeff King wrote:
+On Wed, 12 Aug 2020, Elijah Newren via GitGitGadget wrote:
 
-> From my perspective as somebody who does not work on Windows, I wonder
-> how much value there is in running vsbuild _and_ Windows CI for average
-> developers. I have certainly gotten information from these jobs (e.g.,
-> when introducing a portability problem, or missing a refactoring spot in
-> Windows-only code). But I don't think I've ever gotten information from
-> vsbuild that wasn't also in the regular windows build.
+> From: Elijah Newren <newren@gmail.com>
+>
+> sequencer's get_message() exists to provide good labels on conflict
+> hunks; see commits
+>   d68565402a ("revert: clarify label on conflict hunks", 2010-03-20)
+>   bf975d379d ("cherry-pick, revert: add a label for ancestor", 2010-03-2=
+0)
+>   043a4492b3 ("sequencer: factor code out of revert builtin", 2012-01-11=
+).
+> for background on this function.  These labels are of the form
+>   <commitID>... <commit summary>
+> or
+>   parent of <commitID>... <commit summary>
+> These labels are then passed as branch names to the merge machinery.
+> However, these labels, as formatted, often also serve to confuse.  For
+> example, if we have a rename involved in a content merge, then it
+> results in text such as the following:
+>
+>     <<<<<<<< HEAD:foo.c
+>       int j;
+>     =3D=3D=3D=3D=3D=3D=3D=3D
+>       int counter;
+>     >>>>>>>> b01dface... Removed unnecessary stuff:bar.c
+>
+> Or in various conflict messages, it can make it very difficult to read:
+>
+>     CONFLICT (rename/delete): foo.c deleted in b01dface... Removed
+>     unnecessary stuff and renamed in HEAD.  Version HEAD of foo.c left
+>     in tree.
+>
+>     CONFLICT (file location): dir1/foo.c added in b01dface... Removed
+>     unnecessary stuff inside a directory that was renamed in HEAD,
+>     suggesting it should perhaps be moved to dir2/foo.c.
+>
+> Make a minor change to remove the ellipses and add parentheses around
+> the commit summary; this makes all three examples much easier to read:
+>
+>     <<<<<<<< HEAD:foo.c
+>       int j;
+>     =3D=3D=3D=3D=3D=3D=3D=3D
+>       int counter;
+>     >>>>>>>> b01dface (Removed unnecessary stuff):bar.c
+>
+>     CONFLICT (rename/delete): foo.c deleted in b01dface (Removed
+>     unnecessary stuff) and renamed in HEAD.  Version HEAD of foo.c left
+>     in tree.
+>
+>     CONFLICT (file location): dir1/foo.c added in b01dface (Removed
+>     unnecessary stuff) inside a directory that was renamed in HEAD,
+>     suggesting it should perhaps be moved to dir2/foo.c.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> Reviewed-by: Taylor Blau <me@ttaylorr.com>
+> Acked-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>     sequencer: avoid garbled merge machinery messages due to commit labe=
+ls
+>
+>     Changes since v1:
+>
+>      * Added Taylor's Reviewed-by, and Junio's Acked-by (I assume that's=
+ a
+>        fair translation of "Looks good", anyway; feel free to adjust whe=
+n
+>        you apply otherwise).
 
-There have not been a _ton_ of these instances, but there have been a
-couple:
+Here's my ACK, if you want it ;-)
 
-2049b8dc65e (diffcore_rename(): use a stable sort, 2019-09-30)
+Ciao,
+Dscho
 
-	Here, MSVC pointed out that `qsort()` does not need to be stable,
-	yet our test suite claimed that we expect it to be.
-
-116d1fa6c69 (vreportf(): avoid relying on stdio buffering, 2019-10-30)
-
-	MSVC's code demonstrated that `fprintf()` prints out messages
-	character by character.
-
-c097b95a260 (msvc: avoid using minus operator on unsigned types, 2019-10-04)
-
-	We relied on some iffy behavior of GNU C which allows negating
-	unsigned values (which cannot work if the high bit is set
-	already).
-
-dbcd970c27b (push: do not pretend to return `int` from
-		`die_push_simple()`, 2019-09-30)
-
-	A non-void return type in a noreturn function is bogus.
-
-fdda1ac62d7 (t0001 (mingw): do not expect a specific order of
-		stdout/stderr, 2019-06-19)
-
-	A test that might even have been flaky on Linux failed frequently
-	due to an incorrect assumption whether `stdout` would be flushed
-	before `stderr`.
-
-I cannot find any more instances, so yes, I agree that the
-`vs-build`/`vs-test` jobs might not be _all_ that necessary. So maybe we
-should do something like this?
-
--- snipsnap --
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 30425404eb3..2549fff8edd 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -122,7 +122,7 @@ jobs:
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
-   vs-build:
-     needs: ci-config
--    if: needs.ci-config.outputs.enabled == 'yes'
-+    if: (github.repository == 'git/git' || github.repository == 'gitgitgadget/git') && needs.ci-config.outputs.enabled == 'yes'
-     env:
-       MSYSTEM: MINGW64
-       NO_PERL: 1
-
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-82=
+8%2Fnewren%2Fsequencer-merge-messages-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-828/n=
+ewren/sequencer-merge-messages-v2
+> Pull-Request: https://github.com/git/git/pull/828
+>
+> Range-diff vs v1:
+>
+>  1:  da49e2eb58 ! 1:  762eb962cc sequencer: avoid garbled merge machiner=
+y messages due to commit labels
+>      @@ Commit message
+>               suggesting it should perhaps be moved to dir2/foo.c.
+>
+>           Signed-off-by: Elijah Newren <newren@gmail.com>
+>      +    Reviewed-by: Taylor Blau <me@ttaylorr.com>
+>      +    Acked-by: Junio C Hamano <gitster@pobox.com>
+>
+>        ## sequencer.c ##
+>       @@ sequencer.c: static int get_message(struct commit *commit, stru=
+ct commit_message *out)
+>
+>
+>  sequencer.c                     |  2 +-
+>  t/t3404-rebase-interactive.sh   |  2 +-
+>  t/t3507-cherry-pick-conflict.sh | 20 ++++++++++----------
+>  3 files changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index fd7701c88a..e988c12ad2 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -355,7 +355,7 @@ static int get_message(struct commit *commit, struct=
+ commit_message *out)
+>  	subject_len =3D find_commit_subject(out->message, &subject);
+>
+>  	out->subject =3D xmemdupz(subject, subject_len);
+> -	out->label =3D xstrfmt("%s... %s", abbrev, out->subject);
+> +	out->label =3D xstrfmt("%s (%s)", abbrev, out->subject);
+>  	out->parent_label =3D xstrfmt("parent of %s", out->label);
+>
+>  	return 0;
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.=
+sh
+> index 4a7d21f898..1d0a656ebd 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -256,7 +256,7 @@ test_expect_success 'stop on conflicting pick' '
+>  	D
+>  	=3D=3D=3D=3D=3D=3D=3D
+>  	G
+> -	>>>>>>> $commit... G
+> +	>>>>>>> $commit (G)
+>  	EOF
+>  	git tag new-branch1 &&
+>  	test_must_fail git rebase -i master &&
+> diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-confl=
+ict.sh
+> index 752bc43487..152ea11dc9 100755
+> --- a/t/t3507-cherry-pick-conflict.sh
+> +++ b/t/t3507-cherry-pick-conflict.sh
+> @@ -283,12 +283,12 @@ test_expect_success 'failed cherry-pick describes =
+conflict in work tree' '
+>  	a
+>  	=3D=3D=3D=3D=3D=3D=3D
+>  	c
+> -	>>>>>>> objid picked
+> +	>>>>>>> objid (picked)
+>  	EOF
+>
+>  	test_must_fail git cherry-pick picked &&
+>
+> -	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
+> +	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> @@ -298,16 +298,16 @@ test_expect_success 'diff3 -m style' '
+>  	cat <<-EOF >expected &&
+>  	<<<<<<< HEAD
+>  	a
+> -	||||||| parent of objid picked
+> +	||||||| parent of objid (picked)
+>  	b
+>  	=3D=3D=3D=3D=3D=3D=3D
+>  	c
+> -	>>>>>>> objid picked
+> +	>>>>>>> objid (picked)
+>  	EOF
+>
+>  	test_must_fail git cherry-pick picked &&
+>
+> -	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
+> +	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> @@ -319,7 +319,7 @@ test_expect_success 'revert also handles conflicts s=
+anely' '
+>  	a
+>  	=3D=3D=3D=3D=3D=3D=3D
+>  	b
+> -	>>>>>>> parent of objid picked
+> +	>>>>>>> parent of objid (picked)
+>  	EOF
+>  	{
+>  		git checkout picked -- foo &&
+> @@ -345,7 +345,7 @@ test_expect_success 'revert also handles conflicts s=
+anely' '
+>  	test_must_fail git update-index --refresh -q &&
+>  	test_must_fail git diff-index --exit-code HEAD &&
+>  	test_cmp expected-stages actual-stages &&
+> -	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
+> +	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+>  	test_cmp expected actual
+>  '
+>
+> @@ -429,16 +429,16 @@ test_expect_success 'revert conflict, diff3 -m sty=
+le' '
+>  	cat <<-EOF >expected &&
+>  	<<<<<<< HEAD
+>  	a
+> -	||||||| objid picked
+> +	||||||| objid (picked)
+>  	c
+>  	=3D=3D=3D=3D=3D=3D=3D
+>  	b
+> -	>>>>>>> parent of objid picked
+> +	>>>>>>> parent of objid (picked)
+>  	EOF
+>
+>  	test_must_fail git revert picked &&
+>
+> -	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
+> +	sed "s/[a-f0-9]* (/objid (/" foo >actual &&
+>  	test_cmp expected actual
+>  '
+>
+>
+> base-commit: dc04167d378fb29d30e1647ff6ff51dd182bc9a3
+> --
+> gitgitgadget
+>
