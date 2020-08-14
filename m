@@ -3,81 +3,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9560C433DF
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FCA6C433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:41:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AA9520768
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:11:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26A2F2065C
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:41:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjF9p7oB"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h6HdIVMZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728009AbgHNVLr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 17:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43686 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726285AbgHNVLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 17:11:47 -0400
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19533C061385
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 14:11:47 -0700 (PDT)
-Received: by mail-vs1-xe29.google.com with SMTP id p8so5340816vsm.12
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 14:11:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=qElRhgFW6O3NLrFqH4Lp/T7sQbiF++pSvTBdt0cYgtc=;
-        b=WjF9p7oBKgerFnZtCf5pLMvVu2U+Oh7tmvGAxrIPeV83Yl03a+cKNljF9CrS2nkwTc
-         /Bw4nO5gtNFVr8VLWsK0eWV5qCwAcXZOWQE9KGZu9CJyDD1XUN7qUYb+v+nEcLWyzLSo
-         hXTqhNfAMI/KJ7j0jmX82siFQZpfgBztj1qmEMR7YuTfpp5esYzfiPTeTWVExW0RFJls
-         bD47R/UCktn+pZB1ACqlV6+bU06xejZDxJbY/oUVwF4dAqyhyhF4Fp16CsQt246/jiY8
-         UkbR4GaHR0twWdJw2d5UU6Vxt5zZ/8YqYLAUHnrnw6IZg96oxIBkpK2A04YV43enjn3B
-         t0LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=qElRhgFW6O3NLrFqH4Lp/T7sQbiF++pSvTBdt0cYgtc=;
-        b=jgskOHeEQp0SWVifC1XP0W/o+Et1NC2PKrXXwFg8uENZh7P9sSTURPlQpSQYpP5n0w
-         SSdWiCbP4q17/fqgYtEHD/t38uNq/41SMxXaPGSGnuiP1ppY+BC4/o9lBnQojb8pAACG
-         hg4I1keT76UJO9w57uFtjrmBS3eiYmGvVRE9xUXgd7/8vZbgykliaotTa8Yg3MSvRvbQ
-         +kZAw1EJH3Xv1rmc9h2XMIwMTnxnbrAIfgOF5Vaz39bdQKxyFVYqolcgBp0yCVekBbf9
-         LUpv0vOE7HfSIIblAnSQ4UTKc7+sJlLaajJRiFa/QVOIZlw5WoqkaOTmi0rPCknRH9yG
-         qKpw==
-X-Gm-Message-State: AOAM531dhL6C4l+gzdrvosvu6E6f9IQCwYlVs3XbjwXXoZtrRU9hqHB5
-        pojwt8QmCdBJbTSSh17TaIAeu3qu3CDhD2+Obw84kwo+EOs=
-X-Google-Smtp-Source: ABdhPJwqG7UQG24LIqg+6isWb81eSh2HD/dBzGLbw7IK5SSL7m9w1+SVPY00NpWEzCZE6s/qry0nxyunSljV74Hgmk8=
-X-Received: by 2002:a67:fe15:: with SMTP id l21mr2760389vsr.78.1597439505683;
- Fri, 14 Aug 2020 14:11:45 -0700 (PDT)
+        id S1728312AbgHNVlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 17:41:11 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53988 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726196AbgHNVlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 17:41:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 17B04E7499;
+        Fri, 14 Aug 2020 17:41:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QOjaveBCejkDJBlYnLRNV40zGzk=; b=h6HdIV
+        MZR5nJTucwUQKCjgBlkmlnuk0P7oeIfFgIMBL7qdeX1qUJ7r185y3mYU/xtdU2he
+        HWfhahcbRz3DOzvouErOVuUlW2pnuteQl7y9VZnR+k4eREvyV7cSSclbeYMhdpxK
+        Wxc+BYImv36lA8x2imK1rNm9GYGTs/s2QDPlQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AlLD8XjDCk2dv4YEsldVJZt414FziJIk
+        zjOoMcF+jOCQatfU0of1lvqqP/8Eaf0WXioe4EcfoS2SF5dJ3A4yHx2LnAT4gdYi
+        tJV4wftMLYpuwKr4NSSVM6+aAjnxnXZ9q0bn6QfrFLG5q8bljDaeUjCwU4wY2Tl9
+        6LH/IhJ40Y8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0ECF4E7498;
+        Fri, 14 Aug 2020 17:41:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C670DE7495;
+        Fri, 14 Aug 2020 17:41:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, martin.agren@gmail.com,
+        sandals@crustytoothpaste.net, me@ttaylorr.com,
+        abhishekkumar8222@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 0/3] SHA-256: Update commit-graph and multi-pack-index formats
+References: <pull.703.git.1597428440.gitgitgadget@gmail.com>
+        <xmqqeeo9vxl0.fsf@gitster.c.googlers.com>
+        <04ebec72-07de-4494-688f-a9f48442906e@gmail.com>
+Date:   Fri, 14 Aug 2020 14:41:04 -0700
+In-Reply-To: <04ebec72-07de-4494-688f-a9f48442906e@gmail.com> (Derrick
+        Stolee's message of "Fri, 14 Aug 2020 16:34:56 -0400")
+Message-ID: <xmqqbljcvrbj.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   jim.cromie@gmail.com
-Date:   Fri, 14 Aug 2020 15:11:19 -0600
-Message-ID: <CAJfuBxw2KudBPfpmVqU9VOfnvrKdczU6Us5FWvpj50T88BarHw@mail.gmail.com>
-Subject: git bisect enhancement request
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: DB7EAB0E-DE76-11EA-9E81-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-please teach git bisect how to use 2 separate worktrees
-for the bisection, toggling between them as bisection progresses,
-so that the end result is 2 compiled kernels,
-one broken, one good.
+Derrick Stolee <stolee@gmail.com> writes:
 
-perhaps something like
+> On 8/14/2020 3:25 PM, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> 
+>>> As discussed [1], there is some concern around binary file formats requiring
+>>> the context of the repository config in order to infer hash lengths. Two
+>>> formats that were designed with the hash transition in mind (commit-graph
+>>> and multi-pack-index) have bytes available to indicate the hash algorithm
+>>> used. Let's actually update these formats to be more self-contained with the
+>>> two hash algorithms being available.
+>>> ...
+>>> If this is the way we want to go with the formats, then I'll assist
+>>> coordinating these textual and semantic merge conflicts.
+>> 
+>> I agree that the files should be self-identifying, but have these
+>> changes tested without sha256 hash?
+>
+> All of the test scripts pass with and without GIT_TEST_DEFAULT_HASH=sha256,
+> and this test in t5318 (and a similar one in t5319) are explicit about
+> testing both options:
+>
+> +test_expect_success 'warn on improper hash version' '
+> +	git init --object-format=sha1 sha1 &&
+> +	(
+> +		cd sha1 &&
+> +		test_commit 1 &&
+> +		git commit-graph write --reachable &&
+> +		mv .git/objects/info/commit-graph ../cg-sha1
+> +	) &&
+> +	git init --object-format=sha256 sha256 &&
+> +	(
+> +		cd sha256 &&
+> +		test_commit 1 &&
+> +		git commit-graph write --reachable &&
+> +		mv .git/objects/info/commit-graph ../cg-sha256
+> +	) &&
+> +	(
+> +		cd sha1 &&
+> +		mv ../cg-sha256 .git/objects/info/commit-graph &&
+> +		git log -1 2>err &&
+> +		test_i18ngrep "commit-graph hash version 2 does not match version 1" err
+> +	) &&
+> +	(
+> +		cd sha256 &&
+> +		mv ../cg-sha1 .git/objects/info/commit-graph &&
+> +		git log -1 2>err &&
+> +		test_i18ngrep "commit-graph hash version 1 does not match version 2" err
+> +	)
+> +'
+> +
+>
+> Since this tests exactly that the "hash version" byte is the same in
+> a SHA-1 repo, this checks that the new version of Git writes backwards-
+> compatible data in SHA-1 repos.
+>
+> Or are you hinting at a more subtle test scenario that I missed?
 
-git worktree add A
-git worktree add B
-git bisect worktrees A B
-git bisect start
-
-# and maybe
-git worktree rename A ok
-git worktree rename B meh
-
-its a minor convenience, yes, but having it done once right,
-is better than ad-hoc scripts doing it, each subtly different.
+No, I was just wondering how ready we are, as the four tests looked
+too easy ;-)
