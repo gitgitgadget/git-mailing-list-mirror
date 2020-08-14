@@ -2,84 +2,153 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4EE4C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 03:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C267C433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 04:38:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6449E2078D
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 03:51:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2062520708
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 04:38:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="Ybqi8gt2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ODN/Idhc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726587AbgHNDvc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Aug 2020 23:51:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52836 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726567AbgHNDvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Aug 2020 23:51:32 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5933CC061757
-        for <git@vger.kernel.org>; Thu, 13 Aug 2020 20:51:31 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id h8so4127555lfp.9
-        for <git@vger.kernel.org>; Thu, 13 Aug 2020 20:51:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DczBQIms0HUTDYu5ZxQ4A1QvJu0P7eLgxbmmx0JoZk8=;
-        b=Ybqi8gt2v3nCl9c98o7BBsiHzVzeNx47JGm2r9XjZ8wUkmiAubIFJCM+cWle3ENOGI
-         Ci7LCKR6qjG88MfzozdGm4LLXxAgUIR4f6k1LBKLlykhgLFTZXESoqTwRDWLgLYVnFNS
-         /6kDNz0T9Nx1FCeZhg+pCmdks9WJQ1aNnlfTZcGEWFRPE9bhg4TQBunMhR6gVhqhmEdI
-         Fhna5jhfKOom3USZtNER9t9JczjVKCLIy75zh4jvlbe5qIMQY7nE/YRxOY+CiYr7MivQ
-         IESpxtsQw29JLoQUT7qPAGEEoR0Knk681nlovMH/xK3dbkbdeuiwHFZhy5gVXBO3YLxQ
-         bBAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DczBQIms0HUTDYu5ZxQ4A1QvJu0P7eLgxbmmx0JoZk8=;
-        b=sJ/FhpLV88FIB1OVA/SR919TGLDBdey1HiPvIIhqWLXdaIJrwVK6ZaAYYN+bS4WRzK
-         OMPwCUqcTrGMD+buV7CfIEyOdtt1atEZ0UfqzeVbg8zpSjLISiEdXW/nmhjYpEhS97ZN
-         miNonbrbz9o1lNs43CgKKMzZmWsfireOMFF69WjWeEfe0BD9yltim54WlztvM/tgcmf8
-         Fv7C9bsROtQS31h6MgfH6+WDYOs+aa/7zMhMSOrFLchOPuEbDn2SihHVbRsSPXdyCNQf
-         ce3oOFXtXjbq+CipVpJ9RTG7xwordwW6zoRRH1qQkE4iAKXocTpQJJiWS3SibLCU+ZHo
-         zKEg==
-X-Gm-Message-State: AOAM532yokkkYiXJsr+lCeZGB+S9OMpFgEx7XSmPs9R3JrfFdVAsaYuD
-        VT1PqRGwURtLvLJsuha1AbMfIsE8gtIpBVGX+hVInuvBt1g=
-X-Google-Smtp-Source: ABdhPJyfKlJVLvLF1cYws6WqXqjP7qh2/hJ/+ZN7VdTKhQNjsfJQOv3ljUHVfRe47n/Np5Rc9a/QBFIHqZ0FMxkVlGU=
-X-Received: by 2002:ac2:4a9d:: with SMTP id l29mr281974lfp.23.1597377089251;
- Thu, 13 Aug 2020 20:51:29 -0700 (PDT)
-MIME-Version: 1.0
+        id S1726263AbgHNEiJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 00:38:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50588 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726064AbgHNEiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 00:38:09 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EA817A734;
+        Fri, 14 Aug 2020 00:38:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cTaVMz79lyS5NX3XQmFugTRyxpc=; b=ODN/Id
+        hc6NvA/w1t3F6A4+7bkDjevyfJAu7+mJE4V4COhQrM/38dgMTz1ERbaie8wSv/Ww
+        1oHAvX0fN1byGWtchfcz9M1CvxoDUgDMwa/HK0pq9vzp6unYqM6EaVlL3gSPNRzU
+        VYz+dFPGxvXcfdPqjsldxwsketfg+HI7VSOwA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Q0IAA7fTaeA9DNAMNkkAmjoWmXxZIB8p
+        QUC2W/Npp8V7XenuILnqtCfG6ZkyvddVI9z2dAsbQxLABBKXyAB3CDLf5yCKU134
+        3IN2xxJqP6nd18oQtZ1OzDkM9I7II9EBhMdFcW35aRy4WdwucxpuHJY44oIn4EG6
+        J6RtJsBVAC4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4578B7A733;
+        Fri, 14 Aug 2020 00:38:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA1857A732;
+        Fri, 14 Aug 2020 00:38:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Matheus Tavares <matheus.bernardino@usp.br>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/3] mem-pool: use more standard initialization and finalization
 References: <pull.830.git.git.1597374135.gitgitgadget@gmail.com>
-In-Reply-To: <pull.830.git.git.1597374135.gitgitgadget@gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 14 Aug 2020 00:51:18 -0300
-Message-ID: <CAHd-oW4quRLLD0qz22facBJPzmn_zVoN-Ze=rP2yvTp=HJONFQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Extend and add a little more generalization to the
- mem_pool API
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        <f13a52055cd975d457e0593cbabb70897e78024b.1597374135.git.gitgitgadget@gmail.com>
+Date:   Thu, 13 Aug 2020 21:38:04 -0700
+In-Reply-To: <f13a52055cd975d457e0593cbabb70897e78024b.1597374135.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Fri, 14 Aug 2020
+        03:02:14 +0000")
+Message-ID: <xmqqpn7tzvtf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F18B077E-DDE7-11EA-9F48-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Elijah
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Fri, Aug 14, 2020 at 12:02 AM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+> written.  mem_pool_init() does essentially the following (simplified
+> for purposes of explanation here):
 >
-> Unfortunately, Matheus' parallel-checkout RFC series (not yet in next or
-> seen as far as I can tell) adds a few more mem_pool callers, so this series
-> conflicts with his (semantically). I can rebuild mine on top of his, or,
-> since his is longer and would probably advance more slowly, it may make
-> sense to have his series be based on this one. If so, I'm happy to help him
-> update his to depend on this series. Let me know preferences.
+>     void mem_pool_init(struct mem_pool **pool...)
+>     {
+>         *pool = xcalloc(1, sizeof(*pool));
+>
+> It seems weird to require that mem_pools can only be accessed through a
+> pointer.
 
-Thanks for the heads up. Yeah, let me rebuild my series on top of
-yours. From a quick look at your patches, I think it should be quite
-straightforward to rebase my changes.
+Yup, if the _init() were to also allocate, I would expect it to be
+more like
+
+	struct mem_pool *mem_pool_create(...)
+	{
+		struct mem_pool *pool = xcalloc(1, sizeof(*pool));
+		...
+		return pool;
+	}
+
+It also is OK to let the caller pass uninitialized region of memory,
+which is how we usually arrange _init() to work.  It seems that that
+is the approach this patch takes.
+
+> -void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
+> +void mem_pool_init(struct mem_pool *mem_pool, size_t initial_size)
+>  {
+> -	struct mem_pool *pool;
+> -
+> -	if (*mem_pool)
+> -		return;
+> -
+> -	pool = xcalloc(1, sizeof(*pool));
+> -
+> -	pool->block_alloc = BLOCK_GROWTH_SIZE;
+> +	mem_pool->mp_block = NULL;
+> +	mem_pool->pool_alloc = 0;
+> +	mem_pool->block_alloc = BLOCK_GROWTH_SIZE;
+>  
+>  	if (initial_size > 0)
+> -		mem_pool_alloc_block(pool, initial_size, NULL);
+> -
+> -	*mem_pool = pool;
+> +		mem_pool_alloc_block(mem_pool, initial_size, NULL);
+
+It used to be that this function both knew and took control of all
+the bits in *pool memory by using xcalloc().  Any field the function
+assigned to of course got explicitly the value the function wanted
+it to have, and all other fields were left to 0.
+
+It may happen to be still the case (i.e. the assignments we see in
+this function cover all the fields defined), but don't we need some
+provision to make sure it will hold to be true in the future?
+
+Starting it with "memset(pool, 0, sizeof(*pool)" would be one way.
+
+You'd standardize to s/mem_pool/pool/ in [3/3]; shouldn't this be
+written with pool to begin with, instead of reintroducing mem_pool
+that is of different type from the original?
+
+> -	if (!*pool_ptr)
+> -		mem_pool_init(pool_ptr, 0);
+> +	if (!*pool_ptr) {
+> +		*pool_ptr = xmalloc(sizeof(**pool_ptr));
+> +		mem_pool_init(*pool_ptr, 0);
+
+This one gives an uninitialized chunk of memory to the _init(); an
+example of the caller that the earlier comment may matter.
+
+> +	istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
+>  	if (istate->version == 4) {
+> -		mem_pool_init(&istate->ce_mem_pool,
+> +		mem_pool_init(istate->ce_mem_pool,
+>  				estimate_cache_size_from_compressed(istate->cache_nr));
+>  	} else {
+> -		mem_pool_init(&istate->ce_mem_pool,
+> +		mem_pool_init(istate->ce_mem_pool,
+>  				estimate_cache_size(mmap_size, istate->cache_nr));
+>  	}
+
+Likewise.
+
+Thanks.
