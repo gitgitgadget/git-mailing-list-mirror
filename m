@@ -2,100 +2,193 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1088AC433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5887CC433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:28:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCB5120B1F
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:24:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 256F420B1F
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:28:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sfiEMC3O"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oD+HQAmE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727773AbgHNMYk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 08:24:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46654 "EHLO
+        id S1728138AbgHNM2X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 08:28:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbgHNMYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 08:24:40 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D71FC061384
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:24:40 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id d27so6726680qtg.4
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:24:40 -0700 (PDT)
+        with ESMTP id S1728125AbgHNM2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 08:28:15 -0400
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD949C061384
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:28:14 -0700 (PDT)
+Received: by mail-qv1-xf41.google.com with SMTP id b2so4160415qvp.9
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=THe7QGtkfl7Ot7PnJU30YWGaOcYImCtkeb6rqzq3+OI=;
-        b=sfiEMC3OaSRtJuVOLKAgYRcCVpVyT2H6j2V9mxx/uApQaLVK3He+Xepkb0kL8GeGKs
-         mz4uTUIMvYNzKOHV8QBBKSCTzLVguZxROpG/Z3sAdsdz8PGdnpBkSnvMqoS63lUKzY9/
-         vb8WwKitVPexDSc3q+Io4AOTQms8d+xcJh2zzAfh/CIE/jjA/7OI9ePVSIQ1cOTaoHbK
-         fe92mYTJK3Ys4s/RKa0SFwN9cp+kQ8NTLkbNuEwkqScP+V7CP4a/8SFE91WmnyDQJKvS
-         5NRYgITZXNl2U3L9ReKemU9l+6yFxbNlBdXqcPc9QlEta41tCfVeEyX/LdoDf6a+3yze
-         M+0w==
+        bh=tz/g12dZRlykl1gD6mFDN/pA407MijIi6C0TEwZDrq0=;
+        b=oD+HQAmEnb+VU7UMNAcE5Nawlb8/6NJxIHZddDy44obsNuHQPj3Yb1WuMAx0N8aVzB
+         DzNl7dIVG6MNtueLMwp2gKSvlKMEzVKbe/GBqodvKiH4aM2UkbHvn9ZsptWJYBw2+JfJ
+         VrtxTpVZCvo2GqHi8qaRQ8I4PxltKBErZgr8aKWE3tqkapWblm+lygfc3RbpdaI1j3b0
+         YcvYO+HzceKGoPuzXuUC7medIE+2QfWZ/YKBfzVlUKK6ayIoaNshfpFj1OnyffJ2An5i
+         M6LuQu0W4gx4jP7zsr4RRURRGkO7FRp8BvmuskLJ+vNuNp0EoEAN/HkTc5szWEJxb7kI
+         OM4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=THe7QGtkfl7Ot7PnJU30YWGaOcYImCtkeb6rqzq3+OI=;
-        b=ZUVvm5sqAxf5aDJEr5ssNuGu8XSPQ2uiP7LrW7gDrXtswPSZSZ95OKyytnR7efPYQA
-         adI07uFOzMmZp8XR3cfHIL1DvNtDR9hI6+9AldZLGDzDAdkYOJniDWatT58zxLMTeeOw
-         rB8Y7caxyoqqf/6ljWY6E9a4msw8+81uY5p6Epw06SmX7mya2xNZD9Nv5004xFTq0Pd5
-         EZmyituFn+rqnK0aEN9L7Ki6OP/9iHZpgNm0UYIwBJ7xFr61avoUU0qsllGA3eM81nuO
-         HaoGvXL2sj3UPLquKn2TXqaQYzZsEDDZfePTPpuzP7j8nUKTudGFFuZNV/1G2TPeXPGW
-         iCng==
-X-Gm-Message-State: AOAM531qtAev86QgONvfFwAHklve5lKpznJ3GDzessWS0nOsBJ8HgISm
-        NpiF02D39u/OQmKiY8nykPc=
-X-Google-Smtp-Source: ABdhPJzgIca9a78jV7mkgXnj1EBte4qC8/zj8otdgkbK1xY5RfyOHsMjETnMUqVaHiztA4x2K//dkA==
-X-Received: by 2002:ac8:7a66:: with SMTP id w6mr1776376qtt.242.1597407879386;
-        Fri, 14 Aug 2020 05:24:39 -0700 (PDT)
+        bh=tz/g12dZRlykl1gD6mFDN/pA407MijIi6C0TEwZDrq0=;
+        b=A28swF3j7HvMSRuphcBC7/EUNEUYljDP6+Pwg0tC2XvuqwPxijKmmHDIGLurqq/5zI
+         VAttZ1G4Xb7SChBxynZrdq7/qxsUX1DlaaMzN1fuDT6jHl1TjVqvChDEd05GjnDNTB8k
+         c7cUQ9ONLdrDqnXpjLSocKSgE/szVRy7Wexbp9ZfZJnqPj+H7cDDoy20P0wdP0xWc840
+         cunv9cu+c5BaGvpu7okpTH0qEsZgXI5Svl72EuFUPp5xK2ZWEGhZl2avWRHgVAYKUUd6
+         3S//q10vKPJ5xfAaTac8ER0u87NOSquxMGbX+Io8y3DXig8ptWEpac+RtikbDKpqWicI
+         y73A==
+X-Gm-Message-State: AOAM5328BwhJZ9+DB0urpij18D3k4s8bBBpaRRmlhXS5zO1Wtdo1VPzN
+        RmEq991C7u+i3yWhtTxXQhI=
+X-Google-Smtp-Source: ABdhPJwAs71MuBgQb1Il8omNKXlnXmBaH4XPuuiaDCBFXulLb/pEED9nFZi5kTAQpjzgjY1vxBkwSQ==
+X-Received: by 2002:ad4:54ce:: with SMTP id j14mr2455082qvx.185.1597408093922;
+        Fri, 14 Aug 2020 05:28:13 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:4116:add4:1500:aeb7? ([2600:1700:e72:80a0:4116:add4:1500:aeb7])
-        by smtp.gmail.com with ESMTPSA id k55sm9065136qtf.17.2020.08.14.05.24.38
+        by smtp.gmail.com with ESMTPSA id y3sm8782176qkd.132.2020.08.14.05.28.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Aug 2020 05:24:38 -0700 (PDT)
-Subject: Re: [PATCH v2 07/10] commit-graph: implement corrected commit date
-To:     a3910f82-ab2e-bf35-ac43-c30d77f3c96b@gmail.com
-Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org, jnareb@gmail.com,
-        me@ttaylorr.com, gitgitgadget@gmail.com
-References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
- <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
- <bfe14732014807ff19f943cdf51068f0d3043c30.1596941625.git.gitgitgadget@gmail.com>
- <a3910f82-ab2e-bf35-ac43-c30d77f3c96b@gmail.com>
- <20200814045957.GA1380@Abhishek-Arch>
+        Fri, 14 Aug 2020 05:28:13 -0700 (PDT)
+Subject: Re: [PATCH 2/5] index-format.txt: document SHA-256 index format
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20200813224901.2652387-1-sandals@crustytoothpaste.net>
+ <cover.1597406877.git.martin.agren@gmail.com>
+ <e811455d55cdb222a85d880f3cf3d5e28a8d4c91.1597406877.git.martin.agren@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2c7ee14e-1c80-9860-7bcc-633ac43910a6@gmail.com>
-Date:   Fri, 14 Aug 2020 08:24:38 -0400
+Message-ID: <e9963ef1-cecd-cdf8-a5cf-2be884d8ced6@gmail.com>
+Date:   Fri, 14 Aug 2020 08:28:13 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
  Thunderbird/80.0
 MIME-Version: 1.0
-In-Reply-To: <20200814045957.GA1380@Abhishek-Arch>
+In-Reply-To: <e811455d55cdb222a85d880f3cf3d5e28a8d4c91.1597406877.git.martin.agren@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/14/2020 12:59 AM, Abhishek Kumar wrote:
-> I solved the issue by adding a new member to struct commit_graph
-> `read_generation_data` to maintain the "global" state of the entire
-> commit-graph chain instead.
+On 8/14/2020 8:21 AM, Martin Ågren wrote:
+> Similar to a recent commit, document that in SHA-1 repositories, we use
+> SHA-1 and in SHA-256 repositories, we use SHA-256, then replace all
+> other uses of "SHA-1" with something more neutral.
 > 
-> The relevant changes are in validate_mixed_generation_chain(),
-> read_commit_graph_one() and fill_commit_graph_info().
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+>  Documentation/technical/index-format.txt | 27 +++++++++++++-----------
+>  1 file changed, 15 insertions(+), 12 deletions(-)
+> 
+> diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+> index faa25c5c52..827ece2ed1 100644
+> --- a/Documentation/technical/index-format.txt
+> +++ b/Documentation/technical/index-format.txt
+> @@ -3,8 +3,11 @@ Git index format
+>  
+>  == The Git index file has the following format
+>  
+> -  All binary numbers are in network byte order. Version 2 is described
+> -  here unless stated otherwise.
+> +  All binary numbers are in network byte order.
+> +  In a repository using the traditional SHA-1, checksums and object IDs
+> +  (object names) mentioned below are all computed using SHA-1.  Similarly,
+> +  in SHA-256 repositories, these values are computed using SHA-256.
+> +  Version 2 is described here unless stated otherwise.
+>  
+>     - A 12-byte header consisting of
+>  
+> @@ -32,7 +35,7 @@ Git index format
+>  
+>       Extension data
+>  
+> -   - 160-bit SHA-1 over the content of the index file before this
+> +   - 160-bit hash checksum over the content of the index file before this
+>       checksum.
 
-I think this is a good way to go. Adding that restriction about
-the tip commit-graph was short-sighted of me and was likely to
-break in the future.
+If this hash is flexible, then "160-bit" is not correct anymore, right?
 
-I think your solution here to store extra state from the entire
-chain into each layer makes a lot of sense.
+>  == Index entry
+> @@ -80,7 +83,7 @@ Git index format
+>    32-bit file size
+>      This is the on-disk size from stat(2), truncated to 32-bit.
+>  
+> -  160-bit SHA-1 for the represented object
+> +  160-bit object name for the represented object
 
-Thanks!
+Same here. The later instances of "160-bit" were dropped.
+
+>    A 16-bit 'flags' field split into (high to low bits)
+>  
+> @@ -211,8 +214,8 @@ Git index format
+>  
+>    The extension consists of:
+>  
+> -  - 160-bit SHA-1 of the shared index file. The shared index file path
+> -    is $GIT_DIR/sharedindex.<SHA-1>. If all 160 bits are zero, the
+> +  - Hash of the shared index file. The shared index file path
+> +    is $GIT_DIR/sharedindex.<hash>. If all bits are zero, the
+>      index does not require a shared index file.
+>  
+>    - An ewah-encoded delete bitmap, each bit represents an entry in the
+> @@ -253,10 +256,10 @@ Git index format
+>  
+>    - 32-bit dir_flags (see struct dir_struct)
+>  
+> -  - 160-bit SHA-1 of $GIT_DIR/info/exclude. Null SHA-1 means the file
+> +  - Hash of $GIT_DIR/info/exclude. A null hash means the file
+>      does not exist.
+>  
+> -  - 160-bit SHA-1 of core.excludesfile. Null SHA-1 means the file does
+> +  - Hash of core.excludesfile. A null hash means the file does
+>      not exist.
+>  
+>    - NUL-terminated string of per-dir exclude file name. This usually
+> @@ -285,13 +288,13 @@ The remaining data of each directory block is grouped by type:
+>    - An ewah bitmap, the n-th bit records "check-only" bit of
+>      read_directory_recursive() for the n-th directory.
+>  
+> -  - An ewah bitmap, the n-th bit indicates whether SHA-1 and stat data
+> +  - An ewah bitmap, the n-th bit indicates whether hash and stat data
+>      is valid for the n-th directory and exists in the next data.
+>  
+>    - An array of stat data. The n-th data corresponds with the n-th
+>      "one" bit in the previous ewah bitmap.
+>  
+> -  - An array of SHA-1. The n-th SHA-1 corresponds with the n-th "one" bit
+> +  - An array of hashes. The n-th hash corresponds with the n-th "one" bit
+>      in the previous ewah bitmap.
+>  
+>    - One NUL.
+> @@ -330,12 +333,12 @@ The remaining data of each directory block is grouped by type:
+>  
+>    - 32-bit offset to the end of the index entries
+>  
+> -  - 160-bit SHA-1 over the extension types and their sizes (but not
+> +  - Hash over the extension types and their sizes (but not
+>  	their contents).  E.g. if we have "TREE" extension that is N-bytes
+>  	long, "REUC" extension that is M-bytes long, followed by "EOIE",
+>  	then the hash would be:
+>  
+> -	SHA-1("TREE" + <binary representation of N> +
+> +	Hash("TREE" + <binary representation of N> +
+>  		"REUC" + <binary representation of M>)
+>  
+>  == Index Entry Offset Table
+> 
+
+Thanks,
 -Stolee
+
+
