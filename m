@@ -2,82 +2,170 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3D01C433E3
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 19:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86A48C433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 19:32:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C089E2078D
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 19:25:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BEEC20771
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 19:32:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fBpQyAQE"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lCI1yj9b"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbgHNTZw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 15:25:52 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50994 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726196AbgHNTZw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 15:25:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4662E66C4;
-        Fri, 14 Aug 2020 15:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KVw+emywvw1JkiV/TvW3rz/T3rk=; b=fBpQyA
-        QEZt33mVTcRwvU3xFA8ahb8+yB5+Z6r2qXox2tNwJTgm0rsMG1P59SQUkPeOdNpJ
-        STHo4GLNpgTESU1KJGW2Zopdp53Aw3zQl/GPJMovN9p31YSuCTu6oLs/AKkTUTlq
-        iWTLa7+NzyD+H6kYbIIf1Am1VDjxOPHnrIXLY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E3tG9oFiRlmt5mLow0IFQAUFUNUvmCH2
-        DEYScCXTd57vLBc2xEVNOiNDqS/hoyK6JRqT1Y9f2f7qSU4mENhFzUZGH0VQM947
-        p2I9jfi7GG9UmerXVCB0kYgK0a/AZgGh18iCozaOmVyYtox1sue8cWaGDY9AaCK7
-        G380Bb3/nss=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BDDE6E66C3;
-        Fri, 14 Aug 2020 15:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 10136E66BF;
-        Fri, 14 Aug 2020 15:25:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, martin.agren@gmail.com,
-        sandals@crustytoothpaste.net, me@ttaylorr.com,
-        abhishekkumar8222@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/3] SHA-256: Update commit-graph and multi-pack-index formats
-References: <pull.703.git.1597428440.gitgitgadget@gmail.com>
-Date:   Fri, 14 Aug 2020 12:25:47 -0700
-In-Reply-To: <pull.703.git.1597428440.gitgitgadget@gmail.com> (Derrick Stolee
-        via GitGitGadget's message of "Fri, 14 Aug 2020 18:07:17 +0000")
-Message-ID: <xmqqeeo9vxl0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F58A336E-DE63-11EA-B9C7-843F439F7C89-77302942!pb-smtp21.pobox.com
+        id S1728276AbgHNTck (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 15:32:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728243AbgHNTcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 15:32:39 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7976C061385
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 12:32:39 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id z16so6430192pgh.21
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 12:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=Kfc/vWbpVXhGY6mUz9dU3fLxpi01XFofO35WRF8Q2dU=;
+        b=lCI1yj9bdooG4tJ9mC+7qWBZM1dgancyydfnaKLzR+Q0bwWTSczyRnkVQvFGFS3dAZ
+         wDcUbprKMUSEuB5uEbtM/kQ7YoC97lhIwwFGp7A0DxGntKdKzqpGMXJm6HVIt14GYiB4
+         4edZBEohgajlakWe28mG0D9Myfc8J6s8plP5bxBWbVTUzA++c0LNvDi/0GhSHdMIFINF
+         j5Y+RDfUseYwjKh01PlxpjxMPvk09wSYr+fkEIIt2jittSKPOcHv08Qg5qYsJevoWMTb
+         4b7lBLSn5bhzOnrv3WVaTQJSVk6nDD7jknvxxSCP7wE0Bd6MFQ85PnDHvzu360wvPgnt
+         Kepg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=Kfc/vWbpVXhGY6mUz9dU3fLxpi01XFofO35WRF8Q2dU=;
+        b=BiKsZnuMkOTm7evSX9LydhTt74UnfNpzADpLCTt0O/jFTM6KNoad/K2bIZWDNRQ129
+         P/1yU1CGgkXhxX1iWKBKPFSwIHWrghezrvdGUzHIgT4nWAQBSmHQRzUaO6x0qwHxpAx+
+         zK+hHQkXfUraQJNfGn4GLbp6xa8p4pordxF97nOw1zx34DDLJ26YkjLuAobqkY6u+zn3
+         pzyNndiFAiQQUiXAoqcvRKBM+F9iuayh57vLk+s/QEShKz3Sk+m/IcDa9bYHuYVDc6H3
+         fYZds7PhmWoM8A3vbxKLw1lkC5jbXhz/MxQ5e2R3OEzsbePNtNtlcnZTY0bpdCN9YzOh
+         lcJA==
+X-Gm-Message-State: AOAM532fhDG7xU3Z2OObhOLMpYOFfUw1qjyJ4DeCptbi2JMgEf7fmRZ9
+        brCky2KbogZ/yPu0EsNO/BBLZW6jQ6B/vigTM/jmo6CM5eZ33Ppo0RaWuH/bzn6uSKGiitCJ9SR
+        uFncjVrcoe4dw9FcethTEZSVfdGOiF8etXLzCVn43aRIl7Yj4f4xYwfhnW8D67R7MsFBkIvzVT3
+        Su
+X-Google-Smtp-Source: ABdhPJzu3i1YLOYkc++iZuJd69hhEkWgZdOgPtgxJHsiX0oWYiT+4pSFyt03/L+Ion7Js2yeLHsxWmFRpnSKPJVINYeH
+X-Received: by 2002:a17:90a:aa8e:: with SMTP id l14mr3680920pjq.67.1597433558919;
+ Fri, 14 Aug 2020 12:32:38 -0700 (PDT)
+Date:   Fri, 14 Aug 2020 12:32:34 -0700
+Message-Id: <20200814193234.3072139-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.220.ged08abb693-goog
+Subject: [PATCH] fetch-pack: make packfile URIs work with transfer.fsckobjects
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+When fetching with packfile URIs and transfer.fsckobjects=1, use the
+--fsck-objects instead of the --strict flag when invoking index-pack so
+that links are not checked, only objects. This is because incomplete
+links are expected. (A subsequent connectivity check will be done when
+all the packs have been downloaded regardless of whether
+transfer.fsckobjects is set.)
 
-> As discussed [1], there is some concern around binary file formats requiring
-> the context of the repository config in order to infer hash lengths. Two
-> formats that were designed with the hash transition in mind (commit-graph
-> and multi-pack-index) have bytes available to indicate the hash algorithm
-> used. Let's actually update these formats to be more self-contained with the
-> two hash algorithms being available.
-> ...
-> If this is the way we want to go with the formats, then I'll assist
-> coordinating these textual and semantic merge conflicts.
+This is similar to 98a2ea46c2 ("fetch-pack: do not check links for
+partial fetch", 2018-03-15), but for packfile URIs instead of partial
+clones.
 
-I agree that the files should be self-identifying, but have these
-changes tested without sha256 hash?
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+The subject is longer than 50 characters but I couldn't find a way to
+shorten it, especially since I think it's important to mention packfile
+URIs and transfer.fsckobjects. Any suggestions appreciated.
+---
+ fetch-pack.c           |  2 +-
+ t/t5702-protocol-v2.sh | 53 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 1 deletion(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 7f20eca4f8..66631d0034 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -892,7 +892,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 	    : transfer_fsck_objects >= 0
+ 	    ? transfer_fsck_objects
+ 	    : 0) {
+-		if (args->from_promisor)
++		if (args->from_promisor || !only_packfile)
+ 			/*
+ 			 * We cannot use --strict in index-pack because it
+ 			 * checks both broken objects and links, but we only
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 5a60fbe3ed..8c6c67b10d 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -883,6 +883,59 @@ test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
+ 	test_i18ngrep "pack downloaded from.*does not match expected hash" err
+ '
+ 
++test_expect_success 'packfile-uri with transfer.fsckobjects' '
++	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	rm -rf "$P" http_child log &&
++
++	git init "$P" &&
++	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
++
++	echo my-blob >"$P/my-blob" &&
++	git -C "$P" add my-blob &&
++	git -C "$P" commit -m x &&
++
++	configure_exclusion "$P" my-blob >h &&
++
++	sane_unset GIT_TEST_SIDEBAND_ALL &&
++	git -c protocol.version=2 -c transfer.fsckobjects=1 \
++		-c fetch.uriprotocols=http,https \
++		clone "$HTTPD_URL/smart/http_parent" http_child &&
++
++	# Ensure that there are exactly 4 files (2 .pack and 2 .idx).
++	ls http_child/.git/objects/pack/* >filelist &&
++	test_line_count = 4 filelist
++'
++
++test_expect_success 'packfile-uri with transfer.fsckobjects fails on bad object' '
++	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	rm -rf "$P" http_child log &&
++
++	git init "$P" &&
++	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
++
++	cat >bogus-commit <<EOF &&
++tree $EMPTY_TREE
++author Bugs Bunny 1234567890 +0000
++committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
++
++This commit object intentionally broken
++EOF
++	BOGUS=$(git -C "$P" hash-object -t commit -w --stdin <bogus-commit) &&
++	git -C "$P" branch bogus-branch "$BOGUS" &&
++
++	echo my-blob >"$P/my-blob" &&
++	git -C "$P" add my-blob &&
++	git -C "$P" commit -m x &&
++
++	configure_exclusion "$P" my-blob >h &&
++
++	sane_unset GIT_TEST_SIDEBAND_ALL &&
++	test_must_fail git -c protocol.version=2 -c transfer.fsckobjects=1 \
++		-c fetch.uriprotocols=http,https \
++		clone "$HTTPD_URL/smart/http_parent" http_child 2>error &&
++	test_i18ngrep "invalid author/committer line - missing email" error
++'
++
+ # DO NOT add non-httpd-specific tests here, because the last part of this
+ # test script is only executed when httpd is available and enabled.
+ 
+-- 
+2.28.0.220.ged08abb693-goog
+
