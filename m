@@ -2,81 +2,92 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E19C433DF
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD8DC433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:23:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79FC220791
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:20:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5067020774
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:23:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728273AbgHNQUg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 12:20:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59290 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727886AbgHNQUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 12:20:36 -0400
-Received: (qmail 1117 invoked by uid 109); 14 Aug 2020 16:20:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Aug 2020 16:20:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26978 invoked by uid 111); 14 Aug 2020 16:20:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Aug 2020 12:20:35 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Aug 2020 12:20:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 6/6] submodule--helper: fix leak of core.worktree value
-Message-ID: <20200814162035.GF595698@coredump.intra.peff.net>
-References: <20200814161328.GA153929@coredump.intra.peff.net>
+        id S1726651AbgHNQXt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 12:23:49 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54100 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726360AbgHNQXm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 12:23:42 -0400
+Received: by mail-wm1-f67.google.com with SMTP id g8so7941993wmk.3
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 09:23:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o7OMj0wb8d/zHLi2pZTnwG6nzyWq6wKKo4wE3tlu50w=;
+        b=DCyhzvYiVCJqW5dpzEDgmtHkfX1I6xxcyoZQlkOHTy2JTGcJkH8jUPt0Jrxj3wI4cE
+         qUp1SRATqYmTUSxaWbMX67cPuOQp0LiaTOfOHljgGU5/AQe/J7V/Jv/qSOqt/A3jLLig
+         3+BTJbJi66eSqcfD/Cxlgs/YivO7jwq95kTjtMI4+YI56EOkf+fuhPf2bjzYfVQYJlOj
+         gUhYMBD6ZikU1RteZ7f9+x0tWYLtRnFYyyYc68ZyNnWlMQR68swk4dmGZdUAQ/2/zaF/
+         kwQVnEwLvwlxfkM3t8X8EFUH3cUM+UIUpJUmwyuPijBPv2MlJYE7UjV1iS3eIh4V5vUG
+         p/MA==
+X-Gm-Message-State: AOAM531GKSz6qXcyZNMNtPmlEYnOpY0e7Rb+t9yLFKT+yz04O9RkAe//
+        jSWzi7I6YUqBWlrCEF3YDRO5lgE/HgMWvCfXwU/iVuiQhEA=
+X-Google-Smtp-Source: ABdhPJx4sdBx2TbPfUdc7iINwyXAgf+6qhUamvSv2pz/Mcx0KiGQixrsqdI7Wdxnp+TCS4b0/non/29JkH1Xql8BDTA=
+X-Received: by 2002:a1c:e304:: with SMTP id a4mr3164766wmh.11.1597422219959;
+ Fri, 14 Aug 2020 09:23:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200814161328.GA153929@coredump.intra.peff.net>
+References: <20200813155426.GA896769@coredump.intra.peff.net>
+ <CAPig+cTOcQymWWtSY3UN73_fpaWUs3u66+EZWBp1SvXeUrgsQQ@mail.gmail.com> <20200814103451.GD3312240@coredump.intra.peff.net>
+In-Reply-To: <20200814103451.GD3312240@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 14 Aug 2020 12:23:28 -0400
+Message-ID: <CAPig+cTRPMSEG1gZPkjKDv2qUuFALvtr71-fiqWAiJkrkYZQ0g@mail.gmail.com>
+Subject: Re: [PATCH 0/2] UNLEAK style fixes
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the ensure_core_worktree() function, we load the core.worktree value
-of the submodule repository using repo_config_get_string(). This
-function copies the string, but we never free it, leaking the memory.
+On Fri, Aug 14, 2020 at 6:35 AM Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 13, 2020 at 03:32:56PM -0400, Eric Sunshine wrote:
+> > That all represents a lot of cognitive overhead versus the common
+> > practice of simply freeing resources when you're done with them, which
+> > requires no extra cognitive load since it is something we think about
+> > _always_ when working with a language like C with no built-in garbage
+> > collection.
+>
+> In the meantime, I have a slight preference to leave UNLEAK() there as a
+> potential tool for somebody digging into leak-checkers. But we almost
+> certainly shouldn't be asking new authors to use it in reviews, etc.
 
-We can instead use the "tmp" version of that function to avoid the
-allocation at all. We don't have to worry about lifetime issues, since
-we never even look at the value (we just want to know if it's set).
+I don't think it works that way in practice, though. There are enough
+UNLEAK()'s sprinkled around that anyone working on or around code with
+an existing UNLEAK() is compelled to understand/[re-]study it in order
+to avoid breaking existing uses and/or to correctly mirror existing
+uses when dealing with new resource allocations.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/submodule--helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The same applies to patches. As a reviewer, I have two choices when I
+see UNLEAK(): either I ignore it because I don't have the specialized
+knowledge in my head (which makes me feel like my review is
+ineffective), or I re-acquire the knowledge. And it's not just patches
+like the ones in this series which are actively adjusting UNLEAK()
+callers, but any patch which adds or removes an UNLEAK() corresponding
+to the central meaty changes of the patch, or even a patch in which
+UNLEAK() appears only in context lines, or even patches which don't
+contains any UNLEAK() calls, but the source file to which the patch
+applies does use UNLEAK(), if the reviewer consults the original
+source code in addition to the patch.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e09605716e..a59d8e4bda 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2101,7 +2101,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
- {
- 	const struct submodule *sub;
- 	const char *path;
--	char *cw;
-+	const char *cw;
- 	struct repository subrepo;
- 
- 	if (argc != 2)
-@@ -2116,7 +2116,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
- 	if (repo_submodule_init(&subrepo, the_repository, sub))
- 		die(_("could not get a repository handle for submodule '%s'"), path);
- 
--	if (!repo_config_get_string(&subrepo, "core.worktree", &cw)) {
-+	if (!repo_config_get_string_tmp(&subrepo, "core.worktree", &cw)) {
- 		char *cfg_file, *abs_path;
- 		const char *rel_path;
- 		struct strbuf sb = STRBUF_INIT;
--- 
-2.28.0.596.g9c08d63829
+> TBH, I'm not sure why people starting sprinkling UNLEAK() around in the
+> first place. ;)
+
+For the same reason that people are concerned about calling free() or
+otherwise releasing or unlocking resources which they have acquired:
+they're trying to be responsible. When a programmer sees UNLEAK()
+being used in or around the code being changed, he or she will attempt
+to maintain the fidelity of the existing code by being careful to
+mimic existing nearby resource handling practices.
