@@ -2,89 +2,108 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 351EBC433DF
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 20:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F28C433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 20:24:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F399020768
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 20:22:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F17220771
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 20:24:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hAwZYEeN"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rh3sk13G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727993AbgHNUWf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 16:22:35 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61291 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726241AbgHNUWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 16:22:34 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C1F9E6D63;
-        Fri, 14 Aug 2020 16:22:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JI0d1DuhI0s9RMDZJzSonHsy1Uw=; b=hAwZYE
-        eNQ6bKhAJAL3tHmZKPaK0X+2TLGdM2aGnrdmpWU3/dG1Jo5bIiFISTIgLRlCyGkG
-        j21epMV0KPh4blV/WeRrKjWRyMvc2bTgKTt4mFnIyA8MgOeBKme3tr56DcfGnJUG
-        v+UifO3REv4WPZff3YOKaJB4h/KSmX3HOIGZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ly8AWckOBDUXnyUrEehUai9RCje2nrw3
-        BmWFXDTuWkmmjScENzCzcone3PP2cBASB0qqZcf1dhEbZW2jqeZNlP35Li7OBwhq
-        T4Jss0iAeAUZDEf6AaaEauGWmbgeeLQG8C8BjvP5a3kMzeA5mOkPfG7ZsmwitGuS
-        xSwi+reHdsQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24A99E6D62;
-        Fri, 14 Aug 2020 16:22:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726782AbgHNUYX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 16:24:23 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41554 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726213AbgHNUYX (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Aug 2020 16:24:23 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6856CE6D61;
-        Fri, 14 Aug 2020 16:22:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, martin.agren@gmail.com, me@ttaylorr.com,
-        abhishekkumar8222@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 2/3] commit-graph: use the hash version byte
-References: <pull.703.git.1597428440.gitgitgadget@gmail.com>
-        <4bbfd345d16da4604dd20decda8ecb12372e4223.1597428440.git.gitgitgadget@gmail.com>
-        <20200814201153.GK8085@camp.crustytoothpaste.net>
-Date:   Fri, 14 Aug 2020 13:22:29 -0700
-In-Reply-To: <20200814201153.GK8085@camp.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 14 Aug 2020 20:11:53 +0000")
-Message-ID: <xmqqy2mhuge2.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EEE7760456;
+        Fri, 14 Aug 2020 20:23:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1597436632;
+        bh=QyDSVEMEKg1a4u34D8QvVuRUx7oSPv1OIiLkH/8OkT8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=rh3sk13GRNt0CeNIyN2tOYxIlOjKfsquinJ4SPstvxWtD2fZtjovQG8qHnL6JRXnl
+         loTSUF1fBRaX0OwjUGtK0xwvEH8BK0bEhre6U5EJgeT3dQ4PxdYCJTFR0Aw67KOwVq
+         DfKtzWLXZFjyiv1fiwfX7uBS4YUMAmG5db6wxEhUWPynFVkDpoKQPp7/7K37GiNJMt
+         /leFNWsBg+lrV8vghAksqSb7Hey6j1Floth5X6TSEG6I7XTFpSP63ROeM4yubmtvk4
+         6lQhkfVIUjLBM7KXr0Q1ahrRyT8BKD1UH0P7NAZjBdBN3cfqqx2qC8J2pmA+7npwbH
+         TloT31b3s1V/fZhH+QD/RHr83kXSUFKe+jk/dx5u6EbvVhBkEvRqEaym8glBT6fCW5
+         p8ZNDycvN+MZlTHJQcTjf4nu75mwCY9U/sn285Cj/7uoZugzu2aK3SfpCHHFb/jbwF
+         jTs1Unom60FOpAKG+2kbWsY9L2r3IufLmA2R58gNHj5QjgDASzD
+Date:   Fri, 14 Aug 2020 20:23:47 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 1/5] http-protocol.txt: document SHA-256 "want"/"have"
+ format
+Message-ID: <20200814202347.GN8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+References: <20200813224901.2652387-1-sandals@crustytoothpaste.net>
+ <cover.1597406877.git.martin.agren@gmail.com>
+ <5590a68c5ba7081cd7e64c708b5c25db23f5e95b.1597406877.git.martin.agren@gmail.com>
+ <xmqqk0y1xhl0.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E1814DE6-DE6B-11EA-842D-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="VnOTrGv5LmZxna7m"
+Content-Disposition: inline
+In-Reply-To: <xmqqk0y1xhl0.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Can we maybe say something like this?
->
->   switch (hash_algo_by_ptr(the_hash_algo)) {
->     case GIT_HASH_SHA1:
->       return 1;
->     case GIT_HASH_SHA256:
->       return 2;
->     default:
->       die(_("invalid hash version"));
->   }
->
-> That way if SHA-256 gets broken and we switch to another 256-bit hash
-> (SHA-3-256?), we'll be forced to update this properly.
+--VnOTrGv5LmZxna7m
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Excellent.
+On 2020-08-14 at 17:28:27, Junio C Hamano wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>=20
+> > Document that in SHA-1 repositories, we use SHA-1 for "want"s and
+> > "have"s, and in SHA-256 repositories, we use SHA-256.
+>=20
+> Ehh, doesn't this directly contradict the transition plan of "on the
+> wire everything will use SHA-1 version for now?"
+
+SHA-256 repositories interoperate currently using SHA-256 object IDs.
+It was originally intended that we wouldn't update the protocol, but
+that leads to much of the testsuite failing since it's impossible to
+move objects from one place to another.
+
+If we wanted to be more pedantically correct and optimize for the
+future, we could say that the values use the format negotiated by the
+"object-format" protocol extension and SHA-1 otherwise.
+--=20
+brian m. carlson: Houston, Texas, US
+
+--VnOTrGv5LmZxna7m
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXzby0wAKCRB8DEliiIei
+gc6IAP4gSRkkB+/QSkA+dcThrCAAS2pQgFbDfw+C1jOS5omldAEA3AkcxES8sYPr
+C2L5z7D3/4gy8GoUC31wixWiK9J/ZAc=
+=bfYs
+-----END PGP SIGNATURE-----
+
+--VnOTrGv5LmZxna7m--
