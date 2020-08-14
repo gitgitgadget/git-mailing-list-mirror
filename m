@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21847C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 320BAC433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:22:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE8CD214F1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:22:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D579214F1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:22:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QPWSbJIB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AO8c6SQJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727062AbgHNMWN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 08:22:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46258 "EHLO
+        id S1727120AbgHNMWR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 08:22:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbgHNMWK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 08:22:10 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4583DC061385
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:22:08 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id m22so9692135ljj.5
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:22:08 -0700 (PDT)
+        with ESMTP id S1726247AbgHNMWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 08:22:13 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43C0DC061384
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:22:13 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id s9so4715679lfs.4
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bCmRfWf3V5Z8kL7hlwU6HQ2D31NYOkEfTR37ogrKfxE=;
-        b=QPWSbJIB+jI03tmP/Jdb0uPslF4C43GGUYydV8HPUsU+qqzBOaeQkXnvMErUgqxfCF
-         DHCbU1I+CmCicsQoUs5kAq22+/1TJktSm2d6v4gDji2GEqcJFfgh7KMSBsUO98SBm1/A
-         6hrA5Ne6Yc7ix350LVYBH5DDEDNfgJm3EvuJWXPMUg51RdHMqVwCHM/KIMc6V/ZNlJmt
-         OefkN6n73uiHrOMlnhyYnhV9eH+nmD1ePHMPqPiM/uZZLvLFTCJsZCyv6WvyhWP3i7I+
-         iwqSAmeGdGr306IgHdDsijHh4kbyjto2TJphKN25FfFrqf8XxquccKEayuldh6duUrk9
-         T9Ow==
+        bh=ZF/3L/cZUEESEYGxaPF6dOQvJ17EYN+1uBmRO7+NdNI=;
+        b=AO8c6SQJYXSxqJmxbvQQhRqJHjg9BAij6BMl9CJ8yr/OBcGkXhQaf9Ez99plPUC0bA
+         Z+KjxNLqGjVJWgErVaKAExhmst6l0BMBeAhLYBksu3iNt6b51SgEBMaQlvvnfPE0Q0Nl
+         JsNPL1OL1UNHLIJmrNU08HT0GOfDzqwiKvnIXfJLIZWow5yTDQNDnWQQDFlB+RRnGb0i
+         joOSbWWD3OyOAxpwtLDepibsfBZAs/pH6fRkjIB4rvxhWmQO8WoGmJwy47a6Wy303a+B
+         CY4MDrqwDPUJVIgOgp2a4mEGd2jzATYmRTSXYhinRikOQJMa/ojX6w6zS9DI/4mBU0T1
+         y5+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bCmRfWf3V5Z8kL7hlwU6HQ2D31NYOkEfTR37ogrKfxE=;
-        b=gd1cKeBoP9iyG0SIfPXaP2xB5Lh22MXtbDUebd3Djm59aSMAtsBzn+9eA3Ke0VUxnX
-         RZosQc+PMfEHmkCZCHj/oMRyU/OfwHUckDXARE92geOqyOd4+jrP1XlwCqgJznTp1nbp
-         xjTGVlN5mQM2CIbh/NKn1uYb434HPymKTTOmSiUt/7pclgZZV3IAq6kuYTcRppjiWeEy
-         Kud83YSeLklS/u105ZRCozOpFRSn79qYpp3Qzql+FRiNmkKA4ihu3f1U6N4m2i2xGL1x
-         pAyC1GBcbm79rGNKjGms96Uv4fNCEpuzOJsWsKJVUzI4TAjg+N0/eNVAWVL8QEwt7/XD
-         zwLQ==
-X-Gm-Message-State: AOAM530HMMX5DaTaCyosi+tofAnaLaVwlHeCc9qWRJwd2AOele3Lebq9
-        2k5nT7HcFI1g9Hz5L5pmR+3dxtzMk+s=
-X-Google-Smtp-Source: ABdhPJz1jmZIOWJAVmhRPFZIc2KIJ5BH1+BHcw5ExlQLkGPXOXVKiaJPluun9dgAmCg4zLq98XWiIA==
-X-Received: by 2002:a2e:a58a:: with SMTP id m10mr1122441ljp.247.1597407726748;
-        Fri, 14 Aug 2020 05:22:06 -0700 (PDT)
+        bh=ZF/3L/cZUEESEYGxaPF6dOQvJ17EYN+1uBmRO7+NdNI=;
+        b=uFXqSjm0N/vvt1mrMmRViPg4xYzFJvs2vFxNsVU13hnKpHHb+txPkfy6hx2GdgDPAV
+         X2EBwQCX8jnF61edCkwXLvxxQmrj9QS/pcBQRXpaqKeHVQS9uOSLPA5XRTNLIK/NSH6f
+         kefSrvuS1l/o189BhSUNVTUSVT3S7HyGj9pZ0hQVvVmhNy5FWsq+SRbnHjxY6DO8yPH8
+         bbIFtvQwPCXMJ3FomBp9kEBfLKyn9oDKbbIL7yHponk9JuVOBaRo2CJgXYnnoM/yCLah
+         AtKeIfLXTFBItJ/eEHcPj9FbztJcFDaz+oyDYT6j9UY/PCnus4N69iMgfxIz+H33WbhH
+         A/FQ==
+X-Gm-Message-State: AOAM531iWpb0bc1Ykz2s2vPGnSd073IHMIP7URF5WLT9cyA09AgjE04D
+        FfoGXQ/CYun7gXUn6xGNY4jV/hj4uUA=
+X-Google-Smtp-Source: ABdhPJzmmyFncsLJyFmjcnspmFBrlqEGD2VSirW6WEaJyS1zsRwfyxYPljSXh4Nz5N2bwM1Ej5Jj9A==
+X-Received: by 2002:a05:6512:3af:: with SMTP id v15mr1110129lfp.79.1597407731706;
+        Fri, 14 Aug 2020 05:22:11 -0700 (PDT)
 Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id o2sm1847407lfi.50.2020.08.14.05.22.05
+        by smtp.gmail.com with ESMTPSA id o2sm1847407lfi.50.2020.08.14.05.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2020 05:22:06 -0700 (PDT)
+        Fri, 14 Aug 2020 05:22:11 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] protocol-capabilities.txt: clarify "allow-x-sha1-in-want" re SHA-256
-Date:   Fri, 14 Aug 2020 14:21:44 +0200
-Message-Id: <13798dfb121c9631e9d811f5f74f9a78c1fcfdf9.1597406877.git.martin.agren@gmail.com>
+Subject: [PATCH 5/5] commit-graph-format.txt: fix "Hash Version" description
+Date:   Fri, 14 Aug 2020 14:21:46 +0200
+Message-Id: <bbcd97db8a2c94343950bb0cf8cbd5c9c01b4577.1597406877.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.28.0.277.g9b3c35fffd
 In-Reply-To: <cover.1597406877.git.martin.agren@gmail.com>
 References: <20200813224901.2652387-1-sandals@crustytoothpaste.net> <cover.1597406877.git.martin.agren@gmail.com>
@@ -76,44 +76,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two of our extensions contain "sha1" in their names, but that's
-historical. The "want"s will take object names that are not necessarily
-SHA-1s. Make this clear, but also make it clear how there's still just
-one correct hash algo: These extensions don't somehow make the "want"s
-take object names derived using *any* hash algorithm.
+We say that value 1 means "SHA-1", but in fact, it means "whatever
+the_hash_algo is", see commit c166599862 ("commit-graph: convert to
+using the_hash_algo", 2018-11-14).
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/technical/protocol-capabilities.txt | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ If we want to be more fine-grained in the future, we'll need to say,
+ e.g., "2 means SHA-1, 3 means SHA-256" or, perhaps preferrably, bump the
+ version number.
 
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 36ccd14f97..47f1b30090 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -324,15 +324,18 @@ allow-tip-sha1-in-want
- ----------------------
+ I wonder: Should we instead say "1 means SHA-1, 2 means SHA-256"? It
+ could be implemented as "easily" as "if (value_from_header !=
+ value_from_the_hash_algo) die(...);" for now. Might that pay off in the
+ long run?
+
+ This relates to Stolee's "in a vacuum" comment [1] ... so maybe we're
+ fine.
+
+ [1] https://lore.kernel.org/git/da077fb0-14bb-b84f-c526-d759ebc9f5eb@gmail.com/
+
+ Documentation/technical/commit-graph-format.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index 440541045d..3535426d32 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -42,8 +42,8 @@ HEADER:
+   1-byte version number:
+       Currently, the only valid version is 1.
  
- If the upload-pack server advertises this capability, fetch-pack may
--send "want" lines with SHA-1s that exist at the server but are not
--advertised by upload-pack.
-+send "want" lines with object names that exist at the server but are not
-+advertised by upload-pack. (Note that the name of the capability
-+contains "sha1", but that it's more general than that: in SHA-1
-+repositories, the "want" lines provide SHA-1 values, but in SHA-256
-+repositories, they provide SHA-256 values.)
+-  1-byte Hash Version (1 = SHA-1)
+-      We infer the hash length (H) from this value.
++  1-byte Hash Version (1 = SHA-1 in SHA-1 repo, SHA-256 in SHA-256 repo)
++      We infer the hash length (H) from the hash algo derived from this value.
  
- allow-reachable-sha1-in-want
- ----------------------------
+   1-byte number (C) of "chunks"
  
- If the upload-pack server advertises this capability, fetch-pack may
--send "want" lines with SHA-1s that exist at the server but are not
--advertised by upload-pack.
-+send "want" lines with object names that exist at the server but are not
-+advertised by upload-pack. (Same remark about "sha1" as above.)
- 
- push-cert=<nonce>
- -----------------
 -- 
 2.28.0.277.g9b3c35fffd
 
