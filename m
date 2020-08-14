@@ -2,110 +2,310 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65A44C433DF
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 15:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01854C433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 15:18:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 475AC20768
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 15:11:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA91A207DA
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 15:18:25 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YiWb+ZeL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726967AbgHNPLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 11:11:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59186 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726185AbgHNPLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 11:11:38 -0400
-Received: (qmail 578 invoked by uid 109); 14 Aug 2020 15:11:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Aug 2020 15:11:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26444 invoked by uid 111); 14 Aug 2020 15:11:37 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Aug 2020 11:11:37 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Aug 2020 11:11:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/5] drop vcs-svn experiment
-Message-ID: <20200814151137.GA4169627@coredump.intra.peff.net>
-References: <20200813145515.GA891139@coredump.intra.peff.net>
- <20200813150017.GE891370@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2008141634500.54@tvgsbejvaqbjf.bet>
+        id S1726680AbgHNPSZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 11:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45218 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726212AbgHNPSX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 11:18:23 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F24C061384
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 08:18:23 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a14so8682036wra.5
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 08:18:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=L8DaPd4EHnKdmo3YTCW3dZY0JL3pnnKZ84Ba1g7NfgM=;
+        b=YiWb+ZeLia30UQT/zM9KCrU0W9BtBlyCWBaBnBTyrVnyZhCOcE/0xlXllkrfyZomJI
+         DuvxJowTPw9ro7dle/SlMdD77Ca8Iy5brIseaEoSw4cwxKFvQemKRNyZn8HjlWvkyj3x
+         UiUaNAJ148rtgKXOGlh1/HbYPpdPak1LzE5cWBshxU7juYCLp0iIN2U05Z8SKLo4kSjD
+         56m/oFIRCyAVZt1jqD3+0kdclyj66rnEsSuqrp2erQxz2utOhClZaLor3sEw49MdZv7k
+         nov45Xt6FRiecOW1GUkuwOwCtUTS75oxGpCsU8CmsCpS3qSYXYkag4hAjFEqsHDt3mcB
+         /LJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=L8DaPd4EHnKdmo3YTCW3dZY0JL3pnnKZ84Ba1g7NfgM=;
+        b=lTK20Vos5Wyj3elPu2eQW6d/aHlHNuslcvJLy2dKMYB9edSGb7diJkxbHUsqyXMHVZ
+         OxlThQIjX94NOPldRhicgYQ7xanGYNHqGSTeOOLyC5cJDvZaO8lePJkyEI1Gmk17PY0b
+         X21nzgfpyV4p/qmzclSR2XG0GZA8PWSlWqZdn39SBZHIxVUmll7wDxJ4Jhx0+4HMJ+tG
+         AMo+aPfnq2oYSEGVRhkrK7bgrFlwYsNcckdsDraZDn+knlvJja6wBioLu3KI0zssRf25
+         lqrfURgFAoiWowSKgrYLwOSLYAj7L2G023xF2FCBKNttDfp7eRYRbF+uJ5Ly3G02k1e8
+         QlMw==
+X-Gm-Message-State: AOAM532FrekE9W1pYrWbQE8p7P75Gpxopdp2PJUL6DrkYIRRE7kIdIiB
+        B8OdaqOklRs3djmCqR869jFvl/KeP1w=
+X-Google-Smtp-Source: ABdhPJwN6lDMHysVq6TmFHx/6xmGzBd7HLoH1fuqEetEktYlonUqKkhuf9Nel9jElJEP0nj3uMLvnA==
+X-Received: by 2002:adf:e8cc:: with SMTP id k12mr3290546wrn.2.1597418301784;
+        Fri, 14 Aug 2020 08:18:21 -0700 (PDT)
+Received: from szeder.dev (62-165-238-100.pool.digikabel.hu. [62.165.238.100])
+        by smtp.gmail.com with ESMTPSA id 31sm16671467wrp.87.2020.08.14.08.18.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 14 Aug 2020 08:18:21 -0700 (PDT)
+Date:   Fri, 14 Aug 2020 17:18:15 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/2] diff: index-line: respect --abbrev in object's
+ name
+Message-ID: <20200814151815.GA29528@szeder.dev>
+References: <cover.1596887883.git.congdanhqx@gmail.com>
+ <cover.1597364493.git.congdanhqx@gmail.com>
+ <760df7782dad9e9df7bb284ec57249e697a4cc92.1597364493.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2008141634500.54@tvgsbejvaqbjf.bet>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <760df7782dad9e9df7bb284ec57249e697a4cc92.1597364493.git.congdanhqx@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 14, 2020 at 04:39:07PM +0200, Johannes Schindelin wrote:
-
-> On Thu, 13 Aug 2020, Jeff King wrote:
+On Fri, Aug 14, 2020 at 07:23:10AM +0700, Đoàn Trần Công Danh wrote:
+> A handful of Git's commands respect `--abbrev' for customizing length
+> of abbreviation of object names.
 > 
-> > The code in vcs-svn was started in 2010 as an attempt to build a
-> > remote-helper for interacting with svn repositories (as opposed to
-> > git-svn). However, we never got as far as shipping a mature remote
-> > helper, and the last substantive commit was e99d012a6bc in 2012.
-> >
-> > We do have a git-remote-testsvn, and it is even installed as part of
-> > "make install". But given the name, it seems unlikely to be used by
-> > anybody (you'd have to explicitly "git clone testsvn::$url", and there
-> > have been zero mentions of that on the mailing list since 2013, and even
-> > that includes the phrase "you might need to hack a bit to get it working
-> > properly"[1]).
-> >
-> > We also ship contrib/svn-fe, which builds on the vcs-svn work. However,
-> > it does not seem to build out of the box for me, as the link step misses
-> > some required libraries for using libgit.a. Curiously, the original
-> > build breakage bisects for me to eff80a9fd9 (Allow custom "comment
-> > char", 2013-01-16), which seems unrelated. There was an attempt to fix
-> > it in da011cb0e7 (contrib/svn-fe: fix Makefile, 2014-08-28), but on my
-> > system that only switches the error message.
+> For diff-family, Git supports 2 different options for 2 different
+> purposes, `--full-index' for showing diff-patch object's name in full,
+> and `--abbrev' to customize the length of object names in diff-raw and
+> diff-tree header lines, without any options to customise the length of
+> object names in diff-patch format. When working with diff-patch format,
+> we only have two options, either full index, or default abbrev length.
 > 
-> FWIW I got it to work, as part of my initial patches to support
-> `init.defaultBranch`. I even included a patch to touch `svn-fe` up in the
-> patch thicket to demonstrate how we can move from `master` as Git's
-> default branch to `main`.
+> Although, that consistent is documented, it doesn't stop users from
+> trying to use `--abbrev' with the hope of customising diff-patch's
+> objects' name's abbreviation.
+> 
+> Let's resolve that inconsistency.
+> 
+> To preserve backward compatibility with old script that specify both
+> `--full-index' and `--abbrev', always shows full object id
+> if `--full-index' is specified.
+> 
+> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> ---
+>  Documentation/diff-options.txt                |  9 +++---
+>  diff.c                                        |  5 +++-
+>  t/t4013-diff-various.sh                       |  3 ++
+>  ...ff.diff-tree_--root_-p_--abbrev=10_initial | 29 +++++++++++++++++++
+>  ...--root_-p_--full-index_--abbrev=10_initial | 29 +++++++++++++++++++
+>  ...f.diff-tree_--root_-p_--full-index_initial | 29 +++++++++++++++++++
+>  6 files changed, 99 insertions(+), 5 deletions(-)
+>  create mode 100644 t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+>  create mode 100644 t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+>  create mode 100644 t/t4013/diff.diff-tree_--root_-p_--full-index_initial
+> 
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 7987d72b02..c11efa7865 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -441,10 +441,11 @@ endif::git-format-patch[]
+>  --abbrev[=<n>]::
+>  	Instead of showing the full 40-byte hexadecimal object
+>  	name in diff-raw format output and diff-tree header
+> -	lines, show only a partial prefix.  This is
+> -	independent of the `--full-index` option above, which controls
+> -	the diff-patch output format.  Non default number of
+> -	digits can be specified with `--abbrev=<n>`.
+> +	lines, show only a partial prefix.
+> +	In diff-patch output format, `--full-index` takes higher
+> +	precedent, i.e. if `--full-index` is specified, full blob
+> +	names will be shown regardless of `--abbrev`.
+> +	Non default number of digits can be specified with `--abbrev=<n>`.
+>  
+>  -B[<n>][/<m>]::
+>  --break-rewrites[=[<n>][/<m>]]::
+> diff --git a/diff.c b/diff.c
+> index f9709de7b4..20dedfe2a9 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4319,7 +4319,10 @@ static void fill_metainfo(struct strbuf *msg,
+>  	}
+>  	if (one && two && !oideq(&one->oid, &two->oid)) {
+>  		const unsigned hexsz = the_hash_algo->hexsz;
+> -		int abbrev = o->flags.full_index ? hexsz : DEFAULT_ABBREV;
+> +		int abbrev = o->abbrev ? o->abbrev : DEFAULT_ABBREV;
+> +
+> +		if (o->flags.full_index)
+> +			abbrev = hexsz;
+>  
+>  		if (o->flags.binary) {
+>  			mmfile_t mf;
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 3f60f7d96c..e6eb4dd4c7 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -221,6 +221,9 @@ diff-tree --root -r --abbrev=4 initial
+>  :noellipses diff-tree --root -r --abbrev=4 initial
+>  diff-tree -p initial
+>  diff-tree --root -p initial
+> +diff-tree --root -p --abbrev=10 initial
+> +diff-tree --root -p --full-index initial
+> +diff-tree --root -p --full-index --abbrev=10 initial
+>  diff-tree --patch-with-stat initial
+>  diff-tree --root --patch-with-stat initial
+>  diff-tree --patch-with-raw initial
+> diff --git a/t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial b/t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+> new file mode 100644
+> index 0000000000..7518a9044e
+> --- /dev/null
+> +++ b/t/t4013/diff.diff-tree_--root_-p_--abbrev=10_initial
+> @@ -0,0 +1,29 @@
+> +$ git diff-tree --root -p --abbrev=10 initial
+> +444ac553ac7612cc88969031b02b3767fb8a353a
+> +diff --git a/dir/sub b/dir/sub
+> +new file mode 100644
+> +index 0000000000..35d242ba79
+> +--- /dev/null
+> ++++ b/dir/sub
+> +@@ -0,0 +1,2 @@
+> ++A
+> ++B
+> +diff --git a/file0 b/file0
+> +new file mode 100644
+> +index 0000000000..01e79c32a8
+> +--- /dev/null
+> ++++ b/file0
+> +@@ -0,0 +1,3 @@
+> ++1
+> ++2
+> ++3
+> +diff --git a/file2 b/file2
+> +new file mode 100644
+> +index 0000000000..01e79c32a8
+> +--- /dev/null
+> ++++ b/file2
+> +@@ -0,0 +1,3 @@
+> ++1
+> ++2
+> ++3
+> +$
+> diff --git a/t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial b/t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+> new file mode 100644
+> index 0000000000..69f913fbe5
+> --- /dev/null
+> +++ b/t/t4013/diff.diff-tree_--root_-p_--full-index_--abbrev=10_initial
+> @@ -0,0 +1,29 @@
+> +$ git diff-tree --root -p --full-index --abbrev=10 initial
+> +444ac553ac7612cc88969031b02b3767fb8a353a
+> +diff --git a/dir/sub b/dir/sub
+> +new file mode 100644
+> +index 0000000000000000000000000000000000000000..35d242ba79ae89ac695e26b3d4c27a8e6f028f9e
+> +--- /dev/null
+> ++++ b/dir/sub
+> +@@ -0,0 +1,2 @@
+> ++A
+> ++B
+> +diff --git a/file0 b/file0
+> +new file mode 100644
+> +index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
+> +--- /dev/null
+> ++++ b/file0
+> +@@ -0,0 +1,3 @@
+> ++1
+> ++2
+> ++3
+> +diff --git a/file2 b/file2
+> +new file mode 100644
+> +index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
+> +--- /dev/null
+> ++++ b/file2
+> +@@ -0,0 +1,3 @@
+> ++1
+> ++2
+> ++3
+> +$
+> diff --git a/t/t4013/diff.diff-tree_--root_-p_--full-index_initial b/t/t4013/diff.diff-tree_--root_-p_--full-index_initial
+> new file mode 100644
+> index 0000000000..1b0b6717fa
+> --- /dev/null
+> +++ b/t/t4013/diff.diff-tree_--root_-p_--full-index_initial
+> @@ -0,0 +1,29 @@
+> +$ git diff-tree --root -p --full-index initial
+> +444ac553ac7612cc88969031b02b3767fb8a353a
+> +diff --git a/dir/sub b/dir/sub
+> +new file mode 100644
+> +index 0000000000000000000000000000000000000000..35d242ba79ae89ac695e26b3d4c27a8e6f028f9e
+> +--- /dev/null
+> ++++ b/dir/sub
+> +@@ -0,0 +1,2 @@
+> ++A
+> ++B
+> +diff --git a/file0 b/file0
+> +new file mode 100644
+> +index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
+> +--- /dev/null
+> ++++ b/file0
+> +@@ -0,0 +1,3 @@
+> ++1
+> ++2
+> ++3
+> +diff --git a/file2 b/file2
+> +new file mode 100644
+> +index 0000000000000000000000000000000000000000..01e79c32a8c99c557f0757da7cb6d65b3414466d
+> +--- /dev/null
+> ++++ b/file2
+> +@@ -0,0 +1,3 @@
+> ++1
+> ++2
+> ++3
+> +$
 
-In my case I needed to specify both -lpthread (common for Unix systems)
-and -lpcre (uncommon; I set USE_LIBPCRE).
+All these new tests break when run with GIT_TEST_DEFAULT_HASH=sha256
+with something like:
 
-It looks like it tries to use PTHREAD_LIBS automatically, but that's
-only defined in the Makefile for most platforms, not any of the
-config.mak.* we include. However, I think it would be defined if I used
-autoconf.
+  + test_cmp expect actual
+  --- expect	2020-08-14 15:05:12.209285397 +0000
+  +++ actual	2020-08-14 15:05:12.205285279 +0000
+  @@ -2,7 +2,7 @@
+   0000000000000000000000000000000000000000000000000000000000000000
+   diff --git a/dir/sub b/dir/sub
+   new file mode ffff44
+  -index ffffffffff..fffffffa79
+  +index ffffffffff..fffffff895
+   --- /dev/null
+   +++ b/dir/sub
+   @@ -0,0 +1,2 @@
+  @@ -10,7 +10,7 @@
+   +B
+   diff --git a/file0 b/file0
+   new file mode ffff44
+  -index ffffffffff..fffffff2a8
+  +index ffffffffff..fffffff5d7
+   --- /dev/null
+   +++ b/file0
+   @@ -0,0 +1,3 @@
+  @@ -19,7 +19,7 @@
+   +3
+   diff --git a/file2 b/file2
+   new file mode ffff44
+  -index ffffffffff..fffffff2a8
+  +index ffffffffff..fffffff5d7
+   --- /dev/null
+   +++ b/file2
+   @@ -0,0 +1,3 @@
+  error: last command exited with $?=1
 
-So I can _almost_ build with:
 
-  make PTHREAD_LIBS='-lpthread -lpcre2-8'
-
-But it still doesn't work, because the code which uses those (and -lz,
-which the Makefile does know about) is in the static libraries
-(libgit.a, etc). So the -l libs need to come after that. I needed:
-
-diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
-index e8651aaf4b..b90cf876cd 100644
---- a/contrib/svn-fe/Makefile
-+++ b/contrib/svn-fe/Makefile
-@@ -74,7 +74,7 @@ endif
- endif
- 
- svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(XDIFF_LIB) $(GIT_LIB)
--	$(QUIET_LINK)$(CC) $(CFLAGS) $(LDFLAGS) $(EXTLIBS) -o $@ svn-fe.o $(LIBS)
-+	$(QUIET_LINK)$(CC) $(CFLAGS) $(LDFLAGS) -o $@ svn-fe.o $(LIBS) $(EXTLIBS)
- 
- svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
- 	$(QUIET_CC)$(CC) $(CFLAGS) -I../../vcs-svn -o $*.o -c $<
-
-So I'm sure somebody determined could get it to work, and it's
-definitely salvageable. But given the lack of questions or reports about
-this long-standing breakage on the list, I suspect that nobody is
-actually building it in practice.
-
--Peff
