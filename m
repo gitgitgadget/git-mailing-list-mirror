@@ -2,131 +2,99 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FCA6C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F6DEC433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:09:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26A2F2065C
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 21:41:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F22E20771
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:09:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h6HdIVMZ"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZcW/0KUw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728312AbgHNVlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 17:41:11 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53988 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726196AbgHNVlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 17:41:10 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 17B04E7499;
-        Fri, 14 Aug 2020 17:41:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QOjaveBCejkDJBlYnLRNV40zGzk=; b=h6HdIV
-        MZR5nJTucwUQKCjgBlkmlnuk0P7oeIfFgIMBL7qdeX1qUJ7r185y3mYU/xtdU2he
-        HWfhahcbRz3DOzvouErOVuUlW2pnuteQl7y9VZnR+k4eREvyV7cSSclbeYMhdpxK
-        Wxc+BYImv36lA8x2imK1rNm9GYGTs/s2QDPlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AlLD8XjDCk2dv4YEsldVJZt414FziJIk
-        zjOoMcF+jOCQatfU0of1lvqqP/8Eaf0WXioe4EcfoS2SF5dJ3A4yHx2LnAT4gdYi
-        tJV4wftMLYpuwKr4NSSVM6+aAjnxnXZ9q0bn6QfrFLG5q8bljDaeUjCwU4wY2Tl9
-        6LH/IhJ40Y8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0ECF4E7498;
-        Fri, 14 Aug 2020 17:41:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726444AbgHNWJE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 18:09:04 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41568 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726213AbgHNWJE (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Aug 2020 18:09:04 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C670DE7495;
-        Fri, 14 Aug 2020 17:41:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, martin.agren@gmail.com,
-        sandals@crustytoothpaste.net, me@ttaylorr.com,
-        abhishekkumar8222@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/3] SHA-256: Update commit-graph and multi-pack-index formats
-References: <pull.703.git.1597428440.gitgitgadget@gmail.com>
-        <xmqqeeo9vxl0.fsf@gitster.c.googlers.com>
-        <04ebec72-07de-4494-688f-a9f48442906e@gmail.com>
-Date:   Fri, 14 Aug 2020 14:41:04 -0700
-In-Reply-To: <04ebec72-07de-4494-688f-a9f48442906e@gmail.com> (Derrick
-        Stolee's message of "Fri, 14 Aug 2020 16:34:56 -0400")
-Message-ID: <xmqqbljcvrbj.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B8A8F60458;
+        Fri, 14 Aug 2020 22:08:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1597442913;
+        bh=KR5FjIXlK93UE8NN3yGnG5O9/BLKQABT/Jgza/vrA88=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ZcW/0KUw3m1Ef64s1HTxsZmy1h4G6rHlkKlZXPpi6TeoPY2n1iPQ870rQMM+LUkHL
+         5xWB38qXLeVmDfvcwXlfsiSAnZagO9csF2przJ0in/GjocyQU337PZI5JGwndSlx7a
+         5psqHfMrHFFheQYVGbkExFT8HKZ3EmBBBSpzF8Ra2JReus4TygHJuehdU2+DGceJep
+         zbnnMzAa8WcymDUaZWka9CLN5EZRFhiZW7mk/kCorOZTzdvLWqVD9a5Yzx/HIN5P33
+         NwJAEiIkAXnhwMOnZoT95O94amI7qHtx+1KNOafS5YQ2cDduqg2jWFEg8gf7WT45o+
+         Hk0mnq16N0NvpdKyoKrI/m43UwGAMb+v5fVv1/Hhr5e13z/spa0bfAFNRvV6xc8/qB
+         38pGOe83Ksu34Be+/YZMW2NTrqtTgwnCR83Gqsj0Bje2jBY63qnAVSaDNh8PlXEH1d
+         qcEtEES6vAVVj6TwY3V6A6syy3g16vFsxhFf6LBGXgrORUDJmbN
+Date:   Fri, 14 Aug 2020 22:08:28 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     jim.cromie@gmail.com
+Cc:     git@vger.kernel.org
+Subject: Re: git bisect enhancement request
+Message-ID: <20200814220828.GP8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        jim.cromie@gmail.com, git@vger.kernel.org
+References: <CAJfuBxw2KudBPfpmVqU9VOfnvrKdczU6Us5FWvpj50T88BarHw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DB7EAB0E-DE76-11EA-9E81-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cmVHo2jXx4bdYlgS"
+Content-Disposition: inline
+In-Reply-To: <CAJfuBxw2KudBPfpmVqU9VOfnvrKdczU6Us5FWvpj50T88BarHw@mail.gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
 
-> On 8/14/2020 3:25 PM, Junio C Hamano wrote:
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->>> As discussed [1], there is some concern around binary file formats requiring
->>> the context of the repository config in order to infer hash lengths. Two
->>> formats that were designed with the hash transition in mind (commit-graph
->>> and multi-pack-index) have bytes available to indicate the hash algorithm
->>> used. Let's actually update these formats to be more self-contained with the
->>> two hash algorithms being available.
->>> ...
->>> If this is the way we want to go with the formats, then I'll assist
->>> coordinating these textual and semantic merge conflicts.
->> 
->> I agree that the files should be self-identifying, but have these
->> changes tested without sha256 hash?
->
-> All of the test scripts pass with and without GIT_TEST_DEFAULT_HASH=sha256,
-> and this test in t5318 (and a similar one in t5319) are explicit about
-> testing both options:
->
-> +test_expect_success 'warn on improper hash version' '
-> +	git init --object-format=sha1 sha1 &&
-> +	(
-> +		cd sha1 &&
-> +		test_commit 1 &&
-> +		git commit-graph write --reachable &&
-> +		mv .git/objects/info/commit-graph ../cg-sha1
-> +	) &&
-> +	git init --object-format=sha256 sha256 &&
-> +	(
-> +		cd sha256 &&
-> +		test_commit 1 &&
-> +		git commit-graph write --reachable &&
-> +		mv .git/objects/info/commit-graph ../cg-sha256
-> +	) &&
-> +	(
-> +		cd sha1 &&
-> +		mv ../cg-sha256 .git/objects/info/commit-graph &&
-> +		git log -1 2>err &&
-> +		test_i18ngrep "commit-graph hash version 2 does not match version 1" err
-> +	) &&
-> +	(
-> +		cd sha256 &&
-> +		mv ../cg-sha1 .git/objects/info/commit-graph &&
-> +		git log -1 2>err &&
-> +		test_i18ngrep "commit-graph hash version 1 does not match version 2" err
-> +	)
-> +'
-> +
->
-> Since this tests exactly that the "hash version" byte is the same in
-> a SHA-1 repo, this checks that the new version of Git writes backwards-
-> compatible data in SHA-1 repos.
->
-> Or are you hinting at a more subtle test scenario that I missed?
+--cmVHo2jXx4bdYlgS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No, I was just wondering how ready we are, as the four tests looked
-too easy ;-)
+On 2020-08-14 at 21:11:19, jim.cromie@gmail.com wrote:
+> please teach git bisect how to use 2 separate worktrees
+> for the bisection, toggling between them as bisection progresses,
+> so that the end result is 2 compiled kernels,
+> one broken, one good.
+
+I'm not sure how such a thing would be implemented.  Git doesn't know
+until after it's checked out the tree whether a revision is good or bad,
+since usually the user needs to tell it (or use git bisect run).  Even
+if Git alternated between the two worktrees in order, that doesn't mean
+that one of them will end up being good, since Git may find the last
+good revision early on, then continue to bisect and find many bad
+revisions until it determines the right one.
+
+Can you tell us more about the algorithm you'd like to see here?
+--=20
+brian m. carlson: Houston, Texas, US
+
+--cmVHo2jXx4bdYlgS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXzcLWwAKCRB8DEliiIei
+gZ9VAQCpUp8l418jZMhce3uLkDXKtiJJjuSfFyyCrfmWNtfXAQD7BPOB9A16QEIn
+Mj6D/Jr3hnM5renBSYy+VzTPefLtfgk=
+=iANg
+-----END PGP SIGNATURE-----
+
+--cmVHo2jXx4bdYlgS--
