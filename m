@@ -2,110 +2,149 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD934C433DF
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 00:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B5D4C433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 00:52:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 408582078B
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 00:50:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D735720838
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 00:51:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iGUTKfmx"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CAJLpfYd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726570AbgHNAuf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Aug 2020 20:50:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56523 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbgHNAue (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Aug 2020 20:50:34 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9179879319;
-        Thu, 13 Aug 2020 20:50:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Wce6C4pZKpc1
-        6N8JmpQGL0HTqFw=; b=iGUTKfmx/MuXyYZ7+Wx9iCa92i8j2t4RRFV0WUA93o/B
-        ParuuyXKqjQGV52NQuuU2wtJCq/1olkrv4u7J4P0X/wcUgECOUkfxVldHbmjWqNX
-        sEbmvw54buE4Ko9NLeAEdDW3fVY+lb2iYvcNJtvgcLSu7Z9yREeDd4tG0j9l4fY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=noZ7gC
-        UVitOo26bgg2ugesF5+9BbLkKnNs6kOLm1uQggtFSApHPoZSUkO4Truf7Z5t+nsy
-        2d310+YLt+i7XxpuUmN5+9KLs61GGYLmGaWX7yd1y5a6B6FS5Ejwa/9ng7xvGCYq
-        GnQa/cAb/Vs0IKV8z3OKvPSmGOszqqvU+NnfI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AAC679318;
-        Thu, 13 Aug 2020 20:50:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726564AbgHNAv6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Aug 2020 20:51:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41500 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726205AbgHNAv6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Aug 2020 20:51:58 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1811779317;
-        Thu, 13 Aug 2020 20:50:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/2] revision: differentiate if --no-abbrev asked explicitly
-References: <cover.1596887883.git.congdanhqx@gmail.com>
-        <cover.1597364493.git.congdanhqx@gmail.com>
-        <9a26c5b6110081cd8d029f2ab0327c4a1d228ef7.1597364493.git.congdanhqx@gmail.com>
-Date:   Thu, 13 Aug 2020 17:50:31 -0700
-In-Reply-To: <9a26c5b6110081cd8d029f2ab0327c4a1d228ef7.1597364493.git.congdanhqx@gmail.com>
-        (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Fri, 14 Aug
- 2020 07:23:09 +0700")
-Message-ID: <xmqq8sei125k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 03C9960129;
+        Fri, 14 Aug 2020 00:51:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1597366317;
+        bh=ZsRd7W++g+HWP2KBcq6g70qBVyYImBAV/0mb89qfA3g=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=CAJLpfYdvuJ3y/p64E74eSzv5tG17Ty5sYyVP9GMVK+8A6dCZWAwkXj5gTTUlIZE9
+         CMlBQQ+E0plGq4p2gaP8BtRDByinJLE76U+f6ZMUgzRL4aFm5YL3tNmWMzIO6XLsbN
+         4wElupusO3p8bIauKuOIevQuPvkVEkHKIMP9Qlcz+TDqtvTHDgkrBnrl+2nPrg91OK
+         hWoE7Sbsv4bDmoPegfe0JUO6mq8+awkz9r0isbAHHJlHhkkpxKph9FIX3Sjyx5HCUP
+         RFVFw3vNXe1w3Oe5pOeuNfc07JUDbEE8roOcDVE0kivrwbB+EkmJOE8RiXGNNSx08Y
+         I8eXJkUWS60WNIzL3Sk0ZWc0gwn+YHHBt0P7TEY5F+DmXtS79jF2/FB8vZ/MD1i2Ru
+         dSIdMYuehvZv6CJeGvepBmp4G4JT+0fwhj1Omu+GO2PJ9MU5v9WrDqCFjYM5pWQMVS
+         EPite9SUENgehAIopVu7+nBYqTpcZ4ap1/BoDrgjH8N043+JLPP
+Date:   Fri, 14 Aug 2020 00:51:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] Documentation: mark `--object-format=sha256` as
+ experimental
+Message-ID: <20200814005151.GI8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <20200806202358.2265705-1-martin.agren@gmail.com>
+ <20200806230837.GA8085@camp.crustytoothpaste.net>
+ <CAN0heSptiJL9d86ZeNPMUaZeTA68juwTyf3K-uWR=K-vt=1Hrg@mail.gmail.com>
+ <xmqqr1sifaeu.fsf@gitster.c.googlers.com>
+ <CAN0heSqyBzW_+vWSAxV9O1XAJKmQgrhCms7mSa+hFFx35uU05w@mail.gmail.com>
+ <xmqqmu2y1e0t.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 27EB6A36-DDC8-11EA-B47B-01D9BED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YrQNB5Deg1WGKZi3"
+Content-Disposition: inline
+In-Reply-To: <xmqqmu2y1e0t.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
 
-> When we see --no-abbrev in command's arguments, we reset the 'abbrev'
-> field in diff-options to 0 and this value will be looked at
-> diff_abbrev_oid() to decide not to truncate the object name.
->
-> In a later change, we want to extend --abbrev support to diff-patch
-> format. When --abbrev supporting diff-patch, we need to differentiate
-> those below scenarios:
->
-> * None of those options --abbrev, --no-abbrev, and --full-index are
->   asked. diff-patch should keep old behavior of using DEFAULT_ABBREV
->   for the index length.
-> * --no-abbrev is asked, diff-patch should treat this option as same as
->   --full-index and show full object name in index line.
+--YrQNB5Deg1WGKZi3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, but are you saying that the above two cases cannot be
-differentiated in the current code?
+On 2020-08-13 at 20:34:10, Junio C Hamano wrote:
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>=20
+> >> IOW, you question "if we go a few releases without any major issues"
+> >> part?  I tend to agree that for a large change like this, a few
+> >> releases may not be sufficiently long time for a feature that is
+> >> marked as experimental in big flashing red letters to get exercised
+> >> enough to get major issues noticed.
+> >
+> > Yeah, thanks for summarizing what I failed to express using so many
+> > words.
+> >
+> > I'm fully open to the idea that some people want to leave SHA-1 behind
+> > and that they can do it today, in some "local" sense. If those people
+> > are fully aware that they are guinea pigs, it might actually be ok for
+> > us to subject them to a few rounds of "oops, Git v2.32.0 produces data
+> > that v2.34.0 and later will barf on". Or at least it would be on our
+> > table whether we wanted to be that cavalier.
+> >
+> > Once SHA-256 repos as such are no longer experimental, I fear that we
+> > can only buy ourselves that leeway by introducing fiftyeleven different
+> > config flags for "please produce auxiliary files X even if you don't
+> > actually use them", "please do use X, and I'm fully expecting to trip on
+> > them if you decide to tweak them in backwards-incompatible ways", and so
+> > on. The alternative to buying such leeway might be to establish, pretty
+> > early on, a respectable set of things we support "for compatibility
+> > reasons".
+>=20
+> OK, so can we resolve this one way or the other and move on?
+>=20
+> For now, I'd vote for applying this warning patch, but with or
+> without such warning, it is more important to iron out those details
+> we fear might have to change.
 
- * If none of --abbrev, --no-abbrev, --full-index are given, then
-   diff.c::prep_parse_options() will leave options->flags.full_index
-   and options->abbrev untouched.  They are initialized to false and
-   DEFAULT_ABBREV (typically -1 when unconfigured).
+I'm fine with applying this patch.
 
- * If --no-abbrev is given, options->abbrev is set to 0.
-   options->flags.full_index is not touched.
+As for changes, I don't think there's any changes we need to make for a
+stage 4 implementation.  It works and it passes the testsuite.  I've
+verified the block and gcrypt SHA-256 implementations produce identical
+results, which was my major worry.  Other than the philosophical
+disagreement over whether index v1 and v2 should support SHA-256, I
+don't think there's any points of contention.
 
-So you should be able to tell these two apart by only looking at
-options->flags.full_index bit.  Perhaps, even though you said "we
-need to differentiate", you meant something else?
+When we add support for SHA-1 interoperability, then we'll need pack
+index v3, proper multi-pack index support, and the loose object index.
+Those are being written at the moment, and I think it's fine to add a
+tool to generate the necessary files once that code is in place (which,
+it's looking like, can just be a shell script that pipes every loose
+object to git hash-object and rebuilds the pack indexes).  Support for
+interoperability is an additional extension, so we don't have any
+compatibility concerns and we can generate all of those files based on
+that option.
 
-> While not doing anything is very effective way to show full object id,
-> we couldn't differentiate if --no-abbrev or not.
+I don't plan to enable support for extensions.compatObjectFormat without
+all of the required pieces in place.  There won't be any incremental
+steps there.
+--=20
+brian m. carlson: Houston, Texas, US
 
-Hmph.  --no-abbrev without --full-index would not set
-flags.full_index bit; using --full-index would set the bit.  Are you
-planning to do something special when BOTH --no-abbrev and --full-index
-is given?  I am confused X-<.
+--YrQNB5Deg1WGKZi3
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXzXgJwAKCRB8DEliiIei
+gY2DAP9nQ35kdidQDDdS4bk/SwMShxS0f7CNGFiMMMQyGmCW2QEAgb4Z0D+7dLDA
+PCyR1IvGs39EkFK15iFi7WMWpzj6zgk=
+=SYfP
+-----END PGP SIGNATURE-----
+
+--YrQNB5Deg1WGKZi3--
