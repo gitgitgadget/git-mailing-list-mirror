@@ -2,70 +2,140 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF16CC433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 131C8C433E1
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:28:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8865C20774
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:27:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE03B20774
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 16:28:51 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1aRJr/s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726943AbgHNQ1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 12:27:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59318 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726320AbgHNQ1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 12:27:51 -0400
-Received: (qmail 1188 invoked by uid 109); 14 Aug 2020 16:27:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Aug 2020 16:27:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27142 invoked by uid 111); 14 Aug 2020 16:27:50 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Aug 2020 12:27:50 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Aug 2020 12:27:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/6] more small leak fixes
-Message-ID: <20200814162749.GB595840@coredump.intra.peff.net>
-References: <20200814161328.GA153929@coredump.intra.peff.net>
- <20200814162525.GA595840@coredump.intra.peff.net>
+        id S1728127AbgHNQ2u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 12:28:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56258 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726320AbgHNQ2t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 12:28:49 -0400
+Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB4FC061384
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 09:28:49 -0700 (PDT)
+Received: by mail-io1-xd43.google.com with SMTP id u126so11233043iod.12
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 09:28:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+TFLXJJ6G5bDOyiWpMbaix4M/P0J0nNAaUlb0tvWh7M=;
+        b=e1aRJr/sYtMSXqXrhIo1dEmDnNFCgjuXL9h1F8ZCeua3cVQ0vBWB9JnmScWyvLUgcM
+         cL0tdVqWG5uqwg+/UCoyPf86y4ndORyU26/MoPVEaK8kbT8LTcHp//6nyrWfzP+fNnaZ
+         iJcJMw9LhePgbqVi4GxvMkwyjfcyctTSCkUyjHq222RWz++t9Rv7B8whoOo9SJSuZcls
+         zEIVxoJymJNu1cOnbcvbjKuqB3Qk+9jbTs2sXGc4FHb9Ft2LDYBBz5QAsBcsqijDcVKl
+         a+k0I2C5Gjp9wxhTvJk6l1Yh5BqRHCh57NFoj7/YNowydY18aYaVIt+oA5JCMaHnVwSS
+         SgBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+TFLXJJ6G5bDOyiWpMbaix4M/P0J0nNAaUlb0tvWh7M=;
+        b=nSF2s9ZiuMeLkvTWFjvW7SsTCl9UwWQYckKxmVbFFYBar7d+jtJYxOF58tUEO2/zf4
+         6hKfhCi+pnyqRkDUlRtrLkYerTDQZEfKm2+zZAEXMLeXlxS4XUp1tDmdCAX/n1VpUSm2
+         2bukGHewwDiY3nZ/z0xF9JiID1N7oA8zGwzCZlY6mbdIj+HWuJz0xT8txmcl5Qoi+BTw
+         12pH7GrYinezdAJ+K9s1aLrjC2Uh+WGwHvXq8aT1ch+Qcz3YT9PnQSnjT+o1+a53OFe8
+         3O5qbUgmDRzbrt3CQcCPR6DkY0QNsGVsQVjPQPUuLP/lMMe3smRIOVvpveWNnztY/aFl
+         DO7A==
+X-Gm-Message-State: AOAM532mdtMGHG3KQEjhSZR8tAsIruXPIqOnUlXynzX89Qd1f7dsD9/I
+        TDbnjafH3q/cILzKMqQyQbXHcp7FxFj/vumKmQzx+Kyovm1rwqkb
+X-Google-Smtp-Source: ABdhPJwx7IB81i+7Kh5PBiCzLIrG6CoQlkRYBEdIGvAMF4ypNdHG95WhJpB7uBe0X0Fp/70kP9uJFyoBJxtEN/KNXhI=
+X-Received: by 2002:a05:6602:2515:: with SMTP id i21mr2714457ioe.120.1597422528818;
+ Fri, 14 Aug 2020 09:28:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200814162525.GA595840@coredump.intra.peff.net>
+References: <CAMbsUu5bYN9q34st8AhOCv8y5eJQpVpEKOO3ebTi+CxbYetgmQ@mail.gmail.com>
+In-Reply-To: <CAMbsUu5bYN9q34st8AhOCv8y5eJQpVpEKOO3ebTi+CxbYetgmQ@mail.gmail.com>
+From:   Danny Lin <danny0838@gmail.com>
+Date:   Sat, 15 Aug 2020 00:28:31 +0800
+Message-ID: <CAMbsUu47FUPCnW=EBm-tE9_g5NqKzvzjVQWM1TNdBnTj-TauaA@mail.gmail.com>
+Subject: Re: [BUG] Branches before "git subtree add --squash" are pushed via
+ "git subtree push"
+To:     git develop <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "David A. Greene" <greened@obbligato.org>,
+        Dave Ware <davidw@realtimegenomics.com>, apenwarr@gmail.com,
+        Roger Strain <rstrain@swri.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stephen R Guglielmo <srg@guglielmo.us>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 14, 2020 at 12:25:25PM -0400, Jeff King wrote:
+Sadly no one cares about this issue... This bug is especially obvious
+if we simply run `git subtree push` after a `git subtree add --squash`:
 
-> On Fri, Aug 14, 2020 at 12:13:28PM -0400, Jeff King wrote:
-> 
-> > Based on the discussion over in [1], I wondered how close we were to
-> > being able to run some test scripts with a leak-checker like LSan not
-> > complaining. The answer is...not close.
-> > 
-> > I picked t5526 more or less at random (it was the first failure when I
-> > did a parallel "make test") to see what it would take to get it passing.
-> > After much effort...I have t5526.1, the setup test, running clean. :)
-> 
-> For reference, here are the UNLEAK() calls I had to add to silence the
-> false positives. Some of these are kind of sketchy. For example,
-> declaring that wt_status_collect_changes_index() is allowed to leak is a
-> bit low-level for my tastes (in general it's probably only called once
-> per program, but it's getting quite far from the bottom of the stack).
-> But there's actually no convenient way to free the various bits of a
-> rev_info, so marking it with UNLEAK() is an expedient hack.
+If master is at commit D, which is generated by
+`git subtree add --squash -P sub Y`:
 
-And by the way, having gone through this exercise, I'm re-convinced that
-UNLEAK() is reasonable to keep. A lot of these cases would have been
-very awkward with free(). Not insurmountable, but cases where a variable
-is sometimes-allocated and sometimes-not get rather tricky.
+    A---B---C---D  master
+               /
+              Y'
 
--Peff
+    X---Y  sub
+
+After running `git subtree push -P sub . sub`, we get:
+
+    A---B---C---D'  sub (after push, actual)
+               /
+          X---Y
+
+While the sub branch should not change at all!
+
+This bug, seemingly introduced by 933cfeb90b5d03b4096db6d60494a6eedea25d03
+critically makes --squash approach for `git subtree` almost unusable.
+Added related developers to CC list for better notice.
+
+>
+> Say we have a repository with "master" and "sub" branches like below:
+>
+>     A---B---C---D---E---F  master
+>                /
+>           X---Y
+>
+>     X---Y  sub
+>
+> where commits A and B include changes in subdirectory "sub", commit C
+> removes subdirectory "sub", commit D is generated by "git subtree add
+> -P sub Y", and commits E and F also include changes in subdirectory
+> "sub".
+>
+> We'd get this if we run "git subtree push -P sub . sub" on master at F:
+>
+>     X---Y---E'--F'  sub (after push)
+>
+> On the other hand, if we have simliar trees except that commit D is
+> generated by "git subtree add --squash -P sub Y":
+>
+>     A---B---C---D---E---F  master
+>                /
+>               Y'
+>
+>     X---Y  sub
+>
+> We'd expect to get this when we run "git subtree push -P sub . sub" on
+> master at F:
+>
+>     X---Y---E'--F'  sub (after push, expected)
+>
+> But actually we get this (in Git 2.22.0):
+>
+>     A---B---C---D'--E'--F'  sub (after push, actual)
+>                /
+>           X---Y
+>
+> This seems to be a side effect of 2.7.0 -> 2.7.1 in which a change is
+> made to include merged branches in "git subtree push", but mistakenly
+> causes branches before "git subtree add --squash" be included.
