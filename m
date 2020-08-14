@@ -6,72 +6,66 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA97C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED6EC433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:42:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E56D2074D
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:25:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5DA420774
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727881AbgHNWZV convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 14 Aug 2020 18:25:21 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:25249 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgHNWZV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 18:25:21 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 07EMPBHo045282
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 14 Aug 2020 18:25:12 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        <jim.cromie@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <CAJfuBxw2KudBPfpmVqU9VOfnvrKdczU6Us5FWvpj50T88BarHw@mail.gmail.com> <20200814220828.GP8085@camp.crustytoothpaste.net>
-In-Reply-To: <20200814220828.GP8085@camp.crustytoothpaste.net>
-Subject: RE: git bisect enhancement request
-Date:   Fri, 14 Aug 2020 18:25:05 -0400
-Message-ID: <012301d67289$c5c36010$514a2030$@nexbridge.com>
+        id S1728117AbgHNWmD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 18:42:03 -0400
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:36617 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726795AbgHNWmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 18:42:03 -0400
+Received: by mail-wr1-f42.google.com with SMTP id 88so9633460wrh.3
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 15:42:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D3nrwEJ79YPcg9qqw0GP6dRoWjUU0MqIbn91z5xSTvQ=;
+        b=U2z7GTZBNoV32ThXhhNUMvL/NCVAEkx/141I8aEjk3KHOd8T6DpTHP1emqTXTtmMzV
+         aZzEETmSs4LI3MKwNQmAbYHtc2Fck50WWrAQueDlY0I9nEh4DhYAYo8LfKgbMYdYofDt
+         RXwnbyR9PrGE/GVoMX00CL5rnRe6eFuNLITMge4JEwyqwhTCEL53vFn17Rud5T7QQexN
+         m1DwKMw0t1KlrqnlP7Wuc3TrvuVCzr9s4EnoqGwmKNCAlGIWeL/UFb49XeVz9pgkbl3I
+         iGollZBpuaK/EWWCpBKC0r7a27mTNTxjpj52BO+wODeti+jNbPxUiI+njTBLcMbhECH/
+         lqSg==
+X-Gm-Message-State: AOAM533pE5LxBnKsjzRo+tAQ02AKjzNioF/xiH3bPBsfbWfFhAcUwTQ5
+        7ByjBMOHkWpDHlXJqqo4OsbT/x1VOorAj7p8R1s=
+X-Google-Smtp-Source: ABdhPJwo2GUbyGEGcx/JUX4PaZhT9qGyqwSNdx3bPJuj2MLVsDqZWaSfSwZ4wT9r3HeGQu+H6alF2zhch7Iynts4fdM=
+X-Received: by 2002:adf:ec45:: with SMTP id w5mr4471644wrn.415.1597444922100;
+ Fri, 14 Aug 2020 15:42:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLA1TswLub1wJdglSp//FP9kbFv/wITf/ABp1LKNMA=
-Content-Language: en-ca
+References: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
+In-Reply-To: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 14 Aug 2020 18:41:51 -0400
+Message-ID: <CAPig+cSCd_8YB90sypTe1bHMQhPgo+Tr2PHNucdqfCpEe+Dosg@mail.gmail.com>
+Subject: Re: Possible bug with git restore
+To:     Sergii Shkarnikov <sergii.shkarnikov@globallogic.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 14, 2020 6:08 PM, brian m. carlson wrote:
-> On 2020-08-14 at 21:11:19, jim.cromie@gmail.com wrote:
-> > please teach git bisect how to use 2 separate worktrees for the
-> > bisection, toggling between them as bisection progresses, so that the
-> > end result is 2 compiled kernels, one broken, one good.
-> 
-> I'm not sure how such a thing would be implemented.  Git doesn't know until
-> after it's checked out the tree whether a revision is good or bad, since usually
-> the user needs to tell it (or use git bisect run).  Even if Git alternated between
-> the two worktrees in order, that doesn't mean that one of them will end up
-> being good, since Git may find the last good revision early on, then continue
-> to bisect and find many bad revisions until it determines the right one.
-> 
-> Can you tell us more about the algorithm you'd like to see here?
+On Wed, Aug 12, 2020 at 2:51 PM Sergii Shkarnikov
+<sergii.shkarnikov@globallogic.com> wrote:
+>     I tried to restore a couple of files from an earlier commit
+> running the restore command with a wildcard:
+>
+>     git restore -s HEAD~ -- */filename.*
+>
+>     In my work tree those are .cpp and .hpp files stored in different folders.
+>     Both files were deleted (and got (delete) status).
+>     Running this command without wildcards for each file separately
+> works as expected.
 
-I'm wondering more about the requirements on this. Does the bisect manipulate both worktrees at once or separately? Are these worktrees variants on a theme but on different branches (so synchronizing the commits would probably be impractical) - or bisect both workspaces but using different commits as start and end (this should be scriptable)? Does it flip back and forth between the two worktrees doing a bisect in one, then the other (this should be scriptable)? Or is this just to teach git to bisect a worktree in a distinct manner - which, correct me if I'm wrong, I think it already supports.
-
-Or is this more, I have two worktrees on basically the same branch. When bisect happens, one worktree is bisected, tested. If the new code succeeds, and the other worktree is in a failed state, don't bisect the other worktree in the same direction - that's not right, but I think I know your end-state goal: keep bisecting both worktrees until a state change. What that is leading to is really something different, which is that once bisect is done, you know which commit introduced the bug, so set one worktree to the working commit and the other to the broken commit. If that's the case, it's not a toggle, but an end-state operation to set two worktrees to adjacent commits essentially surrounding the introduction point. Is that what you want?
-
-Regards,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+Thanks for the report. Can you provide a complete recipe in the form
+of shell command to make this happen so others can reproduce the
+behavior? Doing so will help track down the issue. Also, since this is
+Windows, do the cases of the filenames in the referenced commit match
+the cases actually on the filesystem (and have the cases changed
+between commits)?
