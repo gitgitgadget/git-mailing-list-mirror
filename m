@@ -2,142 +2,94 @@ Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B38C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42B2BC433DF
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:40:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90F952087D
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:37:36 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KRpEchu2"
+	by mail.kernel.org (Postfix) with ESMTP id 1AAEC20866
+	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 12:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728259AbgHNMhf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 08:37:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48628 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726651AbgHNMhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 08:37:34 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3776DC061384
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:37:34 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id b79so8124510qkg.9
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 05:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ckoLnhktbchiuchFrb236jg/WQw5qiFHgWoBuwRi2sE=;
-        b=KRpEchu2ztq8X/Dqk1XBJncA29LNhHQIg76QDyezry8NQ81Zl88jyfaR5ybwPxZV4t
-         spjPwM5PM3VpZfw/FTblw1kNKfPB69T86MtQ3Vl0/nkb0kyc8FeqYbIuABUd8mhSwACw
-         Jh6Qgmv/+uSPtdnVgczdfJDgM9ht89TSHqs+5UdHBiK0jzkJ5ghrnMamH8E1rLs/e5cg
-         VKbu+HY+vcQPcbb2YCxoPLfanLmifrpTa9vttWGj3wmSAFN1BhWvg4NivrVpc+Npnp95
-         uCIU7K0YLwiHNKWBEqjymhxJ1/EUKuD4kLWT6FlQhf2M59jcfH5xQEd0ZkSZgzVy/YU7
-         E1cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ckoLnhktbchiuchFrb236jg/WQw5qiFHgWoBuwRi2sE=;
-        b=I62zu2IZO+Mh1BX4UXPp3BvjHZoJ3oVec/Goiyyv7glN6bhmL8VbkXk0zILfyBZv8i
-         MrmEhGCzUyJu8fHSz41e3kbvgZz9dhf3Fzd2fxhbl+MPZW8EuuAqS6c3R6krpPO/eu/P
-         2EYLiOGKz5kj0LPh5kTVmiRQZOqEk/X84JLROS1fZ8KJvLNT8yBmJ9b4zYhUn2OO/w9H
-         VVVa41tr6goOHr64iyAwsmXvQ7NIsnEPK7sywZAlMn8HMLRXFSaqW0yzYYT+vBfXbQzu
-         fIm4g6tSFlhO1RHOclQQbEXRVX4H3vGUzi+Upgq2NIaNbOIHtyxULcLZhFRZ+M1p0DY/
-         tIUA==
-X-Gm-Message-State: AOAM533cHSM7OH8kJI49JCdJ6Jm2sfI2lg5axTu/Iw1rimH7CYi1vlkK
-        PQs9NGJp/te9uJaCyF39FbY=
-X-Google-Smtp-Source: ABdhPJwBJ6iEjLa3uIFzBkooEmIa48aYypATN/nHae8fLUZDK5FJrWBblpiARpcnpaF+omi41tq8UA==
-X-Received: by 2002:a37:a292:: with SMTP id l140mr1659630qke.79.1597408653313;
-        Fri, 14 Aug 2020 05:37:33 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:4116:add4:1500:aeb7? ([2600:1700:e72:80a0:4116:add4:1500:aeb7])
-        by smtp.gmail.com with ESMTPSA id 205sm8408999qkj.19.2020.08.14.05.37.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Aug 2020 05:37:32 -0700 (PDT)
-Subject: Re: [PATCH 5/5] commit-graph-format.txt: fix "Hash Version"
- description
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-References: <20200813224901.2652387-1-sandals@crustytoothpaste.net>
- <cover.1597406877.git.martin.agren@gmail.com>
- <bbcd97db8a2c94343950bb0cf8cbd5c9c01b4577.1597406877.git.martin.agren@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e216492c-d11a-6733-db64-720d027d3d42@gmail.com>
-Date:   Fri, 14 Aug 2020 08:37:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
+        id S1727834AbgHNMkO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 08:40:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58998 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726209AbgHNMkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Aug 2020 08:40:12 -0400
+Received: (qmail 31796 invoked by uid 109); 14 Aug 2020 12:40:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Aug 2020 12:40:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24801 invoked by uid 111); 14 Aug 2020 12:40:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Aug 2020 08:40:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 14 Aug 2020 08:40:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Sibi Siddharthan <sibisiv.siddharthan@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2020, #01; Mon, 3)
+Message-ID: <20200814124011.GA4104592@coredump.intra.peff.net>
+References: <xmqq8sevt1lf.fsf@gitster.c.googlers.com>
+ <20200804185057.GA1400256@coredump.intra.peff.net>
+ <xmqqr1sms0f0.fsf@gitster.c.googlers.com>
+ <20200804192053.GA1400936@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2008121516560.50@tvgsbejvaqbjf.bet>
+ <20200812141958.GA32453@coredump.intra.peff.net>
+ <CAKw82xxOZFcsMw47TSrD7-pXpqO7O0_m84o96iH6+ZVeN9j1uw@mail.gmail.com>
+ <20200812160653.GA42443@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2008141352430.54@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <bbcd97db8a2c94343950bb0cf8cbd5c9c01b4577.1597406877.git.martin.agren@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2008141352430.54@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/14/2020 8:21 AM, Martin Ågren wrote:
-> We say that value 1 means "SHA-1", but in fact, it means "whatever
-> the_hash_algo is", see commit c166599862 ("commit-graph: convert to
-> using the_hash_algo", 2018-11-14).
+On Fri, Aug 14, 2020 at 02:08:28PM +0200, Johannes Schindelin wrote:
+
+> On Wed, 12 Aug 2020, Jeff King wrote:
 > 
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
->  If we want to be more fine-grained in the future, we'll need to say,
->  e.g., "2 means SHA-1, 3 means SHA-256" or, perhaps preferrably, bump the
->  version number.
+> > From my perspective as somebody who does not work on Windows, I wonder
+> > how much value there is in running vsbuild _and_ Windows CI for average
+> > developers. I have certainly gotten information from these jobs (e.g.,
+> > when introducing a portability problem, or missing a refactoring spot in
+> > Windows-only code). But I don't think I've ever gotten information from
+> > vsbuild that wasn't also in the regular windows build.
 > 
->  I wonder: Should we instead say "1 means SHA-1, 2 means SHA-256"? It
->  could be implemented as "easily" as "if (value_from_header !=
->  value_from_the_hash_algo) die(...);" for now. Might that pay off in the
->  long run?
-> 
->  This relates to Stolee's "in a vacuum" comment [1] ... so maybe we're
->  fine.
+> There have not been a _ton_ of these instances, but there have been a
+> couple:
 
-I think that was the intention of the byte, but that is not what ended
-up happening. If we want that to be the case, then we should do that
-work as part of the 2.29 cycle before we release with the ability to
-create SHA-256 repos (which will lock the commit-graph format for these
-repos).
+Thanks, that was exactly the kind of data I was interested in.
 
-(By "we" I mean that I would try to do this work in a way that minimizes
-conflicts with the current commit-graph work in flight [1] [2].)
+> I cannot find any more instances, so yes, I agree that the
+> `vs-build`/`vs-test` jobs might not be _all_ that necessary. So maybe we
+> should do something like this?
 
-[1] https://lore.kernel.org/git/pull.676.v2.git.1596941624.gitgitgadget@gmail.com/
+Let's leave it be for now. The topics I had to adjust due to cmake were
+ones that I'd had sitting around for a while. So while I hit problems
+immediately, now that the queue is drained it's not clear to me how
+often it will come up in practice.
 
-[2] https://lore.kernel.org/git/cover.1597178914.git.me@ttaylorr.com/
+> -- snipsnap --
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 30425404eb3..2549fff8edd 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -122,7 +122,7 @@ jobs:
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    vs-build:
+>      needs: ci-config
+> -    if: needs.ci-config.outputs.enabled == 'yes'
+> +    if: (github.repository == 'git/git' || github.repository == 'gitgitgadget/git') && needs.ci-config.outputs.enabled == 'yes'
 
->  [1] https://lore.kernel.org/git/da077fb0-14bb-b84f-c526-d759ebc9f5eb@gmail.com/
-> 
->  Documentation/technical/commit-graph-format.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
-> index 440541045d..3535426d32 100644
-> --- a/Documentation/technical/commit-graph-format.txt
-> +++ b/Documentation/technical/commit-graph-format.txt
-> @@ -42,8 +42,8 @@ HEADER:
->    1-byte version number:
->        Currently, the only valid version is 1.
->  
-> -  1-byte Hash Version (1 = SHA-1)
-> -      We infer the hash length (H) from this value.
-> +  1-byte Hash Version (1 = SHA-1 in SHA-1 repo, SHA-256 in SHA-256 repo)
-> +      We infer the hash length (H) from the hash algo derived from this value.
+If we do go this route, I'd consider defaulting it to on and just
+letting people disable it through needs.ci-config.outputs.vsbuild or
+similar.
 
-If we are _not_ changing the format to have a meaningful value in
-this byte, then this documentation should be updated to state that
-this byte must always have value 1, as it does not provide any
-information.
-
-Thanks,
--Stolee
+-Peff
