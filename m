@@ -8,113 +8,156 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBBCBC433DF
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93CFEC433DF
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA02F2053B
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DF95206B6
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKmd8uVJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QcSWt9Mm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729221AbgHOVxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 17:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45610 "EHLO
+        id S1728757AbgHOVxN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 17:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729096AbgHOVwn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729158AbgHOVwn (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 Aug 2020 17:52:43 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD592C025575
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:33 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id t23so13021016ljc.3
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:33 -0700 (PDT)
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA97C00214D
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:17:56 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id d4so5723301pjx.5
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:17:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bSXUzHrsp5+czKqabMJHrVPCaZGWcEcvsQY5uNE3Occ=;
-        b=kKmd8uVJoZyYPbFwDqD1fj7xUXY87oX/oaZ81T8s0ORLjrYD+NXtVOm+esGDWWAjJ+
-         Q/8EAfml3nMNQcvrD5w4E+5hN5NhAni4Ns5mgQnmLJd7BNWjILVe9D8tcngJT2A5aSx1
-         CUdskD2glNuTJsdfOT5Tdi7wCdNUgiyj+EBDbla3A+K0OQBAjsEsaqxpD9v19nknxEKh
-         aKSfFB6oaJJXVfmNnQx9iN8CsnO+eliUL26PIo1H3nc3hZA9Vi1Jrq/IbNHdzuLzz/OV
-         77AmSOUGJE1ZktY7JjgeKK4jYdhLwv3eIIDsAWD3LVK77ch/haTUjFLhFxwubv//2L3P
-         iydQ==
+        bh=tx+seKi60p48rZDrSvhq06rOfr3LSqzdUw+gGKvrWf8=;
+        b=QcSWt9MmTgmA0dI6x/WPwNtQapO1h0NYoQ6MXjGD0XwWAqyThUfsRHffhlH35Rnpkp
+         0AttPe6jkrIDIjoIdC2fz9ArYQ24L7urzYD2qCWFRnQYkqf7SVHQctaof63nJeU9pru9
+         e/Xa5N7LRL6h4AlH7lFaCyj9krDeVvchHCTiQ5SMho0GXd+SSVUQzMY/GoKoMxzbCTnX
+         +JQ9Be4i7BbBvErUwVeFRXbtCbQeD8s9B+q3kTNp4SnSKD522UJ8zCgnGhCWbEMMZ06/
+         0H/C0eGgxz3ekhfLW1ZBUzbVAh626zWXg51Z+obySKlmQO503aLHqa3eJOI44sDr39z9
+         79FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bSXUzHrsp5+czKqabMJHrVPCaZGWcEcvsQY5uNE3Occ=;
-        b=trk31KEroq1gO6N3Sp7WIGov9NMLBplvBITVjsDa0/zyKpCea16nUak56rTusMFFCG
-         hNcQI88gwTKWgloQfbtLDEu1yxX5g156sch+52+8x3xOb927sputgGCCw34djui6WW7h
-         UKoJdk6GVMi4JJ8YWKBDf/m5Wpaa14DCqns1YgfQqf8gdp4Yh/Nn+DxmHA8Y1MvntYkc
-         KkI8t6Yjq1Csq/eLrg7wecNlP8QEzXyTp/i0DEbvS4Banmk9hW5MWzj9VKIh7qo4HhWj
-         volpgF9IkDjlvzDFeO6Ki6oofGTPRKjBEhnzLiM5PXw2k3RpSg9ea0aDwCNSsPme7hxC
-         ydew==
-X-Gm-Message-State: AOAM531NT1N70zQFOddotlCt8y4xq66HrGbBPJQsEBKklNR4dIIJ2OoN
-        A3gzMs9Vkt2NOHLJrc3QiOiOJ78J5PQ=
-X-Google-Smtp-Source: ABdhPJyM3t6GnHQyOv71K0jfwkB/gC3Kvg3IKKsUeVw2AiiLRfJDZ076/tZystCGrEPp1wusgvZRHw==
-X-Received: by 2002:a2e:3802:: with SMTP id f2mr3372712lja.212.1597507591897;
-        Sat, 15 Aug 2020 09:06:31 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id a1sm2670493lfb.10.2020.08.15.09.06.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2020 09:06:31 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/4] protocol-capabilities.txt: clarify "allow-x-sha1-in-want" re SHA-256
-Date:   Sat, 15 Aug 2020 18:06:01 +0200
-Message-Id: <2e82be9e365d5157a604a599d764fa39664ab684.1597506837.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <cover.1597506837.git.martin.agren@gmail.com>
-References: <cover.1597406877.git.martin.agren@gmail.com> <cover.1597506837.git.martin.agren@gmail.com>
+        bh=tx+seKi60p48rZDrSvhq06rOfr3LSqzdUw+gGKvrWf8=;
+        b=N21I8wjRw5ah3mriGuqFibnqFt/kOSfctCVyY1rwnM7vKaD6Eoz8XeeDEPgDTMf0No
+         d7zs0iyzDLLWiNpEnYwebJ/XjH4mMS6Q7kaRTrajFrtRyD17yaJEsQSZEFfLYdW+YFZF
+         HLjP+3yXU9j6H+YCaAihqNxsl2RT5c73FsVZkoE6a3dNajuxQdAtsE/4XznB9d4y+4uO
+         kzgKOsYSrN5XJEx1ncTRBHVoe0q9aK/P+0PnptUumpvI7Z5dsx8AD3BWTZ6L6KDhqflb
+         KWK5rOK4h0zDojudoWJQv4jNjnR19zlIs6flNNmxmurxyDAqnBeiMvyslqamLxRvYD0F
+         FIhA==
+X-Gm-Message-State: AOAM531nkMaGBAeZR6MPXsX7dysTaY2txDTw8dZ3Ziq/RzmDGTLu3Msu
+        Iw8aTnPWAADGYaqAhxc9VTI=
+X-Google-Smtp-Source: ABdhPJxbpV5/wm1zJAV+LFuZZ2YNRiMtfhLAoQ89aCXg6uAo1EeHAdLXyoMbP5sFXqJCGEUDAOwFVA==
+X-Received: by 2002:a17:90a:1e65:: with SMTP id w92mr6321289pjw.187.1597511876194;
+        Sat, 15 Aug 2020 10:17:56 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain ([144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id x13sm11040596pga.30.2020.08.15.10.17.55
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 15 Aug 2020 10:17:55 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v17 08/10] t5411: test updates of remote-tracking branches
+Date:   Sat, 15 Aug 2020 13:17:38 -0400
+Message-Id: <20200815171740.6257-9-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
+In-Reply-To: <20200518094039.757-1-worldhello.net@gmail.com>
+References: <20200518094039.757-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two of our capabilities contain "sha1" in their names, but that's
-historical. Clarify that object names are still to be given using
-whatever object format has been negotiated using the "object-format"
-capability.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+In order to test update of remote-tracking branches for special refs,
+add new "remote.origin.fetch" settings and test cases.
+
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Documentation/technical/protocol-capabilities.txt | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ ...t-0036-report-multi-rewrite-for-one-ref.sh | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 36ccd14f97..124d716807 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -324,15 +324,19 @@ allow-tip-sha1-in-want
- ----------------------
+diff --git a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
+index 27d58edd14..8eec3a1ed8 100644
+--- a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
++++ b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
+@@ -1,3 +1,18 @@
++test_expect_success "setup git config for remote-tracking of special refs" '
++	(
++		cd workbench &&
++		if ! git config --get-all remote.origin.fetch | grep refs/for/
++		then
++			git config --add remote.origin.fetch \
++				"+refs/for/*:refs/t/for/*" &&
++			git config --add remote.origin.fetch \
++				"+refs/pull/*:refs/t/pull/*" &&
++			git config --add remote.origin.fetch \
++				"+refs/changes/*:refs/t/changes/*"
++		fi
++	)
++'
++
+ test_expect_success "setup proc-receive hook (multiple rewrites for one ref, no refname for the 1st rewrite, $PROTOCOL)" '
+ 	write_script "$upstream/hooks/proc-receive" <<-EOF
+ 	printf >&2 "# proc-receive hook\n"
+@@ -58,6 +73,17 @@ test_expect_success "proc-receive: multiple rewrite for one ref, no refname for
+ 	test_cmp expect actual
+ '
  
- If the upload-pack server advertises this capability, fetch-pack may
--send "want" lines with SHA-1s that exist at the server but are not
--advertised by upload-pack.
-+send "want" lines with object names that exist at the server but are not
-+advertised by upload-pack. For historical reasons, the name of this
-+capability contains "sha1". Object names are always given using the
-+object format negotiated through the 'object-format' capability.
++test_expect_success "proc-receive: check remote-tracking #1 ($PROTOCOL)" '
++	git -C workbench show-ref |
++		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/t/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C workbench update-ref -d refs/t/for/master/topic
++'
++
+ test_expect_success "setup proc-receive hook (multiple rewrites for one ref, no refname for the 2nd rewrite, $PROTOCOL)" '
+ 	write_script "$upstream/hooks/proc-receive" <<-EOF
+ 	printf >&2 "# proc-receive hook\n"
+@@ -120,6 +146,17 @@ test_expect_success "proc-receive: multiple rewrites for one ref, no refname for
+ 	test_cmp expect actual
+ '
  
- allow-reachable-sha1-in-want
- ----------------------------
- 
- If the upload-pack server advertises this capability, fetch-pack may
--send "want" lines with SHA-1s that exist at the server but are not
--advertised by upload-pack.
-+send "want" lines with object names that exist at the server but are not
-+advertised by upload-pack. For historical reasons, the name of this
-+capability contains "sha1". Object names are always given using the
-+object format negotiated through the 'object-format' capability.
- 
- push-cert=<nonce>
- -----------------
++test_expect_success "proc-receive: check remote-tracking #2 ($PROTOCOL)" '
++	git -C workbench show-ref |
++		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/t/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C workbench update-ref -d refs/t/for/master/topic
++'
++
+ test_expect_success "setup proc-receive hook (multiple rewrites for one ref, $PROTOCOL)" '
+ 	write_script "$upstream/hooks/proc-receive" <<-EOF
+ 	printf >&2 "# proc-receive hook\n"
+@@ -167,3 +204,14 @@ test_expect_success "proc-receive: multiple rewrites for one ref ($PROTOCOL)" '
+ 	EOF
+ 	test_cmp expect actual
+ '
++
++test_expect_success "proc-receive: check remote-tracking #3 ($PROTOCOL)" '
++	git -C workbench show-ref |
++		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/t/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C workbench update-ref -d refs/t/for/master/topic
++'
 -- 
-2.28.0.297.g1956fa8f8d
+2.28.0
 
