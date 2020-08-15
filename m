@@ -2,276 +2,192 @@ Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C4EEC433DF
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC473C433DF
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:02:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C0F92053B
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:02:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F1C52053B
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:02:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R16nPcD4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n3FW6jKJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729741AbgHOWC3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 18:02:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45648 "EHLO
+        id S1729735AbgHOWC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 18:02:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728735AbgHOVvY (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728732AbgHOVvY (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 Aug 2020 17:51:24 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03A4FC0F26D7
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:38:03 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id a15so11007374wrh.10
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:38:02 -0700 (PDT)
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 078BCC0068F8
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:17:53 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id f193so6053747pfa.12
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HihR3MXTCuXZyJFhlu8zx4dmvSHubtDxD8SCsfS341s=;
-        b=R16nPcD4S9O5hVpKab4udUFuxAn43Ve4OQ4KcbW/i01kJNIbK0YUlg6pPulQE57U7M
-         G/s7gMT4XqRLIQBlg0+Urz7WiZHmjTGIe8eamGNwIY2B4+IVKXymnFoi2GTKQHz8P517
-         VqrdLycp/LQfgQ/TIHKmej6I2leXtCOuUbbdYDf2bF5PlGWCwdU0zD9789IbBTIGqH+K
-         0Uj7KHFk/0QyELL5hCdarJ8w368LEkblr+xof8OxwzphhQ3mmK7g5ob3MYSZ5v8Bb75L
-         aPKNu3igkvgiAnFIi6OxZzdGdoCp3xdExx3aQUh2NXHtR2axjnD5/mh0+/quT/UfF6Tp
-         35Hw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kvitj2ntuR2/UytI/5U9IbwHvrC6MX8tJb6rNyP+GYE=;
+        b=n3FW6jKJrrdEl7gyEeKp1Cqv7M8+Mxw6cBJf1CWGyIYo1QqxaPbE1axM4KlO/FmeT/
+         ktCgpyX3Upg8XT9ubmUAPgT/WacB5lHF1RLd228W9mQyPkP2FwzFhShWVoTbLXFazGUC
+         dbecuFPD4R5nIVCQMYMa0x1HyT3gFh5wxhzjnEfeJyOYuWNArH6ahLoDcyl8Zi9yBvnB
+         5muPWsL61CM/qDjZOcG+Y+Emd8SwT5F+iUqjfvBK/HSr7wy/6MUZohsUE3lgYUNhdUKI
+         hCCFw86IFQ/d3FRcy23pji0XWNkuRJ2qJrMxZ/OcTpd7mYhzKGnT/AZBFNdHVd2kFdK5
+         kQ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HihR3MXTCuXZyJFhlu8zx4dmvSHubtDxD8SCsfS341s=;
-        b=q0mZzPsFegdFAtiV4BCzWPgQqTUWUt7YVG1xKUc4BSAG3XkJCezDxPlA1n05V13ojv
-         8Xpm0WImMp7ELnuZQUJJu/LNmgTbzn1v+O024z4ugqWNv4g5bjVwUaKkj2rf4h+rd34C
-         V4yBNEAc8b0jyAxAfq24Y1NogW5eeukrfQGg/P3Kmf/pRJnr+4XMx+PJmUHZABgS7Ue2
-         U/dOYf0CPdy4IG56t+vGFDWLtG9RxjbaDbaFR9FtqYCXR+qRKPxJ2XFyw7G4GzSuxZR3
-         o13BnQX5+64chdhAjoNzbWgLEYVbzwJoeeoPV/u4VN+BUVPV3dkblPKkTF2QWmUMHv0J
-         MJQA==
-X-Gm-Message-State: AOAM531CQKVNaG5/83usrNyDkrG5gUMuCY32rSaJxWLNHOcrtLYyz3On
-        dHpVzrkCnVCkvIPkxXX67Wa9pogwB7c=
-X-Google-Smtp-Source: ABdhPJw4oSJea+qK25TqesZl3p1gBmfl/c3d0b0I62v5m6IY6k5gajCWDmCuQScFXrLJlZkh34b1ow==
-X-Received: by 2002:a5d:548f:: with SMTP id h15mr7683445wrv.331.1597513081334;
-        Sat, 15 Aug 2020 10:38:01 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k1sm24105810wrw.91.2020.08.15.10.38.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2020 10:38:00 -0700 (PDT)
-Message-Id: <65f334f5cfe7dd99e74d48f2b16b61ae84182c9d.1597513078.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.830.v3.git.git.1597513078.gitgitgadget@gmail.com>
-References: <pull.830.v2.git.git.1597384820.gitgitgadget@gmail.com>
-        <pull.830.v3.git.git.1597513078.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Aug 2020 17:37:56 +0000
-Subject: [PATCH v3 2/3] mem-pool: use more standard initialization and
- finalization
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kvitj2ntuR2/UytI/5U9IbwHvrC6MX8tJb6rNyP+GYE=;
+        b=Iug/2L76w/CLtRXwCs9siDfI73zCZxtt1KpL4FtkzqomJznG/QmtBqMBUE0U3dBGue
+         J+8BS2TwlkdI2ElYU8i3ECkhTAMfMwZVZeZ22/sGD3xAuuHBLad6+QL6RITXDh1lPKCk
+         J6gGY86/LAwGXEKJW9LS/Zq3y3H9VIXfnEL5t0HzBEq+AFcOKYNWP5BCRdecek9kxKRo
+         9Fs9EkBCFKASklIkbZZ8mkhzjPfxWKk+xW/h2Sz4EUIX6oL+EWWyddpRQYh2kAvk5JgW
+         Wb7rPZ1csqQ5rqyF/mCkCqTwL9wnn49D57EgrTpSFilU6OH98xeLt69FGq2bjZjbhsyb
+         xq0A==
+X-Gm-Message-State: AOAM530x0Qlh68E1aNd6hVHJevR//7FlFzYwm3GX5HhypLwV1oArXaZW
+        DfFMxY0MC8DXgc4azeSyu04=
+X-Google-Smtp-Source: ABdhPJwsDbIC6AcbaAoHRvtl56npF6VTf3HYrgDGU+oudHQZh7QQXf0GGE9G2wxTDWDPbl3x7h3fig==
+X-Received: by 2002:a63:fe0a:: with SMTP id p10mr5009227pgh.255.1597511873414;
+        Sat, 15 Aug 2020 10:17:53 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain ([144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id x13sm11040596pga.30.2020.08.15.10.17.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 15 Aug 2020 10:17:52 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v17 05/10] doc: add document for capability report-status-v2
+Date:   Sat, 15 Aug 2020 13:17:35 -0400
+Message-Id: <20200815171740.6257-6-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
+In-Reply-To: <20200518094039.757-1-worldhello.net@gmail.com>
+References: <20200518094039.757-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-A typical memory type, such as strbuf, hashmap, or string_list can be
-stored on the stack or embedded within another structure.  mem_pool
-cannot be, because of how mem_pool_init() and mem_pool_discard() are
-written.  mem_pool_init() does essentially the following (simplified
-for purposes of explanation here):
+Add ABNF notation for capability 'report-status-v2' which extends
+capability 'report-status' by adding additional option lines.
 
-    void mem_pool_init(struct mem_pool **pool...)
-    {
-        *pool = xcalloc(1, sizeof(*pool));
-
-It seems weird to require that mem_pools can only be accessed through a
-pointer.  It also seems slightly dangerous: unlike strbuf_release() or
-strbuf_reset() or string_list_clear(), all of which put the data
-structure into a state where it can be re-used after the call,
-mem_pool_discard(pool) will leave pool pointing at free'd memory.
-read-cache (and split-index) are the only current users of mem_pools,
-and they haven't fallen into a use-after-free mistake here, but it seems
-likely to be problematic for future users especially since several of
-the current callers of mem_pool_init() will only call it when the
-mem_pool* is not already allocated (i.e. is NULL).
-
-This type of mechanism also prevents finding synchronization
-points where one can free existing memory and then resume more
-operations.  It would be natural at such points to run something like
-    mem_pool_discard(pool...);
-and, if necessary,
-    mem_pool_init(&pool...);
-and then carry on continuing to use the pool.  However, this fails badly
-if several objects had a copy of the value of pool from before these
-commands; in such a case, those objects won't get the updated value of
-pool that mem_pool_init() overwrites pool with and they'll all instead
-be reading and writing from free'd memory.
-
-Modify mem_pool_init()/mem_pool_discard() to behave more like
-   strbuf_init()/strbuf_release()
-or
-   string_list_init()/string_list_clear()
-In particular: (1) make mem_pool_init() just take a mem_pool* and have
-it only worry about allocating struct mp_blocks, not the struct mem_pool
-itself, (2) make mem_pool_discard() free the memory that the pool was
-responsible for, but leave it in a state where it can be used to
-allocate more memory afterward (without the need to call mem_pool_init()
-again).
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- mem-pool.c    | 15 ++++-----------
- mem-pool.h    |  4 ++--
- read-cache.c  | 21 +++++++++++++--------
- split-index.c |  6 ++++--
- 4 files changed, 23 insertions(+), 23 deletions(-)
+ Documentation/technical/pack-protocol.txt     | 43 +++++++++++++++++--
+ .../technical/protocol-capabilities.txt       | 17 ++++++--
+ 2 files changed, 54 insertions(+), 6 deletions(-)
 
-diff --git a/mem-pool.c b/mem-pool.c
-index 020b51e0c5..7659919ab2 100644
---- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -33,21 +33,13 @@ static struct mp_block *mem_pool_alloc_block(struct mem_pool *mem_pool, size_t b
- 	return p;
- }
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index a4573d12ce..01eb1629a8 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -503,8 +503,8 @@ The reference discovery phase is done nearly the same way as it is in the
+ fetching protocol. Each reference obj-id and name on the server is sent
+ in packet-line format to the client, followed by a flush-pkt.  The only
+ real difference is that the capability listing is different - the only
+-possible values are 'report-status', 'delete-refs', 'ofs-delta' and
+-'push-options'.
++possible values are 'report-status', 'report-status-v2', 'delete-refs',
++'ofs-delta', 'atomic' and 'push-options'.
  
--void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
-+void mem_pool_init(struct mem_pool *pool, size_t initial_size)
- {
--	struct mem_pool *pool;
--
--	if (*mem_pool)
--		return;
--
--	pool = xcalloc(1, sizeof(*pool));
--
-+	memset(pool, 0, sizeof(*pool));
- 	pool->block_alloc = BLOCK_GROWTH_SIZE;
+ Reference Update Request and Packfile Transfer
+ ----------------------------------------------
+@@ -625,7 +625,7 @@ Report Status
+ -------------
  
- 	if (initial_size > 0)
- 		mem_pool_alloc_block(pool, initial_size, NULL);
--
--	*mem_pool = pool;
- }
+ After receiving the pack data from the sender, the receiver sends a
+-report if 'report-status' capability is in effect.
++report if 'report-status' or 'report-status-v2' capability is in effect.
+ It is a short listing of what happened in that update.  It will first
+ list the status of the packfile unpacking as either 'unpack ok' or
+ 'unpack [error]'.  Then it will list the status for each of the references
+@@ -647,6 +647,43 @@ update was successful, or 'ng [refname] [error]' if the update was not.
+   error-msg         = 1*(OCTET) ; where not "ok"
+ ----
  
- void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
-@@ -66,7 +58,8 @@ void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
- 		free(block_to_free);
- 	}
++New capability "report-status-v2" extends the protocol by adding new option
++lines in order to support reporting of reference rewritten by the
++"proc-receive" hook.  The "proc-receive" hook may handle a command for a
++pseudo-reference which may create or update one or more references, and each
++reference may have different name, different new-oid, and different old-oid.
++
++----
++  report-status-v2  = unpack-status
++		      1*(command-status-v2)
++		      flush-pkt
++
++  unpack-status     = PKT-LINE("unpack" SP unpack-result)
++  unpack-result     = "ok" / error-msg
++
++  command-status-v2 = command-ok-v2 / command-fail-v2
++  command-ok-v2     = command-ok
++		      *option-line
++  command-fail-v2   = command-fail
++		      *option-line
++
++  command-ok        = PKT-LINE("ok" SP refname)
++  command-fail      = PKT-LINE("ng" SP refname SP error-msg)
++
++  error-msg         = 1*(OCTET) ; where not "ok"
++
++  option-line       = *1(option-refname)
++		      *1(option-old-oid)
++		      *1(option-new-oid)
++		      *1(option-forced-update)
++
++  option-refname    = PKT-LINE("option" SP "refname" SP refname)
++  option-old-oid    = PKT-LINE("option" SP "old-oid" SP obj-id)
++  option-new-oid    = PKT-LINE("option" SP "new-oid" SP obj-id)
++  option-force      = PKT-LINE("option" SP "forced-update")
++
++----
++
+ Updates can be unsuccessful for a number of reasons.  The reference can have
+ changed since the reference discovery phase was originally sent, meaning
+ someone pushed in the meantime.  The reference being pushed could be a
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 36ccd14f97..78c0c4b3e2 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -22,9 +22,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
+ and server advertised.  As a consequence of these rules, server MUST
+ NOT advertise capabilities it does not understand.
  
--	free(mem_pool);
-+	mem_pool->mp_block = NULL;
-+	mem_pool->pool_alloc = 0;
- }
+-The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
+-capabilities are sent and recognized by the receive-pack (push to server)
+-process.
++The 'atomic', 'report-status', 'report-status-v2', 'delete-refs', 'quiet',
++and 'push-cert' capabilities are sent and recognized by the receive-pack
++(push to server) process.
  
- void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
-diff --git a/mem-pool.h b/mem-pool.h
-index ca062c9070..870161ab44 100644
---- a/mem-pool.h
-+++ b/mem-pool.h
-@@ -24,10 +24,10 @@ struct mem_pool {
- /*
-  * Initialize mem_pool with specified initial size.
-  */
--void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size);
-+void mem_pool_init(struct mem_pool *pool, size_t initial_size);
+ The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
+ by both upload-pack and receive-pack protocols.  The 'agent' capability
+@@ -284,6 +284,17 @@ each reference was updated successfully.  If any of those were not
+ successful, it will send back an error message.  See pack-protocol.txt
+ for example messages.
  
- /*
-- * Discard a memory pool and free all the memory it is responsible for.
-+ * Discard all the memory the memory pool is responsible for.
-  */
- void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory);
++report-status-v2
++----------------
++
++Capability 'report-status-v2' extends capability 'report-status' by
++adding new option lines in order to support reference rewritten by
++the"proc-receive" hook.  The "proc-receive" hook may handle a command
++for a pseudo-reference which may create or update a reference with
++different name, new-oid, and old-oid.  While the capability
++"report-status" cannot report for such case.  See pack-protocol.txt
++for details.
++
+ delete-refs
+ -----------
  
-diff --git a/read-cache.c b/read-cache.c
-index 8ed1c29b54..fa291cdbee 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -89,8 +89,10 @@ static struct mem_pool *find_mem_pool(struct index_state *istate)
- 	else
- 		pool_ptr = &istate->ce_mem_pool;
- 
--	if (!*pool_ptr)
--		mem_pool_init(pool_ptr, 0);
-+	if (!*pool_ptr) {
-+		*pool_ptr = xmalloc(sizeof(**pool_ptr));
-+		mem_pool_init(*pool_ptr, 0);
-+	}
- 
- 	return *pool_ptr;
- }
-@@ -2006,11 +2008,12 @@ static unsigned long load_all_cache_entries(struct index_state *istate,
- {
- 	unsigned long consumed;
- 
-+	istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
- 	if (istate->version == 4) {
--		mem_pool_init(&istate->ce_mem_pool,
-+		mem_pool_init(istate->ce_mem_pool,
- 				estimate_cache_size_from_compressed(istate->cache_nr));
- 	} else {
--		mem_pool_init(&istate->ce_mem_pool,
-+		mem_pool_init(istate->ce_mem_pool,
- 				estimate_cache_size(mmap_size, istate->cache_nr));
- 	}
- 
-@@ -2070,7 +2073,8 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
- 	if (istate->name_hash_initialized)
- 		BUG("the name hash isn't thread safe");
- 
--	mem_pool_init(&istate->ce_mem_pool, 0);
-+	istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
-+	mem_pool_init(istate->ce_mem_pool, 0);
- 
- 	/* ensure we have no more threads than we have blocks to process */
- 	if (nr_threads > ieot->nr)
-@@ -2097,11 +2101,12 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
- 		nr = 0;
- 		for (j = p->ieot_start; j < p->ieot_start + p->ieot_blocks; j++)
- 			nr += p->ieot->entries[j].nr;
-+		istate->ce_mem_pool = xmalloc(sizeof(*istate->ce_mem_pool));
- 		if (istate->version == 4) {
--			mem_pool_init(&p->ce_mem_pool,
-+			mem_pool_init(p->ce_mem_pool,
- 				estimate_cache_size_from_compressed(nr));
- 		} else {
--			mem_pool_init(&p->ce_mem_pool,
-+			mem_pool_init(p->ce_mem_pool,
- 				estimate_cache_size(mmap_size, nr));
- 		}
- 
-@@ -2358,7 +2363,7 @@ int discard_index(struct index_state *istate)
- 
- 	if (istate->ce_mem_pool) {
- 		mem_pool_discard(istate->ce_mem_pool, should_validate_cache_entries());
--		istate->ce_mem_pool = NULL;
-+		FREE_AND_NULL(istate->ce_mem_pool);
- 	}
- 
- 	return 0;
-diff --git a/split-index.c b/split-index.c
-index e6154e4ea9..c0e8ad670d 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -79,8 +79,10 @@ void move_cache_to_base_index(struct index_state *istate)
- 	if (si->base &&
- 		si->base->ce_mem_pool) {
- 
--		if (!istate->ce_mem_pool)
--			mem_pool_init(&istate->ce_mem_pool, 0);
-+		if (!istate->ce_mem_pool) {
-+			istate->ce_mem_pool = xmalloc(sizeof(struct mem_pool));
-+			mem_pool_init(istate->ce_mem_pool, 0);
-+		}
- 
- 		mem_pool_combine(istate->ce_mem_pool, istate->split_index->base->ce_mem_pool);
- 	}
 -- 
-gitgitgadget
+2.28.0
 
