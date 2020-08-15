@@ -2,208 +2,139 @@ Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93691C433E3
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60E24C433DF
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:19:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B43520639
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:07:32 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FAgwMp+m"
+	by mail.kernel.org (Postfix) with ESMTP id 48B1420657
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 22:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729022AbgHOWHb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 18:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728257AbgHOVun (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Aug 2020 17:50:43 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECFFCC0F26D6
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:38:00 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id f1so11043135wro.2
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:38:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JN0XG4SH9Q+Mx7tQscEwp7Puync+1/gM+KJGF6f8RhA=;
-        b=FAgwMp+mucHgl1m1lfMyn2RyamgeKtIYFaoah4q9D/opVBurhMj+4xGFcUz18spOwH
-         jZhnxpKjji1Xy5RfzCWscclr4Q8woMQXZfJ8352qkZvGXxgwxOkS10qknsSTbkYhPtLZ
-         HoZMdg2hurEUak6W1926c8/3HYPkJRHX0+dgTa4OCyQyeQp42j4lhwHhikSvD6PJ6sl/
-         MdpGNpj8zq6oLwagusTvO+27UVMYMfXzEBBChlriGFUGqyIGBmYkdMi4hudIEYfxkK2J
-         FEGP827zDYrL5oLvFsItvB2bUQAcvFfuaFjvzEz4M8KiOa09u78H1HYBG3fd9Qyv6E0f
-         eoRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JN0XG4SH9Q+Mx7tQscEwp7Puync+1/gM+KJGF6f8RhA=;
-        b=axH2gYCZaKxJ3DtJIA6yITFW5B2Hp2+Qllca0hQrL4O2FyF2anVkahlCB/fcElaKon
-         ZS3MapAdtR7tfvxPXrq9Os53+MZDkX9TOzC0v0wb8z82CRgJpzBR4u2hLpy2mLcS3IuG
-         oC0uMGeabgskTjvwihgDx8kID7xR2Y8/D3sWSP2lXDOuDaTUei7kWO7OAStRJ+xSkcdX
-         d87Dc7ipjSLtmnGmyCFcYsPjPoq4HEF6Tz026/G+YmFOwC1WFu/aS3Gjc1F3dg0rCxvn
-         VfO/EMqC9iB2N3MWX3rv+4V3WevqpDj/n7tDoGFKvYhhm4aJq9PSMsQaDgpoN576WgRw
-         ZT/g==
-X-Gm-Message-State: AOAM530GMI+r9bxQNNAd8BEvqsFzflYbAtgILPIB5MA19hMB2H4GQCsy
-        knfMLrlsiR6qyoOUttFAnaRlLuzUuBg=
-X-Google-Smtp-Source: ABdhPJzmmY+n/sgqvIdsAjN0zQEX0PZ77799F7eubgufejAfUwjMjvw2sisDdXE7aCdUJuI/TBKujw==
-X-Received: by 2002:a5d:56c9:: with SMTP id m9mr7549475wrw.311.1597513079356;
-        Sat, 15 Aug 2020 10:37:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p3sm21384988wma.44.2020.08.15.10.37.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2020 10:37:58 -0700 (PDT)
-Message-Id: <pull.830.v3.git.git.1597513078.gitgitgadget@gmail.com>
-In-Reply-To: <pull.830.v2.git.git.1597384820.gitgitgadget@gmail.com>
-References: <pull.830.v2.git.git.1597384820.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Aug 2020 17:37:54 +0000
-Subject: [PATCH v3 0/3] Extend and add a little more generalization to the mem_pool API
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728979AbgHOWTC convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 15 Aug 2020 18:19:02 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:18796 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729084AbgHOWS7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Aug 2020 18:18:59 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 07FMIll3001960
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 15 Aug 2020 18:18:47 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <jim.cromie@gmail.com>
+Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        <git@vger.kernel.org>
+References: <CAJfuBxw2KudBPfpmVqU9VOfnvrKdczU6Us5FWvpj50T88BarHw@mail.gmail.com> <20200814220828.GP8085@camp.crustytoothpaste.net> <012301d67289$c5c36010$514a2030$@nexbridge.com> <CAJfuBxxqxKAFd_3F5ZKWjfmWA0v+kKX6mNqQA=sGYaP-NYXDSQ@mail.gmail.com>
+In-Reply-To: <CAJfuBxxqxKAFd_3F5ZKWjfmWA0v+kKX6mNqQA=sGYaP-NYXDSQ@mail.gmail.com>
+Subject: RE: git bisect enhancement request
+Date:   Sat, 15 Aug 2020 18:18:41 -0400
+Message-ID: <019701d67352$0ba8c250$22fa46f0$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLA1TswLub1wJdglSp//FP9kbFv/wITf/ABAL+FCF0B2qVWwqc/iQJQ
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In my new merge algorithm, I made use of the mem_pool API in a few
-places...but I also needed to add a few more functions and also needed to
-make the API a bit more general.
+On August 15, 2020 9:05 AM, jim.cromie@gmail.com wrote:
+> To: Randall S. Becker <rsbecker@nexbridge.com>
+> Cc: brian m. carlson <sandals@crustytoothpaste.net>; git@vger.kernel.org
+> Subject: Re: git bisect enhancement request
+> 
+> good questions, thank you both
+> 
+> On Fri, Aug 14, 2020 at 4:25 PM Randall S. Becker
+> <rsbecker@nexbridge.com> wrote:
+> >
+> > On August 14, 2020 6:08 PM, brian m. carlson wrote:
+> > > On 2020-08-14 at 21:11:19, jim.cromie@gmail.com wrote:
+> > > > please teach git bisect how to use 2 separate worktrees for the
+> > > > bisection, toggling between them as bisection progresses, so that
+> > > > the end result is 2 compiled kernels, one broken, one good.
+> > >
+> > > I'm not sure how such a thing would be implemented.  Git doesn't
+> > > know until after it's checked out the tree whether a revision is
+> > > good or bad, since usually the user needs to tell it (or use git
+> > > bisect run).  Even if Git alternated between the two worktrees in
+> > > order, that doesn't mean that one of them will end up being good,
+> > > since Git may find the last good revision early on, then continue to bisect
+> and find many bad revisions until it determines the right one.
+> > >
+> > > Can you tell us more about the algorithm you'd like to see here?
+> >
+> > I'm wondering more about the requirements on this. Does the bisect
+> manipulate both worktrees at once or separately? Are these worktrees
+> variants on a theme but on different branches (so synchronizing the commits
+> would probably be impractical) - or bisect both workspaces but using
+> different commits as start and end (this should be scriptable)? Does it flip
+> back and forth between the two worktrees doing a bisect in one, then the
+> other (this should be scriptable)? Or is this just to teach git to bisect a
+> worktree in a distinct manner - which, correct me if I'm wrong, I think it
+> already supports.
+> >
+> > Or is this more, I have two worktrees on basically the same branch. When
+> bisect happens, one worktree is bisected, tested. If the new code succeeds,
+> and the other worktree is in a failed state, don't bisect the other worktree in
+> the same direction - that's not right, but I think I know your end-state goal:
+> keep bisecting both worktrees until a state change. What that is leading to is
+> really something different, which is that once bisect is done, you know which
+> commit introduced the bug, so set one worktree to the working commit and
+> the other to the broken commit. If that's the case, it's not a toggle, but an
+> end-state operation to set two worktrees to adjacent commits essentially
+> surrounding the introduction point. Is that what you want?
+> >
+> 
+> heh - reading paragraph 1, I thought "yeah thats it"
+> but then paragraph 2 ...
+> 
+> its more about the end-state as Ive thought about it, and I casually leaped to
+> it being useful at every iteration.
+> Having 2 worktrees converging on good/bad yes/no old/new does seem
+> generically appealing, but I dont have a solid use case.
+> 
+> My best generic argument is that determining good/bad on a build can be
+> hard, and having the previous build(s) around could be useful.
+> 
+> Broadening, having --last=N wktree-g<sha8>s, in a grove/orchard would be
+> simple to explain (N=0 currently, wo naming games) Accepting a 'wktree'
+> prefix, and adding suffixes like 5.8.0-v1-00025-g8bfb9456e727-dirty
+> (with a strftime-like format "%v-%u-%5N-%14g-%s" ideally) would sidestep
+> any 'policy/methodology' implied by wktree names.
+> having -00025 etc would give cheap look at bisect convergence.
+> 
+> and having 'planted' a grove of bisection points, one could leave it around,
+> for subsequent use as a "re-bisection cache" to retest against a iteratively
+> refined bisect run script
+> 
+> Im now speculating hard, I hope it makes some sense.
+> 
+> My fever dream is to have a gdb-mi script/program talking to 2 separate
+> targets, and "bisecting breakpoints" back from where the bad one panics, to
+> the point where the gdb trace diverges between the 2 targets.
+> 
+> and I want to run rr record vmlinux inside qemu, with quick deterministic
+> replay, and a tight "breakpoint bisection" loop.  But I digress. And a pony.
 
-Changes since v2:
+I think that you might have answered this yourself-ish. Assume that the code is broken and you are looking for the commit where that happened. Bisect will get you there in each target independently and answer which commit works and which commit breaks on system X. The same can be said for system Y in a separate worktree. You then can check whether the commits are the same or not. If not, you have established your system-X/Y delta. If they are the same, you can then check the gdb trace. If they are the same, conceptually anyway, both systems are behaving similarly. Otherwise, you can reset bisect and start over on system Y (or X, I suppose depending on the commit parentage) using the gdb trace as a criteria for good/bad for bisect purposes. Obviously I'm simplifying, but bisect is agnostic to your pass/fail criteria so perhaps some variant of this, where you use a multi-variate concept of "it works" and "the trace matches". The same concept is used for performance testing, where bisec
+ t can be very useful for determining where a performance degradation was introduced (or where things got better), by using various performance metrics as good/bad criteria instead of whether the code functionally works. Sadly (a nit of mine) is that I don't see performance regression testing used enough in DevOps pipelines although it is somewhat difficult to quantify those metrics in a multi-target pipeline).
 
- * Remove 'x' from mem_pool_xstr[n]?dup() names and remove check for NULL
-   since mem_pool_alloc() already handles that (via xmalloc), as suggested
-   by René
- * Rewrite mem_pool_strndup() to not rely on strnlen(), since that may be
-   too new from some systems (comes from POSIX 2008 ). Also pointed out by
-   René
+My $0.03
+Randall
 
-Elijah Newren (3):
-  mem-pool: add convenience functions for strdup and strndup
-  mem-pool: use more standard initialization and finalization
-  mem-pool: use consistent pool variable name
-
- fast-import.c | 12 ++-------
- mem-pool.c    | 69 ++++++++++++++++++++++++++++++---------------------
- mem-pool.h    | 14 ++++++++---
- read-cache.c  | 21 ++++++++++------
- split-index.c |  6 +++--
- 5 files changed, 70 insertions(+), 52 deletions(-)
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
 
-base-commit: 7814e8a05a59c0cf5fb186661d1551c75d1299b5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-830%2Fnewren%2Fmem_pool_api-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-830/newren/mem_pool_api-v3
-Pull-Request: https://github.com/git/git/pull/830
 
-Range-diff vs v2:
-
- 1:  6d679c5b46 ! 1:  e7f6bf8a8c mem-pool: add convenience functions for xstrdup and xstrndup
-     @@ Metadata
-      Author: Elijah Newren <newren@gmail.com>
-      
-       ## Commit message ##
-     -    mem-pool: add convenience functions for xstrdup and xstrndup
-     +    mem-pool: add convenience functions for strdup and strndup
-      
-     -    fast-import had a special mem_pool_xstrdup() convenience function that I
-     +    fast-import had a special mem_pool_strdup() convenience function that I
-          want to be able to use from the new merge algorithm I am writing.  Move
-     -    it from fast-import to mem-pool, and also add a mem_pool_xstrndup()
-     +    it from fast-import to mem-pool, and also add a mem_pool_strndup()
-          while at it that I also want to use.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-     @@ fast-import.c: static struct branch *new_branch(const char *name)
-       
-       	b = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct branch));
-      -	b->name = pool_strdup(name);
-     -+	b->name = mem_pool_xstrdup(&fi_mem_pool, name);
-     ++	b->name = mem_pool_strdup(&fi_mem_pool, name);
-       	b->table_next_branch = branch_table[hc];
-       	b->branch_tree.versions[0].mode = S_IFDIR;
-       	b->branch_tree.versions[1].mode = S_IFDIR;
-     @@ fast-import.c: static void parse_new_tag(const char *arg)
-       	t = mem_pool_alloc(&fi_mem_pool, sizeof(struct tag));
-       	memset(t, 0, sizeof(struct tag));
-      -	t->name = pool_strdup(arg);
-     -+	t->name = mem_pool_xstrdup(&fi_mem_pool, arg);
-     ++	t->name = mem_pool_strdup(&fi_mem_pool, arg);
-       	if (last_tag)
-       		last_tag->next_tag = t;
-       	else
-     @@ mem-pool.c: void *mem_pool_calloc(struct mem_pool *mem_pool, size_t count, size_
-       	return r;
-       }
-       
-     -+char *mem_pool_xstrdup(struct mem_pool *pool, const char *str)
-     ++char *mem_pool_strdup(struct mem_pool *pool, const char *str)
-      +{
-      +	size_t len = strlen(str) + 1;
-      +	char *ret = mem_pool_alloc(pool, len);
-      +
-     -+	if (!ret)
-     -+		die(_("mem_pool_xstrdup: out of memory"));
-     -+
-      +	return memcpy(ret, str, len);
-      +}
-      +
-     -+char *mem_pool_xstrndup(struct mem_pool *pool, const char *str, size_t len)
-     ++char *mem_pool_strndup(struct mem_pool *pool, const char *str, size_t len)
-      +{
-     -+	size_t minlen = strnlen(str, len);
-     -+	char *ret = mem_pool_alloc(pool, minlen+1);
-     -+
-     -+	if (!ret)
-     -+		die(_("mem_pool_xstrndup: out of memory"));
-     ++	char *p = memchr(str, '\0', len);
-     ++	size_t actual_len = (p ? p - str : len);
-     ++	char *ret = mem_pool_alloc(pool, actual_len+1);
-      +
-     -+	ret[minlen] = '\0';
-     -+	return memcpy(ret, str, minlen);
-     ++	ret[actual_len] = '\0';
-     ++	return memcpy(ret, str, actual_len);
-      +}
-      +
-       int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
-     @@ mem-pool.h: void *mem_pool_alloc(struct mem_pool *pool, size_t len);
-      +/*
-      + * Allocate memory from the memory pool and copy str into it.
-      + */
-     -+char *mem_pool_xstrdup(struct mem_pool *pool, const char *str);
-     -+char *mem_pool_xstrndup(struct mem_pool *pool, const char *str, size_t len);
-     ++char *mem_pool_strdup(struct mem_pool *pool, const char *str);
-     ++char *mem_pool_strndup(struct mem_pool *pool, const char *str, size_t len);
-      +
-       /*
-        * Move the memory associated with the 'src' pool to the 'dst' pool. The 'src'
- 2:  e04ba96b22 = 2:  65f334f5cf mem-pool: use more standard initialization and finalization
- 3:  616402c64e ! 3:  09976779c3 mem-pool: use consistent pool variable name
-     @@ mem-pool.c: void *mem_pool_alloc(struct mem_pool *mem_pool, size_t len)
-       	memset(r, 0, len);
-       	return r;
-       }
-     -@@ mem-pool.c: char *mem_pool_xstrndup(struct mem_pool *pool, const char *str, size_t len)
-     - 	return memcpy(ret, str, minlen);
-     +@@ mem-pool.c: char *mem_pool_strndup(struct mem_pool *pool, const char *str, size_t len)
-     + 	return memcpy(ret, str, actual_len);
-       }
-       
-      -int mem_pool_contains(struct mem_pool *mem_pool, void *mem)
-
--- 
-gitgitgadget
