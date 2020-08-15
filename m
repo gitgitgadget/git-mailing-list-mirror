@@ -2,184 +2,119 @@ Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 117D8C433E3
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBBCBC433DF
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E27132053B
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA02F2053B
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyTbWC8L"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKmd8uVJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729215AbgHOVxN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 17:53:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45598 "EHLO
+        id S1729221AbgHOVxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 17:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729157AbgHOVwn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729096AbgHOVwn (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 Aug 2020 17:52:43 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC721C0A3BF1
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:51 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id 88so10968419wrh.3
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:51 -0700 (PDT)
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD592C025575
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:33 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id t23so13021016ljc.3
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=8yKwkpMYec9D/7NkNOP3qoKkDCzYHq6Bs1apFgJT+rs=;
-        b=WyTbWC8Lr9PMsPA66qumdHWg72BmF8syIO6/W7ch5HVy2MOtD2xH0j6ONOdFZHTt0j
-         N51pvLIq1A+XOEx4WY7xceshch9AMUKmbbIE/34y+4JirxkUTVfJiqU0qk6gdvSI3Pxf
-         chNzcpidhO4XPGlTalEA1MSr4HAgYh26ku76maSjX7rCq6Hj2jRAjRVo7I3O+gwC5VVh
-         Bax4cipclxNy6ukwFznokF3HgerAX5X6MzrbJNxSXDgOfjvy8uYn4brKiqTMs8qmgDZ3
-         2iK2tZBx74qn7C2m+elixpGx8A4rAcWtuPzaTdHtps74qqHFPyFiYb0DupCHeg//FY4A
-         3v0Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=bSXUzHrsp5+czKqabMJHrVPCaZGWcEcvsQY5uNE3Occ=;
+        b=kKmd8uVJoZyYPbFwDqD1fj7xUXY87oX/oaZ81T8s0ORLjrYD+NXtVOm+esGDWWAjJ+
+         Q/8EAfml3nMNQcvrD5w4E+5hN5NhAni4Ns5mgQnmLJd7BNWjILVe9D8tcngJT2A5aSx1
+         CUdskD2glNuTJsdfOT5Tdi7wCdNUgiyj+EBDbla3A+K0OQBAjsEsaqxpD9v19nknxEKh
+         aKSfFB6oaJJXVfmNnQx9iN8CsnO+eliUL26PIo1H3nc3hZA9Vi1Jrq/IbNHdzuLzz/OV
+         77AmSOUGJE1ZktY7JjgeKK4jYdhLwv3eIIDsAWD3LVK77ch/haTUjFLhFxwubv//2L3P
+         iydQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8yKwkpMYec9D/7NkNOP3qoKkDCzYHq6Bs1apFgJT+rs=;
-        b=TtzJ1CWjp/V7bYS/AobnfezasxYdbCaMnR2K1FcHA7bcry3XlVBccjERiFChqMYk8T
-         OpL6/apdAC4xm6g34iAzpzuTY6lLC5ptaFmAOmY2fsvcT4fOdlEZd9a5D1rkrPyryHl/
-         rlwpzUw9BJwDl57DanWyvDL7biThzWwKOupbMKKxgLUfG1nIKKSeOGXbKHVbdO6sYYtt
-         Rf9HJjlflzehOjjR0Heb1V4X/CLLRx0V2u1k8fOD7JQIrXG3E0ZMSoM+Qzh2j/+hu9q+
-         IqIUwmSu9SpMhOnAVbwCOe5Sotn6K2e9PkPPCbtaWVqD250ENGmlP56i3/Pnm8K6yGw7
-         0x1A==
-X-Gm-Message-State: AOAM531XE49T+5hk136s8+DfUo7jfl5ncO+p+rK3yWSC4orEKQKnu0pg
-        E5usNW7ccHMUoj6I+2Jl3ZQTcpJbJ64=
-X-Google-Smtp-Source: ABdhPJzh+TVXmuuzS3NtsEBffy+fs+WG0MkNeEtOcIPs0CYZ7GH4C5EnNQvnxoQq5REGayJDT/pLvQ==
-X-Received: by 2002:adf:ed85:: with SMTP id c5mr7526084wro.307.1597509588769;
-        Sat, 15 Aug 2020 09:39:48 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b8sm22702664wrv.4.2020.08.15.09.39.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=bSXUzHrsp5+czKqabMJHrVPCaZGWcEcvsQY5uNE3Occ=;
+        b=trk31KEroq1gO6N3Sp7WIGov9NMLBplvBITVjsDa0/zyKpCea16nUak56rTusMFFCG
+         hNcQI88gwTKWgloQfbtLDEu1yxX5g156sch+52+8x3xOb927sputgGCCw34djui6WW7h
+         UKoJdk6GVMi4JJ8YWKBDf/m5Wpaa14DCqns1YgfQqf8gdp4Yh/Nn+DxmHA8Y1MvntYkc
+         KkI8t6Yjq1Csq/eLrg7wecNlP8QEzXyTp/i0DEbvS4Banmk9hW5MWzj9VKIh7qo4HhWj
+         volpgF9IkDjlvzDFeO6Ki6oofGTPRKjBEhnzLiM5PXw2k3RpSg9ea0aDwCNSsPme7hxC
+         ydew==
+X-Gm-Message-State: AOAM531NT1N70zQFOddotlCt8y4xq66HrGbBPJQsEBKklNR4dIIJ2OoN
+        A3gzMs9Vkt2NOHLJrc3QiOiOJ78J5PQ=
+X-Google-Smtp-Source: ABdhPJyM3t6GnHQyOv71K0jfwkB/gC3Kvg3IKKsUeVw2AiiLRfJDZ076/tZystCGrEPp1wusgvZRHw==
+X-Received: by 2002:a2e:3802:: with SMTP id f2mr3372712lja.212.1597507591897;
+        Sat, 15 Aug 2020 09:06:31 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id a1sm2670493lfb.10.2020.08.15.09.06.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2020 09:39:48 -0700 (PDT)
-Message-Id: <6a0cde983d9ed20f043a4977313d714154602012.1597509583.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
-References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
-        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
-From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Aug 2020 16:39:36 +0000
-Subject: [PATCH v3 04/11] commit-graph: consolidate compare_commits_by_gen
-Fcc:    Sent
+        Sat, 15 Aug 2020 09:06:31 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 3/4] protocol-capabilities.txt: clarify "allow-x-sha1-in-want" re SHA-256
+Date:   Sat, 15 Aug 2020 18:06:01 +0200
+Message-Id: <2e82be9e365d5157a604a599d764fa39664ab684.1597506837.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
+In-Reply-To: <cover.1597506837.git.martin.agren@gmail.com>
+References: <cover.1597406877.git.martin.agren@gmail.com> <cover.1597506837.git.martin.agren@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Taylor Blau <me@ttaylor.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+Two of our capabilities contain "sha1" in their names, but that's
+historical. Clarify that object names are still to be given using
+whatever object format has been negotiated using the "object-format"
+capability.
 
-Comparing commits by generation has been independently defined twice, in
-commit-reach and commit. Let's simplify the implementation by moving
-compare_commits_by_gen() to commit-graph.
-
-Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-Reviewed-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- commit-graph.c | 15 +++++++++++++++
- commit-graph.h |  2 ++
- commit-reach.c | 15 ---------------
- commit.c       |  9 +++------
- 4 files changed, 20 insertions(+), 21 deletions(-)
+ Documentation/technical/protocol-capabilities.txt | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index af8d9cc45e..fb6e2bf18f 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -112,6 +112,21 @@ uint32_t commit_graph_generation(const struct commit *c)
- 	return data->generation;
- }
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 36ccd14f97..124d716807 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -324,15 +324,19 @@ allow-tip-sha1-in-want
+ ----------------------
  
-+int compare_commits_by_gen(const void *_a, const void *_b)
-+{
-+	const struct commit *a = _a, *b = _b;
-+	const uint32_t generation_a = commit_graph_generation(a);
-+	const uint32_t generation_b = commit_graph_generation(b);
-+
-+	/* older commits first */
-+	if (generation_a < generation_b)
-+		return -1;
-+	else if (generation_a > generation_b)
-+		return 1;
-+
-+	return 0;
-+}
-+
- static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
- {
- 	unsigned int i, nth_slab;
-diff --git a/commit-graph.h b/commit-graph.h
-index 09a97030dc..701e3d41aa 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -146,4 +146,6 @@ struct commit_graph_data {
-  */
- uint32_t commit_graph_generation(const struct commit *);
- uint32_t commit_graph_position(const struct commit *);
-+
-+int compare_commits_by_gen(const void *_a, const void *_b);
- #endif
-diff --git a/commit-reach.c b/commit-reach.c
-index efd5925cbb..c83cc291e7 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -561,21 +561,6 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
- 	return repo_is_descendant_of(the_repository, commit, list);
- }
+ If the upload-pack server advertises this capability, fetch-pack may
+-send "want" lines with SHA-1s that exist at the server but are not
+-advertised by upload-pack.
++send "want" lines with object names that exist at the server but are not
++advertised by upload-pack. For historical reasons, the name of this
++capability contains "sha1". Object names are always given using the
++object format negotiated through the 'object-format' capability.
  
--static int compare_commits_by_gen(const void *_a, const void *_b)
--{
--	const struct commit *a = *(const struct commit * const *)_a;
--	const struct commit *b = *(const struct commit * const *)_b;
--
--	uint32_t generation_a = commit_graph_generation(a);
--	uint32_t generation_b = commit_graph_generation(b);
--
--	if (generation_a < generation_b)
--		return -1;
--	if (generation_a > generation_b)
--		return 1;
--	return 0;
--}
--
- int can_all_from_reach_with_flag(struct object_array *from,
- 				 unsigned int with_flag,
- 				 unsigned int assign_flag,
-diff --git a/commit.c b/commit.c
-index 4ce8cb38d5..bd6d5e587f 100644
---- a/commit.c
-+++ b/commit.c
-@@ -731,14 +731,11 @@ int compare_commits_by_author_date(const void *a_, const void *b_,
- int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused)
- {
- 	const struct commit *a = a_, *b = b_;
--	const uint32_t generation_a = commit_graph_generation(a),
--		       generation_b = commit_graph_generation(b);
-+	int ret_val = compare_commits_by_gen(a_, b_);
+ allow-reachable-sha1-in-want
+ ----------------------------
  
- 	/* newer commits first */
--	if (generation_a < generation_b)
--		return 1;
--	else if (generation_a > generation_b)
--		return -1;
-+	if (ret_val)
-+		return -ret_val;
+ If the upload-pack server advertises this capability, fetch-pack may
+-send "want" lines with SHA-1s that exist at the server but are not
+-advertised by upload-pack.
++send "want" lines with object names that exist at the server but are not
++advertised by upload-pack. For historical reasons, the name of this
++capability contains "sha1". Object names are always given using the
++object format negotiated through the 'object-format' capability.
  
- 	/* use date as a heuristic when generations are equal */
- 	if (a->date < b->date)
+ push-cert=<nonce>
+ -----------------
 -- 
-gitgitgadget
+2.28.0.297.g1956fa8f8d
 
