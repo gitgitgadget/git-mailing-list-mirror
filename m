@@ -2,89 +2,102 @@ Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02EEDC433E4
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88844C433DF
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:58:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5993206B6
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:58:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 67136206B6
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:58:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tfnsA3zc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lfe4CtrV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729502AbgHOV6C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 17:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45624 "EHLO
+        id S1729495AbgHOV6B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 17:58:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728219AbgHOVwA (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728960AbgHOVwA (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 Aug 2020 17:52:00 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAC2C02B8FB
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 06:46:54 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id s29so3466957uae.1
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 06:46:54 -0700 (PDT)
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B6EC0A3BE0
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:38 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id h19so12986423ljg.13
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i9FdPUMBeQswcBbmyjIIK9WeyQPQ2nf7SsmgKFdq9OI=;
-        b=tfnsA3zcUUDZ4TOPAGbbfsWSy+muQpn+RpMFfdmQBOUGoTpT2GisYOXhdZByFdXtLu
-         Ss6hIak9ZJAM29y5esVnkA8W83sd4UFlfn7ZseTVmZc79iN+9Wcl6mGpVq2ly71OPwLp
-         LJ2uxzfPwNOQqZ6mahIhUcn2S4omYKdNRzfIEO99X2Bgac+J4M4bgQTnj8xkqG9K5Dt3
-         Ek9CEwptv5z68UAq2j9krUPZRvDYv57VLLk6taRJLgGFNHjFhdhEVAhXWhw0OWyDugX2
-         llLLQHZEvs5hWCBitAleF3+stq2AMvEFd6ikdhAOMgerZQ/jgJz8VQwC3gp03QcWKYif
-         Cpdg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=V5gv5K9TkWLpRShrsSODi5U1FnGFWzDOBRPbR69Y/jQ=;
+        b=Lfe4CtrV2eKpzGMviWiX3dhC1ItZBUDMBOB5bsGwvqvrzOfAxDZvVHcEC7vITug3Hp
+         jLLxsQQ6lVYjpGc+MouzopNjQXgNCGfhFIKGR0I8LtER3Ts0HB7YDHDQrn5PD80lwYli
+         CH0DBpkaf8gTrYoPbaRvEEiePgu+F3H6QIHBqea/Zv38cpEomL/6KdviEpDSiiNzi5TS
+         +i5wccAMKiepbTunWBc9qNtvwEauwH6jM0Han9T3uyyHjRdzJSJozhZG2o8OMcn7mcTZ
+         XZfcxj9NKYGDeuzkQCJvzpgF8AYcN/jHVaV3JffQr5tWsBxiBOmn7JWRvK/NJn+0xk0S
+         upyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i9FdPUMBeQswcBbmyjIIK9WeyQPQ2nf7SsmgKFdq9OI=;
-        b=UBtj9AU0b2H3GBHSwICS3GYWFqWn/QCQXPcjYuuSn/oWNv0xcewBc9Jevqm8GuTK3i
-         vasFEvYlvrrHu333iOXvUUghq/y/C3mr+ZaBsThlUvCSW1cLN8PXyqcpKxXJ+G6SHcO/
-         3HTG+L4RaYybvpXr0dgk3pTQT7v3bfGSYKWteQmpMXwGVatS1OifMCCHbeh0FGW9yasW
-         uHepUExJ8yWlLMHqszlM7XWaeIk7eJ352w/kJzmg4MF1VkqvV/rL24Df6N0AzVoX+6BS
-         L6QCXv2wQACB3ypEtLfHfPAyDOMcd2lJmM0ScQ1LuU+3BLYdpFjx2NVs5brQEjnNiAQs
-         JRzQ==
-X-Gm-Message-State: AOAM530zWfkAuUNUzQhDvndQNIOISIYTsE8ZJfl5jE7gQh6T3sUWTP0z
-        I2VWPrCZwQkaa/1htGLEJrdFgfwomghYqsji4lE=
-X-Google-Smtp-Source: ABdhPJyAbmKURNw6svhhf4LZrvGEoAaMeiHpD753joWsebA7uomwj9eRp3NoNpuQX8qKwxtxAtqb+fv6nbZKiC5azXo=
-X-Received: by 2002:ab0:49ed:: with SMTP id f42mr3838788uad.115.1597499212889;
- Sat, 15 Aug 2020 06:46:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.703.git.1597428440.gitgitgadget@gmail.com>
- <4bbfd345d16da4604dd20decda8ecb12372e4223.1597428440.git.gitgitgadget@gmail.com>
- <20200814201153.GK8085@camp.crustytoothpaste.net> <7082f3c9-652e-36d9-26ae-d1f86e872480@gmail.com>
-In-Reply-To: <7082f3c9-652e-36d9-26ae-d1f86e872480@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 15 Aug 2020 15:46:41 +0200
-Message-ID: <CAN0heSq3voEdae_qiFOx1D1X2qD-2QiOTb5f0Y750pC1UPdH-A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] commit-graph: use the hash version byte
-To:     Derrick Stolee <stolee@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=V5gv5K9TkWLpRShrsSODi5U1FnGFWzDOBRPbR69Y/jQ=;
+        b=pfPn6SdwVxMAsQIHwzwQZJHoIZUQZvnFb4qm4ry+ox6jLM+KeySiag7XRChQUeclkr
+         2WyKClFN0bLfe3KvmWBp8u6F/vRfNeu1HVH2iaAVFt4okUjxoWjrFKFyjf8oYvjyHYL9
+         ND4xqudmAjNM03YoHnDD8O9xZ7qswiKb+NiC+1I9QCZzQPMPGMjMsm+O/lKCJYEAQVpY
+         D8vwfSpOUMqXRhFVLMfReWw+jTWdizWBGkqirulOE6qqWjaSXMESTcgds8K/hBxM8W78
+         sDO+oMxz5zzHGQlswEuaDVSXmNqlvp8b52cUzdTbHR9YZ0nqUDjlIoe2/c6jL8lu5co8
+         LTTA==
+X-Gm-Message-State: AOAM530yk+okVHFRh0+q+oENz6SkO+1NkkpejWGTnQPpgFa6RFiXK9bU
+        F6RgEh5t7Lm9ycoa7Vari82giQL112A=
+X-Google-Smtp-Source: ABdhPJztUrS7HPDay1HR3Vjm7lWFJRt917AMwCL/HhARTWO/oeFOLAIZKNFbtiTp1g1ByWpNT8UjGA==
+X-Received: by 2002:a2e:95cc:: with SMTP id y12mr3423032ljh.138.1597507596440;
+        Sat, 15 Aug 2020 09:06:36 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id a1sm2670493lfb.10.2020.08.15.09.06.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Aug 2020 09:06:35 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 4/4] shallow.txt: document SHA-256 shallow format
+Date:   Sat, 15 Aug 2020 18:06:02 +0200
+Message-Id: <8680fc1af6714b1d97b81b824184679593213d91.1597506837.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
+In-Reply-To: <cover.1597506837.git.martin.agren@gmail.com>
+References: <cover.1597406877.git.martin.agren@gmail.com> <cover.1597506837.git.martin.agren@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 14 Aug 2020 at 22:36, Derrick Stolee <stolee@gmail.com> wrote:
->
-> I appreciate the suggested improvements here. I'm happy to do
-> something more similar to other places in the code.
->
-> These will be part of my v2 to be re-rolled early next week.
+Similar to recent commits, document that we list object names rather
+than SHA-1s.
 
-I have nothing to add to brian's great suggestions. I'll be very happy
-to see this patch instead of my patch 5/5 'commit-graph-format.txt: fix
-"Hash Version" description'.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/technical/shallow.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Martin
+diff --git a/Documentation/technical/shallow.txt b/Documentation/technical/shallow.txt
+index 01dedfe9ff..f3738baa0f 100644
+--- a/Documentation/technical/shallow.txt
++++ b/Documentation/technical/shallow.txt
+@@ -13,7 +13,7 @@ pretend as if they are root commits (e.g. "git log" traversal
+ stops after showing them; "git fsck" does not complain saying
+ the commits listed on their "parent" lines do not exist).
+ 
+-Each line contains exactly one SHA-1. When read, a commit_graft
++Each line contains exactly one object name. When read, a commit_graft
+ will be constructed, which has nr_parent < 0 to make it easier
+ to discern from user provided grafts.
+ 
+-- 
+2.28.0.297.g1956fa8f8d
+
