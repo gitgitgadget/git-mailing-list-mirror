@@ -2,122 +2,113 @@ Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27973C433E5
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CACBC433E3
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:55:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 062DC2053B
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:54:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3759C204FD
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:55:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U9jxWtMT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oyknWPJu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728660AbgHOVyH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 17:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45600 "EHLO
+        id S1729330AbgHOVzT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 17:55:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729135AbgHOVwi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Aug 2020 17:52:38 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11E0FC0068C6
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:17:52 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id i92so6561248pje.0
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 10:17:52 -0700 (PDT)
+        with ESMTP id S1729079AbgHOVwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Aug 2020 17:52:25 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563C0C061385
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 17:29:57 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id p8so5528073vsm.12
+        for <git@vger.kernel.org>; Fri, 14 Aug 2020 17:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=caKEKWGdKp+5Ap1E012huXnjXEaCWna2Ltkuc1hh8KE=;
-        b=U9jxWtMTVcY+gmsz5Cw+PX+5/chgF5F1ju3P99m/QyrxFqnuDtMNqqWBM4+CJST8tb
-         Vr7S6dE+5QtGLqIspOmwOIK+26rzBuhxe/NIJ28qcbDZG+S/BXgWGNP7CAj5I14MfG+C
-         c0vENllxhTbchixaH4urD4XwBYS3A2o4+KdM1+wOPrnt2UAqzgz64ojPhcp9itx1UBJr
-         giGSnZLly3iRf2ABQKDHkzU9G8t9aZucSjs5RsKaoV7SutBgPxpfBA4RZGFbhi7vm+A/
-         vuJdBRs6Q8N7mii+B1tGMx3d2Rst45Pmqor5LcHAbkWHRz1SDrdTg1bJU6hHgpdaDT+o
-         3Dbw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bVgccJefpk9GHbxqI+D4Sy62Umoj3LkxCOVnmIUJHn0=;
+        b=oyknWPJuAAvn+3+ha27t++idLig+cYwjqeq4odmS3h7PijUh8xfJvPulVVx6w01dDS
+         ppeg+l/B/eyiC9qcmMCzCKfkY8tfA40qBEf8NXo762wMcdiLyU9rIDY32vTaCRx+OXdC
+         HBUT39vvp+vipoD///Mi8Ne/ozZZi5k2nbhgYsgcgRk+DOUI37RVerj+e0ON6C/pidgv
+         y6BvoOBT4tUE4hFM19rMYAUJu0xlNJsaWhoNnAqcYB8O2Nt+FRF+bOy22SLhawwB9jtr
+         CTMfRUeWfVFG6xVQHQTR9pUZdaSO1YL80+PBp8NPeZfta2HSXICyAG+Xm3SuZiE2BomK
+         pTFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=caKEKWGdKp+5Ap1E012huXnjXEaCWna2Ltkuc1hh8KE=;
-        b=CDES59cTgjNHRt2zwRAFEe+1E6xO8eqXCadoYmpyR16lEociBhhn3zDgSoYQbGHLE8
-         M/lW8cNEB2fU/AFBm/Aa1BkTuh+KQvw5FygsVIyZKYy+UChOzm6ybgvfEOR72iTt3Qiz
-         W/CWnNnyFm6aLSw1QGFejWNojKLf2tZpoX/vxOqd1dwWNGWvEfRGN8RZquUHT8sfkmPY
-         3bYNBo+uvbAtcDRWX+8PVdKSoakKMrIq+w4CG/q7R0dd4i9HXquxL04vFD68DZlpfpHN
-         JTiTqoQPwi5YVV9woWdFVmBubQCay9yaKzpq1KBaINXmVZaO3+FDM5gGC3VVCZIibO7M
-         G//g==
-X-Gm-Message-State: AOAM532SpbVVU97nXDJPnuMnVwbls6aHQuhz9cG/sRiDwxE5RtiZBx94
-        ATYDY33bb8HcRh/Nm9mSRW8=
-X-Google-Smtp-Source: ABdhPJxq84sptUz3FCs5WAQ6EOujhFNDUj2YuIqXq2+rTvT7/tYEpV6glhnkM6Tk3IzcuheDzq9eeA==
-X-Received: by 2002:a17:90a:8d0b:: with SMTP id c11mr6735463pjo.196.1597511869497;
-        Sat, 15 Aug 2020 10:17:49 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id x13sm11040596pga.30.2020.08.15.10.17.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Aug 2020 10:17:49 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v17 01/10] transport: not report a non-head push as a branch
-Date:   Sat, 15 Aug 2020 13:17:31 -0400
-Message-Id: <20200815171740.6257-2-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
-In-Reply-To: <20200518094039.757-1-worldhello.net@gmail.com>
-References: <20200518094039.757-1-worldhello.net@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bVgccJefpk9GHbxqI+D4Sy62Umoj3LkxCOVnmIUJHn0=;
+        b=HmEvJ1AMjwIN1r7MKmrJ7BnORU8Wm/PwQsryYznvaq4N1OQOK82AQqzkoREpfH3mXz
+         neYoS3B4+WN+ZtF9WjBswAUNgyTyqAA0NRfV7iA/c5t9dIS1olsPSuaeOsRfKgsNjRic
+         0wOexV8rBuWsek6EXcqa8wQfzmsihGlgu3TcvPTTluASIji/hTU6jhQgKdU6GOMB9Efr
+         hj0zyqtESZ46Ey9YCc6p+6GCOPghikgXF7qvgnrhK8qi7yyjeWXFZMXimEV3IcWquZxq
+         clVtxdRi57OHotmH6TsKIa1pTuXAGzCNt+JxpDZsl9hbw/LLyfnyqZVW5W2aRn9sB0Ok
+         XJrA==
+X-Gm-Message-State: AOAM5322W43aMlVmDDlxzaRH/ZParSltZVa0C3M05qySJbzqp2lwjSNZ
+        CRSZ01bBxAomo/sIjtlf+GKd3AWfEn87fgMmDLw=
+X-Google-Smtp-Source: ABdhPJy/mil7A3TPz07iRiGNcBObGDseVbon0cPeCt6DuuT672uzIkF6F3feA7R7qPHi2wGLIsQLymtUDnSsKQZdtIs=
+X-Received: by 2002:a67:7d8b:: with SMTP id y133mr3343583vsc.87.1597451396402;
+ Fri, 14 Aug 2020 17:29:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200815002831.2468968-1-jacob.e.keller@intel.com>
+In-Reply-To: <20200815002831.2468968-1-jacob.e.keller@intel.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 14 Aug 2020 17:29:45 -0700
+Message-ID: <CA+P7+xoDckBukFF9MnkhmWDdJxEcCZK5jg6HJcBbPcXB70xOUQ@mail.gmail.com>
+Subject: Re: [RFC 0/3] support negative refspecs
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+On Fri, Aug 14, 2020 at 5:28 PM Jacob Keller <jacob.e.keller@intel.com> wrote:
+>
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> This is more or less just a port of what Peff already had published a few
+> years ago at https://lore.kernel.org/git/20140125013433.GA22336@sigill.intra.peff.net/
+>
+> I cleaned some things up and made sure the tests pass, but haven't yet added
+> any new tests.
+>
+> I think the overal design makes sense: applying positive first and then
+> negative. This appears to be how negative pathspecs work at least as far as
+> I could tell with a few trials.
+>
+> The first two patches are cleanup/fixups that I think could go separately if
+> everyone agrees. The third is the meat of the idea, and where most of the
+> work needs to be done.
+>
+> Jacob Keller (3):
+>   refspec: fix documentation referring to refspec_item
+>   refspec: make sure stack refspec_item variables are zeroed
+>   refspec: add support for negative refspecs
+>
+>  builtin/fetch.c  |  3 +++
+>  builtin/remote.c |  1 +
+>  refspec.c        | 30 +++++++++++++++++++++++++++++
+>  refspec.h        | 29 +++++++++++++++-------------
+>  remote.c         | 49 +++++++++++++++++++++++++++++++++++++++++++++++-
+>  remote.h         |  9 ++++++++-
+>  transport.c      |  1 +
+>  7 files changed, 107 insertions(+), 15 deletions(-)
+>
+>
+> base-commit: 878e727637ec5815ccb3301eb994a54df95b21b8
+> --
+> 2.28.0.163.g6104cc2f0b60
+>
 
-When pushing a new reference (not a head or tag), report it as a new
-reference instead of a new branch.
+This probably doesn't have the right reply headers, because I forgot
+to send the cover letter along with the patches and realized it after
+I hit send. Sorry!
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- t/t5516-fetch-push.sh | 2 +-
- transport.c           | 9 ++++++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 36ad20a849..d11382f769 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
- test_expect_success 'push --porcelain' '
- 	mk_empty testrepo &&
- 	echo >.git/foo  "To testrepo" &&
--	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
-+	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
- 	echo >>.git/foo "Done" &&
- 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
- 	(
-diff --git a/transport.c b/transport.c
-index 2d4fd851dc..19b033dc6a 100644
---- a/transport.c
-+++ b/transport.c
-@@ -499,9 +499,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
- 				 porcelain, summary_width);
- 	else if (is_null_oid(&ref->old_oid))
- 		print_ref_status('*',
--			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
--			"[new branch]"),
--			ref, ref->peer_ref, NULL, porcelain, summary_width);
-+				 (starts_with(ref->name, "refs/tags/")
-+				  ? "[new tag]"
-+				  : (starts_with(ref->name, "refs/heads/")
-+				     ? "[new branch]"
-+				     : "[new reference]")),
-+				 ref, ref->peer_ref, NULL, porcelain, summary_width);
- 	else {
- 		struct strbuf quickref = STRBUF_INIT;
- 		char type;
--- 
-2.28.0
-
+Thanks,
+Jake
