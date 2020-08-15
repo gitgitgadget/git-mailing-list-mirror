@@ -2,402 +2,747 @@ Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 016AAC433DF
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F86C433E5
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:56:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C324020791
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:56:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 542D3206B6
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:56:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rZsb7kPi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G5BbkS2G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729027AbgHOVwT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 17:52:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45640 "EHLO
+        id S1729156AbgHOV4d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 17:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729026AbgHOVwN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729028AbgHOVwN (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 Aug 2020 17:52:13 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A40BC0A3BF0
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:51 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id g8so9878842wmk.3
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:51 -0700 (PDT)
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C7EEC0A3BED
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:49 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a15so10924985wrh.10
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=uS+mjap2jFwH7Dc8dQ/gHl0IFxMHTx1C1ALI8i/PBpY=;
-        b=rZsb7kPibwEJgUyti+ZDQYoipvK8Vp20hQWQ0RNgugrCIapSUQzbOis4yAZvNmZDm+
-         CW3SJqXHyDYFUpSUEYT6chXILSfYoA0A9zYsAM6oeOWLr+9DX3EQrEfLxIHHDMOE7/Di
-         aW/K5P7y1SVFEXE3evlp0SNZKQryW23PSIg+LPQBlWnHC6PsQWtxu0BffmvVQdfRJk9R
-         SjcmNHuubh5CSv8nwdn5dm5Poc+CPbmPEBxWiQoHaAOkwIUMYYF8L9NUtFdEpwA0NXC5
-         WUrQFejbVelci/HQ3MPv6Krw0gPg4IN3GykX8iUwCefH7oTnhOO4b1nDO6YdNj0CtpN+
-         SPow==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=yPher7/vH7dg6ElB068bkFXCqwOPCW2T13purJWBvrQ=;
+        b=G5BbkS2GC4155DtfiHid4YKlDN5sGFCfoyDUkSUu0tiMLSwiU2NKiue1StKpudjncj
+         Kgu5vBf6pBlF1Nb/fzW+rz6bPvwpEIi1TjTxySVYg07AuQBulOpHqFzo5ELpJnQPQq4R
+         JUjD6KuBjYPZ/AWDtWgjrw10nh5obVdHV5QlqkIkDEJ2jxH4qqJKtP880QmyETIWgx1e
+         JndG8zhpg3DTprNfwiFtDKM6OwgNCv55OyI36Oh1xputhGxhlke8tkYlF/ao6LxONUyq
+         l2Hg3LFe0Mwe5mgFPjej1FDOCDfnrnsPtCwJU8+8qq/6GkgvuhgehNE0jUkvk83WGwgg
+         SWmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uS+mjap2jFwH7Dc8dQ/gHl0IFxMHTx1C1ALI8i/PBpY=;
-        b=NQR7wPj2q+5DEHwyY4XP+iKB+TVjowyyQ5QkO2PYr35/h4b6OnB7FbFSYPhB+Ji6gW
-         ClogXp2dwJVz8mcEztA8brDUHHDo0u6fuYBpeHvcNMd2OV6q5+ZmK2DlLlSUQfP9qw/0
-         NAfkUlvXHugPGlSrPTeUCwzBVD+xB5Nz22E6OXX/kFMkMSViok3Mgi88KijAe8kZn84u
-         tVWPh2e8S43Qvfu/uIIFtbKm5E0ZyM7WeZk0LEmlYglcLCv8IH+WK16VAnT1uGFXSGNg
-         LVGdoUpDireHRs9UKl0Gwh2YXapoGZbvS4qUxVenCktYKiCkgEHLp1A1YS1EwIEjCA64
-         vrkg==
-X-Gm-Message-State: AOAM531OHLwkEXVx5D/3uOfCfNWkKg+dS2FxDMAQ46/bdX6x8Z5tMeUu
-        IpiGTHhOVLRNdwjskp6UK/cmtAQF+Q8=
-X-Google-Smtp-Source: ABdhPJx7KckH4LGWiOk0WduRxpbp7e86FQon9C6rExCQtb/1xLgkHCsRghlQTZszxRox5NPDaW0qKQ==
-X-Received: by 2002:a7b:c0c8:: with SMTP id s8mr7648296wmh.4.1597509589547;
-        Sat, 15 Aug 2020 09:39:49 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=yPher7/vH7dg6ElB068bkFXCqwOPCW2T13purJWBvrQ=;
+        b=rSaTmqnn89t9OVB3pkVsZWzHLouhDY+mkXcPZ8/CQ0KS9byBC9g302IpdowJQjDbM9
+         +X9QnYCZjxr+kykgyaCQ09aUhNIGBbn7Ft0UZN6prY/HM4/+V5iSTMNrGmNvhzpxbXEG
+         0iffI1cP2XvnZZeToDHUw24v7WfFH47ZqW7DanE/OHqiCnJrOu3zZvXyjggkD2sz65yV
+         x5ypWq6sixcz0zaPeoTE1Ixjk0G981YWiD0Eb0HiSV8wgS9D3Qeial9uH1qWIzkBKiER
+         zubTqFHkogPlJt7z5TAhjxztxRv85kCSJHChVU7C1HEjXQz2qTnIsyZUjF0nDQVoaAcW
+         3OBQ==
+X-Gm-Message-State: AOAM532/7II9AXopSrd0KSlSZ3DEVLyKt/BKDh0ohEP+6Ns+UAkyV33V
+        e/wZJOJvzwgtb613OO4TW6BYHsx4fG0=
+X-Google-Smtp-Source: ABdhPJxUUdAuJzbtvtWDPWX+G2oRTssu5Or5aQ7UaJo7N3+pY9CJb2rn0cCA4x+uCx05OnNQetN8lQ==
+X-Received: by 2002:adf:fb01:: with SMTP id c1mr7235233wrr.119.1597509585111;
+        Sat, 15 Aug 2020 09:39:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j11sm21631027wrq.69.2020.08.15.09.39.49
+        by smtp.gmail.com with ESMTPSA id i6sm21172330wrp.92.2020.08.15.09.39.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2020 09:39:49 -0700 (PDT)
-Message-Id: <6be759a9542114e4de41422efa18491085e19682.1597509583.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+        Sat, 15 Aug 2020 09:39:44 -0700 (PDT)
+Message-Id: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+In-Reply-To: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
 References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
-        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 15 Aug 2020 16:39:37 +0000
-Subject: [PATCH v3 05/11] commit-graph: return 64-bit generation number
-Fcc:    Sent
+Date:   Sat, 15 Aug 2020 16:39:32 +0000
+Subject: [PATCH v3 00/11] [GSoC] Implement Corrected Commit Date
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
         Taylor Blau <me@ttaylor.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
         Abhishek Kumar <abhishekkumar8222@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+This patch series implements the corrected commit date offsets as generation
+number v2, along with other pre-requisites.
 
-In a preparatory step, let's return timestamp_t values from
-commit_graph_generation(), use timestamp_t for local variables and
-define GENERATION_NUMBER_INFINITY as (2 ^ 63 - 1) instead.
+Git uses topological levels in the commit-graph file for commit-graph
+traversal operations like git log --graph. Unfortunately, using topological
+levels can result in a worse performance than without them when compared
+with committer date as a heuristics. For example, git merge-base v4.8 v4.9 
+on the Linux repository walks 635,579 commits using topological levels and
+walks 167,468 using committer date.
 
-Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
----
- commit-graph.c | 18 +++++++++---------
- commit-graph.h |  4 ++--
- commit-reach.c | 32 ++++++++++++++++----------------
- commit-reach.h |  2 +-
- commit.h       |  3 ++-
- revision.c     | 10 +++++-----
- upload-pack.c  |  2 +-
- 7 files changed, 36 insertions(+), 35 deletions(-)
+Thus, the need for generation number v2 was born. New generation number
+needed to provide good performance, increment updates, and backward
+compatibility. Due to an unfortunate problem, we also needed a way to
+distinguish between the old and new generation number without incrementing
+graph version.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index fb6e2bf18f..7f9f858577 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -99,7 +99,7 @@ uint32_t commit_graph_position(const struct commit *c)
- 	return data ? data->graph_pos : COMMIT_NOT_FROM_GRAPH;
- }
- 
--uint32_t commit_graph_generation(const struct commit *c)
-+timestamp_t commit_graph_generation(const struct commit *c)
- {
- 	struct commit_graph_data *data =
- 		commit_graph_data_slab_peek(&commit_graph_data_slab, c);
-@@ -115,8 +115,8 @@ uint32_t commit_graph_generation(const struct commit *c)
- int compare_commits_by_gen(const void *_a, const void *_b)
- {
- 	const struct commit *a = _a, *b = _b;
--	const uint32_t generation_a = commit_graph_generation(a);
--	const uint32_t generation_b = commit_graph_generation(b);
-+	const timestamp_t generation_a = commit_graph_generation(a);
-+	const timestamp_t generation_b = commit_graph_generation(b);
- 
- 	/* older commits first */
- 	if (generation_a < generation_b)
-@@ -159,8 +159,8 @@ static int commit_gen_cmp(const void *va, const void *vb)
- 	const struct commit *a = *(const struct commit **)va;
- 	const struct commit *b = *(const struct commit **)vb;
- 
--	uint32_t generation_a = commit_graph_data_at(a)->generation;
--	uint32_t generation_b = commit_graph_data_at(b)->generation;
-+	const timestamp_t generation_a = commit_graph_data_at(a)->generation;
-+	const timestamp_t generation_b = commit_graph_data_at(b)->generation;
- 	/* lower generation commits first */
- 	if (generation_a < generation_b)
- 		return -1;
-@@ -1338,7 +1338,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
- 
- 		display_progress(ctx->progress, i + 1);
--		if (generation != GENERATION_NUMBER_INFINITY &&
-+		if (generation != GENERATION_NUMBER_V1_INFINITY &&
- 		    generation != GENERATION_NUMBER_ZERO)
- 			continue;
- 
-@@ -1352,7 +1352,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 			for (parent = current->parents; parent; parent = parent->next) {
- 				generation = commit_graph_data_at(parent->item)->generation;
- 
--				if (generation == GENERATION_NUMBER_INFINITY ||
-+				if (generation == GENERATION_NUMBER_V1_INFINITY ||
- 				    generation == GENERATION_NUMBER_ZERO) {
- 					all_parents_computed = 0;
- 					commit_list_insert(parent->item, &list);
-@@ -2355,8 +2355,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	for (i = 0; i < g->num_commits; i++) {
- 		struct commit *graph_commit, *odb_commit;
- 		struct commit_list *graph_parents, *odb_parents;
--		uint32_t max_generation = 0;
--		uint32_t generation;
-+		timestamp_t max_generation = 0;
-+		timestamp_t generation;
- 
- 		display_progress(progress, i + 1);
- 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-diff --git a/commit-graph.h b/commit-graph.h
-index 701e3d41aa..430bc830bb 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -138,13 +138,13 @@ void disable_commit_graph(struct repository *r);
- 
- struct commit_graph_data {
- 	uint32_t graph_pos;
--	uint32_t generation;
-+	timestamp_t generation;
- };
- 
- /*
-  * Commits should be parsed before accessing generation, graph positions.
-  */
--uint32_t commit_graph_generation(const struct commit *);
-+timestamp_t commit_graph_generation(const struct commit *);
- uint32_t commit_graph_position(const struct commit *);
- 
- int compare_commits_by_gen(const void *_a, const void *_b);
-diff --git a/commit-reach.c b/commit-reach.c
-index c83cc291e7..470bc80139 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -32,12 +32,12 @@ static int queue_has_nonstale(struct prio_queue *queue)
- static struct commit_list *paint_down_to_common(struct repository *r,
- 						struct commit *one, int n,
- 						struct commit **twos,
--						int min_generation)
-+						timestamp_t min_generation)
- {
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	struct commit_list *result = NULL;
- 	int i;
--	uint32_t last_gen = GENERATION_NUMBER_INFINITY;
-+	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
- 
- 	if (!min_generation)
- 		queue.compare = compare_commits_by_commit_date;
-@@ -58,10 +58,10 @@ static struct commit_list *paint_down_to_common(struct repository *r,
- 		struct commit *commit = prio_queue_get(&queue);
- 		struct commit_list *parents;
- 		int flags;
--		uint32_t generation = commit_graph_generation(commit);
-+		timestamp_t generation = commit_graph_generation(commit);
- 
- 		if (min_generation && generation > last_gen)
--			BUG("bad generation skip %8x > %8x at %s",
-+			BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
- 			    generation, last_gen,
- 			    oid_to_hex(&commit->object.oid));
- 		last_gen = generation;
-@@ -177,12 +177,12 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
- 		repo_parse_commit(r, array[i]);
- 	for (i = 0; i < cnt; i++) {
- 		struct commit_list *common;
--		uint32_t min_generation = commit_graph_generation(array[i]);
-+		timestamp_t min_generation = commit_graph_generation(array[i]);
- 
- 		if (redundant[i])
- 			continue;
- 		for (j = filled = 0; j < cnt; j++) {
--			uint32_t curr_generation;
-+			timestamp_t curr_generation;
- 			if (i == j || redundant[j])
- 				continue;
- 			filled_index[filled] = j;
-@@ -321,7 +321,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- {
- 	struct commit_list *bases;
- 	int ret = 0, i;
--	uint32_t generation, min_generation = GENERATION_NUMBER_INFINITY;
-+	timestamp_t generation, min_generation = GENERATION_NUMBER_INFINITY;
- 
- 	if (repo_parse_commit(r, commit))
- 		return ret;
-@@ -470,7 +470,7 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
- static enum contains_result contains_test(struct commit *candidate,
- 					  const struct commit_list *want,
- 					  struct contains_cache *cache,
--					  uint32_t cutoff)
-+					  timestamp_t cutoff)
- {
- 	enum contains_result *cached = contains_cache_at(cache, candidate);
- 
-@@ -506,11 +506,11 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
- {
- 	struct contains_stack contains_stack = { 0, 0, NULL };
- 	enum contains_result result;
--	uint32_t cutoff = GENERATION_NUMBER_INFINITY;
-+	timestamp_t cutoff = GENERATION_NUMBER_INFINITY;
- 	const struct commit_list *p;
- 
- 	for (p = want; p; p = p->next) {
--		uint32_t generation;
-+		timestamp_t generation;
- 		struct commit *c = p->item;
- 		load_commit_graph_info(the_repository, c);
- 		generation = commit_graph_generation(c);
-@@ -565,7 +565,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 				 unsigned int with_flag,
- 				 unsigned int assign_flag,
- 				 time_t min_commit_date,
--				 uint32_t min_generation)
-+				 timestamp_t min_generation)
- {
- 	struct commit **list = NULL;
- 	int i;
-@@ -666,13 +666,13 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 	time_t min_commit_date = cutoff_by_min_date ? from->item->date : 0;
- 	struct commit_list *from_iter = from, *to_iter = to;
- 	int result;
--	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
-+	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
- 
- 	while (from_iter) {
- 		add_object_array(&from_iter->item->object, NULL, &from_objs);
- 
- 		if (!parse_commit(from_iter->item)) {
--			uint32_t generation;
-+			timestamp_t generation;
- 			if (from_iter->item->date < min_commit_date)
- 				min_commit_date = from_iter->item->date;
- 
-@@ -686,7 +686,7 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 
- 	while (to_iter) {
- 		if (!parse_commit(to_iter->item)) {
--			uint32_t generation;
-+			timestamp_t generation;
- 			if (to_iter->item->date < min_commit_date)
- 				min_commit_date = to_iter->item->date;
- 
-@@ -726,13 +726,13 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 	struct commit_list *found_commits = NULL;
- 	struct commit **to_last = to + nr_to;
- 	struct commit **from_last = from + nr_from;
--	uint32_t min_generation = GENERATION_NUMBER_INFINITY;
-+	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
- 	int num_to_find = 0;
- 
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 
- 	for (item = to; item < to_last; item++) {
--		uint32_t generation;
-+		timestamp_t generation;
- 		struct commit *c = *item;
- 
- 		parse_commit(c);
-diff --git a/commit-reach.h b/commit-reach.h
-index b49ad71a31..148b56fea5 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -87,7 +87,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 				 unsigned int with_flag,
- 				 unsigned int assign_flag,
- 				 time_t min_commit_date,
--				 uint32_t min_generation);
-+				 timestamp_t min_generation);
- int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 		       int commit_date_cutoff);
- 
-diff --git a/commit.h b/commit.h
-index e901538909..bc0732a4fe 100644
---- a/commit.h
-+++ b/commit.h
-@@ -11,7 +11,8 @@
- #include "commit-slab.h"
- 
- #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
--#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
-+#define GENERATION_NUMBER_INFINITY ((1ULL << 63) - 1)
-+#define GENERATION_NUMBER_V1_INFINITY 0xFFFFFFFF
- #define GENERATION_NUMBER_MAX 0x3FFFFFFF
- #define GENERATION_NUMBER_ZERO 0
- 
-diff --git a/revision.c b/revision.c
-index ecf757c327..411852468b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -3290,7 +3290,7 @@ define_commit_slab(indegree_slab, int);
- define_commit_slab(author_date_slab, timestamp_t);
- 
- struct topo_walk_info {
--	uint32_t min_generation;
-+	timestamp_t min_generation;
- 	struct prio_queue explore_queue;
- 	struct prio_queue indegree_queue;
- 	struct prio_queue topo_queue;
-@@ -3336,7 +3336,7 @@ static void explore_walk_step(struct rev_info *revs)
- }
- 
- static void explore_to_depth(struct rev_info *revs,
--			     uint32_t gen_cutoff)
-+			     timestamp_t gen_cutoff)
- {
- 	struct topo_walk_info *info = revs->topo_walk_info;
- 	struct commit *c;
-@@ -3379,7 +3379,7 @@ static void indegree_walk_step(struct rev_info *revs)
- }
- 
- static void compute_indegrees_to_depth(struct rev_info *revs,
--				       uint32_t gen_cutoff)
-+				       timestamp_t gen_cutoff)
- {
- 	struct topo_walk_info *info = revs->topo_walk_info;
- 	struct commit *c;
-@@ -3437,7 +3437,7 @@ static void init_topo_walk(struct rev_info *revs)
- 	info->min_generation = GENERATION_NUMBER_INFINITY;
- 	for (list = revs->commits; list; list = list->next) {
- 		struct commit *c = list->item;
--		uint32_t generation;
-+		timestamp_t generation;
- 
- 		if (parse_commit_gently(c, 1))
- 			continue;
-@@ -3498,7 +3498,7 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
- 	for (p = commit->parents; p; p = p->next) {
- 		struct commit *parent = p->item;
- 		int *pi;
--		uint32_t generation;
-+		timestamp_t generation;
- 
- 		if (parent->object.flags & UNINTERESTING)
- 			continue;
-diff --git a/upload-pack.c b/upload-pack.c
-index 80ad9a38d8..bcb8b5dfda 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -497,7 +497,7 @@ static int got_oid(struct upload_pack_data *data,
- 
- static int ok_to_give_up(struct upload_pack_data *data)
- {
--	uint32_t min_generation = GENERATION_NUMBER_ZERO;
-+	timestamp_t min_generation = GENERATION_NUMBER_ZERO;
- 
- 	if (!data->have_obj.nr)
- 		return 0;
+Various candidates were examined (https://github.com/derrickstolee/gen-test, 
+https://github.com/abhishekkumar2718/git/pull/1). The proposed generation
+number v2, Corrected Commit Date with Mononotically Increasing Offsets 
+performed much worse than committer date (506,577 vs. 167,468 commits walked
+for git merge-base v4.8 v4.9) and was dropped.
+
+Using Generation Data chunk (GDAT) relieves the requirement of backward
+compatibility as we would continue to store topological levels in Commit
+Data (CDAT) chunk. Thus, Corrected Commit Date was chosen as generation
+number v2. The Corrected Commit Date is defined as:
+
+For a commit C, let its corrected commit date be the maximum of the commit
+date of C and the corrected commit dates of its parents. Then corrected
+commit date offset is the difference between corrected commit date of C and
+commit date of C.
+
+We will introduce an additional commit-graph chunk, Generation Data chunk,
+and store corrected commit date offsets in GDAT chunk while storing
+topological levels in CDAT chunk. The old versions of Git would ignore GDAT
+chunk, using topological levels from CDAT chunk. In contrast, new versions
+of Git would use corrected commit dates, falling back to topological level
+if the generation data chunk is absent in the commit-graph file.
+
+Thanks to Dr. Stolee, Dr. Narębski, and Taylor for their reviews on the
+first version.
+
+I look forward to everyone's reviews!
+
+Thanks
+
+ * Abhishek
+
+
+----------------------------------------------------------------------------
+
+Changes in version 3:
+
+ * Reordered patches as discussed in 1
+   [https://lore.kernel.org/git/aee0ae56-3395-6848-d573-27a318d72755@gmail.com/]
+ * Split "implement corrected commit date" into two patches - one
+   introducing the topo level slab and other implementing corrected commit
+   dates.
+ * Extended split-commit-graph tests to verify at the end of test.
+ * Use topological levels as generation number if any of split commit-graph
+   files do not have generation data chunk.
+
+Changes in version 2:
+
+ * Add tests for generation data chunk.
+ * Add an option GIT_TEST_COMMIT_GRAPH_NO_GDAT to control whether to write
+   generation data chunk.
+ * Compare commits with corrected commit dates if present in
+   paint_down_to_common().
+ * Update technical documentation.
+ * Handle mixed graph version commit chains.
+ * Improve commit messages for
+ * Revert unnecessary whitespace changes.
+ * Split uint_32 -> timestamp_t change into a new commit.
+
+Abhishek Kumar (11):
+  commit-graph: fix regression when computing bloom filter
+  revision: parse parent in indegree_walk_step()
+  commit-graph: consolidate fill_commit_graph_info
+  commit-graph: consolidate compare_commits_by_gen
+  commit-graph: return 64-bit generation number
+  commit-graph: add a slab to store topological levels
+  commit-graph: implement corrected commit date
+  commit-graph: implement generation data chunk
+  commit-graph: use generation v2 only if entire chain does
+  commit-reach: use corrected commit dates in paint_down_to_common()
+  doc: add corrected commit date info
+
+ .../technical/commit-graph-format.txt         |  12 +-
+ Documentation/technical/commit-graph.txt      |  45 ++--
+ commit-graph.c                                | 241 +++++++++++++-----
+ commit-graph.h                                |  16 +-
+ commit-reach.c                                |  49 ++--
+ commit-reach.h                                |   2 +-
+ commit.c                                      |   9 +-
+ commit.h                                      |   4 +-
+ revision.c                                    |  13 +-
+ t/README                                      |   3 +
+ t/helper/test-read-graph.c                    |   2 +
+ t/t4216-log-bloom.sh                          |   4 +-
+ t/t5000-tar-tree.sh                           |   4 +-
+ t/t5318-commit-graph.sh                       |  27 +-
+ t/t5324-split-commit-graph.sh                 |  82 +++++-
+ t/t6024-recursive-merge.sh                    |   4 +-
+ t/t6600-test-reach.sh                         |  62 +++--
+ upload-pack.c                                 |   2 +-
+ 18 files changed, 396 insertions(+), 185 deletions(-)
+
+
+base-commit: 7814e8a05a59c0cf5fb186661d1551c75d1299b5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-676%2Fabhishekkumar2718%2Fcorrected_commit_date-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-676/abhishekkumar2718/corrected_commit_date-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/676
+
+Range-diff vs v2:
+
+  1:  a962b9ae4b =  1:  c6b7ade7af commit-graph: fix regression when computing bloom filter
+  2:  cf61239f93 =  2:  e673867234 revision: parse parent in indegree_walk_step()
+  3:  32da955e31 =  3:  18d5864f81 commit-graph: consolidate fill_commit_graph_info
+  4:  b254782858 !  4:  6a0cde983d commit-graph: consolidate compare_commits_by_gen
+     @@ Commit message
+      
+          Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+          Reviewed-by: Taylor Blau <me@ttaylorr.com>
+     +    Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+      
+       ## commit-graph.c ##
+      @@ commit-graph.c: uint32_t commit_graph_generation(const struct commit *c)
+  6:  1aa2a00a7a =  5:  6be759a954 commit-graph: return 64-bit generation number
+  7:  bfe1473201 !  6:  b347dbb01b commit-graph: implement corrected commit date
+     @@ Metadata
+      Author: Abhishek Kumar <abhishekkumar8222@gmail.com>
+      
+       ## Commit message ##
+     -    commit-graph: implement corrected commit date
+     +    commit-graph: add a slab to store topological levels
+      
+     -    With most of preparations done, let's implement corrected commit date
+     -    offset. We add a new commit-slab to store topogical levels while
+     -    writing commit graph and upgrade the generation member in struct
+     -    commit_graph_data to a 64-bit timestamp. We store topological levels to
+     -    ensure that older versions of Git will still have the performance
+     -    benefits from generation number v2.
+     +    As we are writing topological levels to commit data chunk to ensure
+     +    backwards compatibility with "Old" Git and the member `generation` of
+     +    struct commit_graph_data will store corrected commit date in a later
+     +    commit, let's introduce a commit-slab to store topological levels while
+     +    writing commit-graph.
+     +
+     +    When Git creates a split commit-graph, it takes advantage of the
+     +    generation values that have been computed already and present in
+     +    existing commit-graph files.
+     +
+     +    So, let's add a pointer to struct commit_graph to the topological level
+     +    commit-slab and populate it with topological levels while writing a
+     +    split commit-graph.
+      
+          Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+      
+     @@ commit-graph.c: void git_test_write_commit_graph_or_die(void)
+       /* Keep track of the order in which commits are added to our list. */
+       define_commit_slab(commit_pos, int);
+       static struct commit_pos commit_pos = COMMIT_SLAB_INIT(1, commit_pos);
+     -@@ commit-graph.c: static int commit_gen_cmp(const void *va, const void *vb)
+     - 	else if (generation_a > generation_b)
+     - 		return 1;
+     - 
+     --	/* use date as a heuristic when generations are equal */
+     --	if (a->date < b->date)
+     --		return -1;
+     --	else if (a->date > b->date)
+     --		return 1;
+     - 	return 0;
+     - }
+     - 
+      @@ commit-graph.c: static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+       	item->date = (timestamp_t)((date_high << 32) | date_low);
+       
+     - 	if (g->chunk_generation_data)
+     --		graph_data->generation = get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
+     -+	{
+     -+		graph_data->generation = item->date +
+     -+			(timestamp_t) get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
+     -+	}
+     - 	else
+     - 		graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+     + 	graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+     ++
+     ++	if (g->topo_levels)
+     ++		*topo_level_slab_at(g->topo_levels, item) = get_be32(commit_data + g->hash_len + 8) >> 2;
+       }
+     + 
+     + static inline void set_commit_tree(struct commit *c, struct tree *t)
+      @@ commit-graph.c: struct write_commit_graph_context {
+     - 	struct progress *progress;
+     - 	int progress_done;
+     - 	uint64_t progress_cnt;
+     -+	struct topo_level_slab *topo_levels;
+     + 		 changed_paths:1,
+     + 		 order_by_pack:1;
+       
+     - 	char *base_graph_name;
+     - 	int num_commit_graphs_before;
+     ++	struct topo_level_slab *topo_levels;
+     + 	const struct split_commit_graph_opts *split_opts;
+     + 	size_t total_bloom_filter_data_size;
+     + 	const struct bloom_filter_settings *bloom_settings;
+      @@ commit-graph.c: static int write_graph_chunk_data(struct hashfile *f,
+       		else
+       			packedDate[0] = 0;
+     @@ commit-graph.c: static int write_graph_chunk_data(struct hashfile *f,
+       
+       		packedDate[1] = htonl((*list)->date);
+       		hashwrite(f, packedDate, 8);
+     -@@ commit-graph.c: static int write_graph_chunk_generation_data(struct hashfile *f,
+     - 	int i;
+     - 	for (i = 0; i < ctx->commits.nr; i++) {
+     - 		struct commit *c = ctx->commits.list[i];
+     -+		timestamp_t offset = commit_graph_data_at(c)->generation - c->date;
+     - 		display_progress(ctx->progress, ++ctx->progress_cnt);
+     --		hashwrite_be32(f, commit_graph_data_at(c)->generation);
+     -+
+     -+		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX)
+     -+			offset = GENERATION_NUMBER_V2_OFFSET_MAX;
+     -+
+     -+		hashwrite_be32(f, offset);
+     - 	}
+     - 
+     - 	return 0;
+      @@ commit-graph.c: static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+       					_("Computing commit graph generation numbers"),
+       					ctx->commits.nr);
+       	for (i = 0; i < ctx->commits.nr; i++) {
+      -		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
+     -+		uint32_t topo_level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
+     ++		uint32_t level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
+       
+       		display_progress(ctx->progress, i + 1);
+      -		if (generation != GENERATION_NUMBER_V1_INFINITY &&
+      -		    generation != GENERATION_NUMBER_ZERO)
+     -+		if (topo_level != GENERATION_NUMBER_V1_INFINITY &&
+     -+		    topo_level != GENERATION_NUMBER_ZERO)
+     ++		if (level != GENERATION_NUMBER_V1_INFINITY &&
+     ++		    level != GENERATION_NUMBER_ZERO)
+       			continue;
+       
+       		commit_list_insert(ctx->commits.list[i], &list);
+     @@ commit-graph.c: static void compute_generation_numbers(struct write_commit_graph
+       			int all_parents_computed = 1;
+      -			uint32_t max_generation = 0;
+      +			uint32_t max_level = 0;
+     -+			timestamp_t max_corrected_commit_date = current->date - 1;
+       
+       			for (parent = current->parents; parent; parent = parent->next) {
+      -				generation = commit_graph_data_at(parent->item)->generation;
+     -+				topo_level = *topo_level_slab_at(ctx->topo_levels, parent->item);
+     ++				level = *topo_level_slab_at(ctx->topo_levels, parent->item);
+       
+      -				if (generation == GENERATION_NUMBER_V1_INFINITY ||
+      -				    generation == GENERATION_NUMBER_ZERO) {
+     -+				if (topo_level == GENERATION_NUMBER_V1_INFINITY ||
+     -+				    topo_level == GENERATION_NUMBER_ZERO) {
+     ++				if (level == GENERATION_NUMBER_V1_INFINITY ||
+     ++				    level == GENERATION_NUMBER_ZERO) {
+       					all_parents_computed = 0;
+       					commit_list_insert(parent->item, &list);
+       					break;
+      -				} else if (generation > max_generation) {
+      -					max_generation = generation;
+     -+				} else {
+     -+					struct commit_graph_data *data = commit_graph_data_at(parent->item);
+     -+
+     -+					if (topo_level > max_level)
+     -+						max_level = topo_level;
+     -+
+     -+					if (data->generation > max_corrected_commit_date)
+     -+						max_corrected_commit_date = data->generation;
+     ++				} else if (level > max_level) {
+     ++					max_level = level;
+       				}
+       			}
+       
+       			if (all_parents_computed) {
+     - 				struct commit_graph_data *data = commit_graph_data_at(current);
+     - 
+     +-				struct commit_graph_data *data = commit_graph_data_at(current);
+     +-
+      -				data->generation = max_generation + 1;
+     --				pop_commit(&list);
+     -+				if (max_level > GENERATION_NUMBER_MAX - 1)
+     -+					max_level = GENERATION_NUMBER_MAX - 1;
+     -+
+     -+				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+     -+				data->generation = max_corrected_commit_date + 1;
+     + 				pop_commit(&list);
+       
+      -				if (data->generation > GENERATION_NUMBER_MAX)
+      -					data->generation = GENERATION_NUMBER_MAX;
+     -+				pop_commit(&list);
+     ++				if (max_level > GENERATION_NUMBER_MAX - 1)
+     ++					max_level = GENERATION_NUMBER_MAX - 1;
+     ++				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+       			}
+       		}
+       	}
+     @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
+       	if (!commit_graph_compatible(the_repository))
+       		return 0;
+      @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
+     - 	ctx->total_bloom_filter_data_size = 0;
+     - 	ctx->write_generation_data = !git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0);
+     + 		}
+     + 	}
+       
+      +	init_topo_level_slab(&topo_levels);
+      +	ctx->topo_levels = &topo_levels;
+      +
+     - 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+     - 		ctx->changed_paths = 1;
+     - 	if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
+     -@@ commit-graph.c: int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+     - 	for (i = 0; i < g->num_commits; i++) {
+     - 		struct commit *graph_commit, *odb_commit;
+     - 		struct commit_list *graph_parents, *odb_parents;
+     --		timestamp_t max_generation = 0;
+     --		timestamp_t generation;
+     -+		timestamp_t max_parent_corrected_commit_date = 0;
+     -+		timestamp_t corrected_commit_date;
+     - 
+     - 		display_progress(progress, i + 1);
+     - 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+     -@@ commit-graph.c: int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+     - 					     oid_to_hex(&graph_parents->item->object.oid),
+     - 					     oid_to_hex(&odb_parents->item->object.oid));
+     - 
+     --			generation = commit_graph_generation(graph_parents->item);
+     --			if (generation > max_generation)
+     --				max_generation = generation;
+     -+			corrected_commit_date = commit_graph_generation(graph_parents->item);
+     -+			if (corrected_commit_date > max_parent_corrected_commit_date)
+     -+				max_parent_corrected_commit_date = corrected_commit_date;
+     - 
+     - 			graph_parents = graph_parents->next;
+     - 			odb_parents = odb_parents->next;
+     -@@ commit-graph.c: int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+     - 		if (generation_zero == GENERATION_ZERO_EXISTS)
+     - 			continue;
+     ++	if (ctx->r->objects->commit_graph) {
+     ++		struct commit_graph *g = ctx->r->objects->commit_graph;
+     ++
+     ++		while (g) {
+     ++			g->topo_levels = &topo_levels;
+     ++			g = g->base_graph;
+     ++		}
+     ++	}
+     ++
+     + 	if (pack_indexes) {
+     + 		ctx->order_by_pack = 1;
+     + 		if ((res = fill_oids_from_packs(ctx, pack_indexes)))
+     +
+     + ## commit-graph.h ##
+     +@@ commit-graph.h: struct commit_graph {
+     + 	const unsigned char *chunk_bloom_indexes;
+     + 	const unsigned char *chunk_bloom_data;
+     + 
+     ++	struct topo_level_slab *topo_levels;
+     + 	struct bloom_filter_settings *bloom_filter_settings;
+     + };
+       
+     --		/*
+     --		 * If one of our parents has generation GENERATION_NUMBER_MAX, then
+     --		 * our generation is also GENERATION_NUMBER_MAX. Decrement to avoid
+     --		 * extra logic in the following condition.
+     --		 */
+     --		if (max_generation == GENERATION_NUMBER_MAX)
+     --			max_generation--;
+     --
+     --		generation = commit_graph_generation(graph_commit);
+     --		if (generation != max_generation + 1)
+     --			graph_report(_("commit-graph generation for commit %s is %u != %u"),
+     -+		corrected_commit_date = commit_graph_generation(graph_commit);
+     -+		if (corrected_commit_date < max_parent_corrected_commit_date + 1)
+     -+			graph_report(_("commit-graph generation for commit %s is %"PRItime" < %"PRItime),
+     - 				     oid_to_hex(&cur_oid),
+     --				     generation,
+     --				     max_generation + 1);
+     -+				     corrected_commit_date,
+     -+				     max_parent_corrected_commit_date + 1);
+     - 
+     - 		if (graph_commit->date != odb_commit->date)
+     - 			graph_report(_("commit date for commit %s in commit-graph is %"PRItime" != %"PRItime),
+      
+       ## commit.h ##
+      @@
+  -:  ---------- >  7:  4074ace65b commit-graph: implement corrected commit date
+  5:  cb797e20d7 !  8:  4e746628ac commit-graph: implement generation data chunk
+     @@ commit-graph.c: static void fill_commit_graph_info(struct commit *item, struct c
+       
+      -	graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+      +	if (g->chunk_generation_data)
+     -+		graph_data->generation = get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
+     ++		graph_data->generation = item->date +
+     ++			(timestamp_t) get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
+      +	else
+      +		graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+     - }
+       
+     - static inline void set_commit_tree(struct commit *c, struct tree *t)
+     + 	if (g->topo_levels)
+     + 		*topo_level_slab_at(g->topo_levels, item) = get_be32(commit_data + g->hash_len + 8) >> 2;
+      @@ commit-graph.c: struct write_commit_graph_context {
+       		 report_progress:1,
+       		 split:1,
+     @@ commit-graph.c: struct write_commit_graph_context {
+      +		 order_by_pack:1,
+      +		 write_generation_data:1;
+       
+     + 	struct topo_level_slab *topo_levels;
+       	const struct split_commit_graph_opts *split_opts;
+     - 	size_t total_bloom_filter_data_size;
+      @@ commit-graph.c: static int write_graph_chunk_data(struct hashfile *f,
+       	return 0;
+       }
+     @@ commit-graph.c: static int write_graph_chunk_data(struct hashfile *f,
+      +	int i;
+      +	for (i = 0; i < ctx->commits.nr; i++) {
+      +		struct commit *c = ctx->commits.list[i];
+     ++		timestamp_t offset = commit_graph_data_at(c)->generation - c->date;
+      +		display_progress(ctx->progress, ++ctx->progress_cnt);
+     -+		hashwrite_be32(f, commit_graph_data_at(c)->generation);
+     ++
+     ++		if (offset > GENERATION_NUMBER_V2_OFFSET_MAX)
+     ++			offset = GENERATION_NUMBER_V2_OFFSET_MAX;
+     ++		hashwrite_be32(f, offset);
+      +	}
+      +
+      +	return 0;
+     @@ commit-graph.c: static int write_commit_graph_file(struct write_commit_graph_con
+       	chunks[2].id = GRAPH_CHUNKID_DATA;
+       	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
+       	chunks[2].write_fn = write_graph_chunk_data;
+     ++
+     ++	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0))
+     ++		ctx->write_generation_data = 0;
+      +	if (ctx->write_generation_data) {
+      +		chunks[num_chunks].id = GRAPH_CHUNKID_GENERATION_DATA;
+      +		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
+     @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
+       	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
+       	ctx->split_opts = split_opts;
+       	ctx->total_bloom_filter_data_size = 0;
+     -+	ctx->write_generation_data = !git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0);
+     ++	ctx->write_generation_data = 1;
+       
+       	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+       		ctx->changed_paths = 1;
+     @@ t/t5318-commit-graph.sh: test_expect_success 'replace-objects invalidates commit
+      
+       ## t/t5324-split-commit-graph.sh ##
+      @@ t/t5324-split-commit-graph.sh: test_expect_success 'setup repo' '
+     + 	infodir=".git/objects/info" &&
+       	graphdir="$infodir/commit-graphs" &&
+     - 	test_oid_init &&
+       	test_oid_cache <<-EOM
+      -	shallow sha1:1760
+      -	shallow sha256:2064
+  8:  833779ad53 !  9:  5a147a9704 commit-graph: handle mixed generation commit chains
+     @@ Metadata
+      Author: Abhishek Kumar <abhishekkumar8222@gmail.com>
+      
+       ## Commit message ##
+     -    commit-graph: handle mixed generation commit chains
+     +    commit-graph: use generation v2 only if entire chain does
+      
+     -    As corrected commit dates and topological levels cannot be compared
+     -    directly, we must handle commit graph chains with mixed generation
+     -    number definitions.
+     +    Since there are released versions of Git that understand generation
+     +    numbers in the commit-graph's CDAT chunk but do not understand the GDAT
+     +    chunk, the following scenario is possible:
+      
+     -    While reading a commit graph file, we disable generation numbers if the
+     -    chain contains mixed generation numbers.
+     +    1. "New" Git writes a commit-graph with the GDAT chunk.
+     +    2. "Old" Git writes a split commit-graph on top without a GDAT chunk.
+      
+     -    While writing to commit graph chain, we write generation data chunk only
+     -    if the previous tip of chain had a generation data chunk. Using
+     -    `--split=replace` overwrites the existing chain and writes generation
+     -    data chunk regardless of previous tip.
+     +    Because of the current use of inspecting the current layer for a
+     +    chunk_generation_data pointer, the commits in the lower layer will be
+     +    interpreted as having very large generation values (commit date plus
+     +    offset) compared to the generation numbers in the top layer (topological
+     +    level). This violates the expectation that the generation of a parent is
+     +    strictly smaller than the generation of a child.
+      
+     -    In t5324-split-commit-graph, we set up a repo with twelve commits and
+     -    write a base commit graph file with no generation data chunk. When add
+     -    three commits and write to chain again, Git does not write generation
+     -    data chunk even without setting GIT_TEST_COMMIT_GRAPH_NO_GDAT=1. Then,
+     -    as we replace the existing chain, Git writes a commit graph file with
+     -    generation data chunk.
+     +    It is difficult to expose this issue in a test. Since we _start_ with
+     +    artificially low generation numbers, any commit walk that prioritizes
+     +    generation numbers will walk all of the commits with high generation
+     +    number before walking the commits with low generation number. In all the
+     +    cases I tried, the commit-graph layers themselves "protect" any
+     +    incorrect behavior since none of the commits in the lower layer can
+     +    reach the commits in the upper layer.
+      
+     +    This issue would manifest itself as a performance problem in this case,
+     +    especially with something like "git log --graph" since the low
+     +    generation numbers would cause the in-degree queue to walk all of the
+     +    commits in the lower layer before allowing the topo-order queue to write
+     +    anything to output (depending on the size of the upper layer).
+     +
+     +    Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+          Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+      
+       ## commit-graph.c ##
+     -@@ commit-graph.c: int generation_numbers_enabled(struct repository *r)
+     - 	if (!g->num_commits)
+     - 		return 0;
+     +@@ commit-graph.c: static struct commit_graph *load_commit_graph_chain(struct repository *r,
+     + 	return graph_chain;
+     + }
+       
+     -+	/* We cannot compare topological levels and corrected commit dates */
+     -+	while (g->base_graph) {
+     -+		warning(_("commit-graph-chain contains mixed generation versions"));
+     -+		if ((g->chunk_generation_data == NULL) ^ (g->base_graph->chunk_generation_data == NULL))
+     -+			return 0;
+     ++static void validate_mixed_generation_chain(struct repository *r)
+     ++{
+     ++	struct commit_graph *g = r->objects->commit_graph;
+     ++	int read_generation_data = 1;
+     ++
+     ++	while (g) {
+     ++		if (!g->chunk_generation_data) {
+     ++			read_generation_data = 0;
+     ++			break;
+     ++		}
+      +		g = g->base_graph;
+      +	}
+      +
+     - 	first_generation = get_be32(g->chunk_commit_data +
+     - 				    g->hash_len + 8) >> 2;
+     ++	g = r->objects->commit_graph;
+     ++
+     ++	while (g) {
+     ++		g->read_generation_data = read_generation_data;
+     ++		g = g->base_graph;
+     ++	}
+     ++}
+     ++
+     + struct commit_graph *read_commit_graph_one(struct repository *r,
+     + 					   struct object_directory *odb)
+     + {
+     +@@ commit-graph.c: struct commit_graph *read_commit_graph_one(struct repository *r,
+     + 	if (!g)
+     + 		g = load_commit_graph_chain(r, odb);
+     + 
+     ++	validate_mixed_generation_chain(r);
+     ++
+     + 	return g;
+     + }
+     + 
+     +@@ commit-graph.c: static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+     + 	date_low = get_be32(commit_data + g->hash_len + 12);
+     + 	item->date = (timestamp_t)((date_high << 32) | date_low);
+       
+     +-	if (g->chunk_generation_data)
+     ++	if (g->chunk_generation_data && g->read_generation_data)
+     + 		graph_data->generation = item->date +
+     + 			(timestamp_t) get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
+     + 	else
+     +@@ commit-graph.c: void load_commit_graph_info(struct repository *r, struct commit *item)
+     + 	uint32_t pos;
+     + 	if (!prepare_commit_graph(r))
+     + 		return;
+     ++
+     + 	if (find_commit_in_graph(item, r->objects->commit_graph, &pos))
+     + 		fill_commit_graph_info(item, r->objects->commit_graph, pos);
+     + }
+      @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
+       
+       		g = ctx->r->objects->commit_graph;
+     @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
+       
+       	ctx->approx_nr_objects = approximate_object_count();
+      
+     + ## commit-graph.h ##
+     +@@ commit-graph.h: struct commit_graph {
+     + 	struct object_directory *odb;
+     + 
+     + 	uint32_t num_commits_in_base;
+     ++	uint32_t read_generation_data;
+     + 	struct commit_graph *base_graph;
+     + 
+     + 	const uint32_t *chunk_oid_fanout;
+     +
+       ## t/t5324-split-commit-graph.sh ##
+      @@ t/t5324-split-commit-graph.sh: done <<\EOF
+       0600 -r--------
+     @@ t/t5324-split-commit-graph.sh: done <<\EOF
+      +		test_commit $i &&
+      +		git branch commits/$i || return 1
+      +	done &&
+     ++	git commit-graph write --reachable --split &&
+      +	git reset --hard commits/2 &&
+      +	git merge commits/4 &&
+      +	git branch merge/1 &&
+      +	git reset --hard commits/4 &&
+      +	git merge commits/6 &&
+      +	git branch merge/2 &&
+     -+	GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph write --reachable --split &&
+     ++	GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph write --reachable --split=no-merge &&
+      +	test-tool read-graph >output &&
+      +	cat >expect <<-EOF &&
+     -+	header: 43475048 1 1 3 0
+     -+	num_commits: 12
+     ++	header: 43475048 1 1 4 1
+     ++	num_commits: 2
+      +	chunks: oid_fanout oid_lookup commit_metadata
+      +	EOF
+     -+	test_cmp expect output
+     ++	test_cmp expect output &&
+     ++	git commit-graph verify
+      +'
+      +
+      +test_expect_success 'does not write generation data chunk if not present on existing tip' '
+     @@ t/t5324-split-commit-graph.sh: done <<\EOF
+      +	git merge commits/5 &&
+      +	git merge merge/2 &&
+      +	git branch merge/3 &&
+     -+	git commit-graph write --reachable --split &&
+     ++	git commit-graph write --reachable --split=no-merge &&
+      +	test-tool read-graph >output &&
+      +	cat >expect <<-EOF &&
+     -+	header: 43475048 1 1 4 1
+     ++	header: 43475048 1 1 4 2
+      +	num_commits: 3
+      +	chunks: oid_fanout oid_lookup commit_metadata
+      +	EOF
+     -+	test_cmp expect output
+     ++	test_cmp expect output &&
+     ++	git commit-graph verify
+      +'
+      +
+      +test_expect_success 'writes generation data chunk when commit-graph chain is replaced' '
+      +	cd "$TRASH_DIRECTORY/mixed" &&
+     -+	git commit-graph write --reachable --split='replace' &&
+     ++	git commit-graph write --reachable --split=replace &&
+      +	test_path_is_file $graphdir/commit-graph-chain &&
+      +	test_line_count = 1 $graphdir/commit-graph-chain &&
+      +	verify_chain_files_exist $graphdir &&
+     -+	graph_read_expect 15
+     ++	graph_read_expect 15 &&
+     ++	git commit-graph verify
+      +'
+      +
+       test_done
+  9:  58a2d5da01 = 10:  439adc1718 commit-reach: use corrected commit dates in paint_down_to_common()
+ 10:  4c34294602 = 11:  f6f91af305 doc: add corrected commit date info
+
 -- 
 gitgitgadget
-
