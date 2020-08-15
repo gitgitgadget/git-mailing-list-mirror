@@ -1,312 +1,345 @@
-Return-Path: <SRS0=xyTh=BY=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=NddV=BZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4662C433E1
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39863C433E1
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 00:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66C622068E
-	for <git@archiver.kernel.org>; Fri, 14 Aug 2020 22:45:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 077422074D
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 00:21:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X+ivt6TB"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="J7+ZtAP/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726700AbgHNWpz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Aug 2020 18:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58158 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbgHNWpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Aug 2020 18:45:55 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC036C061385
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 15:45:54 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id z18so9595369wrm.12
-        for <git@vger.kernel.org>; Fri, 14 Aug 2020 15:45:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=sb9mVHrZ6iVr7cqpUFD2eo3X1kyMyNd5q1N/XI0k0L0=;
-        b=X+ivt6TB9d1KQB1r4L9IXVd2MTVnDYRfJR8t3qczfLjNfpVl9eF7uTbSNBFxSEGC//
-         Eo2wOSAdFGaesZIxmKBI6D9JNTELPZQPkgaazh5THeDoKzm7erfiQtwiBCWkypE5dINB
-         q1wANDeOEE1f5TEsY5/DymYXEHVOdkIyhJ5kSIfSAIfsk6pEV+/xlMDAyV7tQ0Y8+J+e
-         hWi925sgdeN1K80Hd+fwv4OqM/z1NP+Uvt8uj3yqtwYT3EUGCrqD5DzqklrbZYfzpyPn
-         8dMw0OXASoUj9x9S/e8iwceBpY6kBE53PLgP9zs96Lu0O/3muglWNGAi8KNUL2Im06Cm
-         2gCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sb9mVHrZ6iVr7cqpUFD2eo3X1kyMyNd5q1N/XI0k0L0=;
-        b=HKF0TPyYuEme33XYAs2QqcM8/oWPAA5Whll/9k99Cw6uLJ2A1CxxzwSIdmewczWe2M
-         IwTYi97wdZk+tdkAYP89s49LN9ZtirHXepyeezTTI2Ir9VQGHcJIEVXFLhJtzlVMsgcz
-         vRir/lxFiLbm70EPHTpJgT88FPDbKN3WBkzqFuOLS5+vq5YWWUJnTZR+T+qkpd/FAFWK
-         AZOwzXTTHavS1uBIImk+wvvckeKGt8GaaRbRAPpTVEQqz2N2r71vqnrY3kA6fn7aGSwb
-         QvwRw+LKnzlUguMQcuhqV9z5fvzNBPiE6KeKHIT/uVyQS8yEXDLRtMS9RfK48UXSoKkt
-         hEWw==
-X-Gm-Message-State: AOAM531HYyJyHLfPTAcdzaEppqKJ3sufPO969TiUS+bFcXKAxRJfX8DT
-        a8UTWlbtD+GBD1bx8VEH9Mh2lW0f0EE=
-X-Google-Smtp-Source: ABdhPJz1HQZhtT/Lm8fx7VlK4kA7XToKCW3rz8u9hfbpAMgzXO/NqjvTx3r1sj5IGRJzdPtpaYyKwg==
-X-Received: by 2002:a5d:6a4e:: with SMTP id t14mr4529022wrw.135.1597445153282;
-        Fri, 14 Aug 2020 15:45:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11sm19626431wrq.0.2020.08.14.15.45.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2020 15:45:52 -0700 (PDT)
-Message-Id: <pull.689.v2.git.1597445151824.gitgitgadget@gmail.com>
-In-Reply-To: <pull.689.git.1596324796918.gitgitgadget@gmail.com>
-References: <pull.689.git.1596324796918.gitgitgadget@gmail.com>
-From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Aug 2020 22:45:51 +0000
-Subject: [PATCH v2] diff: teach --stat to ignore uninteresting modifications
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727794AbgHOAV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Aug 2020 20:21:29 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41572 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726882AbgHOAV2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Aug 2020 20:21:28 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BB6F060129;
+        Sat, 15 Aug 2020 00:21:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1597450887;
+        bh=sFFDm7rm8eugIQkf3a0RSfTYzxFV1gcLRHXdDKCAsSU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=J7+ZtAP/wU2awBvEurqfJSJouKzqSgjLDr4hSKKtLEXqljtKTj6/OWVKfgWfwsnBu
+         /i+F6jfl1E0bAN4Esxr0O8m0eXhT856qkdgv/7FuVLqT2V5ehpMtaeQvIi2hL8UEp5
+         iwUoVws7n5g/esgUdzxjPK/fdwWrB+Qdwn2k41sHOzSOb/MPmISfpetg5NNTDw1llr
+         D3Gv74EqLkHL5Vhwof/6TxqUp4O0CTWwU3jzsS2QIjgAvUMr5GhM6FIElHcIRXkfn0
+         f2frZK77tAKjCdF7ehI/X+e7tRQje5ydQCdkkivuAwxPD2uwU+Eu1KoF2YW5Adf44l
+         5gQ5sgHILqaYhwz3Km7Rs6D2vZdSbn5RxvudFQIznKZBqivGJ1XOW9lYuWTc8oR2F6
+         gzLkiSRZxkJh1CTCJ9Hyq8PseSzw5oQUXD47FuON2QcsgKYo05W5zM6M5hJSbPPh7V
+         Pzfv2gpbKNgwmFTaYHMJ8NHrvd/bxnVzjVTvZyigBdAWtvOIGeo
+Date:   Sat, 15 Aug 2020 00:21:20 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/2] diff: index-line: respect --abbrev in object's
+ name
+Message-ID: <20200815002120.GQ8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+References: <cover.1596887883.git.congdanhqx@gmail.com>
+ <cover.1597364493.git.congdanhqx@gmail.com>
+ <760df7782dad9e9df7bb284ec57249e697a4cc92.1597364493.git.congdanhqx@gmail.com>
+ <20200814151815.GA29528@szeder.dev>
+ <xmqqwo21xiuy.fsf@gitster.c.googlers.com>
+ <xmqqy2mhvys6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, Matthew Rogers <mattr94@gmail.com>,
-        Matthew Rogers <mattr94@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3wfpuDtTLg8/Vq6g"
+Content-Disposition: inline
+In-Reply-To: <xmqqy2mhvys6.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew Rogers <mattr94@gmail.com>
 
-Sometimes when diffing, files may show as being momdified even when
-there are no interesting diffs to show.  This happens naturally when
-using options such as --ignore-space-change.  We don't want to prevent
-the display  of all files that have 0 effective diffs since they could
-be the result of a rename, permission change, or other similar operation
-that may still be of interest so we special case additions and deletions
-as they are always interesting.
+--3wfpuDtTLg8/Vq6g
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Matthew Rogers <mattr94@gmail.com>
----
-    diff: teach --stat to ignore uninteresting modifications
-    
-    This patch is based on the discussion these email threads:
-    
-    https://lore.kernel.org/git/1484704915.2096.16.camel@mattmccutchen.net/
-    https://lore.kernel.org/git/CAOjrSZtQPQ8Xxuz+7SGykR8Q-gFDEZANSE5yQASqKjpbUAq_5Q@mail.gmail.com/
-    
-    With the code mostly taken from this specific message:
-    https://lore.kernel.org/git/20170118111705.6bqzkklluikda3r5@sigill.intra.peff.net/
-    
-    The summary is that when running git diff --stat in combination with
-    --ignore-all-space or similar options, you'll see many lines of the
-    form:
-    
-    some-file.txt | 0
-    
-    which can be misleading when you are explicitly telling git to "ignore
-    all space" or something similar. To rectify this issue, this patch
-    categorizes all files that are modified but have no effective changes as
-    not fit to display to the user.
-    
-    New in V2:
-    
-     * I've added a test covering the rename case with whitespace-changes
-       and permissions changes
-     * I've also updated the logic in builtin_diffstat to include that logic
-       as well
+On 2020-08-14 at 18:59:53, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > Ouch.  These apparently come from
+> >
+> > process_diffs () {
+> > ...
+> > }
+> >
+> > Hash-independence may be good, but it should not munge expected mode
+> > bits from 100644 to ffff44, which I think is a bug in the original
+> > introduced in 72f936b1 (t4013: make test hash independent,
+> > 2020-02-07).
+> >
+> > When we are adjusting the abbrev length of the index line, of course
+> > $_x07 would not be sufficient to match the abbreviated object name
+> > in full, so a79 vs 895 can be explained and is a bug in this patch
+> > that did not update the process_diffs helper.
+> >
+> > Another thing that I find somewhat problematic in the original
+> > (brian cc'ed) is that it does not special case all-zero object name
+> > specially.  By turning any and all instances of $_x40 to $ZERO_OID,
+> > we lose the distinction between a random-looking object name which
+> > got turned into $ZERO_OID by the processing, and an object name that
+> > was $ZERO_OID from the beginning, so we won't catch a possible
+> > future bug where new file's preimage object name is not $ZERO_OID
+> > (this is plausible when you try to show an intent-to-add entry; the
+> > diff between the index and the working tree would be "new file"
+> > patch, but the index entry records the object name for an empty
+> > blob, e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 instead of $ZERO_OID
+> > can easily be emitted by a mistaken implementation).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-689%2FROGERSM94%2Fzero-diffs-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-689/ROGERSM94/zero-diffs-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/689
+Yeah, it wasn't intended that we munge mode bits, and I definitely agree
+we'd be better off distinguishing between all-zero and non-zero OIDs.
 
-Range-diff vs v1:
+As you might imagine, this is not my favorite test because have a large
+amount of diff formats, and even I think the giant list of sed
+expressions I wrote is hideous.  It is, however, reasonably
+comprehensive, which is pretty much the only nice thing that can be said
+about it.
 
- 1:  640c864ac4 ! 1:  6c5db18618 diff: teach --stat to ignore uninteresting modifications
-     @@ diff.c: static void builtin_diffstat(const char *name_a, const char *name_b,
-      +			 * But note that we special-case additions and deletions,
-      +			 * as adding an empty file, for example is still of interest.
-      +			 */
-     -+			if (p->status == DIFF_STATUS_MODIFIED 
-     ++			if ((p->status == DIFF_STATUS_MODIFIED) 
-      +				&& !file->added
-     -+				&& !file->deleted) {
-     ++				&& !file->deleted
-     ++				&& one->mode == two->mode) {
-      +				free_diffstat_file(file);
-      +				diffstat->nr--;
-      +			}
-     @@ t/t4015-diff-whitespace.sh: test_expect_success 'whitespace-only changes not rep
-       	test_must_be_empty actual
-       '
-       
-     +-test_expect_success 'whitespace-only changes reported across renames' '
-      +test_expect_success 'whitespace-only changes not reported (diffstat)' '
-      +	# reuse state from previous test
-      +	git diff --stat -b >actual &&
-      +	test_must_be_empty actual
-      +'
-      +
-     - test_expect_success 'whitespace-only changes reported across renames' '
-     ++test_expect_success 'whitespace changes with modification reported (diffstat)' '
-     ++	git reset --hard &&
-     ++	echo >x "hello  world" &&
-     ++	git update-index --chmod=+x x &&
-     ++	git diff --stat --cached -b >actual &&
-     ++	cat <<-EOF >expect &&
-     ++	 x | 0
-     ++	 1 file changed, 0 insertions(+), 0 deletions(-)
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-     ++test_expect_success 'whitespace-only changes reported across renames (diffstat)' '
-       	git reset --hard &&
-       	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
-     + 	git add x &&
-     ++	git commit -m "base" &&
-     ++	sed -e "5s/^/ /" x >z &&
-     ++	git rm x &&
-     ++	git add z &&
-     ++	git diff -w -M --cached --stat >actual &&
-     ++	cat <<-EOF >expect &&
-     ++	 x => z | 0
-     ++	 1 file changed, 0 insertions(+), 0 deletions(-)
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-     ++test_expect_success 'whitespace-only changes reported across renames' '
-     ++	git reset --hard HEAD~1 &&
-     ++	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
-     ++	git add x &&
-     + 	hash_x=$(git hash-object x) &&
-     + 	before=$(git rev-parse --short "$hash_x") &&
-     + 	git commit -m "base" &&
+> So here is what I came up with as a possible starting point.  The
+> idea is to grab hexadecimal strings at locations the original tried
+> to isolate with various contexts, and
+>=20
+>  - if the input happens to be all zero, use '0', otherwise use 'f'
+>=20
+>  - if the input is 40-bytes (i.e. unabbreviated object name in the
+>    SHA-1 world), repeat the character chosen in the first step as
+>    many times as there are chars in $ZERO_OID
+>=20
+>  - otherwise, repeat the character chosen in the first step as many
+>    times as there are chars in the input.
+>=20
+>  - regardless of all of the above, special case possible in-tree
+>    blob modes (100644, 100755 and 120000) and don't munge them.
+>=20
+> I haven't tried it with the patch that started this discussion
+> thread, nor with SHA-256 build, though.
 
+This seems like a sane approach.
 
- diff.c                     | 37 ++++++++++++++++++++++++++++++-------
- t/t4015-diff-whitespace.sh | 38 ++++++++++++++++++++++++++++++++++++--
- 2 files changed, 66 insertions(+), 9 deletions(-)
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 43267d6024..b33e60ab9d 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -130,27 +130,43 @@ test_expect_success setup '
+>  EOF
+> =20
+>  process_diffs () {
+> -	_x04=3D"[0-9a-f][0-9a-f][0-9a-f][0-9a-f]" &&
+> -	_x07=3D"$_x05[0-9a-f][0-9a-f]" &&
+> -	sed -e "s/$OID_REGEX/$ZERO_OID/g" \
+> -	    -e "s/From $_x40 /From $ZERO_OID /" \
+> -	    -e "s/from $_x40)/from $ZERO_OID)/" \
+> -	    -e "s/commit $_x40\$/commit $ZERO_OID/" \
+> -	    -e "s/commit $_x40 (/commit $ZERO_OID (/" \
+> -	    -e "s/$_x40 $_x40 $_x40/$ZERO_OID $ZERO_OID $ZERO_OID/" \
+> -	    -e "s/$_x40 $_x40 /$ZERO_OID $ZERO_OID /" \
+> -	    -e "s/^$_x40 $_x40$/$ZERO_OID $ZERO_OID/" \
+> -	    -e "s/^$_x40 /$ZERO_OID /" \
+> -	    -e "s/^$_x40$/$ZERO_OID/" \
+> -	    -e "s/$_x07\.\.$_x07/fffffff..fffffff/g" \
+> -	    -e "s/$_x07,$_x07\.\.$_x07/fffffff,fffffff..fffffff/g" \
+> -	    -e "s/$_x07 $_x07 $_x07/fffffff fffffff fffffff/g" \
+> -	    -e "s/$_x07 $_x07 /fffffff fffffff /g" \
+> -	    -e "s/Merge: $_x07 $_x07/Merge: fffffff fffffff/g" \
+> -	    -e "s/$_x07\.\.\./fffffff.../g" \
+> -	    -e "s/ $_x04\.\.\./ ffff.../g" \
+> -	    -e "s/ $_x04/ ffff/g" \
+> -	    "$1"
+> +	perl -e '
+> +		my $oid_length =3D length($ARGV[0]);
+> +		my $x40 =3D "[0-9a-f]{40}";
+> +		my $xab =3D "[0-9a-f]{4,16}";
+> +		my $orx =3D "[0-9a-f]" x $oid_length;
+> +
+> +		sub munge_oid {
+> +			my ($oid) =3D @_;
+> +			my $x;
+> +
+> +			if ($oid =3D~ /^(100644|100755|120000)$/) {
+> +				return $oid;
+> +			}
+> +
+> +			if ($oid =3D~ /^0*$/) {
+> +				$x =3D "0";
+> +			} else {
+> +				$x =3D "f";
+> +			}
+> +
+> +			if (length($oid) =3D=3D 40) {
+> +				return $x x $oid_length;
+> +			} else {
+> +				return $x x length($oid);
+> +			}
+> +		}
+> +
+> +		while (<STDIN>) {
+> +			s/($orx)/munge_oid($1)/ge;
+> +			s/From ($x40)( |\))/"From " . munge_oid($1) . $2/ge;
+> +			s/commit ($x40)($| \()/"commit " . munge_oid($1) . $2/ge;
+> +			s/($x40) /munge_oid($1) . " "/ge;
+> +			s/^($x40)($| )/munge_oid($1) . $2/e;
+> +			s/($xab)(\.\.|,| |\.\.\.|$)/munge_oid($1) . $2/ge;
+> +			print;
+> +		}
+> +	' "$ZERO_OID" <"$1"
+>  }
 
-diff --git a/diff.c b/diff.c
-index f9709de7b4..131903fa3a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3153,16 +3153,19 @@ static void show_dirstat_by_line(struct diffstat_t *data, struct diff_options *o
- 	gather_dirstat(options, &dir, changed, "", 0);
- }
- 
-+static void free_diffstat_file(struct diffstat_file *f)
-+{
-+	free(f->print_name);
-+	free(f->name);
-+	free(f->from_name);
-+	free(f);
-+}
+This is much nicer, but I think we need the following on top of it
+because we have a couple of tricky cases the original didn't consider:
+
+* Some of our 64-bit object IDs get processed twice, turning them into
+  88-character object IDs, which don't match.  We therefore need "\b".
+* The new unabbreviated index lines aren't accounted for, so I included
+  them by possibly matching "\.\.".
+* We have some lines that look like "commit $OID (from $OID)" that
+  aren't accounted for.  Because we now have an optional OID in
+  munge_oid, I had to account for that as well.
+
+So this is what's on top:
+
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index b5c7e1a63b..dfc87a0d19 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -140,6 +140,8 @@ process_diffs () {
+ 			my ($oid) =3D @_;
+ 			my $x;
+=20
++			return "" unless length $oid;
 +
- void free_diffstat_info(struct diffstat_t *diffstat)
- {
- 	int i;
--	for (i = 0; i < diffstat->nr; i++) {
--		struct diffstat_file *f = diffstat->files[i];
--		free(f->print_name);
--		free(f->name);
--		free(f->from_name);
--		free(f);
--	}
-+	for (i = 0; i < diffstat->nr; i++)
-+		free_diffstat_file(diffstat->files[i]);
- 	free(diffstat->files);
- }
- 
-@@ -3718,6 +3721,26 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 		if (xdi_diff_outf(&mf1, &mf2, discard_hunk_line,
- 				  diffstat_consume, diffstat, &xpp, &xecfg))
- 			die("unable to generate diffstat for %s", one->path);
+ 			if ($oid =3D~ /^(100644|100755|120000)$/) {
+ 				return $oid;
+ 			}
+@@ -160,8 +162,8 @@ process_diffs () {
+ 		while (<STDIN>) {
+ 			s/($orx)/munge_oid($1)/ge;
+ 			s/From ($x40)( |\))/"From " . munge_oid($1) . $2/ge;
+-			s/commit ($x40)($| \()/"commit " . munge_oid($1) . $2/ge;
+-			s/($x40) /munge_oid($1) . " "/ge;
++			s/commit ($x40)($| \(from )($x40?)/"commit " .  munge_oid($1) . $2 . mu=
+nge_oid($3)/ge;
++			s/\b($x40)( |\.\.|$)/munge_oid($1) . $2/ge;
+ 			s/^($x40)($| )/munge_oid($1) . $2/e;
+ 			s/($xab)(\.\.|,| |\.\.\.|$)/munge_oid($1) . $2/ge;
+ 			print;
+
+Or, a fresh original version:
+
+-- %< --
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index e6eb4dd4c7..dfc87a0d19 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -130,27 +130,45 @@ test_expect_success setup '
+ EOF
+=20
+ process_diffs () {
+-	_x04=3D"[0-9a-f][0-9a-f][0-9a-f][0-9a-f]" &&
+-	_x07=3D"$_x05[0-9a-f][0-9a-f]" &&
+-	sed -e "s/$OID_REGEX/$ZERO_OID/g" \
+-	    -e "s/From $_x40 /From $ZERO_OID /" \
+-	    -e "s/from $_x40)/from $ZERO_OID)/" \
+-	    -e "s/commit $_x40\$/commit $ZERO_OID/" \
+-	    -e "s/commit $_x40 (/commit $ZERO_OID (/" \
+-	    -e "s/$_x40 $_x40 $_x40/$ZERO_OID $ZERO_OID $ZERO_OID/" \
+-	    -e "s/$_x40 $_x40 /$ZERO_OID $ZERO_OID /" \
+-	    -e "s/^$_x40 $_x40$/$ZERO_OID $ZERO_OID/" \
+-	    -e "s/^$_x40 /$ZERO_OID /" \
+-	    -e "s/^$_x40$/$ZERO_OID/" \
+-	    -e "s/$_x07\.\.$_x07/fffffff..fffffff/g" \
+-	    -e "s/$_x07,$_x07\.\.$_x07/fffffff,fffffff..fffffff/g" \
+-	    -e "s/$_x07 $_x07 $_x07/fffffff fffffff fffffff/g" \
+-	    -e "s/$_x07 $_x07 /fffffff fffffff /g" \
+-	    -e "s/Merge: $_x07 $_x07/Merge: fffffff fffffff/g" \
+-	    -e "s/$_x07\.\.\./fffffff.../g" \
+-	    -e "s/ $_x04\.\.\./ ffff.../g" \
+-	    -e "s/ $_x04/ ffff/g" \
+-	    "$1"
++	perl -e '
++		my $oid_length =3D length($ARGV[0]);
++		my $x40 =3D "[0-9a-f]{40}";
++		my $xab =3D "[0-9a-f]{4,16}";
++		my $orx =3D "[0-9a-f]" x $oid_length;
 +
-+		if (DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two)) {
-+			struct diffstat_file *file = 
-+				diffstat->files[diffstat->nr - 1];
-+			/*
-+			 * Omit diffstats of modified files where nothing changed. 
-+			 * Even if !same_contents, this might be the case due to
-+			 * ignoring whitespace changes, etc.
-+			 * 
-+			 * But note that we special-case additions and deletions,
-+			 * as adding an empty file, for example is still of interest.
-+			 */
-+			if ((p->status == DIFF_STATUS_MODIFIED) 
-+				&& !file->added
-+				&& !file->deleted
-+				&& one->mode == two->mode) {
-+				free_diffstat_file(file);
-+				diffstat->nr--;
++		sub munge_oid {
++			my ($oid) =3D @_;
++			my $x;
++
++			return "" unless length $oid;
++
++			if ($oid =3D~ /^(100644|100755|120000)$/) {
++				return $oid;
++			}
++
++			if ($oid =3D~ /^0*$/) {
++				$x =3D "0";
++			} else {
++				$x =3D "f";
++			}
++
++			if (length($oid) =3D=3D 40) {
++				return $x x $oid_length;
++			} else {
++				return $x x length($oid);
 +			}
 +		}
- 	}
- 
- 	diff_free_filespec_data(one);
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 88d3026894..8bdaa0a693 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -789,7 +789,7 @@ test_expect_success 'checkdiff allows new blank lines' '
- 	git diff --check
- '
- 
--test_expect_success 'whitespace-only changes not reported' '
-+test_expect_success 'whitespace-only changes not reported (diff)' '
- 	git reset --hard &&
- 	echo >x "hello world" &&
- 	git add x &&
-@@ -799,10 +799,44 @@ test_expect_success 'whitespace-only changes not reported' '
- 	test_must_be_empty actual
- '
- 
--test_expect_success 'whitespace-only changes reported across renames' '
-+test_expect_success 'whitespace-only changes not reported (diffstat)' '
-+	# reuse state from previous test
-+	git diff --stat -b >actual &&
-+	test_must_be_empty actual
-+'
 +
-+test_expect_success 'whitespace changes with modification reported (diffstat)' '
-+	git reset --hard &&
-+	echo >x "hello  world" &&
-+	git update-index --chmod=+x x &&
-+	git diff --stat --cached -b >actual &&
-+	cat <<-EOF >expect &&
-+	 x | 0
-+	 1 file changed, 0 insertions(+), 0 deletions(-)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'whitespace-only changes reported across renames (diffstat)' '
- 	git reset --hard &&
- 	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
- 	git add x &&
-+	git commit -m "base" &&
-+	sed -e "5s/^/ /" x >z &&
-+	git rm x &&
-+	git add z &&
-+	git diff -w -M --cached --stat >actual &&
-+	cat <<-EOF >expect &&
-+	 x => z | 0
-+	 1 file changed, 0 insertions(+), 0 deletions(-)
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'whitespace-only changes reported across renames' '
-+	git reset --hard HEAD~1 &&
-+	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
-+	git add x &&
- 	hash_x=$(git hash-object x) &&
- 	before=$(git rev-parse --short "$hash_x") &&
- 	git commit -m "base" &&
++		while (<STDIN>) {
++			s/($orx)/munge_oid($1)/ge;
++			s/From ($x40)( |\))/"From " . munge_oid($1) . $2/ge;
++			s/commit ($x40)($| \(from )($x40?)/"commit " .  munge_oid($1) . $2 . mu=
+nge_oid($3)/ge;
++			s/\b($x40)( |\.\.|$)/munge_oid($1) . $2/ge;
++			s/^($x40)($| )/munge_oid($1) . $2/e;
++			s/($xab)(\.\.|,| |\.\.\.|$)/munge_oid($1) . $2/ge;
++			print;
++		}
++	' "$ZERO_OID" <"$1"
+ }
+=20
+ V=3D$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
+-- %< --
 
-base-commit: 878e727637ec5815ccb3301eb994a54df95b21b8
--- 
-gitgitgadget
+Anyone is welcome to have my sign-off if they pick up any part of this
+patch.
+--=20
+brian m. carlson: Houston, Texas, US
+
+--3wfpuDtTLg8/Vq6g
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXzcqgAAKCRB8DEliiIei
+gSo+AP0c24UkYArTpqTEQbeke04sVJ+kzl7OQJbSXU5vsTmP0QEAyQL5m8VAn2WB
+Fl/FootTW9+SJoIbWPZKXp3S7lGBIwc=
+=fhSq
+-----END PGP SIGNATURE-----
+
+--3wfpuDtTLg8/Vq6g--
