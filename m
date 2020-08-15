@@ -4,245 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA2BC433E1
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 117D8C433E3
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4FC5204FD
-	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:52:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E27132053B
+	for <git@archiver.kernel.org>; Sat, 15 Aug 2020 21:53:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pzJ26LIA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyTbWC8L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729140AbgHOVwj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Aug 2020 17:52:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
+        id S1729215AbgHOVxN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Aug 2020 17:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729101AbgHOVwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Aug 2020 17:52:33 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF28C025571
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:24 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id i10so13023020ljn.2
-        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:06:24 -0700 (PDT)
+        with ESMTP id S1729157AbgHOVwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Aug 2020 17:52:43 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC721C0A3BF1
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:51 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id 88so10968419wrh.3
+        for <git@vger.kernel.org>; Sat, 15 Aug 2020 09:39:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=CmZYnmqWDd0WF9xkJ9XmtO868GG39pigCVobf7SOQBg=;
-        b=pzJ26LIAoNdBPvK+4jdohY0Bzbtpz+5ciWKPTkmvuusSlmWHJGN8/MtEzL/HS1iFBF
-         i67KKjiVkoPcsj1f6ikXmeAcre40bLCF1gkadLkMnIC3uhGOkfcIPrUji4mttDvDzTHl
-         WVP1En6EunbdyWazIE5U5LHphpl3A4KH34Y6bolFP/4cn8F0j3/RIXmIMRLw6FSZXMHH
-         2bi8hyeOmv/+tStZLv8nMS3OZjBrjeE5y2cFUozz+NleQjs95fdb3WiizpUUswslMvLi
-         V4EO9Y712ODegS5kyNFCGmXe8S67VCEMBEgTdtYlekBLgZkbCfqI9ZLKYN5PFWBByVX/
-         XHLA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8yKwkpMYec9D/7NkNOP3qoKkDCzYHq6Bs1apFgJT+rs=;
+        b=WyTbWC8Lr9PMsPA66qumdHWg72BmF8syIO6/W7ch5HVy2MOtD2xH0j6ONOdFZHTt0j
+         N51pvLIq1A+XOEx4WY7xceshch9AMUKmbbIE/34y+4JirxkUTVfJiqU0qk6gdvSI3Pxf
+         chNzcpidhO4XPGlTalEA1MSr4HAgYh26ku76maSjX7rCq6Hj2jRAjRVo7I3O+gwC5VVh
+         Bax4cipclxNy6ukwFznokF3HgerAX5X6MzrbJNxSXDgOfjvy8uYn4brKiqTMs8qmgDZ3
+         2iK2tZBx74qn7C2m+elixpGx8A4rAcWtuPzaTdHtps74qqHFPyFiYb0DupCHeg//FY4A
+         3v0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CmZYnmqWDd0WF9xkJ9XmtO868GG39pigCVobf7SOQBg=;
-        b=Q4qD3x5YzxDbOyxBmgau9+IDt8xtGZeQsGv6eNiezfRgUWWrD6JYhNLhpocwpR5bwz
-         43PdV9l7Q8Ls9cW7qwgSCXuwLNkijlZC8PQCjN2b/jTsrctBmZzZW8be9WJMpDm5Xn02
-         aqMQDWvzF16wdDVTzJxJKz7o0JEP+A6Cdh1mpnS/j13cGwbH1+WQ7lXjfH9nksAvWtzB
-         r7TpafpQml52K5QZ/IXOCUWmj8qWLnDINeNeWBGeNS9jHwg8w2rqhiGm/7x4+yVhbWLX
-         hwleTTXlWzdfZEFISrzJ9oCww5xVUq/bqeGM4LejuDaeVPnrsLNM4Yj5nqJyyTZ4Fg9h
-         A/pg==
-X-Gm-Message-State: AOAM532W5I+/+AB9Fj/7BrV7Gphe9hqW1P41LAZhne57Ub+T3hv56cmP
-        FSFmh65fofMUSQ4JnRNJJtW6uXRNIgU=
-X-Google-Smtp-Source: ABdhPJzhGIO4hVI5Jiy7VhNcuY4wHHHZYmnlAiUIDvQQvLJB+t+5QTw4tMci4pMDGlH8JFlqU6N+ow==
-X-Received: by 2002:a2e:d1a:: with SMTP id 26mr3418161ljn.412.1597507581365;
-        Sat, 15 Aug 2020 09:06:21 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id a1sm2670493lfb.10.2020.08.15.09.06.20
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=8yKwkpMYec9D/7NkNOP3qoKkDCzYHq6Bs1apFgJT+rs=;
+        b=TtzJ1CWjp/V7bYS/AobnfezasxYdbCaMnR2K1FcHA7bcry3XlVBccjERiFChqMYk8T
+         OpL6/apdAC4xm6g34iAzpzuTY6lLC5ptaFmAOmY2fsvcT4fOdlEZd9a5D1rkrPyryHl/
+         rlwpzUw9BJwDl57DanWyvDL7biThzWwKOupbMKKxgLUfG1nIKKSeOGXbKHVbdO6sYYtt
+         Rf9HJjlflzehOjjR0Heb1V4X/CLLRx0V2u1k8fOD7JQIrXG3E0ZMSoM+Qzh2j/+hu9q+
+         IqIUwmSu9SpMhOnAVbwCOe5Sotn6K2e9PkPPCbtaWVqD250ENGmlP56i3/Pnm8K6yGw7
+         0x1A==
+X-Gm-Message-State: AOAM531XE49T+5hk136s8+DfUo7jfl5ncO+p+rK3yWSC4orEKQKnu0pg
+        E5usNW7ccHMUoj6I+2Jl3ZQTcpJbJ64=
+X-Google-Smtp-Source: ABdhPJzh+TVXmuuzS3NtsEBffy+fs+WG0MkNeEtOcIPs0CYZ7GH4C5EnNQvnxoQq5REGayJDT/pLvQ==
+X-Received: by 2002:adf:ed85:: with SMTP id c5mr7526084wro.307.1597509588769;
+        Sat, 15 Aug 2020 09:39:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b8sm22702664wrv.4.2020.08.15.09.39.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2020 09:06:20 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/4] more SHA-256 documentation
-Date:   Sat, 15 Aug 2020 18:05:58 +0200
-Message-Id: <cover.1597506837.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <cover.1597406877.git.martin.agren@gmail.com>
-References: <cover.1597406877.git.martin.agren@gmail.com>
-MIME-Version: 1.0
+        Sat, 15 Aug 2020 09:39:48 -0700 (PDT)
+Message-Id: <6a0cde983d9ed20f043a4977313d714154602012.1597509583.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 15 Aug 2020 16:39:36 +0000
+Subject: [PATCH v3 04/11] commit-graph: consolidate compare_commits_by_gen
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Taylor Blau <me@ttaylor.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks brian, Stolee and Junio for your comments on the initial
-submission. Changes since v1:
+From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
- * Dropped some "160-bit" I had missed.
+Comparing commits by generation has been independently defined twice, in
+commit-reach and commit. Let's simplify the implementation by moving
+compare_commits_by_gen() to commit-graph.
 
- * Refer to the 'object-format' capability in a few spots rather than
-   discussing SHA-1 vs SHA-256 repos.
+Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+Reviewed-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+---
+ commit-graph.c | 15 +++++++++++++++
+ commit-graph.h |  2 ++
+ commit-reach.c | 15 ---------------
+ commit.c       |  9 +++------
+ 4 files changed, 20 insertions(+), 21 deletions(-)
 
- * Dropped the final patch, since Stolee has submitted a patch (series)
-   for changing the implementation instead.
-
-These could be part of bc/sha-256-doc-updates, since they are quite
-similar in spirit, or go in separately, so these series don't need to
-hold each other hostage. Whatever Junio and brian prefer will be fine
-by me.
-
-Martin
-
-Martin Ågren (4):
-  http-protocol.txt: document SHA-256 "want"/"have" format
-  index-format.txt: document SHA-256 index format
-  protocol-capabilities.txt: clarify "allow-x-sha1-in-want" re SHA-256
-  shallow.txt: document SHA-256 shallow format
-
- Documentation/technical/http-protocol.txt     |  5 +--
- Documentation/technical/index-format.txt      | 34 ++++++++++---------
- .../technical/protocol-capabilities.txt       | 12 ++++---
- Documentation/technical/shallow.txt           |  2 +-
- 4 files changed, 30 insertions(+), 23 deletions(-)
-
-Range-diff against v1:
-1:  fcb26c81be ! 1:  2e9f6b9294 http-protocol.txt: document SHA-256 "want"/"have" format
-    @@ Metadata
-      ## Commit message ##
-         http-protocol.txt: document SHA-256 "want"/"have" format
-     
-    -    Document that in SHA-1 repositories, we use SHA-1 for "want"s and
-    -    "have"s, and in SHA-256 repositories, we use SHA-256.
-    +    Document that rather than always naming objects using SHA-1, we should
-    +    use whatever has been negotiated using the object-format capability.
-     
-         Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-     
-    @@ Documentation/technical/http-protocol.txt: at all in the request stream:
-     -SHA-1 as its value.  Multiple SHA-1s MUST be sent by sending
-     -multiple commands.
-     +object name as its value.  Multiple object names MUST be sent by sending
-    -+multiple commands. (An object name is a SHA-1 hash in a SHA-1 repo
-    -+and a SHA-256 hash in a SHA-256 repo.)
-    ++multiple commands. Object names MUST be given using the object format
-    ++negotiated through the `object-format` capability (default SHA-1).
-      
-      The `have` list is created by popping the first 32 commits
-      from `c_pending`.  Less can be supplied if `c_pending` empties.
-2:  5c13a9478a ! 2:  14bd0d9362 index-format.txt: document SHA-256 index format
-    @@ Metadata
-      ## Commit message ##
-         index-format.txt: document SHA-256 index format
-     
-    -    Similar to a recent commit, document that in SHA-1 repositories, we use
-    -    SHA-1 and in SHA-256 repositories, we use SHA-256, then replace all
-    -    other uses of "SHA-1" with something more neutral.
-    +    Document that in SHA-1 repositories, we use SHA-1 and in SHA-256
-    +    repositories, we use SHA-256, then replace all other uses of "SHA-1"
-    +    with something more neutral. Avoid referring to "160-bit" hash values.
-     
-         Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-     
-    @@ Documentation/technical/index-format.txt: Git index format
-           Extension data
-      
-     -   - 160-bit SHA-1 over the content of the index file before this
-    -+   - 160-bit hash checksum over the content of the index file before this
-    -      checksum.
-    +-     checksum.
-    ++   - Hash checksum over the content of the index file before this checksum.
-      
-      == Index entry
-    + 
-     @@ Documentation/technical/index-format.txt: Git index format
-        32-bit file size
-          This is the on-disk size from stat(2), truncated to 32-bit.
-      
-     -  160-bit SHA-1 for the represented object
-    -+  160-bit object name for the represented object
-    ++  Object name for the represented object
-      
-        A 16-bit 'flags' field split into (high to low bits)
-      
-    +@@ Documentation/technical/index-format.txt: Git index format
-    + 
-    +   - A newline (ASCII 10); and
-    + 
-    +-  - 160-bit object name for the object that would result from writing
-    +-    this span of index as a tree.
-    ++  - Object name for the object that would result from writing this span
-    ++    of index as a tree.
-    + 
-    +   An entry can be in an invalidated state and is represented by having
-    +   a negative number in the entry_count field. In this case, there is no
-    +@@ Documentation/technical/index-format.txt: Git index format
-    +     stage 1 to 3 (a missing stage is represented by "0" in this field);
-    +     and
-    + 
-    +-  - At most three 160-bit object names of the entry in stages from 1 to 3
-    ++  - At most three object names of the entry in stages from 1 to 3
-    +     (nothing is written for a missing stage).
-    + 
-    + === Split index
-     @@ Documentation/technical/index-format.txt: Git index format
-      
-        The extension consists of:
-3:  82e5c67b7c ! 3:  2e82be9e36 protocol-capabilities.txt: clarify "allow-x-sha1-in-want" re SHA-256
-    @@ Metadata
-      ## Commit message ##
-         protocol-capabilities.txt: clarify "allow-x-sha1-in-want" re SHA-256
-     
-    -    Two of our extensions contain "sha1" in their names, but that's
-    -    historical. The "want"s will take object names that are not necessarily
-    -    SHA-1s. Make this clear, but also make it clear how there's still just
-    -    one correct hash algo: These extensions don't somehow make the "want"s
-    -    take object names derived using *any* hash algorithm.
-    +    Two of our capabilities contain "sha1" in their names, but that's
-    +    historical. Clarify that object names are still to be given using
-    +    whatever object format has been negotiated using the "object-format"
-    +    capability.
-     
-         Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-     
-    @@ Documentation/technical/protocol-capabilities.txt: allow-tip-sha1-in-want
-     -send "want" lines with SHA-1s that exist at the server but are not
-     -advertised by upload-pack.
-     +send "want" lines with object names that exist at the server but are not
-    -+advertised by upload-pack. (Note that the name of the capability
-    -+contains "sha1", but that it's more general than that: in SHA-1
-    -+repositories, the "want" lines provide SHA-1 values, but in SHA-256
-    -+repositories, they provide SHA-256 values.)
-    ++advertised by upload-pack. For historical reasons, the name of this
-    ++capability contains "sha1". Object names are always given using the
-    ++object format negotiated through the 'object-format' capability.
-      
-      allow-reachable-sha1-in-want
-      ----------------------------
-    @@ Documentation/technical/protocol-capabilities.txt: allow-tip-sha1-in-want
-     -send "want" lines with SHA-1s that exist at the server but are not
-     -advertised by upload-pack.
-     +send "want" lines with object names that exist at the server but are not
-    -+advertised by upload-pack. (Same remark about "sha1" as above.)
-    ++advertised by upload-pack. For historical reasons, the name of this
-    ++capability contains "sha1". Object names are always given using the
-    ++object format negotiated through the 'object-format' capability.
-      
-      push-cert=<nonce>
-      -----------------
-4:  bcfbdd25e5 ! 4:  8680fc1af6 shallow.txt: document SHA-256 shallow format
-    @@ Metadata
-      ## Commit message ##
-         shallow.txt: document SHA-256 shallow format
-     
-    -    Similar to recent commits, document that in SHA-1 repositories, we use
-    -    SHA-1 for these purposes, and in SHA-256 repositories, we use SHA-256.
-    +    Similar to recent commits, document that we list object names rather
-    +    than SHA-1s.
-     
-         Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-     
-5:  f95e3f65e7 < -:  ---------- commit-graph-format.txt: fix "Hash Version" description
+diff --git a/commit-graph.c b/commit-graph.c
+index af8d9cc45e..fb6e2bf18f 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -112,6 +112,21 @@ uint32_t commit_graph_generation(const struct commit *c)
+ 	return data->generation;
+ }
+ 
++int compare_commits_by_gen(const void *_a, const void *_b)
++{
++	const struct commit *a = _a, *b = _b;
++	const uint32_t generation_a = commit_graph_generation(a);
++	const uint32_t generation_b = commit_graph_generation(b);
++
++	/* older commits first */
++	if (generation_a < generation_b)
++		return -1;
++	else if (generation_a > generation_b)
++		return 1;
++
++	return 0;
++}
++
+ static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
+ {
+ 	unsigned int i, nth_slab;
+diff --git a/commit-graph.h b/commit-graph.h
+index 09a97030dc..701e3d41aa 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -146,4 +146,6 @@ struct commit_graph_data {
+  */
+ uint32_t commit_graph_generation(const struct commit *);
+ uint32_t commit_graph_position(const struct commit *);
++
++int compare_commits_by_gen(const void *_a, const void *_b);
+ #endif
+diff --git a/commit-reach.c b/commit-reach.c
+index efd5925cbb..c83cc291e7 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -561,21 +561,6 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
+ 	return repo_is_descendant_of(the_repository, commit, list);
+ }
+ 
+-static int compare_commits_by_gen(const void *_a, const void *_b)
+-{
+-	const struct commit *a = *(const struct commit * const *)_a;
+-	const struct commit *b = *(const struct commit * const *)_b;
+-
+-	uint32_t generation_a = commit_graph_generation(a);
+-	uint32_t generation_b = commit_graph_generation(b);
+-
+-	if (generation_a < generation_b)
+-		return -1;
+-	if (generation_a > generation_b)
+-		return 1;
+-	return 0;
+-}
+-
+ int can_all_from_reach_with_flag(struct object_array *from,
+ 				 unsigned int with_flag,
+ 				 unsigned int assign_flag,
+diff --git a/commit.c b/commit.c
+index 4ce8cb38d5..bd6d5e587f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -731,14 +731,11 @@ int compare_commits_by_author_date(const void *a_, const void *b_,
+ int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused)
+ {
+ 	const struct commit *a = a_, *b = b_;
+-	const uint32_t generation_a = commit_graph_generation(a),
+-		       generation_b = commit_graph_generation(b);
++	int ret_val = compare_commits_by_gen(a_, b_);
+ 
+ 	/* newer commits first */
+-	if (generation_a < generation_b)
+-		return 1;
+-	else if (generation_a > generation_b)
+-		return -1;
++	if (ret_val)
++		return -ret_val;
+ 
+ 	/* use date as a heuristic when generations are equal */
+ 	if (a->date < b->date)
 -- 
-2.28.0.297.g1956fa8f8d
+gitgitgadget
 
