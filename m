@@ -2,95 +2,93 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93577C433E1
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8660C433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:31:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 540E520657
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:30:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B41902063A
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:31:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uEahdJ5l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TS06ACwc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387983AbgHQRau (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 13:30:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52739 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387678AbgHQQ66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 12:58:58 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4303584030;
-        Mon, 17 Aug 2020 12:58:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OlcRgnMFWERm8LGma0NizVz57BE=; b=uEahdJ
-        5lvnW3tm6Pfj4sbNhoknqINZGSj3gHcKwJrw980dR1ydp2N6vIGAT5270Hq688SM
-        tFTVOJU8CEzYxYlMNo1Lv5WQKj1T/b91i0o7oi0S+hUNczn9T/mdQYET+9/OiLan
-        4AKTFgRa8m+TTyWZNkxgdRx1+Iyk2E35l8zFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=utRjlJ/m/b6boB60vsYS6JeVquEeoTcC
-        wxd0WNv8yH+ytounwyn4JQEZdmGXMe9EqT/A3rq5iT76gdxFdSmOOohT99x1p/SF
-        omm8a7DxuoapwKydvcERQsePPw3lRkrTh+TiEUIYcE2N5lv6YPRkFGTn+Iwhb26g
-        a2VV+u7dzAc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 38BCE8402F;
-        Mon, 17 Aug 2020 12:58:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AEF868402E;
-        Mon, 17 Aug 2020 12:58:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH 3/5] make git-bugreport a builtin
-References: <20200813145515.GA891139@coredump.intra.peff.net>
-        <20200813145936.GC891370@coredump.intra.peff.net>
-        <xmqqr1sa2znw.fsf@gitster.c.googlers.com>
-        <20200815063811.GA628010@coredump.intra.peff.net>
-Date:   Mon, 17 Aug 2020 09:58:54 -0700
-In-Reply-To: <20200815063811.GA628010@coredump.intra.peff.net> (Jeff King's
-        message of "Sat, 15 Aug 2020 02:38:11 -0400")
-Message-ID: <xmqqv9hh2oq9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2389268AbgHQRbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 13:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389167AbgHQQ5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 12:57:52 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B53EC061342
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 09:57:51 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id e11so13965321otk.4
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 09:57:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a6hlqvyOHsRd2UQSiHfzY3nPQMlFWOZIIb1bpLTSpnw=;
+        b=TS06ACwcy1Z9cr9dpYK7f5lRaY6vSmcFZsogfkzUlsmJgyQKOAMV/H8f6FWFHUDz6x
+         61N5Iq3U27ZtDKHzsmJckc4ytwAsYkIW7g9gHA4P0Y+FheAN0ia6DwG9dH3UNwTubqrY
+         bxmdnJV3goQWnXu0PBH3nOmPyw4E1rpGG/dwLUOw0VBPCNE3mU764FqauuJBvvCXjMny
+         kh6rk3KcffOyWjmchoyQ6QEzdT7adYH/8m8sBfhgiwqGORCmuGsbdbI4Sk6kQJBwYZqf
+         amiqDM4JilYZLY0Vq44jEEJAUJ0vXpBxkMmtJQWzXb3bzkG2DQyuadhLgSL5SH8Oz3VN
+         0jdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a6hlqvyOHsRd2UQSiHfzY3nPQMlFWOZIIb1bpLTSpnw=;
+        b=JCwEubZrcsCpRuz/OEp5WCTnOdCcXis8YCBuaPk14cI28sYbvj8XdwH0t/5Z/PEEar
+         ZmCuHBprrwKwA7RCFzJIC7KdCB5ZqEXwEFwN8ZPxSAg6gWDy9jP5O/vaV/2xaZDZQ2nV
+         S6V4oaQNnxoaThuBimrj3PncVSEtI9+jCiCOmUwmMiw4QV10Ubr1/cmmBgaG3fJ4hQIP
+         nvy/6rAYh0l2q6jGDaqaMPQTG3hB4gG70Y/faRwcX9XD2RInTbwwha4cIqtTriT45wEK
+         JO56TOJa+1kdGomk8+gKBB3TDPuNsE+taEeasiHMyTNzNVgE+1KrN9uW1o6fv9955noQ
+         Q2hw==
+X-Gm-Message-State: AOAM532W4yH+PopcKB0dWYoQRHqDvGS7InUZmZ3lCKGJt4+F0V+T2cDu
+        wSR2Pk6PNNfJ2EbOvtFkE10zPet3zABg+XvZDAs=
+X-Google-Smtp-Source: ABdhPJylu+VbFxNwh4xXFdHjBZsq1b17XIllHpX02dfjCv7H0tO9/HU70qo2vNgdhSfymMStLZQDgxsKpWNUdDwKZOg=
+X-Received: by 2002:a05:6830:22c8:: with SMTP id q8mr12119755otc.345.1597683469859;
+ Mon, 17 Aug 2020 09:57:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EF9CA3B2-E0AA-11EA-8B0A-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.831.git.git.1597561152.gitgitgadget@gmail.com>
+ <932741d7598ca2934dbca40f715ba2d3819fcc51.1597561152.git.gitgitgadget@gmail.com>
+ <20200816084328.GA1221900@coredump.intra.peff.net>
+In-Reply-To: <20200816084328.GA1221900@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 17 Aug 2020 09:57:39 -0700
+Message-ID: <CABPp-BFBcMaPTvxE_PYqpHzo5zUG=Lv7Y+Oq2yCRYxRTgRQgLA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] dir: fix leak of parent_hashmap and recursive_hashmap
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sun, Aug 16, 2020 at 1:43 AM Jeff King <peff@peff.net> wrote:
+>
+> On Sun, Aug 16, 2020 at 06:59:09AM +0000, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Commit 96cc8ab531 ("sparse-checkout: use hashmaps for cone patterns",
+> > 2019-11-21) added a parent_hashmap and recursive_hashmap to each struct
+> > pattern_list and initialized these in add_patterns_from_buffer() but did
+> > not make sure to add necessary code to clear_pattern_list() to free
+> > these new structures.  Call hashmap_free_() on each to plug this memory
+> > leak.
+>
+> Beat you to it. :)
+>
+> See: https://lore.kernel.org/git/20200814111049.GA4101811@coredump.intra.peff.net/
 
-> Where do we want to go with this? After the discussion and sleeping on
-> it, I'm still of the mind that we should generally default things to
-> being builtins unless there's an immediate need not to do so (like
-> extra link dependencies). But I don't care _too_ much, so I'd rather
-> eject this patch and move forward with the rest of the series if it's a
-> sticking point. Thoughts?
-
-I already said what needs to be said.
-
-I do not care too deeply what we do now today either way, as long as
-people remember that we are interested in the version string, build
-options and external library versions of the "git" binary (for
-built-ins) and non-built-in binaries (like the remote helpers), and
-not as much interested in these traits of the "git-bugreport" binary
-itself, when we need to split "bugreport" out of builtins in the
-future.
-
-Ironically, making it built-in eliminates the chance of sloppy code
-to report versions and other traits of git-bugreport that does not
-matter and is different from these traits of git itself, but it will
-make the technical burden larger if we ever need to split.  It won't
-be just the matter of giving it a new cmd_main() and worry about the
-optional nongit setup.
-
-Thanks.
+Doh!  However, you do need to take care to free the hash table in
+addition to the hash entries, or you'll still have a leak (I actually
+made the same mistake)...  I'll add those comments on your patch,
+though.
