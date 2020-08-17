@@ -2,92 +2,114 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D787C433DF
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41ECEC433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:26:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50F0C20657
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:18:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1667B20716
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:26:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oWqZAj60"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DcTA3ZQS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389549AbgHQRSp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 13:18:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50722 "EHLO
+        id S2389868AbgHQR0u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 13:26:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389671AbgHQRSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 13:18:35 -0400
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49157C061389
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 10:18:34 -0700 (PDT)
-Received: by mail-il1-x144.google.com with SMTP id e11so7217292ils.10
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 10:18:34 -0700 (PDT)
+        with ESMTP id S2389828AbgHQRWk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 13:22:40 -0400
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0012C061389
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 10:22:39 -0700 (PDT)
+Received: by mail-oo1-xc44.google.com with SMTP id z11so3566396oon.5
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 10:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=/BOkytHnzYFgRJBTCni8LBaimpChbtskExKQvXcK5y8=;
-        b=oWqZAj60g7g2PmxZBMB2sPJdjM33XFqfUiKkxJbWseoZ3xXn049Ty6WaVj7I+HstnN
-         fhrMUr2RS2No/IspPA//x21lbuZZ68I52tXHe+XVZ21aPki9xH2XAqj21JdAi/3Yb+Zt
-         UBFNB1vrKeoD2MHJ4shXyHVP8cfFkbBPCAZfegMlnN/UIlo96XwgJFYJa5E29ZP9LWPN
-         ZzuIpnL2m9fFeVXGTjpbIWspIJiJMoBKbcPXT/L6/dqfAZnImJrMl93uTysgyL1JiyQD
-         7/FKLvqMwrK3m/mjUCAAE1CmnDQKT62eqOHV0eOCS1z3n4NY33KRJxwxy7zHimcsSqrP
-         Y+aA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Blz/gnMY8W7Ruq2qvReUdul8p5XMGS0EKqQk5ee02x4=;
+        b=DcTA3ZQSm/dETIQzI6UFxDWgCjJztBXNqkR8IjG/+koevVZ8viQGvZiAHb+RDjfQfl
+         oLad7LQv8aX3EfcBcN2J13DXTH+/f4ydx8RCcnusq9hAZJn72sh95WtJuR8zCOXbKIxy
+         NCyWMpmyEm5VPlDWXP8V/aRlbtkYIzLsy67GSvRvs8HA5/OhbuJndma0/lu+jxSKdWZp
+         tvrvpbBrrNT7Ys6a4NcRPapu5R0XCj1iWn7tjiCyZXycQHg/VppEILDpPbwXAv9JrFTN
+         azL4+DsuvI1QSBW5yd7ZU5BAS571G+WxoVpDlhjpALAjsCGE0+63owNXbXQuY8K0QP0/
+         yZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=/BOkytHnzYFgRJBTCni8LBaimpChbtskExKQvXcK5y8=;
-        b=dbWI9sfmgbNnKaSncsCGxsFlEyQVsinNgBS/XVLDsSsseJlJ7L2EIvbkq6Y0WBApCw
-         9Dy5qUuahN9faZhOdvpdCbgGiaTpm3Ke6ir8LbZSIAQrltu6JSgqEjhuNecI2cRzaq+b
-         G7aC/COZl3adbQoM/7Gx9x2hjVThQgkRmEZhIuJ/dgM5sDfNvqKh2OBi8E5WX3akKGo6
-         Ld/Kq7agk8rtde9aK9yL9R4m9Jh+ZahccCYqISCQPWrdp8lmw/TUT6W2IEF+ceUvJxis
-         5YCqX132jHOeGmg4j+/6bONLBaiWcZRrvzwdJdRtGCkfVKslR+YocAG7xf2LHDuOAMvn
-         VJqw==
-X-Gm-Message-State: AOAM532KKUBItJqQV85XckzIKsBezTREaO0kyey25UPsNebtObTe5dmB
-        9W6uuy29atx5MbLzlOrMNgvtgamlkXaC1DLnbhvSA6mPeHnZZg==
-X-Google-Smtp-Source: ABdhPJzXGlylKS+EZXdMlt/IjMBJhhaMPd9CfUjrmekrumEI5badAXwPJu6EqU6KfHqtrGd/7fWVIl5oKIW3Hh+WbBA=
-X-Received: by 2002:a92:3209:: with SMTP id z9mr7142491ile.126.1597684713596;
- Mon, 17 Aug 2020 10:18:33 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Blz/gnMY8W7Ruq2qvReUdul8p5XMGS0EKqQk5ee02x4=;
+        b=XzTvu5u4I1C5NsnvLKEZy8YAkQET0QaOQ3/5PzgoT5KvNBWaldE5n7RLr1z2Bq/Dzj
+         gsdkgqQj07TuCNPjkVXK3OaNqNfmaIumfa4054+S2zlAfQxZqNZqIkcPjW+8BnraEdNA
+         z8xyFI7Zi0WuprrnuGF2l6VtVUldcz/TFZujgM91GabL4O8MqcqBZADDxF+EPFDtxRcv
+         iY4AXZ4FMEH26PgESQKCdFgGPscmO8Ba1Tb10RDL5g6nBxiB5pMSs5anTNuBb7K/sS68
+         UpGns5qHMAYNx24fD4BT+TNQozN8/8fpNIGlALRvtSI9EHS3lZZ/U9gEpPGBGjtGALWc
+         6XVw==
+X-Gm-Message-State: AOAM530KuBxOqnrikzdPmHs23IU0X6a5s22nVnBXarPRYJXFjDJztYO0
+        cu58F45PA1KGlWDjUJIAV4j43TSXWiFtUWqz7h4xzxbgQbw=
+X-Google-Smtp-Source: ABdhPJzLIYELY6/WN+ktiE+01GOuYtJMe25r4dpqNLHagZa6N7S+hUeqUzg/YKaSdqGagumv461lKIMxBASkId0DPtc=
+X-Received: by 2002:a4a:98ed:: with SMTP id b42mr11834950ooj.32.1597684959029;
+ Mon, 17 Aug 2020 10:22:39 -0700 (PDT)
 MIME-Version: 1.0
-From:   Gopal Yadav <gopunop@gmail.com>
-Date:   Mon, 17 Aug 2020 22:48:22 +0530
-Message-ID: <CAAUOv8hTahjiLvPzX-281wj4omCMktE+MfnPk-xH4Ty1P4W=xw@mail.gmail.com>
-Subject: [Microproject] t0000-basic.sh: replaced test -f with test_path_is_file
-To:     git@vger.kernel.org
+References: <20200814111049.GA4101811@coredump.intra.peff.net> <CABPp-BGrxaY-ObzuJ60TDMfQD+crq+TTnYE03T=KVmG5mEf-5A@mail.gmail.com>
+In-Reply-To: <CABPp-BGrxaY-ObzuJ60TDMfQD+crq+TTnYE03T=KVmG5mEf-5A@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 17 Aug 2020 10:22:27 -0700
+Message-ID: <CABPp-BGUBPJCW3-GrVvom5CwfauY-m5ZCLJmKP=P=fXWm=Kepg@mail.gmail.com>
+Subject: Re: [PATCH] clear_pattern_list(): clear embedded hashmaps
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t0000-basic.sh: replaced test -f with test_path_is_file
+On Mon, Aug 17, 2020 at 9:55 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> Hi,
+>
+> On Fri, Aug 14, 2020 at 5:23 AM Jeff King <peff@peff.net> wrote:
+> >
+> > Commit 96cc8ab531 (sparse-checkout: use hashmaps for cone patterns,
+> > 2019-11-21) added some auxiliary hashmaps to the pattern_list struct,
+> > but they're leaked when clear_pattern_list() is called.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > I have no idea how often this leak triggers in practice. I just noticed
+> > it while poking at LSan output (which we remain depressingly far
+> > from getting a clean run on).
+> >
+> >  dir.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/dir.c b/dir.c
+> > index fe64be30ed..9411b94e9b 100644
+> > --- a/dir.c
+> > +++ b/dir.c
+> > @@ -916,6 +916,8 @@ void clear_pattern_list(struct pattern_list *pl)
+> >                 free(pl->patterns[i]);
+> >         free(pl->patterns);
+> >         free(pl->filebuf);
+> > +       hashmap_free_entries(&pl->recursive_hashmap, struct pattern_entry, ent);
+> > +       hashmap_free_entries(&pl->parent_hashmap, struct pattern_entry, ent);
+>
+> This clears up the hash entries, but continues to leak the hash table.
+> Since you submitted first, can you fix this to use hashmap_free_()
+> instead, as per
+> https://lore.kernel.org/git/932741d7598ca2934dbca40f715ba2d3819fcc51.1597561152.git.gitgitgadget@gmail.com/?
+>  Then I'll rebase my series on yours and drop my first patch (since
+> it'll then be identical).
 
-Signed-off-by: Gopal Yadav <gopunop@gmail.com>
----
-Hi,
-I am new here, and thought of starting out by completing the microproject.
-
-
- t/t0000-basic.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 923281af93..eb99892a87 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -1191,7 +1191,7 @@ test_expect_success 'writing this tree with
---missing-ok' '
- test_expect_success 'git read-tree followed by write-tree should be
-idempotent' '
-     rm -f .git/index &&
-     git read-tree $tree &&
--    test -f .git/index &&
-+    test_path_is_file .git/index &&
-     newtree=$(git write-tree) &&
-     test "$newtree" = "$tree"
- '
--- 
-2.20.1
+Nevermind, I got confused once again by the name.
+hashmap_free_entries() doesn't mean just free the entries, it means
+free what hashmap_free() would plus all the entries, i.e. do what
+hashmap_free() *should* *have* *been* defined to do.  Such a confusing
+API.  And hashmap_free() really perplexes me -- it seems like a
+function that can't possibly be useful; it's sole purpose seems to be
+a trap for the unwary.
