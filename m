@@ -2,66 +2,65 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB0FCC433E4
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB56C433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:26:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A6B920716
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:20:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1118C20760
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:26:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hfvyXlmf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VCJYpBCB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390807AbgHQSUE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 14:20:04 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61266 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390800AbgHQSTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 14:19:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 917C8DEDAE;
-        Mon, 17 Aug 2020 14:19:52 -0400 (EDT)
+        id S2390619AbgHQS02 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 14:26:28 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63150 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390893AbgHQS0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 14:26:19 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DA807DABE2;
+        Mon, 17 Aug 2020 14:26:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Uzk8azrv9pan
-        aLeCdn876qoUsmU=; b=hfvyXlmf8N4y5kR3Jeu17GHhYwgrGwtJW/4RPl2cAoFB
-        Xq9UNcpN1hqayLFwKJpVxexkdWuNa/1JixUbnjpngkLS+Cj0lfpqUPV6lYlhJxEJ
-        PF3wBfg3Z/db5EWg2KOuTVppLRvNvoILo+FDev0paQZjKjcgKIpL47gsfOzw/hk=
+        :content-type; s=sasl; bh=XLDCeAIvc/90qm++//kG0h7bU/0=; b=VCJYpB
+        CBsBlxjleO5MPpKx2XNNFhIbulyRtQZ9mMkjzLBofHrlmbSIv42JDLkIWZcTWidT
+        EAl5x0ixsBnZiLV4nmbGrmwM+LOCBoEIPtnVMyy1wWUKvmeGFHnJ8Hkf1lE0Q75h
+        7F5OAwUK6fVEGxdrmTr86GRyz5a8HxEsiwCr4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gnEBEl
-        /zv88lLfk08D1ra86oGRUgRSh9cL3bDkvsT9B25Ezu62Gr5DMbuCwY+5yHDy49Wh
-        HNdmAPbMAC3wf6I/9Vn3c/qZ/w5ivqnEdPYy4NH/sIbMMT1yZmsNfMI9UqNpd35K
-        YInxF8mFE7SxEa/DiJa5lcatVb7KJqQ8egKn0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 897E5DEDAD;
-        Mon, 17 Aug 2020 14:19:52 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=sH/zuXQNbqE7iQmXVn9BWsFqFmFwHUsL
+        w1SKdmlxSZlp5S29ssFn7kq0VrVTLDDC9Z0dForhFvyqP6GV6vkFpV1j5qzvEoWT
+        w1F09wwgNIvr1XCN8aCwrJH3Ro+9HjfpLXEYjYFvunVGrYeuyu3gZcgUQ4WthKgT
+        FObNp8W8sps=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D2FB8DABE0;
+        Mon, 17 Aug 2020 14:26:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CDA84DEDAC;
-        Mon, 17 Aug 2020 14:19:49 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 02704DABDF;
+        Mon, 17 Aug 2020 14:26:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] Optionally skip linking/copying the built-ins
+Subject: Re: [PATCH 3/3] ci: stop linking built-ins to the dashed versions
 References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
-        <647f49d62e910fe8392219c3a5c6d86ac98a88e6.1597655273.git.gitgitgadget@gmail.com>
-Date:   Mon, 17 Aug 2020 11:19:48 -0700
-In-Reply-To: <647f49d62e910fe8392219c3a5c6d86ac98a88e6.1597655273.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin's message of "Mon, 17 Aug 2020 09:07:52 +0000")
-Message-ID: <xmqq7dtx2kzf.fsf@gitster.c.googlers.com>
+        <1269d7ace84b5d0e9a009044b49251cdf1dfbd23.1597655273.git.gitgitgadget@gmail.com>
+Date:   Mon, 17 Aug 2020 11:26:11 -0700
+In-Reply-To: <1269d7ace84b5d0e9a009044b49251cdf1dfbd23.1597655273.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin's message of "Mon, 17 Aug 2020 09:07:53 +0000")
+Message-ID: <xmqq364l2kos.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3CE533F4-E0B6-11EA-9132-843F439F7C89-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 21487268-E0B7-11EA-8D73-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,43 +68,51 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <gitgitgadget@gmail.com> writes:
 
-> The dashed form of the built-ins is so pass=C3=A9. To save on developme=
-nt
-> time, and to support the idea of eventually dropping the dashed form
-> altogether, let's introduce a Makefile knob to skip generating those
-> hard-links.
+> Originally, all of Git's subcommands were implemented in their own
+> executable/script, using the naming scheme `git-<command-name>`. When
+> more and more functionality was turned into built-in commands (i.e. the
+> `git` executable could run them without spawning a separate process),
+> for backwards-compatibility, we hard-link the `git` executable to
+> `git-<built-in>` for every built-in.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  Makefile | 53 ++++++++++++++++++++++++++++++++++++-----------------
->  1 file changed, 36 insertions(+), 17 deletions(-)
+> This backwards-compatibility was needed to support scripts that called
+> the dashed form, even if we deprecated that a _long_ time ago.
 
-I do not know pass=C3=A9 is a good adjective to use for the past effort
-of keeping the promise we made to our users, but I think in general
-this as an optional installation knob is an excellent idea.
+The other day, I found this amusing (yes, I am a fan of Emacs).
 
->  ### Check documentation
->  #
-> -ALL_COMMANDS =3D $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS)
-> +ALL_COMMANDS =3D $(ALL_PROGRAMS_AND_BUILT_INS) $(SCRIPT_LIB)
->  ALL_COMMANDS +=3D git
->  ALL_COMMANDS +=3D git-citool
->  ALL_COMMANDS +=3D git-gui
+https://medium.com/@steve.yegge/dear-google-cloud-your-deprecation-policy-is-killing-you-ee7525dc05dc
 
-This stops "make check-docs" from ensuring that the built-in
-commands are documented when skip-dashed is requested, no?
-The first action in check-docs target that runs lint-docs in the
-Documentation directory may notice a missing documentation when
-it is referenced by somebody else, but the check in the target
-itself are told that these built-ins no longer exist and triggers
-"removed but listed" errors.
+> In preparation for eventually dropping those hard-links, teach the CI
+> (and PR) builds to skip generating those hard-links.
 
-A mistake clike the above an become harder to make if
-ALL_PROGRAMS_AND_BUILT_INS is renamed to indicate what it really is
-(which would also help its primary target, the installation step).
-It obviously does NOT always include $(BUILT_INS), so it is not "all
-programs and built-ins" but something else (perhaps "all programs
-and built-ins that are installed on a filesystem as separate
-executable files"?)
+You do not have to set the policy of "eventuall dropping" here.
+The presence of the choice of not installing added in step [2/3]
+alone is a very good justification to include this patch in the
+series.  Otherwise, we won't know if our test suite and remaining
+scripted Porcelain rely on the age old promise we made and have kept
+to the end users, as [2/3] requires all our users accept the
+breakage of the promise.
+
+It may be a good idea to test both configurations, with or without
+SKIP_DASHED, at least for now, though.
 
 Thanks.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  ci/run-build-and-tests.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index 17e25aade9..b074db5c4b 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -10,7 +10,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+>  *) ln -s "$cache_dir/.prove" t/.prove;;
+>  esac
+>  
+> -make
+> +make SKIP_DASHED_BUILT_INS=YesPlease
+>  case "$jobname" in
+>  linux-gcc)
+>  	make test
