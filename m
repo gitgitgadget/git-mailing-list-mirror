@@ -2,117 +2,119 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9565C433E1
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 20:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1AC7C433DF
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 20:53:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74B6420758
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 20:36:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD7EA20738
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 20:53:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hw7NCDN5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MT7RBXrY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726560AbgHQUgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 16:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53684 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726290AbgHQUgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 16:36:50 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3038C061389
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 13:36:49 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id f26so18952446ljc.8
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 13:36:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AJAxmn09tWXnVSfmvJpHeRAi8sNjhHDTGJYHxQdt7Ck=;
-        b=hw7NCDN5ffacxOeTmzoE0nSZQpoSiz7GwKNQsvwbGos4hNgI9jbahj3JQxzdvlhBau
-         +HIpMY3H3tX/AHEQYhemcBwRIfp6p3q/AG0DbFEcdwJHSckhn5nEDL+YsNn7QhhvKmCb
-         Qu63xfKcp+R40btLmEvjb7pb867Zt5eYPKHmIJ+m4WtHT7gSqFugo4x3qkrai4n8yGki
-         8BhGNm070hdR9H+E4Um1TEO1G+OWg/QH5Jcgh0stpo3UUwj1GzDF/e6v7zm8RzP9zYvl
-         jDiCzTKzj5qGl6kTQFbAREPcsmyZlPCajcNz+ANwZryZv9uMfaVB8xZuHI/87ZwYpffs
-         xaUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=AJAxmn09tWXnVSfmvJpHeRAi8sNjhHDTGJYHxQdt7Ck=;
-        b=mTPfTTs0AXhu+NwWPfx2jCTcDSqcw7dFPFLOBSrsYYJm0gmBd9XzAWrItsoYtUmyV1
-         ylTtIbBV70KM3q5dvPT7t16XWlwUIwsKUp0AeH8lj/ACllbaAYWcYHiFc1qNp56Gf2UJ
-         /RmuyvfccPhVJftxHRZ3LI+bZ+81Mv88199Qn8PlNNSSlngOFg8KXtqbVbp/KZYFcQqY
-         LjqBlQaxff2QWtwtCxaO7Qf7M49qMf+bVgXsUNchNEd6osnMpOUqvKTk91iBneC0wlUQ
-         wT3hwo7A3+NUpEA8Wh9U6pdXxGjqEVrWno6Nn6AcqlskzICo4lM24SWZLmZXOKAdT+Nz
-         +XGw==
-X-Gm-Message-State: AOAM531Dqmn8SQ/ury2A8sOvvlvOgWwL8wCDK6aUR++i2UWCDS8QY1t8
-        OtM6EqRAe7GwdU3j4n3PtGZIKwVplTA=
-X-Google-Smtp-Source: ABdhPJyvyXMvwDCR03AoPNBX4VFA1WosS3TpHpaMeRf0jwNiZ1WT4TrDnVuDhL4vtlvTMRFHyAlwkA==
-X-Received: by 2002:a2e:87d7:: with SMTP id v23mr8470243ljj.325.1597696607733;
-        Mon, 17 Aug 2020 13:36:47 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 5sm5778836lfz.35.2020.08.17.13.36.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2020 13:36:46 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH  3/3] t/t4013: add test for --diff-merges=off
-References: <20200805220832.3800-1-sorganov@gmail.com>
-        <20200805220832.3800-4-sorganov@gmail.com>
-        <xmqq3650n2rc.fsf@gitster.c.googlers.com> <87lfisk915.fsf@osv.gnss.ru>
-        <xmqqy2msllz0.fsf@gitster.c.googlers.com>
-        <xmqqtuxglksy.fsf@gitster.c.googlers.com> <87ft90uq8w.fsf@osv.gnss.ru>
-        <xmqqmu37lmym.fsf@gitster.c.googlers.com> <874kp4uoic.fsf@osv.gnss.ru>
-        <xmqqr1s52nv5.fsf@gitster.c.googlers.com>
-Date:   Mon, 17 Aug 2020 23:36:45 +0300
-In-Reply-To: <xmqqr1s52nv5.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 17 Aug 2020 10:17:34 -0700")
-Message-ID: <87wo1xko0y.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1726638AbgHQUxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 16:53:37 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57938 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726228AbgHQUxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 16:53:36 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 469ACDBF97;
+        Mon, 17 Aug 2020 16:53:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=33tbWgsHhZzXr/9PsvSqfv4egV8=; b=MT7RBX
+        rYLy+XcBzADoF8FoTWe/RVNct6KsDNflW6szAfFV2aTfiS94Iwg2qoYbINaehWxh
+        Tt2GLmGSMLClderZvv16CvQUxV1m7YWyTytmxVCKjmt7WK9qr9XhSE2Xy0s/asOI
+        Hhws4jL7WFlx60cwMtOwns6nlRNC3Z2jhG0dA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uxuyNmc8gm8XD6MJTVllEn1ghQylrSPV
+        cGOYHJvsSzQmRhNnu3Um/gUxxcHDfnFWhYEo/XULu0t8MxKY+5DcViElY9WE3X4J
+        u5wCsEP3sTIUzdEsvD0xy9lz4YEjktpY1x9ZpzcH9VRKwzCopOhwnLctPHBdtpnS
+        bgadUEKJ6EI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F882DBF96;
+        Mon, 17 Aug 2020 16:53:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8C02ADBF95;
+        Mon, 17 Aug 2020 16:53:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v17 03/10] receive-pack: add new proc-receive hook
+References: <20200518094039.757-1-worldhello.net@gmail.com>
+        <20200815171740.6257-4-worldhello.net@gmail.com>
+Date:   Mon, 17 Aug 2020 13:53:29 -0700
+In-Reply-To: <20200815171740.6257-4-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Sat, 15 Aug 2020 13:17:33 -0400")
+Message-ID: <xmqq8sed0zau.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: B579F95C-E0CB-11EA-A751-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
 >
->> So, do these both effectively resolve to:
->>
->>       git log -m --no-diff-merges --first-parent --patch 
->>
->> where first -m is the one implied by --first-parent, ...
->
-> Eh, why does --first-parent even affect the choice of -m/no-m when
-> --no-diff-merges is explicitly given?
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
 
-Well, let's try your question on 3 abstract options:
+Did I????  I do not think I deserve any credit here.
 
-"Why does --X even affects the choice of --Y/no-Y when --Z is explicitly
-given?"
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-And what is the assumed answer?
 
-"--X should only affect the choice of --Y/no-Y when no --Z is explicitly
-given"
+> +static struct command *find_command_by_refname(const struct command *list,
+> +					       const char *refname)
+> +{
+> +	for (; list; list = list->next)
+> +		if (!strcmp(list->ref_name, refname))
+> +			return (struct command *)list;
+> +	return NULL;
+> +}
 
-right? Or, in other terms:
+Does the last cast really needed, perhaps the caller is adding
+"const" to its objects where it is not needed, or the variable
+caller uses to receive the returned value of too loose a type?
 
-"--X implies --Y unless --Z is explicitly given (as opposed to implied?)"
 
-Do you see the problem here? I do see this as a problem. Simple "--X
-implies --Y" should be sufficient to achieve any of required behaviors.
-No need for such complications.
+> diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.c
+> new file mode 100644
+> index 0000000000..4f352a7baf
+> --- /dev/null
+> +++ b/t/helper/test-proc-receive.c
+> @@ -0,0 +1,176 @@
+> +#include "cache.h"
+> +#include "connect.h"
+> +#include "parse-options.h"
+> +#include "pkt-line.h"
+> +#include "sigchain.h"
+> +#include "test-tool.h"
+> +
+> +static const char *proc_receive_usage[] = {
+> +	"test-tool proc-receive [<options>...]",
+> +	NULL
+> +};
+> +
+> +static int die_version = 0;
+> +static int die_readline = 0;
+> +static int no_push_options = 0;
+> +static int use_atomic = 0;
+> +static int use_push_options = 0;
+> +static int verbose = 0;
 
-I just try to figure if some more or less strict model is hidden behind
-all this, and it seems there is none.
+Let BSS do its job by omitting " = 0;" and " = NULL;" at the end.
 
-Thanks,
--- Sergey
