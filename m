@@ -2,115 +2,199 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E35C433E1
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B867C433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:09:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6D952063A
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:06:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0685C2063A
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:09:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="YfvLmT7E"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aYAM40kA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728208AbgHQJGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 05:06:02 -0400
-Received: from mout.gmx.net ([212.227.17.20]:36989 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727001AbgHQJGA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 05:06:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1597655153;
-        bh=6EeLIqKPZrZ6Shn8xf68uwTNBH0vwWi4D/ri5gVA8jE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YfvLmT7E0lq6Gmdjto3c2dkygnkBsVMvffDw91YG7GDrNEeCNsDCUsKySd9AGlYy4
-         Pu6d7a1RwG4oph0lTK0eALocn5PYrZ+Ev1sUDlVySwfKTfltwG1B4OjPmPzawuv1/t
-         cthxPMT5WN2ota0fQm9iNF5+U3P0lPW9fIIV3Drs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.183.59] ([89.1.215.233]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MmDEm-1kYASm417A-00iA5v; Mon, 17
- Aug 2020 11:05:53 +0200
-Date:   Mon, 17 Aug 2020 06:42:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/5] Makefile: drop builtins from MSVC pdb list
-In-Reply-To: <20200814143231.GA4167031@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2008170641450.56@tvgsbejvaqbjf.bet>
-References: <20200813145515.GA891139@coredump.intra.peff.net> <20200813145719.GA891370@coredump.intra.peff.net> <20200813150428.GA2244@syl.lan> <20200813150828.GA891963@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2008141611490.54@tvgsbejvaqbjf.bet>
- <20200814143231.GA4167031@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728003AbgHQJJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 05:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59400 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728631AbgHQJH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 05:07:58 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2138C061345
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 02:07:57 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id 88so14199537wrh.3
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 02:07:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:message-id:in-reply-to:references:date:subject:mime-version
+         :content-transfer-encoding:fcc:to;
+        bh=vbvISUaPkKc4rrwX+xM60GRWfIbsVasmmRjcKlwh9Vk=;
+        b=aYAM40kALf9QIw2R+vLlYzg0IrXyoB6DsRVO9roqOMc9pj3agyTbD69gF+sB8v6Fqy
+         mcq7fBstCZ0U52BRdiWT0xMtN5WAJe4Bk+JYmnbLet8CnzAsFoKCU/eCni4JovhBoXQU
+         6Yu4LgXAB6tYzFAv+eOalSR/gft7ZMcsGSATXqhVL2MNZgsnm9X4VwvCT5c5y3cAmMLX
+         sGZNa6/gpNAy4I643DIqM16l9w/4fHcJAAn1Xqgvy9hi5kEz04TUybSfvkCCIKciicDh
+         seVOPU8ntHawfd6ITz2JgEi8UIyWJ84GxVVDCGwoiNauFUE8jGStfzCle0WI16JDBhii
+         h6sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:message-id:in-reply-to:references:date
+         :subject:mime-version:content-transfer-encoding:fcc:to;
+        bh=vbvISUaPkKc4rrwX+xM60GRWfIbsVasmmRjcKlwh9Vk=;
+        b=HMkrbvXtst5ynPrCulhUwva3EZ8H10aCRb1pycVyeNojHOIu+RGGxgdJMna/JprmA0
+         aTOw6XUu5GbUUHIaPSekM3b4UCxOHt1AwsbcyUs+Juxhdby5xPs0QEk9OtV5qaPn+Rc5
+         fG5i6dgu8mONhiaQf0v91qsE5zsKNiwjl8FNTjyXRP1WCSyc7dmaGDC7vy7lPeK9iUhW
+         Lp6Sh5fbeGyOeSiy/9SCEo598gc8pvIMpm6v7F/PFnc8tWDnC2f6zJWfC9wiPPkIGPxJ
+         yDKPny7QTzJvckQVhTNNJUZBiFh34gsfOAHYJWbHaEOP8bWcy17zDP9lg/NEJeCFZxmX
+         O8pw==
+X-Gm-Message-State: AOAM531mkHzapb3pF8XqurIKsuL56VtES1bVyigOs2I8i+qG6MiX4N+s
+        Gc9C+LtQPmRwdVNQMfaV7fTrvH6ENVc=
+X-Google-Smtp-Source: ABdhPJzJgQqm2fiRCUHDsBwYJb5kLEWjuQmNzQ4aqaokB1n+DCSaAk8G8u5bGDpZVAnfveaoyyZiZA==
+X-Received: by 2002:a5d:464a:: with SMTP id j10mr15053639wrs.187.1597655276399;
+        Mon, 17 Aug 2020 02:07:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f9sm28207038wrm.62.2020.08.17.02.07.55
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2020 02:07:55 -0700 (PDT)
+From:   Johannes Schindelin <gitgitgadget@gmail.com>
+X-Google-Original-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Message-Id: <647f49d62e910fe8392219c3a5c6d86ac98a88e6.1597655273.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.411.git.1597655273.gitgitgadget@gmail.com>
+References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
+Date:   Mon, 17 Aug 2020 09:07:52 +0000
+Subject: [PATCH 2/3] Optionally skip linking/copying the built-ins
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LNOWgoThPd2VxFIL9BQMYOVn46Co6Z5XvZQPnpG+AffueJuOz4p
- VM/VahiadKoCoFZlVZ3tSdk+QRjf8Tdwi3sPZJJYwWRFC2q0hg9iYyqBZ4NCPT4X/PJcDem
- tLstA+eby3es4+EWUKB9KjkYxat+RU78egNAF2OJ5C5mPLEocd4KwHMb8AYymAEAO3OoVMg
- C+GCSMyz++gA7wSIzgHiA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7FbmLaJVUO8=:/TyOWjxw6zwHd/3kVgUfn4
- UU9uIi0xQsuzt48WnLxqP8Re1XI6SNu4VBEchDJhBU1zq8SWUVjEn08gMdw+ZVErSJRULFtsA
- UkQYkpRY+MKpgWbYlM3+WqVC5u6ZagXcRZXzqhAGWdwpVPvlXYBIHaIkXXJup9GMpbeNHI9m4
- Gw1d1Z0PNFXtMlm7tVguuYbaK4MYBhWFvvt23+QBks1zsCyosIMitaL3Jf+ZQb+WrhyioJSQx
- tTcQIduY6T5lu/qRVECEM/tXxaYvxqS8YrhRIZLE8YBu6wmaDNlAWZpfiQzRxMTY79ec4ezGh
- B0lUhzjyskqxSTzETouGC9Pt25T0x3V2p/xS/3ll9hX+aW1c2iTjba6tmREmwjDB6XBuSOjDm
- mxfT+WIlRaaoxmYx/wzbeYr1NvKL5hDTJp2NUbBPGwfXY7zr0vBbBKFAJ0YBPARnC0D0egWqd
- +T/JTBb0GqH8mPM5k8uDRRt5nIWFyVmYGg65OQ2b2Gt6KDwx5rWqgGWJgJJsPiB0OlQBDaTXk
- DotlvM6fNEWC79nEgYmtD34XA8umzlGmcRh9eZbEM/wD1wBKCe6t6IURJYUTPKq4KewzvGFmU
- tos0tdqqSG47sg/axfFIy/lyWi3fAlVGZw0CJ3LVHc2QLNt7sMptMs3j9KWQmLbp9CBLQXNFx
- usW4Yl0CJ+8uaF+6C4jgfz+DS5G4zYty+mWx3bD+KUnKbR4FFSTt2Pq5ECze12bocFsSMrGrM
- +yybw926mA5eC0aLIW1xdooVt8xMtUmlucn/xUoyJugrhXfRlg2OUIXN6iG6j5HHplg2Hxn6M
- Z+mrd97aphcYqNj/uFdWdD95i7CTA80EajCRLQ2O5ZsBtdRRBnud31eMn8Ya8nhFDsGpHLiBe
- nVygGBNM49E5dXFE/JIC78BG8SosIRqUhmEXe9KEeCY+Ld8+qntrMO2PySEb2YtXF61x8Delc
- GUQWagqgo2ABqtgvyja5fzjTMO0CdsltFpFBK8IeJbd13XjriBk6EO8qhI9otSLrCZSmCFRp1
- 54BR38bENCTEa0AZx+WM8x53g/VVjHcjTfwtgkdDnHewdtXjJYShrh917G8tN17fe6fXuP58q
- BhWL7HM5v54nBvarEcSo61YvvWnUBItSZJZtRL83bnli6Rqm1E9fdhZIA92tP2tNyqWXJLD74
- B7kxKZSNHrLUdlrOxyvLXD903AKuXvNXJlX62RpHrdH+kvi0LGtYOI2QAt1b0EMw6YMwcqfnP
- 3amfTZH/cEsG9ZVsIcr4CsaF7KB2X0uq41zyRrg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+The dashed form of the built-ins is so passé. To save on development
+time, and to support the idea of eventually dropping the dashed form
+altogether, let's introduce a Makefile knob to skip generating those
+hard-links.
 
-On Fri, 14 Aug 2020, Jeff King wrote:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Makefile | 53 ++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 36 insertions(+), 17 deletions(-)
 
-> On Fri, Aug 14, 2020 at 04:18:37PM +0200, Johannes Schindelin wrote:
->
-> > While all four methods work, the only one that is regularly used with =
-the
-> > `make install` command is the first one.
-> >
-> > The location you modified is in the `MSVC` part of `compat.mak.uname`,
-> > i.e. in the Visual C part.
-> >
-> > We originally had a tentative plan to eventually, maybe, build Git for
-> > Windows using Visual C by default. However, it turned out that the
-> > standard malloc in Visual C's runtime was tuned for other workloads th=
-an
-> > Gits, and that nedmalloc performed better, and we originally could not=
- get
-> > nedmalloc to compile with a modern Visual C, so we stopped that effort=
-.
-> >
-> > That's why you still have support for `make MSVC=3D1 install`.
-> >
-> > Since it seems not to be too much trouble, I would prefer to keep it
-> > working for now, even if it is rarely exercised and regressions might
-> > creep in (like the ones you fixed).
->
-> Ah, thanks. That perfectly explains what is going on and why it might
-> not have been noticed. I agree it is not too much trouble to keep it
-> around for now.
+diff --git a/Makefile b/Makefile
+index 3f5ba97b70..2a355a4da8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -348,6 +348,9 @@ all::
+ # Define NO_INSTALL_HARDLINKS if you prefer to use either symbolic links or
+ # copies to install built-in git commands e.g. git-cat-file.
+ #
++# Define SKIP_DASHED_BUILT_INS if you do not need the dashed versions of the
++# built-ins to be linked/copied at all.
++#
+ # Define USE_NED_ALLOCATOR if you want to replace the platforms default
+ # memory allocators with the nedmalloc allocator written by Niall Douglas.
+ #
+@@ -775,6 +778,16 @@ BUILT_INS += git-whatchanged$X
+ # what 'all' will build and 'install' will install in gitexecdir,
+ # excluding programs for built-in commands
+ ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
++ALL_PROGRAMS_AND_BUILT_INS = $(ALL_PROGRAMS)
++ifeq (,$(SKIP_DASHED_BUILT_INS))
++ALL_PROGRAMS_AND_BUILT_INS += $(BUILT_INS)
++else
++# git-upload-pack, git-receive-pack and git-upload-archive are special: they
++# are _expected_ to be present in the `bin/` directory in their dashed form.
++ALL_PROGRAMS_AND_BUILT_INS += git-receive-pack$(X)
++ALL_PROGRAMS_AND_BUILT_INS += git-upload-archive$(X)
++ALL_PROGRAMS_AND_BUILT_INS += git-upload-pack$(X)
++endif
+ 
+ # what 'all' will build but not install in gitexecdir
+ OTHER_PROGRAMS = git$X
+@@ -2066,9 +2079,9 @@ profile-fast: profile-clean
+ 	$(MAKE) PROFILE=USE all
+ 
+ 
+-all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
++all:: $(ALL_PROGRAMS_AND_BUILT_INS) $(SCRIPT_LIB) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
+ ifneq (,$X)
+-	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
++	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS_AND_BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
+ endif
+ 
+ all::
+@@ -2928,7 +2941,7 @@ ifndef NO_TCLTK
+ 	$(MAKE) -C git-gui gitexecdir='$(gitexec_instdir_SQ)' install
+ endif
+ ifneq (,$X)
+-	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
++	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS_AND_BUILT_INS) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
+ endif
+ 
+ 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+@@ -2946,21 +2959,27 @@ endif
+ 	} && \
+ 	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
+ 		$(RM) "$$bindir/$$p" && \
+-		test -n "$(INSTALL_SYMLINKS)" && \
+-		ln -s "git$X" "$$bindir/$$p" || \
+-		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+-		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
+-		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; } \
++		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
++		then \
++			test -n "$(INSTALL_SYMLINKS)" && \
++			ln -s "git$X" "$$bindir/$$p" || \
++			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
++			  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
++			  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
++			  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
++		fi \
+ 	done && \
+ 	for p in $(BUILT_INS); do \
+ 		$(RM) "$$execdir/$$p" && \
+-		test -n "$(INSTALL_SYMLINKS)" && \
+-		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
+-		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
+-		  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
+-		  cp "$$execdir/git$X" "$$execdir/$$p" || exit; } \
++		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
++		then \
++			test -n "$(INSTALL_SYMLINKS)" && \
++			ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
++			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
++			  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
++			  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
++			  cp "$$execdir/git$X" "$$execdir/$$p" || exit; }; \
++		fi \
+ 	done && \
+ 	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
+ 	for p in $$remote_curl_aliases; do \
+@@ -3051,7 +3070,7 @@ ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
+ OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll)
+ endif
+ 
+-artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
++artifacts-tar:: $(ALL_PROGRAMS_AND_BUILT_INS) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
+ 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
+ 		$(MOFILES)
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
+@@ -3146,7 +3165,7 @@ endif
+ 
+ ### Check documentation
+ #
+-ALL_COMMANDS = $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS)
++ALL_COMMANDS = $(ALL_PROGRAMS_AND_BUILT_INS) $(SCRIPT_LIB)
+ ALL_COMMANDS += git
+ ALL_COMMANDS += git-citool
+ ALL_COMMANDS += git-gui
+-- 
+gitgitgadget
 
-Incidentally, I stumbled across the patch I carry in Git for Windows'
-branch thicket that _actually_ fixes this. Will send it out in a couple
-minutes.
-
-Ciao,
-Dscho
