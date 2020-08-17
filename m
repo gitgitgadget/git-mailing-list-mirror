@@ -7,102 +7,132 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A42C433E1
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A998C433DF
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:34:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B15CD20738
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:33:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47A332063A
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 17:34:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G7uWBS4k"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d9YUSQ2l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388645AbgHQRdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 13:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47206 "EHLO
+        id S1731110AbgHQReF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 13:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388272AbgHQQ4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 12:56:10 -0400
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F874C061389
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 09:56:09 -0700 (PDT)
-Received: by mail-oi1-x243.google.com with SMTP id u24so14248649oic.7
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 09:56:09 -0700 (PDT)
+        with ESMTP id S2389010AbgHQQuC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 12:50:02 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB955C061342
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 09:50:01 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id a1so8609051vsp.4
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 09:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IbL3eD1msGGtHoPJJGPTPs2CYN8xzp/AAFRe1ZEOYHU=;
-        b=G7uWBS4kPDO5/4XticvhMrdCuwduycSTRg5YlBgosz6mlC7OhRdYzx+xnN3hY6sQzS
-         n4aM/COPM5ZZ+v7dSHLc1OENIsnZ9/yqp2ll5koNNvE9BYL/pw+e6HXryvkMAsJJHQzJ
-         h98Ebl93HDYyL8OsRl9JAwdPGKOHc6lTHsoeM9dXoSQALQHmkAEPkburPpbWGArn58ay
-         muWkfEO+wPGJX/8Ji/ihhSE3/nH2Ae9n+eEf+Y39yVu+Iq9sWpKDYtl8CUIgJca5MRqU
-         OXBjRJDhW/v+8Z1YwhR4+qzdCpIoZO0PW655z82lgtL806kvxYnfKL9LVhKOHSKhpgkL
-         t+Mw==
+        bh=HnKQsAu+utbtQw57rkDtPYqXFsJfizw35CWEBc3MfjY=;
+        b=d9YUSQ2lAyQR7wOSkbbO9eCmtOplIs6vhDpVt9AbRCMg4l0OfCbxPucs+x7M0RG0RE
+         tMJ5PmTLh3pPPDo536pNrpQg0Byc6YOj119HquxfKC6ayc05JS2myNce7WVwz/4r/jpk
+         UszHySjCMD2G0oVzNsoJ0CcJLzSjDOwPqVEnvWZ9RdX89gvSX0PxImABB4a827RvyLWp
+         btN0BIfpR7eTsyGXNbQ0CuKYn81qJLkfCe6klAgQdoAmu1dG2Aw45V+vXMhKiA5Bxa2P
+         bV1CDMQ0US1ujl5wOfmivEdlyxAi04HPjeh0VZCjtk7DJOTPpUKKpECjvEgEReYs9i48
+         de7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IbL3eD1msGGtHoPJJGPTPs2CYN8xzp/AAFRe1ZEOYHU=;
-        b=RzENaLgRCiJwehsOfNeFwFUFOx4w1hynobwjU0HYNFdI9C3ejr0Nw9dQSRyceh4eSP
-         ztuEngYsItpIhqxFBB995MmAyeUWGum2ntmCjF+xo3bsPCPD4azHt55VW8iAa6aXkqFC
-         c7wJcQR/8yZeSikgTf288ufcINwRiT9p4esyqpVKkyg+M5yluv6E2hHRFGM1QvqT+jIa
-         poE6gyc699QfzIESWdi3dThmIp6ehK2Kw1mzABSPxNSEI0ptDawO8YxvEIYEBbm3Hryu
-         ja5phJPH5Q+jSB3dUscXN3W3DTwL+uDKZ8+65iNEgLM/oJoH0hRwtzZuhnHHbvnRAk+Z
-         UWAg==
-X-Gm-Message-State: AOAM533Z4j/WHexpGnzMMLuW/wpc4Cq/gn5gKNZTWWgW4ULLEaFcI0MW
-        OvmWdWQihPltENJHzyveGAdqIcRuIPV1mQ4z2QHSleJk7BPaGA==
-X-Google-Smtp-Source: ABdhPJy57is9RhdTVvY5qpKZfEjOtIyF8/AZE3vHL7k6NptN1AcSlENCZEhCeOUfRjNFpSNeSFcEbCHcODJjTjfeRsQ=
-X-Received: by 2002:aca:b705:: with SMTP id h5mr9651056oif.31.1597683367780;
- Mon, 17 Aug 2020 09:56:07 -0700 (PDT)
+        bh=HnKQsAu+utbtQw57rkDtPYqXFsJfizw35CWEBc3MfjY=;
+        b=lKALpcz9iUx1L9Jl6JN/CWBKVIZ1dSuYdcYld0Akcs0prVa4On2CgTlAhPxnhtf+hA
+         5MpT011fh9FkGYWYMf4NgntNZCHgnyllIws5j8mKfKsZOXqJA+e8cNJQ3jdqONBTGKaH
+         gWHffs8RVPjdIflRlhPPDZ2UeTa7O6xZqrGubzoqsimLV0xWd0AGipXieVauDlye4ZDG
+         CyUtWrALFQmCQwYnN+vs5SkvgI/r1doKCGQRgxlZj/6HPoGQ9L7mZMedznGcTGlj2U55
+         a1wl68fj2ClO9XdkHtDuWwlIk2V3nHBg9URiiPBwj4LZ4QFogJYoqnAC+uOI5i9am4KV
+         Xm9w==
+X-Gm-Message-State: AOAM531/WvxFEds15YQ76BXgCvaiDYgu9s3+axWxvuSqVOPl5D83hgIN
+        J6k+9ppj23nsNBrAJ9ywX35h4hE9qUnZJiygv10=
+X-Google-Smtp-Source: ABdhPJyi+l7+rIJhUWM6yI1ty3Ik/K+7ZJJdAZlTGv2YyJr8N8XttWXXCm/arVLeDObaEn9YwNC6+PNfn9CSD+cZPmU=
+X-Received: by 2002:a67:8750:: with SMTP id j77mr8887596vsd.5.1597683000723;
+ Mon, 17 Aug 2020 09:50:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200814111049.GA4101811@coredump.intra.peff.net>
-In-Reply-To: <20200814111049.GA4101811@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 17 Aug 2020 09:55:56 -0700
-Message-ID: <CABPp-BGrxaY-ObzuJ60TDMfQD+crq+TTnYE03T=KVmG5mEf-5A@mail.gmail.com>
-Subject: Re: [PATCH] clear_pattern_list(): clear embedded hashmaps
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <20200815002509.2467645-1-jacob.e.keller@intel.com>
+ <20200815002509.2467645-2-jacob.e.keller@intel.com> <xmqqd03p44gr.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqd03p44gr.fsf@gitster.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 17 Aug 2020 09:49:49 -0700
+Message-ID: <CA+P7+xoC8SOn+fOtzL1GqN0P+eB67-L19yUwYo6UNrYoYGh8Lw@mail.gmail.com>
+Subject: Re: [RFC 2/3] refspec: make sure stack refspec_item variables are zeroed
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Aug 17, 2020 at 9:33 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+> > From: Jacob Keller <jacob.keller@gmail.com>
+> >
+> > A couple of functions that used struct refspec_item did not zero out the
+> > structure memory. This can result in unexpected behavior, especially if
+> > additional parameters are ever added to refspec_item in the future. Use
+> > memset to ensure that unset structure members are zero.
+> >
+> > It may make sense to convert most of these uses of struct refspec_item
+> > to use either struct initializers or refspec_item_init_or_die. However,
+> > other similar code uses memset. Converting all of these uses has been
+> > left as a future exercise.
+> >
+> > Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> > ---
+> >  builtin/remote.c | 1 +
+> >  transport.c      | 1 +
+> >  2 files changed, 2 insertions(+)
+> >
+> > diff --git a/builtin/remote.c b/builtin/remote.c
+> > index c8240e9fcd58..542f56e3878b 100644
+> > --- a/builtin/remote.c
+> > +++ b/builtin/remote.c
+> > @@ -478,6 +478,7 @@ static int get_head_names(const struct ref *remote_refs, struct ref_states *stat
+> >       struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
+> >       struct refspec_item refspec;
+> >
+> > +     memset(&refspec, 0, sizeof(refspec));
+> >       refspec.force = 0;
+> >       refspec.pattern = 1;
+> >       refspec.src = refspec.dst = "refs/heads/*";
+>
+> The original leaves .matching and .exact_sha1 bitfields
+> uninitialized.  As .pattern is set to true, .exact_sha1
+> that is not initialized does not make get_fetch_map()
+> misbehave, and .matching is not used there, so the code
+> currently happens to be OK, but futureproofing is always
+> good.
+>
 
-On Fri, Aug 14, 2020 at 5:23 AM Jeff King <peff@peff.net> wrote:
->
-> Commit 96cc8ab531 (sparse-checkout: use hashmaps for cone patterns,
-> 2019-11-21) added some auxiliary hashmaps to the pattern_list struct,
-> but they're leaked when clear_pattern_list() is called.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I have no idea how often this leak triggers in practice. I just noticed
-> it while poking at LSan output (which we remain depressingly far
-> from getting a clean run on).
->
->  dir.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/dir.c b/dir.c
-> index fe64be30ed..9411b94e9b 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -916,6 +916,8 @@ void clear_pattern_list(struct pattern_list *pl)
->                 free(pl->patterns[i]);
->         free(pl->patterns);
->         free(pl->filebuf);
-> +       hashmap_free_entries(&pl->recursive_hashmap, struct pattern_entry, ent);
-> +       hashmap_free_entries(&pl->parent_hashmap, struct pattern_entry, ent);
+Right. Today the unused fields happen to never get checked. But by
+being uninitialized we risk unexpected behavior in case either new
+fields are added or in case those fields start being checked by the
+code using the structure.
 
-This clears up the hash entries, but continues to leak the hash table.
-Since you submitted first, can you fix this to use hashmap_free_()
-instead, as per
-https://lore.kernel.org/git/932741d7598ca2934dbca40f715ba2d3819fcc51.1597561152.git.gitgitgadget@gmail.com/?
- Then I'll rebase my series on yours and drop my first patch (since
-it'll then be identical).
-
-Thanks,
-Elijah
+> > diff --git a/transport.c b/transport.c
+> > index 2d4fd851dc0f..419be0b6ea4b 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -443,6 +443,7 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
+> >       if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
+> >               return;
+> >
+> > +     memset(&rs, 0, sizeof(rs));
+> >       rs.src = ref->name;
+> >       rs.dst = NULL;
+>
+> The original here passes the rs to remote_find_tracking() with only
+> its .src and .dst filled.  The function is to find, given a concrete
+> ref, where the refspec tells it to go on the other end of the
+> connection, so the code currently happend to be OK without all other
+> fields, but again, futureproofing is good.
