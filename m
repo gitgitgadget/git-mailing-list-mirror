@@ -2,133 +2,74 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BBA5C433DF
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87A9DC433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:24:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA8DA2072D
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:18:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="akIiM6xC"
+	by mail.kernel.org (Postfix) with ESMTP id 5F19D207FB
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 09:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727780AbgHQJSw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 05:18:52 -0400
-Received: from mout.gmx.net ([212.227.17.20]:40729 "EHLO mout.gmx.net"
+        id S1727839AbgHQJYd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 05:24:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60858 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726203AbgHQJSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 05:18:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1597655926;
-        bh=FMDiAz6wEF5fPsEyToXSo5NYkziSRCN2Z6W84IfK0R0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=akIiM6xCfkkKvItizBg/GNduDNZrDBnt3XvNvNvQiPHAEcm4YfW1/+U4l/yLDPMHt
-         vaYpT3EAPjrQwO7V9Elvh9fjLOXZJGtEyKugkxn/o+3SF8y0xhKB/wx6t5QmvLfqPc
-         WRzSBxCTOntOby/d702u7iXUKqpbJG4dbKW7b840=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.183.59] ([89.1.215.233]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1McpJq-1kgNsK0Zf8-00Zwyx; Mon, 17
- Aug 2020 11:18:46 +0200
-Date:   Mon, 17 Aug 2020 06:55:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1726381AbgHQJYd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 05:24:33 -0400
+Received: (qmail 3360 invoked by uid 109); 17 Aug 2020 09:24:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 Aug 2020 09:24:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14793 invoked by uid 111); 17 Aug 2020 09:24:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Aug 2020 05:24:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 17 Aug 2020 05:24:31 -0400
+From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Optionally skip linking/copying the built-ins
-In-Reply-To: <pull.411.git.1597655273.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2008170653440.56@tvgsbejvaqbjf.bet>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] msvc: copy the correct `.pdb` files in the Makefile
+ target `install`
+Message-ID: <20200817092431.GA1259595@coredump.intra.peff.net>
 References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+ <120d2bb3e461717e5248bb4c97feab86d4e45c9d.1597655273.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1494576974-1597640142=:56"
-X-Provags-ID: V03:K1:ur+UKu2c8bYH7fLAUHkoIHO3YQN1RVnBbCa+1fFmyb3ZDskvzh+
- fbDhDdPUWRAtXn/k6D1SrpLvAgkvRGb5h4ZS3c6qHFBNV7jDHLg+0FsqkiHbBp0jMfb3P1/
- f3eOpCIWSN+t6JMsA31WA51evYXaatE/TJZOoL2K836fEdqYJ/kMg2sLJ6l6hC2jfrbgdSL
- 7qPqFKnpQGpdWkZKnl8ZQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yJTCdof7BBQ=:+8S9RF8Q1pnoeSbjmvMS9j
- HRCfbRZ2pu20PeiwZ7736nwI20KWRGji8AZeQSm+mMB6XxKYju0Eb2cJ+MMoG7qlmHZh6p1IZ
- aJnC7gbgQxQvVN1yUrmGABOEU2vUCBWB7zxotTpAPiNUrwpm//NsSblvqOL3EXhlpkKa0U/9f
- F9YrymrHycFdAJdLAWhyG2RnhtWXI9xHnyMhl2fFGbhleVfvjit/7ymcYkl56BXIvqUnxK+WH
- EPBZfHOXgknhhbL2htWzDW+uD6iDmEpc2QKqZIbxisOpLm4KvYtVeApVxPrBEpuzxbJUaRdVt
- u7Ml/eoVNO0DACV5keSZ0rZ9ncz3+qXh4+VxApCK+Pc97wfLuri59esNIABIhTfD7SZ1OHhZN
- GUQbuFmBi30wzNsM5JVEGZb6GAUnPDr5s9SI5B5BuXqIQY5os99QENNiCotsRmLQIDUvNTdDb
- B/UIW62eRZbcwktUeXHWgrMFoLeCkc1RTjWHK4ydD5DK/orkD1aoVwetIKl0xYYaOQU9/lHGF
- XD7xwPZ/UfSc1DfN8qZQ5i5tTfGyvFyGLXmYJypZXa1dz3JwF3MLUWORop4pZYXhYieKa+eO+
- ipQDWJuekrR+datHp4Pe/kz+XCzee6r+5olIq+iwoto7MJ/Fz4gwY7VC5zcvW3Xe/XiqqLmIx
- ROeRU9zmqlgfQZOhCEwPNJEhA7CbENU0skF6IMYqzWlcpjmU6B/s8GYyIGcSThkobWCsXvMh8
- XaiqB0RBfnjiAiR+Q/k369TcwNVk/C/AqwuA7frBh421xZxJ62TIba/59kZf9RHJVwYPMxUoS
- rZKs9F5QN7j+i/NtUuGs1vZGx1kUEXhaha4wQ5e74tdgnTpew8DGkXN7YZGglJqt/juSTHAeD
- 0HXUynbO4sHDvGQS5g1qLBQ9LEJahvi9vcwNvGlWFIeZ3Gxzg4VkUlWFTDm3yiaChwrEruWDM
- wAmNbEzTuH9OuE0afTgkuUnkEVVWm556/SPUeUcpbz070lYrWEAQhjs315FTDlLlxFIVy0A3I
- zThtBioDduCTH52AhIkntSppakyMxmp6DzZHzp2ArBVAv66WosJGA2NT8OXto7g+BWLsPAHwH
- +TorJGmTgb1csxJIlqUvmXoDfi+xpgCmE5/5sNJRSbij8LSNQpGmaZI//FDBrbmrbQmj6ftHg
- fsUA4uePLPwnw/uWYXYZhmWlA3GO0hDTIJT/8SLGEbph+DjK5pB9Nk6sNVT04JRxI/QWSSxhw
- yrs15PTh9IJTakfsSOEodYjwxVYs2+PgpAmZSeQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <120d2bb3e461717e5248bb4c97feab86d4e45c9d.1597655273.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Aug 17, 2020 at 09:07:51AM +0000, Johannes Schindelin wrote:
 
---8323328-1494576974-1597640142=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> -	$(INSTALL) git.pdb '$(DESTDIR_SQ)$(bindir_SQ)'
+> -	$(INSTALL) git-shell.pdb '$(DESTDIR_SQ)$(bindir_SQ)'
+> -	$(INSTALL) git-upload-pack.pdb '$(DESTDIR_SQ)$(bindir_SQ)'
+> -	$(INSTALL) git-credential-store.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-daemon.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-fast-import.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-http-backend.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-http-fetch.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-http-push.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-imap-send.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-remote-http.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-remote-testsvn.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-sh-i18n--envsubst.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> -	$(INSTALL) git-show-index.pdb '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> +	$(INSTALL) $(patsubst %.exe,%.pdb,$(filter-out $(BUILT_INS),$(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)))) '$(DESTDIR_SQ)$(bindir_SQ)'
+> +	$(INSTALL) $(patsubst %.exe,%.pdb,$(filter-out $(BUILT_INS) $(REMOTE_CURL_ALIASES),$(PROGRAMS))) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
 
-Hi,
+Oh, this is much better than what my patch does. :)
 
+The rest of the series looks like a good direction to me, but is outside
+the scope of my series. I'd be happy to pick this first patch up for a
+re-roll of mine (which would require tweaking the rest of the patches on
+top to stop removing things from the .pdb list). Or we could just leave
+this as a separate topic and deal with the merge conflict (which would
+obviously resolve in favor of yours).
 
-On Mon, 17 Aug 2020, Johannes Schindelin wrote:
-
-> The dashed form of the built-ins is so pass=C3=A9.
->
-> Incidentally, this also handles the .pdb issue in MSVC's install Makefil=
-e
-> target that Peff pointed out in the context of the "slimming down" patch
-> series
-> [https://lore.kernel.org/git/20200813145719.GA891370@coredump.intra.peff=
-.net/]
-> .
->
-> This addresses https://github.com/gitgitgadget/git/issues/406
-
-Please note that this GitGitGadget run did not work as intended. The
-intention of https://github.com/gitgitgadget/gitgitgadget/pull/296 was to
-use the actual author in the `From:` headers of the sent emails, with
-GitGitGadget mentioned in the `Sender:` header, but apparently this did
-not work, and I will be reverting that PR for the time being.
-
-In short: please do not apply these patches as-are, unless adjusting the
-author email to match my email address.
-
-Thank you,
-Dscho
-
->
-> Johannes Schindelin (3):
->   msvc: copy the correct `.pdb` files in the Makefile target `install`
->   Optionally skip linking/copying the built-ins
->   ci: stop linking built-ins to the dashed versions
->
->  Makefile                  | 69 +++++++++++++++++++++------------------
->  ci/run-build-and-tests.sh |  2 +-
->  2 files changed, 39 insertions(+), 32 deletions(-)
->
->
-> base-commit: b6a658bd00c9c29e07f833cabfc0ef12224e277a
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-411%2F=
-dscho%2Foptionally-skip-dashed-built-ins-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-411/dscho=
-/optionally-skip-dashed-built-ins-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/411
-> --
-> gitgitgadget
->
->
-
---8323328-1494576974-1597640142=:56--
+-Peff
