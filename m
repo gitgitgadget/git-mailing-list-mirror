@@ -2,119 +2,133 @@ Return-Path: <SRS0=R55k=B3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E8AC433DF
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 19:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76D8BC433DF
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 19:13:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 580812072D
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 19:00:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 364422072D
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 19:13:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W4YPB+U2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404000AbgHQTAi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 15:00:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33284 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2403952AbgHQTAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 15:00:32 -0400
-Received: (qmail 5954 invoked by uid 109); 17 Aug 2020 19:00:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 Aug 2020 19:00:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19864 invoked by uid 111); 17 Aug 2020 19:00:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Aug 2020 15:00:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 17 Aug 2020 15:00:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] dir: fix problematic API to avoid memory leaks
-Message-ID: <20200817190031.GB1278968@coredump.intra.peff.net>
-References: <pull.831.git.git.1597561152.gitgitgadget@gmail.com>
- <b9310e9941e91336258edd97a913e5908180720e.1597561152.git.gitgitgadget@gmail.com>
- <20200816091154.GC1221900@coredump.intra.peff.net>
- <CABPp-BHyCVdb5AueF+tTwTsgAA5LkPEj-mPLoX_F+WYgPqFcNw@mail.gmail.com>
+        id S2392114AbgHQTMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 15:12:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65016 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392036AbgHQTMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 15:12:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1789BDF36A;
+        Mon, 17 Aug 2020 15:12:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pmfm1KOkn2+MMZ7q17BX0G71+Ms=; b=W4YPB+
+        U28oGK//O5RFIFQ7P6U49djqJDKXxFCL8h/XWwDO4FOnZjB/lIcg6AqGwg/mN3vn
+        9RgFmVWe9SqzgR+ZIzB3JssFZ/JFuhpexJvb0vAzfob6iKN28J9SAv1QSoR6bWM1
+        wFdC++IfcRSClqHF/co/Z3n84vC56PrPGaknE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AonUDXdZw0JgdrcFfvPfgdHXowgrnfSY
+        Yz5dOjxyA7IW52JnMZyLmBVfijYOetP1Y5TVFUj/xl3KruC6RhHMISGMQbq1zuDo
+        KzcQhOrljb6aKhuh5/s6XJ3bD6Jllrub195YZADAAHDow9pb2miniO6yUowMyN8S
+        fNPKW14Ei5Q=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1052ADF369;
+        Mon, 17 Aug 2020 15:12:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B586DF366;
+        Mon, 17 Aug 2020 15:12:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v8 2/5] am: stop exporting GIT_COMMITTER_DATE
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+        <20200817174004.92455-1-phillip.wood123@gmail.com>
+        <20200817174004.92455-3-phillip.wood123@gmail.com>
+Date:   Mon, 17 Aug 2020 12:12:29 -0700
+In-Reply-To: <20200817174004.92455-3-phillip.wood123@gmail.com> (Phillip
+        Wood's message of "Mon, 17 Aug 2020 18:40:01 +0100")
+Message-ID: <xmqqtux113z6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHyCVdb5AueF+tTwTsgAA5LkPEj-mPLoX_F+WYgPqFcNw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9951571A-E0BD-11EA-891C-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 17, 2020 at 10:19:03AM -0700, Elijah Newren wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> > (I also wouldn't be opposed to changing hashmap and oidmap to use the
-> > name "clear", but that's obviously a separate patch).
-> 
-> hashmap is one of the cases that needs to have a free construct,
-> because the table in which to stuff the entries has to be allocated
-> and thus a hashmap_clear() would have to leave the table allocated if
-> it wants to be ready for re-use.  If someone really is done with a
-> hashmap, then to avoid leaking, both the entries and the table need to
-> be deallocated.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> The implementation of --committer-date-is-author-date exports
+> GIT_COMMITTER_DATE to override the default committer date but does not
+> reset GIT_COMMITTER_DATE in the environment after creating the commit
+> so it is set in the environment of any hooks that get run. We're about
+> to add the same functionality to the sequencer and do not want to have
+> GIT_COMMITTER_DATE set when running hooks or exec commands so lets
+> update commit_tree_extended() to take an explicit committer so we
+> override the default date without setting GIT_COMMITTER_DATE in the
+> environment.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/am.c     | 28 +++++++++++++++++++++++-----
+>  builtin/commit.c |  4 ++--
+>  commit.c         | 11 +++++++----
+>  commit.h         |  7 +++----
+>  ident.c          | 24 ++++++++++++++----------
+>  sequencer.c      |  4 ++--
+>  6 files changed, 51 insertions(+), 27 deletions(-)
 
-Hmm, you're right. oidmap() will lazy-initialize the table, but hashmap
-will not. You _do_ have to initialize a hashmap because somebody has to
-set the comparison function. But that could be fixed, and would make it
-more like the rest of our code. I.e., you should be able to do:
+Nice.
 
-  struct hashmap foo = HASHMAP_INIT(my_cmpfn);
+Obviously this would affect the environment while am is running, and
+the change is observable by post-applypatch hook.  I am not sure if
+this change-in-behaviour would negatively affect people's hooks, but
+given the large end-user population we have, somebody somewhere will
+get hit.
 
-  if (bar)
-	return; /* no leak, because we never put anything in the map! */
+> diff --git a/ident.c b/ident.c
+> index e666ee4e59..7cbf223350 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -361,11 +361,15 @@ N_("\n"
+>  const char *fmt_ident(const char *name, const char *email,
+>  		      enum want_ident whose_ident, const char *date_str, int flag)
+>  {
+> -	static struct strbuf ident = STRBUF_INIT;
+> +	static int index;
+> +	static struct strbuf ident_pool[2] = { STRBUF_INIT, STRBUF_INIT };
+>  	int strict = (flag & IDENT_STRICT);
+>  	int want_date = !(flag & IDENT_NO_DATE);
+>  	int want_name = !(flag & IDENT_NO_NAME);
+>  
+> +	struct strbuf *ident = &ident_pool[index];
+> +	index = (index + 1) % ARRAY_SIZE(ident_pool);
 
-  ... add some stuff to the map ...
+2-element rotating buffer because we happen to care at most two
+idents at the same time, author's and committer's?
 
-  hashmap_clear(&foo);
+How many callers of fmt_ident() do we have these days?  I wonder if
+we can introduce a new API that lets/forces the caller to prepare a
+strbuf and migrate the current callers of this function to it, of if
+it is too large a churn for the purpose of this series.
 
-  ... now it's empty and nothing allocated; we could return
-      here without a leak or we could add more stuff to it ...
-
-I don't even think it would be that big a change. Just translate a NULL
-table to "not found" on the read side, and lazily call alloc_table() on
-the write side. And have hashmap_free() not very the _whole_ struct, but
-leave the cmpfn in place.
-
-> I keep getting confused by the hashmap API, and what pieces it frees
-> -- it looks like my earlier comments today were wrong and
-> hashmap_free_entries() does free the table.  So...perhaps I should
-> create a patch to make that clearer, and also submit the patch I've
-> had for a while to introduce a hashmap_clear() function (which is
-> similar to hashmap_free_entries, in that it frees the entries and
-> zeros out most of the map, but it leaves the table allocated and ready
-> for use).
-> 
-> I really wish hashmap_free() did what hashmap_free_entries() did.  So
-> annoying and counter-intuitive...
-
-I left some comments in my other reply, but in case you do pursue this:
-the obvious thing to have is a free_entries boolean parameter to the
-function, so that each caller is clear about what they want. And we used
-to have that. But it's awkward because "free the entries" isn't a
-boolean anymore; it's "free the entries you can find by moving backwards
-to this offset from the hashmap_entry pointer". So callers who don't
-want to free them have to pass some sentinel value there. And that's how
-we ended up with two separate wrapper functions.
-
-I think your main complaint is just about the naming though. If we had:
-
-  /* drop all entries, freeing any hashmap-specific memory */
-  hashmap_clear();
-
-  /* ditto, but also free the entries themselves */
-  hashmap_clear_and_free_entires();
-
-that would be a bit more obvious (though I imagine it would still be
-easy to forget that "clear" doesn't drop the entries). Another approach
-would be to have a flag in the map for "do I own the entry memory". Most
-callers are happy to hand off ownership of the entries when they're
-added. And it may even be that this would open up the possibility of
-more convenience functions on the adding/allocation side. I didn't think
-it through carefully, though.
-
--Peff
+Thanks.
