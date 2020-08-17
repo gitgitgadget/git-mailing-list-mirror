@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2D6BC433E1
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 14:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DCDFC433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 14:05:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6DA620786
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 14:05:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4ADF32065D
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 14:05:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o2m6e7EF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tTE/r9Z8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728741AbgHQOFA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 10:05:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48930 "EHLO
+        id S1728746AbgHQOFC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 10:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728471AbgHQOE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728651AbgHQOE4 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Aug 2020 10:04:56 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEB30C061389
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 07:04:54 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id 88so15158586wrh.3
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 07:04:54 -0700 (PDT)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D9CC061342
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 07:04:56 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id a15so15113096wrh.10
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 07:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eSyPRGpdr54hZeIx3MgbzcLSGriiOGrRdkvlFes2oMI=;
-        b=o2m6e7EFeqbudB+QPxGYixkx+/oa7RxCCYq37J4w37TjLFrxmD3yMQ9E+EpNGEqhWA
-         JAqwPYilMfmOqNEkDC9x26ZeViWRQSCNLTX13t8b8xrGUv/k5ZFeyFmyHfe8HJ+0Pzx8
-         fYvaNm8y7SbL/AU1rGue9ZGdiBlUdhUdJOzG6l+EX39w0lkpnprLvNiFrxRmUMLbA7/w
-         wQepwlL2lkPAI1rgbm2fhC/4wHtMfGL/LHcdR7oXPS2zyYTAWh5GwuPpJWvmDhgHqMrR
-         kGg2epknvCJNkEWzEhyLtmJYPEUkmN0+/FKiwtfsR+wooIX5gmiiu5qgwPtfyUgAdnmI
-         iWPw==
+        bh=vRwFjaGRukVyApVGz6nU0+Z0qaP5aR9+ftI+QcAT6NY=;
+        b=tTE/r9Z8WosjqQYHSkOvnawj3kcLgwpRhoPMO+RgUAlEyIYIoghChCxd72dFbEQKFQ
+         rCBXsR7SNtYQFcS2GfwbpzO8f34Q4gr//DZ0zpOENwUICRKT9GRAtYe6uykaAKjdV74c
+         FN56lpqL2fyjMcZPz30NFeOLR2v9Gmi1NrInKm5vWOsvflg8yHTIsei3ScqqOViRpg0E
+         Nj/Il8/vdiTF6OhJ5B4iLawyA/TrHTNK7hUW8+O15PxLNUsoIVL3cPO5IWynrdhqTtbf
+         g5l9sIrnoE71KohsK75SBlLRKJmMGa2HGhsvzAHc1v0uH2PbE6U5IvOjpb7/K665TMuL
+         wKWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eSyPRGpdr54hZeIx3MgbzcLSGriiOGrRdkvlFes2oMI=;
-        b=swjo7pMG8UHv7yRBRS2wqP4tCBj4hcatQhxM4QhbkA/bk5QbOSiJb+UOBOD2RD9A70
-         rGMV+jDPfxaL7gJcJWqbvBFfv01bv9ZFw2QLKMipbuSHdIi+CUEH/jDrRDSReBGTmdHj
-         P1eyDTCa6NRD48IZ/kJ3yvYQEbZff3wMzgBSdB5fFpSMtrjgoW5ryH+fNqVvvOEUCMuW
-         /ojgsviqiUiUuZNEC4xCswRjZWFomemdqXO2AXZEG965Ssm9ki0s/pm64yGCFzVQKva5
-         oF2ZmMC+30I+tP7uVSqKdEE/dNHAiiYoeDtsyIFhcy3aDV6XGMyx5uN4QL7fvqcEkhyd
-         8JTg==
-X-Gm-Message-State: AOAM5318CKdaWbylVMnoTYkEQ2NTM5TH+OQDbQmZoinLyECnjRs9c493
-        f6C2Ii0rI+tpap41tKFWjQsfe5EuM3I=
-X-Google-Smtp-Source: ABdhPJwKfTJsYAK1b3y5LKFhXX0I1MGRXSyf4oYPKQ1IJ7hOWwInisOLWtobUFCk835nLWmgjXPBvA==
-X-Received: by 2002:a5d:5084:: with SMTP id a4mr16139083wrt.191.1597673093076;
-        Mon, 17 Aug 2020 07:04:53 -0700 (PDT)
+        bh=vRwFjaGRukVyApVGz6nU0+Z0qaP5aR9+ftI+QcAT6NY=;
+        b=kSWMiw6uKeMS3VvQ9VMKBZEz474aw+kjbQ8OHHm/nc83mSIF3dNcMLaeElerIvR9Bm
+         xTIXB2aDQWuad0d8cMTksu1wk3fhhFspK/+lJhroV7y5BeWgDOLDl2M/1IXMlOt4RCHi
+         owJBQ5jisuNcdbAq4ZHMSoxpgdDUdIKjDqceVRFjyrtXpw4Ad7ZmZ575ZXu7sKppHicT
+         udW7Dq/fLNJBfHC9Bhq5OY0gbSzbS9SjJK1tgn2rAbsE2SH4Uwsj+mgDEI5JxpUIhSR8
+         2P3W4Xat/7EXfoMvlKdPQ/cq6AQt+LnwjlhdHAkQAZlQZ0qRxbfqLHZjrnn9QJRdVCiw
+         DSEA==
+X-Gm-Message-State: AOAM531OHPfmUYe4ulEuyPUQaSYFbvckLovt8hTnp+TfUzSsdY/6LPhJ
+        M9CZtG8+G75P28P6PrTE5AoXd/BN6Io=
+X-Google-Smtp-Source: ABdhPJw5cO0bsQyIU0SQn7vBSZwe4+ke+EbuGlDn3QeN4HoIU1Z+7zT6+a3qjcDlvj8zEi/2/rGfyg==
+X-Received: by 2002:adf:812a:: with SMTP id 39mr15168258wrm.137.1597673094394;
+        Mon, 17 Aug 2020 07:04:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e16sm31388626wrx.30.2020.08.17.07.04.52
+        by smtp.gmail.com with ESMTPSA id m8sm29881874wro.75.2020.08.17.07.04.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2020 07:04:52 -0700 (PDT)
-Message-Id: <8d481f3b223960f2193678929b0a1705222386b7.1597673089.git.gitgitgadget@gmail.com>
+        Mon, 17 Aug 2020 07:04:53 -0700 (PDT)
+Message-Id: <822e46868f52e5518681b6fe433eac0b2072b130.1597673089.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.703.v2.git.1597673089.gitgitgadget@gmail.com>
 References: <pull.703.git.1597428440.gitgitgadget@gmail.com>
         <pull.703.v2.git.1597673089.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Aug 2020 14:04:47 +0000
-Subject: [PATCH v2 2/3] commit-graph: use the "hash version" byte
+Date:   Mon, 17 Aug 2020 14:04:48 +0000
+Subject: [PATCH v2 3/3] multi-pack-index: use hash version byte
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,70 +81,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The commit-graph format reserved a byte among the header of the file to
-store a "hash version". During the SHA-256 work, this was not modified
-because file formats are not necessarily intended to work across hash
-versions. If a repository has SHA-256 as its hash algorithm, it
-automatically up-shifts the lengths of object names in all necessary
-formats.
+Similar to the commit-graph format, the multi-pack-index format has a
+byte in the header intended to track the hash version used to write the
+file. This allows one to interpret the hash length without having the
+context of the repository config specifying the hash length. This was
+not modified as part of the SHA-256 work because the hash length was
+automatically up-shifted due to that config.
 
-However, since we have this byte available for adjusting the version, we
-can make the file formats more obviously incompatible instead of relying
-on other context from the repository.
+Since we have this byte available, we can make the file formats more
+obviously incompatible instead of relying on other context from the
+repository.
 
-Update the oid_version() method in commit-graph.c to add a new value, 2,
-for sha-256. This automatically writes the new value in a SHA-256
-repository _and_ verifies the value is correct. This is a breaking
-change relative to the current 'master' branch since 092b677 (Merge
-branch 'bc/sha-256-cvs-svn-updates', 2020-08-13) but it is not breaking
-relative to any released version of Git.
+Add a new oid_version() method in midx.c similar to the one in
+commit-graph.c. This is specifically made separate from that
+implementation to avoid artificially linking the formats.
 
-The test impact is relatively minor: the output of 'test-tool
-read-graph' lists the header information, so those instances of '1' need
-to be replaced with a variable determined by GIT_TEST_DEFAULT_HASH. A
-more careful test is added that specifically creates a repository of
-each type then swaps the commit-graph files. The important value here is
-that the "git log" command succeeds while writing a message to stderr.
+The test impact requires a few more things than the corresponding change
+in the commit-graph format. Specifically, 'test-tool read-midx' was not
+writing anything about this header value to output. Since the value
+available in 'struct multi_pack_index' is hash_len instead of a version
+value, we output "20" or "32" instead of "1" or "2".
+
+Since we want a user to not have their Git commands fail if their
+multi-pack-index has the incorrect hash version compared to the
+repository's hash version, we relax the die() to an error() in
+load_multi_pack_index(). This has some effect on 'git multi-pack-index
+verify' as we need to check that a failed parse of a file that exists is
+actually a verify error. For that test that checks the hash version
+matches, we change the corrupted byte from "2" to "3" to ensure the test
+fails for both hash algorithms.
 
 Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- .../technical/commit-graph-format.txt         |  9 ++++-
- commit-graph.c                                |  9 ++++-
- t/t4216-log-bloom.sh                          |  9 ++++-
- t/t5318-commit-graph.sh                       | 38 ++++++++++++++++++-
- t/t5324-split-commit-graph.sh                 |  5 ++-
- 5 files changed, 62 insertions(+), 8 deletions(-)
+ Documentation/technical/pack-format.txt |  7 +++-
+ midx.c                                  | 35 ++++++++++++++++----
+ t/helper/test-read-midx.c               |  8 +++--
+ t/t5319-multi-pack-index.sh             | 43 ++++++++++++++++++++++---
+ 4 files changed, 80 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
-index 440541045d..6ddbceba15 100644
---- a/Documentation/technical/commit-graph-format.txt
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -42,8 +42,13 @@ HEADER:
-   1-byte version number:
-       Currently, the only valid version is 1.
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index d3a142c652..16cf7e83aa 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -273,7 +273,12 @@ HEADER:
+ 	    Git only writes or recognizes version 1.
  
--  1-byte Hash Version (1 = SHA-1)
--      We infer the hash length (H) from this value.
-+  1-byte Hash Version
-+      We infer the hash length (H) from this value:
-+	1 => SHA-1
-+	2 => SHA-256
-+      If the hash type does not match the repository's hash algorithm, the
-+      commit-graph file should be ignored with a warning presented to the
-+      user.
+ 	1-byte Object Id Version
+-	    Git only writes or recognizes version 1 (SHA1).
++	    We infer the length of object IDs (OIDs) from this value:
++		1 => SHA-1
++		2 => SHA-256
++	    If the hash type does not match the repository's hash algorithm,
++	    the multi-pack-index file should be ignored with a warning
++	    presented to the user.
  
-   1-byte number (C) of "chunks"
+ 	1-byte number of "chunks"
  
-diff --git a/commit-graph.c b/commit-graph.c
-index e51c91dd5b..0ed003e218 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -179,7 +179,14 @@ static char *get_chain_filename(struct object_directory *odb)
+diff --git a/midx.c b/midx.c
+index a5fb797ede..551a30b907 100644
+--- a/midx.c
++++ b/midx.c
+@@ -17,7 +17,6 @@
+ #define MIDX_BYTE_HASH_VERSION 5
+ #define MIDX_BYTE_NUM_CHUNKS 6
+ #define MIDX_BYTE_NUM_PACKS 8
+-#define MIDX_HASH_VERSION 1
+ #define MIDX_HEADER_SIZE 12
+ #define MIDX_MIN_SIZE (MIDX_HEADER_SIZE + the_hash_algo->rawsz)
  
- static uint8_t oid_version(void)
- {
--	return 1;
+@@ -36,6 +35,18 @@
+ 
+ #define PACK_EXPIRED UINT_MAX
+ 
++static uint8_t oid_version(void)
++{
 +	switch (hash_algo_by_ptr(the_hash_algo)) {
 +	case GIT_HASH_SHA1:
 +		return 1;
@@ -153,119 +164,167 @@ index e51c91dd5b..0ed003e218 100644
 +	default:
 +		die(_("invalid hash version"));
 +	}
- }
- 
- static struct commit_graph *alloc_commit_graph(void)
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index c21cc160f3..4bb9e9dbe2 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -30,12 +30,17 @@ test_expect_success 'setup test - repo, commits, commit graph, log outputs' '
- 	rm file_to_be_deleted &&
- 	git add . &&
- 	git commit -m "file removed" &&
--	git commit-graph write --reachable --changed-paths
-+	git commit-graph write --reachable --changed-paths &&
++}
 +
-+	test_oid_cache <<-EOF
-+	oid_version sha1:1
-+	oid_version sha256:2
-+	EOF
- '
- graph_read_expect () {
- 	NUM_CHUNKS=5
- 	cat >expect <<- EOF
--	header: 43475048 1 1 $NUM_CHUNKS 0
-+	header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
- 	num_commits: $1
- 	chunks: oid_fanout oid_lookup commit_metadata bloom_indexes bloom_data
- 	EOF
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 044cf8a3de..2ed0c1544d 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -10,7 +10,12 @@ test_expect_success 'setup full repo' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git init &&
- 	git config core.commitGraph true &&
--	objdir=".git/objects"
-+	objdir=".git/objects" &&
+ static char *get_midx_filename(const char *object_dir)
+ {
+ 	return xstrfmt("%s/pack/multi-pack-index", object_dir);
+@@ -90,8 +101,11 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
+ 		      m->version);
+ 
+ 	hash_version = m->data[MIDX_BYTE_HASH_VERSION];
+-	if (hash_version != MIDX_HASH_VERSION)
+-		die(_("hash version %u does not match"), hash_version);
++	if (hash_version != oid_version()) {
++		error(_("multi-pack-index hash version %u does not match version %u"),
++		      hash_version, oid_version());
++		goto cleanup_fail;
++	}
+ 	m->hash_len = the_hash_algo->rawsz;
+ 
+ 	m->num_chunks = m->data[MIDX_BYTE_NUM_CHUNKS];
+@@ -418,7 +432,7 @@ static size_t write_midx_header(struct hashfile *f,
+ 
+ 	hashwrite_be32(f, MIDX_SIGNATURE);
+ 	byte_values[0] = MIDX_VERSION;
+-	byte_values[1] = MIDX_HASH_VERSION;
++	byte_values[1] = oid_version();
+ 	byte_values[2] = num_chunks;
+ 	byte_values[3] = 0; /* unused */
+ 	hashwrite(f, byte_values, sizeof(byte_values));
+@@ -1105,8 +1119,17 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+ 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+ 	verify_midx_error = 0;
+ 
+-	if (!m)
+-		return 0;
++	if (!m) {
++		int result = 0;
++		struct stat sb;
++		char *filename = get_midx_filename(object_dir);
++		if (!stat(filename, &sb)) {
++			error(_("multi-pack-index file exists, but failed to parse"));
++			result = 1;
++		}
++		free(filename);
++		return result;
++	}
+ 
+ 	if (flags & MIDX_PROGRESS)
+ 		progress = start_progress(_("Looking for referenced packfiles"),
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index 831b586d02..2430880f78 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -7,14 +7,18 @@
+ static int read_midx_file(const char *object_dir)
+ {
+ 	uint32_t i;
+-	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
++	struct multi_pack_index *m;
 +
-+	test_oid_cache <<-EOF
-+	oid_version sha1:1
-+	oid_version sha256:2
-+	EOF
++	setup_git_directory();
++	m = load_multi_pack_index(object_dir, 1);
+ 
+ 	if (!m)
+ 		return 1;
+ 
+-	printf("header: %08x %d %d %d\n",
++	printf("header: %08x %d %d %d %d\n",
+ 	       m->signature,
+ 	       m->version,
++	       m->hash_len,
+ 	       m->num_chunks,
+ 	       m->num_packs);
+ 
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 7dfff0f8f4..09cbca4949 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -5,6 +5,8 @@ test_description='multi-pack-indexes'
+ 
+ objdir=.git/objects
+ 
++HASH_LEN=$(test_oid rawsz)
++
+ midx_read_expect () {
+ 	NUM_PACKS=$1
+ 	NUM_OBJECTS=$2
+@@ -13,7 +15,7 @@ midx_read_expect () {
+ 	EXTRA_CHUNKS="$5"
+ 	{
+ 		cat <<-EOF &&
+-		header: 4d494458 1 $NUM_CHUNKS $NUM_PACKS
++		header: 4d494458 1 $HASH_LEN $NUM_CHUNKS $NUM_PACKS
+ 		chunks: pack-names oid-fanout oid-lookup object-offsets$EXTRA_CHUNKS
+ 		num_objects: $NUM_OBJECTS
+ 		packs:
+@@ -46,7 +48,7 @@ test_expect_success "don't write midx with no packs" '
+ 	test_path_is_missing pack/multi-pack-index
  '
  
- test_expect_success POSIXPERM 'tweak umask for modebit tests' '
-@@ -77,7 +82,7 @@ graph_read_expect() {
- 		NUM_CHUNKS=$((3 + $(echo "$2" | wc -w)))
- 	fi
- 	cat >expect <<- EOF
--	header: 43475048 1 1 $NUM_CHUNKS 0
-+	header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
- 	num_commits: $1
- 	chunks: oid_fanout oid_lookup commit_metadata$OPTIONAL
- 	EOF
-@@ -412,6 +417,35 @@ test_expect_success 'replace-objects invalidates commit-graph' '
- 	)
- '
+-test_expect_success "Warn if a midx contains no oid" '
++test_expect_success SHA1 'warn if a midx contains no oid' '
+ 	cp "$TEST_DIRECTORY"/t5319/no-objects.midx $objdir/pack/multi-pack-index &&
+ 	test_must_fail git multi-pack-index verify &&
+ 	rm $objdir/pack/multi-pack-index
+@@ -198,6 +200,40 @@ test_expect_success 'write midx with twelve packs' '
+ 
+ compare_results_with_midx "twelve packs"
  
 +test_expect_success 'warn on improper hash version' '
 +	git init --object-format=sha1 sha1 &&
 +	(
 +		cd sha1 &&
++		git config core.multiPackIndex true &&
 +		test_commit 1 &&
-+		git commit-graph write --reachable &&
-+		mv .git/objects/info/commit-graph ../cg-sha1
++		git repack -a &&
++		git multi-pack-index write &&
++		mv .git/objects/pack/multi-pack-index ../mpi-sha1
 +	) &&
 +	git init --object-format=sha256 sha256 &&
 +	(
 +		cd sha256 &&
++		git config core.multiPackIndex true &&
 +		test_commit 1 &&
-+		git commit-graph write --reachable &&
-+		mv .git/objects/info/commit-graph ../cg-sha256
++		git repack -a &&
++		git multi-pack-index write &&
++		mv .git/objects/pack/multi-pack-index ../mpi-sha256
 +	) &&
 +	(
 +		cd sha1 &&
-+		mv ../cg-sha256 .git/objects/info/commit-graph &&
++		mv ../mpi-sha256 .git/objects/pack/multi-pack-index &&
 +		git log -1 2>err &&
-+		test_i18ngrep "commit-graph hash version 2 does not match version 1" err
++		test_i18ngrep "multi-pack-index hash version 2 does not match version 1" err
 +	) &&
 +	(
 +		cd sha256 &&
-+		mv ../cg-sha1 .git/objects/info/commit-graph &&
++		mv ../mpi-sha1 .git/objects/pack/multi-pack-index &&
 +		git log -1 2>err &&
-+		test_i18ngrep "commit-graph hash version 1 does not match version 2" err
++		test_i18ngrep "multi-pack-index hash version 1 does not match version 2" err
 +	)
 +'
 +
- # the verify tests below expect the commit-graph to contain
- # exactly the commits reachable from the commits/8 branch.
- # If the file changes the set of commits in the list, then the
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index ea28d522b8..18216463c7 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -18,6 +18,9 @@ test_expect_success 'setup repo' '
- 
- 	base sha1:1376
- 	base sha256:1496
 +
-+	oid_version sha1:1
-+	oid_version sha256:2
- 	EOM
+ test_expect_success 'verify multi-pack-index success' '
+ 	git multi-pack-index verify --object-dir=$objdir
+ '
+@@ -243,7 +279,6 @@ test_expect_success 'verify bad signature' '
+ 		"multi-pack-index signature"
  '
  
-@@ -28,7 +31,7 @@ graph_read_expect() {
- 		NUM_BASE=$2
- 	fi
- 	cat >expect <<- EOF
--	header: 43475048 1 1 3 $NUM_BASE
-+	header: 43475048 1 $(test_oid oid_version) 3 $NUM_BASE
- 	num_commits: $1
- 	chunks: oid_fanout oid_lookup commit_metadata
- 	EOF
+-HASH_LEN=$(test_oid rawsz)
+ NUM_OBJECTS=74
+ MIDX_BYTE_VERSION=4
+ MIDX_BYTE_OID_VERSION=5
+@@ -272,7 +307,7 @@ test_expect_success 'verify bad version' '
+ '
+ 
+ test_expect_success 'verify bad OID version' '
+-	corrupt_midx_and_verify $MIDX_BYTE_OID_VERSION "\02" $objdir \
++	corrupt_midx_and_verify $MIDX_BYTE_OID_VERSION "\03" $objdir \
+ 		"hash version"
+ '
+ 
 -- 
 gitgitgadget
-
