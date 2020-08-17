@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89DF7C433DF
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 205C2C433E1
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:11:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64E0E2072E
-	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:11:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2E5D2072E
+	for <git@archiver.kernel.org>; Mon, 17 Aug 2020 18:11:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8lj2lkz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z7FYQZ7R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390418AbgHQSKv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Aug 2020 14:10:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58832 "EHLO
+        id S2390451AbgHQSLQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Aug 2020 14:11:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730586AbgHQSK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Aug 2020 14:10:28 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34A75C061344
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 11:10:28 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id d190so14008577wmd.4
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 11:10:28 -0700 (PDT)
+        with ESMTP id S1731517AbgHQSKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Aug 2020 14:10:34 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D240EC061349
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 11:10:31 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id r2so15892381wrs.8
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 11:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Je82nXeOGu8QL9bFt/iOItm11C3ZGeKZmAsav9TQxm8=;
-        b=Y8lj2lkz1FYCOdc49pHdYJMAbFWNct1xNUUX8Kq6P35Ag1rw3MflLjK0WCJrYKn1nw
-         CVp7HTCkt5pkGvvL0hS1pTGSXzpOVcNlzf/MDpAGYnUrN32jAgDg7mq+bPBfys8+P7XW
-         JT7KZaiqgdJCrxPfoyPYg4FzQ2S38QgTicmUBa9Ef4Hqkc7aUQSDCTMTo6/ozzeIVqHj
-         GCtJ4egf1GLXoEPHaI1oBD0AFMoHzQw4H5NMJE2u2JAsuE7pRYPPR3DXNPoNljkHY9Cq
-         z+l+OVZglYMNQv8iGDcahow2iqPHocWHAkcyBwIge7Zc31OFT94K2I51m8EPnFvL7+Ao
-         06dg==
+        bh=/3K3rLxxpmRR344POofiaEMr0WkE1QzMRZWO54dh4ts=;
+        b=Z7FYQZ7RssfZLL6f2hKq2ok57KjQ/OES/rrwU0juRSfCXx3c6Pg0Dhtx7zvIRsILA2
+         3GbvDksCDUh8oYeBezJVO00orZb4zRBDIC2Qt6ldLNAF+YAqZkSEnbXGVbR4fTP7yx9Z
+         ciaI/LtMF8s9IcOSS8M2eGbn1FpI1m2D0aPWNVmIAHGfZtJQ9rdv05LsJmxCTFut4bKx
+         33AH0+pvDCY3ADUUkyFZRGiazgOk04e2UO1ostS7bnonRKqsbxCEWjyX9iR1ydYXkL4u
+         CTv90HztMMIH6/qqLd+Kb5DG5XKmU59OzgmYJituAnZiMEAMn4d6xCKvkJoaPX/jXhuy
+         33Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Je82nXeOGu8QL9bFt/iOItm11C3ZGeKZmAsav9TQxm8=;
-        b=hYI+oQBGaNqIE9H+drEKbO0Ek3o6MYY+vI4X6xXJWZepEVsEBa+q1kLeG0s1XM8xOV
-         oRV+VU34TRSYW6pHnL8cG3hw81VrNyxNRv4UEYUZeTkVbG8xn9zayg3T1nLcDYBAZD0d
-         V1UeXceqYpSGeLB3ylOIMYJVbDQqCpwWAe5xeohTIf2C0dyzhtyhcpDtvYpwGZKE4FZb
-         p3QDXnEVjMs9DKALdvEwQMk0vkgoOa/nBXvABU8ZQEv35BAEH1hBj9/BYO1hl0one0lT
-         03jFrEW8LvBGMiLD7sfYlmohZVR2zA+eBaGe5/Ffe7SiEcoUM/IFKxKQbMan/on/GoCD
-         wDrA==
-X-Gm-Message-State: AOAM532qY3d+G0qMXH53P4gCzSOcTRvhiiu4HorLEVZ6LPlmZZNqGMCc
-        R9aThNhPlcJxyII+fhE+MlMMvU26peA=
-X-Google-Smtp-Source: ABdhPJxpEKlzA8nFZCeXnejGfw1CKAu8c6/d0HAN5NRh0OadHWx1eWeoG5ZWcfjgnkSRJgIvqEy+QA==
-X-Received: by 2002:a7b:c2aa:: with SMTP id c10mr15403514wmk.86.1597687826797;
-        Mon, 17 Aug 2020 11:10:26 -0700 (PDT)
+        bh=/3K3rLxxpmRR344POofiaEMr0WkE1QzMRZWO54dh4ts=;
+        b=qnK8ZkInZtV1HwO0WbQQjPwabXYUYOhFCexZtW1stugqPI7u6jPCDhrKKXBdtLAdrM
+         09qoMuE6RVl4nJKaN2qnTcfxsrqPE3DQmPs7HCZTmDfHd7fAiJpC+vzpGgHKlhsQdO6R
+         +DSUYR6TeXpFs6WhduXWXN+8ynzw3+NZuWhmMkzAb7CiFB7yzvFfE556EdiIb3nZHzJH
+         Z1P7G5lBatCpK/5t14/0pxXnFg0YKp3TMx9HlIbtPNmISIfv9XICOlCb7q7EVE9rYJMR
+         UHj+xOMGL/4TfBfnXPSFjSuXojXsJ8VQ028ivjmitG6JHiZ7HR6o0e9oAZo21Ryjy9ck
+         uPEg==
+X-Gm-Message-State: AOAM531NlhWtb/W7f71yx+t3bwNSfRtONm1ve5boTpNuX/IiZtVed+Jd
+        TlmicEdoEwKB7sRavIveEQXcTs9Pcyo=
+X-Google-Smtp-Source: ABdhPJzG1/L6K479uuVjmdRdav74YOGs4Mme9vrQm7Uw3bjovVmM9suF+fofc1Y+ntX/mHEAERZt3A==
+X-Received: by 2002:adf:ef4c:: with SMTP id c12mr15523644wrp.44.1597687829295;
+        Mon, 17 Aug 2020 11:10:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i4sm32144599wrw.26.2020.08.17.11.10.26
+        by smtp.gmail.com with ESMTPSA id r16sm35575778wrr.13.2020.08.17.11.10.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2020 11:10:26 -0700 (PDT)
-Message-Id: <d53ca56778a789dfef59bd4f0e06122c065f40d2.1597687822.git.gitgitgadget@gmail.com>
+        Mon, 17 Aug 2020 11:10:28 -0700 (PDT)
+Message-Id: <0ad22c7cdd3c692aa5b46444e64a3b76f1e87b4c.1597687822.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.684.v3.git.1597687822.gitgitgadget@gmail.com>
 References: <pull.684.v2.git.1596664305.gitgitgadget@gmail.com>
         <pull.684.v3.git.1597687822.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Aug 2020 18:10:17 +0000
-Subject: [PATCH v3 4/9] ref-filter: rename `objectname` related functions and
- fields
+Date:   Mon, 17 Aug 2020 18:10:20 +0000
+Subject: [PATCH v3 7/9] pretty: refactor `format_sanitized_subject()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,127 +78,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-In previous commits, we prepared some `objectname` related functions
-for more generic usage, so that these functions can be used for `tree`
-and `parent` atom.
+The function 'format_sanitized_subject()' is responsible for
+sanitized subject line in pretty.c
+e.g.
+the subject line
+the-sanitized-subject-line
 
-But the name of some functions and fields may mislead someone.
-For ex: function `objectname_atom_parser()` implies that it is
-for atom `objectname`.
+It would be a nice enhancement to `subject` atom to have the
+same feature. So in the later commits, we plan to add this feature
+to ref-filter.
 
-Let's rename all such functions and fields.
+Refactor `format_sanitized_subject()`, so it can be reused in
+ref-filter.c for adding new modifier `sanitize` to "subject" atom.
+
+Currently, the loop inside `format_sanitized_subject()` runs
+until `\n` is found. But now, we stored the first occurrence
+of `\n` in a variable `eol` and passed it in
+`format_sanitized_subject()`. And the loop runs upto `eol`.
+
+But this change isn't sufficient to reuse this function in
+ref-filter.c because there exist tags with multiline subject.
+
+It's wise to replace `\n` with ' ', if `format_sanitized_subject()`
+encounters `\n` before end of subject line, just like `copy_subject()`.
+Because we'll be only using `format_sanitized_subject()` for
+"%(subject:sanitize)", instead of `copy_subject()` and
+`format_sanitized_subject()` both. So, added the code:
+```
+if (char == '\n') /* never true if called inside pretty.c */
+    char = ' ';
+```
+
+Now, it's ready to be reused in ref-filter.c
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- ref-filter.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ pretty.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 4f4591cad0..066975b306 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -139,7 +139,7 @@ static struct used_atom {
- 		struct {
- 			enum { O_FULL, O_LENGTH, O_SHORT } option;
- 			unsigned int length;
--		} objectname;
-+		} oid;
- 		struct email_option {
- 			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
- 		} email_option;
-@@ -361,20 +361,20 @@ static int contents_atom_parser(const struct ref_format *format, struct used_ato
- 	return 0;
+diff --git a/pretty.c b/pretty.c
+index 2a3d46bf42..8d08e8278a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -839,24 +839,29 @@ static int istitlechar(char c)
+ 		(c >= '0' && c <= '9') || c == '.' || c == '_';
  }
  
--static int objectname_atom_parser(const struct ref_format *format, struct used_atom *atom,
--				  const char *arg, struct strbuf *err)
-+static int oid_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+			   const char *arg, struct strbuf *err)
+-static void format_sanitized_subject(struct strbuf *sb, const char *msg)
++static void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len)
  {
- 	if (!arg)
--		atom->u.objectname.option = O_FULL;
-+		atom->u.oid.option = O_FULL;
- 	else if (!strcmp(arg, "short"))
--		atom->u.objectname.option = O_SHORT;
-+		atom->u.oid.option = O_SHORT;
- 	else if (skip_prefix(arg, "short=", &arg)) {
--		atom->u.objectname.option = O_LENGTH;
--		if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
--		    atom->u.objectname.length == 0)
-+		atom->u.oid.option = O_LENGTH;
-+		if (strtoul_ui(arg, 10, &atom->u.oid.length) ||
-+		    atom->u.oid.length == 0)
- 			return strbuf_addf_ret(err, -1, _("positive value expected '%s' in %%(%s)"), arg, atom->name);
--		if (atom->u.objectname.length < MINIMUM_ABBREV)
--			atom->u.objectname.length = MINIMUM_ABBREV;
-+		if (atom->u.oid.length < MINIMUM_ABBREV)
-+			atom->u.oid.length = MINIMUM_ABBREV;
- 	} else
- 		return strbuf_addf_ret(err, -1, _("unrecognized argument '%s' in %%(%s)"), arg, atom->name);
- 	return 0;
-@@ -495,7 +495,7 @@ static struct {
- 	{ "refname", SOURCE_NONE, FIELD_STR, refname_atom_parser },
- 	{ "objecttype", SOURCE_OTHER, FIELD_STR, objecttype_atom_parser },
- 	{ "objectsize", SOURCE_OTHER, FIELD_ULONG, objectsize_atom_parser },
--	{ "objectname", SOURCE_OTHER, FIELD_STR, objectname_atom_parser },
-+	{ "objectname", SOURCE_OTHER, FIELD_STR, oid_atom_parser },
- 	{ "deltabase", SOURCE_OTHER, FIELD_STR, deltabase_atom_parser },
- 	{ "tree", SOURCE_OBJ },
- 	{ "parent", SOURCE_OBJ },
-@@ -918,14 +918,14 @@ int verify_ref_format(struct ref_format *format)
- 	return 0;
- }
++	char *r = xmemdupz(msg, len);
+ 	size_t trimlen;
+ 	size_t start_len = sb->len;
+ 	int space = 2;
++	int i;
  
--static const char *do_grab_objectname(const char *field, const struct object_id *oid,
--				      struct used_atom *atom)
-+static const char *do_grab_oid(const char *field, const struct object_id *oid,
-+			       struct used_atom *atom)
- {
--	switch (atom->u.objectname.option) {
-+	switch (atom->u.oid.option) {
- 	case O_FULL:
- 		return oid_to_hex(oid);
- 	case O_LENGTH:
--		return find_unique_abbrev(oid, atom->u.objectname.length);
-+		return find_unique_abbrev(oid, atom->u.oid.length);
- 	case O_SHORT:
- 		return find_unique_abbrev(oid, DEFAULT_ABBREV);
- 	default:
-@@ -933,11 +933,11 @@ static const char *do_grab_objectname(const char *field, const struct object_id
+-	for (; *msg && *msg != '\n'; msg++) {
+-		if (istitlechar(*msg)) {
++	for (i = 0; i < len; i++) {
++		if (r[i] == '\n')
++			r[i] = ' ';
++		if (istitlechar(r[i])) {
+ 			if (space == 1)
+ 				strbuf_addch(sb, '-');
+ 			space = 0;
+-			strbuf_addch(sb, *msg);
+-			if (*msg == '.')
+-				while (*(msg+1) == '.')
+-					msg++;
++			strbuf_addch(sb, r[i]);
++			if (r[i] == '.')
++				while (r[i+1] == '.')
++					i++;
+ 		} else
+ 			space |= 1;
  	}
- }
++	free(r);
  
--static int grab_objectname(const char *name, const char *field, const struct object_id *oid,
--			   struct atom_value *v, struct used_atom *atom)
-+static int grab_oid(const char *name, const char *field, const struct object_id *oid,
-+		    struct atom_value *v, struct used_atom *atom)
- {
- 	if (starts_with(name, field)) {
--		v->s = xstrdup(do_grab_objectname(field, oid, atom));
-+		v->s = xstrdup(do_grab_oid(field, oid, atom));
+ 	/* trim any trailing '.' or '-' characters */
+ 	trimlen = 0;
+@@ -1155,7 +1160,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	const struct commit *commit = c->commit;
+ 	const char *msg = c->message;
+ 	struct commit_list *p;
+-	const char *arg;
++	const char *arg, *eol;
+ 	size_t res;
+ 	char **slot;
+ 
+@@ -1405,7 +1410,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		format_subject(sb, msg + c->subject_off, " ");
  		return 1;
- 	}
- 	return 0;
-@@ -966,7 +966,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 		} else if (!strcmp(name, "deltabase"))
- 			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
- 		else if (deref)
--			grab_objectname(name, "objectname", &oi->oid, v, &used_atom[i]);
-+			grab_oid(name, "objectname", &oi->oid, v, &used_atom[i]);
- 	}
- }
- 
-@@ -1746,7 +1746,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		} else if (!deref && grab_objectname(name, "objectname", &ref->objectname, v, atom)) {
-+		} else if (!deref && grab_oid(name, "objectname", &ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
- 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
+ 	case 'f':	/* sanitized subject */
+-		format_sanitized_subject(sb, msg + c->subject_off);
++		eol = strchrnul(msg + c->subject_off, '\n');
++		format_sanitized_subject(sb, msg + c->subject_off, eol - (msg + c->subject_off));
+ 		return 1;
+ 	case 'b':	/* body */
+ 		strbuf_addstr(sb, msg + c->body_off);
 -- 
 gitgitgadget
 
