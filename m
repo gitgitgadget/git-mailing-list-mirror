@@ -2,69 +2,68 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9215C433E1
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C73AC433DF
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:25:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9277B20786
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:25:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A994207DA
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:25:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CFyxp2c+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/TuJxg/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbgHROZu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 10:25:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51036 "EHLO
+        id S1727016AbgHROZw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 10:25:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726815AbgHROZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:25:38 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35D7AC061344
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:37 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id f18so15493415wmc.0
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:37 -0700 (PDT)
+        with ESMTP id S1726820AbgHROZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:25:40 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4757C061345
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:38 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id a14so18481650wra.5
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=85W5dqI78PQ8PaMwFhtO/BYuMbB3AYFrtHNEaBzv2aM=;
-        b=CFyxp2c+j4CEmPD+em2RmS88JIM/tY9h8VT44Zp1B9O9p/76a/CHIrT11FNQbZ2T8T
-         nYhFY5fhucMSjSaRgHhJHwUsevpXvIu+unXnP6HIpv9rvrelIWal5K4g8NPjOOE6Wh2P
-         2qzR63DgfxUyVfhzQnugN1FhTnUsJd2qjjQmH3HjBEToUCpgUb0gVMVjbKf36eXKXQVZ
-         GhhQfthO4wwgAg+UZCJdNZJRtoyK+3fquNI0ajq+5u1CSc3KJcjeDGUNfg0lgASPui2e
-         R52dH8PskScaHz9SC7FQJ34JlGk7W72jRxn/6HOnxIYTGg2zwasL/u24qKCngaE3sdVC
-         OwjA==
+        bh=Ry0hpw+x89x8hU9nQ5fnnsze4ID6eAXp+p+08m26Kb4=;
+        b=a/TuJxg/UZGoUCckP1EHoQcPNyW00NSB4S10YX3bcQCSusVhBfD+ZArqJF5piCp4aF
+         c+5nITGJxBJCsR7jNOyvjFZYDE6LsIcROOorLvImIkI+GL32qP3wjmliu+eQSPkK2rwL
+         EJVYE8BRlUQT8D3LXUNnYguwjn1v8uCVPfRDI1SdbRPbm+ruoyi8gsEvySMThCg44pap
+         ry2QUByQkxCCmRf8qQYuuC/4BA04rtRcAgKxyXHwNPCVnfOrC9yProMZLnnB4/3PAwzg
+         TeakPQ0ATNrPm/UHNChzuJ5/QC0oLkj09+Y8q/B/Y5Y9I3S2KZnhotHWfk5IIkAXrKdR
+         +bvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=85W5dqI78PQ8PaMwFhtO/BYuMbB3AYFrtHNEaBzv2aM=;
-        b=Fjl3X2MoUaA0W3biWDIFFWPw5DT8mL4ZUQO4gEbwvKvp81X1gvp1WpxiAt4IQqKKle
-         EuLQ2HodgHU/9Jh5hdM8+UOhVTVZZ6ajaArMBikGLSmqZRVrKFzk5klI+3BJ0CpymAK3
-         D2IdkR1XVYpxawpbRA/5A85kfmVkAmxU2cZfbTyQ3Z4Qde4yxbJrXFFS6uRNNS4c3JQ2
-         S7q4d/2X5AXyHg5D+vA7V5KlaGm/XY2AKrVYR8ZDYArBSa/SDvMIIUbw96z9q8T/V4BF
-         D594qu2sP4YnFUsEqqeqXhCy/og0QRQslOH3kBaIm/ASf6kjtSVmiC5pJ63FXSYHklt4
-         UG6Q==
-X-Gm-Message-State: AOAM532ZI5vWVXQFQRvcdWP+djWT53xELflMtTwGbWYVOlpnSXAiZSv6
-        WmBXpib9T/sdpzUjWVnG5zvqqg3IroI=
-X-Google-Smtp-Source: ABdhPJzAEKrk3wJ7RUDDglsAAX2tzr1Ug/431gT97TY7uwWA7UXwTMa1AmtpjVY3USrnR5iNX1didg==
-X-Received: by 2002:a1c:98c1:: with SMTP id a184mr202353wme.116.1597760735556;
-        Tue, 18 Aug 2020 07:25:35 -0700 (PDT)
+        bh=Ry0hpw+x89x8hU9nQ5fnnsze4ID6eAXp+p+08m26Kb4=;
+        b=MxxyvQpqiYY3Qej6ZbzIDNkAXZyPbJ7liYqCyFwCwzTYi7UFOW6RRb2qw9m9dCsEyP
+         wRtpUCYJSxr7YWZ+cuzR1ofmbwNReVXSd3Kd3TkoOzxu4VHqSxETMwhF4S0fLPD3EA3S
+         RUr7JMSRYXYm06QpR0zDoHB3bxu2bTJJAPXMgvBII7iFUKdttGBfkbxry+nSXTjtGm+h
+         nncHWkRF3N8u5PHGtkkOCAGj7c1yrtp+nn0A5DtbeJ5rOWu3R2BQrXxJbLSiPyaLz9Mx
+         237ogwLSFQFJGPBdE5cMNM+mwpXNkhZ9hwvqWYR5AJGomsSWM0GFyhKo7lZCpOKSer5l
+         81nw==
+X-Gm-Message-State: AOAM532mgM2PJIBq26i2p4QD1+I92mnsausdR/Ydl3NLr4lZwAm5Ydep
+        Lao3bEljb7DI1wIztJI4F1xZI36oiW4=
+X-Google-Smtp-Source: ABdhPJxfDuS0Nq9kZjwuGCfdmaXSTcbDH5HbZLbFfAnhYnzGuv77/+8/xK3pXddMe7rQste1L7OcMQ==
+X-Received: by 2002:adf:82d5:: with SMTP id 79mr19906597wrc.282.1597760737405;
+        Tue, 18 Aug 2020 07:25:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g3sm38148378wrb.59.2020.08.18.07.25.34
+        by smtp.gmail.com with ESMTPSA id h10sm35055514wro.57.2020.08.18.07.25.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 07:25:34 -0700 (PDT)
-Message-Id: <4fa9d298b98fa8b83108d9d9c58aef0eab934ee5.1597760730.git.gitgitgadget@gmail.com>
+        Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
+Message-Id: <0ee2434bdbabc6f3ed6e80402aa3a19bf9626fc6.1597760730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
         <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 14:25:24 +0000
-Subject: [PATCH v2 3/9] maintenance: add loose-objects task
+Date:   Tue, 18 Aug 2020 14:25:26 +0000
+Subject: [PATCH v2 5/9] midx: enable core.multiPackIndex by default
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,243 +82,113 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-One goal of background maintenance jobs is to allow a user to
-disable auto-gc (gc.auto=0) but keep their repository in a clean
-state. Without any cleanup, loose objects will clutter the object
-database and slow operations. In addition, the loose objects will
-take up extra space because they are not stored with deltas against
-similar objects.
+The core.multiPackIndex setting has been around since c4d25228ebb
+(config: create core.multiPackIndex setting, 2018-07-12), but has been
+disabled by default. If a user wishes to use the multi-pack-index
+feature, then they must enable this config and run 'git multi-pack-index
+write'.
 
-Create a 'loose-objects' task for the 'git maintenance run' command.
-This helps clean up loose objects without disrupting concurrent Git
-commands using the following sequence of events:
+The multi-pack-index feature is relatively stable now, so make the
+config option true by default. For users that do not use a
+multi-pack-index, the only extra cost will be a file lookup to see if a
+multi-pack-index file exists (once per process, per object directory).
 
-1. Run 'git prune-packed' to delete any loose objects that exist
-   in a pack-file. Concurrent commands will prefer the packed
-   version of the object to the loose version. (Of course, there
-   are exceptions for commands that specifically care about the
-   location of an object. These are rare for a user to run on
-   purpose, and we hope a user that has selected background
-   maintenance will not be trying to do foreground maintenance.)
-
-2. Run 'git pack-objects' on a batch of loose objects. These
-   objects are grouped by scanning the loose object directories in
-   lexicographic order until listing all loose objects -or-
-   reaching 50,000 objects. This is more than enough if the loose
-   objects are created only by a user doing normal development.
-   We noticed users with _millions_ of loose objects because VFS
-   for Git downloads blobs on-demand when a file read operation
-   requires populating a virtual file. This has potential of
-   happening in partial clones if someone runs 'git grep' or
-   otherwise evades the batch-download feature for requesting
-   promisor objects.
-
-This step is based on a similar step in Scalar [1] and VFS for Git.
-[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/LooseObjectsStep.cs
+Also, this config option will be referenced by an upcoming
+"incremental-repack" task in the maintenance builtin, so move the config
+option into the repository settings struct. Note that if
+GIT_TEST_MULTI_PACK_INDEX=1, then we want to ignore the config option
+and treat core.multiPackIndex as enabled.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-maintenance.txt | 15 +++++
- builtin/gc.c                      | 97 +++++++++++++++++++++++++++++++
- t/t7900-maintenance.sh            | 39 +++++++++++++
- 3 files changed, 151 insertions(+)
+ Documentation/config/core.txt |  4 ++--
+ midx.c                        | 11 +++--------
+ repo-settings.c               |  6 ++++++
+ repository.h                  |  2 ++
+ 4 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index e82799ccff..85205b5bb9 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -73,6 +73,21 @@ gc::
- 	be disruptive in some situations, as it deletes stale data. See
- 	linkgit:git-gc[1] for more details on garbage collection in Git.
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 74619a9c03..86c91d5381 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -606,8 +606,8 @@ core.useReplaceRefs::
  
-+loose-objects::
-+	The `loose-objects` job cleans up loose objects and places them into
-+	pack-files. In order to prevent race conditions with concurrent Git
-+	commands, it follows a two-step process. First, it deletes any loose
-+	objects that already exist in a pack-file; concurrent Git processes
-+	will examine the pack-file for the object data instead of the loose
-+	object. Second, it creates a new pack-file (starting with "loose-")
-+	containing a batch of loose objects. The batch size is limited to 50
-+	thousand objects to prevent the job from taking too long on a
-+	repository with many loose objects. The `gc` task writes unreachable
-+	objects as loose objects to be cleaned up by a later step only if
-+	they are not re-added to a pack-file; for this reason it is not
-+	advisable to enable both the `loose-objects` and `gc` tasks at the
-+	same time.
-+
- OPTIONS
- -------
- --auto::
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 2ac08cc740..39ea590b5a 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -907,6 +907,98 @@ static int maintenance_task_gc(struct maintenance_opts *opts)
- 	return run_command(&child);
- }
+ core.multiPackIndex::
+ 	Use the multi-pack-index file to track multiple packfiles using a
+-	single index. See link:technical/multi-pack-index.html[the
+-	multi-pack-index design document].
++	single index. See linkgit:git-multi-pack-index[1] for more
++	information. Defaults to true.
  
-+static int prune_packed(struct maintenance_opts *opts)
-+{
-+	struct child_process child = CHILD_PROCESS_INIT;
-+
-+	child.git_cmd = 1;
-+	strvec_push(&child.args, "prune-packed");
-+
-+	if (opts->quiet)
-+		strvec_push(&child.args, "--quiet");
-+
-+	return !!run_command(&child);
-+}
-+
-+struct write_loose_object_data {
-+	FILE *in;
-+	int count;
-+	int batch_size;
-+};
-+
-+static int bail_on_loose(const struct object_id *oid,
-+			 const char *path,
-+			 void *data)
-+{
-+	return 1;
-+}
-+
-+static int write_loose_object_to_stdin(const struct object_id *oid,
-+				       const char *path,
-+				       void *data)
-+{
-+	struct write_loose_object_data *d = (struct write_loose_object_data *)data;
-+
-+	fprintf(d->in, "%s\n", oid_to_hex(oid));
-+
-+	return ++(d->count) > d->batch_size;
-+}
-+
-+static int pack_loose(struct maintenance_opts *opts)
-+{
-+	struct repository *r = the_repository;
-+	int result = 0;
-+	struct write_loose_object_data data;
-+	struct child_process pack_proc = CHILD_PROCESS_INIT;
-+
-+	/*
-+	 * Do not start pack-objects process
-+	 * if there are no loose objects.
-+	 */
-+	if (!for_each_loose_file_in_objdir(r->objects->odb->path,
-+					   bail_on_loose,
-+					   NULL, NULL, NULL))
-+		return 0;
-+
-+	pack_proc.git_cmd = 1;
-+
-+	strvec_push(&pack_proc.args, "pack-objects");
-+	if (opts->quiet)
-+		strvec_push(&pack_proc.args, "--quiet");
-+	strvec_pushf(&pack_proc.args, "%s/pack/loose", r->objects->odb->path);
-+
-+	pack_proc.in = -1;
-+
-+	if (start_command(&pack_proc)) {
-+		error(_("failed to start 'git pack-objects' process"));
-+		return 1;
-+	}
-+
-+	data.in = xfdopen(pack_proc.in, "w");
-+	data.count = 0;
-+	data.batch_size = 50000;
-+
-+	for_each_loose_file_in_objdir(r->objects->odb->path,
-+				      write_loose_object_to_stdin,
-+				      NULL,
-+				      NULL,
-+				      &data);
-+
-+	fclose(data.in);
-+
-+	if (finish_command(&pack_proc)) {
-+		error(_("failed to finish 'git pack-objects' process"));
-+		result = 1;
-+	}
-+
-+	return result;
-+}
-+
-+static int maintenance_task_loose_objects(struct maintenance_opts *opts)
-+{
-+	return prune_packed(opts) || pack_loose(opts);
-+}
-+
- typedef int maintenance_task_fn(struct maintenance_opts *opts);
+ core.sparseCheckout::
+ 	Enable "sparse checkout" feature. See linkgit:git-sparse-checkout[1]
+diff --git a/midx.c b/midx.c
+index a5fb797ede..ef499cf504 100644
+--- a/midx.c
++++ b/midx.c
+@@ -10,6 +10,7 @@
+ #include "progress.h"
+ #include "trace2.h"
+ #include "run-command.h"
++#include "repository.h"
  
- /*
-@@ -927,6 +1019,7 @@ struct maintenance_task {
+ #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
+ #define MIDX_VERSION 1
+@@ -384,15 +385,9 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
+ {
+ 	struct multi_pack_index *m;
+ 	struct multi_pack_index *m_search;
+-	int config_value;
+-	static int env_value = -1;
  
- enum maintenance_task_label {
- 	TASK_PREFETCH,
-+	TASK_LOOSE_OBJECTS,
- 	TASK_GC,
- 	TASK_COMMIT_GRAPH,
+-	if (env_value < 0)
+-		env_value = git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0);
+-
+-	if (!env_value &&
+-	    (repo_config_get_bool(r, "core.multipackindex", &config_value) ||
+-	    !config_value))
++	prepare_repo_settings(r);
++	if (!r->settings.core_multi_pack_index)
+ 		return 0;
  
-@@ -939,6 +1032,10 @@ static struct maintenance_task tasks[] = {
- 		"prefetch",
- 		maintenance_task_prefetch,
- 	},
-+	[TASK_LOOSE_OBJECTS] = {
-+		"loose-objects",
-+		maintenance_task_loose_objects,
-+	},
- 	[TASK_GC] = {
- 		"gc",
- 		maintenance_task_gc,
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 0bade09c43..2e9e369786 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -86,4 +86,43 @@ test_expect_success 'prefetch multiple remotes' '
- 	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two
- '
+ 	for (m_search = r->objects->multi_pack_index; m_search; m_search = m_search->next)
+diff --git a/repo-settings.c b/repo-settings.c
+index 0918408b34..5bd2c22726 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "repository.h"
++#include "midx.h"
  
-+test_expect_success 'loose-objects task' '
-+	# Repack everything so we know the state of the object dir
-+	git repack -adk &&
+ #define UPDATE_DEFAULT_BOOL(s,v) do { if (s == -1) { s = v; } } while(0)
+ 
+@@ -47,6 +48,11 @@ void prepare_repo_settings(struct repository *r)
+ 		r->settings.pack_use_sparse = value;
+ 	UPDATE_DEFAULT_BOOL(r->settings.pack_use_sparse, 1);
+ 
++	value = git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0);
++	if (value || !repo_config_get_bool(r, "core.multipackindex", &value))
++		r->settings.core_multi_pack_index = value;
++	UPDATE_DEFAULT_BOOL(r->settings.core_multi_pack_index, 1);
 +
-+	# Hack to stop maintenance from running during "git commit"
-+	echo in use >.git/objects/maintenance.lock &&
+ 	if (!repo_config_get_bool(r, "feature.manyfiles", &value) && value) {
+ 		UPDATE_DEFAULT_BOOL(r->settings.index_version, 4);
+ 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_WRITE);
+diff --git a/repository.h b/repository.h
+index 3c1f7d54bd..3901ce0b65 100644
+--- a/repository.h
++++ b/repository.h
+@@ -37,6 +37,8 @@ struct repo_settings {
+ 
+ 	int pack_use_sparse;
+ 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
 +
-+	# Assuming that "git commit" creates at least one loose object
-+	test_commit create-loose-object &&
-+	rm .git/objects/maintenance.lock &&
-+
-+	ls .git/objects >obj-dir-before &&
-+	test_file_not_empty obj-dir-before &&
-+	ls .git/objects/pack/*.pack >packs-before &&
-+	test_line_count = 1 packs-before &&
-+
-+	# The first run creates a pack-file
-+	# but does not delete loose objects.
-+	git maintenance run --task=loose-objects &&
-+	ls .git/objects >obj-dir-between &&
-+	test_cmp obj-dir-before obj-dir-between &&
-+	ls .git/objects/pack/*.pack >packs-between &&
-+	test_line_count = 2 packs-between &&
-+	ls .git/objects/pack/loose-*.pack >loose-packs &&
-+	test_line_count = 1 loose-packs &&
-+
-+	# The second run deletes loose objects
-+	# but does not create a pack-file.
-+	git maintenance run --task=loose-objects &&
-+	ls .git/objects >obj-dir-after &&
-+	cat >expect <<-\EOF &&
-+	info
-+	pack
-+	EOF
-+	test_cmp expect obj-dir-after &&
-+	ls .git/objects/pack/*.pack >packs-after &&
-+	test_cmp packs-between packs-after
-+'
-+
- test_done
++	int core_multi_pack_index;
+ };
+ 
+ struct repository {
 -- 
 gitgitgadget
 
