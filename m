@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 488DDC433E5
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 04:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF9F5C433DF
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 04:02:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2694D2076D
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 04:02:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B35442072A
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 04:02:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W/IU4H3w"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Rt+nJC1S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726353AbgHREB6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 00:01:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37716 "EHLO
+        id S1726435AbgHRECK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 00:02:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725554AbgHREBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 00:01:55 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C57DAC061389
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 21:01:55 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id n19so8829159ybf.0
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 21:01:55 -0700 (PDT)
+        with ESMTP id S1726370AbgHRECC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 00:02:02 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 402BCC061344
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 21:02:02 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id x3so11418204pga.4
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 21:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=VmRHp8hAbHUsjPYlGKbIckUXMeT/vlR+MBAv3XSf4Rc=;
-        b=W/IU4H3wXyXmpzLyoWlk7DqFq6c0XNqc/mjjzVkds8pgxZRZ52QGEvIly3QAvs4c31
-         9cbUQTxqvhzAIsYx6Uwz7yHlqigLunE5ktZVp6yO8E3gPTLZNqpSdSODD7aBtXrQvEqx
-         NSG99OsTDBLZqhLp+VuLiCMF2CXJMuN6ZqW0rZ14l35kaM4fpgoECyx+n+XTBnok2cte
-         SYGv/+jR/P/fQILBVNWZa10JbUu9mswNjFWfWTiKYyT/chbkyIndhe2Pk6mE/085u6fG
-         hEa5PYHfGHbBZUyqElsGiHjWseqH5O5fgVT2Y393XbVpnm2nDh2gSzbLnLDHEIWaVqhN
-         k08Q==
+        bh=XMvRLHX//Q6xP55ShLnMeec/Aq4eZwCgRc6ZtZ1n7AM=;
+        b=Rt+nJC1SHExZkvoXwNDGKh6MsvWo+PDNjeMCJ3MeWaiMnP86KwwQxQlgNCFxb2wRp1
+         QmGTsIfoNC2PhaMzXcHS9LeeZWMCMnWblt8L2oqqxXJcyus1NRumFiExTccDc7q0b6cA
+         vfpuXv8O50wUC3dzAhf0sEj9Nsdue7yIEtzLb38wdYWmN3x9tTESBzLNyrl1GI/znqvn
+         t8UZIHG1B2PkeotmQhtVyBBYlB95kGdwZyMk3agTV/rxJOhYzxg6Sve270JekLi/pW9e
+         unlxk8INX8VP0aKbFtcLCS7BOL076kahiRbh4QVv/2UQVGxJoP1Vn8UPBObZgtdzsfhe
+         Iyzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=VmRHp8hAbHUsjPYlGKbIckUXMeT/vlR+MBAv3XSf4Rc=;
-        b=nYuq6ONYZ2jSwvoglCqZ+vnM1xLIq5uQU4ehctwjVPbhGFu/4Vhk6QVA1KNDIZR3fZ
-         tqGE50HqDCwbM9SuATOh6oBDTvWqeiDYXNnR8p/GlvPKwhI3TB6HSmiRY4E0YMjGJc97
-         3fea987ZUXHKJiDbhi3KEbqCERFUypXVP/26MT4PATt6B608WzFn6vhHmWMTlN3hPLIH
-         8HBGkvNGevhWMySy5G/0yyckkCABNEh4mbUswq0IWSar07GHvLYNpIMpb+Si3a5GoTve
-         GTbN4o/dMxCl+1ttlWjrhJwdjJBrYbHZ5wLYcAieRh4d3OWQeaWxCLFFVfvoSaoq6KFn
-         /osw==
-X-Gm-Message-State: AOAM5302pIJjHI/13hiKvf8T0X+/Ipbzy1dVWiBWC9g+kn01tM7ut5a0
-        6+6xQvEXD/dsI+BNnPRqQBXO/KgWntszawW+Vm2IcmuyrTTVXJU9rOHDc/jRDG0dlhY5/gq/qMK
-        aOomNhxzOS890sLGBpmDrd4LL7xgZyRQJ74sTm5JGcDBLtajPOiUxjHLsyrzvqV0qkA0NcZ+ci4
-        1S
-X-Google-Smtp-Source: ABdhPJzS/mhcK5geskCtap7s5sz6uHidFpKiXwNDe17zs7HgP5IWP0J8bSxQWJcCvkWhq5dx3k95FPmRZgR+LDCclImC
-X-Received: by 2002:a25:7491:: with SMTP id p139mr26311547ybc.293.1597723314927;
- Mon, 17 Aug 2020 21:01:54 -0700 (PDT)
-Date:   Mon, 17 Aug 2020 21:01:33 -0700
+        bh=XMvRLHX//Q6xP55ShLnMeec/Aq4eZwCgRc6ZtZ1n7AM=;
+        b=KBMh8Vpb4wQcvDqgMTz3stk0r4OQ5aGzYBkwEUnkRlGh2mhA7xqKfL2EJiJJU6W27j
+         35QviOHynKfpcmkJeMO1UtTG5GG6O2A8YwtsKwvgLmA82eFNN0gBljRzEG9PvhWtmKlo
+         mYo7xDUDGbSZ+zdjy8r4RT4n5mU0zOQZyibHsZXuojwVigye6mwaTTrBb22JG+vAw5i6
+         u29MaY/cB594Cpl2rkGvLkNmkCDOwbH6/NtQNV+OWdmLD3py+1iVpgg0yNDOcgOASJOW
+         t8Oujligp7iARCnEWIZ22EqM5xcgl73mtmC5HLTHJmK8pzIjvxXE8ldpmLGLiCSQR2xV
+         o5fQ==
+X-Gm-Message-State: AOAM530558i/beZwUpCYo9oHafkrtqHpIwZZ0pUBUhpWJ6kpITTmQEgv
+        FG7MJZc/Sg6kn6rk/m0UcGB6VSwbeU+3UvuxmQqudQlA1sFN6E96DEYYFP18iNWGGi7b+VI0hIh
+        2U3x9S4lMYGnMHOrcrcOG/NWwGBtz7y/Otq6aTWjiUR1ElsqnaTSSE9rkV51Brdx/gje977h927
+        sb
+X-Google-Smtp-Source: ABdhPJy6NVadq3pQZk4SpndqmusFmsM0QWk+ypkUo4jKpdIJc4sEG9AMG+jYd4bUesKZyfwrOkl12kF0peAyOEx6LYWn
+X-Received: by 2002:a17:90b:4a07:: with SMTP id kk7mr15705209pjb.125.1597723321610;
+ Mon, 17 Aug 2020 21:02:01 -0700 (PDT)
+Date:   Mon, 17 Aug 2020 21:01:37 -0700
 In-Reply-To: <cover.1597722941.git.jonathantanmy@google.com>
-Message-Id: <fda9f834f691adb3bf18c3b01deb058e8fe36c0c.1597722942.git.jonathantanmy@google.com>
+Message-Id: <3ff9d034e91f394457e1c1813437603e70741aa6.1597722942.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20200724223844.2723397-1-jonathantanmy@google.com> <cover.1597722941.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.28.0.220.ged08abb693-goog
-Subject: [PATCH v3 3/7] fetch: avoid reading submodule config until needed
+Subject: [PATCH v3 7/7] fetch-pack: remove no_dependents code
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
@@ -73,81 +73,339 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In "fetch", there are two parameters submodule_fetch_jobs_config and
-recurse_submodules that can be set in a variety of ways: through
-.gitmodules, through .git/config, and through the command line.
-Currently "fetch" handles this by first reading .gitmodules, then
-reading .git/config (allowing it to overwrite existing values), then
-reading the command line (allowing it to overwrite existing values).
-
-Notice that we can avoid reading .gitmodules if .git/config and/or the
-command line already provides us with what we need. In addition, if
-recurse_submodules is found to be "no", we do not need the value of
-submodule_fetch_jobs_config.
-
-Avoiding reading .gitmodules is especially important when we use "git
-fetch" to perform lazy fetches in a partial clone because the
-.gitmodules file itself might need to be lazy fetched (and otherwise
-causing an infinite loop).
-
-In light of all this, avoid reading .gitmodules until necessary. When
-reading it, we may only need one of the two parameters it provides, so
-teach fetch_config_from_gitmodules() to support NULL arguments. With
-this patch, users (including Git itself when invoking "git fetch" to
-lazy-fetch) will be able to guarantee avoiding reading .gitmodules by
-passing --recurse-submodules=no.
+Now that Git has switched to using a subprocess to lazy-fetch missing
+objects, remove the no_dependents code as it is no longer used.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/fetch.c    | 10 ++++++++--
- submodule-config.c |  8 ++++++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ builtin/fetch-pack.c |   4 --
+ fetch-pack.c         | 110 ++++++++++++-------------------------------
+ fetch-pack.h         |  14 ------
+ remote-curl.c        |   6 ---
+ transport.c          |   4 --
+ transport.h          |   7 ---
+ 6 files changed, 30 insertions(+), 115 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index a5498646bf..29db219c68 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1786,12 +1786,18 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		free(anon);
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index bbb5c96167..58b7c1fbdc 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -153,10 +153,6 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 			args.from_promisor = 1;
+ 			continue;
+ 		}
+-		if (!strcmp("--no-dependents", arg)) {
+-			args.no_dependents = 1;
+-			continue;
+-		}
+ 		if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
+ 			parse_list_objects_filter(&args.filter_options, arg);
+ 			continue;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 707bbc31fd..3212957dae 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -285,10 +285,8 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 			   PACKET_READ_CHOMP_NEWLINE |
+ 			   PACKET_READ_DIE_ON_ERR_PACKET);
+ 
+-	if (!args->no_dependents) {
+-		mark_tips(negotiator, args->negotiation_tips);
+-		for_each_cached_alternate(negotiator, insert_one_alternate_object);
+-	}
++	mark_tips(negotiator, args->negotiation_tips);
++	for_each_cached_alternate(negotiator, insert_one_alternate_object);
+ 
+ 	fetching = 0;
+ 	for ( ; refs ; refs = refs->next) {
+@@ -305,12 +303,8 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 		 * We use lookup_object here because we are only
+ 		 * interested in the case we *know* the object is
+ 		 * reachable and we have already scanned it.
+-		 *
+-		 * Do this only if args->no_dependents is false (if it is true,
+-		 * we cannot trust the object flags).
+ 		 */
+-		if (!args->no_dependents &&
+-		    ((o = lookup_object(the_repository, remote)) != NULL) &&
++		if (((o = lookup_object(the_repository, remote)) != NULL) &&
+ 				(o->flags & COMPLETE)) {
+ 			continue;
+ 		}
+@@ -410,8 +404,6 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	trace2_region_enter("fetch-pack", "negotiation_v0_v1", the_repository);
+ 	flushes = 0;
+ 	retval = -1;
+-	if (args->no_dependents)
+-		goto done;
+ 	while ((oid = negotiator->next(negotiator))) {
+ 		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
+ 		print_verbose(args, "have %s", oid_to_hex(oid));
+@@ -666,9 +658,7 @@ struct loose_object_iter {
+ 
+ /*
+  * Mark recent commits available locally and reachable from a local ref as
+- * COMPLETE. If args->no_dependents is false, also mark COMPLETE remote refs as
+- * COMMON_REF (otherwise, we are not planning to participate in negotiation, and
+- * thus do not need COMMON_REF marks).
++ * COMPLETE.
+  *
+  * The cutoff time for recency is determined by this heuristic: it is the
+  * earliest commit time of the objects in refs that are commits and that we know
+@@ -969,12 +959,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	struct fetch_negotiator negotiator_alloc;
+ 	struct fetch_negotiator *negotiator;
+ 
+-	if (args->no_dependents) {
+-		negotiator = NULL;
+-	} else {
+-		negotiator = &negotiator_alloc;
+-		fetch_negotiator_init(r, negotiator);
+-	}
++	negotiator = &negotiator_alloc;
++	fetch_negotiator_init(r, negotiator);
+ 
+ 	sort_ref_list(&ref, ref_compare_name);
+ 	QSORT(sought, nr_sought, cmp_ref_by_name);
+@@ -1062,15 +1048,11 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	if (!server_supports_hash(the_hash_algo->name, NULL))
+ 		die(_("Server does not support this repository's object format"));
+ 
+-	if (!args->no_dependents) {
+-		mark_complete_and_common_ref(negotiator, args, &ref);
+-		filter_refs(args, &ref, sought, nr_sought);
+-		if (everything_local(args, &ref)) {
+-			packet_flush(fd[1]);
+-			goto all_done;
+-		}
+-	} else {
+-		filter_refs(args, &ref, sought, nr_sought);
++	mark_complete_and_common_ref(negotiator, args, &ref);
++	filter_refs(args, &ref, sought, nr_sought);
++	if (everything_local(args, &ref)) {
++		packet_flush(fd[1]);
++		goto all_done;
  	}
+ 	if (find_common(negotiator, args, fd, &oid, ref) < 0)
+ 		if (!args->keep_pack)
+@@ -1119,7 +1101,7 @@ static void add_shallow_requests(struct strbuf *req_buf,
+ 		packet_buf_write(req_buf, "deepen-relative\n");
+ }
  
--	fetch_config_from_gitmodules(&submodule_fetch_jobs_config,
--				     &recurse_submodules);
- 	git_config(git_fetch_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
-+	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
-+		int *sfjc = submodule_fetch_jobs_config == -1
-+			    ? &submodule_fetch_jobs_config : NULL;
-+		int *rs = recurse_submodules == RECURSE_SUBMODULES_DEFAULT
-+			  ? &recurse_submodules : NULL;
-+
-+		fetch_config_from_gitmodules(sfjc, rs);
-+	}
- 
- 	if (deepen_relative) {
- 		if (deepen_relative < 0)
-diff --git a/submodule-config.c b/submodule-config.c
-index e175dfbc38..c569e22aa3 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -777,10 +777,14 @@ static int gitmodules_fetch_config(const char *var, const char *value, void *cb)
+-static void add_wants(int no_dependents, const struct ref *wants, struct strbuf *req_buf)
++static void add_wants(const struct ref *wants, struct strbuf *req_buf)
  {
- 	struct fetch_config *config = cb;
- 	if (!strcmp(var, "submodule.fetchjobs")) {
--		*(config->max_children) = parse_submodule_fetchjobs(var, value);
-+		if (config->max_children)
-+			*(config->max_children) =
-+				parse_submodule_fetchjobs(var, value);
- 		return 0;
- 	} else if (!strcmp(var, "fetch.recursesubmodules")) {
--		*(config->recurse_submodules) = parse_fetch_recurse_submodules_arg(var, value);
-+		if (config->recurse_submodules)
-+			*(config->recurse_submodules) =
-+				parse_fetch_recurse_submodules_arg(var, value);
- 		return 0;
+ 	int use_ref_in_want = server_supports_feature("fetch", "ref-in-want", 0);
+ 
+@@ -1136,12 +1118,8 @@ static void add_wants(int no_dependents, const struct ref *wants, struct strbuf
+ 		 * We use lookup_object here because we are only
+ 		 * interested in the case we *know* the object is
+ 		 * reachable and we have already scanned it.
+-		 *
+-		 * Do this only if args->no_dependents is false (if it is true,
+-		 * we cannot trust the object flags).
+ 		 */
+-		if (!no_dependents &&
+-		    ((o = lookup_object(the_repository, remote)) != NULL) &&
++		if (((o = lookup_object(the_repository, remote)) != NULL) &&
+ 		    (o->flags & COMPLETE)) {
+ 			continue;
+ 		}
+@@ -1275,19 +1253,14 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
  	}
+ 
+ 	/* add wants */
+-	add_wants(args->no_dependents, wants, &req_buf);
++	add_wants(wants, &req_buf);
+ 
+-	if (args->no_dependents) {
+-		packet_buf_write(&req_buf, "done");
+-		ret = 1;
+-	} else {
+-		/* Add all of the common commits we've found in previous rounds */
+-		add_common(&req_buf, common);
++	/* Add all of the common commits we've found in previous rounds */
++	add_common(&req_buf, common);
+ 
+-		/* Add initial haves */
+-		ret = add_haves(negotiator, seen_ack, &req_buf,
+-				haves_to_send, in_vain);
+-	}
++	/* Add initial haves */
++	ret = add_haves(negotiator, seen_ack, &req_buf,
++			haves_to_send, in_vain);
+ 
+ 	/* Send request */
+ 	packet_buf_flush(&req_buf);
+@@ -1547,12 +1520,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
+ 	int i;
+ 
+-	if (args->no_dependents) {
+-		negotiator = NULL;
+-	} else {
+-		negotiator = &negotiator_alloc;
+-		fetch_negotiator_init(r, negotiator);
+-	}
++	negotiator = &negotiator_alloc;
++	fetch_negotiator_init(r, negotiator);
+ 
+ 	packet_reader_init(&reader, fd[0], NULL, 0,
+ 			   PACKET_READ_CHOMP_NEWLINE |
+@@ -1576,21 +1545,16 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				args->deepen = 1;
+ 
+ 			/* Filter 'ref' by 'sought' and those that aren't local */
+-			if (!args->no_dependents) {
+-				mark_complete_and_common_ref(negotiator, args, &ref);
+-				filter_refs(args, &ref, sought, nr_sought);
+-				if (everything_local(args, &ref))
+-					state = FETCH_DONE;
+-				else
+-					state = FETCH_SEND_REQUEST;
+-
+-				mark_tips(negotiator, args->negotiation_tips);
+-				for_each_cached_alternate(negotiator,
+-							  insert_one_alternate_object);
+-			} else {
+-				filter_refs(args, &ref, sought, nr_sought);
++			mark_complete_and_common_ref(negotiator, args, &ref);
++			filter_refs(args, &ref, sought, nr_sought);
++			if (everything_local(args, &ref))
++				state = FETCH_DONE;
++			else
+ 				state = FETCH_SEND_REQUEST;
+-			}
++
++			mark_tips(negotiator, args->negotiation_tips);
++			for_each_cached_alternate(negotiator,
++						  insert_one_alternate_object);
+ 			break;
+ 		case FETCH_SEND_REQUEST:
+ 			if (!negotiation_started) {
+@@ -1911,20 +1875,6 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 	if (nr_sought)
+ 		nr_sought = remove_duplicates_in_refs(sought, nr_sought);
+ 
+-	if (args->no_dependents && !args->filter_options.choice) {
+-		/*
+-		 * The protocol does not support requesting that only the
+-		 * wanted objects be sent, so approximate this by setting a
+-		 * "blob:none" filter if no filter is already set. This works
+-		 * for all object types: note that wanted blobs will still be
+-		 * sent because they are directly specified as a "want".
+-		 *
+-		 * NEEDSWORK: Add an option in the protocol to request that
+-		 * only the wanted objects be sent, and implement it.
+-		 */
+-		parse_list_objects_filter(&args->filter_options, "blob:none");
+-	}
+-
+ 	if (version != protocol_v2 && !ref) {
+ 		packet_flush(fd[1]);
+ 		die(_("no matching remote head"));
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 85d1e39fe7..bbe2938059 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -42,20 +42,6 @@ struct fetch_pack_args {
+ 	unsigned deepen:1;
+ 	unsigned from_promisor:1;
+ 
+-	/*
+-	 * Attempt to fetch only the wanted objects, and not any objects
+-	 * referred to by them. Due to protocol limitations, extraneous
+-	 * objects may still be included. (When fetching non-blob
+-	 * objects, only blobs are excluded; when fetching a blob, the
+-	 * blob itself will still be sent. The client does not need to
+-	 * know whether a wanted object is a blob or not.)
+-	 *
+-	 * If 1, fetch_pack() will also not modify any object flags.
+-	 * This allows fetch_pack() to safely be called by any function,
+-	 * regardless of which object flags it uses (if any).
+-	 */
+-	unsigned no_dependents:1;
+-
+ 	/*
+ 	 * Because fetch_pack() overwrites the shallow file upon a
+ 	 * successful deepening non-clone fetch, if this struct
+diff --git a/remote-curl.c b/remote-curl.c
+index 5cbc6e5002..a0c81a64bc 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -40,7 +40,6 @@ struct options {
+ 		push_cert : 2,
+ 		deepen_relative : 1,
+ 		from_promisor : 1,
+-		no_dependents : 1,
+ 		atomic : 1,
+ 		object_format : 1;
+ 	const struct git_hash_algo *hash_algo;
+@@ -186,9 +185,6 @@ static int set_option(const char *name, const char *value)
+ 	} else if (!strcmp(name, "from-promisor")) {
+ 		options.from_promisor = 1;
+ 		return 0;
+-	} else if (!strcmp(name, "no-dependents")) {
+-		options.no_dependents = 1;
+-		return 0;
+ 	} else if (!strcmp(name, "filter")) {
+ 		options.filter = xstrdup(value);
+ 		return 0;
+@@ -1171,8 +1167,6 @@ static int fetch_git(struct discovery *heads,
+ 		argv_array_push(&args, "--deepen-relative");
+ 	if (options.from_promisor)
+ 		argv_array_push(&args, "--from-promisor");
+-	if (options.no_dependents)
+-		argv_array_push(&args, "--no-dependents");
+ 	if (options.filter)
+ 		argv_array_pushf(&args, "--filter=%s", options.filter);
+ 	argv_array_push(&args, url.buf);
+diff --git a/transport.c b/transport.c
+index b41386eccb..32e1f21f0c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -232,9 +232,6 @@ static int set_git_option(struct git_transport_options *opts,
+ 	} else if (!strcmp(name, TRANS_OPT_FROM_PROMISOR)) {
+ 		opts->from_promisor = !!value;
+ 		return 0;
+-	} else if (!strcmp(name, TRANS_OPT_NO_DEPENDENTS)) {
+-		opts->no_dependents = !!value;
+-		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_LIST_OBJECTS_FILTER)) {
+ 		list_objects_filter_die_if_populated(&opts->filter_options);
+ 		parse_list_objects_filter(&opts->filter_options, value);
+@@ -359,7 +356,6 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.cloning = transport->cloning;
+ 	args.update_shallow = data->options.update_shallow;
+ 	args.from_promisor = data->options.from_promisor;
+-	args.no_dependents = data->options.no_dependents;
+ 	args.filter_options = data->options.filter_options;
+ 	args.stateless_rpc = transport->stateless_rpc;
+ 	args.server_options = transport->server_options;
+diff --git a/transport.h b/transport.h
+index b3c30133ea..7aa1f33145 100644
+--- a/transport.h
++++ b/transport.h
+@@ -16,7 +16,6 @@ struct git_transport_options {
+ 	unsigned update_shallow : 1;
+ 	unsigned deepen_relative : 1;
+ 	unsigned from_promisor : 1;
+-	unsigned no_dependents : 1;
+ 
+ 	/*
+ 	 * If this transport supports connect or stateless-connect,
+@@ -201,12 +200,6 @@ void transport_check_allowed(const char *type);
+ /* Indicate that these objects are being fetched by a promisor */
+ #define TRANS_OPT_FROM_PROMISOR "from-promisor"
+ 
+-/*
+- * Indicate that only the objects wanted need to be fetched, not their
+- * dependents
+- */
+-#define TRANS_OPT_NO_DEPENDENTS "no-dependents"
+-
+ /* Filter objects for partial clone and fetch */
+ #define TRANS_OPT_LIST_OBJECTS_FILTER "filter"
  
 -- 
 2.28.0.220.ged08abb693-goog
