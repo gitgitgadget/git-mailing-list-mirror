@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B00DCC433DF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09837C433DF
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D72A207FF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C63D1207D3
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtBbgBQz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HzD2gurr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726844AbgHROXc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 10:23:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
+        id S1726862AbgHROXg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 10:23:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726542AbgHROXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:23:14 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 804DFC061342
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:13 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id p14so16404196wmg.1
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:13 -0700 (PDT)
+        with ESMTP id S1726605AbgHROXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:23:15 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86A9C061344
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:14 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id p14so16404267wmg.1
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rz0elcoRUQhrWP42+CgdqapPZCpm/iX374uh59Y88Gc=;
-        b=dtBbgBQz3oCExgbZwuzBd4yBlduH1EE6uAk+3wVFQsBAXwlH52F2aJHB4+p9FG92uh
-         U2Wk4odcqjt5I+fELvhs+w7rU8XtXXPhCUlazv19MoT+576BOs6LWP1sHtyuMqe6x3S9
-         rnOseJwdae+zEdrsL2zZhOAwrHQgkNRHNgctMjq9RgsA68Vpjs7uuuAQgEQsbtQeZfj+
-         YByQE63XXHwtyV3gOEAhFEaXIUy3Ud3G0C9Hl2KOIqAjweYUQLAca6vdiKlqCYcPFgGu
-         fH9E7qLJ/rc41KmX0yXgjAO7kVNMdLLcjUSkDLgmYTjkGZbTO87ODjnpn/3npgwNY8vq
-         pOIw==
+        bh=haPdcuSHV4uqg9oVGnsbasRCEzOuPwsFJKkmpIY23OQ=;
+        b=HzD2gurr2xcL1/yc33QTeMjcXpEna7J6ccZN7hg/jwD4I16Wm9aIdFv9o2GGLIU01b
+         CLNeNkNd2/mjqYFzY6GDZdTVVxBY2TVpn3rf5bY22zp6LB0qJ9ByAI03tszZHPyyvUne
+         W0WSe5JmS+fXdhNjy1w5N1xZO+MmvfDK7eqYJJN1tmSzvm7e1B8spaNnIA6Qo+zIVxla
+         EqANQKcPF9ByGb33FZZwd+2lzrDlLdSDOj05fwimMtsf2pMYAy12pb6oi+ElZmZXBQ68
+         ecELvloAA+cL8xf94PJ6CabJdhBB+YzSGzLqr+7/D3A8Dy7nOHkU/DdStgmkRf0NNqGD
+         8ssQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rz0elcoRUQhrWP42+CgdqapPZCpm/iX374uh59Y88Gc=;
-        b=JvM6sKp0AebWKNU/NgiQRxRITL379fSDkkaEJ0l/V4FEmuMGAKZjyk7LE11RtjlpIx
-         mhipRhaZ6IhgJFKYmq7/SP8OCj9NwQc1bre9ApkItvLYA7ghGP9S6dptHrb/YqNAIKDt
-         M3NPxhFFW16QxEPZf2V1LNL1AVotyROefMyP4jSsZhM6v4HW+fDUQ+pUFFJ+0GetUgXA
-         ZAarfE9+wxn3RxRih6x4/OoG2YhBNDWe2CzNQ23XXS67as/YrK8iniEX6+CEH0TGeP5+
-         9IFtr1xjd6pA5t308stx/9QjtvxjKPiQ6CQc2wynAa72EuAb+hWS9YmRIiRMjcD87B0I
-         ndMQ==
-X-Gm-Message-State: AOAM532jHIAS1qirXgNxLxRe9HA7MJ93ZLcUkPqw9NVBWVeNzC7l96Ej
-        uGyv6Mng9dYnRnhLz/rkqaa6sVkesb4=
-X-Google-Smtp-Source: ABdhPJzVuoU1DQD4D8gOIc/ctUoStydVnSOT5L/rR5LBxdfa0kUoHpDpLSHmLP7oBUnSLCdrrvSj0Q==
-X-Received: by 2002:a7b:c197:: with SMTP id y23mr149273wmi.165.1597760591747;
-        Tue, 18 Aug 2020 07:23:11 -0700 (PDT)
+        bh=haPdcuSHV4uqg9oVGnsbasRCEzOuPwsFJKkmpIY23OQ=;
+        b=LyeEKq811+9xt3ZAvTucvZheMtF40PnK3TNiEduIAVox/xn2dqqecByvrSa+ERIhbz
+         6jkShvy35VRVjhUSgH5RxQkXHmu6+swy1IMOndJcqH7pJt5sQOKCPiyZCtcW6ROWJvsn
+         32Da6DIzeoXT0SoG5EAb2Xl2iHGhuhJW+6EBCXMkWJb8Nhr95UDeOCsYt0WvHsjF5+80
+         mgeelfSYKB41y8k9xqqMKX5QDkohZ0yiS0lL7L4GxUI44JJ+IfrH0O00B0/+q+WfAjIa
+         flR5Ez9/3u3lYAgyfFHEEVAlS9zgKb9ZSik+DJH0wtk3WzJIaNxhfHI5v/T9MO9p6JLV
+         KlbA==
+X-Gm-Message-State: AOAM533M2eVwTs9oHWXIYQuLyLRBrBFXAJ06vYnWdxuHs8/dzM8mnh9H
+        fYicDKsG5XCeQbTUjg687Nzo6toGTaM=
+X-Google-Smtp-Source: ABdhPJzZh9KysedY6G+Q/EBu8RPiz12SI7whXKDzkKNhREZG15Tmn+KCQbvfhqABLgdOwdDaUqG3zQ==
+X-Received: by 2002:a7b:cf08:: with SMTP id l8mr133041wmg.183.1597760593340;
+        Tue, 18 Aug 2020 07:23:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 145sm155571wma.20.2020.08.18.07.23.11
+        by smtp.gmail.com with ESMTPSA id d11sm35213460wrw.77.2020.08.18.07.23.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 07:23:11 -0700 (PDT)
-Message-Id: <e09e4a4a87c09c88ceacf56a3d298de7b5ad3274.1597760589.git.gitgitgadget@gmail.com>
+        Tue, 18 Aug 2020 07:23:12 -0700 (PDT)
+Message-Id: <91741a0cfc44009f6792c8d3d8d7cc086b1a0669.1597760589.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
 References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
         <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 14:22:58 +0000
-Subject: [PATCH v2 01/11] maintenance: create basic maintenance runner
+Date:   Tue, 18 Aug 2020 14:23:00 +0000
+Subject: [PATCH v2 03/11] maintenance: replace run_auto_gc()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,280 +83,208 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'gc' builtin is our current entrypoint for automatically maintaining
-a repository. This one tool does many operations, such as repacking the
-repository, packing refs, and rewriting the commit-graph file. The name
-implies it performs "garbage collection" which means several different
-things, and some users may not want to use this operation that rewrites
-the entire object database.
+The run_auto_gc() method is used in several places to trigger a check
+for repo maintenance after some Git commands, such as 'git commit' or
+'git fetch'.
 
-Create a new 'maintenance' builtin that will become a more general-
-purpose command. To start, it will only support the 'run' subcommand,
-but will later expand to add subcommands for scheduling maintenance in
-the background.
+To allow for extra customization of this maintenance activity, replace
+the 'git gc --auto [--quiet]' call with one to 'git maintenance run
+--auto [--quiet]'. As we extend the maintenance builtin with other
+steps, users will be able to select different maintenance activities.
 
-For now, the 'maintenance' builtin is a thin shim over the 'gc' builtin.
-In fact, the only option is the '--auto' toggle, which is handed
-directly to the 'gc' builtin. The current change is isolated to this
-simple operation to prevent more interesting logic from being lost in
-all of the boilerplate of adding a new builtin.
+Rename run_auto_gc() to run_auto_maintenance() to be clearer what is
+happening on this call, and to expose all callers in the current diff.
+Rewrite the method to use a struct child_process to simplify the calls
+slightly.
 
-Use existing builtin/gc.c file because we want to share code between the
-two builtins. It is possible that we will have 'maintenance' replace the
-'gc' builtin entirely at some point, leaving 'git gc' as an alias for
-some specific arguments to 'git maintenance run'.
+Since 'git fetch' already allows disabling the 'git gc --auto'
+subprocess, add an equivalent option with a different name to be more
+descriptive of the new behavior: '--[no-]maintenance'. Update the
+documentation to include these options at the same time.
 
-Create a new test_subcommand helper that allows us to test if a certain
-subcommand was run. It requires storing the GIT_TRACE2_EVENT logs in a
-file. A negation mode is available that will be used in later tests.
-
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- .gitignore                        |  1 +
- Documentation/git-maintenance.txt | 57 ++++++++++++++++++++++++++++++
- builtin.h                         |  1 +
- builtin/gc.c                      | 58 +++++++++++++++++++++++++++++++
- git.c                             |  1 +
- t/t7900-maintenance.sh            | 21 +++++++++++
- t/test-lib-functions.sh           | 33 ++++++++++++++++++
- 7 files changed, 172 insertions(+)
- create mode 100644 Documentation/git-maintenance.txt
- create mode 100755 t/t7900-maintenance.sh
+ Documentation/fetch-options.txt |  6 ++++--
+ Documentation/git-clone.txt     |  6 +++---
+ builtin/am.c                    |  2 +-
+ builtin/commit.c                |  2 +-
+ builtin/fetch.c                 |  6 ++++--
+ builtin/merge.c                 |  2 +-
+ builtin/rebase.c                |  4 ++--
+ run-command.c                   | 16 +++++++---------
+ run-command.h                   |  2 +-
+ t/t5510-fetch.sh                |  2 +-
+ 10 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index ee509a2ad2..a5808fa30d 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -90,6 +90,7 @@
- /git-ls-tree
- /git-mailinfo
- /git-mailsplit
-+/git-maintenance
- /git-merge
- /git-merge-base
- /git-merge-index
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-new file mode 100644
-index 0000000000..ff47fb3641
---- /dev/null
-+++ b/Documentation/git-maintenance.txt
-@@ -0,0 +1,57 @@
-+git-maintenance(1)
-+==================
-+
-+NAME
-+----
-+git-maintenance - Run tasks to optimize Git repository data
-+
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git maintenance' run [<options>]
-+
-+
-+DESCRIPTION
-+-----------
-+Run tasks to optimize Git repository data, speeding up other Git commands
-+and reducing storage requirements for the repository.
-+
-+Git commands that add repository data, such as `git add` or `git fetch`,
-+are optimized for a responsive user experience. These commands do not take
-+time to optimize the Git data, since such optimizations scale with the full
-+size of the repository while these user commands each perform a relatively
-+small action.
-+
-+The `git maintenance` command provides flexibility for how to optimize the
-+Git repository.
-+
-+SUBCOMMANDS
-+-----------
-+
-+run::
-+	Run one or more maintenance tasks.
-+
-+TASKS
-+-----
-+
-+gc::
-+	Clean up unnecessary files and optimize the local repository. "GC"
-+	stands for "garbage collection," but this task performs many
-+	smaller tasks. This task can be expensive for large repositories,
-+	as it repacks all Git objects into a single pack-file. It can also
-+	be disruptive in some situations, as it deletes stale data. See
-+	linkgit:git-gc[1] for more details on garbage collection in Git.
-+
-+OPTIONS
-+-------
-+--auto::
-+	When combined with the `run` subcommand, run maintenance tasks
-+	only if certain thresholds are met. For example, the `gc` task
-+	runs when the number of loose objects exceeds the number stored
-+	in the `gc.auto` config setting, or when the number of pack-files
-+	exceeds the `gc.autoPackLimit` config setting.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/builtin.h b/builtin.h
-index a5ae15bfe5..17c1c0ce49 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -167,6 +167,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix);
- int cmd_ls_remote(int argc, const char **argv, const char *prefix);
- int cmd_mailinfo(int argc, const char **argv, const char *prefix);
- int cmd_mailsplit(int argc, const char **argv, const char *prefix);
-+int cmd_maintenance(int argc, const char **argv, const char *prefix);
- int cmd_merge(int argc, const char **argv, const char *prefix);
- int cmd_merge_base(int argc, const char **argv, const char *prefix);
- int cmd_merge_index(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/gc.c b/builtin/gc.c
-index aafa0946f5..ce91c754ee 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -699,3 +699,61 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 6e2a160a47..495bc8ab5a 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -86,9 +86,11 @@ ifndef::git-pull[]
+ 	Allow several <repository> and <group> arguments to be
+ 	specified. No <refspec>s may be specified.
  
- 	return 0;
++--[no-]auto-maintenance::
+ --[no-]auto-gc::
+-	Run `git gc --auto` at the end to perform garbage collection
+-	if needed. This is enabled by default.
++	Run `git maintenance run --auto` at the end to perform automatic
++	repository maintenance if needed. (`--[no-]auto-gc` is a synonym.)
++	This is enabled by default.
+ 
+ --[no-]write-commit-graph::
+ 	Write a commit-graph after fetching. This overrides the config
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index c898310099..097e6a86c5 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -78,9 +78,9 @@ repository using this option and then delete branches (or use any
+ other Git command that makes any existing commit unreferenced) in the
+ source repository, some objects may become unreferenced (or dangling).
+ These objects may be removed by normal Git operations (such as `git commit`)
+-which automatically call `git gc --auto`. (See linkgit:git-gc[1].)
+-If these objects are removed and were referenced by the cloned repository,
+-then the cloned repository will become corrupt.
++which automatically call `git maintenance run --auto`. (See
++linkgit:git-maintenance[1].) If these objects are removed and were referenced
++by the cloned repository, then the cloned repository will become corrupt.
+ +
+ Note that running `git repack` without the `--local` option in a repository
+ cloned with `--shared` will copy objects from the source repository into a pack
+diff --git a/builtin/am.c b/builtin/am.c
+index dd4e6c2d9b..68e9d17379 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1795,7 +1795,7 @@ static void am_run(struct am_state *state, int resume)
+ 	if (!state->rebasing) {
+ 		am_destroy(state);
+ 		close_object_store(the_repository->objects);
+-		run_auto_gc(state->quiet);
++		run_auto_maintenance(state->quiet);
+ 	}
  }
-+
-+static const char * const builtin_maintenance_usage[] = {
-+	N_("git maintenance run [<options>]"),
-+	NULL
-+};
-+
-+struct maintenance_opts {
-+	int auto_flag;
-+};
-+
-+static int maintenance_task_gc(struct maintenance_opts *opts)
-+{
-+	struct child_process child = CHILD_PROCESS_INIT;
-+
-+	child.git_cmd = 1;
-+	strvec_push(&child.args, "gc");
-+
-+	if (opts->auto_flag)
-+		strvec_push(&child.args, "--auto");
-+
-+	close_object_store(the_repository->objects);
-+	return run_command(&child);
-+}
-+
-+static int maintenance_run(struct maintenance_opts *opts)
-+{
-+	return maintenance_task_gc(opts);
-+}
-+
-+int cmd_maintenance(int argc, const char **argv, const char *prefix)
-+{
-+	struct maintenance_opts opts;
-+	struct option builtin_maintenance_options[] = {
-+		OPT_BOOL(0, "auto", &opts.auto_flag,
-+			 N_("run tasks based on the state of the repository")),
-+		OPT_END()
-+	};
-+
-+	memset(&opts, 0, sizeof(opts));
-+
-+	if (argc == 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(builtin_maintenance_usage,
-+				   builtin_maintenance_options);
-+
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_maintenance_options,
-+			     builtin_maintenance_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+
-+	if (argc != 1)
-+		usage_with_options(builtin_maintenance_usage,
-+				   builtin_maintenance_options);
-+
-+	if (!strcmp(argv[0], "run"))
-+		return maintenance_run(&opts);
-+
-+	die(_("invalid subcommand: %s"), argv[0]);
-+}
-diff --git a/git.c b/git.c
-index 8bd1d7551d..24f250d29a 100644
---- a/git.c
-+++ b/git.c
-@@ -529,6 +529,7 @@ static struct cmd_struct commands[] = {
- 	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
- 	{ "mailinfo", cmd_mailinfo, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "mailsplit", cmd_mailsplit, NO_PARSEOPT },
-+	{ "maintenance", cmd_maintenance, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
- 	{ "merge-base", cmd_merge_base, RUN_SETUP },
- 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-new file mode 100755
-index 0000000000..14aa691f19
---- /dev/null
-+++ b/t/t7900-maintenance.sh
-@@ -0,0 +1,21 @@
-+#!/bin/sh
-+
-+test_description='git maintenance builtin'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'help text' '
-+	test_expect_code 129 git maintenance -h 2>err &&
-+	test_i18ngrep "usage: git maintenance run" err &&
-+	test_expect_code 128 git maintenance barf 2>err &&
-+	test_i18ngrep "invalid subcommand: barf" err
-+'
-+
-+test_expect_success 'run [--auto]' '
-+	GIT_TRACE2_EVENT="$(pwd)/run-no-auto.txt" git maintenance run &&
-+	GIT_TRACE2_EVENT="$(pwd)/run-auto.txt" git maintenance run --auto &&
-+	test_subcommand git gc <run-no-auto.txt &&
-+	test_subcommand git gc --auto <run-auto.txt
-+'
-+
-+test_done
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 3103be8a32..0adf2b85f8 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1561,3 +1561,36 @@ test_path_is_hidden () {
- 	case "$("$SYSTEMROOT"/system32/attrib "$1")" in *H*?:*) return 0;; esac
- 	return 1
+ 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 69ac78d5e5..f9b0a0c05d 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1702,7 +1702,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	git_test_write_commit_graph_or_die();
+ 
+ 	repo_rerere(the_repository, 0);
+-	run_auto_gc(quiet);
++	run_auto_maintenance(quiet);
+ 	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
+ 	if (amend && !no_post_rewrite) {
+ 		commit_post_rewrite(the_repository, current_head, &oid);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c49f0e9752..c8b9366d3c 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -196,8 +196,10 @@ static struct option builtin_fetch_options[] = {
+ 	OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
+ 			N_("report that we have only objects reachable from this object")),
+ 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
++	OPT_BOOL(0, "auto-maintenance", &enable_auto_gc,
++		 N_("run 'maintenance --auto' after fetching")),
+ 	OPT_BOOL(0, "auto-gc", &enable_auto_gc,
+-		 N_("run 'gc --auto' after fetching")),
++		 N_("run 'maintenance --auto' after fetching")),
+ 	OPT_BOOL(0, "show-forced-updates", &fetch_show_forced_updates,
+ 		 N_("check for forced-updates on all updated branches")),
+ 	OPT_BOOL(0, "write-commit-graph", &fetch_write_commit_graph,
+@@ -1882,7 +1884,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	close_object_store(the_repository->objects);
+ 
+ 	if (enable_auto_gc)
+-		run_auto_gc(verbosity < 0);
++		run_auto_maintenance(verbosity < 0);
+ 
+ 	return result;
  }
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 7da707bf55..c068e73037 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -457,7 +457,7 @@ static void finish(struct commit *head_commit,
+ 			 * user should see them.
+ 			 */
+ 			close_object_store(the_repository->objects);
+-			run_auto_gc(verbosity < 0);
++			run_auto_maintenance(verbosity < 0);
+ 		}
+ 	}
+ 	if (new_head && show_diffstat) {
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index dadb52fa92..9ffba9009d 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -728,10 +728,10 @@ static int finish_rebase(struct rebase_options *opts)
+ 	apply_autostash(state_dir_path("autostash", opts));
+ 	close_object_store(the_repository->objects);
+ 	/*
+-	 * We ignore errors in 'gc --auto', since the
++	 * We ignore errors in 'git maintenance run --auto', since the
+ 	 * user should see them.
+ 	 */
+-	run_auto_gc(!(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE)));
++	run_auto_maintenance(!(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE)));
+ 	if (opts->type == REBASE_MERGE) {
+ 		struct replay_opts replay = REPLAY_OPTS_INIT;
+ 
+diff --git a/run-command.c b/run-command.c
+index cc9c3296ba..2ee59acdc8 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1866,15 +1866,13 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 	return result;
+ }
+ 
+-int run_auto_gc(int quiet)
++int run_auto_maintenance(int quiet)
+ {
+-	struct strvec argv_gc_auto = STRVEC_INIT;
+-	int status;
++	struct child_process maint = CHILD_PROCESS_INIT;
+ 
+-	strvec_pushl(&argv_gc_auto, "gc", "--auto", NULL);
+-	if (quiet)
+-		strvec_push(&argv_gc_auto, "--quiet");
+-	status = run_command_v_opt(argv_gc_auto.v, RUN_GIT_CMD);
+-	strvec_clear(&argv_gc_auto);
+-	return status;
++	maint.git_cmd = 1;
++	strvec_pushl(&maint.args, "maintenance", "run", "--auto", NULL);
++	strvec_push(&maint.args, quiet ? "--quiet" : "--no-quiet");
 +
-+# Check that the given command was invoked as part of the
-+# trace2-format trace on stdin.
-+#
-+#	test_subcommand [!] <command> <args>... < <trace>
-+#
-+# For example, to look for an invocation of "git upload-pack
-+# /path/to/repo"
-+#
-+#	GIT_TRACE2_EVENT=event.log git fetch ... &&
-+#	test_subcommand git upload-pack "$PATH" <event.log
-+#
-+# If the first parameter passed is !, this instead checks that
-+# the given command was not called.
-+#
-+test_subcommand () {
-+	local negate=
-+	if test "$1" = "!"
-+	then
-+		negate=t
-+		shift
-+	fi
-+
-+	local expr=$(printf '"%s",' "$@")
-+	expr="${expr%,}"
-+
-+	if test -n "$negate"
-+	then
-+		! grep "\[$expr\]"
-+	else
-+		grep "\[$expr\]"
-+	fi
-+}
++	return run_command(&maint);
+ }
+diff --git a/run-command.h b/run-command.h
+index 8b9bfaef16..6472b38bde 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -221,7 +221,7 @@ int run_hook_ve(const char *const *env, const char *name, va_list args);
+ /*
+  * Trigger an auto-gc
+  */
+-int run_auto_gc(int quiet);
++int run_auto_maintenance(int quiet);
+ 
+ #define RUN_COMMAND_NO_STDIN 1
+ #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index a66dbe0bde..9850ecde5d 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -919,7 +919,7 @@ test_expect_success 'fetching with auto-gc does not lock up' '
+ 		git config fetch.unpackLimit 1 &&
+ 		git config gc.autoPackLimit 1 &&
+ 		git config gc.autoDetach false &&
+-		GIT_ASK_YESNO="$D/askyesno" git fetch >fetch.out 2>&1 &&
++		GIT_ASK_YESNO="$D/askyesno" git fetch --verbose >fetch.out 2>&1 &&
+ 		test_i18ngrep "Auto packing the repository" fetch.out &&
+ 		! grep "Should I try again" fetch.out
+ 	)
 -- 
 gitgitgadget
 
