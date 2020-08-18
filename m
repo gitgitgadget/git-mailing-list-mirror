@@ -2,68 +2,69 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C73AC433DF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4897FC433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A994207DA
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:25:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E00B20786
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/TuJxg/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xdtvpxoc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727016AbgHROZw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 10:25:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
+        id S1727017AbgHROZx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 10:25:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726820AbgHROZk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:25:40 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4757C061345
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:38 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id a14so18481650wra.5
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:38 -0700 (PDT)
+        with ESMTP id S1726794AbgHROZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:25:36 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EE8AC061343
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id k20so17194395wmi.5
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ry0hpw+x89x8hU9nQ5fnnsze4ID6eAXp+p+08m26Kb4=;
-        b=a/TuJxg/UZGoUCckP1EHoQcPNyW00NSB4S10YX3bcQCSusVhBfD+ZArqJF5piCp4aF
-         c+5nITGJxBJCsR7jNOyvjFZYDE6LsIcROOorLvImIkI+GL32qP3wjmliu+eQSPkK2rwL
-         EJVYE8BRlUQT8D3LXUNnYguwjn1v8uCVPfRDI1SdbRPbm+ruoyi8gsEvySMThCg44pap
-         ry2QUByQkxCCmRf8qQYuuC/4BA04rtRcAgKxyXHwNPCVnfOrC9yProMZLnnB4/3PAwzg
-         TeakPQ0ATNrPm/UHNChzuJ5/QC0oLkj09+Y8q/B/Y5Y9I3S2KZnhotHWfk5IIkAXrKdR
-         +bvQ==
+        bh=gfQFFY1U3cY02b6Wx8Zqn/7SPEXcEtAPodyBG0nK84E=;
+        b=Xdtvpxocr6Hr3Tyz+gwlVnU521fRFFdugRY5iP5NfPUFjHqslxFpiDTm8YDbrUmqZG
+         QYC1a7hUf+24q9avbWKongiozcuQep6+02fYRStPkR3KqskWzaEjOUOr6+yWLJA84gef
+         QbgSZhRD9wL5WYahyAuQ+a6fx9wuMSIp7yrwLZgFlM1rfcT8chkw2oJdJE/75GSVuwSL
+         JYDeUc5bOTcSouNtnpZrV+E0GOmw+FHoqF3pf0CG4fuTVB+g1m1QaeT3/UMoTaO5qBDJ
+         HjMuIao3XBUPgoh780uF3BCVDpN/Rr8pBryFDB94tj+NmS7hBJyXNMnDGcMeiNXuqH+p
+         01Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ry0hpw+x89x8hU9nQ5fnnsze4ID6eAXp+p+08m26Kb4=;
-        b=MxxyvQpqiYY3Qej6ZbzIDNkAXZyPbJ7liYqCyFwCwzTYi7UFOW6RRb2qw9m9dCsEyP
-         wRtpUCYJSxr7YWZ+cuzR1ofmbwNReVXSd3Kd3TkoOzxu4VHqSxETMwhF4S0fLPD3EA3S
-         RUr7JMSRYXYm06QpR0zDoHB3bxu2bTJJAPXMgvBII7iFUKdttGBfkbxry+nSXTjtGm+h
-         nncHWkRF3N8u5PHGtkkOCAGj7c1yrtp+nn0A5DtbeJ5rOWu3R2BQrXxJbLSiPyaLz9Mx
-         237ogwLSFQFJGPBdE5cMNM+mwpXNkhZ9hwvqWYR5AJGomsSWM0GFyhKo7lZCpOKSer5l
-         81nw==
-X-Gm-Message-State: AOAM532mgM2PJIBq26i2p4QD1+I92mnsausdR/Ydl3NLr4lZwAm5Ydep
-        Lao3bEljb7DI1wIztJI4F1xZI36oiW4=
-X-Google-Smtp-Source: ABdhPJxfDuS0Nq9kZjwuGCfdmaXSTcbDH5HbZLbFfAnhYnzGuv77/+8/xK3pXddMe7rQste1L7OcMQ==
-X-Received: by 2002:adf:82d5:: with SMTP id 79mr19906597wrc.282.1597760737405;
-        Tue, 18 Aug 2020 07:25:37 -0700 (PDT)
+        bh=gfQFFY1U3cY02b6Wx8Zqn/7SPEXcEtAPodyBG0nK84E=;
+        b=htfeFLdf++wRQJfSektlXMh62IC/zf2yq46AEvaJrsx6VreGmL+gXra5xZe6gEwjHq
+         VTVZtH4MyVqCx9dpWtoYZBy9YXAMFfy8Mfa0nKbLdx9PtQxDn12l+fTPGrB6+MC5j9Qg
+         ItPhQfZd6F3d0msWh+lbhtnhm1jDSVUjJy8cOOITJGAJRg1fVChX93xVzJhdGhf9NuL1
+         oCr8LBCvr65K5c3i7K5y/gWGH4FauzLyBLttyW+nBghwcBgyM3gNzLNXPG/sUeuY9a3l
+         uswN2RZCFEZhoAeqHFDGNmV4y9I5dpPLMqaoBWddrg8CUjGJCdUTMM4Dc46+HoqmRH67
+         ZuuQ==
+X-Gm-Message-State: AOAM530gjnvfWo5HxohY+r2jHCyEM3dD14ZmWu+KK1G6PSf3j1IuMVOH
+        JHQ0q8gnaYm6dJ6j4FgK8fnk9zqAQsc=
+X-Google-Smtp-Source: ABdhPJw7sCkiR8uVXIyU1VCuUu5ziRNSwE9/yc7Ck6/86OFdAT28+bwIcnb1YnvF2AyKJDxTLu2NDQ==
+X-Received: by 2002:a1c:bc54:: with SMTP id m81mr209595wmf.60.1597760734523;
+        Tue, 18 Aug 2020 07:25:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h10sm35055514wro.57.2020.08.18.07.25.36
+        by smtp.gmail.com with ESMTPSA id j5sm183163wmb.12.2020.08.18.07.25.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
-Message-Id: <0ee2434bdbabc6f3ed6e80402aa3a19bf9626fc6.1597760730.git.gitgitgadget@gmail.com>
+        Tue, 18 Aug 2020 07:25:33 -0700 (PDT)
+Message-Id: <8779c6c20d7e25e13189074dbd57a86b49ec56e9.1597760730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
         <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 14:25:26 +0000
-Subject: [PATCH v2 5/9] midx: enable core.multiPackIndex by default
+Date:   Tue, 18 Aug 2020 14:25:23 +0000
+Subject: [PATCH v2 2/9] maintenance: add prefetch task
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,113 +83,217 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The core.multiPackIndex setting has been around since c4d25228ebb
-(config: create core.multiPackIndex setting, 2018-07-12), but has been
-disabled by default. If a user wishes to use the multi-pack-index
-feature, then they must enable this config and run 'git multi-pack-index
-write'.
+When working with very large repositories, an incremental 'git fetch'
+command can download a large amount of data. If there are many other
+users pushing to a common repo, then this data can rival the initial
+pack-file size of a 'git clone' of a medium-size repo.
 
-The multi-pack-index feature is relatively stable now, so make the
-config option true by default. For users that do not use a
-multi-pack-index, the only extra cost will be a file lookup to see if a
-multi-pack-index file exists (once per process, per object directory).
+Users may want to keep the data on their local repos as close as
+possible to the data on the remote repos by fetching periodically in
+the background. This can break up a large daily fetch into several
+smaller hourly fetches.
 
-Also, this config option will be referenced by an upcoming
-"incremental-repack" task in the maintenance builtin, so move the config
-option into the repository settings struct. Note that if
-GIT_TEST_MULTI_PACK_INDEX=1, then we want to ignore the config option
-and treat core.multiPackIndex as enabled.
+The task is called "prefetch" because it is work done in advance
+of a foreground fetch to make that 'git fetch' command much faster.
+
+However, if we simply ran 'git fetch <remote>' in the background,
+then the user running a foregroudn 'git fetch <remote>' would lose
+some important feedback when a new branch appears or an existing
+branch updates. This is especially true if a remote branch is
+force-updated and this isn't noticed by the user because it occurred
+in the background. Further, the functionality of 'git push
+--force-with-lease' becomes suspect.
+
+When running 'git fetch <remote> <options>' in the background, use
+the following options for careful updating:
+
+1. --no-tags prevents getting a new tag when a user wants to see
+   the new tags appear in their foreground fetches.
+
+2. --refmap= removes the configured refspec which usually updates
+   refs/remotes/<remote>/* with the refs advertised by the remote.
+   While this looks confusing, this was documented and tested by
+   b40a50264ac (fetch: document and test --refmap="", 2020-01-21),
+   including this sentence in the documentation:
+
+	Providing an empty `<refspec>` to the `--refmap` option
+	causes Git to ignore the configured refspecs and rely
+	entirely on the refspecs supplied as command-line arguments.
+
+3. By adding a new refspec "+refs/heads/*:refs/prefetch/<remote>/*"
+   we can ensure that we actually load the new values somewhere in
+   our refspace while not updating refs/heads or refs/remotes. By
+   storing these refs here, the commit-graph job will update the
+   commit-graph with the commits from these hidden refs.
+
+4. --prune will delete the refs/prefetch/<remote> refs that no
+   longer appear on the remote.
+
+5. --no-write-fetch-head prevents updating FETCH_HEAD.
+
+We've been using this step as a critical background job in Scalar
+[1] (and VFS for Git). This solved a pain point that was showing up
+in user reports: fetching was a pain! Users do not like waiting to
+download the data that was created while they were away from their
+machines. After implementing background fetch, the foreground fetch
+commands sped up significantly because they mostly just update refs
+and download a small amount of new data. The effect is especially
+dramatic when paried with --no-show-forced-udpates (through
+fetch.showForcedUpdates=false).
+
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/FetchStep.cs
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/core.txt |  4 ++--
- midx.c                        | 11 +++--------
- repo-settings.c               |  6 ++++++
- repository.h                  |  2 ++
- 4 files changed, 13 insertions(+), 10 deletions(-)
+ Documentation/git-maintenance.txt | 15 +++++++++
+ builtin/gc.c                      | 51 +++++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh            | 26 ++++++++++++++++
+ 3 files changed, 92 insertions(+)
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 74619a9c03..86c91d5381 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -606,8 +606,8 @@ core.useReplaceRefs::
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 9af08c644f..e82799ccff 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -50,6 +50,21 @@ since it will not expire `.graph` files that were in the previous
+ `commit-graph-chain` file. They will be deleted by a later run based on
+ the expiration delay.
  
- core.multiPackIndex::
- 	Use the multi-pack-index file to track multiple packfiles using a
--	single index. See link:technical/multi-pack-index.html[the
--	multi-pack-index design document].
-+	single index. See linkgit:git-multi-pack-index[1] for more
-+	information. Defaults to true.
++prefetch::
++	The `prefetch` task updates the object directory with the latest
++	objects from all registered remotes. For each remote, a `git fetch`
++	command is run. The refmap is custom to avoid updating local or remote
++	branches (those in `refs/heads` or `refs/remotes`). Instead, the
++	remote refs are stored in `refs/prefetch/<remote>/`. Also, tags are
++	not updated.
+++
++This is done to avoid disrupting the remote-tracking branches. The end users
++expect these refs to stay unmoved unless they initiate a fetch.  With prefetch
++task, however, the objects necessary to complete a later real fetch would
++already be obtained, so the real fetch would go faster.  In the ideal case,
++it will just become an update to bunch of remote-tracking branches without
++any object transfer.
++
+ gc::
+ 	Clean up unnecessary files and optimize the local repository. "GC"
+ 	stands for "garbage collection," but this task performs many
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 3fdb08655c..2ac08cc740 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -29,6 +29,7 @@
+ #include "tree.h"
+ #include "promisor-remote.h"
+ #include "refs.h"
++#include "remote.h"
  
- core.sparseCheckout::
- 	Enable "sparse checkout" feature. See linkgit:git-sparse-checkout[1]
-diff --git a/midx.c b/midx.c
-index a5fb797ede..ef499cf504 100644
---- a/midx.c
-+++ b/midx.c
-@@ -10,6 +10,7 @@
- #include "progress.h"
- #include "trace2.h"
- #include "run-command.h"
-+#include "repository.h"
+ #define FAILED_RUN "failed to run %s"
  
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
- #define MIDX_VERSION 1
-@@ -384,15 +385,9 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
+@@ -843,6 +844,51 @@ static int maintenance_task_commit_graph(struct maintenance_opts *opts)
+ 	return 1;
+ }
+ 
++static int fetch_remote(const char *remote, struct maintenance_opts *opts)
++{
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	child.git_cmd = 1;
++	strvec_pushl(&child.args, "fetch", remote, "--prune", "--no-tags",
++		     "--no-write-fetch-head", "--recurse-submodules=no",
++		     "--refmap=", NULL);
++
++	if (opts->quiet)
++		strvec_push(&child.args, "--quiet");
++
++	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote);
++
++	return !!run_command(&child);
++}
++
++static int append_remote(struct remote *remote, void *cbdata)
++{
++	struct string_list *remotes = (struct string_list *)cbdata;
++
++	string_list_append(remotes, remote->name);
++	return 0;
++}
++
++static int maintenance_task_prefetch(struct maintenance_opts *opts)
++{
++	int result = 0;
++	struct string_list_item *item;
++	struct string_list remotes = STRING_LIST_INIT_DUP;
++
++	if (for_each_remote(append_remote, &remotes)) {
++		error(_("failed to fill remotes"));
++		result = 1;
++		goto cleanup;
++	}
++
++	for_each_string_list_item(item, &remotes)
++		result |= fetch_remote(item->string, opts);
++
++cleanup:
++	string_list_clear(&remotes, 0);
++	return result;
++}
++
+ static int maintenance_task_gc(struct maintenance_opts *opts)
  {
- 	struct multi_pack_index *m;
- 	struct multi_pack_index *m_search;
--	int config_value;
--	static int env_value = -1;
- 
--	if (env_value < 0)
--		env_value = git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0);
--
--	if (!env_value &&
--	    (repo_config_get_bool(r, "core.multipackindex", &config_value) ||
--	    !config_value))
-+	prepare_repo_settings(r);
-+	if (!r->settings.core_multi_pack_index)
- 		return 0;
- 
- 	for (m_search = r->objects->multi_pack_index; m_search; m_search = m_search->next)
-diff --git a/repo-settings.c b/repo-settings.c
-index 0918408b34..5bd2c22726 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "config.h"
- #include "repository.h"
-+#include "midx.h"
- 
- #define UPDATE_DEFAULT_BOOL(s,v) do { if (s == -1) { s = v; } } while(0)
- 
-@@ -47,6 +48,11 @@ void prepare_repo_settings(struct repository *r)
- 		r->settings.pack_use_sparse = value;
- 	UPDATE_DEFAULT_BOOL(r->settings.pack_use_sparse, 1);
- 
-+	value = git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0);
-+	if (value || !repo_config_get_bool(r, "core.multipackindex", &value))
-+		r->settings.core_multi_pack_index = value;
-+	UPDATE_DEFAULT_BOOL(r->settings.core_multi_pack_index, 1);
-+
- 	if (!repo_config_get_bool(r, "feature.manyfiles", &value) && value) {
- 		UPDATE_DEFAULT_BOOL(r->settings.index_version, 4);
- 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_WRITE);
-diff --git a/repository.h b/repository.h
-index 3c1f7d54bd..3901ce0b65 100644
---- a/repository.h
-+++ b/repository.h
-@@ -37,6 +37,8 @@ struct repo_settings {
- 
- 	int pack_use_sparse;
- 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
-+
-+	int core_multi_pack_index;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+@@ -880,6 +926,7 @@ struct maintenance_task {
  };
  
- struct repository {
+ enum maintenance_task_label {
++	TASK_PREFETCH,
+ 	TASK_GC,
+ 	TASK_COMMIT_GRAPH,
+ 
+@@ -888,6 +935,10 @@ enum maintenance_task_label {
+ };
+ 
+ static struct maintenance_task tasks[] = {
++	[TASK_PREFETCH] = {
++		"prefetch",
++		maintenance_task_prefetch,
++	},
+ 	[TASK_GC] = {
+ 		"gc",
+ 		maintenance_task_gc,
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 4f6a04ddb1..0bade09c43 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -60,4 +60,30 @@ test_expect_success 'run --task duplicate' '
+ 	test_i18ngrep "cannot be selected multiple times" err
+ '
+ 
++test_expect_success 'run --task=prefetch with no remotes' '
++	git maintenance run --task=prefetch 2>err &&
++	test_must_be_empty err
++'
++
++test_expect_success 'prefetch multiple remotes' '
++	git clone . clone1 &&
++	git clone . clone2 &&
++	git remote add remote1 "file://$(pwd)/clone1" &&
++	git remote add remote2 "file://$(pwd)/clone2" &&
++	git -C clone1 switch -c one &&
++	git -C clone2 switch -c two &&
++	test_commit -C clone1 one &&
++	test_commit -C clone2 two &&
++	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
++	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
++	test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
++	test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
++	test_path_is_missing .git/refs/remotes &&
++	git log prefetch/remote1/one &&
++	git log prefetch/remote2/two &&
++	git fetch --all &&
++	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
++	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two
++'
++
+ test_done
 -- 
 gitgitgadget
 
