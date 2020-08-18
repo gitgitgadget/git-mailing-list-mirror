@@ -2,205 +2,105 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C93C433E3
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0CF7C433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 15:59:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75A3720786
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB7CB20897
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 15:59:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JZUPcxjG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VaYERN62"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727039AbgHRO0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 10:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51054 "EHLO
+        id S1728403AbgHRP6Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 11:58:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726989AbgHROZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:25:41 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9B60C061347
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:40 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id k20so17194489wmi.5
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:40 -0700 (PDT)
+        with ESMTP id S1728259AbgHRP6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 11:58:08 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5BC0C061389
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 08:58:06 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id f24so22713087ejx.6
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 08:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WVnIOoLMGi6G5xYG0eyG1pMO9RT/JNnNv7zeDSIugV0=;
-        b=JZUPcxjGmdtlOVyslsR8BCA7siz7w1nNQs7pTZPfK37xMEtUHmw7O7/QrES9VGitEU
-         JEELuPzf14EWDwTWW7U22DIxeWfvvMZjcAqr0qBdmz1MwgG74pA0qB3KJWdfZrt+BTvN
-         uXlAPac/1S2Tl+/X49hgYjz3G5lFr/0Fv9P3Nu3TLyiNfJxcx0BTMyIgkpg0FV7+JZGq
-         uCi83yg2yBtKkU080YXVaHyTXjuYv25FqanxdbNul64P/pFG/txsFk7axguq92djxijg
-         EPpLsEUMC50SwWsPb584b4McJdedw83M1UFC5ZDb1ztkQccKXnPll2QJ46v0rZ+ga/Rn
-         tvEg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LiqDBNpyXN2bifSjS0LJ/wTAfNT4QbYorryIHKjb52g=;
+        b=VaYERN62LPDgYiqPpH2YB+lGSv1zCk47HoSRxgxdvcQiZDDzSm6SX92h4alt8bD2vm
+         IhVTz+u+0VzKlQgVJeIbkPIFYZB5jiqbgsAs0I23DvsOgu2ZZmME9tTeNxzh5IRLangK
+         ex3mexx91U6utqNCQYHF7XkFqZwsBVz7FHFJzEGR47kualXCYXG7QFcklbGnIpPpC1tn
+         ijBxkVNVEuCsg0PWwsiPlSdTRiUH7XoQwf1WXG4qNAg2/Z+54lOisG0eKVL8uMazIAVz
+         GD0RarAtr9Qp98XqVdgszo6CF+hRRSzEANRZNg0+yc5PM9iTjHb80s2KhNMrtycobb7u
+         SQJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WVnIOoLMGi6G5xYG0eyG1pMO9RT/JNnNv7zeDSIugV0=;
-        b=RDdPAD/43xVKOu3fI6wSv21LIV/9qcdEVhZOT+07QeLz4DZSb1ny9Q22o5smFCATqL
-         8DgVv/9onwyoK7eWgwtZEhfbEVUwIq07dhFLdOH504xGM1eYJw/D2Jz31/txResJB5k9
-         +rce3o5ppx9tv6ZgkVapiJqu4tgzIUvBwR42ff1d3esib4ptPQJhWYe2tMbrvsAGugxF
-         EVihXbKBYd+SdS4Yw6lYHT/c2mf2bk3+lvtjpDbP8lNmtqwA/rERsPCzCQEEEBmCwIKl
-         XEbko+e5SVpeip4weeQPevP2WvrEDOR2dTF5+HlePN8iLAP0kdU2d4+gJHpO+hted7di
-         Y4Ug==
-X-Gm-Message-State: AOAM532JsmQUSXV17kfr78AcQlIwGsxl7VPAigpafBtBiISjhbO+1HjY
-        eol1oglOlt7cfKiYOCho7jVVsMJPNnM=
-X-Google-Smtp-Source: ABdhPJz80R0z/80CTjTzCJsIO/D1DJvG3LUZR+tfJyUarA0MVgYswB5XLcvcGpeBBGXvsQnNjvpk1Q==
-X-Received: by 2002:a1c:1b93:: with SMTP id b141mr197368wmb.150.1597760736483;
-        Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p17sm39838272wra.81.2020.08.18.07.25.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 07:25:35 -0700 (PDT)
-Message-Id: <3432bc3167b2250ce4d02f8b81950c3b12b524d4.1597760730.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
-References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
-        <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 14:25:25 +0000
-Subject: [PATCH v2 4/9] maintenance: create auto condition for loose-objects
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LiqDBNpyXN2bifSjS0LJ/wTAfNT4QbYorryIHKjb52g=;
+        b=cHNBY6b0pVhxlF0qI/7MMvgs9TmzPJtt2XLMjgjieuWNKhJW+5tR1vMsKAjzcRNava
+         eM89eIJTmt2npwKDLY7pbUA6mFP7WXsmSG4O25pmdjgZHbLZ5odAOUwicOKEbHcIJrX2
+         /7nk56AwHBHZSV9Z34TAvzNylSNfcG5Olbp4I2a1C3Qnmi36NA2PBhK4nN4l1p2HFYQL
+         bsU6OCi8h0U0XdHwUbBqxsLtxauH16MPmfUxGS9YGF3+BDd/4VKiUjyN91xKhNspVdNo
+         bKjAwG6hJ9kJTfWz5t4WxOnRMUs6dX9lzmM4Gq3SUMww7PlvSsRdq62V64tcFfqXmC+V
+         7DTw==
+X-Gm-Message-State: AOAM533O69Ol4cByX5/q+PcEyvSg0omoYs271ZTF+s0zfnkZJ0JZeMlG
+        xoDuxpl073l5YNmiWZT75s49hgmSWFFmSw==
+X-Google-Smtp-Source: ABdhPJyQJ0qGQBxyBK02LI7oKXsobdVwOZNcZGsMRijbtbBXmXDlUhx2dmyXL9xFJGl3Bi2fhQIoug==
+X-Received: by 2002:a17:906:fc26:: with SMTP id ov38mr19907165ejb.99.1597766285218;
+        Tue, 18 Aug 2020 08:58:05 -0700 (PDT)
+Received: from [192.168.1.21] (xdsl-31-165-199-9.adslplus.ch. [31.165.199.9])
+        by smtp.gmail.com with ESMTPSA id g9sm15066096edk.97.2020.08.18.08.58.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Aug 2020 08:58:03 -0700 (PDT)
+Subject: Re: [PATCH v2 0/3] submodule--helper.c: add only-active to foreach
+To:     Junio C Hamano <gitster@pobox.com>,
+        "Guillaume G. via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.631.git.1589099162707.gitgitgadget@gmail.com>
+ <pull.631.v2.git.1589697023.gitgitgadget@gmail.com>
+ <xmqq8shq7edu.fsf@gitster.c.googlers.com>
+From:   Guillaume Galeazzi <guillaume.galeazzi@gmail.com>
+Message-ID: <91f0cfdc-dfba-80c1-6581-d8a240cbcc4b@gmail.com>
+Date:   Tue, 18 Aug 2020 17:57:56 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <xmqq8shq7edu.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Le 17.05.2020 à 17:46, Junio C Hamano a écrit :
+> 
+> Does updating the cover letter needs a better support from our
+> tools, I wonder...
+> 
 
-The loose-objects task deletes loose objects that already exist in a
-pack-file, then place the remaining loose objects into a new pack-file.
-If this step runs all the time, then we risk creating pack-files with
-very few objects with every 'git commit' process. To prevent
-overwhelming the packs directory with small pack-files, place a minimum
-number of objects to justify the task.
+Hello, well there was an issue that some markdown and new line of the 
+cover letter was removed by GGG. How to move forward?
 
-The 'maintenance.loose-objects.auto' config option specifies a minimum
-number of loose objects to justify the task to run under the '--auto'
-option. This defaults to 100 loose objects. Setting the value to zero
-will prevent the step from running under '--auto' while a negative value
-will force it to run every time.
+The original text before GGG was:
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/config/maintenance.txt |  9 +++++++++
- builtin/gc.c                         | 30 ++++++++++++++++++++++++++++
- t/t7900-maintenance.sh               | 25 +++++++++++++++++++++++
- 3 files changed, 64 insertions(+)
+On repository with multiple submodules, one may need to run
+a command based on submodule trait.
 
-diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-index 9bd69b9df3..a9442dd260 100644
---- a/Documentation/config/maintenance.txt
-+++ b/Documentation/config/maintenance.txt
-@@ -12,3 +12,12 @@ maintenance.commit-graph.auto::
- 	reachable commits that are not in the commit-graph file is at least
- 	the value of `maintenance.commit-graph.auto`. The default value is
- 	100.
-+
-+maintenance.loose-objects.auto::
-+	This integer config option controls how often the `loose-objects` task
-+	should be run as part of `git maintenance run --auto`. If zero, then
-+	the `loose-objects` task will not run with the `--auto` option. A
-+	negative value will force the task to run every time. Otherwise, a
-+	positive value implies the command should run when the number of
-+	loose objects is at least the value of `maintenance.loose-objects.auto`.
-+	The default value is 100.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 39ea590b5a..61d5752af5 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -926,6 +926,35 @@ struct write_loose_object_data {
- 	int batch_size;
- };
- 
-+static int loose_object_auto_limit = 100;
-+
-+static int loose_object_count(const struct object_id *oid,
-+			       const char *path,
-+			       void *data)
-+{
-+	int *count = (int*)data;
-+	if (++(*count) >= loose_object_auto_limit)
-+		return 1;
-+	return 0;
-+}
-+
-+static int loose_object_auto_condition(void)
-+{
-+	int count = 0;
-+
-+	git_config_get_int("maintenance.loose-objects.auto",
-+			   &loose_object_auto_limit);
-+
-+	if (!loose_object_auto_limit)
-+		return 0;
-+	if (loose_object_auto_limit < 0)
-+		return 1;
-+
-+	return for_each_loose_file_in_objdir(the_repository->objects->odb->path,
-+					     loose_object_count,
-+					     NULL, NULL, &count);
-+}
-+
- static int bail_on_loose(const struct object_id *oid,
- 			 const char *path,
- 			 void *data)
-@@ -1035,6 +1064,7 @@ static struct maintenance_task tasks[] = {
- 	[TASK_LOOSE_OBJECTS] = {
- 		"loose-objects",
- 		maintenance_task_loose_objects,
-+		loose_object_auto_condition,
- 	},
- 	[TASK_GC] = {
- 		"gc",
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 2e9e369786..efda1cf69b 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -125,4 +125,29 @@ test_expect_success 'loose-objects task' '
- 	test_cmp packs-between packs-after
- '
- 
-+test_expect_success 'maintenance.loose-objects.auto' '
-+	git repack -adk &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace-lo1.txt" \
-+		git -c maintenance.loose-objects.auto=1 maintenance \
-+		run --auto --task=loose-objects 2>/dev/null &&
-+	test_subcommand ! git prune-packed --quiet <trace-lo1.txt &&
-+	for i in 1 2
-+	do
-+		printf data-A-$i | git hash-object -t blob --stdin -w &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace-loA-$i" \
-+			git -c maintenance.loose-objects.auto=2 \
-+			maintenance run --auto --task=loose-objects 2>/dev/null &&
-+		test_subcommand ! git prune-packed --quiet <trace-loA-$i &&
-+		printf data-B-$i | git hash-object -t blob --stdin -w &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace-loB-$i" \
-+			git -c maintenance.loose-objects.auto=2 \
-+			maintenance run --auto --task=loose-objects 2>/dev/null &&
-+		test_subcommand git prune-packed --quiet <trace-loB-$i &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace-loC-$i" \
-+			git -c maintenance.loose-objects.auto=2 \
-+			maintenance run --auto --task=loose-objects 2>/dev/null &&
-+		test_subcommand git prune-packed --quiet <trace-loC-$i || return 1
-+	done
-+'
-+
- test_done
--- 
-gitgitgadget
+This changes add flags to `submodule--helper foreach` to fulfill this 
+need by:
+
+Adding the flag `--[no-]active` to filter submodule based on the active
+state.
+Adding the flag `--[no-]populated` to filter submodule based on the
+fact that it is populated or not.
+Adding the flag `-b|--branch <branch>` to filter submodule based on
+the tracking branch.
 
