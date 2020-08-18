@@ -6,84 +6,80 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB40AC433E1
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A24C433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:32:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE74A206B5
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:18:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AC52206B5
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:32:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pz5q/Aek"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k0zUS7ev"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726750AbgHRUSw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 16:18:52 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62434 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbgHRUSv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 16:18:51 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B2C20E5E49;
-        Tue, 18 Aug 2020 16:18:48 -0400 (EDT)
+        id S1726689AbgHRUc3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 16:32:29 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53422 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725554AbgHRUc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 16:32:28 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BBDFDEA4C3;
+        Tue, 18 Aug 2020 16:32:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KNLdEvM/9P7VKZ58ERXt+/ZTeU0=; b=pz5q/A
-        ekKfwj0LLOW7v4WW9zrVJfXKf4byOs/he0HgKyMcA94ZfAV3rT1CZ41ugRC2Tm/W
-        OF2U0aJlehwqQjD+sWiO0ahlGi3ctgpSa6sryrydpDCHz2lueidSPt+679Jm/NL/
-        n2KbGsVMpRTcfCeLtEwzHfFSLd2yWCnk5+hvs=
+        :content-type; s=sasl; bh=OUp+O1IoDXynDtyHiVJZT5bWiR8=; b=k0zUS7
+        evBa43Zw2cvSMmxTeODNJ6I00OO39+048amxe2nNmjy2wwxWZ9+pBusctitIzPj9
+        MeDPrrm3YUvfoP4MCEZRX+qmT0E3QiiLunhbb5b/gbdx412jdJbTpzJyqCP3TLLo
+        WTMXN8+uxdbsQaPj808KG9Jw7R75+9NU/E2BU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cEhIwJOjyzpHn9iOoo8fTpdA18AvEohH
-        pswXIYPgi9A3GxToDETCtBfEjpxXJjjnD0Pet9PyqOOJV3MXYu6zhv8UhXF6W0xx
-        uQ9deAitw6RlQI8pUm+DvQNmuFdgEzv1nVsY/l+tJaJAoiNR+k133RbJgczOQlWY
-        s5EsdU1vYc4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AA054E5E47;
-        Tue, 18 Aug 2020 16:18:48 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=AM3pHshR/r6lHTxeIA2lIJfC12KLM3fL
+        JbRPvML5Ox73TdCEvKOQ7jHHTw9F0WCbsomIc4WcFLkj9GJvJP0bVSrmEpRaKNe0
+        k1UotMx0JB5d7Ye5u9j8MhjSkqkKC8uTDEzAYBUjHiws/i5BcZZptvv/S8TV1PRK
+        NmDwn/Qmqf0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B45E1EA4C2;
+        Tue, 18 Aug 2020 16:32:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 40EE0E5E46;
-        Tue, 18 Aug 2020 16:18:41 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 43F54EA4C0;
+        Tue, 18 Aug 2020 16:32:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 00/11] Maintenance I: Command, gc and commit-graph tasks
-References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
-        <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 13:18:39 -0700
-In-Reply-To: <pull.695.v2.git.1597760589.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Tue, 18 Aug 2020 14:22:57
-        +0000")
-Message-ID: <xmqqa6yryag0.fsf@gitster.c.googlers.com>
+To:     Jimit Bhalavat <jimit@rams.colostate.edu>
+Cc:     David Huseby <dhuseby@linuxfoundation.org>, git@vger.kernel.org
+Subject: Re: GPG Commit Signing Project
+References: <43C81FDC-611D-45A1-9525-24640FEB2E1A@rams.colostate.edu>
+Date:   Tue, 18 Aug 2020 13:32:18 -0700
+In-Reply-To: <43C81FDC-611D-45A1-9525-24640FEB2E1A@rams.colostate.edu> (Jimit
+        Bhalavat's message of "Tue, 18 Aug 2020 12:43:45 -0600")
+Message-ID: <xmqq5z9fy9t9.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 01F8F5B6-E190-11EA-9940-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: EA23976E-E191-11EA-8F1F-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jimit Bhalavat <jimit@rams.colostate.edu> writes:
 
-> This series is based on jk/strvec.
+> Hello Junio,
 
-As jc/no-update-fetch-head topic seems to be getting popular for
-some reason, let's do this:
+Sorry, I read the message twice but I am not sure what you expect
+out of me.  We usually do not evaluate a proposal only from its
+"design document" in the sense that we won't say neither "such a
+proposal is great" or "we won't accept such a proposal" until we
+actually see patches.  It is a good idea to have a written design as
+it may help reviewers when they review patch submission.
 
- - recreate jc/no-update-fetch-head topic with patch [1/9] of the
-   maintenance-2 series directly on top of 'master';
+> 	5. All of these changes will make sure that we maintain
+> 	backwards compatibility. We are aiming to deprecate things a
+> 	little but old options will not stop working. We will
+> 	preserve existing behavior.
 
- - fork ds/maintenance-part-1 topic off of jc/no-update-fetch-head
-   and queue these 11 patches;
+That is always a requirement by our project so it goes without
+saying ;-) but it is good to see the promise written down.
 
- - fork ds/maintenance-part-2 topic off of ds/maintenance-part-1 and
-   queue its 8 patches [2/9 - 9/9].
-
-Thanks.
