@@ -2,69 +2,69 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4897FC433E1
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11899C433DF
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E00B20786
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDFCF207DA
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:26:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xdtvpxoc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QEjXJyAR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727017AbgHROZx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 10:25:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51034 "EHLO
+        id S1726778AbgHRO0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 10:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726794AbgHROZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:25:36 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EE8AC061343
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id k20so17194395wmi.5
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:36 -0700 (PDT)
+        with ESMTP id S1726991AbgHROZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:25:43 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CCF4C061348
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:41 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id z18so18454180wrm.12
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:25:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gfQFFY1U3cY02b6Wx8Zqn/7SPEXcEtAPodyBG0nK84E=;
-        b=Xdtvpxocr6Hr3Tyz+gwlVnU521fRFFdugRY5iP5NfPUFjHqslxFpiDTm8YDbrUmqZG
-         QYC1a7hUf+24q9avbWKongiozcuQep6+02fYRStPkR3KqskWzaEjOUOr6+yWLJA84gef
-         QbgSZhRD9wL5WYahyAuQ+a6fx9wuMSIp7yrwLZgFlM1rfcT8chkw2oJdJE/75GSVuwSL
-         JYDeUc5bOTcSouNtnpZrV+E0GOmw+FHoqF3pf0CG4fuTVB+g1m1QaeT3/UMoTaO5qBDJ
-         HjMuIao3XBUPgoh780uF3BCVDpN/Rr8pBryFDB94tj+NmS7hBJyXNMnDGcMeiNXuqH+p
-         01Rw==
+        bh=/QuuEXvP6bFprNNpiXgGQ1A85GITt6x5parMpIz5IeY=;
+        b=QEjXJyARt0Qhe1rPgaAprikih0KiCovuOVlIG/5TnOiSZJ5g+3hWCgzE98o5AZZYG3
+         w00xZMcoyKAFRdoJeOUXB7gwCMP94S4EfiuIuB2gVGojaBWgad1SnykbYgf5GOdvrP1Y
+         UrKnGU9Shf5Txy97vzqZTceNjaqIwVtl5S9uoBNLFwTsCfGGdLRlPOPalXAdy7UJ8iNk
+         8oJZYaAj7J0iMMnd1sf92w1WIjyCINqyxdMBHw2jfqczf+rZZQAsuLEm3UDMY8SliuJv
+         Brt3KMshBQERTRwZPrHVHGMazJXXx2JxhrL85whqpBWNepUKf3ycv8+BNV/R9EU1e2jS
+         kboQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gfQFFY1U3cY02b6Wx8Zqn/7SPEXcEtAPodyBG0nK84E=;
-        b=htfeFLdf++wRQJfSektlXMh62IC/zf2yq46AEvaJrsx6VreGmL+gXra5xZe6gEwjHq
-         VTVZtH4MyVqCx9dpWtoYZBy9YXAMFfy8Mfa0nKbLdx9PtQxDn12l+fTPGrB6+MC5j9Qg
-         ItPhQfZd6F3d0msWh+lbhtnhm1jDSVUjJy8cOOITJGAJRg1fVChX93xVzJhdGhf9NuL1
-         oCr8LBCvr65K5c3i7K5y/gWGH4FauzLyBLttyW+nBghwcBgyM3gNzLNXPG/sUeuY9a3l
-         uswN2RZCFEZhoAeqHFDGNmV4y9I5dpPLMqaoBWddrg8CUjGJCdUTMM4Dc46+HoqmRH67
-         ZuuQ==
-X-Gm-Message-State: AOAM530gjnvfWo5HxohY+r2jHCyEM3dD14ZmWu+KK1G6PSf3j1IuMVOH
-        JHQ0q8gnaYm6dJ6j4FgK8fnk9zqAQsc=
-X-Google-Smtp-Source: ABdhPJw7sCkiR8uVXIyU1VCuUu5ziRNSwE9/yc7Ck6/86OFdAT28+bwIcnb1YnvF2AyKJDxTLu2NDQ==
-X-Received: by 2002:a1c:bc54:: with SMTP id m81mr209595wmf.60.1597760734523;
-        Tue, 18 Aug 2020 07:25:34 -0700 (PDT)
+        bh=/QuuEXvP6bFprNNpiXgGQ1A85GITt6x5parMpIz5IeY=;
+        b=jdcOFjcQn70MOgWHEncwQeoVETg7ErV0aO7To7SW7eyRv9xs8pbN76o4xxAE3CE7FV
+         6zRDUgVWf3kC+6Q/Z0pEJrJj8OfDNBAZjOW7/YzDTvaU+IPcLm0yTIhbyGdgbLAM/UKA
+         SB0OA8t4fAZY9MATr9whdesxCYIZ1Y/XT/CHeEhFVmozeYEXnK5fum6+LZRb5r6tEtfH
+         LHRDYcSFQVjbqZ5HsEQIMFp9bToLfzz9fMdn8ipTuvc+JZ00Uqf8CQx3OKlIR8GWnT3f
+         XducT2s/LP5ZnDv1n6fnLqiArSUDm4xuIpbOJbHdNJlLFWzTEgqFRck6Pv7uydgTGwZY
+         9YrA==
+X-Gm-Message-State: AOAM530KpQn6wEShTW1TQBSnHRM1vTAY9oZzuj+ILUOoi7sE9avNojmL
+        stjiEQ6LJ3t757Um2jzefWdv7TxYXoU=
+X-Google-Smtp-Source: ABdhPJzPI/9+IMDibwID6+4YOWU4AhYMnGA5FPzvZlID9pG8gNqV8nXgapfTTV4/WLTTBBNHG7ne9g==
+X-Received: by 2002:adf:df91:: with SMTP id z17mr22398394wrl.149.1597760739870;
+        Tue, 18 Aug 2020 07:25:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j5sm183163wmb.12.2020.08.18.07.25.33
+        by smtp.gmail.com with ESMTPSA id j4sm107193wmi.48.2020.08.18.07.25.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 07:25:33 -0700 (PDT)
-Message-Id: <8779c6c20d7e25e13189074dbd57a86b49ec56e9.1597760730.git.gitgitgadget@gmail.com>
+        Tue, 18 Aug 2020 07:25:39 -0700 (PDT)
+Message-Id: <f0e727675584c60046a0fdd7c63a57ec1cbaf150.1597760730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 References: <pull.696.git.1596731424.gitgitgadget@gmail.com>
         <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 14:25:23 +0000
-Subject: [PATCH v2 2/9] maintenance: add prefetch task
+Date:   Tue, 18 Aug 2020 14:25:29 +0000
+Subject: [PATCH v2 8/9] maintenance: auto-size incremental-repack batch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,216 +83,164 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When working with very large repositories, an incremental 'git fetch'
-command can download a large amount of data. If there are many other
-users pushing to a common repo, then this data can rival the initial
-pack-file size of a 'git clone' of a medium-size repo.
+When repacking during the 'incremental-repack' task, we use the
+--batch-size option in 'git multi-pack-index repack'. The initial setting
+used --batch-size=0 to repack everything into a single pack-file. This is
+not sustainable for a large repository. The amount of work required is
+also likely to use too many system resources for a background job.
 
-Users may want to keep the data on their local repos as close as
-possible to the data on the remote repos by fetching periodically in
-the background. This can break up a large daily fetch into several
-smaller hourly fetches.
+Update the 'incremental-repack' task by dynamically computing a
+--batch-size option based on the current pack-file structure.
 
-The task is called "prefetch" because it is work done in advance
-of a foreground fetch to make that 'git fetch' command much faster.
+The dynamic default size is computed with this idea in mind for a client
+repository that was cloned from a very large remote: there is likely one
+"big" pack-file that was created at clone time. Thus, do not try
+repacking it as it is likely packed efficiently by the server.
 
-However, if we simply ran 'git fetch <remote>' in the background,
-then the user running a foregroudn 'git fetch <remote>' would lose
-some important feedback when a new branch appears or an existing
-branch updates. This is especially true if a remote branch is
-force-updated and this isn't noticed by the user because it occurred
-in the background. Further, the functionality of 'git push
---force-with-lease' becomes suspect.
+Instead, we select the second-largest pack-file, and create a batch size
+that is one larger than that pack-file. If there are three or more
+pack-files, then this guarantees that at least two will be combined into
+a new pack-file.
 
-When running 'git fetch <remote> <options>' in the background, use
-the following options for careful updating:
+Of course, this means that the second-largest pack-file size is likely
+to grow over time and may eventually surpass the initially-cloned
+pack-file. Recall that the pack-file batch is selected in a greedy
+manner: the packs are considered from oldest to newest and are selected
+if they have size smaller than the batch size until the total selected
+size is larger than the batch size. Thus, that oldest "clone" pack will
+be first to repack after the new data creates a pack larger than that.
 
-1. --no-tags prevents getting a new tag when a user wants to see
-   the new tags appear in their foreground fetches.
+We also want to place some limits on how large these pack-files become,
+in order to bound the amount of time spent repacking. A maximum
+batch-size of two gigabytes means that large repositories will never be
+packed into a single pack-file using this job, but also that repack is
+rather expensive. This is a trade-off that is valuable to have if the
+maintenance is being run automatically or in the background. Users who
+truly want to optimize for space and performance (and are willing to pay
+the upfront cost of a full repack) can use the 'gc' task to do so.
 
-2. --refmap= removes the configured refspec which usually updates
-   refs/remotes/<remote>/* with the refs advertised by the remote.
-   While this looks confusing, this was documented and tested by
-   b40a50264ac (fetch: document and test --refmap="", 2020-01-21),
-   including this sentence in the documentation:
+Create a test for this two gigabyte limit by creating an EXPENSIVE test
+that generates two pack-files of roughly 2.5 gigabytes in size, then
+performs an incremental repack. Check that the --batch-size argument in
+the subcommand uses the hard-coded maximum.
 
-	Providing an empty `<refspec>` to the `--refmap` option
-	causes Git to ignore the configured refspecs and rely
-	entirely on the refspecs supplied as command-line arguments.
-
-3. By adding a new refspec "+refs/heads/*:refs/prefetch/<remote>/*"
-   we can ensure that we actually load the new values somewhere in
-   our refspace while not updating refs/heads or refs/remotes. By
-   storing these refs here, the commit-graph job will update the
-   commit-graph with the commits from these hidden refs.
-
-4. --prune will delete the refs/prefetch/<remote> refs that no
-   longer appear on the remote.
-
-5. --no-write-fetch-head prevents updating FETCH_HEAD.
-
-We've been using this step as a critical background job in Scalar
-[1] (and VFS for Git). This solved a pain point that was showing up
-in user reports: fetching was a pain! Users do not like waiting to
-download the data that was created while they were away from their
-machines. After implementing background fetch, the foreground fetch
-commands sped up significantly because they mostly just update refs
-and download a small amount of new data. The effect is especially
-dramatic when paried with --no-show-forced-udpates (through
-fetch.showForcedUpdates=false).
-
-[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/FetchStep.cs
-
+Helped-by: Chris Torek <chris.torek@gmail.com>
+Reported-by: Son Luong Ngoc <sluongng@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-maintenance.txt | 15 +++++++++
- builtin/gc.c                      | 51 +++++++++++++++++++++++++++++++
- t/t7900-maintenance.sh            | 26 ++++++++++++++++
- 3 files changed, 92 insertions(+)
+ builtin/gc.c           | 43 +++++++++++++++++++++++++++++++++++++++++-
+ t/t7900-maintenance.sh | 36 +++++++++++++++++++++++++++++++++--
+ 2 files changed, 76 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 9af08c644f..e82799ccff 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -50,6 +50,21 @@ since it will not expire `.graph` files that were in the previous
- `commit-graph-chain` file. They will be deleted by a later run based on
- the expiration delay.
- 
-+prefetch::
-+	The `prefetch` task updates the object directory with the latest
-+	objects from all registered remotes. For each remote, a `git fetch`
-+	command is run. The refmap is custom to avoid updating local or remote
-+	branches (those in `refs/heads` or `refs/remotes`). Instead, the
-+	remote refs are stored in `refs/prefetch/<remote>/`. Also, tags are
-+	not updated.
-++
-+This is done to avoid disrupting the remote-tracking branches. The end users
-+expect these refs to stay unmoved unless they initiate a fetch.  With prefetch
-+task, however, the objects necessary to complete a later real fetch would
-+already be obtained, so the real fetch would go faster.  In the ideal case,
-+it will just become an update to bunch of remote-tracking branches without
-+any object transfer.
-+
- gc::
- 	Clean up unnecessary files and optimize the local repository. "GC"
- 	stands for "garbage collection," but this task performs many
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 3fdb08655c..2ac08cc740 100644
+index 9aabef44a8..d2f3e27e54 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -29,6 +29,7 @@
- #include "tree.h"
- #include "promisor-remote.h"
- #include "refs.h"
-+#include "remote.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -843,6 +844,51 @@ static int maintenance_task_commit_graph(struct maintenance_opts *opts)
- 	return 1;
+@@ -1093,6 +1093,46 @@ static int multi_pack_index_expire(struct maintenance_opts *opts)
+ 	return 0;
  }
  
-+static int fetch_remote(const char *remote, struct maintenance_opts *opts)
++#define TWO_GIGABYTES (INT32_MAX)
++
++static off_t get_auto_pack_size(void)
 +{
-+	struct child_process child = CHILD_PROCESS_INIT;
++	/*
++	 * The "auto" value is special: we optimize for
++	 * one large pack-file (i.e. from a clone) and
++	 * expect the rest to be small and they can be
++	 * repacked quickly.
++	 *
++	 * The strategy we select here is to select a
++	 * size that is one more than the second largest
++	 * pack-file. This ensures that we will repack
++	 * at least two packs if there are three or more
++	 * packs.
++	 */
++	off_t max_size = 0;
++	off_t second_largest_size = 0;
++	off_t result_size;
++	struct packed_git *p;
++	struct repository *r = the_repository;
 +
-+	child.git_cmd = 1;
-+	strvec_pushl(&child.args, "fetch", remote, "--prune", "--no-tags",
-+		     "--no-write-fetch-head", "--recurse-submodules=no",
-+		     "--refmap=", NULL);
-+
-+	if (opts->quiet)
-+		strvec_push(&child.args, "--quiet");
-+
-+	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote);
-+
-+	return !!run_command(&child);
-+}
-+
-+static int append_remote(struct remote *remote, void *cbdata)
-+{
-+	struct string_list *remotes = (struct string_list *)cbdata;
-+
-+	string_list_append(remotes, remote->name);
-+	return 0;
-+}
-+
-+static int maintenance_task_prefetch(struct maintenance_opts *opts)
-+{
-+	int result = 0;
-+	struct string_list_item *item;
-+	struct string_list remotes = STRING_LIST_INIT_DUP;
-+
-+	if (for_each_remote(append_remote, &remotes)) {
-+		error(_("failed to fill remotes"));
-+		result = 1;
-+		goto cleanup;
++	reprepare_packed_git(r);
++	for (p = get_all_packs(r); p; p = p->next) {
++		if (p->pack_size > max_size) {
++			second_largest_size = max_size;
++			max_size = p->pack_size;
++		} else if (p->pack_size > second_largest_size)
++			second_largest_size = p->pack_size;
 +	}
 +
-+	for_each_string_list_item(item, &remotes)
-+		result |= fetch_remote(item->string, opts);
++	result_size = second_largest_size + 1;
 +
-+cleanup:
-+	string_list_clear(&remotes, 0);
-+	return result;
++	/* But limit ourselves to a batch size of 2g */
++	if (result_size > TWO_GIGABYTES)
++		result_size = TWO_GIGABYTES;
++
++	return result_size;
 +}
 +
- static int maintenance_task_gc(struct maintenance_opts *opts)
+ static int multi_pack_index_repack(struct maintenance_opts *opts)
  {
  	struct child_process child = CHILD_PROCESS_INIT;
-@@ -880,6 +926,7 @@ struct maintenance_task {
- };
+@@ -1103,7 +1143,8 @@ static int multi_pack_index_repack(struct maintenance_opts *opts)
+ 	if (opts->quiet)
+ 		strvec_push(&child.args, "--no-progress");
  
- enum maintenance_task_label {
-+	TASK_PREFETCH,
- 	TASK_GC,
- 	TASK_COMMIT_GRAPH,
+-	strvec_push(&child.args, "--batch-size=0");
++	strvec_pushf(&child.args, "--batch-size=%"PRIuMAX,
++				  (uintmax_t)get_auto_pack_size());
  
-@@ -888,6 +935,10 @@ enum maintenance_task_label {
- };
+ 	close_object_store(the_repository->objects);
  
- static struct maintenance_task tasks[] = {
-+	[TASK_PREFETCH] = {
-+		"prefetch",
-+		maintenance_task_prefetch,
-+	},
- 	[TASK_GC] = {
- 		"gc",
- 		maintenance_task_gc,
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4f6a04ddb1..0bade09c43 100755
+index dde28cf837..5c08afc19a 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -60,4 +60,30 @@ test_expect_success 'run --task duplicate' '
- 	test_i18ngrep "cannot be selected multiple times" err
+@@ -182,10 +182,42 @@ test_expect_success 'incremental-repack task' '
+ 	test_line_count = 4 packs-between &&
+ 
+ 	# the job deletes the two old packs, and does not write
+-	# a new one because only one pack remains.
++	# a new one because the batch size is not high enough to
++	# pack the largest pack-file.
+ 	git maintenance run --task=incremental-repack &&
+ 	ls .git/objects/pack/*.pack >packs-after &&
+-	test_line_count = 1 packs-after
++	test_line_count = 2 packs-after
++'
++
++test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
++	for i in $(test_seq 1 5)
++	do
++		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
++		return 1
++	done &&
++	git add big &&
++	git commit -m "Add big file (1)" &&
++
++	# ensure any possible loose objects are in a pack-file
++	git maintenance run --task=loose-objects &&
++
++	rm big &&
++	for i in $(test_seq 6 10)
++	do
++		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
++		return 1
++	done &&
++	git add big &&
++	git commit -m "Add big file (2)" &&
++
++	# ensure any possible loose objects are in a pack-file
++	git maintenance run --task=loose-objects &&
++
++	# Now run the incremental-repack task and check the batch-size
++	GIT_TRACE2_EVENT="$(pwd)/run-2g.txt" git maintenance run \
++		--task=incremental-repack 2>/dev/null &&
++	test_subcommand git multi-pack-index repack \
++		 --no-progress --batch-size=2147483647 <run-2g.txt
  '
  
-+test_expect_success 'run --task=prefetch with no remotes' '
-+	git maintenance run --task=prefetch 2>err &&
-+	test_must_be_empty err
-+'
-+
-+test_expect_success 'prefetch multiple remotes' '
-+	git clone . clone1 &&
-+	git clone . clone2 &&
-+	git remote add remote1 "file://$(pwd)/clone1" &&
-+	git remote add remote2 "file://$(pwd)/clone2" &&
-+	git -C clone1 switch -c one &&
-+	git -C clone2 switch -c two &&
-+	test_commit -C clone1 one &&
-+	test_commit -C clone2 two &&
-+	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
-+	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
-+	test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
-+	test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
-+	test_path_is_missing .git/refs/remotes &&
-+	git log prefetch/remote1/one &&
-+	git log prefetch/remote2/two &&
-+	git fetch --all &&
-+	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
-+	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two
-+'
-+
  test_done
 -- 
 gitgitgadget
