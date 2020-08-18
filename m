@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6615AC433E1
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 05:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B5B3C433DF
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 05:23:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 411072076E
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 05:21:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D8C92072D
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 05:23:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHzZC/Zx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+/PPWeg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbgHRFVt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 01:21:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49894 "EHLO
+        id S1726353AbgHRFXc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 01:23:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726365AbgHRFVr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 01:21:47 -0400
+        with ESMTP id S1726228AbgHRFXa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 01:23:30 -0400
 Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81BB4C061389
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 22:21:47 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id 128so9213505pgd.5
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 22:21:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A11AC061389
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 22:23:30 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id x6so9206311pgx.12
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 22:23:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mQcHWeOzgc1KEpRQqPSKQk+hd4JQcxqTBsMNJ2wQ/ok=;
-        b=ZHzZC/ZxXJ46RcGxShUo7BuUhmW4MnOUkkYMUEn42kS64d6Ko1AAAfliHLi4t28Nf0
-         a02WHsV+ezU0qZjuS3GMbTrcdwlOXhwbflntJo6nK2u/CHF4XodaRDk8jVnCpaGsu7RA
-         pJB1B1mLNAha0QDRaPgqU7rl7uSlvA8fbv5uIIdnyjV1y8qs4LV0CBGCmdMSzSklHCXS
-         muFOCM8FxyYKQm648mB+5yfIIAdipjgKm4EhqBRs9TJyrX4kc8txlBPe0gtV4pLfKGBu
-         0/J8cg1e2h5OSzsstvNK+wSjsgktxqCzU/EA+I22jz3hn0vMut8fPoXYyM/29rkeJgmC
-         Sesg==
+        bh=DYI0SRlazO3YxSbmnDYN+yCuSrx9q/dTaVzK3azAO2k=;
+        b=Y+/PPWegIL1wZZXCaJ+zLxVgIaOw4twXv/gZT5H6AB4TAWAzFmMt+lYxUIWMeEGaWG
+         Wpdy7SygDfO/FGomMwJvpl1wCFAjytpvV4gzg35eAPbD4m8uzgjjToTlowakPaJU5dAe
+         7GOCy6YRSZrsk4Cqsr83oisg+ARYOByFZGT5vjc8/skSHAPRjrryO/W7VCHzLK368wLy
+         2skzTr5qkMM/Ce/2IPra6zMgqrP5qYyB69ns0bXFtG5Cn2tKYx651Oekk1cH3FHtDa5S
+         5RB5T9+XJfbmBsbNtFlcoxdId+d8MMrOCSmdNBy1PhsVDbFJ3KESxx1NOw6TWKwxBwia
+         JpPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mQcHWeOzgc1KEpRQqPSKQk+hd4JQcxqTBsMNJ2wQ/ok=;
-        b=Ue4VyV/+XL8xvF1fQZ5Oi8BAZW9QZmBgMxYtXXL1SXbp0NO/JoZdeK9PMkVDr6m0Bo
-         6dcrUGDBWRL0/s+qVPvlOXbwYPZ1vbPKo8LOciEE04/B7fzv2DRlqRyOZu7jmAUGkywh
-         LDCbGFCmUUBTNNxaqhrxrz3w1Oa5ay3hIqwiqXJgUNLXFv5SeKRXkJj1OfyMOCL4FeMK
-         8yFpu/ole/YnJqlfUEgT+coiI9IdX8M9XtK5IPZSbUhVEeNj3hOVEGqqnyV6Kq1xCPMf
-         6QCA31z4HkohoaOznUYFeOJP5q5cmEG4eFkojwluHNJsLT5m6uOyrhuzJ8fWcg5to+k5
-         E72A==
-X-Gm-Message-State: AOAM532/So/ZGSjPddNozTusY3PiZ//wkED4dfleH02n8I3PYMzxV4sy
-        iVvIjRVG/QEvljc5Ieo6MhA=
-X-Google-Smtp-Source: ABdhPJxt7KpTgST8F6BNEk/grZ/Od5QjQwVF7CEqP5fAdsdmZWumrNKhFL6Z6mTBbBMVyZX+vfyFjg==
-X-Received: by 2002:a63:d1f:: with SMTP id c31mr11712826pgl.27.1597728105970;
-        Mon, 17 Aug 2020 22:21:45 -0700 (PDT)
+        bh=DYI0SRlazO3YxSbmnDYN+yCuSrx9q/dTaVzK3azAO2k=;
+        b=AtqlcfPiSD8WCnGMEOIduFoOzGVAgWksFWa+ZYMDx86eAWXe9LR/9wyUOxZi739/Sd
+         /BtSuZzo3gJXM6GF4C5Q9KMqT19ezen5is9JK7NLgpHZGcFmWj06j8JOLQtNcNkyKWtK
+         2QvWQguYHBHupjS979h5qZ+s4strWI+u/agnuwnh9SZEyGNr0CoB9QhzzfsqmIFr3po4
+         i9Vu8qKsR6zwqOyDiNfWgiUBVmAkw0Tz7qUmAeTiOIO123wNwSW9WjLwhtRhirvejazM
+         REwICcTFLNw4pxwMEvPH4VOJvUGXVfbvGRuXCI4s38j20wIEsLJbPg1ymmIWV10327Gc
+         ycHA==
+X-Gm-Message-State: AOAM532hnwGM+iFL29kByI+5vFYSonnuFUZ6+mEw3Rbj7UVy03fYqsa/
+        iAZta+fqfwFejSfPaxJ74Go=
+X-Google-Smtp-Source: ABdhPJwXdR9oWEuBfgyAWnwkHpNV03UFKYhidXDTjTV4MeaxyzT5SAesCWsh+3KuzFqTOEW/5fM+fQ==
+X-Received: by 2002:a62:c5c6:: with SMTP id j189mr11119725pfg.145.1597728209108;
+        Mon, 17 Aug 2020 22:23:29 -0700 (PDT)
 Received: from localhost.localdomain (36-225-225-45.dynamic-ip.hinet.net. [36.225.225.45])
-        by smtp.gmail.com with ESMTPSA id k12sm19798786pjp.38.2020.08.17.22.21.44
+        by smtp.gmail.com with ESMTPSA id w23sm19940271pgj.5.2020.08.17.22.23.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2020 22:21:45 -0700 (PDT)
+        Mon, 17 Aug 2020 22:23:28 -0700 (PDT)
 From:   Danny Lin <danny0838@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git develop <git@vger.kernel.org>, Danny Lin <danny0838@gmail.com>
-Subject: [PATCH] contrib/subtree: fix "unsure" for --message in the document
-Date:   Tue, 18 Aug 2020 13:21:10 +0800
-Message-Id: <20200818052109.1817-1-danny0838@gmail.com>
+Subject: [PATCH] contrib/subtree: document 'push' does not take '--squash'
+Date:   Tue, 18 Aug 2020 13:22:49 +0800
+Message-Id: <20200818052248.1880-1-danny0838@gmail.com>
 X-Mailer: git-send-email 2.28.0.windows.1
-In-Reply-To: <xmqq4kp143u0.fsf@gitster.c.googlers.com>
-References: <xmqq4kp143u0.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqzh6t2p43.fsf@gitster.c.googlers.com>
+References: <xmqqzh6t2p43.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -74,27 +74,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Revise the documentation and remove previous "unsure" after making sure
-that --message supports only 'add', 'merge', 'pull', and 'split --rejoin'.
+git subtree push does not support --squash, as previously illustrated in
+6ccc71a9 (contrib/subtree: there's no push --squash, 2015-05-07)
 
 Signed-off-by: Danny Lin <danny0838@gmail.com>
 ---
- contrib/subtree/git-subtree.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/subtree/git-subtree.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 352deda69d..9ccd431c7f 100644
+index 9ccd431c7f..0db02fe3c0 100644
 --- a/contrib/subtree/git-subtree.txt
 +++ b/contrib/subtree/git-subtree.txt
-@@ -139,7 +139,7 @@ OPTIONS
- 
- -m <message>::
- --message=<message>::
--	This option is only valid for add, merge and pull (unsure).
-+	This option is only valid for add, merge, pull, and split --rejoin.
+@@ -143,8 +143,8 @@ OPTIONS
  	Specify <message> as the commit message for the merge commit.
  
  
+-OPTIONS FOR add, merge, push, pull
+-----------------------------------
++OPTIONS FOR add, merge, and pull
++--------------------------------
+ --squash::
+ 	This option is only valid for add, merge, and pull
+ 	commands.
 -- 
 2.28.0.windows.1
 
