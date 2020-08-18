@@ -2,84 +2,79 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB25EC433DF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AB13C433DF
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:08:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82ED420772
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:03:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41CC520786
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:08:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LqyJjsq1"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wYeu2qbm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbgHRUDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 16:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48260 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726734AbgHRUDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 16:03:06 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B07BC061389
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 13:03:05 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id t10so23551378ejs.8
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 13:03:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KofySLbD7+WJfPy5RvSMpq21B8XZ+8NPLUNBcz4dJ3s=;
-        b=LqyJjsq1bWk5dWozllRavQsqmL3ijP9rfx2i9ygsd/JoIwHqLSyfrB7snm6dUzO+2f
-         WgeCR+sMi04lcHf4+te5fWHveUeTRH4OZO7phRXJOjlDFQchWpClTH3Ckv5ji9Qa3zHH
-         Zjtitdcji5nAbsH1ddb1W8zsE3FDuzHKJnUKqWYW07nG+2vdoT81KdTwGmynM3VT8mL6
-         T8w0ZxGeoVScqqMw80WvjdT+In/ASP+Cv6WivG4aEAVyviltbqYpJajtjor03elNmdNJ
-         5TuWlvsg1xD/t1fgfbs1LK1K+akPz0PiT/EgCmPQ8j38MPAjdLH1X4UZyHE+hsG34wCD
-         TpMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KofySLbD7+WJfPy5RvSMpq21B8XZ+8NPLUNBcz4dJ3s=;
-        b=q652N5X5lxFCT00Js9N78wV5oGssP+ua8fqEnGnD5zj1fMp1Juyzm2cPyLKOHq+baY
-         svxLf4v4KnS4g2aU7bm0dLrkobFSRjRiLdK1Gt1cMOg3RiNsYGCpOl5U827o31H+I6nA
-         W+T7Qt/aBV2AELWIZyNTbyN6FgVZlHCzJx5f2+0YnS4JtQGoC8XhbglJ8EDLZ9gvuJmk
-         b89gZSLxYB17R01hOlH70MR6f6UfqDaLsPX8s+yDxRy7gInUrAE7FAI0bI4Szl6eM95a
-         83y0XarpljsFCMFZWqRrX2N+j4ZqVnK4vkqAXo5pn25bzUOseifPAwT8YVoW4zSdHPvf
-         sHeA==
-X-Gm-Message-State: AOAM531kzDjwdK8DBZIfH5Trfi2u1Fkk5+JFtMpl7LB7xnNlp5zEEZth
-        H0JHc2bfwkbEQ8bsOAkCztT7Iu3K02aNb1EyyUzciw==
-X-Google-Smtp-Source: ABdhPJzxa1QljOtdIU0rHEDfrjSgkKIAQSwLsOgrrsI+T5nXonvGq9fSXpMwgiNa9OZPJ2t26OhzyNVucw30/XxrO6o=
-X-Received: by 2002:a17:907:408c:: with SMTP id nt20mr21276724ejb.503.1597780981824;
- Tue, 18 Aug 2020 13:03:01 -0700 (PDT)
+        id S1726707AbgHRUIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 16:08:46 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54986 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726539AbgHRUIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 16:08:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A9012E5D87;
+        Tue, 18 Aug 2020 16:08:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mEPkQ939RSDPmbe7LUQyOUi2dY4=; b=wYeu2q
+        bmdBspQ8ba/c3rrST0uBlzPgoSjSEUJAHmLoAqxuH7TUL9sYZCirBycmuzA0v7r5
+        6l9SqbrZdMM0YRRUFIpgvaIjk18v7HN7Oc3XJMQVGRqrI76O44oh6Ucgu/ViE3/t
+        XOmaiX+SaVPj6U4WM8bQTSBXe/8eVGxxhLqas=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=o7UbiCryzpJ+lHFLDd/kjS7CwRrtGibS
+        w1vTWkD2/FKqOYf7GcsTs3+HY2dwKYyqkERAm9UwfarKCgOb1qovPNpWLTmEksxY
+        zVaZjcaP0yZNUNbSf+4EChhZvVqh1MMw3SABKtd/Tkjp4BIEXyTWLEOx6tsSCnJ/
+        C2iTIvBltzI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1A8EE5D86;
+        Tue, 18 Aug 2020 16:08:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 64E48E5D80;
+        Tue, 18 Aug 2020 16:08:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Ian S. Worthington" <ianworthington@usa.net>
+Cc:     <git@vger.kernel.org>
+Subject: Re: Problems with FTP PUSH
+References: <196yHRLtV8416Set.1597751181@web13.cms.usa.net>
+Date:   Tue, 18 Aug 2020 13:08:36 -0700
+In-Reply-To: <196yHRLtV8416Set.1597751181@web13.cms.usa.net> (Ian
+        S. Worthington's message of "Tue, 18 Aug 2020 12:46:21 +0100")
+Message-ID: <xmqqeeo3yawr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CA+Twho+nyERK1Ljdy6MnXA=iK6SiU85v4yLQc+fRmW83JVa+hQ@mail.gmail.com>
- <xmqq1rk3zs7l.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq1rk3zs7l.fsf@gitster.c.googlers.com>
-From:   Carmen Andoh <candoh@google.com>
-Date:   Tue, 18 Aug 2020 16:02:51 -0400
-Message-ID: <CA+Twho+A9QjQ7g8NcV4+n0eOEUfuaRBqT8=7SiR0GCunLfu4Qw@mail.gmail.com>
-Subject: Re: Git Inclusion Contributor Summit Registration
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9AA45E4C-E18E-11EA-AAE1-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ah the dreaded day/date meld.  Monday, September 7th at 5 PM PDT.
-This is September 8th times zones UTC 0 through +12.
+"Ian S. Worthington" <ianworthington@usa.net> writes:
 
-Thanks for the clarifying questions Junio.
+> I have a server without https and so I'm trying to establish if I can host a
+> repository there using ftp.  The manuals suggest that I can, but when I try: 
 
+Which manuals?
 
-On Tue, Aug 18, 2020 at 3:09 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carmen Andoh <candoh@google.com> writes:
->
-> > This is a free event.  We encourage anyone interested to register by
-> > Tuesday, September 7th.
->
-> Monday Sep 7th, or Tue Sep 8th?
+IIUC, a dumb HTTP(S) server that accepts only GET can still serve
+"git fetch", and an FTP(s) server would be able to do the same using
+similar codepath, but I do not think these can accept "git push".  A
+dumb HTTP(S) may be able to accept "git push" if it does WebDAV, but
+I do not think there is corresponding FTP support at all.
+
