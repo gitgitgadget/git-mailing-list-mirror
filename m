@@ -2,411 +2,99 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF9F5C433DF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 04:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6615AC433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 05:21:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B35442072A
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 04:02:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 411072076E
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 05:21:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Rt+nJC1S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHzZC/Zx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbgHRECK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 00:02:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37740 "EHLO
+        id S1726583AbgHRFVt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 01:21:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726370AbgHRECC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 00:02:02 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 402BCC061344
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 21:02:02 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id x3so11418204pga.4
-        for <git@vger.kernel.org>; Mon, 17 Aug 2020 21:02:02 -0700 (PDT)
+        with ESMTP id S1726365AbgHRFVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 01:21:47 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81BB4C061389
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 22:21:47 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id 128so9213505pgd.5
+        for <git@vger.kernel.org>; Mon, 17 Aug 2020 22:21:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=XMvRLHX//Q6xP55ShLnMeec/Aq4eZwCgRc6ZtZ1n7AM=;
-        b=Rt+nJC1SHExZkvoXwNDGKh6MsvWo+PDNjeMCJ3MeWaiMnP86KwwQxQlgNCFxb2wRp1
-         QmGTsIfoNC2PhaMzXcHS9LeeZWMCMnWblt8L2oqqxXJcyus1NRumFiExTccDc7q0b6cA
-         vfpuXv8O50wUC3dzAhf0sEj9Nsdue7yIEtzLb38wdYWmN3x9tTESBzLNyrl1GI/znqvn
-         t8UZIHG1B2PkeotmQhtVyBBYlB95kGdwZyMk3agTV/rxJOhYzxg6Sve270JekLi/pW9e
-         unlxk8INX8VP0aKbFtcLCS7BOL076kahiRbh4QVv/2UQVGxJoP1Vn8UPBObZgtdzsfhe
-         Iyzg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mQcHWeOzgc1KEpRQqPSKQk+hd4JQcxqTBsMNJ2wQ/ok=;
+        b=ZHzZC/ZxXJ46RcGxShUo7BuUhmW4MnOUkkYMUEn42kS64d6Ko1AAAfliHLi4t28Nf0
+         a02WHsV+ezU0qZjuS3GMbTrcdwlOXhwbflntJo6nK2u/CHF4XodaRDk8jVnCpaGsu7RA
+         pJB1B1mLNAha0QDRaPgqU7rl7uSlvA8fbv5uIIdnyjV1y8qs4LV0CBGCmdMSzSklHCXS
+         muFOCM8FxyYKQm648mB+5yfIIAdipjgKm4EhqBRs9TJyrX4kc8txlBPe0gtV4pLfKGBu
+         0/J8cg1e2h5OSzsstvNK+wSjsgktxqCzU/EA+I22jz3hn0vMut8fPoXYyM/29rkeJgmC
+         Sesg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=XMvRLHX//Q6xP55ShLnMeec/Aq4eZwCgRc6ZtZ1n7AM=;
-        b=KBMh8Vpb4wQcvDqgMTz3stk0r4OQ5aGzYBkwEUnkRlGh2mhA7xqKfL2EJiJJU6W27j
-         35QviOHynKfpcmkJeMO1UtTG5GG6O2A8YwtsKwvgLmA82eFNN0gBljRzEG9PvhWtmKlo
-         mYo7xDUDGbSZ+zdjy8r4RT4n5mU0zOQZyibHsZXuojwVigye6mwaTTrBb22JG+vAw5i6
-         u29MaY/cB594Cpl2rkGvLkNmkCDOwbH6/NtQNV+OWdmLD3py+1iVpgg0yNDOcgOASJOW
-         t8Oujligp7iARCnEWIZ22EqM5xcgl73mtmC5HLTHJmK8pzIjvxXE8ldpmLGLiCSQR2xV
-         o5fQ==
-X-Gm-Message-State: AOAM530558i/beZwUpCYo9oHafkrtqHpIwZZ0pUBUhpWJ6kpITTmQEgv
-        FG7MJZc/Sg6kn6rk/m0UcGB6VSwbeU+3UvuxmQqudQlA1sFN6E96DEYYFP18iNWGGi7b+VI0hIh
-        2U3x9S4lMYGnMHOrcrcOG/NWwGBtz7y/Otq6aTWjiUR1ElsqnaTSSE9rkV51Brdx/gje977h927
-        sb
-X-Google-Smtp-Source: ABdhPJy6NVadq3pQZk4SpndqmusFmsM0QWk+ypkUo4jKpdIJc4sEG9AMG+jYd4bUesKZyfwrOkl12kF0peAyOEx6LYWn
-X-Received: by 2002:a17:90b:4a07:: with SMTP id kk7mr15705209pjb.125.1597723321610;
- Mon, 17 Aug 2020 21:02:01 -0700 (PDT)
-Date:   Mon, 17 Aug 2020 21:01:37 -0700
-In-Reply-To: <cover.1597722941.git.jonathantanmy@google.com>
-Message-Id: <3ff9d034e91f394457e1c1813437603e70741aa6.1597722942.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20200724223844.2723397-1-jonathantanmy@google.com> <cover.1597722941.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.28.0.220.ged08abb693-goog
-Subject: [PATCH v3 7/7] fetch-pack: remove no_dependents code
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
-        gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mQcHWeOzgc1KEpRQqPSKQk+hd4JQcxqTBsMNJ2wQ/ok=;
+        b=Ue4VyV/+XL8xvF1fQZ5Oi8BAZW9QZmBgMxYtXXL1SXbp0NO/JoZdeK9PMkVDr6m0Bo
+         6dcrUGDBWRL0/s+qVPvlOXbwYPZ1vbPKo8LOciEE04/B7fzv2DRlqRyOZu7jmAUGkywh
+         LDCbGFCmUUBTNNxaqhrxrz3w1Oa5ay3hIqwiqXJgUNLXFv5SeKRXkJj1OfyMOCL4FeMK
+         8yFpu/ole/YnJqlfUEgT+coiI9IdX8M9XtK5IPZSbUhVEeNj3hOVEGqqnyV6Kq1xCPMf
+         6QCA31z4HkohoaOznUYFeOJP5q5cmEG4eFkojwluHNJsLT5m6uOyrhuzJ8fWcg5to+k5
+         E72A==
+X-Gm-Message-State: AOAM532/So/ZGSjPddNozTusY3PiZ//wkED4dfleH02n8I3PYMzxV4sy
+        iVvIjRVG/QEvljc5Ieo6MhA=
+X-Google-Smtp-Source: ABdhPJxt7KpTgST8F6BNEk/grZ/Od5QjQwVF7CEqP5fAdsdmZWumrNKhFL6Z6mTBbBMVyZX+vfyFjg==
+X-Received: by 2002:a63:d1f:: with SMTP id c31mr11712826pgl.27.1597728105970;
+        Mon, 17 Aug 2020 22:21:45 -0700 (PDT)
+Received: from localhost.localdomain (36-225-225-45.dynamic-ip.hinet.net. [36.225.225.45])
+        by smtp.gmail.com with ESMTPSA id k12sm19798786pjp.38.2020.08.17.22.21.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2020 22:21:45 -0700 (PDT)
+From:   Danny Lin <danny0838@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git develop <git@vger.kernel.org>, Danny Lin <danny0838@gmail.com>
+Subject: [PATCH] contrib/subtree: fix "unsure" for --message in the document
+Date:   Tue, 18 Aug 2020 13:21:10 +0800
+Message-Id: <20200818052109.1817-1-danny0838@gmail.com>
+X-Mailer: git-send-email 2.28.0.windows.1
+In-Reply-To: <xmqq4kp143u0.fsf@gitster.c.googlers.com>
+References: <xmqq4kp143u0.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that Git has switched to using a subprocess to lazy-fetch missing
-objects, remove the no_dependents code as it is no longer used.
+Revise the documentation and remove previous "unsure" after making sure
+that --message supports only 'add', 'merge', 'pull', and 'split --rejoin'.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Danny Lin <danny0838@gmail.com>
 ---
- builtin/fetch-pack.c |   4 --
- fetch-pack.c         | 110 ++++++++++++-------------------------------
- fetch-pack.h         |  14 ------
- remote-curl.c        |   6 ---
- transport.c          |   4 --
- transport.h          |   7 ---
- 6 files changed, 30 insertions(+), 115 deletions(-)
+ contrib/subtree/git-subtree.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index bbb5c96167..58b7c1fbdc 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -153,10 +153,6 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 			args.from_promisor = 1;
- 			continue;
- 		}
--		if (!strcmp("--no-dependents", arg)) {
--			args.no_dependents = 1;
--			continue;
--		}
- 		if (skip_prefix(arg, ("--" CL_ARG__FILTER "="), &arg)) {
- 			parse_list_objects_filter(&args.filter_options, arg);
- 			continue;
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 707bbc31fd..3212957dae 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -285,10 +285,8 @@ static int find_common(struct fetch_negotiator *negotiator,
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_DIE_ON_ERR_PACKET);
+diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
+index 352deda69d..9ccd431c7f 100644
+--- a/contrib/subtree/git-subtree.txt
++++ b/contrib/subtree/git-subtree.txt
+@@ -139,7 +139,7 @@ OPTIONS
  
--	if (!args->no_dependents) {
--		mark_tips(negotiator, args->negotiation_tips);
--		for_each_cached_alternate(negotiator, insert_one_alternate_object);
--	}
-+	mark_tips(negotiator, args->negotiation_tips);
-+	for_each_cached_alternate(negotiator, insert_one_alternate_object);
+ -m <message>::
+ --message=<message>::
+-	This option is only valid for add, merge and pull (unsure).
++	This option is only valid for add, merge, pull, and split --rejoin.
+ 	Specify <message> as the commit message for the merge commit.
  
- 	fetching = 0;
- 	for ( ; refs ; refs = refs->next) {
-@@ -305,12 +303,8 @@ static int find_common(struct fetch_negotiator *negotiator,
- 		 * We use lookup_object here because we are only
- 		 * interested in the case we *know* the object is
- 		 * reachable and we have already scanned it.
--		 *
--		 * Do this only if args->no_dependents is false (if it is true,
--		 * we cannot trust the object flags).
- 		 */
--		if (!args->no_dependents &&
--		    ((o = lookup_object(the_repository, remote)) != NULL) &&
-+		if (((o = lookup_object(the_repository, remote)) != NULL) &&
- 				(o->flags & COMPLETE)) {
- 			continue;
- 		}
-@@ -410,8 +404,6 @@ static int find_common(struct fetch_negotiator *negotiator,
- 	trace2_region_enter("fetch-pack", "negotiation_v0_v1", the_repository);
- 	flushes = 0;
- 	retval = -1;
--	if (args->no_dependents)
--		goto done;
- 	while ((oid = negotiator->next(negotiator))) {
- 		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
- 		print_verbose(args, "have %s", oid_to_hex(oid));
-@@ -666,9 +658,7 @@ struct loose_object_iter {
- 
- /*
-  * Mark recent commits available locally and reachable from a local ref as
-- * COMPLETE. If args->no_dependents is false, also mark COMPLETE remote refs as
-- * COMMON_REF (otherwise, we are not planning to participate in negotiation, and
-- * thus do not need COMMON_REF marks).
-+ * COMPLETE.
-  *
-  * The cutoff time for recency is determined by this heuristic: it is the
-  * earliest commit time of the objects in refs that are commits and that we know
-@@ -969,12 +959,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	struct fetch_negotiator negotiator_alloc;
- 	struct fetch_negotiator *negotiator;
- 
--	if (args->no_dependents) {
--		negotiator = NULL;
--	} else {
--		negotiator = &negotiator_alloc;
--		fetch_negotiator_init(r, negotiator);
--	}
-+	negotiator = &negotiator_alloc;
-+	fetch_negotiator_init(r, negotiator);
- 
- 	sort_ref_list(&ref, ref_compare_name);
- 	QSORT(sought, nr_sought, cmp_ref_by_name);
-@@ -1062,15 +1048,11 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	if (!server_supports_hash(the_hash_algo->name, NULL))
- 		die(_("Server does not support this repository's object format"));
- 
--	if (!args->no_dependents) {
--		mark_complete_and_common_ref(negotiator, args, &ref);
--		filter_refs(args, &ref, sought, nr_sought);
--		if (everything_local(args, &ref)) {
--			packet_flush(fd[1]);
--			goto all_done;
--		}
--	} else {
--		filter_refs(args, &ref, sought, nr_sought);
-+	mark_complete_and_common_ref(negotiator, args, &ref);
-+	filter_refs(args, &ref, sought, nr_sought);
-+	if (everything_local(args, &ref)) {
-+		packet_flush(fd[1]);
-+		goto all_done;
- 	}
- 	if (find_common(negotiator, args, fd, &oid, ref) < 0)
- 		if (!args->keep_pack)
-@@ -1119,7 +1101,7 @@ static void add_shallow_requests(struct strbuf *req_buf,
- 		packet_buf_write(req_buf, "deepen-relative\n");
- }
- 
--static void add_wants(int no_dependents, const struct ref *wants, struct strbuf *req_buf)
-+static void add_wants(const struct ref *wants, struct strbuf *req_buf)
- {
- 	int use_ref_in_want = server_supports_feature("fetch", "ref-in-want", 0);
- 
-@@ -1136,12 +1118,8 @@ static void add_wants(int no_dependents, const struct ref *wants, struct strbuf
- 		 * We use lookup_object here because we are only
- 		 * interested in the case we *know* the object is
- 		 * reachable and we have already scanned it.
--		 *
--		 * Do this only if args->no_dependents is false (if it is true,
--		 * we cannot trust the object flags).
- 		 */
--		if (!no_dependents &&
--		    ((o = lookup_object(the_repository, remote)) != NULL) &&
-+		if (((o = lookup_object(the_repository, remote)) != NULL) &&
- 		    (o->flags & COMPLETE)) {
- 			continue;
- 		}
-@@ -1275,19 +1253,14 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 	}
- 
- 	/* add wants */
--	add_wants(args->no_dependents, wants, &req_buf);
-+	add_wants(wants, &req_buf);
- 
--	if (args->no_dependents) {
--		packet_buf_write(&req_buf, "done");
--		ret = 1;
--	} else {
--		/* Add all of the common commits we've found in previous rounds */
--		add_common(&req_buf, common);
-+	/* Add all of the common commits we've found in previous rounds */
-+	add_common(&req_buf, common);
- 
--		/* Add initial haves */
--		ret = add_haves(negotiator, seen_ack, &req_buf,
--				haves_to_send, in_vain);
--	}
-+	/* Add initial haves */
-+	ret = add_haves(negotiator, seen_ack, &req_buf,
-+			haves_to_send, in_vain);
- 
- 	/* Send request */
- 	packet_buf_flush(&req_buf);
-@@ -1547,12 +1520,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
- 	int i;
- 
--	if (args->no_dependents) {
--		negotiator = NULL;
--	} else {
--		negotiator = &negotiator_alloc;
--		fetch_negotiator_init(r, negotiator);
--	}
-+	negotiator = &negotiator_alloc;
-+	fetch_negotiator_init(r, negotiator);
- 
- 	packet_reader_init(&reader, fd[0], NULL, 0,
- 			   PACKET_READ_CHOMP_NEWLINE |
-@@ -1576,21 +1545,16 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 				args->deepen = 1;
- 
- 			/* Filter 'ref' by 'sought' and those that aren't local */
--			if (!args->no_dependents) {
--				mark_complete_and_common_ref(negotiator, args, &ref);
--				filter_refs(args, &ref, sought, nr_sought);
--				if (everything_local(args, &ref))
--					state = FETCH_DONE;
--				else
--					state = FETCH_SEND_REQUEST;
--
--				mark_tips(negotiator, args->negotiation_tips);
--				for_each_cached_alternate(negotiator,
--							  insert_one_alternate_object);
--			} else {
--				filter_refs(args, &ref, sought, nr_sought);
-+			mark_complete_and_common_ref(negotiator, args, &ref);
-+			filter_refs(args, &ref, sought, nr_sought);
-+			if (everything_local(args, &ref))
-+				state = FETCH_DONE;
-+			else
- 				state = FETCH_SEND_REQUEST;
--			}
-+
-+			mark_tips(negotiator, args->negotiation_tips);
-+			for_each_cached_alternate(negotiator,
-+						  insert_one_alternate_object);
- 			break;
- 		case FETCH_SEND_REQUEST:
- 			if (!negotiation_started) {
-@@ -1911,20 +1875,6 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
- 	if (nr_sought)
- 		nr_sought = remove_duplicates_in_refs(sought, nr_sought);
- 
--	if (args->no_dependents && !args->filter_options.choice) {
--		/*
--		 * The protocol does not support requesting that only the
--		 * wanted objects be sent, so approximate this by setting a
--		 * "blob:none" filter if no filter is already set. This works
--		 * for all object types: note that wanted blobs will still be
--		 * sent because they are directly specified as a "want".
--		 *
--		 * NEEDSWORK: Add an option in the protocol to request that
--		 * only the wanted objects be sent, and implement it.
--		 */
--		parse_list_objects_filter(&args->filter_options, "blob:none");
--	}
--
- 	if (version != protocol_v2 && !ref) {
- 		packet_flush(fd[1]);
- 		die(_("no matching remote head"));
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 85d1e39fe7..bbe2938059 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -42,20 +42,6 @@ struct fetch_pack_args {
- 	unsigned deepen:1;
- 	unsigned from_promisor:1;
- 
--	/*
--	 * Attempt to fetch only the wanted objects, and not any objects
--	 * referred to by them. Due to protocol limitations, extraneous
--	 * objects may still be included. (When fetching non-blob
--	 * objects, only blobs are excluded; when fetching a blob, the
--	 * blob itself will still be sent. The client does not need to
--	 * know whether a wanted object is a blob or not.)
--	 *
--	 * If 1, fetch_pack() will also not modify any object flags.
--	 * This allows fetch_pack() to safely be called by any function,
--	 * regardless of which object flags it uses (if any).
--	 */
--	unsigned no_dependents:1;
--
- 	/*
- 	 * Because fetch_pack() overwrites the shallow file upon a
- 	 * successful deepening non-clone fetch, if this struct
-diff --git a/remote-curl.c b/remote-curl.c
-index 5cbc6e5002..a0c81a64bc 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -40,7 +40,6 @@ struct options {
- 		push_cert : 2,
- 		deepen_relative : 1,
- 		from_promisor : 1,
--		no_dependents : 1,
- 		atomic : 1,
- 		object_format : 1;
- 	const struct git_hash_algo *hash_algo;
-@@ -186,9 +185,6 @@ static int set_option(const char *name, const char *value)
- 	} else if (!strcmp(name, "from-promisor")) {
- 		options.from_promisor = 1;
- 		return 0;
--	} else if (!strcmp(name, "no-dependents")) {
--		options.no_dependents = 1;
--		return 0;
- 	} else if (!strcmp(name, "filter")) {
- 		options.filter = xstrdup(value);
- 		return 0;
-@@ -1171,8 +1167,6 @@ static int fetch_git(struct discovery *heads,
- 		argv_array_push(&args, "--deepen-relative");
- 	if (options.from_promisor)
- 		argv_array_push(&args, "--from-promisor");
--	if (options.no_dependents)
--		argv_array_push(&args, "--no-dependents");
- 	if (options.filter)
- 		argv_array_pushf(&args, "--filter=%s", options.filter);
- 	argv_array_push(&args, url.buf);
-diff --git a/transport.c b/transport.c
-index b41386eccb..32e1f21f0c 100644
---- a/transport.c
-+++ b/transport.c
-@@ -232,9 +232,6 @@ static int set_git_option(struct git_transport_options *opts,
- 	} else if (!strcmp(name, TRANS_OPT_FROM_PROMISOR)) {
- 		opts->from_promisor = !!value;
- 		return 0;
--	} else if (!strcmp(name, TRANS_OPT_NO_DEPENDENTS)) {
--		opts->no_dependents = !!value;
--		return 0;
- 	} else if (!strcmp(name, TRANS_OPT_LIST_OBJECTS_FILTER)) {
- 		list_objects_filter_die_if_populated(&opts->filter_options);
- 		parse_list_objects_filter(&opts->filter_options, value);
-@@ -359,7 +356,6 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.cloning = transport->cloning;
- 	args.update_shallow = data->options.update_shallow;
- 	args.from_promisor = data->options.from_promisor;
--	args.no_dependents = data->options.no_dependents;
- 	args.filter_options = data->options.filter_options;
- 	args.stateless_rpc = transport->stateless_rpc;
- 	args.server_options = transport->server_options;
-diff --git a/transport.h b/transport.h
-index b3c30133ea..7aa1f33145 100644
---- a/transport.h
-+++ b/transport.h
-@@ -16,7 +16,6 @@ struct git_transport_options {
- 	unsigned update_shallow : 1;
- 	unsigned deepen_relative : 1;
- 	unsigned from_promisor : 1;
--	unsigned no_dependents : 1;
- 
- 	/*
- 	 * If this transport supports connect or stateless-connect,
-@@ -201,12 +200,6 @@ void transport_check_allowed(const char *type);
- /* Indicate that these objects are being fetched by a promisor */
- #define TRANS_OPT_FROM_PROMISOR "from-promisor"
- 
--/*
-- * Indicate that only the objects wanted need to be fetched, not their
-- * dependents
-- */
--#define TRANS_OPT_NO_DEPENDENTS "no-dependents"
--
- /* Filter objects for partial clone and fetch */
- #define TRANS_OPT_LIST_OBJECTS_FILTER "filter"
  
 -- 
-2.28.0.220.ged08abb693-goog
+2.28.0.windows.1
 
