@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AB13C433DF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB40AC433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:18:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41CC520786
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:08:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE74A206B5
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 20:18:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wYeu2qbm"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pz5q/Aek"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbgHRUIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 16:08:46 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54986 "EHLO
+        id S1726750AbgHRUSw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 16:18:52 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62434 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726539AbgHRUIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 16:08:44 -0400
+        with ESMTP id S1726738AbgHRUSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 16:18:51 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A9012E5D87;
-        Tue, 18 Aug 2020 16:08:42 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B2C20E5E49;
+        Tue, 18 Aug 2020 16:18:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mEPkQ939RSDPmbe7LUQyOUi2dY4=; b=wYeu2q
-        bmdBspQ8ba/c3rrST0uBlzPgoSjSEUJAHmLoAqxuH7TUL9sYZCirBycmuzA0v7r5
-        6l9SqbrZdMM0YRRUFIpgvaIjk18v7HN7Oc3XJMQVGRqrI76O44oh6Ucgu/ViE3/t
-        XOmaiX+SaVPj6U4WM8bQTSBXe/8eVGxxhLqas=
+        :content-type; s=sasl; bh=KNLdEvM/9P7VKZ58ERXt+/ZTeU0=; b=pz5q/A
+        ekKfwj0LLOW7v4WW9zrVJfXKf4byOs/he0HgKyMcA94ZfAV3rT1CZ41ugRC2Tm/W
+        OF2U0aJlehwqQjD+sWiO0ahlGi3ctgpSa6sryrydpDCHz2lueidSPt+679Jm/NL/
+        n2KbGsVMpRTcfCeLtEwzHfFSLd2yWCnk5+hvs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=o7UbiCryzpJ+lHFLDd/kjS7CwRrtGibS
-        w1vTWkD2/FKqOYf7GcsTs3+HY2dwKYyqkERAm9UwfarKCgOb1qovPNpWLTmEksxY
-        zVaZjcaP0yZNUNbSf+4EChhZvVqh1MMw3SABKtd/Tkjp4BIEXyTWLEOx6tsSCnJ/
-        C2iTIvBltzI=
+        :content-type; q=dns; s=sasl; b=cEhIwJOjyzpHn9iOoo8fTpdA18AvEohH
+        pswXIYPgi9A3GxToDETCtBfEjpxXJjjnD0Pet9PyqOOJV3MXYu6zhv8UhXF6W0xx
+        uQ9deAitw6RlQI8pUm+DvQNmuFdgEzv1nVsY/l+tJaJAoiNR+k133RbJgczOQlWY
+        s5EsdU1vYc4=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1A8EE5D86;
-        Tue, 18 Aug 2020 16:08:42 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AA054E5E47;
+        Tue, 18 Aug 2020 16:18:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 64E48E5D80;
-        Tue, 18 Aug 2020 16:08:38 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 40EE0E5E46;
+        Tue, 18 Aug 2020 16:18:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ian S. Worthington" <ianworthington@usa.net>
-Cc:     <git@vger.kernel.org>
-Subject: Re: Problems with FTP PUSH
-References: <196yHRLtV8416Set.1597751181@web13.cms.usa.net>
-Date:   Tue, 18 Aug 2020 13:08:36 -0700
-In-Reply-To: <196yHRLtV8416Set.1597751181@web13.cms.usa.net> (Ian
-        S. Worthington's message of "Tue, 18 Aug 2020 12:46:21 +0100")
-Message-ID: <xmqqeeo3yawr.fsf@gitster.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
+        congdanhqx@gmail.com, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 00/11] Maintenance I: Command, gc and commit-graph tasks
+References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
+        <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
+Date:   Tue, 18 Aug 2020 13:18:39 -0700
+In-Reply-To: <pull.695.v2.git.1597760589.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Tue, 18 Aug 2020 14:22:57
+        +0000")
+Message-ID: <xmqqa6yryag0.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9AA45E4C-E18E-11EA-AAE1-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 01F8F5B6-E190-11EA-9940-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ian S. Worthington" <ianworthington@usa.net> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> I have a server without https and so I'm trying to establish if I can host a
-> repository there using ftp.  The manuals suggest that I can, but when I try: 
+> This series is based on jk/strvec.
 
-Which manuals?
+As jc/no-update-fetch-head topic seems to be getting popular for
+some reason, let's do this:
 
-IIUC, a dumb HTTP(S) server that accepts only GET can still serve
-"git fetch", and an FTP(s) server would be able to do the same using
-similar codepath, but I do not think these can accept "git push".  A
-dumb HTTP(S) may be able to accept "git push" if it does WebDAV, but
-I do not think there is corresponding FTP support at all.
+ - recreate jc/no-update-fetch-head topic with patch [1/9] of the
+   maintenance-2 series directly on top of 'master';
 
+ - fork ds/maintenance-part-1 topic off of jc/no-update-fetch-head
+   and queue these 11 patches;
+
+ - fork ds/maintenance-part-2 topic off of ds/maintenance-part-1 and
+   queue its 8 patches [2/9 - 9/9].
+
+Thanks.
