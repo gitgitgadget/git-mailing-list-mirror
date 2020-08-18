@@ -2,114 +2,128 @@ Return-Path: <SRS0=LSsm=B4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADC22C433DF
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 12:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12573C433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:18:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86A5920786
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 12:30:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB95B20786
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:18:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TTqqdSDI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L/DHcBwt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726701AbgHRMaV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 08:30:21 -0400
-Received: from mout.gmx.net ([212.227.15.19]:47777 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726635AbgHRMaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 08:30:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1597753815;
-        bh=dU5sn+D6CGZn9g50eZFXYsHC1sZqR2qxtyVJFYpix+E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TTqqdSDImvljSXQPLWtu4kt7qW2tMT1IG7Lq4p7tUq388cy++Rsnf63JH5Mzb4RTQ
-         x98a3J59CnwQnMwCW1TB5IQf9wg6aATMgz5duj+EnqmDrnR6JzCJ9V3+5wLKu6KYWP
-         1BXGie9lamigEKWX6vS/GCyltwRAwsFZkXj1NwM8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.183.59] ([89.1.213.201]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1poA-1k5npf1XAW-002GVT; Tue, 18
- Aug 2020 14:30:15 +0200
-Date:   Tue, 18 Aug 2020 08:39:07 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 0/2] add p in C tweaks
-In-Reply-To: <pull.702.git.1597670589.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2008180838430.56@tvgsbejvaqbjf.bet>
-References: <pull.702.git.1597670589.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726890AbgHROSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 10:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49844 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbgHROSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:18:21 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0A4C061389
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:18:20 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id f26so21607567ljc.8
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:18:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=SZ8+6Vx/VoW3H2yO3bgmZnHiWDLNqZFWbco/8tOOCOE=;
+        b=L/DHcBwt9xKFyqsGlSg2oaPSFP/Jyq/N4Q0OJLFtWOYfKnkGeyIZjmrILFDx1GV9O0
+         4KdPiljImtqv/R1DqQrTn8SOZJbPGYzr9/QI8qyoOR2CP5KHNczQXUQyr+idaQMYq68Y
+         q4F/PRLqP9HmnX9NYRtg/pPRgpcAXzNfto+nMEYnwFHbCsMZFCfhnkoDllX1lxeDNFPE
+         w4m2D5IoE8Px+SA3AKWALCZtM5inrj57XppmL56uopIV/Vngr6FSXDhWreZ6cCoABiS5
+         gr4pNltYmv0bUraMdZSt05vYb6nOMeWZAUVc1ga6VYiSgvLdGzH5CM05NnsBMZxkw/YG
+         bYaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=SZ8+6Vx/VoW3H2yO3bgmZnHiWDLNqZFWbco/8tOOCOE=;
+        b=DaGg/Zgd85eQErFgWcTejaEJbGcN1xGnOjkEVE/Y5yCxnsTVGViS4qnbnpn5Tr3WO6
+         Y1rQe70P8IEfsdloJIQFLu0GfG+SsxSTDUciBy1f1/qaAOM4j1EjkBNoMs5MWJ5oJYJx
+         oBYc+XGBU/kOFbD4LQSoPd6CvDbd3uFrMlExhgahKeSLHjKztaKTxP17E2uPbz7h87X/
+         fGlkQtQ7QRCRHTFGw24kvupNwDZzmck0VU1HtydauYdxiwLRzXkltuhSFRN7peUqqIi7
+         tsheB5ud6+t34B2PuXecIVLcnEQOCK5o2orB59zoguueMx5xAO0QEUdKRKnXNJe/8ony
+         elYA==
+X-Gm-Message-State: AOAM531z+Yp7qI0Iucy3BdEqfJrbcH6rvsDEgUy5rv+hzHOToX8wMnZF
+        64iREFSNxnitrt3etwA5Qt8=
+X-Google-Smtp-Source: ABdhPJzc15u+lnZGS0vvy2PZ5iL3yGV7gBYpBasHjCGpIlbMCPiDVZ52K6OHaCb5VfIrqYPeXTqnEg==
+X-Received: by 2002:a2e:b708:: with SMTP id j8mr10166479ljo.375.1597760299119;
+        Tue, 18 Aug 2020 07:18:19 -0700 (PDT)
+Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id j6sm5974856lja.23.2020.08.18.07.18.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Aug 2020 07:18:18 -0700 (PDT)
+From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
+To:     "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 02/11] revision: parse parent in indegree_walk_step()
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+        <e6738672349254c6405f7dde48f612b82af9299f.1597509583.git.gitgitgadget@gmail.com>
+Date:   Tue, 18 Aug 2020 16:18:17 +0200
+In-Reply-To: <e6738672349254c6405f7dde48f612b82af9299f.1597509583.git.gitgitgadget@gmail.com>
+        (Abhishek Kumar via GitGitGadget's message of "Sat, 15 Aug 2020 16:39:34
+        +0000")
+Message-ID: <85imdgxck6.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:uuLXLypX6Hp9R+lACppd5fw9ma8AOeKnJPNfiFlvV7zBCw1qOgr
- o4cW5qOz/nrfqmtuqdvIf38xrvoU2G4ePwNiQWp86eWgN045tXFgXXvQEkNFwhNIF6yierr
- Rr73tNT/gcXT634KaMg5F89idCCWwLlpnOmRBp/i8G9fq79f/2DveQp22j39N20XCAmywcJ
- wn+Odhj0ga7nS2fZPwX2g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rQNQERjqjm8=:ujCYv4t+PKvBSZeOLbmkwW
- m/f7RJ20HEgNrp8S9s0pNOFoCEiCNhk4lGSJjgfpyX79p80GdZSgTyTjM4UTtsGqaTePOoWkO
- D5s98FdS9EoIp6642ChUs9QNmUJfVb9ngsA0nTBj46t5GSLBOxV6bTCf0ABGn8BH0NEPThgSm
- lBwRPidIHmIULd93ioKlnIzRdyKovRxBJr83Tj1p5gDsoMiLbGAqlbVZIot8Six2CuroKArrc
- DwbCKPkgT5U20Cn+25Q1l0bqF6sJY1WpWJN3NDXzKnB6gD+9sMPuknNvSyb8F+3BP/o0m5bFc
- B1IiHMhh2VDZ/BfS1txAmKBBcqXUvTzU2VkP7ximUYJmB0ZO7MZ0N8pdcA5VMwGcFgkujjJp2
- sIWB2Muae78ve04jn5ZDhkZuwS2YqsN9GrhcBFnA4tJJc4g/Ea0dbi7i/D7TmeJDrDE/djNT4
- hhkU79kny3j5p1lyp8sRC+j8j86k6V2Aav82AMxTSbn4/zeDfaVW9b3X9BYhWONDziNoc6zZ5
- oLjhZ9+foqFpBb5aF6tqtr9ttJzeCyFQiOay7c5h36twSDdzFQ+dIiKUKmDEX+RF3Nreog/+w
- IYlrYFtDoztXOD/jZvR44PFrkLlq1hE1BGCYSMhheDq3NmT4omizHonvPHRg9X16OZy7YJtXh
- rDsKsWO+95osH9Q+EuSM5GCwtqGY/Htpbpysr6BakPxkeQOQqGmsNXkwITuL2CUpyp5rL51/X
- fPJQFXRS3YIHxuMLMCJAXm8FWZQSnvABKM0LF7bghzYP26WA5UxTV3ZCMv/PGj652PhpE25ND
- uwcN6x1U5KoY1au9S86W5AoELkRibUNkYT04KqfoMnnVtY64UThYMP9jGPtGGgBxXJ6A0lSpJ
- xrzgorUmY+a8I3Zf+qegzubaUUh5vQaAaqwYZTKgDdui34EGgoDQ+3btalfMRxx9zBYt9JMrU
- V6X1A3wpr8NgarvrKiQCUEeE9oWklK9lTqQJDJDPJ/Km3BNSC4HbPI/+ceHoLmqNMayYYOimP
- Fv8KH6279B+eoknhN533JqwzCxup/A4N9FCbXJcnPcSZnKV2joe+9ylXvDOEtSs4ABwajwe3C
- 351OFLaH6FV6SAA5DmcZkrGqkyTlaHELF9tvQ0fg3PfaEHFEj574bjKTuU+g98nl+SdvviCNp
- Sl2HVhu7fVWM9ylG7h6iuaDohi3ABBJqTLwY+sztBSUkUMktucxQy9hVb5XSkcJKvNX3dsMpz
- ifjU52qxMJSkArqTw6M3n9+e6lGFfvKcwwA7r7w==
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+"Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Mon, 17 Aug 2020, Phillip Wood via GitGitGadget wrote:
-
-> A code cleanup and small bug fix for the C version of add -p
+> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 >
-> dscho has pointed out that the bug fix in the second patch gets lost in =
-the
-> other changes and suggested adding the last member of the enum (which fi=
-xes
-> the bug with handling 'e') as a separate patch. I'm unsure as it feels o=
-dd
-> to split up the introduction of the flags - I'd be interested to hear wh=
-at
-> others think.
+> In indegree_walk_step(), we add unvisited parents to the indegree queue.
+> However, parents are not guaranteed to be parsed. As the indegree queue
+> sorts by generation number, let's parse parents before inserting them to
+> ensure the correct priority order.
 
-Yep, apart from this issue I am fine with the patches as-are.
-
-Thanks,
-Dscho
+All right, we need to have commit parsed to have correct value for its
+generation number.
 
 >
-> Phillip Wood (2):
->   add -p: use ALLOC_GROW_BY instead of ALLOW_GROW
->   add -p: fix checking of user input
+> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> ---
+>  revision.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
->  add-patch.c | 67 +++++++++++++++++++++++++++++++++--------------------
->  1 file changed, 42 insertions(+), 25 deletions(-)
+> diff --git a/revision.c b/revision.c
+> index 3dcf689341..ecf757c327 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -3363,6 +3363,9 @@ static void indegree_walk_step(struct rev_info *rev=
+s)
+>  		struct commit *parent =3D p->item;
+>  		int *pi =3D indegree_slab_at(&info->indegree, parent);
 >
->
-> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-702%2F=
-phillipwood%2Fwip%2Fadd-p-fixes-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-702/phill=
-ipwood/wip/add-p-fixes-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/702
-> --
-> gitgitgadget
->
+> +		if (parse_commit_gently(parent, 1) < 0)
+> +			return;
+> +
+
+All right, this is exactly what is done in this function for commit 'c'
+taken from indegree_queue, whose parents we process here:
+
+	if (parse_commit_gently(c, 1) < 0)
+		return;
+
+>  		if (*pi)
+>  			(*pi)++;
+>  		else
+
+Looks good to me.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
