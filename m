@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97ED1C433E3
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9001C433E1
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74EB9207DA
-	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D59A207DA
+	for <git@archiver.kernel.org>; Tue, 18 Aug 2020 14:23:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qrWjN+5o"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hZuing9T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726868AbgHROXn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 10:23:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50614 "EHLO
+        id S1726803AbgHROXp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Aug 2020 10:23:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726612AbgHROXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 10:23:16 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFA2C061345
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:15 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id f7so18478874wrw.1
-        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:15 -0700 (PDT)
+        with ESMTP id S1726636AbgHROXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Aug 2020 10:23:20 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C80F3C061347
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:17 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id g75so17174338wme.4
+        for <git@vger.kernel.org>; Tue, 18 Aug 2020 07:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=esQK9tq9GqpY+vSwmwnemBsEpJ5f4uldkNOirXjhIgI=;
-        b=qrWjN+5ogl8cDZriT7ERC4fE5lKmiP+Fc4pSK404zOV16eAsePP6FX1aP36yg/dmjW
-         okrvGbF/48nwp1vDWYc1SGwkyzJqrD/VXlj6ohr9pY8badaLbY9EOxi8G3Lmo97dPRt7
-         XROG6oazA2F+X+niyIL9vg4pxmnCi/gnXHDboIORtKy4dvtHkHB4VIm+YX2akQr6uqtI
-         bGLqldOoOOf34iCbVV4UojrWKUPImjBF++GOwMNj+i8nqC5LcNRswNCEeOlE9B71AMz/
-         aEpJbmgTzCpq7Os8naaCAJUEd7mQ6uoE9IDJa63FouOpFzuNy4yVZ/6FiqGQqYIIqZAD
-         uyzw==
+        bh=JHjJU4VSqmYw0QkLeFL1p9zHlz8jMEG2I2KKfue5Smg=;
+        b=hZuing9TJu0ZZtsw211wk+X9TiYUcW/2bcJ2JUsfQZnZqpPoMrZLROQ4f23SvgC/+d
+         5mUVHU4pjQ2QWoaS5gh573bA+XeVZ1jjxiCoo2v1wcIsDCXfGbH8ZqnpKzM4XyBkHEfm
+         vrJHpHKr0NwBC4nfOETXGrl0ckdGZvkLTrMY6z6cU+Ms/aDtB4zRnlRMoCcalI+wVk66
+         v7R2uh0arr5Jkqu/QsK7BE6BzUndlzL5OFwkeQ3PQMG1+fCSew998MLg5ErtWmcsMWiz
+         4cGzprn8tBgVKqCAdZHgsOxn11/jAkL11mVH3o1QD94UK6hpuqma4H7fiJ8VJWSzzsjA
+         YREw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=esQK9tq9GqpY+vSwmwnemBsEpJ5f4uldkNOirXjhIgI=;
-        b=pBOlquCLQwJAbmjgaMO20QOssJ4xmvNlSIu1UBuoaKXfQS+pbxyRpzKa8cHquJC9HR
-         35Arc5fW5XN03ChsPsmeQWkWvctnhjUvRiYogPuzbLAt7nYyZMT57iF6fsgrlx2cP7la
-         2Awbx6dSkWFZT9CUNHVLAocG+c8g6NY3NX98KxZss6PkfQmDZ7jtWhIDIdzms+gyvbUV
-         zr1NBd50JZabftrwQlIVm1fk6BpsKwpLHYPB5KQqHvSIbs4VrL3RAGb2+eTE5EsXnHD9
-         gGlIvCIRq0FP+Btf2JlI038y6CKoo0YVo1pzhPTD3gbhttTzCNVLVEnHzrGuRS0P12sj
-         HgFQ==
-X-Gm-Message-State: AOAM533i3uSOhoS8ajKsyrEYazHZVuvdNVKiXirEe53eqjcVvq9eT8dM
-        LILzIzQS26QsDDAy11NiCLmGsYjweS8=
-X-Google-Smtp-Source: ABdhPJygWgv2CfmwwKOEPU4qHQ8lgcafnYd36OGVXqepdkXBD5j1gNj3y2kgsCeQ53NwYT+l77HJGg==
-X-Received: by 2002:adf:d84f:: with SMTP id k15mr19666480wrl.176.1597760594256;
-        Tue, 18 Aug 2020 07:23:14 -0700 (PDT)
+        bh=JHjJU4VSqmYw0QkLeFL1p9zHlz8jMEG2I2KKfue5Smg=;
+        b=V/gpqWB5tWPyTYA78n3eea/Sauu2f66tImuG0zX7zlkexNT90QePCT7cjy7BibQb6/
+         1Ju/rzexL51B6dRrbFE2ObCeMhJvGRWadHYeoYEeEvR0w9MOLqVDj2Pqr6ARGnomzmUT
+         6XHqS2Nk1kBGJ6LbMYhkH9RsWl5Tw6978jYEjIvdrwAgGRpcnAdjIm5dsd1vu5yxyRQv
+         TG8YrgvWTHYjojKr+xXc5J2kOpYJFBsr7HVkYdsCkHVs+lxGxTce2mfRUyrPdjSlPugC
+         R69yCkGYaLmOTwmrk9C8cBNoQqfAkm9DAsQq1sihH9KyWEgTS8CDh5YNLym2shH1v1JX
+         SMTA==
+X-Gm-Message-State: AOAM530dR48efcfZ81o5KAlTlZji8QYy5NPuDvrO7Gp4Mxq7wB7QLLDh
+        5hO5VAiVNehcKMsB3Y6UiW+on9Lyp2M=
+X-Google-Smtp-Source: ABdhPJyugO2uH3ln7qxa9vbQK8TRNOxFHGHr4GpeoRWah8bpD4+fyT3RaoR6KZaIxFUnX9TFmtlUKg==
+X-Received: by 2002:a05:600c:2146:: with SMTP id v6mr161023wml.87.1597760596178;
+        Tue, 18 Aug 2020 07:23:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 32sm38180934wrh.18.2020.08.18.07.23.13
+        by smtp.gmail.com with ESMTPSA id v11sm34437150wrr.10.2020.08.18.07.23.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2020 07:23:13 -0700 (PDT)
-Message-Id: <1db3b96280d9bf7908b7dc9fa13b80c445164a99.1597760589.git.gitgitgadget@gmail.com>
+        Tue, 18 Aug 2020 07:23:15 -0700 (PDT)
+Message-Id: <85268bd53ef7f4e7b3d97a8ae091290e8e74441d.1597760589.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
 References: <pull.695.git.1596728921.gitgitgadget@gmail.com>
         <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Aug 2020 14:23:01 +0000
-Subject: [PATCH v2 04/11] maintenance: initialize task array
+Date:   Tue, 18 Aug 2020 14:23:03 +0000
+Subject: [PATCH v2 06/11] maintenance: add --task option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,80 +83,190 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In anticipation of implementing multiple maintenance tasks inside the
-'maintenance' builtin, use a list of structs to describe the work to be
-done.
+A user may want to only run certain maintenance tasks in a certain
+order. Add the --task=<task> option, which allows a user to specify an
+ordered list of tasks to run. These cannot be run multiple times,
+however.
 
-The struct maintenance_task stores the name of the task (as given by a
-future command-line argument) along with a function pointer to its
-implementation and a boolean for whether the step is enabled.
+Here is where our array of maintenance_task pointers becomes critical.
+We can sort the array of pointers based on the task order, but we do not
+want to move the struct data itself in order to preserve the hashmap
+references. We use the hashmap to match the --task=<task> arguments into
+the task struct data.
 
-A list these structs are initialized with the full list of implemented
-tasks along with a default order. For now, this list only contains the
-"gc" task. This task is also the only task enabled by default.
+Keep in mind that the 'enabled' member of the maintenance_task struct is
+a placeholder for a future 'maintenance.<task>.enabled' config option.
+Thus, we use the 'enabled' member to specify which tasks are run when
+the user does not specify any --task=<task> arguments. The 'enabled'
+member should be ignored if --task=<task> appears.
 
-The run subcommand will return a nonzero exit code if any task fails.
-However, it will attempt all tasks in its loop before returning with the
-failure. Also each failed task will send an error message.
-
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ Documentation/git-maintenance.txt |  8 +++-
+ builtin/gc.c                      | 61 +++++++++++++++++++++++++++++--
+ t/t7900-maintenance.sh            | 27 ++++++++++++++
+ 3 files changed, 92 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index c816fa1dcd..cf59eb258c 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -30,7 +30,9 @@ SUBCOMMANDS
+ -----------
+ 
+ run::
+-	Run one or more maintenance tasks.
++	Run one or more maintenance tasks. If one or more `--task=<task>`
++	options are specified, then those tasks are run in the provided
++	order. Otherwise, only the `gc` task is run.
+ 
+ TASKS
+ -----
+@@ -66,6 +68,10 @@ OPTIONS
+ --quiet::
+ 	Do not report progress or other information over `stderr`.
+ 
++--task=<task>::
++	If this option is specified one or more times, then only run the
++	specified tasks in the specified order.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/gc.c b/builtin/gc.c
-index b75ddb780b..946d871d54 100644
+index 4f9352b9d0..0231d2f8c1 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -728,9 +728,45 @@ static int maintenance_task_gc(struct maintenance_opts *opts)
- 	return run_command(&child);
- }
+@@ -791,7 +791,9 @@ typedef int maintenance_task_fn(struct maintenance_opts *opts);
+ struct maintenance_task {
+ 	const char *name;
+ 	maintenance_task_fn *fn;
+-	unsigned enabled:1;
++	unsigned enabled:1,
++		 selected:1;
++	int selected_order;
+ };
  
-+typedef int maintenance_task_fn(struct maintenance_opts *opts);
+ enum maintenance_task_label {
+@@ -814,13 +816,32 @@ static struct maintenance_task tasks[] = {
+ 	},
+ };
+ 
++static int compare_tasks_by_selection(const void *a_, const void *b_)
++{
++	const struct maintenance_task *a, *b;
 +
-+struct maintenance_task {
-+	const char *name;
-+	maintenance_task_fn *fn;
-+	unsigned enabled:1;
-+};
++	a = (const struct maintenance_task *)&a_;
++	b = (const struct maintenance_task *)&b_;
 +
-+enum maintenance_task_label {
-+	TASK_GC,
-+
-+	/* Leave as final value */
-+	TASK__COUNT
-+};
-+
-+static struct maintenance_task tasks[] = {
-+	[TASK_GC] = {
-+		"gc",
-+		maintenance_task_gc,
-+		1,
-+	},
-+};
++	return b->selected_order - a->selected_order;
++}
 +
  static int maintenance_run(struct maintenance_opts *opts)
  {
--	return maintenance_task_gc(opts);
-+	int i;
-+	int result = 0;
+-	int i;
++	int i, found_selected = 0;
+ 	int result = 0;
+ 
++	for (i = 0; !found_selected && i < TASK__COUNT; i++)
++		found_selected = tasks[i].selected;
 +
-+	for (i = 0; i < TASK__COUNT; i++) {
-+		if (!tasks[i].enabled)
++	if (found_selected)
++		QSORT(tasks, TASK__COUNT, compare_tasks_by_selection);
++
+ 	for (i = 0; i < TASK__COUNT; i++) {
+-		if (!tasks[i].enabled)
++		if (found_selected && !tasks[i].selected)
 +			continue;
 +
-+		if (tasks[i].fn(opts)) {
-+			error(_("task '%s' failed"), tasks[i].name);
-+			result = 1;
++		if (!found_selected && !tasks[i].enabled)
+ 			continue;
+ 
+ 		if (tasks[i].fn(opts)) {
+@@ -832,6 +853,37 @@ static int maintenance_run(struct maintenance_opts *opts)
+ 	return result;
+ }
+ 
++static int task_option_parse(const struct option *opt,
++			     const char *arg, int unset)
++{
++	int i, num_selected = 0;
++	struct maintenance_task *task = NULL;
++
++	BUG_ON_OPT_NEG(unset);
++
++	for (i = 0; i < TASK__COUNT; i++) {
++		num_selected += tasks[i].selected;
++		if (!strcasecmp(tasks[i].name, arg)) {
++			task = &tasks[i];
 +		}
 +	}
 +
-+	return result;
- }
- 
++	if (!task) {
++		error(_("'%s' is not a valid task"), arg);
++		return 1;
++	}
++
++	if (task->selected) {
++		error(_("task '%s' cannot be selected multiple times"), arg);
++		return 1;
++	}
++
++	task->selected = 1;
++	task->selected_order = num_selected + 1;
++
++	return 0;
++}
++
  int cmd_maintenance(int argc, const char **argv, const char *prefix)
+ {
+ 	struct maintenance_opts opts;
+@@ -840,6 +892,9 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
+ 			 N_("run tasks based on the state of the repository")),
+ 		OPT_BOOL(0, "quiet", &opts.quiet,
+ 			 N_("do not report progress or other information over stderr")),
++		OPT_CALLBACK_F(0, "task", NULL, N_("task"),
++			N_("run a specific task"),
++			PARSE_OPT_NONEG, task_option_parse),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index c0c4e6846e..792765aff7 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -25,4 +25,31 @@ test_expect_success 'run [--auto|--quiet]' '
+ 	test_subcommand git gc --no-quiet <run-no-quiet.txt
+ '
+ 
++test_expect_success 'run --task=<task>' '
++	GIT_TRACE2_EVENT="$(pwd)/run-commit-graph.txt" \
++		git maintenance run --task=commit-graph 2>/dev/null &&
++	GIT_TRACE2_EVENT="$(pwd)/run-gc.txt" \
++		git maintenance run --task=gc 2>/dev/null &&
++	GIT_TRACE2_EVENT="$(pwd)/run-commit-graph.txt" \
++		git maintenance run --task=commit-graph 2>/dev/null &&
++	GIT_TRACE2_EVENT="$(pwd)/run-both.txt" \
++		git maintenance run --task=commit-graph --task=gc 2>/dev/null &&
++	test_subcommand ! git gc --quiet <run-commit-graph.txt &&
++	test_subcommand git gc --quiet <run-gc.txt &&
++	test_subcommand git gc --quiet <run-both.txt &&
++	test_subcommand git commit-graph write --split --reachable --no-progress <run-commit-graph.txt &&
++	test_subcommand ! git commit-graph write --split --reachable --no-progress <run-gc.txt &&
++	test_subcommand git commit-graph write --split --reachable --no-progress <run-both.txt
++'
++
++test_expect_success 'run --task=bogus' '
++	test_must_fail git maintenance run --task=bogus 2>err &&
++	test_i18ngrep "is not a valid task" err
++'
++
++test_expect_success 'run --task duplicate' '
++	test_must_fail git maintenance run --task=gc --task=gc 2>err &&
++	test_i18ngrep "cannot be selected multiple times" err
++'
++
+ test_done
 -- 
 gitgitgadget
 
