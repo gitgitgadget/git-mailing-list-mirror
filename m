@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20758C433E1
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB383C433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:15:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB8B6207FF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:15:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9C4620885
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:15:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aoWOz1kG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jr0W3qh5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728259AbgHSPPp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 11:15:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57624 "EHLO
+        id S1728341AbgHSPPw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 11:15:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726887AbgHSPPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 11:15:36 -0400
+        with ESMTP id S1726868AbgHSPPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 11:15:41 -0400
 Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74559C061342
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:15:35 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id p20so21917419wrf.0
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:15:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C44C061757
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:15:40 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id y3so21923485wrl.4
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MMbJvakR187I1XG6ZfYROcxF98WwMEF0fMYLH6dc+UM=;
-        b=aoWOz1kG570KAl77RU/KP2awjSpKuUyV8ju3JSxO7xM1UhOZMXhJoiVxWrzZg+Mz2V
-         j1F9PbQ4eSn0tlSZNNoF6rrrerzDT3ftszm9FXEyo6ccWIf4x4lvDjeSC3Pp5g83lGUH
-         JnlpHteTpuQFxo+kWZLk8Y+8vAEeFj3SWEzr3SBp4Ga2ggRvMYnUgvvjpkMwJs7DlGNB
-         klhXPWDv2Ms2jmEx9QN20EyrcYJwTfKE7pjkeBda+N8o8mlUtWVFybvH07NwoXLkJt/k
-         OAW1I+kczE0Wx246QxCqFVcpL19CHM7GJMQqCGK6Q6HZj9KtVviDXkLmpe2JOecah322
-         fQLw==
+        bh=8uRCAD9q+TM2zdKzW5N0kAF5kVOzr2yaYA41ahA4GQo=;
+        b=jr0W3qh51ubzM+aaS2GdxmqxqRb6yTPJxRjOqJ9kO1zwNTa17kMqZZ2m05y6oGUOn4
+         ZT6ABI6s6MKa66xX42aZiume6mNq2t1YZCTEP4p4aBJJwrYNHOk0EyOdz8Pdl6ajwiIB
+         +GVvksxoYrj0upJUZWIiobl8munqtBEPjadUeRckPARnfkXvnlkQlLP4vtqBvrd+xWX8
+         vl8f7Jz6p4MwNFSKoYaL3T7KF7WOJv3rI7Qrmpq649zuCryEbqxV5wSQloiX0+30mS5s
+         SsNe5Y669qIk+NoYKR3TATjPjC6UUVKJ3/pFcdllTf/GgsZMxhshyY+NBOv09O9JKtCF
+         Tukw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MMbJvakR187I1XG6ZfYROcxF98WwMEF0fMYLH6dc+UM=;
-        b=Ym9BvbkmIbcEAftOaMjQa++RfUyDlJ7zGzfPsCe3UbhaYLcYZ6WupvupujL/Q2CVFD
-         nJVyRLg6EfMp1IjVU98VeuTuz+K67acOEy0Hq0e4WXmo7tMFxsRHt3mDGP75DSQNsxif
-         1+og6HjSXwt3f3iUfkePF2LR7WcNlgAFryArfl5R4x0PwLPq7ndUNEEZS607OesqlLP6
-         Xipw/5OIYZ3PGapZQ8YoJkAhZs7GEX/2WG10cDZQ5caG7alWs4EgLNSKL12ng/F25LOW
-         mmPiLAnAGU2hheKCkjK8FWTJ4PGWfDWll0EHbeC4u5YR0R54R2LW4tfgJhKUAFltXxFR
-         F08Q==
-X-Gm-Message-State: AOAM532sXiz+uMkF5PFk6GZ/J/sR7LKlVIsV1JRVnpJr33ibPJ1PgWdU
-        Tp/erT7M3loaxy/ZQW7w211wTrG2tmU=
-X-Google-Smtp-Source: ABdhPJzhFLYcZyyEVd9chjkePoHiX75oW5h/cS3Fbs5TJHuxarOVkqC/ZrcGD+N5xgDJGFxfnDyc5g==
-X-Received: by 2002:adf:fd4e:: with SMTP id h14mr27242002wrs.251.1597850133781;
-        Wed, 19 Aug 2020 08:15:33 -0700 (PDT)
+        bh=8uRCAD9q+TM2zdKzW5N0kAF5kVOzr2yaYA41ahA4GQo=;
+        b=ulpzNqQEntk504nBZYZqKi1yyFmxF0UV1pHK+x9wiY7qpjHXFDBloPq9sJr+p5JgWi
+         yvAtguPCyynxrTiSAasZiRFITMSJTMmYfzNJgms1HlSOpdl/X9TgwQWKZk/gkmoxv9qs
+         uTKUYcXVGyVfTjT5dK9c8F5gy4TrCLihXDWCxlGEcRIG80F+izqaDv5aDcy00qTlsR/f
+         DX60XIMZvAtpEYrP8mII711bfPIXpgzd+DgeFr+Tk/sM7B2tXB/8kxqO4mXu72XAd92x
+         HXCr6QtDm55xho/AbnM0fxF2QWXZfwtI9Zp5ji7Fro7iR6/iIE8b1PgQM7uBS3y46mJ6
+         uQIg==
+X-Gm-Message-State: AOAM531n2NLuGe/qAJEHoWMbTVjbM1lp5/3sYhAdeqknuDs3tYWHCEmZ
+        90IMd+TzbdDe7WTeUbYcnw6gDiWnPHg=
+X-Google-Smtp-Source: ABdhPJwQaCKUpyecL6/Y7R2f+AHcSoCqGDAgI1ErO2VBK6ULnZ96iJ0Q4ImCeG5iE1IjROIHeCJMSA==
+X-Received: by 2002:adf:9ec1:: with SMTP id b1mr25253646wrf.171.1597850135686;
+        Wed, 19 Aug 2020 08:15:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m16sm38527315wrr.71.2020.08.19.08.15.32
+        by smtp.gmail.com with ESMTPSA id j11sm38688195wrq.69.2020.08.19.08.15.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2020 08:15:32 -0700 (PDT)
-Message-Id: <2797e98446deba2756eb8433141514253a54a604.1597850128.git.gitgitgadget@gmail.com>
+        Wed, 19 Aug 2020 08:15:34 -0700 (PDT)
+Message-Id: <2681638651debf267bbe7e45e41decca5852808b.1597850128.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.706.v2.git.1597850128.gitgitgadget@gmail.com>
 References: <pull.706.git.1597753075.gitgitgadget@gmail.com>
         <pull.706.v2.git.1597850128.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 19 Aug 2020 15:15:25 +0000
-Subject: [PATCH v2 2/4] sequencer: treat CHERRY_PICK_HEAD as a pseudo ref
+Date:   Wed, 19 Aug 2020 15:15:26 +0000
+Subject: [PATCH v2 3/4] builtin/commit: suggest update-ref for pseudoref
+ removal
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,214 +79,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Check for existence and delete CHERRY_PICK_HEAD through ref functions.
-This will help cherry-pick work with alternate ref storage backends.
+When pseudorefs move to a different ref storage mechanism, pseudorefs no longer
+can be removed with 'rm'. Instead, suggest a "update-ref -d" command, which will
+work regardless of ref storage backend.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- builtin/merge.c |  2 +-
- path.c          |  1 -
- path.h          |  7 ++++---
- sequencer.c     | 42 ++++++++++++++++++++++++++----------------
- wt-status.c     |  4 ++--
- 5 files changed, 33 insertions(+), 23 deletions(-)
+ builtin/commit.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 74829a838e..b9a89ba858 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1348,7 +1348,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		else
- 			die(_("You have not concluded your merge (MERGE_HEAD exists)."));
- 	}
--	if (file_exists(git_path_cherry_pick_head(the_repository))) {
-+	if (ref_exists("CHERRY_PICK_HEAD")) {
- 		if (advice_resolve_conflict)
- 			die(_("You have not concluded your cherry-pick (CHERRY_PICK_HEAD exists).\n"
- 			    "Please, commit your changes before you merge."));
-diff --git a/path.c b/path.c
-index 8b2c753191..783cc2ae81 100644
---- a/path.c
-+++ b/path.c
-@@ -1528,7 +1528,6 @@ char *xdg_cache_home(const char *filename)
- 	return NULL;
- }
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 69ac78d5e5..a4e5e395ba 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -844,24 +844,24 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		struct ident_split ci, ai;
  
--REPO_GIT_PATH_FUNC(cherry_pick_head, "CHERRY_PICK_HEAD")
- REPO_GIT_PATH_FUNC(revert_head, "REVERT_HEAD")
- REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
- REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
-diff --git a/path.h b/path.h
-index 1f1bf8f87a..8941c018a9 100644
---- a/path.h
-+++ b/path.h
-@@ -170,7 +170,6 @@ void report_linked_checkout_garbage(void);
- 	}
- 
- struct path_cache {
--	const char *cherry_pick_head;
- 	const char *revert_head;
- 	const char *squash_msg;
- 	const char *merge_msg;
-@@ -182,9 +181,11 @@ struct path_cache {
- 	const char *shallow;
- };
- 
--#define PATH_CACHE_INIT { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }
-+#define PATH_CACHE_INIT                                              \
-+	{                                                            \
-+		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL \
-+	}
- 
--const char *git_path_cherry_pick_head(struct repository *r);
- const char *git_path_revert_head(struct repository *r);
- const char *git_path_squash_msg(struct repository *r);
- const char *git_path_merge_msg(struct repository *r);
-diff --git a/sequencer.c b/sequencer.c
-index cc3f8fa88e..09e2ff659e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -381,7 +381,8 @@ static void print_advice(struct repository *r, int show_hint,
- 		 * (typically rebase --interactive) wants to take care
- 		 * of the commit itself so remove CHERRY_PICK_HEAD
- 		 */
--		unlink(git_path_cherry_pick_head(r));
-+		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
-+				NULL, 0);
- 		return;
- 	}
- 
-@@ -1455,7 +1456,8 @@ static int do_commit(struct repository *r,
- 				    author, opts, flags, &oid);
- 		strbuf_release(&sb);
- 		if (!res) {
--			unlink(git_path_cherry_pick_head(r));
-+			refs_delete_ref(get_main_ref_store(r), "",
-+					"CHERRY_PICK_HEAD", NULL, 0);
- 			unlink(git_path_merge_msg(r));
- 			if (!is_rebase_i(opts))
- 				print_commit_summary(r, NULL, &oid,
-@@ -1966,7 +1968,8 @@ static int do_pick_commit(struct repository *r,
- 		flags |= ALLOW_EMPTY;
- 	} else if (allow == 2) {
- 		drop_commit = 1;
--		unlink(git_path_cherry_pick_head(r));
-+		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
-+				NULL, 0);
- 		unlink(git_path_merge_msg(r));
- 		fprintf(stderr,
- 			_("dropping %s %s -- patch contents already upstream\n"),
-@@ -2305,8 +2308,10 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
- 	int need_cleanup = 0;
- 
--	if (file_exists(git_path_cherry_pick_head(r))) {
--		if (!unlink(git_path_cherry_pick_head(r)) && verbose)
-+	if (refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD")) {
-+		if (!refs_delete_ref(get_main_ref_store(r), "",
-+				     "CHERRY_PICK_HEAD", NULL, 0) &&
-+		    verbose)
- 			warning(_("cancelling a cherry picking in progress"));
- 		opts.action = REPLAY_PICK;
- 		need_cleanup = 1;
-@@ -2671,8 +2676,9 @@ static int create_seq_dir(struct repository *r)
- 	enum replay_action action;
- 	const char *in_progress_error = NULL;
- 	const char *in_progress_advice = NULL;
--	unsigned int advise_skip = file_exists(git_path_revert_head(r)) ||
--				file_exists(git_path_cherry_pick_head(r));
-+	unsigned int advise_skip =
-+		file_exists(git_path_revert_head(r)) ||
-+		refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD");
- 
- 	if (!sequencer_get_last_command(r, &action)) {
- 		switch (action) {
-@@ -2771,7 +2777,7 @@ static int rollback_single_pick(struct repository *r)
- {
- 	struct object_id head_oid;
- 
--	if (!file_exists(git_path_cherry_pick_head(r)) &&
-+	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
- 	    !file_exists(git_path_revert_head(r)))
- 		return error(_("no cherry-pick or revert in progress"));
- 	if (read_ref_full("HEAD", 0, &head_oid, NULL))
-@@ -2874,7 +2880,8 @@ int sequencer_skip(struct repository *r, struct replay_opts *opts)
+ 		if (whence != FROM_COMMIT) {
++			const char *pseudoref = (whence == FROM_MERGE) ?
++							      "MERGE_HEAD" :
++							      "CHERRY_PICK_HEAD";
++			const char *what = (whence == FROM_MERGE) ?
++							 "merge" :
++							 "cherry-pick";
++
+ 			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
+ 				!merge_contains_scissors)
+ 				wt_status_add_cut_line(s->fp);
+-			status_printf_ln(s, GIT_COLOR_NORMAL,
+-			    whence == FROM_MERGE
+-				? _("\n"
+-					"It looks like you may be committing a merge.\n"
+-					"If this is not correct, please remove the file\n"
+-					"	%s\n"
+-					"and try again.\n")
+-				: _("\n"
+-					"It looks like you may be committing a cherry-pick.\n"
+-					"If this is not correct, please remove the file\n"
+-					"	%s\n"
+-					"and try again.\n"),
+-				whence == FROM_MERGE ?
+-					git_path_merge_head(the_repository) :
+-					git_path_cherry_pick_head(the_repository));
++			status_printf_ln(
++				s, GIT_COLOR_NORMAL,
++				_("\n"
++				  "It looks like you may be committing a %s.\n"
++				  "If this is not correct, please remove %s with\n"
++				  "	git update-ref -d %s\n"
++				  "and try again.\n"),
++				what, pseudoref, pseudoref);
  		}
- 		break;
- 	case REPLAY_PICK:
--		if (!file_exists(git_path_cherry_pick_head(r))) {
-+		if (!refs_ref_exists(get_main_ref_store(r),
-+				     "CHERRY_PICK_HEAD")) {
- 			if (action != REPLAY_PICK)
- 				return error(_("no cherry-pick in progress"));
- 			if (!rollback_is_safe())
-@@ -3569,7 +3576,8 @@ static int do_merge(struct repository *r,
- 				    oid_to_hex(&j->item->object.oid));
  
- 		strbuf_release(&ref_name);
--		unlink(git_path_cherry_pick_head(r));
-+		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
-+				NULL, 0);
- 		rollback_lock_file(&lock);
- 
- 		rollback_lock_file(&lock);
-@@ -4201,7 +4209,7 @@ static int continue_single_pick(struct repository *r)
- {
- 	const char *argv[] = { "commit", NULL };
- 
--	if (!file_exists(git_path_cherry_pick_head(r)) &&
-+	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
- 	    !file_exists(git_path_revert_head(r)))
- 		return error(_("no cherry-pick or revert in progress"));
- 	return run_command_v_opt(argv, RUN_GIT_CMD);
-@@ -4318,9 +4326,10 @@ static int commit_staged_changes(struct repository *r,
- 	}
- 
- 	if (is_clean) {
--		const char *cherry_pick_head = git_path_cherry_pick_head(r);
--
--		if (file_exists(cherry_pick_head) && unlink(cherry_pick_head))
-+		if (refs_ref_exists(get_main_ref_store(r),
-+				    "CHERRY_PICK_HEAD") &&
-+		    refs_delete_ref(get_main_ref_store(r), "",
-+				    "CHERRY_PICK_HEAD", NULL, 0))
- 			return error(_("could not remove CHERRY_PICK_HEAD"));
- 		if (!final_fixup)
- 			return 0;
-@@ -4379,7 +4388,8 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 
- 	if (!is_rebase_i(opts)) {
- 		/* Verify that the conflict has been resolved */
--		if (file_exists(git_path_cherry_pick_head(r)) ||
-+		if (refs_ref_exists(get_main_ref_store(r),
-+				    "CHERRY_PICK_HEAD") ||
- 		    file_exists(git_path_revert_head(r))) {
- 			res = continue_single_pick(r);
- 			if (res)
-@@ -5442,7 +5452,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 
- int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
- {
--	if (file_exists(git_path_cherry_pick_head(r))) {
-+	if (refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD")) {
- 		struct object_id cherry_pick_head, rebase_head;
- 
- 		if (file_exists(git_path_seq_dir()))
-diff --git a/wt-status.c b/wt-status.c
-index d75399085d..c6abf2f3ca 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1672,8 +1672,8 @@ void wt_status_get_state(struct repository *r,
- 		state->merge_in_progress = 1;
- 	} else if (wt_status_check_rebase(NULL, state)) {
- 		;		/* all set */
--	} else if (!stat(git_path_cherry_pick_head(r), &st) &&
--			!get_oid("CHERRY_PICK_HEAD", &oid)) {
-+	} else if (refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
-+		   !get_oid("CHERRY_PICK_HEAD", &oid)) {
- 		state->cherry_pick_in_progress = 1;
- 		oidcpy(&state->cherry_pick_head_oid, &oid);
- 	}
+ 		fprintf(s->fp, "\n");
 -- 
 gitgitgadget
 
