@@ -2,105 +2,99 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CB82C433DF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 00:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A02DC433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 07:18:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBEC8207BB
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 00:36:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED14220738
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 07:18:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="E/+MqDY7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeqtVzRL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgHSAgq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Aug 2020 20:36:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61835 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725554AbgHSAgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Aug 2020 20:36:46 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ECB837CE99;
-        Tue, 18 Aug 2020 20:36:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5ol7ddjaZZG4DT68Lmms0B8ygCE=; b=E/+MqD
-        Y7jsKnX3ONwcVgKHVGaFQDjr/rQgVSydW/m/ZL2093RKaV4xcarLSPQdLa2dzxeP
-        Xf0iiO/xgsdGA81ytmhM8Gb5wFei44mn9P2cXWEKwksV9nQ5jjJRjvmKfpbA1o7w
-        6IQVpIQy64k7w/4XG9plm+ENADHIOPRDBFhhI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QYfDWkEZRVZ97NNUzJltJco1AdWIRKaH
-        vIBh+TIjzvum5Y5Pyp5IGKZguLGnkYUkIegRBiiw4dXiZNwQqIHqCRdp+dtql8+n
-        phnhg/ha2NKjGfB0FnpFxdzOlQELhGvh0UTI4L5Mj5+iacxgvfIQGxZSoFwV5xN+
-        uT/KFEyoB8I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E32067CE97;
-        Tue, 18 Aug 2020 20:36:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EF9C7CE96;
-        Tue, 18 Aug 2020 20:36:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitgitgadget@gmail.com, git@vger.kernel.org,
-        sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, derrickstolee@github.com, dstolee@microsoft.com
-Subject: Re: [PATCH v2 06/11] maintenance: add --task option
-References: <85268bd53ef7f4e7b3d97a8ae091290e8e74441d.1597760589.git.gitgitgadget@gmail.com>
-        <20200819000015.2838345-1-jonathantanmy@google.com>
-Date:   Tue, 18 Aug 2020 17:36:43 -0700
-In-Reply-To: <20200819000015.2838345-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 18 Aug 2020 17:00:15 -0700")
-Message-ID: <xmqq364jwjxg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726702AbgHSHSf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 03:18:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40036 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726735AbgHSHSb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 03:18:31 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0182FC061389
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 00:18:31 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id t4so19839112iln.1
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 00:18:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Q01TrnIuItPagqZIwECtj6t0GQEUr/aKj/jthKN1Bik=;
+        b=HeqtVzRLQltsrLkBwaOt93qN4s4GSz4e3l8fy762ZzkhWHsAYyPax6ZKdFQiNod24k
+         xVLbp5/mXnvv4S3yArB+9KCqiQ8rN1p1dwxhSIutbyGObnihE0IjSb6PDLAakUT5W8el
+         weI+HnPRwJr+eQsNc575rnhyQHh/9sPs042FEmtVoU3791EYqnjyvu27Bs3nvEeubUQ1
+         r/RhNlVlE/pI9EmntuPdHKmrjrqgDOOk+nKELva+rFwc6sWy84/aQK9lcUuGv/7+vUud
+         43IELrpT3sJ1OMJnCGSfQLDUyRD78aSXmx4hpeWoUtRByhzF9xw2QDWcfUOFsUUwgjgQ
+         sDnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Q01TrnIuItPagqZIwECtj6t0GQEUr/aKj/jthKN1Bik=;
+        b=fHPREquU+yw8mv40oeNfX6IRkgdbu1NUb08zMfXexxVFRjKE1V2mXEjUSiuMzr/yBd
+         j1Ix8bV2kjmx5RFLAwDxNiRHgtgX08aiAbIutzxQo8FCvLicTzTRjX7mMPKUT2oMYOv/
+         HUzkmNtwWnsBHXzoZiFpUzvaj5N75IuTCn7azzFzvCBvpU9dWJKGz1oJvfI3zDc4BmE6
+         bA61eZky5BAqWU8pS+S28wQ8JNEcUxDMKPMpgBR/HphvrxrSC0QB26nJNViyIy1NT2rp
+         y4CHHQnaWLrCv2fLLPtNuBX2xQS2q7F6XNvdyjBauQpOPXsbv5mm48GBC1TeauqOc4V9
+         KX2w==
+X-Gm-Message-State: AOAM532CskfRCspNquzlLKCz/ZSeasanlCbrhNVn/i9iItACfECSHlXt
+        rXszX+ypTq6sr07SMlzWjNBfdQxq3dV4tK5HM+Zkc+V00Ss=
+X-Google-Smtp-Source: ABdhPJxyJspQGeMweJ2R6MamUMLQfe+UGij1jjBbav6QnPiYRrkgTT8aMxeOzGAJvadJ880Ao+Ed59wDvx+O1PCED88=
+X-Received: by 2002:a05:6e02:14cf:: with SMTP id o15mr21666475ilk.239.1597821508960;
+ Wed, 19 Aug 2020 00:18:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0EAC4AC8-E1B4-11EA-A7FE-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <CAAUOv8jP00_W6=qFBWL1RpV0Dd1Fh1k19PQ33ycBnwVMLfRypA@mail.gmail.com>
+ <CAPig+cRF=PXWTgOzxAsMQ=bSUPnsORBKWUTk38BCvMSVzS=KJw@mail.gmail.com>
+In-Reply-To: <CAPig+cRF=PXWTgOzxAsMQ=bSUPnsORBKWUTk38BCvMSVzS=KJw@mail.gmail.com>
+From:   Gopal Yadav <gopunop@gmail.com>
+Date:   Wed, 19 Aug 2020 12:48:17 +0530
+Message-ID: <CAAUOv8jraMz3+M_fddwAVcLNGPZehgosvHXyCSUx1u+555LmOA@mail.gmail.com>
+Subject: Re: [NEW] Git
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> @@ -66,6 +68,10 @@ OPTIONS
->>  --quiet::
->>  	Do not report progress or other information over `stderr`.
->>  
->> +--task=<task>::
->> +	If this option is specified one or more times, then only run the
->> +	specified tasks in the specified order.
+On Tue, Aug 18, 2020 at 10:22 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> We should list the accepted tasks somewhere but maybe this can wait
-> until after part 2.
+> On Tue, Aug 18, 2020 at 8:23 AM Gopal Yadav <gopunop@gmail.com> wrote:
+
+> No. test_lazy_prereq() is merely the function which defines how a lazy
+> prerequisites should be determined when the answer about the
+> prerequisite is actually needed. What #353 is saying is to not perform
+> the actual determination if a test which requires it isn't going to be
+> run.
 >
->> @@ -791,7 +791,9 @@ typedef int maintenance_task_fn(struct maintenance_opts *opts);
->>  struct maintenance_task {
->>  	const char *name;
->>  	maintenance_task_fn *fn;
->> -	unsigned enabled:1;
->> +	unsigned enabled:1,
->> +		 selected:1;
->> +	int selected_order;
->>  };
+> Fixing the issue might be as simple as moving the test_verify_prereq()
+> call (and related "export") inside the 'if ! test_skip "$@"'
+> conditional in the test_expect_success() and test_expect_failure()
+> functions.
+
+I see that test_verify_prereq() (and related export) being used inside
+3 different functions
+namely test_expect_failure(), test_expect_success() and test_external().
+So the solution here is to move these into the if ! test_skip block.
+
+Thanks, will submit a patch.
+
+> > I know the issue talks about something related to chains but I am
+> > thinking of starting by resolving the lazy prereq task first.
 >
-> "selected" and "selected_order" are redundant in some cases - I think
-> this would be better if selected_order is negative if this task is not
-> selected, and non-negative otherwise.
-
-It is good to get rid of redundancies.
-
-> Apart from that, maybe this should be documented. It is unusual (to me)
-> that a selection can override something being enabled, but that is the
-> case here.
-
-I had the same reaction as "(to me)" above during an earlier review
-round, IIRC.  This definitely deserves documentation.
+> I took a look at the &&-chain logic and, as far as I can tell by both
+> direct inspection and by experimentation, the detection of broken
+> &&-chains is _not_ performed for tests which are being skipped. So, I
+> think that portion of #353 is just wrong.
