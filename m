@@ -2,107 +2,127 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFCA6C433E1
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93CFDC433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:05:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4AD220882
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:04:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EB8620897
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:05:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CiiDkmVa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BROmolVx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728625AbgHSPE4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 11:04:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55904 "EHLO
+        id S1728415AbgHSPFN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 11:05:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728585AbgHSPEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 11:04:36 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29BA6C061757
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:04:36 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id n12so959544vkk.11
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:04:36 -0700 (PDT)
+        with ESMTP id S1728445AbgHSPE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 11:04:57 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C673C061757
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:04:57 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id s23so17971168qtq.12
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 08:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+8tae5ZEkPPegdgQ5hVTgy97Fd/SIsAR5QegOG+Wyj4=;
-        b=CiiDkmVaGImuRwRF7OWczhDNGtc0Mozidg9c2sGPJJyK1KnHG2i4PHAKZx9CyDmBKy
-         aZZbogJLYhdYU2z1XujsMJlvW6Uelu8BUYpXavnZaTmTGpsjHjhQvm9sNKz9JGHu8vmz
-         L9B/4ZGBticnhZPVPPfxo6/0AQ2/v6RzO6lqiO/pL6/tnUa2DyJN0kOTdfmT2JuUoCxz
-         UDSEtWuYcveJexozOODy2TMD0lT7WWaju9nzyVOZ/0kUi1ah+oSzJ+dMoUG/MCRSig7y
-         Rs8SP5T2cAfEwIrrIZxIq94mS3g8/V/Z7ZMQfWShA8btGj6wc4O9R89kSzI4P3MD3AKZ
-         ZCuQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=td34xuUpRT+XI3h2ujl/xe/oPFKfiIw6kdM1WZiDhfM=;
+        b=BROmolVx5WDPpZkhNyuOOib57oQVRnxVeZ1v7oLiMAM6qpns0Ta5z7oea1pbpRJcHA
+         g3iaXSchVO10moM7d4ga7JbvfnHy8EuIuJjC0Bf2knphpbB9xADb8s2P5lcQ/q+ODIBK
+         3BmJicoVnxoV7bNHh1RuMFtnCV06M683FqgbqHTTGUyVh5LV8jI25fIz+E8NATqQbliE
+         TUNUSJ0D3gv1eSyGhnYzWwUW1htT2fIm85RQ7EYR8boZpYP39fV/c6DxnPqdHMaj7dPB
+         +qI+1Tunr+RajGugbV7nlFvDKs0SDguBaL/jP9DQtMud1Y7tLS6lUj4AlzXNF68CTjmd
+         vmQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+8tae5ZEkPPegdgQ5hVTgy97Fd/SIsAR5QegOG+Wyj4=;
-        b=XHimHaHoTanjr00YJXHqJInMCC3BPycWwWPcdCni0EnDW/XzdYwBHiS1/l2tBD/eH8
-         Rk4WcINh29xqWiqTr7m57EYGUuQirTznj/SzBGhyt9JF1Cc83P9u/YvQTpUgNplXqx7e
-         0SU/b+wpfCB+2u4fUwi2IWPqMMOdDAaaAwx+CNFvi1G1AwR62PD1L81PCIWYj3tt6X0R
-         vIjA6q908yPslSOX0UU5aCANnNcS0ukZDT2K3WIcsj8VpsFwludlir7RlGm6tasiQE9w
-         yo1vPXMbwwd/gWvO8LMIuLHkrmqyePuK49ijyjLx43I6stbpOTTRLTJvXRqKHkO0bVyM
-         S7zQ==
-X-Gm-Message-State: AOAM532UhwyI+MOTmB37nLHxf1cf53s0pW1J4wqwj1MDDfitNOFqmOc1
-        sKjj0mVjP7cp/kzyRzXIyT48PYq9fijlwOsGAJeKFtIBY2k=
-X-Google-Smtp-Source: ABdhPJx7m+ilOa0vbJdTr0IKFWlzrj3o/pTeOu/qL6Vy4fJl0+zvR3WKZ4ZsX0ob5AaLDtpa8z4apPuEfpjzw9QuBEg=
-X-Received: by 2002:a1f:3045:: with SMTP id w66mr15308222vkw.35.1597849474952;
- Wed, 19 Aug 2020 08:04:34 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=td34xuUpRT+XI3h2ujl/xe/oPFKfiIw6kdM1WZiDhfM=;
+        b=ZpD8HHdXPshRXmKKj96HemF2YeHyqQc7joGnUH7TawYBOT/sL3QAU/cZOfd7E+jlHZ
+         0CweLpqY8M8BxaclGxvpuqWoQ5JS52EHVjikHsdLpxdezlqFRBro/8xyth42U6JkRg2e
+         2wZd9LDfoWLaF6L1VtfQC1mpePpQB2xmf1ovzItZWoXn5h77AKVGrAgYdBC3cjoKgwsL
+         nJ20qBX11TdqmcDWBrmfGBpa6c+JNDD5C5Yosub74DwJIoDuSonb3IuEbREUYmPZt3eY
+         BGedVuNagrqZeCGPFdifbovXDxYsIMtfIu1DHSOO1oI/XhcXgf0e32FV0UaT7COQbSuL
+         kSTg==
+X-Gm-Message-State: AOAM533uQpkwOezuClwnSSnS+5byYc3SFD3iZlBWggmVBMkKucDnfnCO
+        bsPknZXACfUUMPYbKpvwsm+BPVpH3DrdDSB0
+X-Google-Smtp-Source: ABdhPJwt4KoejL4kumQdoYFPGFBPn/Q5h6KPxxRGVbgRElSgWoYzG85gKsMLyEhlW7hJVltlv/EtoA==
+X-Received: by 2002:ac8:7b51:: with SMTP id m17mr22431065qtu.80.1597849496568;
+        Wed, 19 Aug 2020 08:04:56 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:641b:4ef3:c176:5ed3? ([2600:1700:e72:80a0:641b:4ef3:c176:5ed3])
+        by smtp.gmail.com with ESMTPSA id n6sm22200065qkh.74.2020.08.19.08.04.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Aug 2020 08:04:55 -0700 (PDT)
+Subject: Re: [PATCH v2 05/11] maintenance: add commit-graph task
+To:     Jonathan Tan <jonathantanmy@google.com>, gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
+        congdanhqx@gmail.com, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        derrickstolee@github.com, dstolee@microsoft.com
+References: <50b457fd57aef4e9ac6a15549561936dc962ef36.1597760589.git.gitgitgadget@gmail.com>
+ <20200818235126.2836309-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <66ae9121-80c9-4030-1119-a11eab8d392b@gmail.com>
+Date:   Wed, 19 Aug 2020 11:04:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
-References: <pull.706.git.1597753075.gitgitgadget@gmail.com>
- <06a8e8cbd1370ba3d4ea8a0a9f1e69d27b1d62c4.1597753075.git.gitgitgadget@gmail.com>
- <xmqqsgcjwtpv.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqsgcjwtpv.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 19 Aug 2020 17:04:22 +0200
-Message-ID: <CAFQ2z_PYpP4WdUaaG4=fOQ_7RLLmGLjuBQaE2yQVA9=7j9XcuQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] Treat CHERRY_PICK_HEAD as a pseudo ref
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200818235126.2836309-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 18, 2020 at 11:05 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Han-Wen Nienhuys <hanwen@google.com>
-> >
-> > Check for existence and delete CHERRY_PICK_HEAD through ref functions.
-> > This will help cherry-pick work with alternate ref storage backends.
->
-> These two sentences are true, but this patch does another thing that
-> is not advertised here.  It stops recommending removal of
-> CHERRY_PICK_HEAD from the filesystem with "rm" (or using "git
-> update-ref -d" for that matter) as a way to avoid recording the
-> current commit as a cherry-pick.
-..
-> Does "git cherry-pick --abort" only remove CHERRY_PICK_HEAD without
-> doing any other damage to the working tree files and to the index?
+On 8/18/2020 7:51 PM, Jonathan Tan wrote:
+>> By using 'git commit-graph verify --shallow' we can ensure that
+>> the file we just wrote is valid. This is an extra safety precaution
+>> that is faster than our 'write' subcommand. In the rare situation
+>> that the newest layer of the commit-graph is corrupt, we can "fix"
+>> the corruption by deleting the commit-graph-chain file and rewrite
+>> the full commit-graph as a new one-layer commit graph. This does
+>> not completely prevent _that_ file from being corrupt, but it does
+>> recompute the commit-graph by parsing commits from the object
+>> database. In our use of this step in Scalar and VFS for Git, we
+>> have only seen this issue arise because our microsoft/git fork
+>> reverted 43d3561 ("commit-graph write: don't die if the existing
+>> graph is corrupt" 2019-03-25) for a while to keep commit-graph
+>> writes very fast. We dropped the revert when updating to v2.23.0.
+>> The verify still has potential for catching corrupt data across
+>> the layer boundary: if the new file has commit X with parent Y
+>> in an old file but the commit ID for Y in the old file had a
+>> bitswap, then we will notice that in the 'verify' command.
+> 
+> I'm concerned about having this extra precaution, because it is never
+> tested (neither here or in a future patch). When you saw this issue
+> arise, was there ever an instance in which a valid set of commit graph
+> files turned invalid after this maintenance step? (It seems from your
+> description that the set was invalid to begin with, so the maintenance
+> step did not fix it but also did not make it worse. And it does not make
+> it worse, that seems not too bad to me.)
 
-Good catch. I just added cherry-pick --abort without much thinking. I
-reverted to update-ref -d which should be equivalent to what is
-currently recommended.
+The cases we've seen this happen were root-caused to hardware
+problems (disk or RAM), and the invalid data was present immediately
+after the "git commit-graph write" command. Since implementing the
+"verify" step after each write, we have not had any user reports of
+problems with these files.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+Are you suggesting one of these options?
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+ 1. Remove this validation and rewrite entirely.
 
-Registergericht und -nummer: Hamburg, HRB 86891
+ 2. Remove the rewrite and only delete the known-bad data.
 
-Sitz der Gesellschaft: Hamburg
+ 3. Insert a way to cause the verify to return failure mid-process,
+    so that this function can be covered by tests.
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Thanks,
+-Stolee
