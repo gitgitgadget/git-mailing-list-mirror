@@ -2,167 +2,150 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24DBEC433DF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 10:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C49CC433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 10:20:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3003207BB
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 10:00:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49A4B207DE
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 10:20:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifh3r/0r"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="F2eIv2n8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726851AbgHSKAE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 06:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36712 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726634AbgHSKAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 06:00:01 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57EB6C061757
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 03:00:01 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g8so1463039wmk.3
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 03:00:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+l8VkmVcx2/hDmTEAQKQii88Z8MukpbxEHHCGU+vlCo=;
-        b=ifh3r/0rK54GJZqR4LwJr7TiWyiE8L/sPh3dEOJLR6rrXrIjpLrq0dbxo1eizU+9Kg
-         dPG+B+VJWbLbLWoQoZHpYaLahgJdRVSohxh5hf9svmnzGd4+Sbl21E8u1KTaOW8o6E7s
-         GIrIZ0U5U+TCkFstLQMCTmxoDuGfR10T++8NiZFAN1v/nqxKO2jRUy3VmczpjNQkKGf9
-         7REaOZ0XQyS6dmPNiXIkAjSWAQAKt8DVgTsSMTLTILS5JZzbg/sVXQ7wmEp//ViUbKMp
-         RaCkYa3b2tZA/yDgATWoswqogMsBlrolE+PZvmTnKbD0/bi+4pDjh2vOUAF6kJ0RoWzU
-         mu4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+l8VkmVcx2/hDmTEAQKQii88Z8MukpbxEHHCGU+vlCo=;
-        b=IbkdOinjhim0x651O6NO6Dxdq043PuTC0+UP4Hvvj/guMszCM1ul147R08lEiBM9r8
-         uvZSqIUgViMwb2EhHgmvmzV/X9pLwPNPM2djC3zJ3SoYQWW9dw4s3n2luMlqQF+PJ2P1
-         PxBqofGZfmRjpeW4M0s1mhu8IArrGwMUnDOqVPUKJQxTD/Sj85WS0NmXMZWt/6Q+aj0+
-         uatC5C2yHdRmUrek8dk37UjNFN9Rq45/fAyk6MI77vpe9oPqlvwfng5+HQvDKRO4xpiA
-         hXOwi5E4QEYhteLezjGI48XSjfbIep7arck56XMHBXymRbbpQo0e6dPHTeBOwjGaielY
-         GhWQ==
-X-Gm-Message-State: AOAM532zq2x/tw90hjZiJyFuL9m5Kty7LhtX6TgOn5WDq64aNsAFn7fu
-        oBZ+fhM+fQUns3qJQaTUM8Q=
-X-Google-Smtp-Source: ABdhPJwkujmJ7nNVLuW/N3cTbMIAXT//DbHstpNyzBzjcNqrux/cIbnVM8ZVfCBd5ma/+G2RBCx3jA==
-X-Received: by 2002:a7b:c8da:: with SMTP id f26mr4284642wml.126.1597831199634;
-        Wed, 19 Aug 2020 02:59:59 -0700 (PDT)
-Received: from [192.168.1.201] (192.252.189.80.dyn.plus.net. [80.189.252.192])
-        by smtp.googlemail.com with ESMTPSA id k10sm40486286wrm.74.2020.08.19.02.59.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Aug 2020 02:59:59 -0700 (PDT)
-Subject: Re: [PATCH 0/2] add p in C tweaks
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.702.git.1597670589.gitgitgadget@gmail.com>
- <xmqqmu2ryc0l.fsf@gitster.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <744e464f-6378-ef68-01c1-3b8bf63c54a4@gmail.com>
-Date:   Wed, 19 Aug 2020 10:59:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        id S1727102AbgHSKUA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 06:20:00 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43382 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726835AbgHSKT7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 Aug 2020 06:19:59 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0DF9A60456;
+        Wed, 19 Aug 2020 10:19:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1597832397;
+        bh=y2JuDSyaFkinL0GJxxVaKqm8VBhAKIJ6WTYSbnwXoDQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=F2eIv2n8Uis7fFuo5q02CN6Y0yTxjwDsJ9uCMkTdzEgmPHYZ48jfN6Jc6wy62IS9n
+         ifWDO8thdmm/oi7D2M2SuCo/UiDv6Bf9yXWv47x/yeaJ3B6ggmZCG+E0Ro7ljm9SEg
+         ERH+SfKVQRA20sRgw6rOnOr8Fs53I0l/bYUuH1xpBouWImwsdYVtPiiGSJnle2goA7
+         9R3Sx61Ucg2bJyIdNlzmGnxzjPz89K9vbymkqCbz81u6P2pJFx9PJ6SqQtqsOzBXJU
+         rhzM58sO7jhnsOPx7m7443/LyOQR6Gobky4SxuSPKMnp4IIZKS0mCe1yGWngtdyLMl
+         uLsfk8XcYLdVLHeaHPRns4YNW7l9r69R8ryh0nagDMaWU0hDnk78I5h+vVlM5EzPTO
+         anRtFIHFT5Daj5GBdA87m6ASHhQ5K5/rldlY9L1/Qski3BxIgNRYR5az60kM3ZGrAt
+         C/ZQsyDePCcyiQi7TFwAbyHGSYGqJOcDM7c8Ds8CPfBuYrs7zmu
+Date:   Wed, 19 Aug 2020 10:19:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jimit Bhalavat <jimit@rams.colostate.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        David Huseby <dhuseby@linuxfoundation.org>, git@vger.kernel.org
+Subject: Re: GPG Commit Signing Project
+Message-ID: <20200819101950.GV8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jimit Bhalavat <jimit@rams.colostate.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        David Huseby <dhuseby@linuxfoundation.org>, git@vger.kernel.org
+References: <43C81FDC-611D-45A1-9525-24640FEB2E1A@rams.colostate.edu>
 MIME-Version: 1.0
-In-Reply-To: <xmqqmu2ryc0l.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yC91f7qSViS67v3c"
+Content-Disposition: inline
+In-Reply-To: <43C81FDC-611D-45A1-9525-24640FEB2E1A@rams.colostate.edu>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/08/2020 20:44, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> A code cleanup and small bug fix for the C version of add -p
->>
->> dscho has pointed out that the bug fix in the second patch gets lost in the
->> other changes and suggested adding the last member of the enum (which fixes
->> the bug with handling 'e') as a separate patch. I'm unsure as it feels odd
->> to split up the introduction of the flags - I'd be interested to hear what
->> others think.
-> 
-> Essentially, the original was doing:
-> 
->     - In early part of patch_update_file(), decide what option to show
->       in s->buf using "if (undecided_previous >= 0)" etc. boolean
->       expression that is tailored for each command;
-> 
->     - In later part of patch_update_file(), after getting an answer
->       to the end user, try to use the same boolean expression that
->       is tailored for each command to see if the given command is
->       acceptable.
-> 
-> and the bug was that each pair of boolean expressions that are
-> supposed to be identical were duplicated in two places, and one pair
-> was not identical by mistake.
-> 
-> Your [2/2] fixes it by turning the above to
-> 
->     - In early part of patch_update_file(), decide what option to show
->       in s->buf using "if (undecided_previous >= 0)" etc. boolean
->       expression that is tailored for each command, *AND* record the
->       fact that the command is allowed in the permitted bitmask.
-> 
->     - In later part of patch_update_file(), after getting an answer
->       to the end user, consult the permitted bitmask computed
->       earlier to see if the given command is acceptable.
-> 
-> Since there no longer is duplicated boolean expressions that are
-> supposed to be the same but different by a bug, once this conversion
-> is made, it is impossible to have the bug.  For that reason, I do
-> not think the suggested split makes much sense.
-> 
-> A much saner split, if we have to split this step into two, would be
-> to first fix the bug keeping the code structure of the original,
-> i.e. the later part guards the 'e' command with
-> 
-> 	if (hunk_index + 1 == file_diff->mode_change)
-> 
-> but the earlier part also required !file_diff->deleted, i.e. the
-> condition should have been
-> 
-> 	if (hunk_index + 1 > file_diff->mode_change && !file_diff->deleted)
-> 
-> So without introducing enum and permitted bitmask, you can fix the
-> bug in place, replacing the incorrect boolean condition in the later
-> part that guards the 'e' command with a corrected one.  That would
-> be a minimum fix that can become your new [2/2], whose theme is "to
-> fix the bug with minumum change".
-> 
-> On top of that, you can convert the function again to reach the
-> final shape that writes each boolean condition only once and records
-> the permitted commands in the bitmask.  That can be your new [3/2],
-> whose these is "to make it impossible to introduce the bug previous
-> step fixed".
 
-Thanks that makes much more sense to me
+--yC91f7qSViS67v3c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best Wishes
+On 2020-08-18 at 18:43:45, Jimit Bhalavat wrote:
+> The proposal:
+>=20
+> 	1. We aim to achieve that instead of having C code that calls all the si=
+gning tools, we will try to achieve that only one piece of code will do the=
+ standardized pipe forking and take the values from the config file. The co=
+nfig file will contain the following values: which executable to run, what =
+parameters to pass, what regular expressions to use for detecting signature=
+ type and pulling the signature out of commits and tags.
 
-Phillip
+Assuming the config file is the standard one and not a custom config
+file, this seems fine.
 
->> Phillip Wood (2):
->>   add -p: use ALLOC_GROW_BY instead of ALLOW_GROW
->>   add -p: fix checking of user input
->>
->>  add-patch.c | 67 +++++++++++++++++++++++++++++++++--------------------
->>  1 file changed, 42 insertions(+), 25 deletions(-)
->>
->>
->> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-702%2Fphillipwood%2Fwip%2Fadd-p-fixes-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-702/phillipwood/wip/add-p-fixes-v1
->> Pull-Request: https://github.com/gitgitgadget/git/pull/702
+> 	2. The current patch uses a set of function pointers, but this project a=
+ims to use a struct with the configuration data for the detected signature =
+type such as PGP, x509, minisig, etc.
+> 		a. When signing, the signature type either comes from the command-line =
+switch or from the signing default as specified in the config file. The con=
+fig file has different parameters: which executable to run, what parameters=
+ to pass, what regular expressions to use for detecting signature type and =
+pulling the signature out of commits and tags. The goal is to try and call =
+the signing tools from one piece of code instead multiple C code. If the co=
+nfig file does not have any values, it defaults to the GPG executable, GPG =
+regular expressions, and the GPG parameters.
+> 		b. During the verification process, the signature type is detected by u=
+sing regular expressions from the config file. The regular expression searc=
+hes for metadata for a matching signature, and the first one that matches, =
+that format is returned and used for the verification. This design also ope=
+ns up the possibility of having multiple signatures on a commit/tag.
 
+Having multiple signatures is tricky, but I'm willing to reserve
+judgement until I see this.  I'm not opposed in principle.
+
+> 		c. Once format is determined, a signing_tool struct is initialized for =
+the given format. The struct contains all of the config data for the given =
+tool (e.g. program to run, regex=E2=80=99s, command line switches, etc).
+> 	3. The project also aims to improve the signing-interface.c file to work=
+ from the signing_tool struct which we created above which contains all of =
+the configuration data for the given tool such as what program to run, regu=
+lar expressions, and command line switches. The flow of the code should loo=
+k like this:
+> 		a. Pass in a signing tool struct to sign commit
+> 		b. Instead of calling function pointers to the signing-tool-specific =
+=E2=80=9Cdrivers=E2=80=9D, it will instead do what the existing code does; =
+however the executable and command line switches all come from the config/d=
+efaults instead of being hard coded..
+> 	4. Create a struct for signer_identity:
+> 		a. This struct will be helpful to load signer_identity from config (e.g=
+=2E the existing signingkey config item) or command line.
+> 		b. It stores the signing-tool-specific signer identity string/identifie=
+r, so that it can be passed to the signing tool.
+> 	5. All of these changes will make sure that we maintain backwards compat=
+ibility. We are aiming to deprecate things a little but old options will no=
+t stop working. We will preserve existing behavior. The goal is to try and =
+call the signing tools from one piece of code instead multiple C code.
+
+As Junio said, we prefer to look at patches rather than a proposal, but
+I so far am happy with what you've proposed.  Assuming your code is of
+good quality, I can see this being a viable design and I'd be happy to
+see these changes come in.
+
+I expect some conflicts with some future SHA-256 work I'm doing, but
+that's my problem, not yours.
+--=20
+brian m. carlson: Houston, Texas, US
+
+--yC91f7qSViS67v3c
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXzz8xAAKCRB8DEliiIei
+gYj9AQDKZSejdXV33oLl7b2hst44ItdQMWNwGTb+7HqIvr+0ugD/ShdZLsnkgbm1
+gM96uv4RAMMl73aJxJyMQLgAY1oCFQY=
+=zyyo
+-----END PGP SIGNATURE-----
+
+--yC91f7qSViS67v3c--
