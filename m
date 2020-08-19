@@ -2,99 +2,94 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A02DC433E1
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 07:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AB5CC433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 08:20:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED14220738
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 07:18:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD38A205CB
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 08:20:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeqtVzRL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LVir0MSO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726702AbgHSHSf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 03:18:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40036 "EHLO
+        id S1726630AbgHSIUb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 04:20:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726735AbgHSHSb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 03:18:31 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0182FC061389
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 00:18:31 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id t4so19839112iln.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 00:18:30 -0700 (PDT)
+        with ESMTP id S1725275AbgHSIUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 04:20:30 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BF68C061389
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 01:20:29 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id jp10so25290519ejb.0
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 01:20:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Q01TrnIuItPagqZIwECtj6t0GQEUr/aKj/jthKN1Bik=;
-        b=HeqtVzRLQltsrLkBwaOt93qN4s4GSz4e3l8fy762ZzkhWHsAYyPax6ZKdFQiNod24k
-         xVLbp5/mXnvv4S3yArB+9KCqiQ8rN1p1dwxhSIutbyGObnihE0IjSb6PDLAakUT5W8el
-         weI+HnPRwJr+eQsNc575rnhyQHh/9sPs042FEmtVoU3791EYqnjyvu27Bs3nvEeubUQ1
-         r/RhNlVlE/pI9EmntuPdHKmrjrqgDOOk+nKELva+rFwc6sWy84/aQK9lcUuGv/7+vUud
-         43IELrpT3sJ1OMJnCGSfQLDUyRD78aSXmx4hpeWoUtRByhzF9xw2QDWcfUOFsUUwgjgQ
-         sDnQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RICZdjaX/Hzsn2E66zQz81RK5aDtkSLcoLG8PWpq4xM=;
+        b=LVir0MSOW1UcdqS6pyTvvJAS9uk95iSfwVc6mzcsBWvQW1tKurOK6ltwR9P5DOpWGH
+         xyqpifNBFvZ2/IEDzk6e8LSoUCa5Y1hGp5iO2lAxXDWEv1bTz0wDEsYRzABlw5xiAz1Y
+         hFIQQZhjjQjT6YyK8N8CRJrO820EJdf43oqWRM+ynPFcpdORvOObdCb8aPMow2FSwUnz
+         rBJZYl960Ic9UVtKBb5+dkza9lKnGufiEr7ZDqz4goMJ0zPotzy4TtM15HbFt64yq26u
+         qz5esk/74qg3UF9orlWyXiLZ58JxPBNBgKcuT59QiZ3EHrULILdb4NmGkU7bKQvBk4AQ
+         B/CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Q01TrnIuItPagqZIwECtj6t0GQEUr/aKj/jthKN1Bik=;
-        b=fHPREquU+yw8mv40oeNfX6IRkgdbu1NUb08zMfXexxVFRjKE1V2mXEjUSiuMzr/yBd
-         j1Ix8bV2kjmx5RFLAwDxNiRHgtgX08aiAbIutzxQo8FCvLicTzTRjX7mMPKUT2oMYOv/
-         HUzkmNtwWnsBHXzoZiFpUzvaj5N75IuTCn7azzFzvCBvpU9dWJKGz1oJvfI3zDc4BmE6
-         bA61eZky5BAqWU8pS+S28wQ8JNEcUxDMKPMpgBR/HphvrxrSC0QB26nJNViyIy1NT2rp
-         y4CHHQnaWLrCv2fLLPtNuBX2xQS2q7F6XNvdyjBauQpOPXsbv5mm48GBC1TeauqOc4V9
-         KX2w==
-X-Gm-Message-State: AOAM532CskfRCspNquzlLKCz/ZSeasanlCbrhNVn/i9iItACfECSHlXt
-        rXszX+ypTq6sr07SMlzWjNBfdQxq3dV4tK5HM+Zkc+V00Ss=
-X-Google-Smtp-Source: ABdhPJxyJspQGeMweJ2R6MamUMLQfe+UGij1jjBbav6QnPiYRrkgTT8aMxeOzGAJvadJ880Ao+Ed59wDvx+O1PCED88=
-X-Received: by 2002:a05:6e02:14cf:: with SMTP id o15mr21666475ilk.239.1597821508960;
- Wed, 19 Aug 2020 00:18:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RICZdjaX/Hzsn2E66zQz81RK5aDtkSLcoLG8PWpq4xM=;
+        b=H7IQH1TuvuscqcAlpSWWqvHny67zpd6/rskW74dX7PU8SZMSx56qOm7lPFAPRRGOWS
+         xs3m6iK3P1/169pVN7UyKahvFJuPghwmuWpecQcpgt8vUGitJNk+m0EGZdk0Ln2kwMnq
+         Kwx21tm1uamuuI9yg0rLf7IvcMB3mgyb0iiWkM2Y7XjnJkQ+g7ZvP9zySurzPKKRm0YN
+         yuxJiQDPCJ/qsHnhjC9kSkim/1AOgnu7b6KzP9B/I72P6frTwlZcBqlHkCMcoXVHGeti
+         M5o5dfSmmXhes+sL0zVod82Kn4Z9GjhF2TM8pxbALA9di0sMpT/qSB9GQiwqbMObk6Ek
+         eGDA==
+X-Gm-Message-State: AOAM530h1PgTv/v9Mnc4ANc6d8YNHrUIlgPor79tZWQX33EbqgyS6DRo
+        Wiy37dqywAULz54WaDttRMQ=
+X-Google-Smtp-Source: ABdhPJwfDJDwUfCYixIg2slhbw/oMMr8opkIZJaW3hxjfz0irv4fo7iD/3Z3VA6+sk5l2d8RApg6HA==
+X-Received: by 2002:a17:906:cc4a:: with SMTP id mm10mr3037162ejb.451.1597825227748;
+        Wed, 19 Aug 2020 01:20:27 -0700 (PDT)
+Received: from szeder.dev (84-236-109-47.pool.digikabel.hu. [84.236.109.47])
+        by smtp.gmail.com with ESMTPSA id b24sm17833125edn.33.2020.08.19.01.20.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Aug 2020 01:20:26 -0700 (PDT)
+Date:   Wed, 19 Aug 2020 10:20:21 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v3 14/14] builtin/commit-graph.c: introduce
+ '--max-new-filters=<n>'
+Message-ID: <20200819082021.GA5238@szeder.dev>
+References: <cover.1596480582.git.me@ttaylorr.com>
+ <cover.1597178914.git.me@ttaylorr.com>
+ <09f6871f66bff838c067a3e0d23cd4622171f3bd.1597178915.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <CAAUOv8jP00_W6=qFBWL1RpV0Dd1Fh1k19PQ33ycBnwVMLfRypA@mail.gmail.com>
- <CAPig+cRF=PXWTgOzxAsMQ=bSUPnsORBKWUTk38BCvMSVzS=KJw@mail.gmail.com>
-In-Reply-To: <CAPig+cRF=PXWTgOzxAsMQ=bSUPnsORBKWUTk38BCvMSVzS=KJw@mail.gmail.com>
-From:   Gopal Yadav <gopunop@gmail.com>
-Date:   Wed, 19 Aug 2020 12:48:17 +0530
-Message-ID: <CAAUOv8jraMz3+M_fddwAVcLNGPZehgosvHXyCSUx1u+555LmOA@mail.gmail.com>
-Subject: Re: [NEW] Git
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, sunshine@sunshineco.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <09f6871f66bff838c067a3e0d23cd4622171f3bd.1597178915.git.me@ttaylorr.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 18, 2020 at 10:22 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Tue, Aug 18, 2020 at 8:23 AM Gopal Yadav <gopunop@gmail.com> wrote:
+On Tue, Aug 11, 2020 at 04:52:14PM -0400, Taylor Blau wrote:
+> Introduce a command-line flag and configuration variable to fill in the
+> 'max_new_filters' variable introduced by the previous patch.
+> 
+> The command-line option '--max-new-filters' takes precedence over
+> 'commitGraph.maxNewFilters', which is the default value.
+> '--no-max-new-filters' can also be provided, which sets the value back
+> to '-1', indicating that an unlimited number of new Bloom filters may be
+> generated. (OPT_INTEGER only allows setting the '--no-' variant back to
+> '0', hence a custom callback was used instead).
 
-> No. test_lazy_prereq() is merely the function which defines how a lazy
-> prerequisites should be determined when the answer about the
-> prerequisite is actually needed. What #353 is saying is to not perform
-> the actual determination if a test which requires it isn't going to be
-> run.
->
-> Fixing the issue might be as simple as moving the test_verify_prereq()
-> call (and related "export") inside the 'if ! test_skip "$@"'
-> conditional in the test_expect_success() and test_expect_failure()
-> functions.
+Forgot the most important thing: Why?  Please explain in the commit
+message why this option is necesary, what problems does it solve,
+how it is supposed to interact with other options and why so.
 
-I see that test_verify_prereq() (and related export) being used inside
-3 different functions
-namely test_expect_failure(), test_expect_success() and test_external().
-So the solution here is to move these into the if ! test_skip block.
-
-Thanks, will submit a patch.
-
-> > I know the issue talks about something related to chains but I am
-> > thinking of starting by resolving the lazy prereq task first.
->
-> I took a look at the &&-chain logic and, as far as I can tell by both
-> direct inspection and by experimentation, the detection of broken
-> &&-chains is _not_ performed for tests which are being skipped. So, I
-> think that portion of #353 is just wrong.
