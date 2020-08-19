@@ -7,128 +7,258 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08EE9C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F96DC433E3
 	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 16:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBD8E20888
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 16:44:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 797F320888
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 16:44:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="oOPojZG1"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="EoE1Ev8v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbgHSQop (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 12:44:45 -0400
-Received: from mout.web.de ([212.227.15.14]:54235 "EHLO mout.web.de"
+        id S1726578AbgHSQoo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 12:44:44 -0400
+Received: from mout.web.de ([217.72.192.78]:39465 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726876AbgHSQoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 12:44:00 -0400
+        id S1726874AbgHSQoB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 12:44:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1597855429;
-        bh=elpQWnMEbQJfLsNjewKKZ3fdHB+Kvm017RCsE/3EDR8=;
+        s=dbaedf251592; t=1597855426;
+        bh=sFgxq75EywJtCWSn/GlQwbKQr7tB6vBKgJsD2Cs10A8=;
         h=X-UI-Sender-Class:Date:From:To:Cc:Subject:In-Reply-To:References;
-        b=oOPojZG1tDEzEpeF/U1HaoaHbZB84JYgildCtGCinOY5SiiVf878dYW0+CtghU2yX
-         ZQq/4zoOxxNDWFNoMXBpKwFkkGPAzGZaETGWhlfLqg842LPguvoFCJZBtFuaRgA8S7
-         pK2OtIqu34St0JC4iwEcabbd2z8GbDqemz4BT19A=
+        b=EoE1Ev8vk4Eo5DhseMNUdkLLaQsOMyIWHmz+DVhbUIrOCFFqzgyVdp2zGGMJb+H+I
+         zlCtf1aUEnjuFSr6pbNl+FTb62iVv6q3bOUD5v6VeqwIyAyu82uJDmBHUa9nluc9U1
+         hSz3botcGCVPoVMFtAJytWVgHpOiFHPeFPAbz40c=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from luklap ([87.123.206.157]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LtoGb-1kp9v62CRx-011E7s; Wed, 19
- Aug 2020 18:43:49 +0200
-Date:   Wed, 19 Aug 2020 18:43:48 +0200
+Received: from luklap ([87.123.206.157]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2dbt-1kxvLb19Zl-00sLKV; Wed, 19
+ Aug 2020 18:43:46 +0200
+Date:   Wed, 19 Aug 2020 18:43:44 +0200
 From:   Lukas Straub <lukasstraub2@web.de>
 To:     git <git@vger.kernel.org>
 Cc:     Elijah Newren <newren@gmail.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 2/2] dir: Recurse into nested git repos if they aren't
- submodules
-Message-ID: <52f2765689d0d56739b3ba2c08d9cf8db63b5794.1597853634.git.lukasstraub2@web.de>
+Subject: [RFC PATCH 1/2] dir/read-cache: Allow adding .git files and
+ directories
+Message-ID: <b673d675eef04b9cc9b7459c066856dcea7b6eea.1597853634.git.lukasstraub2@web.de>
 In-Reply-To: <cover.1597853634.git.lukasstraub2@web.de>
 References: <cover.1597853634.git.lukasstraub2@web.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/sRKfcG+uykK18LYrkNfCJDu";
+Content-Type: multipart/signed; boundary="Sig_/0oFq6E+vWsULHfY2++_5JQ.";
  protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Provags-ID: V03:K1:YWBZfQTStgg/LDkb1qFYRNFHiGZ1FBKAp7z8NkI3yI7QYW0Aa4Q
- 3Ro0KE1+iZxef0qFL4/d8Xf4IPMH+EHu9s0sKFG9i5pg0skBR/CxhsRqWiAE86T5knzVQ0K
- KCMfTMHdivZr0peUo7AUtM+d5fGr8XWn/ohNYlp+S/ehlDmwyxQWOuFJddaq0p8Rbx9q5W2
- PzEALuTAWucIGcabUvFJg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Z+VyMVC9rJs=:re61Xat14j7UooDGIt6lTB
- AJaInbI6X4yzAh0UpGKD1X5Ew9rYGor9nYifXn/J9/MtggKVv94vY6YQtrCi/pJoevsQCaGtx
- EiiMVICoOiQsDdQNh9rhXvqbFYKkfjrIFyIsVbDeGnNAiTZ5zIb5+gAcQ7WM4M8xJfZB7+7kY
- umLM9Px2ZXY36yibuZK/A6BXzRpMKSv3tSpwrmYtgSXZ8d+FJxErteSBNrFcYgcgevwWqq7KW
- DU6hkt5NS9t+mgm9sVs/+iE0QfNLHlH9Nwsw9vWNJpNQFzGGU1KwuDanR1h5S/XeXwAG+XtxH
- p5CFhvP7A+wMZTw+DPsDHVuYzIPAdDmAchbbNLBcIO1C2tBXsohfjYX4ng1UwcoR7kDXnaN4z
- EyqZXUt5PZn4O+kjX1WjDHi80jvrdDFZBbxEVhTrN3yT+v6phZua/mGngAKO+SHmqCKZZuTum
- eWg2NZV9NsGASMEhBmuOWLJPWnWCXBORdXxeKDIxZBX4zdj4VhHbu9Ah40xEGuYyftg/pwQZI
- yxqi0Ykafg2nInc0PSqTcCr7RCT51lC3y2q+RgpO5OLKKDw8FHykJliEL4zG/A6/crkA0ZUTk
- Zr+FqEU9NMsGeUluiNDDmSxM7xaqPH3ApivuNwPy9mWc6QHPs69tEkHS3u85n2L3D8a+pvfE6
- M66b/I6ieX+lRrO03uLZNHbl+vtW3SdrkV4Mv09KNb9mPhGP6IRjC21dvO0KyHcDFSQYhVg3N
- 2LcrbcQ3WkbbqwcBw8EWQrf0TbwUGyzapmd/LlPafE8qNOLi1VvQTQjKBVHmM0ask39+R8UTL
- KDjnAJ2w+YhyVkMi4IdXgGNdOV4AkYoolcS4jfaOdtGRIJNHaY4AN+eCvb3D5KfPa2vKdE942
- bk+qq94zmIpzBfuBOH4Eimg/nRTCoTgHEGNODP99j07XZORBMtw1sy9Rk5bHuyzAI1C29JUUU
- 3saro0W2V9xq1L+hNQKKArsiKlqqcqhdES8qobP3lCqj/YKZTB5wEBWsX2lqKSQn0YbYn5K19
- LYKnnmFPpRMuJ32Wf/IFQ+kgH453ujpaakYLYK2kT073Mr2MK0uPisHUnw7XVCiiGEyz3rPsf
- 3dSqchTSiiwMkvM5JkcsAuTwfepdFzoMh2bxLhvKbfPYmejgyyCt47XFBqkmfzVxvXOsDldtC
- 6BghIHlzJBl5tm3KcTrUYdH6ubQh2X5/Q5jFW1yfNRSjpJicePpXt6b8o0VH73xetP6lU+FZM
- Q/TGemHF0iCxW1PhFGTTVn3IGhpUj9sdaFRwWQg==
+X-Provags-ID: V03:K1:s3E3odAU8A1/CfgUk1Ar7h8SKFc8/ON4/ZGEz1MTeNo8CFUIOpD
+ eRN3HSyOz2qhceeBH8Ka9nGG604nOeW77b+LxCNM4ttYsKIJ8nHIw4EKw2DBdsYQXFIKMxv
+ +578CwI2MdpETwSL1jPa5m27TOgkwKF3feYRakDc2/9HdMGlFzg2iH6apxJDwu2W7L2fB7N
+ v8snAAdCR4l7lctP9RrhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:I8QobicBf98=:/kwHjom3Ed3o9MGoNl7Nyi
+ IqqVxhywKmchleUJuJgUXLdVIn6iJa3a96XgK6uu/K+rHpU+TAKpl+kZWTQP3jJcx1DIMAXhC
+ Tm0wxB4oPrXI/VOyPXRAaD+83ZbSsVX6FLCnZKZEqW6TnmSM4l2hX3VVM/uGCTExmDBN+nL5I
+ pjMsrhiJ+EB+kjjFfEXfkJSmGW/uDw21g72At0By7nlakRqSguaubPyP0xwOxKukwsA9/iIRN
+ jEoE0I+qXbkyvaVwil+ofyLdVOg84B8iNidoKU1ThzKtftTFXUGNdrShtzb151f3xFfIMmAFx
+ PjiMg+7MiDj5uuG3/IWXL1l52bkiZTqSZeL1/x4hRHg7YU9/tbzV6t5Prwo+KJ0aHu27DXdOi
+ TlTea1sP5E+VQ4wUR1b6x1igReO/E5niq/XHsAdHRHv93Y4NBfp02NWnsMrZC7cwVpzv2Lm/w
+ 9MtANAuyCgUBCxAPBlEf5xncTRSyQIZSzTYiyaM0VLWPAtgC56bMhAmzcDVyJAFPma2o0g7iK
+ ILhnfCX9iF8OzTq/4gcq/w5lGItGWM4rdwPUJRGAXS7DAPRJqi5Xr2EIXgMkYBLdIu4LL0ccL
+ AEWr9PmNrjBoedA9a56ujJuEnFnyVD9cOvTNvwjN8hAdAPYVzc1gfm3lLHtbBpRCdo0GXXFLx
+ tPd2AfOYOGf3H6ctwaOPkHi7XKhtydePwN3jPSUfCokXrWhdDvkXufv6pXXQ4xNm84H+HbTix
+ NS5rgrNoa21qQFW0AVmmwz59PAAyTjrgqkGRnJyErK+z02XGQz9CUKqkW6HVIBfOI1VLM5Gr/
+ aT4FnPKlWtajaCGupddUkmVNEXbacVPee/df9lz8onNHVldnBtpfjjvePFO55u1I+JF/xGfoW
+ TVfcepUV1d6oJdeafG5tLVqFEkBFeEcF6nkOHHbDp7TKM1HNSnrmrc51wdaQdsjF+ZikQZ77A
+ sqz4cQnbAzNvTRPcSCRoZ/KnzOOJgYIdZPtQUuM+40SS2IQd+WYNf0EXC8bhjNczaftyq06uD
+ h59FS/5gGGDcfSUrxntJ2EBYe0jFSrFUyNbrW0Ya27wGwRsp4f7+H6lxco4jU0NrHuRsAn2qW
+ 3WEseybDD4b6llKPgXCi70CE7m4NRVwqu4Aivyd5fiKxdIlEwxWWljkrVctaYjZ7PuSnEfgpK
+ 3y4Yj3nYaRJmijvALqBL0UO0byZClBYjhUT9bQ3Esv4YpAqmus8asoI9JD5sFcEs/Rxg6xdOv
+ CJbyUm/hwJgZ/G+7FN4pPjy3okn2yYpy8OdASrQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/sRKfcG+uykK18LYrkNfCJDu
+--Sig_/0oFq6E+vWsULHfY2++_5JQ.
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
 
-Only stop recursing into a nested git repository if it actually is
-a submodule.
+Prevent adding .git/.gitmodules only in the root of the repository.
 
-This allows adding nested git repositories as files as usual.
+This allows adding .git files and directories as long as they are
+not in the root.
 
 Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 ---
- dir.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ dir.c        |  3 ++-
+ read-cache.c | 59 +++++++++++++++++++++++++++++++---------------------
+ 2 files changed, 37 insertions(+), 25 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index a959885f50..359015748f 100644
+index fe64be30ed..a959885f50 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1787,10 +1787,8 @@ static enum path_treatment treat_directory(struct di=
-r_struct *dir,
+@@ -2145,7 +2145,8 @@ static enum path_treatment treat_path(struct dir_stru=
+ct *dir,
+ 	if (!cdir->d_name)
+ 		return treat_path_fast(dir, untracked, cdir, istate, path,
+ 				       baselen, pathspec);
+-	if (is_dot_or_dotdot(cdir->d_name) || !fspathcmp(cdir->d_name, ".git"))
++	if (is_dot_or_dotdot(cdir->d_name) ||
++	    (path->len =3D=3D 0 && !fspathcmp(cdir->d_name, ".git")))
+ 		return path_none;
+ 	strbuf_setlen(path, baselen);
+ 	strbuf_addstr(path, cdir->d_name);
+diff --git a/read-cache.c b/read-cache.c
+index 8ed1c29b54..7fb25c23d5 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -906,12 +906,7 @@ int ce_same_name(const struct cache_entry *a, const st=
+ruct cache_entry *b)
+ }
 =20
- 	if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
- 		!(dir->flags & DIR_NO_GITLINKS)) {
--		struct strbuf sb =3D STRBUF_INIT;
--		strbuf_addstr(&sb, dirname);
--		nested_repo =3D is_nonbare_repository_dir(&sb);
--		strbuf_release(&sb);
-+		nested_repo =3D !!submodule_from_path(the_repository, &null_oid,
-+						    dirname);
+ /*
+- * We fundamentally don't like some paths: we don't want
+- * dot or dot-dot anywhere, and for obvious reasons don't
+- * want to recurse into ".git" either.
+- *
+- * Also, we don't want double slashes or slashes at the
+- * end that can make pathnames ambiguous.
++ * We don't want dot or dot-dot anywhere
+  */
+ static int verify_dotfile(const char *rest, unsigned mode)
+ {
+@@ -922,10 +917,24 @@ static int verify_dotfile(const char *rest, unsigned =
+mode)
+ 	 */
+=20
+ 	/* "." is not allowed */
+-	if (*rest =3D=3D '\0' || is_dir_sep(*rest))
++	if (rest[0] =3D=3D '\0' || is_dir_sep(rest[0]))
++		return 0;
++
++	/* ".." is not allowed */
++	if (rest[0] =3D=3D '.' && (rest[1] =3D=3D '\0' || is_dir_sep(rest[1])))
+ 		return 0;
+=20
+-	switch (*rest) {
++	return 1;
++}
++
++static int verify_dotgit(const char *rest, unsigned mode)
++{
++	/*
++	 * The first character was '.', but that
++	 * has already been discarded, we now test
++	 * the rest.
++	 */
++
+ 	/*
+ 	 * ".git" followed by NUL or slash is bad. Note that we match
+ 	 * case-insensitively here, even if ignore_case is not set.
+@@ -935,12 +944,11 @@ static int verify_dotfile(const char *rest, unsigned =
+mode)
+ 	 * Once we've seen ".git", we can also find ".gitmodules", etc (also
+ 	 * case-insensitively).
+ 	 */
+-	case 'g':
+-	case 'G':
++	if (rest[0] =3D=3D 'g' || rest[0] =3D=3D 'G') {
+ 		if (rest[1] !=3D 'i' && rest[1] !=3D 'I')
+-			break;
++			return 1;
+ 		if (rest[2] !=3D 't' && rest[2] !=3D 'T')
+-			break;
++			return 1;
+ 		if (rest[3] =3D=3D '\0' || is_dir_sep(rest[3]))
+ 			return 0;
+ 		if (S_ISLNK(mode)) {
+@@ -949,17 +957,16 @@ static int verify_dotfile(const char *rest, unsigned =
+mode)
+ 			    (*rest =3D=3D '\0' || is_dir_sep(*rest)))
+ 				return 0;
+ 		}
+-		break;
+-	case '.':
+-		if (rest[1] =3D=3D '\0' || is_dir_sep(rest[1]))
+-			return 0;
  	}
- 	if (nested_repo)
- 		return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
++
+ 	return 1;
+ }
+=20
+ int verify_path(const char *path, unsigned mode)
+ {
++	const char *orig_path =3D path;
+ 	char c =3D 0;
++	#define is_root(len) ((len) =3D=3D 0)
+=20
+ 	if (has_dos_drive_prefix(path))
+ 		return 0;
+@@ -973,8 +980,7 @@ int verify_path(const char *path, unsigned mode)
+ 			return 1;
+ 		if (is_dir_sep(c)) {
+ inside:
+-			if (protect_hfs) {
+-
++			if (protect_hfs && is_root(path - orig_path)) {
+ 				if (is_hfs_dotgit(path))
+ 					return 0;
+ 				if (S_ISLNK(mode)) {
+@@ -982,11 +988,7 @@ int verify_path(const char *path, unsigned mode)
+ 						return 0;
+ 				}
+ 			}
+-			if (protect_ntfs) {
+-#ifdef GIT_WINDOWS_NATIVE
+-				if (c =3D=3D '\\')
+-					return 0;
+-#endif
++			if (protect_ntfs && is_root(path - orig_path)) {
+ 				if (is_ntfs_dotgit(path))
+ 					return 0;
+ 				if (S_ISLNK(mode)) {
+@@ -995,11 +997,20 @@ int verify_path(const char *path, unsigned mode)
+ 				}
+ 			}
+=20
++#ifdef GIT_WINDOWS_NATIVE
++			if (protect_ntfs && c =3D=3D '\\')
++				return 0;
++#endif
++
+ 			c =3D *path++;
+ 			if ((c =3D=3D '.' && !verify_dotfile(path, mode)) ||
+ 			    is_dir_sep(c) || c =3D=3D '\0')
+ 				return 0;
+-		} else if (c =3D=3D '\\' && protect_ntfs) {
++			if (c =3D=3D '.' && is_root(path - orig_path -1) &&
++			    !verify_dotgit(path, mode))
++				return 0;
++		} else if (c =3D=3D '\\' && protect_ntfs &&
++			   is_root(path - orig_path)) {
+ 			if (is_ntfs_dotgit(path))
+ 				return 0;
+ 			if (S_ISLNK(mode)) {
 --=20
 2.28.0.217.ge805fe7219
 
---Sig_/sRKfcG+uykK18LYrkNfCJDu
+
+--Sig_/0oFq6E+vWsULHfY2++_5JQ.
 Content-Type: application/pgp-signature
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAl89VsQACgkQNasLKJxd
-sljWmQ//XD4qKiQqLP8gP6vCYraSYHTuPI7Ti6MUUKH6+oT7QGyJYt+Hd2tPNXnL
-aMmDJLkB5w40SZAjtfVgC5MB2XXDKbCBHxrRIb/23jnI2wnxZHAvgWZkMHzosgNa
-cIcoisGwPEtm2GAAvIrpNIwuKHSPCb1P+tVRlNmjcV0lw2DrJlmcSED/UqVB8FeW
-1xRnIyV5/wGXJpfyKryrrqo+mWHtIRBSG8dw9lnjZz9dbM6AFafYRDNOPB249PEB
-zDEDeP6YTs4g//IGooyYrMBll6zhMmgS6ZgYSlFxdhoJ9mg+/8GDJPLE7AVDxHAB
-+Yi2H31L57VUh5eyBked585IaVBwpu5cMrl9SBDzgRi2hbDAAQKT8SYulZt9813V
-i2H7kvjWMmffQLjvyEVAsT4tHN8upZVKPSo9IOFIZiSbmBNcxNOJ+h/vO1lJh4gO
-7gFHiLYDIj7W7rRFolsC5BsCnrCGHg3CazdvYZV5F456XszDzNPPQarkFXvGPnWl
-YStNxMq4Hoo3nBX6CGbS26pKvnSKieliAZ+AAihMOGCQgsaaDxXGlV5ngBap5H3H
-SOJYx/9aHr5aenS2WLxfQtVyyXIy/bYvD1484qcr94OBn7SjQfVr4AahdiviT/rf
-tYlXbizp5vss8g+Z3TJIYdA+asW8ByYqLz+TSdOeOxdlenVe3+Q=
-=61vQ
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAl89VsAACgkQNasLKJxd
+slihQRAArvtsapMbY11V2JK+YR2nmTduZxyjETZKBd+ziNGvR5HFZbdvRYFUcW5T
+/aXGGsJJR8RMCyp4aUHurw7yUK1zDHuInBrjwcsEnFzYSlkNiQntp7vmOv2HI3tm
+0+PTZBTrVj3O7YNwhZM/QIlxz/asy5VSaD+FVXFlkB2uSxdCc0rrixayMS5YDUfj
+vWGgukkNcvoG/BF4yfmql18G0VV0eri7k4N7OMC29X3sPiBJZ1IsjVXon3H38cuX
+EbqlOQ0q88byip/LYsPl+MSL4Qir3AqLl7iYwox9UiUxmpa0nPFJRUxtq0+kWgFc
+Nx3l/J/qkSwWvb7qjmUJmFR4LpTLOJXTIE7gchSpTrMscGN100/1Aqxj7yQekxUl
+TFsl3whnR5ImdqpV/jVtLD2kBHc+rSVsOou8l7HjozpPBYwB8sRzxeBTSPxVPomJ
+HLAC0dIQcfWPR5p9fV3AWmywQ9fKVMxP17b9DiXod4f4ruDbxKNGbgYtMVX7ZnH3
+/fhcQLtF8gc4jw4eZtdbg4ZJg8bc9ohuS/QnnfSs6kPEzgIVfTB8w5tIdm3Xr1/j
+8qxRVgAWZJk6vbE0c7io/2srB6X2LwfLKTQZGkTiOsiAqZkKwE9cRnnuXeeHgy30
+k0fV1+Sbu99wFNC+/lLG70RvASOgTNP/vTcZhFWcvAMG1xLiuyI=
+=Newp
 -----END PGP SIGNATURE-----
 
---Sig_/sRKfcG+uykK18LYrkNfCJDu--
+--Sig_/0oFq6E+vWsULHfY2++_5JQ.--
