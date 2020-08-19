@@ -2,185 +2,94 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96FB8C433E1
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 12:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D22FC433DF
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 12:52:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75F11206B5
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 12:52:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C0AA206B5
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 12:52:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVn70fap"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tiwOtYwR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726961AbgHSMwo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 08:52:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35100 "EHLO
+        id S1728503AbgHSMwn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 08:52:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728497AbgHSMwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 08:52:36 -0400
+        with ESMTP id S1728364AbgHSMwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 08:52:34 -0400
 Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1906C061383
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 05:52:35 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id 88so21431131wrh.3
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 05:52:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E65C061757
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 05:52:34 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id l2so21407654wrc.7
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 05:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OS2sRKB34GpX+DjHnAPxp4cG4XQ9WPhbPQMol2NtnuM=;
-        b=jVn70fapFRniwTidcQNdDzGgeIpNtcQsrpHrJFmj2+rltmmco28F7fNWvaNMnefimv
-         UqVWsMyLrDkMUaqDxSgMy8YdApi4hB8SobeGGIm95h0NU0IUXxJTqEYVrLfSQwRWvKko
-         rBx5yZWmKe/kFLhNGU31BFqK401mlLGdaCPqSeoi07cmeEj1900Kqz6N8D4zjEdiHvVS
-         hxXQFszLWhMJFVGF1KC8x9KEMrYsBiGZ7kMLQVV3nnMiAD2kOOhDa3UfH5GaZm3/pYhu
-         K1qEC8DlyvXgOP/lsiIHRnOvCkxO4yZ9MJdC++5nzauxw1o1y6hZy+kS3gOTEeFmjwp5
-         tAPA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=pdKHxpxjj+zK+hlAXyBN0jLkA8i5WDn+hf50HX73oOg=;
+        b=tiwOtYwR6JyL0/+vORw2GdyMzhbCFrTYXYOxJAdu5R4Uw/vMvgmD1QIjsCbXRita+c
+         XoawYUeUhfY3wd/kazSPIuiFSEqp7KUZCMRavkCAPQ4thIWrHyXNnZK3lti0wXZNEdU8
+         38HJKrkgZfR2Q6j7TJWZ8PdB+Nl8Zm2byGbYpGuYRfZhtnIokfAvZpdheA330kxDmfK1
+         PQAdREXSQ1w5i2fCTg/wJDse6LugjSJnRwEHvnLgVVUwH4wwMNgtalnSnU6AKFZ2L43x
+         w5cgo6Q3mVqrooWwfP8n+yLqGkDhaZIj4GEyE+THsvf6meAS4lcGnkS3GyUie9Seweab
+         xOTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OS2sRKB34GpX+DjHnAPxp4cG4XQ9WPhbPQMol2NtnuM=;
-        b=qNru9mC8PrtH8D/F8siOR/EXxDUpCl1P2HjfJoXEODrSr0YCU6xbYhiNQ5+6jfC3KK
-         HMIIgTPDbuMt9i3wCuf6BoZl9QfZD65tt4d95lmYf3iVtvgWYu+xpqEuv9byotaf1jZB
-         LvkFUorT44lTu2nIMiIbSlX4CJbafoV7coU9W3hQ7fwephxhhmJd9X+DOJoWABWttGmm
-         oQ00IgvB39N3XDsvNsavhtz8UFwUsuH+9VhJJyjaVxgcjrvSmE2+D1BU2tPWCAP3HyPR
-         BfOMCXXz6rODRYjpXfGJholVGx//imvIOsfXQGqc0HGSuE2ovIq9SgboC4QOCr8u4AbO
-         4peQ==
-X-Gm-Message-State: AOAM530+2ndBOpLd8S3a9Ys+SFjjQgPqlzsH3ao6Hv1HrvhQ5WGD26YJ
-        raEHAO12XTCiabO77hTSEzVs1NTH55A=
-X-Google-Smtp-Source: ABdhPJw6OMiHQKzR4rlHxThtm1s4ie2MN8xtU1gDugXOy1Dx9j5Gv+nTCnnH7VCXK5SAYftMA/QklQ==
-X-Received: by 2002:adf:edc3:: with SMTP id v3mr4037601wro.193.1597841554219;
-        Wed, 19 Aug 2020 05:52:34 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pdKHxpxjj+zK+hlAXyBN0jLkA8i5WDn+hf50HX73oOg=;
+        b=E+hzO0gVW61laTRO74b/F03kXE7Vc2VDm/5AInbUXBZgOBODLG8sX6jX2h+f4sCi2G
+         /alRa9BrxNmt7jxCWgbVEsIpD9ntEgcBdlyk1zZVq8tZVUp9BG/HC+s/9fAzwtIw//8a
+         U9yXMS6TF+ezUi+0o59dUBtb+OVz9Tc0uT7FgHXxY9a0toJgbgAYd8mgm+ASBvVDXFde
+         zmL9r2QOI5fiOFL6zzRjNIV1C1fg2qTFtksP3Zh30AJYPFFKxEroe1f11iDzZiYCeVcv
+         5R2rRsq9EkEs/DmbR4lCVbxztHrtMDAmq9chuy5PYd3bnyqtIS40K4MH0Uh+vCC7oP1Q
+         JeMQ==
+X-Gm-Message-State: AOAM532KEbhzrkyUJLztB/BwnRkTi/0gumrMfEXzvdvboyIxFMnQjgWD
+        7Iu8pGnnmg0b2zWcAeTzch4CrpkChSw=
+X-Google-Smtp-Source: ABdhPJz13O1Lk5DqAIoEzjZ78oLRlebRiTAu6x/GBe0LhnbRs2zus3MnY774op1gOdETuzVPi6ajug==
+X-Received: by 2002:a5d:5682:: with SMTP id f2mr24499862wrv.248.1597841552676;
+        Wed, 19 Aug 2020 05:52:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m126sm5319271wmf.3.2020.08.19.05.52.32
+        by smtp.gmail.com with ESMTPSA id p25sm5259413wma.39.2020.08.19.05.52.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2020 05:52:33 -0700 (PDT)
-Message-Id: <bd0bb8d0ef0936866c2a957e5391424a7481a33c.1597841551.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.707.git.1597841551.gitgitgadget@gmail.com>
-References: <pull.707.git.1597841551.gitgitgadget@gmail.com>
+        Wed, 19 Aug 2020 05:52:32 -0700 (PDT)
+Message-Id: <pull.707.git.1597841551.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 19 Aug 2020 12:52:30 +0000
-Subject: [PATCH 1/2] t6300: unify %(trailers) and %(contents:trailers) tests
+Date:   Wed, 19 Aug 2020 12:52:29 +0000
+Subject: [PATCH 0/2] Fix trailers atom bug and improved tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Hariom Verma <hariom18599@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
+Cc:     Hariom Verma <hariom18599@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Hariom Verma <hariom18599@gmail.com>
+Currently, there exists a bug in 'contents' atom. It does not show any error
+if used with modifier 'trailers' and semicolon is missing before trailers
+arguments. This small patch series is focused on fixing that bug and also
+unified 'trailers' and 'contents:trailers' tests. Thus, removed duplicate
+code from t6300 and made tests more compact.
 
-Currently, there are different tests for testing %(trailers) and
-%(contents:trailers) causing redundant copy.
+Hariom Verma (2):
+  t6300: unify %(trailers) and %(contents:trailers) tests
+  ref-filter: 'contents:trailers' show error if `:` is missing
 
-Its time to get rid of duplicate code.
+ ref-filter.c            | 21 +++++++++++++++---
+ t/t6300-for-each-ref.sh | 49 +++++++++++++----------------------------
+ 2 files changed, 33 insertions(+), 37 deletions(-)
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Heba Waly <heba.waly@gmail.com>
-Signed-off-by: Hariom Verma <hariom18599@gmail.com>
----
- t/t6300-for-each-ref.sh | 50 +++++++++--------------------------------
- 1 file changed, 11 insertions(+), 39 deletions(-)
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index a83579fbdf..495848c881 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -776,60 +776,39 @@ test_expect_success 'set up trailers for next test' '
- '
- 
- test_expect_success '%(trailers:unfold) unfolds trailers' '
--	git for-each-ref --format="%(trailers:unfold)" refs/heads/master >actual &&
- 	{
- 		unfold <trailers
- 		echo
- 	} >expect &&
-+	git for-each-ref --format="%(trailers:unfold)" refs/heads/master >actual &&
-+	test_cmp expect actual &&
-+	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success '%(trailers:only) shows only "key: value" trailers' '
--	git for-each-ref --format="%(trailers:only)" refs/heads/master >actual &&
- 	{
- 		grep -v patch.description <trailers &&
- 		echo
- 	} >expect &&
-+	git for-each-ref --format="%(trailers:only)" refs/heads/master >actual &&
-+	test_cmp expect actual &&
-+	git for-each-ref --format="%(contents:trailers:only)" refs/heads/master >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
--	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/master >actual &&
--	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/master >reverse &&
--	test_cmp actual reverse &&
- 	{
- 		grep -v patch.description <trailers | unfold &&
- 		echo
- 	} >expect &&
--	test_cmp expect actual
--'
--
--test_expect_success '%(contents:trailers:unfold) unfolds trailers' '
--	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
--	{
--		unfold <trailers
--		echo
--	} >expect &&
--	test_cmp expect actual
--'
--
--test_expect_success '%(contents:trailers:only) shows only "key: value" trailers' '
--	git for-each-ref --format="%(contents:trailers:only)" refs/heads/master >actual &&
--	{
--		grep -v patch.description <trailers &&
--		echo
--	} >expect &&
--	test_cmp expect actual
--'
--
--test_expect_success '%(contents:trailers:only) and %(contents:trailers:unfold) work together' '
-+	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/master >reverse &&
-+	test_cmp actual reverse &&
-+	test_cmp expect actual &&
- 	git for-each-ref --format="%(contents:trailers:only,unfold)" refs/heads/master >actual &&
- 	git for-each-ref --format="%(contents:trailers:unfold,only)" refs/heads/master >reverse &&
- 	test_cmp actual reverse &&
--	{
--		grep -v patch.description <trailers | unfold &&
--		echo
--	} >expect &&
- 	test_cmp expect actual
- '
- 
-@@ -839,14 +818,7 @@ test_expect_success '%(trailers) rejects unknown trailers arguments' '
- 	fatal: unknown %(trailers) argument: unsupported
- 	EOF
- 	test_must_fail git for-each-ref --format="%(trailers:unsupported)" 2>actual &&
--	test_i18ncmp expect actual
--'
--
--test_expect_success '%(contents:trailers) rejects unknown trailers arguments' '
--	# error message cannot be checked under i18n
--	cat >expect <<-EOF &&
--	fatal: unknown %(trailers) argument: unsupported
--	EOF
-+	test_i18ncmp expect actual &&
- 	test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
- 	test_i18ncmp expect actual
- '
+base-commit: 2befe97201e1f3175cce557866c5822793624b5a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-707%2Fharry-hov%2Ffix-trailers-atom-bug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-707/harry-hov/fix-trailers-atom-bug-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/707
 -- 
 gitgitgadget
-
