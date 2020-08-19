@@ -6,82 +6,106 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BAE6C433DF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D35C0C433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:51:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1669220639
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:43:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC5752063A
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 15:51:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UCKbv4Hn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N6s6sQ1e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728641AbgHSPnL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 11:43:11 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62677 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728766AbgHSPnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 11:43:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 47534F2EE4;
-        Wed, 19 Aug 2020 11:43:06 -0400 (EDT)
+        id S1726965AbgHSPvn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 11:51:43 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54232 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726570AbgHSPvm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 11:51:42 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F478EED4E;
+        Wed, 19 Aug 2020 11:51:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JHo5ZwbJPVAQVYJkdkwRUihlUWU=; b=UCKbv4
-        HnCLjHyClZs0m/8l14v2fd/6nEDeZDd7xxMeNTRe28qm2U6boNsjcEtH3kvWQbyB
-        jRw3EHkZpp7V5q8KlinAi28Hc2iK8pe1ZY2uiXOwoek3ZjtPGOTYEKKubv0YCJsA
-        Rmct04bKd35QQ82DgdfxYXOQdY7F8+rNj2UFQ=
+        :content-type; s=sasl; bh=HCaeutmvndY44E0mCNch040Rcl4=; b=N6s6sQ
+        1eVqe4N1THVWCOxb4joV2S9Q1cecjJ1Cwgp+OxBSTDTpv7mC0nKF5OkxTV87HdlO
+        GBlaCHRGazdXniWnKLzpWtdk7SE2QjakHCtmkPcu9l044TzEFq4mr0dAvC3dcmg7
+        KisW74akDvUD/Su40yvZEI1XGrH1m0ptgAUtk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZY3OXPN60LoGdyYFbOlCz5ijDSvPvy9y
-        Ny2QqrZTdmoTjXwUS8J2BEL5b2SzvO7KA702oj/S46HIX//UG8iBJ3zheUDcibTA
-        Bdeh6L6Uu03HfuYfXGFKzBn1I8IxAe5xK2Xy1hXKtf8/v5QHv3JGivxG079b/kfM
-        CIogbFRFJNY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4080EF2EE3;
-        Wed, 19 Aug 2020 11:43:06 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=W5kXlTD11Br3M6zFFrvra7LvzOv/6j0H
+        eSOoSonZZ8+ogAOFrN67M8HR8Ze2MWjG9/EQDOnrOzC57qdxkp8XHd5s7m/lAoRD
+        NCfB8pGBB6O1dCVERYWzfnKUpclzi/PRY9Tg2+y7nLjw2HjbZIK/1dikVYv7o4O8
+        Kig7EEEQIs4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17A8FEED4D;
+        Wed, 19 Aug 2020 11:51:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 83B2CF2EE2;
-        Wed, 19 Aug 2020 11:43:03 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 139FDEED4C;
+        Wed, 19 Aug 2020 11:51:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Carmen Andoh <candoh@google.com>, git@vger.kernel.org,
-        git-inclusion@googlegroups.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git Inclusion Contributor Summit Registration
-References: <CA+Twho+nyERK1Ljdy6MnXA=iK6SiU85v4yLQc+fRmW83JVa+hQ@mail.gmail.com>
-        <20200819095109.GA60828@cat>
-Date:   Wed, 19 Aug 2020 08:43:01 -0700
-In-Reply-To: <20200819095109.GA60828@cat> (Thomas Gummerer's message of "Wed,
-        19 Aug 2020 10:51:09 +0100")
-Message-ID: <xmqqy2mavdyy.fsf@gitster.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v8 2/5] am: stop exporting GIT_COMMITTER_DATE
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+        <20200817174004.92455-1-phillip.wood123@gmail.com>
+        <20200817174004.92455-3-phillip.wood123@gmail.com>
+        <xmqqtux113z6.fsf@gitster.c.googlers.com>
+        <2ad142e6-5f2c-7e05-c8d3-ab6efcfc7058@gmail.com>
+Date:   Wed, 19 Aug 2020 08:51:33 -0700
+In-Reply-To: <2ad142e6-5f2c-7e05-c8d3-ab6efcfc7058@gmail.com> (Phillip Wood's
+        message of "Wed, 19 Aug 2020 11:20:30 +0100")
+Message-ID: <xmqqr1s2vdkq.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AB215BEA-E232-11EA-BB0D-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: DC085F1E-E233-11EA-B27D-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On 08/14, Carmen Andoh wrote:
->> Registration is now open for the Git contributor summit dedicated to
->> inclusion. The summit will take place online over two half days on
->> Monday, September 14th, 16:00-19:30 UTC (9am-12:30pm PDT) and Tuesday,
->> September 15th, 17:00-21:00 UTC (10am-2pm PDT).
+> For am and the sequencer fmt_ident() is in a function which is called
+> from a loop and it is convenient not to have to worry about passing an
+> strbuf around or allocating and freeing it on each function call
+
+That's strbuf on caller's stack, right?  The actual string pointed
+by the strbuf's buf pointer will be needed and on the heap with or
+without the clean-up on top of the patch we are discussing, so I do
+not think alloc/free would be in the picture when considering the
+pros-and-cons.
+
+> The callers in ident (fmt_name(), git_author_info() and
+> git_committer_info()) return the string so they would need their own
+> strbuf or have to be changed so the caller passed one in. There are
+> quite a few callers of those functions and they seem to either
+> immediately call split_ident_line() or duplicate the returned string
+> (mostly the latter).
 >
-> I've taken the liberty to add the event to tinyurl.com/gitCal with the
-> link to the registration form, to give it some more visibility.
->
-> Should that be unwelcome please let me know and I'm happy to remove
-> it again :)
+> So it would be a bit of work to do it but not an enormous amount
+> (assuming we don't change the signature of git_author_info() etc in
+> ident.c, although given the pattern of callers it might be worth doing
+> that if they are mostly duplicating the returned string anyway)
 
-Thanks.  My earlier question wrt the registration deadline (by the
-way, in case you missed it, the answer is Mon Sep 7th 17:00 PDT) was
-exactly for gitCal, but it sounds like that you beated me to it ;-)
+I'd say that is more than "while at it" clean-up.  It would be
+easier to review and slightly easier to do if done before this patch
+introduces rotating strbuf, but ...
 
+> I'm going to be off line for 10-14 days from the beginning of next week,
+> I could take a look at it after that, or we could leave it for a future
+> improvement - what do you think?
+
+... I can be talked into punting it for later, at least for now.
+
+Thanks.
