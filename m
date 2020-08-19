@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F171BC433DF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 14:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE513C433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 14:28:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAFC42076E
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 14:28:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC6352076E
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 14:28:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BeX+TAdy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DC+ACPnK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728479AbgHSO2Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 10:28:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50094 "EHLO
+        id S1728493AbgHSO2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 10:28:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728175AbgHSO2F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 10:28:05 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85CF8C061757
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 07:28:04 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id a14so21754579wra.5
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 07:28:04 -0700 (PDT)
+        with ESMTP id S1728393AbgHSO2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 10:28:06 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751FEC061342
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 07:28:05 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id a14so21754635wra.5
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 07:28:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2i3qUwPJDAmy4lYfuNBK8v1B1C+CYmST/yp8s9bmrTI=;
-        b=BeX+TAdyOffiveir8zSavUvFy6yg/RXJ3NORZFlNMZaD1xN19mOrUTuS92jk8IGuAy
-         +2q8zT9LJk6gVtTf3GYs1FFWTOkKNT31VniM1PYBvPi1LNkQLFuMnoi3J0b+qBXACtxe
-         Ft59hKErRAvZcIUiJwqVNZTyx3Bd6EJSs4kSMLK6MSHzARMQ2TkGhB5PrhNmh6hPbFxu
-         KwNvmkypdNELOeSuScqnn3oTlHfC6FlADMvtxjo9lvMsva4lu0THpP+Dm8l1yBdO2m6Y
-         GDaKSkxzXsLogw0cP5tZU41JGOJ7tIoblI1bN2nLmrvNRPEoiulXzlo+DXqUy7p8aoub
-         2ANw==
+        bh=2Nm9NToXXZPc36xOHORm95YmqHPjhog2RFKnTRhYc5Q=;
+        b=DC+ACPnKyI/q91t+NgrKTvMuMYhASSLad5Fb5hQ5iaMurjIbklfrm52fk5WQIRfnBS
+         bnrB3txpMVSmyuoQrJ7IB4IWOLbxFbrAvLbzdKKO0DuGWDxqQVuqUahdSp6MgLrfyUBr
+         JifTGYUIYZUAWfH3vvlquTigWlLY3efcG62gOpZ+nP5fuEKQv8qMLPSwAXmwW0er74j1
+         10pe4erOJDtUbvEklZ2+Ca9vMHuLJjszFFlgOdXjgywz5iib3mLcMFx6qzSOdch4RqQS
+         nLBa1x2a8Juo9auYhfD6KkPf/5ClMy8FxEL1G4i861dVFsv9psQhL14O0dP1MsHYB3kl
+         h7eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2i3qUwPJDAmy4lYfuNBK8v1B1C+CYmST/yp8s9bmrTI=;
-        b=scvIXZQjSGXz5Cv63GRidWUTqOBKa9aqjH9dfIiRhhPCIkLzQNmr8Jb2f4hGWARAbW
-         6c0ZRu4VvXUFBz7ltzXs+cRKmYk8PrZMdn/lgsb1StZ/Kx/oeP8dEtK640m3W1z0eodX
-         vzsm9rf790IFv7cF2/CSvtlYATFjNBd495xHnR4A/SIYd1rI6bfUMIjeJYgak8wM3WgZ
-         U9tk0e8njX1WxMjngDM7pOAZeXflxTlR9nRLhqrFNUzO1hHk8mTxG45ilYl7FCnEbm39
-         UtwXl+3koUMLyRkfYLIk6zjBsMELh2omCdPvz7oVeC2oJM7mtrb8aQ0tJyB1VGSB9W4H
-         kL/A==
-X-Gm-Message-State: AOAM530gSetIIuXLnd32wiWOmGlI9Od7Uf8HLAtjKyUkGCYumdxjrBT0
-        53/hy7i4uf+k4YFusVRwiqLGlXb8qB0=
-X-Google-Smtp-Source: ABdhPJySxrk9Y/OSA7ICExqTWVWA5Kb6ETrpNBP/B8min3Dn0CuSDaX46OvflyjxCCN1JTx6i3xOiQ==
-X-Received: by 2002:a5d:548f:: with SMTP id h15mr25345433wrv.331.1597847282968;
-        Wed, 19 Aug 2020 07:28:02 -0700 (PDT)
+        bh=2Nm9NToXXZPc36xOHORm95YmqHPjhog2RFKnTRhYc5Q=;
+        b=noi9L3Hi4qwdVHgu44Q/TVngYAg5+yEXR6sgzC3CQgFIwzrwnXQMBjMaycy49jLcX1
+         Br483RPq1nmDTydT5iVfq5saNGL044IRk9b1uKYyhpQ3emNRD42MBl3Ko/9DdmCPoTbX
+         2aNcDnEBfak71roHjF4+7hQ0nGuFAp6Nk/wo9sv7IyuJJaNDeCaHctzeaPRpQySHEeR5
+         3TZDP6iBhXnBiq5fabmShENM1TdG8dLQfWYtnMgMZK3v3rJk/tnqWgaNYgXfMbv+kqM4
+         gDlKkXBJQMyhaGyAAwCbYAisiNyEgFzeZrX25qxIvPTCCLqfKJCFjbr1WCR3PXPj4Ppv
+         1l1w==
+X-Gm-Message-State: AOAM5306Gt6KJxW5iCSY3FbjKDAQdt1mW+Q51tFzY2qNYNaRyizbam0p
+        hZL2UygvG+UKsmvF2IIZwriXNUlL3ek=
+X-Google-Smtp-Source: ABdhPJxGmFw84il3Gw62gr/ebYzca1eVPafHkYET8Vla+mGl4+CEUTDG6n93UMm3GYGu9n5fSPsS2Q==
+X-Received: by 2002:adf:e902:: with SMTP id f2mr24755867wrm.174.1597847283834;
+        Wed, 19 Aug 2020 07:28:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 188sm11609593wmz.2.2020.08.19.07.28.02
+        by smtp.gmail.com with ESMTPSA id f15sm43211625wrt.80.2020.08.19.07.28.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Aug 2020 07:28:02 -0700 (PDT)
-Message-Id: <6263b4b3f2dd2f0e77235f5f09daed7c0bd69099.1597847278.git.gitgitgadget@gmail.com>
+        Wed, 19 Aug 2020 07:28:03 -0700 (PDT)
+Message-Id: <a3e903e4c0b29a3c37a43b0e76060aa3bb250cfa.1597847278.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.705.v2.git.1597847278.gitgitgadget@gmail.com>
 References: <pull.705.git.1597678796.gitgitgadget@gmail.com>
         <pull.705.v2.git.1597847278.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 19 Aug 2020 14:27:57 +0000
-Subject: [PATCH v2 3/4] refs: move gitdir into base ref_store
+Date:   Wed, 19 Aug 2020 14:27:58 +0000
+Subject: [PATCH v2 4/4] refs: read FETCH_HEAD and MERGE_HEAD generically
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,105 +78,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+The FETCH_HEAD and MERGE_HEAD refs must be stored in a file, regardless of the
+type of ref backend. This is because they can hold more than just a single ref.
+
+To accomodate them for alternate ref backends, read them from a file generically
+in refs_read_raw_ref()
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs/files-backend.c  | 15 ++++++---------
- refs/packed-backend.c |  1 +
- refs/refs-internal.h  |  3 +++
- 3 files changed, 10 insertions(+), 9 deletions(-)
+ refs.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 3a3573986f..dd712e47f4 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -67,7 +67,6 @@ struct files_ref_store {
- 	struct ref_store base;
- 	unsigned int store_flags;
+diff --git a/refs.c b/refs.c
+index cf91711968..3ee3afaf41 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1527,11 +1527,37 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
+ 	return refs_for_each_rawref(get_main_ref_store(the_repository), fn, cb_data);
+ }
  
--	char *gitdir;
- 	char *gitcommondir;
- 
- 	struct ref_cache *loose;
-@@ -94,18 +93,17 @@ static struct ref_store *files_ref_store_create(const char *gitdir,
- 	struct ref_store *ref_store = (struct ref_store *)refs;
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	ref_store->gitdir = xstrdup(gitdir);
- 	base_ref_store_init(ref_store, &refs_be_files);
- 	refs->store_flags = flags;
- 
--	refs->gitdir = xstrdup(gitdir);
- 	get_common_dir_noenv(&sb, gitdir);
- 	refs->gitcommondir = strbuf_detach(&sb, NULL);
- 	strbuf_addf(&sb, "%s/packed-refs", refs->gitcommondir);
- 	refs->packed_ref_store = packed_ref_store_create(sb.buf, flags);
- 	strbuf_release(&sb);
- 
--	chdir_notify_reparent("files-backend $GIT_DIR",
--			      &refs->gitdir);
-+	chdir_notify_reparent("files-backend $GIT_DIR", &refs->base.gitdir);
- 	chdir_notify_reparent("files-backend $GIT_COMMONDIR",
- 			      &refs->gitcommondir);
- 
-@@ -176,7 +174,7 @@ static void files_reflog_path(struct files_ref_store *refs,
- 	switch (ref_type(refname)) {
- 	case REF_TYPE_PER_WORKTREE:
- 	case REF_TYPE_PSEUDOREF:
--		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
-+		strbuf_addf(sb, "%s/logs/%s", refs->base.gitdir, refname);
- 		break;
- 	case REF_TYPE_OTHER_PSEUDOREF:
- 	case REF_TYPE_MAIN_PSEUDOREF:
-@@ -198,7 +196,7 @@ static void files_ref_path(struct files_ref_store *refs,
- 	switch (ref_type(refname)) {
- 	case REF_TYPE_PER_WORKTREE:
- 	case REF_TYPE_PSEUDOREF:
--		strbuf_addf(sb, "%s/%s", refs->gitdir, refname);
-+		strbuf_addf(sb, "%s/%s", refs->base.gitdir, refname);
- 		break;
- 	case REF_TYPE_MAIN_PSEUDOREF:
- 		if (!skip_prefix(refname, "main-worktree/", &refname))
-@@ -2203,12 +2201,11 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
- 		files_downcast(ref_store, REF_STORE_READ,
- 			       "reflog_iterator_begin");
- 
--	if (!strcmp(refs->gitdir, refs->gitcommondir)) {
-+	if (!strcmp(refs->base.gitdir, refs->gitcommondir)) {
- 		return reflog_iterator_begin(ref_store, refs->gitcommondir);
- 	} else {
- 		return merge_ref_iterator_begin(
--			0,
--			reflog_iterator_begin(ref_store, refs->gitdir),
-+			0, reflog_iterator_begin(ref_store, refs->base.gitdir),
- 			reflog_iterator_begin(ref_store, refs->gitcommondir),
- 			reflog_iterator_select, refs);
- 	}
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 4458a0f69c..b912f2505f 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -200,6 +200,7 @@ struct ref_store *packed_ref_store_create(const char *path,
- 	struct ref_store *ref_store = (struct ref_store *)refs;
- 
- 	base_ref_store_init(ref_store, &refs_be_packed);
-+	ref_store->gitdir = xstrdup(path);
- 	refs->store_flags = store_flags;
- 
- 	refs->path = xstrdup(path);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 9188ddbec2..527b0a6e2e 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -672,6 +672,9 @@ extern struct ref_storage_be refs_be_packed;
- struct ref_store {
- 	/* The backend describing this ref_store's storage scheme: */
- 	const struct ref_storage_be *be;
++static int refs_read_special_head(struct ref_store *ref_store,
++				  const char *refname, struct object_id *oid,
++				  struct strbuf *referent, unsigned int *type)
++{
++	struct strbuf full_path = STRBUF_INIT;
++	struct strbuf content = STRBUF_INIT;
++	int result = -1;
++	strbuf_addf(&full_path, "%s/%s", ref_store->gitdir, refname);
 +
-+	/* The gitdir that this ref_store applies to: */
-+	char *gitdir;
- };
++	if (strbuf_read_file(&content, full_path.buf, 0) < 0)
++		goto done;
++
++	result = parse_loose_ref_contents(content.buf, oid, referent, type);
++
++done:
++	strbuf_release(&full_path);
++	strbuf_release(&content);
++	return result;
++}
++
+ int refs_read_raw_ref(struct ref_store *ref_store,
+ 		      const char *refname, struct object_id *oid,
+ 		      struct strbuf *referent, unsigned int *type)
+ {
+-	return ref_store->be->read_raw_ref(ref_store, refname, oid, referent, type);
++	if (!strcmp(refname, "FETCH_HEAD") || !strcmp(refname, "MERGE_HEAD")) {
++		return refs_read_special_head(ref_store, refname, oid, referent,
++					      type);
++	}
++
++	return ref_store->be->read_raw_ref(ref_store, refname, oid, referent,
++					   type);
+ }
  
- /*
+ /* This function needs to return a meaningful errno on failure */
 -- 
 gitgitgadget
-
