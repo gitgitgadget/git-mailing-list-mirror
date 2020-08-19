@@ -2,102 +2,94 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85ACFC433DF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 13:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8332DC433DF
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 13:37:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52B30205CB
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 13:22:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E0AC204EC
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 13:37:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gKtFZqR5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FtH8V+mo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728208AbgHSNVy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 09:21:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
+        id S1728582AbgHSNhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 09:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728518AbgHSNUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 09:20:14 -0400
-Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F5FC061757
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 06:20:05 -0700 (PDT)
-Received: by mail-ua1-x943.google.com with SMTP id v20so6875917ual.4
-        for <git@vger.kernel.org>; Wed, 19 Aug 2020 06:20:05 -0700 (PDT)
+        with ESMTP id S1728446AbgHSNfb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 09:35:31 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C2BC061757
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 06:35:31 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id m20so18124545eds.2
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 06:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JTYPq621nUzgUVL1LjFidgeqDv9PRuD8MMxV1mS9GdQ=;
-        b=gKtFZqR5TNhrj/0vrMtX3t859W1ZXdivA6bLdgo+drNeI9Pdg5R/AiK9qWrDwxhi4T
-         C6eFkNqNtFU1zdg+I96L+F2+WzvvJp/r3HdMhzjCIAnTdSkdRjBo+fE4f3+MN18WUbBa
-         GLYjXpDksTRpeYB0eKImG3yGEZ4DLqy2rI9i8uj7gRbQoT7NzhdDWO6xK7EN1OS6asIq
-         qx/J/if4pvPFlZ0HcBwXQKGkef8LSVfPIjXjRHWDMbFCnrPt/ovDEhHsB+UF4ayN/vHX
-         H6qk4fbn0NrQMQyzTzTi3I+A1y8nR5ap54Dby/fHCRaSMvuPhl5Q+O3PsG3D4eDqHRHV
-         ZawA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DIO05+R3utiw8wHh5DnISr/TM2AW5irZvvsIYZdqe2M=;
+        b=FtH8V+moZb2tFgeQMxXRnq6qFjAcSZLy/9h2RHNTAeAE7K8XhdecwsjdAqYWx4I6pS
+         0RTMuOQegU/uVEbGxNWFpldkJ+FWSUYp/L9DxTv0qTbq1CY24yq+rhxH4LBp4KnoEi9c
+         E115WOoDqqA8GU4Zkh/mtUIYBZasDgw+mNtyMHmTPLtZt5mwnhkObuZW1D97TEOhjPOK
+         1K8epeQF3hVU2FSu/a4WwyK8VCyozqmRL0hBUOhrqxE7+voEBnB2WTfEkEfWmDL0kOvc
+         RvE2/w6UeP+BzrHUtOFAOTKPW5//8YE7wVvQRpMfZgOJamhjLksaQayMa4HdEv2Cv5wC
+         jq3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JTYPq621nUzgUVL1LjFidgeqDv9PRuD8MMxV1mS9GdQ=;
-        b=nBTRRJE9xBSYRil83/hMu5vmAydC2e65SMTvRuHbtue8RA77oLIsw6U24QZMIxCe6p
-         IqK5/zJ3ef5Wi3TWQx/lNFeFi8n1nuy0X7RpQU+MxTN2h7qhBx3/Tss60W42fE5IvXoz
-         uItcSsTo2vdaQwEGftevo5PzeypyJiwNcXyaEmqYFzW2xQ6X3CSusDksq4TZyOdHSLJf
-         x7ffDm47X/WnhY+m431dkezlVMYrAKE78fk4MzO5aPlxM5/lQaRQLWRW5cPRahbcymHj
-         dhZwRnDXjnAGTzxnoA2ZnzQT/O30ODkkm1UMHDByTLZ7JwpfhUo33jml16sjOYH3dLgq
-         0eag==
-X-Gm-Message-State: AOAM533JXONpJ6IbvAKE42x4hIs6xSAlxL7LbOwmkPM0wT6lU8/rhXuY
-        OZJwha78CnB0qojoUUHZePpx2d7NNb61nTNGobRI8A==
-X-Google-Smtp-Source: ABdhPJy6gXHlBPdMQuctjjfCuB+sZQhbiB3tiqNjFnf8ei5q528sDQZRo7SaPaTTIjN1HeufalSffs0EqMatIOWWgXI=
-X-Received: by 2002:ab0:4828:: with SMTP id b37mr13574752uad.83.1597843203077;
- Wed, 19 Aug 2020 06:20:03 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DIO05+R3utiw8wHh5DnISr/TM2AW5irZvvsIYZdqe2M=;
+        b=F/5+N8FyqoV21SbU27oro3DBSJuJ54XJTzThQRl8SAAFHsL05t+L1JcXKpAbUUwAId
+         W9gvKX6+uCnl/JnXfuz8NFuDLDi6A6U2VzAEO6H9aeTHgJPLfi6KMmCLvHujWgmIBuVq
+         3P0bAJolGIMoNJyb85Jd+CHVdRa5bzhhVUMN3KPXBbHMvqiZedZvqD4iHODEIRUmZNsS
+         gHIk7uLu8VYp/ftxvlEdR6bQDAz/9oNtZNQ4AbXL4wuueS3OLQAzRfEjED5yuYu07Q2F
+         dBn3aOCSsDe2eJCk7lvUbNN6edBzNyLv99OnSQO/p/ZKIFx+UVN+V65p2X0bSolQQtIW
+         kXSQ==
+X-Gm-Message-State: AOAM533WOw8aUI5mGAgQOVI1wc1G1FaBgSVxhqGA/IgokIr8j2JycwYk
+        +utpRQCr0A77LZDVSmqMHq4=
+X-Google-Smtp-Source: ABdhPJwjH0TX0pie8BjztxrFlL69Q4/4xDHILfihPF8o1w3Np36Pje2xgu6fVWoTkye5oD61b8/png==
+X-Received: by 2002:a05:6402:84e:: with SMTP id b14mr24108922edz.115.1597844129787;
+        Wed, 19 Aug 2020 06:35:29 -0700 (PDT)
+Received: from szeder.dev (84-236-109-47.pool.digikabel.hu. [84.236.109.47])
+        by smtp.gmail.com with ESMTPSA id s16sm18848667ejr.31.2020.08.19.06.35.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Aug 2020 06:35:28 -0700 (PDT)
+Date:   Wed, 19 Aug 2020 15:35:26 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        gitster@pobox.com
+Subject: Re: [PATCH v3 12/14] commit-graph: add large-filters bitmap chunk
+Message-ID: <20200819133526.GE29528@szeder.dev>
+References: <cover.1596480582.git.me@ttaylorr.com>
+ <cover.1597178914.git.me@ttaylorr.com>
+ <619e0c619dd12e2bea2b80c7d249ba66fe2a315c.1597178915.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <pull.673.v2.git.1594329108.gitgitgadget@gmail.com>
- <pull.673.v3.git.1594925141.gitgitgadget@gmail.com> <xmqqwo33f6xb.fsf@gitster.c.googlers.com>
- <CAFQ2z_P+L5ystTA8MjSjnUJQyEoH5Q3QtnMd0ezJpKPv_ntrgA@mail.gmail.com>
- <xmqqpn8hgca7.fsf@gitster.c.googlers.com> <CAFQ2z_O1sRm-_SNP=-GvgNLqB+qgf6k9YVfbF1XCAmFWdeX6Ew@mail.gmail.com>
- <xmqqh7tjv6hb.fsf@gitster.c.googlers.com> <xmqq1rklrhle.fsf@gitster.c.googlers.com>
- <CAFQ2z_NU4=WcUDvVY9PNs+p-WU4u5=QY+=DHonGyK29numhWoQ@mail.gmail.com> <xmqqk0ydozqe.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk0ydozqe.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 19 Aug 2020 15:19:51 +0200
-Message-ID: <CAFQ2z_No3QPJju7N9EqnT+knOioJpxxi61oFf9HyRGgf-fuwpA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Remove special casing for PSEUDOREF updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <619e0c619dd12e2bea2b80c7d249ba66fe2a315c.1597178915.git.me@ttaylorr.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 5, 2020 at 5:54 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >> All of which means FETCH_HEAD is special and we may not want to
-> >> burden the special casing of it to newer backends.
-> >
-> > Can you confirm that FETCH_HEAD is the only thing that can store more
-> > than just a symref / SHA1 ? Based on the name, and a comment in the
-> > JGit source, I thought that MERGE_HEAD might contain more than one
-> > SHA1 at a time.
->
-> No I cannot.  I do not think MERGE_HEAD is something I added with as
-> deep a thought as I did with FETCH_HEAD.  If it mimics FETCH_HEAD,
-> then perhaps it does, but I somehow doubt it.
+On Tue, Aug 11, 2020 at 04:52:07PM -0400, Taylor Blau wrote:
+> When a commit has more than a certain number of changed paths (commonly
+> 512), the commit-graph machinery represents it as a zero-length filter.
+> This is done since having many entries in the Bloom filter has
+> undesirable effects on the false positivity rate.
 
-blame.c has an append_merge_parents() which reads multiple lines from
-MERGE_HEAD, and cmd_commit does so too. It's populated from
-write_merge_heads(). So the special casing should be extended to
-MERGE_HEAD.
+This is not the case, the false positive probability depends on the
+ratio of the Bloom filter's size and the number of elements it
+contains, and we size the filters proportional to the number of
+elements they contain, so the number of elements shouldn't affect the 
+false positive rate.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+On the contrary, it's the small filters, up to around 30-35 bytes, 
+that tend to have larger than expected false positive rate when using
+double hashing.
+
