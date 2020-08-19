@@ -2,144 +2,97 @@ Return-Path: <SRS0=/SyM=B5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD3BC433E1
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 17:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83F36C433E3
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 17:35:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F865214F1
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 17:31:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64A0720888
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 17:35:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dzYgfafZ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="T4Fhapmp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbgHSRbj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 13:31:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60674 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgHSRbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 13:31:38 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0C0E2F3FF6;
-        Wed, 19 Aug 2020 13:31:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4cNhEgyy0MM6nfiOHtrYVmbfq0M=; b=dzYgfa
-        fZIAo34FxtyeVT9NiVh+0PwB6cFckZm4FVicke3pNlIYk1pSpEECi1+S25obUpD4
-        xenLy0/xvBVo/e1wnaZhKhE2UZaYnwB6sQ7lDj69Uw3OGl3tph+kUmFkpQaZ4mS9
-        mKQELlOXLGE+N3KLqpn0mWh6mmy8ff+whc1eI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A1uoqmfxjBk/iBT8XCrIBuH1+IEYOPBn
-        IarKCG2D2ztrXzSCwCDf2PHn+hbi8D0Ng9H9TeJ1SNuObRa+dX3uJD/ksSyOt0M1
-        iOodDBYAPE5M0GaF1JWV1z6pYD6fvHH5PaZa7XJjW+UECKQgFy2D+LWGBeO0+ASt
-        dSxfmadD/3Y=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6D03F3FF5;
-        Wed, 19 Aug 2020 13:31:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 22DCEF3FF3;
-        Wed, 19 Aug 2020 13:31:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH 1/2] t6300: unify %(trailers) and %(contents:trailers) tests
-References: <pull.707.git.1597841551.gitgitgadget@gmail.com>
-        <bd0bb8d0ef0936866c2a957e5391424a7481a33c.1597841551.git.gitgitgadget@gmail.com>
-Date:   Wed, 19 Aug 2020 10:31:30 -0700
-In-Reply-To: <bd0bb8d0ef0936866c2a957e5391424a7481a33c.1597841551.git.gitgitgadget@gmail.com>
-        (Hariom Verma via GitGitGadget's message of "Wed, 19 Aug 2020 12:52:30
-        +0000")
-Message-ID: <xmqq1rk2v8y5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D28F4FFC-E241-11EA-B187-843F439F7C89-77302942!pb-smtp21.pobox.com
+        id S1726578AbgHSRfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 13:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbgHSRfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 13:35:51 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D10F0C061757
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 10:35:50 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id x10so26259784ybj.19
+        for <git@vger.kernel.org>; Wed, 19 Aug 2020 10:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=TtJmOIt6JjCGaxfj1BAx04w7DGpJx5iHVWpvusgoegk=;
+        b=T4FhapmpSXrZBeCVv8Ht7Ago98SWpyE9LlISwQhuoyDkCKCJhKJ7+qw2ynTm+q3qL5
+         qvsPsnD2R1C7AagSOnEH9OMzJ9MJ6iQF1HBO7Mzfs79tCeofjh9/lN5Iou9OAyteetaA
+         MQpLHaXpv35AApxepbyhbHG+7y63eA7tWnZAYOtCvlgan/OpGoHtCyyvxt9ZWHmtYLip
+         G1R9pKiVh7JaP9WehCSPJV50WF6y3aor+nAsU1nELh4o+Vkq4gQsuXTtIn1eIcsRKACy
+         WuFdAizLAt9jjYsJMkQIPVHLWdaphT1dKqloiO3u+n0byXB3ssE2vWhBt4PkohS2PApK
+         MrVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=TtJmOIt6JjCGaxfj1BAx04w7DGpJx5iHVWpvusgoegk=;
+        b=WK0bELLCwSGzd9Q76Z5eGfWJGUXZttg+luio4w7KB/feVkUaXfa6FrXxARYA6iOtCR
+         bDnSv3atdNqEej7jAi9SO25nACJliI65OXxUR1HnZe5aD39LsU8v7dVikzthSmFG/5of
+         pCDS0Ra9m2ImS9M5uy8iIUCvZgOuDYcWohHOxwPJivljwhRvCRw62mOnORIy9a/s2vKA
+         jEer7Xh4hui4Gd+P4OtVaC18SmQ2tZ+lNCOsbyvWwassnEQ3iJ+dMN8eP4BS7fNUQ3kH
+         +LRcW4+Vx7tkkFPaLZ7rZmaLDO8xQrRA/ehbuZXGNPptGmJrr8ZzgGath8bdqDtSRbT1
+         sosg==
+X-Gm-Message-State: AOAM531ocuBacjPjnziPC1kkJUHsiaiytEtYoZjLHTx9cby3RWb6+l7W
+        6Fmx4C1qM1B1QLhJKzOD3s1uL/z8UsdXtHx6m4J9
+X-Google-Smtp-Source: ABdhPJyn1O/2uTWlDTo+GY/5e8iOt2dNgs7xJHvkkgRTUURFtsnmYtOWFAuNkafehIp6n45zK2LK/asDhwkwLUA8MVrb
+X-Received: by 2002:a25:fc22:: with SMTP id v34mr34400796ybd.393.1597858550065;
+ Wed, 19 Aug 2020 10:35:50 -0700 (PDT)
+Date:   Wed, 19 Aug 2020 10:35:47 -0700
+In-Reply-To: <3a5328c0-15f0-a427-1f21-2c8e3ef8277a@gmail.com>
+Message-Id: <20200819173547.3084636-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <3a5328c0-15f0-a427-1f21-2c8e3ef8277a@gmail.com>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
+Subject: Re: [PATCH v2 06/11] maintenance: add --task option
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     stolee@gmail.com
+Cc:     gitster@pobox.com, jonathantanmy@google.com,
+        gitgitgadget@gmail.com, git@vger.kernel.org,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, derrickstolee@github.com, dstolee@microsoft.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On 8/18/2020 8:36 PM, Junio C Hamano wrote:
+> > Jonathan Tan <jonathantanmy@google.com> writes:
+> > 
+> >>> @@ -66,6 +68,10 @@ OPTIONS
+> >>>  --quiet::
+> >>>  	Do not report progress or other information over `stderr`.
+> >>>  
+> >>> +--task=<task>::
+> >>> +	If this option is specified one or more times, then only run the
+> >>> +	specified tasks in the specified order.
+> >>
+> >> We should list the accepted tasks somewhere but maybe this can wait
+> >> until after part 2.
+> 
+> It's hard to see from the patch-context, but there is a section titled
+> "TASKS" that lists the 'gc' and 'commit-graph' tasks from the earlier
+> patches. Would a reference to that section be helpful?
+> 
+> 	See the TASKS section for the list of available tasks.
 
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index a83579fbdf..495848c881 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -776,60 +776,39 @@ test_expect_success 'set up trailers for next test' '
->  '
->  
->  test_expect_success '%(trailers:unfold) unfolds trailers' '
-> -	git for-each-ref --format="%(trailers:unfold)" refs/heads/master >actual &&
->  	{
->  		unfold <trailers
->  		echo
->  	} >expect &&
-> +	git for-each-ref --format="%(trailers:unfold)" refs/heads/master >actual &&
-> +	test_cmp expect actual &&
-> +	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
->  	test_cmp expect actual
->  '
-
-Hmph, what is this one doing?  Ah, OK, trailers:unfold is tested as
-before (just the steps to prepare 'expect' and 'actual' got swapped),
-and because the same expectation holds for contents:trailers:unfold,
-we can test it at the same.   Makes sense.
-
->  test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
-> -	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/master >actual &&
-> -	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/master >reverse &&
-> -	test_cmp actual reverse &&
->  	{
->  		grep -v patch.description <trailers | unfold &&
->  		echo
->  	} >expect &&
-> +	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/master >actual &&
-> +	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/master >reverse &&
-> +	test_cmp actual reverse &&
-> +	test_cmp expect actual &&
-
-This uses different pattern.  It may be cleaner to test one side at
-a time, as we have prepared the 'expect' that should be the same for
-both, and compare with the expected pattern one at a time; that would
-eliminate the need for 'reverse', too.  I.e.
-
-	{
-		grep -v patch.description trailers | unfold && echo
-	} >expect &&
-	git for-each-ref ... only,unfold ... >actual &&
-	test_cmp expect actual &&
-	git for-each-ref ... unfold,only ... >actual &&
-	test_cmp expect actual &&
-
-> @@ -839,14 +818,7 @@ test_expect_success '%(trailers) rejects unknown trailers arguments' '
->  	fatal: unknown %(trailers) argument: unsupported
->  	EOF
->  	test_must_fail git for-each-ref --format="%(trailers:unsupported)" 2>actual &&
-> -	test_i18ncmp expect actual
-> -'
-> -
-> -test_expect_success '%(contents:trailers) rejects unknown trailers arguments' '
-> -	# error message cannot be checked under i18n
-> -	cat >expect <<-EOF &&
-> -	fatal: unknown %(trailers) argument: unsupported
-> -	EOF
-> +	test_i18ncmp expect actual &&
->  	test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
->  	test_i18ncmp expect actual
->  '
-
-Doesn't this highlight a small bug, where an end-user request for an
-unknown %(contents:trailers:unsupported) is flagged as an error
-about %(trailers)?  Is it OK because we expect that users who use
-the longer %(contents:trailers) to know that it is a synonym for
-%(trailers) and the latter is the official way to write it?
-
-Thanks.
+Ah, I missed that. What you have now is fine then, but a reference might
+be helpful if this man page ever grows.
