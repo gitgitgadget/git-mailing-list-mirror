@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12CB4C433DF
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 23:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C86DC433E1
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 23:06:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD5BA20758
-	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 23:06:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC4B520758
+	for <git@archiver.kernel.org>; Wed, 19 Aug 2020 23:06:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rtzoeller.com header.i=@rtzoeller.com header.b="X84pjtDp"
+	dkim=pass (1024-bit key) header.d=rtzoeller.com header.i=@rtzoeller.com header.b="AJk+EUdV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbgHSXGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Aug 2020 19:06:20 -0400
-Received: from mail-40134.protonmail.ch ([185.70.40.134]:62561 "EHLO
-        mail-40134.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726209AbgHSXGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Aug 2020 19:06:19 -0400
-Date:   Wed, 19 Aug 2020 23:06:08 +0000
+        id S1727772AbgHSXGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Aug 2020 19:06:24 -0400
+Received: from mail2.protonmail.ch ([185.70.40.22]:33941 "EHLO
+        mail2.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbgHSXGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Aug 2020 19:06:23 -0400
+Date:   Wed, 19 Aug 2020 23:06:13 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rtzoeller.com;
-        s=protonmail; t=1597878376;
-        bh=2m6X29UrpAXTmDpNaBkohMvH9Bn4qVeeuxQqm7Pocrw=;
+        s=protonmail; t=1597878380;
+        bh=olbI1EAyvdKbBD1foJYoCGD2Dt/yIeiSdxqSTKX8XAg=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=X84pjtDpkx9cmJKppH6oBkF+nYYZ+v5QFYOKnjCj4Z/tNuR0GzDVxGwLWeUAgVned
-         F5hTtru96Vp7wWcoJK7e+8pH7jh6yF4bOsPt+j7jSa2Se3x2H5J/XXD3wX2kFhEedB
-         uSYJyWQ0NRFA6eKfRrOSOe+ukzvD5mGuvZGZl4JU=
+        b=AJk+EUdV022tBIC4fwwIMhBD1JTD6hrsZDMplgj8GpTG4myz/MObgRX7M8OsAojAs
+         MsK/Obj9EoS0rDMBJzDT9Ud+b7QBaGdtRRnWJ62cugTkfYreSM23tpSqbN49ICGn1s
+         FygW8iDM//XCH/Gk/m/sjgsjbfgJG68KJayw9Fcw=
 To:     git@vger.kernel.org
 From:   Ryan Zoeller <rtzoeller@rtzoeller.com>
 Cc:     Ryan Zoeller <rtzoeller@rtzoeller.com>,
         Junio C Hamano <gitster@pobox.com>
 Reply-To: Ryan Zoeller <rtzoeller@rtzoeller.com>
-Subject: [PATCH v2 1/2] parse-options: add --git-completion-helper-all
-Message-ID: <20200819230523.773348-2-rtzoeller@rtzoeller.com>
+Subject: [PATCH v2 2/2] completion: add GIT_COMPLETION_SHOW_ALL env var
+Message-ID: <20200819230523.773348-3-rtzoeller@rtzoeller.com>
 In-Reply-To: <20200819175047.692962-1-rtzoeller@rtzoeller.com>
 References: <20200819175047.692962-1-rtzoeller@rtzoeller.com>
 MIME-Version: 1.0
@@ -46,92 +46,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---git-completion-helper excludes hidden options, such as --allow-empty
-for git commit. This is typically helpful, but occasionally we want
-auto-completion for obscure flags. --git-completion-helper-all returns
-all options, even if they are marked as hidden or nocomplete.
+When set to 1, GIT_COMPLETION_SHOW_ALL causes --git-completion-helper-all
+to be passed instead of --git-completion-helper.
 
 Signed-off-by: Ryan Zoeller <rtzoeller@rtzoeller.com>
 ---
- parse-options.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ contrib/completion/git-completion.bash | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index c57618d537..f0507432ee 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -525,7 +525,8 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
- =09parse_options_start_1(ctx, argc, argv, prefix, options, flags);
- }
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/gi=
+t-completion.bash
+index 700d44af5b..9147fba3d5 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -39,6 +39,11 @@
+ #     When set to "1", do not include "DWIM" suggestions in git-checkout
+ #     and git-switch completion (e.g., completing "foo" when "origin/foo"
+ #     exists).
++#
++#   GIT_COMPLETION_SHOW_ALL
++#
++#     When set to "1" suggest all options, including options which are
++#     typically hidden (e.g. '--allow-empty' for 'git commit').
 =20
--static void show_negated_gitcomp(const struct option *opts, int nr_noopts)
-+static void show_negated_gitcomp(const struct option *opts, int show_all,
-+=09=09=09=09 int nr_noopts)
- {
- =09int printed_dashdash =3D 0;
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+@@ -411,10 +416,17 @@ __gitcomp_builtin ()
+ =09local options
+ =09eval "options=3D\${$var-}"
 =20
-@@ -535,7 +536,8 @@ static void show_negated_gitcomp(const struct option *o=
-pts, int nr_noopts)
++=09local completion_helper
++=09if [ "$GIT_COMPLETION_SHOW_ALL" =3D "1" ]; then
++=09=09completion_helper=3D"--git-completion-helper-all"
++=09else
++=09=09completion_helper=3D"--git-completion-helper"
++=09fi
++
+ =09if [ -z "$options" ]; then
+ =09=09# leading and trailing spaces are significant to make
+ =09=09# option removal work correctly.
+-=09=09options=3D" $incl $(__git ${cmd/_/ } --git-completion-helper) " || r=
+eturn
++=09=09options=3D" $incl $(__git ${cmd/_/ } $completion_helper) " || return
 =20
- =09=09if (!opts->long_name)
- =09=09=09continue;
--=09=09if (opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE))
-+=09=09if (!show_all &&
-+=09=09=09(opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE)))
- =09=09=09continue;
- =09=09if (opts->flags & PARSE_OPT_NONEG)
- =09=09=09continue;
-@@ -572,7 +574,7 @@ static void show_negated_gitcomp(const struct option *o=
-pts, int nr_noopts)
- =09}
- }
-=20
--static int show_gitcomp(const struct option *opts)
-+static int show_gitcomp(const struct option *opts, int show_all)
- {
- =09const struct option *original_opts =3D opts;
- =09int nr_noopts =3D 0;
-@@ -582,7 +584,8 @@ static int show_gitcomp(const struct option *opts)
-=20
- =09=09if (!opts->long_name)
- =09=09=09continue;
--=09=09if (opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE))
-+=09=09if (!show_all &&
-+=09=09=09(opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE)))
- =09=09=09continue;
-=20
- =09=09switch (opts->type) {
-@@ -610,8 +613,8 @@ static int show_gitcomp(const struct option *opts)
- =09=09=09nr_noopts++;
- =09=09printf(" --%s%s", opts->long_name, suffix);
- =09}
--=09show_negated_gitcomp(original_opts, -1);
--=09show_negated_gitcomp(original_opts, nr_noopts);
-+=09show_negated_gitcomp(original_opts, show_all, -1);
-+=09show_negated_gitcomp(original_opts, show_all, nr_noopts);
- =09fputc('\n', stdout);
- =09return PARSE_OPT_COMPLETE;
- }
-@@ -723,9 +726,14 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- =09=09if (internal_help && ctx->total =3D=3D 1 && !strcmp(arg + 1, "h"))
- =09=09=09goto show_usage;
-=20
--=09=09/* lone --git-completion-helper is asked by git-completion.bash */
--=09=09if (ctx->total =3D=3D 1 && !strcmp(arg + 1, "-git-completion-helper"=
-))
--=09=09=09return show_gitcomp(options);
-+=09=09/*
-+=09=09 * lone --git-completion-helper and --git-completion-helper-all
-+=09=09 * are asked by git-completion.bash
-+=09=09 */
-+=09=09if (ctx->total =3D=3D 1 && !strcmp(arg, "--git-completion-helper"))
-+=09=09=09return show_gitcomp(options, 0);
-+=09=09if (ctx->total =3D=3D 1 && !strcmp(arg, "--git-completion-helper-all=
-"))
-+=09=09=09return show_gitcomp(options, 1);
-=20
- =09=09if (arg[1] !=3D '-') {
- =09=09=09ctx->opt =3D arg + 1;
+ =09=09for i in $excl; do
+ =09=09=09options=3D"${options/ $i / }"
 --=20
 2.28.0.260.g5934a15c94
 
