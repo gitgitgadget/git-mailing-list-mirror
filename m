@@ -2,158 +2,160 @@ Return-Path: <SRS0=wu5b=B6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.5 required=3.0 tests=BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 673A7C433E1
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 17:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7961C433DF
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 18:27:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 384DF20885
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 17:51:32 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="AwBELude"
+	by mail.kernel.org (Postfix) with ESMTP id A2B04208E4
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 18:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbgHTRv0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 13:51:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725852AbgHTRvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 13:51:23 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43520C061385
-        for <git@vger.kernel.org>; Thu, 20 Aug 2020 10:51:23 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id x18so1584807pjq.1
-        for <git@vger.kernel.org>; Thu, 20 Aug 2020 10:51:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=HH00SexG0J8IcmXs/ID7rNy8ETPZT4GR4nyyg0M7X+M=;
-        b=AwBELudeggTZgCJLI+2ATkiO0iSEDhLdMmW89OLhlxRy4/Ieux+PtFHDRSbn80HVHy
-         BuRtVNhZ9EiXqoTgvx134IsebZiQ2Rg2SwKezfYgKGlvPI7KcRuaZ/g40aiDq8AcZhPN
-         CIDmvkghHsPd4UhJO3rn1LbwjWGQPrjaMXhq71uBv75Q1QJeb4h0heGTfrZhtuwSjnF8
-         MvLu7CgtA4NbqJBdZ5P1a5qbEnrHgQUcvgFoP6ZCmGUD9c9wsypR0JiAO8UCzc5xw33O
-         E4QCsK7FK5GX2t+lmuOno+foaMhxe8NiHOlJ+MhQDWVOtbemFpE73d5A8PKlxHq/c0CZ
-         FnJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=HH00SexG0J8IcmXs/ID7rNy8ETPZT4GR4nyyg0M7X+M=;
-        b=MQSOP8kOLbCHln0Y3pa5FaP0963w96V7kWq+lA/3P1eTlCQG08x4PTOQfvhC5LZ4yq
-         vBXT4Vky2MaTHt9vESAOItBnLsO2bVfejYwgJO6MRkgfP6qiJQTVGQovCcS6UElo0/p8
-         bNSayrmjeSi8rZL8Q0MEe0xenuYYaIN6dTdXq0p0p53SE4xH4r1FGg0mmO5VUWME9xy+
-         UVMI/U0k6FabGb7Jh1m7ZPI98y6V3X3F5ptPOXWQhGa8LvVevkq7qzf13jrPmUhSrbre
-         vK9mLYqNYrhfGUZrXU+kP0AJ9Gv6kQfYUw3hGzv8MLuTSp+YMmROWVKd33QltGQy5Vnj
-         69TA==
-X-Gm-Message-State: AOAM533x/7BiSKmEKvanA1DMxcIWHPitW37ZsDlnV47Dkad+g5VPt9uo
-        jcanfpNexSumWzAmwpx8CrHzV3u0cTQ+KvIEI3kXwCOfqgMsfqFu+ckyb3Hqv0hsgyD8UgC2al1
-        0swdjPvFacnUkRep9JN2bPuFQf4hacQ1QsYA4MTpg7ag0jyEru8msj6f1Ku60HPqaeA2EzcJjiW
-        gI
-X-Google-Smtp-Source: ABdhPJzq4Kx4lwkqKAd7aD7v2F4Z5iq9UDq4IpZZqRJZPkV6TwSjcvbn4gIxeTbIS7BR1Biwk7LsusNlxOQxgh+2Gd7K
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:960f:: with SMTP id
- q15mr3183359pfg.79.1597945882449; Thu, 20 Aug 2020 10:51:22 -0700 (PDT)
-Date:   Thu, 20 Aug 2020 10:51:16 -0700
-Message-Id: <20200820175116.3889786-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
-Subject: [PATCH] fetch-pack: in partial clone, pass --promisor
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727039AbgHTS1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 14:27:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36508 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727011AbgHTS1W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 14:27:22 -0400
+Received: (qmail 9052 invoked by uid 109); 20 Aug 2020 18:27:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Aug 2020 18:27:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18360 invoked by uid 111); 20 Aug 2020 18:27:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Aug 2020 14:27:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 20 Aug 2020 14:27:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Sergii Shkarnikov <sergii.shkarnikov@globallogic.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Possible bug with git restore
+Message-ID: <20200820182720.GA2537643@coredump.intra.peff.net>
+References: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
+ <CAPig+cSCd_8YB90sypTe1bHMQhPgo+Tr2PHNucdqfCpEe+Dosg@mail.gmail.com>
+ <CAFvH=vuFg+kM2GkBaE7jRqHWWcTcZMrs36KLS+-VTy8tgNZXJw@mail.gmail.com>
+ <20200820134013.GA2526241@coredump.intra.peff.net>
+ <c3f0d51a-d0e3-ed0a-c9ed-da092704da5c@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c3f0d51a-d0e3-ed0a-c9ed-da092704da5c@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fetching a pack from a promisor remote, the corresponding .promisor
-file needs to be created. "fetch-pack" originally did this by passing
-"--promisor" to "index-pack", but in 5374a290aa ("fetch-pack: write
-fetched refs to .promisor", 2019-10-16), "fetch-pack" was taught to do
-this itself instead, because it needed to store ref information in the
-.promisor file.
+On Thu, Aug 20, 2020 at 07:48:48PM +0200, René Scharfe wrote:
 
-This causes a problem with superprojects when transfer.fsckobjects is
-set, because in the current implementation, it is "index-pack" that
-calls fsck_finish() to check the objects; before 5374a290aa,
-fsck_finish() would see that .gitmodules is a promisor object and
-tolerate it being missing, but after, there is no .promisor file (at the
-time of the invocation of fsck_finish() by "index-pack") to tell it that
-.gitmodules is a promisor object, so it returns an error.
+> >   - shouldn't that wildcard pathspec match those files? I've confirmed
+> >     that the glob characters make it into Git's pathspec machinery, and
+> >     since it doesn't have slashes, I think we'd match a basename (and
+> >     certainly "git ls-files *test_file.*" does what I expect).
+> 
+> No, because restore doesn't interpret pathspecs recursively.  I don't
+> know why that causes files to disappear, though.  But here's a fix.
 
-Therefore, teach "fetch-pack" to pass "--promisor" to index pack once
-again. "fetch-pack" will subsequently overwrite this file with the ref
-information.
+I think it's because of this comment from bc96cc87dbb:
 
-An alternative is to instead move object checking to "fetch-pack", and
-let "index-pack" only index the files. However, since "index-pack" has
-to inflate objects in order to index them, it seems reasonable to also
-let it check the objects (which also require inflated files).
+  When pathspec.recursive == 0, the behavior depends on match functions:
+  non-recursive for tree_entry_interesting() and recursive for
+  match_pathspec{,_depth}
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- fetch-pack.c             | 17 ++++++++++-------
- t/t5616-partial-clone.sh | 16 ++++++++++++++++
- 2 files changed, 26 insertions(+), 7 deletions(-)
+So when we read the tree, we don't match recursively, and those entries
+don't appear. But then we correlate that with the index:
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 7f20eca4f8..d467edc24e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -866,13 +866,16 @@ static int get_pack(struct fetch_pack_args *args,
- 			 * have this responsibility.
- 			 */
- 			args->check_self_contained_and_connected = 0;
--		/*
--		 * If we're obtaining the filename of a lockfile, we'll use
--		 * that filename to write a .promisor file with more
--		 * information below. If not, we need index-pack to do it for
--		 * us.
--		 */
--		if (!(do_keep && pack_lockfiles) && args->from_promisor)
-+
-+		if (args->from_promisor)
-+			/*
-+			 * write_promisor_file() may be called afterwards but
-+			 * we still need index-pack to know that this is a
-+			 * promisor pack. For example, if transfer.fsckobjects
-+			 * is true, index-pack needs to know that .gitmodules
-+			 * is a promisor object (so that it won't complain if
-+			 * it is missing).
-+			 */
- 			strvec_push(&cmd.args, "--promisor");
- 	}
- 	else {
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 8827c2ed18..5a01466db4 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -163,6 +163,22 @@ test_expect_success 'manual prefetch of missing objects' '
- 	test_line_count = 0 observed.oids
- '
- 
-+test_expect_success 'partial clone with transfer.fsckobjects=1 works with submodules' '
-+	test_create_repo submodule &&
-+	test_commit -C submodule mycommit &&
-+
-+	test_create_repo src_with_sub &&
-+	test_config -C src_with_sub uploadpack.allowfilter 1 &&
-+	test_config -C src_with_sub uploadpack.allowanysha1inwant 1 &&
-+
-+	git -C src_with_sub submodule add "file://$(pwd)/submodule" mysub &&
-+	git -C src_with_sub commit -m "commit with submodule" &&
-+
-+	git -c transfer.fsckobjects=1 \
-+		clone --filter="blob:none" "file://$(pwd)/src_with_sub" dst &&
-+	test_when_finished rm -rf dst
-+'
-+
- test_expect_success 'partial clone with transfer.fsckobjects=1 uses index-pack --fsck-objects' '
- 	git init src &&
- 	test_commit -C src x &&
--- 
-2.28.0.297.g1956fa8f8d-goog
+          /*
+           * Make sure all pathspecs participated in locating the paths
+           * to be checked out.
+           */
+          for (pos = 0; pos < active_nr; pos++)
+                  if (opts->overlay_mode)
+                          mark_ce_for_checkout_overlay(active_cache[pos],
+                                                       ps_matched,
+                                                       opts);
+                  else
+                          mark_ce_for_checkout_no_overlay(active_cache[pos],
+                                                          ps_matched,
+                                                          opts);
 
+And in no-overlay mode (the default for restore), we do:
+
+  
+  static void mark_ce_for_checkout_no_overlay(struct cache_entry *ce,
+                                              char *ps_matched,
+                                              const struct checkout_opts *opts)
+  {
+          ce->ce_flags &= ~CE_MATCHED;
+          if (!opts->ignore_skipworktree && ce_skip_worktree(ce))
+                  return;
+          if (ce_path_match(&the_index, ce, &opts->pathspec, ps_matched)) {
+                  ce->ce_flags |= CE_MATCHED;
+                  if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
+                          /*
+                           * In overlay mode, but the path is not in
+                           * tree-ish, which means we should remove it
+                           * from the index and the working tree.
+                           */
+                          ce->ce_flags |= CE_REMOVE | CE_WT_REMOVE;
+          }
+  }
+
+And that ce_path_match() _does_ treat the pathspec recursively. So we
+say "yes, it matches in the index but wasn't in the tree, and therefore
+we must delete it".
+
+So the fundamental issue is treating the pathspec in two different ways,
+and then correlating the results. We need to either do a recursive match
+for the tree match (as your patch does), or do non-recursive for this
+index match (which I don't think is trivial, because of the way the
+recursive flag works).
+
+> No sign-off because I don't understand why pathspec recursiveness is a
+> thing that can be turned off -- I'd expect pathspec syntax to be
+> consistent for all commands.  So there might be a good reason why it was
+> not enabled for restore (and switch and checkout).
+
+I think it was originally done this way for compatibility of some
+commands as we unified the pathspec code. But I'm having trouble digging
+up the exact details.
+
+However, it seems particularly egregious in checkout/restore, because we
+may also be using the index as a source, in which case the pathspecs
+_would_ be recursive by default. E.g., in the test repo we've been
+discussing:
+
+  [make the index and working tree differ]
+  $ git reset HEAD^
+  Unstaged changes after reset:
+  M	incl/test_file.hpp
+  M	src/test_file.cpp
+
+  [restore using a wildcard, but out of the index rather than a tree]
+  $ git restore -- '*.hpp'
+
+  [and check that we did indeed match]
+  $ git status
+  On branch master
+  Changes not staged for commit:
+	modified:   src/test_file.cpp
+
+So I think this inconsistency in pathspec matching between trees and the
+index has probably existed in git-checkout for ages (and I guess people
+don't do wildcards with trees often enough for anybody to have noticed).
+But it didn't cause the index-deletion problem, because that only
+appeared more recently with the --no-overlay mode. That's the default
+for restore, but you can trigger the problem with checkout, too:
+
+  $ git reset --hard
+  $ git checkout --no-overlay HEAD^ '*.hpp'
+  Updated 0 paths from 2668463
+  $ git status
+  On branch master
+  Changes to be committed:
+	deleted:    incl/test_file.hpp
+
+-Peff
