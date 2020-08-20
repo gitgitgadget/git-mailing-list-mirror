@@ -6,85 +6,101 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 583C7C433E1
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64462C433DF
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:48:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A7D5207BB
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:08:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36D1A2076E
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728528AbgHTNIX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 09:08:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36234 "EHLO cloud.peff.net"
+        id S1729767AbgHTNsX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 09:48:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36278 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729685AbgHTNIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 09:08:14 -0400
-Received: (qmail 6824 invoked by uid 109); 20 Aug 2020 13:08:13 -0000
+        id S1730592AbgHTNkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 09:40:35 -0400
+Received: (qmail 7094 invoked by uid 109); 20 Aug 2020 13:40:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Aug 2020 13:08:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Aug 2020 13:40:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15206 invoked by uid 111); 20 Aug 2020 13:08:13 -0000
+Received: (qmail 15457 invoked by uid 111); 20 Aug 2020 13:40:14 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Aug 2020 09:08:13 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Aug 2020 09:40:14 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 20 Aug 2020 09:08:13 -0400
+Date:   Thu, 20 Aug 2020 09:40:13 -0400
 From:   Jeff King <peff@peff.net>
-To:     Lukas Straub <lukasstraub2@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'git' <git@vger.kernel.org>, 'Elijah Newren' <newren@gmail.com>,
-        'Brandon Williams' <bwilliams.eng@gmail.com>,
-        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 0/2] Allow adding .git files and directories
-Message-ID: <20200820130813.GC2522289@coredump.intra.peff.net>
-References: <cover.1597853634.git.lukasstraub2@web.de>
- <xmqqr1s2tswd.fsf@gitster.c.googlers.com>
- <04aa01d67659$2dc217b0$89464710$@nexbridge.com>
- <xmqqimdetpuw.fsf@gitster.c.googlers.com>
- <20200819201736.GA2511157@coredump.intra.peff.net>
- <20200820143755.06d39a05@luklap>
+To:     Sergii Shkarnikov <sergii.shkarnikov@globallogic.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Possible bug with git restore
+Message-ID: <20200820134013.GA2526241@coredump.intra.peff.net>
+References: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
+ <CAPig+cSCd_8YB90sypTe1bHMQhPgo+Tr2PHNucdqfCpEe+Dosg@mail.gmail.com>
+ <CAFvH=vuFg+kM2GkBaE7jRqHWWcTcZMrs36KLS+-VTy8tgNZXJw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200820143755.06d39a05@luklap>
+In-Reply-To: <CAFvH=vuFg+kM2GkBaE7jRqHWWcTcZMrs36KLS+-VTy8tgNZXJw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 20, 2020 at 02:37:55PM +0200, Lukas Straub wrote:
+On Thu, Aug 20, 2020 at 03:59:00PM +0300, Sergii Shkarnikov wrote:
 
-> > Right now git-fsck complains about ".git" appearing in a tree, and that
-> > check blocks people from pushing such trees to any hosting sites that
-> > enable transfer.fsckObjects (which includes hosters like GitHub). So
-> > you'd not only need to allow the behavior to be loosened for all of the
-> > people using the feature, but you'd need to convince server-side hosters
-> > to loosen their config. And because part of the purpose is to protect
-> > downstream clients from attacks, I doubt that public hosters like GitHub
-> > would do so.
+> Here is a script to reproduce the issue that works for me in Git Bash:
 > 
-> I guess they can add a checkbox to their (secured) web-ui to configure
-> this.
+> =============================================
+> #!/bin/bash
+> 
+> #create repo with corresponding structure
+> mkdir restore_bug_test
+> cd restore_bug_test
+> mkdir incl
+> mkdir src
+> touch incl/test_file.hpp
+> touch src/test_file.cpp
+> git init
+> git add .
+> git commit -m"initial"
+> 
+> #add a couple of commits
+> echo "1" >> incl/test_file.hpp
+> echo "1" >> src/test_file.cpp
+> git commit -am"1"
+> echo "2" >> incl/test_file.hpp
+> echo "2" >> src/test_file.cpp
+> git commit -am"2"
+> 
+> #reproduce bug
+> git restore -s HEAD~ -- *test_file.*
+> git status
+> ===============================================
 
-No, that would defeat the purpose. Hosting sites aren't protecting users
-from themselves. They're concerned about malicious actors pushing up
-objects that violate expectations and make the hosting site a vector for
-attacks. Either against other parts of the site, or against downstream
-users who aren't running fully-patched versions of Git (or perhaps are
-running a misconfigured one, if there's a known-unsafe configuration).
+That reproduces for me here on Linux, as well (for those just joining,
+the interesting thing is that the final "git status" reports the files
+as deleted, rather than modified back to "1").
 
-I don't know of a version of Git that's vulnerable to ".git" (it should
-be blocked from entering the index by verify_path()), but the fsck
-checks are one layer of a multiple-layer defense against such problems
-(which have helped us contain other path-related vulnerabilities).
-Letting the potential attacker turn off that layer makes it pointless.
+Interestingly, if I do:
 
-> In the worst-case where the hosting sites don't adopt this config, the user
-> enables and uses this feature despite the warnings and then wants to use a
-> hosting site, he can still rewrite the history. Not nice, but no disaster
-> either.
+  git restore -s HEAD~ --overlay -- *test_file.*
 
-In general, I do like to err on the side of providing users tools to
-shoot themselves in the foot. But this feels like it crosses even my bar
-for a foot-gun, especially when there are other solutions available.
+then I get:
+
+  error: pathspec '*test_file.*' did not match any file(s) known to git
+
+So there are two oddities here:
+
+  - shouldn't that wildcard pathspec match those files? I've confirmed
+    that the glob characters make it into Git's pathspec machinery, and
+    since it doesn't have slashes, I think we'd match a basename (and
+    certainly "git ls-files *test_file.*" does what I expect).
+
+  - even if it doesn't match, it seems weird that overlay mode would
+    remove files that don't match. I'd expect it to remove files in
+    trees that _did_ match the pathspec, but leave anything outside of
+    the pathspec untouched.
+
+    It's almost like we matched the pathspec in the pass over the
+    working tree files, but failed to do so when reading in the tree.
 
 -Peff
