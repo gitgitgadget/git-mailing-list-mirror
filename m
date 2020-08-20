@@ -2,297 +2,130 @@ Return-Path: <SRS0=wu5b=B6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9777C433DF
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 08:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45C7DC433DF
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 10:17:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92F0821744
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 08:03:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13705206DA
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 10:17:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="qtS2f4eb"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Gt9/iIc6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbgHTIDP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 04:03:15 -0400
-Received: from mail-40141.protonmail.ch ([185.70.40.141]:54760 "EHLO
-        mail-40141.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725834AbgHTIDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 04:03:12 -0400
-Date:   Thu, 20 Aug 2020 08:03:02 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1597910587;
-        bh=sTAQYfaYpfYaqL23/gb6xcbE0LtFmCdCUQ7HbMzI/bY=;
-        h=Date:To:From:Reply-To:Subject:From;
-        b=qtS2f4ebfnkCEFJ5MIRzry4RMJmbmXdBAsPeOF3xTC0vYrH103TXgtk8QD9SUDGH7
-         BDsh+R/NtW7gDgZ9WTuirZO7Uusv0pFtOHurvFd/BaSE0Bpm3lTWHBVXfDW3b1X5Rr
-         daO8w7lIIC2WYAqBmXsWfKE6ODeRXbQYQA/VZ9S4=
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Mickey Endito <mickey.endito.2323@protonmail.com>
-Reply-To: Mickey Endito <mickey.endito.2323@protonmail.com>
-Subject: Cloning subfolder as new root; subfolder as worktree
-Message-ID: <fO2Zef1hJ8xCWRCeWPtEHSr1YtlbqeXFqR09Frz0CmXU_Z8awBLgw_F8wdBiUsxuJrTWxvMAM1A6mUfqtWLvLIfBWNdDwDHSWS-SHNpjUz0=@protonmail.com>
+        id S1729928AbgHTKR4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 06:17:56 -0400
+Received: from mout.gmx.net ([212.227.17.22]:37721 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730154AbgHTKRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 06:17:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1597918597;
+        bh=zdx4JDuknqVUyhquQ9a8qCOnRrOmDX1E51104l+VRWk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Gt9/iIc61fg0x6FRPrRFgK+ibwmGxHJp7D0FxZ3nKd3nXDb65ai0k+zNvr1uz9CKV
+         rpNq6iobdXlzHD6U53ZPZsGii7Viw83eTsvHm9QNSsDJ4D5qVX8ndT6uINDYt6h0kt
+         Xf4Wn217u6KCd5Sr+ptRwfp81aRF7Cbo4ZuVKCUg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.183.59] ([89.1.215.144]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhlKy-1kdeez1GxE-00dnDU; Thu, 20
+ Aug 2020 12:16:37 +0200
+Date:   Thu, 20 Aug 2020 12:16:34 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Lukas Straub' <lukasstraub2@web.de>,
+        'git' <git@vger.kernel.org>, 'Elijah Newren' <newren@gmail.com>,
+        'Brandon Williams' <bwilliams.eng@gmail.com>
+Subject: Re: [RFC PATCH 0/2] Allow adding .git files and directories
+In-Reply-To: <20200819203825.GA2511902@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2008201214110.56@tvgsbejvaqbjf.bet>
+References: <cover.1597853634.git.lukasstraub2@web.de> <xmqqr1s2tswd.fsf@gitster.c.googlers.com> <04aa01d67659$2dc217b0$89464710$@nexbridge.com> <xmqqimdetpuw.fsf@gitster.c.googlers.com> <20200819201736.GA2511157@coredump.intra.peff.net>
+ <xmqqa6yqtm03.fsf@gitster.c.googlers.com> <20200819203825.GA2511902@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:d3iRFriNg1Rm++15HTXIZV+wSVDA5TBNc57mqnL2nCaO+i9htRv
+ Ef8A38q/bFef3ZPIC2dcnMW+J5y5kmWGdIn7OBVUCMGWjwAU49aa5kC+eUTA7oM8DEmRjn2
+ yHO94m3mojhwmS9DHEAPwOCNhaqsV9irnfJ/GWWJu3GDw8Ga4tHK+2itr9M2e7W6Ei9XX22
+ 0Po5L17A0Q3LDC8b3ww1Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rCSs2aK+SlI=:QqR9oieUyl2qeNPleMersD
+ tO7jVVqWchDhm7KL+X6EHiRCluxP+k1F73GZinf+IpxDqyvxKeCETrFHY9oStGx+KXRvR5uBY
+ 3o0HtQaJcdbcoy6AqzLFdy+LRH+nyZq2njsWuguxEkyMRC4AvTfKxYqbWInpncQAIdj0uf9y4
+ ExAwacGm5Dpipcexg+c7gK0+KxNwIfhsag9ElxZyZHujM0ANZzo1snsYITkRP8VVzXzbLUQpj
+ IA8G/PIlp4GRPgDn9+p00uImQ+qUz8J2tZrYV3HkpmXVLHsNt87CeFaVKPlm5h5jUfSWOlao3
+ ij/fXPqEJPk+G3QCR4iaU4lYf1p+LG9h+jXWxBnvAm5W0icbgyxoxvxE6vbZ4s2QjBea7AjwK
+ bfcEN8ixbVpbuPUicomIUvYei6rXRTamyEszs6LBMtZ1QY6LHeM2nkPkyGTN39/AXsgVezbvj
+ 7Idz2wvRh/M80pqJdAOKEJBhwdIjqOY9Rg52RV4aicbGN7bxzrMv54s4EW2s4jDUoFITVN1vX
+ JqmiT+oJzdM5eXJ15YoPm5qtecKliuESPikf7oawC+nHQxNo0F7lle8ZHlAcSh0GJ840QdHaE
+ Ra0J1Z1kKmroNsp/MTVPxFrZGceb4KIxkhmJkNVd0qM/nB6RTxVTkRey2EcRAXHpFrXBDDLaI
+ Knz4DsgHUGZGfNBMMOQuqkB1cbdC6p1AvrHnfMC9/DYgzkGQTZ1cL9c/Tf7pZYpsfUDYLKodc
+ pHRbkK+3kRL/cpw/alMmNiLXHxv9zJig4nkkrt7CHCzc3q0AUJqQh6sCWtIToGLWsABcAoEEP
+ 0RaPG2f3K8917sgjgrBcIvIiJv5iq6Q6WBc1A4pCG2agLPqT+gsxdgVNdG9vAWnuOpyftymhC
+ KPnKAkyC3DodW/AuqBxtQmhfhOjFGBgjAj/B3U+3IGbTuC0dLIaZBPqVn7LF0KwBvbcnWoRt4
+ u5KHvCtfcy+GPqHEoG8K88TA/KEmhi6T0FkIhspp02w5jlnzHF25qqmCu5ID4PiImiSGWPRl1
+ DecRjy0aA6viuKr5r+rjDspdoum4Vz0u8FomFYpgge6SHmerhMBED1RxrNG+lgIVSBht0lmA9
+ HirxIGlxTOi0VzKFnFqRbTv7LqXwTpTNny+F3jgOhlNTyx1JJmT9fZMq6Q9nzJ0y/DeDXbWQg
+ B+Ra7CIIMiYZdbp/twy3Wu0Vih+PZ8xT+4j5lCruF/6YgTGQnHWR3oVghxil/qNXqLQ1EtG/X
+ 5hRjfiZPrLUuW7Uc7ixBuPbKdbGwVYuuhwSuGeQ==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear all,
+Hi,
 
-I'm currently missing a feature in git to be able to clone a subfolder as t=
-he
-root or phrased differently use a subfolder as a worktree.
+On Wed, 19 Aug 2020, Jeff King wrote:
 
-This mail has become rather long, so here is an overview: First, I state th=
+> On Wed, Aug 19, 2020 at 01:32:28PM -0700, Junio C Hamano wrote:
+>
+> > Jeff King <peff@peff.net> writes:
+> >
+> > > It _could_ still be useful in a more isolated environment (e.g., you=
+r
+> > > company server that is serving only internal repos to employees). Bu=
+t I
+> > > have misgivings about a feature that lets people intentionally creat=
 e
-problem and give some use cases. Then, I list a couple of partial workaroun=
-ds
-and other methods for the problem, which are currently achievable with git.
-Lastly, I provide an idea how this feature could be implemented within git
-object model.
+> > > repositories whose history cannot ever interact with other users who
+> > > haven't set a special config flag. It's one thing to say "to take
+> > > advantage of this feature, we must all agree to have version X, or s=
+et
+> > > flag Y". But it's another to bake that restriction into the reposito=
+ry
+> > > history for all time.
+> >
+> > If people want a pre-prepared repository propagated to CI
+> > environment and keep trakc of the state of such repository over
+> > time, for example, they can use (versioned) tarballs.  Such a
+> > tarball won't automatically get extracted after "git pull" (which
+> > is a feature), but those who want such a pre-prepared repository
+> > for CI can make the extraction step as a part of their CI build
+> > procedure.
+>
+> Yeah, I almost went into more detail there. There are lots of solutions
+> that make accessing an embedded sub-repository only one command away for
+> the person who clones. :)  Some others are:
+>
+>   - just call it "foo.git", and "mv foo.git .git" solves it (you'd
+>     probably want to "git checkout -f" after that, but even if it were
+>     embedded it seems silly to hold the data in two separate formats
+>     anyway
+>
+>   - just hold a bare repository ("foo.git") and then clone it
+>
+> etc. I think this is really a solution in search of a problem.
 
+As far as testing goes, libgit2 already commits such bare repositories
+under names like `shallow.git`.
 
-The Problem
------------
+So yeah, I also do not see the need for this patch series, and I do have
+serious doubts about wanting to risk the security implications.
 
-Assume you have a git repository A with the following file structure:
-
-foo/a.txt
-bar/b.txt
-bar/baz/c.txt
-
-What I want to achieve is creating a git repo where bar/ equals the root /,
-i.e. a repo B with the contents
-
-b.txt
-baz/c.txt
-
-We can describe that as a lens or zoom of the repo A.
-I believe svn had that capability but I'm not sure.
-
-
-Applications for that feature
------------------------------
-
-Notation: I use "repo:path" to indicate that path should be seen relative t=
-o
-the repository repo.
-
-* I have a repo which mimics (parts of) my entire file system (think
-  configuration files).  I'd like to be able to check out the subfolder
-  repo:/etc/foobar in the actual filesystem folder /etc. While not checking=
- out
-  the rest of repo:/etc as that would lead in a disaster.
-
-* I have a website project where the html files (which are not generated by
-  a build script) are in repo:www/ and I'd like to check them out to /srv/w=
-ww/
-  for deployment.
-
-* Think of a big project with different components possibly stacked deep in
-  a directory structure. We want to work on a single component somewhere do=
-wn
-  that structure, e.g. repo:client/new/x11/gtk/daemon/test/testapp. We coul=
-d
-  use git-sparse-checkout for that but that would leave us with a lot of
-  quasi-empty directories client/new/x11/gtk/daemon/test/ where in this cas=
-e
-  only the testapp directory is relevant.
-
-
-Things/Workarounds I am aware of
---------------------------------
-
-1. git submodules
-
-You probably think use git-submodules. However, bar/ is not a dependency or
-library where that would make sense but rather a part of of repo A.  So the
-logical dependency is reversed: it's not A that depends on B but rather
-B depends on A.  In some use cases changes in bar/ require additional chang=
-es
-in foo (in that use cases B is like a read-only view).
-
-2. git clone + filter-branch
-
-We can clone the repo followed by a git-filter-branch (or its alternative
-git-filter-repo)
-
-git clone /path/to/repo/A /path/to/repo/B cd /path/to/repo/B git filter-bra=
-nch
---subdirectory-filter bar -- --all
-
-This creates a sort of read-only clone. But has massive drawbacks:
-* We cannot do a simple git pull to update repo B to the new state of repo =
-A.
-  To do that we have to clone and filer-branch it again.
-* It changes commit-IDs.
-* We cannot push changes done in B back to A.
-
-3. git-subtree
-
-We can use git-subtree to filter the subdirectory and then clone the genera=
-ted
-branch as repo B, like so:
-
-# in repo A
-cd /path/to/repo/A
-git subtree split --prefix=3Dbar --annotate 'bar: ' --branch branch-bar
-git clone -b branch-bar /path/to/repo/A /path/to/repo/B
-
-Here we have:
-* It requires support from repo A which must generate the branch-bar.
-* Repo A now must contain two commit-histories (the main branch and the
-  branch-bar) of the same logical-history.  In particular the commit ids ar=
-e
-  different for the same logical commit in the main branch and the branch-b=
-ar.
-* branch-bar must be regenerated every time. I have not (yet) investigated
-  whether git-subtree is capable of continuing a split from the last commit=
-. So
-  far I only managed that it recreates all commits in branch-bar (but with =
-the
-  same commit-ids as before)
-* Because the commit-ids of branch-bar do not change (at least when called =
-with
-  the same arguments), we can use git pull to update repo B
-* We can push changes in repo B back to repo A in the branch-bar. But
-  I currently do not see a simple method how to incorporate this changes in=
-to
-  the main branch.
-
-4. git-sparse-checkout
-
-We can use git-sparse-checkout like so
-
-git clone /path/to/repo/A --no-checkout /path/to/repo/B
-cd /path/to/repo/B
-git sparse-checkout init
-git spares-checkout set bar
-
-This is kind a close to what I want in the sense that we can push and pull =
-and
-the commit-ids are unaltered. However, this totally gets the directory
-structure wrong, which is a no-go in some of the above use cases.
-
-
-An idea for a solution
-----------------------
-
-The following is an idea how the above feature could be implemented. This i=
-s
-just a rough sketch and I have not thought how this approach would interact
-with other git tooling.
-
-We add a (for example; names are up to debate) --subfolder argument to git
-clone:
-
-git clone --subfolder bar /path/to/repo/A /path/to/repo/B
-
-This clones the complete repo A but checks out contents of path bar in the =
-root
-directory. The HEAD points to the (full) commit. Additionally somewhere(tm)=
- we
-store that we have zoomed in to only see paths in bar (maybe git-worktree c=
-an
-be expanded for that?).
-
-That is stuff under bar is treated like a checkedout repo while all other s=
-tuff
-is treated like being in a bare repo. (This at least should be the guide li=
-ne
-when thinking about the behaviour git should provide)
-
-Doing a git push, git pull does the normal update of the repo but when chec=
-king
-out files to the working directory only those files under bar/ are consider=
-ed.
-
-When editing and committing files in repo B, the following would be a sane =
-thing
-to do: The (old) tree of the current HEAD is taken and then the subtree
-corresponding to bar is replaced with the tree in the index. That way we
-generate a full valid commit which can be pushed back to repo A.
-
-If we switch/checkout to a branch/commit that has not bar/ directory, then =
-the
-checkout copy should be empty. If we add something and commit it, then the
-parent tree-objects of the new commit should be altered to contain the path=
- bar.
-As git does not track directories this should work out as expected.
-
-Merge conflicts happen. If these happen for files inside the bar directory,=
- the
-we can do our usual stuff. Due to the flexibility of git we can arrange tha=
-t the
-commits/trees to be merged have a conflict outside of the bar directory. In
-that case we cannot produce a working copy of the commit. Thus, it seems
-appropriate to abort whatever we do and inform the user to use a full clone=
- for
-doing the merge.
-
-When cloning repo B to repo C, there are not restrictions whatsoever as B h=
-as
-a full copy of the repository (just not checked out). So when looking from
-"outside" repo A and repo B are indistinguishable. Thus the following works=
-:
-
-
-git clone --subfolder bar /path/to/repo/A /path/to/repo/B
-git clone /path/to/repo/B /path/to/repo/C
-
-Repo A and C are the same (both without a zoom).
-
-git clone --subfolder bar /path/to/repo/A /path/to/repo/B
-git clone --subfolder foo /path/to/repo/B /path/to/repo/C1
-
-git clone --subfolder foo /path/to/repo/A /path/to/repo/C2
-
-Repo C1 and C2 are the same (both zoomed to foo/).
-
-Non-goals:
-
-The following (weird?) thing is outside of the scope of this idea.
-zooming in into two (or more) directories simultaneously, e.g.
-
-repo A:
-foo1/bar/...
-foo2/foo3/baz/...
-
-and with the hypothetical git clone --subfolder foo1 --subfolder foo2/foo3
-
-we get
-
-repo B:
-bar/...
-baz/...
-
-Also converting a zoomed repo B into a full (non-bare) repo A is not part o=
-f it.
-Although I think, this could easily be achieved by some usage of deleting t=
-he
-reference to the subfolder and doing a `git reset --hard` on the working co=
-py.
-
-
-
-Summary
--------
-
-That the problem is not about the size of the checkout (which sparse-checko=
-ut
-tackles), nor the size of the repo or the mount of data which needs to be
-downloaded (both of which clone --depth tackles), its about getting the
-directory structure in repo B right while also keeping a strong link to rep=
-o
-A as upstream to pull (and maybe push) changes.
-
-If I have missed any approach for a solution I'd like to hear about it.
-
-Best
-Mickey
-
+Ciao,
+Dscho
