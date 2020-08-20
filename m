@@ -1,137 +1,197 @@
-Return-Path: <SRS0=wu5b=B6=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4AA6C433E1
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 23:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28F69C433E3
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 00:00:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6880920702
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 23:57:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 02F5220702
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 00:00:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q0H/nyso"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FeMa0rYq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727791AbgHTX5c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 19:57:32 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57822 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726995AbgHTX50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 19:57:26 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D9DE0DA01F;
-        Thu, 20 Aug 2020 19:57:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cngq6aqoSZcjHBggu5GQsdDRJ/E=; b=Q0H/ny
-        sod/DQr+vYg5c/OkdnBvtZRt/emY6wW5n0oVJlRX4SV7GAhkUMtg2iTJYKsnRvAn
-        J1ggqp0CC2qvGGPpPT4w15xPLM+SKY2XyoWYh3kkvlNJG4EhBz4SSx1ImEz0ve+p
-        aT1lcxWHQJ1Su/foN+mMmnpTOLmoARY+AHgjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=anI8aw5B50NWLPonSUzI8q+Q3g3dbTh1
-        dHNqtcwYGK/CXXOIpfNCUauhyvu5HoiCPdyHvp/ya4Y+Go2l+njzCEZnkIkoi9QD
-        7YBWV+sb7tAt/glIJvLW7Z3Bxc0a5iZecsQkJojlj8rZjQwCzzPgLfNmqwGLQh2g
-        tK6EmSvLAzM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF4B1DA01E;
-        Thu, 20 Aug 2020 19:57:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 056E6DA01D;
-        Thu, 20 Aug 2020 19:57:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Raymond E. Pasco" <ray@ameretat.dev>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] git-apply.txt: update descriptions of --cached, --index
-References: <20200820231051.85134-1-ray@ameretat.dev>
-Date:   Thu, 20 Aug 2020 16:57:19 -0700
-In-Reply-To: <20200820231051.85134-1-ray@ameretat.dev> (Raymond E. Pasco's
-        message of "Thu, 20 Aug 2020 19:10:51 -0400")
-Message-ID: <xmqq4kowc1ls.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727884AbgHUAAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 20:00:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50634 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726806AbgHUAAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 20:00:06 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 906B4C061385
+        for <git@vger.kernel.org>; Thu, 20 Aug 2020 17:00:06 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id e14so1310767vsa.9
+        for <git@vger.kernel.org>; Thu, 20 Aug 2020 17:00:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=w/5Yw1cJ+dgB7OPdqKioas4ZdQIzoMPVpaVsPQf5Qp8=;
+        b=FeMa0rYqpaOALRErClh4XwEwjuQ3djUiEMpK2E9Iqo0ie2er4Q4HyNoaZ0LY0UijJw
+         yWdZReS7xgDGi92GjlBngolp3Y395MWQeB0CBKbP7hFTgoK0pKPdWV+pVWPgQ8OqNYvH
+         Bhh0ohmRQc0p73HgC2LTMD94dBqc3lHqi+icWGGAfN3LMquB1qpDq476Z0lYbJ1SeBIx
+         BvDr0zGJWNu4DX+sQkDfBWTNJxB3mS1cXPEtl+Iyy2FwcGFm8lNBDqpBa1tq68s4YscH
+         DxF7omajLD98cMZmx+nbGJRj9X5/PZd+PXuUWY1YcV1FvBlZNbKtNkbM78l6YMLy16DE
+         CHNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w/5Yw1cJ+dgB7OPdqKioas4ZdQIzoMPVpaVsPQf5Qp8=;
+        b=OhM2F5kInycZGdePjYytgunM1wIps3ud3h1+AyvAQk8c3S54Vcm/R0VtLW1mWkDR+T
+         6eSm8fGbaH/t+2xOvlUgY2bn0poagK0QhkJasA4YxQrMP4zX0YrCSmonAgGIfChIRz7x
+         S16vH+UW8czbW44eWch93HejQYbQ8jv5GMabSXPnXCq6RE1pagW7qXs0qVSfpkJ0oSia
+         7bN46uBclgsxARRzAYlBYiUyHnRXPYVFWLj7sAT8P1+VT3hFUZ+2VFN7Sfll9kQnCo2C
+         vc6O78QHlJERdfZdPKn5ArU1Q8pQNiHOMD8s9MxDLdKDNEQpgDtZqLeamrZjInm2gE98
+         rtcA==
+X-Gm-Message-State: AOAM533Qsn0jjKHkba9ex5cWyNkoQbufpflPd5RNeFMWd7VUDONPyHm0
+        PtkOVfv6GNFrCu2SZQJVOpORexBTssnAad1AJC4=
+X-Google-Smtp-Source: ABdhPJxmh293Dv2EL4tmCu2Qapul8fmJ6e1msYTBUqnq8BayTOhbrYM8egTdZTGy2h/4ZDacsIMfvgK4KbneSC9ApiM=
+X-Received: by 2002:a67:8807:: with SMTP id k7mr334908vsd.153.1597968004954;
+ Thu, 20 Aug 2020 17:00:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E2C7E258-E340-11EA-A99C-843F439F7C89-77302942!pb-smtp21.pobox.com
+References: <20200815002509.2467645-1-jacob.e.keller@intel.com>
+ <20200815002509.2467645-3-jacob.e.keller@intel.com> <xmqq5z9gzvmb.fsf@gitster.c.googlers.com>
+ <CA+P7+xpcm51cLPDDW+F1J-XZ2VvwNDWjnZqm54f3DKXxDfBF5Q@mail.gmail.com> <20200818174116.GA2473110@coredump.intra.peff.net>
+In-Reply-To: <20200818174116.GA2473110@coredump.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 20 Aug 2020 16:59:53 -0700
+Message-ID: <CA+P7+xqfAqnoKBeOiO6f7tdyi_7M=wKpmnFoWBt6UHbOqbYCzQ@mail.gmail.com>
+Subject: Re: [RFC 3/3] refspec: add support for negative refspecs
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Raymond E. Pasco" <ray@ameretat.dev> writes:
-
-> The blurb for "--cached" says it implies "--index", but in reality
-> "--cached" and "--index" are distinct modes with different behavior.
+On Tue, Aug 18, 2020 at 10:41 AM Jeff King <peff@peff.net> wrote:
 >
-> Additionally, the descriptions of "--index" and "--cached" are somewhat
-> unclear about what might be modified, and what "--index" looks for to
-> determine that the index and working copy "match".
+> On Mon, Aug 17, 2020 at 05:04:00PM -0700, Jacob Keller wrote:
 >
-> Rewrite the blurbs for both options for clarity and accuracy.
+> > > > +     /* apply any negative refspecs now to prune the list of refs */
+> > > > +     ref_map = apply_negative_refspecs(ref_map, rs);
+> > > > +
+> > > >       ref_map = ref_remove_duplicates(ref_map);
+> > >
+> > > How was the ordering here decided?  Should it result the same set if
+> > > negative ones are excluded after duplicates are removed?
+> >
+> > Good question. This was what was done in peff's original patch. I need
+> > to understand a bit more about what ref_remove_duplicates does to
+> > really figure this out.
 >
-> Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
-> ---
-> How's this for an updated wording?
-
-s/blurbs?/description/
-
->  Documentation/git-apply.txt | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+> The relevant commit is 2467a4fa03 (Remove duplicate ref matches in
+> fetch, 2007-10-08), I think. We may end up with multiple refspecs
+> requesting a particular ref. E.g.:
 >
-> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> index b9aa39000f..91d9a8601c 100644
-> --- a/Documentation/git-apply.txt
-> +++ b/Documentation/git-apply.txt
-> @@ -61,18 +61,18 @@ OPTIONS
->  	file and detects errors.  Turns off "apply".
->  
->  --index::
-> -	When `--check` is in effect, or when applying the patch
-> -	(which is the default when none of the options that
-> -	disables it is in effect), make sure the patch is
-> -	applicable to what the current index file records.  If
-> -	the file to be patched in the working tree is not
-> -	up to date, it is flagged as an error.  This flag also
-> -	causes the index file to be updated.
-> +	Apply the patch to both the index and the working tree (or
-> +	merely check that it would apply cleanly to both if `--check` is
-> +	in effect). Note that `--index` expects index entries and
-> +	working tree copies for relevant paths to be identical (their
-> +	contents and metadata such as file mode must match), and will
-> +	raise an error if they are not, even if the patch would apply
-> +	cleanly to both the index and the working tree in isolation.
+>   git fetch origin refs/heads/master refs/heads/*
+>
+> I don't think the order should matter. If we apply negative refspecs
+> first, then we'd either remove both copies or leave both untouched (and
+> if the latter, then de-dup to a single). If we apply negative refspecs
+> after de-duping, then we'd either remove the single or leave it in
+> place. But the result is the same either way.
 
-I do not see why we want to stress the last part after ", even if".
-The safety mechanism insists on the working tree file and the index
-entry to be identical, and the location where in the file the
-difference is, is irrelevant, whether it is outside the area the
-incoming patch touches, or it overlaps.
+I'm not sure this is quite true in the case where destinations are
+supplied. Suppose this case:
 
-I however am OK if your thrust is to stress the fact that the paths
-must be up to date.  I think we can do so by making that the first
-thing readers would read about the option, e.g.
+git fetch refs/heads/*:refs/remotes/origin/*
+refs/other/mybranch:refs/remotes/origin/mybranch
 
-	After making sure the paths the patch touches in the working
-	tree are up to date (i.e. have no modifications relative to
-	their index entries), apply the patch both to the index
-	entries and to the working tree files (or see if it applies
-	cleanly, when `--check` is in effect).
+This would ofcourse error out due to de-duping where we determine that
+both would fetch to the same place.. however if you also added a
+negative refspec:
 
->  --cached::
-> -	Apply a patch without touching the working tree. Instead take the
-> -	cached data, apply the patch, and store the result in the index
-> -	without using the working tree. This implies `--index`.
-> +	Apply the patch to just the index, without touching the working
-> +	tree. If `--check` is in effect, merely check that it would
-> +	apply cleanly to the index entry.
+git fetch refs/heads/*:refs/remotes/origin/*
+refs/other/mybranch:refs/remotes/origin/mybranch ^refs/heads/mybranch
 
-This side looks good.
+then shouldn't this work? meaning we should de-dupe only after we
+apply negative refspecs in this case?
 
-Thanks.
+>
+> > > > @@ -1441,6 +1445,8 @@ int match_push_refs(struct ref *src, struct ref **dst,
+> > > >               string_list_clear(&src_ref_index, 0);
+> > > >       }
+> > > >
+> > > > +     *dst = apply_negative_refspecs(*dst, rs);
+> > > > +
+> > >
+> > > The block of code whose tail is shown in the pre-context has
+> > > prepared "delete these refs because we no longer have them" to the
+> > > other side under MATCH_REFS_PRUNE but that was done based on the
+> > > *dst list before we applied the negative refspec.  Is the ordering
+> > > of these two correct, or should we filter the dst list with negative
+> > > ones and use the resulting one in pruning operation?
+> >
+> > I think we need to swap the order here. I'll take a closer look.
+>
+
+
+> Hmm. I think the behavior we'd want is something like:
+>
+>   # make sure the other side has three refs
+>   git branch prune/one HEAD
+>   git branch prune/two HEAD
+>   git branch prune/three HEAD
+>   git push dst.git refs/heads/prune/*
+>
+>   # now drop two of ours, which are eligible for pruning
+>   git branch -d prune/one
+>   git branch -d prune/two
+>
+>   # push with pruning, omitting "two"
+>   git push --prune dst.git refs/heads/prune/* ^refs/heads/prune/two
+>
+>   # we should leave "two" but still deleted "one"
+>   test_write_lines one three >expect
+>   git -C dst.git for-each-ref --format='%(refname:lstrip=3)' refs/heads/prune/ >actual
+>   test_cmp expect actual
+>
+> I.e., the negative refspec shrinks the space we're considering pruning.
+> And we'd probably want a similar test for "fetch --prune".
+>
+> I just tried that, though, and got an interesting result. The push
+> actually complains:
+>
+>   $ git push --prune dst.git refs/heads/prune/* ^refs/heads/prune/two
+>   error: src refspec refs/heads/prune/two does not match any
+>   error: failed to push some refs to 'dst.git'
+>
+> For negative refspecs, would we want to loosen the "must-exist" check?
+> Or really, is this getting into the "are we negative on the src or dst"
+> thing you brought up earlier? Especially with --prune, what I really
+> want to say is "do not touch the remote refs/heads/two".
+>
+
+Hmmm..
+
+For regular push the negative refspec applies to the source. For prune
+though we only provide a destination..
+
+> We can get work around it by using a wildcard:
+>
+>   $ git push --prune dst.git refs/heads/prune/* ^refs/heads/prune/two*
+>   To dst.git
+>    - [deleted]         prune/one
+>
+> So it works as I'd expect already with your patch. But I do wonder if
+> there are corner cases around the src/dst thing that might not behave
+> sensibly.
+>
+
+Right, there's some interesting questions here still.
+
+> -Peff
+
+I'll be adding this as a test!
+
+Thanks,
+Jake
