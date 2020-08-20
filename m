@@ -4,142 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D33C433E1
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 19:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E46BC433DF
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 20:11:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB0E2208DB
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 19:58:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 377B1207BB
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 20:11:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RwHUDDDd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R7rA+8x9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbgHTT6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 15:58:24 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50075 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725819AbgHTT6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 15:58:22 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 98904D81EA;
-        Thu, 20 Aug 2020 15:58:18 -0400 (EDT)
+        id S1728348AbgHTULZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 16:11:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54084 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbgHTULX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 16:11:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5EC67DB82;
+        Thu, 20 Aug 2020 16:11:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=0QEpABejA969
-        Z9dyiIgVtYHH59U=; b=RwHUDDDdW2EitNHm1m8y4sVc8vtS6H29ni3U2/SiUcR6
-        VvdDAcMTLvNthiYooxaCt9/c5FU2GV5rlRPcGq76nYfsZ2zt5z2dGwIP/TTLSPoj
-        xLzGIZTDWs6fF5+BiNxD+UrDMG5rTep2CAIRJLA433bWEO8mlBUxpZrd7Z/6Ehc=
+        :content-type; s=sasl; bh=0dLIiilcpSIQl9fz1cu4lvOdyLs=; b=R7rA+8
+        x9x9D0jvZ6MyFyqL+Q4k/WBWpxL4ooB6AQPyOoZEQHgQEMtVN2OcmnNzzvEJayyK
+        NByRAxVBD2O7rDEQtHeRtghB45kxZqnpwJ115g9QnaZTi4+mPVFinyh1yqHEBoWM
+        IPWc9j1mqdHisxc/F+Xp+i45rs3xHThwQlmBU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=w/Bq+t
-        y7aQ7dbfKgaT8WkfpAQnifMX5xCerdNvjE4tZNA6hOr8XoAN3BvymxIrzWBaLIz7
-        EI/BKYdE1lSVIsMOcMwFY8pVJSmyQxyYH7xSmSZO5XKHgPQNpPO92Nvt83SuAvHW
-        lZXjXYf3A+HsDDLfM/wOOJ6LtBBfb/tafb37I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F69DD81E9;
-        Thu, 20 Aug 2020 15:58:18 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=RnaZd4CyiFHDlLuvpau5me7YlCzXMS08
+        uJX4uN/7WQwYdnTEQkQM4w/vXy+vxFY3LiF1AVpyBve/TiuEX1YV9/BSOTbE4qyj
+        l+oxZw41YUBgnWjaPsyllC7UlHsGf4bn39uxRS/AVXvg6C+vVnxhvf5uwGyFXFHY
+        5LSu21Dg5j8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE97C7DB81;
+        Thu, 20 Aug 2020 16:11:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.190.152.57])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8C9F1D81E8;
-        Thu, 20 Aug 2020 15:58:14 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 267E97DB7F;
+        Thu, 20 Aug 2020 16:11:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 2/2] diff: index-line: respect --abbrev in object's name
-References: <cover.1596887883.git.congdanhqx@gmail.com>
-        <cover.1597926783.git.congdanhqx@gmail.com>
-        <3cec490500ebb7037fe13fd70bbbb43d035a65f5.1597926783.git.congdanhqx@gmail.com>
-Date:   Thu, 20 Aug 2020 12:58:12 -0700
-In-Reply-To: <3cec490500ebb7037fe13fd70bbbb43d035a65f5.1597926783.git.congdanhqx@gmail.com>
-        (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Thu, 20 Aug
- 2020 19:35:35 +0700")
-Message-ID: <xmqqmu2pay3v.fsf@gitster.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: in partial clone, pass --promisor
+References: <20200820175116.3889786-1-jonathantanmy@google.com>
+Date:   Thu, 20 Aug 2020 13:11:20 -0700
+In-Reply-To: <20200820175116.3889786-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Thu, 20 Aug 2020 10:51:16 -0700")
+Message-ID: <xmqqimddaxhz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7BA1F94A-E31F-11EA-B5A1-843F439F7C89-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5078F046-E321-11EA-84A7-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> A handful of Git's commands respect `--abbrev' for customizing length
-> of abbreviation of object names.
->
-> For diff-family, Git supports 2 different options for 2 different
-> purposes, `--full-index' for showing diff-patch object's name in full,
-> and `--abbrev' to customize the length of object names in diff-raw and
-> diff-tree header lines, without any options to customise the length of
-> object names in diff-patch format. When working with diff-patch format,
-> we only have two options, either full index, or default abbrev length.
+> When fetching a pack from a promisor remote, the corresponding .promisor
+> file needs to be created. "fetch-pack" originally did this by passing
+> "--promisor" to "index-pack", but in 5374a290aa ("fetch-pack: write
+> fetched refs to .promisor", 2019-10-16), "fetch-pack" was taught to do
+> this itself instead, because it needed to store ref information in the
+> .promisor file.
 
-Correct.
+So is this patch a fix for a regression in v2.25?
 
+> This causes a problem ...
+> ...
+> An alternative is to instead move object checking to "fetch-pack", and
+> let "index-pack" only index the files. However, since "index-pack" has
+> to inflate objects in order to index them, it seems reasonable to also
+> let it check the objects (which also require inflated files).
 
-> Although, that consistent is documented, it doesn't stop users from
+I can see why it might feel attractive to draw the line to divide
+the labor between the two that way, but I 100% agree with your
+reasoning---index-pack needs to inspect the objects in order for it
+to be able to index, and in order for us to be able to trust the
+resulting index, it should be validating the objects it identified
+while it was indexing the pack stream.
 
-I am not sure what you meant by the word "consistent" here.
-Dropping the word altogether makes the sentence work just fine, but
-it may not be what you wanted to say, so I dunno.
-
-> trying to use `--abbrev' with the hope of customising diff-patch's
-> objects' name's abbreviation.
-
-OK.
-
-> Let's resolve that inconsistency.
-
-I am not sure if this should even be called "inconsistency".  We
-have two things to control, (1) length of abbreviated object names
-in the "raw" output and (2) length of abbreviated object names on
-the "index" line, and they can be independently controlled with
-different options.  What this patch does is, as the first paragraph
-explained, the latter does not take an arbitrary length as end users
-may expect.
-
-	Let's allow the blob object names shown on the "index" line
-	to be abbreviated to arbitrary length given via the "--abbrev"
-	option.
-
-perhaps?
-
-> To preserve backward compatibility with old script that specify both
-> `--full-index' and `--abbrev', always shows full object id
-> if `--full-index' is specified.
-
-s/shows/show/ but otherwise good.
-
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-> index b7af973d9c..1bb897d665 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -446,10 +446,11 @@ endif::git-format-patch[]
->  --abbrev[=3D<n>]::
->  	Instead of showing the full 40-byte hexadecimal object
->  	name in diff-raw format output and diff-tree header
-> -	lines, show only a partial prefix.  This is
-> -	independent of the `--full-index` option above, which controls
-> -	the diff-patch output format.  Non default number of
-> -	digits can be specified with `--abbrev=3D<n>`.
-> +	lines, show only a partial prefix.
-> +	In diff-patch output format, `--full-index` takes higher
-> +	precedent, i.e. if `--full-index` is specified, full blob
-
-"precedence", I think.
-
-> +	names will be shown regardless of `--abbrev`.
-> +	Non default number of digits can be specified with `--abbrev=3D<n>`.
+> +
+> +		if (args->from_promisor)
+> +			/*
+> +			 * write_promisor_file() may be called afterwards but
+> +			 * we still need index-pack to know that this is a
+> +			 * promisor pack. For example, if transfer.fsckobjects
+> +			 * is true, index-pack needs to know that .gitmodules
+> +			 * is a promisor object (so that it won't complain if
+> +			 * it is missing).
+> +			 */
+>  			strvec_push(&cmd.args, "--promisor");
+>  	}
+>  	else {
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> index 8827c2ed18..5a01466db4 100755
+> --- a/t/t5616-partial-clone.sh
+> +++ b/t/t5616-partial-clone.sh
+> @@ -163,6 +163,22 @@ test_expect_success 'manual prefetch of missing objects' '
+>  	test_line_count = 0 observed.oids
+>  '
+>  
+> +test_expect_success 'partial clone with transfer.fsckobjects=1 works with submodules' '
+> +	test_create_repo submodule &&
+> +	test_commit -C submodule mycommit &&
+> +
+> +	test_create_repo src_with_sub &&
+> +	test_config -C src_with_sub uploadpack.allowfilter 1 &&
+> +	test_config -C src_with_sub uploadpack.allowanysha1inwant 1 &&
+> +
+> +	git -C src_with_sub submodule add "file://$(pwd)/submodule" mysub &&
+> +	git -C src_with_sub commit -m "commit with submodule" &&
+> +
+> +	git -c transfer.fsckobjects=1 \
+> +		clone --filter="blob:none" "file://$(pwd)/src_with_sub" dst &&
+> +	test_when_finished rm -rf dst
+> +'
+> +
+>  test_expect_success 'partial clone with transfer.fsckobjects=1 uses index-pack --fsck-objects' '
+>  	git init src &&
+>  	test_commit -C src x &&
