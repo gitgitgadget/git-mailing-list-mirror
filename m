@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 749AFC433DF
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 583C7C433E1
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:08:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52B7D207DE
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:01:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A7D5207BB
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 13:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729092AbgHTNBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 09:01:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36208 "EHLO cloud.peff.net"
+        id S1728528AbgHTNIX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 09:08:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36234 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728250AbgHTNBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 09:01:36 -0400
-Received: (qmail 6755 invoked by uid 109); 20 Aug 2020 13:01:26 -0000
+        id S1729685AbgHTNIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 09:08:14 -0400
+Received: (qmail 6824 invoked by uid 109); 20 Aug 2020 13:08:13 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Aug 2020 13:01:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Aug 2020 13:08:13 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15157 invoked by uid 111); 20 Aug 2020 13:01:26 -0000
+Received: (qmail 15206 invoked by uid 111); 20 Aug 2020 13:08:13 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Aug 2020 09:01:26 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Aug 2020 09:08:13 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 20 Aug 2020 09:01:25 -0400
+Date:   Thu, 20 Aug 2020 09:08:13 -0400
 From:   Jeff King <peff@peff.net>
 To:     Lukas Straub <lukasstraub2@web.de>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -35,42 +35,56 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         'Brandon Williams' <bwilliams.eng@gmail.com>,
         'Johannes Schindelin' <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC PATCH 0/2] Allow adding .git files and directories
-Message-ID: <20200820130125.GB2522289@coredump.intra.peff.net>
+Message-ID: <20200820130813.GC2522289@coredump.intra.peff.net>
 References: <cover.1597853634.git.lukasstraub2@web.de>
  <xmqqr1s2tswd.fsf@gitster.c.googlers.com>
  <04aa01d67659$2dc217b0$89464710$@nexbridge.com>
  <xmqqimdetpuw.fsf@gitster.c.googlers.com>
  <20200819201736.GA2511157@coredump.intra.peff.net>
- <xmqqa6yqtm03.fsf@gitster.c.googlers.com>
- <20200819203825.GA2511902@coredump.intra.peff.net>
- <20200820133445.2bd162a3@luklap>
+ <20200820143755.06d39a05@luklap>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200820133445.2bd162a3@luklap>
+In-Reply-To: <20200820143755.06d39a05@luklap>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 20, 2020 at 01:34:45PM +0200, Lukas Straub wrote:
+On Thu, Aug 20, 2020 at 02:37:55PM +0200, Lukas Straub wrote:
 
-> Yes, there are many workarounds and they work well in the CI usecase. However,
-> for the arbitrary files usecase there is no good workaround. I currently use
-> a script which iterates over the tree and renames .git -> dotgit before running
-> any git command and back again afterwards, but it is slow and brittle. I toyed
-> with the idea of writing a FUSE filesystem to do the renaming, but it is
-> needlessly complex and hurts performance.
+> > Right now git-fsck complains about ".git" appearing in a tree, and that
+> > check blocks people from pushing such trees to any hosting sites that
+> > enable transfer.fsckObjects (which includes hosters like GitHub). So
+> > you'd not only need to allow the behavior to be loosened for all of the
+> > people using the feature, but you'd need to convince server-side hosters
+> > to loosen their config. And because part of the purpose is to protect
+> > downstream clients from attacks, I doubt that public hosters like GitHub
+> > would do so.
 > 
-> Really, this problem should be solved in git itself.
+> I guess they can add a checkbox to their (secured) web-ui to configure
+> this.
 
-It is unclear to me why need to hold many sub-repositories within the
-parent one, nor what Git operations you expect to perform over them. And
-what disadvantages your script solution has.
+No, that would defeat the purpose. Hosting sites aren't protecting users
+from themselves. They're concerned about malicious actors pushing up
+objects that violate expectations and make the hosting site a vector for
+attacks. Either against other parts of the site, or against downstream
+users who aren't running fully-patched versions of Git (or perhaps are
+running a misconfigured one, if there's a known-unsafe configuration).
 
-Perhaps you can give a more concrete use-case (but before you spend a
-lot of time doing so, I'll warn you that I find it pretty unlikely that
-it will cross the bar necessary to counter the downsides we've discussed
-so far).
+I don't know of a version of Git that's vulnerable to ".git" (it should
+be blocked from entering the index by verify_path()), but the fsck
+checks are one layer of a multiple-layer defense against such problems
+(which have helped us contain other path-related vulnerabilities).
+Letting the potential attacker turn off that layer makes it pointless.
+
+> In the worst-case where the hosting sites don't adopt this config, the user
+> enables and uses this feature despite the warnings and then wants to use a
+> hosting site, he can still rewrite the history. Not nice, but no disaster
+> either.
+
+In general, I do like to err on the side of providing users tools to
+shoot themselves in the foot. But this feels like it crosses even my bar
+for a foot-gun, especially when there are other solutions available.
 
 -Peff
