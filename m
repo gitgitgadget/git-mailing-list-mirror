@@ -2,94 +2,297 @@ Return-Path: <SRS0=wu5b=B6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99F70C433E1
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 04:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9777C433DF
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 08:03:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64E4420786
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 04:56:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92F0821744
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 08:03:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P/Lmzm99"
+	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="qtS2f4eb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725885AbgHTE4m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 00:56:42 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51101 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725820AbgHTE4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 00:56:41 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4E6AFF41E8;
-        Thu, 20 Aug 2020 00:56:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=UW+QUm5BJQQS
-        0XWcC+UhcLaZL6o=; b=P/Lmzm9943qHtPA1Eyh7/76OR4k7B41XtStrH/8ZGu+j
-        JDsr1YNVEp3z9CkvFh1E8H3euJ8tk2Rk+TfqkWCCv6OZdbndzn2TJ/e/kehLmKw9
-        r1Hh3LTd4SNqVNIas6OsKpKY1kcIarlZf2RLhvuB8RJWWMeRAc1+HG3wuQSlISc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=F6rINm
-        mHbO0W+wcWEaNmg4a63C1xVwKxM6aBGuXT6pbRzhTE2IgVyL8eJBeXphPORFBCfi
-        O4En5fe0w9USc5cB56lC8epbO/zNBvZRUhq61dW4p/VBXaMoaTcdi68Ghj7yFbQc
-        POiOR5UIPQvgWNQbnk6r7huIoHrZS2uTrnudo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46417F41E7;
-        Thu, 20 Aug 2020 00:56:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3F529F41E4;
-        Thu, 20 Aug 2020 00:56:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/2] diff: index-line: respect --abbrev in object's name
-References: <cover.1596887883.git.congdanhqx@gmail.com>
-        <cover.1597364493.git.congdanhqx@gmail.com>
-        <760df7782dad9e9df7bb284ec57249e697a4cc92.1597364493.git.congdanhqx@gmail.com>
-        <20200814151815.GA29528@szeder.dev>
-        <xmqqwo21xiuy.fsf@gitster.c.googlers.com>
-        <xmqqy2mhvys6.fsf@gitster.c.googlers.com>
-        <20200815002120.GQ8085@camp.crustytoothpaste.net>
-        <20200815022759.GC12363@danh.dev>
-Date:   Wed, 19 Aug 2020 21:56:33 -0700
-In-Reply-To: <20200815022759.GC12363@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
- =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s
-        message of "Sat, 15 Aug 2020 09:27:59 +0700")
-Message-ID: <xmqqv9hdc3um.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725977AbgHTIDP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 04:03:15 -0400
+Received: from mail-40141.protonmail.ch ([185.70.40.141]:54760 "EHLO
+        mail-40141.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbgHTIDM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 04:03:12 -0400
+Date:   Thu, 20 Aug 2020 08:03:02 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1597910587;
+        bh=sTAQYfaYpfYaqL23/gb6xcbE0LtFmCdCUQ7HbMzI/bY=;
+        h=Date:To:From:Reply-To:Subject:From;
+        b=qtS2f4ebfnkCEFJ5MIRzry4RMJmbmXdBAsPeOF3xTC0vYrH103TXgtk8QD9SUDGH7
+         BDsh+R/NtW7gDgZ9WTuirZO7Uusv0pFtOHurvFd/BaSE0Bpm3lTWHBVXfDW3b1X5Rr
+         daO8w7lIIC2WYAqBmXsWfKE6ODeRXbQYQA/VZ9S4=
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Mickey Endito <mickey.endito.2323@protonmail.com>
+Reply-To: Mickey Endito <mickey.endito.2323@protonmail.com>
+Subject: Cloning subfolder as new root; subfolder as worktree
+Message-ID: <fO2Zef1hJ8xCWRCeWPtEHSr1YtlbqeXFqR09Frz0CmXU_Z8awBLgw_F8wdBiUsxuJrTWxvMAM1A6mUfqtWLvLIfBWNdDwDHSWS-SHNpjUz0=@protonmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 85ECD79A-E2A1-11EA-BFD4-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+Dear all,
+
+I'm currently missing a feature in git to be able to clone a subfolder as t=
+he
+root or phrased differently use a subfolder as a worktree.
+
+This mail has become rather long, so here is an overview: First, I state th=
+e
+problem and give some use cases. Then, I list a couple of partial workaroun=
+ds
+and other methods for the problem, which are currently achievable with git.
+Lastly, I provide an idea how this feature could be implemented within git
+object model.
+
+
+The Problem
+-----------
+
+Assume you have a git repository A with the following file structure:
+
+foo/a.txt
+bar/b.txt
+bar/baz/c.txt
+
+What I want to achieve is creating a git repo where bar/ equals the root /,
+i.e. a repo B with the contents
+
+b.txt
+baz/c.txt
+
+We can describe that as a lens or zoom of the repo A.
+I believe svn had that capability but I'm not sure.
+
+
+Applications for that feature
+-----------------------------
+
+Notation: I use "repo:path" to indicate that path should be seen relative t=
+o
+the repository repo.
+
+* I have a repo which mimics (parts of) my entire file system (think
+  configuration files).  I'd like to be able to check out the subfolder
+  repo:/etc/foobar in the actual filesystem folder /etc. While not checking=
+ out
+  the rest of repo:/etc as that would lead in a disaster.
+
+* I have a website project where the html files (which are not generated by
+  a build script) are in repo:www/ and I'd like to check them out to /srv/w=
+ww/
+  for deployment.
+
+* Think of a big project with different components possibly stacked deep in
+  a directory structure. We want to work on a single component somewhere do=
+wn
+  that structure, e.g. repo:client/new/x11/gtk/daemon/test/testapp. We coul=
+d
+  use git-sparse-checkout for that but that would leave us with a lot of
+  quasi-empty directories client/new/x11/gtk/daemon/test/ where in this cas=
+e
+  only the testapp directory is relevant.
+
+
+Things/Workarounds I am aware of
+--------------------------------
+
+1. git submodules
+
+You probably think use git-submodules. However, bar/ is not a dependency or
+library where that would make sense but rather a part of of repo A.  So the
+logical dependency is reversed: it's not A that depends on B but rather
+B depends on A.  In some use cases changes in bar/ require additional chang=
+es
+in foo (in that use cases B is like a read-only view).
+
+2. git clone + filter-branch
+
+We can clone the repo followed by a git-filter-branch (or its alternative
+git-filter-repo)
+
+git clone /path/to/repo/A /path/to/repo/B cd /path/to/repo/B git filter-bra=
+nch
+--subdirectory-filter bar -- --all
+
+This creates a sort of read-only clone. But has massive drawbacks:
+* We cannot do a simple git pull to update repo B to the new state of repo =
+A.
+  To do that we have to clone and filer-branch it again.
+* It changes commit-IDs.
+* We cannot push changes done in B back to A.
+
+3. git-subtree
+
+We can use git-subtree to filter the subdirectory and then clone the genera=
+ted
+branch as repo B, like so:
+
+# in repo A
+cd /path/to/repo/A
+git subtree split --prefix=3Dbar --annotate 'bar: ' --branch branch-bar
+git clone -b branch-bar /path/to/repo/A /path/to/repo/B
+
+Here we have:
+* It requires support from repo A which must generate the branch-bar.
+* Repo A now must contain two commit-histories (the main branch and the
+  branch-bar) of the same logical-history.  In particular the commit ids ar=
+e
+  different for the same logical commit in the main branch and the branch-b=
+ar.
+* branch-bar must be regenerated every time. I have not (yet) investigated
+  whether git-subtree is capable of continuing a split from the last commit=
+. So
+  far I only managed that it recreates all commits in branch-bar (but with =
+the
+  same commit-ids as before)
+* Because the commit-ids of branch-bar do not change (at least when called =
+with
+  the same arguments), we can use git pull to update repo B
+* We can push changes in repo B back to repo A in the branch-bar. But
+  I currently do not see a simple method how to incorporate this changes in=
+to
+  the main branch.
+
+4. git-sparse-checkout
+
+We can use git-sparse-checkout like so
+
+git clone /path/to/repo/A --no-checkout /path/to/repo/B
+cd /path/to/repo/B
+git sparse-checkout init
+git spares-checkout set bar
+
+This is kind a close to what I want in the sense that we can push and pull =
+and
+the commit-ids are unaltered. However, this totally gets the directory
+structure wrong, which is a no-go in some of the above use cases.
+
+
+An idea for a solution
+----------------------
+
+The following is an idea how the above feature could be implemented. This i=
+s
+just a rough sketch and I have not thought how this approach would interact
+with other git tooling.
+
+We add a (for example; names are up to debate) --subfolder argument to git
+clone:
+
+git clone --subfolder bar /path/to/repo/A /path/to/repo/B
+
+This clones the complete repo A but checks out contents of path bar in the =
+root
+directory. The HEAD points to the (full) commit. Additionally somewhere(tm)=
+ we
+store that we have zoomed in to only see paths in bar (maybe git-worktree c=
+an
+be expanded for that?).
+
+That is stuff under bar is treated like a checkedout repo while all other s=
+tuff
+is treated like being in a bare repo. (This at least should be the guide li=
+ne
+when thinking about the behaviour git should provide)
+
+Doing a git push, git pull does the normal update of the repo but when chec=
+king
+out files to the working directory only those files under bar/ are consider=
+ed.
+
+When editing and committing files in repo B, the following would be a sane =
+thing
+to do: The (old) tree of the current HEAD is taken and then the subtree
+corresponding to bar is replaced with the tree in the index. That way we
+generate a full valid commit which can be pushed back to repo A.
+
+If we switch/checkout to a branch/commit that has not bar/ directory, then =
+the
+checkout copy should be empty. If we add something and commit it, then the
+parent tree-objects of the new commit should be altered to contain the path=
+ bar.
+As git does not track directories this should work out as expected.
+
+Merge conflicts happen. If these happen for files inside the bar directory,=
+ the
+we can do our usual stuff. Due to the flexibility of git we can arrange tha=
+t the
+commits/trees to be merged have a conflict outside of the bar directory. In
+that case we cannot produce a working copy of the commit. Thus, it seems
+appropriate to abort whatever we do and inform the user to use a full clone=
+ for
+doing the merge.
+
+When cloning repo B to repo C, there are not restrictions whatsoever as B h=
+as
+a full copy of the repository (just not checked out). So when looking from
+"outside" repo A and repo B are indistinguishable. Thus the following works=
 :
 
->> Anyone is welcome to have my sign-off if they pick up any part of this
->> patch.
->
-> This one seems to work with:
->
-> 	make -j9 test GIT_TEST_DEFAULT_HASH=3Dsha256
->
-> If noone step up and write this into a patch in some days,
-> I'll take this as first step in my series.
 
-So, is there anything happening on this front?
+git clone --subfolder bar /path/to/repo/A /path/to/repo/B
+git clone /path/to/repo/B /path/to/repo/C
 
-Thanks.
+Repo A and C are the same (both without a zoom).
+
+git clone --subfolder bar /path/to/repo/A /path/to/repo/B
+git clone --subfolder foo /path/to/repo/B /path/to/repo/C1
+
+git clone --subfolder foo /path/to/repo/A /path/to/repo/C2
+
+Repo C1 and C2 are the same (both zoomed to foo/).
+
+Non-goals:
+
+The following (weird?) thing is outside of the scope of this idea.
+zooming in into two (or more) directories simultaneously, e.g.
+
+repo A:
+foo1/bar/...
+foo2/foo3/baz/...
+
+and with the hypothetical git clone --subfolder foo1 --subfolder foo2/foo3
+
+we get
+
+repo B:
+bar/...
+baz/...
+
+Also converting a zoomed repo B into a full (non-bare) repo A is not part o=
+f it.
+Although I think, this could easily be achieved by some usage of deleting t=
+he
+reference to the subfolder and doing a `git reset --hard` on the working co=
+py.
+
+
+
+Summary
+-------
+
+That the problem is not about the size of the checkout (which sparse-checko=
+ut
+tackles), nor the size of the repo or the mount of data which needs to be
+downloaded (both of which clone --depth tackles), its about getting the
+directory structure in repo B right while also keeping a strong link to rep=
+o
+A as upstream to pull (and maybe push) changes.
+
+If I have missed any approach for a solution I'd like to hear about it.
+
+Best
+Mickey
+
