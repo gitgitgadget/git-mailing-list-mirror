@@ -2,82 +2,111 @@ Return-Path: <SRS0=wu5b=B6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FC51C433E1
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 18:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10D6FC433E1
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 18:47:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4C18208E4
-	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 18:27:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5331207DE
+	for <git@archiver.kernel.org>; Thu, 20 Aug 2020 18:47:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=elementl-com.20150623.gappssmtp.com header.i=@elementl-com.20150623.gappssmtp.com header.b="s3Z34/dW"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="bQHheR9m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727063AbgHTS1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Aug 2020 14:27:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727011AbgHTS1s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Aug 2020 14:27:48 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA48BC061385
-        for <git@vger.kernel.org>; Thu, 20 Aug 2020 11:27:47 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id h16so2241619oti.7
-        for <git@vger.kernel.org>; Thu, 20 Aug 2020 11:27:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=elementl-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=2iNmiCWdu9JnCVOAVO+89bQoENGLhHiBi1Ruew3y+JE=;
-        b=s3Z34/dW7fjiknodQckwO4RITSHXSpGWYTJRN6dc9NnnoactSgqXOQ3n9DKC4Rk1Ci
-         VqjIbmEW4ABtdUicrNNUAwaRBynwZxXQztSgogkOMP/U63a9p3hkYF7RVtfV8Bf/m/yN
-         g3TxNhj4tEaW1LkqQCrfy+2posk9drTz+zkyEU33PlNXbT3EOcN1LwbQH19N44w+akhr
-         1/5tQonjFjm6Tm2mVWJhHfZnY59LP/yrZ9viG1XzAgfPApkOMamGyq+PNRxds3Ppuiye
-         ApsZml8PZOAQ9Euqyor5fiSPm29UNCOFyf+iDyWhj3F+Ws3hF+anlO0L6h6Ei/bfjhWN
-         ntrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=2iNmiCWdu9JnCVOAVO+89bQoENGLhHiBi1Ruew3y+JE=;
-        b=ZMM/axYqCCUqDwQR/LSUlyeKJDxvX23GfDx5eEsUdNlOGK4uI96l8mRh5Ern70N3Wg
-         bQnNuDceXd2cy45OfhmgYrxtste30G2yTWrPsTPmDcQomYM1ytYhBDVsk8gSINXfr5zH
-         /1gLTZFqIb1QNpxWb82qt9E09BxU9Hzlh+yknp9TdYRblYIePQHe+4RfBN/O8iDzR86Y
-         a7Ehpt8KMMy3cHtxyyO6t+oAWrg2Oj6vRMQHN9+YEAmbze6viuggyRPLs5HSga5AYQZO
-         D7CDIi2uB/pUv+iLrmcAu7+MYrT6skohYnPOBABdye4B4JPuFyv7pRnL8GA95GOw4aYc
-         nmLg==
-X-Gm-Message-State: AOAM531ISBym3rpw50WyAVuNM4q7AjU55qjRgpnz9L4OY65aCKWgaLjN
-        UkNCLcCuR18JmhEgFnVuxKFTPpPzZv4pGeKTREcH2gszjsESfg==
-X-Google-Smtp-Source: ABdhPJyBBwTnU36X+O5YgSvmRhfmENDIs1rIpT2zewVH21jc5M5fArjp5XL2aKCHRMR2E5cNv6JwDFrVG3LyCWj3g9g=
-X-Received: by 2002:a05:6830:786:: with SMTP id w6mr3205864ots.232.1597948064567;
- Thu, 20 Aug 2020 11:27:44 -0700 (PDT)
+        id S1727797AbgHTSrl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Aug 2020 14:47:41 -0400
+Received: from mout.web.de ([212.227.15.3]:47795 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726985AbgHTSrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Aug 2020 14:47:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1597949255;
+        bh=IWdM+6DwsEvMi/2aDgWe5U5F+NNGdtrA0sdrRj5hNKk=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=bQHheR9mTMed3zfF0a0NpGAyTT3IR6DRUTHPqjf/yQ9O2my6euaFgcT2gnVsj2J+m
+         +3UEJxlo08KYpNFEWGT3bwQH5oYfGxECzT8LNau9IVf/slrzM8AtxZ25QMs/dr3GpG
+         SJvxMAqMD6Yg6Hal9xO3WRT2r09f3bLKkclm33dA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MgAJ8-1kZfMv2u3K-00hUrG; Thu, 20
+ Aug 2020 20:47:35 +0200
+Subject: Re: [PATCH] Issue #353: Skipping lazy prereq for skipped tests
+To:     Gopal Yadav <gopunop@gmail.com>, git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, sunshine@sunshineco.com
+References: <CAAUOv8gf7e=pFGgPBK5cb1_RusWEY7s+iWf95_ETTz_3juzggg@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c3ab29b6-39e8-b0a2-d628-873261850b98@web.de>
+Date:   Thu, 20 Aug 2020 20:47:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-From:   Chris DeCarolis <chris@elementl.com>
-Date:   Thu, 20 Aug 2020 14:27:34 -0400
-Message-ID: <CAMs-bDiFmD3=rWVc33oD-rUYWfawAjeqtbgsfoYzq9cav9UCsQ@mail.gmail.com>
-Subject: Inconsistent error message with git checkout
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAAUOv8gf7e=pFGgPBK5cb1_RusWEY7s+iWf95_ETTz_3juzggg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:nThkUZeKicxddLve+oUJcim8kti6pIQz8/VnxVXTpp4PO8471hz
+ Neb9ZxqReQc6lFbIhtaXjr06k1fiLnkaZ4dO30I9mVfnvJfVsdV65McOUE0cyobDqGapAyH
+ CKDyKMCCT4+VzUKsrlv7w+MJYB1qJuNLKvbJ1ZpeszyK6UaKG0BO9VGg6AdKANLn5in2yvL
+ X7JCC79xmARNTQG9E7AbQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:n1zR2vGRvVA=:uAGxZG9nuwLum5XwnJPd6M
+ fPRwGGnHaO04S2DTIS45R/CpNjC18OLRBDf3L2CRfArgq9zVYn/VEHhAeq1KKaBGuhfEbmP63
+ gkplZ8p/JTiOPQ55ULjeeGMlFdnDdtZMEcobG2tPPfzJEeVRMTm0mc3Z/zZ2u4YvuQGPpvJp8
+ RnBWSFb56aB1HgJESU42HqX6QO0V2bgRfeDUw+HLxb4EBtGemmPKlKT3egEvU3Jgx+udqxVPt
+ hUFUvzzG0niIa8pXo0f5yZzU9v4Gjy8w3kVBYLTQBC5/aF/1HdBPvdLYAxhQL0oRgJZkrpqwY
+ RqzOMiVsbQdT8sm+//d8AK4zNMEIEfhzcacuGZ7/9ce3zsDaFW4IEFeV5Oi685hQRKvwsEyKu
+ xEc7rGPFZ0jpRDRKBJnUzewV3E+A1ttQqxcP+qv9NsBhwCeiZLTNCeIZBHo7nHHFs7zAO444K
+ aEG3EKmKgn5C0VaHfAcZr96jRojLRnSaD+9FNCM/b8hUJHpO8qoYjPGirs2OlNVuPuVDMzJxx
+ 2m4Jd/RXCwss/+ZzpzyqTkZyInBJWCVbMbZvyyLO2fVi/iInE0Yg+IoVbnC05GJc7JqGo6GC/
+ RJcdM1xbtydzpjFdMUOObubOk/rWqG4ySNlHTDvfjZ2e2dFMdo4H7V8AXR8x9U8kvRCV4+OIK
+ Avx4xsi9ynfcXl7v8Va+rvNec5B2pDqdAFEF0/pwHNBKg1lnJwu7ru2C+gfpbtKSFNUv6O4gC
+ P4FD8AwzA+JL3yWzapUIlBiWqfGBC1Nw7e9PlHqdKY6I3jWpA8wzJ/I6Mtt7HkzAG5v71Sw5A
+ lg9LQykyED01POOGS7rB7CpOoaR+GXddWH9LcvWQ2uCh//RHhUFLqBqCenfQNwL1/ONVRH8yR
+ ugDr+ZDr3XFcFTVXGiOf/q/H+yo7f4nDoh/jduhBviOo8uuolAvIEVboneExwXop2Qeg903fW
+ H42AWf+eUsQ+/Ezw06XVZ4xElORkY6nCZaBJRHc23Swi2aPwHzE4tC4lC68mYnk9pRukL+u+h
+ mEXv4ELF/fVfzsBmq5ldxp8zwRB9WNcUB3jwh3EE/8o4wCyHKOfFp6/s3mRGpTOtC8oeGIVf6
+ OhSHcYGU/zJEsI/TMbc3uI1vPnbjvGAzhriEUXgTINDaTmKf/aOZMs6CJPY265TdSoEFBzemf
+ WxSmb/S2ZHiocbVFDEyPWGxzTfeL8rD7jYTPvLUqpCgqjOylciVrdcmr/dcR5VTFpdanLmRqT
+ isyeHpLXhyBY7ZzTN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Am 20.08.20 um 18:01 schrieb Gopal Yadav:
+>  Skipping lazy prereq for test cases that are skipped via
+>  the --run option or via GIT_SKIP_TESTS. Issue 353:
+>  https://github.com/gitgitgadget/git/issues/353
+>
+> Signed-off-by: Gopal Yadav <gopunop@gmail.com>
+> ---
+>  t/test-lib-functions.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 6a8e194a99..bac86ffd9d 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -578,10 +578,10 @@ test_expect_failure () {
+>      test "$#" =3D 3 && { test_prereq=3D$1; shift; } || test_prereq=3D
+>      test "$#" =3D 2 ||
+>      BUG "not 2 or 3 parameters to test-expect-failure"
+> -    test_verify_prereq
+> -    export test_prereq
+>      if ! test_skip "$@"
+>      then
+> +        test_verify_prereq
+> +        export test_prereq
 
-I hope all is well. I wanted to send this email to report a possible
-inconsistency with the error message displayed by git checkout under
-certain conditions.
+$test_prereq is used as a named parameter of the function test_skip,
+which uses it to determine if a test needs to be skipped due to
+missing prerequisites.  Checking and exporting its input parameter
+only after it succeeded probably won't do any good.
 
-When I try to switch branches using git checkout, and switching is
-disallowed due to uncommitted changes, the error message will tell me
-the absolute path of the files causing the issue rather than the
-relative path. This seems to be a bit inconsistent, as calling git
-status, for example, will display relative paths. Since this only
-occurs when barred from actually switching branches, it seems
-displaying the relative path would be a better option here.
+Anyway, didn't e0316695ec3 (test-lib: don't check prereqs of test
+cases that won't be run anyway, 2019-11-12) already solve the
+issue?
 
-I'd love to know your thoughts as to whether changing this behavior is
-worthwhile or not.
-
-Best,
-Chris
+Ren=C3=A9
