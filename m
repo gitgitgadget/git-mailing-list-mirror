@@ -7,119 +7,83 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28A19C433E3
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A04CC433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:19:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0319920738
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:17:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB29A20738
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:19:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S47KbKIj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7rNy7L8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728987AbgHURQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 13:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42056 "EHLO
+        id S1728378AbgHURS7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 13:18:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728651AbgHURQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 13:16:52 -0400
-Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1C9C061574
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 10:16:52 -0700 (PDT)
-Received: by mail-ua1-x930.google.com with SMTP id g11so743677ual.2
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 10:16:52 -0700 (PDT)
+        with ESMTP id S1728634AbgHURRQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 13:17:16 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E621C061573
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 10:17:16 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id n3so1017624pjq.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 10:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5WmRBMACRDMTNZHCrvmAVH7wY5vipw+K1z8VG04SPVs=;
-        b=S47KbKIjRBNCr6LdoaZlw6FbyJLMPqT5n0Kjg1zJ8cSNpmcqm3CiIyBmmn2b8VMS1g
-         u6Pl/zsN02oFvXbk4NHVP4YFZb4kJ+rdwQpMVWvuJAfYjj97QWNj19+298brIifoTWkR
-         H7xUhlPUNebBD6iGjJQBhgWCs/L+5D9dzotRra7hVZpW1n3iRaGBxLHcN9MGMiK/ta2O
-         W2ThE7UJSALAcF2xSLjgjPGT1B5UEIpZ1AE7EiADTf75Wy5rjvMQ1wBUQornEDC04U5w
-         oBrLDv1/lH615xoGydiZjf7wNJckJOhfxlWCqd+Q7OLpkfZsIPGf6w0KJI3Xec/EipMw
-         m9Hw==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :in-reply-to;
+        bh=1LNnOj25kClvYCtR/heJRxpj4R1LclfVgP1cPbNfCK8=;
+        b=K7rNy7L8FEoP14MUfh2H6F43J3CXKbTv/Joqtr302ecVYOnYqVEBbCCffshCeHgfBq
+         b1jrUHWMCqCbuu494UnzMvx5WXRnw4SdImKJnk8A4Y44xyCGpvorVfHH2IA+WirpIxp0
+         m18wi8/488+TS3k6GLa4hCfPaChYwDB9mKO2QJ/bRFmxtRik8DMZ5/OzeFFOJ8QGEa58
+         mZWWFOPoyOpDDJyxJbaqKLfs/CbtB8KHM6cp9Pi6TX+wIyta5gS7lVPTFjFPiKsF05/C
+         O36Y8nlOPlE79pWKuEsX+VulEPXUD4ZVibkl3Ljkc52KQX/xSRi4EYbsHTdTt8cIYBhD
+         Z20Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5WmRBMACRDMTNZHCrvmAVH7wY5vipw+K1z8VG04SPVs=;
-        b=XQlhzY9GGxvRrfVPCInDjByd3T7Z1pEjlo7hKIcKghQdGLi6bPWjc3dIN/w4R11rgW
-         U9GzoJSoEG3x34b2n7mnnlOcA18LScXLLmAoEcocz2tCAGSImHzx1CcfZWfTrtKAGVd8
-         eKDx+iGrZHfJ39P5Ms3tPHx9YJHVFcOmyU82VzlK73zG9OvVOZPK1nkRmf7F4wJgVByS
-         P6h3p5YrFRrvTugd8gSAnakWyuT1+8U3Mclg+zesrkViEFAnh7yh2JfuEvdhpaIXBUrl
-         1R4+1MMkM0w2lF1LGCj0pxzxZkkP+RcT5mmNMNe0Q8Jfcu6p1odDjkZzPIZpWeAlPYrD
-         f77Q==
-X-Gm-Message-State: AOAM530k1V0tJSJ91oPJAS5ZXUoeHdCh4UURyVGqsTryp8hEhuuhcct2
-        7/Wuxn4WV/YnIaMmFih22HGP9fAS3G2Sl40QKVgT6x0hwPA=
-X-Google-Smtp-Source: ABdhPJyzxhn55NJbHGJBp9+Ri/M3H2wUTa7W1N/O3uLRGed1Oqdv+LCokxpp+gkBl3ofQu6GEcLbxHq8R7SzWZbftqk=
-X-Received: by 2002:ab0:3762:: with SMTP id o2mr2271610uat.140.1598030208238;
- Fri, 21 Aug 2020 10:16:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:in-reply-to;
+        bh=1LNnOj25kClvYCtR/heJRxpj4R1LclfVgP1cPbNfCK8=;
+        b=LnGeha2QvpWrpJeBf0AEh1y399QkCml5SKm6D1OvNV8t42/lFGwBYjo6Oqpen/w6wB
+         vthR5RGrOhyLLWTn4iL0fuA/UvhDme0H5oJCWnUgxlsxltS/ohC7v4GxKE5ND6gq/l0r
+         oGVPdBHdoaBx8ma+sVwQK75/d7LRA/kosi5bx3MqhIxXIoxE3TYNDyWlXgJHEC0erznE
+         J7vub3vcvWtpGLbx2O8WnoFNWkWICKAz4eaZZd1QyTj3D9n2rSD2E6UnT6pBXFi/7uLU
+         05lqRKvq/wxTTV7+OMdRcDE1s75i9UAwjiu4blhzAgFLMo6cD+YOs2zDrmYXSy9TVz5x
+         eUTA==
+X-Gm-Message-State: AOAM533JCJPJMaPTzhTP8kLGfKiK8nKMGnvT100mqoNWC+x43bCb/kHu
+        XiOkIb87M+sK8AqiIV9vqbw/Y9YmSrpXNg==
+X-Google-Smtp-Source: ABdhPJxGmiXS3LDQv0/bBpOvKtW8jQbiZPxDeQaVqYJq4cKB5tPOcmjoZ3bbbNeEeBl9GfEZgE16bw==
+X-Received: by 2002:a17:902:44c:: with SMTP id 70mr2990421ple.293.1598030232985;
+        Fri, 21 Aug 2020 10:17:12 -0700 (PDT)
+Received: from konoha ([125.99.204.38])
+        by smtp.gmail.com with ESMTPSA id x18sm3235983pfq.124.2020.08.21.10.17.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Aug 2020 10:17:12 -0700 (PDT)
+Date:   Fri, 21 Aug 2020 22:47:05 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     gitster@pobox.com
+Cc:     Johannes.Schindelin@gmx.de, chriscool@tuxfamily.org,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
+        pc44800@gmail.com, shouryashukla.oo@gmail.com,
+        stefanbeller@gmail.com
+Subject: Re: [PATCH v3 4/4] submodule: port submodule subcommand 'summary'
+ from shell to C
+Message-ID: <20200821171705.GA16484@konoha>
 MIME-Version: 1.0
-References: <20200815002509.2467645-1-jacob.e.keller@intel.com>
- <20200815002509.2467645-3-jacob.e.keller@intel.com> <xmqq5z9gzvmb.fsf@gitster.c.googlers.com>
- <CA+P7+xpcm51cLPDDW+F1J-XZ2VvwNDWjnZqm54f3DKXxDfBF5Q@mail.gmail.com> <20200818174116.GA2473110@coredump.intra.peff.net>
-In-Reply-To: <20200818174116.GA2473110@coredump.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 21 Aug 2020 10:16:36 -0700
-Message-ID: <CA+P7+xrPep7caJm2uN+hAqOqZU3b2njpW95JQCzYJdKgbakp8A@mail.gmail.com>
-Subject: Re: [RFC 3/3] refspec: add support for negative refspecs
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqimdc9cuc.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 18, 2020 at 10:41 AM Jeff King <peff@peff.net> wrote:
-> Hmm. I think the behavior we'd want is something like:
->
->   # make sure the other side has three refs
->   git branch prune/one HEAD
->   git branch prune/two HEAD
->   git branch prune/three HEAD
->   git push dst.git refs/heads/prune/*
->
->   # now drop two of ours, which are eligible for pruning
->   git branch -d prune/one
->   git branch -d prune/two
->
->   # push with pruning, omitting "two"
->   git push --prune dst.git refs/heads/prune/* ^refs/heads/prune/two
->
->   # we should leave "two" but still deleted "one"
->   test_write_lines one three >expect
->   git -C dst.git for-each-ref --format='%(refname:lstrip=3)' refs/heads/prune/ >actual
->   test_cmp expect actual
->
-> I.e., the negative refspec shrinks the space we're considering pruning.
-> And we'd probably want a similar test for "fetch --prune".
->
-> I just tried that, though, and got an interesting result. The push
-> actually complains:
->
->   $ git push --prune dst.git refs/heads/prune/* ^refs/heads/prune/two
->   error: src refspec refs/heads/prune/two does not match any
->   error: failed to push some refs to 'dst.git'
->
-> For negative refspecs, would we want to loosen the "must-exist" check?
-> Or really, is this getting into the "are we negative on the src or dst"
-> thing you brought up earlier? Especially with --prune, what I really
-> want to say is "do not touch the remote refs/heads/two".
->
-> We can get work around it by using a wildcard:
->
->   $ git push --prune dst.git refs/heads/prune/* ^refs/heads/prune/two*
->   To dst.git
->    - [deleted]         prune/one
->
-> So it works as I'd expect already with your patch. But I do wonder if
-> there are corner cases around the src/dst thing that might not behave
-> sensibly.
->
+> I think a test that relies on platform-specific error string is a
+> bug.  It's like expecting an exact string out of strerror(), which
+> we had to fix a few times.
 
-Hmm. So this raises a good point. I added a variation of this test
-where I used separate names for the source and destination. It looks
-like with the current implementation, negative refspecs always apply
-to the destination.
+> So I am not sure we would want to butcher compat/mingw.c only to
+> match such an expectation by a (buggy) test.
+
+Alright. That is understandable. What alternative do you suggest? Should
+we change the check in the test?
+
