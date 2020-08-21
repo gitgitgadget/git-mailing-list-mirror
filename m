@@ -2,174 +2,86 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0510C433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF02EC433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C69E620724
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9764F20724
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ByIXptHY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R77ZZpPY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726838AbgHUVmO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 17:42:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726433AbgHUVmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 17:42:00 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91957C061575
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:41:59 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id f18so2017558wmc.0
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=y9gz+4QhZ13A2LGFwbS6ZAj9K7bkVoWByLN4SMbwILc=;
-        b=ByIXptHYHTLStkAnfu5e+wGfyqZ3a0t/rnCJe1h1/fsvXqpqzStSRJsUYbsMSqFlpL
-         YhOH2QpYAD0ZJxP/Em+MN4pgcTUXqC8NURkl0rQZZaK7pUpZZqqOfJNIPDrtXRsu/xDw
-         G9QDqhGKEliBgMT5ZUnI9rU4sQV5upixbgoaaz4gCm0bIoeT5F9AbtqITOqmALgjFvXg
-         bSbNTn4yacevR+HFIK/7eM6h4t901RDmJzF5rqfq5ldjWA5jcc8T1GoOU0zcIifIlXnp
-         uXY59hbIjJs7xmfVXBUa3CJ4UfObeo/7KuBcRfpicBTxuwQPALa3ZHBWe0KzAKPKAtDk
-         4+4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y9gz+4QhZ13A2LGFwbS6ZAj9K7bkVoWByLN4SMbwILc=;
-        b=PBw0uJnNQMYq4Z96xMHDvPh+5CCLWsrkoRXxwncmdZXVsBPX4n35EZbUDM36eiPyak
-         dMnHzHOSoCZZxvZL44qA3JRxBBz1PtLrwhKdQHIJLckEdB7hVtxTjjHgytFx9ES2uhec
-         l3U6UNkNtXbr+5JX2fe2aaqo5k3Y3SYKvpjEqSv9Yqfo0b3rk/jGXDYljmefxKasoANX
-         nG6a1DS8rjSf7tOSEFrP+MRZeac/aXVsPwUuCVutfLiqOvyzfmy+AmVqYloi0fFVuIWu
-         vpw/6ZkE7/+YcHMf5xeMqCRkirxwoPRQ3Sk43wPSiYqKZoxsJlqqybH9SzrYNMIxMk0/
-         z0uA==
-X-Gm-Message-State: AOAM531v7vwuLlaT+cz/fnjGoLS9xFVNVB1QVEcVAhLBTX4MvUjoW4A0
-        KNuMZmYYGjVRcMQvLkKXtOyxLyUekHs=
-X-Google-Smtp-Source: ABdhPJwWQ6vJnW4/1RhOcn/r6Yenss1EOmW/IqIjLEI2RmuldKfUL9ZegYtkNCkEMFXAGrZIY40zDA==
-X-Received: by 2002:a7b:cb4d:: with SMTP id v13mr5935859wmj.56.1598046118097;
-        Fri, 21 Aug 2020 14:41:58 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f9sm6594260wrm.62.2020.08.21.14.41.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 14:41:57 -0700 (PDT)
-Message-Id: <6105046d96223bda40ab0f0177e4f0281376ba53.1598046110.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.684.v4.git.1598046110.gitgitgadget@gmail.com>
-References: <pull.684.v3.git.1597687822.gitgitgadget@gmail.com>
-        <pull.684.v4.git.1598046110.gitgitgadget@gmail.com>
-From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 21:41:49 +0000
-Subject: [PATCH v4 7/8] pretty: refactor `format_sanitized_subject()`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726843AbgHUVmY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 17:42:24 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65529 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726433AbgHUVmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 17:42:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 44F00E2A5A;
+        Fri, 21 Aug 2020 17:42:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=mjFjJVMPS7FZYMtJChoc3AR2Tuw=; b=R77ZZp
+        PYiVRgAWWNZ0SDnOOVz4jh1TCQZRe1SLdbMTg8I0At/nIEO4GmsBXleCWg9Z9rf3
+        ZC0rr9HkdYlPrQJLevdVi4biCk/bMdayzq4B6xGgePJHxPC6G0Zh5LHvWjlA2xPR
+        lg3uau/q1BT/pcnBpOXo7fJr3Yl7iS0dwuD+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=D03yzEviLoJPkRWQLisqAjKqYlFVfNTW
+        aog2ThoFTLh3wnxdtTYspoTD+v7CP8qsRuV0IuQdlwRDKVc5CWeOIypHSmS+fRC4
+        NhLqtSkgc39sA8ckz2vIxIGq+3ubmKWBoUTnpBBjWHGEGAgs6XJLXkE4j1q3pnXX
+        3cQWKzvQWq8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35061E2A59;
+        Fri, 21 Aug 2020 17:42:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 62ECFE2A58;
+        Fri, 21 Aug 2020 17:42:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: in partial clone, pass --promisor
+References: <xmqqimddaxhz.fsf@gitster.c.googlers.com>
+        <20200821210827.1203531-1-jonathantanmy@google.com>
+Date:   Fri, 21 Aug 2020 14:42:16 -0700
+In-Reply-To: <20200821210827.1203531-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Fri, 21 Aug 2020 14:08:27 -0700")
+Message-ID: <xmqqo8n37k1z.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Hariom Verma <hariom18599@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2FA811F4-E3F7-11EA-832E-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Hariom Verma <hariom18599@gmail.com>
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-The function 'format_sanitized_subject()' is responsible for
-sanitized subject line in pretty.c
-e.g.
-the subject line
-the-sanitized-subject-line
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>> 
+>> > When fetching a pack from a promisor remote, the corresponding .promisor
+>> > file needs to be created. "fetch-pack" originally did this by passing
+>> > "--promisor" to "index-pack", but in 5374a290aa ("fetch-pack: write
+>> > fetched refs to .promisor", 2019-10-16), "fetch-pack" was taught to do
+>> > this itself instead, because it needed to store ref information in the
+>> > .promisor file.
+>> 
+>> So is this patch a fix for a regression in v2.25?
+>
+> Yes. (Just checked with "git merge-base" that 5374a290aa is in v2.25.0
+> but not v2.24.0.)
 
-It would be a nice enhancement to `subject` atom to have the
-same feature. So in the later commits, we plan to add this feature
-to ref-filter.
+Thanks.  
 
-Refactor `format_sanitized_subject()`, so it can be reused in
-ref-filter.c for adding new modifier `sanitize` to "subject" atom.
-
-Currently, the loop inside `format_sanitized_subject()` runs
-until `\n` is found. But now, we stored the first occurrence
-of `\n` in a variable `eol` and passed it in
-`format_sanitized_subject()`. And the loop runs upto `eol`.
-
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Heba Waly <heba.waly@gmail.com>
-Signed-off-by: Hariom Verma <hariom18599@gmail.com>
----
- pretty.c | 20 +++++++++++---------
- pretty.h |  3 +++
- 2 files changed, 14 insertions(+), 9 deletions(-)
-
-diff --git a/pretty.c b/pretty.c
-index 2a3d46bf42..7a7708a0ea 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -839,21 +839,22 @@ static int istitlechar(char c)
- 		(c >= '0' && c <= '9') || c == '.' || c == '_';
- }
- 
--static void format_sanitized_subject(struct strbuf *sb, const char *msg)
-+void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len)
- {
- 	size_t trimlen;
- 	size_t start_len = sb->len;
- 	int space = 2;
-+	int i;
- 
--	for (; *msg && *msg != '\n'; msg++) {
--		if (istitlechar(*msg)) {
-+	for (i = 0; i < len; i++) {
-+		if (istitlechar(msg[i])) {
- 			if (space == 1)
- 				strbuf_addch(sb, '-');
- 			space = 0;
--			strbuf_addch(sb, *msg);
--			if (*msg == '.')
--				while (*(msg+1) == '.')
--					msg++;
-+			strbuf_addch(sb, msg[i]);
-+			if (msg[i] == '.')
-+				while (msg[i+1] == '.')
-+					i++;
- 		} else
- 			space |= 1;
- 	}
-@@ -1155,7 +1156,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	const struct commit *commit = c->commit;
- 	const char *msg = c->message;
- 	struct commit_list *p;
--	const char *arg;
-+	const char *arg, *eol;
- 	size_t res;
- 	char **slot;
- 
-@@ -1405,7 +1406,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		format_subject(sb, msg + c->subject_off, " ");
- 		return 1;
- 	case 'f':	/* sanitized subject */
--		format_sanitized_subject(sb, msg + c->subject_off);
-+		eol = strchrnul(msg + c->subject_off, '\n');
-+		format_sanitized_subject(sb, msg + c->subject_off, eol - (msg + c->subject_off));
- 		return 1;
- 	case 'b':	/* body */
- 		strbuf_addstr(sb, msg + c->body_off);
-diff --git a/pretty.h b/pretty.h
-index 071f2fb8e4..7ce6c0b437 100644
---- a/pretty.h
-+++ b/pretty.h
-@@ -139,4 +139,7 @@ const char *format_subject(struct strbuf *sb, const char *msg,
- /* Check if "cmit_fmt" will produce an empty output. */
- int commit_format_is_empty(enum cmit_fmt);
- 
-+/* Make subject of commit message suitable for filename */
-+void format_sanitized_subject(struct strbuf *sb, const char *msg, size_t len);
-+
- #endif /* PRETTY_H */
--- 
-gitgitgadget
-
+I wonder how we missed the breakage back then, but better late than
+never ;-)
