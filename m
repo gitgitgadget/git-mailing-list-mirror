@@ -2,108 +2,102 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70C07C433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 14:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60471C433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 14:37:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3540320724
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 14:03:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=myitcv.io header.i=@myitcv.io header.b="cFuUhThq"
+	by mail.kernel.org (Postfix) with ESMTP id 43FCB2078B
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 14:37:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbgHUOD2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 10:03:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40322 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbgHUOD1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 10:03:27 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4E0C061573
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 07:03:26 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id b11so964966lfe.10
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 07:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=myitcv.io; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=dgR30vE2VI1nbqD6bDtYtOdPCu85Ji4Q78ZzX7/Hg/A=;
-        b=cFuUhThqEX+Omvz+zkVgdaW6jqWsMOCcr0Dx9gLJg0uQ5DzKbl8GoO9AvePG6E32U2
-         kEzRtJmJHZlMwPMv2tAjBV5SGkEmf7S4bXCcX5oI7YXySI22OZ7VftdU7FYwR0H7KRmo
-         ANmokJ8u2+HeONPKAhHchPlctyeMMAv5G62gqKigvTqN3I9zb7hRLfXZSbPHYGeyAXpG
-         Ox4BN5AbdG2ZzMK7apFN41rdiRpD2WBd63d5FiWBJEBBV7Bk211AOZmKKVaFSJ6ZASQ5
-         4K6vmNqBtUQVE+VBfV+jD4JM3YfA+j6Q5TLbwpvZGaPhZy7L9fa8qXaLOCKD1etlJQua
-         ltGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=dgR30vE2VI1nbqD6bDtYtOdPCu85Ji4Q78ZzX7/Hg/A=;
-        b=Qpxo+8hd4fsyga6/jnIhqSBMmCgHCS9EdtWvZrrcvYRaCVMBR27RttPvMkh0i25VOq
-         mMxc4bxqoUzhllW1NZnayEcR9kI22HYsMzJn2e0AZ0UfRLm7dRvzx0X7vgemzS3oZj+3
-         aDyuOInvtLhA88H98RDLfu5bWn65Sq31FvnSc1E//7ZLz29uh81eIMDHUQYXTF88fEpL
-         Jb3soogev+StT+PX7rzEhTkAmqkV5aIs6yeKLrdJGh+s4HxNfYPtqe3KM6vDD7RQCtHl
-         92UiMs5yCSseZYOcvO+IaiUu7NI0eG0m+9uZHfCMJT9Ei8BK1HAlOILlc6c/X5kKQj91
-         sjdg==
-X-Gm-Message-State: AOAM5318ekHyvB9WnbnXOofYwnzcc5Wi19Px1mV3dNExcx7y+ON7phE5
-        SFescopyNwIg+6O+CR7Vd8A6CegdAlf0zMtb36qbvqH9h1Dbbw==
-X-Google-Smtp-Source: ABdhPJxZuvmRMRnKFNiIzrNGlCmXHrhUiLo6liGil9xssOdGDKG6OLc36tw5WU1mQ9pksOJmaZjMkTB9VzHS8zKBG9k=
-X-Received: by 2002:a05:6512:2010:: with SMTP id a16mr1498298lfb.196.1598018603383;
- Fri, 21 Aug 2020 07:03:23 -0700 (PDT)
+        id S1727084AbgHUOha (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 10:37:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37036 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726118AbgHUOh3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 10:37:29 -0400
+Received: (qmail 17561 invoked by uid 109); 21 Aug 2020 14:37:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Aug 2020 14:37:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28214 invoked by uid 111); 21 Aug 2020 14:37:27 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Aug 2020 10:37:27 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 Aug 2020 10:37:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] refs: remove lookup cache for reference-transaction hook
+Message-ID: <20200821143727.GA3241139@coredump.intra.peff.net>
+References: <0db8ad8cdb69afb9d6453bf60a808e8b82382a4e.1597998473.git.ps@pks.im>
 MIME-Version: 1.0
-From:   Paul Jolly <paul@myitcv.io>
-Date:   Fri, 21 Aug 2020 15:03:12 +0100
-Message-ID: <CACoUkn7D52ox2MgUfS2uQtLa28twccfxnQnUteVV_yFfVLFQdQ@mail.gmail.com>
-Subject: Bash completion does not offer bare name origin where remote head is set
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0db8ad8cdb69afb9d6453bf60a808e8b82382a4e.1597998473.git.ps@pks.im>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Aug 21, 2020 at 10:29:18AM +0200, Patrick Steinhardt wrote:
 
-In some of my repositories I use either:
+> One case notably absent from those benchmarks is a single executable
+> searching for the hook hundreds of times, which is exactly the case for
+> which the negative cache was added. p1400.2 will spawn a new update-ref
+> for each transaction and p1400.3 only has a single reference-transaction
+> for all reference updates. So this commit adds a third benchmark, which
+> performs an non-atomic push of a thousand references. This will create a
+> new reference transaction per reference. But even for this case, the
+> negative cache doesn't consistently improve performance:
 
-    git remote set-head origin -a
+Ah, right, I forgot that update-ref would use one single transaction. So
+what we were testing in our earlier discussion was not even useful. :)
 
-or the more explicit:
+>  test_expect_success "setup" '
+> +	git init --bare target-repo.git &&
+>  	test_commit PRE &&
+>  	test_commit POST &&
+>  	printf "create refs/heads/%d PRE\n" $(test_seq 1000) >create &&
+>  	printf "update refs/heads/%d POST PRE\n" $(test_seq 1000) >update &&
+> -	printf "delete refs/heads/%d POST\n" $(test_seq 1000) >delete
+> +	printf "delete refs/heads/%d POST\n" $(test_seq 1000) >delete &&
+> +	printf "create refs/heads/branch-%d PRE\n" $(test_seq 1000) | git update-ref --stdin
+>  '
 
-    git remote set-head origin main
+OK, we need these new branches to have something to push into and delete
+from the remote. They might impact the timings of the other tests,
+though (since we now have 1000 entries in .git/refs/heads/, which might
+affect filesystem performance). But it should do so uniformly, so I
+don't think it invalidates their results.
 
-to set the remote default branch. My understanding is that this then
-allows me to use the name "origin" to refer to (in the second case)
-"origin/main".
+However, I wondered...
 
-However, testing git version 2.28.0.308.g675a4aaf3b, bash completion
-does not offer the name  "origin" as a valid completion.
+> +test_perf "nonatomic push" '
+> +	git push ./target-repo.git branch-{1..1000} &&
+> +	git push --delete ./target-repo.git branch-{1..1000}
+> +'
 
-For example if I type:
+...if it might make the test more consistent (not to mention isolated
+from the cost of other parts of the push) if we used update-ref here, as
+well. You added the code necessary to control individual transactions,
+so I thought that:
 
-    git checkout ori
+  printf 'start\ncreate refs/heads/%d PRE\ncommit\n' \
+    $(test_seq 1000) >create-transaction
 
-and hit <Tab>, the command completes to:
+might work. But it doesn't, because after the first transaction is
+closed, we refuse to accept any other commands. That makes sense for
+"prepare", etc, but there's no reason we couldn't start a new one.
 
-    git checkout origin/
+Is that worth supporting? It would allow a caller to use a single
+update-ref to make a series of non-atomic updates, which is something
+that can't currently be done. And we're so close.
 
-(notice the trailing slash). Which means I then either need to hit
-<Backspace> to remove the slash, or I have to remember the default
-branch name of the remote. Either is a slight annoyance... which
-multiplied many times a day becomes painful!
+Even if it is, though, that's definitely outside the scope of this
+patch, and I think we should take it as-is with "push".
 
-Ideally I would like the <Tab> completion to result in:
-
-    git checkout origin
-
-(notice no trailing slash), i.e to know that the bare name "origin" is
-valid by itself.
-
-With many repositories renaming their default branch from master to
-main, git remote set-head has become essential. It would be ideal to
-have completion help support this.
-
-Many thanks,
-
-
-Paul
+-Peff
