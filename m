@@ -2,162 +2,101 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3170CC433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B7B1C433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:35:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3FFD20738
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:28:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18D8620738
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:35:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EkCTkpnr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bz/H6k76"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726894AbgHUW2X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 18:28:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34018 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbgHUW2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 18:28:22 -0400
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83054C061573
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 15:28:22 -0700 (PDT)
-Received: by mail-oo1-xc42.google.com with SMTP id r6so675874oon.13
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 15:28:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KvlWn6J0Pf3iW33Qk5OpytsxRPw6T+D2qbkH8Kmt1DM=;
-        b=EkCTkpnrKdZ3UpIm8b68yy9qDUrHv6Ap9OgJWUTbpDWI2JNbmt3q5FJPUWcdmqfUyd
-         ui0JXZ9OCT/0Hz6RxqQvSVdSMQ+7CElfzMAdBA28kl0EfInO3Z9pFdRYzXQIHzH5A/YN
-         Swuz9hfiii/jpkTeTtps3eJkQY2xXz+PFksDdJACE3Nvfd0LoANUw+oJfg4Mc/XRHnxX
-         oEcFlmQT31cvQDeSFU1C+rS3lSPSNJe+BAdPfvgu6l9O/zG+4tjaIuKPToY3WSeSuwx3
-         2WDpGPn/s8O7tKjV5qK2dGj8JAlFy/EcuL1+PtlMzioXPHEPh/B025bh20W85ZIaVYOW
-         GLoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KvlWn6J0Pf3iW33Qk5OpytsxRPw6T+D2qbkH8Kmt1DM=;
-        b=qcImb8J8cBcbZIdRFPbL2QcIi5jIGEKor3rF1s4AMw9PNgxUeG8BHnz1AENifERY6Z
-         dgrxFWagyQsFw5dtv958MajVXd0ZDP7mMElExnFmFRgveqEVrWjTb4VCiEbA7xGEbaZW
-         tFMXj7bMFgIt0Yft9+YsVjsdvNT6t3r06HdFguFeXFRzVq60cPTUlmN05gDNKtNOJp8b
-         8kqSxoela3jqBrWbu5Ay8Qho+dpHrn+Q7Hd1dtrrnzgSKzYO2GumQBoYBgjQBG7kodVO
-         c/qa8JRp3mP6TYDEZylf3YQhv90wjrFShYyucx0aeNRO/jlizoQSLg694E269IqqZ/2Q
-         zjJQ==
-X-Gm-Message-State: AOAM532y9hQla8Az23bzBmiyuJnqlQyHkOj1ONZ7yio6qJd0a0gXaWKA
-        4OnSMoXCbTDyif9mA00ezOg0CHpCjXhQ9l9msJg=
-X-Google-Smtp-Source: ABdhPJwm9TmVhKydcWarqWBSyvUY6QbzmLS1Jr2tc2WjPa4arDAkWg67Nl2RCqPQ2e47ICZ664xEzjCgGM6dJkFsOOI=
-X-Received: by 2002:a4a:98ed:: with SMTP id b42mr3905400ooj.32.1598048899057;
- Fri, 21 Aug 2020 15:28:19 -0700 (PDT)
+        id S1727030AbgHUWfM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 18:35:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62662 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726358AbgHUWfL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 18:35:11 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF7158751A;
+        Fri, 21 Aug 2020 18:35:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aBei3+m73VS+LG8BjpUJCCiLBfs=; b=bz/H6k
+        76pGhq00OAxWs1oertOcI3kMWSoTvddb+QRk3tan+8mm+8ZFM3zzNBFqahj80sqx
+        g1hEI7oBrOWCxgTQIjh3iGaOTwYYdRx9hyfWpm/3yGySa5rYA0186+m1qqR6f8Rx
+        LVlrLRaK3wjf2AvAPLdd8xBoVnydtuWYp9JMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GfZ0KJA0pa5SwZGJr7eWzDybSt48TJFe
+        8+ECTPV3VsegNzTQXkY+VpoOWf/3Rk3CWnv+5aspd0jiDsJx0WYfU1L8RZjwa3YO
+        R533KAciB6W+7inMX5RY8qjbPYbrelu0osGyxIvhgxxwlUHgj7WJxm0ZkuEBhZAN
+        IcnnqQP3zNI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC5C887518;
+        Fri, 21 Aug 2020 18:35:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED9B287517;
+        Fri, 21 Aug 2020 18:35:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Alvaro Aleman <aaleman@redhat.com>, Git List <git@vger.kernel.org>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] ident: say whose identity is missing when giving user.name hint
+References: <CAOW=8D2J3t3cE32q2xNqSOPTa6gxR5gSuJUCCj5MSj58ccc3Cg@mail.gmail.com>
+        <87ft8fvoow.fsf@igel.home> <xmqqr1rz96ry.fsf@gitster.c.googlers.com>
+        <CAOW=8D3WZyoc=PpyzmPRYM2MT_=F4tnuTxJ0Z+_dHMb4Xk8imQ@mail.gmail.com>
+        <xmqq5z9b91o3.fsf_-_@gitster.c.googlers.com>
+        <CAPig+cR12i8KQjiWYm8DGuAc9BfJqanmNBZcZfwHGsrt2hW3Dw@mail.gmail.com>
+        <xmqq1rjz8zy7.fsf@gitster.c.googlers.com>
+        <CAOW=8D1nFgRRPyD7yxW2X7ZcAA3yaMzWJy7B3ykuPBJk3t8X5Q@mail.gmail.com>
+        <CAPig+cSLxRVufZcnXa6JAbP-SYX486OebDS5hYjEhH7jaNgM5Q@mail.gmail.com>
+Date:   Fri, 21 Aug 2020 15:35:08 -0700
+In-Reply-To: <CAPig+cSLxRVufZcnXa6JAbP-SYX486OebDS5hYjEhH7jaNgM5Q@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 21 Aug 2020 17:37:58 -0400")
+Message-ID: <xmqqblj37hlv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
- <20200821201648.GH1165@coredump.intra.peff.net> <CABPp-BGYiphp-93Bf=2z-ZLd-Y=buTA0BCp6zuTJF39n1x3Rfw@mail.gmail.com>
-In-Reply-To: <CABPp-BGYiphp-93Bf=2z-ZLd-Y=buTA0BCp6zuTJF39n1x3Rfw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 21 Aug 2020 15:28:07 -0700
-Message-ID: <CABPp-BFFOKcBsPEu+zueCKwPGMh9RgOE8QJonKxkNNE3-Ym7Gw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Add struct strmap and associated utility functions
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 917717DE-E3FE-11EA-A661-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 21, 2020 at 2:33 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Fri, Aug 21, 2020 at 1:16 PM Jeff King <peff@peff.net> wrote:
-> >
-> > On Fri, Aug 21, 2020 at 06:52:24PM +0000, Elijah Newren via GitGitGadget wrote:
-> >
-> > > Here I introduce a new strmap type, which my new merge backed, merge-ort,
-> > > uses heavily. (I also made significant use of it in my changes to
-> > > diffcore-rename). This strmap type was based on Peff's proposal from a
-> > > couple years ago[1], but has additions that I made as I used it. I also
-> > > start the series off with a quick documentation improvement to hashmap.c to
-> > > differentiate between hashmap_free() and hashmap_free_entries(), since I
-> > > personally had difficulty understanding them and it affects how
-> > > strmap_clear()/strmap_free() are written.
-> >
-> > I like the direction overall (unsurprisingly), but left a bunch of
-> > comments. I do think if we're going to do this that it may be worth
-> > cleaning up hashmap a bit first, especially around its clear/free
-> > semantics, and its ability to lazy-allocate the table.
-> >
-> > I'm happy to work on that, but don't want to step on your toes.
->
-> I have patches which introduce hashmap_clear() and
-> hashmap_clear_entries() to hashmap.[ch], which allowed me to simplify
-> strmap_clear(); instead of needing to call both
-> hashmap_free[_entries]() && strmap_init(), I could just call
-> hashmap_clear[_entries]().  Doing that surprised me with a significant
-> performance impact (in a good direction), at which point I started
-> adding mem-pool integration into hashmap for storing the entries that
-> hashmap.c allocates and got further good speedups.
->
-> I thought those were better explained when I got to the performance
-> stuff, so I had held off on those patches.  I could pull them out and
-> submit them first.
->
-> However, there's an important difference here between what I've done
-> and what you've suggested for hashmap: my method did not deallocate
-> hashmap->table in hashmap_clear() and then use lazy initialization.
-> In fact, I think not deallocating the table was part of the charm --
-> the table had already naturally grown to the right size, and because
-> the repository has approximately the same number of paths in various
-> commits, this provided me a way of getting a table preallocated to a
-> reasonable size for all merges after the first (and there are multiple
-> merges either when recursiveness is needed due to multiple merge
-> bases, OR when rebasing or cherry-picking a sequence of commits).
-> This prevented, as hashmap.h puts it, "expensive resizing".
->
-> So, once again, my performance ideas might be clashing with some of
-> your desires for the API.  Any clever ideas for resolving that?
->
-> Also, since you want to see hashmap cleanup first, should I submit
-> just the hashmap_clear[_entries()] stuff, or should I also submit the
-> API additions to allow mem-pool integration in hashmap (it's pretty
-> small and self-contained, but it'll be a while before I submit the
-> patches that use it...)?
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Nevermind, I mis-remembered.  The mempool integration was added
-specifically to strmap, not to hashmap, because strmap_put() does the
-allocation of the str_entry.  So I'll just pull out the
-hashmap_clear[_entries]() stuff and send it up.
+> On Fri, Aug 21, 2020 at 5:31 PM Alvaro Aleman <aaleman@redhat.com> wrote:
+>> One nit though: There is no `--committer` flag for `git commit`,
+>
+> Indeed, that `--committer=` was a last-second edit (without checking
+> docs).
 
+Yeah, I forgot that we deliberately omit the command line option for
+the committer info.
+
+> How about this?
 >
-> > I also wonder if you looked at the khash stuff at all. Especially for
-> > storing integers, it makes things much more natural. You'd do something
-> > like:
-> >
-> >   /* you might even be able to just write !strcmp in the macro below */
-> >   static inline int streq(const char *a, const char *b)
-> >   {
-> >           return !strcmp(a, b);
-> >   }
-> >
-> >   KHASH_INIT(strint_map, char *, int, 1, strhash, streq);
-> >
-> > and then you'd probably want a "put" wrapper that makes a copy of the
-> > string. khash has its own charming awkwardness, but I'm just curious if you
-> > looked at it and found it more awkward than hashmap.c, or if you just
-> > didn't look at it.
+>     If `user.name` and `user.email` have not been configured and the
+>     user invokes:
 >
-> I did look at it, but only briefly.  I had a further investigation on
-> my TODO list for months, along with several other improvement ideas.
-> But it seemed like my TODO list was really long, and my new merge
-> backend hasn't benefited anyone yet.  At some point, I decided to punt
-> on it and other ideas and start cleaning up my code and submitting.  I
-> believe merge-ort is more accurate than merge-recursive (it fixes
-> several test_expect_failures) and is a lot faster as well for the
-> cases I'm looking at.  So, for now, I've pulled it off my radar.
+>         git commit --author=...
 >
-> But I'd be really happy if someone else wanted to jump in and try
-> switching out hashmap for khash in the strmap API and see if it helps
-> merge-ort performance.  :-)
+>     without specifying the committer, then Git errors out with a
+>     message asking the user to configure `user.name` and `user.email`
+>     but doesn't tell the user which attribution was missing. This can
+>     be confusing for a user new to Git who isn't aware of the
+>     distinction between user, author, and committer.  Give such users
+>     a bit more help by extending the error message to also say which
+>     attribution is expected.
+
+OK.
