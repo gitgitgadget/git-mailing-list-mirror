@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AE06C433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B15D3C433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 791A0207DE
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 837BC20724
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fjh9n4lA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+KA1IuM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbgHUVmJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 17:42:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55076 "EHLO
+        id S1726832AbgHUVmL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 17:42:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726804AbgHUVl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 17:41:59 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA5FC061574
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:41:58 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id a15so3180342wrh.10
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:41:58 -0700 (PDT)
+        with ESMTP id S1726813AbgHUVmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 17:42:01 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78646C061755
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:42:00 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id b17so2419099wru.2
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=o5X9jZM8RxMRVE7BT4xW91an31/9I25DwJ1adalSf1Y=;
-        b=fjh9n4lAX5DOAI9DyOx4k5WHBPfRy1ASY5ccuZS5MvR1GjMi6N6Vhqr4zZmUFu7e40
-         dbO+tL3jqGlAloLaJMUcwNW8W+cY3giz8pPkdmTdqTncQKJHQmMaxkFkGNjt1iAQ9Pvd
-         fo728DGO9ip7lxKvlg30j7vKuSPfyP5LvgULkXQtTSjwJV+QMYxTC7SFIqKBUGLFwx74
-         1Cogpsu37fPgjGfKUMbSHs9U5yOXf5rZAFpqPsq6HOZB/IH23cIRjctZKfb8gsI2DjWc
-         89JZOMeJNbpvzEKSYcww2yuEU24O3rcUfR4lf69yPrV39SbTS/gsewSLYHxwClG0Rg7p
-         JeQw==
+        bh=QR1w2Zp6gFF71LmnCss6TN/IzKoFjdS10xuG1zbnlSE=;
+        b=g+KA1IuMpOqc+zGoJPb52Re91IMAPmmfVRDd2AUGsZtwXvB5ISblEw+BfJFMyEUynT
+         EBxihQi1S5u/PfgM0X1epoWv+OLG5BDcQ2I6XLlJKtIPXxVq0M+n4pxwofhuYDoP0oZL
+         frimwGu9MijQ5w6ocqYLiMU4ZTDl5WkASuUFonT2LLm9CJBBJLjEMeyhJ4pwxInOHHHW
+         HZn3hsCyllXgiSgKPnssb29uKQtB1ntYLUM5S6UigB2kQzqo3mCOIS83Syi4fFxn1gZt
+         YXz4pnSX7iXfaG0FlQEhVakzKFGFndRPhYMm0v4XNpDem75PUl7wwzslKkW8owDEVNQP
+         dHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=o5X9jZM8RxMRVE7BT4xW91an31/9I25DwJ1adalSf1Y=;
-        b=EmQiiYgIcBnZXf4w19pgegGA2chy+sc+hMg7iO1UPAdoUJxP4dYNUb+P9+Wf58PyBj
-         9qYC5CB/USBW/jGW4giaHqCj42/55Lgb70/MkWgh89hKJbHTySymSwfQjajaWIc9nhbb
-         e1/5x0fjqCJS2Dpp7Soaqy9AzShK5MFpow6CmBMtFlnRO47YsPLYiWdcUn2jPQ/Np4yf
-         6WRH2vCnZ0bYzSFqKPd0lrzDA3avGXttUChsy2Ja0T5ZSpSu7ANHVFr4Hy5A9iPGpC53
-         e2IHkWixKQpbdWNU6ZJxQRyKB9RE4LN2clVd6B5sr2K0QA9cH4f5CYow0ZjlY2EXH5Mw
-         fQug==
-X-Gm-Message-State: AOAM533BcBETSiI46KrMiPxVMbZ6We7cN5+sJ+yBIejxtM08WZtQO5KJ
-        auqW70pB/NZ2efJeV/BRNKD33RFoYg0=
-X-Google-Smtp-Source: ABdhPJxG8aIee4tOlMF5ATrvIDsvRUKp5OTlw4sNd0gKoGY03aPsXz11KPGJgemf6pfwcH1tWRoylw==
-X-Received: by 2002:a5d:5704:: with SMTP id a4mr4278487wrv.318.1598046116946;
-        Fri, 21 Aug 2020 14:41:56 -0700 (PDT)
+        bh=QR1w2Zp6gFF71LmnCss6TN/IzKoFjdS10xuG1zbnlSE=;
+        b=bBdsGr6VXQKSk4W0ffR8z0v4Pf34ZMWNjv9yy5IPqTyYMHYrYD8kkWTCK0/xLv3SwW
+         koQbU+0pwEJ1WJagXutApdvVfJ9cga8MXm7Tv4TytclIRlnifVIPpdH5bbyffB4qRWCC
+         52EUJvrXmPd1jZwwR0Pm3nfXR+ML5kZyw7mCHSzpOkMUBCGBqZNKlSklllbcZgJcZXCx
+         5DYaDx/Ls5r3MoAdtnEeHY3v0v2YUNikmaAMCr1GoqwQOojmtnuwUQEGVyfn4jJC+pkm
+         CYtJ7Q8V/8Wt2fVURbxdqBYZq539DBLFIMEQwZ358gXSJ5Acp026uXUpEogggQm6dwZl
+         fxgQ==
+X-Gm-Message-State: AOAM5304cx6/swsq2HAFhcyJYbt6vvLR6+77VwfS7vYrXC670YiEjr8g
+        i2zlkiSvRo8SDf8qGRlEL75BOK9JHs0=
+X-Google-Smtp-Source: ABdhPJxLMOK8oZKw1SlWYROurYTrmkTEqbpG7S+KzEGWufjObwbiXOctSLl6FxMrNpAhKKAPsq1LkA==
+X-Received: by 2002:adf:9463:: with SMTP id 90mr4252534wrq.223.1598046118936;
+        Fri, 21 Aug 2020 14:41:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 31sm6446461wrj.94.2020.08.21.14.41.56
+        by smtp.gmail.com with ESMTPSA id b129sm7590880wmb.29.2020.08.21.14.41.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 14:41:56 -0700 (PDT)
-Message-Id: <5ed5ac259d59b855fc5c956bc8af80fecfc7c971.1598046110.git.gitgitgadget@gmail.com>
+        Fri, 21 Aug 2020 14:41:58 -0700 (PDT)
+Message-Id: <7cba8d7a2881055e89976ca420392da2eaa596b8.1598046110.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.684.v4.git.1598046110.gitgitgadget@gmail.com>
 References: <pull.684.v3.git.1597687822.gitgitgadget@gmail.com>
         <pull.684.v4.git.1598046110.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 21:41:48 +0000
-Subject: [PATCH v4 6/8] ref-filter: add `short` modifier to 'parent' atom
+Date:   Fri, 21 Aug 2020 21:41:50 +0000
+Subject: [PATCH v4 8/8] ref-filter: add `sanitize` option for 'subject' atom
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,91 +79,152 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-Sometimes while using 'parent' atom, user might want to see abbrev hash
-instead of full 40 character hash.
+Currently, subject does not take any arguments. This commit introduce
+`sanitize` formatting option to 'subject' atom.
 
-Just like 'objectname', it might be convenient for users to have the
-`:short` and `:short=<length>` option for printing 'parent' hash.
+`subject:sanitize` - print sanitized subject line, suitable for a filename.
 
-Let's introduce `short` option to 'parent' atom.
+e.g.
+%(subject): "the subject line"
+%(subject:sanitize): "the-subject-line"
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- Documentation/git-for-each-ref.txt | 2 +-
- ref-filter.c                       | 8 ++++----
- t/t6300-for-each-ref.sh            | 6 ++++++
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ Documentation/git-for-each-ref.txt |  3 +++
+ ref-filter.c                       | 23 +++++++++++++++--------
+ t/t6300-for-each-ref.sh            |  7 +++++++
+ 3 files changed, 25 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 40ebdfcc41..dd09763e7d 100644
+index dd09763e7d..616ce46087 100644
 --- a/Documentation/git-for-each-ref.txt
 +++ b/Documentation/git-for-each-ref.txt
-@@ -222,7 +222,7 @@ worktreepath::
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
--Field `tree` can also be used with modifier `:short` and
-+Fields `tree` and `parent` can also be used with modifier `:short` and
- `:short=<length>` just like `objectname`.
+@@ -247,6 +247,9 @@ contents:subject::
+ 	The first paragraph of the message, which typically is a
+ 	single line, is taken as the "subject" of the commit or the
+ 	tag message.
++	Instead of `contents:subject`, field `subject` can also be used to
++	obtain same results. `:sanitize` can be appended to `subject` for
++	subject line suitable for filename.
  
- For commit and tag objects, the special `creatordate` and `creator`
+ contents:body::
+ 	The remainder of the commit or the tag message that follows
 diff --git a/ref-filter.c b/ref-filter.c
-index 3449fe45d8..c7d81088e4 100644
+index c7d81088e4..12bb78ce06 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -498,7 +498,7 @@ static struct {
- 	{ "objectname", SOURCE_OTHER, FIELD_STR, oid_atom_parser },
- 	{ "deltabase", SOURCE_OTHER, FIELD_STR, deltabase_atom_parser },
- 	{ "tree", SOURCE_OBJ, FIELD_STR, oid_atom_parser },
--	{ "parent", SOURCE_OBJ },
-+	{ "parent", SOURCE_OBJ, FIELD_STR, oid_atom_parser },
- 	{ "numparent", SOURCE_OBJ, FIELD_ULONG },
- 	{ "object", SOURCE_OBJ },
- 	{ "type", SOURCE_OBJ },
-@@ -1011,14 +1011,14 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 			v->value = commit_list_count(commit->parents);
- 			v->s = xstrfmt("%lu", (unsigned long)v->value);
- 		}
--		else if (!strcmp(name, "parent")) {
-+		else if (starts_with(name, "parent")) {
- 			struct commit_list *parents;
- 			struct strbuf s = STRBUF_INIT;
- 			for (parents = commit->parents; parents; parents = parents->next) {
--				struct commit *parent = parents->item;
-+				struct object_id *oid = &parents->item->object.oid;
- 				if (parents != commit->parents)
- 					strbuf_addch(&s, ' ');
--				strbuf_addstr(&s, oid_to_hex(&parent->object.oid));
-+				strbuf_addstr(&s, do_grab_oid("parent", oid, &used_atom[i]));
- 			}
- 			v->s = strbuf_detach(&s, NULL);
- 		}
+@@ -127,8 +127,8 @@ static struct used_atom {
+ 			unsigned int nobracket : 1, push : 1, push_remote : 1;
+ 		} remote_ref;
+ 		struct {
+-			enum { C_BARE, C_BODY, C_BODY_DEP, C_LENGTH,
+-			       C_LINES, C_SIG, C_SUB, C_TRAILERS } option;
++			enum { C_BARE, C_BODY, C_BODY_DEP, C_LENGTH, C_LINES,
++			       C_SIG, C_SUB, C_SUB_SANITIZE, C_TRAILERS } option;
+ 			struct process_trailer_options trailer_opts;
+ 			unsigned int nlines;
+ 		} contents;
+@@ -301,9 +301,12 @@ static int body_atom_parser(const struct ref_format *format, struct used_atom *a
+ static int subject_atom_parser(const struct ref_format *format, struct used_atom *atom,
+ 			       const char *arg, struct strbuf *err)
+ {
+-	if (arg)
+-		return strbuf_addf_ret(err, -1, _("%%(subject) does not take arguments"));
+-	atom->u.contents.option = C_SUB;
++	if (!arg)
++		atom->u.contents.option = C_SUB;
++	else if (!strcmp(arg, "sanitize"))
++		atom->u.contents.option = C_SUB_SANITIZE;
++	else
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(subject) argument: %s"), arg);
+ 	return 0;
+ }
+ 
+@@ -1282,8 +1285,8 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 			continue;
+ 		if (deref)
+ 			name++;
+-		if (strcmp(name, "subject") &&
+-		    strcmp(name, "body") &&
++		if (strcmp(name, "body") &&
++		    !starts_with(name, "subject") &&
+ 		    !starts_with(name, "trailers") &&
+ 		    !starts_with(name, "contents"))
+ 			continue;
+@@ -1295,7 +1298,11 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 
+ 		if (atom->u.contents.option == C_SUB)
+ 			v->s = copy_subject(subpos, sublen);
+-		else if (atom->u.contents.option == C_BODY_DEP)
++		else if (atom->u.contents.option == C_SUB_SANITIZE) {
++			struct strbuf sb = STRBUF_INIT;
++			format_sanitized_subject(&sb, subpos, sublen);
++			v->s = strbuf_detach(&sb, NULL);
++		} else if (atom->u.contents.option == C_BODY_DEP)
+ 			v->s = xmemdupz(bodypos, bodylen);
+ 		else if (atom->u.contents.option == C_LENGTH)
+ 			v->s = xstrfmt("%"PRIuMAX, (uintmax_t)strlen(subpos));
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index e30bbff6d9..79d5b29387 100755
+index 79d5b29387..220ff5c3c2 100755
 --- a/t/t6300-for-each-ref.sh
 +++ b/t/t6300-for-each-ref.sh
-@@ -120,6 +120,9 @@ test_atom head tree:short $(git rev-parse --short refs/heads/master^{tree})
- test_atom head tree:short=1 $(git rev-parse --short=1 refs/heads/master^{tree})
- test_atom head tree:short=10 $(git rev-parse --short=10 refs/heads/master^{tree})
- test_atom head parent ''
-+test_atom head parent:short ''
-+test_atom head parent:short=1 ''
-+test_atom head parent:short=10 ''
- test_atom head numparent 0
- test_atom head object ''
- test_atom head type ''
-@@ -174,6 +177,9 @@ test_atom tag tree:short ''
- test_atom tag tree:short=1 ''
- test_atom tag tree:short=10 ''
- test_atom tag parent ''
-+test_atom tag parent:short ''
-+test_atom tag parent:short=1 ''
-+test_atom tag parent:short=10 ''
- test_atom tag numparent ''
- test_atom tag object $(git rev-parse refs/tags/testtag^0)
- test_atom tag type 'commit'
+@@ -150,6 +150,7 @@ test_atom head taggerdate ''
+ test_atom head creator 'C O Mitter <committer@example.com> 1151968723 +0200'
+ test_atom head creatordate 'Tue Jul 4 01:18:43 2006 +0200'
+ test_atom head subject 'Initial'
++test_atom head subject:sanitize 'Initial'
+ test_atom head contents:subject 'Initial'
+ test_atom head body ''
+ test_atom head contents:body ''
+@@ -207,6 +208,7 @@ test_atom tag taggerdate 'Tue Jul 4 01:18:45 2006 +0200'
+ test_atom tag creator 'C O Mitter <committer@example.com> 1151968725 +0200'
+ test_atom tag creatordate 'Tue Jul 4 01:18:45 2006 +0200'
+ test_atom tag subject 'Tagging at 1151968727'
++test_atom tag subject:sanitize 'Tagging-at-1151968727'
+ test_atom tag contents:subject 'Tagging at 1151968727'
+ test_atom tag body ''
+ test_atom tag contents:body ''
+@@ -619,6 +621,7 @@ test_expect_success 'create tag with subject and body content' '
+ 	git tag -F msg subject-body
+ '
+ test_atom refs/tags/subject-body subject 'the subject line'
++test_atom refs/tags/subject-body subject:sanitize 'the-subject-line'
+ test_atom refs/tags/subject-body body 'first body line
+ second body line
+ '
+@@ -639,6 +642,7 @@ test_expect_success 'create tag with multiline subject' '
+ 	git tag -F msg multiline
+ '
+ test_atom refs/tags/multiline subject 'first subject line second subject line'
++test_atom refs/tags/multiline subject:sanitize 'first-subject-line-second-subject-line'
+ test_atom refs/tags/multiline contents:subject 'first subject line second subject line'
+ test_atom refs/tags/multiline body 'first body line
+ second body line
+@@ -671,6 +675,7 @@ sig='-----BEGIN PGP SIGNATURE-----
+ 
+ PREREQ=GPG
+ test_atom refs/tags/signed-empty subject ''
++test_atom refs/tags/signed-empty subject:sanitize ''
+ test_atom refs/tags/signed-empty contents:subject ''
+ test_atom refs/tags/signed-empty body "$sig"
+ test_atom refs/tags/signed-empty contents:body ''
+@@ -678,6 +683,7 @@ test_atom refs/tags/signed-empty contents:signature "$sig"
+ test_atom refs/tags/signed-empty contents "$sig"
+ 
+ test_atom refs/tags/signed-short subject 'subject line'
++test_atom refs/tags/signed-short subject:sanitize 'subject-line'
+ test_atom refs/tags/signed-short contents:subject 'subject line'
+ test_atom refs/tags/signed-short body "$sig"
+ test_atom refs/tags/signed-short contents:body ''
+@@ -686,6 +692,7 @@ test_atom refs/tags/signed-short contents "subject line
+ $sig"
+ 
+ test_atom refs/tags/signed-long subject 'subject line'
++test_atom refs/tags/signed-long subject:sanitize 'subject-line'
+ test_atom refs/tags/signed-long contents:subject 'subject line'
+ test_atom refs/tags/signed-long body "body contents
+ $sig"
 -- 
 gitgitgadget
-
