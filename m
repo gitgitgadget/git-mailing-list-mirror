@@ -2,101 +2,132 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B7B1C433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 925CBC433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:52:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18D8620738
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:35:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 671AD2067C
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 22:52:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bz/H6k76"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zdb8lwMp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727030AbgHUWfM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 18:35:12 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62662 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726358AbgHUWfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 18:35:11 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF7158751A;
-        Fri, 21 Aug 2020 18:35:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aBei3+m73VS+LG8BjpUJCCiLBfs=; b=bz/H6k
-        76pGhq00OAxWs1oertOcI3kMWSoTvddb+QRk3tan+8mm+8ZFM3zzNBFqahj80sqx
-        g1hEI7oBrOWCxgTQIjh3iGaOTwYYdRx9hyfWpm/3yGySa5rYA0186+m1qqR6f8Rx
-        LVlrLRaK3wjf2AvAPLdd8xBoVnydtuWYp9JMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GfZ0KJA0pa5SwZGJr7eWzDybSt48TJFe
-        8+ECTPV3VsegNzTQXkY+VpoOWf/3Rk3CWnv+5aspd0jiDsJx0WYfU1L8RZjwa3YO
-        R533KAciB6W+7inMX5RY8qjbPYbrelu0osGyxIvhgxxwlUHgj7WJxm0ZkuEBhZAN
-        IcnnqQP3zNI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC5C887518;
-        Fri, 21 Aug 2020 18:35:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726784AbgHUWwo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 18:52:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:44966 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726541AbgHUWwo (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 21 Aug 2020 18:52:44 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED9B287517;
-        Fri, 21 Aug 2020 18:35:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Alvaro Aleman <aaleman@redhat.com>, Git List <git@vger.kernel.org>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] ident: say whose identity is missing when giving user.name hint
-References: <CAOW=8D2J3t3cE32q2xNqSOPTa6gxR5gSuJUCCj5MSj58ccc3Cg@mail.gmail.com>
-        <87ft8fvoow.fsf@igel.home> <xmqqr1rz96ry.fsf@gitster.c.googlers.com>
-        <CAOW=8D3WZyoc=PpyzmPRYM2MT_=F4tnuTxJ0Z+_dHMb4Xk8imQ@mail.gmail.com>
-        <xmqq5z9b91o3.fsf_-_@gitster.c.googlers.com>
-        <CAPig+cR12i8KQjiWYm8DGuAc9BfJqanmNBZcZfwHGsrt2hW3Dw@mail.gmail.com>
-        <xmqq1rjz8zy7.fsf@gitster.c.googlers.com>
-        <CAOW=8D1nFgRRPyD7yxW2X7ZcAA3yaMzWJy7B3ykuPBJk3t8X5Q@mail.gmail.com>
-        <CAPig+cSLxRVufZcnXa6JAbP-SYX486OebDS5hYjEhH7jaNgM5Q@mail.gmail.com>
-Date:   Fri, 21 Aug 2020 15:35:08 -0700
-In-Reply-To: <CAPig+cSLxRVufZcnXa6JAbP-SYX486OebDS5hYjEhH7jaNgM5Q@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 21 Aug 2020 17:37:58 -0400")
-Message-ID: <xmqqblj37hlv.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 59C8D60457;
+        Fri, 21 Aug 2020 22:52:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1598050363;
+        bh=jd7+g+hmcqWRXpteCnZb1E6rdoKIN0ZWElyadYaZJb8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=zdb8lwMp+1Ix3oXX2gYOD63vUpDZOnalF3gWMDGYXs8fg3CjBjy/jcsSj/pu34WDu
+         ChAendKgr5a1EsKY+swL3DAEj+ySnBTqTfkpKdoyA2DiVAXtg4MxIP3zl4iAhjXvME
+         lu5Ab9olNbRZZULzL7AFR7D/7gy5lcH3Oa+eGV9crWM0zq+osSVjcrqDg+J+kW84K0
+         kZnCF7owIJEW+NseuvYXfnVDyr5u0Vzm9Haw1Tpju4wWsadSr675vQbh/eL9K5CVZu
+         V6LoMHvt6ar16ApIDhlHvgVu3GuB2BKd6ulMKaLvYxW8vb2nePbdSFGo8OVBlW3kHq
+         1h7ikn8kxlzlnekZ+IJ/QCPSvxNU8m+nrrR7+DYyAIfWaQHEozu0LBhuFNORKM2v1g
+         phctWTR+4rmjN9I4SE5WJNet1xgyNDmOlyk0SZFaZGDDFdc7w4l5CyYvhpN+MsXI1U
+         sVIAf/+CYYEjnR2qB7I+vCGHFuacayUyLxSp3sKvOLMjumCfw1o
+Date:   Fri, 21 Aug 2020 22:52:37 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Lukas Straub <lukasstraub2@web.de>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'git' <git@vger.kernel.org>, 'Elijah Newren' <newren@gmail.com>,
+        'Brandon Williams' <bwilliams.eng@gmail.com>,
+        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH 0/2] Allow adding .git files and directories
+Message-ID: <20200821225237.GW8085@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Lukas Straub <lukasstraub2@web.de>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'git' <git@vger.kernel.org>, 'Elijah Newren' <newren@gmail.com>,
+        'Brandon Williams' <bwilliams.eng@gmail.com>,
+        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>
+References: <cover.1597853634.git.lukasstraub2@web.de>
+ <xmqqr1s2tswd.fsf@gitster.c.googlers.com>
+ <04aa01d67659$2dc217b0$89464710$@nexbridge.com>
+ <xmqqimdetpuw.fsf@gitster.c.googlers.com>
+ <20200819201736.GA2511157@coredump.intra.peff.net>
+ <xmqqa6yqtm03.fsf@gitster.c.googlers.com>
+ <20200819203825.GA2511902@coredump.intra.peff.net>
+ <20200820133445.2bd162a3@luklap>
+ <20200820130125.GB2522289@coredump.intra.peff.net>
+ <20200821143941.28f71287@luklap>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 917717DE-E3FE-11EA-A661-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="i/VKSWANvDZSIhsB"
+Content-Disposition: inline
+In-Reply-To: <20200821143941.28f71287@luklap>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Fri, Aug 21, 2020 at 5:31 PM Alvaro Aleman <aaleman@redhat.com> wrote:
->> One nit though: There is no `--committer` flag for `git commit`,
->
-> Indeed, that `--committer=` was a last-second edit (without checking
-> docs).
+--i/VKSWANvDZSIhsB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I forgot that we deliberately omit the command line option for
-the committer info.
+On 2020-08-21 at 12:39:41, Lukas Straub wrote:
+> The downsides we discussed don't apply in this usecase. These are mostly
+> personal files, so I wont upload them to any hosting site (not even priva=
+te
+> ones). There is no security impact as I only sync with trusted devices.
 
-> How about this?
->
->     If `user.name` and `user.email` have not been configured and the
->     user invokes:
->
->         git commit --author=...
->
->     without specifying the committer, then Git errors out with a
->     message asking the user to configure `user.name` and `user.email`
->     but doesn't tell the user which attribution was missing. This can
->     be confusing for a user new to Git who isn't aware of the
->     distinction between user, author, and committer.  Give such users
->     a bit more help by extending the error message to also say which
->     attribution is expected.
+I realize this works for you, but in general Git's security model does
+not permit untrusted configuration files or hooks.  Configuration can
+have numerous different commands that Git may execute and it is not, in
+general, safe to share across users.  This is why Git does not provide a
+way to sync whole repositories, only the objects within them.
 
-OK.
+Adding the ability to transport configuration through a repository is a
+security problem because it allows an attacker to potentially execute
+arbitrary code on the user's machine, and I can tell you that many, many
+people do clone untrusted repositories.  Just because you are aware of
+the risks, are comfortable with them, and are the only user in this
+scenario does not mean that this feature is a prudent one to add to Git.
+It violates our own security model, and as such, isn't a feature we're
+going to want to add.
+
+I want to be clear that it is not that we don't see your use case as
+valuable or important, only that we can't see a way to implement it
+securely as proposed.  Warning users unfortunately isn't sufficient
+because users tend not to read documentation.
+
+Multiple core contributors representing various aspects of the Git
+community have weighed in, and it looks like the answer is unanimous.
+
+Sorry for the bad news.
+--=20
+brian m. carlson: Houston, Texas, US
+
+--i/VKSWANvDZSIhsB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX0BQNAAKCRB8DEliiIei
+gRaVAP0QykhU80tZXUSEcI06HH7W9FLydm1fOg8JevX7y6AwOwD+K8YQt1seApWQ
+hgPaDWzKDCpsyt+k5cATmHaflGq4xQc=
+=BHU4
+-----END PGP SIGNATURE-----
+
+--i/VKSWANvDZSIhsB--
