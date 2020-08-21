@@ -2,89 +2,92 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C51CC433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 16:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D5EEC433E3
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 16:35:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6386D207BB
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 16:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F4C220724
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 16:35:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTxMDzKs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h3GQxrMu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727973AbgHUQ24 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 12:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728461AbgHUQ2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 12:28:49 -0400
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1F6AC061795
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 09:28:23 -0700 (PDT)
-Received: by mail-vs1-xe2f.google.com with SMTP id b26so1101120vsa.13
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 09:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QC044wAJ9M/wh1gfwzFGiYfS1czFGXnJlhZ8Iaa7gH8=;
-        b=bTxMDzKs5iOoCVXVBilNDpid/3VSAtdj2uBQvDCPfNLrb6FPRXHG5R2V70u3idQyXn
-         te765vaj4L6AdbSjgbwt3jP4ITG5eiG9JhHuefjY9a89fnCJX8n3PimzdNsDfZ1E0csr
-         +9CQaUUG2LfNOjySmWfTsYBUWn3+QzdfHn424h0lRHkObgkDpRKH+3Af4jykAEjAGdPP
-         AIaF0b+e0AMm8LZWqNXpYOnZRdHe/RYqM8rCgeIxdSiueFwI+PdLNfqx+rx655pSwsDo
-         7HNSNzV0nMgYe/DmO/X/t8rMVxRj5qPwIr3KHgBoigg0GR7R/XafxFOMk2xOhuU6Fu/o
-         0wHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QC044wAJ9M/wh1gfwzFGiYfS1czFGXnJlhZ8Iaa7gH8=;
-        b=MC/0YyTGH/UBx9yOybNcz4ifInfwu69HjDlJS7pPt1tAm5iVyp15QMgaPWfzf72Vh+
-         uNpTld/S+4TELnOIFPPEz5yr1OWc8n22dFMKMZEBp2vhtbEB23PXz4j6IBcNmrX5I5DC
-         YGdJMfQby1PgeVd39C/rSrRq+msXZ7Y5LT2ZTFIwjyfTE2RIQobNFum5Vj7PMkbzcm7A
-         3qpPBh8CmbzoXAs3/GxvlV4rb2jDBv58eItG9UUV/OHHYeYrxvrn+uBjKQBRtVh2nK3P
-         To7Y2tBvVbgT613ffB6hprTLuWMhstNmtyUb/4ckzkhRqvdjlD4w72xaWefRIBIkfXlT
-         kBUA==
-X-Gm-Message-State: AOAM532tdWZywr+pV0TvEyqd+zxjw/JKUXwK/1H6klgOIFB7MKMpnlZc
-        pFJSXdR4eqZG/QT5vmujRs2BsROyzSd0BwVzoRw=
-X-Google-Smtp-Source: ABdhPJwdabrKd5IROWUnKnMshGijL6s3XTSF6cWEjididyyV8ei/As4xL9ka4FAK1+UmiCv4Jf0YQ5zFz+R1xk535kk=
-X-Received: by 2002:a67:bb06:: with SMTP id m6mr2447496vsn.54.1598027303120;
- Fri, 21 Aug 2020 09:28:23 -0700 (PDT)
+        id S1728165AbgHUQfZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 12:35:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59337 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728401AbgHUQfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 12:35:16 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9945184FD1;
+        Fri, 21 Aug 2020 12:35:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KR5I3MQCnZi4L2/BLFyPwWkJxUk=; b=h3GQxr
+        MuR8nqkyvNYpQaco/XvPsp/POFgUfnjSQqL+9j9aa98Mgl73yQLR6TDKYKfJV5/b
+        69AZ2eSmDpKDEPUVCvA1qKGciH5zP0x8y85qr++Qa0TIA0acs+2N068eB8B64akM
+        9XxQSJsr3bImb+QhRv8yYfD6VGosBBE2RQpe8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MYiOxGcUh1Tpl4KR4IXqiaSh27S20cRM
+        gsmwiWPQoWKaXrzYf1ZGG8fpy0Lb32btPKgtLbzcV3ce6Q3y39ann1xg/QmJkWtQ
+        ZNFhrYAUGq8DFmuNiXBwgw2ZeDW+rNiyDV9lloEHb7DEIp6mZsWqBtxD+YlQniaO
+        exG3kV70GVc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EAA584FCF;
+        Fri, 21 Aug 2020 12:35:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AB6C84FCE;
+        Fri, 21 Aug 2020 12:35:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v3 4/4] submodule: port submodule subcommand 'summary' from shell to C
+References: <20200806164102.6707-1-shouryashukla.oo@gmail.com>
+        <20200812194404.17028-1-shouryashukla.oo@gmail.com>
+        <20200812194404.17028-5-shouryashukla.oo@gmail.com>
+        <nycvar.QRO.7.76.6.2008211708280.56@tvgsbejvaqbjf.bet>
+Date:   Fri, 21 Aug 2020 09:35:07 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2008211708280.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 21 Aug 2020 17:17:42 +0200 (CEST)")
+Message-ID: <xmqqimdc9cuc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200815002509.2467645-1-jacob.e.keller@intel.com>
- <20200815002509.2467645-3-jacob.e.keller@intel.com> <xmqq5z9gzvmb.fsf@gitster.c.googlers.com>
- <CA+P7+xpcm51cLPDDW+F1J-XZ2VvwNDWjnZqm54f3DKXxDfBF5Q@mail.gmail.com>
- <20200818174116.GA2473110@coredump.intra.peff.net> <CA+P7+xqfAqnoKBeOiO6f7tdyi_7M=wKpmnFoWBt6UHbOqbYCzQ@mail.gmail.com>
- <20200821023335.GA3124022@coredump.intra.peff.net> <xmqqr1s09djt.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1s09djt.fsf@gitster.c.googlers.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 21 Aug 2020 09:28:11 -0700
-Message-ID: <CA+P7+xpc_jOc5kQ3eicSGUEO+GSr9a3fZ6TUyeEPvy+YSVdGNg@mail.gmail.com>
-Subject: Re: [RFC 3/3] refspec: add support for negative refspecs
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 46867512-E3CC-11EA-92FD-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 21, 2020 at 9:19 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jeff King <peff@peff.net> writes:
->
-> > Yes, I'd agree we should be applying the negative refspecs first, and
-> > then de-duping / looking for collisions. Which I think is what the patch
-> > is doing currently.
->
-> Good to see that we thought this through.  The reasoning deserves to
-> be recorded somewhere (perhaps a comment just before making the call
-> to apply the negative refspec).
->
-> Thanks.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I am hoping to add a test case for this as well!
+> Sadly, this breaks on Windows: on Linux (and before this patch, also on
+> Windows), the error message reads somewhat like this:
+>
+> 	fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or directory
+>
+> However, with the built-in `git submodule summary`, on Windows the error
+> message reads like this:
+>
+> 	error: cannot spawn git: No such file or directory
+
+I think a test that relies on platform-specific error string is a
+bug.  It's like expecting an exact string out of strerror(), which
+we had to fix a few times.
+
+So I am not sure we would want to butcher compat/mingw.c only to
+match such an expectation by a (buggy) test.
+
