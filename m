@@ -2,85 +2,101 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C910DC433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 20:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9085C433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:03:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A07B720724
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 20:52:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A3BA207CD
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726391AbgHUUwr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 16:52:47 -0400
-Received: from mail-ej1-f67.google.com ([209.85.218.67]:40423 "EHLO
-        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725767AbgHUUwq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 16:52:46 -0400
-Received: by mail-ej1-f67.google.com with SMTP id o18so3963930eje.7
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 13:52:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GqTOHQQTCHhyQkUOJ3wooHSonAvOkOTzktbjTgblRHw=;
-        b=pqcz4N9Din0+9Mx9YF4TxFwn8LJ+CYU1WgBzWkNtCROcbHdGQU1FJ031VOb29UkFiJ
-         93jqq5KKjFgYk038SiJ4oZ3tf/VUQW7xBMTHY/Jz/29LDxpy7Hk54U55EwwW4LgsVKyL
-         84VCX8hiw02qwVNxlu96QDzumBBMhxs8KyUSZgok2wTtgDvlWh5gRSaT62vDoR8WvcwU
-         PtIIECh7gfQv0geK6hWphrPMjFJi57OdutDvN4546JriC7yHLcTsrqv7zrJ2TG1klAzv
-         TolQg2PCLmuaPVfbH4a0RqbAyp9daO+CG5XkoBR72c8Lt4Lw2MOnzWGSXmUv4y+QX7QV
-         /7rg==
-X-Gm-Message-State: AOAM532y+5WOoqwyJf3AgTu7mEtemUVZISIAeR7GRgaf8ttR0HNgb4xm
-        cHGiucyGIef+MQaKIl8AKNlCLEowdrsUTqW6uFY=
-X-Google-Smtp-Source: ABdhPJw99jXAYNpRhrCVVEhZKsmbqfrPaCJPJXEbrrit01Fht45ssJvBkWq6tAq58Nko8RvU/LRWrZDONL2ScPQ05vI=
-X-Received: by 2002:a17:906:a1cf:: with SMTP id bx15mr4427548ejb.231.1598043163869;
- Fri, 21 Aug 2020 13:52:43 -0700 (PDT)
+        id S1726697AbgHUVDE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 17:03:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37654 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726243AbgHUVDD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 17:03:03 -0400
+Received: (qmail 21224 invoked by uid 109); 21 Aug 2020 21:03:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Aug 2020 21:03:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 475 invoked by uid 111); 21 Aug 2020 21:03:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Aug 2020 17:03:02 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 Aug 2020 17:03:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/5] strmap: add strdup_strings option
+Message-ID: <20200821210301.GA11806@coredump.intra.peff.net>
+References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
+ <b3095d97d8ee9d6576292731cc100492e7c64f13.1598035949.git.gitgitgadget@gmail.com>
+ <20200821200121.GF1165@coredump.intra.peff.net>
+ <CABPp-BGJK4C7U+-MB-+TUgFAuuFJKE-E7y17FFJDRTyFydVX2A@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAOW=8D2J3t3cE32q2xNqSOPTa6gxR5gSuJUCCj5MSj58ccc3Cg@mail.gmail.com>
- <87ft8fvoow.fsf@igel.home> <xmqqr1rz96ry.fsf@gitster.c.googlers.com>
- <CAOW=8D3WZyoc=PpyzmPRYM2MT_=F4tnuTxJ0Z+_dHMb4Xk8imQ@mail.gmail.com> <xmqq5z9b91o3.fsf_-_@gitster.c.googlers.com>
-In-Reply-To: <xmqq5z9b91o3.fsf_-_@gitster.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 21 Aug 2020 16:52:33 -0400
-Message-ID: <CAPig+cR12i8KQjiWYm8DGuAc9BfJqanmNBZcZfwHGsrt2hW3Dw@mail.gmail.com>
-Subject: Re: [PATCH] ident: say whose identity is missing when giving
- user.name hint
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Alvaro Aleman <aaleman@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGJK4C7U+-MB-+TUgFAuuFJKE-E7y17FFJDRTyFydVX2A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 21, 2020 at 4:36 PM Junio C Hamano <gitster@pobox.com> wrote:
-> When the author or the committer identity is missing when required,
-> "git" errors out with a message that suggests to set these
-> configuration variables at the per-user level as the easiest way
-> forward.  This message is given to a brand-new user, whose
-> ~/.gitconfig hasn't been configured for user.name and user.email,
-> who runs "git commit --author=...", too, but such a user may find it
-> confusing ("why?  I just gave you a name and e-mail").
->
-> State whose identity is missing as the reason why we are erroring
-> out, when we give the hint, to help reduce the confusion.
+On Fri, Aug 21, 2020 at 01:41:44PM -0700, Elijah Newren wrote:
 
-I had trouble following the first paragraph due to the run-on nature
-of the second sentence. Perhaps the entire message could be rewritten
-something like this:
+> > This is actually one of the ugliest parts of string_list, IMHO, and I'd
+> > prefer if we can avoid duplicating it. Yes, sometimes we can manage to
+> > avoid an extra copy of a string. But the resulting ownership and
+> > lifetime questions are often very error-prone. In other data structures
+> > we've moved towards just having the structure own its data (e.g.,
+> > strvec does so, and things like oidmap store their own oids). I've been
+> > happy with the simplicity of it.
+> >
+> > It also works if you use a flex-array for the key storage in the
+> > strmap_entry. :)
+> 
+> I can see how it's easier, but that worries me about the number of
+> extra copies for my usecase.  In order to minimize actual computation,
+> I track an awful lot of auxiliary data in merge-ort so that I know
+> when I can safely perform many different case-specific optimizations.
+> Among other things, this means 15 strmaps.  1 of those stores a
+> mapping from all paths that traverse_trees() walks over (file or
+> directory) to metadata about the content on the three different sides.
+> 9 of the remaining 14 simply share the strings in the main strmap,
+> because I don't need extra copies of the paths in the repository.  I
+> could (and maybe should) extend that to 11 of the 14.  Only 3 actually
+> do need to store a copy of the paths (because they store data used
+> beyond the end of an inner recursive merge or can be used to
+> accelerate subsequent commits in a rebase or cherry-pick sequence).
 
-    If `user.name` and `user.email` have not been configured and the
-    user invokes:
+I'd have to see the code, of course, but:
 
-        git commit --author=...
+  - keep in mind you're allocating 8 bytes for a pointer (plus 24 for
+    the rest of the strmap entry). If you use a flex-array you get those
+    8 bytes back. Full paths do tend to be longer than that, so it's
+    probably net worse than a pointer to an existing string. But how
+    much worse, and does it matter?
 
-    without without specifying `--committer=`, then Git errors out
-    with a message asking the user to configure `user.name` and
-    `user.email` but doesn't tell the user which attribution was
-    missing. This can be confusing for a user new to Git who isn't
-    aware of the distinction between user, author, and committer.
-    Give such users a bit more help by extending the error message to
-    also say which attribution is expected.
+  - That sounds like a lot of maps. :) I guess you've looked at
+    compacting some of them into a single map-to-struct?
+
+> So, in most my cases, I don't want to duplicate strings.  I actually
+> started my implementation using FLEX_ALLOC_STR(), as you suggested
+> earlier in this thread, but tossed it because of this same desire to
+> not duplicate strings but just share them between the strmaps.
+> 
+> Granted, I made that decision before I had a complete implementation,
+> so I didn't measure the actual costs.  It's possible that was a
+> premature optimization.
+
+I'm just really concerned that it poisons the data structure with
+complexity that many of the other callers will have to deal with. We've
+had several "oops, strdup_strings wasn't what I expected it to be" bugs
+with string-list (in both directions: leaks and use-after-free). It
+would be nice to have actual numbers and see if it's worth the cost.
+
+-Peff
