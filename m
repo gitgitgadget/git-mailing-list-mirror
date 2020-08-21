@@ -2,184 +2,348 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F38FCC433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF94AC433E3
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:06:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFE702076E
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:06:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9098D2076E
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:06:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hvwHD2Q7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hsq3pWPH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726693AbgHUVG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726711AbgHUVG0 (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 21 Aug 2020 17:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49564 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726461AbgHUVGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 17:06:21 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11FE2C061574
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:06:21 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 83so3098314wme.4
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:06:21 -0700 (PDT)
+        with ESMTP id S1726611AbgHUVGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 17:06:23 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ED98C061755
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:06:22 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id l2so3129931wrc.7
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5LTkrvhYfKwhVtFUpdkdge37SOZJ7R/e1FHA1Cu3b28=;
-        b=hvwHD2Q7b7rc42LDLrTF0WbhhytGRc6uYY/K1ZxCQT8rEpAfyLjmRbnIBPcDzJa+8g
-         GwD8D5RZevphJZVLobyT8PDdJMpqOjH4xQ0XjbfSZsuaqd85NRWXaUs52YmSy2HZoD9F
-         zRzzRWCSadxF533JWYTiIhTHVHeh+HZI6Z0Qp3HQIPTQ22q/E8xvY+v4hW5vtejWAbUG
-         ct2rg4RpCTjTIq/f/mhnX8fjo2iF6cmIgl3obpF6HddM9S2m83tKguEnp8adsezDGIzH
-         gFPSmrOc15pJbb+PAPMfkOMVZZG4s/RBiXXb9ukHOGtS62wkamMsVjvOzwrOfGsak9XF
-         lHGA==
+        bh=YrfiyumIc+dnkMX191wSa+ug66Vr1S65SLxvTcQAIsw=;
+        b=Hsq3pWPHaQfrcgPceQm4INAskOGb7nIwd/MnxCe6h1mf7DIkDqh1/7UAujZXF7ZDCk
+         qKaihEHvB83PFD08EYDRz31EBY1CUwR3wY296HyuukN74DEaO6776PyWsWafVaTQ6jr2
+         9QlwLeA6W+Gl6wgM6sp0Ho8RRn2AQkkpzPWjcdNsgHAn3Hqm6GTvf3ncFaA5VKLgFDX6
+         /u9a0qSZMZF4cvJPOX20PDrCbyTIo7QwqnxyaVCyuJPAj6ON3QUak7pljayhM9y9Huhw
+         bJLewTQoqhRtgpBvl1R0Q0nPfoshE8/oGLYhommw05INiR9w4H5ekXisXChvRddPX5L0
+         wWAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5LTkrvhYfKwhVtFUpdkdge37SOZJ7R/e1FHA1Cu3b28=;
-        b=K3+JyZgf8OPAU+umD+fsSo6+/cu+buT4rfytqqosHbsYh4uj+cjeFgev0WCnU2UXdP
-         d8BWElV+EwEVRxo3MikExsjsSb6itfLyuTxFx5G/JUZXUbQH44MCdlMRgNGEX0wD/g7V
-         RU6mxvileTgeM7r/awxtYhpTsstMjAg7gCV7r4mr/QBcc+TMyAVrOyWjNUvzmrx5BQoR
-         T6urtykV7MSNcF8yMx5HOD8unxtvcKElJZkibZ5QLLj0VTuWHG0nQsdHCVoslaCT2wV5
-         C2Pf53L1nBkATw3y0hAtLYZBkwiebUX2mnh1W8g8/Dph4/cPosthZ+55uDsYu1C46tw2
-         JdCQ==
-X-Gm-Message-State: AOAM532lL/yO9OLzoWCz+mupEIwggSxXrADSgAeVB2t4oBx5IIop1EVn
-        Pn8Wmyuk5ptXStumHFzMI023BdXyQzQ=
-X-Google-Smtp-Source: ABdhPJwhEeCzGHCQ6rKc/Yati5lMpujh/0bdTx5brydbz29e5CdJ5Cv34McAXxW56E7rFBlsTYOUyg==
-X-Received: by 2002:a1c:4c0e:: with SMTP id z14mr5465982wmf.54.1598043977313;
-        Fri, 21 Aug 2020 14:06:17 -0700 (PDT)
+        bh=YrfiyumIc+dnkMX191wSa+ug66Vr1S65SLxvTcQAIsw=;
+        b=i0y88TZpUKhfjncECFn5ufs9Gnsqt0MOJcobT7FNP1pCusO9a0L8Q9YBfCty7C372K
+         sY34n/UjL7AsJqg/zvYzlJkOZpsUj6Y1oe4GQSAdzMqq8MK4v5kpu7z4N1v6LSOCDZEj
+         sOuoCryDvCM1CxuTf2MVOuYRWNFw7Eg7G1LTNSgCcntVrq25J6gihrc0isx8MLEi4lAD
+         KUepWPmzAZ6kRDcHS8icvRXEHx6fjVAwCR4VKpwmxukYp1NsrRtcJZWUd8FxDFPnZric
+         xvQBp7eFZCj5dLAj01A+OLZgGCOs74KrIR5QCdcs2/3y4UQbRiZpLBx4jCYIl/8yS3yQ
+         2TvQ==
+X-Gm-Message-State: AOAM533u3+2W2kBg2cxzQ/ccp0PwjQPTUBNKIfXdA8FNm39aJrQwdEVF
+        KS7qQ4N2srzvOc/rm9zh0lz3tXVLZag=
+X-Google-Smtp-Source: ABdhPJydgvCbgKKS7H3AyL7tMTK8L0FvBOiXnhHKTgefpeWKYaed3vDLKM4iYRBqtntufioQE89UYA==
+X-Received: by 2002:adf:df85:: with SMTP id z5mr4142013wrl.267.1598043980692;
+        Fri, 21 Aug 2020 14:06:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v67sm8086143wma.46.2020.08.21.14.06.16
+        by smtp.gmail.com with ESMTPSA id o3sm6160153wru.64.2020.08.21.14.06.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 14:06:16 -0700 (PDT)
-Message-Id: <pull.707.v3.git.1598043976.gitgitgadget@gmail.com>
-In-Reply-To: <pull.707.v2.git.1598004663.gitgitgadget@gmail.com>
+        Fri, 21 Aug 2020 14:06:20 -0700 (PDT)
+Message-Id: <d491be5d10991189f7ec6ead739c1d1500e437a1.1598043976.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.707.v3.git.1598043976.gitgitgadget@gmail.com>
 References: <pull.707.v2.git.1598004663.gitgitgadget@gmail.com>
+        <pull.707.v3.git.1598043976.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 21:06:12 +0000
-Subject: [PATCH v3 0/4] [GSoC] Fix trailers atom bug and improved tests
+Date:   Fri, 21 Aug 2020 21:06:16 +0000
+Subject: [PATCH v3 4/4] ref-filter: using pretty.c logic for trailers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Hariom Verma <hariom18599@gmail.com>
+Cc:     Hariom Verma <hariom18599@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, there exists a bug in 'contents' atom. It does not show any error
-if used with modifier 'trailers' and semicolon is missing before trailers
-arguments. This small patch series is focused on fixing that bug and also
-unified 'trailers' and 'contents:trailers' tests. Thus, removed duplicate
-code from t6300 and made tests more compact.
+From: Hariom Verma <hariom18599@gmail.com>
 
-Change log since v2:
+Now, ref-filter is using pretty.c logic for setting trailer options.
 
- * Used simplified logic as per suggested by Eric (here 
-   https://public-inbox.org/git/CAPig+cRxCvHG70Nd00zBxYFuecu6+Z6uDP8ooN3rx9vPagoYBA@mail.gmail.com/
-   )
- * Unified trailer formatting logic for pretty.c and ref-filter.c
+New to ref-filter:
+  :key=<K> - only show trailers with specified key.
+  :valueonly[=val] - only show the value part.
+  :separator=<SEP> - inserted between trailer lines
 
-Hariom Verma (4):
-  t6300: unify %(trailers) and %(contents:trailers) tests
-  ref-filter: 'contents:trailers' show error if `:` is missing
-  pretty.c: refactor trailer logic to `format_set_trailers_options()`
-  ref-filter: using pretty.c logic for trailers
+Enhancement to existing options(now can take value and its optional):
+  :only[=val]
+  :unfold[=val]
 
- Documentation/git-for-each-ref.txt |  36 ++++++--
- Hariom Verma via GitGitGadget      |   0
- pretty.c                           |  83 +++++++++++-------
- pretty.h                           |  11 +++
- ref-filter.c                       |  43 +++++-----
- t/t6300-for-each-ref.sh            | 133 ++++++++++++++++++++++-------
- 6 files changed, 219 insertions(+), 87 deletions(-)
- create mode 100644 Hariom Verma via GitGitGadget
+'val' can be: true, on, yes or false, off, no.
 
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Heba Waly <heba.waly@gmail.com>
+Signed-off-by: Hariom Verma <hariom18599@gmail.com>
+---
+ Documentation/git-for-each-ref.txt |  36 +++++++--
+ ref-filter.c                       |  35 ++++-----
+ t/t6300-for-each-ref.sh            | 115 +++++++++++++++++++++++++----
+ 3 files changed, 151 insertions(+), 35 deletions(-)
 
-base-commit: 675a4aaf3b226c0089108221b96559e0baae5de9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-707%2Fharry-hov%2Ffix-trailers-atom-bug-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-707/harry-hov/fix-trailers-atom-bug-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/707
-
-Range-diff vs v2:
-
- 1:  4816aa3cfa = 1:  383476b177 t6300: unify %(trailers) and %(contents:trailers) tests
- 2:  39aa46bce7 ! 2:  659b9835dc ref-filter: 'contents:trailers' show error if `:` is missing
-     @@ Commit message
-          ref-filter: 'contents:trailers' show error if `:` is missing
-      
-          The 'contents' atom does not show any error if used with 'trailers'
-     -    atom and semicolon is missing before trailers arguments.
-     +    atom and colon is missing before trailers arguments.
-      
-          e.g %(contents:trailersonly) works, while it shouldn't.
-      
-     @@ Commit message
-      
-          Let's fix this bug.
-      
-     +    Acked-by: Eric Sunshine <sunshine@sunshineco.com>
-          Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-          Mentored-by: Heba Waly <heba.waly@gmail.com>
-          Signed-off-by: Hariom Verma <hariom18599@gmail.com>
-      
-       ## ref-filter.c ##
-     -@@ ref-filter.c: static int trailers_atom_parser(const struct ref_format *format, struct used_ato
-     - 	return 0;
-     - }
-     - 
-     -+static int check_format_field(const char *arg, const char *field, const char **option)
-     -+{
-     -+	const char *opt;
-     -+	if (skip_prefix(arg, field, &opt)) {
-     -+		if (*opt == '\0') {
-     -+			*option = NULL;
-     -+			return 1;
-     -+		}
-     -+		else if (*opt == ':') {
-     -+			*option = opt + 1;
-     -+			return 1;
-     -+		}
-     -+	}
-     -+	return 0;
-     -+}
-     -+
-     - static int contents_atom_parser(const struct ref_format *format, struct used_atom *atom,
-     - 				const char *arg, struct strbuf *err)
-     - {
-      @@ ref-filter.c: static int contents_atom_parser(const struct ref_format *format, struct used_ato
-       		atom->u.contents.option = C_SIG;
-       	else if (!strcmp(arg, "subject"))
-     @@ ref-filter.c: static int contents_atom_parser(const struct ref_format *format, s
-      -	else if (skip_prefix(arg, "trailers", &arg)) {
-      -		skip_prefix(arg, ":", &arg);
-      -		if (trailers_atom_parser(format, atom, *arg ? arg : NULL, err))
-     -+	else if (check_format_field(arg, "trailers", &arg)) {
-     ++	else if (!strcmp(arg, "trailers")) {
-     ++		if (trailers_atom_parser(format, atom, NULL, err))
-     ++			return -1;
-     ++	} else if (skip_prefix(arg, "trailers:", &arg)) {
-      +		if (trailers_atom_parser(format, atom, arg, err))
-       			return -1;
-       	} else if (skip_prefix(arg, "lines=", &arg)) {
-     @@ t/t6300-for-each-ref.sh: test_expect_success '%(trailers) rejects unknown traile
-       '
-       
-      +test_expect_success 'if arguments, %(contents:trailers) shows error if semicolon is missing' '
-     -+	# error message cannot be checked under i18n
-      +	cat >expect <<-EOF &&
-      +	fatal: unrecognized %(contents) argument: trailersonly
-      +	EOF
- -:  ---------- > 3:  712ab9aacf pretty.c: refactor trailer logic to `format_set_trailers_options()`
- -:  ---------- > 4:  d491be5d10 ref-filter: using pretty.c logic for trailers
-
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 2ea71c5f6c..f8e15916bc 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -254,11 +254,37 @@ contents:lines=N::
+ 	The first `N` lines of the message.
+ 
+ Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
+-are obtained as `trailers` (or by using the historical alias
+-`contents:trailers`).  Non-trailer lines from the trailer block can be omitted
+-with `trailers:only`. Whitespace-continuations can be removed from trailers so
+-that each trailer appears on a line by itself with its full content with
+-`trailers:unfold`. Both can be used together as `trailers:unfold,only`.
++are obtained as `trailers[:options]` (or by using the historical alias
++`contents:trailers[:options]`). Valid [:option] are:
++** 'key=<K>': only show trailers with specified key. Matching is done
++   case-insensitively and trailing colon is optional. If option is
++   given multiple times trailer lines matching any of the keys are
++   shown. This option automatically enables the `only` option so that
++   non-trailer lines in the trailer block are hidden. If that is not
++   desired it can be disabled with `only=false`.  E.g.,
++   `%(trailers:key=Reviewed-by)` shows trailer lines with key
++   `Reviewed-by`.
++** 'only[=val]': select whether non-trailer lines from the trailer
++   block should be included. The `only` keyword may optionally be
++   followed by an equal sign and one of `true`, `on`, `yes` to omit or
++   `false`, `off`, `no` to show the non-trailer lines. If option is
++   given without value it is enabled. If given multiple times the last
++   value is used.
++** 'separator=<SEP>': specify a separator inserted between trailer
++   lines. When this option is not given each trailer line is
++   terminated with a line feed character. The string SEP may contain
++   the literal formatting codes described above. To use comma as
++   separator one must use `%x2C` as it would otherwise be parsed as
++   next option. If separator option is given multiple times only the
++   last one is used. E.g., `%(trailers:key=Ticket,separator=%x2C )`
++   shows all trailer lines whose key is "Ticket" separated by a comma
++   and a space.
++** 'unfold[=val]': make it behave as if interpret-trailer's `--unfold`
++   option was given. In same way as to for `only` it can be followed
++   by an equal sign and explicit value. E.g.,
++   `%(trailers:only,unfold=true)` unfolds and shows all trailer lines.
++** 'valueonly[=val]': skip over the key part of the trailer line and only
++   show the value part. Also this optionally allows explicit value.
+ 
+ For sorting purposes, fields with numeric values sort in numeric order
+ (`objectsize`, `authordate`, `committerdate`, `creatordate`, `taggerdate`).
+diff --git a/ref-filter.c b/ref-filter.c
+index 8ba0e31915..20f5b829ee 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -67,6 +67,11 @@ struct refname_atom {
+ 	int lstrip, rstrip;
+ };
+ 
++struct ref_trailer_buf {
++	struct string_list filter_list;
++	struct strbuf sepbuf;
++} ref_trailer_buf;
++
+ static struct expand_data {
+ 	struct object_id oid;
+ 	enum object_type type;
+@@ -307,28 +312,24 @@ static int subject_atom_parser(const struct ref_format *format, struct used_atom
+ static int trailers_atom_parser(const struct ref_format *format, struct used_atom *atom,
+ 				const char *arg, struct strbuf *err)
+ {
+-	struct string_list params = STRING_LIST_INIT_DUP;
+-	int i;
+-
+ 	atom->u.contents.trailer_opts.no_divider = 1;
+-
+ 	if (arg) {
+-		string_list_split(&params, arg, ',', -1);
+-		for (i = 0; i < params.nr; i++) {
+-			const char *s = params.items[i].string;
+-			if (!strcmp(s, "unfold"))
+-				atom->u.contents.trailer_opts.unfold = 1;
+-			else if (!strcmp(s, "only"))
+-				atom->u.contents.trailer_opts.only_trailers = 1;
+-			else {
+-				strbuf_addf(err, _("unknown %%(trailers) argument: %s"), s);
+-				string_list_clear(&params, 0);
+-				return -1;
+-			}
++		const char *argbuf = xstrfmt("%s)", arg);
++		const char *err_arg = NULL;
++
++		if (format_set_trailers_options(&atom->u.contents.trailer_opts,
++			&ref_trailer_buf.filter_list,
++			&ref_trailer_buf.sepbuf,
++			&argbuf, &err_arg)) {
++			if (!err_arg)
++				strbuf_addf(err, _("expected %%(trailers:key=<value>)"));
++			else
++				strbuf_addf(err, _("unknown %%(trailers) argument: %s"), err_arg);
++			free((char *)err_arg);
++			return -1;
+ 		}
+ 	}
+ 	atom->u.contents.option = C_TRAILERS;
+-	string_list_clear(&params, 0);
+ 	return 0;
+ }
+ 
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index fdf2c442c5..664af8588a 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -786,14 +786,32 @@ test_expect_success '%(trailers:unfold) unfolds trailers' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success '%(trailers:only) shows only "key: value" trailers' '
++test_show_key_value_trailers () {
++	option="$1"
++	test_expect_success "%($option) shows only 'key: value' trailers" '
++		{
++			grep -v patch.description <trailers &&
++			echo
++		} >expect &&
++		git for-each-ref --format="%($option)" refs/heads/master >actual &&
++		test_cmp expect actual &&
++		git for-each-ref --format="%(contents:$option)" refs/heads/master >actual &&
++		test_cmp expect actual
++	'
++}
++
++test_show_key_value_trailers 'trailers:only'
++test_show_key_value_trailers 'trailers:only=no,only=true'
++test_show_key_value_trailers 'trailers:only=yes'
++
++test_expect_success '%(trailers:only=no) shows all trailers' '
+ 	{
+-		grep -v patch.description <trailers &&
++		cat trailers &&
+ 		echo
+ 	} >expect &&
+-	git for-each-ref --format="%(trailers:only)" refs/heads/master >actual &&
++	git for-each-ref --format="%(trailers:only=no)" refs/heads/master >actual &&
+ 	test_cmp expect actual &&
+-	git for-each-ref --format="%(contents:trailers:only)" refs/heads/master >actual &&
++	git for-each-ref --format="%(contents:trailers:only=no)" refs/heads/master >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -812,17 +830,88 @@ test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
+ 	test_cmp actual actual
+ '
+ 
+-test_expect_success '%(trailers) rejects unknown trailers arguments' '
+-	# error message cannot be checked under i18n
+-	cat >expect <<-EOF &&
+-	fatal: unknown %(trailers) argument: unsupported
+-	EOF
+-	test_must_fail git for-each-ref --format="%(trailers:unsupported)" 2>actual &&
+-	test_i18ncmp expect actual &&
+-	test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
+-	test_i18ncmp expect actual
++test_trailer_option() {
++	title="$1"
++	option="$2"
++	expect="$3"
++	test_expect_success "$title" '
++		echo $expect >expect &&
++		git for-each-ref --format="%($option)" refs/heads/master >actual &&
++		test_cmp expect actual &&
++		git for-each-ref --format="%(contents:$option)" refs/heads/master >actual &&
++		test_cmp expect actual
++	'
++}
++
++test_trailer_option '%(trailers:key=foo) shows that trailer' \
++	'trailers:key=Signed-off-by' 'Signed-off-by: A U Thor <author@example.com>\n'
++test_trailer_option '%(trailers:key=foo) is case insensitive' \
++	'trailers:key=SiGned-oFf-bY' 'Signed-off-by: A U Thor <author@example.com>\n'
++test_trailer_option '%(trailers:key=foo:) trailing colon also works' \
++	'trailers:key=Signed-off-by:' 'Signed-off-by: A U Thor <author@example.com>\n'
++test_trailer_option '%(trailers:key=foo) multiple keys' \
++	'trailers:key=Reviewed-by:,key=Signed-off-by' 'Reviewed-by: A U Thor <author@example.com>\nSigned-off-by: A U Thor <author@example.com>\n'
++test_trailer_option '%(trailers:key=nonexistent) becomes empty' \
++	'trailers:key=Shined-off-by:' ''
++
++test_expect_success '%(trailers:key=foo) handles multiple lines even if folded' '
++	{
++		grep -v patch.description <trailers | grep -v Signed-off-by | grep -v Reviewed-by &&
++		echo
++	} >expect &&
++	git for-each-ref --format="%(trailers:key=Acked-by)" refs/heads/master >actual &&
++	test_cmp expect actual &&
++	git for-each-ref --format="%(contents:trailers:key=Acked-by)" refs/heads/master >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '%(trailers:key=foo,unfold) properly unfolds' '
++	{
++		unfold <trailers | grep Signed-off-by &&
++		echo
++	} >expect &&
++	git for-each-ref --format="%(trailers:key=Signed-Off-by,unfold)" refs/heads/master >actual &&
++	test_cmp expect actual &&
++	git for-each-ref --format="%(contents:trailers:key=Signed-Off-by,unfold)" refs/heads/master >actual &&
++	test_cmp expect actual
+ '
+ 
++test_expect_success 'pretty format %(trailers:key=foo,only=no) also includes nontrailer lines' '
++	{
++		echo "Signed-off-by: A U Thor <author@example.com>" &&
++		grep patch.description <trailers &&
++		echo
++	} >expect &&
++	git for-each-ref --format="%(trailers:key=Signed-off-by,only=no)" refs/heads/master >actual &&
++	test_cmp expect actual &&
++	git for-each-ref --format="%(contents:trailers:key=Signed-off-by,only=no)" refs/heads/master >actual &&
++	test_cmp expect actual
++'
++
++test_trailer_option '%(trailers:key=foo,valueonly) shows only value' \
++	'trailers:key=Signed-off-by,valueonly' 'A U Thor <author@example.com>\n'
++test_trailer_option '%(trailers:separator) changes separator' \
++	'trailers:separator=%x2C,key=Reviewed-by,key=Signed-off-by:' 'Reviewed-by: A U Thor <author@example.com>,Signed-off-by: A U Thor <author@example.com>'
++
++test_failing_trailer_option () {
++	title="$1"
++	option="$2"
++	error="$3"
++	test_expect_success "$title" '
++		# error message cannot be checked under i18n
++		echo $error >expect &&
++		test_must_fail git for-each-ref --format="%($option)" refs/heads/master 2>actual &&
++		test_i18ncmp expect actual &&
++		test_must_fail git for-each-ref --format="%(contents:$option)" refs/heads/master 2>actual &&
++		test_i18ncmp expect actual
++	'
++}
++
++test_failing_trailer_option '%(trailers:key) without value is error' \
++	'trailers:key' 'fatal: expected %(trailers:key=<value>)'
++test_failing_trailer_option '%(trailers) rejects unknown trailers arguments' \
++	'trailers:unsupported' 'fatal: unknown %(trailers) argument: unsupported'
++
+ test_expect_success 'if arguments, %(contents:trailers) shows error if semicolon is missing' '
+ 	cat >expect <<-EOF &&
+ 	fatal: unrecognized %(contents) argument: trailersonly
 -- 
 gitgitgadget
