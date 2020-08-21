@@ -2,150 +2,95 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E0FDC433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A697C433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:44:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 677BF2063A
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:40:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CDF920855
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:44:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0JmuEWW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwYvB02r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727926AbgHUPkz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 11:40:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55462 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727906AbgHUPky (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 11:40:54 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75BD2C061573
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 08:40:52 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id o23so2826424ejr.1
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 08:40:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=40//1uRhY8Ih/xYTje3yGd1eA2Nnm1MJPVcncfHYFs4=;
-        b=J0JmuEWWfSQDN67BdOGADTpbxS7Y78tiQS0hqKFJ33WvJu1YCvCPAnIqws3r4jZVBL
-         2JcM9zj1QtrwJyGrh4sRjxTKu4WD8Gxd5l7nkVesgQXWe0u6IDa7MiCfNIexXP87ctyg
-         Jz59vmrvQ3eK7G02Coir33RNuADLNtgIaMpEuzT6KPSRZwUjZN/m/42ZfW3k026Kjyb/
-         bBuAtYz9utVrvjjCr43b2RZQHlShmheBIwkALRL7LUukb35LH3X93KbSgsVKqGTb7eUQ
-         dHI5OqlsHyGa9dnbEhuxfolQu45qnJgMgi2h3Jhrb/EQ1ukYJawm1+/dIK8PVuyGSDQJ
-         9jqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=40//1uRhY8Ih/xYTje3yGd1eA2Nnm1MJPVcncfHYFs4=;
-        b=Yrv3Nbk9BYxS2UcT36HJj16Hr+3NRMMNIgw23+kUJDDlo7VXNOYywZGWIADEHTYUFE
-         JyRyq4Ai1hyO7EnLh76sR5d6qlQI3rWbh2KqUA0aVf+NYBU4I3GS0sXkKiugU57ReuFa
-         7JGBqRwPTJ7mbyOTE4ztFVb9ggAvhkk8XJ7ekYWP54lKicuHZmXcZFrpTH23K31JsquU
-         Ix1L7bSZF0dVyeSL8iy/4ZspQHS+iOqm8ATjcPc0wK76cNRgS6yG8qKc/HrS/BQyplN9
-         LJJO2ZX2VefVj5z8BoNalUq+JAXxR+c8TCKtY+5QhVcyHeWnk5kywNItS7OuxCQQh1wi
-         +ruw==
-X-Gm-Message-State: AOAM530BlxAJbuCoCrBx3IXCttdI9f/eNZQuVo6epO1uZSupjhbEawWU
-        oWB9VTyphfvQ7UGbmZnwklCTUswZlKJd0hg6g5HRhV0eja0=
-X-Google-Smtp-Source: ABdhPJw7FIvysJJa1HU6ZrB8jdf1BPhxIG50Ax60DVjOSR2uCPGkQIHHdayf66HwxFHCOYkR9cvD3Go2KlIeeJaG4ns=
-X-Received: by 2002:a17:907:2078:: with SMTP id qp24mr3450488ejb.286.1598024449961;
- Fri, 21 Aug 2020 08:40:49 -0700 (PDT)
+        id S1727939AbgHUPoi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 11:44:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59968 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgHUPoh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 11:44:37 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F20C79D96;
+        Fri, 21 Aug 2020 11:44:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=14Gai3Py3HBO
+        QaHjAt3IoohwFL8=; b=wwYvB02r7BC5REa/SUKAhcV8aOovxm+2SAmDmm9vyHNf
+        YgOCT7f98nr1A7bKxXRjpwrEwSFqLgHwbPUBsGziaKBH+scQkdn8cVvT8ktszTE4
+        lg46Pp+sT2/IgToIG7hNMCpeg7SQ+4wgmniqZhQQ7KZZfn0nu5K+Vkv6q82f07I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xtjGnV
+        qXzsQwgBftuc+OOY/7U9BDP2jm4cmqx94msv6eh95Ahxq5IJPDu7Bq2pG464I/8H
+        bL10pxOTE/p5+T2VfIxljXw2y7/qthmMOKzBGYdeqzkK/1zE04kamv1GKCjPllzd
+        oEASnlcJLB9pz5fzYQ+g/0Mzetngwkvyk1rdw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14F3779D93;
+        Fri, 21 Aug 2020 11:44:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3694879D92;
+        Fri, 21 Aug 2020 11:44:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 1/2] t4013: improve diff-post-processor logic
+References: <cover.1596887883.git.congdanhqx@gmail.com>
+        <cover.1597926783.git.congdanhqx@gmail.com>
+        <a52d0e59ecd5777f2a1d242a37c6bb6aaafb1ed2.1597926783.git.congdanhqx@gmail.com>
+        <xmqqr1s1ayj2.fsf@gitster.c.googlers.com>
+        <20200821120525.GA599@danh.dev>
+Date:   Fri, 21 Aug 2020 08:44:31 -0700
+In-Reply-To: <20200821120525.GA599@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
+ =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s message
+        of "Fri, 21 Aug 2020 19:05:25 +0700")
+Message-ID: <xmqqzh6o9f6o.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Yohan de Oliveira <yohan.deoliveira@gmail.com>
-Date:   Fri, 21 Aug 2020 17:40:37 +0200
-Message-ID: <CADZrCYDayJ+kN08BQZ6DZXRc5hpZDr9mVFOWQPCawqfg_8Xzog@mail.gmail.com>
-Subject: credentialHelperSelector keep poping in 2.28 using windows identity story
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 357244D8-E3C5-11EA-AC2F-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-I have some trouble when migrating from 2.27 to 2.28. here is my bugreport :
+> On 2020-08-20 12:49:05-0700, Junio C Hamano <gitster@pobox.com> wrote:
+>> > diff-processor logic.
+>> >
+>> > Let's fix the bug for all-zero object names and extend object names'
+>> > abbrev to 16 while we're at it.
+>>=20
+>> "and support abbreviation of object names up to 16 bytes"?
+>>=20
+>> Also while we are at it, we fixed the post-processing not to touch
+>> the file modes, which were mistakenly munged in the older code as if
+>> they were object names abbreviated to 7 hexdigits.
+>
+> I've integrated your suggestion into newest series.
+> I think you meant 6 hex-digits here, and I took the liberty to change
+> to 7 digits.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-I migrated from 2.27.0 to 2.28.0
-
-What did you expect to happen? (Expected behavior)
-I connect to a https bitbucket server (ssl is blocked). For This, I
-stock my login/token in the windows identity store. Here, I have my
-server address as :
-https://bitbucket.server
-login: User
-password: token
-So I use credential.helper manager. To trust the certificate, I need
-to set the http.sslBackend = schannel, or I face the error "SSL
-certificate problem: unable to get local issuer certificate".
-When I do a "git pull" I'm supposed to have a line :
-$ git pull
-Already up to date.
-
-In the windows identity store a new entry is created with server address :
-https://User@bitbucket.server
-login:User
-passwod: ?? (maybe my token)
-
-What happened instead? (Actual behavior)
-Instead, I have a strange behaviour where the
-"credentialHelperSelector" keep poping 2 times with the line :
-$ git pull
-error: key does not contain a section: -
-error: key does not contain a section: -
-Already up to date.
-
-Everytime I do a git pull or anything that needs to ask the server, I
-have these 2 popups again and again and the error.
-
-
-What's different between what you expected and what actually happened?
-Normally, I used to set the credentialHelperSelector to manager once
-for all and never ask again for it. I did this in version 2.20 a long
-time ago and did not have this popup for a long time since now.
-I don't see the error key does not contain a section: -
-
-Anything else you want to add:
-Yes, by removing the new created entry in the windows identity store
-(https://User@bitbucket.server), there is still the 2 popups but no
-more error 'key does not contain a section: -'
-
-For the same .gitconfig file, it doesn't give the same result between
-version 2.27 and 2.28.
-Returning back to 2.27, no more popups, everything works fine.
-
-Here is a part of my .gitconfig
-[color]
-    ui = auto
-
-[core]
-    autocrlf = input
-    eol = lf
-    longpaths = true
-
-[http]
-    sslBackend = schannel
-    postBuffer = 4096000
-
-[credential]
-    helper = manager
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-[System Info]
-git version:
-git version 2.28.0.windows.1
-cpu: x86_64
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-compiler info: gnuc: 10.2
-libc info: no libc information available
-[Enabled Hooks]
-
-Best regards,
-
-Yohan de Oliveira
+Thanks, yeah, 100644 has 6 digits but I somehow couldn't count ;-)
