@@ -2,88 +2,97 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C84C433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4B6FC433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:18:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32235207DA
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:13:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92F8220791
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:18:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SCrxqBWC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hj34kO/t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgHUVNo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 17:13:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56568 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbgHUVNn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 17:13:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 16A7FE4AD1;
-        Fri, 21 Aug 2020 17:13:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UsCdR7YOMvq8T8XRGY0UzAQnE4Q=; b=SCrxqB
-        WC+jnswuKPiPyT3VUUXz1lRLTUaBG/H+CE4BJZacd22VNCaqzzG/WTKZIY/SeNbc
-        vzzR11ahJ5Y6+L7m8iIxW84fMSwcg1y6rha/LYvV2fphPR43zotSh7gf8/vPNwao
-        PmfLaTOHoxdB9gPKeDvb4e+YZQc3rYedlxTOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HnTtn1Irf8PuPkCWuLKulgT8c1S6rM+w
-        QZAJ2P4TtHz8x39yicWxsqFpclkmx7nyoirBHu8c8C2Q3Z6wrvQWvfr3HvOqasKD
-        fZzd+mreJnvl20jn4vKI3EhzkXuN0W4e5qEeLaQFJro48ruZdK7kgtL8swalfUOZ
-        uSrtn99iUYc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0EBF1E4AD0;
-        Fri, 21 Aug 2020 17:13:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 51F57E4ACF;
-        Fri, 21 Aug 2020 17:13:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Alvaro Aleman <aaleman@redhat.com>
-Subject: Re: [PATCH] ident: say whose identity is missing when giving user.name hint
-References: <CAOW=8D2J3t3cE32q2xNqSOPTa6gxR5gSuJUCCj5MSj58ccc3Cg@mail.gmail.com>
-        <87ft8fvoow.fsf@igel.home> <xmqqr1rz96ry.fsf@gitster.c.googlers.com>
-        <CAOW=8D3WZyoc=PpyzmPRYM2MT_=F4tnuTxJ0Z+_dHMb4Xk8imQ@mail.gmail.com>
-        <xmqq5z9b91o3.fsf_-_@gitster.c.googlers.com>
-        <CAPig+cR12i8KQjiWYm8DGuAc9BfJqanmNBZcZfwHGsrt2hW3Dw@mail.gmail.com>
-Date:   Fri, 21 Aug 2020 14:13:36 -0700
-In-Reply-To: <CAPig+cR12i8KQjiWYm8DGuAc9BfJqanmNBZcZfwHGsrt2hW3Dw@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 21 Aug 2020 16:52:33 -0400")
-Message-ID: <xmqq1rjz8zy7.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726701AbgHUVSM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 17:18:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbgHUVSK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 17:18:10 -0400
+Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF52C061573
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:18:10 -0700 (PDT)
+Received: by mail-vs1-xe43.google.com with SMTP id a1so1526681vsp.4
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:18:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8eiVOsBWuH7GqdTrBbN1LEmwgyysNy8rvyR1ix9xgvc=;
+        b=Hj34kO/tmkNlP5ImpNh5a19+UTJYtjDnh7BrB3yj7Ki4FS/Z+nVZhBckKknWODcq6a
+         m5015LpQchhZGw7ZmO16SWujSlSQSBO9n7M4CWUz0QPfdWuvJZZKSykBvoGL4UjBY0kv
+         FhWq8rgzo6GrogN5djEFti9BgXGc/PzcxexDkH8R90QbbvHmRNW4n9mosXsCQ2NokfmR
+         V4xizF49y3NQFBqIZSkIUOkJXaWduVynWcgzGrJ7hV4RFDO1LgATOn0hu7PdQPLZHIX0
+         QOkx3h1rgZZ5atRr84c03T84w2LDW2PVPfGKEItuNxhiJ1sE1UZ3G0MgjwAxhkuG8v6/
+         CpnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8eiVOsBWuH7GqdTrBbN1LEmwgyysNy8rvyR1ix9xgvc=;
+        b=QHsft8q59Nmb9v7r7ULiyl0VgG6UHreMWqP5juMb+gc8kOam4WKw6fw167afdUCHJo
+         bd60u0fuZhBzn0cWifd0WUsaakNPHo4vI8RVx0KlWV4g+ESGgJGLtIt7a3fnS+rJdKDM
+         Vk/fe88q9B3BSd/OwDFHn9oBgVy3hclRyiMEvOKcu3F2OtE4js8RDbuuDjNsrjFOJQtK
+         KDS8xaC1vhhw1twfJYIPXyxIdiDVpD6rZ3yUvSOThjhAeHj17XHrJFECsEqahOo5wyd7
+         mTZI8tKqRcs/q9IBFGNTEWEQh20pqeL60JFx5HaTUb6H58e3diyeymiGdocAyhbVTHYr
+         MTLA==
+X-Gm-Message-State: AOAM530leYYov/A9t93E+SDYxTPRqXxkZpjWNmybVG6WxR+T9g8e15uN
+        ANnaWoHXhjn7oWlrBZS9t/QMz7nas26yIGUfmEc=
+X-Google-Smtp-Source: ABdhPJxKNueiz8mwnyePS7Vkjy9RKaYBj2tNwlihopIK4bTcofes8GTOpNWso6zgcEKnHfjzfbXsqm6+ugDQw+CHgT0=
+X-Received: by 2002:a67:7d8b:: with SMTP id y133mr3379691vsc.87.1598044689488;
+ Fri, 21 Aug 2020 14:18:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2E6A6BA6-E3F3-11EA-BF2B-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+References: <20200815002509.2467645-1-jacob.e.keller@intel.com> <xmqqk0xx455u.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqk0xx455u.fsf@gitster.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 21 Aug 2020 14:17:58 -0700
+Message-ID: <CA+P7+xpew4-ZxcOjuTqq7B3ziYOpNzUWSaTMQLRnxZQPsb1PSA@mail.gmail.com>
+Subject: Re: [RFC 1/3] refspec: fix documentation referring to refspec_item
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->     If `user.name` and `user.email` have not been configured and the
->     user invokes:
+On Mon, Aug 17, 2020 at 9:18 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->         git commit --author=...
+> Jacob Keller <jacob.e.keller@intel.com> writes:
 >
->     without without specifying `--committer=`, then Git errors out
->     with a message asking the user to configure `user.name` and
->     `user.email` but doesn't tell the user which attribution was
->     missing. This can be confusing for a user new to Git who isn't
->     aware of the distinction between user, author, and committer.
->     Give such users a bit more help by extending the error message to
->     also say which attribution is expected.
+> > From: Jacob Keller <jacob.keller@gmail.com>
+> >
+> > In commit d27eb356bf25 ("remote: move doc to remote.h and refspec.h")
+> > the documentation for the refspec structure was moved into refspec.h
+> >
+> > This documentation refers to elements of the refspec_item, not the
+> > struct refspec. Move the documentation slightly in order to align it
+> > with the structure it is actually referring to.
+>
+> Makes sense to me.
+>
 
-Much easier to read.  Will steal.
+Hi Junio,
+
+I'm thinking I should send the first two patches a separate
+preparatory series while I follow up with a v2 of the RFC of negative
+refspecs
+
+Does that seem reasonable?
+
+Thanks,
+Jake
