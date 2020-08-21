@@ -2,111 +2,78 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25E91C433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E6EBC433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:21:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F03AC2054F
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:20:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ClQtyycw"
+	by mail.kernel.org (Postfix) with ESMTP id 066F220738
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 17:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729075AbgHURUd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 13:20:33 -0400
-Received: from us-smtp-1.mimecast.com ([207.211.31.81]:40484 "EHLO
-        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728044AbgHUQQK (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 21 Aug 2020 12:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1598026567;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type;
-        bh=k13RLLvoUA6rsxLuOHqN4WkqcorC158Mu/bNctVRAKA=;
-        b=ClQtyycwhTrMG6RFan7PaBiRGQ79LRF2j0tRRMOxeTwNhcnv4i2X1+XkgTZKvvWV6TEaYy
-        gO+E2Bcuzrsa3uehO87xyidlnRHQoC/LVxGOz3RzIBRNvJafuMf2TQOcBhZQGPV8WiJAeD
-        QBGQKklF5xA6XAxZZO9QY8HYdP+DsZQ=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-299-4nAEqJcrOpWmORBdh5K-XQ-1; Fri, 21 Aug 2020 12:16:01 -0400
-X-MC-Unique: 4nAEqJcrOpWmORBdh5K-XQ-1
-Received: by mail-pg1-f200.google.com with SMTP id c3so1293178pgq.9
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 09:16:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=k13RLLvoUA6rsxLuOHqN4WkqcorC158Mu/bNctVRAKA=;
-        b=Z3s9C8uuonWn2pAH68ald2IBs9OKp+Ft/10O5timnuqyXvz1K0q1hHXJ4+ZapVjFAL
-         xWbCaURYy0AkBeHHI7TqiD9f0xZfwQvj+CSyPuhFmUByTdmANrG8QsXhbj1JRNF5HbIa
-         59zAjPsWY1BhAehD7mu3wEXEWyxlzT6WbE18E+XHRl+2+w3Ic78pQ/rboriNa64CeiGA
-         Tl6pOkFudFKbT6UWYRMSdTMaKbKTOGNWWwGYeNwoDfm5/A1D2leY33IrgElh+VGJiy0i
-         to93X40ByD8stU6LpPB8OtU2Ti65sX9WgytWH3J8jr0KzwWIZEahwqpnZmLK9hdeMbCJ
-         /eRw==
-X-Gm-Message-State: AOAM533zhS93+1XaqjO3BxXwZDdXYJqxSt6aR8bMKiAWx3USgdhPxKwk
-        Z7vs0P0iaTL/Ftc1G0SOtyF5te4vNHdkZersVfbXqrMkQMicY0Q2ewc/fLfbVayORvY05s2bTaV
-        jKwp0B2ijyn7iBIdww14gZr4AgRYd
-X-Received: by 2002:a63:505b:: with SMTP id q27mr2696443pgl.91.1598026560158;
-        Fri, 21 Aug 2020 09:16:00 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJys83gtiKABoPTiWWfqCj81GUrAbtJEA8a0ZuzmONYQEqCc2SeEkgsHspdAGx1SkBHTcE2ULenTRP781oagJMo=
-X-Received: by 2002:a63:505b:: with SMTP id q27mr2696425pgl.91.1598026559824;
- Fri, 21 Aug 2020 09:15:59 -0700 (PDT)
+        id S1729128AbgHURVw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 13:21:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37256 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728010AbgHURVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 13:21:39 -0400
+Received: (qmail 18743 invoked by uid 109); 21 Aug 2020 17:21:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Aug 2020 17:21:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29848 invoked by uid 111); 21 Aug 2020 17:21:37 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Aug 2020 13:21:37 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 Aug 2020 13:21:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] refs: remove lookup cache for reference-transaction hook
+Message-ID: <20200821172137.GA3261095@coredump.intra.peff.net>
+References: <0db8ad8cdb69afb9d6453bf60a808e8b82382a4e.1597998473.git.ps@pks.im>
+ <20200821143727.GA3241139@coredump.intra.peff.net>
+ <xmqqeeo09chm.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-From:   Alvaro Aleman <aaleman@redhat.com>
-Date:   Fri, 21 Aug 2020 12:15:49 -0400
-Message-ID: <CAOW=8D2J3t3cE32q2xNqSOPTa6gxR5gSuJUCCj5MSj58ccc3Cg@mail.gmail.com>
-Subject: --author arg on commit only works if there is an email configured already
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqeeo09chm.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,
+On Fri, Aug 21, 2020 at 09:42:45AM -0700, Junio C Hamano wrote:
 
-It seems the `--author` arg on the `git commit` command only works if
-an author email is configured already somewhere:
+> Jeff King <peff@peff.net> writes:
+> 
+> > However, I wondered...
+> >
+> >> +test_perf "nonatomic push" '
+> >> +	git push ./target-repo.git branch-{1..1000} &&
+> >> +	git push --delete ./target-repo.git branch-{1..1000}
+> >> +'
+> 
+> Is this a bash-and-ksh-only test?  At least, the above would not try
+> to push 1000 branches with the version of dash I have.
 
-Sample that I would expect to work and that does not work:
+Heh, I was so focused on the "push" part of it that I didn't even look
+carefully at the second half of the command-line. ;)
 
-```
-$ docker run --rm -it golang /bin/bash -c 'cd $(mktemp -d); git init;
-touch test; git add test; git commit -m message --author "A U Thor
-<author@example.com>"'
-Initialized empty Git repository in /tmp/tmp.TiNqOZsw9C/.git/
+I think pushing "refs/heads/branch-*" would work for pushing. For
+deletion, though, I don't think we allow wildcards in the refspecs.
+You could abuse pruning:
 
-*** Please tell me who you are.
+  git push --prune ../dst.git refs/heads/does-not-exist/*:refs/heads/*
 
-Run
+It also may be OK to just omit that half of the test. I think the
+initial push exercises the case we care about. Though I guess we do run
+the test repeatedly, so we might have to do:
 
-  git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
+  rm -rf dst.git &&
+  git init dst.git &&
+  git push dst.git refs/heads/branch-*
 
-to set your account's default identity.
-Omit --global to set the identity only in this repository.
-
-fatal: unable to auto-detect email address (got 'root@aedfbe0df193.(none)')
-```
-
-When configuring any mail first, this works and uses the mail
-specified in the `--author` arg:
-
-```
-$ docker run --rm -it golang /bin/bash -c 'cd $(mktemp -d); git init;
-touch test; git add test; git config --local user.email
-"mail@domain.com"; git commit -m message --author "A U Thor
-<author@example.com>"'
-Initialized empty Git repository in /tmp/tmp.1drhE2Rgmh/.git/
-[master (root-commit) b3dad37] message
- Author: A U Thor <author@example.com>
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 test
-```
-
-The git version:
-$ docker run --rm -it golang  git --version
-git version 2.20
-
+-Peff
