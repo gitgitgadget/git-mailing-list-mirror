@@ -2,171 +2,150 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64C4AC433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E0FDC433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:40:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34250207DE
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:19:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 677BF2063A
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:40:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="VBGI92km"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0JmuEWW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728360AbgHUPTW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 11:19:22 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49033 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728047AbgHUPRv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 11:17:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1598023064;
-        bh=vb5KXUJrDgzOoysmKQEPcKYu/wnPoFbu6+pWHUPCVVo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=VBGI92kmJfuYUkPp2RSj4r0SfD9x5wkfTBNAwd2iMjHRJBpQl1gYret2N2wcm9rf2
-         AwS/srzj+laEompOQKcbZiUxY3Y6VyTptdJ7QEANPE6iZbSI+Roln9UP9A96HNrGX+
-         7+FQOMZngLycG99OL+scLeHd1NVGWPPcvXdLtr44=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.183.59] ([89.1.213.219]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsYux-1kwiRf0qGR-00u4vp; Fri, 21
- Aug 2020 17:17:44 +0200
-Date:   Fri, 21 Aug 2020 17:17:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v3 4/4] submodule: port submodule subcommand 'summary'
- from shell to C
-In-Reply-To: <20200812194404.17028-5-shouryashukla.oo@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2008211708280.56@tvgsbejvaqbjf.bet>
-References: <20200806164102.6707-1-shouryashukla.oo@gmail.com> <20200812194404.17028-1-shouryashukla.oo@gmail.com> <20200812194404.17028-5-shouryashukla.oo@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727926AbgHUPkz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 11:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55462 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727906AbgHUPky (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 11:40:54 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75BD2C061573
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 08:40:52 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id o23so2826424ejr.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 08:40:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=40//1uRhY8Ih/xYTje3yGd1eA2Nnm1MJPVcncfHYFs4=;
+        b=J0JmuEWWfSQDN67BdOGADTpbxS7Y78tiQS0hqKFJ33WvJu1YCvCPAnIqws3r4jZVBL
+         2JcM9zj1QtrwJyGrh4sRjxTKu4WD8Gxd5l7nkVesgQXWe0u6IDa7MiCfNIexXP87ctyg
+         Jz59vmrvQ3eK7G02Coir33RNuADLNtgIaMpEuzT6KPSRZwUjZN/m/42ZfW3k026Kjyb/
+         bBuAtYz9utVrvjjCr43b2RZQHlShmheBIwkALRL7LUukb35LH3X93KbSgsVKqGTb7eUQ
+         dHI5OqlsHyGa9dnbEhuxfolQu45qnJgMgi2h3Jhrb/EQ1ukYJawm1+/dIK8PVuyGSDQJ
+         9jqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=40//1uRhY8Ih/xYTje3yGd1eA2Nnm1MJPVcncfHYFs4=;
+        b=Yrv3Nbk9BYxS2UcT36HJj16Hr+3NRMMNIgw23+kUJDDlo7VXNOYywZGWIADEHTYUFE
+         JyRyq4Ai1hyO7EnLh76sR5d6qlQI3rWbh2KqUA0aVf+NYBU4I3GS0sXkKiugU57ReuFa
+         7JGBqRwPTJ7mbyOTE4ztFVb9ggAvhkk8XJ7ekYWP54lKicuHZmXcZFrpTH23K31JsquU
+         Ix1L7bSZF0dVyeSL8iy/4ZspQHS+iOqm8ATjcPc0wK76cNRgS6yG8qKc/HrS/BQyplN9
+         LJJO2ZX2VefVj5z8BoNalUq+JAXxR+c8TCKtY+5QhVcyHeWnk5kywNItS7OuxCQQh1wi
+         +ruw==
+X-Gm-Message-State: AOAM530BlxAJbuCoCrBx3IXCttdI9f/eNZQuVo6epO1uZSupjhbEawWU
+        oWB9VTyphfvQ7UGbmZnwklCTUswZlKJd0hg6g5HRhV0eja0=
+X-Google-Smtp-Source: ABdhPJw7FIvysJJa1HU6ZrB8jdf1BPhxIG50Ax60DVjOSR2uCPGkQIHHdayf66HwxFHCOYkR9cvD3Go2KlIeeJaG4ns=
+X-Received: by 2002:a17:907:2078:: with SMTP id qp24mr3450488ejb.286.1598024449961;
+ Fri, 21 Aug 2020 08:40:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Lw6c976jMZiwGUjhdY3Y0i2/9aDWJ1QK6J1OWcy+ttGH3Vngl34
- wkRk+iRwpA4kg18KlkH63YLNNfg2k5grohXrhG0NAaIsLQ22SMyKMFajxPcWmygonW7baMv
- J42tyZHMIZXN5xQTt7rqdhzgWkRvLHSakBXOgX1LG5J7NU97UN7LGq85i+nl7hBO0SEXHZ8
- 9mEThZ6EI+ZcJGoqjxrrA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TNyTD6NTEwo=:Vws10hrFnECb5WI1VRFHy7
- 6Fe/Au9bkEwX2mbmuSuUdqVFqZk3c2N2p0+XV2p1vx/s1UHoBuMUtZAbXTzmO2zFxZXIYLAKP
- zXZpRG+S/ce9K4cTY7evQYJuzN2CVIcxBgNypp0Yvzn7bG4iBBmEgCgcUbJmpIyhiLCPVEtll
- DqSIjmP6BPyUC2GN4vnsqAWNqE6CWHfQ7Wq7Viy6baSsRzT8rwTlDLp/e5l4CQkGeeak35gPf
- JV1vy8g46oxjthFKbYEP8PP+JSWOFuZRq31XDwEa6elryjgUTxb9Bl1iRtw0rFt0P1MzFopCR
- OrP64PmGpW8o/wyJR7pVZ/iA/HyDwF7mF0lnLhSSR73uyywVmNk4xjLCJIf0SuaRvmlLL603L
- ISajt2WLOFa5V9Y2gM3f4vKo+U2H0VPpe+2rRQ1CujZQpUE9V8H+Jxanp+qL8WyDweShxb8gi
- 8H+3e3oG5MXpkP+irrNhJ6egaqHUKLl21tiDevW2WCpi0iGM2hQIove96IVWMTiKEgmAKQJxT
- 25bv/88ek9+ZX6HcfZKmSADKgRbDm+u3ZSBE3N7Wo1jYLmHbZ4A0WI9B2Zaj1tsseT4KmekJ1
- 7YQJsNzJp8iaYGBDRcmU8I3bvQYuyVsVDLN5kUKwjizchLYGcvl4MjrcQjLi117rGhRIn40FO
- oHvizwiCKHh9mypauc9sc9NFQyIZYsWHgcdCKwZEJvTfWpv2rArWKaZKFSxCQqgabCneH2GQI
- H++FMEgAToOjNEDdAFZtgYaohD/Y1FMlNS4nGQCPdkXYu9oWnhqKjR9EL/Zf4udgvdgaCAMVk
- uKO9321T6x8ZPSJMqsX9HbavODQjLZpJ/WG6SRGH8JPuW2kqxjb8I68aS4WQ9cKkk2sp/ffUC
- E9wRFoqmZ5Sa1cf+FlpEQ8DLyAvEBQp00IqRFS+YYjxW11wqHVlva0k3SU6VR/wIy0dPhuXm/
- k1Gs4BsUWXR/j3uRxo6BpI1pVNiLb7G5UuHP6fJR14pQulbgglDk8fzokYGDmH2N+gNy/xb59
- hZ4ekoBahDV6nbxBhuXxzqUJJ6pUw/deed8E49jt0WqwlXUyZ0sgT2j9Z8dYT3ivTTBFX3Jej
- Y9316WPUP/4klqTHmpBl4dmgIgyY0G93s4AKT5zNtvfynNY8Kq5g8p+r68tah3t2JUxPqwhE2
- VkpSTArg7qHd91hgI+3xw6INgiPxViBn51bUsI6KlmTx+fb7HAhPdr99wxjndlX9cJZ6vMZxC
- 0RxOxl0+N4027oVCZ3PUts+tsXMj6G5FKHSSZiQ==
-Content-Transfer-Encoding: quoted-printable
+From:   Yohan de Oliveira <yohan.deoliveira@gmail.com>
+Date:   Fri, 21 Aug 2020 17:40:37 +0200
+Message-ID: <CADZrCYDayJ+kN08BQZ6DZXRc5hpZDr9mVFOWQPCawqfg_8Xzog@mail.gmail.com>
+Subject: credentialHelperSelector keep poping in 2.28 using windows identity story
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shourya,
+Hello,
 
-On Thu, 13 Aug 2020, Shourya Shukla wrote:
+I have some trouble when migrating from 2.27 to 2.28. here is my bugreport :
 
-> [...]
-> diff --git a/t/t7421-submodule-summary-add.sh b/t/t7421-submodule-summar=
-y-add.sh
-> index 829fe26d6d..59a9b00467 100755
-> --- a/t/t7421-submodule-summary-add.sh
-> +++ b/t/t7421-submodule-summary-add.sh
-> @@ -58,7 +58,7 @@ test_expect_success 'submodule summary output for subm=
-odules with changed paths'
->  	git commit -m "change submodule path" &&
->  	rev=3D$(git -C sm rev-parse --short HEAD^) &&
->  	git submodule summary HEAD^^ -- my-subm >actual 2>err &&
-> -	test_i18ngrep "fatal:.*my-subm" err &&
-> +	grep "fatal:.*my-subm" err &&
+What did you do before the bug happened? (Steps to reproduce your issue)
+I migrated from 2.27.0 to 2.28.0
 
-Sadly, this breaks on Windows: on Linux (and before this patch, also on
-Windows), the error message reads somewhat like this:
+What did you expect to happen? (Expected behavior)
+I connect to a https bitbucket server (ssl is blocked). For This, I
+stock my login/token in the windows identity store. Here, I have my
+server address as :
+https://bitbucket.server
+login: User
+password: token
+So I use credential.helper manager. To trust the certificate, I need
+to set the http.sslBackend = schannel, or I face the error "SSL
+certificate problem: unable to get local issuer certificate".
+When I do a "git pull" I'm supposed to have a line :
+$ git pull
+Already up to date.
 
-	fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or director=
-y
+In the windows identity store a new entry is created with server address :
+https://User@bitbucket.server
+login:User
+passwod: ?? (maybe my token)
 
-However, with the built-in `git submodule summary`, on Windows the error
-message reads like this:
+What happened instead? (Actual behavior)
+Instead, I have a strange behaviour where the
+"credentialHelperSelector" keep poping 2 times with the line :
+$ git pull
+error: key does not contain a section: -
+error: key does not contain a section: -
+Already up to date.
 
-	error: cannot spawn git: No such file or directory
+Everytime I do a git pull or anything that needs to ask the server, I
+have these 2 popups again and again and the error.
 
-Now, this is of course not the best way to present this error message, but
-please note that even providing a better error message does not fix the
-erroneous expectation of the `fatal:` prefix (Git typically produces this
-when `die()`ing, which can be done in the POSIX version that uses `fork()`
-and `exec()` but not in the Windows version that needs to use
-`CreateProcessW()` instead).
 
-Therefore, I propose this patch on top:
+What's different between what you expected and what actually happened?
+Normally, I used to set the credentialHelperSelector to manager once
+for all and never ask again for it. I did this in version 2.20 a long
+time ago and did not have this popup for a long time since now.
+I don't see the error key does not contain a section: -
 
-=2D- snipsnap --
-[PATCH] mingw: mention if `mingw_spawnve()` failed due to a missing direct=
-ory
+Anything else you want to add:
+Yes, by removing the new created entry in the windows identity store
+(https://User@bitbucket.server), there is still the 2 popups but no
+more error 'key does not contain a section: -'
 
-When we recently converted the `summary` subcommand of `git submodule`
-to be mostly built-in, a bug was uncovered where a very unhelpful error
-message was produced when a process could not be spawned because the
-directory in which it was supposed to be run does not exist.
+For the same .gitconfig file, it doesn't give the same result between
+version 2.27 and 2.28.
+Returning back to 2.27, no more popups, everything works fine.
 
-Even so, we _still_ have to adjust the `git submodule summary` test, to
-accommodate for the fact that the `mingw_spawnve()` function will return
-with an error instead of `die()`ing.
+Here is a part of my .gitconfig
+[color]
+    ui = auto
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- compat/mingw.c                   | 4 ++++
- t/t7421-submodule-summary-add.sh | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+[core]
+    autocrlf = input
+    eol = lf
+    longpaths = true
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 1a64d4efb26b..3c30d0cab589 100644
-=2D-- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1850,6 +1850,10 @@ static pid_t mingw_spawnve_fd(const char *cmd, cons=
-t char **argv, char **deltaen
- 	/* Make sure to override previous errors, if any */
- 	errno =3D 0;
+[http]
+    sslBackend = schannel
+    postBuffer = 4096000
 
-+	if (dir && !is_directory(dir))
-+		return error_errno(_("could not exec '%s' in '%s'"),
-+				   argv[0], dir);
-+
- 	if (restrict_handle_inheritance < 0)
- 		restrict_handle_inheritance =3D core_restrict_inherited_handles;
- 	/*
-diff --git a/t/t7421-submodule-summary-add.sh b/t/t7421-submodule-summary-=
-add.sh
-index 59a9b00467dc..f00d69ca29ea 100755
-=2D-- a/t/t7421-submodule-summary-add.sh
-+++ b/t/t7421-submodule-summary-add.sh
-@@ -58,7 +58,7 @@ test_expect_success 'submodule summary output for submod=
-ules with changed paths'
- 	git commit -m "change submodule path" &&
- 	rev=3D$(git -C sm rev-parse --short HEAD^) &&
- 	git submodule summary HEAD^^ -- my-subm >actual 2>err &&
--	grep "fatal:.*my-subm" err &&
-+	grep "my-subm" err &&
- 	cat >expected <<-EOF &&
- 	* my-subm ${rev}...0000000:
+[credential]
+    helper = manager
 
-=2D-
-2.28.0.windows.1
 
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+[System Info]
+git version:
+git version 2.28.0.windows.1
+cpu: x86_64
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+compiler info: gnuc: 10.2
+libc info: no libc information available
+[Enabled Hooks]
+
+Best regards,
+
+Yohan de Oliveira
