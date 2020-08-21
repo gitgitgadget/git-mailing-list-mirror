@@ -2,81 +2,91 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67541C433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05026C433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:41:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1333620720
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:34:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="F6OzJ3t3"
+	by mail.kernel.org (Postfix) with ESMTP id E254B20735
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725991AbgHUSe4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 14:34:56 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53118 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725802AbgHUSe4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 14:34:56 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FE13E3787;
-        Fri, 21 Aug 2020 14:34:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ki3nGDTpIwYCha1B7KKZSWrR4OY=; b=F6OzJ3
-        t3N4hQhEDtk2RtdRAi1y2GfCkp0Ci5P1bOBw8Rqes4L4pu1ZTUAeahPOviBNohCC
-        i+Xu0wx8Cuwkq3z4GDZQbsEDr7QhhlTowYenkApbqeMPXf8l2sB4EIl4uHdk8zSq
-        c0td8bwLvgEJv7tgxf239rSpzYSJsWoDgsFjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lHVNQ0R5gL+0nnFA2wL/0LE8c4Mx9U69
-        fDnV2rgtDw2BIwZMoZimzAPnZsE8FFd8Nvy6f+mQ1opWl6hNpSicd6RvOtCJU7kl
-        E1XWc0T9adkzNtFnTA5zEnggFsE2G5ig07HlFsHdDMdhTOT9ht0Ro8Y255ZyVpnO
-        MAPlkofwVYQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 385E7E3786;
-        Fri, 21 Aug 2020 14:34:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 682A3E3785;
-        Fri, 21 Aug 2020 14:34:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v3 0/4] Use refs API for handling sundry pseudorefs
-References: <pull.706.v2.git.1597850128.gitgitgadget@gmail.com>
-        <pull.706.v3.git.1598029177.gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 11:34:49 -0700
-In-Reply-To: <pull.706.v3.git.1598029177.gitgitgadget@gmail.com> (Han-Wen
-        Nienhuys via GitGitGadget's message of "Fri, 21 Aug 2020 16:59:33
-        +0000")
-Message-ID: <xmqq1rjzalva.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725938AbgHUSly (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 14:41:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37358 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725768AbgHUSlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 14:41:53 -0400
+Received: (qmail 19462 invoked by uid 109); 21 Aug 2020 18:41:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Aug 2020 18:41:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30663 invoked by uid 111); 21 Aug 2020 18:41:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Aug 2020 14:41:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 Aug 2020 14:41:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] index-pack: adjust default threading cap
+Message-ID: <20200821184152.GA3263614@coredump.intra.peff.net>
+References: <20200821175153.GA3263018@coredump.intra.peff.net>
+ <20200821175800.GC3263141@coredump.intra.peff.net>
+ <CAPig+cRQG6EN7Zq_fYMQOM7y9a6rgwWORZhN=px21-7RorWNdg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FFEF9730-E3DC-11EA-8A62-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRQG6EN7Zq_fYMQOM7y9a6rgwWORZhN=px21-7RorWNdg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, Aug 21, 2020 at 02:08:55PM -0400, Eric Sunshine wrote:
 
-> This series changes the handling of CHERRY_PICK_HEAD and REVERT_HEAD to use
-> the refs API, as a preliminary refactor for reftable. 
->
-> No functional changes.
->
-> Han-Wen Nienhuys (4):
->   refs: make refs_ref_exists public
->   sequencer: treat CHERRY_PICK_HEAD as a pseudo ref
->   builtin/commit: suggest update-ref for pseudoref removal
->   sequencer: treat REVERT_HEAD as a pseudo ref
+> On Fri, Aug 21, 2020 at 1:58 PM Jeff King <peff@peff.net> wrote:
+> > So what's a good default value? It's clear that the current cap of 3 is
+> > too low; our default values are 42% and 57% slower than the best times
+> > on each machine. The results on the 40-core machine imply that 20
+> > threads is an actual barrier regardless of the number of cores, so we'll
+> > take that as a maximum. We get the best results on these machines at
+> > half of the online-cpus value. That's presumably a result of the
+> > hyperthreading. That's common on multi-core Intel processors, but not
+> > necessarily elsewhere. But if we take it as an assumption, we can
+> > perform optimally on hyperthreaded machines and still do much better
+> > than the status quo on other machines, as long as we never half below
+> > the current value of 3.
+> 
+> I'm not familiar with the index-pack machinery, so this response may
+> be silly, but the first question which came to my mind was whether or
+> not SSD vs. spinning-platter disk impacts these results, and which of
+> the two you were using for the tests (which I don't think was
+> mentioned in any of the commit messages). So, basically, I'm wondering
+> about the implication of this change for those of us still stuck with
+> old spinning-platter disks.
 
-Thanks.
+They were both SSD machines, but it wouldn't matter for these tests
+because they easily fit the whole pack into memory anyway.
+
+But in the general case, I don't think disk performance would be
+relevant. Delta resolution is very CPU-bound, because it's
+de-compressing data and then computing its SHA-1. So linux.git, for
+instance, is looking at ~1.3GB on disk that expands to 87.5GB of bytes
+to run through SHA-1.
+
+And it would be pretty unlikely to hit the disk anyway, as the thing we
+primarily index is incoming packs which we've literally just written. So
+I'd expect them to be in cache.
+
+Of course, if you can get different numbers from p5302, I'd be curious
+to hear them. :)
+
+A more plausible downside might be that memory usage would increase as
+we operate on multiple deltas at once. But pack-objects is already much
+more hungry here, as it runs online_cpus() delta-compression threads
+simultaneously, each of which may have up to window_size entries in
+memory at once.
+
+-Peff
