@@ -2,135 +2,191 @@ Return-Path: <SRS0=jbtA=B7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B91C7C433E4
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 19:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 410F5C433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 19:56:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91E9E214F1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 19:55:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 105AB20724
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 19:56:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xhRPoveQ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KYQarT5y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbgHUTzC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 15:55:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55270 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726889AbgHUTyw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 15:54:52 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D9BF7BAB1;
-        Fri, 21 Aug 2020 15:54:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PA21XC685WOhRQpUCvNjCrdi5qE=; b=xhRPov
-        eQiJrdv983YJ+Q4xXX8lnb6N154JpKXBmufzelC8N2yaNHJXD5FLPt7ltL+rtZy7
-        or2/BoeoAmtOtR5NwAocvPHtczsL1pI0oQ4jHRizkuIzfwQSMN8uZ/f+bm2X+Bc/
-        46Ox7NJt9TsTu1pfPMPbIgOOCM7cWjwI9MtgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mMrj5hU3T544CebtuhzZsNrum+oUA698
-        jVhjJd+VWFFE+222ysSbB1VD/2TPpdvXCZSzuSN0RXi9RwT9LOF/8xZ8lPgFa/mw
-        4JRZBdR3AxKYPDm9ADfT1mc4qsF4eNR337CY9YH62uDw4ZzyAboE1MSEtK/X95B+
-        uUEN+glfE8g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 83AC57BAB0;
-        Fri, 21 Aug 2020 15:54:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 006C77BAAF;
-        Fri, 21 Aug 2020 15:54:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Johannes.Schindelin@gmx.de, chriscool@tuxfamily.org,
-        christian.couder@gmail.com, git@vger.kernel.org,
-        liu.denton@gmail.com, pc44800@gmail.com, stefanbeller@gmail.com
-Subject: Re: [PATCH v3 4/4] submodule: port submodule subcommand 'summary' from shell to C
-References: <20200821171705.GA16484@konoha>
-        <xmqq5z9ban27.fsf@gitster.c.googlers.com>
-        <377b1a2ad60c5ca30864f48c5921ff89b5aca65b.camel@gmail.com>
-Date:   Fri, 21 Aug 2020 12:54:46 -0700
-In-Reply-To: <377b1a2ad60c5ca30864f48c5921ff89b5aca65b.camel@gmail.com>
-        (Kaartic Sivaraam's message of "Sat, 22 Aug 2020 00:24:01 +0530")
-Message-ID: <xmqqa6yn93ll.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726661AbgHUT4K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 15:56:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:20800 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726593AbgHUT4I (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 21 Aug 2020 15:56:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1598039766;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=rXPptV5IoHq19Mr7lJ6o8NzD6v3UGPD6sqtkMQ8IyQM=;
+        b=KYQarT5yQUhkV2clxffzeP8K5rIqpYr9cGcq6S4lgq5RHxzVDOjIgydpceC9kbbwBuvek0
+        3uOcYhs9Om3TvQSF+bpo0zItIwJm5ZSYC3d/r1rZVXQ0WOTrUwdIBSiEVv2XtZRomKt+gf
+        Gb4H6yHbs9woiTVuQPxbtp6PmOmb3Wc=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-413-Pv3ZA9-YPQCtRWqFtvn7jA-1; Fri, 21 Aug 2020 15:56:03 -0400
+X-MC-Unique: Pv3ZA9-YPQCtRWqFtvn7jA-1
+Received: by mail-pf1-f199.google.com with SMTP id y11so1964573pfq.8
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 12:56:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rXPptV5IoHq19Mr7lJ6o8NzD6v3UGPD6sqtkMQ8IyQM=;
+        b=duv3nScWW0speWH1GnQ9wuU8wUuYgzfRejzO6Ot6w7+yjeemZu60SjIOub8eGqmCva
+         1MslXmuudS59cmYzNKzizpUQFj0N9X4aLFvy1VFx22NonOpKytRpHosFCWFRAr/hW3hi
+         QH1LV1d1adhWpZe5CZPr+pP0Hjk5Dpg3+tuIoAKEF+MG8nMoguNMq9BrapP548bxbiva
+         R4k2tJ4XuGjeODT9fyIdWGhK8HLRfEjl2nLZXFBKgjX/7pTo7f80PmSjPg08rw7wogZe
+         ottFu2W4pWbQofLMZduFAMEa3IGFJo9cgbdyP1v666doklmKWqFMJEfLTStWoh4CSPbz
+         6A3A==
+X-Gm-Message-State: AOAM531NPVMwEJpNeYnPzLmk90dhoIW/KeJWMce7lZwwn+nCEypHZZaF
+        d8RxyB05Bhie4BfFOcLM9MrzgrWVOO9osli2hkTQ65PmLV8ef1ZJFOgeqpduVu22zFSNqgu4dkN
+        rsIPmKbTDV7CHxQYC0/UUjZrckF6t
+X-Received: by 2002:a65:6882:: with SMTP id e2mr3485796pgt.290.1598039762611;
+        Fri, 21 Aug 2020 12:56:02 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyo8K5ooNIWxp/Hg4WiXxQg/IdHVNClRIbwyDCTzBi5YK9nsDJf4ME0R1YpD4zYuLf8UbHrKCK6p3b+c6Rj3YU=
+X-Received: by 2002:a65:6882:: with SMTP id e2mr3485772pgt.290.1598039762195;
+ Fri, 21 Aug 2020 12:56:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2A52D216-E3E8-11EA-B477-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <CAOW=8D2J3t3cE32q2xNqSOPTa6gxR5gSuJUCCj5MSj58ccc3Cg@mail.gmail.com>
+ <87ft8fvoow.fsf@igel.home> <xmqqr1rz96ry.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1rz96ry.fsf@gitster.c.googlers.com>
+From:   Alvaro Aleman <aaleman@redhat.com>
+Date:   Fri, 21 Aug 2020 15:55:51 -0400
+Message-ID: <CAOW=8D3WZyoc=PpyzmPRYM2MT_=F4tnuTxJ0Z+_dHMb4Xk8imQ@mail.gmail.com>
+Subject: Re: --author arg on commit only works if there is an email configured already
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+Thank you for the explanation. Yes, having the error explicitly
+mention t about which of author/committer this is would be helpful.
 
-> Here's the error message with context of the trash directory of that
-> test:
+On Fri, Aug 21, 2020 at 2:47 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> -- 8< --
-> $ cd t
-> $ ./t7421-submodule-summary-add.sh  -d
-> $ cd trash\ directory.t7421-submodule-summary-add/
+> Andreas Schwab <schwab@linux-m68k.org> writes:
 >
-> $ git submodule summary HEAD^^
-> fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or directory
-> * my-subm 35b40f1...0000000:
+> > On Aug 21 2020, Alvaro Aleman wrote:
+> >
+> >> It seems the `--author` arg on the `git commit` command only works if
+> >> an author email is configured already somewhere:
+> >
+> > The `--author' argument only sets the author, but git still need to fill
+> > in the committer.
 >
-> * subm 0000000...dbd5fc8 (2):
->   > add file2
+> In other words, the --author option works just fine.  You still need
+> to tell Git what committer identity you want to use, and the easiest
+> way to do so is with user.{name,email} configuration variables.
 >
-> -- >8 --
+> I wonder if it helps to give an extra line of message like the
+> attached (untested) patch, though.
 >
-> That 'fatal' is a consequence of spawning a process in
-> `verify_submodule_committish` of `builtin/submodule--helper.c` even for
-> non-existent submodules.
-
-Oh, so doing something that would cause the error message to be
-emitted itself is a bug.
-
-> I don't think that 'fatal: ' message is giving
-> any useful information here. The fact that submodule 'my-subm' doesn't
-> exist can easily be inferred just by looking at the destination mode
-> (0000000). If anything that 'fatal' message is just confusing and
-> unnecessary, IMO.
-
-Yes, I 100% agree.
-
-> So, we could easily suppress it by doing something like this (while
-> also fixing the test):
-
-Yup.  That is a very good idea.  
-
-Or the caller of verify_submodule_committish() should refrain from
-calling it for the path?  After all, it is checking sm_path is a
-path to where a submodule should be before calling the function
-(instead of calling it for every random path), iow its criteria to
-make the call currently may be "the path in the index says it is a
-submodule", but it should easily be updated to "the path in the
-index says it is a submodule, and the submodule actually is
-populated", right?
-
-> @@ -972,7 +972,7 @@ static char* verify_submodule_committish(const char *sm_path,
->         strvec_pushf(&cp_rev_parse.args, "%s^0", committish);
-> ...
-> BTW, I noted that `print_submodule_summary` has the following
-> definition:
+>  ident.c | 51 ++++++++++++++++++++++++++++++++++-----------------
+>  1 file changed, 34 insertions(+), 17 deletions(-)
 >
->    static void print_submodule_summary(struct summary_cb *info, char* errmsg
->    				    ...
+> diff --git a/ident.c b/ident.c
+> index e666ee4e59..177ac00261 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -345,18 +345,35 @@ int split_ident_line(struct ident_split *split, const char *line, int len)
+>         return 0;
+>  }
 >
-> Note how '*' is placed near 'char' for 'errmsg' with an incorrect style. Ditto
-> for the return type of `verify_submodule_committish`. This might make
-> for a nice cleanup patch.
+> -static const char *env_hint =
+> -N_("\n"
+> -   "*** Please tell me who you are.\n"
+> -   "\n"
+> -   "Run\n"
+> -   "\n"
+> -   "  git config --global user.email \"you@example.com\"\n"
+> -   "  git config --global user.name \"Your Name\"\n"
+> -   "\n"
+> -   "to set your account\'s default identity.\n"
+> -   "Omit --global to set the identity only in this repository.\n"
+> -   "\n");
+> +
+> +static void ident_env_hint(enum want_ident whose_ident)
+> +{
+> +       static const char *env_hint =
+> +               N_("\n"
+> +                  "*** Please tell me who you are.\n"
+> +                  "\n"
+> +                  "Run\n"
+> +                  "\n"
+> +                  "  git config --global user.email \"you@example.com\"\n"
+> +                  "  git config --global user.name \"Your Name\"\n"
+> +                  "\n"
+> +                  "to set your account\'s default identity.\n"
+> +                  "Omit --global to set the identity only in this repository.\n"
+> +                  "\n");
+> +
+> +       switch (whose_ident) {
+> +       case WANT_AUTHOR_IDENT:
+> +               fputs(_("Author identity unknown\n"), stderr);
+> +               break;
+> +       case WANT_COMMITTER_IDENT:
+> +               fputs(_("Committer identity unknown\n"), stderr);
+> +               break;
+> +       default:
+> +               break;
+> +       }
+> +
+> +       fputs(_(env_hint), stderr);
+> +}
+>
+>  const char *fmt_ident(const char *name, const char *email,
+>                       enum want_ident whose_ident, const char *date_str, int flag)
+> @@ -375,12 +392,12 @@ const char *fmt_ident(const char *name, const char *email,
+>         if (!email) {
+>                 if (strict && ident_use_config_only
+>                     && !(ident_config_given & IDENT_MAIL_GIVEN)) {
+> -                       fputs(_(env_hint), stderr);
+> +                       ident_env_hint(whose_ident);
+>                         die(_("no email was given and auto-detection is disabled"));
+>                 }
+>                 email = ident_default_email();
+>                 if (strict && default_email_is_bogus) {
+> -                       fputs(_(env_hint), stderr);
+> +                       ident_env_hint(whose_ident);
+>                         die(_("unable to auto-detect email address (got '%s')"), email);
+>                 }
+>         }
+> @@ -397,13 +414,13 @@ const char *fmt_ident(const char *name, const char *email,
+>                 if (!name) {
+>                         if (strict && ident_use_config_only
+>                             && !(ident_config_given & IDENT_NAME_GIVEN)) {
+> -                               fputs(_(env_hint), stderr);
+> +                               ident_env_hint(whose_ident);
+>                                 die(_("no name was given and auto-detection is disabled"));
+>                         }
+>                         name = ident_default_name();
+>                         using_default = 1;
+>                         if (strict && default_name_is_bogus) {
+> -                               fputs(_(env_hint), stderr);
+> +                               ident_env_hint(whose_ident);
+>                                 die(_("unable to auto-detect name (got '%s')"), name);
+>                         }
+>                 }
+> @@ -411,7 +428,7 @@ const char *fmt_ident(const char *name, const char *email,
+>                         struct passwd *pw;
+>                         if (strict) {
+>                                 if (using_default)
+> -                                       fputs(_(env_hint), stderr);
+> +                                       ident_env_hint(whose_ident);
+>                                 die(_("empty ident name (for <%s>) not allowed"), email);
+>                         }
+>                         pw = xgetpwuid_self(NULL);
+>
 
-Yup.  It would have been nicer to catch these before the topic hit
-'next'.
-
-Thanks.
