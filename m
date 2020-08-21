@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC3E2C433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E669C433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1C5420724
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56D1220724
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 21:42:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmSpUYkK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h8Y5hqa1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbgHUVmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 17:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55058 "EHLO
+        id S1726818AbgHUVmH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 17:42:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726792AbgHUVlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 17:41:55 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14C2BC061574
+        with ESMTP id S1726793AbgHUVl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 17:41:56 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D130BC061575
         for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:41:55 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g75so3125614wme.4
+Received: by mail-wr1-x442.google.com with SMTP id l2so3191790wrc.7
         for <git@vger.kernel.org>; Fri, 21 Aug 2020 14:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PSLsgbsMTwXOlHbD5s/hbx0sdlArgiwvBIPDoMGVOgM=;
-        b=bmSpUYkKKjj7u3VWijAPgIEP3j4jAaadmetJlOSyhLWM4KNBArnA6yfQ3HbBSe1NHu
-         u+0z7Lk1fB1md01CTmGPFfsTEM1XyZ7mX6hilzClIroQFToNSp+XWHOPMxlc9EooXBH3
-         GkJfLqsBkT+iBz5udBuYTlD4K0PIMDUMw5GDsT0TVFJJCBymEc71WAtr2ESNVQ3a3xz0
-         1svFAOGfRJdsAHScWBVK/ijL+/ZFkajlvNxOdwZYPJMpES3VjanFHsXZ1tB3dA6Rbriy
-         /YXP6nVFsmytGPXCjtg93dE36EyvnignhS6lyHGE7SqaXgFWGTIgav/F3/PE9EB87rFQ
-         rUKQ==
+        bh=cRalOlriif3z6cxzVgA5CoycAdB4v2Pz0Kz77A3aYd8=;
+        b=h8Y5hqa19BbjHAmI4mKX5IysKkasZlStRHKa+SSxo3wRa1gPVQTU2bodFWyf8YcEZw
+         KHysO+nyC2kjIW1aiE4J8fI301p0iEK5BTnTxlNhgcP90/sbX6IipiuMORPVM8zMGjtw
+         b06cJA3+MF8HOiEPSVXJLLws1wOhPSiHG9Rzz1VhvLibE8UQMFHSv4wzZC5Itdot1XNC
+         lyP4Ij0bHrb2ohFWt/lXQcHErN4MLsnleKExeINwRPvu7ZQAQBNXz9x/mssWKUAzEL06
+         wjdO5OuXSj/07n4rR7wy3T7w4xTZwlVpIRUCqzGZX3sKEWcbAGuFRl4a2DY0p1FOm8Lx
+         +TGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PSLsgbsMTwXOlHbD5s/hbx0sdlArgiwvBIPDoMGVOgM=;
-        b=Dk+IU1MWXbkO5AJ2S5MTdjeYo9FBfzozvcvECCsrobCRO2s4OrZTMCBx84FBFTlZno
-         jPWbwQJ/GhIS4ITY79hUMrBqDKCU5il1F7I4Pk1Ujm/rJIpy2Z8x4/yyEUPJdjYRed8m
-         Sqvs3ZjP5J9s/e/TANYJUN+CG1GTKiz5Ztn4ebl0cK17rd0RUFQn+yVCoQ+1VsPWq4TF
-         xTSyLSSDh5Y/fBF0xILsRTyUSGqcRKQSqEri/WYnhcOZ4BFGViDL44G9SAoGOCmdYcsp
-         mq0nxabDR/cdAGMIgE79uDUtyiJRR+c2t6QsWml+LE8d3Ox4mtss7eDwPnRR3UBXMNUK
-         vrCg==
-X-Gm-Message-State: AOAM532lz+1RdDuULEU+rQGKrANfuoItTUFA0Uw5IOxN3YvindDOraYC
-        nI2OKxqPBClyfLz3tZ2HMbxS112x7ZM=
-X-Google-Smtp-Source: ABdhPJxa8CeqiCvxiqu5b90Ic62dXlyrC45wmfbXhus56XbsUomJZKaBwHAJONU+Gs1YWMiGUQeEwQ==
-X-Received: by 2002:a1c:1b8f:: with SMTP id b137mr5221054wmb.151.1598046113661;
-        Fri, 21 Aug 2020 14:41:53 -0700 (PDT)
+        bh=cRalOlriif3z6cxzVgA5CoycAdB4v2Pz0Kz77A3aYd8=;
+        b=f+Y45cz82qB1q2RZHxpGEcEq9XyjY7ipYzX7PQ/ZD2tYaERiR6XRdgYc9bAi/ikYYn
+         3+BnLWRRFSlFU0vjvOXbUS/UfcINlnRAeyO212Zb3t1Xwg4Y0kZJUdH0dwE5ucN+8/AU
+         tckQkuE5Llb0h/+8zYDWxpYB6YhZZzhtmzN/jgWaRhybP8u/XoVBSpqTyYVWX5cavhUz
+         vzgwCdd9ZUQwSbmW6ashTcvnJHkQk9sC2F4j+Q8t+NNei44wgjjV9qVocaM2wnS2gs35
+         8fIjFkUfjtr6HyxO5mfQOTxvLr2le+sSx56Rb+mg8ZX0dZL21kPsl1VzWuQAeOHmXX6+
+         cErg==
+X-Gm-Message-State: AOAM5334Da/cThompQjAR3mfJYHUvnvz5wTNqU2/e1iZJdk8UKLJgM0i
+        +5jGawXeSUSJRWqCl55jRunAqcbSTFI=
+X-Google-Smtp-Source: ABdhPJxY6pwHTg3OXHFkBLNVVo9bnC0E+l/bCMiN3kTptPsldvCEiZAok8CMv37ovD8d9GMfQOrR9A==
+X-Received: by 2002:adf:e911:: with SMTP id f17mr4289353wrm.397.1598046114411;
+        Fri, 21 Aug 2020 14:41:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y142sm8205274wmd.3.2020.08.21.14.41.52
+        by smtp.gmail.com with ESMTPSA id m16sm6348608wrr.71.2020.08.21.14.41.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 14:41:52 -0700 (PDT)
-Message-Id: <c508c96eb88f7e11b0ac6303c30fa78dd7585ec0.1598046110.git.gitgitgadget@gmail.com>
+        Fri, 21 Aug 2020 14:41:54 -0700 (PDT)
+Message-Id: <582f00ace6b3173cfebb3f6e5d859f471ea01ab7.1598046110.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.684.v4.git.1598046110.gitgitgadget@gmail.com>
 References: <pull.684.v3.git.1597687822.gitgitgadget@gmail.com>
         <pull.684.v4.git.1598046110.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 21:41:44 +0000
-Subject: [PATCH v4 2/8] ref-filter: refactor `grab_objectname()`
+Date:   Fri, 21 Aug 2020 21:41:45 +0000
+Subject: [PATCH v4 3/8] ref-filter: modify error messages in
+ `grab_objectname()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,80 +80,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-Prepares `grab_objectname()` for more generic usage.
-This change will allow us to reuse `grab_objectname()` for
-the `tree` and `parent` atoms in a following commit.
+As we plan to use `grab_objectname()` for `tree` and `parent` atom,
+it's better to parameterize the error messages in the function
+`grab_objectname()` where "objectname" is hard coded.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- ref-filter.c | 36 +++++++++++++++++++++---------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ ref-filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index e60765f156..9bf92db6df 100644
+index 9bf92db6df..4f4591cad0 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -918,21 +918,27 @@ int verify_ref_format(struct ref_format *format)
+@@ -372,11 +372,11 @@ static int objectname_atom_parser(const struct ref_format *format, struct used_a
+ 		atom->u.objectname.option = O_LENGTH;
+ 		if (strtoul_ui(arg, 10, &atom->u.objectname.length) ||
+ 		    atom->u.objectname.length == 0)
+-			return strbuf_addf_ret(err, -1, _("positive value expected objectname:short=%s"), arg);
++			return strbuf_addf_ret(err, -1, _("positive value expected '%s' in %%(%s)"), arg, atom->name);
+ 		if (atom->u.objectname.length < MINIMUM_ABBREV)
+ 			atom->u.objectname.length = MINIMUM_ABBREV;
+ 	} else
+-		return strbuf_addf_ret(err, -1, _("unrecognized %%(objectname) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized argument '%s' in %%(%s)"), arg, atom->name);
  	return 0;
  }
  
--static int grab_objectname(const char *name, const struct object_id *oid,
-+static const char *do_grab_objectname(const char *field, const struct object_id *oid,
-+				      struct used_atom *atom)
-+{
-+	switch (atom->u.objectname.option) {
-+	case O_FULL:
-+		return oid_to_hex(oid);
-+	case O_LENGTH:
-+		return find_unique_abbrev(oid, atom->u.objectname.length);
-+	case O_SHORT:
-+		return find_unique_abbrev(oid, DEFAULT_ABBREV);
-+	default:
-+		BUG("unknown %%(%s) option", field);
-+	}
-+}
-+
-+static int grab_objectname(const char *name, const char *field, const struct object_id *oid,
- 			   struct atom_value *v, struct used_atom *atom)
- {
--	if (starts_with(name, "objectname")) {
--		if (atom->u.objectname.option == O_SHORT) {
--			v->s = xstrdup(find_unique_abbrev(oid, DEFAULT_ABBREV));
--			return 1;
--		} else if (atom->u.objectname.option == O_FULL) {
--			v->s = xstrdup(oid_to_hex(oid));
--			return 1;
--		} else if (atom->u.objectname.option == O_LENGTH) {
--			v->s = xstrdup(find_unique_abbrev(oid, atom->u.objectname.length));
--			return 1;
--		} else
--			BUG("unknown %%(objectname) option");
-+	if (starts_with(name, field)) {
-+		v->s = xstrdup(do_grab_objectname(field, oid, atom));
-+		return 1;
- 	}
- 	return 0;
- }
-@@ -960,7 +966,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 		} else if (!strcmp(name, "deltabase"))
- 			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
- 		else if (deref)
--			grab_objectname(name, &oi->oid, v, &used_atom[i]);
-+			grab_objectname(name, "objectname", &oi->oid, v, &used_atom[i]);
- 	}
- }
- 
-@@ -1740,7 +1746,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		} else if (!deref && grab_objectname(name, &ref->objectname, v, atom)) {
-+		} else if (!deref && grab_objectname(name, "objectname", &ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
- 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
 -- 
 gitgitgadget
 
