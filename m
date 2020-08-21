@@ -7,153 +7,232 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69099C433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 10:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AECB0C433DF
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 11:05:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4835E20656
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 10:11:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8348720738
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 11:05:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C2HOqgh4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXxEN8qq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728548AbgHUKLN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 06:11:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60544 "EHLO
+        id S1727846AbgHULFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 07:05:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727846AbgHUKLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 06:11:08 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBBF0C061387
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 03:11:07 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id b17so644650wru.2
-        for <git@vger.kernel.org>; Fri, 21 Aug 2020 03:11:07 -0700 (PDT)
+        with ESMTP id S1726118AbgHULFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 07:05:22 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1434EC061385
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 04:05:22 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id 185so1380660ljj.7
+        for <git@vger.kernel.org>; Fri, 21 Aug 2020 04:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=obr7vrjW8EfxlMosv0HNmUXesii9n8cwKnFfiKqp6wo=;
-        b=C2HOqgh4MPnrIQ5oRfdDiX5IidtuTXzPQ3MGbswNWjfYbjllpBFMFmq5tfUjCrXXwu
-         WPQrxLzlBQu/wh7r3Kr2p/k7jDbjTGuVnKohexeL9SN480WkPUxg+rhLBpLtKp8oUCg5
-         Mh8TUfVA2AUvSprsEyGQ6JUEMaHZHIJT/pseJDebgAMNs/PBT13kA0ttbu3SddpENouV
-         cmJ4MeqUgXQHTUCJPI09tLtfYiXwYoV6Ed//6+Q7Oo2JxbM0M2v1Cp2fUKVre2mtxVpj
-         6vAnweDyJPzh7TzkHgLcVpl1nfb8HJ1vQtqF5MLSTTiKwbjMGqUpCamYUX0NNbQMMnJG
-         5tEg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=H8yZNtz5AJ7z47i2IsisYOGCwSY8IlgWxFfoaRYzCEY=;
+        b=aXxEN8qqXxBvPiyY6QMsIR5cK8qOMuCytOhuhRWq9HFEXMP8h9m4MUPU1mNOwPaMZh
+         4Y2U6su8zC3YJqC3rSWk9NwQzkO1eVzv7ST818XQSqwI/qnVF9vcOvS1qJbOzwpATvb1
+         PqRLzrVAxHKFeuftaDS2K5GHPK9siMBSqjEeAnBGKHaZ6+9B9LyeSBjR2xKSkw1bNBty
+         DrgNrV+mn8MptKNimOHgq8RGHjqEG8XeoTSAQWCV5UmXC1EbwrXxxOQXZcfBI1UhQD6p
+         QiVoSARArU4wIUNCjUKId9aU7bI8w1zlStUdRau6Z0ynF1PZ5OeEjEr88N9tASFC6qt+
+         r0pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=obr7vrjW8EfxlMosv0HNmUXesii9n8cwKnFfiKqp6wo=;
-        b=W/zyvyUWvu3b9/UAgRLPA0JzKVph/5JKfrqC6IqTN+WatmPgMPRGYMeX3GCkCCPOC9
-         CrsZxeljsJZqJJW/6cek/OSoOy+RU7cVptnTgWkMTTk30d2pd9q1KS5VJfbd1m0n3AJX
-         uvVKY8IU6dQiskcTUvZ6+WfiY+NyGjS+F5UGZ9iSXUSyHUpt5MN3kx9MyhZ3AZ62glVI
-         6+CEnXqvQHgz+xn1/yqbZgsqBVcjY+CIJLLpbpJzS09+2kohLTGxPmSvAoKShm13JopM
-         tSKczbE0SFrzpciVnupi7mJhaiKJ9yAUOehglgW6z8z/GbO5Y3zjtpkUzSQjGKgZXdZx
-         1qWQ==
-X-Gm-Message-State: AOAM530GiPJg/Hq/MS3AK9vxehiGNa/bCtCYVt5t1bly37oDUIZuHnUQ
-        FVJ70t+P2qltjs/O+JBOq13qwsqP2eA=
-X-Google-Smtp-Source: ABdhPJypigXyMts3YsfwpuP2jV3ei2YPPXbHA9jVFrBZtbrbPphPNC2l9KJLzhLVWKRe/mcOQTgPxQ==
-X-Received: by 2002:adf:ab0d:: with SMTP id q13mr1933544wrc.134.1598004666321;
-        Fri, 21 Aug 2020 03:11:06 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u6sm3772621wmc.12.2020.08.21.03.11.05
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=H8yZNtz5AJ7z47i2IsisYOGCwSY8IlgWxFfoaRYzCEY=;
+        b=gLCDadqRfVf/z1DryBROqjLpOBqMDv5V9JgQDin0jM7WPr5lpbfsNVrwXI7vAZ0SBF
+         x7vidVGRWoQKOsXOUSj7DP0CzB7qQ+8WyrQdx+Zku+zTeF6R5mkiH2LNS8dcZ7UhUDWn
+         5of7uzLzzN9ydSJJ5zWx6CqMX4iFlA7PCu2rtcN6hPb/eoKajdb83Fh10bQL4+PsKH91
+         78p1JiCmIDEh6XKHAYpTcSym1fOOqtvm0KNlUDquSYQMmT82yLJlfi8jZq0hDa4WQsdv
+         F+V7rbKyXaPhMJVA0F88vsZew4U0KFeOWSPuPbAVrQVXE8f198b80U4oD2wr43Wawg3W
+         X08Q==
+X-Gm-Message-State: AOAM532YuobiqGR3OjO7E5KbEMKsdOdOwkm/oEBQLr1yx06UhzgX6+hG
+        EhALq+M1N9o6/TAga/Qtnlxao1as2bmoQw==
+X-Google-Smtp-Source: ABdhPJzM9PkYK2T8lVO2CbhpJfHeog0TUbnNdarAvuarKJfaEhJoxUeQu9qAogNbNL4ifyAVx5cySA==
+X-Received: by 2002:a2e:9913:: with SMTP id v19mr1206780lji.292.1598007920298;
+        Fri, 21 Aug 2020 04:05:20 -0700 (PDT)
+Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id a21sm311521ljh.114.2020.08.21.04.05.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 03:11:05 -0700 (PDT)
-Message-Id: <39aa46bce700cc9a4ca49f38922e3a7ebf14a52c.1598004663.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.707.v2.git.1598004663.gitgitgadget@gmail.com>
-References: <pull.707.git.1597841551.gitgitgadget@gmail.com>
-        <pull.707.v2.git.1598004663.gitgitgadget@gmail.com>
-From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 10:11:02 +0000
-Subject: [PATCH v2 2/2] ref-filter: 'contents:trailers' show error if `:` is
- missing
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 21 Aug 2020 04:05:19 -0700 (PDT)
+From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
+To:     "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 04/11] commit-graph: consolidate compare_commits_by_gen
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+        <6a0cde983d9ed20f043a4977313d714154602012.1597509583.git.gitgitgadget@gmail.com>
+Date:   Fri, 21 Aug 2020 13:05:19 +0200
+In-Reply-To: <6a0cde983d9ed20f043a4977313d714154602012.1597509583.git.gitgitgadget@gmail.com>
+        (Abhishek Kumar via GitGitGadget's message of "Sat, 15 Aug 2020 16:39:36
+        +0000")
+Message-ID: <85sgcgmf80.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Hariom Verma <hariom18599@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Hariom Verma <hariom18599@gmail.com>
+"Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The 'contents' atom does not show any error if used with 'trailers'
-atom and semicolon is missing before trailers arguments.
+> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+>
+> Comparing commits by generation has been independently defined twice, in
+> commit-reach and commit. Let's simplify the implementation by moving
+> compare_commits_by_gen() to commit-graph.
 
-e.g %(contents:trailersonly) works, while it shouldn't.
+All right, seems reasonable.
 
-It is definitely not an expected behavior.
+Though it might be not obvious that the second repetition of code
+comparing commits by generation is part of commit.c's
+compare_commits_by_gen_then_commit_date().
 
-Let's fix this bug.
+Is't it micro-pessimization though, or can the compiler inline function
+across different files?  On the other hand it reduces code duplication...
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Heba Waly <heba.waly@gmail.com>
-Signed-off-by: Hariom Verma <hariom18599@gmail.com>
----
- ref-filter.c            | 21 ++++++++++++++++++---
- t/t6300-for-each-ref.sh |  9 +++++++++
- 2 files changed, 27 insertions(+), 3 deletions(-)
+>
+> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> Reviewed-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> ---
+>  commit-graph.c | 15 +++++++++++++++
+>  commit-graph.h |  2 ++
+>  commit-reach.c | 15 ---------------
+>  commit.c       |  9 +++------
+>  4 files changed, 20 insertions(+), 21 deletions(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index af8d9cc45e..fb6e2bf18f 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -112,6 +112,21 @@ uint32_t commit_graph_generation(const struct commit=
+ *c)
+>  	return data->generation;
+>  }
+>
+> +int compare_commits_by_gen(const void *_a, const void *_b)
+> +{
+> +	const struct commit *a =3D _a, *b =3D _b;
+> +	const uint32_t generation_a =3D commit_graph_generation(a);
+> +	const uint32_t generation_b =3D commit_graph_generation(b);
 
-diff --git a/ref-filter.c b/ref-filter.c
-index ba85869755..fa131c4854 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -332,6 +332,22 @@ static int trailers_atom_parser(const struct ref_format *format, struct used_ato
- 	return 0;
- }
- 
-+static int check_format_field(const char *arg, const char *field, const char **option)
-+{
-+	const char *opt;
-+	if (skip_prefix(arg, field, &opt)) {
-+		if (*opt == '\0') {
-+			*option = NULL;
-+			return 1;
-+		}
-+		else if (*opt == ':') {
-+			*option = opt + 1;
-+			return 1;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int contents_atom_parser(const struct ref_format *format, struct used_atom *atom,
- 				const char *arg, struct strbuf *err)
- {
-@@ -345,9 +361,8 @@ static int contents_atom_parser(const struct ref_format *format, struct used_ato
- 		atom->u.contents.option = C_SIG;
- 	else if (!strcmp(arg, "subject"))
- 		atom->u.contents.option = C_SUB;
--	else if (skip_prefix(arg, "trailers", &arg)) {
--		skip_prefix(arg, ":", &arg);
--		if (trailers_atom_parser(format, atom, *arg ? arg : NULL, err))
-+	else if (check_format_field(arg, "trailers", &arg)) {
-+		if (trailers_atom_parser(format, atom, arg, err))
- 			return -1;
- 	} else if (skip_prefix(arg, "lines=", &arg)) {
- 		atom->u.contents.option = C_LINES;
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 0570380344..6d535653d9 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -823,6 +823,15 @@ test_expect_success '%(trailers) rejects unknown trailers arguments' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'if arguments, %(contents:trailers) shows error if semicolon is missing' '
-+	# error message cannot be checked under i18n
-+	cat >expect <<-EOF &&
-+	fatal: unrecognized %(contents) argument: trailersonly
-+	EOF
-+	test_must_fail git for-each-ref --format="%(contents:trailersonly)" 2>actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_expect_success 'basic atom: head contents:trailers' '
- 	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
- 	sanitize_pgp <actual >actual.clean &&
--- 
-gitgitgadget
+All right, this function used protected access to generation number of a
+commit, that is it correctly handles the case where commit '_a' and/or
+'_b' are new enough to be not present in the commit graph.
+
+That is why we cannot simply use commit_gen_cmp(), that is the function
+used for sorting during `git commit-graph write --reachable --changed-paths=
+`,
+because after 1st patch it access the slab directly.
+
+> +
+> +	/* older commits first */
+
+Nice!  Thanks for adding this comment.
+
+Though it might be good idea to add this comment also to the header
+file, commit-graph.h, because the fact that compare_commits_by_gen()
+and compare_commits_by_gen_then_commit_date() sort in different
+order is not something that we can see from their names.  Well,
+they have slightly different sigatures...
+
+> +	if (generation_a < generation_b)
+> +		return -1;
+> +	else if (generation_a > generation_b)
+> +		return 1;
+> +
+> +	return 0;
+> +}
+> +
+>  static struct commit_graph_data *commit_graph_data_at(const struct commi=
+t *c)
+>  {
+>  	unsigned int i, nth_slab;
+> diff --git a/commit-graph.h b/commit-graph.h
+> index 09a97030dc..701e3d41aa 100644
+> --- a/commit-graph.h
+> +++ b/commit-graph.h
+> @@ -146,4 +146,6 @@ struct commit_graph_data {
+>   */
+>  uint32_t commit_graph_generation(const struct commit *);
+>  uint32_t commit_graph_position(const struct commit *);
+> +
+> +int compare_commits_by_gen(const void *_a, const void *_b);
+
+All right.
+
+>  #endif
+> diff --git a/commit-reach.c b/commit-reach.c
+> index efd5925cbb..c83cc291e7 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -561,21 +561,6 @@ int commit_contains(struct ref_filter *filter, struc=
+t commit *commit,
+>  	return repo_is_descendant_of(the_repository, commit, list);
+>  }
+>
+> -static int compare_commits_by_gen(const void *_a, const void *_b)
+> -{
+> -	const struct commit *a =3D *(const struct commit * const *)_a;
+> -	const struct commit *b =3D *(const struct commit * const *)_b;
+> -
+> -	uint32_t generation_a =3D commit_graph_generation(a);
+> -	uint32_t generation_b =3D commit_graph_generation(b);
+> -
+> -	if (generation_a < generation_b)
+> -		return -1;
+> -	if (generation_a > generation_b)
+> -		return 1;
+> -	return 0;
+> -}
+
+All right, commit-reach.c includes commit-graph.h, so now it simply uses
+compare_commits_by_gen() that was copied to commit-graph.c.
+
+> -
+>  int can_all_from_reach_with_flag(struct object_array *from,
+>  				 unsigned int with_flag,
+>  				 unsigned int assign_flag,
+> diff --git a/commit.c b/commit.c
+> index 4ce8cb38d5..bd6d5e587f 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -731,14 +731,11 @@ int compare_commits_by_author_date(const void *a_, =
+const void *b_,
+>  int compare_commits_by_gen_then_commit_date(const void *a_, const void *=
+b_, void *unused)
+>  {
+>  	const struct commit *a =3D a_, *b =3D b_;
+> -	const uint32_t generation_a =3D commit_graph_generation(a),
+> -		       generation_b =3D commit_graph_generation(b);
+> +	int ret_val =3D compare_commits_by_gen(a_, b_);
+>
+>  	/* newer commits first */
+
+Maybe this comment should be put in the header file, near this functionn
+declaration?
+
+> -	if (generation_a < generation_b)
+> -		return 1;
+> -	else if (generation_a > generation_b)
+> -		return -1;
+> +	if (ret_val)
+> +		return -ret_val;
+
+All right, this handles reversed sorting order of compare_commits_by_gen().
+
+>
+>  	/* use date as a heuristic when generations are equal */
+>  	if (a->date < b->date)
+
+Best,
+--=20
+Jakub Nar=C4=99bski
