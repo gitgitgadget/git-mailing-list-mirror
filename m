@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DF8EC433DF
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DACC433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:52:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED21720748
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:52:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFC5120748
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 18:52:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U2TmCM2B"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="abtj+B3z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726711AbgHUSwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 14:52:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56920 "EHLO
+        id S1726727AbgHUSwr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 14:52:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726690AbgHUSwi (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726682AbgHUSwi (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Aug 2020 14:52:38 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7613AC0613ED
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 621E3C061755
         for <git@vger.kernel.org>; Fri, 21 Aug 2020 11:52:38 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id k8so2788465wma.2
+Received: by mail-wm1-x332.google.com with SMTP id t14so2780365wmi.3
         for <git@vger.kernel.org>; Fri, 21 Aug 2020 11:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jLC6+Dg0oFm7zIlpMUr3c3sbyDAR4md6X1v2GjWUA1E=;
-        b=U2TmCM2Bp7wmjza/LW+7UYBlJqcjnKJTHtpCfaZTbHFlMqEnf0+eaZ5P2IS30P4ewD
-         A/DsVSANiDd9EJe2tCDsUDeJ5/dp9B7+ndzoVZ8mZjxL/kpaCV6u/Cm+5FheIvEM1Qi2
-         zkUXOr0yYotsZBvtqj2Jk3hlm637dLxPwevC/C/cpt3RMwtIA1+ppIUTNCzmSCDNKS1L
-         zL59a4wE0noFAVDL5E4a0e0swHi3q+1XK1Wlnd9zjRmBvg12rBKvyBpjP2+7loCeFGLN
-         dgqbrYuRJyFpk3RbpYeBOJF4NRlKEl/ninlep/ipPrtwYXdqaI2pRv2pbATx4WCHRGpU
-         Uqtw==
+        bh=kkaPjl9wusTTa7slj9B8jUG/++0w8k/jaaFOQ+MQnzI=;
+        b=abtj+B3zCJYtmdy85Gz6EfqDQM5AKolnrK5UcC8UNHkeeQdpt3ogXZUzGb1ASAfkb5
+         lpxJeWzfG1VLew80TlOxMhHWcjHGSZBX877QuFVmU2QgCKk1v93rsbz58R7YJa+gxp9L
+         Dp4iBoXyuZ2uGGPbJKLiK879bmJS1SRQJHaPhHSaQzA4F1meK9I1abIMpq4/UfGUotvE
+         iWd3mz7MqrP8huZRgtmFRrs3sx9CGzCaoD53MdPgCcX382iuLxYCLk2GNrEvHg6Y/l6M
+         wfGybyjVbI9Hjkd5SeRUMXgd6gCOwk9Wj6EMShPEdW+uUFGmzDswRpTtVoWGCj+uXTRR
+         Uhpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jLC6+Dg0oFm7zIlpMUr3c3sbyDAR4md6X1v2GjWUA1E=;
-        b=fbgHnouCNAyoO7AQoO9apAau3gcT/bEKR+RsY7MDckdvk1GP/O/jh31HN4HSyhbhkQ
-         KJTQwQj72Cxcs6SnXHs4ZdN8XrqzSewrc6FAa3xYvONvP1qL2KifF69zLFyxLlAomZ04
-         Ed56EkrJreDM0BYifpqjIcUuatlLr9iUY+AU+G3Cjri+K0ICbvlUcRWYTSUceWYV37IQ
-         VR6oQwV4kT11RVwSUL+YdcFHJExFPkPGVIlkayRYk0EiFGo12Fp7l9vjN4XwvkuQB3ul
-         W6CJzhXDAKA3xZn2cEFggg7qbz5g6xZP0rnhG4dZS4FRUZhDE+xaAk4xEUTyOeEgztoh
-         hmmA==
-X-Gm-Message-State: AOAM530RWkIptdjk7u1EePsMUJCh6pFjNigy0EEl9hImk795Ao6fKbga
-        /wF/dvOh64jIuuiwFo+Hsy3UV/94GUI=
-X-Google-Smtp-Source: ABdhPJydRprpYfDi/LO7eJIeFY5LxQWhYcN3XXxYKFOC93g2vabzvi+gZtLk9WZx9m6sr8et+95FJw==
-X-Received: by 2002:a1c:2501:: with SMTP id l1mr1561702wml.16.1598035951802;
-        Fri, 21 Aug 2020 11:52:31 -0700 (PDT)
+        bh=kkaPjl9wusTTa7slj9B8jUG/++0w8k/jaaFOQ+MQnzI=;
+        b=Ve69cn16vm3/38OCd+ytDM1KJ5wxPmMZufPUzGPcipfkJTAhcnYRL6oFRKJUVBK3ZG
+         ZMfIjFElOCXr0T1E/qqDX8utSxwpkn1Dd8mKriQzL15Z4PCqiH+ggM7QADtYVGwjIVAP
+         OIofsAoCyDmw6kQO3orbNgUKPHrNnlIV1bBNIDBjZkVGOIqZl0o186JlAr0fxplcSvq1
+         IvQEuK8oHbrLEpzHc2EwRLKsr6I1tAGIW0EckmeIlozn8rbTulrWgpE6QNTH37fHJIa0
+         Y032b6HeO/WO41CC2CfNuFfdf7ttPR/WPr8Lo5xoCrsjSA8XXpIXZPHFgDB5BHd5j/IU
+         FPgA==
+X-Gm-Message-State: AOAM531ok1Ag53TPKrkaGd3RzLHjvt4PtMPjGXZIpeEg07Oz5UCYx0nI
+        MBlgye+ahF75KpeX7uz7vfGAA5W5PEI=
+X-Google-Smtp-Source: ABdhPJy/xz+w8SiMeXvTf2GiE6Wjys165l0Zw0sj/NSa1K4ZfB8HBiFBZSsKJz1oqGCiX9ywrGFo/A==
+X-Received: by 2002:a1c:a385:: with SMTP id m127mr5404727wme.189.1598035954970;
+        Fri, 21 Aug 2020 11:52:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p6sm6805851wmg.0.2020.08.21.11.52.31
+        by smtp.gmail.com with ESMTPSA id i7sm6378713wrs.25.2020.08.21.11.52.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2020 11:52:31 -0700 (PDT)
-Message-Id: <b295e9393a8998b3b9263ab7cd195907d4002e36.1598035949.git.gitgitgadget@gmail.com>
+        Fri, 21 Aug 2020 11:52:34 -0700 (PDT)
+Message-Id: <418975b46039f63476852a868ca6221244b5d88e.1598035949.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
 References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Aug 2020 18:52:25 +0000
-Subject: [PATCH 1/5] hashmap: add usage documentation explaining
- hashmap_free[_entries]()
+Date:   Fri, 21 Aug 2020 18:52:29 +0000
+Subject: [PATCH 5/5] strmap: add functions facilitating use as a string->int
+ map
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,59 +78,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The existence of hashmap_free() and hashmap_free_entries() confused me,
-and the docs weren't clear enough.  I had to consult other source code
-examples and the implementation.  Add a brief note to clarify,
-especially since hashmap_clear*() variants may be added in the future.
+Although strmap could be used as a string->int map, one either had to
+allocate an int for every entry and then deallocate later, or one had to
+do a bunch of casting between (void*) and (intptr_t).
+
+Add some special functions that do the casting.  Also, rename put->set
+for such wrapper functions since 'put' implied there may be some
+deallocation needed if the string was already found in the map, which
+isn't the case when we're storing an int value directly in the void*
+slot instead of using the void* slot as a pointer to data.
+
+A note on the name: strintmap looks and sounds pretty lame to me, but
+after trying to come up with something better and having no luck, I
+figured I'd just go with it for a while and then at some point some
+better and obvious name would strike me and I could replace it.  Several
+months later, I still don't have a better name.  Hopefully someone else
+has one.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- hashmap.h | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ strmap.c | 11 +++++++++++
+ strmap.h | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+)
 
-diff --git a/hashmap.h b/hashmap.h
-index ef220de4c6..a2f4adc1b3 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -236,13 +236,36 @@ void hashmap_init(struct hashmap *map,
- void hashmap_free_(struct hashmap *map, ssize_t offset);
+diff --git a/strmap.c b/strmap.c
+index 03eb6af45d..cbb99f4030 100644
+--- a/strmap.c
++++ b/strmap.c
+@@ -113,3 +113,14 @@ void strmap_remove(struct strmap *map, const char *str, int free_util)
+ 		free(ret->item.util);
+ 	free(ret);
+ }
++
++void strintmap_incr(struct strmap *map, const char *str, intptr_t amt)
++{
++	struct str_entry *entry = find_str_entry(map, str);
++	if (entry) {
++		intptr_t *whence = (intptr_t*)&entry->item.util;
++		*whence += amt;
++	}
++	else
++		strintmap_set(map, str, amt);
++}
+diff --git a/strmap.h b/strmap.h
+index 28a98c5a4b..5d9dd3ef58 100644
+--- a/strmap.h
++++ b/strmap.h
+@@ -88,4 +88,36 @@ static inline unsigned int strmap_get_size(struct strmap *map)
+ 		var = hashmap_iter_next_entry_offset(iter, \
+ 						OFFSETOF_VAR(var, ent)))
  
- /*
-- * Frees a hashmap structure and allocated memory, leaves entries undisturbed
-+ * Frees a hashmap structure and allocated memory for the table, but does not
-+ * free the entries nor anything they point to.
-+ *
-+ * Usage note:
-+ *
-+ * Many callers will need to iterate over all entries and free the data each
-+ * entry points to; in such a case, they can free the entry itself while at it.
-+ * Thus, you might see:
-+ *    hashmap_for_each_entry(map, hashmap_iter, e, hashmap_entry_name) {
-+ *      free(e->somefield);
-+ *      free(e);
-+ *    }
-+ *    hashmap_free(map);
-+ * instead of
-+ *    hashmap_for_each_entry(map, hashmap_iter, e, hashmap_entry_name) {
-+ *      free(e->somefield);
-+ *    }
-+ *    hashmap_free_entries(map, struct my_entry_struct, hashmap_entry_name);
-+ * to avoid the implicit extra loop over the entries.  However, if there are
-+ * no special fields in your entry that need to be freed beyond the entry
-+ * itself, it is probably simpler to avoid the explicit loop and just call
-+ * hashmap_free_entries().
-  */
- #define hashmap_free(map) hashmap_free_(map, -1)
- 
- /*
-  * Frees @map and all entries.  @type is the struct type of the entry
-- * where @member is the hashmap_entry struct used to associate with @map
-+ * where @member is the hashmap_entry struct used to associate with @map.
-+ *
-+ * See usage note above hashmap_free().
-  */
- #define hashmap_free_entries(map, type, member) \
- 	hashmap_free_(map, offsetof(type, member));
++/*
++ * Helper functions for using strmap as map of string -> int, using the void*
++ * field to store the int instead of allocating an int and having the void*
++ * member point to the allocated int.
++ */
++
++static inline int strintmap_get(struct strmap *map, const char *str,
++				int default_value)
++{
++	struct string_list_item *result = strmap_get_item(map, str);
++	if (!result)
++		return default_value;
++	return (intptr_t)result->util;
++}
++
++static inline void strintmap_set(struct strmap *map, const char *str, intptr_t v)
++{
++	strmap_put(map, str, (void *)v);
++}
++
++void strintmap_incr(struct strmap *map, const char *str, intptr_t amt);
++
++static inline void strintmap_clear(struct strmap *map)
++{
++	strmap_clear(map, 0);
++}
++
++static inline void strintmap_free(struct strmap *map)
++{
++	strmap_free(map, 0);
++}
++
+ #endif /* STRMAP_H */
 -- 
 gitgitgadget
-
