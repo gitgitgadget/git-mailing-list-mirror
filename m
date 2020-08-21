@@ -6,91 +6,88 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A697C433E1
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47A82C433E1
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 16:28:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CDF920855
-	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 15:44:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2193520656
+	for <git@archiver.kernel.org>; Fri, 21 Aug 2020 16:28:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wwYvB02r"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pDLelwB1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgHUPoi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Aug 2020 11:44:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59968 "EHLO
+        id S1727895AbgHUQ2a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Aug 2020 12:28:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63967 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbgHUPoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Aug 2020 11:44:37 -0400
+        with ESMTP id S1728350AbgHUQ1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Aug 2020 12:27:55 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F20C79D96;
-        Fri, 21 Aug 2020 11:44:34 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A80E67A2F9;
+        Fri, 21 Aug 2020 12:27:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=14Gai3Py3HBO
-        QaHjAt3IoohwFL8=; b=wwYvB02r7BC5REa/SUKAhcV8aOovxm+2SAmDmm9vyHNf
-        YgOCT7f98nr1A7bKxXRjpwrEwSFqLgHwbPUBsGziaKBH+scQkdn8cVvT8ktszTE4
-        lg46Pp+sT2/IgToIG7hNMCpeg7SQ+4wgmniqZhQQ7KZZfn0nu5K+Vkv6q82f07I=
+        :content-type; s=sasl; bh=WRqnn+4Tw6pV9gYrZv+WWKMhplA=; b=pDLelw
+        B1gmIp+Pmn1DxzbACdB9l8auQrTDl56+CBYpC0PUQ+wD0EVQvZ3GMxSpGkf52bb6
+        N389pP6GIOF1/rBG86UVcqaF8fa0R7wba9Mm4otZxK1OsQQNtf40uG5TxrZkhusG
+        IwAuQRcZxuVURzrqZH8q38qy7Je0Lsm+JcHN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xtjGnV
-        qXzsQwgBftuc+OOY/7U9BDP2jm4cmqx94msv6eh95Ahxq5IJPDu7Bq2pG464I/8H
-        bL10pxOTE/p5+T2VfIxljXw2y7/qthmMOKzBGYdeqzkK/1zE04kamv1GKCjPllzd
-        oEASnlcJLB9pz5fzYQ+g/0Mzetngwkvyk1rdw=
+        :content-type; q=dns; s=sasl; b=Mmtuh2Ry535ZzdVheSNl9UwnkRxdGtxT
+        mjShB4oyFSeoyB3rY9Svo7hDmq0ywmW5EPeOERKep0P1mHdMhYw57TPEw26ZzrIr
+        fREFjJmGs2LqXIR7wR4nzi9dPfbaQREROFGV5WEnCUdfKtrWS5K/s3K6f6HTDjsv
+        WOyw+FQhPQg=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14F3779D93;
-        Fri, 21 Aug 2020 11:44:34 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E5327A2F8;
+        Fri, 21 Aug 2020 12:27:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3694879D92;
-        Fri, 21 Aug 2020 11:44:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20B3C7A2F7;
+        Fri, 21 Aug 2020 12:27:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 1/2] t4013: improve diff-post-processor logic
-References: <cover.1596887883.git.congdanhqx@gmail.com>
-        <cover.1597926783.git.congdanhqx@gmail.com>
-        <a52d0e59ecd5777f2a1d242a37c6bb6aaafb1ed2.1597926783.git.congdanhqx@gmail.com>
-        <xmqqr1s1ayj2.fsf@gitster.c.googlers.com>
-        <20200821120525.GA599@danh.dev>
-Date:   Fri, 21 Aug 2020 08:44:31 -0700
-In-Reply-To: <20200821120525.GA599@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
- =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s message
-        of "Fri, 21 Aug 2020 19:05:25 +0700")
-Message-ID: <xmqqzh6o9f6o.fsf@gitster.c.googlers.com>
+To:     "Raymond E. Pasco" <ray@ameretat.dev>
+Cc:     "Thomas Sullivan" <tom@msbit.com.au>, <git@vger.kernel.org>,
+        "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: git add intent-to-add then git add patch no longer allows edit
+References: <C52FB27V04G0.2ML0PLGDE71MG@ziyou.local>
+Date:   Fri, 21 Aug 2020 09:27:48 -0700
+In-Reply-To: <C52FB27V04G0.2ML0PLGDE71MG@ziyou.local> (Raymond E. Pasco's
+        message of "Fri, 21 Aug 2020 01:25:41 -0400")
+Message-ID: <xmqqmu2o9d6j.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 357244D8-E3C5-11EA-AC2F-01D9BED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 40B25422-E3CB-11EA-B0C4-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+"Raymond E. Pasco" <ray@ameretat.dev> writes:
 
-> On 2020-08-20 12:49:05-0700, Junio C Hamano <gitster@pobox.com> wrote:
->> > diff-processor logic.
->> >
->> > Let's fix the bug for all-zero object names and extend object names'
->> > abbrev to 16 while we're at it.
->>=20
->> "and support abbreviation of object names up to 16 bytes"?
->>=20
->> Also while we are at it, we fixed the post-processing not to touch
->> the file modes, which were mistakenly munged in the older code as if
->> they were object names abbreviated to 7 hexdigits.
->
-> I've integrated your suggestion into newest series.
-> I think you meant 6 hex-digits here, and I took the liberty to change
-> to 7 digits.
+> I fixed half of this in a topic that's on master now (it errors out
+> entirely if you try to stage it at all in 2.28.0), 
 
-Thanks, yeah, 100644 has 6 digits but I somehow couldn't count ;-)
+Yup, thanks for that one.
+
+> but new file diffs
+> still aren't splittable into hunks. Phillip Wood (on cc) is looking into
+> that; the tricky part is that when split into hunks only the first hunk
+> actually staged can be a "new file" patch.
+
+Out of a change that adds a file with three parts A, B and C (in
+this order), you could pick the parts A and C, while leaving the
+change to further add B in the middle, and create a patch to add a
+file that has A and C, and apply that to the index alone (i.e. "add
+-p", pick A and C, and "add" that part by applying that "new file"
+diff).  After that, the path is no longer i-t-a but has the real
+contents (i.e. part A followed by part C), so further "add -p" would
+see the difference between the index and the working tree as a
+modification patch.
+
+So as long as you could come up with a good UI to pick parts from a
+single hunk "new file" diff, "the second and later application must
+be done as modification" should fall out naturally, no?
+
