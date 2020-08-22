@@ -2,155 +2,178 @@ Return-Path: <SRS0=iV/m=CA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F3AC433DF
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 09:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAF43C433E1
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 10:29:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A25521741
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 09:02:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91C7C204EC
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 10:29:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d/Z3YMbM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S7CMW9l9"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="jmMgeDsl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgHVJCh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Aug 2020 05:02:37 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44117 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725877AbgHVJCg (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Aug 2020 05:02:36 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 6BABB5C0090;
-        Sat, 22 Aug 2020 05:02:35 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Sat, 22 Aug 2020 05:02:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=p2dm8UVbZSoFsary1xdb6Z67+rh
-        6SPjyq2AxDs8CC1s=; b=d/Z3YMbMiZiCT9QBYWwW9z60IXP0DXocXUYxt4cW2Cr
-        BYy8yYCtElTfIP2/6AWPVrlVZgg03sof7kbCzdHlwGhT+7sMwEp7ht6RJ3KFycjn
-        poxkmvZOACl/RXtb6WAmUOS4Ovu3lDcr3O4/8/hwiEO/qeYSpqUzvnhWqazebWs2
-        MM03+V+/Msjjryx2CEeHp8cTrloqXOZIimeOyGfLtHSUbi1NxpL7W0db9iaeiux3
-        IFeJ0JA6XzmkmU7qwapgoG5sP81Qmo4Gyl0KFEuxI/oe/hFArFDR5pO1aWUBGuSd
-        87euv/26OChC58C4OCGYt/LI8GtR22R1RkURsnI+qnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=p2dm8U
-        VbZSoFsary1xdb6Z67+rh6SPjyq2AxDs8CC1s=; b=S7CMW9l9q0Ncjjo2W8alt6
-        Mpp06Z8gjJrRueUNJ7N6bhkiMIUKBWSW6MnjVTkhWBP4ytzQWfTdP7DTDfeagwTH
-        pEpGGdFkY4XNucxAB30WwyqdTD66sJs755TFKPDgfk8Ag/bpW0m4yzpUBbP401mA
-        U2OqR4VQU/KivY6SuAiajd/CehfZWJrzFyv8TPbGwWf7/hYgGHLOWwvBgNw1wjbI
-        EgylJhBcV8pcbC2fXgCivUG7VZ6lkdJKZxuILNYCf+F7MRWfH5720EsiQjRomXtb
-        XUWZQlcnJ4n9u7dl2/nwGIV3leNWAngmDGpfzD4vRcit4GTCk2TRz6oXa7rkmxhg
-        ==
-X-ME-Sender: <xms:K99AX-Rq9ZMeES-VSDSxzYD3MjyzDgKCxCHMlg_ZILcXaDeetfaR1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddugedguddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejjedrudekfedrhedtrddugedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:K99AXzx3rQc4IMPhWmR6-fMPnRrxFgtel58W9QZerO4Wxt-PH9rapw>
-    <xmx:K99AX70ErAh_GSoAkY5y7AFg9MOMrsvF2IgaORUtsSFyoJf5MOekFQ>
-    <xmx:K99AX6A-n8Zf_S84q2OQM3LdCtHMwu03eSHXINmd6VTTjisOvezgUw>
-    <xmx:K99AX3IcvC8ErVCODuD3ERl7pW_KqDO16Go2P_31KgZWHve9byre0Q>
-Received: from vm-mail.pks.im (x4db7328c.dyn.telefonica.de [77.183.50.140])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 56840306005F;
-        Sat, 22 Aug 2020 05:02:34 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6403b352 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Sat, 22 Aug 2020 09:02:33 +0000 (UTC)
-Date:   Sat, 22 Aug 2020 11:02:34 +0200
-From:   Patrick Steinhardt <ps@pks.im>
+        id S1727849AbgHVK3g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Aug 2020 06:29:36 -0400
+Received: from mout.web.de ([212.227.15.14]:35057 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726728AbgHVK3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Aug 2020 06:29:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1598092164;
+        bh=cOulWmSdUyCDkwj81QMgV9CcwikkD3V9Y4J95qsZRd8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=jmMgeDslI420GFlzbeNw8qgpeKgpBdJHqRWDaB/kmdH2oprhyrN2rjHNfWtje/wo0
+         56otbGls2Vz7hT+Qs8f2rnvpErN7GJgt95tDYjIn46dhCiEGmhkbjgoQYyQplS77Ux
+         Y9wkmmE0ErQi/ZnIRXRyCWkxjtHneM56Tnr6Ot7I=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNt8d-1kGqMx2Czr-007RRk; Sat, 22
+ Aug 2020 12:29:24 +0200
+Subject: Re: Possible bug with git restore
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] refs: remove lookup cache for reference-transaction hook
-Message-ID: <20200822090234.GC1069@ncase.pks.im>
-References: <0db8ad8cdb69afb9d6453bf60a808e8b82382a4e.1597998473.git.ps@pks.im>
- <20200821143727.GA3241139@coredump.intra.peff.net>
- <xmqqeeo09chm.fsf@gitster.c.googlers.com>
- <20200821172137.GA3261095@coredump.intra.peff.net>
+Cc:     Sergii Shkarnikov <sergii.shkarnikov@globallogic.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+References: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
+ <CAPig+cSCd_8YB90sypTe1bHMQhPgo+Tr2PHNucdqfCpEe+Dosg@mail.gmail.com>
+ <CAFvH=vuFg+kM2GkBaE7jRqHWWcTcZMrs36KLS+-VTy8tgNZXJw@mail.gmail.com>
+ <20200820134013.GA2526241@coredump.intra.peff.net>
+ <c3f0d51a-d0e3-ed0a-c9ed-da092704da5c@web.de>
+ <20200820182720.GA2537643@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <73bddcfc-f8c9-6ec1-328d-a2f427c4aef2@web.de>
+Date:   Sat, 22 Aug 2020 12:29:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JgQwtEuHJzHdouWu"
-Content-Disposition: inline
-In-Reply-To: <20200821172137.GA3261095@coredump.intra.peff.net>
+In-Reply-To: <20200820182720.GA2537643@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:W95KEdq43xYLvprAYMT2kcMQd0GT+9lWzJVG4l+HKOdgoNWCavO
+ boN6zCDsORiAhij1MqlrpwjBW8pQ5YfWljy6/NzEu7I5u3ZUojZQEDui7D6rteJl89O91y2
+ PUrzgqLy0HUqevLzHViiFlzZMXyoCbcdhZKLHsw0eMy3R462grPqzudW/Wh0c9BBrJzbSjg
+ zhdIFH9v6H7MCPsUti+OQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AvpeIXMJHbk=:R9ayMMAnmpWMf0wGQbo4Oo
+ w6Nc3lQYXQm2gcsiOekHzIs5+qRVOetkBxSrpg5pAONWZO2s9t3Ye4bN3vETFSvXttsUMFKOP
+ 7PvKSU/J7d+8JkiCYV9OtB1aRt9Oo14treplBo4bMMlIHxOaBXuVLwfVig3zOsvAlq79f4qq3
+ 6y42glHOz1jreyAB04IPrMdh8Ja1i57RxPoeXhF//CTAD8wP/A5KyYGNbMHY8CXc+nh2H9r9o
+ aqv+jlypaYJ46Acmam7MPLm+KKQR3gLhX9OL7HknlT9p/h08QN6NPvn9PGp+qWtDRoII+F/Xf
+ wOU18AX4qd8UIx23TMYr+F+HDIKyODxj/PnA95Y0xEJWHPuo5tbDiHlP0OjZH51aYiFOL9Vk7
+ pQ447Ni+JIdl8SfkIDGMR91+hW1Y49ToZy/cHChONq2ZcSt+76cFPiy3TM16KSM8fmauj5qcd
+ TfgS5KR4MpRXgR1jAF+v42tzoMs++UEfzmRRKr6ZOgO7o4Vn2rjWrdUxUQ0sEerqWd61vVbqr
+ 9LC83i3XLXu3yMR9a2Ohr1zJxLIyj7px9WCHJ72o6x4uqRqSJjTDMQgbnALGw6nptJrtOek7Y
+ mLd4/OJWe5KLQUxHtEf/aaJaT4KrBmVK8bL15oOE5pKuWzmZMVl/cnx2OkUZSl2v6snt07RD2
+ e+itwbw/HOVh30ibLii68ArIHAa6dGZrNnX4QWhhYgN1weRDtbklk9h4xXMji5fkz1zsoEyx6
+ L0LFNti49wZgsFOEqUt49opIMlSovdTJ/w7q1HNV4JIOpy2jLs/2j7kO7Da1QxvQLpZsTJH+8
+ gIJ2IHsjCxw6beLFhhGyPnwU84zNFDAf6s1dX2lB6HuZelPhyPN/KY491UozzHY6gE1RA0yOI
+ w5djemzEajVgSG0Mg7wgt2tZGjIa1qoFTfd9dorOGzU0ByLyb80hfr/L3/0NcF1WHj9Qmv78i
+ MlPil2AJlK1Q+andXCiT2s4TaN7uSNv/RRrYA5PCLDRICigf97Zqfin+SOKhyki6rMHeFxLch
+ OJWTimx49TB+Eo84MbbJOf3Cv8jC+DHGx8iMGocaZvo+EsA11fnzsFNLNTfOh99QRef2RACXO
+ qU1QzpCE/LW/wV063WA6Q8dUMuGsKV8/oJFeYTXcoiUuREnexqYMmbddgsGY4vVqBv3RzDLjV
+ MG+XS4fke6aSXNgaHDOQ2cyWH8Ief8HxyLUietr9uxJdICfwSxc0+MMZXXd5+Rz8JoFHu+o/i
+ zcoXYUzrBoXOkFWaP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 20.08.20 um 20:27 schrieb Jeff King:
+> On Thu, Aug 20, 2020 at 07:48:48PM +0200, Ren=C3=A9 Scharfe wrote:
+>
+>>>   - shouldn't that wildcard pathspec match those files? I've confirmed
+>>>     that the glob characters make it into Git's pathspec machinery, an=
+d
+>>>     since it doesn't have slashes, I think we'd match a basename (and
+>>>     certainly "git ls-files *test_file.*" does what I expect).
+>>
+>> No, because restore doesn't interpret pathspecs recursively.  I don't
+>> know why that causes files to disappear, though.  But here's a fix.
+>
+> I think it's because of this comment from bc96cc87dbb:
+>
+>   When pathspec.recursive =3D=3D 0, the behavior depends on match functi=
+ons:
+>   non-recursive for tree_entry_interesting() and recursive for
+>   match_pathspec{,_depth}
 
---JgQwtEuHJzHdouWu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> So the fundamental issue is treating the pathspec in two different ways,
+> and then correlating the results. We need to either do a recursive match
+> for the tree match (as your patch does), or do non-recursive for this
+> index match (which I don't think is trivial, because of the way the
+> recursive flag works).
 
-On Fri, Aug 21, 2020 at 01:21:37PM -0400, Jeff King wrote:
-> On Fri, Aug 21, 2020 at 09:42:45AM -0700, Junio C Hamano wrote:
->=20
-> > Jeff King <peff@peff.net> writes:
-> >=20
-> > > However, I wondered...
-> > >
-> > >> +test_perf "nonatomic push" '
-> > >> +	git push ./target-repo.git branch-{1..1000} &&
-> > >> +	git push --delete ./target-repo.git branch-{1..1000}
-> > >> +'
-> >=20
-> > Is this a bash-and-ksh-only test?  At least, the above would not try
-> > to push 1000 branches with the version of dash I have.
+If using the same pathspec with both tree_entry_interesting and
+match_pathspec gives inconsistent results and can even lead to data loss
+as we've seen here, then we better prevent it.
 
-I didn't realize it's shell-specific behaviour, thanks for highlighting.
+The easiest way to do that would be to BUG out in match_pathspec if
+recursive is unset, to indicate that it doesn't support non-recursive
+matching.  Finding all the places that didn't bothered to set this flag
+since it doesn't affect match_pathspec anyway would be quite tedious,
+though.
 
-> Heh, I was so focused on the "push" part of it that I didn't even look
-> carefully at the second half of the command-line. ;)
->=20
-> I think pushing "refs/heads/branch-*" would work for pushing. For
-> deletion, though, I don't think we allow wildcards in the refspecs.
-> You could abuse pruning:
->=20
->   git push --prune ../dst.git refs/heads/does-not-exist/*:refs/heads/*
->=20
-> It also may be OK to just omit that half of the test. I think the
-> initial push exercises the case we care about. Though I guess we do run
-> the test repeatedly, so we might have to do:
->=20
->   rm -rf dst.git &&
->   git init dst.git &&
->   git push dst.git refs/heads/branch-*
+At least the test suite still completes with the following evil patch
+and the fix I sent earlier (evil because it ignores const), so we
+currently don't have any other mismatches in covered code.
 
-I'm not too keen to use `rm -rf && git init` as it muddies the subject
-under test a bit. I'll try to come up with a non-shell-specific version
-of this on Monday.
+Ren=C3=A9
 
-Patrick
+=2D--
+ dir.c       | 4 ++++
+ pathspec.h  | 2 ++
+ tree-walk.c | 5 +++++
+ 3 files changed, 11 insertions(+)
 
---JgQwtEuHJzHdouWu
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/dir.c b/dir.c
+index fe64be30ed6..87d5ffa62d0 100644
+=2D-- a/dir.c
++++ b/dir.c
+@@ -432,6 +432,10 @@ static int do_match_pathspec(const struct index_state=
+ *istate,
+ {
+ 	int i, retval =3D 0, exclude =3D flags & DO_MATCH_EXCLUDE;
 
------BEGIN PGP SIGNATURE-----
++	((struct pathspec *)ps)->match_pathspec =3D 1;
++	if (ps->tree_entry_interesting && !ps->recursive)
++		BUG("match_pathspec tree_entry_interesting !recursive");
++
+ 	GUARD_PATHSPEC(ps,
+ 		       PATHSPEC_FROMTOP |
+ 		       PATHSPEC_MAXDEPTH |
+diff --git a/pathspec.h b/pathspec.h
+index 454ce364fac..bbae0abb249 100644
+=2D-- a/pathspec.h
++++ b/pathspec.h
+@@ -32,6 +32,8 @@ struct pathspec {
+ 	unsigned int has_wildcard:1;
+ 	unsigned int recursive:1;
+ 	unsigned int recurse_submodules:1;
++	unsigned int match_pathspec:1;
++	unsigned int tree_entry_interesting:1;
+ 	unsigned magic;
+ 	int max_depth;
+ 	struct pathspec_item {
+diff --git a/tree-walk.c b/tree-walk.c
+index 0160294712b..f6465cd9cf4 100644
+=2D-- a/tree-walk.c
++++ b/tree-walk.c
+@@ -1185,6 +1185,11 @@ enum interesting tree_entry_interesting(struct inde=
+x_state *istate,
+ 					const struct pathspec *ps)
+ {
+ 	enum interesting positive, negative;
++
++	((struct pathspec *)ps)->tree_entry_interesting =3D 1;
++	if (ps->match_pathspec && !ps->recursive)
++		BUG("match_pathspec tree_entry_interesting !recursive");
++
+ 	positive =3D do_match(istate, entry, base, base_offset, ps, 0);
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl9A3ykACgkQVbJhu7ck
-PpS0BhAAoyRdT4A58DOG6cqbvCBo9fPaAPKSDB/rl6N+5dLvz7QkrBNorha+FgCZ
-Qm/JQWyZfwO66KvCvhba51KA+/VHSxhqs4Ut43hWD5e+Orn8f2EGNqXrylTtO4/G
-rXJm0bz8vUIdeNRgZXwTkL+Q9byu9R7F6EPo4H7uvVEj11rA4CoROB3J5nRE8QLD
-z8bc5eoohPngwpKB9cCBqJQsLUWOg0pqgz4DR9XM/M85jD7gwoWi3hVgpiPo7UqO
-O0UDyBYUK5bCJUGxaBdi9TurusHbdjd3oC2SoON6NmV0fu0TZN3+c8J8eoK8IDpW
-HhBW5tCpQM2nw1QGjog5yeapfheNsqKmMQfITTlnUYa2IIyTPSYeQwYUYnYUllh8
-r8lyQzYTK5UP9PVRWpIuGWAbo9LL3gAGXn7GK+gwB/g1LFAUcq5zx28To2A7Gn5+
-GUjOW32xDGoqWIAAmLFXd5y8BZTJD1xw6RWr0cddVrnIDnye+b1trKilBU/uwCDK
-+RXJmMSvgLar+3TD3EbIutAJNJAvEPWdQQAUwV70Y8L9mpLUaz7bRj0MEA9rlaQM
-BZXUH+IwHOHjoGRpnOjyGU5iq2bPXXJhdruP8VwjyKVKM4c6L8d053t34TUUesfO
-BMdQiyf2xrB18PNaek1a01f1z0hQfYukErMLeozyAkdsuIOoXy0=
-=gabW
------END PGP SIGNATURE-----
-
---JgQwtEuHJzHdouWu--
+ 	/*
+=2D-
+2.28.0
