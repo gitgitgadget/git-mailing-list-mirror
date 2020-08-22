@@ -2,178 +2,564 @@ Return-Path: <SRS0=iV/m=CA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAF43C433E1
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 10:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D37AC433DF
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 10:56:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91C7C204EC
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 10:29:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BD352067C
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 10:56:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="jmMgeDsl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFJ4m146"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727849AbgHVK3g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Aug 2020 06:29:36 -0400
-Received: from mout.web.de ([212.227.15.14]:35057 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726728AbgHVK3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Aug 2020 06:29:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1598092164;
-        bh=cOulWmSdUyCDkwj81QMgV9CcwikkD3V9Y4J95qsZRd8=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=jmMgeDslI420GFlzbeNw8qgpeKgpBdJHqRWDaB/kmdH2oprhyrN2rjHNfWtje/wo0
-         56otbGls2Vz7hT+Qs8f2rnvpErN7GJgt95tDYjIn46dhCiEGmhkbjgoQYyQplS77Ux
-         Y9wkmmE0ErQi/ZnIRXRyCWkxjtHneM56Tnr6Ot7I=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNt8d-1kGqMx2Czr-007RRk; Sat, 22
- Aug 2020 12:29:24 +0200
-Subject: Re: Possible bug with git restore
-To:     Jeff King <peff@peff.net>
-Cc:     Sergii Shkarnikov <sergii.shkarnikov@globallogic.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-References: <CAFvH=vsWyX79j-9pyC5gpxGu8rRxYyrXwywHjh-_T2opHjT8Xg@mail.gmail.com>
- <CAPig+cSCd_8YB90sypTe1bHMQhPgo+Tr2PHNucdqfCpEe+Dosg@mail.gmail.com>
- <CAFvH=vuFg+kM2GkBaE7jRqHWWcTcZMrs36KLS+-VTy8tgNZXJw@mail.gmail.com>
- <20200820134013.GA2526241@coredump.intra.peff.net>
- <c3f0d51a-d0e3-ed0a-c9ed-da092704da5c@web.de>
- <20200820182720.GA2537643@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <73bddcfc-f8c9-6ec1-328d-a2f427c4aef2@web.de>
-Date:   Sat, 22 Aug 2020 12:29:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+        id S1727846AbgHVK4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Aug 2020 06:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726222AbgHVK4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Aug 2020 06:56:45 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46CEEC061573
+        for <git@vger.kernel.org>; Sat, 22 Aug 2020 03:56:44 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id a15so4142202wrh.10
+        for <git@vger.kernel.org>; Sat, 22 Aug 2020 03:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Nz+ZiFM4n8u+ntbTXOr+ZETpgXoD/6Fu8F3Nu3rhM3E=;
+        b=WFJ4m146uwa7FzSm2jhqT79g8wu4hHJ1RB8cw9v8tLA1C8NiriuYWtcyuOUbNbHlEq
+         pURAKnKp0menFHabdglovUWT6rNOYXytNA/IvyiOYTjBJyrM9mXBj97V0zkKoEs9sRzM
+         rSVsRvgEwf661H7MXHOnOrjSfXJDxI2Y04/Z3w0m1C4O2YlPQeek9ExJiZ51IbQLby3o
+         HyRYJfcG94cYglf9DwrN6z/KaQISkpoBb+e6Ua6ECMCyTWQ5DDN4VElsalwW4DR++d7G
+         sFaKNnab2WW1Bsyo2dMFF6eG/f5Uy4lrJ5YsANj9HsLO2ri9KshmFBGZ4JyEkrGAUW2P
+         vdog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Nz+ZiFM4n8u+ntbTXOr+ZETpgXoD/6Fu8F3Nu3rhM3E=;
+        b=JK9Tj4oggJ9f4gnMZjgo2yw0GnaR5Koe9W2M0bdUFqgi/0NJlOlDCiJn+0cIRmqMGz
+         zfddRw3K1Hic8o22qpGENdoHw3nfr67712Ykn18axb0MtazjOrK1tswFBPgq+Qtymtre
+         APDg+jxTX62DiceokyRflCkihd05OG4sBppPVymHXQw83m2tJPQ3UrRyYE23/7ASrzL2
+         jaqJseSxYLVzwYzqf5a1i7//1nQICIAiqZFmidFkFcx2WFNl7TXI64MTTu/RO9ALxE69
+         NNlVmbH/jKgcxa7g7qiwWxqYjrOMbMTnDDmD5E9GmGz0s2GxYd4k5BEvdlvrn3eAk34F
+         zE2g==
+X-Gm-Message-State: AOAM531Y5YFykdERURFhup9umf8ADuE87ngMcR6kXkcV0UPHKbTp5/Yr
+        5vC3K2uwE6BDO9LflAZWpiS0GlXwKZfzDg==
+X-Google-Smtp-Source: ABdhPJzB786rG03HIWa4ZFJ9xkcJBG2xUruSIiCx2cgbIYPNFMiJhfOPZ3sDrqwD9z5VP85xrQIMZA==
+X-Received: by 2002:adf:e84d:: with SMTP id d13mr6517353wrn.126.1598093801729;
+        Sat, 22 Aug 2020 03:56:41 -0700 (PDT)
+Received: from partizan.lan ([46.98.122.115])
+        by smtp.gmail.com with ESMTPSA id b203sm12746636wmc.22.2020.08.22.03.56.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Aug 2020 03:56:40 -0700 (PDT)
+From:   Serg Tereshchenko <serg.partizan@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Serg Tereshchenko <serg.partizan@gmail.com>
+Subject: style(git-gui): Fix mixed tabs & spaces; Always use tabs.
+Date:   Sat, 22 Aug 2020 13:56:16 +0300
+Message-Id: <20200822105616.68296-1-serg.partizan@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20200820182720.GA2537643@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:W95KEdq43xYLvprAYMT2kcMQd0GT+9lWzJVG4l+HKOdgoNWCavO
- boN6zCDsORiAhij1MqlrpwjBW8pQ5YfWljy6/NzEu7I5u3ZUojZQEDui7D6rteJl89O91y2
- PUrzgqLy0HUqevLzHViiFlzZMXyoCbcdhZKLHsw0eMy3R462grPqzudW/Wh0c9BBrJzbSjg
- zhdIFH9v6H7MCPsUti+OQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AvpeIXMJHbk=:R9ayMMAnmpWMf0wGQbo4Oo
- w6Nc3lQYXQm2gcsiOekHzIs5+qRVOetkBxSrpg5pAONWZO2s9t3Ye4bN3vETFSvXttsUMFKOP
- 7PvKSU/J7d+8JkiCYV9OtB1aRt9Oo14treplBo4bMMlIHxOaBXuVLwfVig3zOsvAlq79f4qq3
- 6y42glHOz1jreyAB04IPrMdh8Ja1i57RxPoeXhF//CTAD8wP/A5KyYGNbMHY8CXc+nh2H9r9o
- aqv+jlypaYJ46Acmam7MPLm+KKQR3gLhX9OL7HknlT9p/h08QN6NPvn9PGp+qWtDRoII+F/Xf
- wOU18AX4qd8UIx23TMYr+F+HDIKyODxj/PnA95Y0xEJWHPuo5tbDiHlP0OjZH51aYiFOL9Vk7
- pQ447Ni+JIdl8SfkIDGMR91+hW1Y49ToZy/cHChONq2ZcSt+76cFPiy3TM16KSM8fmauj5qcd
- TfgS5KR4MpRXgR1jAF+v42tzoMs++UEfzmRRKr6ZOgO7o4Vn2rjWrdUxUQ0sEerqWd61vVbqr
- 9LC83i3XLXu3yMR9a2Ohr1zJxLIyj7px9WCHJ72o6x4uqRqSJjTDMQgbnALGw6nptJrtOek7Y
- mLd4/OJWe5KLQUxHtEf/aaJaT4KrBmVK8bL15oOE5pKuWzmZMVl/cnx2OkUZSl2v6snt07RD2
- e+itwbw/HOVh30ibLii68ArIHAa6dGZrNnX4QWhhYgN1weRDtbklk9h4xXMji5fkz1zsoEyx6
- L0LFNti49wZgsFOEqUt49opIMlSovdTJ/w7q1HNV4JIOpy2jLs/2j7kO7Da1QxvQLpZsTJH+8
- gIJ2IHsjCxw6beLFhhGyPnwU84zNFDAf6s1dX2lB6HuZelPhyPN/KY491UozzHY6gE1RA0yOI
- w5djemzEajVgSG0Mg7wgt2tZGjIa1qoFTfd9dorOGzU0ByLyb80hfr/L3/0NcF1WHj9Qmv78i
- MlPil2AJlK1Q+andXCiT2s4TaN7uSNv/RRrYA5PCLDRICigf97Zqfin+SOKhyki6rMHeFxLch
- OJWTimx49TB+Eo84MbbJOf3Cv8jC+DHGx8iMGocaZvo+EsA11fnzsFNLNTfOh99QRef2RACXO
- qU1QzpCE/LW/wV063WA6Q8dUMuGsKV8/oJFeYTXcoiUuREnexqYMmbddgsGY4vVqBv3RzDLjV
- MG+XS4fke6aSXNgaHDOQ2cyWH8Ief8HxyLUietr9uxJdICfwSxc0+MMZXXd5+Rz8JoFHu+o/i
- zcoXYUzrBoXOkFWaP
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.08.20 um 20:27 schrieb Jeff King:
-> On Thu, Aug 20, 2020 at 07:48:48PM +0200, Ren=C3=A9 Scharfe wrote:
->
->>>   - shouldn't that wildcard pathspec match those files? I've confirmed
->>>     that the glob characters make it into Git's pathspec machinery, an=
-d
->>>     since it doesn't have slashes, I think we'd match a basename (and
->>>     certainly "git ls-files *test_file.*" does what I expect).
->>
->> No, because restore doesn't interpret pathspecs recursively.  I don't
->> know why that causes files to disappear, though.  But here's a fix.
->
-> I think it's because of this comment from bc96cc87dbb:
->
->   When pathspec.recursive =3D=3D 0, the behavior depends on match functi=
-ons:
->   non-recursive for tree_entry_interesting() and recursive for
->   match_pathspec{,_depth}
+Hello.
 
-> So the fundamental issue is treating the pathspec in two different ways,
-> and then correlating the results. We need to either do a recursive match
-> for the tree match (as your patch does), or do non-recursive for this
-> index match (which I don't think is trivial, because of the way the
-> recursive flag works).
+I want to improve styling of git-citool, so it supports dark themes.
+But first i want to remove "mixed indent warning" from my editor
+modeline.
 
-If using the same pathspec with both tree_entry_interesting and
-match_pathspec gives inconsistent results and can even lead to data loss
-as we've seen here, then we better prevent it.
+This patch does not change anything besides indents, and sometimes i
+replace
 
-The easiest way to do that would be to BUG out in match_pathspec if
-recursive is unset, to indicate that it doesn't support non-recursive
-matching.  Finding all the places that didn't bothered to set this flag
-since it doesn't affect match_pathspec anyway would be quite tedious,
-though.
+```tcl
+if {long ||
+    multiline ||
+    statement}
+```
 
-At least the test suite still completes with the following evil patch
-and the fix I sent earlier (evil because it ignores const), so we
-currently don't have any other mismatches in covered code.
+with more readable
 
-Ren=C3=A9
+```tcl
+if {
+    long
+    || multiline
+    || statement
+}
+```
+But only in lines with mixed indents.
 
-=2D--
- dir.c       | 4 ++++
- pathspec.h  | 2 ++
- tree-walk.c | 5 +++++
- 3 files changed, 11 insertions(+)
 
-diff --git a/dir.c b/dir.c
-index fe64be30ed6..87d5ffa62d0 100644
-=2D-- a/dir.c
-+++ b/dir.c
-@@ -432,6 +432,10 @@ static int do_match_pathspec(const struct index_state=
- *istate,
- {
- 	int i, retval =3D 0, exclude =3D flags & DO_MATCH_EXCLUDE;
+To clearly see changes in this patch, instruct your editor to display
+tabs.
+I use this in vim:
 
-+	((struct pathspec *)ps)->match_pathspec =3D 1;
-+	if (ps->tree_entry_interesting && !ps->recursive)
-+		BUG("match_pathspec tree_entry_interesting !recursive");
+```vim
+set list
+set listchars=eol:¬,tab:\ \ ┊,trail:·,nbsp:⎵
+```
+
+
+Btw, at the start of git-gui.sh there is sanity check requiring Tcl 8.5.
+And somewhere later legacy code for 8.4.
+
+I would like to clean it up. Should i do this or better leave it as it
+is?
+
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 49bd86e..ca66a8e 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1,13 +1,10 @@
+ #!/bin/sh
+ # Tcl ignores the next line -*- tcl -*- \
+- if test "z$*" = zversion \
+- || test "z$*" = z--version; \
+- then \
+-	echo 'git-gui version @@GITGUI_VERSION@@'; \
+-	exit; \
+- fi; \
+- argv0=$0; \
+- exec wish "$argv0" -- "$@"
++if test "z$*" = zversion || test "z$*" = z--version; \
++	then echo 'git-gui version @@GITGUI_VERSION@@'; exit; \
++fi; \
++argv0=$0; \
++exec wish "$argv0" -- "$@"
+ 
+ set appvers {@@GITGUI_VERSION@@}
+ set copyright [string map [list (c) \u00a9] {
+@@ -31,7 +28,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.}]
+ ## Tcl/Tk sanity check
+ 
+ if {[catch {package require Tcl 8.5} err]
+- || [catch {package require Tk  8.5} err]
++	|| [catch {package require Tk  8.5} err]
+ } {
+ 	catch {wm withdraw .}
+ 	tk_messageBox \
+@@ -404,9 +401,9 @@ proc _git_cmd {name} {
+ 
+ 	if {[catch {set v $_git_cmd_path($name)}]} {
+ 		switch -- $name {
+-		  version   -
+-		--version   -
+-		--exec-path { return [list $::_git $name] }
++			version     -
++			--version   -
++			--exec-path { return [list $::_git $name] }
+ 		}
+ 
+ 		set p [gitexec git-$name$::_search_exe]
+@@ -548,9 +545,10 @@ proc _open_stdout_stderr {cmd} {
+ 	if {[catch {
+ 			set fd [open [concat [list | ] $cmd] r]
+ 		} err]} {
+-		if {   [lindex $cmd end] eq {2>@1}
+-		    && $err eq {can not find channel named "1"}
+-			} {
++		if {
++			[lindex $cmd end] eq {2>@1}
++			&& $err eq {can not find channel named "1"}
++		} {
+ 			# Older versions of Tcl 8.4 don't have this 2>@1 IO
+ 			# redirect operator.  Fallback to |& cat for those.
+ 			# The command was not actually started, so its safe
+@@ -947,15 +945,15 @@ if {![regsub {^git version } $_git_version {} _git_version]} {
+ }
+ 
+ proc get_trimmed_version {s} {
+-    set r {}
+-    foreach x [split $s -._] {
+-        if {[string is integer -strict $x]} {
+-            lappend r $x
+-        } else {
+-            break
+-        }
+-    }
+-    return [join $r .]
++	set r {}
++	foreach x [split $s -._] {
++		if {[string is integer -strict $x]} {
++			lappend r $x
++		} else {
++			break
++		}
++	}
++	return [join $r .]
+ }
+ set _real_git_version $_git_version
+ set _git_version [get_trimmed_version $_git_version]
+@@ -967,7 +965,7 @@ if {![regexp {^[1-9]+(\.[0-9]+)+$} $_git_version]} {
+ 		-type yesno \
+ 		-default no \
+ 		-title "[appname]: warning" \
+-		 -message [mc "Git version cannot be determined.
++		-message [mc "Git version cannot be determined.
+ 
+ %s claims it is version '%s'.
+ 
+@@ -975,7 +973,7 @@ if {![regexp {^[1-9]+(\.[0-9]+)+$} $_git_version]} {
+ 
+ Assume '%s' is version 1.5.0?
+ " $_git $_real_git_version [appname] $_real_git_version]] eq {yes}} {
+-		set _git_version 1.5.0
++	set _git_version 1.5.0
+ 	} else {
+ 		exit 1
+ 	}
+@@ -1181,44 +1179,44 @@ enable_option transport
+ disable_option bare
+ 
+ switch -- $subcommand {
+-browser -
+-blame {
+-	enable_option bare
+-
+-	disable_option multicommit
+-	disable_option branch
+-	disable_option transport
+-}
+-citool {
+-	enable_option singlecommit
+-	enable_option retcode
+-
+-	disable_option multicommit
+-	disable_option branch
+-	disable_option transport
++	browser -
++	blame {
++		enable_option bare
 +
- 	GUARD_PATHSPEC(ps,
- 		       PATHSPEC_FROMTOP |
- 		       PATHSPEC_MAXDEPTH |
-diff --git a/pathspec.h b/pathspec.h
-index 454ce364fac..bbae0abb249 100644
-=2D-- a/pathspec.h
-+++ b/pathspec.h
-@@ -32,6 +32,8 @@ struct pathspec {
- 	unsigned int has_wildcard:1;
- 	unsigned int recursive:1;
- 	unsigned int recurse_submodules:1;
-+	unsigned int match_pathspec:1;
-+	unsigned int tree_entry_interesting:1;
- 	unsigned magic;
- 	int max_depth;
- 	struct pathspec_item {
-diff --git a/tree-walk.c b/tree-walk.c
-index 0160294712b..f6465cd9cf4 100644
-=2D-- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -1185,6 +1185,11 @@ enum interesting tree_entry_interesting(struct inde=
-x_state *istate,
- 					const struct pathspec *ps)
- {
- 	enum interesting positive, negative;
++		disable_option multicommit
++		disable_option branch
++		disable_option transport
++	}
++	citool {
++		enable_option singlecommit
++		enable_option retcode
 +
-+	((struct pathspec *)ps)->tree_entry_interesting =3D 1;
-+	if (ps->match_pathspec && !ps->recursive)
-+		BUG("match_pathspec tree_entry_interesting !recursive");
++		disable_option multicommit
++		disable_option branch
++		disable_option transport
 +
- 	positive =3D do_match(istate, entry, base, base_offset, ps, 0);
-
- 	/*
-=2D-
-2.28.0
++		while {[llength $argv] > 0} {
++			set a [lindex $argv 0]
++			switch -- $a {
++				--amend {
++					enable_option initialamend
++				}
++				--nocommit {
++					enable_option nocommit
++					enable_option nocommitmsg
++				}
++				--commitmsg {
++					disable_option nocommitmsg
++				}
++				default {
++					break
++				}
++			}
+ 
+-	while {[llength $argv] > 0} {
+-		set a [lindex $argv 0]
+-		switch -- $a {
+-		--amend {
+-			enable_option initialamend
++			set argv [lrange $argv 1 end]
+ 		}
+-		--nocommit {
+-			enable_option nocommit
+-			enable_option nocommitmsg
+-		}
+-		--commitmsg {
+-			disable_option nocommitmsg
+-		}
+-		default {
+-			break
+-		}
+-		}
+-
+-		set argv [lrange $argv 1 end]
+ 	}
+ }
+-}
+ 
+ ######################################################################
+ ##
+@@ -1237,15 +1235,15 @@ if {![info exists env(SSH_ASKPASS)]} {
+ 
+ set picked 0
+ if {[catch {
+-		set _gitdir $env(GIT_DIR)
+-		set _prefix {}
+-		}]
+-	&& [catch {
+-		# beware that from the .git dir this sets _gitdir to .
+-		# and _prefix to the empty string
+-		set _gitdir [git rev-parse --git-dir]
+-		set _prefix [git rev-parse --show-prefix]
+-	} err]} {
++	set _gitdir $env(GIT_DIR)
++	set _prefix {}
++}]
++&& [catch {
++	# beware that from the .git dir this sets _gitdir to .
++	# and _prefix to the empty string
++	set _gitdir [git rev-parse --git-dir]
++	set _prefix [git rev-parse --show-prefix]
++} err]} {
+ 	load_config 1
+ 	apply_config
+ 	choose_repository::pick
+@@ -1653,7 +1651,7 @@ proc prepare_commit_msg_hook_wait {fd_ph} {
+ 		set pch_error {}
+ 		catch {file delete [gitdir PREPARE_COMMIT_MSG]}
+ 		return
+-        }
++	}
+ 	fconfigure $fd_ph -blocking 0
+ 	catch {file delete [gitdir PREPARE_COMMIT_MSG]}
+ }
+@@ -2001,72 +1999,72 @@ set filemask {
+ #define mask_width 14
+ #define mask_height 15
+ static unsigned char mask_bits[] = {
+-   0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f,
+-   0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f,
+-   0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f};
++	0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f,
++	0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f,
++	0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f};
+ }
+ 
+ image create bitmap file_plain -background white -foreground black -data {
+ #define plain_width 14
+ #define plain_height 15
+ static unsigned char plain_bits[] = {
+-   0xfe, 0x01, 0x02, 0x03, 0x02, 0x05, 0x02, 0x09, 0x02, 0x1f, 0x02, 0x10,
+-   0x02, 0x10, 0x02, 0x10, 0x02, 0x10, 0x02, 0x10, 0x02, 0x10, 0x02, 0x10,
+-   0x02, 0x10, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x03, 0x02, 0x05, 0x02, 0x09, 0x02, 0x1f, 0x02, 0x10,
++	0x02, 0x10, 0x02, 0x10, 0x02, 0x10, 0x02, 0x10, 0x02, 0x10, 0x02, 0x10,
++	0x02, 0x10, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ image create bitmap file_mod -background white -foreground blue -data {
+ #define mod_width 14
+ #define mod_height 15
+ static unsigned char mod_bits[] = {
+-   0xfe, 0x01, 0x02, 0x03, 0x7a, 0x05, 0x02, 0x09, 0x7a, 0x1f, 0x02, 0x10,
+-   0xfa, 0x17, 0x02, 0x10, 0xfa, 0x17, 0x02, 0x10, 0xfa, 0x17, 0x02, 0x10,
+-   0xfa, 0x17, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x03, 0x7a, 0x05, 0x02, 0x09, 0x7a, 0x1f, 0x02, 0x10,
++	0xfa, 0x17, 0x02, 0x10, 0xfa, 0x17, 0x02, 0x10, 0xfa, 0x17, 0x02, 0x10,
++	0xfa, 0x17, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ image create bitmap file_fulltick -background white -foreground "#007000" -data {
+ #define file_fulltick_width 14
+ #define file_fulltick_height 15
+ static unsigned char file_fulltick_bits[] = {
+-   0xfe, 0x01, 0x02, 0x1a, 0x02, 0x0c, 0x02, 0x0c, 0x02, 0x16, 0x02, 0x16,
+-   0x02, 0x13, 0x00, 0x13, 0x86, 0x11, 0x8c, 0x11, 0xd8, 0x10, 0xf2, 0x10,
+-   0x62, 0x10, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x1a, 0x02, 0x0c, 0x02, 0x0c, 0x02, 0x16, 0x02, 0x16,
++	0x02, 0x13, 0x00, 0x13, 0x86, 0x11, 0x8c, 0x11, 0xd8, 0x10, 0xf2, 0x10,
++	0x62, 0x10, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ image create bitmap file_question -background white -foreground black -data {
+ #define file_question_width 14
+ #define file_question_height 15
+ static unsigned char file_question_bits[] = {
+-   0xfe, 0x01, 0x02, 0x02, 0xe2, 0x04, 0xf2, 0x09, 0x1a, 0x1b, 0x0a, 0x13,
+-   0x82, 0x11, 0xc2, 0x10, 0x62, 0x10, 0x62, 0x10, 0x02, 0x10, 0x62, 0x10,
+-   0x62, 0x10, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x02, 0xe2, 0x04, 0xf2, 0x09, 0x1a, 0x1b, 0x0a, 0x13,
++	0x82, 0x11, 0xc2, 0x10, 0x62, 0x10, 0x62, 0x10, 0x02, 0x10, 0x62, 0x10,
++	0x62, 0x10, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ image create bitmap file_removed -background white -foreground red -data {
+ #define file_removed_width 14
+ #define file_removed_height 15
+ static unsigned char file_removed_bits[] = {
+-   0xfe, 0x01, 0x02, 0x03, 0x02, 0x05, 0x02, 0x09, 0x02, 0x1f, 0x02, 0x10,
+-   0x1a, 0x16, 0x32, 0x13, 0xe2, 0x11, 0xc2, 0x10, 0xe2, 0x11, 0x32, 0x13,
+-   0x1a, 0x16, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x03, 0x02, 0x05, 0x02, 0x09, 0x02, 0x1f, 0x02, 0x10,
++	0x1a, 0x16, 0x32, 0x13, 0xe2, 0x11, 0xc2, 0x10, 0xe2, 0x11, 0x32, 0x13,
++	0x1a, 0x16, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ image create bitmap file_merge -background white -foreground blue -data {
+ #define file_merge_width 14
+ #define file_merge_height 15
+ static unsigned char file_merge_bits[] = {
+-   0xfe, 0x01, 0x02, 0x03, 0x62, 0x05, 0x62, 0x09, 0x62, 0x1f, 0x62, 0x10,
+-   0xfa, 0x11, 0xf2, 0x10, 0x62, 0x10, 0x02, 0x10, 0xfa, 0x17, 0x02, 0x10,
+-   0xfa, 0x17, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x03, 0x62, 0x05, 0x62, 0x09, 0x62, 0x1f, 0x62, 0x10,
++	0xfa, 0x11, 0xf2, 0x10, 0x62, 0x10, 0x02, 0x10, 0xfa, 0x17, 0x02, 0x10,
++	0xfa, 0x17, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ image create bitmap file_statechange -background white -foreground green -data {
+ #define file_statechange_width 14
+ #define file_statechange_height 15
+ static unsigned char file_statechange_bits[] = {
+-   0xfe, 0x01, 0x02, 0x03, 0x02, 0x05, 0x02, 0x09, 0x02, 0x1f, 0x62, 0x10,
+-   0x62, 0x10, 0xba, 0x11, 0xba, 0x11, 0x62, 0x10, 0x62, 0x10, 0x02, 0x10,
+-   0x02, 0x10, 0x02, 0x10, 0xfe, 0x1f};
++	0xfe, 0x01, 0x02, 0x03, 0x02, 0x05, 0x02, 0x09, 0x02, 0x1f, 0x62, 0x10,
++	0x62, 0x10, 0xba, 0x11, 0xba, 0x11, 0x62, 0x10, 0x62, 0x10, 0x02, 0x10,
++	0x02, 0x10, 0x02, 0x10, 0xfe, 0x1f};
+ } -maskdata $filemask
+ 
+ set ui_index .vpane.files.index.list
+@@ -2088,36 +2086,36 @@ set all_icons(T$ui_workdir) file_statechange
+ 
+ set max_status_desc 0
+ foreach i {
+-		{__ {mc "Unmodified"}}
+-
+-		{_M {mc "Modified, not staged"}}
+-		{M_ {mc "Staged for commit"}}
+-		{MM {mc "Portions staged for commit"}}
+-		{MD {mc "Staged for commit, missing"}}
+-
+-		{_T {mc "File type changed, not staged"}}
+-		{MT {mc "File type changed, old type staged for commit"}}
+-		{AT {mc "File type changed, old type staged for commit"}}
+-		{T_ {mc "File type changed, staged"}}
+-		{TM {mc "File type change staged, modification not staged"}}
+-		{TD {mc "File type change staged, file missing"}}
+-
+-		{_O {mc "Untracked, not staged"}}
+-		{A_ {mc "Staged for commit"}}
+-		{AM {mc "Portions staged for commit"}}
+-		{AD {mc "Staged for commit, missing"}}
+-
+-		{_D {mc "Missing"}}
+-		{D_ {mc "Staged for removal"}}
+-		{DO {mc "Staged for removal, still present"}}
+-
+-		{_U {mc "Requires merge resolution"}}
+-		{U_ {mc "Requires merge resolution"}}
+-		{UU {mc "Requires merge resolution"}}
+-		{UM {mc "Requires merge resolution"}}
+-		{UD {mc "Requires merge resolution"}}
+-		{UT {mc "Requires merge resolution"}}
+-	} {
++	{__ {mc "Unmodified"}}
++
++	{_M {mc "Modified, not staged"}}
++	{M_ {mc "Staged for commit"}}
++	{MM {mc "Portions staged for commit"}}
++	{MD {mc "Staged for commit, missing"}}
++
++	{_T {mc "File type changed, not staged"}}
++	{MT {mc "File type changed, old type staged for commit"}}
++	{AT {mc "File type changed, old type staged for commit"}}
++	{T_ {mc "File type changed, staged"}}
++	{TM {mc "File type change staged, modification not staged"}}
++	{TD {mc "File type change staged, file missing"}}
++
++	{_O {mc "Untracked, not staged"}}
++	{A_ {mc "Staged for commit"}}
++	{AM {mc "Portions staged for commit"}}
++	{AD {mc "Staged for commit, missing"}}
++
++	{_D {mc "Missing"}}
++	{D_ {mc "Staged for removal"}}
++	{DO {mc "Staged for removal, still present"}}
++
++	{_U {mc "Requires merge resolution"}}
++	{U_ {mc "Requires merge resolution"}}
++	{UU {mc "Requires merge resolution"}}
++	{UM {mc "Requires merge resolution"}}
++	{UD {mc "Requires merge resolution"}}
++	{UT {mc "Requires merge resolution"}}
++} {
+ 	set text [eval [lindex $i 1]]
+ 	if {$max_status_desc < [string length $text]} {
+ 		set max_status_desc [string length $text]
+@@ -2475,8 +2473,10 @@ proc next_diff_after_action {w path {lno {}} {mmask {}}} {
+ proc select_first_diff {after} {
+ 	global ui_workdir
+ 
+-	if {[find_next_diff $ui_workdir {} 1 {^_?U}] ||
+-	    [find_next_diff $ui_workdir {} 1 {[^O]$}]} {
++	if {
++		[find_next_diff $ui_workdir {} 1 {^_?U}]
++		|| [find_next_diff $ui_workdir {} 1 {[^O]$}]
++	} {
+ 		next_diff $after
+ 	} else {
+ 		uplevel #0 $after
+@@ -3111,8 +3111,11 @@ proc normalize_relpath {path} {
+ 	set elements {}
+ 	foreach item [file split $path] {
+ 		if {$item eq {.}} continue
+-		if {$item eq {..} && [llength $elements] > 0
+-		    && [lindex $elements end] ne {..}} {
++		if {
++			$item eq {..}
++			&& [llength $elements] > 0
++			&& [lindex $elements end] ne {..}
++		} {
+ 			set elements [lrange $elements 0 end-1]
+ 			continue
+ 		}
+@@ -3878,18 +3881,18 @@ proc on_application_mapped {} {
+ 	set gm $repo_config(gui.geometry)
+ 	if {$use_ttk} {
+ 		bind .vpane <Map> \
+-		    [list on_ttk_pane_mapped %W 0 [lindex $gm 1]]
++			[list on_ttk_pane_mapped %W 0 [lindex $gm 1]]
+ 		bind .vpane.files <Map> \
+-		    [list on_ttk_pane_mapped %W 0 [lindex $gm 2]]
++			[list on_ttk_pane_mapped %W 0 [lindex $gm 2]]
+ 	} else {
+ 		bind .vpane <Map> \
+-		    [list on_tk_pane_mapped %W 0 \
+-			 [lindex $gm 1] \
+-			 [lindex [.vpane sash coord 0] 1]]
++			[list on_tk_pane_mapped %W 0 \
++			[lindex $gm 1] \
++			[lindex [.vpane sash coord 0] 1]]
+ 		bind .vpane.files <Map> \
+-		    [list on_tk_pane_mapped %W 0 \
+-			 [lindex [.vpane.files sash coord 0] 0] \
+-			 [lindex $gm 2]]
++			[list on_tk_pane_mapped %W 0 \
++			[lindex [.vpane.files sash coord 0] 0] \
++			[lindex $gm 2]]
+ 	}
+ 	wm geometry . [lindex $gm 0]
+ }
+@@ -4145,8 +4148,10 @@ if {[winfo exists $ui_comm]} {
+ 	lappend spell_cmd --mode=none
+ 	lappend spell_cmd --encoding=utf-8
+ 	lappend spell_cmd pipe
+-	if {$spell_dict eq {none}
+-	 || [catch {set spell_fd [open $spell_cmd r+]} spell_err]} {
++	if {
++		$spell_dict eq {none}
++		|| [catch {set spell_fd [open $spell_cmd r+]} spell_err]
++	} {
+ 		bind_button3 $ui_comm [list tk_popup $ui_comm_ctxm %X %Y]
+ 	} else {
+ 		set ui_comm_spell [spellcheck::init \
