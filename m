@@ -4,178 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B854DC433DF
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 08:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F3AC433DF
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 09:02:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 695CF208DB
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 08:59:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A25521741
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 09:02:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Cxo3R9Ti";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eCRt7ICs"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d/Z3YMbM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S7CMW9l9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726060AbgHVI7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Aug 2020 04:59:54 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:57239 "EHLO
+        id S1726676AbgHVJCh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Aug 2020 05:02:37 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44117 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725877AbgHVI7x (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Aug 2020 04:59:53 -0400
+        by vger.kernel.org with ESMTP id S1725877AbgHVJCg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 22 Aug 2020 05:02:36 -0400
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 625265C00EA;
-        Sat, 22 Aug 2020 04:59:52 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 6BABB5C0090;
+        Sat, 22 Aug 2020 05:02:35 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Sat, 22 Aug 2020 04:59:52 -0400
+  by compute3.internal (MEProxy); Sat, 22 Aug 2020 05:02:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=/HbV6P47BxWdHPqO3P2DQVORS5P
-        USBKFrPPH0HoPx0w=; b=Cxo3R9TiOjKO21B+rA9fW3t3UQfnNggxRWtFfjrn26h
-        VCN6+gt82NVy+ru22rt9WNo0XtVSab/dF1Ch1b9ro0Gyv9Z9ge3g/rausLzbqIpX
-        YTjGCTX/c0VlutDNAy0Pkg4iF8R/dBdTU3tuGyzfdLAR/QKfQV5vkGptayolZrmz
-        jxADllzLdKeiNsw/klQ5WeH71nCeFgcMfOOgCeVs/afhyDqhNgZncIchLZfwFpLM
-        ZE4LRtf6QcurKNjTd2/CJ1CGJUliDFWDbtp44KReZ5qg1m3fDg3HRsOicZsQB3A2
-        wEv3u79bFbE2FI2d4LO9Onq+MnYTHpr7akCcJZrDt2g==
+        :content-type:in-reply-to; s=fm1; bh=p2dm8UVbZSoFsary1xdb6Z67+rh
+        6SPjyq2AxDs8CC1s=; b=d/Z3YMbMiZiCT9QBYWwW9z60IXP0DXocXUYxt4cW2Cr
+        BYy8yYCtElTfIP2/6AWPVrlVZgg03sof7kbCzdHlwGhT+7sMwEp7ht6RJ3KFycjn
+        poxkmvZOACl/RXtb6WAmUOS4Ovu3lDcr3O4/8/hwiEO/qeYSpqUzvnhWqazebWs2
+        MM03+V+/Msjjryx2CEeHp8cTrloqXOZIimeOyGfLtHSUbi1NxpL7W0db9iaeiux3
+        IFeJ0JA6XzmkmU7qwapgoG5sP81Qmo4Gyl0KFEuxI/oe/hFArFDR5pO1aWUBGuSd
+        87euv/26OChC58C4OCGYt/LI8GtR22R1RkURsnI+qnQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=/HbV6P
-        47BxWdHPqO3P2DQVORS5PUSBKFrPPH0HoPx0w=; b=eCRt7ICsMAS11NEa24ipsQ
-        rVBhMcClmIt0V3PuFoVSwDLgxwxD4Tg2Jp76dOEg7CVXafb2C1J5xNNqi1i4EXoK
-        iIi0tqQIiObJh3kLuM9/ovLs0TJYLFx1CLcuGwWjSyXz3o+g9MrAst+URMNxOA4p
-        +w5LFvlJ2O2Qe3KV8ob0XJFPjmwivuaKkzVYP99pkBR3PMNXchIddo9A8PtE/bAp
-        roVN+oTc/BbCCMv8y+gO0DjNjEBSxXvLgAOEEJh/cGHHXHM6kcpR5zDLtEAvCWzM
-        MB+5kH9yhOWKgTns5YQJZ/7afEPCO2JNxXcwxrBxyGjs84tkPRMzBWSGJH7IbVjQ
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=p2dm8U
+        VbZSoFsary1xdb6Z67+rh6SPjyq2AxDs8CC1s=; b=S7CMW9l9q0Ncjjo2W8alt6
+        Mpp06Z8gjJrRueUNJ7N6bhkiMIUKBWSW6MnjVTkhWBP4ytzQWfTdP7DTDfeagwTH
+        pEpGGdFkY4XNucxAB30WwyqdTD66sJs755TFKPDgfk8Ag/bpW0m4yzpUBbP401mA
+        U2OqR4VQU/KivY6SuAiajd/CehfZWJrzFyv8TPbGwWf7/hYgGHLOWwvBgNw1wjbI
+        EgylJhBcV8pcbC2fXgCivUG7VZ6lkdJKZxuILNYCf+F7MRWfH5720EsiQjRomXtb
+        XUWZQlcnJ4n9u7dl2/nwGIV3leNWAngmDGpfzD4vRcit4GTCk2TRz6oXa7rkmxhg
         ==
-X-ME-Sender: <xms:iN5AXz5hu85rJKeY66R-HqEHnLSZygEIIeaACifre9sTlluoBaWxIQ>
+X-ME-Sender: <xms:K99AX-Rq9ZMeES-VSDSxzYD3MjyzDgKCxCHMlg_ZILcXaDeetfaR1Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddugedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejjedrudekfedrhedtrddugedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:iN5AX443RBA4MFMAJOXbYc0stAfGTIFJKu7EHq70pSOTVReRyX3j9A>
-    <xmx:iN5AX6eTPYlw4P2K_OuFNDzozEYtT0kcQUd_NTDVM1G4RhP02dJXng>
-    <xmx:iN5AX0JUt_aGKyO1uYF7RtCKjYcZoGNdhU-wX2FUnpoJkOY_cTnvDQ>
-    <xmx:iN5AX5zeFCgxvm4nWrAnZrBtKY8XjBmJrCW2oiZ7YJhfAsVpQ1qPOw>
+X-ME-Proxy: <xmx:K99AXzx3rQc4IMPhWmR6-fMPnRrxFgtel58W9QZerO4Wxt-PH9rapw>
+    <xmx:K99AX70ErAh_GSoAkY5y7AFg9MOMrsvF2IgaORUtsSFyoJf5MOekFQ>
+    <xmx:K99AX6A-n8Zf_S84q2OQM3LdCtHMwu03eSHXINmd6VTTjisOvezgUw>
+    <xmx:K99AX3IcvC8ErVCODuD3ERl7pW_KqDO16Go2P_31KgZWHve9byre0Q>
 Received: from vm-mail.pks.im (x4db7328c.dyn.telefonica.de [77.183.50.140])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 50CA230600A3;
-        Sat, 22 Aug 2020 04:59:51 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 56840306005F;
+        Sat, 22 Aug 2020 05:02:34 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 87109f7d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Sat, 22 Aug 2020 08:59:50 +0000 (UTC)
-Date:   Sat, 22 Aug 2020 10:59:51 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6403b352 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Sat, 22 Aug 2020 09:02:33 +0000 (UTC)
+Date:   Sat, 22 Aug 2020 11:02:34 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH] refs: remove lookup cache for reference-transaction hook
-Message-ID: <20200822085951.GB1069@ncase.pks.im>
+Message-ID: <20200822090234.GC1069@ncase.pks.im>
 References: <0db8ad8cdb69afb9d6453bf60a808e8b82382a4e.1597998473.git.ps@pks.im>
  <20200821143727.GA3241139@coredump.intra.peff.net>
+ <xmqqeeo09chm.fsf@gitster.c.googlers.com>
+ <20200821172137.GA3261095@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xgyAXRrhYN0wYx8y"
+        protocol="application/pgp-signature"; boundary="JgQwtEuHJzHdouWu"
 Content-Disposition: inline
-In-Reply-To: <20200821143727.GA3241139@coredump.intra.peff.net>
+In-Reply-To: <20200821172137.GA3261095@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---xgyAXRrhYN0wYx8y
+--JgQwtEuHJzHdouWu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 21, 2020 at 10:37:27AM -0400, Jeff King wrote:
-> On Fri, Aug 21, 2020 at 10:29:18AM +0200, Patrick Steinhardt wrote:
+On Fri, Aug 21, 2020 at 01:21:37PM -0400, Jeff King wrote:
+> On Fri, Aug 21, 2020 at 09:42:45AM -0700, Junio C Hamano wrote:
 >=20
-> > One case notably absent from those benchmarks is a single executable
-> > searching for the hook hundreds of times, which is exactly the case for
-> > which the negative cache was added. p1400.2 will spawn a new update-ref
-> > for each transaction and p1400.3 only has a single reference-transaction
-> > for all reference updates. So this commit adds a third benchmark, which
-> > performs an non-atomic push of a thousand references. This will create a
-> > new reference transaction per reference. But even for this case, the
-> > negative cache doesn't consistently improve performance:
->=20
-> Ah, right, I forgot that update-ref would use one single transaction. So
-> what we were testing in our earlier discussion was not even useful. :)
->=20
-> >  test_expect_success "setup" '
-> > +	git init --bare target-repo.git &&
-> >  	test_commit PRE &&
-> >  	test_commit POST &&
-> >  	printf "create refs/heads/%d PRE\n" $(test_seq 1000) >create &&
-> >  	printf "update refs/heads/%d POST PRE\n" $(test_seq 1000) >update &&
-> > -	printf "delete refs/heads/%d POST\n" $(test_seq 1000) >delete
-> > +	printf "delete refs/heads/%d POST\n" $(test_seq 1000) >delete &&
-> > +	printf "create refs/heads/branch-%d PRE\n" $(test_seq 1000) | git upd=
-ate-ref --stdin
-> >  '
->=20
-> OK, we need these new branches to have something to push into and delete
-> from the remote. They might impact the timings of the other tests,
-> though (since we now have 1000 entries in .git/refs/heads/, which might
-> affect filesystem performance). But it should do so uniformly, so I
-> don't think it invalidates their results.
->=20
-> However, I wondered...
->=20
-> > +test_perf "nonatomic push" '
-> > +	git push ./target-repo.git branch-{1..1000} &&
-> > +	git push --delete ./target-repo.git branch-{1..1000}
-> > +'
->=20
-> ...if it might make the test more consistent (not to mention isolated
-> from the cost of other parts of the push) if we used update-ref here, as
-> well. You added the code necessary to control individual transactions,
-> so I thought that:
->=20
->   printf 'start\ncreate refs/heads/%d PRE\ncommit\n' \
->     $(test_seq 1000) >create-transaction
->=20
-> might work. But it doesn't, because after the first transaction is
-> closed, we refuse to accept any other commands. That makes sense for
-> "prepare", etc, but there's no reason we couldn't start a new one.
->=20
-> Is that worth supporting? It would allow a caller to use a single
-> update-ref to make a series of non-atomic updates, which is something
-> that can't currently be done. And we're so close.
+> > Jeff King <peff@peff.net> writes:
+> >=20
+> > > However, I wondered...
+> > >
+> > >> +test_perf "nonatomic push" '
+> > >> +	git push ./target-repo.git branch-{1..1000} &&
+> > >> +	git push --delete ./target-repo.git branch-{1..1000}
+> > >> +'
+> >=20
+> > Is this a bash-and-ksh-only test?  At least, the above would not try
+> > to push 1000 branches with the version of dash I have.
 
-Yeah, I had the exact same thought and I do think it's useful to be able
-to create multiple reference transactions per git-update-ref(1) session.
-I might whip something up as soon as I find the time to do so, it really
-shouldn't be a lot of work.
+I didn't realize it's shell-specific behaviour, thanks for highlighting.
+
+> Heh, I was so focused on the "push" part of it that I didn't even look
+> carefully at the second half of the command-line. ;)
+>=20
+> I think pushing "refs/heads/branch-*" would work for pushing. For
+> deletion, though, I don't think we allow wildcards in the refspecs.
+> You could abuse pruning:
+>=20
+>   git push --prune ../dst.git refs/heads/does-not-exist/*:refs/heads/*
+>=20
+> It also may be OK to just omit that half of the test. I think the
+> initial push exercises the case we care about. Though I guess we do run
+> the test repeatedly, so we might have to do:
+>=20
+>   rm -rf dst.git &&
+>   git init dst.git &&
+>   git push dst.git refs/heads/branch-*
+
+I'm not too keen to use `rm -rf && git init` as it muddies the subject
+under test a bit. I'll try to come up with a non-shell-specific version
+of this on Monday.
 
 Patrick
 
-> Even if it is, though, that's definitely outside the scope of this
-> patch, and I think we should take it as-is with "push".
->=20
-> -Peff
-
---xgyAXRrhYN0wYx8y
+--JgQwtEuHJzHdouWu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl9A3oYACgkQVbJhu7ck
-PpRrAw/8DNUEV1UAbWb9XhvbE10Ldr8/S0N+ohVqwA+JOTJ7fchjU6tOhVHhBVGz
-XdwWLm/9RxiUYByTm82ywTOWLld2q6TEA/WFbvQAMJiWZvYXHjnXksplmua2/r3A
-CjXMzHbieG+mJQPv1pszUO1ALDSIzyz/u2V5a3GifhYhvw3OGWEsqyy941Teoclz
-EctEfgPBU/RRkGLQMyb/vw48GtQPIchcPWhvLeFlfQ69oGCLMr5AUlns/tZXKTQq
-PX+7hVNVqWicKZwX/3d4hAP9EAPpocuS8UaP89v+i33MTyGHA8E5M40PSTpARH3k
-I/e/shgythPaLxQ6MBWT64AQ9F4sbxMXQxt8g8QMMApjwZ3Px/PKzbRt3KerjvXT
-cUoxQk6l6itD+vosRB0jvIlE2NslV2zkvGRMLi6PLh+egn50pJcuSO88hEQthShG
-haht8uduveI/9SPhXCsD90s7qi6lPRm6dhQCeNXxt/d2QCHqsDyou+/oq66i2quj
-ASkCXdYk2kHFomHQBNj41gKy4YMR0T243WtvaNl0VWwG/TWqwQiLSGuKn4BfHoZA
-fuCgkc9kwDcqg5AcaNbM86TNWiO3fQ51nA2MGDdtc3O9lYZ2VtC7SBXErKWipOYe
-vIsRammFmYczxKZJi47+63ixFaKnkPiZAlB9UvpqG9UKwaurcQY=
-=SWxH
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl9A3ykACgkQVbJhu7ck
+PpS0BhAAoyRdT4A58DOG6cqbvCBo9fPaAPKSDB/rl6N+5dLvz7QkrBNorha+FgCZ
+Qm/JQWyZfwO66KvCvhba51KA+/VHSxhqs4Ut43hWD5e+Orn8f2EGNqXrylTtO4/G
+rXJm0bz8vUIdeNRgZXwTkL+Q9byu9R7F6EPo4H7uvVEj11rA4CoROB3J5nRE8QLD
+z8bc5eoohPngwpKB9cCBqJQsLUWOg0pqgz4DR9XM/M85jD7gwoWi3hVgpiPo7UqO
+O0UDyBYUK5bCJUGxaBdi9TurusHbdjd3oC2SoON6NmV0fu0TZN3+c8J8eoK8IDpW
+HhBW5tCpQM2nw1QGjog5yeapfheNsqKmMQfITTlnUYa2IIyTPSYeQwYUYnYUllh8
+r8lyQzYTK5UP9PVRWpIuGWAbo9LL3gAGXn7GK+gwB/g1LFAUcq5zx28To2A7Gn5+
+GUjOW32xDGoqWIAAmLFXd5y8BZTJD1xw6RWr0cddVrnIDnye+b1trKilBU/uwCDK
++RXJmMSvgLar+3TD3EbIutAJNJAvEPWdQQAUwV70Y8L9mpLUaz7bRj0MEA9rlaQM
+BZXUH+IwHOHjoGRpnOjyGU5iq2bPXXJhdruP8VwjyKVKM4c6L8d053t34TUUesfO
+BMdQiyf2xrB18PNaek1a01f1z0hQfYukErMLeozyAkdsuIOoXy0=
+=gabW
 -----END PGP SIGNATURE-----
 
---xgyAXRrhYN0wYx8y--
+--JgQwtEuHJzHdouWu--
