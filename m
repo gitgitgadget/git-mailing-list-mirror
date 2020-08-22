@@ -2,236 +2,171 @@ Return-Path: <SRS0=iV/m=CA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B35D3C433DF
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 19:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACDD5C433DF
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 19:13:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7751E2075E
-	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 19:09:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AFA42075E
+	for <git@archiver.kernel.org>; Sat, 22 Aug 2020 19:13:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5cF/qqW"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="mR/Yu4J2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728626AbgHVTJ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Aug 2020 15:09:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728398AbgHVTJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Aug 2020 15:09:25 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48D06C061573
-        for <git@vger.kernel.org>; Sat, 22 Aug 2020 12:09:25 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id g6so5350871ljn.11
-        for <git@vger.kernel.org>; Sat, 22 Aug 2020 12:09:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=gU9Lmi9AgwOxm9jSUAk3LG7Be+j0mUqShNHSslrBkCw=;
-        b=C5cF/qqWbi9LE1H5QA+ZChyDD2V3MOwGQTbYtoY4CoUT0xUapJq1RLo5VbfU82lUBv
-         V6ejYm2q4zCOKCZZQkSjFTx0CUjq17JmO+A6rz6HuCt5z80GdS6isV0nVYBn6Nmx8aH0
-         ceIGR0eidYujdF86fsysg02RhlhG4F2UUufq/AQoPGatwWFfMQHVKr7vB8QpsB8ihG55
-         kgwKQ2J68UR96JIrMgc7dgQzcqZfA5zLprTbif4J8FQmqzksj2YR2O4IBjMop5ZDcOkE
-         tb5Y31CaOPr0S2QQ+1NTci0Bo8xn7YVLazQ5ar1OQB5ZLx4mFIQF8t7ZLzJ6P5ijjqZT
-         2a2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=gU9Lmi9AgwOxm9jSUAk3LG7Be+j0mUqShNHSslrBkCw=;
-        b=Qw8UX/v7HIVqcihe4NY5Owr8+ex30QWuTLfW7C0juF1ZXeoGa9MM3CmN2qCnDRwAEE
-         L9VffM1Q148ElzkggIeCN5P6fhpvUeyzuPLkmMW7w8eg/8vQoPLvtgtSVoJjBexsV567
-         aH8s8lv0kyuo99ll4XxmgziogPpduGKQbDzL5L9yZ0+Ra73h5CDFA/MSRkdJGnHTc7zO
-         sL8KjwCsp6ZJz/4mXuW8kLZnPQaQF8upmIzaEVVIrj1O5ZtnjYKWmZt+mT16ZZXjo1yp
-         h6Gr5xFxTGozyvRD5a9RNnjU0mcZhtDcbEFg4ZUJVL6IPmijayPg3El2p0w2oMdhHCC5
-         CLIQ==
-X-Gm-Message-State: AOAM531ZqUdqmtsR97pkgXE3m0gDDC7dGvWu6z/6Uq9OPmLwB2+P9XXE
-        wEcdKljbIpe/OHzbtq1/k40=
-X-Google-Smtp-Source: ABdhPJyPYYEUTCcT428dKRuLQ1Z5rRMY41jhdjDq8eL/VGkWX0wHkkXsHx4hPNsEIuBGZjOkXFFYng==
-X-Received: by 2002:a2e:9a15:: with SMTP id o21mr4138161lji.419.1598123363386;
-        Sat, 22 Aug 2020 12:09:23 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id x17sm1176406ljm.0.2020.08.22.12.09.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Aug 2020 12:09:22 -0700 (PDT)
-From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
-To:     "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3 10/11] commit-reach: use corrected commit dates in paint_down_to_common()
-References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
-        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
-        <439adc1718d6cc37f18c1eaeafd605f5c2961733.1597509583.git.gitgitgadget@gmail.com>
-Date:   Sat, 22 Aug 2020 21:09:21 +0200
-In-Reply-To: <439adc1718d6cc37f18c1eaeafd605f5c2961733.1597509583.git.gitgitgadget@gmail.com>
-        (Abhishek Kumar via GitGitGadget's message of "Sat, 15 Aug 2020 16:39:42
-        +0000")
-Message-ID: <85imdah50e.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        id S1728632AbgHVTNa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Aug 2020 15:13:30 -0400
+Received: from mout.web.de ([212.227.17.12]:55467 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728530AbgHVTN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Aug 2020 15:13:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1598123580;
+        bh=oOQrfKxfVMmJnYwhqZWsX2YL6wVbNxySwGu3RIgHcbw=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:In-Reply-To:References;
+        b=mR/Yu4J2RNFiE9fScuxlg5v/c4LLphqPffnRM1ik3nmtXRlRkpXAR+PTkm+zIg7/O
+         5iQQ8K+mTUl+Y66VpekRLyua13aFm+EEyGdpHRhHWRlFHz7cf/x89kkKTX/jMONNb+
+         6947VRL2y8blwX3x5tmw+anib7aZFhx6lsCXXfMk=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from luklap ([88.130.61.124]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N5lnF-1kgsUx01jH-01790A; Sat, 22
+ Aug 2020 21:13:00 +0200
+Date:   Sat, 22 Aug 2020 21:12:50 +0200
+From:   Lukas Straub <lukasstraub2@web.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'git' <git@vger.kernel.org>, 'Elijah Newren' <newren@gmail.com>,
+        'Brandon Williams' <bwilliams.eng@gmail.com>,
+        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH 0/2] Allow adding .git files and directories
+Message-ID: <20200822211250.59a8b351@luklap>
+In-Reply-To: <20200822185307.GZ8085@camp.crustytoothpaste.net>
+References: <04aa01d67659$2dc217b0$89464710$@nexbridge.com>
+        <xmqqimdetpuw.fsf@gitster.c.googlers.com>
+        <20200819201736.GA2511157@coredump.intra.peff.net>
+        <xmqqa6yqtm03.fsf@gitster.c.googlers.com>
+        <20200819203825.GA2511902@coredump.intra.peff.net>
+        <20200820133445.2bd162a3@luklap>
+        <20200820130125.GB2522289@coredump.intra.peff.net>
+        <20200821143941.28f71287@luklap>
+        <20200821225237.GW8085@camp.crustytoothpaste.net>
+        <20200822162152.2be1d024@luklap>
+        <20200822185307.GZ8085@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; boundary="Sig_/wxYmihNgcAM_3RU=cAFtNdH";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Provags-ID: V03:K1:yktY+1miMv2uWQposqYxOqwWApCyyBfOKhp/yX7ZWSYnrM/YRM1
+ SCBFBHLgllcSGaX903sGYKMeJcKQQQGxoozFI5JVYgY5TB1s6FaR9wz3jEQ4FnoYNKnzPW0
+ M4BRpphe6IWOzqHxUwTYy7f15B/LWIw5ssKjVZxNv0Ve46ARfeeaF413Ii7sdWm/cqn2PbX
+ p/p3cg1aVIlCVSJP75Ngg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:z7IEeW+t93k=:OR4GN+R4RztkzPDCgzozgM
+ 6kMjLjOHOq9iaFCxoExWavyli45uYuePbSrA29K9JtBdmXuXjyThkGw96svD6I2BDyEPMcy8z
+ UONgFzvvxUPfzi+PUWVZFnSzIsCWZpZ29ekAFztDrjLK4+lEofh9vjHZFIw+giHw2TALXDabs
+ /gej9aSP3cHS3c6lG8noC6g8B3xh46EYCvbwc1SCTl8vk9TYrslOqrsW0OfZcHjItVhaAAQxU
+ +8yqGH5v8IOIuuQQW2R7Y94lcBt1+3e5kzJROr5V4RqtVfK466OSlS32qwRc9c/aEYaFi8Zss
+ yvXQSv6nU56WbWs9MlhjmjPTbtf9GvcpX8SPsiHm8HWFRuqzT8oWQdRgSL6wemAJRXdabTEEy
+ i2YXNmgU/77/ZYMRJVbtUtp5cnkH1vDSLZva9zIiDVOI4PRCRsUBQ2yhOg2UQNj0GJyEsZHyR
+ DE2xkvrQfEehL0Rk+T2Y4ESak5t5tmzpjsX7t/tQUtJicArDZrCPD8oKlCITrhL565IkQ4WBQ
+ n1DknQ+oyI2mVkfyvrdIJoZ6RVlSrSxvgf6oSWV8o6fJiak1aBZ/EUpst9ZO/k6cSeg4hQNyS
+ +55dYUJsSVhJB9g3ctfCP6wVDlwgqjBQi/MUTvZfNcwEiX3tgdK/i/T2i/Fc88YYVME/681dG
+ ehOMbtslZkOBtTp4ttTTL8Yf50dnN1+a1Mxav/PO5vbV8l76OcObNrKUO1i+iC/AyfDLJR/LV
+ Z3upzb5z4mO3X9G66mJbpeLA2VgTDepY3/42UubVNyJQj1oGLagwko4bBuoA6uruqoBDnZRT4
+ Qx3w5WHtJHw+zYuPq15f72eC5S7y7yPOxjz3UzqX5K+3tjJQcUsgtrK6qSOP/4wmlNifUOnmd
+ RIHlYMI3gL60pJBIBjJRzqe1EnipihiG7flUal7Y0K9kHOJNo+HHLAl9PHgp1NSiOt5qdYD+b
+ o4yQyYCbf0yB1luREo0fyIJ5BREvVqXWHirkR8GBxwhReYxfzhw/DZPmiAxDqr3W4PiPA/7tB
+ I6xWFW19purqQLwMuW9hVobnQdQSKESsP08vaoIbUKasoGqNbUYVDbWTzo66DybK5BzElKB+S
+ gHvUbbbEQqJLnAOHroTLzr22h478ViIv34dfc5xjsAPxoUaDeosa8ogmdOK6dnPDWzOB7svVW
+ ABFDnlzyE+GX3/1K5RTKmywLh/q9HwcKDip5PDlznNVAnFED8yYZci5Uvj+MBQJJYMi1d7zpo
+ HKNVEl0XW1+jHBFgow0QoQXmTzJEavFhtIZeVyb7Z/R0D1yLwVRW9GCrfWip2ITPEv2eZNgDR
+ jHgBWZ7UrdNvXopqgVgZF4QPDozG4HwyWo2DQf4ex2eKkjDyVom7MU3qdSW9BPhTeDpoYOJnf
+ 1bGSGqS3jRIOYfKj+ceH6LMNLVoNEz/KgSIqX+mQ0SVRjUY+8WaMvQD71FGsKOgip3MEB01nS
+ 2DN5eArYnBio0+2BpFJxXqiSYvf4ScyIhWikbsTyEK+sgHZGE1uJepFNAxr8Oa0JpCqoWSVoz
+ iAccNXFG8nUKBv5lQzdHqzjwG16gyJP062RGOEdc4shLaToQRTXSMQUn1ahgz6enoPDkQ0Jpi
+ UJAoW4zEG1GFXVp50Rrz0BJQyeOWR4yK243PyVw4fXgkYuTXwflEg1HYFkOmlATeScX/mLscp
+ 6oB9QM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Abhishek,
+--Sig_/wxYmihNgcAM_3RU=cAFtNdH
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-"Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sat, 22 Aug 2020 18:53:07 +0000
+"brian m. carlson" <sandals@crustytoothpaste.net> wrote:
 
-> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
->
-> With corrected commit dates implemented, we no longer have to rely on
-> commit date as a heuristic in paint_down_to_common().
+> On 2020-08-22 at 14:21:52, Lukas Straub wrote:
+> > On Fri, 21 Aug 2020 22:52:37 +0000
+> > "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> >  =20
+> > > On 2020-08-21 at 12:39:41, Lukas Straub wrote: =20
+> > > > The downsides we discussed don't apply in this usecase. These are m=
+ostly
+> > > > personal files, so I wont upload them to any hosting site (not even=
+ private
+> > > > ones). There is no security impact as I only sync with trusted devi=
+ces.   =20
+> > >=20
+> > > I realize this works for you, but in general Git's security model does
+> > > not permit untrusted configuration files or hooks.  Configuration can
+> > > have numerous different commands that Git may execute and it is not, =
+in
+> > > general, safe to share across users.  This is why Git does not provid=
+e a
+> > > way to sync whole repositories, only the objects within them.
+> > >=20
+> > > Adding the ability to transport configuration through a repository is=
+ a
+> > > security problem because it allows an attacker to potentially execute
+> > > arbitrary code on the user's machine, and I can tell you that many, m=
+any
+> > > people do clone untrusted repositories.  Just because you are aware of
+> > > the risks, are comfortable with them, and are the only user in this
+> > > scenario does not mean that this feature is a prudent one to add to G=
+it.
+> > > It violates our own security model, and as such, isn't a feature we're
+> > > going to want to add. =20
+> >=20
+> > I don't understand. If the attacker gets the user to set git config opt=
+ions,
+> > then all hope is lost anyways, no? =20
+>=20
+> When you can embed repositories in other repositories like you're
+> proposing, those embedded repositories can have configuration files in
+> them (e.g., .git/config), which leads to the security problem.
 
-All right, but it would be nice to have some benchmark data: what were
-performance when using topological levels, what was performance when
-using commit date heuristics (before this patch), what is performace now
-when using corrected commit date.
+Yes, I understand that, but the user has to actively allow this via the
+allowDotGit config option, which I'll implement in the next patch version.
+So the attacker has to get the user to set the option. If the user does thi=
+s,
+the attacker could get the user to set any other option (like core.gitProxy)
+anyway and gain remote execution regardless of this patch.
 
->
-> t6024-recursive-merge setups a unique repository where all commits have
-> the same committer date without well-defined merge-base. As this has
-> already caused problems (as noted in 859fdc0 (commit-graph: define
-> GIT_TEST_COMMIT_GRAPH, 2018-08-29)), we disable commit graph within the
-> test script.
+Regards,
+Lukas Straub
 
-OK?
+--Sig_/wxYmihNgcAM_3RU=cAFtNdH
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
->
-> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> ---
->  commit-graph.c             | 14 ++++++++++++++
->  commit-graph.h             |  6 ++++++
->  commit-reach.c             |  2 +-
->  t/t6024-recursive-merge.sh |  4 +++-
->  4 files changed, 24 insertions(+), 2 deletions(-)
->
+-----BEGIN PGP SIGNATURE-----
 
-I have reorderd files for easier review.
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAl9BbjIACgkQNasLKJxd
+slgAAA//QNMraKLgsxItUdVUKwihfEJM7/7Kui07JvQRBzkP8r8h95khSyBcEq21
+q80rJhUnkgD+CW3y0J3UaXXc+q3bEUUnGmtLWR5umFd/PLVKzI1T0NnK3Ds3tz+W
+rq6QzCln2ktnHHe8IWdlPuyqrNPd23HEPGtjwqISWIQyLpYO/VjAuGXqXgZ+4vok
+Fslhbo/Uuc4aLtEhCgYc9kH3MefpO90h61+iYfqXLrsZd9bYSnAwXb4JlcribZ7y
+31nl+xj1UUFEiKBe5+3y0/qzm2ZLKRaLpD4S/OF4EkFC0EebWvZ71RzuYcY9qV6S
+a1OU9QkTWc1r+FwfmXgHFtFA9BRlru4FVrnENQBl0lyVm2EY2JfNSTZwLyF8Mph9
+IjMgsu5BcWKA8dFRHBxj1ODhK2W8rWJDtGYyOaLnmuIODmSKiXGuACWFcTnQgh2F
+mZH6ykOragWIT66wqzOZGe/Z1nV7nsno7qP4a4hWjN8LcIX94dvTlPR/Y3sGt9uP
+/um7F8xAP0yofA+SH3ULw780NhPp+alo+q78wn1oCqsS7Q+lDHquDFrQkZZLJ952
+/oDGdiqveW9wqhnPU0R3zFB6/V7SiO0U/b0I0twqamKBlN+MZGZhtyJ1z2s13K+6
+ENC0oGZvpKMQqMyCeaObH1l/lUBRCqt5Kh92qBLt00iLQO3z7Ig=
+=tiax
+-----END PGP SIGNATURE-----
 
-> diff --git a/commit-graph.h b/commit-graph.h
-> index 3cf89d895d..e22ec1e626 100644
-> --- a/commit-graph.h
-> +++ b/commit-graph.h
-> @@ -91,6 +91,12 @@ struct commit_graph *parse_commit_graph(void *graph_ma=
-p, size_t graph_size);
->   */
->  int generation_numbers_enabled(struct repository *r);
->
-> +/*
-> + * Return 1 if and only if the repository has a commit-graph
-> + * file and generation data chunk has been written for the file.
-> + */
-> +int corrected_commit_dates_enabled(struct repository *r);
-> +
->  enum commit_graph_write_flags {
->  	COMMIT_GRAPH_WRITE_APPEND     =3D (1 << 0),
->  	COMMIT_GRAPH_WRITE_PROGRESS   =3D (1 << 1),
-
-All right.
-
-> diff --git a/commit-graph.c b/commit-graph.c
-> index c1292f8e08..6411068411 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -703,6 +703,20 @@ int generation_numbers_enabled(struct repository *r)
->  	return !!first_generation;
->  }
->
-> +int corrected_commit_dates_enabled(struct repository *r)
-> +{
-> +	struct commit_graph *g;
-> +	if (!prepare_commit_graph(r))
-> +		return 0;
-> +
-> +	g =3D r->objects->commit_graph;
-> +
-> +	if (!g->num_commits)
-> +		return 0;
-> +
-> +	return !!g->chunk_generation_data;
-> +}
-
-The previous commit introduced validate_mixed_generation_chain(), which
-walked whole split commit-graph chain, and set `read_generation_data`
-field in `struct commit_graph` for all layers in the chain.
-
-This function examines only the top layer, so it follows the assumption
-that Git would behave in such way that oly topmost layers in the chai
-can be GDAT-less.
-
-Why the difference?  Couldn't validate_mixed_generation_chain() simply
-call corrected_commit_dates_enabled()?
-
-> +
->  static void close_commit_graph_one(struct commit_graph *g)
->  {
->  	if (!g)
-> diff --git a/commit-reach.c b/commit-reach.c
-> index 470bc80139..3a1b925274 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -39,7 +39,7 @@ static struct commit_list *paint_down_to_common(struct =
-repository *r,
->  	int i;
->  	timestamp_t last_gen =3D GENERATION_NUMBER_INFINITY;
->
-> -	if (!min_generation)
-
-This check was added in 091f4cf (commit: don't use generation numbers if
-not needed, 2018-08-30) by Derrick Stolee, and its commit message
-includes benchmark results for running 'git merge-base v4.8 v4.9' in
-Linux kernel repository:
-
-      v2.18.0: 0.122s    167,468 walked
-  v2.19.0-rc1: 0.547s    635,579 walked
-         HEAD: 0.127s
-
-> +	if (!min_generation && !corrected_commit_dates_enabled(r))
->  		queue.compare =3D compare_commits_by_commit_date;
-
-It would be nice to have similar benchmark for this change... unless of
-course there is no change in performance, but I think then it needs to
-be stated explicitly.  I think.
-
->
->  	one->object.flags |=3D PARENT1;
-> diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-> index 332cfc53fd..d3def66e7d 100755
-> --- a/t/t6024-recursive-merge.sh
-> +++ b/t/t6024-recursive-merge.sh
-> @@ -15,6 +15,8 @@ GIT_COMMITTER_DATE=3D"2006-12-12 23:28:00 +0100"
->  export GIT_COMMITTER_DATE
->
->  test_expect_success 'setup tests' '
-> +	GIT_TEST_COMMIT_GRAPH=3D0 &&
-> +	export GIT_TEST_COMMIT_GRAPH &&
->  	echo 1 >a1 &&
->  	git add a1 &&
->  	GIT_AUTHOR_DATE=3D"2006-12-12 23:00:00" git commit -m 1 a1 &&
-> @@ -66,7 +68,7 @@ test_expect_success 'setup tests' '
->  '
->
->  test_expect_success 'combined merge conflicts' '
-> -	test_must_fail env GIT_TEST_COMMIT_GRAPH=3D0 git merge -m final G
-> +	test_must_fail git merge -m final G
->  '
->
->  test_expect_success 'result contains a conflict' '
-
-OK, so instead of disabling commit-graph for this test, now we disable
-it for the whole script.
-
-Maybe this change should be in a separate patch?
-
-Best,
---=20
-Jakub Nar=C4=99bski
+--Sig_/wxYmihNgcAM_3RU=cAFtNdH--
