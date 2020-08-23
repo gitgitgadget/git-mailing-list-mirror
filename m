@@ -1,98 +1,145 @@
-Return-Path: <SRS0=2KbR=CB=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC5CC433DF
-	for <git@archiver.kernel.org>; Sun, 23 Aug 2020 20:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD533C433DF
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 00:55:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB50120774
-	for <git@archiver.kernel.org>; Sun, 23 Aug 2020 20:41:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9972120738
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 00:55:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FhzHmwof"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726765AbgHWUlq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Aug 2020 16:41:46 -0400
-Received: from mimir.eigenstate.org ([206.124.132.107]:7614 "EHLO
-        mimir.eigenstate.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726483AbgHWUlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Aug 2020 16:41:46 -0400
-Received: from oneeye (pool-74-101-2-6.nycmny.fios.verizon.net [74.101.2.6])
-        by mimir.eigenstate.org (OpenSMTPD) with ESMTPSA id 5b2327d1 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
-        Sun, 23 Aug 2020 13:41:46 -0700 (PDT)
-Date:   Sun, 23 Aug 2020 13:41:44 -0700
-From:   Ori Bernstein <ori@eigenstate.org>
-To:     =?UTF-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Avoid infinite loop in malformed packfiles
-Message-Id: <20200823134144.d57c80322f479eb554bab9d1@eigenstate.org>
-In-Reply-To: <672843a1-b98c-7567-a078-a2dacd4b7074@web.de>
-References: <20200823005236.10386-1-ori@eigenstate.org>
-        <20200823031151.10985-1-ori@eigenstate.org>
-        <672843a1-b98c-7567-a078-a2dacd4b7074@web.de>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; amd64-portbld-freebsd12.0)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727850AbgHXAz4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Aug 2020 20:55:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47982 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726480AbgHXAzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Aug 2020 20:55:55 -0400
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5EC9C061573
+        for <git@vger.kernel.org>; Sun, 23 Aug 2020 17:55:55 -0700 (PDT)
+Received: by mail-oo1-xc44.google.com with SMTP id x1so1576237oox.6
+        for <git@vger.kernel.org>; Sun, 23 Aug 2020 17:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2spYR9Rzk2AIWPrjv67zbfVd6rGF5+4D/YiBUYn9jcY=;
+        b=FhzHmwofoKJAixR+ucysNu+T8uEDhHgdqLjdxnABLBR57m6PFb8uDtncujXWStue1V
+         tscIYg5SJzWcZVH/X21kZeQhgyWaT5YcC5tzNMv3HaYdzSrm8yO8Ajz68Uq90Vn5Nmgy
+         YWXASR0KNZEVmpF4wzAA5GPwWmvnyeTNnFKEfUhldZ1DlngkVXcGQrdnNkNqlCHfmZB8
+         iqCiiGeUbwZrwkTBUp1IsffElHbr2iUMidezqEq9rnw7zIXy3Jt8Dp6QLNDLGkjJfrSS
+         m7vAb5eDThurG/qh1mtqnvE7ceJiQMUngmJzcAyYRhKC40iWhjY8iSFMwa66ijd776Jb
+         jJag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2spYR9Rzk2AIWPrjv67zbfVd6rGF5+4D/YiBUYn9jcY=;
+        b=I+yAoialhIyrXvkKSA43rFfn0/41dCFaFqK09VEVhACak7Aud8tY+2umheQO2XosUl
+         xLM7K0F0MWXOGkQHFDr48GHV7+10AoBR7JATT8k38jfwDIhqgltP+eC74NrqTSEn7Qg1
+         1JB2GLrD2ZgITuE8BXUKRHJ0pFHwnWTO8va3V3MwyOHBJ61tIWd6BvYDIkXqvOlaxcA8
+         XzLNoBHNXdZ4PRarUf3TDJiUpe9Eesl+djVnoHzvAFJ8zbtC1bSyj9+7BwVGtm1x4jOy
+         Cfv0vC1dae7h7uned6MlJ6uSzumSEUfE3TmPvCCief2bBCr7ij3X+PkG5UQzOrzK51lb
+         Slww==
+X-Gm-Message-State: AOAM530F17RUDXS2oMbXASi5KsK77WdCpPRH5byQ/5s/VjqTqsLnU4iT
+        mJsqH8w1ZLAuf4PnqcOYkQhY32pFndgZuQCzqTQ=
+X-Google-Smtp-Source: ABdhPJwvF05EHEN463GK6RgkFRA64QlvhLOK2vd7MhbWHJ20HpJn3s2s2e3fEMgV+QIU0Mzv3yVhAxAqpjzYBjkdfFk=
+X-Received: by 2002:a4a:98ed:: with SMTP id b42mr2285330ooj.32.1598230553614;
+ Sun, 23 Aug 2020 17:55:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.707.git.1597841551.gitgitgadget@gmail.com>
+ <pull.707.v2.git.1598004663.gitgitgadget@gmail.com> <39aa46bce700cc9a4ca49f38922e3a7ebf14a52c.1598004663.git.gitgitgadget@gmail.com>
+ <CAPig+cRxCvHG70Nd00zBxYFuecu6+Z6uDP8ooN3rx9vPagoYBA@mail.gmail.com> <xmqqeenz95bj.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqeenz95bj.fsf@gitster.c.googlers.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Mon, 24 Aug 2020 00:55:42 +0530
+Message-ID: <CA+CkUQ8Gst2RTaXY6t+ytWu_9Pu7eqnRYRrnawRwYd_NN=u0Lg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] ref-filter: 'contents:trailers' show error if `:`
+ is missing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 23 Aug 2020 08:26:14 +0200, René Scharfe <l.s.r@web.de> wrote:
+Hi,
 
-> Am 23.08.20 um 05:11 schrieb Ori Bernstein:
-> > In packfile.c:1680, there's an infinite loop that tries to get
-> > to the base of a packfile. With offset deltas, the offset needs
-> > to be greater than 0, so it's always walking backwards, and the
-> > search is guaranteed to terminate.
+On Sat, Aug 22, 2020 at 12:47 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+> > ...an alternative would have been something like:
 > >
-> > With reference deltas, there's no check for a cycle in the
-> > references, so a cyclic reference will cause git to loop
-> > infinitely, growing the delta_stack infinitely, which will
-> > cause it to consume all available memory as as a full CPU
-> > core.
-> 
-> "as as"?  Perhaps "and"?
-
-I think I meant 'As well as' -- will fix.
- 
-> 
-> b5c0cbd8083 (pack-objects: use bitfield for object_entry::depth,
-> 2018-04-14) limited the delta depth for new packs to 4095, so 10000
-> seems reasonable.  Users with unreasonable packs would need to repack
-> them with an older version of Git, though.  Not sure if that would
-> affect anyone in practice.
-> 
-> >  #define UNPACK_ENTRY_STACK_PREALLOC 64
-> 
-> Hmm, setting a hard limit may allow to allocate the whole stack on the,
-> ehm, stack.  That would get rid of the hybrid stack/heap allocation and
-> thus simplify the code a bit.  10000 entries with 24 bytes each would be
-> quite big, though, but that might be OK without recursion.  (And not in
-> this patch anyway, of course.)
-> 
-> >  struct unpack_entry_stack_ent {
-> >  	off_t obj_offset;
-> > @@ -1715,6 +1716,12 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
-> >  			break;
-> >  		}
+> >     else if (!strcmp(arg, "trailers")) {
+> >         if (trailers_atom_parser(format, atom, NULL, err))
+> >             return -1;
+> >     } else if (skip_prefix(arg, "trailers:", &arg)) {
+> >         if (trailers_atom_parser(format, atom, arg, err))
+> >             return -1;
+> >     }
 > >
-> > +		if (delta_stack_nr > UNPACK_ENTRY_STACK_LIMIT) {
-> > +			error("overlong delta chain at offset %jd from %s",
-> > +			      (uintmax_t)curpos, p->pack_name);
-> > +			goto out;
-> > +		}
-> 
-> Other error handlers in this loop set data to NULL.  That's actually
-> unnecessary because it's NULL to begin with and the loop is exited after
-> setting it to some other value.  So not doing it here is fine.  (And a
-> separate cleanup patch could remove the dead stores in the other
-> handlers.)
+> > which is quite simple to reason about (though has the cost of a tiny
+> > bit of duplication).
+>
+> Yeah, that looks quite simple and straight-forward.
 
-Is there anything you'd like me to do in this patch, other than fixing
-the typo?
+No doubt, it looks good for "contents:trailers".
 
--- 
-    Ori Bernstein
+What if In future we would like to expand functionalities of other
+'contents' options?
+
+Recently, I sent a patch series "Improvements to ref-filter"[1]. A
+patch in this patch series introduced "sanitize" modifier to "subject"
+atom. i.e "%(subject:sanitize)".
+
+What if in the future we also want "%(contents:subject:sanitize)" to work?
+We can duplicate code again. Something like:
+```
+} else if (!strcmp(arg, "trailers")) {
+        if (trailers_atom_parser(format, atom, NULL, err))
+            return -1;
+} else if (skip_prefix(arg, "trailers:", &arg)) {
+        if (trailers_atom_parser(format, atom, arg, err))
+            return -1;
+} else if (!strcmp(arg, "subject")) {
+        if (subject_atom_parser(format, atom, NULL, err))
+            return -1;
+} else if (skip_prefix(arg, "subject:", &arg)) {
+        if (subject_atom_parser(format, atom, arg, err))
+            return -1;
+}
+```
+
+OR
+
+We can just simply use helper. Something like:
+```
+else if (check_format_field(arg, "subject", &arg)) {
+    if (subject_atom_parser(format, atom, arg, err))
+        return -1;
+} else if (check_format_field(arg, "trailers", &arg)) {
+    if (trailers_atom_parser(format, atom, arg, err))
+        return -1;
+```
+We can use this helper any number of times, whenever there is a need.
+
+Sorry, I missed saying this earlier. But I don't prefer duplicating
+the code here.
+
+Thanks,
+Hariom
+
+[1]: https://public-inbox.org/git/pull.684.v4.git.1598046110.gitgitgadget@gmail.com/#t
