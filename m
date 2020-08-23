@@ -6,20 +6,20 @@ X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_20,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PHP_ORIG_SCRIPT,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EBEAC433E1
-	for <git@archiver.kernel.org>; Sun, 23 Aug 2020 13:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F3A2C433E1
+	for <git@archiver.kernel.org>; Sun, 23 Aug 2020 13:08:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FF062078D
-	for <git@archiver.kernel.org>; Sun, 23 Aug 2020 13:08:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8E6820825
+	for <git@archiver.kernel.org>; Sun, 23 Aug 2020 13:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727809AbgHWNIQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Aug 2020 09:08:16 -0400
-Received: from d40993.acod.regrucolo.ru ([176.99.6.231]:42384 "EHLO
+        id S1727827AbgHWNIT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Aug 2020 09:08:19 -0400
+Received: from d40993.acod.regrucolo.ru ([176.99.6.231]:42524 "EHLO
         d40993.acod.regrucolo.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727781AbgHWNIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Aug 2020 09:08:15 -0400
+        with ESMTP id S1727787AbgHWNIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Aug 2020 09:08:16 -0400
 Received: by d40993.acod.regrucolo.ru (Postfix, from userid 502)
-        id E13EB3335B9; Sun, 23 Aug 2020 15:59:52 +0300 (MSK)
+        id 2660133349C; Sun, 23 Aug 2020 15:59:46 +0300 (MSK)
 To:     git@vger.kernel.org
 Subject: =?UTF-8?B?TW9kaTog0KDQtdCz0LjRgdGC0YDQsNGG0LjQvtC90L3QsNGPINC40L3RhNC+0YDQvNCw0YbQuNGP?=
 X-PHP-Originating-Script: 502:tools.php
@@ -27,12 +27,12 @@ From:   noreply@modi.ru
 Reply-To: noreply@modi.ru
 X-EVENT_NAME: NEW_USER_WITH_PASS
 X-Priority: 3 (Normal)
-Date:   Sun, 23 Aug 2020 15:59:52 +0300
+Date:   Sun, 23 Aug 2020 15:59:46 +0300
 MIME-Version: 1.0
-X-MID:  0.50 (23.08.2020 15:59:52)
+X-MID:  0.50 (23.08.2020 15:59:46)
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Message-Id: <20200823125952.E13EB3335B9@d40993.acod.regrucolo.ru>
+Message-Id: <20200823125946.2660133349C@d40993.acod.regrucolo.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -40,15 +40,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Информационное сообщение сайта Modi
 ------------------------------------------
-Hannah left you a message. Click here https://sites.google.com/view/tt259?gfdylg,
+Hannah left you a message. Click here https://sites.google.com/view/tt259?maw1rq,
 
 Ваша регистрационная информация:
 
 ID пользователя: 
 Имя: Hannah left you a message.
-Фамилия: Click here https://sites.google.com/view/tt259?gfdylg
+Фамилия: Click here https://sites.google.com/view/tt259?maw1rq
 E-Mail: git@vger.kernel.org
-Пароль: gfdylg
+Пароль: maw1rq
 
 Вы можете изменить пароль в личном кабинете.
 
