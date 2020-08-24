@@ -7,95 +7,156 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88C1AC433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A70CCC433E3
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 406C320578
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C7992087D
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="BGo+h5lx"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="revGDt0g"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgHXTRC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 15:17:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50594 "EHLO
+        id S1727921AbgHXTRE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 15:17:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbgHXTQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 15:16:57 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8BDFC061573
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:16:56 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id u128so6539943ybg.17
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:16:56 -0700 (PDT)
+        with ESMTP id S1726222AbgHXTQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 15:16:58 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71589C061574
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:16:58 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id l13so11759425ybf.5
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=A7Qs+TNEQ5WmONobc2y/iWCU7LgyoYQhC3l1sYuvAUs=;
-        b=BGo+h5lxpL1hzSwOVfBiNiLefzrl3knaZ3L6vJrycWd4ubKexudxPXHXX9Yh7doE62
-         1V1VCgfHBk8YZsDRO3YEoJMhdkgyArakwFdU3tPTR+N87cq0R4SKojuM0YyhVHSkuLlg
-         OTm9QSiK0wPIy5oKJ6DADiWbyi3vvONuUV8yK8ywJE4y7J0vJdR6yNooQ/QC040QFviY
-         Kfd3tI1NZM4sPfFfjzXkslGQod0ZsjNaXH4f3mM+9eaDNMwY711QP4lDKY52Hwzx/TaX
-         vAXehWjNOy9T6Kt40JQeZ8tG5f8EyQbXK2qK/QHja1VHTM/bSCBOYpAZRIcKfFrQcpWw
-         hgCA==
+        bh=HH00SexG0J8IcmXs/ID7rNy8ETPZT4GR4nyyg0M7X+M=;
+        b=revGDt0g6y9vfgAkQfuAt4rXkljhixqXc0julS13wxJOsRENiuDgAwsLmNc72KZxZL
+         7LB45lHt87V94ccESB73av22HGwTjinUw+sFXoqemGGqLekWtIWZprnE8Us3sE05ryzY
+         wAdqfXbF9e3AuDp6Gf8FK5dR1RAdxzza+mu7qjz9bcUyAJ3I7QjUltOBj/KxlUVW2PuG
+         fMXWmWcQFlVAAu6VqamPgR2fyiEEpscRn2jc53DS2gU2FBD/gUGb9f10RUAv3VqhVPG7
+         LqkeNPhBDGG46KxaMuJHdC07PjKkmAxvfA+Yorw7hm5F38ybALsxmlljGVbkm12Z6NEG
+         KKyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=A7Qs+TNEQ5WmONobc2y/iWCU7LgyoYQhC3l1sYuvAUs=;
-        b=ND/48xi9ti1Q66rgOP4y8RjF8sSCWfRcDXH5dHagQcqp3G9llz5ZQRJ+GrvK9cLD16
-         JuvT598VvuIVVRblFYKcUhJNw3LddBJFpLgkMNThosealpG3DcSDC7z7aHdBV7W/NH5U
-         tWJLY0L9ojL4DkoqIPzB6VKhA0o6fJIWKpzdKKzasFB8abII8LjxPY/sjuwHc8th8UxF
-         mdz3nRhjEjeA4SGe9eVF3OoHdOfEEOyjeB36C2Ac2n4ZB0U09GUPg4NCeDiaLvY8HOgG
-         2+KS4khS/scjr5fsBKtqrk3NbD00QKlWV2HPR8EO50DuFWysXmx73vRmYJcL+GFtfGY0
-         D5fw==
-X-Gm-Message-State: AOAM533x23fiApQTPWVVO5LCUakN7lneniWaVJrUEThvBd5j6kkb2C+5
-        zevq47muKabogrFC+KOH2ammIPz3EojasMFRUfYkvaQlVZQ4+udERgEC4NW3onR3FZNgqc5RhVe
-        rsCEcoqWIeNH0MZg9Xxi2nkmX15NTx4q8ZY+zkxeE1BU+Fc3ifsy+yxHcGO21hsRNBzTLG0hgLz
-        ks
-X-Google-Smtp-Source: ABdhPJyh/tfC4qH6YyVNyyfXTnkXFc2AgLq+cmLM1i6OFps7TFgApGAL0sR44N78DacYsu8b5+NlEkGC3lIb8K1xl/mV
+        bh=HH00SexG0J8IcmXs/ID7rNy8ETPZT4GR4nyyg0M7X+M=;
+        b=IKL8VU6hSqD+KLB1uVz59nqdHupzpyOz1cPKD02Eancz1kxzR0MVTq3aSvpifttrvs
+         dh+pZ4wtxVeUf2kf7stDqqrlLFt9DGoPDkzKLR8u1N2Z7ClTJa/eB+lUN/pbiID87VFZ
+         sR9UYu0CiIMnPcZ5yofBhzrJcXiefCzEvPabmlZ9AFAqwoBUDb8GeGHvaV6ZF8KkKxPL
+         eyWzWiSqJCv87ISM/l1f5wDbk7NxJdDPoOQa0mMIj/WdSYFpWkclRT3t8DpkqUFCGIrt
+         7ExRuceXFCRXoEBxUxVir5Hn6SY9xmxOE/fHBTD6i2ysnI8XdQHdV0kGhOaE1Xwu8BJ2
+         uftQ==
+X-Gm-Message-State: AOAM531FtphPBU+cpntrVf+ptnvkVxAkdsmEgsjFW2Fmtqm/n+En0sbL
+        p5ZQPF9wuSe6vYmXFnRaZN8CrpZVq6crchAwakh4GoeL0AnhAuWgcooaVZCvLVgCsgwDnPHDVCn
+        uMkFhCxPlruLLJzH5tI54QPQ82Z8b9fHvBXcwgF7lrpCCMw65ZN0ovHY1CPryKJAW7gQ8rJaQCg
+        mk
+X-Google-Smtp-Source: ABdhPJwx91LdEcxmNXGJycAHjqTLyChuN4UvRBt4QaGua15q6R2Zc9N5/N9raDWzIxkV5xdDZzrZQ1MWWYET5s2k1V6v
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:a5b:2cb:: with SMTP id
- h11mr9142010ybp.116.1598296616088; Mon, 24 Aug 2020 12:16:56 -0700 (PDT)
-Date:   Mon, 24 Aug 2020 12:16:31 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a25:5305:: with SMTP id
+ h5mr8728287ybb.433.1598296617624; Mon, 24 Aug 2020 12:16:57 -0700 (PDT)
+Date:   Mon, 24 Aug 2020 12:16:32 -0700
 In-Reply-To: <cover.1598296530.git.jonathantanmy@google.com>
-Message-Id: <2a1caac85a6fe4812aea246e6e467c0d25dcbb1c.1598296530.git.jonathantanmy@google.com>
+Message-Id: <20200824191656.3870231-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1598296530.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
-Subject: [PATCH 1/7] Documentation: deltaBaseCacheLimit is per-thread
+Subject: [PATCH] fetch-pack: in partial clone, pass --promisor
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
-        steadmon@google.com
+Cc:     Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clarify that core.deltaBaseCacheLimit is per-thread, as can be seen from
-the fact that cache usage (base_cache_used in struct thread_local in
-builtin/index-pack.c) is tracked individually for each thread and
-compared against delta_base_cache_limit.
+When fetching a pack from a promisor remote, the corresponding .promisor
+file needs to be created. "fetch-pack" originally did this by passing
+"--promisor" to "index-pack", but in 5374a290aa ("fetch-pack: write
+fetched refs to .promisor", 2019-10-16), "fetch-pack" was taught to do
+this itself instead, because it needed to store ref information in the
+.promisor file.
+
+This causes a problem with superprojects when transfer.fsckobjects is
+set, because in the current implementation, it is "index-pack" that
+calls fsck_finish() to check the objects; before 5374a290aa,
+fsck_finish() would see that .gitmodules is a promisor object and
+tolerate it being missing, but after, there is no .promisor file (at the
+time of the invocation of fsck_finish() by "index-pack") to tell it that
+.gitmodules is a promisor object, so it returns an error.
+
+Therefore, teach "fetch-pack" to pass "--promisor" to index pack once
+again. "fetch-pack" will subsequently overwrite this file with the ref
+information.
+
+An alternative is to instead move object checking to "fetch-pack", and
+let "index-pack" only index the files. However, since "index-pack" has
+to inflate objects in order to index them, it seems reasonable to also
+let it check the objects (which also require inflated files).
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- Documentation/config/core.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fetch-pack.c             | 17 ++++++++++-------
+ t/t5616-partial-clone.sh | 16 ++++++++++++++++
+ 2 files changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 74619a9c03..02002cf109 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -399,7 +399,7 @@ the largest projects.  You probably do not need to adjust this value.
- Common unit suffixes of 'k', 'm', or 'g' are supported.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 7f20eca4f8..d467edc24e 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -866,13 +866,16 @@ static int get_pack(struct fetch_pack_args *args,
+ 			 * have this responsibility.
+ 			 */
+ 			args->check_self_contained_and_connected = 0;
+-		/*
+-		 * If we're obtaining the filename of a lockfile, we'll use
+-		 * that filename to write a .promisor file with more
+-		 * information below. If not, we need index-pack to do it for
+-		 * us.
+-		 */
+-		if (!(do_keep && pack_lockfiles) && args->from_promisor)
++
++		if (args->from_promisor)
++			/*
++			 * write_promisor_file() may be called afterwards but
++			 * we still need index-pack to know that this is a
++			 * promisor pack. For example, if transfer.fsckobjects
++			 * is true, index-pack needs to know that .gitmodules
++			 * is a promisor object (so that it won't complain if
++			 * it is missing).
++			 */
+ 			strvec_push(&cmd.args, "--promisor");
+ 	}
+ 	else {
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 8827c2ed18..5a01466db4 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -163,6 +163,22 @@ test_expect_success 'manual prefetch of missing objects' '
+ 	test_line_count = 0 observed.oids
+ '
  
- core.deltaBaseCacheLimit::
--	Maximum number of bytes to reserve for caching base objects
-+	Maximum number of bytes per thread to reserve for caching base objects
- 	that may be referenced by multiple deltified objects.  By storing the
- 	entire decompressed base objects in a cache Git is able
- 	to avoid unpacking and decompressing frequently used base
++test_expect_success 'partial clone with transfer.fsckobjects=1 works with submodules' '
++	test_create_repo submodule &&
++	test_commit -C submodule mycommit &&
++
++	test_create_repo src_with_sub &&
++	test_config -C src_with_sub uploadpack.allowfilter 1 &&
++	test_config -C src_with_sub uploadpack.allowanysha1inwant 1 &&
++
++	git -C src_with_sub submodule add "file://$(pwd)/submodule" mysub &&
++	git -C src_with_sub commit -m "commit with submodule" &&
++
++	git -c transfer.fsckobjects=1 \
++		clone --filter="blob:none" "file://$(pwd)/src_with_sub" dst &&
++	test_when_finished rm -rf dst
++'
++
+ test_expect_success 'partial clone with transfer.fsckobjects=1 uses index-pack --fsck-objects' '
+ 	git init src &&
+ 	test_commit -C src x &&
 -- 
 2.28.0.297.g1956fa8f8d-goog
 
