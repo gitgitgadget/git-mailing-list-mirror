@@ -2,241 +2,113 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36047C433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 15:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 521EBC433DF
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 16:06:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B7872071E
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 15:50:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23F452072D
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 16:06:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLhjomYc"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="pVx4ymk/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728024AbgHXPum (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 11:50:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727877AbgHXPtM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 11:49:12 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2963C061573
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 08:49:01 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id ba10so8508643edb.3
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 08:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rpHqLOLfCufiNldSzGi0xWICLXcMU99TUpTLyJpCU1w=;
-        b=gLhjomYcS21ED03dk3xG4v+JBMRDzfaFP9tYXor5aO+94f20gpld8SL6B4Dp1dm3nt
-         7rpkkwI6PVYUq9IQfnNVV9EjEfz0C2bb/SFSZtmKn2RWYi3r2w2JbtDHsmm+xB7B9ht4
-         LY4jXBiAwRc02FiEfoEe7YzLfKbjU9LaKjjao/kmL5O/iv5payCUxg6tcitIDUFFkaeh
-         837woz07UeK85WxBA+halsYGdUGOZfWlTT06fNF48l1Pf53Afb1074B/5iCtZ/7MjDJ8
-         S7x2PZXTogqfyZmfBaaOBMGKjhLCn2q4snlcxtRhzeJvPJ+uM5NWU55Nlvb1jaZrM4it
-         V0wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rpHqLOLfCufiNldSzGi0xWICLXcMU99TUpTLyJpCU1w=;
-        b=axWFHv9+vj2Ce6QzW3S5rOLYMit7ycAHJJJFd+TmqAck6WveU66ZW5q222ms+xTAp7
-         Qkna3GG4Jh6xaKVVnn1ccTdu/Culue0+MgkNgAj47CFNrGDlz2LZuDFp93qXRxwUqYKG
-         Ax4ejL3Ok7K1yKCICt141tMmBV7q2QTJBqumSylQKu8MRetOBfucZvuYCtvSnvBE7Q3e
-         Av1XiHckFxMg8XwThDAdNNj29czrwxfKeQNH1jA+1SXXH3dBuyUfDbXH++T/DPYgSh4V
-         Vti4uOxy3kMej0WU3pSrTK6O5+QvRYeBmirMf2jN65eGtWnisX2FmL8mwGP9F0N/ndNR
-         8lWQ==
-X-Gm-Message-State: AOAM5335t+alWXFDdzcKNIs6a+Ff8Bp5Qefd3s9O8E+HFBf5s/f3UXjC
-        3GysV7vScOt3A7ZZkwUVvBUvUCwV/Qr8yg==
-X-Google-Smtp-Source: ABdhPJxrTKBpsZkM0lsBd9cU8qQknMfqLCcawaPwGttuuMNPo9OztyWV/ZaM01GBBymdrD9ZBFihhg==
-X-Received: by 2002:aa7:dc58:: with SMTP id g24mr5016679edu.344.1598284140285;
-        Mon, 24 Aug 2020 08:49:00 -0700 (PDT)
-Received: from partizan.lan ([46.98.122.217])
-        by smtp.gmail.com with ESMTPSA id s21sm10546182ejc.16.2020.08.24.08.48.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Aug 2020 08:48:59 -0700 (PDT)
-From:   Serg Tereshchenko <serg.partizan@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Serg Tereshchenko <serg.partizan@gmail.com>
-Subject: [PATCH] git-gui: Basic dark mode support
-Date:   Mon, 24 Aug 2020 18:48:35 +0300
-Message-Id: <20200824154835.160749-1-serg.partizan@gmail.com>
-X-Mailer: git-send-email 2.28.0
+        id S1726884AbgHXQGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 12:06:54 -0400
+Received: from mout.web.de ([212.227.17.12]:39189 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726691AbgHXQGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 12:06:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1598285202;
+        bh=XPgJ1Q7rl8B6ouj/1WTWLh5LMWz3gx0QT6nK6Rrsx90=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=pVx4ymk/2OrV9lUPdWetlY27MBQOyRVoT9/l1uKzYKMo/aCj1lnybG5ok4k6IlGuR
+         vcyOOnVQsGVned8moK5bnYTyZvPDopXt2ngXP0jgaPWpJgkJI2YpuxJTzbU77r+RKP
+         ASmaNy55Pf6lNVEJYJGiRZ5Ie+MeNjLl7IRXcayg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MwjFg-1kXi7k1W5i-00y2Sq; Mon, 24
+ Aug 2020 18:06:42 +0200
+Subject: Re: [PATCH] Avoid infinite loop in malformed packfiles
+To:     Ori Bernstein <ori@eigenstate.org>
+Cc:     git@vger.kernel.org
+References: <20200823005236.10386-1-ori@eigenstate.org>
+ <20200823031151.10985-1-ori@eigenstate.org>
+ <672843a1-b98c-7567-a078-a2dacd4b7074@web.de>
+ <20200823134144.d57c80322f479eb554bab9d1@eigenstate.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ef92391d-09ef-4c27-e6dd-ec7b907174fa@web.de>
+Date:   Mon, 24 Aug 2020 18:06:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200823134144.d57c80322f479eb554bab9d1@eigenstate.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:B+mxtYzaFR5qu2qiDdiasYuW59yiQOV00z/7hrRLR5FDyxwzH2E
+ S4sYEn0IOA9jJverHMON+dtSI47iFrbwEytnqq+KLRXCvD9tUzP7Btf+Zbssq/tFbpVHuHy
+ 2AVd45t4NpZgNNThjnXmfs5rYrNvEJ27UgGF7ItljfcGcp9n9peHgLTDqk692eXbnszMnHy
+ PLhEpWx9txlnGj4tMbk0g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0WoqJYZ7RE4=:J6aUnT8/f2uSp92Bz7/Kwg
+ grBFBuDPbypcsd8zq1SLfBtV1wNQ+PyroQ0AXZiHSdKPTUTpnyWeA06OTanc7Zwag7gP5zzK3
+ R1bBzc3dwKAZuSdVuRAJJ1fZD3nNeQqBLS+B5qBmk+N7tS49KVqvDfPzIhP6j0C8iPLEu0FRq
+ MFy1s904bjLZiUMmF3XVGZ3rncFMsxSkfABLMXX9YaeXlccHFHoYGAnwk08N++RRqlGrSBEw8
+ MoDQBB9481xphIFgPGuboCKNT43VblGnjNahIN5nQX6yVmwQRWprHs/GNPQaaa3rcCSRXzTzm
+ /T1RqFDBzkp4SlFmvQaVTeNVl6GTQ8m491Lq5Y4KrGYmunLOGc/qyiCY3ZDe9Y0EyvpdTMLVs
+ PTHCjkMD8fxLLbdmIHcSFm83Ew3vX/iVN6bMdZGBA1rEqNyoP4uptAA8vd/+KvMkqmDcoGm31
+ sHTp7CD9p8YfnepmHMnjVHA0unwD09r9ZhhLfahFtmk95PkiBuuDz+BkIcW8Kk0PP5sSE29Pf
+ RLHiq9FvOgOuMjJvDaUNYLwqCZ02X0QnCjsi6RDsd41e2ckW5Jzk4TFLmTiz2EGBOlvIyWXCq
+ ajLLP5uudk6/RIG6gl9rASFWPuTd7OZFltllHFy8MtzN/SCgjozwQV1GaVKnlNFo+YfRalakM
+ OlnCw/Zt24qKqJsZ9JV0/TMxaOqxSPpi3QnUfpyBtUUGgqfeNBL1T/KwjcuPQOPZDd1kBtEk/
+ prIK7YYpIcZ8yEwDFuzCznTEdX57rH3CIJsRt03FsWiET7E/MNHyHcIfuwaH3Bl1aGBCjcNcb
+ 4qbMwOYMpCP78W4oojcdwB0Rnc41gAo70NkfV4X0bhv8uuGwGqq4IgF+tgoQDrT3yCIJ6W/h4
+ DAEWRZfk6gjvUhveG3FxC/xiH6EiVX5XBl0HvZrBohoSoO6bVQNBu/SKOHcyma3a88OpzIoLH
+ wGJQw0tMy4IxvZYkHlxs9OVzVR4pmFdOXNmgLOqwEK0qatGSY44rVrCvsisAOhw8ykqsQvOsV
+ 59chfzcQIQayP8nQCoqMYtRFCTGrT5YZUlM8XodHz5gLI01rw5qG1M2BB8OhCmr9/eXIUIEfG
+ DIsIkvcsuJRt7lpMRXG86y28GG+YJ+5wu/EmXH6Tl82GPKsEvh7vzf41FTuNXOigbKO0I6SjJ
+ 9nffQZ0nlN0AS97FGqQrk+Ud00Uwr0EEPq0BFL+Hd/s+2gPkuW8Kvudc65lMfIUjERQ5T9cCO
+ FVsW0miRhk4HDCVHZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all.
+Am 23.08.20 um 22:41 schrieb Ori Bernstein:
+> On Sun, 23 Aug 2020 08:26:14 +0200, Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
+>
+>> Am 23.08.20 um 05:11 schrieb Ori Bernstein:
+>>> In packfile.c:1680, there's an infinite loop that tries to get
+>>> to the base of a packfile. With offset deltas, the offset needs
+>>> to be greater than 0, so it's always walking backwards, and the
+>>> search is guaranteed to terminate.
+>>>
+>>> With reference deltas, there's no check for a cycle in the
+>>> references, so a cyclic reference will cause git to loop
+>>> infinitely, growing the delta_stack infinitely, which will
+>>> cause it to consume all available memory as as a full CPU
+>>> core.
+>>
+>> "as as"?  Perhaps "and"?
+>
+> I think I meant 'As well as' -- will fix.
+>
+>>
+>> b5c0cbd8083 (pack-objects: use bitfield for object_entry::depth,
+>> 2018-04-14) limited the delta depth for new packs to 4095, so 10000
+>> seems reasonable.  Users with unreasonable packs would need to repack
+>> them with an older version of Git, though.  Not sure if that would
+>> affect anyone in practice.
 
-I want to use dark themes with git citool, and here is my first attempt
-to do so.
+> Is there anything you'd like me to do in this patch, other than fixing
+> the typo?
 
-I am new to tcl, so i happily accept any tips on how to improve code.
+Please explain in the commit message why 10000 is a good choice for that
+new limit, and what users who happen to exceed it can do to regain
+access to their packed data.
 
-First things first: to properly support colors, would be nice to have
-them separated from app code, so i created new file lib/colored.tcl. Name
-is selected to be consistent with "lib/themed.tcl".
-
-Then, i extract hardcoded colors from git-gui.sh into namespace Color.
-Then, if option use_ttk is true, i update default colors for
-background/foreground from current theme.
-
-How it was looking before:
- - Dark theme (awdark): https://i.imgur.com/0lrfHyq.png
- - Light theme (clam): https://i.imgur.com/1fsfayJ.png
-
-Now looks like this:
- - Dark theme (awdark): https://i.imgur.com/BISllEH.png
- - Light theme (clam): https://i.imgur.com/WclSTa4.png
-
-One problem that i can't yet fix: gray background for files in
-changelists. Any advice on this?
-
-
-I would be happy to move color definitions from git-gui.sh to
-themed.tcl, so we can set it once, and not for each ttext call. Do you
-think this is a good idea now or in the future?
-
-I see some work is already done in that direction, like lib/themed.tcl:gold_frame.
-
-
-Kind Regards.
-
-Signed-off-by: Serg Tereshchenko <serg.partizan@gmail.com>
----
- git-gui.sh      | 33 +++++++++++++++++++--------------
- lib/colored.tcl | 23 +++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 14 deletions(-)
- create mode 100644 lib/colored.tcl
-
-diff --git a/git-gui.sh b/git-gui.sh
-index ca66a8e..cffd106 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -861,6 +861,7 @@ proc apply_config {} {
- 			set NS ttk
- 			bind [winfo class .] <<ThemeChanged>> [list InitTheme]
- 			pave_toplevel .
-+			Color::syncColorsWithTheme
- 		}
- 	}
- }
-@@ -3273,9 +3274,13 @@ pack .vpane -anchor n -side top -fill both -expand 1
- # -- Working Directory File List
- 
- textframe .vpane.files.workdir -height 100 -width 200
--tlabel .vpane.files.workdir.title -text [mc "Unstaged Changes"] \
--	-background lightsalmon -foreground black
--ttext $ui_workdir -background white -foreground black \
-+tlabel .vpane.files.workdir.title \
-+	-text [mc "Unstaged Changes"] \
-+	-background $Color::lightRed \
-+	-foreground $Color::textOnLight
-+ttext $ui_workdir \
-+	-background $Color::textBg \
-+	-foreground $Color::textColor \
- 	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
-@@ -3296,8 +3301,8 @@ pack $ui_workdir -side left -fill both -expand 1
- textframe .vpane.files.index -height 100 -width 200
- tlabel .vpane.files.index.title \
- 	-text [mc "Staged Changes (Will Commit)"] \
--	-background lightgreen -foreground black
--ttext $ui_index -background white -foreground black \
-+	-background $Color::lightGreen -foreground $Color::textOnLight
-+ttext $ui_index -background $Color::textBg -foreground $Color::textColor \
- 	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
-@@ -3432,7 +3437,7 @@ if {![is_enabled nocommit]} {
- }
- 
- textframe .vpane.lower.commarea.buffer.frame
--ttext $ui_comm -background white -foreground black \
-+ttext $ui_comm -background $Color::textBg -foreground $Color::textColor \
- 	-borderwidth 1 \
- 	-undo true \
- 	-maxundo 20 \
-@@ -3519,19 +3524,19 @@ trace add variable current_diff_path write trace_current_diff_path
- 
- gold_frame .vpane.lower.diff.header
- tlabel .vpane.lower.diff.header.status \
--	-background gold \
--	-foreground black \
-+	-background $Color::lightGold \
-+	-foreground $Color::textOnLight \
- 	-width $max_status_desc \
- 	-anchor w \
- 	-justify left
- tlabel .vpane.lower.diff.header.file \
--	-background gold \
--	-foreground black \
-+	-background $Color::lightGold \
-+	-foreground $Color::textOnLight \
- 	-anchor w \
- 	-justify left
- tlabel .vpane.lower.diff.header.path \
--	-background gold \
--	-foreground blue \
-+	-background $Color::lightGold \
-+	-foreground $Color::lightBlue \
- 	-anchor w \
- 	-justify left \
- 	-font [eval font create [font configure font_ui] -underline 1] \
-@@ -3561,7 +3566,7 @@ bind .vpane.lower.diff.header.path <Button-1> {do_file_open $current_diff_path}
- #
- textframe .vpane.lower.diff.body
- set ui_diff .vpane.lower.diff.body.t
--ttext $ui_diff -background white -foreground black \
-+ttext $ui_diff -background $Color::textBg -foreground $Color::textColor \
- 	-borderwidth 0 \
- 	-width 80 -height 5 -wrap none \
- 	-font font_diff \
-@@ -3589,7 +3594,7 @@ foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 gr
- $ui_diff tag configure clr1 -font font_diffbold
- $ui_diff tag configure clr4 -underline 1
- 
--$ui_diff tag conf d_info -foreground blue -font font_diffbold
-+$ui_diff tag conf d_info -foreground $Color::lightBlue -font font_diffbold
- 
- $ui_diff tag conf d_cr -elide true
- $ui_diff tag conf d_@ -font font_diffbold
-diff --git a/lib/colored.tcl b/lib/colored.tcl
-new file mode 100644
-index 0000000..fdb3f9c
---- /dev/null
-+++ b/lib/colored.tcl
-@@ -0,0 +1,23 @@
-+# Color configuration support for git-gui.
-+
-+namespace eval Color {
-+	# static colors
-+	variable lightRed		lightsalmon
-+	variable lightGreen		green
-+	variable lightGold		gold
-+	variable lightBlue		blue
-+	variable textOnLight	black
-+	variable textOnDark		white
-+	# theme colors
-+	variable interfaceBg	lightgray
-+	variable textBg			white
-+	variable textColor		black
-+
-+	proc syncColorsWithTheme {} {
-+		set Color::interfaceBg	[ttk::style lookup Entry -background]
-+		set Color::textBg		[ttk::style lookup Treeview -background]
-+		set Color::textColor	[ttk::style lookup Treeview -foreground]
-+
-+		tk_setPalette $Color::interfaceBg
-+	}
-+}
--- 
-2.28.0
-
+Ren=C3=A9
