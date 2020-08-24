@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2BD1C433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 15:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E07CC433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 15:42:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A51A20838
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 15:40:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD83320738
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 15:42:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCgl79KF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2MjG+Hq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727969AbgHXPj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 11:39:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44680 "EHLO
+        id S1728012AbgHXPm1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 11:42:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726374AbgHXPik (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 11:38:40 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3167C061798
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 08:38:05 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id x5so8808668wmi.2
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 08:38:05 -0700 (PDT)
+        with ESMTP id S1727104AbgHXPj1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 11:39:27 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA90C061799
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 08:38:06 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id u18so8795552wmc.3
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 08:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pfQU/UgIwp9s3VOVYJ5vfMVbzyyspSe7E6rfKEJIwfI=;
-        b=PCgl79KFQshqXGIUu0woRDj82vDwoIMN0MRqVugivhfu7kdq7EhsBxBl1fxREupDp+
-         KaZ/N3fs3Olc5tLgkPa4wFhKe/Bx2NORgIC0cfAb5+iXaGfaZ4FABv7kR1LMDEj3Tnhp
-         gWrsO9TZnsr4K9DpmUCRJgK8eMolRXZfz2abOtotUdYK9kREEDS647EM3OUUmPjl+x1n
-         WTNsQMHJLm5wUbc4JjZrrxA6E8yw64iAwXVFYcOZtzwdH8wrfvZZ9ykB+sQAgbFMRKEZ
-         2+WPGFAhkzDENBzxqlIn2g8maY+z8noAjWxV8COaxJuUT7kMhH8j56ZDbvR3EJiu9iFw
-         vxbA==
+        bh=BHkZfIp3eJUJmbeT+kunhu5i+hXVqYxZSG+YbLVhMT8=;
+        b=Z2MjG+Hqejh0M3CpDCGOyeOoOrWEuaCfTJedCjzhXiq59clTwIWwS+DEvtxUbs4I++
+         Gl6CS2uTcin2yzWi/bb7jH+kkMTVSel9MUIA4+opP+7b0E7V/ebCAVVfS/xG4y7ma9ey
+         htuYyMkMYS9w7cyEy2/E2ezdjFeUG2lsm5oreiobDghLS/3taxTyyf+YG2OdoOHirfLT
+         boUesAwUKfZUaIXdm7Wn9nlRg6O5Sg5PKaJnUIsKrZo9j7HEPh8nuNr6DjNL4f7gaomq
+         9s8dnb5TQWk0r+QGD3oS1hp+rpdz7J2n4/BgdJKzt1qA3v9lKbmbLeFtgpnKAxdjs28s
+         cTSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pfQU/UgIwp9s3VOVYJ5vfMVbzyyspSe7E6rfKEJIwfI=;
-        b=NCM5hv4jMlZHFVpC1jNqYNREB+/Vpzwc995S9/qXx9DjN4igPFwIz8aDLdEVJVcp5h
-         UQQhU/YDQoRhAdTu4z9wRMsUfS8g2CMUvS/B1aGCNWtUzVkYATVKEw80KEH1W7VNlnUh
-         qK8l6pmbWv8FUnBeATYvL/2d9NTw5KMDFp3GDGvIQTKzejn2ifi+siMzG3YV2VSCtzoZ
-         dUJ4m6iylNCgubFzrZ1innzzXgAaG8Djnl96NNnUhzlfWzIiWvy6masK92R6iIhkHlyw
-         OO4EwiQ4/BIly+p5gou6o7Ewr9BW6cj5z4svIGvhSLWJaHPDUV+jitgsuIROPopDZ4iu
-         FrsQ==
-X-Gm-Message-State: AOAM532bKGQzqb+U1Rm/2yczrmK3d/Y1ddZgD5W9FCaFH8EERph57hBu
-        zJsaolbg9PIdgurQ/d6onSc4iCi1FRE=
-X-Google-Smtp-Source: ABdhPJyDmTVjDle1BEMQQefodv7r7OTZJK30Uf5cX6vz34oxrZ6kZM8gxrFy0MC7DTmjCRm27SGT3w==
-X-Received: by 2002:a7b:cd0d:: with SMTP id f13mr6087866wmj.122.1598283483961;
-        Mon, 24 Aug 2020 08:38:03 -0700 (PDT)
+        bh=BHkZfIp3eJUJmbeT+kunhu5i+hXVqYxZSG+YbLVhMT8=;
+        b=ZS8YvsW1Fh9nCJNaVAaQ0xMdUdC6wSfrgcdU0ULMbTBndtaEOqKAu6iBMrrCYGv9Qo
+         sfX+56LwVqNPO0lrxCsYOSOvUcL+iMBEjH6Y0xe64MRjIhXH/pbCkFMdCL3Qx7iAqLB6
+         g9LU/yAm+nKR6odukeH3iJpobgdKtnxjRrMUp2BKs+95T+T7H50FkqOCE5boxjbjPMhC
+         lzK1I19tWFsfiaNyM4aNprzcuXMVt5h1KWbDVsCY6bZl8uwKCzzOJs66X9S4i1hZ9/mg
+         BSFSuMm7F0i/CI949n16B7zxSPC1UQCSy47ZAPMvj6MWeKayCmSAeJUq0hyqOpAoavjz
+         WBQw==
+X-Gm-Message-State: AOAM530/xLLV/hWvMsRp6ZWjhZbsXt69988YUd6m8ruTZsjHQHl2dOab
+        IiqDBcKPayjKl0+jgSPi37b7+B7yRNA=
+X-Google-Smtp-Source: ABdhPJzYwR/bmbnDmK1SZktk9SMYg8iLlV+7wGvbXA1hCjUHE/18hQgs42S8HUru2kgGO5x87YP5iQ==
+X-Received: by 2002:a1c:2045:: with SMTP id g66mr5837676wmg.184.1598283484909;
+        Mon, 24 Aug 2020 08:38:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z66sm25258506wme.16.2020.08.24.08.38.03
+        by smtp.gmail.com with ESMTPSA id c10sm24314769wro.84.2020.08.24.08.38.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Aug 2020 08:38:03 -0700 (PDT)
-Message-Id: <166bd0d8fb699132569aff855de59c7607581adf.1598283480.git.gitgitgadget@gmail.com>
+        Mon, 24 Aug 2020 08:38:04 -0700 (PDT)
+Message-Id: <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>
 References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
         <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Aug 2020 15:37:59 +0000
-Subject: [PATCH v2 2/3] Optionally skip linking/copying the built-ins
+Date:   Mon, 24 Aug 2020 15:38:00 +0000
+Subject: [PATCH v2 3/3] ci: stop linking built-ins to the dashed versions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,152 +78,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-For a long time already, the non-dashed form of the built-ins is the
-recommended way to write scripts, i.e. it is better to call `git merge
-[...]` than to call `git-merge [...]`.
+Originally, all of Git's subcommands were implemented in their own
+executable/script, using the naming scheme `git-<command-name>`. When
+more and more functionality was turned into built-in commands (i.e. the
+`git` executable could run them without spawning a separate process),
+for backwards-compatibility, we hard-link the `git` executable to
+`git-<built-in>` for every built-in.
 
-While Git still supports the dashed form (by hard-linking the `git`
-executable to the dashed name in `libexec/git-core/`), in practice, it
-is probably almost irrelevant.
+This backwards-compatibility was needed to support scripts that called
+the dashed form, even if we deprecated that a _long_ time ago.
 
-In fact, some platforms (such as Windows) only started gaining
-meaningful Git support _after_ the dashed form was deprecated, and
-therefore one would expect that all this hard-linking is unnecessary on
-those platforms.
-
-In addition to that, some programs that are regularly used to assess
-disk usage fail to realize that those are hard-links, and heavily
-overcount disk usage. Most notably, this was the case with Windows
-Explorer up until the last couple of Windows 10 versions.
-
-To save on the time needed to hard-link these dashed commands, and to
-eventually stop shipping with those hard-links on Windows, let's
-introduce a Makefile knob to skip generating them.
+For that reason, we just introduced a Makefile knob to skip linking
+them. TO make sure that this keeps working, teach the CI
+(and PR) builds to skip generating those hard-links.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile | 55 +++++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 37 insertions(+), 18 deletions(-)
+ ci/run-build-and-tests.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 66b6e076e2..0a09146fb3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -348,6 +348,9 @@ all::
- # Define NO_INSTALL_HARDLINKS if you prefer to use either symbolic links or
- # copies to install built-in git commands e.g. git-cat-file.
- #
-+# Define SKIP_DASHED_BUILT_INS if you do not need the dashed versions of the
-+# built-ins to be linked/copied at all.
-+#
- # Define USE_NED_ALLOCATOR if you want to replace the platforms default
- # memory allocators with the nedmalloc allocator written by Niall Douglas.
- #
-@@ -775,6 +778,16 @@ BUILT_INS += git-whatchanged$X
- # what 'all' will build and 'install' will install in gitexecdir,
- # excluding programs for built-in commands
- ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
-+ALL_COMMANDS_TO_INSTALL = $(ALL_PROGRAMS)
-+ifeq (,$(SKIP_DASHED_BUILT_INS))
-+ALL_COMMANDS_TO_INSTALL += $(BUILT_INS)
-+else
-+# git-upload-pack, git-receive-pack and git-upload-archive are special: they
-+# are _expected_ to be present in the `bin/` directory in their dashed form.
-+ALL_COMMANDS_TO_INSTALL += git-receive-pack$(X)
-+ALL_COMMANDS_TO_INSTALL += git-upload-archive$(X)
-+ALL_COMMANDS_TO_INSTALL += git-upload-pack$(X)
-+endif
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 6c27b886b8..1df9402c3b 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -10,7 +10,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+ *) ln -s "$cache_dir/.prove" t/.prove;;
+ esac
  
- # what 'all' will build but not install in gitexecdir
- OTHER_PROGRAMS = git$X
-@@ -2066,9 +2079,9 @@ profile-fast: profile-clean
- 	$(MAKE) PROFILE=USE all
- 
- 
--all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
-+all:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
- ifneq (,$X)
--	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
-+	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS_TO_INSTALL) git$X)), test -d '$p' -o '$p' -ef '$p$X' || $(RM) '$p';)
- endif
- 
- all::
-@@ -2928,7 +2941,7 @@ ifndef NO_TCLTK
- 	$(MAKE) -C git-gui gitexecdir='$(gitexec_instdir_SQ)' install
- endif
- ifneq (,$X)
--	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
-+	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS_TO_INSTALL) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
- endif
- 
- 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
-@@ -2946,21 +2959,27 @@ endif
- 	} && \
- 	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
- 		$(RM) "$$bindir/$$p" && \
--		test -n "$(INSTALL_SYMLINKS)" && \
--		ln -s "git$X" "$$bindir/$$p" || \
--		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
--		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
--		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
--		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; } \
-+		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
-+		then \
-+			test -n "$(INSTALL_SYMLINKS)" && \
-+			ln -s "git$X" "$$bindir/$$p" || \
-+			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
-+			  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
-+			  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
-+			  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
-+		fi \
- 	done && \
- 	for p in $(BUILT_INS); do \
- 		$(RM) "$$execdir/$$p" && \
--		test -n "$(INSTALL_SYMLINKS)" && \
--		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
--		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
--		  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
--		  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
--		  cp "$$execdir/git$X" "$$execdir/$$p" || exit; } \
-+		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
-+		then \
-+			test -n "$(INSTALL_SYMLINKS)" && \
-+			ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
-+			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
-+			  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
-+			  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
-+			  cp "$$execdir/git$X" "$$execdir/$$p" || exit; }; \
-+		fi \
- 	done && \
- 	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
- 	for p in $$remote_curl_aliases; do \
-@@ -3051,7 +3070,7 @@ ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
- OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll)
- endif
- 
--artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
-+artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
- 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
- 		$(MOFILES)
- 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
-@@ -3146,7 +3165,7 @@ endif
- 
- ### Check documentation
- #
--ALL_COMMANDS = $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS)
-+ALL_COMMANDS = $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB)
- ALL_COMMANDS += git
- ALL_COMMANDS += git-citool
- ALL_COMMANDS += git-gui
-@@ -3186,7 +3205,7 @@ check-docs::
- 		    -e 's/\.txt//'; \
- 	) | while read how cmd; \
- 	do \
--		case " $(patsubst %$X,%,$(ALL_COMMANDS) $(EXCLUDED_PROGRAMS)) " in \
-+		case " $(patsubst %$X,%,$(ALL_COMMANDS) $(BUILT_INS) $(EXCLUDED_PROGRAMS)) " in \
- 		*" $$cmd "*)	;; \
- 		*) echo "removed but $$how: $$cmd" ;; \
- 		esac; \
+-make
++make SKIP_DASHED_BUILT_INS=YesPlease
+ case "$jobname" in
+ linux-gcc)
+ 	make test
 -- 
 gitgitgadget
-
