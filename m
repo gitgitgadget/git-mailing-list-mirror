@@ -2,84 +2,117 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFF3BC433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DE06C433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:28:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DB7E20706
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:22:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1223E20706
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:28:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="T1eLPNl3"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="TGpLVC7J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbgHXVWn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 17:22:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64415 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbgHXVWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 17:22:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91F397825C;
-        Mon, 24 Aug 2020 17:22:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+H6le21uqgZTuCzie1MFe6azabE=; b=T1eLPN
-        l3fNCgznIA3aqmzHZD6zyFpHvddXbvU3WilY6aIgxIPOEsaDMeDt1H2kpQB8MrUR
-        i6a46g3vUg0n8JQ+XuGWOl6zVQxIg8U/Q0d6aRchqVaK+yl7sDFHczEKNpfG+1Cj
-        bbq0Ob0eEZjKTJsj2BkzS28+3Mha4Cba3z5GI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lKgWb+P92Ip+GvYDr+0ga8DaPYL76SAt
-        VxaBsQ9hQa33VYbL3hPZOD827l0kKUoJlKkcO4+0H+qm+PsBmKuEBUfXcFlsl+Ao
-        YWIFKhP/o88McOPs8V+pe1fajn1AUi9M5oOQ4PFKupuy6cvES/ggpGBOfs2z9GEu
-        ka74RiKtZUg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89E897825A;
-        Mon, 24 Aug 2020 17:22:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1ADFE78258;
-        Mon, 24 Aug 2020 17:22:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Ori Bernstein <ori@eigenstate.org>, git@vger.kernel.org
-Subject: Re: [PATCH] Avoid infinite loop in malformed packfiles
-References: <20200823005236.10386-1-ori@eigenstate.org>
-        <20200823031151.10985-1-ori@eigenstate.org>
-        <672843a1-b98c-7567-a078-a2dacd4b7074@web.de>
-        <20200823134144.d57c80322f479eb554bab9d1@eigenstate.org>
-        <ef92391d-09ef-4c27-e6dd-ec7b907174fa@web.de>
-        <20200824201208.GA706849@coredump.intra.peff.net>
-        <xmqq5z974w50.fsf@gitster.c.googlers.com>
-        <20200824205231.GA787628@coredump.intra.peff.net>
-Date:   Mon, 24 Aug 2020 14:22:39 -0700
-In-Reply-To: <20200824205231.GA787628@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 24 Aug 2020 16:52:31 -0400")
-Message-ID: <xmqqft8b3fj4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F093FFD6-E64F-11EA-A9B5-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1726664AbgHXV16 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 17:27:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42792 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726189AbgHXV16 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 17:27:58 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1540C061574
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 14:27:57 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id y185so6848229pfb.3
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 14:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=CGWnVazwejIbLc8Ubq9G2wAUW1yheiYg7z44VNSLw18=;
+        b=TGpLVC7JDZ1YUUyUJKA63xvgZzqX60gmbxAYMziJr1b5ofAGibYNCYlO+5lB/eqjDs
+         +4z4Lfrhd9UxPie32ClNDhglXtimCczBbEYqyz+XcV2zj4YLiogdVOuJ9Y+VkFN5mGCo
+         KJdnNh55yVXoWpd8cnC+zo6xhvTCmwmQelKSCcahKN1b0afs2q04KTGK1mzjUB+rkg05
+         GKeStA66vLCRb0FVonoP1AfnBwUQGR3i58c1MI6Floz5D/XnAuS0Eci0l907LOM/T6cI
+         iozrBIOzhzc26stry7xmaah8S/OzajdIlstI4eBFPMLANUP8Mq00mRvWypXMOhVxV1WJ
+         fk1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=CGWnVazwejIbLc8Ubq9G2wAUW1yheiYg7z44VNSLw18=;
+        b=eY6Ok3kp6VI8QmvysL1Ig2JIBuXCIIzR6WV73PCYK0NO04skoWuBbOZWs/nZsW/pQn
+         c0UC8sffsvBz395/RnT6AR7rw3xCeZG3SRmPPDyiALb0OaqqDi2mQrfM76c5OyoOdWzJ
+         WZ/p1cq9pjjTi6MOFFGRCgkEuAReQn/4xXdKhmhRaVND1GoNHgGyrvA/Nz5Vddgqotvq
+         8MarNJkEh5wYLRBMsSo71hRVb4a6EI8w0Rg8bQzxjN7i93002Ej/tKJAON5nMPO6yccl
+         ttUkp//6IgWhD/PoFcKCdjzd2v4mqiKaakKt2iAV2EMGnJJJPFEzqjq9X8tahO0p9S1T
+         +pmA==
+X-Gm-Message-State: AOAM532omF89QNiUHVGk8xROrT8d8TERJUgJW1PPhijll3zzONXJJffq
+        udtPJAJSjEFMPhpSNfSTsV6ZHVMPQ917CWeoTA3ELuPzWE+wNpYk5sR2c9/gkuCn0GIyOb6c1eF
+        PhKka74smLUoo1j3czWzX5qSd8X9XTNVJVdNdCZSH4VXlJXTCGMz9NbEgEah6dJ4rJ2d9r0ZTVd
+        8L
+X-Google-Smtp-Source: ABdhPJyNhyhu7JG+qFuAkST5sNUIiCUq4JFacDD2LUknAtWbBMKBPLQ9wPNHqskLkiSPrDUFZ0aZ9SHYoQ3ddvGyugiv
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:4595:: with SMTP id
+ hd21mr142743pjb.0.1598304476775; Mon, 24 Aug 2020 14:27:56 -0700 (PDT)
+Date:   Mon, 24 Aug 2020 14:27:51 -0700
+In-Reply-To: <cover.1598296530.git.jonathantanmy@google.com>
+Message-Id: <20200824212751.3907181-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1598296530.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
+Subject: [PATCH] fixup! index-pack: make quantum of work smaller
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+---
+> Josh did not list
+> out specific improvements to commit messages but I have taken his
+> suggestions for comments.
 
-> It may be hard to test, as I suspect modern versions of Git are not
-> happy to create such a deep chain. We could test with a lowered value of
-> the config option, though.
+...and somehow I forgot to commit them before sending out this patch
+set, so here they are.
 
-Yes, that was what I meant.  Start from a 1KB text, create 50
-revisions of the file by adding a single line at its end at a time,
-pack with depth limit of 100, and then see "git log -p" die when the
-allowed max lowered to 10, or something like that.
+ builtin/index-pack.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 0a5b938e1e..4fa9127c35 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -62,6 +62,8 @@ struct base_data {
+  * Stack of struct base_data that have unprocessed children.
+  * threaded_second_pass() uses this as a source of work (the other being the
+  * objects array).
++ *
++ * Guarded by work_mutex.
+  */
+ LIST_HEAD(work_head);
+ 
+@@ -70,11 +72,16 @@ LIST_HEAD(work_head);
+  * processed or are being processed, and at least one child is being processed.
+  * These struct base_data must be kept around until the last child is
+  * processed.
++ *
++ * Guarded by work_mutex.
+  */
+ LIST_HEAD(done_head);
+ 
+ /*
+  * All threads share one delta base cache.
++ *
++ * base_cache_used is guarded by work_mutex, and base_cache_limit is read-only
++ * in a thread.
+  */
+ size_t base_cache_used;
+ size_t base_cache_limit;
+-- 
+2.28.0.297.g1956fa8f8d-goog
 
