@@ -2,171 +2,108 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F39E4C433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 12:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 717AAC433DF
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 12:47:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C70BB20706
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 12:42:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D42E20706
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 12:47:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="b1Dct/wc"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Up7GEGLV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726541AbgHXMmO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 08:42:14 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59675 "EHLO mout.gmx.net"
+        id S1726802AbgHXMr2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 08:47:28 -0400
+Received: from mout.gmx.net ([212.227.15.19]:47437 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725904AbgHXMmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 08:42:12 -0400
+        id S1725883AbgHXMrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 08:47:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1598272926;
-        bh=i/aU0g20yss1oNGFeWaOnQLCttE8Hjz5jIagDdcuUYI=;
+        s=badeba3b8450; t=1598273234;
+        bh=pHg19xZjZyHmyb/e1eGS4CdmxbJ4o2cD1b0ocMOC/5I=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=b1Dct/wcq7MTN9rFvg2vEKXbRpp6bk/Lu6QBRl/qzOM4Oi0MGwhN+eYcZfwye2Y3V
-         91YuuAZ5tU5GDi8NaP1PtydGm3HPzl/LZtBoNO249B8Bo/Ur626xnvE3Zx1xxTX+4j
-         5DyA2fqBQVYkCew41N7nFjFgd/uKa8HNbTvAoSeg=
+        b=Up7GEGLV8szMvaT43qC97xyvc1fv6TyxavKSLY56Ugcj6807FJ4DXO/b8Pk0h7KFV
+         EatT4+5ewb9oUvYK8iniasz6I70ktZgxYEWcia8S2N0U9G6e/VQpfZHQTQiLm+k6cq
+         mMHGov7MAKarD9gQW76yoi8heNrQT09bACcwIzKY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.24.183.59] ([89.1.214.173]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M89Kr-1kDkQn0w0h-005GEA; Mon, 24
- Aug 2020 14:42:06 +0200
-Date:   Mon, 24 Aug 2020 14:42:05 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8hZD-1kEIbr01XF-004iLy; Mon, 24
+ Aug 2020 14:47:14 +0200
+Date:   Mon, 24 Aug 2020 14:47:13 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Tilman Vogel <tilman.vogel@web.de>, git@vger.kernel.org
-Subject: Re: [PATCH] patch-id: ignore newline at end of file in
- diff_flush_patch_id()
-In-Reply-To: <xmqqblj7worr.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2008241441410.56@tvgsbejvaqbjf.bet>
-References: <2639321.dTF8K4C05n@alien.lan> <b67eb51d-75e8-62c5-d1c4-fc3015e13fc6@web.de> <xmqqblj7worr.fsf@gitster.c.googlers.com>
+cc:     Johannes Schindelin <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Optionally skip linking/copying the built-ins
+In-Reply-To: <xmqqblj92lro.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2008241445200.56@tvgsbejvaqbjf.bet>
+References: <pull.411.git.1597655273.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2008170653440.56@tvgsbejvaqbjf.bet> <xmqqblj92lro.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-506925876-1598272926=:56"
-X-Provags-ID: V03:K1:bBQk6TYsxrcTdA7ONX5ea9AXtcq2pKULcuIL1kMLGY0ppbmYnCo
- yp3p/WC9DXHdiyJoo4PSSRXIehBSKUbCVtyzp0eK+1U6vXfm9sg5/wA/sXikK+xA4JH3ckv
- cAtRwb6z/ASv4dehm6eIIJdZGy+8icR8bpwUydIMT35WRkyKRD8CeeU+f8rhQVieHRQz68c
- 5uAOuH00tk3FWUC5eXqhA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3mTj2T3jO1A=:ELvqjnIqBVJWqMI4h6X2ob
- mydxdfffm2c4otp0qPg/agQ3QHQztAh1E8s9DbPfU6Y+xpRF+HoRPU8zeB5zQK9yTs7D5EPMA
- ZjANTBmSmIQnnMvvE0DLYNS9XmvWT2Et32Cieb8RhOJoepXX5cX2MZBdP3hQig/G+lfnyZWqS
- 8XVsrkiJTimtmDNIppSOV4kKRpXHiLvKGgy+STVlbY6eMb8tnFBIMC9auyAgBffJcEMrJr2xQ
- UPgc3p6hwAyiE6DSaaKrHY7eS1vV1OSQ2y6l+SRtitb+jYbCagv5aoUNicpX6v1/4yyu4dqHs
- dBoDjl4NwddaH2/u/gmfg5yGiiqCOuvQY9LSNCP/cCR1fVAO66eHJMMGfCUjjJMeoO/pUu6EV
- FYbOoTZ++ThwoS0n2Hv/lnfrAATlKJf5fZkDT1mRJHs0xdLMic+AEFuoLsbzcRs7EHHVwxk8x
- 3TOEbQxzSut/uzhbAhlVpFofYVMLV/BiFUyRqbFfIQZmRLEgyrYOQqGwesSySLnfnGS7I5VgR
- j79ecHwVV45fRLWAiGIJ5qHSbM3nEt5HlOZpmwH4c0tJkckbNaavoMMkXDV8bcZwYJM3EVCSW
- Ue9CbJQJzfeDVszyA2HOjThMeQ+yoraf9YlKz5Kk2DSj2i3oABfVQ+uoW9pnBVjNqY3HxbHq5
- SvXvF7vkVHRRpgWILmSmQF9nWi/WcQJnwfer3gRcv5kF6aBAr5F7d6n/motDi1Ip0mi/BXtqR
- Eh4gHjCJouAGG7zbZTSoLLNHR2+v8dc569pmm7IHMDQpBS0SaCGbarXspXUZ4xKQete0nV/WI
- 8PkrPvMCyIbX4KXN+k+WAYmun90vhtOIfdtxZn80xinaHBBQh4MLQ+A/y1NDvaMAo9ZsO+GCF
- 4kK3lMKPtGzvZdmZJ7Bgq+75KONtYFJ8HuvszVDau/l2DFZm3UOR6HMa3JfrUzYDMHp6P0Jrp
- tXtxONJCgWpsSAkBcQi7iSrG51Ob5AAbn5dXiuUZCRzQno/yOGLCMUFg0C3ou7wbJR0sZgRno
- Y2hqCxSqTXN0FbtQH8jSKmquRjuL7zhnkVm+fmqryJHKAucTW6l9pxMm2zAu7o6M01ArbZcqW
- UYh9Ze4dvoYMdxR8n4YOw3fvh1sPnzpTs//dsuK1yCtLkMLAfJzS/wL/jjp5x1eZQ8OeFVTmp
- VdIuBkFDZFuYTyEh3Xo/iOjmHCwAppfeGqn1LRo4x5UnL+lnTuYmr7L/pC+aihjj+Uwpc7wIg
- E+G2x+N386N4l+SzOn6XP15SpAk3WCRL/QohVsxXXaYEE/NSLF8Lh+dMyULk=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mz3lbEfoPAfa6bpJSaS+TgNp3vrN2wjYaVkUM68gNRgpYfZukmg
+ 9rosQD33jKgO37B6JqwuodBJFUW9oasxR2rctoAerz/xVvPg2cWZwQljmbZ0WSqbllzKUEz
+ 5Lj2voyM/0mkh532u9DN1oVIUj73miLDSLg23foX9NEyD++Q4JVuGnwaML8Dmncmcc6h2YI
+ w/9Ihtz3syoi431UEdCVQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PTLC0hYTFbA=:igNSkSnqVud7eyJBpfx4Yo
+ 7/bsm3iR+4UUX3SdfvNe7Mj1EVgBkfbX6w8gEiI2oDSK1cnPEYrHIpg4YNkMEdbn6W9y7NDfd
+ vNbbxAfZBN+Muqn2ADZj+A0sRQApbo1gHv9nkO0sQiID+ZzM+5F156d1vUoy1o9AaOWmMAkzf
+ Umj0fKVe64LNPaanXDnWlilYMlLYL5F20dPf6yeyEYhjx/0jfZE92LCkknJb1MpbX4+EKt86x
+ 4vyP3hZDgkS98GEvNfbQY+e1qlIB2llWmtOnMYkE8ZSVitr1sb/gU0GdJc7Qhu3k2mCyG3X/+
+ 8NZsKfR+HPmmrFKmIZOE/W48HMp/0sHIzAR1Rey5FiNyqD35eLqdt941wy6zgE4yE9qYMTBtK
+ zGGsWuiDbqo2qb8TGu5bUjiNqU0si5xhOrOUxmjp3hf/Go1yH6K/Y4DJLsigHCbHlN/K1voNZ
+ I1Ob18mEG1YSQ/3UofkzgWhMaoALbzoT7MO19tlYpO8ujFxvOk+AF+JEOgXj076TLeSUTKAyX
+ uEi/ZjiImVy8DcGKiF7RW6pK/vR35ShWc7fIdnusdXmZ8ujN/9dtTGwnMGqkkYMuLHnQhAaIh
+ tjRar3Yc80454UASa8icIZuVdNq8dgdyrlDl7qFTNMjrBvl+5p0xU+GouGSDBYGb7nn0DqKJd
+ PxM0HM6LDq6uWy4ovm5eyduvHHVR3qLI7JF6HiNYmD1qtaGd1f0hcYtHT51QC67SEmRQDHTRa
+ c2xUWLj8iSA4tJw9vvCBR9B+DLClX7W7Si6uDvdXJWL5z/l9ch9vB7CADi2uTdNeC08Fcw0sc
+ 2iq8YIvNXRgcpRcOs58Dr71usI+94MU5Av+gd1J/sVB0VSSU9JesmLsv1HX0VeVrdMUSstfZ3
+ UJmy9Z+8LKNvkXS0L9+ssrC0SsBERKKFkBbH5R2qrzF+loZF3cJFSglZoCqlVE4y7ECeSUNCu
+ /fEe03GjvUvCIQrzt1dAFe+e5Yj1cQcZFq/G0f5BO/dN23Sv0mdQiv0oUkdFbOWdxBkh635iM
+ XKMkWeZEKNXugygvw1NQzrRb+wbWPqa1sf0MLxnNj/rz23Z7hdkncRtJYbdrVIKvMQ1F2h0pM
+ 5TLqNw37wxi/mDkQYgZjMsNPIvOHS7E4SBhpX1EFV6HODDxOMcv2om7/AMAH5TFlPaZZChmYT
+ BSe5M4BDzK8vv6geqPsHgSXlmmuokeix6BLjdp2s4XPqnaaEImCyKe1+Um8OsfjgzI3CVH3r1
+ cNxYO3cTSAmq7RoZgjRv9a41sITshnBiCWHeIsGw1WVa6kaqHGhhVREZK3zs=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-506925876-1598272926=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, 17 Aug 2020, Junio C Hamano wrote:
 
-Hi,
-
-On Tue, 18 Aug 2020, Junio C Hamano wrote:
-
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> > Whitespace is ignored when calculating patch IDs.  This is done by
-> > removing all whitespace from diff lines before hashing them, including
-> > a newline at the end of a file.  If that newline is missing, however,
-> > diff reports that fact in a separate line containing "\ No newline at
-> > end of file\n", and this marker is hashed like a context line.
+> >> This addresses https://github.com/gitgitgadget/git/issues/406
+> >
+> > Please note that this GitGitGadget run did not work as intended. The
+> > intention of https://github.com/gitgitgadget/gitgitgadget/pull/296 was=
+ to
+> > use the actual author in the `From:` headers of the sent emails, with
+> > GitGitGadget mentioned in the `Sender:` header, but apparently this di=
+d
+> > not work, and I will be reverting that PR for the time being.
 >
-> Ah, ouch.
+> It is close ;-)
 >
-> > This goes against our goal of making patch IDs independent of
-> > whitespace.  Use the same heuristic that 2485eab55cc (git-patch-id: do
-> > not trip over "no newline" markers, 2011-02-17) added to git patch-id
-> > instead and skip diff lines that start with a backslash and a space
-> > and are longer than twelve characters.
->
-> Good find of previous example.  Excellent.
+> The author name is correctly on "From:" but not the address.
 
-Yup. Looks good to me, too. Thank you!
+Yes, but the problem seems to be insurmountable, as I _think_ it is to
+prevent spammers from successfully sending "from abitrary email
+addresses".
+
+GMail adds an `X-Google-Original-From:` header with the original `From:`
+header, and drops the `Sender:` header.
+
+There _might_ be other SMTP servers out there that might allow us to do
+this for GitGitGadget, but I am wary of undermining anti-spam measures
+that way.
+
+Ciao,
 Dscho
-
->
-> > Reported-by: Tilman Vogel <tilman.vogel@web.de>
-> > Initial-test-by: Tilman Vogel <tilman.vogel@web.de>
-> > Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> > ---
-> >  diff.c            |  2 ++
-> >  t/t3500-cherry.sh | 23 +++++++++++++++++++++++
-> >  2 files changed, 25 insertions(+)
->
-> Thanks.
->
-> > diff --git a/diff.c b/diff.c
-> > index f9709de7b45..f175019eb7a 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -6044,6 +6044,8 @@ static void patch_id_consume(void *priv, char *l=
-ine, unsigned long len)
-> >  	struct patch_id_t *data =3D priv;
-> >  	int new_len;
-> >
-> > +	if (len > 12 && starts_with(line, "\\ "))
-> > +		return;
-> >  	new_len =3D remove_space(line, len);
-> >
-> >  	the_hash_algo->update_fn(data->ctx, line, new_len);
-> > diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
-> > index f038f34b7c0..2b8d9cb38ed 100755
-> > --- a/t/t3500-cherry.sh
-> > +++ b/t/t3500-cherry.sh
-> > @@ -55,4 +55,27 @@ test_expect_success \
-> >       expr "$(echo $(git cherry master my-topic-branch) )" : "+ [^ ]* =
-- .*"
-> >  '
-> >
-> > +test_expect_success 'cherry ignores whitespace' '
-> > +	git switch --orphan=3Dupstream-with-space &&
-> > +	test_commit initial file &&
-> > +	>expect &&
-> > +	git switch --create=3Dfeature-without-space &&
-> > +
-> > +	# A spaceless file on the feature branch.  Expect a match upstream.
-> > +	printf space >file &&
-> > +	git add file &&
-> > +	git commit -m"file without space" &&
-> > +	git log --format=3D"- %H" -1 >>expect &&
-> > +
-> > +	# A further change.  Should not match upstream.
-> > +	test_commit change file &&
-> > +	git log --format=3D"+ %H" -1 >>expect &&
-> > +
-> > +	git switch upstream-with-space &&
-> > +	# Same as the spaceless file, just with spaces and on upstream.
-> > +	test_commit "file with space" file "s p a c e" file-with-space &&
-> > +	git cherry upstream-with-space feature-without-space >actual &&
-> > +	test_cmp expect actual
-> > +'
-> > +
-> >  test_done
-> > --
-> > 2.28.0
->
-
---8323328-506925876-1598272926=:56--
