@@ -2,158 +2,461 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E184C433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 14:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E46C433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 14:51:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 121582065F
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 14:04:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF07B206B5
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 14:51:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ry/xr4xx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mTV8K5Fm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726717AbgHXOEB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 10:04:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58050 "EHLO
+        id S1726795AbgHXOv5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 10:51:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725780AbgHXOD4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 10:03:56 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C037FC061573
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 07:03:55 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id d139so2397995qke.11
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 07:03:55 -0700 (PDT)
+        with ESMTP id S1725976AbgHXOvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 10:51:51 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B591C061574
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 07:51:51 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id w13so8667267wrk.5
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 07:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pzI11uomCgNK6tPICX0LDcszrWSZ4KUC0kDTFjMpLX0=;
-        b=Ry/xr4xxa82Ca+AzketYswoZNN654O+udG5rTLqxep5savnFS84XMItqgOBfxq7BK0
-         I8kSV2aBT0py6VWBMGhUdIhLQ8r5dZsfmrH/WE2b9/fWPT/nB0W4VJdy7ZWXIBVJ/Zgs
-         xrgpV4gXudDnPygRxUXy3fRLciyxGTt0kXlgFk556SI4w7gFY/sZCtbGHpQkT8HiQldH
-         /5ozYj1ji++vVkDMg6ecm/H7qyU9cjzzM8bN4ybe05AAWtD0pnr+9sUVWWGZ0xv761M5
-         AePPNPnR5UHPvqhm5hyOduTaExYEkgVnynj5G1BT+kVXG2d5P5rEfO8W4bRhBD74XFVp
-         jvaA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=muyzJYsLU1GY871woUoRsJEEQGMLFvvxTVJGrJdIBVM=;
+        b=mTV8K5Fm/VbEbi4F6b2c5Amb81IZN3tPcNdcaMDBfI/+Dud5Ee9Ic6Nfana+TDEFWj
+         dXszhBkxhRbpa1oLeIwG3MEfaUb5eqj3ApaN9PQTdpc40ni/4Zvsh8rgUNa4RzeY+oP+
+         YzZxE1fh9Pz/XLXr5KlZoV0wFkD7SSmJjK5yasP9l3yGxeTFs5C7ABs88YOH2lfnYAlq
+         oGMBtcYLH62uNGfr38MiG2Y1ZyJk7LAggwwwO883530AMGtXHnYWzU8lY58MDg9LHlst
+         Tn5q4IlOUs6+bZWQDj07A+nz/aN9I4snO3az7cB7LpmMXYd4cTcG+Sw0+OPvzRFJZ1X2
+         cxeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pzI11uomCgNK6tPICX0LDcszrWSZ4KUC0kDTFjMpLX0=;
-        b=Xb6AOiAUhFbg9dKSNVztwtxY2uLrdlakC1KnRFShOBmJI+j0v6LK5qOlFkB2XmBBKH
-         FQPKxVL85ezXCX7YiI1gOirC01YZC4zwnppEgRKnxYBKpXrCreXHQHd+PaFsC5TPFSOC
-         equMZlJLanJP0XtR36QPhjKzos6XONOHmNhp/s95j3/OTyO4VHGQEbAaochjRivnAXXs
-         22soiSUA7GvKjitQcVfDJYISXUDNeN6S7d6ySq+5jTWBqv1wDfJz6g+UZKaeR0rBRgT4
-         xo5lmsXqsP5X00UEUWQ2JRnogT9M9G6/XrAEPd+hfrqAD8Rvom1mPZJStUxehMYHsBOX
-         eN+w==
-X-Gm-Message-State: AOAM5314yBfLT7g4yT1iENHCKrr1Cf97pQo3PQB0BNQdmjL/IIFEK6mL
-        ygKICheIG95T29umF/WSTo8=
-X-Google-Smtp-Source: ABdhPJztmRdtlfn3VMXRQqUwB54FfbW4KLdUg2NhL5I5fWgIjUtaM+x1G1VX9nFgTz13bM+jpw50sw==
-X-Received: by 2002:a37:8107:: with SMTP id c7mr4739069qkd.22.1598277832977;
-        Mon, 24 Aug 2020 07:03:52 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:bd91:ce7a:f45a:6364? ([2600:1700:e72:80a0:bd91:ce7a:f45a:6364])
-        by smtp.gmail.com with ESMTPSA id v136sm8606053qkb.31.2020.08.24.07.03.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Aug 2020 07:03:52 -0700 (PDT)
-Subject: Re: [PATCH 3/7] maintenance: add --scheduled option and config
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
- <4473c93b118a0e0cdb205d1758aaaa2d8bf5139a.1597857412.git.gitgitgadget@gmail.com>
- <20200820145127.GC31084@danh.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <83b90c15-6d19-3d6e-cefe-4d271aaaac3a@gmail.com>
-Date:   Mon, 24 Aug 2020 10:03:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
-MIME-Version: 1.0
-In-Reply-To: <20200820145127.GC31084@danh.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=muyzJYsLU1GY871woUoRsJEEQGMLFvvxTVJGrJdIBVM=;
+        b=NmxjU55CQOCJQWbZHbR9S3x3xUTiijTohcHtpI3YssN1hkjpdvXuzB1WywNIZiT9uw
+         +r0iv1DxZJ4DnJ9SHNbi3Jz/nF36Y1V7FEhcIh8eGf/0Ve9+gPMkyx6yI4zjCRuY0dxL
+         vDejxlgAADHhMUF834sIzIitm3lInxjLqlZda1DbdPpOHCH5cfZ4U0UY2One/d8wbihG
+         9Re2R0vhtBdww8ZSO0DCT6QnI3iv+GnfA0UYXyOa8GQlFLEd2BRskcwhcaUDRJaIsG1c
+         DR5C159rOuD9HYmDyrnyPRlF/QmUevHn0n/GUdHq74a8TMxZaPB4K6cCjpidrtI+fUSA
+         SDxg==
+X-Gm-Message-State: AOAM531tjKBCdKyIDD/nfmtKFIR4VAG7C8BHrOEsMi+b2+IkXjzQpqFI
+        rXlgsaRXx0Cr2arfkdN7q18CrIXDiNs=
+X-Google-Smtp-Source: ABdhPJxAWzOZYdAoggq8nN5tlzcVJMII6lzRn5vQvDArDOOHRZT5FBgA8RYEkjC0j2v4QAtqgBqMjQ==
+X-Received: by 2002:adf:eb89:: with SMTP id t9mr6077746wrn.65.1598280709205;
+        Mon, 24 Aug 2020 07:51:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q7sm22989334wra.56.2020.08.24.07.51.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Aug 2020 07:51:48 -0700 (PDT)
+Message-Id: <fc2138e1db2de46793100b87c00dbde270f6b350.1598280704.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.708.git.1598280703.gitgitgadget@gmail.com>
+References: <pull.708.git.1598280703.gitgitgadget@gmail.com>
+From:   "Vadim Sannikov via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 24 Aug 2020 14:51:42 +0000
+Subject: [PATCH 1/2] Unify `update-index --cacheinfo` usage
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Vadim Sannikov <vsj.vadim@gmail.com>,
+        Vadim Sannikov <vsj.vadim@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/20/2020 10:51 AM, Đoàn Trần Công Danh wrote:
-> On 2020-08-19 17:16:44+0000, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
->> +static void fill_schedule_info(struct maintenance_task *task,
->> +			       const char *config_name,
->> +			       timestamp_t schedule_delay)
->> +{
->> +	timestamp_t now = approxidate("now");
-> 
-> I see this pattern in both previous patch and this patch,
-> should we create a helper (if not exist) to get current timestamp
-> instead, parsing "now" every now and then is not a good idea, in my
-> very opinionated opinion.
+From: Vadim Sannikov <vsj.vadim@gmail.com>
 
-Parsing "now" is not that much work, and it is done only once per
-maintenance task. To make a helper that avoids these string comparisons
-(specifically to avoid iterating through the "special" array in date.c)
-is unlikely to be worth the effort and code duplication.
+The old three separate parameters format (`<mode> <object> <path>`)
+is replaced with the modern, single-parameter form
+(`<mode>,<object>,<path>`).
 
-If you mean it would be good to use a macro here, then that would be
-easy:
+Different parts of Git code use different syntax, so the commit unifies
+it. According to `git-update-index` manual page, the new form is
+preferred.
 
-	#define approxidate_now() approxidate("now")
+Signed-off-by: Vadim Sannikov <vsj.vadim@gmail.com>
+---
+ git-merge-one-file.sh | 6 +++---
+ git-mergetool.sh      | 2 +-
+ merge-recursive.c     | 2 +-
+ po/bg.po              | 4 ++--
+ po/ca.po              | 4 ++--
+ po/de.po              | 4 ++--
+ po/el.po              | 2 +-
+ po/es.po              | 4 ++--
+ po/fr.po              | 4 ++--
+ po/git.pot            | 2 +-
+ po/it.po              | 4 ++--
+ po/ko.po              | 4 ++--
+ po/ru.po              | 8 ++++++--
+ po/sv.po              | 4 ++--
+ po/tr.po              | 4 ++--
+ po/vi.po              | 4 ++--
+ po/zh_CN.po           | 4 ++--
+ po/zh_TW.po           | 4 ++--
+ 18 files changed, 37 insertions(+), 33 deletions(-)
 
-One important thing for using this over time(NULL) is that we really
-want this to work with GIT_TEST_DATE_NOW.
-
->> +	char *value = NULL;
->> +	struct strbuf last_run = STRBUF_INIT;
->> +	int64_t previous_run;
->> +
->> +	strbuf_addf(&last_run, "maintenance.%s.lastrun", task->name);
->> +
->> +	if (git_config_get_string(last_run.buf, &value))
->> +		task->scheduled = 1;
->> +	else {
->> +		previous_run = git_config_int64(last_run.buf, value);
->> +		if (now >= previous_run + schedule_delay)
->> +			task->scheduled = 1;
->> +	}
->> +
->> +	free(value);
->> +	strbuf_release(&last_run);
->> +}
->> +
->>  static void initialize_task_config(void)
->>  {
->>  	int i;
->> @@ -1359,6 +1387,7 @@ static void initialize_task_config(void)
->>  
->>  	for (i = 0; i < TASK__COUNT; i++) {
->>  		int config_value;
->> +		char *config_str;
->>  
->>  		strbuf_setlen(&config_name, 0);
->>  		strbuf_addf(&config_name, "maintenance.%s.enabled",
->> @@ -1366,6 +1395,20 @@ static void initialize_task_config(void)
->>  
->>  		if (!git_config_get_bool(config_name.buf, &config_value))
->>  			tasks[i].enabled = config_value;
->> +
->> +		strbuf_setlen(&config_name, 0);
-> 
-> It looks like we have a simple and better named alias for this:
-> 
-> 	strbuf_reset(&config_name)
-> 
-> _reset has 400+ occurences in this code base, compare to 20 of _setlen
-
-Makes sense. Thanks.
-
--Stolee
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index f6d9852d2f..5691c4e7ff 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -71,7 +71,7 @@ case "${1:-.}${2:-.}${3:-.}" in
+ ".$2.")
+ 	# the other side did not add and we added so there is nothing
+ 	# to be done, except making the path merged.
+-	exec git update-index --add --cacheinfo "$6" "$2" "$4"
++	exec git update-index --add --cacheinfo "$6","$2","$4"
+ 	;;
+ "..$3")
+ 	echo "Adding $4"
+@@ -80,7 +80,7 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 		echo "ERROR: untracked $4 is overwritten by the merge." >&2
+ 		exit 1
+ 	fi
+-	git update-index --add --cacheinfo "$7" "$3" "$4" &&
++	git update-index --add --cacheinfo "$7","$3","$4" &&
+ 		exec git checkout-index -u -f -- "$4"
+ 	;;
+ 
+@@ -95,7 +95,7 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 		exit 1
+ 	fi
+ 	echo "Adding $4"
+-	git update-index --add --cacheinfo "$6" "$2" "$4" &&
++	git update-index --add --cacheinfo "$6","$2","$4" &&
+ 		exec git checkout-index -u -f -- "$4"
+ 	;;
+ 
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index e3f6d543fb..ad37b15f4b 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -224,7 +224,7 @@ stage_submodule () {
+ 	)
+ 	test -n "$work_rel_path" ||
+ 	die "fatal: unable to get path of module $path relative to work tree"
+-	git update-index --add --replace --cacheinfo 160000 "$submodule_sha1" "${work_rel_path%/}" || die
++	git update-index --add --replace --cacheinfo 160000,"$submodule_sha1","${work_rel_path%/}" || die
+ }
+ 
+ checkout_staged_file () {
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d0214335a7..dfe6f67ec8 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1259,7 +1259,7 @@ static int merge_submodule(struct merge_options *opt,
+ 		       "If this is correct simply add it to the index "
+ 		       "for example\n"
+ 		       "by using:\n\n"
+-		       "  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
++		       "  git update-index --cacheinfo 160000,%s,\"%s\"\n\n"
+ 		       "which will accept this suggestion.\n"),
+ 		       oid_to_hex(&merges.objects[0].item->oid), path);
+ 		break;
+diff --git a/po/bg.po b/po/bg.po
+index a189b16dc4..517c0e6b49 100644
+--- a/po/bg.po
++++ b/po/bg.po
+@@ -4737,13 +4737,13 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Ако това е така, добавете го към индекса с команда като следната:\n"
+ "\n"
+-"    git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "Това приема предложеното.\n"
+ 
+diff --git a/po/ca.po b/po/ca.po
+index c43c21bc22..61c3a7f9b0 100644
+--- a/po/ca.po
++++ b/po/ca.po
+@@ -4592,12 +4592,12 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Si això és correcte simplement afegiu-ho a l'índex per exemple utilitzant "
+-"git update-index --cacheinfo 160000 per cents \"%s\" que acceptaran aquest "
++"  git update-index --cacheinfo 160000,%s,\"%s\" que acceptaran aquest "
+ "suggeriment.\n"
+ 
+ #: merge-recursive.c:1268
+diff --git a/po/de.po b/po/de.po
+index 656de24218..ec0106f2b8 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -4641,14 +4641,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Falls das korrekt ist, fügen Sie es einfach der Staging-Area, zum Beispiel "
+ "mit:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "hinzu, um diesen Vorschlag zu akzeptieren.\n"
+ 
+diff --git a/po/el.po b/po/el.po
+index 703f46d0c7..e775885187 100644
+--- a/po/el.po
++++ b/po/el.po
+@@ -3075,7 +3075,7 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+diff --git a/po/es.po b/po/es.po
+index 41a72ca6fb..1c1aeebe47 100644
+--- a/po/es.po
++++ b/po/es.po
+@@ -4572,14 +4572,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Si esto es correcto simplemente agrégalo al índice por ejemplo\n"
+ "usando:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "el cual aceptará esta sugerencia.\n"
+ 
+diff --git a/po/fr.po b/po/fr.po
+index d20fc440ab..157c41ff4c 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -4714,14 +4714,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Si c'est correct, ajoutez le simplement à l'index\n"
+ "en utilisant par exemple :\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "qui acceptera cette suggestion.\n"
+ 
+diff --git a/po/git.pot b/po/git.pot
+index 198b6e0a4a..2d50bebf5a 100644
+--- a/po/git.pot
++++ b/po/git.pot
+@@ -4256,7 +4256,7 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+diff --git a/po/it.po b/po/it.po
+index 53523e76df..c8264dd7bc 100644
+--- a/po/it.po
++++ b/po/it.po
+@@ -4649,14 +4649,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Se è corretta aggiungila semplicemente all'indice, ad esempio\n"
+ "usando:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "per accettare questo suggerimento.\n"
+ 
+diff --git a/po/ko.po b/po/ko.po
+index dcfe21c223..47b611edee 100644
+--- a/po/ko.po
++++ b/po/ko.po
+@@ -2361,14 +2361,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "이 제안이 맞으면 인덱스에 추가하면 됩니다. 예를 들어\n"
+ "다음 명령을 사용하면:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "제안을 받아들이게 됩니다.\n"
+ 
+diff --git a/po/ru.po b/po/ru.po
+index a77b462e62..a928cd879e 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -3523,10 +3523,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+-msgstr "Если оно верное, то просто добавьте его в индекс, например так:\n\n  git update-index --cacheinfo 160000 %s \"%s\"\n\nтем самым принимая это предположение.\n"
++msgstr "Если оно верное, то просто добавьте его в индекс, например так:\n"
++"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
++"\n"
++"тем самым принимая это предположение.\n"
+ 
+ #: merge-recursive.c:1252
+ #, c-format
+diff --git a/po/sv.po b/po/sv.po
+index 93f3c6f3f7..f5a850f0b7 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -4551,14 +4551,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Om detta är riktigt lägger du bara till det i indexet, till\n"
+ "exempel så här:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "vilket godtar lösningen.\n"
+ 
+diff --git a/po/tr.po b/po/tr.po
+index 9a17c19b25..af5f9ba7f8 100644
+--- a/po/tr.po
++++ b/po/tr.po
+@@ -4619,13 +4619,13 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Eğer bu doğruysa yalnızca indekse ekleyin, örneğinbu öneriyi kabul edecek:\n"
+ "\n"
+-"\tgit update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "komutunu kullanmanız yeterlidir.\n"
+ 
+diff --git a/po/vi.po b/po/vi.po
+index d730cf1141..beec050125 100644
+--- a/po/vi.po
++++ b/po/vi.po
+@@ -4548,14 +4548,14 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "Nếu đây là đúng đơn giản thêm nó vào mục lục ví dụ\n"
+ "bằng cách dùng:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "cái mà sẽ chấp nhận gợi ý này.\n"
+ 
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index a531819623..69dd29140b 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -4567,13 +4567,13 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "如果这个正确，将其添加到索引，例如使用命令：\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "以接受此建议。\n"
+ 
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+index 9334b46faa..18e6b8985a 100644
+--- a/po/zh_TW.po
++++ b/po/zh_TW.po
+@@ -4692,13 +4692,13 @@ msgid ""
+ "If this is correct simply add it to the index for example\n"
+ "by using:\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "which will accept this suggestion.\n"
+ msgstr ""
+ "如果這個正確，將其新增到索引，例如使用指令：\n"
+ "\n"
+-"  git update-index --cacheinfo 160000 %s \"%s\"\n"
++"  git update-index --cacheinfo 160000,%s,\"%s\"\n"
+ "\n"
+ "以接受此建議。\n"
+ 
+-- 
+gitgitgadget
 
