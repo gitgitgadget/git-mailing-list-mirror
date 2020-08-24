@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2F4C433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E59E8C433E4
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E3CB208E4
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A44B420578
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:17:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="bQywsbHe"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="P2IjvLtK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727937AbgHXTRO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 15:17:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50624 "EHLO
+        id S1727931AbgHXTRT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 15:17:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727923AbgHXTRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 15:17:04 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F11C061573
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:17:04 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id x2so3976384pfd.8
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:17:04 -0700 (PDT)
+        with ESMTP id S1727926AbgHXTRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 15:17:09 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08924C061574
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:17:09 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id 73so2636035pfz.13
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=HazzQ/oLGUJAkzZcUf+Ksxm/Mw1SHF/7iUSuvLwN+e0=;
-        b=bQywsbHeI/BG623Ock0Mp7hIwp7HyH9oY1Y8L4kCDikM3TtESepiGhVpKtFCT7Y6ul
-         UdeqX/GzRFbq3jwXOkmVCJH54bhCp5y4iolSOUshRdy6vcWIFtbYRO810PMtpbX68a8D
-         9O3fAAK9lUYTA+VgzpcjatjtERO3oUJTQHAqm/fJCAejQX9BCMcSKm49h4/S2kOtRoE0
-         Sb8wXn2GffGNHd1gcfBBICW34pBzfR1Y2wzerq/x0MLiWeZTEpXKDyV7PjL+w3E1LiY+
-         3qDC+8Fc7N8EqMTqOblXTfme0hbi7lmHfV6vTLj1Bv/N4b/Lu7oMxCRDSpleYd6F97VP
-         Sa+A==
+        bh=KhKBjolNZQ6JCHEjrzrGIMAn+mcesVdbmgd2GCJdyvg=;
+        b=P2IjvLtKeb6JWAJ8JUcg+biSMuiXQ8Lzj7KTI9WtZt6mbrw7gBkdKmGrsPeRy1UGhE
+         oyfXBbsLrBCs7vbSXReLNUT2VZwYIyzLynot56l1bR3fzyL76u0UWdS+QAfqqard3OSv
+         BEl5oX7+UjgH1RfFXO2LGJBS6WYRy9uIWvCq2tyqhpPkt/XtjQn1YKVaNoCkUpnKU9gL
+         iRLTgRwHANIEgGpBKn8GYDTH1K50ogqzQ8FL8jX1yChgry14fqeveAbF2GCWeLFMKHpc
+         WYsTBVsTlY/XimLTt0+TG8dBqIyftsmZBrxkVFLWnzH8c5wht6yoRnw+Y9yCZhMahhI5
+         itXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=HazzQ/oLGUJAkzZcUf+Ksxm/Mw1SHF/7iUSuvLwN+e0=;
-        b=UOrk2EJESyLYiA9xpF58zzgRqIBobzMVfRdbIRTRYiU0Bfp4FlDDiwOS0isTsDrgg0
-         QIS+/gMMZOFdj/xyTLtQW0IT6G8lNjx2mIvkhfUqwerBa1HuTD6zbEUWwGocr/C3jRFc
-         jEqzOMlrOVGEfGvmrGh3wle245MOg06onyaUOs4K+n/dx6F7fC6GjGNKJVwUczkctL57
-         V33+kdCZV4Mv1/SfMBurOxJSr/UbrUgIzc+3a8bHEQe5iHO6LUFkzB68mdpkygq6yack
-         by1wygTB9NeL2QbDAqVxqdc8XP5rxq4nEMniIT6bKh95j0F3wStD+B7rJ0HgYHky9yNe
-         26Pw==
-X-Gm-Message-State: AOAM530hbh9H9T9UQnyMa0eaOY9oS85ZeaqOm3riSFfd4A9RaOWlo5Z/
-        YBqy0GFdKYqETkeacZD/AntiVdEoEj6g+1xPClsdiZ+uIyUrz15IDYQJOlB5QEs7oOgYh2aI6ms
-        tt1DgTMrzBnAKitP27qTEJVrWapz9eMT+yy2dQ6jIV7gL+Vk4nWSJ6s635+BduWCl+WBg2vi4Lf
-        l6
-X-Google-Smtp-Source: ABdhPJxusCXINBHvTbAF7GcUM6zFIKf565k09gyHx35ZNndWsRf3+AOaU09Gr29xO6D8/NELqZfclKJZKDDKjxXfOeJ8
+        bh=KhKBjolNZQ6JCHEjrzrGIMAn+mcesVdbmgd2GCJdyvg=;
+        b=RJ5hQOfcCWX8friDK5ih6O7F2a8h4esQSHx3qajgFF1OIySSOC9VI/f8oYCMGybyKy
+         j9mmYKE2c10RBpQQfLkR5/BUvb/HvBrH5uZJDRBxBbhBnQ5Pq8PPzoG+Gu7axaBPXuXr
+         jbdZBrHz/LUMUTmCE4v7IW9u3lDPIRtU2CmIF72K4DMdWqcKjqGHm6fyySxS9i12IqQN
+         bOHQLI/JMiNWi3WCu3+qfLEBGVjXaS8coQe5n8USQf+Ln9GJYLm0exXzcAO2I8o9Xwg3
+         KAHQ6LMaq9gYtuJgq0kX0RuX0otNKetwU7WexUTY00OLslA/AwOoZOmWyPgmUs/CtxZF
+         lkKg==
+X-Gm-Message-State: AOAM531pUNCGs2e1fW/v8GC4NywGRCgY67qqhqbnZsEwylfUFtsYFF+4
+        xkRKOIop+yUpXxn8d7S/tR/8gGW6H7QxZlFKjlYj9sZP2/j62Cydl24rFE8AJa6Hr6Obfls/azs
+        mNSeCEmcbk5It2B82R4HoT93E6gHR6rlYrWdEaQiqRIOD+vy1OxwwA3oMNCiIbRy1MxiYwwiniZ
+        tI
+X-Google-Smtp-Source: ABdhPJxmNEXKXOEHOW2zDTh4KMLNo6z+OfP9FIfiwTJ4kppCUuHaVdCR/bo94vKTKOYayDHKlAwQPa7676lhS3rUhXS9
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:bf86:: with SMTP id
- d6mr575060pjs.83.1598296624047; Mon, 24 Aug 2020 12:17:04 -0700 (PDT)
-Date:   Mon, 24 Aug 2020 12:16:36 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:19c3:: with SMTP id
+ nm3mr609939pjb.8.1598296627181; Mon, 24 Aug 2020 12:17:07 -0700 (PDT)
+Date:   Mon, 24 Aug 2020 12:16:38 -0700
 In-Reply-To: <cover.1598296530.git.jonathantanmy@google.com>
-Message-Id: <91459ab4119a33d40d39a565c96282db7865c946.1598296530.git.jonathantanmy@google.com>
+Message-Id: <3e69f41f19535fa2c04fae6adc78bcc4f052d523.1598296530.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1598296530.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
-Subject: [PATCH 5/7] index-pack: calculate {ref,ofs}_{first,last} early
+Subject: [PATCH 7/7] index-pack: make quantum of work smaller
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
@@ -73,249 +73,495 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is refactoring 2 of 2 to simplify struct base_data.
+Currently, when index-pack resolves deltas, it does not split up delta
+trees into threads: each delta base root (an object that is not a
+REF_DELTA or OFS_DELTA) can go into its own thread, but all deltas on
+that root (direct or indirect) are processed in the same thread.
 
-Whenever we make a struct base_data, immediately calculate its delta
-children. This eliminates confusion as to when the
-{ref,ofs}_{first,last} fields are initialized.
+This is a problem when a repository contains a large text file (thus,
+delta-able) that is modified many times - delta resolution time during
+fetching is dominated by processing the deltas corresponding to that
+text file.
 
-Before this patch, the delta children were calculated at the last
-possible moment. This allowed the members of struct base_data to be
-populated in any order, superficially useful when we have the object
-contents before the struct object_entry. But this makes reasoning about
-the state of struct base_data more complicated, hence this patch.
+This patch contains a solution to that. When cloning using
+
+  git -c core.deltabasecachelimit=1g clone \
+    https://fuchsia.googlesource.com/third_party/vulkan-cts
+
+on my laptop, clone time improved from 3m2s to 2m5s (using 3 threads,
+which is the default).
+
+The solution is to have a global work stack. This stack contains delta
+bases (objects, whether appearing directly in the packfile or generated
+by delta resolution, that themselves have delta children) that need to
+be processed; whenever a thread needs work, it peeks at the top of the
+stack and processes its next unprocessed child. If a thread finds the
+stack empty, it will look for more delta base roots to push on the stack
+instead.
+
+The main weakness of having a global work stack is that more time is
+spent in the mutex, but profiling has shown that most time is spent in
+the resolution of the deltas themselves, so this shouldn't be an issue
+in practice. In any case, experimentation (as described in the clone
+command above) shows that this patch is a net improvement.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 123 +++++++++++++++++++++----------------------
- 1 file changed, 60 insertions(+), 63 deletions(-)
+ builtin/index-pack.c | 341 ++++++++++++++++++++++++-------------------
+ 1 file changed, 193 insertions(+), 148 deletions(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 032716553c..e98b11ab37 100644
+index c6d2acc13a..0a5b938e1e 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -33,12 +33,15 @@ struct object_stat {
- };
- 
- struct base_data {
-+	/* Initialized by make_base(). */
- 	struct base_data *base;
+@@ -38,15 +38,49 @@ struct base_data {
  	struct object_entry *obj;
--	void *data;
--	unsigned long size;
  	int ref_first, ref_last;
  	int ofs_first, ofs_last;
-+
-+	/* Not initialized by make_base(). */
-+	void *data;
-+	unsigned long size;
++	/*
++	 * Threads should increment retain_data if they are about to call
++	 * patch_delta() using this struct's data as a base, and decrement this
++	 * when they are done. While retain_data is nonzero, this struct's data
++	 * will not be freed even if the delta base cache limit is exceeded.
++	 */
++	int retain_data;
++	/*
++	 * The number of direct children that have not been fully processed
++	 * (entered work_head, entered done_head, left done_head). When this
++	 * number reaches zero, this struct base_data can be freed.
++	 */
++	int children_remaining;
+ 
+ 	/* Not initialized by make_base(). */
++	struct list_head list;
+ 	void *data;
+ 	unsigned long size;
  };
  
++/*
++ * Stack of struct base_data that have unprocessed children.
++ * threaded_second_pass() uses this as a source of work (the other being the
++ * objects array).
++ */
++LIST_HEAD(work_head);
++
++/*
++ * Stack of struct base_data that have children, all of whom have been
++ * processed or are being processed, and at least one child is being processed.
++ * These struct base_data must be kept around until the last child is
++ * processed.
++ */
++LIST_HEAD(done_head);
++
++/*
++ * All threads share one delta base cache.
++ */
++size_t base_cache_used;
++size_t base_cache_limit;
++
  struct thread_local {
-@@ -362,14 +365,6 @@ static void set_thread_data(struct thread_local *data)
- 		pthread_setspecific(key, data);
- }
+ 	pthread_t thread;
+-	size_t base_cache_used;
+ 	int pack_fd;
+ };
  
--static struct base_data *alloc_base_data(void)
--{
--	struct base_data *base = xcalloc(1, sizeof(struct base_data));
--	base->ref_last = -1;
--	base->ofs_last = -1;
--	return base;
--}
--
- static void free_base_data(struct base_data *c)
+@@ -369,36 +403,38 @@ static void free_base_data(struct base_data *c)
  {
  	if (c->data) {
-@@ -406,19 +401,6 @@ static void prune_base_data(struct base_data *youngest_child)
- 	free(ancestry);
- }
- 
--static void link_base_data(struct base_data *base, struct base_data *c)
--{
--	c->base = base;
--	if (c->data)
--		get_thread_data()->base_cache_used += c->size;
--	prune_base_data(c);
--}
--
--static void unlink_base_data(struct base_data *c)
--{
--	free_base_data(c);
--}
--
- static int is_delta_type(enum object_type type)
- {
- 	return (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA);
-@@ -929,10 +911,25 @@ static void *get_base_data(struct base_data *c)
- 	return c->data;
- }
- 
--static void resolve_delta(struct object_entry *delta_obj,
--			  struct base_data *base, struct base_data *result)
-+static struct base_data *make_base(struct object_entry *obj,
-+				   struct base_data *parent)
- {
--	void *base_data, *delta_data;
-+	struct base_data *base = xcalloc(1, sizeof(struct base_data));
-+	base->base = parent;
-+	base->obj = obj;
-+	find_ref_delta_children(&obj->idx.oid,
-+				&base->ref_first, &base->ref_last);
-+	find_ofs_delta_children(obj->idx.offset,
-+				&base->ofs_first, &base->ofs_last);
-+	return base;
-+}
-+
-+static struct base_data *resolve_delta(struct object_entry *delta_obj,
-+				       struct base_data *base)
-+{
-+	void *base_data, *delta_data, *result_data;
-+	struct base_data *result;
-+	unsigned long result_size;
- 
- 	if (show_stat) {
- 		int i = delta_obj - objects;
-@@ -946,19 +943,31 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 		FREE_AND_NULL(c->data);
+-		get_thread_data()->base_cache_used -= c->size;
++		base_cache_used -= c->size;
  	}
- 	delta_data = get_data_from_pack(delta_obj);
- 	base_data = get_base_data(base);
--	result->obj = delta_obj;
--	result->data = patch_delta(base_data, base->size,
--				   delta_data, delta_obj->size, &result->size);
-+	result_data = patch_delta(base_data, base->size,
-+				  delta_data, delta_obj->size, &result_size);
- 	free(delta_data);
--	if (!result->data)
-+	if (!result_data)
- 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
--	hash_object_file(the_hash_algo, result->data, result->size,
-+	hash_object_file(the_hash_algo, result_data, result_size,
- 			 type_name(delta_obj->real_type), &delta_obj->idx.oid);
--	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
-+	sha1_object(result_data, NULL, result_size, delta_obj->real_type,
- 		    &delta_obj->idx.oid);
+ }
+ 
+-static void prune_base_data(struct base_data *youngest_child)
++static void prune_base_data(struct base_data *retain)
+ {
+-	struct base_data *b;
+-	struct thread_local *data = get_thread_data();
+-	struct base_data **ancestry = NULL;
+-	size_t nr = 0, alloc = 0;
+-	ssize_t i;
++	struct list_head *pos;
+ 
+-	if (data->base_cache_used <= delta_base_cache_limit)
++	if (base_cache_used <= base_cache_limit)
+ 		return;
+ 
+-	/*
+-	 * Free all ancestors of youngest_child until we have enough space,
+-	 * starting with the oldest. (We cannot free youngest_child itself.)
+-	 */
+-	for (b = youngest_child->base; b != NULL; b = b->base) {
+-		ALLOC_GROW(ancestry, nr + 1, alloc);
+-		ancestry[nr++] = b;
++	list_for_each_prev(pos, &done_head) {
++		struct base_data *b = list_entry(pos, struct base_data, list);
++		if (b->retain_data || b == retain)
++			continue;
++		if (b->data) {
++			free_base_data(b);
++			if (base_cache_used <= base_cache_limit)
++				return;
++		}
+ 	}
+-	for (i = nr - 1;
+-	     i >= 0 && data->base_cache_used > delta_base_cache_limit;
+-	     i--) {
+-		if (ancestry[i]->data)
+-			free_base_data(ancestry[i]);
 +
-+	result = make_base(delta_obj, base);
-+	if (result->ref_last == -1 && result->ofs_last == -1) {
-+		free(result_data);
-+	} else {
-+		result->data = result_data;
-+		result->size = result_size;
-+		get_thread_data()->base_cache_used += result->size;
-+		prune_base_data(result);
-+	}
-+
- 	counter_lock();
- 	nr_resolved_deltas++;
- 	counter_unlock();
-+
-+	return result;
++	list_for_each_prev(pos, &work_head) {
++		struct base_data *b = list_entry(pos, struct base_data, list);
++		if (b->retain_data || b == retain)
++			continue;
++		if (b->data) {
++			free_base_data(b);
++			if (base_cache_used <= base_cache_limit)
++				return;
++		}
+ 	}
+-	free(ancestry);
+ }
+ 
+ static int is_delta_type(enum object_type type)
+@@ -851,15 +887,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
  }
  
  /*
-@@ -984,24 +993,9 @@ static int compare_and_swap_type(signed char *type,
- static struct base_data *find_unresolved_deltas_1(struct base_data *base,
- 						  struct base_data *prev_base)
- {
--	if (base->ref_last == -1 && base->ofs_last == -1) {
--		find_ref_delta_children(&base->obj->idx.oid,
--					&base->ref_first, &base->ref_last);
+- * This function is part of find_unresolved_deltas(). There are two
+- * walkers going in the opposite ways.
+- *
+- * The first one in find_unresolved_deltas() traverses down from
+- * parent node to children, deflating nodes along the way. However,
+- * memory for deflated nodes is limited by delta_base_cache_limit, so
+- * at some point parent node's deflated content may be freed.
+- *
+- * The second walker is this function, which goes from current node up
++ * Walk from current node up
+  * to top parent if necessary to deflate the node. In normal
+  * situation, its parent node would be already deflated, so it just
+  * needs to apply delta.
+@@ -887,7 +915,7 @@ static void *get_base_data(struct base_data *c)
+ 		if (!delta_nr) {
+ 			c->data = get_data_from_pack(obj);
+ 			c->size = obj->size;
+-			get_thread_data()->base_cache_used += c->size;
++			base_cache_used += c->size;
+ 			prune_base_data(c);
+ 		}
+ 		for (; delta_nr > 0; delta_nr--) {
+@@ -903,7 +931,7 @@ static void *get_base_data(struct base_data *c)
+ 			free(raw);
+ 			if (!c->data)
+ 				bad_object(obj->idx.offset, _("failed to apply delta"));
+-			get_thread_data()->base_cache_used += c->size;
++			base_cache_used += c->size;
+ 			prune_base_data(c);
+ 		}
+ 		free(delta);
+@@ -921,6 +949,8 @@ static struct base_data *make_base(struct object_entry *obj,
+ 				&base->ref_first, &base->ref_last);
+ 	find_ofs_delta_children(obj->idx.offset,
+ 				&base->ofs_first, &base->ofs_last);
++	base->children_remaining = base->ref_last - base->ref_first +
++		base->ofs_last - base->ofs_first + 2;
+ 	return base;
+ }
+ 
+@@ -954,14 +984,8 @@ static struct base_data *resolve_delta(struct object_entry *delta_obj,
+ 		    &delta_obj->idx.oid);
+ 
+ 	result = make_base(delta_obj, base);
+-	if (result->ref_last == -1 && result->ofs_last == -1) {
+-		free(result_data);
+-	} else {
+-		result->data = result_data;
+-		result->size = result_size;
+-		get_thread_data()->base_cache_used += result->size;
+-		prune_base_data(result);
+-	}
++	result->data = result_data;
++	result->size = result_size;
+ 
+ 	counter_lock();
+ 	nr_resolved_deltas++;
+@@ -970,86 +994,6 @@ static struct base_data *resolve_delta(struct object_entry *delta_obj,
+ 	return result;
+ }
+ 
+-/*
+- * Standard boolean compare-and-swap: atomically check whether "*type" is
+- * "want"; if so, swap in "set" and return true. Otherwise, leave it untouched
+- * and return false.
+- */
+-static int compare_and_swap_type(signed char *type,
+-				 enum object_type want,
+-				 enum object_type set)
+-{
+-	enum object_type old;
 -
--		find_ofs_delta_children(base->obj->idx.offset,
--					&base->ofs_first, &base->ofs_last);
+-	type_cas_lock();
+-	old = *type;
+-	if (old == want)
+-		*type = set;
+-	type_cas_unlock();
 -
--		if (base->ref_last == -1 && base->ofs_last == -1) {
--			free(base->data);
--			return NULL;
--		}
+-	return old == want;
+-}
 -
--		link_base_data(prev_base, base);
+-static struct base_data *find_unresolved_deltas_1(struct base_data *base,
+-						  struct base_data *prev_base)
+-{
+-	if (base->ref_first <= base->ref_last) {
+-		struct object_entry *child = objects + ref_deltas[base->ref_first].obj_no;
+-		struct base_data *result;
+-
+-		if (!compare_and_swap_type(&child->real_type, OBJ_REF_DELTA,
+-					   base->obj->real_type))
+-			die("REF_DELTA at offset %"PRIuMAX" already resolved (duplicate base %s?)",
+-			    (uintmax_t)child->idx.offset,
+-			    oid_to_hex(&base->obj->idx.oid));
+-
+-		get_base_data(base);
+-		result = resolve_delta(child, base);
+-		if (base->ref_first == base->ref_last && base->ofs_last == -1)
+-			free_base_data(base);
+-
+-		base->ref_first++;
+-		return result;
 -	}
 -
- 	if (base->ref_first <= base->ref_last) {
- 		struct object_entry *child = objects + ref_deltas[base->ref_first].obj_no;
--		struct base_data *result = alloc_base_data();
-+		struct base_data *result;
+-	if (base->ofs_first <= base->ofs_last) {
+-		struct object_entry *child = objects + ofs_deltas[base->ofs_first].obj_no;
+-		struct base_data *result;
+-
+-		assert(child->real_type == OBJ_OFS_DELTA);
+-		child->real_type = base->obj->real_type;
+-		get_base_data(base);
+-		result = resolve_delta(child, base);
+-		if (base->ofs_first == base->ofs_last)
+-			free_base_data(base);
+-
+-		base->ofs_first++;
+-		return result;
+-	}
+-
+-	free_base_data(base);
+-	return NULL;
+-}
+-
+-static void find_unresolved_deltas(struct base_data *base)
+-{
+-	struct base_data *new_base, *prev_base = NULL;
+-	for (;;) {
+-		new_base = find_unresolved_deltas_1(base, prev_base);
+-
+-		if (new_base) {
+-			prev_base = base;
+-			base = new_base;
+-		} else {
+-			free(base);
+-			base = prev_base;
+-			if (!base)
+-				return;
+-			prev_base = base->base;
+-		}
+-	}
+-}
+-
+ static int compare_ofs_delta_entry(const void *a, const void *b)
+ {
+ 	const struct ofs_delta_entry *delta_a = a;
+@@ -1068,33 +1012,131 @@ static int compare_ref_delta_entry(const void *a, const void *b)
+ 	return oidcmp(&delta_a->oid, &delta_b->oid);
+ }
  
- 		if (!compare_and_swap_type(&child->real_type, OBJ_REF_DELTA,
- 					   base->obj->real_type))
-@@ -1009,7 +1003,7 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
- 			    (uintmax_t)child->idx.offset,
- 			    oid_to_hex(&base->obj->idx.oid));
+-static void resolve_base(struct object_entry *obj)
+-{
+-	struct base_data *base_obj = make_base(obj, NULL);
+-
+-	find_unresolved_deltas(base_obj);
+-}
+-
+ static void *threaded_second_pass(void *data)
+ {
+-	set_thread_data(data);
++	if (data)
++		set_thread_data(data);
+ 	for (;;) {
+-		int i;
+-		counter_lock();
+-		display_progress(progress, nr_resolved_deltas);
+-		counter_unlock();
++		struct base_data *parent = NULL;
++		struct object_entry *child_obj;
++		struct base_data *child;
++
+ 		work_lock();
+-		while (nr_dispatched < nr_objects &&
+-		       is_delta_type(objects[nr_dispatched].type))
+-			nr_dispatched++;
+-		if (nr_dispatched >= nr_objects) {
+-			work_unlock();
+-			break;
++		if (list_empty(&work_head)) {
++			/*
++			 * Take an object from the object array.
++			 */
++			while (nr_dispatched < nr_objects &&
++			       is_delta_type(objects[nr_dispatched].type))
++				nr_dispatched++;
++			if (nr_dispatched >= nr_objects) {
++				work_unlock();
++				break;
++			}
++			child_obj = &objects[nr_dispatched++];
++		} else {
++			/*
++			 * Peek at the top of the stack, and take a child from
++			 * it.
++			 */
++			parent = list_first_entry(&work_head, struct base_data,
++						  list);
++
++			if (parent->ref_first <= parent->ref_last) {
++				int offset = ref_deltas[parent->ref_first++].obj_no;
++				child_obj = objects + offset;
++				if (child_obj->real_type != OBJ_REF_DELTA)
++					die("REF_DELTA at offset %"PRIuMAX" already resolved (duplicate base %s?)",
++					    (uintmax_t) child_obj->idx.offset,
++					    oid_to_hex(&parent->obj->idx.oid));
++				child_obj->real_type = parent->obj->real_type;
++			} else {
++				child_obj = objects +
++					ofs_deltas[parent->ofs_first++].obj_no;
++				assert(child_obj->real_type == OBJ_OFS_DELTA);
++				child_obj->real_type = parent->obj->real_type;
++			}
++
++			if (parent->ref_first > parent->ref_last &&
++			    parent->ofs_first > parent->ofs_last) {
++				/*
++				 * This parent has run out of children, so move
++				 * it to done_head.
++				 */
++				list_del(&parent->list);
++				list_add(&parent->list, &done_head);
++			}
++
++			/*
++			 * Ensure that the parent has data, since we will need
++			 * it later.
++			 *
++			 * NEEDSWORK: If parent data needs to be reloaded, this
++			 * prolongs the time that the current thread spends in
++			 * the mutex. A mitigating factor is that parent data
++			 * needs to be reloaded only if the delta base cache
++			 * limit is exceeded, so in the typical case, this does
++			 * not happen.
++			 */
++			get_base_data(parent);
++			parent->retain_data++;
+ 		}
+-		i = nr_dispatched++;
+ 		work_unlock();
  
--		resolve_delta(child, base, result);
-+		result = resolve_delta(child, base);
- 		if (base->ref_first == base->ref_last && base->ofs_last == -1)
- 			free_base_data(base);
- 
-@@ -1019,11 +1013,11 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
- 
- 	if (base->ofs_first <= base->ofs_last) {
- 		struct object_entry *child = objects + ofs_deltas[base->ofs_first].obj_no;
--		struct base_data *result = alloc_base_data();
-+		struct base_data *result;
- 
- 		assert(child->real_type == OBJ_OFS_DELTA);
- 		child->real_type = base->obj->real_type;
--		resolve_delta(child, base, result);
-+		result = resolve_delta(child, base);
- 		if (base->ofs_first == base->ofs_last)
- 			free_base_data(base);
- 
-@@ -1031,7 +1025,7 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
- 		return result;
+-		resolve_base(&objects[i]);
++		if (parent) {
++			child = resolve_delta(child_obj, parent);
++			if (!child->children_remaining)
++				FREE_AND_NULL(child->data);
++		} else {
++			child = make_base(child_obj, NULL);
++			if (child->children_remaining) {
++				/*
++				 * Since this child has its own delta children,
++				 * we will need this data in the future.
++				 * Inflate now so that future iterations will
++				 * have access to this object's data while
++				 * outside the work mutex.
++				 */
++				child->data = get_data_from_pack(child_obj);
++				child->size = child_obj->size;
++			}
++		}
++
++		work_lock();
++		if (parent)
++			parent->retain_data--;
++		if (child->data) {
++			/*
++			 * This child has its own children, so add it to
++			 * work_head.
++			 */
++			list_add(&child->list, &work_head);
++			base_cache_used += child->size;
++			prune_base_data(NULL);
++		} else {
++			/*
++			 * This child does not have its own children. It may be
++			 * the last descendant of its ancestors; free those
++			 * that we can.
++			 */
++			struct base_data *p = parent;
++
++			while (p) {
++				struct base_data *next_p;
++
++				p->children_remaining--;
++				if (p->children_remaining)
++					break;
++
++				next_p = p->base;
++				free_base_data(p);
++				list_del(&p->list);
++				free(p);
++
++				p = next_p;
++			}
++		}
++		work_unlock();
  	}
- 
--	unlink_base_data(base);
-+	free_base_data(base);
  	return NULL;
  }
+@@ -1195,6 +1237,7 @@ static void resolve_deltas(void)
+ 					  nr_ref_deltas + nr_ofs_deltas);
  
-@@ -1074,9 +1068,8 @@ static int compare_ref_delta_entry(const void *a, const void *b)
- 
- static void resolve_base(struct object_entry *obj)
- {
--	struct base_data *base_obj = alloc_base_data();
--	base_obj->obj = obj;
--	base_obj->data = NULL;
-+	struct base_data *base_obj = make_base(obj, NULL);
-+
- 	find_unresolved_deltas(base_obj);
- }
- 
-@@ -1369,22 +1362,26 @@ static void fix_unresolved_deltas(struct hashfile *f)
+ 	nr_dispatched = 0;
++	base_cache_limit = delta_base_cache_limit * nr_threads;
+ 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
+ 		init_thread();
+ 		for (i = 0; i < nr_threads; i++) {
+@@ -1364,10 +1407,8 @@ static void fix_unresolved_deltas(struct hashfile *f)
  	for (i = 0; i < nr_ref_deltas; i++) {
  		struct ref_delta_entry *d = sorted_by_pos[i];
  		enum object_type type;
--		struct base_data *base_obj = alloc_base_data();
-+		struct base_data *base;
-+		void *data;
-+		unsigned long size;
-+		struct object_entry *obj;
+-		struct base_data *base;
+ 		void *data;
+ 		unsigned long size;
+-		struct object_entry *obj;
  
  		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
  			continue;
--		base_obj->data = read_object_file(&d->oid, &type,
--						  &base_obj->size);
--		if (!base_obj->data)
-+		data = read_object_file(&d->oid, &type, &size);
-+		if (!data)
- 			continue;
- 
- 		if (check_object_signature(the_repository, &d->oid,
--					   base_obj->data, base_obj->size,
-+					   data, size,
+@@ -1379,11 +1420,15 @@ static void fix_unresolved_deltas(struct hashfile *f)
+ 					   data, size,
  					   type_name(type)))
  			die(_("local object %s is corrupt"), oid_to_hex(&d->oid));
--		base_obj->obj = append_obj_to_pack(f, d->oid.hash,
--					base_obj->data, base_obj->size, type);
--		find_unresolved_deltas(base_obj);
-+		obj = append_obj_to_pack(f, d->oid.hash, data, size, type);
-+		base = make_base(obj, NULL);
-+		base->data = data;
-+		base->size = size;
-+		find_unresolved_deltas(base);
+-		obj = append_obj_to_pack(f, d->oid.hash, data, size, type);
+-		base = make_base(obj, NULL);
+-		base->data = data;
+-		base->size = size;
+-		find_unresolved_deltas(base);
++
++		/*
++		 * Add this as an object to the objects array and call
++		 * threaded_second_pass() (which will pick up the added
++		 * object).
++		 */
++		append_obj_to_pack(f, d->oid.hash, data, size, type);
++		threaded_second_pass(NULL);
++
  		display_progress(progress, nr_resolved_deltas);
  	}
  	free(sorted_by_pos);
