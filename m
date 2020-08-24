@@ -2,92 +2,96 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B37F7C433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 22:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFB9DC433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 22:23:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98D83207D3
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 22:08:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE7A62054F
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 22:23:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YV9MOfdt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727935AbgHXWIb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 18:08:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39300 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726090AbgHXWIa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 18:08:30 -0400
-Received: (qmail 24530 invoked by uid 109); 24 Aug 2020 22:08:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Aug 2020 22:08:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18844 invoked by uid 111); 24 Aug 2020 22:08:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Aug 2020 18:08:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 24 Aug 2020 18:08:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, steadmon@google.com
-Subject: Re: [PATCH 0/7] Better threaded delta resolution in index-pack
- (another try)
-Message-ID: <20200824220829.GA802799@coredump.intra.peff.net>
-References: <cover.1598296530.git.jonathantanmy@google.com>
+        id S1728067AbgHXWXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 18:23:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51795 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726303AbgHXWXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 18:23:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D435F6CC64;
+        Mon, 24 Aug 2020 18:23:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=k
+        CisVBK5tao2QlZfY7zLi2IeSNQ=; b=YV9MOfdtIgmcXKu++DzNqmXLHD6g0k+7P
+        Zop8KVwAf4AtMIgGaRdCav8s5VD60W6Uq4CD+sm4uICZ5FbDKhg1nmu7ldsdnWA3
+        dW8IiDo5yxe3wmvYpWO4hP5i/S9cksAegWVlnWqzFBRTGYCAai6VDlMHKmTVLisy
+        17dviInkMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type; q=dns; s=
+        sasl; b=UpQ8R0OEk/D48BnHauS3W9z6MMKM6UfE2xHV8vMnietH+wy/wfa94nzr
+        NAfZ/Ln0+FSwLfFAl+BOfUNFiSSdRRr+w3QEeLHNvrn9Fw4r1EY9upDb98eITGuu
+        ZgmwrT/+Oc0Om+XjSeEGeQBh15Bij45zvut1hdcNNwvlTP/rBig=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B84806CC63;
+        Mon, 24 Aug 2020 18:23:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E0576CC5E;
+        Mon, 24 Aug 2020 18:23:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     users@kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [RFD] on removing "git-foo" for builtins from disk
+Date:   Mon, 24 Aug 2020 15:23:39 -0700
+Message-ID: <xmqqbliz3cpg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1598296530.git.jonathantanmy@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 76321364-E658-11EA-BBF6-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 24, 2020 at 12:16:30PM -0700, Jonathan Tan wrote:
+Back in 2005, all "git" subcommands were installed in $PATH as
+"git-commit" etc., and people wrote their scripts assuming that they
+are all available on their $PATH.  But it then became cumbersome to
+have so many "git-foo" commands in /usr/bin/.  Because "git" is
+installed in /usr/bin/ and knows to dispatch to 'git-foo' subcommand
+when invoked with 'foo' as its first argument, we asked our users to
+use "git foo" form and moved "git-foo" commands out of /usr/bin/,
+moved to /usr/libexec/git-core/, and gave an escape hatch, which is
+to add the output of "git --exec-path" early in their $PATH, to old
+scripts (i.e. the scripts needed a one-line fix).
 
-> I'm trying to resurrect [1] and have rebased it to latest master
-> (675a4aaf3b ("Ninth batch", 2020-08-19)).
-> 
-> Peff said [2] (of v1) that the overall direction seems reasonable and
-> Josh Steadmon said [3] (of v2) that it looks mostly good except for
-> possible improvements to commit messages and comments. Josh did not list
-> out specific improvements to commit messages but I have taken his
-> suggestions for comments.
+Exectly 12 years ago, we asked the users if they still need these
+on-disk binaries [*1*].  Many built-in commands (i.e. subcommands
+whose code is in the "git" binary), as long as they are invoked in
+"git foo" form, do not need to be installed anywhere on-disk, and
+theoretically can be removed, as long as the users and the scripts
+they wrote long time ago, following our advise to use the escape
+hatch, can somehow be convinced.
 
-I haven't looked closely yet, but since I was doing timings of
-index-pack recently[1], I wondered if this might change anything
-(spoiler: it doesn't really seem to).
+Removing /usr/libexec/git-core/git-{add,branch,commit,...} will
+allow us to reduce disk footprint on systems that do not support
+hardlinks and slightly simplifies the installation procedure.  Some
+folks want to do so unconditionally.  The only downside being that
+we finally break the promise we made our users 12 years ago.
 
-Here's the result of p5302 with my extra tests on my 8-core (16 with
-hyperthreading) laptop against linux.git:
+I do not have a strong opinion either way, but if proponents for
+removal can convince others successfully, I do not mind removing the
+unnecessary on-disk binaries for built-in commands.
 
-  5302.3: index-pack 0 threads                   266.66(263.85+2.71)
-  5302.4: index-pack 1 threads                   275.06(272.11+2.85)
-  5302.5: index-pack 2 threads                   159.49(285.44+3.51)
-  5302.6: index-pack 4 threads                   102.54(318.86+4.30)
-  5302.7: index-pack 8 threads                   75.60(391.39+6.56) 
-  5302.8: index-pack 16 threads                  75.56(748.45+13.37)
-  5302.9: index-pack default number of threads   75.01(389.33+6.59) 
+Discuss away.
 
-So the conclusions from that other series remain pretty similar: nothing
-gets faster as we move past the number of actual cores. The penalty for
-doing so seems less than what I got before, though (though it might just
-be a fluke; it was something like 2s worse before your patches, and
-there's a bit of noise; the increased CPU time can be disregarded as the
-processors are throttled down when more are running).
 
-The overall time seems to get slightly worse, though (HEAD~7 is before
-your patch, HEAD is with it):
+[References and Footnotes]
 
-  Test                                           HEAD~7               HEAD                    
-  --------------------------------------------------------------------------------------------
-  5302.9: index-pack default number of threads   71.96(376.11+3.66)   74.18(390.62+6.08) +3.1%
-
-There may be other cases that get better, though. A 3% increase here is
-probably OK if we get something for it. But if our primary goal here is
-increasing multithread efficiency, then we should be able to show some
-benchmark that improves. :)
-
--Peff
-
-[1] https://lore.kernel.org/git/20200821175153.GA3263018@coredump.intra.peff.net/
+*1* https://lore.kernel.org/git/7vprnzt7d5.fsf@gitster.siamese.dyndns.org/
