@@ -2,104 +2,108 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCBCEC433E3
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 488D7C433DF
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:37:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7225F2067C
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:33:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IBufsgKz"
+	by mail.kernel.org (Postfix) with ESMTP id 326EA20702
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728567AbgHXRdg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 13:33:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57505 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728558AbgHXRd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 13:33:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87C6A6A764;
-        Mon, 24 Aug 2020 13:33:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p6g3ZZ7/1qJTmqgkHR5iFBK5MEQ=; b=IBufsg
-        KzixOb63YyF8yEtZUK6DagsnBpH7u1r4NksZvoAOGRzJSZrnKWF44gEy6CDrzpeL
-        21n65U3U7vfdVwoS/5MCm0q7xslrIeoLStFLzoMPFuL5Kc+4L57su8/a91yg7igk
-        xkllmRr3wFcSCV5ajCkkkei4GCwBRL95ahZ1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=glPU+HATPpVvLbt8rVBSYkY483ESr2zw
-        B0/e1FoTGK6AhjayjYtUOxKwWRxeKkKJRUikTU/UHcdgaLB8P6/bz6zh3t9woSud
-        Ue+Xo4L8sWe8bwQt/ZxJvAJHHHpVoxEPJya/eFIitXpco1YOe7CClypUcsq+lHcG
-        rtDUC2m1PKo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D87E6A761;
-        Mon, 24 Aug 2020 13:33:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF28A6A760;
-        Mon, 24 Aug 2020 13:33:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ori Bernstein <ori@eigenstate.org>
+        id S1726737AbgHXRhi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 13:37:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38842 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725601AbgHXRhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 13:37:37 -0400
+Received: (qmail 22166 invoked by uid 109); 24 Aug 2020 17:37:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Aug 2020 17:37:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14946 invoked by uid 111); 24 Aug 2020 17:37:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Aug 2020 13:37:35 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 24 Aug 2020 13:37:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Avoid infinite loop in malformed packfiles
-References: <20200823005236.10386-1-ori@eigenstate.org>
-        <20200823031151.10985-1-ori@eigenstate.org>
-Date:   Mon, 24 Aug 2020 10:33:21 -0700
-In-Reply-To: <20200823031151.10985-1-ori@eigenstate.org> (Ori Bernstein's
-        message of "Sat, 22 Aug 2020 20:11:52 -0700")
-Message-ID: <xmqqsgcc54pq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Subject: Re: [PATCH 3/3] index-pack: adjust default threading cap
+Message-ID: <20200824173735.GA673908@coredump.intra.peff.net>
+References: <20200821175153.GA3263018@coredump.intra.peff.net>
+ <20200821175800.GC3263141@coredump.intra.peff.net>
+ <20200822011607.GX8085@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E89CF456-E62F-11EA-BA30-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200822011607.GX8085@camp.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ori Bernstein <ori@eigenstate.org> writes:
+On Sat, Aug 22, 2020 at 01:16:07AM +0000, brian m. carlson wrote:
 
-> diff --git a/packfile.c b/packfile.c
-> index 6ab5233613..321e002c50 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1715,6 +1716,12 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
->  			break;
->  		}
->  
-> +		if (delta_stack_nr > UNPACK_ENTRY_STACK_LIMIT) {
-> +			error("overlong delta chain at offset %jd from %s",
-> +			      (uintmax_t)curpos, p->pack_name);
+> > +		if (nr_threads < 4)
+> > +			; /* too few cores to consider capping */
+> > +		else if (nr_threads < 6)
+> > +			nr_threads = 3; /* historic cap */
+> > +		else if (nr_threads < 40)
+> > +			nr_threads /= 2;
+> 
+> I was going to ask if we could make the halving conditional on x86_64,
+> but it turns out POWER and UltraSPARC also have SMT, so that doesn't
+> make sense.  I expect that most users who have more than 6 "cores" are
+> going to be on one of those systems or possibly ARM64, and since the
+> performance penalty of using half as many cores isn't that significant,
+> I'm not sure it's worth worrying about further.  This will be an
+> improvement regardless.
+> 
+> Which is just a long way of saying, this patch seems fine to me.
 
-The "j" length field is not used anywhere in the codebase for
-portability concerns, I think.  "d" is for signed, but curpos
-is an unsigned off_t.  I think
+OK, good. :) I agree there may be room for more improvement on those
+systems. But lacking access to any, my goal was to make things better on
+systems I _could_ test on, and not make things worse on other systems.
+So I'd be very happy if people on other platforms (especially non-intel
+ones) wanted to run:
 
-	"... %"PRIuMAX" from %s", (uintmax_t)curpos, ...
+  cd t/perf
+  GIT_PERF_EXTRA=1 \
+  GIT_PERF_LARGE_REPO=/path/to/clone/of/linux.git \
+  ./p5302-pack-index.sh
 
-would match how we write this kind of thing everywhere else in the
-code, e.g. showing obj_offset in packed_to_object_type() in the same
-file in an error message.
+and report the results.
 
-> @@ -1633,6 +1633,7 @@ static void write_pack_access_log(struct packed_git *p, off_t obj_offset)
->  
->  int do_check_packed_object_crc;
->  
-> +#define UNPACK_ENTRY_STACK_LIMIT 10000
->  #define UNPACK_ENTRY_STACK_PREALLOC 64
->  struct unpack_entry_stack_ent {
->  	off_t obj_offset;
+I do have a slightly-old AMD machine with 4 cores (an A8-7600). Here's
+what it says:
 
-What escape hatch would the end-users have when they have a
-legitimate packfile that has a truly deep delta chain, by the way?
+  5302.3: index-pack 0 threads                   447.67(436.62+6.57)
+  5302.4: index-pack 1 threads                   450.80(441.26+7.20)
+  5302.5: index-pack 2 threads                   265.62(459.56+7.30)
+  5302.6: index-pack 4 threads                   177.06(477.56+8.22)
+  5302.7: index-pack default number of threads   202.60(473.15+7.61)
 
-Thanks.
+So it does get better with 4 threads (but we continue to cap it at 3).
+I wonder whether we should just do:
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 9721bf1ffe..d7453d0c09 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1809,7 +1809,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 		if (nr_threads < 4)
+ 			; /* too few cores to consider capping */
+ 		else if (nr_threads < 6)
+-			nr_threads = 3; /* historic cap */
++			nr_threads = nr_threads;
+ 		else if (nr_threads < 40)
+ 			nr_threads /= 2;
+ 		else
+
+That does probably make things slightly worse for a 6-core hyperthreaded
+Intel machine. And it doesn't help an actual 8-core AMD machine at all.
+
+-Peff
