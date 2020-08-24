@@ -2,375 +2,288 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15B94C433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 06:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0411CC433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 07:26:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAAFD2067C
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 06:12:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD5D12072D
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 07:26:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nI2hlKEf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BO8qWK5d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbgHXGMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 02:12:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39822 "EHLO
+        id S1726090AbgHXH0n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 03:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbgHXGMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 02:12:13 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B6EC061573
-        for <git@vger.kernel.org>; Sun, 23 Aug 2020 23:12:12 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id h2so3729975plr.0
-        for <git@vger.kernel.org>; Sun, 23 Aug 2020 23:12:12 -0700 (PDT)
+        with ESMTP id S1725976AbgHXH0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 03:26:42 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703FDC061573
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 00:26:42 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id n3so2826100pjq.1
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 00:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ipo5MtTb/HZjnuZGYlv3w45mnvX/Cf1Z89IBMFDjxHg=;
-        b=nI2hlKEfqc4OBSdE/T9J6rP0lAzQ7c5oDeRuQ40QcorabDkq52/NHKv9J5n7E1fchw
-         ZYYljsNCKsRKAp0KYsk7/4X049tb/AqidMTidjvQSYsCu6qsWdIA347HxamNjx2KP+bE
-         UeseYbEf65gk9wb2X26BhZhXMeRZZ3ntbA1VJNp78T6/fHWrZmz1dbdPn1Dm9fP+xAyV
-         xkoM1GC2xzPX5PGDVDKevdYJ0d83VUwUY+McuekKDCg9w8Une9kOnfHSFq26o88L0pR3
-         NqeQ619NZPq2Wli/Hrk+/OT7U5P/iXTuDtN9Wxu3t+XlYLFwuI4mc6LpTcOpmoOopeY9
-         eijw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1g0mWIaZ8NIxnq0FIl2SjwgyQxKCMyf54VqpVK/B5rU=;
+        b=BO8qWK5di6H2iRqRjOK98oa4hdCe1PdTAWUfLgOVEZy2uqpjwXGW9mp/hoWmwLukqY
+         fl8kdGbjstAtU3wh8+fPvncRaqefW/V1g4ChzJVpbDlcm1UseAU3qwx4k7SOWs3ak/fq
+         yL7DxeTSwaeRxsHwjpnbXOOianKZUHOZGlOcYR0+NbabWLrNx9xcTIGJrFGrx9nH4BTu
+         Lpp9NAEEqSh5Gvcm1SH2QqMunlU5MwXvTMOKSAwhOfsEu+MRRcc7g6nhL/pQ3S7d8n9X
+         9hyhidv+n4H3v0TepUUZz8CfOk1EssU0vSMGD8nyqH2FAp7mdEjSIU5MReREQY2FY09C
+         uojQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ipo5MtTb/HZjnuZGYlv3w45mnvX/Cf1Z89IBMFDjxHg=;
-        b=iLCDV0YdzVV28fCemyfZ73Ez+wbFkIIDMFPSDOngfzN/9N/sSdZ2V0Q+0+MyiqiIRs
-         PPveFky/qcnX0ug+/nJ1XWIqHBmhAjqovGArIom/CDH2pgVKOw7Ug2HZG1FNP5/FsWzl
-         ELab4Lp9A2+/YMs30EkmZBpuX+tVI3U5Nmu6AfV2HSislvFV9z2qlORs8JZM/1xKB1W5
-         wj67A1M+TeBSZZ8jloxoEqcUQzsq9LytO7vE9+v3Kr5nPjdonclJsKylXg+oXlwMHBER
-         MIwoYSm6ry2KoUmkhasL8qd/SHSzjMKH9EFGcEZVy5UqZ6mXWOVTisNyGdxOpgczdrDS
-         cymA==
-X-Gm-Message-State: AOAM532hari6ci47c+iP07T4l4HVxdDGLH2k6+mg+46r95WKob0jorxg
-        9A1xW9NyG/gFfOjGrD5rQJo2/kGb+0UkNQ==
-X-Google-Smtp-Source: ABdhPJzuxyfsM57Z+0eZ3GG4fj4nXal3rGx4nsv52k8plNoCBXMwtSzNPJS7av3pOeIgYYOv7n1XeA==
-X-Received: by 2002:a17:90a:307:: with SMTP id 7mr3563003pje.37.1598249531470;
-        Sun, 23 Aug 2020 23:12:11 -0700 (PDT)
-Received: from binky.lan ([2600:8802:d04:de02::8a9])
-        by smtp.gmail.com with ESMTPSA id o2sm3821222pjh.4.2020.08.23.23.12.09
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1g0mWIaZ8NIxnq0FIl2SjwgyQxKCMyf54VqpVK/B5rU=;
+        b=RUhlLxNFJKUoQQa5OmIXmXh3RGtwAnMPjziiBJSQqdaRgV5veSnBQmY0m2c07UCxGb
+         yQ1h21PO5WMtxEnVxLMEvyXbIXGbz1KbgfYoFwfuwv4FG6+TONTpdDhKxwHKnlycbIKA
+         WqQMgT8W0krn/SN6Bzw2K6wM/AbfafQIZYE7LzPzse3D9CHG1tqtYhj0P4NqZGbgTVrq
+         iOIbN2oqHkz8TU6O68aqE0jBL1Z129Bu0Cy/Wz8/Aohyi7D0R0mLXeY0Iv3McczUUpxS
+         pwdiaIWipSvhN1+/wV13jTxy5MSE+xo1VrEJHdfaxoIVxCr3+GSbCDVhrRpM2r28kadk
+         rwMg==
+X-Gm-Message-State: AOAM530KVajEdXGTe+TkdpaqKuOX3zRE5z1hdnbESTjKDmy0ferJN3Db
+        68hrSBZ9XsH8sGn7gY0dzoU=
+X-Google-Smtp-Source: ABdhPJx07z5HLL3FqzTtBSDyIHVbcy5Wlv2mHeg85S0HXTGZPNnesMPTlHhQhUbuiwymQSma/jZp3w==
+X-Received: by 2002:a17:90a:f593:: with SMTP id ct19mr2014737pjb.36.1598254001785;
+        Mon, 24 Aug 2020 00:26:41 -0700 (PDT)
+Received: from konoha ([27.7.229.188])
+        by smtp.gmail.com with ESMTPSA id k20sm4945588pfu.197.2020.08.24.00.26.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Aug 2020 23:12:10 -0700 (PDT)
-From:   Edwin Peer <espeer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Edwin Peer <espeer@gmail.com>, Denton Liu <liu.denton@gmail.com>,
-        "David A . Wheeler" <dwheeler@dwheeler.com>,
-        Jameson Miller <jamill@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>, kuba@kernel.org
-Subject: [PATCH] commit: provide option to add Fixes tags to log
-Date:   Sun, 23 Aug 2020 23:11:56 -0700
-Message-Id: <20200824061156.1929850-1-espeer@gmail.com>
-X-Mailer: git-send-email 2.28.0
+        Mon, 24 Aug 2020 00:26:40 -0700 (PDT)
+Date:   Mon, 24 Aug 2020 12:56:33 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        liu.denton@gmail.com, kaartic.sivaraam@gmail.com,
+        Johannes.Schindelin@gmx.de, gitster@pobox.com, pc44800@gmail.com,
+        stefanbeller@gmail.com
+Subject: Re: [PATCH v3 4/4] submodule: port submodule subcommand 'summary'
+ from shell to C
+Message-ID: <20200824072633.GA38870@konoha>
+References: <20200821171705.GA16484@konoha>
+ <xmqq5z9ban27.fsf@gitster.c.googlers.com>
+ <377b1a2ad60c5ca30864f48c5921ff89b5aca65b.camel@gmail.com>
+ <xmqqa6yn93ll.fsf@gitster.c.googlers.com>
+ <5b6ed82f3ab58a194bf51c0e2905214f64246ad8.camel@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5b6ed82f3ab58a194bf51c0e2905214f64246ad8.camel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Linux style Fixes tag has been adopted by many projects and represents
-best practice for referring to previous commits which introduce a bug that
-has been fixed by the present commit. Creating these tags manually can be
-error prone and doing so using git log -1 --format='Fixes: %h ("%s")' is
-cumbersome. It's time the commit command learn to perform this popular
-pattern natively.
+On 24/08 01:33, Kaartic Sivaraam wrote:
+> > Or the caller of verify_submodule_committish() should refrain from
+> > calling it for the path?  After all, it is checking sm_path is a
+> > path to where a submodule should be before calling the function
+> > (instead of calling it for every random path), iow its criteria to
+> > make the call currently may be "the path in the index says it is a
+> > submodule", but it should easily be updated to "the path in the
+> > index says it is a submodule, and the submodule actually is
+> > populated", right?
+> > 
+> 
+> Ah, this reminds me of the initial version of the patch which did
+> exactly that. Quoting it here for reference:
+> 
+> +	strbuf_addstr(&sm_git_dir_sb, p->sm_path);
+> +	if (is_nonbare_repository_dir(&sm_git_dir_sb))
+> +		is_sm_git_dir = 1;
+> +
+> +	if (is_sm_git_dir && S_ISGITLINK(p->mod_src))
+> +		missing_src = verify_submodule_object_name(p->sm_path,
+> +							   oid_to_hex(&p->oid_src));
+> +
+> +	if (is_sm_git_dir && S_ISGITLINK(p->mod_dst))
+> +		missing_dst = verify_submodule_object_name(p->sm_path,
+> +							   oid_to_hex(&p->oid_dst));
+> +
+> 
+> Note: `verify_submodule_object_name` is now renamed to
+> `verify_submodule_committish`.
+> 
+> That does sound like a sane approach to me. There's not much point in
+> invoking `rev-parse` in a non-populated (a.k.a. de-initialized) or non-
+> existent submodule but we removed that check as we thought it was
+> unnecessary redundant because `capture_command` would fail anyway.
+> Looks like we failed to notice the additional `fatal` message fallout
+> then.
 
-Implement a convenient command line option to add Fixes tags at the end of
-the log message during commmit. The tag refers to the commit hash and
-subject line of the given commit reference. This option may appear
-multiple times on the command line to reference more than one commit. A
-new tag will only be added if it does not already exist in the log message
-trailer and will otherwise be added in option order to the beginning of
-the trailer section. The minimum number of characters comprising the hash
-portion of the tag is 12 by default, but the `core.abbrev` configuration
-variable will be honored if it is specified.
+This is what I have tried to implement after your suggestion:
 
-Signed-off-by: Edwin Peer <espeer@gmail.com>
----
- Documentation/git-commit.txt |  14 +++-
- builtin/commit.c             |  54 ++++++++++++++
- t/t7527-commit-fixes.sh      | 135 +++++++++++++++++++++++++++++++++++
- 3 files changed, 202 insertions(+), 1 deletion(-)
- create mode 100755 t/t7527-commit-fixes.sh
+-----8<-----
+strbuf_addstr(&sb, p->sm_path);
+	if (is_nonbare_repository_dir(&sb) && S_ISGITLINK(p->mod_src)) {
+		src_abbrev = verify_submodule_committish(p->sm_path,
+							 oid_to_hex(&p->oid_src));
+		if (!src_abbrev) {
+			missing_src = 1;
+			/*
+			 * As `rev-parse` failed, we fallback to getting
+			 * the abbreviated hash using oid_src. We do
+			 * this as we might still need the abbreviated
+			 * hash in cases like a submodule type change, etc.
+			 */
+			src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
+		}
+	} else {
+		/*
+		 * The source does not point to a submodule.
+		 * So, we fallback to getting the abbreviation using
+		 * oid_src as we might still need the abbreviated
+		 * hash in cases like submodule add, etc.
+		 */
+		src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
+	}
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index a3baea32ae..4acb4b3ac8 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
--	   [-S[<keyid>]] [--] [<pathspec>...]
-+	   [-S[<keyid>]] [(-f | --fixes) <commit>] [--] [<pathspec>...]
- 
- DESCRIPTION
- -----------
-@@ -172,6 +172,18 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
- 	agrees to a Developer Certificate of Origin
- 	(see http://developercertificate.org/ for more information).
- 
-+-f::
-+--fixes::
-+	Add Linux style Fixes tag at the end of the commit log message. The
-+	tag refers to the commit hash and subject line of the given commit
-+	reference. This option may appear multiple times on the command
-+	line to reference more than one commit. A new tag will only be
-+	added if it does not already exist in the log message trailer and
-+	will otherwise be added in option order to the beginning of the
-+	trailer section. The minimum number of characters comprising the
-+	hash portion of the tag is 12 by default, but the `core.abbrev`
-+	configuration variable will be honored if it is specified.
-+
- -n::
- --no-verify::
- 	This option bypasses the pre-commit and commit-msg hooks.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 69ac78d5e5..231abe92ff 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -34,6 +34,7 @@
- #include "sequencer.h"
- #include "mailmap.h"
- #include "help.h"
-+#include "trailer.h"
- #include "commit-reach.h"
- #include "commit-graph.h"
- 
-@@ -113,6 +114,7 @@ static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
- static char *sign_commit, *pathspec_from_file;
-+static struct string_list fixes = STRING_LIST_INIT_NODUP;
- 
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -651,6 +653,54 @@ static int author_date_is_interesting(void)
- 	return author_message || force_date;
- }
- 
-+static void tag_fixes(struct strbuf *msg)
-+{
-+	const struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
-+	struct pretty_print_context pretty = { .abbrev = default_abbrev };
-+	const char *format = "Fixes: %h (\"%s\")";
-+	const struct string_list_item *fix;
-+	struct strbuf tags = STRBUF_INIT;
-+	struct trailer_info info;
-+	size_t insert_pos;
-+
-+	/* use at least 12 hash characters unless explicitly configured */
-+	if (pretty.abbrev == -1)
-+		pretty.abbrev = 12;
-+
-+	trailer_info_get(&info, msg->buf, &opts);
-+
-+	for_each_string_list_item(fix, &fixes) {
-+		struct strbuf tag = STRBUF_INIT;
-+		struct commit *commit;
-+		int i;
-+
-+		commit = lookup_commit_reference_by_name(fix->string);
-+		if (!commit)
-+			die(_("could not find commit: %s"), fix->string);
-+
-+		format_commit_message(commit, format, &tag, &pretty);
-+
-+		/* skip fixes tags that are already present */
-+		for (i = 0; i < info.trailer_nr; i++)
-+			if (!strncmp(info.trailers[i], tag.buf, tag.len))
-+				goto skip;
-+
-+		strbuf_add(&tags, tag.buf, tag.len);
-+		strbuf_addch(&tags, '\n');
-+skip:
-+		strbuf_release(&tag);
-+	}
-+
-+	insert_pos = info.trailer_start - msg->buf;
-+	strbuf_insert(msg, insert_pos, tags.buf, tags.len);
-+	if (tags.len != 0 && !info.blank_line_before_trailer) {
-+		if (msg->len == tags.len)
-+			strbuf_insert(msg, insert_pos, "\n", 1);
-+		strbuf_insert(msg, insert_pos, "\n", 1);
-+	}
-+	strbuf_release(&tags);
-+}
-+
- static void adjust_comment_line_char(const struct strbuf *sb)
- {
- 	char candidates[] = "#;@!$%^&|:";
-@@ -829,6 +879,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	if (signoff)
- 		append_signoff(&sb, ignore_non_trailer(sb.buf, sb.len), 0);
- 
-+	if (fixes.nr)
-+		tag_fixes(&sb);
-+
- 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
- 		die_errno(_("could not write commit template"));
- 
-@@ -1510,6 +1563,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
- 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
- 		OPT_BOOL('s', "signoff", &signoff, N_("add Signed-off-by:")),
-+		OPT_STRING_LIST('f', "fixes", &fixes, N_("commit"), N_("add Fixes: tag referencing <commit>")),
- 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
- 		OPT_CLEANUP(&cleanup_arg),
-diff --git a/t/t7527-commit-fixes.sh b/t/t7527-commit-fixes.sh
-new file mode 100755
-index 0000000000..8067cd1ed5
---- /dev/null
-+++ b/t/t7527-commit-fixes.sh
-@@ -0,0 +1,135 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2020 Edwin Peer <espeer@gmail.com>
-+#
-+
-+test_description="git commit -f"
-+. ./test-lib.sh
-+
-+test_expect_success 'empty message' '
-+	>foo && git add foo &&
-+	git commit -m "first" &&
-+	echo 1 >foo &&
-+	git commit -af 3b6336 &&
-+	git log -1 --format="%s" >actual &&
-+	echo "Fixes: 3b6336cd156f (\"first\")" >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'invalid commit' '
-+	echo 2>foo &&
-+	test_must_fail git commit -af abcdef
-+'
-+
-+test_expect_success 'blank line after message' '
-+	git commit --amend -m "second commit with spaces" -f 3b6336 &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		second commit with spaces
-+		
-+		Fixes: 3b6336cd156f ("first")
-+		
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'no duplicate' '
-+	git commit --amend -f 3b6336 &&
-+	git log -1 --format="%B" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'at start of trailer' '
-+	echo 3>foo &&
-+	git commit -asm "third
-+
-+Reviewed-by: John Doe <john@nobody.com>" &&
-+	git commit --amend -f HEAD~ &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		third
-+		
-+		Fixes: a102cd7a0d16 ("second commit with spaces")
-+		Reviewed-by: John Doe <john@nobody.com>
-+		Signed-off-by: C O Mitter <committer@example.com>
-+		
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'multiple' '
-+	echo 4 >foo &&
-+	git commit -asm "fourth" -f 3b6336 -f 6b4393 &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		fourth
-+		
-+		Fixes: 3b6336cd156f ("first")
-+		Fixes: 6b4393deae7c ("third")
-+		Signed-off-by: C O Mitter <committer@example.com>
-+
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'multiple without duplicates' '
-+	git commit --amend -f 6b4393 -f a102cd -f 3b6336 &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		fourth
-+		
-+		Fixes: a102cd7a0d16 ("second commit with spaces")
-+		Fixes: 3b6336cd156f ("first")
-+		Fixes: 6b4393deae7c ("third")
-+		Signed-off-by: C O Mitter <committer@example.com>
-+		
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'honors core.abbrev' '
-+	git config core.abbrev 8 &&
-+	echo 5 >foo &&
-+	git commit -asm "fifth" -f b06e7571b56c3fc5ac5151ff1b0651debbdada51 &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		fifth
-+		
-+		Fixes: b06e7571 ("fourth")
-+		Signed-off-by: C O Mitter <committer@example.com>
-+		
-+	EOF
-+	test_cmp expected actual &&
-+	git config --unset core.abbrev
-+'
-+
-+test_expect_success 'option order' '
-+	echo 6 >foo &&
-+	git commit -asm "sixth" -f 3b6336cd -f a102cd7a -f 6b4393de &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		sixth
-+		
-+		Fixes: 3b6336cd156f ("first")
-+		Fixes: a102cd7a0d16 ("second commit with spaces")
-+		Fixes: 6b4393deae7c ("third")
-+		Signed-off-by: C O Mitter <committer@example.com>
-+		
-+	EOF
-+	test_cmp expected actual &&
-+	echo 7 >foo &&
-+	git commit -asm "seventh" -f 6b4393de -f a102cd7a -f 3b6336cd &&
-+	git log -1 --format="%B" >actual &&
-+	cat >expected <<-EOF &&
-+		seventh
-+		
-+		Fixes: 6b4393deae7c ("third")
-+		Fixes: a102cd7a0d16 ("second commit with spaces")
-+		Fixes: 3b6336cd156f ("first")
-+		Signed-off-by: C O Mitter <committer@example.com>
-+		
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-2.28.0
+	if (is_nonbare_repository_dir(&sb) && S_ISGITLINK(p->mod_dst)) {
+		dst_abbrev = verify_submodule_committish(p->sm_path,
+							 oid_to_hex(&p->oid_dst));
+		if (!dst_abbrev) {
+			missing_dst = 1;
+			/*
+			 * As `rev-parse` failed, we fallback to getting
+			 * the abbreviated hash using oid_dst. We do
+			 * this as we might still need the abbreviated
+			 * hash in cases like a submodule type change, etc.
+			 */
+			dst_abbrev = xstrndup(oid_to_hex(&p->oid_dst), 7);
+		}
+	} else {
+		/*
+		 * The destination does not point to a submodule.
+		 * So, we fallback to getting the abbreviation using
+		 * oid_dst as we might still need the abbreviated
+		 * hash in cases like a submodule removal, etc.
+		 */
+		dst_abbrev = xstrndup(oid_to_hex(&p->oid_dst), 7);
+	}
+----->8-----
+
+That is, add another check along with the 'S_ISGITLINK()' one. Now, the
+thing is that 'rev-list' (called just after this part) starts to bother
+and comes up with its own 'fatal' that the directory rev-list does not
+exist.
+
+The thing is that 'missing{src,dst}' should be set to 1 in two cases:
+
+    1. If the hash is not found, i.e, when 'verify_submodule..()'
+       returns a NULL. Something which is happening right now as well.
+
+    2. If the SM is not reachable for some reason (maybe it does not
+       exist like in our case). Something which is NOT happening right
+       now.
+
+Or if having the same variable denote two things does not please you,
+then we can create another variable for the second check BUT, we will
+have to incorporate checking of that variable in the 
+
+-----8<-----
+if (!missing_src && !missing_dst) {
+		struct child_process cp_rev_list = CHILD_PROCESS_INIT;
+		struct strbuf sb_rev_list = STRBUF_INIT;
+
+		strvec_pushl(&cp_rev_list.args, "rev-list",
+			     "--first-parent", "--count", NULL);
+                 .........
+----->8-----
+
+check.
+
+This way, we hit two birds with one stone:
+
+    1. Bypass the 'verify_submodule..()' call when the SM directory does
+       not exist. We can then remove the is_directory() test from the
+       'verify_submodule_..()' function.
+
+    2. Avoid a 'rev-{parse,list}' fatal error message and thus pass all
+       the tests successfully.
+
+Therefore, the final outcome is something like this:
+
+-----8<-----
+	if (is_directory(p->sm_path) && S_ISGITLINK(p->mod_src)) {
+		src_abbrev = verify_submodule_committish(p->sm_path,
+							 oid_to_hex(&p->oid_src));
+		if (!src_abbrev) {
+			missing_src = 1;
+			/*
+			 * As `rev-parse` failed, we fallback to getting
+			 * the abbreviated hash using oid_src. We do
+			 * this as we might still need the abbreviated
+			 * hash in cases like a submodule type change, etc.
+			 */
+			src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
+		}
+	} else {
+		missing_src = 1;
+		/*
+		 * The source does not point to a submodule.
+		 * So, we fallback to getting the abbreviation using
+		 * oid_src as we might still need the abbreviated
+		 * hash in cases like submodule add, etc.
+		 */
+		src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
+	}
+
+	if (is_directory(p->sm_path) && S_ISGITLINK(p->mod_dst)) {
+		dst_abbrev = verify_submodule_committish(p->sm_path,
+							 oid_to_hex(&p->oid_dst));
+		if (!dst_abbrev) {
+			missing_dst = 1;
+			/*
+			 * As `rev-parse` failed, we fallback to getting
+			 * the abbreviated hash using oid_dst. We do
+			 * this as we might still need the abbreviated
+			 * hash in cases like a submodule type change, etc.
+			 */
+			dst_abbrev = xstrndup(oid_to_hex(&p->oid_dst), 7);
+		}
+	} else {
+		missing_dst = 1;
+		/*
+		 * The destination does not point to a submodule.
+		 * So, we fallback to getting the abbreviation using
+		 * oid_dst as we might still need the abbreviated
+		 * hash in cases like a submodule removal, etc.
+		 */
+		dst_abbrev = xstrndup(oid_to_hex(&p->oid_dst), 7);
+	}
+----->8-----
+
+Or if is_directory() does not please you then we can make it
+'is_nonbare_..()' too. The outcome will be unchanged.
+
+What are your opinions on this?
+
+> Also, I think it would be better to something like the following in
+> t7421 to ensure that `fatal` doesn't sneak up accidentally in the
+> future:
+> 
+> -- 8< --
+> diff --git t/t7421-submodule-summary-add.sh t/t7421-submodule-summary-add.sh
+> index 59a9b00467..b070f13714 100755
+> --- t/t7421-submodule-summary-add.sh
+> +++ t/t7421-submodule-summary-add.sh
+> @@ -58,7 +58,7 @@ test_expect_success 'submodule summary output for submodules with changed paths'
+>         git commit -m "change submodule path" &&
+>         rev=$(git -C sm rev-parse --short HEAD^) &&
+>         git submodule summary HEAD^^ -- my-subm >actual 2>err &&
+> -       grep "fatal:.*my-subm" err &&
+> +       test_must_be_empty err &&
+>         cat >expected <<-EOF &&
+>         * my-subm ${rev}...0000000:
+>  
+> -- >8 --
+
+Yes, this I will do.
 
