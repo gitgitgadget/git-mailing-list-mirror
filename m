@@ -2,180 +2,171 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E81E9C433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 11:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F39E4C433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 12:42:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2749206BE
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 11:08:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C70BB20706
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 12:42:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UHuJ+vMJ"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="b1Dct/wc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbgHXLIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 07:08:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58918 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726104AbgHXLIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 07:08:49 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B44FC061573
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 04:08:49 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id x25so4630581pff.4
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 04:08:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=CkdrHL4kMcT+nIWdUA984J3DOQC3isJZYtTAQPQZAcU=;
-        b=UHuJ+vMJ9y88jdKBo16UHpn+var4ZNO4NgDmPdihNID/Ko7Wuvlt+nfatjrguG6EHN
-         53PPzHyMSrRjJWciL6Ss2Ks7KjjRjApSgJKWiQ6hGuv1ybgUvLJuUciFzm+pZ8d6GXv4
-         XLKVmculSruxSMBQ7KZtKVNB1CDIO1gGUQGtguyRsKpkCupX7SElB72vMnr6187B+ZuJ
-         PiD7UnAN+IE7oKDh7vT1DmM9d0QBD7GFoagX6tj7i24caGZ9p/s0vO4tVVTws/4uZTUL
-         Cs8a+m517fGwXTsDavcUF4ZVPU5rVQs9VOL54shP6li0IX+TqtLZgPeSDjjP+mIJTc4/
-         CKCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=CkdrHL4kMcT+nIWdUA984J3DOQC3isJZYtTAQPQZAcU=;
-        b=elrmV57GekHs3S23apFvWNGPlFxc9w6QmxurdgLqL3AN6UpCnD6tnUQZdKviZBFze5
-         Wj0eTDmnLoC/RZfr6ctCNVbBXowyJbVCaZOtISLRX4MltGP7V35CSVrquc3LF/+2ludc
-         3SC8azxoP9nvwtFzECnFB3oX7ke7YcEeCwIHrkbzMrx0TE93tOXWRYv+OQFQJNtFfxgr
-         gM1qZp1Sb3CHTQ5obHM0ZHg7omDlOLWP5dB8L10NI01kRTwiUoF7MUCO9owc6Mt4/JQq
-         AiGElGivmDdzlCn89nsHng9byClx63f1oY0bgfMSJfoA7B2JdZlqn7BNfmBitNEsXd3T
-         lUUA==
-X-Gm-Message-State: AOAM532RM36sELWaBTJ6KGEvo1GX5t3a4qqOxVps/94im9I2UXk9SuUe
-        Q3xcsRfJ6BBDNNXZxmbrUBU=
-X-Google-Smtp-Source: ABdhPJzzPQP3gF9E3fpdONNTEM8gOGy8z0tushykPowzF3Ky/4mvS1ghSFTot9AEk0i2hxG6rE0lwA==
-X-Received: by 2002:aa7:9e4f:: with SMTP id z15mr3914511pfq.80.1598267328876;
-        Mon, 24 Aug 2020 04:08:48 -0700 (PDT)
-Received: from lwitch-pc ([49.205.77.238])
-        by smtp.gmail.com with ESMTPSA id v6sm3450734pgf.55.2020.08.24.04.08.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Aug 2020 04:08:48 -0700 (PDT)
-Message-ID: <a30f43ecbbc5fa64fe62eb5903d81bce7440986c.camel@gmail.com>
-Subject: Re: [PATCH v3 4/4] submodule: port submodule subcommand 'summary'
- from shell to C
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, liu.denton@gmail.com,
-        pc44800@gmail.com, stefanbeller@gmail.com
-Date:   Mon, 24 Aug 2020 16:38:39 +0530
-In-Reply-To: <20200824084634.GA377527@konoha>
-References: <20200824084634.GA377527@konoha>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.1-2 
+        id S1726541AbgHXMmO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 08:42:14 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59675 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725904AbgHXMmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 08:42:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1598272926;
+        bh=i/aU0g20yss1oNGFeWaOnQLCttE8Hjz5jIagDdcuUYI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=b1Dct/wcq7MTN9rFvg2vEKXbRpp6bk/Lu6QBRl/qzOM4Oi0MGwhN+eYcZfwye2Y3V
+         91YuuAZ5tU5GDi8NaP1PtydGm3HPzl/LZtBoNO249B8Bo/Ur626xnvE3Zx1xxTX+4j
+         5DyA2fqBQVYkCew41N7nFjFgd/uKa8HNbTvAoSeg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.183.59] ([89.1.214.173]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M89Kr-1kDkQn0w0h-005GEA; Mon, 24
+ Aug 2020 14:42:06 +0200
+Date:   Mon, 24 Aug 2020 14:42:05 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Tilman Vogel <tilman.vogel@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH] patch-id: ignore newline at end of file in
+ diff_flush_patch_id()
+In-Reply-To: <xmqqblj7worr.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2008241441410.56@tvgsbejvaqbjf.bet>
+References: <2639321.dTF8K4C05n@alien.lan> <b67eb51d-75e8-62c5-d1c4-fc3015e13fc6@web.de> <xmqqblj7worr.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-506925876-1598272926=:56"
+X-Provags-ID: V03:K1:bBQk6TYsxrcTdA7ONX5ea9AXtcq2pKULcuIL1kMLGY0ppbmYnCo
+ yp3p/WC9DXHdiyJoo4PSSRXIehBSKUbCVtyzp0eK+1U6vXfm9sg5/wA/sXikK+xA4JH3ckv
+ cAtRwb6z/ASv4dehm6eIIJdZGy+8icR8bpwUydIMT35WRkyKRD8CeeU+f8rhQVieHRQz68c
+ 5uAOuH00tk3FWUC5eXqhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3mTj2T3jO1A=:ELvqjnIqBVJWqMI4h6X2ob
+ mydxdfffm2c4otp0qPg/agQ3QHQztAh1E8s9DbPfU6Y+xpRF+HoRPU8zeB5zQK9yTs7D5EPMA
+ ZjANTBmSmIQnnMvvE0DLYNS9XmvWT2Et32Cieb8RhOJoepXX5cX2MZBdP3hQig/G+lfnyZWqS
+ 8XVsrkiJTimtmDNIppSOV4kKRpXHiLvKGgy+STVlbY6eMb8tnFBIMC9auyAgBffJcEMrJr2xQ
+ UPgc3p6hwAyiE6DSaaKrHY7eS1vV1OSQ2y6l+SRtitb+jYbCagv5aoUNicpX6v1/4yyu4dqHs
+ dBoDjl4NwddaH2/u/gmfg5yGiiqCOuvQY9LSNCP/cCR1fVAO66eHJMMGfCUjjJMeoO/pUu6EV
+ FYbOoTZ++ThwoS0n2Hv/lnfrAATlKJf5fZkDT1mRJHs0xdLMic+AEFuoLsbzcRs7EHHVwxk8x
+ 3TOEbQxzSut/uzhbAhlVpFofYVMLV/BiFUyRqbFfIQZmRLEgyrYOQqGwesSySLnfnGS7I5VgR
+ j79ecHwVV45fRLWAiGIJ5qHSbM3nEt5HlOZpmwH4c0tJkckbNaavoMMkXDV8bcZwYJM3EVCSW
+ Ue9CbJQJzfeDVszyA2HOjThMeQ+yoraf9YlKz5Kk2DSj2i3oABfVQ+uoW9pnBVjNqY3HxbHq5
+ SvXvF7vkVHRRpgWILmSmQF9nWi/WcQJnwfer3gRcv5kF6aBAr5F7d6n/motDi1Ip0mi/BXtqR
+ Eh4gHjCJouAGG7zbZTSoLLNHR2+v8dc569pmm7IHMDQpBS0SaCGbarXspXUZ4xKQete0nV/WI
+ 8PkrPvMCyIbX4KXN+k+WAYmun90vhtOIfdtxZn80xinaHBBQh4MLQ+A/y1NDvaMAo9ZsO+GCF
+ 4kK3lMKPtGzvZdmZJ7Bgq+75KONtYFJ8HuvszVDau/l2DFZm3UOR6HMa3JfrUzYDMHp6P0Jrp
+ tXtxONJCgWpsSAkBcQi7iSrG51Ob5AAbn5dXiuUZCRzQno/yOGLCMUFg0C3ou7wbJR0sZgRno
+ Y2hqCxSqTXN0FbtQH8jSKmquRjuL7zhnkVm+fmqryJHKAucTW6l9pxMm2zAu7o6M01ArbZcqW
+ UYh9Ze4dvoYMdxR8n4YOw3fvh1sPnzpTs//dsuK1yCtLkMLAfJzS/wL/jjp5x1eZQ8OeFVTmp
+ VdIuBkFDZFuYTyEh3Xo/iOjmHCwAppfeGqn1LRo4x5UnL+lnTuYmr7L/pC+aihjj+Uwpc7wIg
+ E+G2x+N386N4l+SzOn6XP15SpAk3WCRL/QohVsxXXaYEE/NSLF8Lh+dMyULk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2020-08-24 at 14:16 +0530, Shourya Shukla wrote:
-> Or rather, we can do this:
-> 
-> -----8<-----
-> if (S_ISGITLINK(p->mod_src)) {
-> 		struct strbuf sb = STRBUF_INIT;
-> 		strbuf_addstr(&sb, p->sm_path);
-> 		if (is_nonbare_repository_dir(&sb))
-> 			src_abbrev = verify_submodule_committish(p->sm_path,
-> 								                     oid_to_hex(&p->oid_src));
-> 		strbuf_release(&sb);
-> 		if (!src_abbrev) {
-> 			missing_src = 1;
-> 			/*
-> 			 * As `rev-parse` failed, we fallback to getting
-> 			 * the abbreviated hash using oid_src. We do
-> 			 * this as we might still need the abbreviated
-> 			 * hash in cases like a submodule type change, etc.
-> 			 */
-> 			src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
-> 		}
-> 	} else {
-> 		/*
-> 		 * The source does not point to a submodule.
-> 		 * So, we fallback to getting the abbreviation using
-> 		 * oid_src as we might still need the abbreviated
-> 		 * hash in cases like submodule add, etc.
-> 		 */
-> 		src_abbrev = xstrndup(oid_to_hex(&p->oid_src), 7);
-> 	}
-> ----->8-----
-> 
-> Similarly for dst as well. This solution passes all the tests and does
-> not call 'verify_submodule_committish()' all the time. The previous
-> approach failed a couple of tests, this one seems fine to me.
-> 
-> How is this one?
-> 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This is more or less what I had in mind initially. But later after
-being reminded about the fact that there's a code path which calls
-`generate_submodule_summary` only when `is_nonbare_repository_dir`
-succeeds, I realized any conditional that uses
-`is_nonbare_repository_dir` or the likes of it would be confusing. So,
-I think a better approach would be something like:
+--8323328-506925876-1598272926=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
--- 8< --
-diff --git builtin/submodule--helper.c builtin/submodule--helper.c
-index 63ea39025d..b490108cd9 100644
---- builtin/submodule--helper.c
-+++ builtin/submodule--helper.c
-@@ -1036,7 +1036,7 @@ static void print_submodule_summary(struct summary_cb *info, char* errmsg,
- static void generate_submodule_summary(struct summary_cb *info,
-                                       struct module_cb *p)
- {
--       char *displaypath, *src_abbrev, *dst_abbrev;
-+       char *displaypath, *src_abbrev = NULL, *dst_abbrev;
-        int missing_src = 0, missing_dst = 0;
-        char *errmsg = NULL;
-        int total_commits = -1;
-@@ -1062,8 +1062,9 @@ static void generate_submodule_summary(struct summary_cb *info,
-        }
- 
-        if (S_ISGITLINK(p->mod_src)) {
--               src_abbrev = verify_submodule_committish(p->sm_path,
--                                                        oid_to_hex(&p->oid_src));
-+               if (p->status != 'D')
-+                       src_abbrev = verify_submodule_committish(p->sm_path,
-+                                                                oid_to_hex(&p->oid_src));
-                if (!src_abbrev) {
-                        missing_src = 1;
-                        /*
-diff --git t/t7421-submodule-summary-add.sh t/t7421-submodule-summary-add.sh
-index 59a9b00467..b070f13714 100755
---- t/t7421-submodule-summary-add.sh
-+++ t/t7421-submodule-summary-add.sh
-@@ -58,7 +58,7 @@ test_expect_success 'submodule summary output for submodules with changed paths'
-        git commit -m "change submodule path" &&
-        rev=$(git -C sm rev-parse --short HEAD^) &&
-        git submodule summary HEAD^^ -- my-subm >actual 2>err &&
--       grep "fatal:.*my-subm" err &&
-+       test_must_be_empty err &&
-        cat >expected <<-EOF &&
-        * my-subm ${rev}...0000000:
- 
--- >8 --
+Hi,
 
-I suggest this as the other code path that calls
-`generate_submodule_summary` without going through the
-`is_nonbare_repository_dir` condition is the one where we get
-`p->status` as 'T' (typechange) or 'D' (deleted). We don't have to
-worry about 'T' as we would want the hash for the new object anyway.
-That leaves us with 'D' which we indeed have to handle.
+On Tue, 18 Aug 2020, Junio C Hamano wrote:
 
-Note that no such handling is required for the similar portion
-corresponding to `dst_abbrev` as the conditional `if (S_ISGITLINK(p-
->mod_dst))` already guards the `verify_submodule_committish` when we
-have a status of 'D'.
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+> > Whitespace is ignored when calculating patch IDs.  This is done by
+> > removing all whitespace from diff lines before hashing them, including
+> > a newline at the end of a file.  If that newline is missing, however,
+> > diff reports that fact in a separate line containing "\ No newline at
+> > end of file\n", and this marker is hashed like a context line.
+>
+> Ah, ouch.
+>
+> > This goes against our goal of making patch IDs independent of
+> > whitespace.  Use the same heuristic that 2485eab55cc (git-patch-id: do
+> > not trip over "no newline" markers, 2011-02-17) added to git patch-id
+> > instead and skip diff lines that start with a backslash and a space
+> > and are longer than twelve characters.
+>
+> Good find of previous example.  Excellent.
 
--- 
-Sivaraam
+Yup. Looks good to me, too. Thank you!
+Dscho
 
+>
+> > Reported-by: Tilman Vogel <tilman.vogel@web.de>
+> > Initial-test-by: Tilman Vogel <tilman.vogel@web.de>
+> > Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> > ---
+> >  diff.c            |  2 ++
+> >  t/t3500-cherry.sh | 23 +++++++++++++++++++++++
+> >  2 files changed, 25 insertions(+)
+>
+> Thanks.
+>
+> > diff --git a/diff.c b/diff.c
+> > index f9709de7b45..f175019eb7a 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -6044,6 +6044,8 @@ static void patch_id_consume(void *priv, char *l=
+ine, unsigned long len)
+> >  	struct patch_id_t *data =3D priv;
+> >  	int new_len;
+> >
+> > +	if (len > 12 && starts_with(line, "\\ "))
+> > +		return;
+> >  	new_len =3D remove_space(line, len);
+> >
+> >  	the_hash_algo->update_fn(data->ctx, line, new_len);
+> > diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
+> > index f038f34b7c0..2b8d9cb38ed 100755
+> > --- a/t/t3500-cherry.sh
+> > +++ b/t/t3500-cherry.sh
+> > @@ -55,4 +55,27 @@ test_expect_success \
+> >       expr "$(echo $(git cherry master my-topic-branch) )" : "+ [^ ]* =
+- .*"
+> >  '
+> >
+> > +test_expect_success 'cherry ignores whitespace' '
+> > +	git switch --orphan=3Dupstream-with-space &&
+> > +	test_commit initial file &&
+> > +	>expect &&
+> > +	git switch --create=3Dfeature-without-space &&
+> > +
+> > +	# A spaceless file on the feature branch.  Expect a match upstream.
+> > +	printf space >file &&
+> > +	git add file &&
+> > +	git commit -m"file without space" &&
+> > +	git log --format=3D"- %H" -1 >>expect &&
+> > +
+> > +	# A further change.  Should not match upstream.
+> > +	test_commit change file &&
+> > +	git log --format=3D"+ %H" -1 >>expect &&
+> > +
+> > +	git switch upstream-with-space &&
+> > +	# Same as the spaceless file, just with spaces and on upstream.
+> > +	test_commit "file with space" file "s p a c e" file-with-space &&
+> > +	git cherry upstream-with-space feature-without-space >actual &&
+> > +	test_cmp expect actual
+> > +'
+> > +
+> >  test_done
+> > --
+> > 2.28.0
+>
+
+--8323328-506925876-1598272926=:56--
