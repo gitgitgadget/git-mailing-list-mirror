@@ -6,61 +6,78 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36425C433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87373C433DF
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:19:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D363F2067C
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:11:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E4CB20656
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 21:19:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="XEpdXLG+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O2fjqAiB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727990AbgHXVLh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 17:11:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726138AbgHXVLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 17:11:36 -0400
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36EC5C061574
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 14:11:36 -0700 (PDT)
-Content-Transfer-Encoding: quoted-printable
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-        s=default; t=1598303489;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:  in-reply-to:in-reply-to;
-        bh=erpyrmfAOxUFC6/52n2SKlYpk5ZgnYcck4C1EyZzspc=;
-        b=XEpdXLG+lVHGt94Tk5/4M0pDmLZQKak4bz6fu/EYA9gX9YlnY3KF+2ABENUSpkOOssFuR/
-        AGqBXbQA30s1OWQEH84/IQDGdq4C3YUGaj+RMhtwxEvBUDOe1KvfuBO28wNkW76z0Uqqu3
-        Vzae0pbD0Jm8r7qpBM3lvWFuPoNIt6s=
-Content-Type: text/plain; charset=UTF-8
-Cc:     "Thomas Sullivan" <tom@msbit.com.au>, <git@vger.kernel.org>
-Subject: Re: git add intent-to-add then git add patch no longer allows edit
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   "Raymond E. Pasco" <ray@ameretat.dev>
-To:     <phillip.wood@dunelm.org.uk>, <phillip.wood@dunelm.org.uk>,
-        "Junio C Hamano" <gitster@pobox.com>
-Date:   Mon, 24 Aug 2020 17:03:48 -0400
-Message-Id: <C55J4YTSBL48.171K3FSJLUQOA@ziyou.local>
-In-Reply-To: <fe21c773-341c-d029-077c-00daeb6014f7@gmail.com>
+        id S1726995AbgHXVTl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 17:19:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63102 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbgHXVTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 17:19:41 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C0746DAE19;
+        Mon, 24 Aug 2020 17:19:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jB8oPgUksGDtA1Q8PXT7WmmyxEk=; b=O2fjqA
+        iBYxM1JENtWi6auudKJPdeQO92S60uQ/hnOYdb7oTlpJRdoaR1kHZgUk4fa868Ab
+        JDLGlJn6k5hH1OY9GFcOd2u9aap+AAImDDetDTBOhKiVji+ao+255jYfrwwscCN5
+        4FTlb+5GXmjcxn+YiGSRB0NblPwtpAEmUbAfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=R619iYy01MxUdGpHG/zzq/1JrALO39rR
+        kMZ5bG4CX8SA4TYYDO42Xgnwys/xd28Pb00b8DjQ5/SvfK/l1vAPG6UYkMjOgppI
+        QJfDzxEDPTlrcizvCMQveLcUsxUHhV4JT0s4svu2s8qRTsUoHiIBOd90dlKAn4Xo
+        /DB6A3nrKo8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B96CCDAE18;
+        Mon, 24 Aug 2020 17:19:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0DD9EDAE16;
+        Mon, 24 Aug 2020 17:19:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, steadmon@google.com
+Subject: Re: [PATCH 7/7] index-pack: make quantum of work smaller
+References: <cover.1598296530.git.jonathantanmy@google.com>
+        <3e69f41f19535fa2c04fae6adc78bcc4f052d523.1598296530.git.jonathantanmy@google.com>
+Date:   Mon, 24 Aug 2020 14:19:35 -0700
+In-Reply-To: <3e69f41f19535fa2c04fae6adc78bcc4f052d523.1598296530.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 24 Aug 2020 12:16:38 -0700")
+Message-ID: <xmqqk0xn3fo8.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 837823D2-E64F-11EA-B8F3-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon Aug 24, 2020 at 1:28 PM EDT, Phillip Wood wrote:
-> The patch I was referring to is 2c8bd8471a ("checkout -p: handle new
-> files correctly", 2020-05-27)
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+> Currently, when index-pack resolves deltas, it does not split up delta
+> trees into threads: each delta base root (an object that is not a
+> REF_DELTA or OFS_DELTA) can go into its own thread, but all deltas on
+> that root (direct or indirect) are processed in the same thread.
 >
-> I tested seen at 3981657b13 ("Merge branch 'rp/apply-cached-doc' into
-> seen", 2020-08-21). I was using the C version of 'add -p' which is
-> opt-in at the moment by setting add.interactive.usebuiltin=3Dtrue in your
-> config (or with git -c). I hope that helps, I'm going off line now for
-> 10-14 days
+> This is a problem when a repository contains a large text file (thus,
+> delta-able) that is modified many times - delta resolution time during
+> fetching is dominated by processing the deltas corresponding to that
+> text file.
 
-Indeed, this works and restores my workflow (although it errors out if I
-don't manually edit the range information, which isn't necessary with
-diffs to existing files). It's a bit unsatisfying as it stands, but
-perhaps there are patches I can write.
+We favor wide and shallow delta trees for both reduced storage
+footprint and lower runtime overhead, so optimizing the index-pack
+for that use case makes a lot of sense.
 
-No need to reply, enjoy your vacation!
