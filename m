@@ -2,123 +2,100 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EFA7C433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD0BC433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:16:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14D222074D
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31E7F2087D
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 19:16:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HR/HTK3y"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="e//SM7Dk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726519AbgHXTHA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 15:07:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50839 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbgHXTHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 15:07:00 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E182C77230;
-        Mon, 24 Aug 2020 15:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hrHxeNrAqK1TfSq5cCJN9w6uWkM=; b=HR/HTK
-        3yjfwXXBUIH0Zk5rS8TQXqpkJTJRfyd/wVZ11qWgs4PJYzVP8hbwHZk9V0zUgKhW
-        BD8GZcMs4okWdTEYL83YD/dvzKXGnIEqvrknKx9XzC4meNwoq2XHOm1PMPb+6q/g
-        dZa5Kqzc1j5HkXvIMgU6/5tPNE3K849ZM0p7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tPjMIeulSgXduKhwS4kuOLxg+mVPnrFL
-        Bbfj2LtkR4+Rk5BBpWmkIBNGDNh2wQyzCMKQJESn8fWqLyBcNIDymQvaNyBnMnDQ
-        qhtAjh64zm3S/2Ha8jNIHdtMopEx+oFac3oPnS83OJkvZbyuR0zG0j1MUuFD7vZm
-        wOyzaHmhsLE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9E7A7722F;
-        Mon, 24 Aug 2020 15:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 58B1B7722E;
-        Mon, 24 Aug 2020 15:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/3] ci: stop linking built-ins to the dashed versions
-References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
-        <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>
-        <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
-Date:   Mon, 24 Aug 2020 12:06:56 -0700
-In-Reply-To: <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 24 Aug 2020
-        15:38:00 +0000")
-Message-ID: <xmqqimd750dr.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FB1F61A6-E63C-11EA-B570-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1726929AbgHXTQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 15:16:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725976AbgHXTQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 15:16:55 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58107C061573
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:16:55 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id a75so11708419ybg.15
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 12:16:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=WAgWCog/M71li/iqXqFp42DSqrMFWgPFbLQ8Rkjs3IA=;
+        b=e//SM7DkwyeNfM8faeNNIv/eXFuCjvVwro8gKqOb21UTkwwwAX7ahqCN/JChkP9O8X
+         UhW7b/Hp9OoM9tmO+Oc32LPdThfRs3IGlBonYBt7bdsLfki8paJC+1DVmnc5jMxF7rkz
+         /RCAMYdKiPBq2y6Yl7qr6OanEoe15ofLp2ONm7/vdWO2R6Ww9hM554/Xgill0qMP5GlC
+         iXDzr8WJWsfDZEbEnMwD33GbX26IVKBX6hrPEs33oNM7dVqfeKXCc/wwEuyTWIPcod1t
+         lS999NKxUnfDsj3QZ62mZW1q2J0CfixaRMRiQZ8tYzDwVKhRc5g056xhvVB3LlWbPaBe
+         EPYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=WAgWCog/M71li/iqXqFp42DSqrMFWgPFbLQ8Rkjs3IA=;
+        b=cb+rfkK+l6ONujlx02WJ6zjo63u/lvr2d7dGEKuYCDYe6nrvFkCYhdrEiFiH0c/OHX
+         n0TAuwh5/nAm1Xi7qVItwPA1xyK9WPh5dUL07hAjBTVFb6bjMNrxF2gsQwPGFKV8A1Tk
+         cHrdwdfHvEizXi4fbWGZXQbnIBeQ8FPf4WkG14PIKzN3FJ+z1qK/Toskq807JZ82ED0v
+         UFi3UFq1jPuOh2QmWdvkfBY3v06KnMLSnT6grPx/RxMFJVLrnksPDr4Q82g4xfZavAHh
+         22mBKTjdB8rg8mJWoO50LSM+sVmL+pzgalIETM18KIzz4NYROEIhOPh02RfdBWsUBisb
+         69EQ==
+X-Gm-Message-State: AOAM532CZAg9QiQ30WNzIrp+ni+Q1tFd5z/FZLbgzzOIGrbnkWwYCVK0
+        UZAWh1mYwkfuB3l9kGz0MkMDOv4kma3OGa1TozNP/enYiZIkG44eBs2XYJGo6X2LcgdcPqvnjZq
+        Nz5aUdRUtiOR9/uuDDtIhPqEgk5EhhIwEzVuzRFOy8Wfp2pRl+VoFsCgU/j5fN7J6CKaqeXSp3d
+        fM
+X-Google-Smtp-Source: ABdhPJx+yl2u6NDnKOL8AwhOg2cNoBsna/94RAaQmR+wCye0WyAduurVBmpq9tMmKg+BHhJRpASSWnl1QUPHukjxPgPF
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:c50d:: with SMTP id
+ v13mr9628335ybe.206.1598296614441; Mon, 24 Aug 2020 12:16:54 -0700 (PDT)
+Date:   Mon, 24 Aug 2020 12:16:30 -0700
+Message-Id: <cover.1598296530.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d-goog
+Subject: [PATCH 0/7] Better threaded delta resolution in index-pack (another try)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        steadmon@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+I'm trying to resurrect [1] and have rebased it to latest master
+(675a4aaf3b ("Ninth batch", 2020-08-19)).
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Originally, all of Git's subcommands were implemented in their own
-> executable/script, using the naming scheme `git-<command-name>`. When
-> more and more functionality was turned into built-in commands (i.e. the
-> `git` executable could run them without spawning a separate process),
-> for backwards-compatibility, we hard-link the `git` executable to
-> `git-<built-in>` for every built-in.
->
-> This backwards-compatibility was needed to support scripts that called
-> the dashed form, even if we deprecated that a _long_ time ago.
+Peff said [2] (of v1) that the overall direction seems reasonable and
+Josh Steadmon said [3] (of v2) that it looks mostly good except for
+possible improvements to commit messages and comments. Josh did not list
+out specific improvements to commit messages but I have taken his
+suggestions for comments.
 
-This paragraph is irrelevant.  We are keeping the support for it and
-this topic is not newly deprecating or removing anything.  We need
-to argue for a need to test an installation that lacks these builtin
-subcommands anywhere on disk under their own names, which you did
-succinctly below (and there is no need for "For that reason,"
-there).
+[1] https://lore.kernel.org/git/cover.1571343096.git.jonathantanmy@google.com/
+[2] https://lore.kernel.org/git/20191017063554.GG10862@sigill.intra.peff.net/
+[3] https://lore.kernel.org/git/20200228000350.GB12115@google.com/
 
-> For that reason, we just introduced a Makefile knob to skip linking
-> them. TO make sure that this keeps working, teach the CI
+Jonathan Tan (7):
+  Documentation: deltaBaseCacheLimit is per-thread
+  index-pack: remove redundant parameter
+  index-pack: unify threaded and unthreaded code
+  index-pack: remove redundant child field
+  index-pack: calculate {ref,ofs}_{first,last} early
+  index-pack: make resolve_delta() assume base data
+  index-pack: make quantum of work smaller
 
-s/TO/To/
+ Documentation/config/core.txt |   2 +-
+ builtin/index-pack.c          | 449 ++++++++++++++++++----------------
+ 2 files changed, 244 insertions(+), 207 deletions(-)
 
-> (and PR) builds to skip generating those hard-links.
+-- 
+2.28.0.297.g1956fa8f8d-goog
 
-What is not justified enough is why we no longer test installations
-with dashed builtins on disk.  If this topic is primarily about
-Windows (as 2/3 said), perhaps we can do this only for Windows tasks
-before we make a colletive decision to _DROP_ support for the on-disk
-builtin subcommands?
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  ci/run-build-and-tests.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index 6c27b886b8..1df9402c3b 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -10,7 +10,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
->  *) ln -s "$cache_dir/.prove" t/.prove;;
->  esac
->  
-> -make
-> +make SKIP_DASHED_BUILT_INS=YesPlease
->  case "$jobname" in
->  linux-gcc)
->  	make test
