@@ -2,160 +2,158 @@ Return-Path: <SRS0=3swP=CC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33472C433E1
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 13:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E184C433E1
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 14:04:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10DAC207CD
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 13:53:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 121582065F
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 14:04:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HfNTkN2R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ry/xr4xx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbgHXNxH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 09:53:07 -0400
-Received: from mout.gmx.net ([212.227.15.15]:45921 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725780AbgHXNw5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 09:52:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1598277151;
-        bh=AgrDBbEW6qzztRQNReWCMqbmK17Ncsd11GhDkti2JR4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HfNTkN2RPJODz70yPE8sptdXQAN7FBYaMCoIJmLwy0iGUcbdd6r8HnCGYeQXSJAWU
-         fiK7b+M3XuW/uSLqhLSc1S8713ZoqeTzD6Z1KqZhJ6MDzXvNJnSew94hSKOgHg3jPV
-         B7RSJ4pHtkKrDUwOJptBjlFk74ouUwh2qDteBqpQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.183.59] ([89.1.214.173]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2V0H-1kcudF3MFD-013s3u; Mon, 24
- Aug 2020 15:52:30 +0200
-Date:   Mon, 24 Aug 2020 15:52:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Lukas Straub <lukasstraub2@web.de>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'git' <git@vger.kernel.org>, 'Elijah Newren' <newren@gmail.com>,
-        'Brandon Williams' <bwilliams.eng@gmail.com>
-Subject: Re: [RFC PATCH 0/2] Allow adding .git files and directories
-In-Reply-To: <20200822211250.59a8b351@luklap>
-Message-ID: <nycvar.QRO.7.76.6.2008241547070.56@tvgsbejvaqbjf.bet>
-References: <04aa01d67659$2dc217b0$89464710$@nexbridge.com> <xmqqimdetpuw.fsf@gitster.c.googlers.com> <20200819201736.GA2511157@coredump.intra.peff.net> <xmqqa6yqtm03.fsf@gitster.c.googlers.com> <20200819203825.GA2511902@coredump.intra.peff.net>
- <20200820133445.2bd162a3@luklap> <20200820130125.GB2522289@coredump.intra.peff.net> <20200821143941.28f71287@luklap> <20200821225237.GW8085@camp.crustytoothpaste.net> <20200822162152.2be1d024@luklap> <20200822185307.GZ8085@camp.crustytoothpaste.net>
- <20200822211250.59a8b351@luklap>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726717AbgHXOEB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 10:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58050 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725780AbgHXOD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 10:03:56 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C037FC061573
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 07:03:55 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id d139so2397995qke.11
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 07:03:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pzI11uomCgNK6tPICX0LDcszrWSZ4KUC0kDTFjMpLX0=;
+        b=Ry/xr4xxa82Ca+AzketYswoZNN654O+udG5rTLqxep5savnFS84XMItqgOBfxq7BK0
+         I8kSV2aBT0py6VWBMGhUdIhLQ8r5dZsfmrH/WE2b9/fWPT/nB0W4VJdy7ZWXIBVJ/Zgs
+         xrgpV4gXudDnPygRxUXy3fRLciyxGTt0kXlgFk556SI4w7gFY/sZCtbGHpQkT8HiQldH
+         /5ozYj1ji++vVkDMg6ecm/H7qyU9cjzzM8bN4ybe05AAWtD0pnr+9sUVWWGZ0xv761M5
+         AePPNPnR5UHPvqhm5hyOduTaExYEkgVnynj5G1BT+kVXG2d5P5rEfO8W4bRhBD74XFVp
+         jvaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pzI11uomCgNK6tPICX0LDcszrWSZ4KUC0kDTFjMpLX0=;
+        b=Xb6AOiAUhFbg9dKSNVztwtxY2uLrdlakC1KnRFShOBmJI+j0v6LK5qOlFkB2XmBBKH
+         FQPKxVL85ezXCX7YiI1gOirC01YZC4zwnppEgRKnxYBKpXrCreXHQHd+PaFsC5TPFSOC
+         equMZlJLanJP0XtR36QPhjKzos6XONOHmNhp/s95j3/OTyO4VHGQEbAaochjRivnAXXs
+         22soiSUA7GvKjitQcVfDJYISXUDNeN6S7d6ySq+5jTWBqv1wDfJz6g+UZKaeR0rBRgT4
+         xo5lmsXqsP5X00UEUWQ2JRnogT9M9G6/XrAEPd+hfrqAD8Rvom1mPZJStUxehMYHsBOX
+         eN+w==
+X-Gm-Message-State: AOAM5314yBfLT7g4yT1iENHCKrr1Cf97pQo3PQB0BNQdmjL/IIFEK6mL
+        ygKICheIG95T29umF/WSTo8=
+X-Google-Smtp-Source: ABdhPJztmRdtlfn3VMXRQqUwB54FfbW4KLdUg2NhL5I5fWgIjUtaM+x1G1VX9nFgTz13bM+jpw50sw==
+X-Received: by 2002:a37:8107:: with SMTP id c7mr4739069qkd.22.1598277832977;
+        Mon, 24 Aug 2020 07:03:52 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:bd91:ce7a:f45a:6364? ([2600:1700:e72:80a0:bd91:ce7a:f45a:6364])
+        by smtp.gmail.com with ESMTPSA id v136sm8606053qkb.31.2020.08.24.07.03.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Aug 2020 07:03:52 -0700 (PDT)
+Subject: Re: [PATCH 3/7] maintenance: add --scheduled option and config
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
+ <4473c93b118a0e0cdb205d1758aaaa2d8bf5139a.1597857412.git.gitgitgadget@gmail.com>
+ <20200820145127.GC31084@danh.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <83b90c15-6d19-3d6e-cefe-4d271aaaac3a@gmail.com>
+Date:   Mon, 24 Aug 2020 10:03:51 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:v6ksgcOh4i4Qc/pDFnHBes6r1Pg832jgDrwjLZA5ginD0AMiFm/
- KoS2+aFU9pQ44ow5NMvk3g3Mgcf8WSGs0TGnn4Tgbj8tLaplmewUtn0aVGwiMfUsyJws0Z+
- RH1gWDswZFR2Imo/MgEvqqEDx+imkBiCU0xjCG/qwdIyEgrfzIqQta7JzFjCCku74FZG3I+
- q3uJWUQhdurxyVvZG2EKA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:F8mTFU/X5jA=:V8bWImu53Q+/F42yb0S+vY
- 9oG6iBvX/eOzSjRdXYvQ7/UX/0u469KqEFkjOee0hvU4OGC9548sKlcImj9QsTkLLbM24FtME
- O3xjGPezEuhoXLMEe7uEs6mh8qZ/ZnJXF/OPn6ZdGogux2QVvSvRcEz8dEtKhQUUTlQlI79Hx
- k5CSVLc+H4V9F9/DnTnnz64V2ezL0O87vm+tAfi5pNCbJnbyFBEUd8/eeXKk4Jc8EBmR/ZYMG
- 38uuzt/c7cVNWvRNFq5W017S/zWxuHPZBsFNDlPisxQ7V7GrjNNi/L3EBRFOR3wQkWyWfBz4n
- Qfzdk0BNWQSrto2tSvjlHKj+aDsOrw+a95VuLBeqSUhyoqxCVSPVkJoN/4uFfuLRzKtriuIKu
- 8oLG/lwkJgvSISBrDYBRzebVuvLXIRxotBg2aEbO4Lx4CeaEe66PrHLKwhtC8I2By03gjUaJU
- reZQ3g7JgjfrDt3T6roRF5S/dhphQC67TkM95lJC8mg2LIjNK1isFZ1QHxG7Je2fMIRgLl3SB
- qngLm8aQAzja0BItICAGsL1FwgdLgTmM6j59h8q+mcLqh1L/oDtUuNIwwtdlkukL9vMdK88dG
- H4ql24RNpNHy2E7ay7EYy/E4WpevAYCmwNxWQViA5SsHVK3BeUXwSeixQk9aYS5HwKnGKd98T
- 5Vps4kC91G1RiPveinBkX1WMSrzpgWZQZMjl+VAXXkO3RRGyIVQ1rSwp97cjZzSr7T3//Z68E
- Ax3uNqQpZVe+bZqdJwU+7Y+N8+ivkcd75UFOKmHQ71Dzc2tAD1wcVaGnROKM/A36AFjtw+YkE
- 6sE6X37rXaNM9N+tkcT7W43QKwdjPgYQ54JvSRu4L92IZ24EKFHK64DunaXjpM6I9JMBbcJ4O
- 6Bv6EGQ+VrNlRLSlnyK8lCO4YiIoTECcZcscgZXCedBWJ+O/Vcdi31e6RMmA0TjtWZn3Uhhf8
- mwO6tnbsGKeueuLspOpJ/T1Yi7rkCEuItbTx4AzRSTK9mK36cUDcNeohSFK9j9hi6SWLNYwDv
- aU6Eo2ZOpYXT6ZlDZ405gLf50WXhIWrRXqBN81UDW+sr0aOJw22yc6s3p3TJnGBHj2AaUmI8T
- vZz/uiHGRTfRNXngmTO2i/fQ7mqs7tXSWa628d5MX9PZ9hu19Dm3ShBSY9wwuFxyMy6eCoUur
- Dug5/hJOJ+0ViJwy6WobJ4V9woT2k7kNw41CqNt4FFT7LL7FEiTWHHMP4GOOBIZBjV2iD2+U8
- GY+xUG7WyIOCMgyfiKYVSjhnUCjL5CW8vFLrdb0Ut5QRYHgEAS7HvE1euq8g=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200820145127.GC31084@danh.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lukas,
+On 8/20/2020 10:51 AM, Đoàn Trần Công Danh wrote:
+> On 2020-08-19 17:16:44+0000, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
+>> +static void fill_schedule_info(struct maintenance_task *task,
+>> +			       const char *config_name,
+>> +			       timestamp_t schedule_delay)
+>> +{
+>> +	timestamp_t now = approxidate("now");
+> 
+> I see this pattern in both previous patch and this patch,
+> should we create a helper (if not exist) to get current timestamp
+> instead, parsing "now" every now and then is not a good idea, in my
+> very opinionated opinion.
 
-On Sat, 22 Aug 2020, Lukas Straub wrote:
+Parsing "now" is not that much work, and it is done only once per
+maintenance task. To make a helper that avoids these string comparisons
+(specifically to avoid iterating through the "special" array in date.c)
+is unlikely to be worth the effort and code duplication.
 
-> On Sat, 22 Aug 2020 18:53:07 +0000
-> "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
->
-> > On 2020-08-22 at 14:21:52, Lukas Straub wrote:
-> > > On Fri, 21 Aug 2020 22:52:37 +0000
-> > > "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> > >
-> > > > On 2020-08-21 at 12:39:41, Lukas Straub wrote:
-> > > > > The downsides we discussed don't apply in this usecase. These ar=
-e mostly
-> > > > > personal files, so I wont upload them to any hosting site (not e=
-ven private
-> > > > > ones). There is no security impact as I only sync with trusted d=
-evices.
-> > > >
-> > > > I realize this works for you, but in general Git's security model =
-does
-> > > > not permit untrusted configuration files or hooks.  Configuration =
-can
-> > > > have numerous different commands that Git may execute and it is no=
-t, in
-> > > > general, safe to share across users.  This is why Git does not pro=
-vide a
-> > > > way to sync whole repositories, only the objects within them.
-> > > >
-> > > > Adding the ability to transport configuration through a repository=
- is a
-> > > > security problem because it allows an attacker to potentially exec=
-ute
-> > > > arbitrary code on the user's machine, and I can tell you that many=
-, many
-> > > > people do clone untrusted repositories.  Just because you are awar=
-e of
-> > > > the risks, are comfortable with them, and are the only user in thi=
-s
-> > > > scenario does not mean that this feature is a prudent one to add t=
-o Git.
-> > > > It violates our own security model, and as such, isn't a feature w=
-e're
-> > > > going to want to add.
-> > >
-> > > I don't understand. If the attacker gets the user to set git config =
-options,
-> > > then all hope is lost anyways, no?
-> >
-> > When you can embed repositories in other repositories like you're
-> > proposing, those embedded repositories can have configuration files in
-> > them (e.g., .git/config), which leads to the security problem.
->
-> Yes, I understand that, but the user has to actively allow this via the
-> allowDotGit config option, which I'll implement in the next patch versio=
-n.
-> So the attacker has to get the user to set the option. If the user does =
-this,
-> the attacker could get the user to set any other option (like core.gitPr=
-oxy)
-> anyway and gain remote execution regardless of this patch.
+If you mean it would be good to use a macro here, then that would be
+easy:
 
-Even if your patches were perfect, and even if unrelated patches in the
-future would never weaken this via an unintended consequence, it is
-_still_ too easy for users to get this wrong, or to forget about a config
-option they set.
+	#define approxidate_now() approxidate("now")
 
-Having addressed my share of CVEs in Git, I am pretty firmly against
-weakening Git's security model in the way you propose.
+One important thing for using this over time(NULL) is that we really
+want this to work with GIT_TEST_DATE_NOW.
 
-Ciao,
-Johannes
+>> +	char *value = NULL;
+>> +	struct strbuf last_run = STRBUF_INIT;
+>> +	int64_t previous_run;
+>> +
+>> +	strbuf_addf(&last_run, "maintenance.%s.lastrun", task->name);
+>> +
+>> +	if (git_config_get_string(last_run.buf, &value))
+>> +		task->scheduled = 1;
+>> +	else {
+>> +		previous_run = git_config_int64(last_run.buf, value);
+>> +		if (now >= previous_run + schedule_delay)
+>> +			task->scheduled = 1;
+>> +	}
+>> +
+>> +	free(value);
+>> +	strbuf_release(&last_run);
+>> +}
+>> +
+>>  static void initialize_task_config(void)
+>>  {
+>>  	int i;
+>> @@ -1359,6 +1387,7 @@ static void initialize_task_config(void)
+>>  
+>>  	for (i = 0; i < TASK__COUNT; i++) {
+>>  		int config_value;
+>> +		char *config_str;
+>>  
+>>  		strbuf_setlen(&config_name, 0);
+>>  		strbuf_addf(&config_name, "maintenance.%s.enabled",
+>> @@ -1366,6 +1395,20 @@ static void initialize_task_config(void)
+>>  
+>>  		if (!git_config_get_bool(config_name.buf, &config_value))
+>>  			tasks[i].enabled = config_value;
+>> +
+>> +		strbuf_setlen(&config_name, 0);
+> 
+> It looks like we have a simple and better named alias for this:
+> 
+> 	strbuf_reset(&config_name)
+> 
+> _reset has 400+ occurences in this code base, compare to 20 of _setlen
 
-P.S.: Besides, your patch would violate a the principle that unchanged
-entities do not cause changes in the objects' hashes. And if you even so
-much as `git repack` in one of those repositories you want to check in,
-the hashes will change, even if there are no actual changes. It's much
-like checking in gzipped files which then delta super badly. And in any
-case, the proposed functionality is definitely in conflict with Git's
-design.
+Makes sense. Thanks.
+
+-Stolee
+
