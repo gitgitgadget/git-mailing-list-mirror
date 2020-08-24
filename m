@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB183C433DF
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BE9DC433E3
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:42:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8F092067C
-	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:42:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2957B20702
+	for <git@archiver.kernel.org>; Mon, 24 Aug 2020 17:42:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cy6xUuHy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rapOb22t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726880AbgHXRme (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Aug 2020 13:42:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35746 "EHLO
+        id S1726585AbgHXRmf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Aug 2020 13:42:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726630AbgHXRmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Aug 2020 13:42:18 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96E26C061755
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 10:42:17 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id p15so1027416pli.6
-        for <git@vger.kernel.org>; Mon, 24 Aug 2020 10:42:17 -0700 (PDT)
+        with ESMTP id S1726691AbgHXRmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Aug 2020 13:42:19 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57702C061795
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 10:42:19 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id y6so4571815plk.10
+        for <git@vger.kernel.org>; Mon, 24 Aug 2020 10:42:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oJOnLx001mlmQ3uZcYbe7M7qCAT+P1kynidn98oyJjs=;
-        b=Cy6xUuHyJHHwljUADB2ghoYYu2cbyUJAPMZj+Hiu1irHlGxdWdcBjAF4UHEnctQKzo
-         veOM5dH/YA/7yBfdZbdxVJmargSJAcVb8dFl8HUNDILkIkWpsBFgJvt+1ZegqMoC9ufx
-         zPb0bRIjSCIAHwqOWv8pXjNocnW64SBHr7MddTaHyH8/xKCO+OgoLX/AbCnBl/J9SvqP
-         S4ZS980O18gpRJLSZazLlS30DHIzgQNesRWdhkqL9u75GznbdA5ow+0Gts9OmWwzuzR8
-         6A2w2Xq4rNHwo2ePT5pgj2S2PZE83FY1YNPWuRAw2cNgtZ7i+cAsbT8Yt4pp1GuHpkZK
-         TdAA==
+        bh=JKkzv5uHWjStIPLmBqjV+ImS+rOXWcOFxrifeT45Lcw=;
+        b=rapOb22tMWGjwb5+mo+TBYNAHXpTfIvy/RSrJbSt7CncifEjPQQb59CyToGXH6Lclh
+         rCiq10E/DgiDynLv7oi45vkIOyqyhVjNmK/jbeUac1LOIOh1XIlEjkqbOg8OdNPp9WwK
+         tqMUisAZf5AhaefzWEQ96PItB1Ymv2Vj699dBFAVan35ThUzSWOPNRvAlLKlnklAyZka
+         eCiXnKQHP6Ha1hv6uJBcS/Uj/nGe2wIqWEUX0cuUvVbeacAlefWcpqykeIw7qzCKdRV+
+         7wAaYyGiZ59ooZ8NnitUmtXt0E1dOoqgynM7qdZlzSDaOGVFf/MOHt1KwZZJ3xe3FA8m
+         Ujqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oJOnLx001mlmQ3uZcYbe7M7qCAT+P1kynidn98oyJjs=;
-        b=ry8+LaqXu4n48+nq6pDQd1NA2d2iOMr15pSEjbGdNzvj7ja1dR1JivsBy6tQRqRUa1
-         AId+XNOIOQUyq5+rFEaBsLHO7R/RvKu8CF5Z6WEMwV0juBqYyEFuEehiC/1AOnL3jQQP
-         ENQ1IQkNf0LmZe8i8a0Wc3gfOBRt0nFNHt4IvNoMIw+UAnl6Fo+dizs1Np2dYrFKMjni
-         oiXx1j7JRuHG9uOIvd7MYCd0e1Rqdo+OqZBxrD/PQ6aGLN696yZ30nntgjiz9Vp0WMyZ
-         A+rLeNTXGILKi47ZjOTfKIx3+WHvEIo2cuOk8oLk4zFXhIlFFbidjB38Rt8K1ZU4kFl8
-         MJ7Q==
-X-Gm-Message-State: AOAM530dJDIYxUY20mpXxBJOYWSveNriwR/QVwWJDQn8hh52G641dK8r
-        AAszfHwTBopjVAtaPir589A=
-X-Google-Smtp-Source: ABdhPJxrEz4GxMYEkrjt9cad0uu8sO/ApKiBU2dOKqReF6Y8u3TWO5Sc1oEjW8AMwyfwxOUcBnl6lg==
-X-Received: by 2002:a17:902:a982:: with SMTP id bh2mr4579021plb.182.1598290936353;
-        Mon, 24 Aug 2020 10:42:16 -0700 (PDT)
+        bh=JKkzv5uHWjStIPLmBqjV+ImS+rOXWcOFxrifeT45Lcw=;
+        b=SIrvc+DqsUOmiRDA+jpjjwWDSYS7q8T0PmTj8AFBv++cMYFHroXjlzN3Lg4d1lsbH/
+         jKojCY+HZQOdWrZQ4M/TdtQsxp3gp6DXNJVvBVIERxvnUMmWVT7H/7uUFUwR383QdQ1s
+         J+IQtInxY4m0qvTiGkCO6qb1+yjy25/X2o77FUnkJCRi3feyzPPRyngKurdLbTfUvGxc
+         R/3nKbO/J8QshVifVbOsN90QmeZKi/hoTTIEN1O3ks+kS1YUN08R8HsxVeeTJVbqO0nh
+         /+tw+rr4Fz+e0/3b8TjH3nPZGlXBrOyFW3ULzPkxS/enNTU2io9BDgYa6jQbOQLUxDkO
+         86DQ==
+X-Gm-Message-State: AOAM532RFrKZiwm40NX8jRgsGLHVSQGzePu+dzxerR0iRLlNffh8QhTi
+        NUQ3abucE4l0ZcIUF6ykF5SrHHVn3VIq5w==
+X-Google-Smtp-Source: ABdhPJyI3FJsed0Rm8r14v6liWXpvxMycU3SWU9Y0gObF5QEXGWPXikKkyGXD2YM1LGKNQQDIpIXLQ==
+X-Received: by 2002:a17:902:8d8a:: with SMTP id v10mr4453774plo.249.1598290938851;
+        Mon, 24 Aug 2020 10:42:18 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id b15sm9773162pgk.14.2020.08.24.10.42.15
+        by smtp.gmail.com with ESMTPSA id b15sm9773162pgk.14.2020.08.24.10.42.17
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Aug 2020 10:42:15 -0700 (PDT)
+        Mon, 24 Aug 2020 10:42:18 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v18 04/10] receive-pack: feed report options to post-receive
-Date:   Mon, 24 Aug 2020 13:41:56 -0400
-Message-Id: <20200824174202.11710-5-worldhello.net@gmail.com>
+Subject: [PATCH v18 06/10] doc: add document for capability report-status-v2
+Date:   Mon, 24 Aug 2020 13:41:58 -0400
+Message-Id: <20200824174202.11710-7-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200815171740.6257-1-worldhello.net@gmail.com>
 References: <20200815171740.6257-1-worldhello.net@gmail.com>
@@ -76,297 +76,118 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When commands are fed to the "post-receive" hook, report options will
-be parsed and the real old-oid, new-oid, reference name will feed to
-the "post-receive" hook.
+Add ABNF notation for capability 'report-status-v2' which extends
+capability 'report-status' by adding additional option lines.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- builtin/receive-pack.c                        | 30 ++++++++++++++++---
- t/t5411/test-0032-report-with-options.sh      | 14 ++++-----
- ...est-0033-report-with-options--porcelain.sh | 14 ++++-----
- ...t-0036-report-multi-rewrite-for-one-ref.sh | 11 +++++--
- ...rt-multi-rewrite-for-one-ref--porcelain.sh | 11 +++++--
- t/t5411/test-0038-report-mixed-refs.sh        |  2 +-
- .../test-0039-report-mixed-refs--porcelain.sh |  2 +-
- 7 files changed, 58 insertions(+), 26 deletions(-)
+ Documentation/technical/pack-protocol.txt     | 43 +++++++++++++++++--
+ .../technical/protocol-capabilities.txt       | 17 ++++++--
+ 2 files changed, 54 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 2b63b92545..38f230248d 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -694,6 +694,7 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index d5ce4eea8a..7547b9ca89 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -503,8 +503,8 @@ The reference discovery phase is done nearly the same way as it is in the
+ fetching protocol. Each reference obj-id and name on the server is sent
+ in packet-line format to the client, followed by a flush-pkt.  The only
+ real difference is that the capability listing is different - the only
+-possible values are 'report-status', 'delete-refs', 'ofs-delta' and
+-'push-options'.
++possible values are 'report-status', 'report-status-v2', 'delete-refs',
++'ofs-delta', 'atomic' and 'push-options'.
  
- struct receive_hook_feed_state {
- 	struct command *cmd;
-+	struct ref_push_report *report;
- 	int skip_broken;
- 	struct strbuf buf;
- 	const struct string_list *push_options;
-@@ -781,11 +782,31 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
- 		cmd = cmd->next;
- 	if (!cmd)
- 		return -1; /* EOF */
-+	if (!bufp)
-+		return 0; /* OK, can feed something. */
- 	strbuf_reset(&state->buf);
--	strbuf_addf(&state->buf, "%s %s %s\n",
--		    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
--		    cmd->ref_name);
--	state->cmd = cmd->next;
-+	if (!state->report)
-+		state->report = cmd->report;
-+	if (state->report) {
-+		struct object_id *old_oid;
-+		struct object_id *new_oid;
-+		const char *ref_name;
+ Reference Update Request and Packfile Transfer
+ ----------------------------------------------
+@@ -625,7 +625,7 @@ Report Status
+ -------------
+ 
+ After receiving the pack data from the sender, the receiver sends a
+-report if 'report-status' capability is in effect.
++report if 'report-status' or 'report-status-v2' capability is in effect.
+ It is a short listing of what happened in that update.  It will first
+ list the status of the packfile unpacking as either 'unpack ok' or
+ 'unpack [error]'.  Then it will list the status for each of the references
+@@ -647,6 +647,43 @@ update was successful, or 'ng [refname] [error]' if the update was not.
+   error-msg         = 1*(OCTET) ; where not "ok"
+ ----
+ 
++New capability "report-status-v2" extends the protocol by adding new option
++lines in order to support reporting of reference rewritten by the
++"proc-receive" hook.  The "proc-receive" hook may handle a command for a
++pseudo-reference which may create or update one or more references, and each
++reference may have different name, different new-oid, and different old-oid.
 +
-+		old_oid = state->report->old_oid ? state->report->old_oid : &cmd->old_oid;
-+		new_oid = state->report->new_oid ? state->report->new_oid : &cmd->new_oid;
-+		ref_name = state->report->ref_name ? state->report->ref_name : cmd->ref_name;
-+		strbuf_addf(&state->buf, "%s %s %s\n",
-+			    oid_to_hex(old_oid), oid_to_hex(new_oid),
-+			    ref_name);
-+		state->report = state->report->next;
-+		if (!state->report)
-+			state->cmd = cmd->next;
-+	} else {
-+		strbuf_addf(&state->buf, "%s %s %s\n",
-+			    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
-+			    cmd->ref_name);
-+		state->cmd = cmd->next;
-+	}
- 	if (bufp) {
- 		*bufp = state->buf.buf;
- 		*sizep = state->buf.len;
-@@ -804,6 +825,7 @@ static int run_receive_hook(struct command *commands,
- 	strbuf_init(&state.buf, 0);
- 	state.cmd = commands;
- 	state.skip_broken = skip_broken;
-+	state.report = NULL;
- 	if (feed_receive_hook(&state, NULL, NULL))
- 		return 0;
- 	state.cmd = commands;
-diff --git a/t/t5411/test-0032-report-with-options.sh b/t/t5411/test-0032-report-with-options.sh
-index a743aa8018..c559c207fa 100644
---- a/t/t5411/test-0032-report-with-options.sh
-+++ b/t/t5411/test-0032-report-with-options.sh
-@@ -54,7 +54,7 @@ test_expect_success "proc-receive: report option refname ($PROTOCOL)" '
- 	remote: proc-receive> ok refs/for/master/topic
- 	remote: proc-receive> option refname refs/pull/123/head
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/pull/123/head
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -87,7 +87,7 @@ test_expect_success "proc-receive: report option refname and forced-update ($PRO
- 	remote: proc-receive> option refname refs/pull/123/head
- 	remote: proc-receive> option forced-update
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/pull/123/head
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -121,7 +121,7 @@ test_expect_success "proc-receive: report option refname and old-oid ($PROTOCOL)
- 	remote: proc-receive> option refname refs/pull/123/head
- 	remote: proc-receive> option old-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/pull/123/head
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -153,7 +153,7 @@ test_expect_success "proc-receive: report option old-oid ($PROTOCOL)" '
- 	remote: proc-receive> ok refs/for/master/topic
- 	remote: proc-receive> option old-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -187,7 +187,7 @@ test_expect_success "proc-receive: report option old-oid and new-oid ($PROTOCOL)
- 	remote: proc-receive> option old-oid <COMMIT-A>
- 	remote: proc-receive> option new-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -237,9 +237,9 @@ test_expect_success "proc-receive: report with multiple rewrites ($PROTOCOL)" '
- 	remote: proc-receive> option forced-update
- 	remote: proc-receive> option new-oid <COMMIT-A>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/pull/123/head
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/pull/124/head
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/next/topic
- 	 * [new reference] HEAD -> refs/for/a/b/c/topic
-diff --git a/t/t5411/test-0033-report-with-options--porcelain.sh b/t/t5411/test-0033-report-with-options--porcelain.sh
-index 439b97b06e..ea9312234e 100644
---- a/t/t5411/test-0033-report-with-options--porcelain.sh
-+++ b/t/t5411/test-0033-report-with-options--porcelain.sh
-@@ -55,7 +55,7 @@ test_expect_success "proc-receive: report option refname ($PROTOCOL/porcelain)"
- 	remote: proc-receive> ok refs/for/master/topic
- 	remote: proc-receive> option refname refs/pull/123/head
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/pull/123/head
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -90,7 +90,7 @@ test_expect_success "proc-receive: report option refname and forced-update ($PRO
- 	remote: proc-receive> option refname refs/pull/123/head
- 	remote: proc-receive> option forced-update
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/pull/123/head
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -125,7 +125,7 @@ test_expect_success "proc-receive: report option refname and old-oid ($PROTOCOL/
- 	remote: proc-receive> option refname refs/pull/123/head
- 	remote: proc-receive> option old-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/pull/123/head
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -158,7 +158,7 @@ test_expect_success "proc-receive: report option old-oid ($PROTOCOL/porcelain)"
- 	remote: proc-receive> ok refs/for/master/topic
- 	remote: proc-receive> option old-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/for/master/topic
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -193,7 +193,7 @@ test_expect_success "proc-receive: report option old-oid and new-oid ($PROTOCOL/
- 	remote: proc-receive> option old-oid <COMMIT-A>
- 	remote: proc-receive> option new-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -245,9 +245,9 @@ test_expect_success "proc-receive: report with multiple rewrites ($PROTOCOL/porc
- 	remote: proc-receive> option forced-update
- 	remote: proc-receive> option new-oid <COMMIT-A>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/pull/123/head
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/a/b/c/topic
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/pull/124/head
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/next/topic    [new reference]
- 	*    HEAD:refs/for/a/b/c/topic    [new reference]
-diff --git a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-index 12acf9ea1f..67cc4a8a4c 100644
---- a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-+++ b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-@@ -41,7 +41,9 @@ test_expect_success "proc-receive: multiple rewrite for one ref, no refname for
- 	remote: proc-receive> option old-oid <COMMIT-A>
- 	remote: proc-receive> option new-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/changes/24/124/1
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/changes/25/125/1
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -99,7 +101,9 @@ test_expect_success "proc-receive: multiple rewrites for one ref, no refname for
- 	remote: proc-receive> option new-oid <COMMIT-A>
- 	remote: proc-receive> option forced-update
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/changes/24/124/1
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/changes/25/125/1
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-@@ -145,7 +149,8 @@ test_expect_success "proc-receive: multiple rewrites for one ref ($PROTOCOL)" '
- 	remote: proc-receive> option old-oid <COMMIT-A>
- 	remote: proc-receive> option new-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/changes/23/123/1
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/changes/24/124/2
- 	To <URL/of/upstream.git>
- 	 * [new reference] HEAD -> refs/for/master/topic
- 	EOF
-diff --git a/t/t5411/test-0037-report-multi-rewrite-for-one-ref--porcelain.sh b/t/t5411/test-0037-report-multi-rewrite-for-one-ref--porcelain.sh
-index f4a2c56e14..1dc8551bc6 100644
---- a/t/t5411/test-0037-report-multi-rewrite-for-one-ref--porcelain.sh
-+++ b/t/t5411/test-0037-report-multi-rewrite-for-one-ref--porcelain.sh
-@@ -41,7 +41,9 @@ test_expect_success "proc-receive: multiple rewrite for one ref, no refname for
- 	remote: proc-receive> option old-oid <COMMIT-A>
- 	remote: proc-receive> option new-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/changes/24/124/1
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/changes/25/125/1
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -100,7 +102,9 @@ test_expect_success "proc-receive: multiple rewrites for one ref, no refname for
- 	remote: proc-receive> option new-oid <COMMIT-A>
- 	remote: proc-receive> option forced-update
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/changes/24/124/1
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
-+	remote: post-receive< <COMMIT-B> <COMMIT-A> refs/changes/25/125/1
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-@@ -147,7 +151,8 @@ test_expect_success "proc-receive: multiple rewrites for one ref ($PROTOCOL/porc
- 	remote: proc-receive> option old-oid <COMMIT-A>
- 	remote: proc-receive> option new-oid <COMMIT-B>
- 	remote: # post-receive hook
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/changes/23/123/1
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/changes/24/124/2
- 	To <URL/of/upstream.git>
- 	*    HEAD:refs/for/master/topic    [new reference]
- 	Done
-diff --git a/t/t5411/test-0038-report-mixed-refs.sh b/t/t5411/test-0038-report-mixed-refs.sh
-index 1dd6a97a97..bfc8d586d6 100644
---- a/t/t5411/test-0038-report-mixed-refs.sh
-+++ b/t/t5411/test-0038-report-mixed-refs.sh
-@@ -53,7 +53,7 @@ test_expect_success "proc-receive: report update of mixed refs ($PROTOCOL)" '
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic2
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
- 	To <URL/of/upstream.git>
- 	 <OID-A>..<OID-B> <COMMIT-B> -> master
- 	 * [new branch] HEAD -> bar
-diff --git a/t/t5411/test-0039-report-mixed-refs--porcelain.sh b/t/t5411/test-0039-report-mixed-refs--porcelain.sh
-index 32ebf63dcf..5d021a4837 100644
---- a/t/t5411/test-0039-report-mixed-refs--porcelain.sh
-+++ b/t/t5411/test-0039-report-mixed-refs--porcelain.sh
-@@ -53,7 +53,7 @@ test_expect_success "proc-receive: report update of mixed refs ($PROTOCOL/porcel
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/baz
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/next/topic2
- 	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/foo
--	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: post-receive< <COMMIT-A> <COMMIT-B> refs/for/master/topic
- 	To <URL/of/upstream.git>
- 	     <COMMIT-B>:refs/heads/master    <OID-A>..<OID-B>
- 	*    HEAD:refs/heads/bar    [new branch]
++----
++  report-status-v2  = unpack-status
++		      1*(command-status-v2)
++		      flush-pkt
++
++  unpack-status     = PKT-LINE("unpack" SP unpack-result)
++  unpack-result     = "ok" / error-msg
++
++  command-status-v2 = command-ok-v2 / command-fail-v2
++  command-ok-v2     = command-ok
++		      *option-line
++  command-fail-v2   = command-fail
++		      *option-line
++
++  command-ok        = PKT-LINE("ok" SP refname)
++  command-fail      = PKT-LINE("ng" SP refname SP error-msg)
++
++  error-msg         = 1*(OCTET) ; where not "ok"
++
++  option-line       = *1(option-refname)
++		      *1(option-old-oid)
++		      *1(option-new-oid)
++		      *1(option-forced-update)
++
++  option-refname    = PKT-LINE("option" SP "refname" SP refname)
++  option-old-oid    = PKT-LINE("option" SP "old-oid" SP obj-id)
++  option-new-oid    = PKT-LINE("option" SP "new-oid" SP obj-id)
++  option-force      = PKT-LINE("option" SP "forced-update")
++
++----
++
+ Updates can be unsuccessful for a number of reasons.  The reference can have
+ changed since the reference discovery phase was originally sent, meaning
+ someone pushed in the meantime.  The reference being pushed could be a
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 2b267c0da6..91fd976094 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -22,9 +22,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
+ and server advertised.  As a consequence of these rules, server MUST
+ NOT advertise capabilities it does not understand.
+ 
+-The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
+-capabilities are sent and recognized by the receive-pack (push to server)
+-process.
++The 'atomic', 'report-status', 'report-status-v2', 'delete-refs', 'quiet',
++and 'push-cert' capabilities are sent and recognized by the receive-pack
++(push to server) process.
+ 
+ The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
+ by both upload-pack and receive-pack protocols.  The 'agent' capability
+@@ -269,6 +269,17 @@ each reference was updated successfully.  If any of those were not
+ successful, it will send back an error message.  See pack-protocol.txt
+ for example messages.
+ 
++report-status-v2
++----------------
++
++Capability 'report-status-v2' extends capability 'report-status' by
++adding new option lines in order to support reference rewritten by
++the"proc-receive" hook.  The "proc-receive" hook may handle a command
++for a pseudo-reference which may create or update a reference with
++different name, new-oid, and old-oid.  While the capability
++"report-status" cannot report for such case.  See pack-protocol.txt
++for details.
++
+ delete-refs
+ -----------
+ 
 -- 
 2.26.2.543.ge7de2a6e37
 
