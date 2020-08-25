@@ -2,68 +2,68 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B208FC433E1
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 196A9C433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:36:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E3952074D
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:34:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9FC62074D
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:36:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qLqyi1zZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aIEuuBkE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726633AbgHYSei (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 14:34:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43430 "EHLO
+        id S1726336AbgHYSgn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 14:36:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726556AbgHYSeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 14:34:00 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C43C061796
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:34:00 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 83so3567962wme.4
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:34:00 -0700 (PDT)
+        with ESMTP id S1726119AbgHYSgm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 14:36:42 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC3AC061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:42 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id q14so2715850wrn.9
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vM0TuBEUY0vrapOf9Ut/0RUxanAqe66yuP0tCUJZssI=;
-        b=qLqyi1zZ93D0wuHFjTV+O6aArs2RPob3NsCrqEZQeAU6wasFLp5lRIVluZeLkiNZ0s
-         OWVMlfcqj1qQPTTPLujvRZE3G1TaPwhZQjp4+oEKZg7KkMWsXt/tMSKVgUJEjhfyXMBH
-         Ge+5iCVuvvbxffsu5SPyTMS1hWBsLrGConS+klqWX2XgVsqO3T5bAvYZANpQR1oOROSd
-         de65bq0tH0EVJFIzIXzDKZYGNSasTcDY6Yp+GaIwiKW3Ul31wVaoCQiGv31L7w0r6nO6
-         VHXepYv/tvsYrj9BYi/OhGcxtol3o9J7aQmWTqS8+xphbDk4xjkDDRHFos4C871bYpML
-         VUOQ==
+        bh=F8mU9NKZuA18w5VKz4CodAh6jz8SfLjF086lLOb1XAY=;
+        b=aIEuuBkEszHsiR6iGSfSRV2+IQwxvNa2OJGMM3Xm2U0NF8rIDvMZWy+A7e91AJjr4e
+         U06s9/ef8BDbFts4JiAnvLtJcfKUJvcjLXz17P1Vbj3e3lsc+Pq2iS32nqQMB8JnZCtU
+         qn+WwmYU4vbVTSQ6oXaAaIo+pQxuG5vLlgkOcz67pyC9l5rYfnaQeKFvmwWQwAuzl/DH
+         YrO1t2bhXGDIsmeZZuexnQaG7u97NDyPFHRYh/Kzh+uaYrztRMAak8wQWJ+qs0Z91+rz
+         LUFl/uveVI8iTUm/KY2knhkCJD16zOU1hLlR/fL1l3QDZBRT0rT4IZc+FFb3bk51DNku
+         X+IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vM0TuBEUY0vrapOf9Ut/0RUxanAqe66yuP0tCUJZssI=;
-        b=DEINnVtyrEJ6K4eRb/4HilJ1ow6bR21D0OC+I1bmfmMZXDWevyYsJpvbarOfwwZyMA
-         hxDeVlJHtX5Udk0Gl8OJHhRe05HoyQaDJFhc9LW3Bu201e4CqTfGIicLOHYBEgqrLhMr
-         OgzMAHxSWaYJ2KvZDWSAslhwdTWorWyMgGuWSGE6WAvSEUOlKCT7iR409HrqFDIxtFjG
-         /eIJ304+6p6IuGnMfS+ZfZbf/GuB8tr2oMsRWNl4nu46oEuffCaBs3qxYDnotQNUBMGH
-         el+i+gZM3HGBqb58JZ0TCKxg7/O2I7a2xj7OcYzq7jPv+7M9DL/wF34Gtfo/LlNqQ89L
-         PBGA==
-X-Gm-Message-State: AOAM532CVwrN1QZwHzAPdDs6nZPv/x3QMlqVPUBzvo9LQd0wMVNqGvYa
-        j8uiLTmaiTgYuzKAbi5ruA5zLH7Kado=
-X-Google-Smtp-Source: ABdhPJzXBTrkJ3CBg4i5ATBhFbbjhmnD77tcBYe/NnHNbOIZDd6ze3pCvjUNGvz3pkfK9bFc3nVixw==
-X-Received: by 2002:a7b:c00c:: with SMTP id c12mr3486700wmb.54.1598380437045;
-        Tue, 25 Aug 2020 11:33:57 -0700 (PDT)
+        bh=F8mU9NKZuA18w5VKz4CodAh6jz8SfLjF086lLOb1XAY=;
+        b=Z3oNcsKHPYn8bKWZEun9A0qn/fHBod+7VR8wNSAaLQkZ9csef/1/tgirGML9slAz7X
+         zT+CDxmbrx1Tw2Zx4g2OKfyjnB1Mz5RtdOcuQrMehoBweeWRQQtSz24W1/GSDqoOy32j
+         GxrgGDE8xE6zdrF2za1ks6CJlZ0Tn2+fBB9xqlRtacPSPEDmEchJyPhnOfu+vN33sUCx
+         lyTVmvA3tB+YBsTPJQ87W44B+jPYKSSUk/DcGVaLcc4Qb+TfLPIEuQ2ZyZmT8PJ8htVD
+         826Tu+yakfHrQzNXtLl75J2uZ3wviIn9Uw8fK62gQdbH2v4wOaII1OZtgCPj7OmUm/RQ
+         3FvA==
+X-Gm-Message-State: AOAM5303q/TUrt0DziH6hX/gCbNQp352J/3DM7L0Q7AQ7GhSDimo/l+S
+        d78KJxBwzFxA/knbUocYZruU/DJ7eWw=
+X-Google-Smtp-Source: ABdhPJyL/ahbBxx7141IkeOe8q0bsUFs0FZZzIWd0wD/t8stBspVOmkQBq6W3QkcejkQiCF4bbflKg==
+X-Received: by 2002:adf:ff8a:: with SMTP id j10mr11238867wrr.323.1598380600516;
+        Tue, 25 Aug 2020 11:36:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6sm10785252wme.32.2020.08.25.11.33.56
+        by smtp.gmail.com with ESMTPSA id q3sm6924685wmq.12.2020.08.25.11.36.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 11:33:56 -0700 (PDT)
-Message-Id: <69d3b48fd4474783579297d3d25f04dd8f1e7673.1598380427.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.695.v3.git.1598380426.gitgitgadget@gmail.com>
-References: <pull.695.v2.git.1597760589.gitgitgadget@gmail.com>
-        <pull.695.v3.git.1598380426.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2020 11:36:40 -0700 (PDT)
+Message-Id: <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
+In-Reply-To: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
+References: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 25 Aug 2020 18:33:44 +0000
-Subject: [PATCH v3 09/11] maintenance: use pointers to check --auto
+Date:   Tue, 25 Aug 2020 18:36:31 +0000
+Subject: [PATCH v3 0/8] Maintenance II: prefetch, loose-objects, incremental-repack tasks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,126 +73,378 @@ Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
         jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
         phillip.wood123@gmail.com, emilyshaffer@google.com,
         sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+This series is based on v3 of part I (ds/maintenance-part-1) [2].
 
-The 'git maintenance run' command has an '--auto' option. This is used
-by other Git commands such as 'git commit' or 'git fetch' to check if
-maintenance should be run after adding data to the repository.
+This patch series contains 9 patches that were going to be part of v4 of
+ds/maintenance [1], but the discussion has gotten really long. To help, I'm
+splitting out the portions that create and test the 'maintenance' builtin
+from the additional tasks (prefetch, loose-objects, incremental-repack) that
+can be brought in later.
 
-Previously, this --auto option was only used to add the argument to the
-'git gc' command as part of the 'gc' task. We will be expanding the
-other tasks to perform a check to see if they should do work as part of
-the --auto flag, when they are enabled by config.
+[1] 
+https://lore.kernel.org/git/pull.671.git.1594131695.gitgitgadget@gmail.com/
+[2] 
+https://lore.kernel.org/git/pull.695.v3.git.1598380426.gitgitgadget@gmail.com/
 
-First, update the 'gc' task to perform the auto check inside the
-maintenance process. This prevents running an extra 'git gc --auto'
-command when not needed. It also shows a model for other tasks.
+As detailed in [2], the 'git maintenance run' subcommand will run certain
+tasks based on config options or the --task= arguments. The --auto option
+indicates to the task to only run based on some internal check that there
+has been "enough" change in that domain to merit the work. In the case of
+the 'gc' task, this also reduces the amount of work done. 
 
-Second, use the 'auto_condition' function pointer as a signal for
-whether we enable the maintenance task under '--auto'. For instance, we
-do not want to enable the 'fetch' task in '--auto' mode, so that
-function pointer will remain NULL.
+The new maintenance tasks in this series are:
 
-Now that we are not automatically calling 'git gc', a test in
-t5514-fetch-multiple.sh must be changed to watch for 'git maintenance'
-instead.
+ * 'loose-objects' : prune packed loose objects, then create a new pack from
+   a batch of loose objects.
+ * 'pack-files' : expire redundant packs from the multi-pack-index, then
+   repack using the multi-pack-index's incremental repack strategy.
+ * 'prefetch' : fetch from each remote, storing the refs in 'refs/prefetch/
+   /'.
 
-We continue to pass the '--auto' option to the 'git gc' command when
-necessary, because of the gc.autoDetach config option changes behavior.
-Likely, we will want to absorb the daemonizing behavior implied by
-gc.autoDetach as a maintenance.autoDetach config option.
+These tasks are all disabled by default, but can be enabled with config
+options or run explicitly using "git maintenance run --task=". 
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/gc.c              | 16 ++++++++++++++++
- t/t5514-fetch-multiple.sh |  2 +-
- t/t7900-maintenance.sh    |  2 +-
- 3 files changed, 18 insertions(+), 2 deletions(-)
+Since [2] replaced the 'git gc --auto' calls with 'git maintenance run
+--auto' at the end of some Git commands, users could replace the 'gc' task
+with these lighter-weight changes for foreground maintenance.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 67a8d405a1..709d13553b 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -755,9 +755,17 @@ static int maintenance_task_gc(struct maintenance_run_opts *opts)
- 
- typedef int maintenance_task_fn(struct maintenance_run_opts *opts);
- 
-+/*
-+ * An auto condition function returns 1 if the task should run
-+ * and 0 if the task should NOT run. See needs_to_gc() for an
-+ * example.
-+ */
-+typedef int maintenance_auto_fn(void);
-+
- struct maintenance_task {
- 	const char *name;
- 	maintenance_task_fn *fn;
-+	maintenance_auto_fn *auto_condition;
- 	unsigned enabled:1;
- 
- 	/* -1 if not selected. */
-@@ -776,6 +784,7 @@ static struct maintenance_task tasks[] = {
- 	[TASK_GC] = {
- 		"gc",
- 		maintenance_task_gc,
-+		need_to_gc,
- 		1,
- 	},
- 	[TASK_COMMIT_GRAPH] = {
-@@ -831,6 +840,11 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
- 		if (!found_selected && !tasks[i].enabled)
- 			continue;
- 
-+		if (opts->auto_flag &&
-+		    (!tasks[i].auto_condition ||
-+		     !tasks[i].auto_condition()))
-+			continue;
-+
- 		if (tasks[i].fn(opts)) {
- 			error(_("task '%s' failed"), tasks[i].name);
- 			result = 1;
-@@ -845,6 +859,8 @@ static void initialize_task_config(void)
- {
- 	int i;
- 	struct strbuf config_name = STRBUF_INIT;
-+	gc_config();
-+
- 	for (i = 0; i < TASK__COUNT; i++) {
- 		int config_value;
- 
-diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
-index de8e2f1531..bd202ec6f3 100755
---- a/t/t5514-fetch-multiple.sh
-+++ b/t/t5514-fetch-multiple.sh
-@@ -108,7 +108,7 @@ test_expect_success 'git fetch --multiple (two remotes)' '
- 	 GIT_TRACE=1 git fetch --multiple one two 2>trace &&
- 	 git branch -r > output &&
- 	 test_cmp ../expect output &&
--	 grep "built-in: git gc" trace >gc &&
-+	 grep "built-in: git maintenance" trace >gc &&
- 	 test_line_count = 1 gc
- 	)
- '
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 290abb7832..4f6a04ddb1 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -21,7 +21,7 @@ test_expect_success 'run [--auto|--quiet]' '
- 	GIT_TRACE2_EVENT="$(pwd)/run-no-quiet.txt" \
- 		git maintenance run --no-quiet 2>/dev/null &&
- 	test_subcommand git gc --quiet <run-no-auto.txt &&
--	test_subcommand git gc --auto --quiet <run-auto.txt &&
-+	test_subcommand ! git gc --auto --quiet <run-auto.txt &&
- 	test_subcommand git gc --no-quiet <run-no-quiet.txt
- '
- 
+The 'git maintenance' builtin has a 'run' subcommand so it can be extended
+later with subcommands that manage background maintenance, such as 'start'
+or 'stop'. These are not the subject of this series, as it is important to
+focus on the maintenance activities themselves. I have an RFC series for
+this available at [3].
+
+[3] 
+https://lore.kernel.org/git/pull.680.git.1597857408.gitgitgadget@gmail.com/
+
+Updates since v2
+================
+
+ * Dropped "fetch: optionally allow disabling FETCH_HEAD update"
+   
+   
+ * A lot of fallout from the change in the option parsing in v3 of
+   Maintenance II.
+   
+   
+ * Dropped the "verify, and delete and rewrite on failure" logic from the
+   incremental-repack task. This might be added again later after it can be
+   tested more thoroughly.
+   
+   
+
+Updates since v1 (of this series)
+=================================
+
+ * PATCH 1 ("fetch: optionally allow disabling FETCH_HEAD update") was
+   rewritten on-list. Getting a version out with this patch is the main
+   reason for rolling a v2. (That, and Part I is re-rolled with a v2 and I
+   want to make sure this series applies cleanly.)
+   
+   
+ * The 'prefetch' and 'loose-objects' tasks had some review, but my proposed
+   changes were not acked, so they may need another review.
+   
+   
+
+UPDATES since v3 of [1]
+=======================
+
+ * The biggest change here is the use of "test_subcommand", based on
+   Jonathan Nieder's approach. This requires having the exact command-line
+   figured out, which now requires spelling out all --no- [quiet%7Cprogress] 
+   options. I also added a bunch of "2>/dev/null" checks because of the
+   isatty(2) calls. Without that, the behavior will change depending on
+   whether the test is run with -x/-v or without.
+   
+   
+ * The 0x7FFF/0x7FFFFFFF constant problem is fixed with an EXPENSIVE test
+   that verifies it.
+   
+   
+ * The option parsing has changed to use a local struct and pass that struct
+   to the helper methods. This is instead of having a global singleton.
+   
+   
+
+Thanks, -Stolee
+
+Derrick Stolee (8):
+  maintenance: add prefetch task
+  maintenance: add loose-objects task
+  maintenance: create auto condition for loose-objects
+  midx: enable core.multiPackIndex by default
+  midx: use start_delayed_progress()
+  maintenance: add incremental-repack task
+  maintenance: auto-size incremental-repack batch
+  maintenance: add incremental-repack auto condition
+
+ Documentation/config/core.txt        |   4 +-
+ Documentation/config/maintenance.txt |  18 ++
+ Documentation/git-maintenance.txt    |  45 ++++
+ builtin/gc.c                         | 327 +++++++++++++++++++++++++++
+ midx.c                               |  23 +-
+ midx.h                               |   1 +
+ repo-settings.c                      |   6 +
+ repository.h                         |   2 +
+ t/t5319-multi-pack-index.sh          |  15 +-
+ t/t7900-maintenance.sh               | 191 ++++++++++++++++
+ 10 files changed, 609 insertions(+), 23 deletions(-)
+
+
+base-commit: 652a8eac57d04a51820c7a5b45031b50c5188e7b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-696%2Fderrickstolee%2Fmaintenance%2Fgc-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-696/derrickstolee/maintenance/gc-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/696
+
+Range-diff vs v2:
+
+  1:  f3bc0b2d92 <  -:  ---------- fetch: optionally allow disabling FETCH_HEAD update
+  2:  8779c6c20d !  1:  da64c51a81 maintenance: add prefetch task
+     @@ Commit message
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Documentation/git-maintenance.txt ##
+     -@@ Documentation/git-maintenance.txt: since it will not expire `.graph` files that were in the previous
+     - `commit-graph-chain` file. They will be deleted by a later run based on
+     - the expiration delay.
+     +@@ Documentation/git-maintenance.txt: commit-graph::
+     + 	`commit-graph-chain` file. They will be deleted by a later run based
+     + 	on the expiration delay.
+       
+      +prefetch::
+      +	The `prefetch` task updates the object directory with the latest
+     @@ builtin/gc.c
+       
+       #define FAILED_RUN "failed to run %s"
+       
+     -@@ builtin/gc.c: static int maintenance_task_commit_graph(struct maintenance_opts *opts)
+     - 	return 1;
+     +@@ builtin/gc.c: static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
+     + 	return 0;
+       }
+       
+     -+static int fetch_remote(const char *remote, struct maintenance_opts *opts)
+     ++static int fetch_remote(const char *remote, struct maintenance_run_opts *opts)
+      +{
+      +	struct child_process child = CHILD_PROCESS_INIT;
+      +
+     @@ builtin/gc.c: static int maintenance_task_commit_graph(struct maintenance_opts *
+      +	return 0;
+      +}
+      +
+     -+static int maintenance_task_prefetch(struct maintenance_opts *opts)
+     ++static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
+      +{
+      +	int result = 0;
+      +	struct string_list_item *item;
+     @@ builtin/gc.c: static int maintenance_task_commit_graph(struct maintenance_opts *
+      +	return result;
+      +}
+      +
+     - static int maintenance_task_gc(struct maintenance_opts *opts)
+     + static int maintenance_task_gc(struct maintenance_run_opts *opts)
+       {
+       	struct child_process child = CHILD_PROCESS_INIT;
+      @@ builtin/gc.c: struct maintenance_task {
+  3:  4fa9d298b9 !  2:  75e846456b maintenance: add loose-objects task
+     @@ Documentation/git-maintenance.txt: gc::
+       --auto::
+      
+       ## builtin/gc.c ##
+     -@@ builtin/gc.c: static int maintenance_task_gc(struct maintenance_opts *opts)
+     +@@ builtin/gc.c: static int maintenance_task_gc(struct maintenance_run_opts *opts)
+       	return run_command(&child);
+       }
+       
+     -+static int prune_packed(struct maintenance_opts *opts)
+     ++static int prune_packed(struct maintenance_run_opts *opts)
+      +{
+      +	struct child_process child = CHILD_PROCESS_INIT;
+      +
+     @@ builtin/gc.c: static int maintenance_task_gc(struct maintenance_opts *opts)
+      +	return ++(d->count) > d->batch_size;
+      +}
+      +
+     -+static int pack_loose(struct maintenance_opts *opts)
+     ++static int pack_loose(struct maintenance_run_opts *opts)
+      +{
+      +	struct repository *r = the_repository;
+      +	int result = 0;
+     @@ builtin/gc.c: static int maintenance_task_gc(struct maintenance_opts *opts)
+      +	return result;
+      +}
+      +
+     -+static int maintenance_task_loose_objects(struct maintenance_opts *opts)
+     ++static int maintenance_task_loose_objects(struct maintenance_run_opts *opts)
+      +{
+      +	return prune_packed(opts) || pack_loose(opts);
+      +}
+      +
+     - typedef int maintenance_task_fn(struct maintenance_opts *opts);
+     + typedef int maintenance_task_fn(struct maintenance_run_opts *opts);
+       
+       /*
+      @@ builtin/gc.c: struct maintenance_task {
+  4:  3432bc3167 =  3:  d6e382c43e maintenance: create auto condition for loose-objects
+  5:  0ee2434bdb =  4:  d0f2ec70d9 midx: enable core.multiPackIndex by default
+  6:  e157ea8dd7 =  5:  2cd3c803d9 midx: use start_delayed_progress()
+  7:  a8d956dad6 !  6:  0dd26bb584 maintenance: add incremental-repack task
+     @@ Commit message
+             it requires doing some calculations that are better isolated to
+             a separate change.
+      
+     -    Each of the above steps update the multi-pack-index file. After
+     -    each step, we verify the new multi-pack-index. If the new
+     -    multi-pack-index is corrupt, then delete the multi-pack-index,
+     -    rewrite it from scratch, and stop doing the later steps of the
+     -    job. This is intended to be an extra-safe check without leaving
+     -    a repo with many pack-files without a multi-pack-index.
+     -
+          These steps are based on a similar background maintenance step in
+          Scalar (and VFS for Git) [1]. This was incredibly effective for
+          users of the Windows OS repository. After using the same VFS for Git
+     @@ builtin/gc.c
+       
+       #define FAILED_RUN "failed to run %s"
+       
+     -@@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts *opts)
+     +@@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_run_opts *opts)
+       	return prune_packed(opts) || pack_loose(opts);
+       }
+       
+     -+static int multi_pack_index_write(struct maintenance_opts *opts)
+     ++static int multi_pack_index_write(struct maintenance_run_opts *opts)
+      +{
+      +	struct child_process child = CHILD_PROCESS_INIT;
+      +
+     @@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts
+      +	return 0;
+      +}
+      +
+     -+static int rewrite_multi_pack_index(struct maintenance_opts *opts)
+     -+{
+     -+	struct repository *r = the_repository;
+     -+	char *midx_name = get_midx_filename(r->objects->odb->path);
+     -+
+     -+	unlink(midx_name);
+     -+	free(midx_name);
+     -+
+     -+	return multi_pack_index_write(opts);
+     -+}
+     -+
+     -+static int multi_pack_index_verify(struct maintenance_opts *opts,
+     -+				   const char *message)
+     -+{
+     -+	struct child_process child = CHILD_PROCESS_INIT;
+     -+
+     -+	child.git_cmd = 1;
+     -+	strvec_pushl(&child.args, "multi-pack-index", "verify", NULL);
+     -+
+     -+	if (opts->quiet)
+     -+		strvec_push(&child.args, "--no-progress");
+     -+
+     -+	if (run_command(&child)) {
+     -+		warning(_("'git multi-pack-index verify' failed %s"), message);
+     -+		return 1;
+     -+	}
+     -+
+     -+	return 0;
+     -+}
+     -+
+     -+static int multi_pack_index_expire(struct maintenance_opts *opts)
+     ++static int multi_pack_index_expire(struct maintenance_run_opts *opts)
+      +{
+      +	struct child_process child = CHILD_PROCESS_INIT;
+      +
+     @@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts
+      +	return 0;
+      +}
+      +
+     -+static int multi_pack_index_repack(struct maintenance_opts *opts)
+     ++static int multi_pack_index_repack(struct maintenance_run_opts *opts)
+      +{
+      +	struct child_process child = CHILD_PROCESS_INIT;
+      +
+     @@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts
+      +	return 0;
+      +}
+      +
+     -+static int maintenance_task_incremental_repack(struct maintenance_opts *opts)
+     ++static int maintenance_task_incremental_repack(struct maintenance_run_opts *opts)
+      +{
+      +	prepare_repo_settings(the_repository);
+      +	if (!the_repository->settings.core_multi_pack_index) {
+     @@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts
+      +
+      +	if (multi_pack_index_write(opts))
+      +		return 1;
+     -+	if (multi_pack_index_verify(opts, "after initial write"))
+     -+		return rewrite_multi_pack_index(opts);
+      +	if (multi_pack_index_expire(opts))
+      +		return 1;
+     -+	if (multi_pack_index_verify(opts, "after expire step"))
+     -+		return !!rewrite_multi_pack_index(opts);
+      +	if (multi_pack_index_repack(opts))
+      +		return 1;
+     -+	if (multi_pack_index_verify(opts, "after repack step"))
+     -+		return !!rewrite_multi_pack_index(opts);
+      +	return 0;
+      +}
+      +
+     - typedef int maintenance_task_fn(struct maintenance_opts *opts);
+     + typedef int maintenance_task_fn(struct maintenance_run_opts *opts);
+       
+       /*
+      @@ builtin/gc.c: struct maintenance_task {
+  8:  f0e7276755 !  7:  f3b25a9927 maintenance: auto-size incremental-repack batch
+     @@ Commit message
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## builtin/gc.c ##
+     -@@ builtin/gc.c: static int multi_pack_index_expire(struct maintenance_opts *opts)
+     +@@ builtin/gc.c: static int multi_pack_index_expire(struct maintenance_run_opts *opts)
+       	return 0;
+       }
+       
+     @@ builtin/gc.c: static int multi_pack_index_expire(struct maintenance_opts *opts)
+      +	return result_size;
+      +}
+      +
+     - static int multi_pack_index_repack(struct maintenance_opts *opts)
+     + static int multi_pack_index_repack(struct maintenance_run_opts *opts)
+       {
+       	struct child_process child = CHILD_PROCESS_INIT;
+     -@@ builtin/gc.c: static int multi_pack_index_repack(struct maintenance_opts *opts)
+     +@@ builtin/gc.c: static int multi_pack_index_repack(struct maintenance_run_opts *opts)
+       	if (opts->quiet)
+       		strvec_push(&child.args, "--no-progress");
+       
+  9:  5659a23ad5 !  8:  e9bb32f53a maintenance: add incremental-repack auto condition
+     @@ builtin/gc.c
+       
+       #define FAILED_RUN "failed to run %s"
+       
+     -@@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts *opts)
+     +@@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_run_opts *opts)
+       	return prune_packed(opts) || pack_loose(opts);
+       }
+       
+     @@ builtin/gc.c: static int maintenance_task_loose_objects(struct maintenance_opts
+      +	return count >= incremental_repack_auto_limit;
+      +}
+      +
+     - static int multi_pack_index_write(struct maintenance_opts *opts)
+     + static int multi_pack_index_write(struct maintenance_run_opts *opts)
+       {
+       	struct child_process child = CHILD_PROCESS_INIT;
+      @@ builtin/gc.c: static struct maintenance_task tasks[] = {
+
 -- 
 gitgitgadget
-
