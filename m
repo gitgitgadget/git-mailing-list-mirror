@@ -7,192 +7,209 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 694D6C433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 07:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4B89C433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 10:07:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F1D42071E
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 07:57:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D6B62068E
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 10:07:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MM9Kq+aY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mlTgQcad"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726066AbgHYH5W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 03:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56028 "EHLO
+        id S1729530AbgHYKHW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 06:07:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbgHYH5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 03:57:21 -0400
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37646C061574
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 00:57:21 -0700 (PDT)
-Received: by mail-il1-x142.google.com with SMTP id k4so9626613ilr.12
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 00:57:21 -0700 (PDT)
+        with ESMTP id S1726000AbgHYKHV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 06:07:21 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30FBCC061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 03:07:21 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id i10so13126465ljn.2
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 03:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=n1BoHo1/mLw1HuKkyMZA1O7QFtZxswHQs0c0ooTbI9Q=;
-        b=MM9Kq+aY4cxD177btBnxUlgPdCJjrMiBqrT6eSOZFwgL920u2mR7cbecODn8LZ1JMp
-         OJwscR9tIbjokb4xpJvx3mSPU9u9swbUT2N1OdbvPiXKCQ5xn2nHKenGePiPrDCuoHrm
-         MD9qA5HxPbpHRrgykd3KFk4/Uw+slCZYqWApN2mu05SPjpELLWdKa1gQn2FgAzZZoxCY
-         dMTElEjliWIQ4ywU1xcQweZIR0fBQeV3+SmxzbmZrwTqSB9NUbZJvjoKx4fLttpU+x7w
-         HSru+T0itU+BLPnGGsFcMW+73h/i+aLMEiKIYeQj3ecOSTx7NjJCUntnuBZJt4EYh8WW
-         3m9Q==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Ollj2tdMTim5CjH0ZjHuzAADtmp3FtUCskfJ84IqPIE=;
+        b=mlTgQcadf9+r3YXve1coTBHsyQVUt6PAemmE1DEsymiR2V36NdywmPjIxDDDpcndc0
+         UMgf9CfdxgzLT27/U2ACZG+dy6VtufDBdVQLNyKhHc0wJZ8VYfgcOe+5Hp9TxeEMjDXe
+         VeijQFhcENpWS44m5jdLjW7jGqHsAFLSR+pDr2cevf3NVILr7OLN1kJBiNjxYDDCZhab
+         KEvZesOoaT9Elfl8HFWM8UnW3HVARIe2gVb390/AHgrxup5jQhP8nFeUiEXVq97K+IVq
+         V01XBEjb+HBZ34gb3EXFg8WfF690rA/Udpxi3nOPhboAoWlQsDGtnfYV8j+0NxJg50dE
+         tyQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=n1BoHo1/mLw1HuKkyMZA1O7QFtZxswHQs0c0ooTbI9Q=;
-        b=Bgk9WXglZgfPhQODyIx4sTDXOxoXsnrgtWE2rI0w3ZRa9+nCV5zAEfEHxa79+owQlx
-         76cWf9vnVn4fS0lBmkTkoYC1FaKnwtoyP2TtNH1/BzdgbRzB4oDSD4JFmxxOVo7yPT51
-         BW1nGpwwLbo3b7/cK6/VbQNMRCgWfKuom84sRrgo5QwUc+tQd5qCspRgE6VrDrpK7Vne
-         V5n2crtELO/vI1secapbpLFqxo2XZK/xn801BMzPD0QFE/0azzIx1mTyOvlXlIWS/YSR
-         lnJ2cgeGjSZQTY782+YLfbAN6DyjxUfJGireUjcVSg7o+1xGvWrTcQTItHCCh+I4VppM
-         URIg==
-X-Gm-Message-State: AOAM531NqwTeJ3PEaxaTqR9dd/FtZqUtXYVQ+lLYhVRSN1vTyVNFdJqe
-        6j3kqp4X/x1Z8Bdmmdek9wBYZ7Dbgf8CwKinfN2nzNOTVEb3hw==
-X-Google-Smtp-Source: ABdhPJwlpUcnkVwEY+6qeRGZgATqXGE6hEu30RbDpkbpYOvTQGjck4IbNjpQj0A3TYBxQfBslJJbybw7p64uYHDYiw4=
-X-Received: by 2002:a05:6e02:f92:: with SMTP id v18mr8004856ilo.125.1598342240494;
- Tue, 25 Aug 2020 00:57:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
- <pull.676.v3.git.1597509583.gitgitgadget@gmail.com> <b347dbb01b9254ab8d79fbbd0f7c2b637efde62e.1597509583.git.gitgitgadget@gmail.com>
- <85d03jlu05.fsf@gmail.com> <20200825061418.GA629699@Abhishek-Arch> <855z97dvsp.fsf@gmail.com>
-In-Reply-To: <855z97dvsp.fsf@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Date:   Tue, 25 Aug 2020 09:56:44 +0200
-Message-ID: <CANQwDwdsV0mSos7M_d7UP1CjT1rCyA_GfaYarMKUZaFdDZ0WRg@mail.gmail.com>
-Subject: Re: [PATCH v3 06/11] commit-graph: add a slab to store topological levels
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=Ollj2tdMTim5CjH0ZjHuzAADtmp3FtUCskfJ84IqPIE=;
+        b=Td7AxURf6u3ZILzZnxLnSnKPIaqMcG4pr4XPXwzPdJ1lI/XeXBWTEXHD1228jgTTaC
+         Rj+Xb+BWo9cW9f50M8TpBiD9ikyq4T2dSgGkutQ40px7ejGZ3Y7vLvd9k0rQIljdSlpV
+         EhJCA31EOjE3eZs6Mr8r48FaFmmzu12LiUtcmw8zVK4JfxoSYMCKUj219H1zezElthRX
+         +48ZZHsqOuIoh+ejb/QHkH/Mzvu1mBBwc9aVWd9ZHp6sgUX87muskzgzOaisXFo6AS80
+         V0lIggaraUCJf6gSvqgV1n3up1spsBSeQJLZr/NM9TEtYHT/ORfUghIZn5blHRvDNeQb
+         RgUg==
+X-Gm-Message-State: AOAM533Urnf/YVJ+4gVQJ9blCq0EeQotDYvB/KAPC3JuflfeFcHEt8Oq
+        GVvlWVrTB+hGR04M4w/sm+CmXGLFOc72aQ==
+X-Google-Smtp-Source: ABdhPJwDbuart6nMDxqtI39NdnIRhW2PrxFNSr6vUKk8mCOcy6OMebwDBZ7EaMdcX8QFTrYosAiS2g==
+X-Received: by 2002:a2e:8197:: with SMTP id e23mr4947607ljg.406.1598350039543;
+        Tue, 25 Aug 2020 03:07:19 -0700 (PDT)
+Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id j6sm2735364lja.23.2020.08.25.03.07.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2020 03:07:18 -0700 (PDT)
+From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
 To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
-Cc:     git <git@vger.kernel.org>,
+Cc:     git@vger.kernel.org,
         Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+        Taylor Blau <me@ttaylorr.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 07/11] commit-graph: implement corrected commit date
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+        <4074ace65be3094d35dd0aaedb89eb5a0ec98cee.1597509583.git.gitgitgadget@gmail.com>
+        <85wo1rk0iy.fsf@gmail.com> <20200825064954.GA645690@Abhishek-Arch>
+Date:   Tue, 25 Aug 2020 12:07:17 +0200
+In-Reply-To: <20200825064954.GA645690@Abhishek-Arch> (Abhishek Kumar's message
+        of "Tue, 25 Aug 2020 12:19:54 +0530")
+Message-ID: <85wo1nca3u.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 25 Aug 2020 at 09:33, Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
-> Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
-> > On Fri, Aug 21, 2020 at 08:43:38PM +0200, Jakub Nar=C4=99bski wrote:
-> >> "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >>
-> >>> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> [...]
-> >>> @@ -1335,11 +1341,11 @@ static void compute_generation_numbers(struct=
- write_commit_graph_context *ctx)
-> >>>                                     _("Computing commit graph generat=
-ion numbers"),
-> >>>                                     ctx->commits.nr);
-> >>>     for (i =3D 0; i < ctx->commits.nr; i++) {
-> >>> -           uint32_t generation =3D commit_graph_data_at(ctx->commits=
-.list[i])->generation;
-> >>> +           uint32_t level =3D *topo_level_slab_at(ctx->topo_levels, =
-ctx->commits.list[i]);
-> >>
-> >> All right, so that is why this 'generation' variable was not converted
-> >> to timestamp_t type.
-> >>
-> >>>
-> >>>             display_progress(ctx->progress, i + 1);
-> >>> -           if (generation !=3D GENERATION_NUMBER_V1_INFINITY &&
-> >>> -               generation !=3D GENERATION_NUMBER_ZERO)
-> >>> +           if (level !=3D GENERATION_NUMBER_V1_INFINITY &&
-> >>> +               level !=3D GENERATION_NUMBER_ZERO)
-> >>>                     continue;
-> >>
-> >> Here we use GENERATION_NUMBER*_INFINITY to check if the commit is
-> >> outside commit-graph files, and therefore we would need its topologica=
-l
-> >> level computed.
-> >>
-> >> However, I don't understand how it works.  We have had created the
-> >> commit_graph_data_at() and use it instead of commit_graph_data_slab_at=
-()
-> >> to provide default values for `struct commit_graph`... but only for
-> >> `graph_pos` member.  It is commit_graph_generation() that returns
-> >> GENERATION_NUMBER_INFINITY for commits not in graph.
-> >>
-> >> But neither commit_graph_data_at()->generation nor topo_level_slab_at(=
-)
-> >> handles this special case, so I don't see how 'generation' variable ca=
-n
-> >> *ever* be GENERATION_NUMBER_INFINITY, and 'level' variable can ever be
-> >> GENERATION_NUMBER_V1_INFINITY for commits not in graph.
-> >>
-> >> Does it work *accidentally*, because the default value for uninitializ=
-ed
-> >> data on commit-slab is 0, which matches GENERATION_NUMBER_ZERO?  It
-> >> certainly looks like it does.  And GENERATION_NUMBER_ZERO is an artifa=
-ct
-> >> of commit-graph feature development history, namely the short time whe=
-re
-> >> Git didn't use any generation numbers and stored 0 in the place set fo=
-r
-> >> it in the commit-graph format...  On the other hand this is not the ca=
-se
-> >> for corrected commit date (generation number v2), as it could
-> >> "legitimately" be 0 if some root commit (without any parents) had
-> >> committerdate of epoch 0, i.e. 1 January 1970 00:00:00 UTC, perhaps
-> >> caused by malformed but valid commit object.
-> >>
-> >> Ugh...
-> >
-> > It works accidentally.
-> >
-> > Our decision to avoid the cost of initializing both
-> > commit_graph_data->generation and commit_graph_data->graph_pos has
-> > led to some unwieldy choices - the complexity of helper functions,
-> > bypassing helper functions when writing a commit-graph file [1].
-> >
-> > I want to re-visit how commit_graph_data slab is defined in a future se=
-ries.
-> >
-> > [1]: https://lore.kernel.org/git/be28ab7b-0ae4-2cc5-7f2b-92075de3723a@g=
-mail.com/
->
-> All right, we might want to make use of the fact that the value of 0 for
-> topological level here always mean that its value for a commit needs to
-> be computed, that 0 is not a valid value for topological levels.
-> - if the value 0 came from commit-graph file, it means that it came
->   from Git version that used commit-graph but didn't compute generation
->   numbers; the value is GENERATION_NUMBER_ZERO
-> - the value 0 might came from the fact that commit is not in graph,
->   and that commit-slab zero-initializes the values stored; let's
->   call this value GENERATION_NUMBER_UNINITIALIZED
->
-> If we ensure that corrected commit date can never be zero (which is
-> extremely unlikely, as one of root commits would have to be malformed or
-> written on badly misconfigured computer, with value of 0 for committer
-> timestamp), then this "happy accident" can keep working.
->
->   As a special case, commit date with timestamp of zero (01.01.1970 00:00=
-:00Z)
->   has corrected commit date of one, to be able to distinguish
->   uninitialized values.
->
-> Or something like that.
->
-> Actually, it is not even necessary, as corrected commit date of 0 just
-> means that this single value (well, for every root commit with commit
-> date of 0) would be unnecessary recomputed in compute_generation_numbers(=
-).
->
-> Anyway, we would want to document this fact in the commit message.
+Hello,
 
-Alternatively, instead of comparing 'level' (and later in series also
-'corrected_commit_date') against GENERATION_NUMBER_INFINITY,
-we could load at no extra cost `graph_pos` value and compare it
-against COMMIT_NOT_FROM_GRAPH.
+Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+> On Sat, Aug 22, 2020 at 02:05:41AM +0200, Jakub Nar=C4=99bski wrote:
+>> "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+[...]
+>>> To minimize the space required to store corrected commit date, Git
+>>> stores corrected commit date offsets into the commit-graph file. The
+>>> corrected commit date offset for a commit is defined as the difference
+>>> between its corrected commit date and actual commit date.
+>>
+>> Perhaps we should add more details about data type sizes in question.
+>
+> Will add.
 
-But with this solution we could never get rid of graph_pos, if we
-think it is unnecessary. If we split commit_graph_data into separate
-slabs (as it was in early versions of respective patch series), we
-would have to pay additional cost.
+Note however that we need to solve the problem of storing values which
+are not monotonic wrt. parent relation (partial order) in limited disk
+space, that is GENERATION_NUMBER_V2_OFFSET_MAX vs GENERATION_NUMBER_MAX;
+see comments in 11/11 and 00/11.
 
-But it is an alternative.
+>>
+>> Storing corrected commit date requires sizeof(timestamp_t) bytes, which
+>> in most cases is 64 bits (uintmax_t).  However corrected commit date
+>> offsets can be safely stored^* using only 32 bits.  This halves the size
+>> of GDAT chunk, reducing per-commit storage from 2*H + 16 + 8 bytes to
+>> 2*H + 16 + 4 bytes, which is reduction of around 6%, not including
+>> header, fanout table (OIDF) and extra edges list (EDGE).
+>>
+>> Which might mean that the extra complication is not worth it, and we
+>> should store corrected commit date directly instead.
+>>
+>> *) unless for example one of commits is malformed but valid,
+>>    and has committerdate of 0 Unix time, 1 January 1970.
+
+See above.
+
+>>> While Git does not write out offsets at this stage, Git stores the
+>>> corrected commit dates in member generation of struct commit_graph_data.
+>>> It will begin writing commit date offsets with the introduction of
+>>> generation data chunk.
+>>
+>> OK, so the agenda for introducing geeration number v2 is as follows:
+>> - compute generation numbers v2, i.e. corrected commit date
+>> - store corrected commit date [offsets] in new GDAT chunk,
+>>   unless backward-compatibility concerns require us to not to
+>> - load [and compute] corrected commit date from commit-graph
+>>   storing it as 'generation' field of `struct commit_graph_data`,
+>>   unless backward-compatibility concerns require us to store
+>>   topological levels (generation number v1) in there instead
+>>
+>
+> The last point is not correct. We always store topological levels into
+> the topo_levels slab introduced and always store corrected commit date
+> into data->generation, regardless of backward compatibility concerns.
+
+I think I was not clear enough (in trying to be brief).  I meant here
+loading available generation numbers for use in graph traversal,
+done in later patches in this series.
+
+In _next_ commit we store topological levels in `generation` field:
+
+  @@ -755,7 +763,11 @@ static void fill_commit_graph_info(struct commit *it=
+em, struct commit_graph *g,
+   	date_low =3D get_be32(commit_data + g->hash_len + 12);
+   	item->date =3D (timestamp_t)((date_high << 32) | date_low);
+
+  -	graph_data->generation =3D get_be32(commit_data + g->hash_len + 8) >> 2;
+  +	if (g->chunk_generation_data)
+  +		graph_data->generation =3D item->date +
+  +			(timestamp_t) get_be32(g->chunk_generation_data + sizeof(uint32_t) * =
+lex_index);
+  +	else
+  +		graph_data->generation =3D get_be32(commit_data + g->hash_len + 8) >> =
+2;
+
+
+We use topo_level slab only when writing the commit-graph file.
+
+> We could avoid initializing topo_slab if we are not writing generation
+> data chunk (and thus don't need corrected commit dates) but that
+> wouldn't have an impact on run time while writing commit-graph because
+> computing corrected commit dates is cheap as the main cost is in walking
+> the graph and writing the file.
+
+Right.
+
+Though you need to add the cost of allocation and managing extra
+commit slab, I think that amortized cost is negligible.
+
+But what would be better is showing benchmark data: does writing the
+commit graph without GDAT take not insigificant more time than without
+this patch?
+
+[...]
+>>> @@ -2372,8 +2384,8 @@ int verify_commit_graph(struct repository *r, str=
+uct commit_graph *g, int flags)
+>>>  	for (i =3D 0; i < g->num_commits; i++) {
+>>>  		struct commit *graph_commit, *odb_commit;
+>>>  		struct commit_list *graph_parents, *odb_parents;
+>>> -		timestamp_t max_generation =3D 0;
+>>> -		timestamp_t generation;
+>>> +		timestamp_t max_corrected_commit_date =3D 0;
+>>> +		timestamp_t corrected_commit_date;
+>>
+>> This is simple, and perhaps unnecessary, rename of variables.
+>> Shouldn't we however verify *both* topological level, and
+>> (if exists) corrected commit date?
+>
+> The problem with verifying both topological level and corrected commit
+> dates is that we would have to re-fill commit_graph_data slab with commit
+> data chunk as we cannot modify data->generation otherwise, essentially
+> repeating the whole verification process.
+>
+> While it's okay for now, I might take this up in a future series [1].
+>
+> [1]: https://lore.kernel.org/git/4043ffbc-84df-0cd6-5c75-af80383a56cf@gma=
+il.com/
+
+All right, I believe you that verifying both topological level and
+corrected commit date would be more difficult.
+
+That doesn't change the conclusion that this variable should remain to
+be named `generation`, as when verifying GDAT-less commit-graph files it
+would check topological levels (it uses commit_graph_generation(), which
+in turn uses `generation` field in commit graph info, which as I have
+show above in later patch could be v1 or v2 generation number).
 
 Best,
 --=20
