@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C7AFC433E3
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 290DBC433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:36:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5ED92076C
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:36:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DEE22071E
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:36:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hz7AaFbj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TN2gAYfH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726541AbgHYSgn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 14:36:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43866 "EHLO
+        id S1726673AbgHYSgr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 14:36:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgHYSgn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 14:36:43 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5C1C061755
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:43 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id 2so2674782wrj.10
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:42 -0700 (PDT)
+        with ESMTP id S1726149AbgHYSgo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 14:36:44 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14876C061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:44 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id z9so3128999wmk.1
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JK0tGbaMIKdk1hvIKqpiOacoW3D9iUo2ZtIbD7S3HlU=;
-        b=hz7AaFbjhcEMechPlhylzMCaV5dQBoo/pxsALxnUJX0y6cPc6aJwUyNrXszrAtUXbJ
-         sDkz4vVl63I0CYfErnMNPBnx+EjEnP2Pxtq9pWCpuUfeCHUlH3D7k2YHtBr93mIOlD+v
-         eH1M5LMkiIJSODfXtQeH4YGEBua5rW0ZsIXWbG1wdWxd4ZelhcGlRCxWi3YxhhXDhlaQ
-         XVPePmDSJeis2kstqXVom9+Nd2sme68VpTOB2ieDhfgdfF+7K7BJAfzvti00r7tLkWOR
-         dM5sO07o1LegFurFe8wMnXgoe8LR4q2mXUZKxjd2rXZjC5bMPrG8gBNksRKoA67tINq8
-         HBow==
+        bh=6r2hLeU/nyGmpZiDrr6PAXzoBR1Xz/3XJ77BSywaxfQ=;
+        b=TN2gAYfHwu+7s6DVfDCXtIPOU6KyhbtMrzSSKbCgrr/ac+TRGhcyy6q72x3DkSOSmL
+         A76T7tkA5jenFedHZGY9ohc7ykIif55p5YsHuPOCX3+UTDwp+bNUCYCSEAS9aooE8qtp
+         0PKQq8TVM/5nHcpBJQLCoauyTcwMqaKxytM3Mr3cvhF3lOK44U8qw6I8hL6aKbzWn0p1
+         Gq1QofMsLkxeZJ3TclT6JaKISCuzOXc4m3WfRaqDoQMkndLfhhs6eoTmkVwPOGqdSLzm
+         /24Sy83ushLHQ3F1f/vz6aG6gWdvexEnEjy5hnTiW79CGkNhr+R1ZTHhyN720Rq9BkHq
+         K5KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JK0tGbaMIKdk1hvIKqpiOacoW3D9iUo2ZtIbD7S3HlU=;
-        b=o20udbAFxaNnf3UFzlGQP0el/9v5bwBeAl8E43NVJXL7UGCoX7LxgLZoGQ0wnZCITE
-         fE2N+efw0fE5DhcvehYRR78CBVFu+hh2X0TbK4ZXJksWlLoG6VojCPqS7IECp2yGDCk+
-         2Jboh++uPluuHsQ3T73wNq+8dT1Rk7Soyzsyspyt2aS7hgiLk2Z8+2bPezOnS3cCrd4P
-         978a5ICmcdi6ehcpOgk9NhVYJzFfnJSSIjnDPRef17csScuzM3Xm3ZaGIQjsBJbI9phq
-         8Pm73p7HmilTtli5FoydFX30v7V2TpqQCA2fTTKXns7IDE0w5paMV2cpEa+qDdilQ+Ns
-         uTww==
-X-Gm-Message-State: AOAM533RkWv1P6m0DO4NnmpkyZZ7mQ96Qfa6cC007Gpvow+/7mOjVO9i
-        uxXeYQp2hxwjlM4UJUm+25vFY7lI4Qg=
-X-Google-Smtp-Source: ABdhPJyqPAwPmnOOzzj8jeHO5SWAWht+mVDQX8VneMn1njCtVUhu/kR9ndksY1EKOpxwvJYXpoKAbw==
-X-Received: by 2002:a5d:56ca:: with SMTP id m10mr8763706wrw.262.1598380601391;
-        Tue, 25 Aug 2020 11:36:41 -0700 (PDT)
+        bh=6r2hLeU/nyGmpZiDrr6PAXzoBR1Xz/3XJ77BSywaxfQ=;
+        b=gVlJqaaaJ9F5YZgfPTmOa1sfgAAMUoIhUdY/I+Ys1MpfJ7vpfH/m+FvBVKwL/yHwxW
+         tMk0c5cDMGl3j+jw8RS10m3yh7/8WMP7EU5Kh8/weaCPi12D+v1hIjs0GIvb52MZe1b2
+         Iy13Vx5c1Q+NU8mN4Iiss2eIqs9mfqEXWpZVVJGBb9PK/zYEQgUmPiPinzAT4FYZIPne
+         vPZiGTTXTSkgp20DoquDvq0tjouhqoN1MPi+Z/B5LJe2gtqmqMgAg6m+ypkzXZAdRATU
+         RCcIKUWuLe9hVaA0ym6YfyaVDOGXE2npWIMP0pvP+4QTpKB5RSzT7Et9yyP788Av45lG
+         RNMQ==
+X-Gm-Message-State: AOAM530yCAUncBqMa/ctGaaNt75QF8nTbON26zeqh16Enrh+yOvBLYFo
+        h/vnMZ+BKQUlevC5xk8SO0JY0HY8xrY=
+X-Google-Smtp-Source: ABdhPJzQsdGANBeEI/4TgNHc9KtAq5H5I9bMh/eMCDjBiT2PuBnp0GuGaOO75nBx/USnZ7fb43CZlg==
+X-Received: by 2002:a7b:c4c5:: with SMTP id g5mr3382870wmk.46.1598380602471;
+        Tue, 25 Aug 2020 11:36:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n18sm32377474wrp.58.2020.08.25.11.36.40
+        by smtp.gmail.com with ESMTPSA id j5sm8051471wma.45.2020.08.25.11.36.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 11:36:40 -0700 (PDT)
-Message-Id: <da64c51a8182ec13aeed8f0157079fb29a09ee85.1598380599.git.gitgitgadget@gmail.com>
+        Tue, 25 Aug 2020 11:36:41 -0700 (PDT)
+Message-Id: <75e846456b8ac4a3518ecc9051c927539dd7ff08.1598380599.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
 References: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
         <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 25 Aug 2020 18:36:32 +0000
-Subject: [PATCH v3 1/8] maintenance: add prefetch task
+Date:   Tue, 25 Aug 2020 18:36:33 +0000
+Subject: [PATCH v3 2/8] maintenance: add loose-objects task
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,214 +83,240 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When working with very large repositories, an incremental 'git fetch'
-command can download a large amount of data. If there are many other
-users pushing to a common repo, then this data can rival the initial
-pack-file size of a 'git clone' of a medium-size repo.
+One goal of background maintenance jobs is to allow a user to
+disable auto-gc (gc.auto=0) but keep their repository in a clean
+state. Without any cleanup, loose objects will clutter the object
+database and slow operations. In addition, the loose objects will
+take up extra space because they are not stored with deltas against
+similar objects.
 
-Users may want to keep the data on their local repos as close as
-possible to the data on the remote repos by fetching periodically in
-the background. This can break up a large daily fetch into several
-smaller hourly fetches.
+Create a 'loose-objects' task for the 'git maintenance run' command.
+This helps clean up loose objects without disrupting concurrent Git
+commands using the following sequence of events:
 
-The task is called "prefetch" because it is work done in advance
-of a foreground fetch to make that 'git fetch' command much faster.
+1. Run 'git prune-packed' to delete any loose objects that exist
+   in a pack-file. Concurrent commands will prefer the packed
+   version of the object to the loose version. (Of course, there
+   are exceptions for commands that specifically care about the
+   location of an object. These are rare for a user to run on
+   purpose, and we hope a user that has selected background
+   maintenance will not be trying to do foreground maintenance.)
 
-However, if we simply ran 'git fetch <remote>' in the background,
-then the user running a foregroudn 'git fetch <remote>' would lose
-some important feedback when a new branch appears or an existing
-branch updates. This is especially true if a remote branch is
-force-updated and this isn't noticed by the user because it occurred
-in the background. Further, the functionality of 'git push
---force-with-lease' becomes suspect.
+2. Run 'git pack-objects' on a batch of loose objects. These
+   objects are grouped by scanning the loose object directories in
+   lexicographic order until listing all loose objects -or-
+   reaching 50,000 objects. This is more than enough if the loose
+   objects are created only by a user doing normal development.
+   We noticed users with _millions_ of loose objects because VFS
+   for Git downloads blobs on-demand when a file read operation
+   requires populating a virtual file. This has potential of
+   happening in partial clones if someone runs 'git grep' or
+   otherwise evades the batch-download feature for requesting
+   promisor objects.
 
-When running 'git fetch <remote> <options>' in the background, use
-the following options for careful updating:
-
-1. --no-tags prevents getting a new tag when a user wants to see
-   the new tags appear in their foreground fetches.
-
-2. --refmap= removes the configured refspec which usually updates
-   refs/remotes/<remote>/* with the refs advertised by the remote.
-   While this looks confusing, this was documented and tested by
-   b40a50264ac (fetch: document and test --refmap="", 2020-01-21),
-   including this sentence in the documentation:
-
-	Providing an empty `<refspec>` to the `--refmap` option
-	causes Git to ignore the configured refspecs and rely
-	entirely on the refspecs supplied as command-line arguments.
-
-3. By adding a new refspec "+refs/heads/*:refs/prefetch/<remote>/*"
-   we can ensure that we actually load the new values somewhere in
-   our refspace while not updating refs/heads or refs/remotes. By
-   storing these refs here, the commit-graph job will update the
-   commit-graph with the commits from these hidden refs.
-
-4. --prune will delete the refs/prefetch/<remote> refs that no
-   longer appear on the remote.
-
-5. --no-write-fetch-head prevents updating FETCH_HEAD.
-
-We've been using this step as a critical background job in Scalar
-[1] (and VFS for Git). This solved a pain point that was showing up
-in user reports: fetching was a pain! Users do not like waiting to
-download the data that was created while they were away from their
-machines. After implementing background fetch, the foreground fetch
-commands sped up significantly because they mostly just update refs
-and download a small amount of new data. The effect is especially
-dramatic when paried with --no-show-forced-udpates (through
-fetch.showForcedUpdates=false).
-
-[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/FetchStep.cs
+This step is based on a similar step in Scalar [1] and VFS for Git.
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/LooseObjectsStep.cs
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-maintenance.txt | 15 +++++++++
- builtin/gc.c                      | 51 +++++++++++++++++++++++++++++++
- t/t7900-maintenance.sh            | 26 ++++++++++++++++
- 3 files changed, 92 insertions(+)
+ Documentation/git-maintenance.txt | 15 +++++
+ builtin/gc.c                      | 97 +++++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh            | 39 +++++++++++++
+ 3 files changed, 151 insertions(+)
 
 diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 6abcb8255a..12668fccf7 100644
+index 12668fccf7..fc95eb594f 100644
 --- a/Documentation/git-maintenance.txt
 +++ b/Documentation/git-maintenance.txt
-@@ -47,6 +47,21 @@ commit-graph::
- 	`commit-graph-chain` file. They will be deleted by a later run based
- 	on the expiration delay.
+@@ -70,6 +70,21 @@ gc::
+ 	be disruptive in some situations, as it deletes stale data. See
+ 	linkgit:git-gc[1] for more details on garbage collection in Git.
  
-+prefetch::
-+	The `prefetch` task updates the object directory with the latest
-+	objects from all registered remotes. For each remote, a `git fetch`
-+	command is run. The refmap is custom to avoid updating local or remote
-+	branches (those in `refs/heads` or `refs/remotes`). Instead, the
-+	remote refs are stored in `refs/prefetch/<remote>/`. Also, tags are
-+	not updated.
-++
-+This is done to avoid disrupting the remote-tracking branches. The end users
-+expect these refs to stay unmoved unless they initiate a fetch.  With prefetch
-+task, however, the objects necessary to complete a later real fetch would
-+already be obtained, so the real fetch would go faster.  In the ideal case,
-+it will just become an update to bunch of remote-tracking branches without
-+any object transfer.
++loose-objects::
++	The `loose-objects` job cleans up loose objects and places them into
++	pack-files. In order to prevent race conditions with concurrent Git
++	commands, it follows a two-step process. First, it deletes any loose
++	objects that already exist in a pack-file; concurrent Git processes
++	will examine the pack-file for the object data instead of the loose
++	object. Second, it creates a new pack-file (starting with "loose-")
++	containing a batch of loose objects. The batch size is limited to 50
++	thousand objects to prevent the job from taking too long on a
++	repository with many loose objects. The `gc` task writes unreachable
++	objects as loose objects to be cleaned up by a later step only if
++	they are not re-added to a pack-file; for this reason it is not
++	advisable to enable both the `loose-objects` and `gc` tasks at the
++	same time.
 +
- gc::
- 	Clean up unnecessary files and optimize the local repository. "GC"
- 	stands for "garbage collection," but this task performs many
+ OPTIONS
+ -------
+ --auto::
 diff --git a/builtin/gc.c b/builtin/gc.c
-index c3bcdc1167..eb9c4d6147 100644
+index eb9c4d6147..248ccde3c3 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -29,6 +29,7 @@
- #include "tree.h"
- #include "promisor-remote.h"
- #include "refs.h"
-+#include "remote.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -816,6 +817,51 @@ static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
- 	return 0;
+@@ -880,6 +880,98 @@ static int maintenance_task_gc(struct maintenance_run_opts *opts)
+ 	return run_command(&child);
  }
  
-+static int fetch_remote(const char *remote, struct maintenance_run_opts *opts)
++static int prune_packed(struct maintenance_run_opts *opts)
 +{
 +	struct child_process child = CHILD_PROCESS_INIT;
 +
 +	child.git_cmd = 1;
-+	strvec_pushl(&child.args, "fetch", remote, "--prune", "--no-tags",
-+		     "--no-write-fetch-head", "--recurse-submodules=no",
-+		     "--refmap=", NULL);
++	strvec_push(&child.args, "prune-packed");
 +
 +	if (opts->quiet)
 +		strvec_push(&child.args, "--quiet");
 +
-+	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote);
-+
 +	return !!run_command(&child);
 +}
 +
-+static int append_remote(struct remote *remote, void *cbdata)
-+{
-+	struct string_list *remotes = (struct string_list *)cbdata;
++struct write_loose_object_data {
++	FILE *in;
++	int count;
++	int batch_size;
++};
 +
-+	string_list_append(remotes, remote->name);
-+	return 0;
++static int bail_on_loose(const struct object_id *oid,
++			 const char *path,
++			 void *data)
++{
++	return 1;
 +}
 +
-+static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
++static int write_loose_object_to_stdin(const struct object_id *oid,
++				       const char *path,
++				       void *data)
 +{
-+	int result = 0;
-+	struct string_list_item *item;
-+	struct string_list remotes = STRING_LIST_INIT_DUP;
++	struct write_loose_object_data *d = (struct write_loose_object_data *)data;
 +
-+	if (for_each_remote(append_remote, &remotes)) {
-+		error(_("failed to fill remotes"));
-+		result = 1;
-+		goto cleanup;
++	fprintf(d->in, "%s\n", oid_to_hex(oid));
++
++	return ++(d->count) > d->batch_size;
++}
++
++static int pack_loose(struct maintenance_run_opts *opts)
++{
++	struct repository *r = the_repository;
++	int result = 0;
++	struct write_loose_object_data data;
++	struct child_process pack_proc = CHILD_PROCESS_INIT;
++
++	/*
++	 * Do not start pack-objects process
++	 * if there are no loose objects.
++	 */
++	if (!for_each_loose_file_in_objdir(r->objects->odb->path,
++					   bail_on_loose,
++					   NULL, NULL, NULL))
++		return 0;
++
++	pack_proc.git_cmd = 1;
++
++	strvec_push(&pack_proc.args, "pack-objects");
++	if (opts->quiet)
++		strvec_push(&pack_proc.args, "--quiet");
++	strvec_pushf(&pack_proc.args, "%s/pack/loose", r->objects->odb->path);
++
++	pack_proc.in = -1;
++
++	if (start_command(&pack_proc)) {
++		error(_("failed to start 'git pack-objects' process"));
++		return 1;
 +	}
 +
-+	for_each_string_list_item(item, &remotes)
-+		result |= fetch_remote(item->string, opts);
++	data.in = xfdopen(pack_proc.in, "w");
++	data.count = 0;
++	data.batch_size = 50000;
 +
-+cleanup:
-+	string_list_clear(&remotes, 0);
++	for_each_loose_file_in_objdir(r->objects->odb->path,
++				      write_loose_object_to_stdin,
++				      NULL,
++				      NULL,
++				      &data);
++
++	fclose(data.in);
++
++	if (finish_command(&pack_proc)) {
++		error(_("failed to finish 'git pack-objects' process"));
++		result = 1;
++	}
++
 +	return result;
 +}
 +
- static int maintenance_task_gc(struct maintenance_run_opts *opts)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
-@@ -854,6 +900,7 @@ struct maintenance_task {
- };
++static int maintenance_task_loose_objects(struct maintenance_run_opts *opts)
++{
++	return prune_packed(opts) || pack_loose(opts);
++}
++
+ typedef int maintenance_task_fn(struct maintenance_run_opts *opts);
+ 
+ /*
+@@ -901,6 +993,7 @@ struct maintenance_task {
  
  enum maintenance_task_label {
-+	TASK_PREFETCH,
+ 	TASK_PREFETCH,
++	TASK_LOOSE_OBJECTS,
  	TASK_GC,
  	TASK_COMMIT_GRAPH,
  
-@@ -862,6 +909,10 @@ enum maintenance_task_label {
- };
- 
- static struct maintenance_task tasks[] = {
-+	[TASK_PREFETCH] = {
-+		"prefetch",
-+		maintenance_task_prefetch,
+@@ -913,6 +1006,10 @@ static struct maintenance_task tasks[] = {
+ 		"prefetch",
+ 		maintenance_task_prefetch,
+ 	},
++	[TASK_LOOSE_OBJECTS] = {
++		"loose-objects",
++		maintenance_task_loose_objects,
 +	},
  	[TASK_GC] = {
  		"gc",
  		maintenance_task_gc,
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4f6a04ddb1..0bade09c43 100755
+index 0bade09c43..2e9e369786 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -60,4 +60,30 @@ test_expect_success 'run --task duplicate' '
- 	test_i18ngrep "cannot be selected multiple times" err
+@@ -86,4 +86,43 @@ test_expect_success 'prefetch multiple remotes' '
+ 	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two
  '
  
-+test_expect_success 'run --task=prefetch with no remotes' '
-+	git maintenance run --task=prefetch 2>err &&
-+	test_must_be_empty err
-+'
++test_expect_success 'loose-objects task' '
++	# Repack everything so we know the state of the object dir
++	git repack -adk &&
 +
-+test_expect_success 'prefetch multiple remotes' '
-+	git clone . clone1 &&
-+	git clone . clone2 &&
-+	git remote add remote1 "file://$(pwd)/clone1" &&
-+	git remote add remote2 "file://$(pwd)/clone2" &&
-+	git -C clone1 switch -c one &&
-+	git -C clone2 switch -c two &&
-+	test_commit -C clone1 one &&
-+	test_commit -C clone2 two &&
-+	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
-+	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
-+	test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
-+	test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
-+	test_path_is_missing .git/refs/remotes &&
-+	git log prefetch/remote1/one &&
-+	git log prefetch/remote2/two &&
-+	git fetch --all &&
-+	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
-+	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two
++	# Hack to stop maintenance from running during "git commit"
++	echo in use >.git/objects/maintenance.lock &&
++
++	# Assuming that "git commit" creates at least one loose object
++	test_commit create-loose-object &&
++	rm .git/objects/maintenance.lock &&
++
++	ls .git/objects >obj-dir-before &&
++	test_file_not_empty obj-dir-before &&
++	ls .git/objects/pack/*.pack >packs-before &&
++	test_line_count = 1 packs-before &&
++
++	# The first run creates a pack-file
++	# but does not delete loose objects.
++	git maintenance run --task=loose-objects &&
++	ls .git/objects >obj-dir-between &&
++	test_cmp obj-dir-before obj-dir-between &&
++	ls .git/objects/pack/*.pack >packs-between &&
++	test_line_count = 2 packs-between &&
++	ls .git/objects/pack/loose-*.pack >loose-packs &&
++	test_line_count = 1 loose-packs &&
++
++	# The second run deletes loose objects
++	# but does not create a pack-file.
++	git maintenance run --task=loose-objects &&
++	ls .git/objects >obj-dir-after &&
++	cat >expect <<-\EOF &&
++	info
++	pack
++	EOF
++	test_cmp expect obj-dir-after &&
++	ls .git/objects/pack/*.pack >packs-after &&
++	test_cmp packs-between packs-after
 +'
 +
  test_done
