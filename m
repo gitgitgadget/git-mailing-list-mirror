@@ -2,88 +2,101 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA72FC433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6801FC433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:42:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 615622075E
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:40:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D5412076C
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:42:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JZTra1mz"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BZ3SL98a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbgHYTks (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 15:40:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63374 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgHYTkq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 15:40:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0792980C31;
-        Tue, 25 Aug 2020 15:40:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0y3MmtNUMbrvx7T86/6h2ZiRi7A=; b=JZTra1
-        mzoNfpUY103yPiGMJOsdcDX+1DstVzY1ry4OwS0mVJ+guaUEogmwN74MsKL5oDns
-        7S4ADNlUC1tF9p3HGoil4VEPHFMVgXsTnhxB4wdPGMrasgc4bWpoSBiVgfA8bo1Q
-        ELfnEYbB8jVP4TLaDUk1uZ3AT3oS8rorIEYlE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RfKyKF74Iy/KeT9y//yNH8Kioz3ugSdf
-        o41l2TRfTPjpqt2SOOLJT8o0OBKKT+1+hjBjmMxpjw0bEgLy6ElDJL1gPkPAQisP
-        PZTOT6VXGzlDZzaicF2/nxKDEd//3fN+vAIvbPEAe/zWMV6fDCC/6P/5Fsu7VY/U
-        cuYh8EiGdPI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F240D80C2F;
-        Tue, 25 Aug 2020 15:40:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FC7080C2D;
-        Tue, 25 Aug 2020 15:40:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: Mismatched HEAD default behavior from git log
-References: <CAGyf7-G_ciVpgvvOiH1Fq9kNuWunCpM1fhv3ao_RMXBB0K=HMA@mail.gmail.com>
-Date:   Tue, 25 Aug 2020 12:40:42 -0700
-In-Reply-To: <CAGyf7-G_ciVpgvvOiH1Fq9kNuWunCpM1fhv3ao_RMXBB0K=HMA@mail.gmail.com>
-        (Bryan Turner's message of "Tue, 25 Aug 2020 12:16:38 -0700")
-Message-ID: <xmqq8se21pl1.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726391AbgHYTmS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 15:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbgHYTmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 15:42:16 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CF7C061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 12:42:16 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id kx11so17889pjb.5
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 12:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZRq5TqL7kIjLAu+WnVw10wLkzWqKyOjbs9r+KAX1EXU=;
+        b=BZ3SL98a+QBR4HIwKAzVR3f7UQVYJCRSpxI23OS0XkkoJrk19HC4oDhB5bJnkNP89i
+         rRMa6eOBEhJUxZWoOZ2IboyFGsD7mtq4CyEiUjbZ5C41M0mcwKamXdpZRcvRiNOVWFHj
+         Qlofeisj2f05XP7j3J7iRmleCJ+QVNY7Ue3zgZeiGwFeh4LSzI+yopr1z9lBbuilOSiE
+         bAt1U3fxhg5YrAXakBlbQb/0FMIJuuFpMR84jqaFSTSrFEquP7FJZnwDHJP96zriO36N
+         9jfCdbyrUDfxQ17dh+Zw1j/iD1wqWQRFzjPEUedrKPGVJ9TRGO/6Acizt0ZiskZxTwsL
+         1z+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZRq5TqL7kIjLAu+WnVw10wLkzWqKyOjbs9r+KAX1EXU=;
+        b=RpTPkd1k9bPxINyWEPAWHkoAh9eq/6iz86qzetUtI8Aa5HOavZKHSY/K1IWyI7xcvB
+         1AZyJ47R0OddouZF1d9C+lhSxF8kmwFkXxGg9orGAKiR+5Wogv1oNZ4wioEqLcEU0uov
+         mRnw5mn3fgMIPjuGBGOPciIGDAn7nvkJWs2mh0IFf8lBj669AM57JzjqxgqBquBYVfi8
+         oX/FX2aE0rzCGjkVutL8NbN5lVQDeVMAHFK8YtnQszgDQYdUYRJCmMjiMwZR52C8mTui
+         ffSouBqn3QXo3PblB6tdwxbb2PFWhjlbFpNWPmNT5iH6gyZbEYW2pm93vfwKhqqd28NP
+         y1SA==
+X-Gm-Message-State: AOAM533Dm7E7mHJM2NJp9/eX+CHO7Ad1ZtrSYnej0kE5TMYgF04AADZU
+        P78r9gHbW45julyGa8oFxZOu3A==
+X-Google-Smtp-Source: ABdhPJx1tNLgaRIjEM14jbQdnO0ha401dyut1ZTbMYsILl3+llb4nZ2AXdR0qyIYoYtpfvZkPyQPgA==
+X-Received: by 2002:a17:90a:4382:: with SMTP id r2mr888829pjg.144.1598384535351;
+        Tue, 25 Aug 2020 12:42:15 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
+        by smtp.gmail.com with ESMTPSA id t19sm20725pfq.179.2020.08.25.12.42.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2020 12:42:14 -0700 (PDT)
+Date:   Tue, 25 Aug 2020 12:42:09 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2020, #06; Mon, 24)
+Message-ID: <20200825194209.GB331156@google.com>
+References: <xmqq7dtn3785.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DD2F35A8-E70A-11EA-ACC9-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7dtn3785.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Turner <bturner@atlassian.com> writes:
+> * es/config-hooks (2020-07-30) 6 commits
+>  - hook: add 'run' subcommand
+>  - parse-options: parse into argv_array
+>  - hook: add --porcelain to list command
+>  - hook: add list command
+>  - hook: scaffolding for git-hook subcommand
+>  - doc: propose hooks managed by the config
+> 
+>  The "hooks defined in config" topic.
+> 
+>  Expecting a reroll.
+>  Now jk/strvec is in 'master', we may want to see the topic reworked
+>  on top of it.  Are there unresolved issues, or does the topic need
+>  a round of detailed review?
 
-> It appears the way --stdin processes input discards nonexistent
-> commits before the machinery that decides whether you provided any
-> revs or not runs, and so if every --stdin rev is discarded then you
-> get the default HEAD. If you provide them via the command line,
-> though, then it seems like they're discarded later and you don't get a
-> default.
->
-> I'm not sure whether this is intentional or not (certainly I don't see
-> it anywhere in the git log documentation for --ignore-missing or
-> --stdin), but it results in a behavior mismatch that's impossible to
-> reconcile without requiring extra git processes. I can't always
-> provide HEAD since, if multiple revs are supplied, if any revs exist
-> then HEAD would not be included regardless of whether the revs were
-> supplied via the command line or --stdin.
+I have it reworked locally to use strvec instead. I see in
+https://lore.kernel.org/git/xmqqsgd8606c.fsf@gitster.c.googlers.com that
+you were waiting for another jk/strvec reroll and it looks like that's
+happened now, so I'll rebase this series against 'master' once more.
 
-As the intent for adding the "--stdin" option to any subcommand has
-always been "we may need to feed many many things, that may bust the
-command line length limit, hence we let you feed these things from
-the standard input, but otherwise there should be no change in
-behaviour or semantics", when the behaviour of command line and
-"--stdin" differ, it is a bug in the latter.
+I'm ready for the first four (five?) of the series to receive a detailed
+review, but I think it's premature for the 6th to be considered before
+I've seen what the conversion process looks like for existing hook
+callers. That's my main focus right now, although it tends to be bumped
+by concerns for the summit next month as well as pesky life events.
+
+ - Emily
