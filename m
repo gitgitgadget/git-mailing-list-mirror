@@ -2,129 +2,149 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4FA5C433E1
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 13:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7C80C433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 14:33:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ACBB20738
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 13:47:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F80820786
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 14:33:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CmdGLi1t"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QFJzBX/S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726716AbgHYNrb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 09:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
+        id S1726347AbgHYOde (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 10:33:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726878AbgHYNrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 09:47:19 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C963C061756
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 06:47:19 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id a21so646455ejp.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 06:47:19 -0700 (PDT)
+        with ESMTP id S1726186AbgHYOdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 10:33:31 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D92A7C061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 07:33:30 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id k18so7491599pfp.7
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 07:33:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9oKtXrJPKzggZEHXd38u78LH+MMg+CeRotKEYnghq9Q=;
-        b=CmdGLi1taTOXcA5gUWHHgGtii8texHr4Lz4gBQ7TT1+/M9NKnSpiXWJsR/RHkVQ0K0
-         aNEpSO8pY2NP2bJcU4h8xCF2eVBNQeMXRJl639jp2tUMFzMSFnvKq14ny46hLQKwGpdB
-         tIsU7CJpiNyPZKHEGuaDimwBtlpgT3pyumTWoi2lyrNkb63ml+FbCS5BJZfsWqnsFNPT
-         fGXB6y/rQ3/cnySDUvEeKdN698PUGQ6zHy/QjZhJM0gq45tmMITnrjw1eELu/dVcP2wj
-         2/lx5bMBoIWPt5GF1muHOzJQ3Kj2IW6/mTIkamjOlw6OGSg95DRWbGnKKtfpfFyIV7FN
-         vaJA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=iK8mPfVOOmZKvrNfgbAuTqeL7ojHrkJLWKZtqx4DuYc=;
+        b=QFJzBX/S0vJnP50DYfH5Lm10stVXsYLZhJHzM0u4AEQRAK+5xPY+tBG0zReEtr/VPl
+         ozOFc+VPjrYVBtiP6i0857X1MBYapIbf+rvsaXgJUssDwqT9jeQXOvTRlhYCZHa3rXji
+         tv3yPJ0uwuLQtJXeLG5JCJeDvLvE1G2W7oT6rMGk+p6DBoS5yEcZiYquYBfGe06aELHH
+         MmGM8xq6VNPMewAbyljoTRYvtzc9Hkf0hKzKWulWxaz/awIXGQzLgm1Ly9fJta29kQI2
+         4+g0ewsy527OZJ96o0zUisr30WFjWe+mee11nsrGBH/4lGYmdTy3Fes7hPYv+caVc7dn
+         ebWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9oKtXrJPKzggZEHXd38u78LH+MMg+CeRotKEYnghq9Q=;
-        b=QQlNMKg2SG7paUtahuEuLSdCnJvNCNN7jGbclEGhcz/vNba3mQbEF4MNFrfWMWEqdH
-         xKzUgHW8xQf1nQnLRVf83lnmvzylRN2/s0GnQq4YGFdYHQSI1J+BuStjr2xrju3zzXmK
-         H77HjhKpFoctRlTUd00V6KzdEAT+CWobeHmq2IktI0uCkakK3I3CXkjOLvs0hJYvWpna
-         KSkisF5K1ljpa3vtdoK4mQs4hB+GGmHX+JlO66aK7BJ+a4NvwckwBle33f6EV0kGOPrW
-         vXjb4fz9prbHq6K1h/arwq18ONTTp/1sE/CC1y0gf+OQa+dJZZ1YiGwWIQliWJIpU0M1
-         l8Iw==
-X-Gm-Message-State: AOAM531LbzSdJba4lK33iGaKQnMfBLL5tbIPE9laAUO9KMB3uEDAwLA7
-        6kRYUgAxTqSSd+qavcxPub4=
-X-Google-Smtp-Source: ABdhPJzPMYjVC6OfkrkttN5C8sVzLEQjzY8naoloq22Ux8qBq96+rmK8nSj6yRfwS1NvMqq76mIvsw==
-X-Received: by 2002:a17:906:7752:: with SMTP id o18mr10335228ejn.150.1598363237893;
-        Tue, 25 Aug 2020 06:47:17 -0700 (PDT)
-Received: from szeder.dev (84-236-109-47.pool.digikabel.hu. [84.236.109.47])
-        by smtp.gmail.com with ESMTPSA id a26sm13575510eju.83.2020.08.25.06.47.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Aug 2020 06:47:17 -0700 (PDT)
-Date:   Tue, 25 Aug 2020 15:47:14 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/3] ci: stop linking built-ins to the dashed versions
-Message-ID: <20200825134714.GC25052@szeder.dev>
-References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
- <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>
- <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=iK8mPfVOOmZKvrNfgbAuTqeL7ojHrkJLWKZtqx4DuYc=;
+        b=KRdLrRrOL4kDIO04RszgHl8jzGIYw5hO22t51kSiLW8Bt5P52Erl3ElIOvPsKGPIuk
+         zpDcO2tqnGZ43jyPjWbXyW7LcNCai3UWs5LFfqBJPRP8GZ55ca8WkaWz1JYC8riUyWoX
+         6TlQwdWHTlhNJybbISA0gljCoTj3LUmmPrgQojrDRvd4Zf5xqglphQcJR24tgbH5vbsv
+         CG2aMSvQwCSzjYrpLjPx9mRiv/GyTP5s3/ldk0difBHtikZNqJf3TfMMEfn+cmj0Jql6
+         nuxYaBDme244i8SgXZFt/Rvw1YvronrfU42y6+cd51z94ChXolyrJTNBSo1gj4KjD/D9
+         d7vQ==
+X-Gm-Message-State: AOAM530uQ/jRrCNcnTvy/rxV+Ux8PhZuW1aKKRZvt83a5QY57CjbqMCa
+        cpjhBb1nzRnUCxnj3rs6CAo=
+X-Google-Smtp-Source: ABdhPJyPD/jKsT/4Y8eG4YWM4Z7WWjPgLLLN6zynBzRr/yUmnKL9zIYKKDcT7rBVhwykfsprigsA/g==
+X-Received: by 2002:a63:6d4c:: with SMTP id i73mr4828738pgc.63.1598366010350;
+        Tue, 25 Aug 2020 07:33:30 -0700 (PDT)
+Received: from [192.168.208.37] ([49.205.78.114])
+        by smtp.gmail.com with ESMTPSA id n12sm16593854pfj.99.2020.08.25.07.33.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2020 07:33:29 -0700 (PDT)
+Subject: Re: [PATCH 3/3] t7421: eliminate 'grep' check in t7421.4 for mingw
+ compatibility
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
+        Johannes.Schindelin@gmx.de, peff@peff.net, liu.denton@gmail.com,
+        Christian Couder <chriscool@tuxfamily.org>
+References: <20200825113020.71801-1-shouryashukla.oo@gmail.com>
+ <20200825113020.71801-4-shouryashukla.oo@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <2a1ea501-4974-4d74-fe3c-d173bbe76855@gmail.com>
+Date:   Tue, 25 Aug 2020 20:03:24 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
+In-Reply-To: <20200825113020.71801-4-shouryashukla.oo@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 24, 2020 at 03:38:00PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 25-08-2020 17:00, Shourya Shukla wrote:
+> The 'grep' check in test 4 of t7421 resulted in the failure of t7421 on
+> Windows due to a different error message
 > 
-> Originally, all of Git's subcommands were implemented in their own
-> executable/script, using the naming scheme `git-<command-name>`. When
-> more and more functionality was turned into built-in commands (i.e. the
-> `git` executable could run them without spawning a separate process),
-> for backwards-compatibility, we hard-link the `git` executable to
-> `git-<built-in>` for every built-in.
+>     error: cannot spawn git: No such file or directory
 > 
-> This backwards-compatibility was needed to support scripts that called
-> the dashed form, even if we deprecated that a _long_ time ago.
+> instead of
 > 
-> For that reason, we just introduced a Makefile knob to skip linking
-> them. TO make sure that this keeps working, teach the CI
-> (and PR) builds to skip generating those hard-links.
+>     fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or directory
+> 
+> Tighten up the check to compute '{src,dst}_abbrev' by guarding the
 
-I'm afraid I don't understand this patch or the previous one (or
-both?).  So this new Makefile knob stops hard-linking the dashed
-builtins _during 'make install'_, but it doesn't affect how Git is
-built by the default target.  And our CI jobs only build Git by the
-default target, but don't run 'make install', so setting
-SKIP_DASHED_BUILT_INS wouldn't have any affect anyway.
+The change only affects `src_abbrev`. So, it's misleading to mention
+`dst_abbrev` here.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 'verify_submodule_committish()' call using `p->status !='D'`, so that
+> the former isn't called in case of non-existent submodule directory,
+> consequently, there is no such error message on any execution
+> environment.
+> 
+> Therefore, eliminate the 'grep' check in t7421. Instead, verify the
+> absence of an error message by doing a 'test_must_be_empty' on the
+> file containing the error.
+> 
+> Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 > ---
->  ci/run-build-and-tests.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  builtin/submodule--helper.c      | 7 ++++---
+>  t/t7421-submodule-summary-add.sh | 2 +-
+>  2 files changed, 5 insertions(+), 4 deletions(-)
 > 
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index 6c27b886b8..1df9402c3b 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -10,7 +10,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
->  *) ln -s "$cache_dir/.prove" t/.prove;;
->  esac
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 93d0700891..f1951680f7 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1035,7 +1035,7 @@ static void print_submodule_summary(struct summary_cb *info, char *errmsg,
+>  static void generate_submodule_summary(struct summary_cb *info,
+>  				       struct module_cb *p)
+>  {
+> -	char *displaypath, *src_abbrev, *dst_abbrev;
+> +	char *displaypath, *src_abbrev = NULL, *dst_abbrev = NULL;
+
+Unlike `src_abbrev`, I don't think we need to initilialize `dst_abbrev`
+to NULL here as it would be assigned in all code paths.
+
+>  	int missing_src = 0, missing_dst = 0;
+>  	char *errmsg = NULL;
+>  	int total_commits = -1;
+> @@ -1061,8 +1061,9 @@ static void generate_submodule_summary(struct summary_cb *info,
+>  	}
 >  
-> -make
-> +make SKIP_DASHED_BUILT_INS=YesPlease
+>  	if (S_ISGITLINK(p->mod_src)) {
+> -		src_abbrev = verify_submodule_committish(p->sm_path,
+> -							 oid_to_hex(&p->oid_src));
+> +		if (p->status != 'D')
+> +			src_abbrev = verify_submodule_committish(p->sm_path,
+> +								 oid_to_hex(&p->oid_src));
+>  		if (!src_abbrev) {
+>  			missing_src = 1;
+>  			/*
 
-Note that the CI jobs executed in containers (Linux32 and linux-musl)
-don't use this 'ci/run-build-and-tests.sh' script, so they won't set
-SKIP_DASHED_BUILT_INS.  I suppose that's unintentional, because it
-wasn't mentioned in the commit message.
-
->  case "$jobname" in
->  linux-gcc)
->  	make test
-> -- 
-> gitgitgadget
+-- 
+Sivaraam
