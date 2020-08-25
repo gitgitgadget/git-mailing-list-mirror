@@ -2,149 +2,120 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 538C7C433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 11:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD13C433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 11:33:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3188120767
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 11:31:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 764E92068E
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 11:33:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JomRkJw/"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PbywQ3Ib"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730013AbgHYLbd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 07:31:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33262 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730028AbgHYLaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 07:30:55 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74371C061756
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 04:30:55 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id x25so7114743pff.4
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 04:30:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=sgunsanhPjvfQJDw4981MBRNATbWvlj8DjXzfTzsxmU=;
-        b=JomRkJw/YiCOufFpjmEglTZZwO/aPJD6whyqtI8hKNOjJ2oOytGxzpYfcxfsWPYtY9
-         b5+20HfuGEC03puXdemLuIaKOS0k3FqZpyykl2RBbKi/KMLygxN4Uy7vTpK6mnKr2XZB
-         dymbBFnZ4oiSBVfIY/BGny4+5xe4sD5NDeZFygHuS0ECyhrWN8aInrDRL6ErgIE2y6nO
-         3yaFyngXnSauaYb3Rx4bfJkmT/W0lvtdxzCIHuEp63hEN3y/7WWU1xUef5vMOQhoZq6E
-         BcaQjglOJfxp4IsaxHSnQLCeM94dlaYusYQqIHDgHCMW77ivDwA1z0wGi7IMDSbwRxY9
-         CusA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=sgunsanhPjvfQJDw4981MBRNATbWvlj8DjXzfTzsxmU=;
-        b=lUPajlmC60DY/l2dIYOEeYNp6X3k27uexSAwOfktAmrn2CdZlA6K/6FNLknZAmExBR
-         LTLLK+eKyhpJ5FR/bXat1wADF6FWMyGo8nlip09audLSyAQz/wWu0hJDpxvq4GhGKkz1
-         5ijEmqfvZsYr9gC5c0VHcGYf1HfcCQkOoXT7PVP9dkv3RhkvY2bsjRKK4bpbufZOKDmT
-         Suh1vNxf4Eom0TK/bI0fs4vgOMdW+oHOTpS8UT74dEpVrJvAfrx8miPl8whF7GG+60Wb
-         5JHpwe1pRFQxkgoAiaqLTnr5owSMNTRBLcGv9VgQKPnlX50UJZfhODOCiQnIicOPaFAu
-         N2gw==
-X-Gm-Message-State: AOAM5337fnAQeiaQLBDlb0rAcuglLpRuY/DOPU8AGVQ82SAFXXzvDc36
-        AQjl5oFMG+kfwn09oiryQYznW6sq2ph/Lg==
-X-Google-Smtp-Source: ABdhPJwD0Wd8XVf+aYeJL90G14nGnm5h7R+V/jY2N4SIMTdfPUX5ZEV6R7ajo5HSQ5Ic1EvoWWQAGg==
-X-Received: by 2002:aa7:982e:: with SMTP id q14mr7649021pfl.299.1598355054483;
-        Tue, 25 Aug 2020 04:30:54 -0700 (PDT)
-Received: from localhost.localdomain ([115.97.133.243])
-        by smtp.gmail.com with ESMTPSA id y3sm2821518pjg.8.2020.08.25.04.30.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 04:30:53 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
-        peff@peff.net, liu.denton@gmail.com,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/3] t7421: eliminate 'grep' check in t7421.4 for mingw compatibility
-Date:   Tue, 25 Aug 2020 17:00:20 +0530
-Message-Id: <20200825113020.71801-4-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200825113020.71801-1-shouryashukla.oo@gmail.com>
-References: <20200825113020.71801-1-shouryashukla.oo@gmail.com>
+        id S1729885AbgHYLdx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 07:33:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:43629 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725893AbgHYLdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 07:33:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1598355214;
+        bh=gobEks5bXoc4/xo+1mX4lIMI2dfSh8mRN+VuDH1gbHw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PbywQ3IbI6h54ol4fqs5vIgyXBBsqB9pgbNslpQAHdfYOyofQWKNXdraMscPDOkkC
+         RHghQldI9/4G2p9MVQsvgvEYqcoloCNSfTt4EU2QrUJS2+YgEVJGGtvJB8vSK0IjCn
+         es0FO/Kf68ZT/2oUOhPy6Ce/qvltD8jjV4Jh9PhI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.183.59] ([213.196.212.184]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhU9j-1kondt0ra7-00ebSX; Tue, 25
+ Aug 2020 13:33:34 +0200
+Date:   Tue, 25 Aug 2020 10:20:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] Optionally skip linking/copying the built-ins
+In-Reply-To: <xmqqmu2j50kk.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2008251014380.56@tvgsbejvaqbjf.bet>
+References: <pull.411.git.1597655273.gitgitgadget@gmail.com> <pull.411.v2.git.1598283480.gitgitgadget@gmail.com> <166bd0d8fb699132569aff855de59c7607581adf.1598283480.git.gitgitgadget@gmail.com> <xmqqmu2j50kk.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7fPrvqM9b8gci/0EmwjBMJyGpbtOTdJFJBLLj39QLkr2Cst3bCV
+ dP16OCc1rF6ZaaxhfpL9+7BEqntpfGIeD9w8P802jdlebwjt2Miox5O3darhFitL34Sm129
+ refdoFQQ4Pqkbc8EYFlLFbmfFM1tGX4hJsTvOld/VmG0dBIcow+aRbeq1eBOOkSpvY9YF/c
+ 6KCsFzDHAVw8rAu6wP69w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SYYSwDvnJB0=:qDhmieYB4DjaPahzwbx6AT
+ xAwpdkdOWSyKSEzpZKqgRW0HsJK+TIUD+AXeyCr4bJG0cKOEoL3pNvTxh7fk22mmKY2RdbybB
+ sPuL1eWpU0tUXR1tjcknCfymdoSHAm7U4KxufDfLpiJRPZNuA2twJ4jwVMTaCrIj8Mjsb14O0
+ 6kEE7rkglTLAT1PT6MgfwniwyhDUrCXD8flYp9Mt3p9zx4WD5I17OsTvAicoRiuA1qGC5vrPv
+ rtNnqG/gp2v8sZA7QKIdXxdkq/0Rilwbr+YNCxolvOyadbsc7BjWlJjZnYexdbfO2CjYPaqlj
+ HakCgBtLq7/GSzqBGVEASJ5GSvFYVcf/hAzcYeNdRwWjaEJQqhzwHU6IFm7WBQ+boNfNkEWES
+ cGmijDp1lcZi/ZTck5vC5TC3LM8HacJ0w5I5/1CMpvhVjsOtpWjLnOARFBVVsHh1fxyQ+tYI8
+ VXNlW1j5RWXtchsVF/umCjobu53P8TylCjQ0KYN3u+SHAKvAi8fevG/DihW+b+rHu1R7TDr0x
+ XkA0GeJNLW07a9zxUhAo86ZYSJCJUkUBPgE1yLzlpdeHkYTeBpKF1Ufmj6xnF//wJvq3plIk5
+ Q/ZPekvzhQyn5630crDHx9ShkyI7/llVxForeTHo7CiqZ2YRoGtg9rmJ5ZqH/YT+6/wPCKKM6
+ BWj4w5z+5FS5UiOAa5A98DPP+IHqMCtO07XiHMeqQv/n6obX1lsS4Rpo8G4zdms1FXr67Sn+K
+ FK39T26CzdZKjy4YQOq0TxnsKTlq7psg/1k2mvdFY1DiwtA+KXz77+wkr5JoPzLEaBrDlXXb4
+ ETJlNeJQ7q+aH16plHfBqoOKS+I9Dp1U7vkohpTeZTmeXJUoOxNP4cWz0J4z/oOyGZq2dBaXB
+ SCYQu/BGGMPtIkyWPykXawn+4YdfCtXkq7fbnDFS0QwWn9ut0Rf7cp42/+o8Dx2Oem67fHAxA
+ HDC6HsmQb5VVtKHQowtVTmlbyJofmcWIabVBbkbHw8M4hh5NeRERLxfBR4bEwDAkbhKXjcHEF
+ i5MIGF/Hv1pu6+9yyMEqGilm6xcbS2YOe66bGx9Rnq2FsOPpMFlI6/fNCibrCXS6ZfoPRieeg
+ /ac5M/k1r/KcsfytsIDU+18oyA683UF2W3esmSO/KXgzFT4DJ2+z5TslqRHh714d3OR97U91C
+ WZMpQIaaXXa3VAYSdNW14PG3se812t0hOIFzwC06l4TQ5pbweTLuuiR9QfliZnsbCnQRozjTE
+ TR9Pre97B/VSY1pU8LabcfNo8Nvw80iXnmBNSfg==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'grep' check in test 4 of t7421 resulted in the failure of t7421 on
-Windows due to a different error message
+Hi Junio,
 
-    error: cannot spawn git: No such file or directory
+On Mon, 24 Aug 2020, Junio C Hamano wrote:
 
-instead of
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > While Git still supports the dashed form (by hard-linking the `git`
+> > executable to the dashed name in `libexec/git-core/`), in practice, it
+> > is probably almost irrelevant.
+>
+> It is irrelevant when you have to say "probably" without facts, and
+> this paragraph is not necessary to justify this option.  I'd omit it.
 
-    fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or directory
+I would like to gently request to keep the sentence in, as it will provide
+me with the context when I stumble across this commit the next time.
 
-Tighten up the check to compute '{src,dst}_abbrev' by guarding the
-'verify_submodule_committish()' call using `p->status !='D'`, so that
-the former isn't called in case of non-existent submodule directory,
-consequently, there is no such error message on any execution
-environment.
+> We do care about keeping people's scripts working (even if they were
+> written before Windows folks started using Git---those people who
+> started using Git before that still exist ;-).
 
-Therefore, eliminate the 'grep' check in t7421. Instead, verify the
-absence of an error message by doing a 'test_must_be_empty' on the
-file containing the error.
+That, however, I totally understand, and I think you're right, I should
+add this sentence (in one form or another).
 
-Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
----
- builtin/submodule--helper.c      | 7 ++++---
- t/t7421-submodule-summary-add.sh | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+> > In fact, some platforms (such as Windows) only started gaining
+> > meaningful Git support _after_ the dashed form was deprecated, and
+> > therefore one would expect that all this hard-linking is unnecessary o=
+n
+> > those platforms.
+> >
+> > In addition to that, some programs that are regularly used to assess
+> > disk usage fail to realize that those are hard-links, and heavily
+> > overcount disk usage. Most notably, this was the case with Windows
+> > Explorer up until the last couple of Windows 10 versions.
+>
+> However, the above two paragraphs I would suggest to keep, as they
+> do matter---it is a good justification to have this configurable.
+> Windows folks won't be able to copy and use POSIX shell scripts
+> written by folks before the Windows port of Git was started to
+> become widely used anyway.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 93d0700891..f1951680f7 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1035,7 +1035,7 @@ static void print_submodule_summary(struct summary_cb *info, char *errmsg,
- static void generate_submodule_summary(struct summary_cb *info,
- 				       struct module_cb *p)
- {
--	char *displaypath, *src_abbrev, *dst_abbrev;
-+	char *displaypath, *src_abbrev = NULL, *dst_abbrev = NULL;
- 	int missing_src = 0, missing_dst = 0;
- 	char *errmsg = NULL;
- 	int total_commits = -1;
-@@ -1061,8 +1061,9 @@ static void generate_submodule_summary(struct summary_cb *info,
- 	}
- 
- 	if (S_ISGITLINK(p->mod_src)) {
--		src_abbrev = verify_submodule_committish(p->sm_path,
--							 oid_to_hex(&p->oid_src));
-+		if (p->status != 'D')
-+			src_abbrev = verify_submodule_committish(p->sm_path,
-+								 oid_to_hex(&p->oid_src));
- 		if (!src_abbrev) {
- 			missing_src = 1;
- 			/*
-diff --git a/t/t7421-submodule-summary-add.sh b/t/t7421-submodule-summary-add.sh
-index 59a9b00467..b070f13714 100755
---- a/t/t7421-submodule-summary-add.sh
-+++ b/t/t7421-submodule-summary-add.sh
-@@ -58,7 +58,7 @@ test_expect_success 'submodule summary output for submodules with changed paths'
- 	git commit -m "change submodule path" &&
- 	rev=$(git -C sm rev-parse --short HEAD^) &&
- 	git submodule summary HEAD^^ -- my-subm >actual 2>err &&
--	grep "fatal:.*my-subm" err &&
-+	test_must_be_empty err &&
- 	cat >expected <<-EOF &&
- 	* my-subm ${rev}...0000000:
- 
--- 
-2.28.0
+Excellent!
 
+Ciao,
+Dscho
