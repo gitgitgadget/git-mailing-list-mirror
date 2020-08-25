@@ -2,143 +2,141 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B09F9C433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 22:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E79D1C433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 22:45:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C8DE206EB
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 22:19:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDF1020706
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 22:45:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kv/0AdC2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ptjEXUsH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbgHYWT6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 18:19:58 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60947 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726391AbgHYWT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 18:19:57 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64F11DFE38;
-        Tue, 25 Aug 2020 18:19:55 -0400 (EDT)
+        id S1726645AbgHYWp4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 18:45:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51269 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726580AbgHYWp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 18:45:56 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AA4E76A45;
+        Tue, 25 Aug 2020 18:45:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+dBdcFUjGjLCQKc3KUcAVDvVh7I=; b=kv/0Ad
-        C2ZMr1GQcuRL/OwCINjhA5yOJoCG931REEhXk24WUlR4aSFFrKD1oVwgiQWBAe2Q
-        wyX/ASJ4Klrn78iwPeufcJuirMn0cAduBpTJUDTqZPNO9ulxwbyiaDa6yPidxBYf
-        vz+V1YkeAhYRuPtZDVfZjSIRS5tZ6n9RHxHCg=
+        :content-type; s=sasl; bh=cDyXfwfi04sRPikE2zYZ9oWsf7w=; b=ptjEXU
+        sH0adswV03oT0y5w+qAJkkLyjvE6pQCfofgcGw4CINDu2ezcfcsx4ZrOABI/Okr5
+        WfKDjOQt1ueOKUjR0hGtz+TdSD0mNwJP3qeG/xOdaSWKYxp2Dnqor/qLwvEfmAbz
+        OL/jE3TwFruNccAfjx75DixwlSbitGF5dNRQo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=um+2qUo9HVL/iCjyZ01TLLpymPCcLDSz
-        E6uKJeLEdVcOkjqC63f2GCGTfiPwCqn65UKfFHBf11vnh9E8ksWkeP+PpSRYmU2K
-        pWgKce0NyoLvIcg3DP5d4PEUbZIHz8ybCc5t1udu6kkCLqLE1lTZSSMgSrSl+SSv
-        /6Dr9DnYbhQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D6C5DFE35;
-        Tue, 25 Aug 2020 18:19:55 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=DTdXu/ryFJcYUFLdiyiSdc1aGYKd7Lsa
+        La5cjo/mQSn2o1dLyGgi0qdmaCsLCa6OAP9znFVVL0pzHGago3ZoyZCW3MQYPuyD
+        y6bopcX+4EfPUTiJRRl4OTXLcilix4ppxJLtxyPiGOBFWZwNH+n6MroHyfR2QN3i
+        WxMutUdbVSo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01E3676A43;
+        Tue, 25 Aug 2020 18:45:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B9C80DFE34;
-        Tue, 25 Aug 2020 18:19:52 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 844FA76A42;
+        Tue, 25 Aug 2020 18:45:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 4/7] for-each-repo: run subcommands on configured repos
-References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
-        <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
-        <0314258c5cbb8fd771c35e433bf6be95297c4597.1598380805.git.gitgitgadget@gmail.com>
-Date:   Tue, 25 Aug 2020 15:19:50 -0700
-In-Reply-To: <0314258c5cbb8fd771c35e433bf6be95297c4597.1598380805.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Tue, 25 Aug 2020
-        18:40:01 +0000")
-Message-ID: <xmqq8se2z7uh.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com
+Subject: [PATCH] pack-redundant: gauge the usage before proposing its removal
+References: <ef9186a8df0d712c2ecccbe62cb43a7abadb9c96.1598320716.git.me@ttaylorr.com>
+        <20200825022614.GA1391422@coredump.intra.peff.net>
+        <xmqqtuwq1zux.fsf@gitster.c.googlers.com>
+        <20200825172214.GC1414394@coredump.intra.peff.net>
+        <xmqqh7sq1u0a.fsf@gitster.c.googlers.com>
+        <20200825182745.GA1417288@coredump.intra.peff.net>
+Date:   Tue, 25 Aug 2020 15:45:52 -0700
+In-Reply-To: <20200825182745.GA1417288@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 25 Aug 2020 14:27:45 -0400")
+Message-ID: <xmqq1rjuz6n3.fsf_-_@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 19030A62-E721-11EA-A1DA-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: BB4EF062-E724-11EA-9F3B-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+The subcommand is unusably slow and the reason why nobody reports it
+as a performance bug is suspected to be the absense of users.  Let's
+show a big message that asks the user to tell us that they still
+care about the command when an attempt is made to run the command,
+with an escape hatch to override it with a command line option.
 
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git for-each-repo' --config=<config> [--] <arguments>
-> + ...
-> +--config=<config>::
-> +	Use the given config variable as a multi-valued list storing
-> +	absolute path names.
+In a few releases, we may turn it into an error and keep it for a
+few more releases before finally removing it (during the whole time,
+the plan to remove it would be interrupted by end user raising hand).
 
-Would it make sense to allow this config to be read from the current
-repository, I wonder.  It is probably designed to be written to
-either ~/.gitconfig or /etc/gitconfig because it is probably a need
-that is not per-repository to list repositories for various purposes
-specified by the config key, but I suspect there _might_ be a good
-use case for storing some custom list of repositories in the
-configuration file local to a repository, but it is not quite
-obvious what it is.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-If we have a good example, we may want to spell it out---that would
-help future readers who wonder about this (just like I am doing now).
+    Jeff King <peff@peff.net> writes:
 
-Also, if we do read from local config, should there be a way to say
-"ah, you may have read values from /etc/gitconfig and ~/.gitconfig,
-but please forget them---I have a full list I care when you are
-running in this repository", i.e. clear the list.  It is purely a
-convention and there is no built-in mechanism for this in the config
-API, but often it is signalled by giving an empty string as a value.
+    > A more gentle transition would I guess be:
+    >
+    >   1. Mention deprecation in release notes (hah, as if anybody reads
+    >      them).
+    >
+    >   2. Issue a warning but continue to behave as normal. That might break
+    >      scripts that care a lot about stderr, but otherwise is harmless. No
+    >      clue if anybody would actually see the message or not.
 
-By the way, I do not have a good concrete suggestion, but can we use
-something better than <config> as the placeholder?  I first thought
-this was naming the name of a file that lists repositories, not the
-config variable name in our usual config namespace.
+    OK, so here is an update for the above.
 
-> +static int run_command_on_repo(const char *path,
-> +			       void *cbdata)
+ builtin/pack-redundant.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Is that on repo or in repo?  When I saw "-C" on the command line, I
-immediately thought of "in repo".
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 178e3409b7..b94c2f2423 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -554,6 +554,7 @@ static void load_all(void)
+ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
++	int i_still_use_this = 0;
+ 	struct pack_list *min = NULL, *red, *pl;
+ 	struct llist *ignore;
+ 	struct object_id *oid;
+@@ -580,12 +581,24 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ 			alt_odb = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--i-still-use-this")) {
++			i_still_use_this = 1;
++			continue;
++		}
+ 		if (*arg == '-')
+ 			usage(pack_redundant_usage);
+ 		else
+ 			break;
+ 	}
+ 
++	if (!i_still_use_this) {
++		fputs(_("'git pack-redundant' is nominated for removal.\n"
++			"If you still use this command, please add an extra\n"
++			"option, '--i-still-use-this', on the command line\n"
++			"and let us know you still use it by sending an e-mail\n"
++			"to <git@vger.kernel.org>.  Thanks.\n"), stderr);
++	}
++
+ 	if (load_all_packs)
+ 		load_all();
+ 	else
+-- 
+2.28.0-454-g5f859b1948
 
-> +{
-> +	int i;
-> +	struct child_process child = CHILD_PROCESS_INIT;
-> +	struct strvec *args = (struct strvec *)cbdata;
-> +
-> +	child.git_cmd = 1;
-> +	strvec_pushl(&child.args, "-C", path, NULL);
-> +
-> +	for (i = 0; i < args->nr; i++)
-> +		strvec_push(&child.args, args->v[i]);
-
-Would strvec_pushv() work, or is args->v[] not NULL terminated?
-
-> +	return run_command(&child);
-> +}
-
-
-> +	values = repo_config_get_value_multi(the_repository,
-> +					     config_key);
-
-Not your fault, but it is a bit unsatisfactory that we do not have
-special "type" meant for paths in the config API, unlike the
-parse-options API where there is a "filename" type that is a bit
-richer than a vanilla "string" type by allowing "prefix" handling.
-For the purposes of this, as the values are limited to absolute/full
-pathnames, it does not hurt as much, though.
-
-Thanks.
