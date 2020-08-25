@@ -2,68 +2,66 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F713C433E1
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DC67C433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:10:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F20FA206EB
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:05:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFEA920715
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:10:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cw+rhPfP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WXKa61WH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgHYSFR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 14:05:17 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52617 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726104AbgHYSFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 14:05:16 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 36137E3326;
-        Tue, 25 Aug 2020 14:05:14 -0400 (EDT)
+        id S1726180AbgHYSKA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 14:10:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63897 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726104AbgHYSKA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 14:10:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A4F60DDDCB;
+        Tue, 25 Aug 2020 14:09:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ifqd49c0Y5t9N6z9MFFHdLgLV6M=; b=cw+rhP
-        fP+K3P5X08Gq/gZsQIrzc+3CjSxufusmiaX9cwy72/BCZxJc+GW11JgVFQRHodxj
-        VHCVwfVlgRK7n/hKyaZ7iuIo0M7TwxwE95OgDwYcvBWVUAgSpoRd99fkHATs7pHX
-        KY5Nws9rUDEDFM7oyP+JiUVnVvTQZiG3t9CSg=
+        :content-type; s=sasl; bh=T2wUj3b91PD9kHA5yTI9l21jPdI=; b=WXKa61
+        WHdlIBBXhtciq8ZlrLYk7Ph7bPbURk6EsMIRWbgNMYUbyzjrxBkAw+uyiSIHTi5t
+        OpZ3sMBJkFW6m8x+aaAeB/hfzrWDkL0CYoFWznMnBMPhDDkmzrfvJS8G637PNwbk
+        G1A2ZbsNGe8heRjIDcl1wQOG4pU2pJl9V2LVw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CW1R+tvAqnun9UkZTH551ZiVI5FhwTex
-        MMKXZNKdSoIYORTJS5hUWanEeV5CjpXU28l96SbpmAKu3KPQj7+lRPbw20uV7L7z
-        ZY7+thWxZvyfqyWUX5sxc0ukqgSYvJsOkD5VR+9HnXtllyfclDWhzxxuf79uiWEu
-        Fph21rZcRFw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E521E3325;
-        Tue, 25 Aug 2020 14:05:14 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=hEkE/XR7q3tChWz6sUDIopc0Q0h6ibH1
+        D7XvswJAN5nrtrpu97msNHHfxsy1flsNQsh73PZcrXmrF8GKaurKkf4sFhLznoes
+        d+o+XhYphi0zSg83sDf7ZmHHwJgUL+0L/xjwlc/hqEkabdK5827O2tETx9VpAl+H
+        +OKBXDe7cGo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E5E5DDDCA;
+        Tue, 25 Aug 2020 14:09:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 759B7E331F;
-        Tue, 25 Aug 2020 14:05:11 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DC7B2DDDC9;
+        Tue, 25 Aug 2020 14:09:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com
-Subject: Re: [PATCH] builtin/repack.c: invalidate MIDX only when necessary
-References: <ef9186a8df0d712c2ecccbe62cb43a7abadb9c96.1598320716.git.me@ttaylorr.com>
-        <20200825022614.GA1391422@coredump.intra.peff.net>
-        <xmqqtuwq1zux.fsf@gitster.c.googlers.com>
-        <20200825172214.GC1414394@coredump.intra.peff.net>
-Date:   Tue, 25 Aug 2020 11:05:09 -0700
-In-Reply-To: <20200825172214.GC1414394@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 25 Aug 2020 13:22:14 -0400")
-Message-ID: <xmqqh7sq1u0a.fsf@gitster.c.googlers.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] refs: remove lookup cache for reference-transaction hook
+References: <0db8ad8cdb69afb9d6453bf60a808e8b82382a4e.1597998473.git.ps@pks.im>
+        <c1cae6dd19ffe00e4456e4f96ad92277ceeced27.1598349284.git.ps@pks.im>
+        <20200825151053.GA1409139@coredump.intra.peff.net>
+Date:   Tue, 25 Aug 2020 11:09:54 -0700
+In-Reply-To: <20200825151053.GA1409139@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 25 Aug 2020 11:10:53 -0400")
+Message-ID: <xmqqd03e1tsd.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 84A89B98-E6FD-11EA-9CF9-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2E2FA706-E6FE-11EA-A5FC-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,85 +69,27 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> OK, that's the part I was missing. The discussion here and the statement
-> from git-repack(1):
+> On Tue, Aug 25, 2020 at 12:35:24PM +0200, Patrick Steinhardt wrote:
 >
->   -d
->       After packing, if the newly created packs make some existing packs
->       redundant, remove the redundant packs. Also run git prune-packed
->       to remove redundant loose object files.
+>> The only change compared to v1 is that I've addressed the unportable
+>> `branch-{1..1000}` syntax in favor of `test_seq`. I had to setup refs as
+>> part of the setup and change the ordering for "update-ref --stdin" from
+>> create/update/delete to update/delete/create, but I don't think that's
+>> too bad. At least timings didn't seem to really change because of that.
 >
-> made me think that it was running pack-redundant. But it doesn't seem
-> to. It looks like we stopped doing so in 6ed64058e1 (git-repack: do not
-> do complex redundancy check., 2005-11-19).
+> Another option instead of changing the order in the other tests is to do
+> another untimed setup step before the push test. I'm OK either way,
+> though.
+>
+>> +test_perf "nonatomic push" '
+>> +	git push ./target-repo.git $(test_seq 1000) &&
+>> +	git push --delete ./target-repo.git $(test_seq 1000)
+>>  '
+>
+> This works as far as Git is concerned, but "seq 1000" output with NULs
+> is 3893 bytes. I wonder if some platforms might run into command-line
+> limits there.
 
-Thanks for digging.  A good opportunity for a #leftoverbits
-documentation update from new people is here.
+That was my thought when I saw the above as well.  In addition, I do
+not think it is a good idea to encourage digit-only refnames.
 
-> As an aside, we tried using pack-redundant at GitHub several years ago
-> for dropping packs that were replicated in alternates storage. It
-> performs very poorly (quadratically, perhaps?) to the point that we
-> found it unusable,...
-
-Yes, I originally wrote "the pack-redundant subcommand" in the
-message you are responding to with a bit more colourful adjectives,
-but rewrote it ;-)  My recollection from the last time I looked at
-it is that it is quadratic or even worse---that was long time ago,
-but on the other hand I think the subcommand had no significant
-improvement over the course of its life.
-
-Perhaps it is time to drop it.
-
--- >8 --
-Subject: [RFC] pack-redundant: gauge the usage before proposing its removal
-
-The subcommand is unusably slow and the reason why nobody reports it
-as a performance bug is suspected to be the absense of users.  Let's
-disable the normal use of command by making it error out with a big
-message that asks the user to tell us that they still care about the
-command, with an escape hatch to override it with a command line
-option.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pack-redundant.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 178e3409b7..97cf3df79b 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -554,6 +554,7 @@ static void load_all(void)
- int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-+	int i_still_use_this = 0;
- 	struct pack_list *min = NULL, *red, *pl;
- 	struct llist *ignore;
- 	struct object_id *oid;
-@@ -580,12 +581,25 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
- 			alt_odb = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--i-still-use-this")) {
-+			i_still_use_this = 1;
-+			continue;
-+		}
- 		if (*arg == '-')
- 			usage(pack_redundant_usage);
- 		else
- 			break;
- 	}
- 
-+	if (!i_still_use_this) {
-+		puts(_("'git pack-redundant' is nominated for removal.\n"
-+		       "If you still use this command, please add an extra\n"
-+		       "option, '--i-still-use-this', on the command line\n"
-+		       "and let us know you still use it by sending an e-mail\n"
-+		       "to <git@vger.kernel.org>.  Thanks\n"));
-+		exit(1);
-+	}
-+
- 	if (load_all_packs)
- 		load_all();
- 	else
