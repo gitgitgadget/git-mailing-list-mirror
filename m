@@ -2,246 +2,158 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B8EC433E4
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6564C433E3
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:38:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3EC222071E
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:37:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FB7E2076C
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:38:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwVqhiAH"
+	dkim=pass (1024-bit key) header.d=nelhage.com header.i=@nelhage.com header.b="V+Iyyoh1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726752AbgHYShD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 14:37:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43894 "EHLO
+        id S1726656AbgHYSiT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 14:38:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726704AbgHYSgt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 14:36:49 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C359C0613ED
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:48 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id t2so3613113wma.0
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:36:48 -0700 (PDT)
+        with ESMTP id S1726466AbgHYSiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 14:38:18 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85182C061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:38:17 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id a1so6887013vsp.4
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=oXBuyWEjP/ytBbhvszrritMFjhG19mvyi5Qo2oXFKkQ=;
-        b=jwVqhiAHqytsNdZPj4ljDSaj8rPA9A5tZ/Nfsf+rf9wFx4qC6JXbR+VxbzXG9ZLu7R
-         AL7sU1WZWT6LA15EwXrFVjcL+VY8M0OJiKBIzy9gg5TqXfKcRR5ftoz9/rtSA42C7giw
-         03M0PMfwVJtvk+Dr77nSaGfWwpte81hOZZaj0cOPMPCsuhSOtfNl/RAhozSKEzsz/X/+
-         eMAB2Etwx1bAuqfXYM0SJcZ3ZuBKfroW7Lz/uPrDY4IMcWuuOHowRsigzVL+1mH713Eh
-         gN5+4XxaUkZ9otE076B8PA59GtmxC+4LpA1tTnZOMan0VutXrkcxqulQ5e/94e2jwC2H
-         hpLw==
+        d=nelhage.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YIPtapUgBpGbYN9TXhOzzhwq1YNXPZ8YljVw0iXBUlM=;
+        b=V+Iyyoh1XTH2bYdyvCosetUUeaRZMQIlPdOHCEJ9srYZsaVuZG45lYXhFgWt/W9Q88
+         ILrHURWqlpmgk16dDN6RsKhSZceSZWU4OPVCmRiafP93Drs0f+2AkOFoMXWIxsC4OuTg
+         5MCOm7Q1GV/P1Gl0Q1LS40BfQhjt0V89oM5yk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oXBuyWEjP/ytBbhvszrritMFjhG19mvyi5Qo2oXFKkQ=;
-        b=FmY9DXKuFJH30sqlUagTumFIcEXbprH6pOezgRtNM/6jD0VGqSbCE+g6Vr1IhQAfdy
-         t4cNtFqHHLwk+/HMK/2vAGCuUj5aAwYZgLCGXdnM/h+ZDiUZoUfAwqcf2Yx0gZusz/Ln
-         Skc8HrM2FdMRlN3t/uWFNR6+IoN4qLbCRRzK6lsddhGJkzekKoaUROhldkDq77KOgvvM
-         dAg66vm13P5lzpKBsGV/PWWPzugXmmSLJZ2XeCtWc5PONU4e1H4ZTrwtdz8SnUNZLyt/
-         W5LxF2SWPyo2oMVujrhouFgzr/Xy1HcMeqa5ozA4C40oWYU3jRRpsx6Mxr8A+QM3sVMD
-         wMIA==
-X-Gm-Message-State: AOAM530DwaD2N9I5YpRTyhKVrxAIPhQvEQAKtXyXKwOqi7H5aXuEnUHl
-        Px76gNXgWrkNSgkT2arS3qkpFXXYMks=
-X-Google-Smtp-Source: ABdhPJw9EGsA5TV9bUWHh9xWrxST7DIrKusd5kGmQkIjaJOtMn8GMUS6ULQgjaadlFpyOkaBYS4/ug==
-X-Received: by 2002:a1c:f60e:: with SMTP id w14mr3142190wmc.19.1598380606934;
-        Tue, 25 Aug 2020 11:36:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s20sm7180689wmh.21.2020.08.25.11.36.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 11:36:46 -0700 (PDT)
-Message-Id: <f3b25a9927fe560b764850ea880a71932ec2af32.1598380599.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
-References: <pull.696.v2.git.1597760730.gitgitgadget@gmail.com>
-        <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 25 Aug 2020 18:36:38 +0000
-Subject: [PATCH v3 7/8] maintenance: auto-size incremental-repack batch
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YIPtapUgBpGbYN9TXhOzzhwq1YNXPZ8YljVw0iXBUlM=;
+        b=B6HGvXz9f559nx3Flhsil4KnmuKZ5QfVCiHDTijoBr2sBFxRB+qeHewCYTQLZWU9c6
+         TAS7ovEfG2WH9tcIVKeMwQn14FleeEzNuY/HGjmqrZugLWUTv3NxDRJQK/XOxfwegtzU
+         eHlkSkE8ihI9+3FHEExiwP9NmMsnALE7px+WbKoRuc7ob/tnhLq1ikR0sXQsqkwpLZbq
+         cW2D5+ms7l8YODOGsI0CmLtB5lW5at+lQVYeBSrsfCCVTjDNyIQp0N+B6eAyH2vrxu/c
+         S++tKJdk+JRxx7Z2a58ys6BzrHykTLX5MRN9qSxJnBoKWYzEt2lOn+CGSU8WTAa1BIgL
+         bYsQ==
+X-Gm-Message-State: AOAM530mtrF84QMPm8v6aC7cAaKjbfCQvIFJa/osrnhjO9LFwMTQ7jn1
+        lD37NzlQL8FJ8VbkUDoh951TTOd3G4TMnd59EdG7oEHigSz9GRPB
+X-Google-Smtp-Source: ABdhPJxSuASfVbclqcN4GtVQ9y60nYVzj4ueMBvPzmbXzMwnOhs+WK8X84eZFjXXDn2m1WJK0ygYb23V3tDBH0GSnVg=
+X-Received: by 2002:a67:ed06:: with SMTP id l6mr6914057vsp.216.1598380695224;
+ Tue, 25 Aug 2020 11:38:15 -0700 (PDT)
 MIME-Version: 1.0
+From:   Nelson Elhage <nelhage@nelhage.com>
+Date:   Tue, 25 Aug 2020 11:38:04 -0700
+Message-ID: <CAPSG9dZV2EPpVKkOMcjv5z+NF7rUu=V-ZkZNx47rCv122HsiKg@mail.gmail.com>
+Subject: git clone --shallow-since can result in inconsistent shallow clones
 To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-When repacking during the 'incremental-repack' task, we use the
---batch-size option in 'git multi-pack-index repack'. The initial setting
-used --batch-size=0 to repack everything into a single pack-file. This is
-not sustainable for a large repository. The amount of work required is
-also likely to use too many system resources for a background job.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Update the 'incremental-repack' task by dynamically computing a
---batch-size option based on the current pack-file structure.
+I ran
 
-The dynamic default size is computed with this idea in mind for a client
-repository that was cloned from a very large remote: there is likely one
-"big" pack-file that was created at clone time. Thus, do not try
-repacking it as it is likely packed efficiently by the server.
+  git clone --shallow-since="1548454011" "https://github.com/abseil/abseil-cpp"
 
-Instead, we select the second-largest pack-file, and create a batch size
-that is one larger than that pack-file. If there are three or more
-pack-files, then this guarantees that at least two will be combined into
-a new pack-file.
+to produce a shallow clone of abseil-cpp.git, with the aim of going
+deep enough to grab commit `5e0dcf72c64fae912184d2e0de87195fe8f0a425`,
+which I know to have a commit date of `1548454011`.
 
-Of course, this means that the second-largest pack-file size is likely
-to grow over time and may eventually surpass the initially-cloned
-pack-file. Recall that the pack-file batch is selected in a greedy
-manner: the packs are considered from oldest to newest and are selected
-if they have size smaller than the batch size until the total selected
-size is larger than the batch size. Thus, that oldest "clone" pack will
-be first to repack after the new data creates a pack larger than that.
+What did you expect to happen? (Expected behavior)
 
-We also want to place some limits on how large these pack-files become,
-in order to bound the amount of time spent repacking. A maximum
-batch-size of two gigabytes means that large repositories will never be
-packed into a single pack-file using this job, but also that repack is
-rather expensive. This is a trade-off that is valuable to have if the
-maintenance is being run automatically or in the background. Users who
-truly want to optimize for space and performance (and are willing to pay
-the upfront cost of a full repack) can use the 'gc' task to do so.
+- I expected the command to produce a valid shallow git clone.
+- I further expected the repository to include commit
+  5e0dcf72c64fae912184d2e0de87195fe8f0a425, which has a commit date <=
+  the provided `--shallow`, as do all of its descendants up to the
+  `master` branch
 
-Create a test for this two gigabyte limit by creating an EXPENSIVE test
-that generates two pack-files of roughly 2.5 gigabytes in size, then
-performs an incremental repack. Check that the --batch-size argument in
-the subcommand uses the hard-coded maximum.
+What happened instead? (Actual behavior)
 
-Helped-by: Chris Torek <chris.torek@gmail.com>
-Reported-by: Son Luong Ngoc <sluongng@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/gc.c           | 43 +++++++++++++++++++++++++++++++++++++++++-
- t/t7900-maintenance.sh | 36 +++++++++++++++++++++++++++++++++--
- 2 files changed, 76 insertions(+), 3 deletions(-)
+- The clone command produced an inconsistent shallow clone. In the
+repository I see:
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index fbf84996fa..e043403400 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1036,6 +1036,46 @@ static int multi_pack_index_expire(struct maintenance_run_opts *opts)
- 	return 0;
- }
- 
-+#define TWO_GIGABYTES (INT32_MAX)
-+
-+static off_t get_auto_pack_size(void)
-+{
-+	/*
-+	 * The "auto" value is special: we optimize for
-+	 * one large pack-file (i.e. from a clone) and
-+	 * expect the rest to be small and they can be
-+	 * repacked quickly.
-+	 *
-+	 * The strategy we select here is to select a
-+	 * size that is one more than the second largest
-+	 * pack-file. This ensures that we will repack
-+	 * at least two packs if there are three or more
-+	 * packs.
-+	 */
-+	off_t max_size = 0;
-+	off_t second_largest_size = 0;
-+	off_t result_size;
-+	struct packed_git *p;
-+	struct repository *r = the_repository;
-+
-+	reprepare_packed_git(r);
-+	for (p = get_all_packs(r); p; p = p->next) {
-+		if (p->pack_size > max_size) {
-+			second_largest_size = max_size;
-+			max_size = p->pack_size;
-+		} else if (p->pack_size > second_largest_size)
-+			second_largest_size = p->pack_size;
-+	}
-+
-+	result_size = second_largest_size + 1;
-+
-+	/* But limit ourselves to a batch size of 2g */
-+	if (result_size > TWO_GIGABYTES)
-+		result_size = TWO_GIGABYTES;
-+
-+	return result_size;
-+}
-+
- static int multi_pack_index_repack(struct maintenance_run_opts *opts)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
-@@ -1046,7 +1086,8 @@ static int multi_pack_index_repack(struct maintenance_run_opts *opts)
- 	if (opts->quiet)
- 		strvec_push(&child.args, "--no-progress");
- 
--	strvec_push(&child.args, "--batch-size=0");
-+	strvec_pushf(&child.args, "--batch-size=%"PRIuMAX,
-+				  (uintmax_t)get_auto_pack_size());
- 
- 	close_object_store(the_repository->objects);
- 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index dde28cf837..5c08afc19a 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -182,10 +182,42 @@ test_expect_success 'incremental-repack task' '
- 	test_line_count = 4 packs-between &&
- 
- 	# the job deletes the two old packs, and does not write
--	# a new one because only one pack remains.
-+	# a new one because the batch size is not high enough to
-+	# pack the largest pack-file.
- 	git maintenance run --task=incremental-repack &&
- 	ls .git/objects/pack/*.pack >packs-after &&
--	test_line_count = 1 packs-after
-+	test_line_count = 2 packs-after
-+'
-+
-+test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
-+	for i in $(test_seq 1 5)
-+	do
-+		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
-+		return 1
-+	done &&
-+	git add big &&
-+	git commit -m "Add big file (1)" &&
-+
-+	# ensure any possible loose objects are in a pack-file
-+	git maintenance run --task=loose-objects &&
-+
-+	rm big &&
-+	for i in $(test_seq 6 10)
-+	do
-+		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
-+		return 1
-+	done &&
-+	git add big &&
-+	git commit -m "Add big file (2)" &&
-+
-+	# ensure any possible loose objects are in a pack-file
-+	git maintenance run --task=loose-objects &&
-+
-+	# Now run the incremental-repack task and check the batch-size
-+	GIT_TRACE2_EVENT="$(pwd)/run-2g.txt" git maintenance run \
-+		--task=incremental-repack 2>/dev/null &&
-+	test_subcommand git multi-pack-index repack \
-+		 --no-progress --batch-size=2147483647 <run-2g.txt
- '
- 
- test_done
--- 
-gitgitgadget
+    $ cat .git/shallow
+    5e0dcf72c64fae912184d2e0de87195fe8f0a425
+    89ea0c5ff34aaa5855cfc7aa41f323b8a0ef0ede
 
+But commit `5e0dcf72c64fae912184d2e0de87195fe8f0a425` is missing. An
+attempt to `git fetch --unshallow` errors out, because the server
+sends an `unshallow 5e0dcf72c64fae912184d2e0de87195fe8f0a425`, which
+we are unable to execute since we're missing that object.
+
+That object is also the specific one I mentioned above that I wanted.
+
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+The problem here is triggered by passing a `shallow-since` that lies
+*between* the first and and second parents of a merge commit that
+itself is on the first-parent spine. If we examine the relevant
+portion of `abseil-cpp.git`'s history, we find:
+
+    $ git --no-pager log --format='%h %ct' --graph
+89ea0c5ff34aaa5855cfc7aa41f323b8a0ef0ede~6..89ea0c5ff34aaa5855cfc7aa41f323b8a0ef0ede
+    *   89ea0c5 1548698816      # WANT
+    |\
+    | * 7ec3270 1548194022      # WANT
+    * | 5e0dcf7 1548454011      # WANT
+    * | 0dffca4 1548346230      # DON'T WANT
+    * | 6b4201f 1548261751      # DON'T WANT
+    |/
+    * 0b1e6d4 1547838308        # DON'T WANT
+    * efccc50 1547753737        # DON'T WANT
+
+I've annotated the commits with WANT or DON'T WONT based on whether or
+not their commit time is included by the `--shallow-since` filter.
+
+What is happening, I believe, is that we are marking 89ea0c5 as
+shallow, since its first parent is unwanted. However, marking it
+shallow causes pack generation to ignore _all_ of its parents,
+including 7ec3270, which we _do_ want. This results in the
+inconsistent state where we mark `5e0dcf7` as shallow (and send the
+`shallow` line), but don't send the actual object.
+
+It's unfortunately a bit unclear to me what _should_ happen here. We
+really want a way to mark `89ea0c5` as "partially-shallow", and send
+its second parent, but not its first parent, but shallowness is a
+property of an entire commit, not of a specific commit/parent
+relationship. However, it'd be nice if we at least ended up with a
+consistent state, instead of with a repository with invalid `shallow`
+marks.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.28.0.461.g40977abb40
+cpu: x86_64
+built from commit: 40977abb4059c11004726852a79df64f4553944d
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.4.0-42-generic #46-Ubuntu SMP Fri Jul 10 00:24:02 UTC 2020 x86_64
+compiler info: gnuc: 9.3
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+- Nelson Elhage
