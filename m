@@ -2,98 +2,88 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12994C433E1
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA72FC433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:40:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E75FB2071E
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:16:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 615622075E
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:40:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="KwYKHTPi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JZTra1mz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726878AbgHYTQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 15:16:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50092 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726222AbgHYTQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 15:16:52 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0397C061574
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 12:16:51 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id q14so11414238ilm.2
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 12:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=83sR149wZfdQ5tuf6I+eZSgSM/Fexto60UQvdNOSOgA=;
-        b=KwYKHTPifOTm1SO0UGL34PbP/yMuxuJdrOFMD5K9OG8GHWSF6WuTPsKZkATOagQPLR
-         ZnmYKANInXkG4Rw1Fbtd1bueUWOog5V97OEjrh0IyWe9njfzm8gRj9p7m0cefD+9f0oX
-         WRpBDYRpg0ZM1LoW1GzySfNS3eUnHLuILqwr7t2vAPbA3Gn/W1r8AZ0xG3Huuymc7bWC
-         dWFBYMXHW6RrtlGVle4PAXDnp+6CrnTQgIGU3Q+AYFnsI2O60GlOEk8O03F9/plpfJfV
-         sACKSy6z+FjP51Wi2JR026eypPlOOtFx9+ErVn1s/PUsV+cEGvGHpDMzD//+a6dhO91y
-         dwFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=83sR149wZfdQ5tuf6I+eZSgSM/Fexto60UQvdNOSOgA=;
-        b=O5b9UnK6rzcXNrFJAqUr5bxyX+QuprxFfd2Jp5RLqAHu1J1mKmb3qfrwVjhVEZtxzB
-         vYBu2ts9cmurU1GlM5/SBxOji7PoFkCwkdszTVPQ42ZeJAyZjhL1D32gWd3OD08jHxZn
-         bF0iKjGOUQZztTZKMFvOdNeJ8mVFd02zSNgbgMgaHHcllqJ/P4BzVH6qzYo3zXNZUk4Y
-         dVXPE32mJj3Y8eyXxKGjZp3MXB739+ZzerB9orRCN5awBvrkY8hFfnRd77LvuoiM/hYR
-         8cTUn7nr13XTzy89vkQhQYxNQJiTq3HCsQSqiTuPTnSPTgxpJYRGdHSescBoG+TldeQ2
-         /T/w==
-X-Gm-Message-State: AOAM532wtOIvdLpU4MRjW4WFI/Gmp5pjQVdi3Ua2iiVFnfuoEjaFRoBS
-        imU3NrKp9z+QWGqAw8i6EVs+xHUa0EkJzpYgmMOojPNRd6c=
-X-Google-Smtp-Source: ABdhPJza8YkHs13kd23toQwHnEIgG6F0xQl+EPOgAOtioGSS7qzicAAP1waoa0iD8RIWP2jBaq4Sr1IFR31qku1ypJ4=
-X-Received: by 2002:a92:79ca:: with SMTP id u193mr9669525ilc.185.1598383009169;
- Tue, 25 Aug 2020 12:16:49 -0700 (PDT)
+        id S1726483AbgHYTks (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 15:40:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63374 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbgHYTkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 15:40:46 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0792980C31;
+        Tue, 25 Aug 2020 15:40:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0y3MmtNUMbrvx7T86/6h2ZiRi7A=; b=JZTra1
+        mzoNfpUY103yPiGMJOsdcDX+1DstVzY1ry4OwS0mVJ+guaUEogmwN74MsKL5oDns
+        7S4ADNlUC1tF9p3HGoil4VEPHFMVgXsTnhxB4wdPGMrasgc4bWpoSBiVgfA8bo1Q
+        ELfnEYbB8jVP4TLaDUk1uZ3AT3oS8rorIEYlE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RfKyKF74Iy/KeT9y//yNH8Kioz3ugSdf
+        o41l2TRfTPjpqt2SOOLJT8o0OBKKT+1+hjBjmMxpjw0bEgLy6ElDJL1gPkPAQisP
+        PZTOT6VXGzlDZzaicF2/nxKDEd//3fN+vAIvbPEAe/zWMV6fDCC/6P/5Fsu7VY/U
+        cuYh8EiGdPI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F240D80C2F;
+        Tue, 25 Aug 2020 15:40:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FC7080C2D;
+        Tue, 25 Aug 2020 15:40:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: Mismatched HEAD default behavior from git log
+References: <CAGyf7-G_ciVpgvvOiH1Fq9kNuWunCpM1fhv3ao_RMXBB0K=HMA@mail.gmail.com>
+Date:   Tue, 25 Aug 2020 12:40:42 -0700
+In-Reply-To: <CAGyf7-G_ciVpgvvOiH1Fq9kNuWunCpM1fhv3ao_RMXBB0K=HMA@mail.gmail.com>
+        (Bryan Turner's message of "Tue, 25 Aug 2020 12:16:38 -0700")
+Message-ID: <xmqq8se21pl1.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 25 Aug 2020 12:16:38 -0700
-Message-ID: <CAGyf7-G_ciVpgvvOiH1Fq9kNuWunCpM1fhv3ao_RMXBB0K=HMA@mail.gmail.com>
-Subject: Mismatched HEAD default behavior from git log
-To:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: DD2F35A8-E70A-11EA-ACC9-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When git log is run without revs, it defaults to HEAD. That's
-well-documented. However, when paired with --ignore-missing, there's a
-behavior mismatch if all the provided revs are nonexistent.
+Bryan Turner <bturner@atlassian.com> writes:
 
-If you provide the revs on the command line, like "git log
---ignore-missing nonexistent --" (the trailing -- is just to help git
-log know "nonexistent" isn't intended to be a path), you get no output
-and no error (exit code is 0).
+> It appears the way --stdin processes input discards nonexistent
+> commits before the machinery that decides whether you provided any
+> revs or not runs, and so if every --stdin rev is discarded then you
+> get the default HEAD. If you provide them via the command line,
+> though, then it seems like they're discarded later and you don't get a
+> default.
+>
+> I'm not sure whether this is intentional or not (certainly I don't see
+> it anywhere in the git log documentation for --ignore-missing or
+> --stdin), but it results in a behavior mismatch that's impossible to
+> reconcile without requiring extra git processes. I can't always
+> provide HEAD since, if multiple revs are supplied, if any revs exist
+> then HEAD would not be included regardless of whether the revs were
+> supplied via the command line or --stdin.
 
-If you provide the revs via stdin, like "echo 'nonexistent' | git log
---ignore-missing --stdin --", you get every commit reachable from
-HEAD.
-
-It appears the way --stdin processes input discards nonexistent
-commits before the machinery that decides whether you provided any
-revs or not runs, and so if every --stdin rev is discarded then you
-get the default HEAD. If you provide them via the command line,
-though, then it seems like they're discarded later and you don't get a
-default.
-
-I'm not sure whether this is intentional or not (certainly I don't see
-it anywhere in the git log documentation for --ignore-missing or
---stdin), but it results in a behavior mismatch that's impossible to
-reconcile without requiring extra git processes. I can't always
-provide HEAD since, if multiple revs are supplied, if any revs exist
-then HEAD would not be included regardless of whether the revs were
-supplied via the command line or --stdin.
-
-I've confirmed this behavior as far back as Git 1.8.0 all the way up
-to 2.28.0, so it's by no means new. I can't recall seeing it come up
-on the list before, but that doesn't mean it hasn't. Is this a bug, or
-a feature?
-
-Best regards,
-Bryan Turner
+As the intent for adding the "--stdin" option to any subcommand has
+always been "we may need to feed many many things, that may bust the
+command line length limit, hence we let you feed these things from
+the standard input, but otherwise there should be no change in
+behaviour or semantics", when the behaviour of command line and
+"--stdin" differ, it is a bug in the latter.
