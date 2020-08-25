@@ -2,133 +2,167 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C8C4C433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 17:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 542B0C433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 17:22:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E76D2076C
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 17:10:21 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGvdEE7P"
+	by mail.kernel.org (Postfix) with ESMTP id 3AA8C20706
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 17:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbgHYRKS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 13:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726104AbgHYRKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 13:10:16 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93255C061574
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 10:10:16 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id z195so9232336oia.6
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 10:10:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eYupF+SwPhizhaaneSxWkFzXbNn9U/wpBrcPRVuvN5o=;
-        b=NGvdEE7PCv5Po2aBiCqQjqQAUACGNWMRzX1THR2FjKkG5YsCfrMBa6AB1huK7SMQWI
-         EhtCqNLWo3V0wfsvpEIlXFyxtKYH9K52MtE2KNIPkY0axCrGS2lOXqpbtjRUsmrBbnjX
-         cEZwYlRDtcIl+XGLhEIHFNbLV3PC+wqN1Byl1QVHQZ8ZbBIGX8GTqFIzTTuKMcyI64Hy
-         9V8V+zzrdkbjJkFMpGE1cYiKUBMoc5sxjq+AWXEd+2dr4EFHw7snA2uz2LpmlYUv+td9
-         eOU0tZIyruKzlRktBy+E9bJudmK3+rAQVo9zC2G2IJ5TE2ERovejt5LHd/K42+vN5zvs
-         DElA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eYupF+SwPhizhaaneSxWkFzXbNn9U/wpBrcPRVuvN5o=;
-        b=QP/8fLO0qE2RaegjXdeSLN6sPiiq6WKJPPu4ZjEcyrVnlRtFCtFnHSX0YtssvhwquC
-         jJ80SJq5bXYe+98tIHOJJ8LcDQsQdwvSDHI6Jq5Wsf9l0SWMs9mNpkBChNcl6FK+IkEC
-         sOosbrwCUc3Zhf72fidGH7NafHa6ymkavfN4jAJDYyiiauvQIlnAf1kPOqMTt3hEeYp8
-         xJLvk3+9jI4cJ/UP4Mx33OxfteJ8reqm9aso2QNROpZ8VPqQnjMhbSa6B912tolqNmXt
-         lWjP5eGk6yvoxT2GzhY1Fx2GF0RRA+b41aaLP9kNOTdmYpjWftiSisdcZHwEfVznT2yZ
-         B6oQ==
-X-Gm-Message-State: AOAM532JjOcLapdOhTIxSf82FSzPos/IO+E/AfPHqFMAZLuAc9dEMFB3
-        dYX+2Hx2NNciQ23qUf4Z3E0=
-X-Google-Smtp-Source: ABdhPJxkERl+9017/xg2Bu2w9vacqLc6BVEkfv6XoNVdy11RqdNE+QiyRXhIYOLgniL7qiPaaJhgQA==
-X-Received: by 2002:a05:6808:2da:: with SMTP id a26mr1492082oid.79.1598375414547;
-        Tue, 25 Aug 2020 10:10:14 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:600d:49d2:12ae:f5e7? ([2600:1700:e72:80a0:600d:49d2:12ae:f5e7])
-        by smtp.gmail.com with ESMTPSA id z63sm2760441otb.19.2020.08.25.10.10.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Aug 2020 10:10:14 -0700 (PDT)
-Subject: Re: [PATCH] builtin/repack.c: invalidate MIDX only when necessary
-To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-Cc:     Son Luong Ngoc <sluongng@gmail.com>, git <git@vger.kernel.org>,
+        id S1726475AbgHYRWR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 13:22:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40164 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726336AbgHYRWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 13:22:16 -0400
+Received: (qmail 1287 invoked by uid 109); 25 Aug 2020 17:22:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Aug 2020 17:22:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30251 invoked by uid 111); 25 Aug 2020 17:22:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Aug 2020 13:22:14 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 25 Aug 2020 13:22:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         dstolee@microsoft.com
+Subject: Re: [PATCH] builtin/repack.c: invalidate MIDX only when necessary
+Message-ID: <20200825172214.GC1414394@coredump.intra.peff.net>
 References: <ef9186a8df0d712c2ecccbe62cb43a7abadb9c96.1598320716.git.me@ttaylorr.com>
- <CB6B70D3-5FC6-43FE-8460-33F6CFC123E6@gmail.com>
- <20200825144515.GB7671@syl.lan>
- <20200825164721.GA1414394@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <45921233-ac6c-05f2-e108-0ab2aeb56104@gmail.com>
-Date:   Tue, 25 Aug 2020 13:10:13 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
+ <20200825022614.GA1391422@coredump.intra.peff.net>
+ <xmqqtuwq1zux.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20200825164721.GA1414394@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqtuwq1zux.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/25/2020 12:47 PM, Jeff King wrote:
-> It may be worth thinking a bit about atomicity here, though. Rather than
-> separate delete and write steps, would somebody want a sequence like:
+On Tue, Aug 25, 2020 at 08:58:46AM -0700, Junio C Hamano wrote:
 
-...
-> If we do care, though, that implies some cooperation between the
-> deletion process and the midx code. Perhaps it even argues that repack
-> should refuse to delete such a single pack at all, since it _isn't_
-> redundant. It's part of a midx, and the caller should rewrite the midx
-> first itself, and _then_ look for redundant packs.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Does "git repack" ever remove just one pack? Obviously "git repack -ad"
+> > or "git repack -Ad" is going to pack everything and delete the old
+> > packs. So I think we'd want to remove a midx there.
+> 
+> AFAIK, the pack-redundant subcommand is used by nobody in-tree, so
+> nobody is doing "there are three packfiles, but all the objects in
+> one of them are contained in the other two, so let's remove that
+> redundant one".
 
-It is worth noting that we _do_ have a way to integrate the delete and
-write code using 'git multi-pack-index expire'. One way to resolve this
-atomicity would be to do the following inside the repack command:
+OK, that's the part I was missing. The discussion here and the statement
+from git-repack(1):
 
- 1. Create and index the new pack.
- 2. git multi-pack-index write
- 3. git multi-pack-index expire
+  -d
+      After packing, if the newly created packs make some existing packs
+      redundant, remove the redundant packs. Also run git prune-packed
+      to remove redundant loose object files.
 
-While this _mostly_ works, we still have issues around a concurrent
-process opening a multi-pack-index before step (2) and trying to
-read from the pack-file deleted in step (3). For this reason, the
-'incremental-repack' task in the maintenance builtin series [1] runs
-'expire' then 'repack' (and not the opposite order). To be completely
-safe, we'd want to make sure that no Git command that started before
-the 'repack' command is still running when we run 'expire'. In practice,
-it suffices to run the 'incremental-repack' step at most once a day.
+made me think that it was running pack-redundant. But it doesn't seem
+to. It looks like we stopped doing so in 6ed64058e1 (git-repack: do not
+do complex redundancy check., 2005-11-19).
 
-[1] https://lore.kernel.org/git/a8d956dad6b3a81d0f1b63cbd48f36a5e1195ae8.1597760730.git.gitgitgadget@gmail.com/
+As an aside, we tried using pack-redundant at GitHub several years ago
+for dropping packs that were replicated in alternates storage. It
+performs very poorly (quadratically, perhaps?) to the point that we
+found it unusable, and I implemented a "local-redundant" command to do
+the same thing more quickly. We ended up dropping that as we now migrate
+packs wholesale (rather than via fetch), so I never upstreamed it.
 
-This discussion points out a big reason why the multi-pack-index
-wasn't fully integrated with 'git repack': it can be tricky. Using
-a repacking strategy that is focused on the multi-pack-index is
-less tricky.
+I mention that here to warn people away from pack-redundant (I wondered
+at the time why nobody had noticed its terrible performance, but now I
+think the answer is just that nobody ever runs it). I wonder if we
+should even consider deprecating and removing it.
 
-I still think that this patch is moving us in a better direction.
+I'm also happy to share local-redundant if anybody is interested (though
+as I've mentioned elsewhere, I think the larger scheme it was part of it
+also performed poorly and isn't worth pursuing).
 
-I'm making note of these possible improvements:
+> > And "git repack -d" I think of as deleting only loose objects that we
+> > just packed. But I guess it could also remove a pack that has now been
+> > made redundant? That seems like a rare case in practice, but I suppose
+> > is possible.
+> 
+> Meaning it can become reality?  Yes.  Or it already can happen?  I
+> doubt it.
 
-1. Have 'git repack' integrate with 'git multi-pack-index expire'
-   when deleting pack-files after creating a new one (if a
-   multi-pack-index exists).
+I thought the latter, but after this thread I agree that it can't.
 
-2. Handle "missing packs" referenced by the multi-pack-index more
-   gracefully, likely by disabling the multi-pack-index and
-   calling reprepare_packed_git().
+> > I'm also a little curious how bad it is to have a midx whose pack has
+> > gone away. I guess we'd answer queries for "yes, we have this object"
+> > even if we don't, which is bad. Though in practice we'd only delete
+> > those packs if we have their objects elsewhere.
+> 
+> Hmph, object O used to be in pack A and pack B, midx points at the
+> copy in pack B but we deleted it because the pack is redundant.
+> Now, midx says O exists, but midx cannot be used to retrieve O.  We
+> need to ask A.idx about O to locate it.
+> 
+> That sounds brittle.  I am not sure our error fallback is all that
+> patient.
 
-Thanks,
--Stolee
+It has to be that patient even without a midx, I think. We might open
+A.idx and mmap its contents, without opening the matching A.pack (or we
+might open it and later close it due to memory or descriptor
+constraints). And we have two layers there:
 
+  - when object_info_extended sees a bad return from
+    packed_object_info(), it will mark the entry as bad and recurse,
+    giving us an opportunity to find another one
 
+  - when we can't find the object at all (e.g., because we marked that
+    particular pack's version as inaccessible), we'll hit the
+    reprepare_packed_git() path and look for a new idx
+
+Those same things should be kicking in for midx lookups, too (I didn't
+test them, but from a cursory look at the organization of the code, I
+think they will).
+
+> > In that line of thinking, do we even need to delete midx files if one of
+> > their packs goes away? The reading side probably ought to be able to
+> > handle that gracefully.
+> 
+> But at that point, is there even a point to have that midx file that
+> knows about objects (so it can answer has_object()? correctly and
+> quickly) but does not know the correct location of half of the objects?
+> Instead of going directly to A.idx to locate O, we need to go to midx
+> to learn the location of O in B (which no longer exists), and then
+> fall back to it, that is a pure overhead.
+
+It is overhead for sure. But my thinking was that you're trading one
+efficiency for another:
+
+  - the midx may incur an extra lookup for objects in the redundant
+    pack, but that pack may be a small portion of what the midx indexes
+    (and this is likely in the usual case that you have one big
+    cumulative pack and many recently-created smaller ones; the big one
+    will never be made redundant and dominates the object count of the
+    midx)
+
+  - by keeping the midx, you're improving lookup speed for all of the
+    other objects, which don't have to hunt through separate pack idx
+    files
+
+So my guess is that it would usually be a win. Though really the correct
+answer is: if you are mucking with packs you should just generate a new
+midx (or you should pack all-into-one, which generates a single idx
+accomplishing the same thing).
+
+> > And the more interesting case is when you repack everything with "-ad"
+> > or similar, at which point you shouldn't even need to look up what's in
+> > the midx to see if you deleted its packs. The point of your operation is
+> > to put it all-into-one, so you know the old midx should be discarded.
+> 
+> Old one, yes.  Do we need to have the new one in that case?
+
+You shouldn't need one since you'd only have a single pack now.
+
+-Peff
