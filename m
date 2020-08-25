@@ -2,101 +2,128 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6801FC433E1
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA43FC433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:46:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D5412076C
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:42:19 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BZ3SL98a"
+	by mail.kernel.org (Postfix) with ESMTP id A767C2075F
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726391AbgHYTmS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 15:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgHYTmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 15:42:16 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CF7C061574
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 12:42:16 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id kx11so17889pjb.5
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 12:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZRq5TqL7kIjLAu+WnVw10wLkzWqKyOjbs9r+KAX1EXU=;
-        b=BZ3SL98a+QBR4HIwKAzVR3f7UQVYJCRSpxI23OS0XkkoJrk19HC4oDhB5bJnkNP89i
-         rRMa6eOBEhJUxZWoOZ2IboyFGsD7mtq4CyEiUjbZ5C41M0mcwKamXdpZRcvRiNOVWFHj
-         Qlofeisj2f05XP7j3J7iRmleCJ+QVNY7Ue3zgZeiGwFeh4LSzI+yopr1z9lBbuilOSiE
-         bAt1U3fxhg5YrAXakBlbQb/0FMIJuuFpMR84jqaFSTSrFEquP7FJZnwDHJP96zriO36N
-         9jfCdbyrUDfxQ17dh+Zw1j/iD1wqWQRFzjPEUedrKPGVJ9TRGO/6Acizt0ZiskZxTwsL
-         1z+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZRq5TqL7kIjLAu+WnVw10wLkzWqKyOjbs9r+KAX1EXU=;
-        b=RpTPkd1k9bPxINyWEPAWHkoAh9eq/6iz86qzetUtI8Aa5HOavZKHSY/K1IWyI7xcvB
-         1AZyJ47R0OddouZF1d9C+lhSxF8kmwFkXxGg9orGAKiR+5Wogv1oNZ4wioEqLcEU0uov
-         mRnw5mn3fgMIPjuGBGOPciIGDAn7nvkJWs2mh0IFf8lBj669AM57JzjqxgqBquBYVfi8
-         oX/FX2aE0rzCGjkVutL8NbN5lVQDeVMAHFK8YtnQszgDQYdUYRJCmMjiMwZR52C8mTui
-         ffSouBqn3QXo3PblB6tdwxbb2PFWhjlbFpNWPmNT5iH6gyZbEYW2pm93vfwKhqqd28NP
-         y1SA==
-X-Gm-Message-State: AOAM533Dm7E7mHJM2NJp9/eX+CHO7Ad1ZtrSYnej0kE5TMYgF04AADZU
-        P78r9gHbW45julyGa8oFxZOu3A==
-X-Google-Smtp-Source: ABdhPJx1tNLgaRIjEM14jbQdnO0ha401dyut1ZTbMYsILl3+llb4nZ2AXdR0qyIYoYtpfvZkPyQPgA==
-X-Received: by 2002:a17:90a:4382:: with SMTP id r2mr888829pjg.144.1598384535351;
-        Tue, 25 Aug 2020 12:42:15 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id t19sm20725pfq.179.2020.08.25.12.42.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 12:42:14 -0700 (PDT)
-Date:   Tue, 25 Aug 2020 12:42:09 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
+        id S1726391AbgHYTqV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 15:46:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40638 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726090AbgHYTqV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 15:46:21 -0400
+Received: (qmail 2385 invoked by uid 109); 25 Aug 2020 19:46:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Aug 2020 19:46:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1242 invoked by uid 111); 25 Aug 2020 19:46:19 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Aug 2020 15:46:19 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 25 Aug 2020 15:46:19 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2020, #06; Mon, 24)
-Message-ID: <20200825194209.GB331156@google.com>
-References: <xmqq7dtn3785.fsf@gitster.c.googlers.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Mismatched HEAD default behavior from git log
+Message-ID: <20200825194619.GB1419759@coredump.intra.peff.net>
+References: <CAGyf7-G_ciVpgvvOiH1Fq9kNuWunCpM1fhv3ao_RMXBB0K=HMA@mail.gmail.com>
+ <xmqq8se21pl1.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7dtn3785.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq8se21pl1.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * es/config-hooks (2020-07-30) 6 commits
->  - hook: add 'run' subcommand
->  - parse-options: parse into argv_array
->  - hook: add --porcelain to list command
->  - hook: add list command
->  - hook: scaffolding for git-hook subcommand
->  - doc: propose hooks managed by the config
+On Tue, Aug 25, 2020 at 12:40:42PM -0700, Junio C Hamano wrote:
+
+> Bryan Turner <bturner@atlassian.com> writes:
 > 
->  The "hooks defined in config" topic.
+> > It appears the way --stdin processes input discards nonexistent
+> > commits before the machinery that decides whether you provided any
+> > revs or not runs, and so if every --stdin rev is discarded then you
+> > get the default HEAD. If you provide them via the command line,
+> > though, then it seems like they're discarded later and you don't get a
+> > default.
+> >
+> > I'm not sure whether this is intentional or not (certainly I don't see
+> > it anywhere in the git log documentation for --ignore-missing or
+> > --stdin), but it results in a behavior mismatch that's impossible to
+> > reconcile without requiring extra git processes. I can't always
+> > provide HEAD since, if multiple revs are supplied, if any revs exist
+> > then HEAD would not be included regardless of whether the revs were
+> > supplied via the command line or --stdin.
 > 
->  Expecting a reroll.
->  Now jk/strvec is in 'master', we may want to see the topic reworked
->  on top of it.  Are there unresolved issues, or does the topic need
->  a round of detailed review?
+> As the intent for adding the "--stdin" option to any subcommand has
+> always been "we may need to feed many many things, that may bust the
+> command line length limit, hence we let you feed these things from
+> the standard input, but otherwise there should be no change in
+> behaviour or semantics", when the behaviour of command line and
+> "--stdin" differ, it is a bug in the latter.
 
-I have it reworked locally to use strvec instead. I see in
-https://lore.kernel.org/git/xmqqsgd8606c.fsf@gitster.c.googlers.com that
-you were waiting for another jk/strvec reroll and it looks like that's
-happened now, so I'll rebase this series against 'master' once more.
+Agreed. It also helps in this case that the command-line behavior is
+sensible and the --stdin one is not. :)
 
-I'm ready for the first four (five?) of the series to receive a detailed
-review, but I think it's premature for the 6th to be considered before
-I've seen what the conversion process looks like for existing hook
-callers. That's my main focus right now, although it tends to be bumped
-by concerns for the summit next month as well as pesky life events.
+I think the solution is probably something like:
 
- - Emily
+diff --git a/revision.c b/revision.c
+index 96630e3186..f5bbefa091 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2099,12 +2099,13 @@ static void read_pathspec_from_stdin(struct strbuf *sb,
+ 		strvec_push(prune, sb->buf);
+ }
+ 
+-static void read_revisions_from_stdin(struct rev_info *revs,
+-				      struct strvec *prune)
++static int read_revisions_from_stdin(struct rev_info *revs,
++				     struct strvec *prune)
+ {
+ 	struct strbuf sb;
+ 	int seen_dashdash = 0;
+ 	int save_warning;
++	int got_rev_arg = 0;
+ 
+ 	save_warning = warn_on_object_refname_ambiguity;
+ 	warn_on_object_refname_ambiguity = 0;
+@@ -2124,12 +2125,14 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 		if (handle_revision_arg(sb.buf, revs, 0,
+ 					REVARG_CANNOT_BE_FILENAME))
+ 			die("bad revision '%s'", sb.buf);
++		got_rev_arg = 1;
+ 	}
+ 	if (seen_dashdash)
+ 		read_pathspec_from_stdin(&sb, prune);
+ 
+ 	strbuf_release(&sb);
+ 	warn_on_object_refname_ambiguity = save_warning;
++	return got_rev_arg;
+ }
+ 
+ static void add_grep(struct rev_info *revs, const char *ptn, enum grep_pat_token what)
+@@ -2754,7 +2757,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 				}
+ 				if (revs->read_from_stdin++)
+ 					die("--stdin given twice?");
+-				read_revisions_from_stdin(revs, &prune_data);
++				if (read_revisions_from_stdin(revs, &prune_data))
++					got_rev_arg = 1;
+ 				continue;
+ 			}
+ 
+
+Possibly it would make sense to push that flag into rev_info, though,
+and let handle_revision_arg() set it. That would fix this bug and
+prevent similar ones in other code paths (though we're not likely to get
+revisions from anywhere else, I suppose).
+
+-Peff
