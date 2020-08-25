@@ -2,250 +2,107 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,FORGED_MUA_MOZILLA,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C8A9C433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92BEAC433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:02:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10FBF2074D
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:40:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A8pbRyCr"
+	by mail.kernel.org (Postfix) with ESMTP id 706822074D
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 19:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726783AbgHYSk0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 14:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44420 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726740AbgHYSkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 14:40:12 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28DC3C061574
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:40:12 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id b17so13064989wru.2
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:40:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3PhVGgGEqdc/N+TszgKfIi4lzL1p/ldjNnJzfUXIgec=;
-        b=A8pbRyCrYF7YFx1AfEaT+O9XjW4rSEvsRDRg57vuGtM8WNFYvChMujz9zq33gSUEEX
-         a4AvJfXp191c/SHybo4PfKWO5i833oma475yaNFCa+981h1h37DbZib6BDI8CQMHl3aG
-         mhahffdIMX7k63E/I/PwmYM3O0RvSb71OuqaDz0U0KKRzOg7qXjM4l1z89cbOJD/O4eN
-         vz6n+9xQnL1y3SMIOQ9IRX4qmsGPx+iXxbAOb99x1nr3UOuhKNOtAm8pkQ+HBdfFDG7E
-         rjOhlpk0FHQ1JYAz1NX2ZL1PRJkOhokVsGATwleQCtty62+UdsNyXp8qFshw8gEZc7VW
-         zcnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3PhVGgGEqdc/N+TszgKfIi4lzL1p/ldjNnJzfUXIgec=;
-        b=a0/j3esx+lXuTmRpz8ZeW0r30+zfCzb5lA0Ii0WebOT3w3eccN+iYTcRS1uTtjNUDA
-         WY6pIT0CxvMdDzr8EH5ALy2457i8Cv1OCA/YDvqroZ7sBuMKXnMOA2kGFWIMgbOFRdpG
-         AJFYPnpO9h9xNecNHmfjsv5bKZptHcjKsIIEHwR8lS740MmjfodM9xMNUsVxItWck4vd
-         DgN1riR6Yda0Okk7nuZVJmj5t41ET1Xa4wcGkT1TAxCneG9hLnl5IpJZ0p6U/YCOzgxu
-         Fot+h/5PZZxz5EbqPOdq17zczBGz+kSKNZTRiyN6tuu1aQL6dNNFjust8yzhjpUnTz6p
-         1FhQ==
-X-Gm-Message-State: AOAM531G8bzj0nA5EJle95gD6XoB2X/pHg3+5yXSIECy7In6yB7BB+/q
-        lwRj+zvHBDDKohpPhhbz+hih1i7YhGY=
-X-Google-Smtp-Source: ABdhPJx6qJhiuClVUI92Eljzv+y9mkelLHsp/ztzI1OjQxKPWH3jEQUrogqLTznkJapKQDCFcpEXRA==
-X-Received: by 2002:adf:e982:: with SMTP id h2mr12723759wrm.394.1598380810614;
-        Tue, 25 Aug 2020 11:40:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q12sm21285172wrn.94.2020.08.25.11.40.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Aug 2020 11:40:09 -0700 (PDT)
-Message-Id: <c0ce1267a99606e7632c8930c3b4d6c33f901101.1598380805.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
-References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
-        <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 25 Aug 2020 18:40:02 +0000
-Subject: [PATCH v2 5/7] maintenance: add [un]register subcommands
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726704AbgHYTB7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 15:01:59 -0400
+Received: from mail-oln040092072087.outbound.protection.outlook.com ([40.92.72.87]:11747
+        "EHLO EUR03-VE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726149AbgHYTB7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 15:01:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MHYGdbHyynIvRcODcEShByAymwtjTg/Ow+hEA02Mg7bPYQPAXbTVCZPs4OlrK4m21lbEM0bk9SfkDfIHFijkocsCrZIZ6mGhVdRBENFaAWpFIf34Pp3bDfE1UyNn5QlFMkXK85HtkcpVhHtVSzE9ktVJfVJGKIybzqAe5YGrEbSrS1Zckrr0KQKQaZVBy65d330tfVUoo+6KeEM7XU3sMcZyXwzQPncY2Wbl9EDDYus+ZrlM2T82o5U3UndhoY5QRPLzU7mUjC97lCAfq3ftFrGrj3xzPDcyxaaxV039EQJiEbkbxsdCrcOgDpMXifmexn5OJ4DmfkE4gttcsbehOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uvigHZiZV1cQEQw5zkS5odlLkVp4YOyZt4v5QDus/qE=;
+ b=dA5wPozJV/SqxZVFRjQBe6Aku8FBLRboL9OrsWelqMNshE+/K1Ppn5b0eW+wL5lfTIBSNnQSedhVZYcVbEMr9EWS25X2Y501abW+90krTkftFFJWELPW1ac0t+LeCefmpyT2SWEyXlG74rzY+0A77fR3FzKUci4OVEFMV1dCcb1M+FQmwnbcKCOpkG8lFab51xZynef8iZGNeTeC8QRB5bpaEppGDyTXPw38dFVcs5m0B0PSlrpdfew5d5j8cZrPNbSvSvnPK4jusKhwAacbOEXs2uzjl3XN24BLzfEZ8BczrsxftVNsG37LKlHGptPXI3fLwohOQwM02KsPNz7Ucw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from DB5EUR03FT053.eop-EUR03.prod.protection.outlook.com
+ (2a01:111:e400:7e0a::51) by
+ DB5EUR03HT111.eop-EUR03.prod.protection.outlook.com (2a01:111:e400:7e0a::264)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24; Tue, 25 Aug
+ 2020 19:01:56 +0000
+Received: from AM0PR04MB4771.eurprd04.prod.outlook.com
+ (2a01:111:e400:7e0a::4d) by DB5EUR03FT053.mail.protection.outlook.com
+ (2a01:111:e400:7e0a::375) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24 via Frontend
+ Transport; Tue, 25 Aug 2020 19:01:56 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:70BCBD60243F0F72532F386DE2F120A97E3E89C6BB3D927BE805F744E2771090;UpperCasedChecksum:34C1818B38BAE9334546E4FDE857BAE851C491ABA8423D5339119E232B5E108F;SizeAsReceived:8849;Count:48
+Received: from AM0PR04MB4771.eurprd04.prod.outlook.com
+ ([fe80::e085:aa99:33d3:81a2]) by AM0PR04MB4771.eurprd04.prod.outlook.com
+ ([fe80::e085:aa99:33d3:81a2%5]) with mapi id 15.20.3305.026; Tue, 25 Aug 2020
+ 19:01:56 +0000
+To:     serg.partizan@gmail.com
+Cc:     git@vger.kernel.org, Pratyush Yadav <me@yadavpratyush.com>
+References: <20200824154835.160749-1-serg.partizan@gmail.com>
+Subject: Re: [PATCH] git-gui: Basic dark mode support
+From:   =?UTF-8?Q?Matthias_A=c3=9fhauer?= <mha1993@live.de>
+Message-ID: <AM0PR04MB4771FE6F6A9284489A3D5660A5570@AM0PR04MB4771.eurprd04.prod.outlook.com>
+Date:   Tue, 25 Aug 2020 21:01:56 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+In-Reply-To: <20200824154835.160749-1-serg.partizan@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: AM3PR03CA0071.eurprd03.prod.outlook.com
+ (2603:10a6:207:5::29) To AM0PR04MB4771.eurprd04.prod.outlook.com
+ (2603:10a6:208:c4::28)
+X-Microsoft-Original-Message-ID: <090e236f-1848-f3a2-41a2-461b9877f36c@live.de>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2003:d3:bf15:6300:9c66:b85:2b4:b5bb] (2003:d3:bf15:6300:9c66:b85:2b4:b5bb) by AM3PR03CA0071.eurprd03.prod.outlook.com (2603:10a6:207:5::29) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.25 via Frontend Transport; Tue, 25 Aug 2020 19:01:55 +0000
+X-Microsoft-Original-Message-ID: <090e236f-1848-f3a2-41a2-461b9877f36c@live.de>
+X-TMN:  [3qrVLsxkBwe8qwurQVlCj5b6FPakZb4mnAPSsKfF4Uf0NiGoq3aEw8bzv+st5CR4]
+X-MS-PublicTrafficType: Email
+X-IncomingHeaderCount: 48
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-Correlation-Id: e5ba6d16-5a2c-4864-718c-08d84929561d
+X-MS-TrafficTypeDiagnostic: DB5EUR03HT111:
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 5VSjKD6NCIdwkGpLV/zgofvDmikeCdpqcGTBP8MNzQGDfnLODfH/hM1/K09EZPy+572OdG3Lkno9FujGNErTg6kndPiYhAyx4OLIukomHLm7+QHUchkoSnhd0f1LddKhcpLyFVJJNZ2WKePWrpz6ICpKHqr7ZZ18QnGzX5cfQTl22FZB0ZH4w9gyUfzazUtyaV+HYh0c8MjecFmoFKJJZQ==
+X-MS-Exchange-AntiSpam-MessageData: hkP4HcpKfugK334yGEGYmUzRFQcSe5LW0LLXetWnS120WLXYpxOvgqShyQoIvHSCj2NmYaXXZ0BU7Tb0p5+HhJ/0FGIcty7XlsV1Ou9Hx3NGRakganidlESV4MACFDEoZ7c1tSyl6iqBlpSDSFal9SShVyxJnyu7VUl6GpEjEwkqaBcmpYx4puZ3zqWbb4rgIelCwwUVi2eizfGgEF2EIg==
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5ba6d16-5a2c-4864-718c-08d84929561d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2020 19:01:56.4639
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: DB5EUR03FT053.eop-EUR03.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB5EUR03HT111
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+ >One problem that i can't yet fix: gray background for files 
+inchangelists. Any advice on this?
 
-In preparation for launching background maintenance from the 'git
-maintenance' builtin, create register/unregister subcommands. These
-commands update the new 'maintenance.repos' config option in the global
-config so the background maintenance job knows which repositories to
-maintain.
+If I understand the issue and the tcl/tk docs correctly, you can change 
+that color using -highlightcolor on the ttext widget.
 
-These commands allow users to add a repository to the background
-maintenance list without disrupting the actual maintenance mechanism.
+I've cc'ed in Pratyush, the current git-gui maintainer. He's probably 
+best suited to review this patch.
 
-For example, a user can run 'git maintenance register' when no
-background maintenance is running and it will not start the background
-maintenance. A later update to start running background maintenance will
-then pick up this repository automatically.
 
-The opposite example is that a user can run 'git maintenance unregister'
-to remove the current repository from background maintenance without
-halting maintenance for other repositories.
+Best regards
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-maintenance.txt | 14 ++++++++
- builtin/gc.c                      | 55 ++++++++++++++++++++++++++++++-
- t/t7900-maintenance.sh            | 17 +++++++++-
- 3 files changed, 84 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 2bc02c65e4..c42a176a95 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -29,6 +29,15 @@ Git repository.
- SUBCOMMANDS
- -----------
- 
-+register::
-+	Initialize Git config values so any scheduled maintenance will
-+	start running on this repository. This adds the repository to the
-+	`maintenance.repo` config variable in the current user's global
-+	config and enables some recommended configuration values for
-+	`maintenance.<task>.schedule`. The tasks that are enabled are safe
-+	for running in the background without disrupting foreground
-+	processes.
-+
- run::
- 	Run one or more maintenance tasks. If one or more `--task` options
- 	are specified, then those tasks are run in that order. Otherwise,
-@@ -36,6 +45,11 @@ run::
- 	config options are true. By default, only `maintenance.gc.enabled`
- 	is true.
- 
-+unregister::
-+	Remove the current repository from background maintenance. This
-+	only removes the repository from the configured list. It does not
-+	stop the background maintenance processes from running.
-+
- TASKS
- -----
- 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 5726a9a3b3..5218d52cb7 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1414,7 +1414,56 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
- 	return maintenance_run_tasks(&opts);
- }
- 
--static const char builtin_maintenance_usage[] = N_("git maintenance run [<options>]");
-+static int maintenance_register(void)
-+{
-+	struct child_process config_set = CHILD_PROCESS_INIT;
-+	struct child_process config_get = CHILD_PROCESS_INIT;
-+
-+	/* There is no current repository, so skip registering it */
-+	if (!the_repository || !the_repository->gitdir)
-+		return 0;
-+
-+	config_get.git_cmd = 1;
-+	strvec_pushl(&config_get.args, "config", "--global", "--get", "maintenance.repo",
-+		     the_repository->worktree ? the_repository->worktree
-+					      : the_repository->gitdir,
-+			 NULL);
-+	config_get.out = -1;
-+
-+	if (start_command(&config_get))
-+		return error(_("failed to run 'git config'"));
-+
-+	/* We already have this value in our config! */
-+	if (!finish_command(&config_get))
-+		return 0;
-+
-+	config_set.git_cmd = 1;
-+	strvec_pushl(&config_set.args, "config", "--add", "--global", "maintenance.repo",
-+		     the_repository->worktree ? the_repository->worktree
-+					      : the_repository->gitdir,
-+		     NULL);
-+
-+	return run_command(&config_set);
-+}
-+
-+static int maintenance_unregister(void)
-+{
-+	struct child_process config_unset = CHILD_PROCESS_INIT;
-+
-+	if (!the_repository || !the_repository->gitdir)
-+		return error(_("no current repository to unregister"));
-+
-+	config_unset.git_cmd = 1;
-+	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
-+		     "maintenance.repo",
-+		     the_repository->worktree ? the_repository->worktree
-+					      : the_repository->gitdir,
-+		     NULL);
-+
-+	return run_command(&config_unset);
-+}
-+
-+static const char builtin_maintenance_usage[] =	N_("git maintenance <subcommand> [<options>]");
- 
- int cmd_maintenance(int argc, const char **argv, const char *prefix)
- {
-@@ -1423,6 +1472,10 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
- 
- 	if (!strcmp(argv[1], "run"))
- 		return maintenance_run(argc - 1, argv + 1, prefix);
-+	if (!strcmp(argv[1], "register"))
-+		return maintenance_register();
-+	if (!strcmp(argv[1], "unregister"))
-+		return maintenance_unregister();
- 
- 	die(_("invalid subcommand: %s"), argv[1]);
- }
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 3e0c5f1ca8..b20ee2d542 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -9,7 +9,7 @@ GIT_TEST_MULTI_PACK_INDEX=0
- 
- test_expect_success 'help text' '
- 	test_expect_code 129 git maintenance -h 2>err &&
--	test_i18ngrep "usage: git maintenance run" err &&
-+	test_i18ngrep "usage: git maintenance <subcommand>" err &&
- 	test_expect_code 128 git maintenance barf 2>err &&
- 	test_i18ngrep "invalid subcommand: barf" err
- '
-@@ -294,4 +294,19 @@ test_expect_success '--scheduled with specific time' '
- 	test_cmp_config 1595000100 maintenance.commit-graph.lastrun
- '
- 
-+test_expect_success 'register and unregister' '
-+	test_when_finished git config --global --unset-all maintenance.repo &&
-+	git config --global --add maintenance.repo /existing1 &&
-+	git config --global --add maintenance.repo /existing2 &&
-+	git config --global --get-all maintenance.repo >before &&
-+	git maintenance register &&
-+	git config --global --get-all maintenance.repo >actual &&
-+	cp before after &&
-+	pwd >>after &&
-+	test_cmp after actual &&
-+	git maintenance unregister &&
-+	git config --global --get-all maintenance.repo >actual &&
-+	test_cmp before actual
-+'
-+
- test_done
--- 
-gitgitgadget
+Matthias
+
 
