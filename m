@@ -2,125 +2,86 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.0 required=3.0 tests=BAYES_50,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53700C433E1
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 21:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0485C433E3
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 21:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25DE920738
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 21:18:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FCC92074A
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 21:19:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=premiumguestposting-com.20150623.gappssmtp.com header.i=@premiumguestposting-com.20150623.gappssmtp.com header.b="FFF8FshO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbgHYVSi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 17:18:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40764 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726158AbgHYVSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 17:18:37 -0400
-Received: (qmail 2920 invoked by uid 109); 25 Aug 2020 21:18:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Aug 2020 21:18:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3000 invoked by uid 111); 25 Aug 2020 21:18:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Aug 2020 17:18:36 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 25 Aug 2020 17:18:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, steadmon@google.com
-Subject: Re: [PATCH 0/7] Better threaded delta resolution in index-pack
- (another try)
-Message-ID: <20200825211836.GA1448402@coredump.intra.peff.net>
-References: <20200824220829.GA802799@coredump.intra.peff.net>
- <20200825181145.1091378-1-jonathantanmy@google.com>
+        id S1726466AbgHYVT4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 17:19:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726158AbgHYVTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 17:19:55 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E57C061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 14:19:55 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id w13so197007wrk.5
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 14:19:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=premiumguestposting-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:reply-to:to:subject:content-transfer-encoding
+         :date:message-id;
+        bh=aoHqmH9sL+OcIlY4FyOlkTJUBUWRl5bkF8J+rcVr6u0=;
+        b=FFF8FshOlU94FCDZtE+6QgQIfp7uYsiZSyGt0iaWKowJVGnj3f3SuJugZBKFrTEoeJ
+         e02qum1C1BsuFRkNVXD9fgZeWZ5lMsTNlov/GXQHS3KcRwi4dv422lR4iIDQnAkoloN+
+         LpgbpYrvQuTqI82mTuQGYyj/Vj/JIpGzZhdT5mdpqSGWi56fFKQ8aoGrWwzaIG089P1L
+         mQmkirGrFsy6B2vNtqUgYgT7XdVGQVfjpF7ggkFdDh3MtouBmFI8AsZKaatmvE1W6yL3
+         NnbxA6IvrSuDXIq+/Kh1CGyM4pVGA7tdi4yZHysu31UijgTN2Hw1qNc0femQiG7UXMxR
+         z+xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:reply-to:to:subject
+         :content-transfer-encoding:date:message-id;
+        bh=aoHqmH9sL+OcIlY4FyOlkTJUBUWRl5bkF8J+rcVr6u0=;
+        b=i3i+Xe9F2+ZASESF208Y2o0W2MVD+khiy+gh6cBeBiWQ78Tetwd/7A9P2ASdYaiQF1
+         uNeTONyqeAlykQqiwSTybpJ3GBmlF2qqcDmkg5VtatoQA97ILuLwgM37Vslvz2Wkry6C
+         pWNwgYEii/hJblAJBn9tt1npurrkWFglZc4+4CkNwj4sFmvv8H6oporM/crU+MtBVOC+
+         D16/KxbaszSA5NweWRcv0w9rtbaZDaC+S4nIykklIelxXwMAlGdylmDJlVfJce4fEvf9
+         vS8PpLdWSkeCL98Q3OPLbzpsd2ZC25Um3mtUEjBhmYz7BEjSvOWMdfptmF2g7gCProEt
+         CCWg==
+X-Gm-Message-State: AOAM5321OnsXkfO759/ImsaRmOFKJt7SenY37nu0RE991WsxsUHUZTHl
+        jpfC/r85RDj33L0YBZoOJWTgKqCkYmZQ1kOx
+X-Google-Smtp-Source: ABdhPJxkD8XBvhe9wBMyNHo46DcWJOZVxPpi1NDl4MVU6huELdX8aoit/1sgyCuT8OlO6z3wqG5T1g==
+X-Received: by 2002:adf:bb54:: with SMTP id x20mr11540873wrg.413.1598390393668;
+        Tue, 25 Aug 2020 14:19:53 -0700 (PDT)
+Received: from 39.35.131.93 ([39.35.131.93])
+        by smtp.gmail.com with ESMTPSA id 11sm681391wmo.23.2020.08.25.14.19.52
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 25 Aug 2020 14:19:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200825181145.1091378-1-jonathantanmy@google.com>
+From:   "Russell Fenton" <russell@premiumguestposting.com>
+Reply-To: russell@premiumguestposting.com
+To:     git@vger.kernel.org
+Subject: Paid Post
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Smart_Send_3_1_6
+Date:   Wed, 26 Aug 2020 02:19:48 +0500
+Message-ID: <79723828004881898010020@DESKTOP-FB7ULH6>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 25, 2020 at 11:11:45AM -0700, Jonathan Tan wrote:
+Hello there,
 
-> > There may be other cases that get better, though. A 3% increase here is
-> > probably OK if we get something for it. But if our primary goal here is
-> > increasing multithread efficiency, then we should be able to show some
-> > benchmark that improves. :)
-> 
-> Ah...good question. Cloning from
-> https://fuchsia.googlesource.com/third_party/vulkan-cts (mentioned in
-> patch 7), cd-ing to the pack dir, and running:
-> 
->   git index-pack --stdin -o foo <*.pack
-> 
-> I got 8m2.878s with my patches and 12m6.365s without. But I ran this on
-> a cloud virtual machine (what I have access to right now) so the numbers
-> might look different on a dedicated machine.
+Hope you are fine and doing well.
+I want to make a long-haul business association with you.
+I will give you elegantly composed and one of a kind articles identified wi=
+th your site.
 
-Thanks, that's a much more interesting example. Here's what I get on my
-8-core machine:
+I will give you 2 to 3 articles each month. The links would be the do-follo=
+w and relevant to your website. No gambling or adult.
 
-  5302.9: index-pack default number of threads   167.70(546.19+12.00)   83.69(585.61+6.95) -50.1%
+I will pay Via PayPal or Payoneer.
 
-So that's a considerable improvement. And hardly surprising given the
-repository structure. I used the script below to show the size of the
-delta families, and the vk-master ones really dominate in size and
-object number (the biggest is 50GB in one delta family).
-
-I also ran my PERF_EXTRA tests on them to see if it behaved differently
-as the threads increased. Nope:
-
-  5302.3: index-pack 0 threads                   434.13(425.90+8.16)
-  5302.4: index-pack 1 threads                   428.65(421.82+6.77)
-  5302.5: index-pack 2 threads                   224.05(424.13+6.21)
-  5302.6: index-pack 4 threads                   125.43(457.68+5.77)
-  5302.7: index-pack 8 threads                   82.60(579.10+7.78) 
-  5302.8: index-pack 16 threads                  82.89(1147.82+9.66)
-  5302.9: index-pack default number of threads   83.91(576.92+8.52) 
-
-Still maxes out at the number of physical cores (not unexpected, but
-that was the thing I was most curious about ;) ). I may run it on the
-40-core machine, too. It's possible that with the new threading we're
-able to do better going past 20-threads. I doubt it, because I think
-it's mostly a function of Git's locking granularity, but worth checking.
-
--Peff
-
--- >8 --
-#!/bin/sh
-# script to output size, count, and filenames for each delta family
-
-git rev-list --objects --all |
-git cat-file --buffer \
-  --batch-check='%(objectname) %(deltabase) %(objectsize) %(rest)' |
-perl -alne '
-  if ($F[1] =~ /[^0]/) {
-    push @{$children{$F[1]}}, $F[0];
-  } else {
-    push @bases, $F[0];
-  }
-  $size{$F[0]} = $F[2];
-  $name{$F[0]} = $F[3];
-  END {
-    sub add_to_component {
-      my ($oid, $data) = @_;
-      $data->{names}->{$name{$oid}}++;
-      $data->{size} += $size{$oid};
-      $data->{nr}++;
-      add_to_component($_, $data) for @{$children{$oid}};
-    }
-    for my $b (@bases) {
-      my $data = { size => 0, nr => 0, names => {} };
-      add_to_component($b, $data);
-      print join(" ",
-                 $data->{size}, $data->{nr},
-		 sort keys(%{$data->{names}})
-            ), "\n";
-    }
-  }
-' |
-sort -rn
+Much obliged.
