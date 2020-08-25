@@ -2,93 +2,153 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B5F5C433DF
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 16:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC58C433DF
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 16:18:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66D8320782
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 16:10:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E710020786
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 16:18:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZLuLEhA2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEy1F7wX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbgHYQKm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 12:10:42 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56510 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726351AbgHYQKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 12:10:41 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF8AADCC74;
-        Tue, 25 Aug 2020 12:10:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RqPdiRitvooaLv/Z957vXIT1J7U=; b=ZLuLEh
-        A2BnVgW3p7ZIVyhlPqMkW9AbeeSDMlFG3pWneZLBiLScPa296084RZq6RaG+nNcs
-        Rilysk+VG6NERnbl9aboZZnU4N0Q09Bgx9qaDS4RodZk4OWLo4Bxt9gKw6FA+uoD
-        wI6DzX3bOkQ/ZgijUAXI43kxX3diqM5jb2gok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=itrHUrDeAzeMHmUhr2pR7mccMYs9qhgC
-        wmmIXcBuT8LGZqUxHj44kMPdzVRdA2Mh13H+JBpFZNHNbLyKVJBJPNYS+5vKMDUl
-        R5vOoNXtsltilFGkaa1Dk3Y8tvnD9If/903SFZOjx74+kxLdtPUKiH/lmXrdtFY+
-        e9C/hQx4jf0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7585DCC73;
-        Tue, 25 Aug 2020 12:10:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 12A29DCC70;
-        Tue, 25 Aug 2020 12:10:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
-        peff@peff.net, liu.denton@gmail.com,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] t7421: eliminate 'grep' check in t7421.4 for mingw compatibility
-References: <20200825113020.71801-1-shouryashukla.oo@gmail.com>
-        <20200825113020.71801-4-shouryashukla.oo@gmail.com>
-        <2a1ea501-4974-4d74-fe3c-d173bbe76855@gmail.com>
-Date:   Tue, 25 Aug 2020 09:10:35 -0700
-In-Reply-To: <2a1ea501-4974-4d74-fe3c-d173bbe76855@gmail.com> (Kaartic
-        Sivaraam's message of "Tue, 25 Aug 2020 20:03:24 +0530")
-Message-ID: <xmqqlfi21zb8.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726698AbgHYQSq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 12:18:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726466AbgHYQSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 12:18:45 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA2EC061574
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 09:18:44 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id n129so11450807qkd.6
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 09:18:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dVG8QxbuiI7ogS0C8mbpCV7MLUEHwO0BVOkfqWTr2l8=;
+        b=aEy1F7wXR47yehpxZzNFV6Gppui9l2BEW7PkNvXuaxTzIMZ9i1YqGjtOy4vkM4Pvzb
+         OMOF/5BODtyDjwuwUObKedwpmUJuJdrY/SaWP/ZqGiaiICnd0UFuyUJmDNW5Zg3ylWVZ
+         Rei6HDh8blyLAcz+mPIlH+gh8hp5bGWVFN1jxSLt0XY/nDG+M13YgMUPmeifdaXLTi+w
+         QU6ifYVqlqdRUKNlAJygUM5MfO7s3rjkqRXmIFq7tAzk8kwwogmSeQtfn4eIF6eKaLZn
+         YNC8rlQqJbAKqQd2mRyOZT0gqdg8eksOZnMjpyvUXUeV1W4gL9yTiw0geYHMysx31K18
+         JhmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dVG8QxbuiI7ogS0C8mbpCV7MLUEHwO0BVOkfqWTr2l8=;
+        b=IQswCdmZqWHiud/aB/TyoO+P10/0hTcq2aWQauIowqLhe29XN4kobPJ9d+DShiNDr+
+         RUirMNOJcbpfP40Dv49Su1s5zXRgDsF60nZC9uwLV5ab1RwuPU86b4qeoD3MT/dX7N7l
+         FK5tb/WRRBvQPaIgDR0J/ZFWpAvrCYuuaXGVdE8G5jvFeXp+/1YLymGyc1c8NrG7VZ7X
+         /lqxCYWl7TdYXK7l6WU8rlDscOZ58bCz6efehD1sSp99lgJBTL9ah3maPABzzI9NDxpe
+         7MGDTp9j3HHUtTY1NMbk5MoaYYmMAtJL5mheG9kRFGf5bERWOMqWcAZANxEu59vbYNLC
+         c1NA==
+X-Gm-Message-State: AOAM530L+G/IPnNpzO6BqHb1/u93TiAha5nC9E4PaN0divxPweK/D0I9
+        Vk0a8zi2LDqY1+Y/NpECPhA=
+X-Google-Smtp-Source: ABdhPJw8D914tbhXMCqJH2KM0v5J8mJ+FbAkwcM5weKJfmFHbHtbD5HWWvJEGvFQ1O2dgcgigat5hQ==
+X-Received: by 2002:a37:9c8b:: with SMTP id f133mr10371466qke.332.1598372323973;
+        Tue, 25 Aug 2020 09:18:43 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:600d:49d2:12ae:f5e7? ([2600:1700:e72:80a0:600d:49d2:12ae:f5e7])
+        by smtp.gmail.com with ESMTPSA id i66sm1462038qkc.63.2020.08.25.09.18.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Aug 2020 09:18:43 -0700 (PDT)
+Subject: Re: [PATCH] builtin/repack.c: invalidate MIDX only when necessary
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com
+References: <ef9186a8df0d712c2ecccbe62cb43a7abadb9c96.1598320716.git.me@ttaylorr.com>
+ <20200825022614.GA1391422@coredump.intra.peff.net>
+ <xmqqtuwq1zux.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c78b3108-b760-d252-9428-6f03549fea11@gmail.com>
+Date:   Tue, 25 Aug 2020 12:18:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8331BFC0-E6ED-11EA-A855-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+In-Reply-To: <xmqqtuwq1zux.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On 8/25/2020 11:58 AM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> Does "git repack" ever remove just one pack? Obviously "git repack -ad"
+>> or "git repack -Ad" is going to pack everything and delete the old
+>> packs. So I think we'd want to remove a midx there.
+> 
+> AFAIK, the pack-redundant subcommand is used by nobody in-tree, so
+> nobody is doing "there are three packfiles, but all the objects in
+> one of them are contained in the other two, so let's remove that
+> redundant one".
+> 
+>> And "git repack -d" I think of as deleting only loose objects that we
+>> just packed. But I guess it could also remove a pack that has now been
+>> made redundant? That seems like a rare case in practice, but I suppose
+>> is possible.
+> 
+> Meaning it can become reality?  Yes.  Or it already can happen?  I
+> doubt it.
+> 
+>> E.g., imagine we have a midx that points to packs A and B, and
+>> git-repack deletes B. By your logic above, we need to remove the midx
+>> because now it points to objects in B which aren't accessible. But by
+>> deleting it, could we be deleting the only thing that mentions the
+>> objects in A?
+>>
+>> I _think_ the answer is "no", because we never went all-in on midx and
+>> allowed deleting the matching .idx files for contained packs.
+> 
+> Yeah, it has been my assumption that that part of the design would
+> never change.
 
->> @@ -1061,8 +1061,9 @@ static void generate_submodule_summary(struct summary_cb *info,
->>  	}
->>  
->>  	if (S_ISGITLINK(p->mod_src)) {
->> -		src_abbrev = verify_submodule_committish(p->sm_path,
->> -							 oid_to_hex(&p->oid_src));
->> +		if (p->status != 'D')
->> +			src_abbrev = verify_submodule_committish(p->sm_path,
->> +								 oid_to_hex(&p->oid_src));
->>  		if (!src_abbrev) {
->>  			missing_src = 1;
->>  			/*
+Yes, we should intend to keep the .idx files around forever even when
+using the multi-pack-index. The duplicated data overhead is not typically
+a real problem.
 
-Interesting.  There is a mirroring if-else cascade that begins with
-"if (S_ISGITLINK(p->mod_dst))" immediately after the if-else cascade
-started here, and in there, the same verify_submodule_committish()
-is called for oid_dst unconditionally.  Should the asymmetry bother
-readers of the code, or is the source side somehow special and needs
-extra care?
+The one caveat I would consider is if we wanted to let a multi-pack-index
+cover thin packs, but that would be a substantial change to the object
+database that I do not plan to tackle any time soon.
 
+>> I'm also a little curious how bad it is to have a midx whose pack has
+>> gone away. I guess we'd answer queries for "yes, we have this object"
+>> even if we don't, which is bad. Though in practice we'd only delete
+>> those packs if we have their objects elsewhere.
+> 
+> Hmph, object O used to be in pack A and pack B, midx points at the
+> copy in pack B but we deleted it because the pack is redundant.
+> Now, midx says O exists, but midx cannot be used to retrieve O.  We
+> need to ask A.idx about O to locate it.
+> 
+> That sounds brittle.  I am not sure our error fallback is all that
+> patient.
 
+The best I can see is that prepare_midx_pack() will return 1 if the
+pack no longer exists, and this would cause a die("error preparing
+packfile from multi-pack-index") in nth_midxed_pack_entry(), killing
+the following stack trace:
+
++ find_pack_entry():packfile.c
+ + fill_midx_entry():midx.c
+  + nth_midxed_pack_entry():midx.c
+
+Perhaps that die() is a bit over-zealous since we could return 1
+through this stack and find_pack_entry() could continue searching
+for the object in the packed_git list. However, it could start
+returning false _negatives_ if there were duplicates of the object
+in the multi-pack-index but only the latest copy was deleted (and
+the object does not appear in a pack-file outside of the multi-
+pack-index).
+
+Thanks,
+-Stolee
