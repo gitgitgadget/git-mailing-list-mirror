@@ -2,158 +2,167 @@ Return-Path: <SRS0=G1/z=CD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6564C433E3
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA4AC433E1
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:40:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FB7E2076C
-	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:38:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EED062071E
+	for <git@archiver.kernel.org>; Tue, 25 Aug 2020 18:40:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nelhage.com header.i=@nelhage.com header.b="V+Iyyoh1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IyUeLqRz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726656AbgHYSiT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Aug 2020 14:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
+        id S1726716AbgHYSkL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Aug 2020 14:40:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726466AbgHYSiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Aug 2020 14:38:18 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85182C061574
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:38:17 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id a1so6887013vsp.4
-        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:38:17 -0700 (PDT)
+        with ESMTP id S1726119AbgHYSkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Aug 2020 14:40:09 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77D6C061755
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:40:08 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id y3so13838926wrl.4
+        for <git@vger.kernel.org>; Tue, 25 Aug 2020 11:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nelhage.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YIPtapUgBpGbYN9TXhOzzhwq1YNXPZ8YljVw0iXBUlM=;
-        b=V+Iyyoh1XTH2bYdyvCosetUUeaRZMQIlPdOHCEJ9srYZsaVuZG45lYXhFgWt/W9Q88
-         ILrHURWqlpmgk16dDN6RsKhSZceSZWU4OPVCmRiafP93Drs0f+2AkOFoMXWIxsC4OuTg
-         5MCOm7Q1GV/P1Gl0Q1LS40BfQhjt0V89oM5yk=
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5lURrJo2phQFyTaCa9VzL15Edu5uwyU3aVspJO/+d8Q=;
+        b=IyUeLqRzNxy08lQGHSiYrY/oykI2rKIKiWeApAdD7YzlwENc9tFNTed8jQeB+mijpZ
+         qQDPjVting8zlQH5NbL4M/COmn5BIXxF2dcqTzqGmxau1atVd11W1GmSU/IF2EfPr2Ln
+         WLcHi+BwAR11jbHqyNj5KdciZluxTh10kYmw5C0Tm8oIYrQx36Mk2zIShBD9h+UG6oza
+         QhGzHcXIKqnfGesz/bDN5b5gvJbL4iN2P7bCauGV1qAeDBQsozl0IoZPoqtyliOQfzxE
+         AhvSlWJjfxUwBZF/eAfzvPr4RfzOVpsiNA12x0yGRTYMs6ddoCIFD+X27id2cIITmQ8u
+         iJQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YIPtapUgBpGbYN9TXhOzzhwq1YNXPZ8YljVw0iXBUlM=;
-        b=B6HGvXz9f559nx3Flhsil4KnmuKZ5QfVCiHDTijoBr2sBFxRB+qeHewCYTQLZWU9c6
-         TAS7ovEfG2WH9tcIVKeMwQn14FleeEzNuY/HGjmqrZugLWUTv3NxDRJQK/XOxfwegtzU
-         eHlkSkE8ihI9+3FHEExiwP9NmMsnALE7px+WbKoRuc7ob/tnhLq1ikR0sXQsqkwpLZbq
-         cW2D5+ms7l8YODOGsI0CmLtB5lW5at+lQVYeBSrsfCCVTjDNyIQp0N+B6eAyH2vrxu/c
-         S++tKJdk+JRxx7Z2a58ys6BzrHykTLX5MRN9qSxJnBoKWYzEt2lOn+CGSU8WTAa1BIgL
-         bYsQ==
-X-Gm-Message-State: AOAM530mtrF84QMPm8v6aC7cAaKjbfCQvIFJa/osrnhjO9LFwMTQ7jn1
-        lD37NzlQL8FJ8VbkUDoh951TTOd3G4TMnd59EdG7oEHigSz9GRPB
-X-Google-Smtp-Source: ABdhPJxSuASfVbclqcN4GtVQ9y60nYVzj4ueMBvPzmbXzMwnOhs+WK8X84eZFjXXDn2m1WJK0ygYb23V3tDBH0GSnVg=
-X-Received: by 2002:a67:ed06:: with SMTP id l6mr6914057vsp.216.1598380695224;
- Tue, 25 Aug 2020 11:38:15 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=5lURrJo2phQFyTaCa9VzL15Edu5uwyU3aVspJO/+d8Q=;
+        b=RbKtnK4eCiElCaRk1QPEgNB9+WyxnFUvvL8ItylX6c9UzB7M3faH6qFsBx79+5KuVy
+         NkW+D2gieJVm3/LSDS13gamNnnmPR6snLssLfFkyjjuIGm25olxdbzC29rbhqVIMlWL7
+         XHI50Nzp9pNn8ADDYMnaTX2hfSrJI14RBitYBoVjfshIYJz2VH3LeNuVhkpzxWXEMVVO
+         rooERC+nlG3ggqGvV2epGZmR6HhU6RUvLZF7LQRaS2MhEj8NMsARh7vnZ1/S0dnjSmno
+         sQFWVAl3zCCp7jTggUcju5kn3a/FpHwN2Gbk2BTC/Jj2qXhnKVwvbm1gOSoKbfkDXIoW
+         7pWA==
+X-Gm-Message-State: AOAM531XXDuNz5USnvBp8AlGO2v0b1sqjIumPltxBQWhoiOzi8AFqa/M
+        LNfxbvMgfV0wSM+kJRv/Owh0jwHMaOg=
+X-Google-Smtp-Source: ABdhPJxV/zLJ3mmoZFyHwzGEZXYCD/2EE2QlHgxH/t/QppCyC4g1t/31HcUMr3Lgxj/DxBJeb7CBAQ==
+X-Received: by 2002:adf:c182:: with SMTP id x2mr375124wre.400.1598380807024;
+        Tue, 25 Aug 2020 11:40:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n21sm7138855wmc.11.2020.08.25.11.40.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Aug 2020 11:40:06 -0700 (PDT)
+Message-Id: <5fdd8188b1d9b6efc2803b557b3ba344e184d22e.1598380805.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
+References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
+        <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 25 Aug 2020 18:39:58 +0000
+Subject: [PATCH v2 1/7] maintenance: optionally skip --auto process
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Nelson Elhage <nelhage@nelhage.com>
-Date:   Tue, 25 Aug 2020 11:38:04 -0700
-Message-ID: <CAPSG9dZV2EPpVKkOMcjv5z+NF7rUu=V-ZkZNx47rCv122HsiKg@mail.gmail.com>
-Subject: git clone --shallow-since can result in inconsistent shallow clones
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Some commands run 'git maintenance run --auto --[no-]quiet' after doing
+their normal work, as a way to keep repositories clean as they are used.
+Currently, users who do not want this maintenance to occur would set the
+'gc.auto' config option to 0 to avoid the 'gc' task from running.
+However, this does not stop the extra process invocation. On Windows,
+this extra process invocation can be more expensive than necessary.
 
-I ran
+Allow users to drop this extra process by setting 'maintenance.auto' to
+'false'.
 
-  git clone --shallow-since="1548454011" "https://github.com/abseil/abseil-cpp"
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/config/maintenance.txt |  5 +++++
+ run-command.c                        |  6 ++++++
+ t/t7900-maintenance.sh               | 13 +++++++++++++
+ 3 files changed, 24 insertions(+)
 
-to produce a shallow clone of abseil-cpp.git, with the aim of going
-deep enough to grab commit `5e0dcf72c64fae912184d2e0de87195fe8f0a425`,
-which I know to have a commit date of `1548454011`.
+diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
+index a0706d8f09..06db758172 100644
+--- a/Documentation/config/maintenance.txt
++++ b/Documentation/config/maintenance.txt
+@@ -1,3 +1,8 @@
++maintenance.auto::
++	This boolean config option controls whether some commands run
++	`git maintenance run --auto` after doing their normal work. Defaults
++	to true.
++
+ maintenance.<task>.enabled::
+ 	This boolean config option controls whether the maintenance task
+ 	with name `<task>` is run when no `--task` option is specified to
+diff --git a/run-command.c b/run-command.c
+index 2ee59acdc8..ea4d0fb4b1 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -7,6 +7,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "quote.h"
++#include "config.h"
+ 
+ void child_process_init(struct child_process *child)
+ {
+@@ -1868,8 +1869,13 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 
+ int run_auto_maintenance(int quiet)
+ {
++	int enabled;
+ 	struct child_process maint = CHILD_PROCESS_INIT;
+ 
++	if (!git_config_get_bool("maintenance.auto", &enabled) &&
++	    !enabled)
++		return 0;
++
+ 	maint.git_cmd = 1;
+ 	strvec_pushl(&maint.args, "maintenance", "run", "--auto", NULL);
+ 	strvec_push(&maint.args, quiet ? "--quiet" : "--no-quiet");
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 6f878b0141..e0ba19e1ff 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -26,6 +26,19 @@ test_expect_success 'run [--auto|--quiet]' '
+ 	test_subcommand git gc --no-quiet <run-no-quiet.txt
+ '
+ 
++test_expect_success 'maintenance.auto config option' '
++	GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
++	test_subcommand git maintenance run --auto --quiet <default &&
++	GIT_TRACE2_EVENT="$(pwd)/true" \
++		git -c maintenance.auto=true \
++		commit --quiet --allow-empty -m 2 &&
++	test_subcommand git maintenance run --auto --quiet  <true &&
++	GIT_TRACE2_EVENT="$(pwd)/false" \
++		git -c maintenance.auto=false \
++		commit --quiet --allow-empty -m 3 &&
++	test_subcommand ! git maintenance run --auto --quiet  <false
++'
++
+ test_expect_success 'maintenance.<task>.enabled' '
+ 	git config maintenance.gc.enabled false &&
+ 	git config maintenance.commit-graph.enabled true &&
+-- 
+gitgitgadget
 
-What did you expect to happen? (Expected behavior)
-
-- I expected the command to produce a valid shallow git clone.
-- I further expected the repository to include commit
-  5e0dcf72c64fae912184d2e0de87195fe8f0a425, which has a commit date <=
-  the provided `--shallow`, as do all of its descendants up to the
-  `master` branch
-
-What happened instead? (Actual behavior)
-
-- The clone command produced an inconsistent shallow clone. In the
-repository I see:
-
-    $ cat .git/shallow
-    5e0dcf72c64fae912184d2e0de87195fe8f0a425
-    89ea0c5ff34aaa5855cfc7aa41f323b8a0ef0ede
-
-But commit `5e0dcf72c64fae912184d2e0de87195fe8f0a425` is missing. An
-attempt to `git fetch --unshallow` errors out, because the server
-sends an `unshallow 5e0dcf72c64fae912184d2e0de87195fe8f0a425`, which
-we are unable to execute since we're missing that object.
-
-That object is also the specific one I mentioned above that I wanted.
-
-What's different between what you expected and what actually happened?
-
-Anything else you want to add:
-
-The problem here is triggered by passing a `shallow-since` that lies
-*between* the first and and second parents of a merge commit that
-itself is on the first-parent spine. If we examine the relevant
-portion of `abseil-cpp.git`'s history, we find:
-
-    $ git --no-pager log --format='%h %ct' --graph
-89ea0c5ff34aaa5855cfc7aa41f323b8a0ef0ede~6..89ea0c5ff34aaa5855cfc7aa41f323b8a0ef0ede
-    *   89ea0c5 1548698816      # WANT
-    |\
-    | * 7ec3270 1548194022      # WANT
-    * | 5e0dcf7 1548454011      # WANT
-    * | 0dffca4 1548346230      # DON'T WANT
-    * | 6b4201f 1548261751      # DON'T WANT
-    |/
-    * 0b1e6d4 1547838308        # DON'T WANT
-    * efccc50 1547753737        # DON'T WANT
-
-I've annotated the commits with WANT or DON'T WONT based on whether or
-not their commit time is included by the `--shallow-since` filter.
-
-What is happening, I believe, is that we are marking 89ea0c5 as
-shallow, since its first parent is unwanted. However, marking it
-shallow causes pack generation to ignore _all_ of its parents,
-including 7ec3270, which we _do_ want. This results in the
-inconsistent state where we mark `5e0dcf7` as shallow (and send the
-`shallow` line), but don't send the actual object.
-
-It's unfortunately a bit unclear to me what _should_ happen here. We
-really want a way to mark `89ea0c5` as "partially-shallow", and send
-its second parent, but not its first parent, but shallowness is a
-property of an entire commit, not of a specific commit/parent
-relationship. However, it'd be nice if we at least ended up with a
-consistent state, instead of with a repository with invalid `shallow`
-marks.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.28.0.461.g40977abb40
-cpu: x86_64
-built from commit: 40977abb4059c11004726852a79df64f4553944d
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.4.0-42-generic #46-Ubuntu SMP Fri Jul 10 00:24:02 UTC 2020 x86_64
-compiler info: gnuc: 9.3
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-
-- Nelson Elhage
