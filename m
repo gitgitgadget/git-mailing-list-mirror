@@ -6,96 +6,84 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEAA3C433E1
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 16:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95594C433DF
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 16:14:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D03D2075E
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 16:09:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 541EE2080C
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 16:14:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="H+U4S3Cy"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xGhENHMT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726971AbgHZQJD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Aug 2020 12:09:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60628 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726745AbgHZQI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Aug 2020 12:08:59 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4793C7D11A;
-        Wed, 26 Aug 2020 12:08:55 -0400 (EDT)
+        id S1727878AbgHZQOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Aug 2020 12:14:22 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54014 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727020AbgHZQNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Aug 2020 12:13:23 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 64ED0EBE7A;
+        Wed, 26 Aug 2020 12:13:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kIr0PHPRj1BAmQdVz37cYr/OQfc=; b=H+U4S3
-        Cyf7NXJML91OGc/yqm8u4XucJwI6x/e/4RTnpIAZSkwDhR2Ph9oEpvwcMgESyBWl
-        Akf0GKhBtdAi2BKnT0ga+09SGhnaYVqVxha8PQAWgX8SU0OJGAGmSCC7VwF2+1AP
-        +2KBsR2e92rT4v4KEI7q/UkCZdnke0EthGv14=
+        :content-type; s=sasl; bh=1JXFUHUN5U8UHvj103ntY15y6PM=; b=xGhENH
+        MTPEqWDNn9DUbwaWdLfMK4kFMCaeUOlEBN4+jB0Ysy/MPNpzsV/mysLUQ1OSxQ0N
+        felBneULM+ArVzlhG1gAW0+m3CNvLHHaeiGSVVxcJaBqnsfQB4OnSj+U3i8EtPcf
+        /W7p3WNwCpdRTIbNpUpT7Rdw6Q+hxv7+AhUo0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=N0NgU2GlKxw4MBp46L4powCt1OCZvT+b
-        GA6lT6pM7w4c6UHnj9ZitPLb2R3sB7PHdCYzJ/P+w8nSWWUuuHu55VpL6vXSIruC
-        fpaz0Kg2NVeuTh6/qkyqYA3XUYhkd6h0S27v6FGsO5HJ/txQv+itPid6fB1lsQDu
-        Zut3Yc3cqNM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F4477D119;
-        Wed, 26 Aug 2020 12:08:55 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Pw/M+wMdwLRlUM+5pdAIMmO3+gD8ljAW
+        KbkU6h9rj51/81jrw8jhVus7DVlvY9zj519Cq+dfXAvxCVsxOW0QThEtRY5iwQOl
+        UtZrG229IjP9Kwm1JcBZY46HhY2+yvQHytyqiJZQMh/NEuH/VcZQRMrrbZ9F3Es7
+        TpePAbIC+sE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A9CFEBE78;
+        Wed, 26 Aug 2020 12:13:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B2E807D118;
-        Wed, 26 Aug 2020 12:08:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 79615EBE75;
+        Wed, 26 Aug 2020 12:13:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 2/3] cvsexportcommit: do not run git programs in dashed form
-References: <xmqq1rjuz6n3.fsf_-_@gitster.c.googlers.com>
-        <20200826011718.3186597-1-gitster@pobox.com>
-        <20200826011718.3186597-3-gitster@pobox.com>
-        <CAPig+cR-eYCVQLRa0rVhgJ8L60-zCS_aK6_nVERcrXSyApdihw@mail.gmail.com>
-Date:   Wed, 26 Aug 2020 09:08:53 -0700
-In-Reply-To: <CAPig+cR-eYCVQLRa0rVhgJ8L60-zCS_aK6_nVERcrXSyApdihw@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 25 Aug 2020 21:28:29 -0400")
-Message-ID: <xmqqa6yhxucq.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] ci: stop linking built-ins to the dashed versions
+References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
+        <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>
+        <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
+        <20200825134714.GC25052@szeder.dev>
+        <xmqq364a3f6r.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2008260615280.56@tvgsbejvaqbjf.bet>
+Date:   Wed, 26 Aug 2020 09:13:16 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2008260615280.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 26 Aug 2020 06:19:52 +0200 (CEST)")
+Message-ID: <xmqq5z95xu5f.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 709B3E6C-E7B6-11EA-8903-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0DD20E54-E7B7-11EA-A53E-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Tue, Aug 25, 2020 at 9:17 PM Junio C Hamano <gitster@pobox.com> wrote:
->> This ancient script runs "git-foo" all over the place.  A strange
->> thing is that it has t9200 tests successfully running, even though
->> it does not seem to futz with PATH to prepend $(git --exec-path)
->> output.
->
-> t/test-lib.sh takes care of that for us, doesn't it?
+> Actually, `SKIP_DASHED_BUILT_INS` does not _only_ have an impact on `make
+> install`:
+> ...
+> See how `git-add.exe` is linked in the first, but not in the second run?
 
-Actually, it is "git" itself.  
-
-The tests spawn "git cvsexportcommit" via the "git" dispatcher.  The
-dispatcher adds GIT_EXEC_PATH to PATH in exec-cmd.c::setup_path()
-and that is used to (1) locate "git-foo" from /usr/libexec/git-core/
-that are not builtin and (2) passed to any processes we invoke.  I
-think the latter was originally done primarily for not breaking
-hooks, but that is what allows this script going in this particular
-case.
-
-If this were only a fluke in the test that kept otherwise unrunnable
-script passing, I'd say it is an evidence enough that lets us drop
-the cvsexportcommit immediately, but now I rediscovered how it was
-supposed to work and saw how it actually does work as designed, I
-would not be surprised if it is still used in the wild.
+OK, that is one more reason why we do want to have 3/3 applied not
+for all tasks in the CI , but for subset of tasks that includes the
+Windows task.  If we had multiple Windows tasks, it may even be
+better to have only to some tasks, and allow other tasks build
+git-add.exe, so that both can be tested for the primary intended
+platform.
 
 Thanks.
-
-
 
