@@ -2,231 +2,171 @@ Return-Path: <SRS0=bNai=CE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A92B0C433DF
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13014C433DF
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 16:03:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7921320738
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:45:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1FD52075E
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 16:03:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHoqspyl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VztXTTQS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbgHZPpz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Aug 2020 11:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
+        id S1727824AbgHZQDm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Aug 2020 12:03:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726739AbgHZPpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Aug 2020 11:45:55 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C56F1C061574
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 08:45:54 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id q9so22219wmj.2
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 08:45:54 -0700 (PDT)
+        with ESMTP id S1727881AbgHZQDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Aug 2020 12:03:24 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B86D8C061757
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 09:03:23 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id cs12so950778qvb.2
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 09:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=/lV90Mz+zFg4gr4xX5cxJ6LedUv6oVuZP6jKy7/4x+E=;
-        b=QHoqspylL+oI83Zk5JiqapqZSdD+Z/l3n/TPgqVLa6doj9z53nwkHBH5vbPWHANC16
-         NzYmO8ZRirqsyZOklOwtgi8Q6SE1rn9lmlLQHjJ0wu6qndGEYKediCAJ9OIcpjXm+kfP
-         7fKCQM3L+sTE2Hxp0N0hza/0Dw1PN3zVkye2PK/er15VnhX8QdhAIDPHvjx48abw3Usc
-         e1Z6UiLoU6S9T1jCuvk0S/5iupk+5tAyW5Empe/0kveJsL5wQtwCFsP3A9yUaWyZI2ES
-         NKJY2eEUy/lTaRv+jCo+eYeZ0QE4sP+AAq2OKgWaN8lwTLjJm8AZ3DNn/jrxDYcgu1th
-         z+wA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=X0OjuTZT9TrhvhxiO1Uz4TlVYlg/QDbohBfpIUzeWdo=;
+        b=VztXTTQSCL3XED41hrriMBRllmcZtyNwkucZ4fr8UM63tgBa8DTOrcyzq8btBfb1rN
+         fs7QkSwlVGgB1Dzzur7gW9kDfLzoZYgX8P9tQcfwPbLX+iw8kDA0wWeCeLxK7ak9aF82
+         wNJis30U70euYpGSGROSV7bHYMacpLUNBXCDfXTuKehfZSG8a7Zu2zAsgP6bTPM8qCdn
+         9viYUfJ7rGOUNK0l02OvQLdTJiIF743shkbRK34j1K9t7Acv5oj8apK2lG+kvjlaO99h
+         lgXNAfAAzpbbiJj5Rm7CzGgtLWPJFFE4NsW2JRc9jwM2lTFKPXoyzPAkFncxs1yF1X/I
+         2HuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/lV90Mz+zFg4gr4xX5cxJ6LedUv6oVuZP6jKy7/4x+E=;
-        b=ZJr7X25pFEFHJmr8va6ghFtHRmiqnP6Kb3Och7nG/5+bpN1AsLu24HbIgKxHd59KtN
-         L7FAOUjztFkmdbZHgodMnjhcAbXIJ1j/DGYH7Ozv1W6g6ECR84mgP7qqM4tIub+2jhIX
-         408wq2hyRWRaJwnd9DSxd1wmSsdqGfJrWKvgWIcORTYPuNRMjM6E1X03iK8USYwdiiFj
-         GyQ3/MRntqVQIElbfmHdOweg2t5N5MT0ZRQqJN36XoMGCdM1AbRgpJol7XGTdIGd8vQ2
-         9db9oWl1GKbZqritfGcx46Vu3TxuDqiBQTKuy3Vy5sS7iFS7xN4fnlso0LjXNDUDAkWg
-         wkmg==
-X-Gm-Message-State: AOAM533dbaCBF0aDPb6H2/KWDvWkaT0Poei6M7LDf139nq/mXY8jhaPl
-        bC3uHrtqzga2kSfkH3Hd0T7z5KJXXLY=
-X-Google-Smtp-Source: ABdhPJzcMTDUrDcKkj41xKOM03L/bjjODdPhUQZvzjfHjXYueMlmFy5903j/JoQ2evnnV8tUhA2GSQ==
-X-Received: by 2002:a7b:c156:: with SMTP id z22mr3679510wmi.101.1598456753018;
-        Wed, 26 Aug 2020 08:45:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2sm8175104wrf.78.2020.08.26.08.45.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2020 08:45:52 -0700 (PDT)
-Message-Id: <pull.710.git.1598456751674.gitgitgadget@gmail.com>
-From:   "Sean Barag via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Aug 2020 15:45:51 +0000
-Subject: [PATCH] clone: add remote.cloneDefault config option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=X0OjuTZT9TrhvhxiO1Uz4TlVYlg/QDbohBfpIUzeWdo=;
+        b=LdviHE1GHkbfy0ofCa/DLYWDzquUV/g/CgogoM/F7qCw5DKQu3l+IKHgzoZN4UUtbv
+         enSs2ySbtO82baAHCy4fKbUwqEezkoR4y7xAjB0otitv34cr8E/Lkzbnz+zmHHzqHF0w
+         Rm4ARD6tSi9f44GgaHQxG/2d1yhh3fIgb1fkg4Lm19eOz7gIwWV6yAEsy1WPMQd67ViY
+         uq4LeZXVSGXDCJuDAKuRPbjyaeOFbNsiOfiEQEqj88hV09/ti/phNKjDFgWAv0WuWCB6
+         Hp4y7hT4Kyam5pBa/vtHTD/zJiiFQfGL2yX3qTc/Xm5jeATL+IJVPR7AWFwDx1tDsSGk
+         y1+g==
+X-Gm-Message-State: AOAM533KkMRiE9W1UjG3C+JwH0YUb1OtVWFOb4bLmgIjyVFE28sXZtEg
+        kxfALRGwEo8o2ybDJlBHlvo=
+X-Google-Smtp-Source: ABdhPJynmU5YrfivJCf9wf0xRqdqcH31VsbjZr6uLOlFcQ+04O9RCSdBtR3J4Ju2eyObxQ3bZVqMlA==
+X-Received: by 2002:ad4:444e:: with SMTP id l14mr14373476qvt.111.1598457802810;
+        Wed, 26 Aug 2020 09:03:22 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:718c:9432:b85d:1e88? ([2600:1700:e72:80a0:718c:9432:b85d:1e88])
+        by smtp.gmail.com with ESMTPSA id 103sm2270340qta.31.2020.08.26.09.03.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Aug 2020 09:03:22 -0700 (PDT)
+Subject: Re: [PATCH v2 4/7] for-each-repo: run subcommands on configured repos
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
+        congdanhqx@gmail.com, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
+ <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
+ <0314258c5cbb8fd771c35e433bf6be95297c4597.1598380805.git.gitgitgadget@gmail.com>
+ <xmqq8se2z7uh.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <30cadb74-924e-09bc-1ca4-352de3e629f3@gmail.com>
+Date:   Wed, 26 Aug 2020 12:03:21 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sean Barag <sean@barag.org>, Sean Barag <sean@barag.org>
+In-Reply-To: <xmqq8se2z7uh.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sean Barag <sean@barag.org>
+On 8/25/2020 6:19 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +SYNOPSIS
+>> +--------
+>> +[verse]
+>> +'git for-each-repo' --config=<config> [--] <arguments>
+>> + ...
+>> +--config=<config>::
+>> +	Use the given config variable as a multi-valued list storing
+>> +	absolute path names.
+> 
+> Would it make sense to allow this config to be read from the current
+> repository, I wonder.  It is probably designed to be written to
+> either ~/.gitconfig or /etc/gitconfig because it is probably a need
+> that is not per-repository to list repositories for various purposes
+> specified by the config key, but I suspect there _might_ be a good
+> use case for storing some custom list of repositories in the
+> configuration file local to a repository, but it is not quite
+> obvious what it is.
+> 
+> If we have a good example, we may want to spell it out---that would
+> help future readers who wonder about this (just like I am doing now).
+> 
+> Also, if we do read from local config, should there be a way to say
+> "ah, you may have read values from /etc/gitconfig and ~/.gitconfig,
+> but please forget them---I have a full list I care when you are
+> running in this repository", i.e. clear the list.  It is purely a
+> convention and there is no built-in mechanism for this in the config
+> API, but often it is signalled by giving an empty string as a value.
 
-While the default remote name of `origin` can be overridden both
-pre-clone (with `git clone --origin foo`) and post-clone (with `git
-remote rename origin foo`), it'd be handy to have a configurable
-system-wide default for clones!  This commit implements
-`remote.cloneDefault` as a parallel to `remote.pushDefault`,
-with prioritized name resolution:
+I guess I should test this, but if I ask for a multi-valued config,
+will I not get _all_ of the results from /etc/gitconfig, ~/.gitconfig,
+AND .git/config? That was my expectation, which is why I don't specify
+"local" or "global" config anywhere in the discussion.
 
-1. (Highest priority) `git clone`'s `-o` option
-2. `git config`'s `remote.cloneDefault` value
-3. `origin`
+> By the way, I do not have a good concrete suggestion, but can we use
+> something better than <config> as the placeholder?  I first thought
+> this was naming the name of a file that lists repositories, not the
+> config variable name in our usual config namespace.
+Sure. How about "<key>"?
 
-There should be no impact for existing users, as it's pretty unlikely
-that anyone's already configured `remote.cloneDefault` and the porcelain
-hasn't changed (as best I can tell at least!).
+>> +static int run_command_on_repo(const char *path,
+>> +			       void *cbdata)
+> 
+> Is that on repo or in repo?  When I saw "-C" on the command line, I
+> immediately thought of "in repo".
 
-Signed-off-by: Sean Barag <sean@barag.org>
----
-    clone: add remote.cloneDefault config option
-    
-    While the default remote name of origin can be overridden both pre-clone
-    (with git clone --origin foo) and post-clone (with git remote rename
-    origin foo), it'd be handy to have a configurable system-wide default
-    for clones! This implementsremote.cloneDefault as a parallel to 
-    remote.pushDefault, with prioritized name resolution:
-    
-     1. (Highest priority) git clone's -o option
-     2. git config's remote.cloneDefault value
-     3. origin
-    
-    There should be no impact for existing users, as it's pretty unlikely
-    that anyone's already configured remote.cloneDefault and the porcelain
-    hasn't changed (as best I can tell at least!).
+"in" is better.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-710%2Fsjbarag%2Fadd-remote.cloneDefault-config-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-710/sjbarag/add-remote.cloneDefault-config-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/710
+>> +{
+>> +	int i;
+>> +	struct child_process child = CHILD_PROCESS_INIT;
+>> +	struct strvec *args = (struct strvec *)cbdata;
+>> +
+>> +	child.git_cmd = 1;
+>> +	strvec_pushl(&child.args, "-C", path, NULL);
+>> +
+>> +	for (i = 0; i < args->nr; i++)
+>> +		strvec_push(&child.args, args->v[i]);
+> 
+> Would strvec_pushv() work, or is args->v[] not NULL terminated?
 
- Documentation/config/remote.txt |  4 ++++
- Documentation/git-clone.txt     |  5 +++--
- builtin/clone.c                 | 34 +++++++++++++++++++++++++++++++--
- t/t5606-clone-options.sh        | 14 ++++++++++++++
- 4 files changed, 53 insertions(+), 4 deletions(-)
+Yeah, pushv should work.
 
-diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
-index a8e6437a90..debb21ecbf 100644
---- a/Documentation/config/remote.txt
-+++ b/Documentation/config/remote.txt
-@@ -3,6 +3,10 @@ remote.pushDefault::
- 	`branch.<name>.remote` for all branches, and is overridden by
- 	`branch.<name>.pushRemote` for specific branches.
- 
-+remote.cloneDefault::
-+	The name of the remote to create during `git clone <url>`.
-+	Defaults to "origin".
-+
- remote.<name>.url::
- 	The URL of a remote repository.  See linkgit:git-fetch[1] or
- 	linkgit:git-push[1].
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index c898310099..2e101ba4f4 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -183,8 +183,9 @@ objects from the source repository into a pack in the cloned repository.
- 
- -o <name>::
- --origin <name>::
--	Instead of using the remote name `origin` to keep track
--	of the upstream repository, use `<name>`.
-+	The remote name used to keep track of the upstream repository.
-+	Overrides `remote.cloneDefault` from the config, and defaults
-+	to `origin`.
- 
- -b <name>::
- --branch <name>::
-diff --git a/builtin/clone.c b/builtin/clone.c
-index b087ee40c2..b0dbb848c6 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -941,6 +941,29 @@ static int path_exists(const char *path)
- 	return !stat(path, &sb);
- }
- 
-+struct clone_default_info
-+{
-+	enum config_scope scope;
-+	struct strbuf remote_name;
-+	int linenr;
-+};
-+
-+static int config_read_clone_default(const char *key, const char *value,
-+	void *cb)
-+{
-+	struct clone_default_info* info = cb;
-+	if (strcmp(key, "remote.clonedefault") || !value) {
-+		return 0;
-+	}
-+
-+	info->scope = current_config_scope();
-+	strbuf_reset(&info->remote_name);
-+	strbuf_addstr(&info->remote_name, value);
-+	info->linenr = current_config_line();
-+
-+	return 0;
-+}
-+
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
-@@ -992,8 +1015,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_no_checkout = 1;
- 	}
- 
--	if (!option_origin)
--		option_origin = "origin";
-+	if (!option_origin) {
-+		struct clone_default_info clone_default = { CONFIG_SCOPE_UNKNOWN, STRBUF_INIT, -1 };
-+		git_config(config_read_clone_default, &clone_default);
-+		if (strcmp("", (const char*) clone_default.remote_name.buf))
-+			option_origin = clone_default.remote_name.buf;
-+		else
-+			option_origin = "origin";
-+	}
-+
- 
- 	repo_name = argv[0];
- 
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index e69427f881..8aac67b385 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -19,6 +19,20 @@ test_expect_success 'clone -o' '
- 
- '
- 
-+test_expect_success 'clone respects remote.cloneDefault' '
-+
-+	git -c remote.cloneDefault=bar clone parent clone-config &&
-+	(cd clone-config && git rev-parse --verify refs/remotes/bar/master)
-+
-+'
-+
-+test_expect_success 'clone chooses correct remote name' '
-+
-+	git -c remote.cloneDefault=bar clone -o foo parent clone-o-and-config &&
-+	(cd clone-o-and-config && git rev-parse --verify refs/remotes/foo/master)
-+
-+'
-+
- test_expect_success 'redirected clone does not show progress' '
- 
- 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
+>> +	return run_command(&child);
+>> +}
+> 
+> 
+>> +	values = repo_config_get_value_multi(the_repository,
+>> +					     config_key);
+> 
+> Not your fault, but it is a bit unsatisfactory that we do not have
+> special "type" meant for paths in the config API, unlike the
+> parse-options API where there is a "filename" type that is a bit
+> richer than a vanilla "string" type by allowing "prefix" handling.
+> For the purposes of this, as the values are limited to absolute/full
+> pathnames, it does not hurt as much, though.
 
-base-commit: e9b77c84a0a0df029f2a3a8114e9f22186e7da24
--- 
-gitgitgadget
+Interesting. Noted.
+
+Thanks,
+-Stolee
