@@ -2,209 +2,231 @@ Return-Path: <SRS0=bNai=CE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76064C433E1
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A92B0C433DF
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:45:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F4092078D
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:30:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7921320738
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:45:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cfdph6fj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHoqspyl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727941AbgHZPae (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Aug 2020 11:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39944 "EHLO
+        id S1726988AbgHZPpz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Aug 2020 11:45:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726874AbgHZPac (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Aug 2020 11:30:32 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E69BC061574
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 08:30:32 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id t7so1838679otp.0
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 08:30:32 -0700 (PDT)
+        with ESMTP id S1726739AbgHZPpz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Aug 2020 11:45:55 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C56F1C061574
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 08:45:54 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id q9so22219wmj.2
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 08:45:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xaIyQ3bc/uzlKo0QVUWn5qTIpNGHUKOfJHw1IgctrUQ=;
-        b=cfdph6fjs/Eam6KrmhgE+OGed4gJ+0v1gvRUrNTU3SwE+S4UZWma/bl0naAo+gZU+v
-         XikNsxPcWkjEE2uXz1g6q7B4TQTV8Xm0qU4VCoBscE/g3hs+naLtXl7opuqNmROV3f54
-         cKtmGkjyoD0SvWrMb++g6O85Ks6OTJwpZVwUhwgq4d59sHWc9EoaF87/H/T+lMYagHFE
-         OVedKh3iZcau9AtsHXXN8dOXCSihVP1fI2GMSPiwAfnW9Mzwldh1IICC67SJM3aBxOT2
-         7MH7emfzlbffm3frclos9LSSSnjmbP7gYBedp4CGGrdFPdpsNpP2l3ia6tnza0By2url
-         2Org==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=/lV90Mz+zFg4gr4xX5cxJ6LedUv6oVuZP6jKy7/4x+E=;
+        b=QHoqspylL+oI83Zk5JiqapqZSdD+Z/l3n/TPgqVLa6doj9z53nwkHBH5vbPWHANC16
+         NzYmO8ZRirqsyZOklOwtgi8Q6SE1rn9lmlLQHjJ0wu6qndGEYKediCAJ9OIcpjXm+kfP
+         7fKCQM3L+sTE2Hxp0N0hza/0Dw1PN3zVkye2PK/er15VnhX8QdhAIDPHvjx48abw3Usc
+         e1Z6UiLoU6S9T1jCuvk0S/5iupk+5tAyW5Empe/0kveJsL5wQtwCFsP3A9yUaWyZI2ES
+         NKJY2eEUy/lTaRv+jCo+eYeZ0QE4sP+AAq2OKgWaN8lwTLjJm8AZ3DNn/jrxDYcgu1th
+         z+wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xaIyQ3bc/uzlKo0QVUWn5qTIpNGHUKOfJHw1IgctrUQ=;
-        b=argXzn/D7ysrrU+SJoqYqYHRSapVbPx58B1DA/Ti25j8r6izGgEi9zZDLWpKjcN9iS
-         x/mOGbXAVA0pdwMZVRq3BC+65/ZZRt+DTQblOwqrPusG6daWdSeU8OJZgEEpN+yfM7oU
-         dipH/b3P7Y04sO1TDzGC4J3zF7gmd3+cAC1GYu4svutam5AYx6KV1Tiza894LvlaPEWc
-         6oD33u3MCmgJAIZk67YTGnUoDfGmRAemTaUV1jmsr91Xy8xcfKkUya+MxgOJ+sIxAh80
-         NfMNHAhcspmHU3L4TUD1NrAu4IBy3Y+ZJQ5fN+hLYWBffSbq6fdEI9fZcidumGcIO2lH
-         aMYg==
-X-Gm-Message-State: AOAM533sEFbi9X/oCgzjWoDqMhzZ80BvtjWEyv9uwop4wR/bnnAmYD1M
-        CYtgmiVmGVd4xeFyTxaQ14U=
-X-Google-Smtp-Source: ABdhPJzjZ8HAHaCM6o71dSPrYXocabC84h7zeVDoojSmyjxaX6+gOYIo432NWvR964HLNxn9L0GKGw==
-X-Received: by 2002:a05:6830:1283:: with SMTP id z3mr10052981otp.51.1598455831207;
-        Wed, 26 Aug 2020 08:30:31 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:718c:9432:b85d:1e88? ([2600:1700:e72:80a0:718c:9432:b85d:1e88])
-        by smtp.gmail.com with ESMTPSA id x21sm676269ooq.30.2020.08.26.08.30.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Aug 2020 08:30:30 -0700 (PDT)
-Subject: Re: [PATCH v2 3/7] maintenance: add --scheduled option and config
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.680.git.1597857408.gitgitgadget@gmail.com>
- <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
- <c728c57d85b17035d42313260620a7de5756b0c3.1598380805.git.gitgitgadget@gmail.com>
- <xmqqd03ez8pp.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bd4e18b7-6265-73e7-bc1a-a7d647eafd0a@gmail.com>
-Date:   Wed, 26 Aug 2020 11:30:29 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/lV90Mz+zFg4gr4xX5cxJ6LedUv6oVuZP6jKy7/4x+E=;
+        b=ZJr7X25pFEFHJmr8va6ghFtHRmiqnP6Kb3Och7nG/5+bpN1AsLu24HbIgKxHd59KtN
+         L7FAOUjztFkmdbZHgodMnjhcAbXIJ1j/DGYH7Ozv1W6g6ECR84mgP7qqM4tIub+2jhIX
+         408wq2hyRWRaJwnd9DSxd1wmSsdqGfJrWKvgWIcORTYPuNRMjM6E1X03iK8USYwdiiFj
+         GyQ3/MRntqVQIElbfmHdOweg2t5N5MT0ZRQqJN36XoMGCdM1AbRgpJol7XGTdIGd8vQ2
+         9db9oWl1GKbZqritfGcx46Vu3TxuDqiBQTKuy3Vy5sS7iFS7xN4fnlso0LjXNDUDAkWg
+         wkmg==
+X-Gm-Message-State: AOAM533dbaCBF0aDPb6H2/KWDvWkaT0Poei6M7LDf139nq/mXY8jhaPl
+        bC3uHrtqzga2kSfkH3Hd0T7z5KJXXLY=
+X-Google-Smtp-Source: ABdhPJzcMTDUrDcKkj41xKOM03L/bjjODdPhUQZvzjfHjXYueMlmFy5903j/JoQ2evnnV8tUhA2GSQ==
+X-Received: by 2002:a7b:c156:: with SMTP id z22mr3679510wmi.101.1598456753018;
+        Wed, 26 Aug 2020 08:45:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p2sm8175104wrf.78.2020.08.26.08.45.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Aug 2020 08:45:52 -0700 (PDT)
+Message-Id: <pull.710.git.1598456751674.gitgitgadget@gmail.com>
+From:   "Sean Barag via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 26 Aug 2020 15:45:51 +0000
+Subject: [PATCH] clone: add remote.cloneDefault config option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <xmqqd03ez8pp.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Sean Barag <sean@barag.org>, Sean Barag <sean@barag.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/25/2020 6:01 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> A user may want to run certain maintenance tasks based on frequency, not
->> conditions given in the repository. For example, the user may want to
->> perform a 'prefetch' task every hour, or 'gc' task every day. To assist,
->> update the 'git maintenance run --scheduled' command to check the config
->> for the last run of that task and add a number of seconds. The task
->> would then run only if the current time is beyond that minimum
->> timestamp.
->>
->> Add a '--scheduled' option to 'git maintenance run' to only run tasks
->> that have had enough time pass since their last run. This is done for
->> each enabled task by checking if the current timestamp is at least as
->> large as the sum of 'maintenance.<task>.lastRun' and
->> 'maintenance.<task>.schedule' in the Git config. This second value is
->> new to this commit, storing a number of seconds intended between runs.
->>
->> A user could then set up an hourly maintenance run with the following
->> cron table:
->>
->>   0 * * * * git -C <repo> maintenance run --scheduled
-> 
-> The scheme has one obvious drawback.  An hourly crontab entry means
-> your maintenance.*.schedule that is finer grained than an hour
-> increment will not run as expected.  You'd need to take all the
-> schedule intervals and take their GCD to come up with the frequency
-> of the single crontab entry.  
+From: Sean Barag <sean@barag.org>
 
-My intention for the *.schedule is that it is not an _exact_ frequency,
-but instead a lower bound on the frequency. That can be shelved for now
-as we discuss this setup:
+While the default remote name of `origin` can be overridden both
+pre-clone (with `git clone --origin foo`) and post-clone (with `git
+remote rename origin foo`), it'd be handy to have a configurable
+system-wide default for clones!  This commit implements
+`remote.cloneDefault` as a parallel to `remote.pushDefault`,
+with prioritized name resolution:
 
-> Wouldn't it make more sense to have N crontab entries for N tasks
-> you want to run periodically, each with their own frequency
-> controlled by crontab?  That way, you do not need to maintain
-> maintenance.*.schedule configuration variables and the --scheduled
-> option.  It might make maintenance.*.lastrun timestamps unneeded,
-> which would be an added plus to simplify the system quite
-> drastically.  Most importantly, that would be the way crontab users
-> are most used to in order to schedule their periodical jobs, so it
-> is one less thing to learn.
+1. (Highest priority) `git clone`'s `-o` option
+2. `git config`'s `remote.cloneDefault` value
+3. `origin`
 
-I had briefly considered setting up crontab entries for each task
-(and possibly each repo) but ended up with these complications:
+There should be no impact for existing users, as it's pretty unlikely
+that anyone's already configured `remote.cloneDefault` and the porcelain
+hasn't changed (as best I can tell at least!).
 
- 1. Maintenance frequency differs by task, so we need to split the
-    crontab by task. But we can't just split everything because we
-    do not want multiple tasks running at the same time on one
-    repository. We would need to group the tasks and have one entry
-    saying "git maintenance run --task=<task1> --task=<task2> ..."
-    for all tasks in the group.
+Signed-off-by: Sean Barag <sean@barag.org>
+---
+    clone: add remote.cloneDefault config option
+    
+    While the default remote name of origin can be overridden both pre-clone
+    (with git clone --origin foo) and post-clone (with git remote rename
+    origin foo), it'd be handy to have a configurable system-wide default
+    for clones! This implementsremote.cloneDefault as a parallel to 
+    remote.pushDefault, with prioritized name resolution:
+    
+     1. (Highest priority) git clone's -o option
+     2. git config's remote.cloneDefault value
+     3. origin
+    
+    There should be no impact for existing users, as it's pretty unlikely
+    that anyone's already configured remote.cloneDefault and the porcelain
+    hasn't changed (as best I can tell at least!).
 
- 2. Different repositories might want different tasks at different
-    frequencies, so we might need to split the crontab by repository.
-    Again, we likely want to group repositories by these frequencies
-    because a user could have 100 registered repositories and we don't
-    really want to launch 100 parallel processes.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-710%2Fsjbarag%2Fadd-remote.cloneDefault-config-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-710/sjbarag/add-remote.cloneDefault-config-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/710
 
- 3. If we want to stop maintenance, then restart it, we need to
-    clear the crontab and repopulate it, which would require iterating
-    through all "registered" repositories to read their config for
-    frequencies.
+ Documentation/config/remote.txt |  4 ++++
+ Documentation/git-clone.txt     |  5 +++--
+ builtin/clone.c                 | 34 +++++++++++++++++++++++++++++++--
+ t/t5606-clone-options.sh        | 14 ++++++++++++++
+ 4 files changed, 53 insertions(+), 4 deletions(-)
 
- 4. On macOS, editing the crontab doesn't require "sudo" but it _does_
-    create a pop-up(!) to get permission from the user. It would be
-    good to minimize how often we edit the crontab and instead use
-    config edits to change frequencies.
+diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
+index a8e6437a90..debb21ecbf 100644
+--- a/Documentation/config/remote.txt
++++ b/Documentation/config/remote.txt
+@@ -3,6 +3,10 @@ remote.pushDefault::
+ 	`branch.<name>.remote` for all branches, and is overridden by
+ 	`branch.<name>.pushRemote` for specific branches.
+ 
++remote.cloneDefault::
++	The name of the remote to create during `git clone <url>`.
++	Defaults to "origin".
++
+ remote.<name>.url::
+ 	The URL of a remote repository.  See linkgit:git-fetch[1] or
+ 	linkgit:git-push[1].
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index c898310099..2e101ba4f4 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -183,8 +183,9 @@ objects from the source repository into a pack in the cloned repository.
+ 
+ -o <name>::
+ --origin <name>::
+-	Instead of using the remote name `origin` to keep track
+-	of the upstream repository, use `<name>`.
++	The remote name used to keep track of the upstream repository.
++	Overrides `remote.cloneDefault` from the config, and defaults
++	to `origin`.
+ 
+ -b <name>::
+ --branch <name>::
+diff --git a/builtin/clone.c b/builtin/clone.c
+index b087ee40c2..b0dbb848c6 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -941,6 +941,29 @@ static int path_exists(const char *path)
+ 	return !stat(path, &sb);
+ }
+ 
++struct clone_default_info
++{
++	enum config_scope scope;
++	struct strbuf remote_name;
++	int linenr;
++};
++
++static int config_read_clone_default(const char *key, const char *value,
++	void *cb)
++{
++	struct clone_default_info* info = cb;
++	if (strcmp(key, "remote.clonedefault") || !value) {
++		return 0;
++	}
++
++	info->scope = current_config_scope();
++	strbuf_reset(&info->remote_name);
++	strbuf_addstr(&info->remote_name, value);
++	info->linenr = current_config_line();
++
++	return 0;
++}
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle = 0, is_local;
+@@ -992,8 +1015,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_no_checkout = 1;
+ 	}
+ 
+-	if (!option_origin)
+-		option_origin = "origin";
++	if (!option_origin) {
++		struct clone_default_info clone_default = { CONFIG_SCOPE_UNKNOWN, STRBUF_INIT, -1 };
++		git_config(config_read_clone_default, &clone_default);
++		if (strcmp("", (const char*) clone_default.remote_name.buf))
++			option_origin = clone_default.remote_name.buf;
++		else
++			option_origin = "origin";
++	}
++
+ 
+ 	repo_name = argv[0];
+ 
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index e69427f881..8aac67b385 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -19,6 +19,20 @@ test_expect_success 'clone -o' '
+ 
+ '
+ 
++test_expect_success 'clone respects remote.cloneDefault' '
++
++	git -c remote.cloneDefault=bar clone parent clone-config &&
++	(cd clone-config && git rev-parse --verify refs/remotes/bar/master)
++
++'
++
++test_expect_success 'clone chooses correct remote name' '
++
++	git -c remote.cloneDefault=bar clone -o foo parent clone-o-and-config &&
++	(cd clone-o-and-config && git rev-parse --verify refs/remotes/foo/master)
++
++'
++
+ test_expect_success 'redirected clone does not show progress' '
+ 
+ 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
 
-With these things in mind, here is a suggested alternative design:
-
-Let users specify a schedule frequency among this list: hourly, daily,
-weekly, monthly. We then set the following* crontab:
-
-	0 * * * * git for-each-repo --config=maintenance.repos maintenance run --scheduled=hourly
-	0 0 * * * git for-each-repo --config=maintenance.repos maintenance run --scheduled=daily
-	0 0 * * 0 git for-each-repo --config=maintenance.repos maintenance run --scheduled=weekly
-	0 0 0 * * git for-each-repo --config=maintenance.repos maintenance run --scheduled=monthly
-
-*Of course, there is some care around "$path/git --exec-path=$path"
-that I drop for ease here.
-
-Then, "git maintenance (start|stop)" can be just as simple as we have
-now: write a fixed schedule every time.
-
-The problem here is that cron will launch these processes in parallel,
-and then our object-database lock will cause some to fail! If anyone
-knows a simple way to tell cron "run hourly _except_ not at midnight"
-then we could let the "daily" schedule also run the "hourly" jobs, for
-instance. Hopefully that pattern could be extended to the weekly and
-monthly collisions.
-
-Alternatively, we could run every hour and then interpret from config
-if the current "hour" matches one of the schedules ourselves. So, the
-crontab would be this simple:
-
-	0 * * * * git for-each-repo --config=maintenance.repos maintenance run --scheduled
-
-and then we would internally decide "is this the midnight hour?" and
-"is this the first day of the week?" and "is this the first day of the
-month?" to detect if we should run the daily/weekly/monthly tasks. While
-it adds more time-awareness into Git, it does avoid the parallel task
-collisions. There are some concerns here related to long-running tasks
-delaying sequential runs of "git -C <repo> maintenance run --scheduled"
-causing the "is this the midnight hour?" queries to fail and having
-nightly/weekly/monthly maintenance be skipped accidentally. This
-motivates the *.lastRun config giving us some guarantee of _eventually_
-running the tasks, just _not too frequently_.
-
-I hope this launches a good discussion to help us find a good cron
-schedule strategy. After we land on a suitable strategy, I'll summarize
-all of these subtleties in the commit message for posterity.
-
-Hopefully, the current way that I integrate with crontab and test that
-integration (in PATCH 6/7) could also be reviewed in parallel with this
-discussion. I'm very curious to see how that could be improved.
-
-Thanks,
--Stolee
+base-commit: e9b77c84a0a0df029f2a3a8114e9f22186e7da24
+-- 
+gitgitgadget
