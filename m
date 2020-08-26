@@ -2,131 +2,138 @@ Return-Path: <SRS0=bNai=CE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2417EC433DF
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 10:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3BECC433E1
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 10:54:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3BCE20786
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 10:41:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B829206EB
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 10:54:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hm4WEBaX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kcBX24Ad"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728564AbgHZKlS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Aug 2020 06:41:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51266 "EHLO
+        id S1728602AbgHZKyr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Aug 2020 06:54:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728410AbgHZKlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Aug 2020 06:41:17 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71B6C061574
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 03:41:16 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id t185so751463pfd.13
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 03:41:16 -0700 (PDT)
+        with ESMTP id S1727122AbgHZKyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Aug 2020 06:54:45 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317F1C061574
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 03:54:45 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id p37so854754pgl.3
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 03:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4WUYd+136qXkxniauYO+99/FG98iT4va2QaFsOaq02I=;
-        b=Hm4WEBaXBQh/UMNGHueMhyVuBcaZ7BK5o+QgRU3Zju8q0nQmRhVi5jpd8kdJPqLuUu
-         4Ygota2ZylMiVNnPf7U6Gp2Lzbr1Re/La/zGB7G5HYt55Y4ll7/vo9n5mUEOWHn8gnLG
-         SUcQNNpO8i5rddTtFJVjVrS93QpPywYAGj9Hj9tcMUYiZcjpe37KDs5ch2p7aHMEs1Jj
-         xPHBzY52ASUUDnzUW93Xy/oqBimwJzWClhaRczXUTRC0N5NwzMy7sMAGLPeIGKvrdIj3
-         kbgtcex65/U8uERA1pZDJ9T7UiC6YOx3VrzhEjSd4wZH/02UMxUiBcRnZ7By3TJQpEK2
-         ieyg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3yqGcLCqz1F2QDRMSggJHB7D+jpRgpLpYO2S63kxsig=;
+        b=kcBX24Ad+l+6u1pCmhQBhfIu/cCC3uKzWav9qF5WVnwfEJ9l5aMUngmSQ4KMtGhTQd
+         YPEEobf4L2yMLQMTw1dKi9AlKsqNs1+cBZA52o+KK2wSZxlsQ5YgngOiZVeXNuKmU/+R
+         E0axjIcVD3oU9uoFzzLgDlbOTHMtAXLYEUXci9zLRsfUPiURorYsiHRE/+8ykS8JI5i7
+         vR9Y3w8sCHWjWKvvvK8XbrhIh9IHduy/m5D5nrR3nsX7O1zE4eOZmVhuywgsK7Igz6j9
+         jCnuvJ3NU9zl37BkF3S65Rg18hSdwtkFONrwXjo/bUQAgW2tJN5ySzj6OO30NWl0DMXZ
+         3wRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4WUYd+136qXkxniauYO+99/FG98iT4va2QaFsOaq02I=;
-        b=p04tGx4PZh3BEkdp0V0b9rSMhFNl2y+LB5tyjO+Ao3qh2G1nM9TGSGJ+pR74jnGJv8
-         W/srKOjOaw3uf4GOfYWB9N2poh/6Hk3kjl7diLr+drVqJAirNwuwrG5ZYA18si+2j2Io
-         lpc839x4Z77T7VCaJBRqNuTRTBgzOlL9n4C9lOvI7qVlg7oGSgaPl/i+NADb9Zf4XC0y
-         MzrKu6Y04wOfKstL0Nxq3zOmpjNWWMGrMyooBSdeTrbyyrqeeHmv0qiote5+44bxfVp8
-         448R3NgzuJZGn1tJlhEgtmjM5JERDWoTCfSvSYnUiUgqLMsn0YEdWKSkicqv4+IckSIy
-         spXw==
-X-Gm-Message-State: AOAM5328L6T7stmvj8O4qWY8XsNCDZwp4gu/bZ2yNB5jU+zr4U9/g8vT
-        glnvOBBUK/6FmCoP/+RTx8o=
-X-Google-Smtp-Source: ABdhPJw0/kbL+AgQ66GhP/jBIGu4M+rq0RWLmkCVSKA6u+VrBsSChn8zkh0OdPmeinRZ3nRnd9mnLw==
-X-Received: by 2002:a63:9a41:: with SMTP id e1mr7584478pgo.183.1598438475240;
-        Wed, 26 Aug 2020 03:41:15 -0700 (PDT)
-Received: from konoha ([2401:4900:4154:7a6d:4044:dd86:7023:5493])
-        by smtp.gmail.com with ESMTPSA id q5sm2854806pfu.16.2020.08.26.03.41.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2020 03:41:14 -0700 (PDT)
-Date:   Wed, 26 Aug 2020 16:10:47 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
-        Johannes.Schindelin@gmx.de, peff@peff.net, liu.denton@gmail.com
-Subject: Re: [PATCH 3/3] t7421: eliminate 'grep' check in t7421.4 for mingw
- compatibility
-Message-ID: <20200826104047.GA315563@konoha>
-References: <20200825113020.71801-1-shouryashukla.oo@gmail.com>
- <20200825113020.71801-4-shouryashukla.oo@gmail.com>
- <2a1ea501-4974-4d74-fe3c-d173bbe76855@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3yqGcLCqz1F2QDRMSggJHB7D+jpRgpLpYO2S63kxsig=;
+        b=Z6h9hHZhFLCFVu9BE3AUnJUI+uwhlaqikbmW0bqUe7itoyuHwwxG+kde1XekGRTRof
+         /kLoaUe3GqRv1rHQ6pqX6ohyA2R+P0OS3sg7d0kLsar3aCIKs+DBhJiiXhLW5pSClqJq
+         2O8pE6y+wzPEcZx1Y3Bk8zRfOjsk7AjPm7j2MIatlKoxGxG0vMzJ5GQGGFHV5LK/Hiyz
+         abfAlRIje1f6Mc9tsPwD86LiY3pYv9M20K9wU+v9uUEdcR5Nrzbob78nj2Y7F0A+fvgX
+         pI01lDoSxigYGNe49I1uvrkCshbRqlwKZLHUyjsVGr/JOqC6PBA1DCHMPpv7HgwBV2cG
+         tSmg==
+X-Gm-Message-State: AOAM531X29TE542J63ea/rmkeALs4apR2Y1+gw4khBWhL2W18ebr3FDy
+        Mogw7RP4H1ggWCRuDlN6TX21rFnXxOI=
+X-Google-Smtp-Source: ABdhPJx9ULBA/Y7/ktjzPWMFLXZBiA1/c7ZAiNghZg/LLOBx3om2He1R7BvPT9sEWJrXPohDIcZ6jQ==
+X-Received: by 2002:a62:2e81:: with SMTP id u123mr6085277pfu.304.1598439284708;
+        Wed, 26 Aug 2020 03:54:44 -0700 (PDT)
+Received: from [192.168.208.37] ([183.83.153.247])
+        by smtp.gmail.com with ESMTPSA id p14sm300221pff.148.2020.08.26.03.54.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Aug 2020 03:54:44 -0700 (PDT)
+Subject: Re: [GSoC][PATCH] submodule: port submodule subcommand 'add' from
+ shell to C
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, johannes.schindelin@gmx.de,
+        liu.denton@gmail.com, Prathamesh Chavan <pc44800@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Stefan Beller <stefanbeller@gmail.com>
+References: <20200824090359.403944-1-shouryashukla.oo@gmail.com>
+ <xmqq8se36gev.fsf@gitster.c.googlers.com>
+ <43337924c09119d43c74fdad3f00d4dab76edb51.camel@gmail.com>
+ <CAP6+3T2FbjKc35QYiDmaezzKbkrxEOcBqzirm032_tTU2foZ=Q@mail.gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <5899bf6e-f61f-8a19-196d-d38d611dc037@gmail.com>
+Date:   Wed, 26 Aug 2020 16:24:39 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2a1ea501-4974-4d74-fe3c-d173bbe76855@gmail.com>
+In-Reply-To: <CAP6+3T2FbjKc35QYiDmaezzKbkrxEOcBqzirm032_tTU2foZ=Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/08 08:03, Kaartic Sivaraam wrote:
-> On 25-08-2020 17:00, Shourya Shukla wrote:
-> > The 'grep' check in test 4 of t7421 resulted in the failure of t7421 on
-> > Windows due to a different error message
-> > 
-> >     error: cannot spawn git: No such file or directory
-> > 
-> > instead of
-> > 
-> >     fatal: exec 'rev-parse': cd to 'my-subm' failed: No such file or directory
-> > 
-> > Tighten up the check to compute '{src,dst}_abbrev' by guarding the
+On 26-08-2020 14:57, Shourya Shukla wrote:
+> On 8/25/20, Kaartic Sivaraam <kaartic.sivaraam@gmail.com> wrote:
+>>
+>> This part results in a difference in error message in shell and C
+>> versions.
+>>
+>> -- 8< --
+>> $ # Shell version
+>> $ git submodule add ../subm1 sub
+>> A git directory for 'sub' is found locally with remote(s):
+>>   origin        /me/subm1
+>> If you want to reuse this local git directory instead of cloning again from
+>>   /me/subm1
+>> use the '--force' option. If the local git directory is not the correct
+>> repo
+>> or you are unsure what this means choose another name with the '--name'
+>> option.
+>> $
+>> $ # C version
+>> $ git submodule add ../subm1 sub
+>> A git directory for 'sub' is found locally with remote(s):
+>>   origin        /me/subm1
+>> error: If you want to reuse this local git directory instead of cloning
+>> again from
+>>    /me/subm1
+>> use the '--force' option. If the local git directory is not the correct
+>> repo
+>> or you are unsure what this means choose another name with the '--name'
+>> option.
+>> -- >8 --
+>>
+>> Note how the third line is oddly prefixed by a `error` unlike the rest
+>> of the lines. It would be nice if we could weed out that inconsistency.
+>> We could probably use `advise()` for printing the last four lines and
+>> `error()` for the lines above them.
 > 
-> The change only affects `src_abbrev`. So, it's misleading to mention
-> `dst_abbrev` here.
-
-I forgot to change that. Thank you for pointing this out.
-
-> > 'verify_submodule_committish()' call using `p->status !='D'`, so that
-> > the former isn't called in case of non-existent submodule directory,
-> > consequently, there is no such error message on any execution
-> > environment.
-> > 
-> > Therefore, eliminate the 'grep' check in t7421. Instead, verify the
-> > absence of an error message by doing a 'test_must_be_empty' on the
-> > file containing the error.
-> > 
-> > Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> > Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-> > ---
-> >  builtin/submodule--helper.c      | 7 ++++---
-> >  t/t7421-submodule-summary-add.sh | 2 +-
-> >  2 files changed, 5 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> > index 93d0700891..f1951680f7 100644
-> > --- a/builtin/submodule--helper.c
-> > +++ b/builtin/submodule--helper.c
-> > @@ -1035,7 +1035,7 @@ static void print_submodule_summary(struct summary_cb *info, char *errmsg,
-> >  static void generate_submodule_summary(struct summary_cb *info,
-> >  				       struct module_cb *p)
-> >  {
-> > -	char *displaypath, *src_abbrev, *dst_abbrev;
-> > +	char *displaypath, *src_abbrev = NULL, *dst_abbrev = NULL;
+> Understood. I will correct this part. BTW, you surely are talking
+> about error() on
+> the first 2 lines? I think fprintf(stderr, _()) is OK for them otherwise they
+> will be prefixed by 'error:' which will not be in line with the shell version.
 > 
-> Unlike `src_abbrev`, I don't think we need to initilialize `dst_abbrev`
-> to NULL here as it would be assigned in all code paths.
 
-Alright. Changed!
+Yes. It's better to prefix them with `error` because well... it is an
+error. I realize the shell version didn't explicitly do this but that
+doesn't necessarily mean the error message was helpful without the
+prefix. AFAIK, many Git commands prefix their error messages with
+`fatal` or `error` which makes it easy to distinguish error messages
+from actual program output in the terminal. So, it's good to do the same
+here.
 
+-- 
+Sivaraam
