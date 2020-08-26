@@ -2,121 +2,100 @@ Return-Path: <SRS0=bNai=CE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22F1BC433E1
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 14:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB540C433E1
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:02:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F35F121741
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 14:58:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 721772074A
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 15:02:33 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Sbk2+hby"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727846AbgHZOwg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Aug 2020 10:52:36 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:38699 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728098AbgHZOwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Aug 2020 10:52:24 -0400
-X-Originating-IP: 103.82.80.123
-Received: from localhost (unknown [103.82.80.123])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 6D657C0002;
-        Wed, 26 Aug 2020 14:52:20 +0000 (UTC)
-Date:   Wed, 26 Aug 2020 20:22:17 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] git-gui: accommodate for intent-to-add files
-Message-ID: <20200826145217.gx2prxltyoyuoxo3@yadavpratyush.com>
-References: <pull.699.git.1597244777943.gitgitgadget@gmail.com>
- <20200826113030.xnutfxxfmdhgoq5o@yadavpratyush.com>
- <nycvar.QRO.7.76.6.2008260936010.56@tvgsbejvaqbjf.bet>
+        id S1727821AbgHZPCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Aug 2020 11:02:32 -0400
+Received: from mout.gmx.net ([212.227.17.20]:34697 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727103AbgHZPC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Aug 2020 11:02:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1598454130;
+        bh=NAVzfw5VJHUTmrIn2nkqcl5J4gQAerBJNQa/10o2TXk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Sbk2+hbymqVYGONZELjqJykh6AiWiTNP+C6Tfib0czH5oqNbLqigtKbpGXqGEezQS
+         ABgeiG3poRRC5698yErbpYxDOF5S6+tUiArUcLKlRYE7PXt9qPBZ8P9YOio+bM8STW
+         fdFXCUtY26ABE8dLpIIawzmD24EWZl2Si0DJUUzk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.183.59] ([89.1.212.143]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMGRK-1jrddU0UNy-00JM6o; Wed, 26
+ Aug 2020 17:02:10 +0200
+Date:   Wed, 26 Aug 2020 10:02:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1 2/3] cvsexportcommit: do not run git programs in dashed
+ form
+In-Reply-To: <20200826011718.3186597-3-gitster@pobox.com>
+Message-ID: <nycvar.QRO.7.76.6.2008260956380.56@tvgsbejvaqbjf.bet>
+References: <xmqq1rjuz6n3.fsf_-_@gitster.c.googlers.com> <20200826011718.3186597-1-gitster@pobox.com> <20200826011718.3186597-3-gitster@pobox.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2008260936010.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:hkHL4C5AXov6h34GbCZW+yeiycrZH76qGUmP7XDFgWCRnVc2CeK
+ 1V31XO71uxdnBvnGqfbMzIv44qq6FK1pRyfGBae4Hx0PiBfN4TZ8lzPo4H/vADtQwzhRKY1
+ aKYSVUVo5WOkvUTnWMpwx7HjKbxOMwQOI0g5jDF5tYBn2xxVqqu29vJmSk4a4SW5g0c7hFM
+ Zny2A6X8HH3WeaJF4iOLQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ijQrBegu4gA=:cRt34SKjopDL694gmyhJoe
+ MjPQrjNm1z6R0SRhHCzlusqv85MmvF/Nekhb1jYidW0XxarBGIfG6KWYcAW+YYX2A5R+n71of
+ NRq+7LmFJJdcWLmep2cwKGUpZ86BzW8Sn5kFT2Bhlfc/5xecDQiGdQVArLF/QM21N5V11byOp
+ I2mdoKZYWS3XvyjrqkLB6x4jDwntpNVQ4DrsQcPb86af5LHrygFIIgJZt/sn8l1vGr+T95TCX
+ f5gujTenbcnHdwnNuOwAJdk7KOXZQBvkbqlpceREknxza/+z3j3BwjGL1HPjhlq4jORSX9zc4
+ +1hy/biVnwebylWJtXwc8zcuJEpln68EjXKYPCmhyRXID+b1mUxw9Hx2Xbb2qh0bh3JnwscnE
+ RTC5zuoJNuAhxUhffj9EXlnOCcezGF3Z2Nmx3nPflvHlqVsoGl2vU7z6IMiKByyXMBBN1SWej
+ hRetxKf7CensqiyL3RcKbzt+0NIGGcL2ZeKEgM1LTWt/sNMJhexIpzkTSkgjfI8m0vEgCPfOT
+ YDU3XXAo+HgU7HopezQo+hD6CpQC6nXAdDILP1PyK4phZKfnhfB//ISA3g5GhDwYbiJ8WdaoH
+ +W9Kp0y6NX4Dk7BeYI5YG2uF9s5S7EUcbcyiz6tYQxWp+xzfE308Hb4270CsdDsbkqR9mSaJV
+ S3zoCrKECRm12DMuR04qfWsdN0NXBiiFRLHaiWHGb9/z/06TolxtYm5fxhoK6HRwPpzZQaG8j
+ F3xBzlMFyrWhNflTkb6lQ7lGb9feo/72GEBXD/9CUrV5MGLwKW2+Vyi3aR2WK9Q3eaX59gKM3
+ xdUWJ3156jDau7IvAfNk5E97UaXODLwc/q4KVqje6LTVR1GVO8cZaINPM+PDqt7SQTJUpu+UV
+ saxOZcDeQZEUHI5JY1uIjWUQ4iT93agdIpZeolusU/AFuFWG7q8wmJd/nzPVjlvN3VSl18Y03
+ VR6kSlaHWHNADIHYjx1E3NO6r3nznq7426J0VO7bH/Rara/BBL+EZwMT7st3Q1fvusu/DsYK+
+ Gep32aa5NUCj753mse7DxU2n324mT6odk2ILakBJgyT0SjeRCJCQBdT7KzldaK/HnrLI2ud9N
+ N+jCXIyhoO3dstkpJJJ/CaUWO2GoPyxbf8xNJcs1OJmQWOjiSEdF9EnHG+LPvWpIvxT1piDYt
+ vbS+Hc/UQySLuBiCQbbNJY8NMjhxDatjsd8763tv5FX1KYpQFggVEmsw68ptJgwOI+bOFjhny
+ BCBCjihYjUBP9FYVFEC45y9VJnH8tpDtHsJ+BhA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/08/20 09:36AM, Johannes Schindelin wrote:
-> Hi Pratyush,
-> 
-> On Wed, 26 Aug 2020, Pratyush Yadav wrote:
-> 
-> > On 12/08/20 03:06PM, Johannes Schindelin via GitGitGadget wrote:
-> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > >
-> > > As of Git v2.28.0, the diff for files staged via `git add -N` marks them
-> > > as new files. Git GUI was ill-prepared for that, and this patch teaches
-> > > Git GUI about them.
-> > >
-> > > Please note that this will not even fix things with v2.28.0, as the
-> > > `rp/apply-cached-with-i-t-a` patches are required on Git's side, too.
-> > >
-> > > This fixes https://github.com/git-for-windows/git/issues/2779
-> > >
-> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > > ---
-> > >     git-gui: accommodate for intent-to-add files
-> > >
-> > >     This fixes the intent-to-add bug reported in
-> > >     https://github.com/git-for-windows/git/issues/2779: after a file was
-> > >     staged with git add -N, staging hunks/lines would fail silently.
-> > >
-> > >     On its own, this patch is not enough, as it requires the patches
-> > >     provided in rp/apply-cached-with-i-t-a to be applied on Git's side.
-> > >
-> > >     Please note that this patch might need a bit more help, as I do not
-> > >     really know whether showing "new file mode 100644" in the diff view is
-> > >     desirable, or whether we should somehow try to retain the
-> > >     "intent-to-add" state so that unstaging all hunks would return the file
-> > >     to "intent-to-add" state.
-> >
-> > I built latest Git master (e9b77c84a0) which has
-> > `rp/apply-cached-with-i-t-a` and tested this patch. It works... for the
-> > most part.
-> >
-> > I can select a line set of lines and they get staged/unstaged, which is
-> > good. The part that is not good though is that a lot of common
-> > operations still don't work as they should:
-> >
-> > - I can't click on the icon in the "Unstaged Changes" pane to stage the
-> >   whole file. Nothing happens when I do that.
-> >
-> > - The file that is marked as intent-to-add shows up in both the "Staged
-> >   Changes" and "Unstaged Changes" panes, with the "Staged Changes" part
-> >   being empty. Ideally it should only show up in the "Unstaged Changes"
-> >   pane.
-> >
-> > - Selecting the whole file and choosing "Stage Lines for Commit" works
-> >   well. But choosing "Stage Hunk for Commit" does not. While the changes
-> >   do get staged, the UI is not properly updated and the file is still
-> >   listed in the "Unstaged Changes" pane.
-> >
-> >   I think the difference here is because for
-> >   `apply_or_revert_range_or_line`, we call `do_rescan` after it to
-> >   update the UI, but for `apply_or_revert_hunk` we update the UI
-> >   "manually" in the function after we are done applying or reverting the
-> >   changes. So the logic to update the UI needs to be updated to account
-> >   for this change. Or we can get rid of all that logic and just run a
-> >   rescan.
-> >
-> > And also, like you mentioned, we don't retain the i-t-a state when
-> > unstaging. But with some quick testing, I see that Git command line
-> > doesn't either (I tried a plain `git restore --staged`). So IMO we
-> > should mimic what the command line UI does and not retain the i-t-a
-> > state when unstaging.
-> 
-> To be quite honest, I had hoped that this might be a good patch to start
-> from... for somebody else (you?)
+Hi Junio,
 
-I'll take a stab at this during the weekend :-)
+On Tue, 25 Aug 2020, Junio C Hamano wrote:
 
--- 
-Regards,
-Pratyush Yadav
+> This ancient script runs "git-foo" all over the place.  A strange
+> thing is that it has t9200 tests successfully running, even though
+> it does not seem to futz with PATH to prepend $(git --exec-path)
+> output.  It is tempting to declare that the command must be unused,
+> but that is left to another topic.
+
+Not surprising at all: when t9200 runs `git cvsexportcommit`, it actually
+runs `bin-wrappers/git`, which sets `GIT_EXEC_PATH` to the top-level
+directory of the Git source code, then calls the `git` executable which in
+turn will set up the `PATH` to prepend `GIT_EXEC_PATH`, and then look for
+`git-cvsexportcommit` (which does not exist in `bin-wrappers/`, but in
+`GIT_EXEC_PATH`). And of course then `git-rev-parse` is found on the
+`PATH`, too.
+
+Slightly more surprising is that my PR build did not fail. I guess we do
+test `git svn`, but we skip all CVS-related tests, eh?
+
+Slightly related: it might be a good time to deprecate the CVS-related Git
+commands...
+
+Ciao,
+Dscho
