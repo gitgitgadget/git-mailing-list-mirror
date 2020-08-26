@@ -2,200 +2,140 @@ Return-Path: <SRS0=bNai=CE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDF40C433DF
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 11:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 244F5C433DF
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 11:47:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6196206EB
-	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 11:30:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E886A20707
+	for <git@archiver.kernel.org>; Wed, 26 Aug 2020 11:47:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="AVdKkPNT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728933AbgHZLal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Aug 2020 07:30:41 -0400
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:45565 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728968AbgHZLai (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Aug 2020 07:30:38 -0400
-X-Originating-IP: 103.82.80.123
-Received: from localhost (unknown [103.82.80.123])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id C259FFF809;
-        Wed, 26 Aug 2020 11:30:32 +0000 (UTC)
-Date:   Wed, 26 Aug 2020 17:00:30 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] git-gui: accommodate for intent-to-add files
-Message-ID: <20200826113030.xnutfxxfmdhgoq5o@yadavpratyush.com>
-References: <pull.699.git.1597244777943.gitgitgadget@gmail.com>
+        id S1728694AbgHZLrw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Aug 2020 07:47:52 -0400
+Received: from mout.gmx.net ([212.227.15.18]:47283 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728873AbgHZLUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Aug 2020 07:20:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1598440784;
+        bh=yV7fo/7Sa8ejBP4efGUQlwoZzYAg4tvmG0XWG5X3aQ0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AVdKkPNTLjqJhcwepYxgaBZ0/sSiyOKeU6Vo4N+PZOISrwA2h+ngYUStaFzrHniBL
+         ZjVOHjdmAeXjON9t32Hf9xnmkOtmf8jm/aGr97cIR8VMrOsbaCnJSInofTVqErwi6V
+         GKh57C3GGPAeXfqm0xmYkOaJ6sgtQ7vrizFiOOb0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.183.59] ([89.1.212.143]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1ML9uK-1jsg5q1Tik-00IGi7; Wed, 26
+ Aug 2020 13:19:44 +0200
+Date:   Wed, 26 Aug 2020 06:19:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] ci: stop linking built-ins to the dashed
+ versions
+In-Reply-To: <xmqq364a3f6r.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2008260615280.56@tvgsbejvaqbjf.bet>
+References: <pull.411.git.1597655273.gitgitgadget@gmail.com>        <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>        <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>        <20200825134714.GC25052@szeder.dev>
+ <xmqq364a3f6r.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.699.git.1597244777943.gitgitgadget@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-1697021862-1598415594=:56"
+X-Provags-ID: V03:K1:3o11zo5vA9q5Nds42D157zbIQfgQpj2bBRSvhMnzbaVEBmqO/WW
+ xv0mZfD4YhTMfYexCEoO9CJmKHiye2J32GhoCCqClhrsKh5yiuNPApqB0z0d7JFhwBdq491
+ 8WXQ6lIEyYKV67zgYXyK7JPEFVdV+kWKNiY2HyDAuuukwZ2sHBLhPSJNOwFI726BnhCBWJq
+ BtCySLEPUlq2fqWSj86TQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9jSjjiuinzg=:ZnJuWMq4VMSPs1l+e94hmJ
+ AfWvrRXsJ1QNKDDxM7ryO9/pOnH0763ebS8diGV6hnBfSofrJGWgLNVJX/WQ1k5xXt+kznWEP
+ TMIE9z/SBgBo7Vymi42IHAsGHN2cl4sXgeUJ9kyyhvvu8OGFKcKAtNKgiCyWba0xB9ouarYW8
+ 72be5jIXQz5VwhFXtXtUbp6jaQzRJGlsmwzkPVMWW9UeSuGDMgYL3YFIPoekgtO22BR+4OiJ7
+ 6R0btsGZ1RQaIwl+DOuaRJm/YFw4VCIFrzOs3xr+LIMahr5VsZaGwZmkP82fXUuAM7TaJRk31
+ TqHTsBjUGf4ibreRuqpGR1RV2ey+0rbDjeijdS4knCj6PXm+p2nsuDAsxzwPtmIyip8PO7gp6
+ P6ELkllY6NpXYfM2WG3TBayG/LxdEMxJ90PVhZjVaV0EkM3rQrl6CKvflDK8v1fu0lFJK1l3p
+ YUKDuheGRlPqYeIFRnqyEOU+PO6ZDwV5GIP9i9/4voYxen9f6WKnnmOBWcRKZPDuTu4DE4Mzs
+ c2cBI5WQ0H/8gPjMjfpSA5p6NUmp2qHKqj2v8Goxf0HmzgeLQb+VAgVs3xFVBRrM676b5WzZh
+ IARGkAfvOWwDFbrU4219NcTMDlz89MApTC6DzJFzJSZmBwCtjer9ftKueIpaU6fkOSpzdhrH4
+ rcmA+HIAKOFFcEwSAZm36CM/Z4+a5Il0cDO5ynd2YyleM38zWGZM6PUZtoM0kCQnjaFi9FHMF
+ VM5OuB3cq3QdsfKUtNBujh+tMrjJrLIMhGZn+XAxaHf5FiUV1Ji6soE4B+b5o1tU4HAcMt1Il
+ GhYSpk5MxqW1vi/qM4ALJKRbw/uxN33NnTCUZMcyaQdPYkEGMy+N5aSckCb7FrrU6LojKE+O4
+ 7a9YWYxXr8dQDkfmC23L8SGtcbl4MwYhG+dniYXyjnkg3EHxXSMaVOR4+LgXai7EtzyplOLzp
+ iEuGpLOeHo9dUnQgwe+3Q7ASKJfqcfNmj07MD9NoirLpuxGgPJ5sPOT9ifT99frVjvpX0s0hg
+ RMhY+j0UQoq+PcDLGzT0wZPO9DAKlpnk6GPcgNmRb5U1yJXsfDhKFHUGEaHpbUnCJqGH1Pstt
+ /6uqnLiJTACVblyy0GLWXmB9RUoX/gHtVZX4or+IJ4rsQxp5v3g4A0j9fIOZcwtdZhWWQGV1N
+ ssJgW/289calUxPL7hLdGgWcblw+UvKl3VHzwLZv+p5ss3RQvFdgEnMLDXvtYI+uHAa/eMZhD
+ CDvRFOjamFAFRlvLeuuxX84rGlMbvRJ92sZ85aQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks for the patch.
+--8323328-1697021862-1598415594=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On 12/08/20 03:06PM, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> As of Git v2.28.0, the diff for files staged via `git add -N` marks them
-> as new files. Git GUI was ill-prepared for that, and this patch teaches
-> Git GUI about them.
-> 
-> Please note that this will not even fix things with v2.28.0, as the
-> `rp/apply-cached-with-i-t-a` patches are required on Git's side, too.
-> 
-> This fixes https://github.com/git-for-windows/git/issues/2779
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     git-gui: accommodate for intent-to-add files
->     
->     This fixes the intent-to-add bug reported in 
->     https://github.com/git-for-windows/git/issues/2779: after a file was
->     staged with git add -N, staging hunks/lines would fail silently.
->     
->     On its own, this patch is not enough, as it requires the patches
->     provided in rp/apply-cached-with-i-t-a to be applied on Git's side.
->     
->     Please note that this patch might need a bit more help, as I do not
->     really know whether showing "new file mode 100644" in the diff view is
->     desirable, or whether we should somehow try to retain the
->     "intent-to-add" state so that unstaging all hunks would return the file
->     to "intent-to-add" state.
+Hi,
 
-I built latest Git master (e9b77c84a0) which has 
-`rp/apply-cached-with-i-t-a` and tested this patch. It works... for the 
-most part.
+On Tue, 25 Aug 2020, Junio C Hamano wrote:
 
-I can select a line set of lines and they get staged/unstaged, which is 
-good. The part that is not good though is that a lot of common 
-operations still don't work as they should:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+> > I'm afraid I don't understand this patch or the previous one (or
+> > both?).  So this new Makefile knob stops hard-linking the dashed
+> > builtins _during 'make install'_, but it doesn't affect how Git is
+> > built by the default target.  And our CI jobs only build Git by the
+> > default target, but don't run 'make install', so setting
+> > SKIP_DASHED_BUILT_INS wouldn't have any affect anyway.
+>
+> Very very true.  Let's drop 3/3 if it is not testing anything new.
+>
+> I do understand the concern 2/3 wants to address, and it would be a
+> real one to you especially if you come from Windows.  People on the
+> platform wouldn't be able to use shell scripts written in 12 years
+> ago or written with the promise we made to our users 12 years ago,
+> and unlike hardlink-capable platforms it incurs real cost to install
+> these individual binaries on disk.
 
-- I can't click on the icon in the "Unstaged Changes" pane to stage the 
-  whole file. Nothing happens when I do that.
+Actually, `SKIP_DASHED_BUILT_INS` does not _only_ have an impact on `make
+install`:
 
-- The file that is marked as intent-to-add shows up in both the "Staged 
-  Changes" and "Unstaged Changes" panes, with the "Staged Changes" part 
-  being empty. Ideally it should only show up in the "Unstaged Changes" 
-  pane.
+	$ rm git-add.exe && make
+	    BUILTIN git-add.exe
+	    BUILTIN all
+	    SUBDIR git-gui
+	    SUBDIR gitk-git
+	    SUBDIR templates
 
-- Selecting the whole file and choosing "Stage Lines for Commit" works 
-  well. But choosing "Stage Hunk for Commit" does not. While the changes 
-  do get staged, the UI is not properly updated and the file is still 
-  listed in the "Unstaged Changes" pane.
+	$ rm git-add.exe && make SKIP_DASHED_BUILT_INS=3D1
+	    BUILTIN all
+	    SUBDIR git-gui
+	    SUBDIR gitk-git
+	    SUBDIR templates
 
-  I think the difference here is because for 
-  `apply_or_revert_range_or_line`, we call `do_rescan` after it to 
-  update the UI, but for `apply_or_revert_hunk` we update the UI 
-  "manually" in the function after we are done applying or reverting the 
-  changes. So the logic to update the UI needs to be updated to account 
-  for this change. Or we can get rid of all that logic and just run a 
-  rescan.
+See how `git-add.exe` is linked in the first, but not in the second run?
 
-And also, like you mentioned, we don't retain the i-t-a state when 
-unstaging. But with some quick testing, I see that Git command line 
-doesn't either (I tried a plain `git restore --staged`). So IMO we 
-should mimic what the command line UI does and not retain the i-t-a 
-state when unstaging.
+So the difference 3/3 has is that those hard-linked executables are not
+even generated. Now, _technically_ this should not result in any change
+because we run the test suite without `--with-dashes`.
 
->     
->     Thoughts?
+Practically, it _does_ make a difference, though, as `bin-wrappers/git`
+_specifically_ sets `GIT_EXEC_PATH` to the top-level directory, i.e.
+`git-add.exe` _would_ be found if any core Git command that is still
+implemented as a script called `git-add`.
 
-IMO this is a good start but more work needs to be done before we can 
-call this feature finished.
- 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-699%2Fdscho%2Fgit-gui-stage-ita-hunks-and-lines-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-699/dscho/git-gui-stage-ita-hunks-and-lines-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/699
-> 
->  git-gui.sh   |  2 ++
->  lib/diff.tcl | 12 ++++++++----
->  2 files changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 49bd86e635..e08cb17395 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -2080,6 +2080,7 @@ set all_icons(U$ui_index)   file_merge
->  set all_icons(T$ui_index)   file_statechange
->  
->  set all_icons(_$ui_workdir) file_plain
-> +set all_icons(A$ui_workdir) file_plain
->  set all_icons(M$ui_workdir) file_mod
->  set all_icons(D$ui_workdir) file_question
->  set all_icons(U$ui_workdir) file_merge
-> @@ -2106,6 +2107,7 @@ foreach i {
->  		{A_ {mc "Staged for commit"}}
->  		{AM {mc "Portions staged for commit"}}
->  		{AD {mc "Staged for commit, missing"}}
-> +		{AA {mc "Intended to be added"}}
->  
->  		{_D {mc "Missing"}}
->  		{D_ {mc "Staged for removal"}}
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 871ad488c2..36d3715f7b 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -582,7 +582,8 @@ proc apply_or_revert_hunk {x y revert} {
->  	if {$current_diff_side eq $ui_index} {
->  		set failed_msg [mc "Failed to unstage selected hunk."]
->  		lappend apply_cmd --reverse --cached
-> -		if {[string index $mi 0] ne {M}} {
-> +		set file_state [string index $mi 0]
-> +		if {$file_state ne {M} && $file_state ne {A}} {
->  			unlock_index
->  			return
->  		}
-> @@ -595,7 +596,8 @@ proc apply_or_revert_hunk {x y revert} {
->  			lappend apply_cmd --cached
->  		}
->  
-> -		if {[string index $mi 1] ne {M}} {
-> +		set file_state [string index $mi 1]
-> +		if {$file_state ne {M} && $file_state ne {A}} {
->  			unlock_index
->  			return
->  		}
-> @@ -687,7 +689,8 @@ proc apply_or_revert_range_or_line {x y revert} {
->  		set failed_msg [mc "Failed to unstage selected line."]
->  		set to_context {+}
->  		lappend apply_cmd --reverse --cached
-> -		if {[string index $mi 0] ne {M}} {
-> +		set file_state [string index $mi 0]
-> +		if {$file_state ne {M} && $file_state ne {A}} {
->  			unlock_index
->  			return
->  		}
-> @@ -702,7 +705,8 @@ proc apply_or_revert_range_or_line {x y revert} {
->  			lappend apply_cmd --cached
->  		}
->  
-> -		if {[string index $mi 1] ne {M}} {
-> +		set file_state [string index $mi 1]
-> +		if {$file_state ne {M} && $file_state ne {A}} {
->  			unlock_index
->  			return
->  		}
-> 
+Therefore, 3/3 makes sure that we really, really, really do not use those
+dashed invocations ourselves.
 
-These changes look good to me to set up basic functionality. We just 
-need to iron out the rough edges.
+Ciao,
+Dscho
 
-> base-commit: 469725c1a3d44f7e1475f1d37cd13e0824d4ea41
-> -- 
-> gitgitgadget
-
--- 
-Regards,
-Pratyush Yadav
+--8323328-1697021862-1598415594=:56--
