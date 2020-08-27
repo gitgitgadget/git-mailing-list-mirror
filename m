@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B577FC433E5
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC2BC433DF
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 917FB20738
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A1C720738
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jBa+Q4sK"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bpKVpSkJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728209AbgH0IXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 04:23:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56998 "EHLO
+        id S1728220AbgH0IXQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 04:23:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728203AbgH0IXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 04:23:12 -0400
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FD52C061232
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:10 -0700 (PDT)
-Received: by mail-io1-xd44.google.com with SMTP id j2so2682181ioj.7
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:10 -0700 (PDT)
+        with ESMTP id S1728202AbgH0IXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 04:23:09 -0400
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F06FC06121B
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:09 -0700 (PDT)
+Received: by mail-il1-x144.google.com with SMTP id e11so4150369ils.10
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qz7iQlM9eZVy8DRWqSLivbEpJ/TClwPgMZNfHbjx8nM=;
-        b=jBa+Q4sKnVkiwzhL+F3G4x48hTjLcub44WLi20qw5ZrjImA4/Wfts+G6HbK2NxT7+q
-         3sB+MQGM5hdRVoZ/Vok8H2FmvnqjBkJkz+8WIKwjE4sSZF8rzMlakKGiJbzJYPN9lAHF
-         zz/+WM1fJnlSoucG77GasdmMf3eomKHozENx4DHIiNCdJA6JPBM4og+UiySbainvzFRe
-         cUGy1vpLMj+iwEgWraRDO5GXA02z/OSPmU2w8nW+TScmr4BJDdKzfcmYxYgWKCORZaLy
-         ffRQMRt2/z7/YC+mY9GFBOPmVcHAz6ruM27XwtKZsvdJT89hgJXdp89dczA6GV8IgixG
-         lpDw==
+        bh=L4gpVE73A5R6mECafxyOesEw1tGc8KuzSNxwKiGFDLU=;
+        b=bpKVpSkJDx7rx/IYwFYRPLy2C6P4FrEgJc5IdoiJRU0NHYNo7ORJjsNITEtlSXVjwr
+         jSAbkgtIL6EyWLSUt5RK6Vok0swCsZk22e0nDxSMUStHArs2gSDkEA1KrROif72080o5
+         SZIiP2IMVtmd280RDk0xUwz3SCpQDY1Y+g09vzvkaSx2MVcp8AtYm+9JOsxoNbl2FYOK
+         MrMOLdNU9LYIMgjo1Msz5DedYpd+8QkYQMUkhl9FOaaNXZVsoscpWJ5f9qlPUgOwfXkM
+         /9UClYnkXjSCK1+U+tUclSC27u39Wxz6tCnk896gdTUBWaa+XDAxzr+5XxBGscSCNVy2
+         aBXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=Qz7iQlM9eZVy8DRWqSLivbEpJ/TClwPgMZNfHbjx8nM=;
-        b=SnV1tEXWYk3+MIv2NHcdI/+LyCO3uON6Xv9fgvO3B1FAvLXQuyUX8BN3MS2t5KoHdU
-         5d0FehhEgRgLRsbqVAO2D4OHfyi81aIlmQhwYi3VStlSUpLColFyU+rqAeXrcSFU+bB/
-         DjUcheUgzhZpmZKvvEZ5/tnFnHJ0RYQ/PCCsE7NnJY3XvleypUKsMqe3x0CFzoAKTeUn
-         hdmVinR3TDwz6OF0bVkwQmXidm4pcHqgrm1TGahpeRLZBqIUcW4pqPXSumGU24f4mgGv
-         SIKrZt5LpIG1LgBJDnvbrUkHW0xFkm8EDxiznnn8NuwsxOHKduzSCXhgaRsYcq8pp78o
-         Jc4g==
-X-Gm-Message-State: AOAM531KlGirxBc4QK1eZjH39vn5JBbc/9J50GwBs+PX+sVvCGXHfltM
-        sZrwhvxE8WFDWsllJXUzQOrbrVzIvFc=
-X-Google-Smtp-Source: ABdhPJyrJjJ3YgfDMv3xn2SYhuwf+PrwhSnT/dkEHWuTZ9l3OLryqbiL0NLOIKmUWNkeaUbXCgqd+g==
-X-Received: by 2002:a02:65c2:: with SMTP id u185mr6437257jab.35.1598516589040;
-        Thu, 27 Aug 2020 01:23:09 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id n15sm816553ioc.15.2020.08.27.01.23.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        bh=L4gpVE73A5R6mECafxyOesEw1tGc8KuzSNxwKiGFDLU=;
+        b=QzIt9cFjxfqvlPd3t4KwPSM/V5GWOeK1e3RLyw3xM0Q39mTkfPrsEK0EPKllwgdvHB
+         srGNK2eSbpIkhiFVJzUkHcuaIsNHROMbe36shbaPIK8ZVZNwh8xoceGKJp2DH/+VjJ83
+         ANzbT4QyO6IGfm33+r7Ly+McWEJKdHZAYjILw4N9GypO8UJTO6j9RaNWdK6JZWm6KCoz
+         /w+oSoktlVoppahZmzTv52YB5JHDkp3YKKJV4zlYbrqkgniJlSVQXknceeY6MToUNdd8
+         4lsqf7ccEGu8wJIjztE5Z0d5y3tCCEnGe/xTBGst6RwLXTCNEGwFx7VTfcLt6gMY4IN7
+         LmZw==
+X-Gm-Message-State: AOAM530JaLWzVCSWZZllEG/t96it018juVmuAKfV80gB7yw0IzXKVewW
+        81wlg8IVo1hwXSGPrJOtm4pBTNf60tM=
+X-Google-Smtp-Source: ABdhPJwcLaAxgpM6Fste3fd+zek7ATFQnKk59YymTW4Bc/Ah3vnTkm6eWH6iDhp5kVe8A9WyUBT0Ug==
+X-Received: by 2002:a05:6e02:f4e:: with SMTP id y14mr17097579ilj.255.1598516588082;
         Thu, 27 Aug 2020 01:23:08 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id n15sm816553ioc.15.2020.08.27.01.23.07
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Aug 2020 01:23:07 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Henr=C3=A9=20Botha?= <henrebotha@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 5/5] init: make --separate-git-dir work from within linked worktree
-Date:   Thu, 27 Aug 2020 04:21:29 -0400
-Message-Id: <20200827082129.56149-6-sunshine@sunshineco.com>
+Subject: [PATCH 4/5] init: teach --separate-git-dir to repair linked worktrees
+Date:   Thu, 27 Aug 2020 04:21:28 -0400
+Message-Id: <20200827082129.56149-5-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.28.0.461.g40977abb40
 In-Reply-To: <20200827082129.56149-1-sunshine@sunshineco.com>
 References: <20200827082129.56149-1-sunshine@sunshineco.com>
@@ -76,111 +76,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The intention of `git init --separate-work-dir=<path>` is to move the
-.git/ directory to a location outside of the main worktree. When used
-within a linked worktree, however, rather than moving the .git/
-directory as intended, it instead incorrectly moves the worktree's
-.git/worktrees/<id> directory to <path>, thus disconnecting the linked
-worktree from its parent repository and breaking the worktree in the
-process since its local .git file no longer points at a location at
-which it can find the object database. Fix this broken behavior.
-
-An intentional side-effect of this change is that it also closes a
-loophole not caught by ccf236a23a (init: disallow --separate-git-dir
-with bare repository, 2020-08-09) in which the check to prevent
---separate-git-dir being used in conjunction with a bare repository was
-unable to detect the invalid combination when invoked from within a
-linked worktree. Therefore, add a test to verify that this loophole is
-closed, as well.
+A linked worktree's .git file is a "gitlink" pointing at the
+.git/worktrees/<id> directory within the repository. When `git init
+--separate-git-dir=<path>` is used on an existing repository to relocate
+the repository's .git/ directory to a different location, it neglects to
+update the .git files of linked worktrees, thus breaking the worktrees
+by making it impossible for them to locate the repository. Fix this by
+teaching --separate-git-dir to repair the .git file of each linked
+worktree to point at the new repository location.
 
 Reported-by: Henré Botha <henrebotha@gmail.com>
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- builtin/init-db.c | 24 ++++++++++++++++++++++++
- t/t0001-init.sh   | 21 +++++++++++++++++++--
- 2 files changed, 43 insertions(+), 2 deletions(-)
+ builtin/init-db.c |  2 ++
+ t/t0001-init.sh   | 11 +++++++++++
+ 2 files changed, 13 insertions(+)
 
 diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 7b915d88ab..6a94d20a2e 100644
+index bbc9bc78f9..7b915d88ab 100644
 --- a/builtin/init-db.c
 +++ b/builtin/init-db.c
-@@ -642,6 +642,30 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	if (!git_dir)
- 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+@@ -9,6 +9,7 @@
+ #include "builtin.h"
+ #include "exec-cmd.h"
+ #include "parse-options.h"
++#include "worktree.h"
  
-+	/*
-+	 * When --separate-git-dir is used inside a linked worktree, take
-+	 * care to ensure that the common .git/ directory is relocated, not
-+	 * the worktree-specific .git/worktrees/<id>/ directory.
-+	 */
-+	if (real_git_dir) {
-+		int err;
-+		const char *p;
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		p = read_gitfile_gently(git_dir, &err);
-+		if (p && get_common_dir(&sb, p)) {
-+			struct strbuf mainwt = STRBUF_INIT;
-+
-+			strbuf_addbuf(&mainwt, &sb);
-+			strbuf_strip_suffix(&mainwt, "/.git");
-+			if (chdir(mainwt.buf) < 0)
-+				die_errno(_("cannot chdir to %s"), mainwt.buf);
-+			strbuf_release(&mainwt);
-+			git_dir = strbuf_detach(&sb, 0);
-+		}
-+		strbuf_release(&sb);
-+	}
-+
- 	if (is_bare_repository_cfg < 0)
- 		is_bare_repository_cfg = guess_repository_type(git_dir);
+ #ifndef DEFAULT_GIT_TEMPLATE_DIR
+ #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
+@@ -364,6 +365,7 @@ static void separate_git_dir(const char *git_dir, const char *git_link)
  
+ 		if (rename(src, git_dir))
+ 			die_errno(_("unable to move %s to %s"), src, git_dir);
++		repair_worktrees(NULL, NULL);
+ 	}
+ 
+ 	write_file(git_link, "gitdir: %s", git_dir);
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index e489eb4ddb..2f7c3dcd0f 100755
+index 50222a10c5..e489eb4ddb 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -329,6 +329,15 @@ test_expect_success 'implicit bare & --separate-git-dir incompatible' '
- 	test_i18ngrep "incompatible" err
- '
- 
-+test_expect_success 'bare & --separate-git-dir incompatible within worktree' '
-+	test_when_finished "rm -rf bare.git linkwt seprepo" &&
-+	test_commit gumby &&
-+	git clone --bare . bare.git &&
-+	git -C bare.git worktree add --detach ../linkwt &&
-+	test_must_fail git -C linkwt init --separate-git-dir seprepo 2>err &&
-+	test_i18ngrep "incompatible" err
-+'
-+
- test_lazy_prereq GETCWD_IGNORES_PERMS '
- 	base=GETCWD_TEST_BASE_DIR &&
- 	mkdir -p $base/dir &&
-@@ -405,15 +414,23 @@ test_expect_success SYMLINKS 're-init to move gitdir symlink' '
+@@ -405,6 +405,17 @@ test_expect_success SYMLINKS 're-init to move gitdir symlink' '
  	test_path_is_dir realgitdir/refs
  '
  
--test_expect_success 're-init to move gitdir with linked worktrees' '
-+sep_git_dir_worktree ()  {
- 	test_when_finished "rm -rf mainwt linkwt seprepo" &&
- 	git init mainwt &&
- 	test_commit -C mainwt gumby &&
- 	git -C mainwt worktree add --detach ../linkwt &&
--	git -C mainwt init --separate-git-dir ../seprepo &&
-+	git -C "$1" init --separate-git-dir ../seprepo &&
- 	git -C mainwt rev-parse --git-common-dir >expect &&
- 	git -C linkwt rev-parse --git-common-dir >actual &&
- 	test_cmp expect actual
-+}
-+
 +test_expect_success 're-init to move gitdir with linked worktrees' '
-+	sep_git_dir_worktree mainwt
++	test_when_finished "rm -rf mainwt linkwt seprepo" &&
++	git init mainwt &&
++	test_commit -C mainwt gumby &&
++	git -C mainwt worktree add --detach ../linkwt &&
++	git -C mainwt init --separate-git-dir ../seprepo &&
++	git -C mainwt rev-parse --git-common-dir >expect &&
++	git -C linkwt rev-parse --git-common-dir >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 're-init to move gitdir within linked worktree' '
-+	sep_git_dir_worktree linkwt
- '
- 
  test_expect_success MINGW '.git hidden' '
+ 	rm -rf newdir &&
+ 	(
 -- 
 2.28.0.461.g40977abb40
 
