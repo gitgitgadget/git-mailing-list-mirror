@@ -2,84 +2,120 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD94C433E2
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 22:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DCEDC433E2
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 22:58:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8BE82087E
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 22:35:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C19220872
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 22:58:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fvH4xwn/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xIG0KpXF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727949AbgH0Wfo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 18:35:44 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:48670 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726266AbgH0Wfn (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Aug 2020 18:35:43 -0400
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727959AbgH0W6E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 18:58:04 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53918 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726826AbgH0W6E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 18:58:04 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D103F218B;
+        Thu, 27 Aug 2020 18:58:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=zphtEhPLc/QR
+        22GBjUjvzSs6MJU=; b=xIG0KpXFoInjsU+5KP93TtJoAoE73bT5UHnnF6KITKQK
+        LcVL9A8ZeC0MIUowsEzo34yz9Ghkt/w5TBhnFV2XoW9cHkWpkwA3v4eLkJh/HiRi
+        SyvSpqGQ7P07e3p57cFfNZlE8RYQY0hgDZthhx/JzLbDVuoOjsLddJvWQYE2LEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=U0MALU
+        QyDcVoVAKjhBlx2VC4ObzFyvwcEMwFQf41EBt5P3Tvd0AcxkjevdgeTDgii085IX
+        SJH5igeTMXU6y9QfEtQ3V7JJCSgwQEibekWPNEnq5bDJUTMnzVGJr+afUcBmbVOo
+        BJvcj6wBCxyL53dSHm0tlmmQF3VFNdhzy3ZA4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85E10F218A;
+        Thu, 27 Aug 2020 18:58:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1CA7660426;
-        Thu, 27 Aug 2020 22:35:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1598567739;
-        bh=H0hnwtRGgnW2AM+phzmOnZpI7SqudT3sZU9raaL2mmA=;
-        h=From:To:Cc:Subject:Date:Content-Type:From:Reply-To:Subject:Date:
-         To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
-         References:Content-Type:Content-Disposition;
-        b=fvH4xwn/s9Rz0WDoBweMKqBnw9H0/6q/0bXoVysDhjWJ4WBkWxayTG4bPqVUJYjuy
-         dFUuZMchuCX8OYlFtCb3U9Tf8pNAtU1s2960xDl1oGWEf+Aj6xISqjEsM1WTtNoZe5
-         eLyZbvp2aI/kEhbAgsW5O7h/fp32aCZziGpU16wW7t728FwNHeyi0xNSBD9KMupxwi
-         K1t9ISjRnhgPgm2LOWbFTzawgOK3McudFjnnfohoOhigpipkywjT3Hh4D5ezaosFaH
-         I8rtJnWyBLC6gkwyh2P07JIytb1py91wrJR4xeTk+vDrn3j1MUzmfaGzh1f+gMh/lS
-         6YtR/rnmGs4vK8XeK7l4RTeFG6Ofy12m2nCzgiH8OjOr5hzOQb3ZPj9fuT4OACBJUI
-         5gFxx6MSFGmkbxNCUdrWxz0AHgpgUhm3tI+dNHI5hlSw6mWCFtkYy+vXZQh2PnuT1s
-         xIWhpZa39X8ItY5UzxDbzdOXXQhiAn2muIwYoKMySoDbEiJogTX
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH] po: add missing letter for French message
-Date:   Thu, 27 Aug 2020 22:35:27 +0000
-Message-Id: <20200827223527.36788-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CC589F2186;
+        Thu, 27 Aug 2020 18:57:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org
+Subject: Re: [PATCH] send-email: do not prompt for In-Reply-To
+References: <xmqq3647rjnt.fsf@gitster.c.googlers.com>
+        <C580P9BS4VYA.15I6SHXQQ35HF@homura>
+        <20200827192029.GA63138@Carlos-MBP>
+        <xmqqtuwnq3x1.fsf@gitster.c.googlers.com>
+        <20200827220249.GA71190@Carlos-MBP>
+Date:   Thu, 27 Aug 2020 15:57:56 -0700
+In-Reply-To: <20200827220249.GA71190@Carlos-MBP> ("Carlo Marcelo Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 27 Aug 2020 15:02:49 -0700")
+Message-ID: <xmqqd03bpuh7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BFD8DA22-E8B8-11EA-A759-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the missing "e" in "de".  While it is possible in French to omit it,
-that only occurs with an apostrophe and only when the next word starts
-with a vowel or mute h, which is not the case here.
+Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-I noticed this the other day when trying to delete a remote branch that
-I'd already deleted.  I'm not sure what the preferred approach is for
-this, whether Junio should pick it up or whether Jean-Noël will want to
-incorporate it first, but I've CC'd both so y'all can fight it out.
+> On Thu, Aug 27, 2020 at 12:34:02PM -0700, Junio C Hamano wrote:
+>>=20
+>> That feels both understandable and bogus at the same time.  To:
+>> is pretty much required (yes, you can use cc: and bcc: without any
+>> address on To:, but that is not something you'd usually do to send
+>> patches to mailing lists), so lack of it means either asking
+>> interactively or aborting.  But other things like in-reply-to are
+>> optional, and tying the decision to prompt for them or not does not
+>> feel OK.
+>
+> but trying to "fix" this breaks 10 year old tests, so it is obvious
+> that everyone already expects it to work this way (probably hidden
+> by the fact most people don't let git-send-email prompt for "To:")
 
- po/fr.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Oh, I agree with that 100%.
 
-diff --git a/po/fr.po b/po/fr.po
-index d20fc440ab..75b1e75f6a 100644
---- a/po/fr.po
-+++ b/po/fr.po
-@@ -6503,7 +6503,7 @@ msgstr "'%s' ne peut pas être résolue comme une branche"
- #: remote.c:1088
- #, c-format
- msgid "unable to delete '%s': remote ref does not exist"
--msgstr "suppression d '%s' impossible : la référence distante n'existe pas"
-+msgstr "suppression de '%s' impossible : la référence distante n'existe pas"
- 
- #: remote.c:1100
- #, c-format
+> -Only necessary if --compose is also set.  If --compose
+> -is not set, this will be prompted for.
+> +If --compose is not set, and there is no known "To:" this will be prom=
+pted for.
+
+The updated sentence structure, with or without the mention of
+"to:", reads much better than the original. =20
+
+The original told them that they must give it from the command line
+in "--compose" mode, because they will not be given the chance to
+give it interactively, and the intended target audience was those
+who want to send a message with in-reply-to (which is natural, as
+this is a description for that option).
+
+The updated message says the same thing, but is audience-neutral and
+tries to be more useful to folks who are not responding to any
+message.  I.e. outside "--compose" mode, you'll be asked if you want
+to make it a response, unless you gave "to:".
+
+By losing the "we won't ask so you must give it from the command
+line" message in the original, the resulting description has become
+easier to follow, I think.  Those who do want to add the header,
+when they reach this description in the manual, already knows that
+there is a command line option.
+
+To help those who do not want to add this header, it would probably
+be more helpful to tell what to do when prompted (like "you can give
+an empty answer to tell the command that you are not responding to
+any message").
+
+Thanks.
+
