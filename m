@@ -2,111 +2,70 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBD77C433E6
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 23:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F768C433E2
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 23:04:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6881C207F7
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 23:04:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D047207F7
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 23:04:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jL6ZUYXo"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="Pid7WaQ8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727906AbgH0XEG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 19:04:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62512 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726826AbgH0XEG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 19:04:06 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84D4575BB9;
-        Thu, 27 Aug 2020 19:04:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=j3SnXKGvvnOr
-        LZg6uS5m7yhgVok=; b=jL6ZUYXoPirYpzuAYV2Q9DshsF+2usI1Qn27jjmSfhdK
-        av5QBVyOn5txfDcreAVlc4pi4bXRU1omPXtCfUU3teI60AQUr6QF+diZQ4bHMWG2
-        Sa3XJr5tiySF7ew+7+QGQsrHFSSJqlQc0eN3FeYR2NoEIPoItIGcMqBI7ym5eg4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Ef8hHn
-        m/S4xYOxwV8y43B+YuE8ZV0PICrd2v5IoqfhYS4NG/0bWAXTRao3TaIY/8KFxM3s
-        mNe0zKA/tmCDhXcZtCj+0PNxDA/eWlDk1ap07tVp81N+g8OyEtD5EvKfub/O1Ov6
-        yuwzxs4Z7bHmZRaBawR/GAFazvD9q9euDzq3A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70B4275BB8;
-        Thu, 27 Aug 2020 19:04:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E3D1175BB7;
-        Thu, 27 Aug 2020 19:04:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] po: add missing letter for French message
-References: <20200827223527.36788-1-sandals@crustytoothpaste.net>
-Date:   Thu, 27 Aug 2020 16:04:02 -0700
-In-Reply-To: <20200827223527.36788-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 27 Aug 2020 22:35:27 +0000")
-Message-ID: <xmqq8sdzpu71.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 997680CC-E8B9-11EA-B984-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1727944AbgH0XEU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 19:04:20 -0400
+Received: from mail.cmpwn.com ([45.56.77.53]:48022 "EHLO mail.cmpwn.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726826AbgH0XEU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 19:04:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
+        t=1598569459; bh=eXIjNaY9VRpSzd41pAx0LyeKDpdJGEXxBA9vpoA7dkI=;
+        h=Cc:Subject:From:To:Date:In-Reply-To;
+        b=Pid7WaQ8AzQQTHCyJ6gfrFTZ7bC2G1pgr64230DW3vBS2pHDUZtcf22RFSrmfpt6j
+         bAw23lqErEQpmPDV5vriS5YNceFZLBi5iv4fjgXP47ilFh+1LyBfnEMS29q2tIuZ8Z
+         Ws4VedzTZOpuefTsGtDZzuKkCYf1QobXZgWmNiFw=
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Cc:     "Drew DeVault" <sir@cmpwn.com>, <git@vger.kernel.org>
+Subject: Re: [PATCH] send-email: do not prompt for In-Reply-To
+From:   "Drew DeVault" <sir@cmpwn.com>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        =?utf-8?q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Date:   Thu, 27 Aug 2020 18:59:01 -0400
+Message-Id: <C585GT9K2V93.4O470Q21FXFD@homura>
+In-Reply-To: <xmqqd03bpuh7.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Thu Aug 27, 2020 at 6:57 PM EDT, Junio C Hamano wrote:
+> To help those who do not want to add this header, it would probably
+> be more helpful to tell what to do when prompted (like "you can give
+> an empty answer to tell the command that you are not responding to
+> any message").
 
-> Add the missing "e" in "de".  While it is possible in French to omit it=
-,
-> that only occurs with an apostrophe and only when the next word starts
-> with a vowel or mute h, which is not the case here.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> I noticed this the other day when trying to delete a remote branch that
-> I'd already deleted.  I'm not sure what the preferred approach is for
-> this, whether Junio should pick it up or whether Jean-No=C3=ABl will wa=
-nt to
-> incorporate it first, but I've CC'd both so y'all can fight it out.
+I don't like this solution. We should make it harder to do the wrong
+thing, and easier to do the right thing.
 
-Unless it is in the pre-release period (in which case I'd prefer not
-to touch po/ myself at all, to give i18n/l10n teams a stable base to
-work from), I can take it dircetly as long as somebody from the l10n
-team for the language gives an Ack, as I cannot read most of the
-files under po/ directory.
+It would be helpful for git to take an opinionated stance on the right
+way to send emails with it, since no one else is really in the position
+to. This behavior has confused many people that I've spoken with and
+makes for a rough introduction to a tool which people are already loathe
+to learn. git send-email is really the best way to send emails with git,
+and will save the user a lot of trouble in the future if they figure it
+out, so I want it to be as easy to figure out as possible.
 
-Thanks.
+Even so, I understand the concerns raised so far. I haven't started on
+v2 yet, but my rough plan is to add a config option along the lines of
+sendemail.verbosePrompts, defaulted to on for now, which enables the
+present-day behavior, along with a message stating the intention to
+change the behavior in a future release, and an invitation to comment on
+the mailing list.
 
-
->  po/fr.po | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/po/fr.po b/po/fr.po
-> index d20fc440ab..75b1e75f6a 100644
-> --- a/po/fr.po
-> +++ b/po/fr.po
-> @@ -6503,7 +6503,7 @@ msgstr "'%s' ne peut pas =C3=AAtre r=C3=A9solue c=
-omme une branche"
->  #: remote.c:1088
->  #, c-format
->  msgid "unable to delete '%s': remote ref does not exist"
-> -msgstr "suppression d '%s' impossible=C2=A0: la r=C3=A9f=C3=A9rence di=
-stante n'existe pas"
-> +msgstr "suppression de '%s' impossible=C2=A0: la r=C3=A9f=C3=A9rence d=
-istante n'existe pas"
-> =20
->  #: remote.c:1100
->  #, c-format
+The behavior of this flag if set to false would be equivalent to
+removing the $prompting condition in the if statement which controls
+whether or not this prompt is shown.
