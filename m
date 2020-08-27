@@ -2,93 +2,98 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9607C433DF
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 09:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1770CC433E1
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 10:19:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDAA02074A
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 09:15:14 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bAUS8HXl"
+	by mail.kernel.org (Postfix) with ESMTP id E3E642075B
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 10:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728286AbgH0JPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 05:15:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726266AbgH0JPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 05:15:10 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 084D1C061264
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 02:15:10 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id 17so3015781pfw.9
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 02:15:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to;
-        bh=BmyOUDt85Yt6RSpruODx+UDC/gLVEWJDADPQ2Yvl0yg=;
-        b=bAUS8HXlDAVLBJ1C+x8BmbbIrfbCiCyj8FDily1JP4RwHEz1kpdzgYaEb/MszUsAGR
-         47XEIdtbzBD9f8PoF5V4Kk6syHRpOrhjnPs/u4hVf+lbIX17+D/lkyOwV888z9Kdppct
-         dFBD91oX2uwkfk6DtdIUQPzXZelRYMw/BXV+jyybIivImuy50JmjkdkEBX6P2vhLlTCw
-         +D/5QjZPetLfCnv9qdKgvqjzynNE0FCVHCc1AyDbaOqUe3twFje3YGbe/NJH7n7SbPy8
-         BMOVziF1YBfctW2nhG36r1j5i5dyC3tPh9jDd3rkvGE+D92aezZmGqg5s71m4+39BmFf
-         tF+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to;
-        bh=BmyOUDt85Yt6RSpruODx+UDC/gLVEWJDADPQ2Yvl0yg=;
-        b=lDIVi8drLCPNULmnnuT/Th9aHGUDTFTDGAcP1i6R72+ltQCGlmPO+VO12lOp8UthW/
-         jDpQg2oOWP5wQfN/u6CMJObEC1ymK/glzYRxBl+W8/w26tUfwtKuxlM6SF6mrJRIGM9V
-         ZKHu529ItRxQwyAGdfUK+S0JNSASbUDYwGu56qo+Y3SBuSs6DEdg/Kph9oRJTx4KK3H4
-         kCRnjpc0fessbc6QsRenXnBZF8Ub5RZ8w9J0GaD/BV2JXEm03cJ82xst/c3JqxwD7l7F
-         7IX6Usv0zRtAyPMc1W1a+BoVlu50yVb4PVC8D5FZth4DDSn0XRG/66W0P2mfaNmi4wQM
-         B28w==
-X-Gm-Message-State: AOAM5303YgTvlOZWukt2Imt4svwCGZiMaT1Yhx+pXNj7tGcA/UOtjTRR
-        JpvnVAuxQc5K4ocfuQFI+PQ=
-X-Google-Smtp-Source: ABdhPJwg7OJs/vS2NvNWsH2KkH3EBXQI7icyorkjle+Ok/UcTDYCj3/F+HcKJnJIm+EAj1NBEK/Sqg==
-X-Received: by 2002:a17:902:8648:: with SMTP id y8mr15331889plt.91.1598519709466;
-        Thu, 27 Aug 2020 02:15:09 -0700 (PDT)
-Received: from konoha ([2401:4900:b81:a787:19fc:518d:6f59:7c])
-        by smtp.gmail.com with ESMTPSA id w199sm1928159pfc.191.2020.08.27.02.14.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2020 02:15:08 -0700 (PDT)
-Date:   Thu, 27 Aug 2020 14:44:41 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     gitster@pobox.com
-Cc:     Johannes.Schindelin@gmx.de, chriscool@tuxfamily.org,
-        christian.couder@gmail.com, git@vger.kernel.org,
-        kaartic.sivaraam@gmail.com, liu.denton@gmail.com, peff@peff.net,
-        shouryashukla.oo@gmail.com
-Subject: Re: [PATCH 3/3] t7421: eliminate 'grep' check in t7421.4 for mingw
- compatibility
-Message-ID: <20200827091441.GA6656@konoha>
+        id S1727897AbgH0KTe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 06:19:34 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:40823 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726093AbgH0KTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 06:19:34 -0400
+Received: from localhost (unknown [103.82.80.232])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 944D4200002;
+        Thu, 27 Aug 2020 10:19:28 +0000 (UTC)
+Date:   Thu, 27 Aug 2020 15:49:24 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Toni Brkic <brkict@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: feature request - add --only-author option to git push
+Message-ID: <20200827101924.iklvsy6lnscrpojs@yadavpratyush.com>
+References: <CAF2SHyBYZ7=vcL4sPdP=T9zRCBrwW_z0-o1v9=gC4=oPqv4oXQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqlfi21zb8.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF2SHyBYZ7=vcL4sPdP=T9zRCBrwW_z0-o1v9=gC4=oPqv4oXQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Interesting.  There is a mirroring if-else cascade that begins with
-> "if (S_ISGITLINK(p->mod_dst))" immediately after the if-else cascade
-> started here, and in there, the same verify_submodule_committish()
-> is called for oid_dst unconditionally.  Should the asymmetry bother
-> readers of the code, or is the source side somehow special and needs
-> extra care?
+Hi Toni,
 
-I understand what you are trying to say. The thing is that the
-conditional `if (S_ISGITLINK(p->mod_dst))` already guards the
-`verify_submodule_committish` when we have a status of 'D'. So, we do
-not need another similar if-statement for that. It does seem a bit weird
-to someone who is reading this thing for the first time, hence, I will
-mention this in the commit message.
+On 27/08/20 09:47AM, Toni Brkic wrote:
+> Sorry if this mail list is not used for feature requests/discussions.
+> This was the best list I found.
+> Let me know if should post it somewhere else.
+> 
+> I would like to be able to configure git so that when doing git push
+> git checks that I am author of
+> all patches that are being pushed. If I am not authour it should not do push.
+> 
+> The reason for this is that a common mistake that happens when working
+> with gerrit (at least for me)
+> 
+> Person A has uploaded patch1
+> I need patch1 to continue development and cherry pick it to my repo.
+> Person A uploads new version of patch1
+> I have finished my patch and push to gerrit. What then happens is that
+> I have an older version of patch1 and thus overwrite the new version
+> by Person A
+> 
+> Maybe there is some way already to do this, but I could not find
+> anything when searching.
 
-Apologies for the late reply, I was a little busy with something.
+Have you tried using a pre-push hook? It looks like it is exactly what 
+you need:
 
+   pre-push
+     This hook is called by git-push(1) and can be used to prevent a 
+     push from taking place. The hook is called with two parameters 
+     which provide the name and location of the destination remote, if a 
+     named remote is not being used both values will be the same.
+
+     Information about what is to be pushed is provided on the hook’s 
+     standard input with lines of the form:
+
+         <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
+
+     For instance, if the command git push origin master:foreign were 
+     run the hook would receive a line like the following:
+
+         refs/heads/master 67890 refs/heads/foreign 12345
+
+     although the full, 40-character SHA-1s would be supplied. If the 
+     foreign ref does not yet exist the <remote SHA-1> will be 40 0. If 
+     a ref is to be deleted, the <local ref> will be supplied as
+     (delete) and the <local SHA-1> will be 40 0. If the local commit 
+     was specified by something other than a name which could be 
+     expanded (such as HEAD~, or a SHA-1) it will be supplied as it was 
+     originally given.
+
+     If this hook exits with a non-zero status, git push will abort 
+     without pushing anything. Information about why the push is 
+     rejected may be sent to the user by writing to standard error.
+
+-- 
+Regards,
+Pratyush Yadav
