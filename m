@@ -2,120 +2,109 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BE09C433DF
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 19:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B5AC433DF
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 19:05:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18A3520786
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 19:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B142A20786
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 19:05:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YiuV2uIr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZNnkCH1Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727860AbgH0TEg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 15:04:36 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55880 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727845AbgH0TEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 15:04:34 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0000EF082E;
-        Thu, 27 Aug 2020 15:04:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=e67J7WeCeyj0k4cjHY8QUV5SxT8=; b=YiuV2u
-        IrG9BuqU4bmVo7zcXZkKmvOfyb4nqMSzwUZnSXlDxS5pGrIEbmoD1IC5lH02Kh6h
-        Hhm2VSpi5YPh0wBzOVr0TBSDl6GdBxlYGMv4aKmnStEhEudGSEMjMYSqderD3viq
-        +ydr7bI/MVkNf0fmdRXAOPodQ0BLl9+QeLVIs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qLj5/vpyGbKAcReCz0AdN1zQTyVq/EUw
-        w0jJohrYv9bv97PYbtV87DbIUH0YRHrOYMlzRxd4lCxmT7r7uFQWHpRKFtI872FG
-        Jka4CHODrQuygjFAemPUO+5kHrKFQ+7vNn58YMr0XQOaTFy5HZEYPlqgrtL5iIlZ
-        SJsyLT2pqh8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EC4D9F082C;
-        Thu, 27 Aug 2020 15:04:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3C0BAF0828;
-        Thu, 27 Aug 2020 15:04:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] send-email: do not prompt for In-Reply-To
-References: <20200827175552.132193-1-sir@cmpwn.com>
-Date:   Thu, 27 Aug 2020 12:04:26 -0700
-In-Reply-To: <20200827175552.132193-1-sir@cmpwn.com> (Drew DeVault's message
-        of "Thu, 27 Aug 2020 13:55:52 -0400")
-Message-ID: <xmqq7dtjrjut.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727818AbgH0TFJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 15:05:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726009AbgH0TFI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 15:05:08 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF07C061264
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 12:05:07 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id t2so6171212wma.0
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 12:05:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YNW2nAMCfU9SuA94gRQ+AxWcz9q5Vslqh8nTdoIf98k=;
+        b=ZNnkCH1YSk2arKBv3vAvi7yDEXOydXBs8BA2DRT14p3EPV2LiuNtucITN1NkcyxYmK
+         F0tSU6YMFZMT85zK4PhQiiwFAuQfJ2wdlRx6pHZa4qzT3OfTBBwt3IqxbhfeCRYtB9dB
+         e2I86tllK626cCCyX9HdRDiNChGmsns9NfvMiq+b5GSCxhRGHXHUIT+y5l6PDSuVDMyu
+         pry8tPkuUM10FNPrz9HPDkVSCTm9H/jJqFxfCIUCXvwxe5bIDI9x96yWpif+4s3nm5qj
+         1alP2DdZ8ijRClmar69sqeC/tqeZjwmTS6xMhVec+hRyPJ95SQ2JDJgTY4HdOkijhFpd
+         UASg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YNW2nAMCfU9SuA94gRQ+AxWcz9q5Vslqh8nTdoIf98k=;
+        b=o+XS4+8G7h7JPDCZZQcNFJ1EfL5PC811VlO5hJu5SCqbDp9Txrf1GTUKyll65KZ57u
+         NejAIfCsucR1M0/k9V9m4j3l495srHADE5THMHgbGsiAtFh4KtCXxrrEEggSRb6SUW2p
+         DN3qbQkAgBVh+shpoxaGk5WIYcuL6+LIClaQ7Xk50HPwY6UYISF0mMbnRLIwULw/sFXT
+         h4qPS7BUcoJRKkts6+zMvl71XpMh5k51JvL1MHdoK5tXBt5GtBjKu595HxwnraZDxC0A
+         tK2K9NUpUI0hxQfhjVfcBJL/tCquMb1khpw3uUajg0pWMYEcjzWk4g6WgmX/YlqH63JU
+         cj6Q==
+X-Gm-Message-State: AOAM5300xaZPZe+I4vF93sczxL/C9LGgDKl0iFfJN3l4BYsmmSO76waA
+        8+RZQnVaif4jZaSzQilSf5DgvpmMMeDxHET33oI=
+X-Google-Smtp-Source: ABdhPJxW1XcOPEzGh+zFFqsW8esmo/YA/R+6u1yAhCG1RBFW4hPNvc7aDO05G5FN/BAGzvDkRKxSL0/zs7aevSvoy9I=
+X-Received: by 2002:a1c:4685:: with SMTP id t127mr269325wma.119.1598555103585;
+ Thu, 27 Aug 2020 12:05:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 217AB28A-E898-11EA-AB7A-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+References: <CAHr-Uu_KeAJZrd+GzymNP47iFi+dZkvVYsWQPtzT_FQrVnWTDg@mail.gmail.com>
+ <xmqq7dtlt080.fsf@gitster.c.googlers.com> <xmqq3649szs8.fsf@gitster.c.googlers.com>
+ <CAHr-Uu8umDQJ=LORaBNJX+wnmaeM1hHxxpG7xROPgCqgEPrwdw@mail.gmail.com>
+ <CAPx1GvfSt=s5VP9_+ZtndHWaBZ5W7nFxAf8bTF2tXnJkS95Dfg@mail.gmail.com> <xmqqzh6gqe7i.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqzh6gqe7i.fsf@gitster.c.googlers.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Thu, 27 Aug 2020 12:04:52 -0700
+Message-ID: <CAPx1GvfXOMFDsXE74LiG_BG5Bqb+seHDWX69xGe49C240ORi6A@mail.gmail.com>
+Subject: Re: post-checkout hook aborts rebase
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tom Rutherford <tmrutherford@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Drew DeVault <sir@cmpwn.com> writes:
+On Thu, Aug 27, 2020 at 8:51 AM Junio C Hamano <gitster@pobox.com> wrote:
+> I still suspect that the checkout run, merely as an implementation
+> detail of rebase (or any other git subcommand), should not trigger
+> any hook ...
 
-> Most mailing lists prefer that new patchsets and their revisions are
-> placed into a new thread. Additionally, knowledge of what In-Reply-To
-> means and where to find the Message-Id to fill in are domain-specific
-> and confusing to new users. In the niche situations where this is called
-> for, the --in-reply-to flag is sufficient.
+The *last* checkout from the finished rebase perhaps *should*, but
+other than that one, that seems logically correct.
+
+> but before any such code change, at least let's update the
+> documentation to clarify what we mean by "the outcome".
 >
-> A config option, sendemail.promptInReplyTo, has been added to re-enable
-> the old behavior.
+> Hopefully something like the below may be a good starting point?
+>
+>  Documentation/githooks.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 31b601e4bc..cf95d6d02b 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -193,7 +193,9 @@ worktree.  The hook is given three parameters: the ref of the previous HEAD,
+>  the ref of the new HEAD (which may or may not have changed), and a flag
+>  indicating whether the checkout was a branch checkout (changing branches,
+>  flag=1) or a file checkout (retrieving a file from the index, flag=0).
+> -This hook cannot affect the outcome of `git switch` or `git checkout`.
+> +This hook cannot affect the outcome of `git switch` or `git checkout`,
+> +other than that the hook's exit status becomes the exit status of
+> +these two commands.
+>
+>  It is also run after linkgit:git-clone[1], unless the `--no-checkout` (`-n`) option is
+>  used. The first parameter given to the hook is the null-ref, the second the
 
-We do not break existing users' habits without a good reason, and a
-subjective "this is the way I prefer" is *not* a good reason.
+This looks good to me, and can either be independent of, or the first part of,
+any rebase update.
 
-If/when the claim "most mailing lists prefer" can be substantiated,
-we'd need to devise a transition plan to flip the default over
-several releases.  Here is how I would envision the plan should go.
-
- (0) Introduce sendemail.promptInReplyTo that defaults to true; this
-     can be done today and it would be a genuine improvement for
-     those who want the new behaviour, without hurting any existing
-     users.
-
- (1) Substantiate the "most mailing list prefer" claim.  If we
-     cannot, we stop here.  Otherwise we would move to the next
-     step.
-
- (2) Teach "git send-email" to issue a warning message when the
-     telling the user that the default will be flipped in some
-     future version of Git and optionally ask them to tell us to
-     stop on the mailing list, when sendemail.promptInReplyTo
-     configuration variable is not set.
-
-     Advertise the future flip of the default in other channels,
-     too.
-
- (3) Wait for at least a few releases.  Monitor the mailing list and
-     other channels for objections, and if it becomes clear that we
-     misjudged in step (1), stop the transition plan by reverting to
-     the state before step (2) (i.e. not to before step (0)).
-
- (4) Flip the default and tweak the message to tell those users who
-     still do not have sendemail.promptInReplyTo variable set that
-     the default have changed, and if they want to get prompted,
-     they must set the variable to true.  Also stop asking them to
-     tell us to stop---at this point we are committed and will not
-     go back.
-
- (5) Waiting for several releases
-
- (6) Remove the code to give messages for users who do not have the
-     configuration variable.
-
-
+Chris
