@@ -6,64 +6,63 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A005C433DF
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 04:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BDC8C433DF
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 04:31:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE61D20786
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 04:30:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D620220786
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 04:31:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hiW3wWC5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oOjqCT8X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726087AbgH0EaT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 00:30:19 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55058 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725385AbgH0EaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 00:30:19 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B5FC5F0F56;
-        Thu, 27 Aug 2020 00:30:17 -0400 (EDT)
+        id S1726070AbgH0Eb2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 00:31:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63507 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725385AbgH0Eb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 00:31:27 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F2F26DE13;
+        Thu, 27 Aug 2020 00:31:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EvJiaQHjstYBGCRsPkJPcPa8hHI=; b=hiW3wW
-        C5HAFLbG/o1iBWnPSShaIFdSleyYwFa5jdzRaVrtnkGJICqiTQ9qwxU08bJsFFTu
-        Hr6zEci0XHxxgmixrLLFEmlbTgvKIEa3lxVhK/tRqmnP7QMBreDJEe9vOYMF6Y3R
-        vFnJeq1Xcgffuns2BjzblpYvfIV8oxUZAzhWw=
+        :content-type; s=sasl; bh=dBDGpydfZn1sPZFe082eASR2rkk=; b=oOjqCT
+        8XQcxKeRDalGWXbf/4GuPpbBvNvSyOv2CI+nN4tIsz8uCG1/n3u/Kg9TKQWnte2y
+        3si0kdjxc25jS13/UqzXchvCA39HtGWgeVClezy7H3kzs3bX/OQJpFVnvHK+98ns
+        OMM/7sAOVlGiBo+p9OnLNzmvJJJhK2RxNKyAM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PCj5EQATgnE3MyjTnAEvnS0EeuTs4w88
-        7rjbQPPZXTrFnB7ZKgZHLzpziFyA9j4Uz2hwvHbmDeiOf5wFniYjjc9Je2X0lOyb
-        6+a9WYiPwaoIz9wzgvEUXtr1Kkbf5MIB4k5Hxg89UwKSQa6EB9Ov9fjTSLm9SE8y
-        E64wvshHlBQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B0579F0F55;
-        Thu, 27 Aug 2020 00:30:17 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=avxAOAcUpyH51hmu7A9IGoIrBlULfAGX
+        qblL9PZeJOPWkPwF3CdIzBm6pqU6X+76epOHEAatt2sledhMFYtmfzDwENg6Tgrl
+        qLhyWSiajf9hu3UqzyYMbIcuSsjHjAZ1MHByV6Xvl/ClO7v3zIFFskBm6PoadZOF
+        GM65X58xYzw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 579FA6DE12;
+        Thu, 27 Aug 2020 00:31:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 039CEF0F53;
-        Thu, 27 Aug 2020 00:30:14 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D639A6DE11;
+        Thu, 27 Aug 2020 00:31:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] run_command: teach API users to use embedded 'args' more
+Subject: Re: [PATCH v2 3/2] credential-cache: use child_process.args
 References: <xmqqd03dwe2x.fsf@gitster.c.googlers.com>
         <20200826194650.4031087-1-gitster@pobox.com>
         <20200826194650.4031087-3-gitster@pobox.com>
         <xmqqzh6ht7fg.fsf_-_@gitster.c.googlers.com>
-        <xmqqmu2ht58g.fsf_-_@gitster.c.googlers.com>
-        <20200827042157.GC3346457@coredump.intra.peff.net>
-Date:   Wed, 26 Aug 2020 21:30:13 -0700
-In-Reply-To: <20200827042157.GC3346457@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 27 Aug 2020 00:21:57 -0400")
-Message-ID: <xmqqlfi0sobu.fsf@gitster.c.googlers.com>
+        <20200827041328.GA3346457@coredump.intra.peff.net>
+Date:   Wed, 26 Aug 2020 21:31:24 -0700
+In-Reply-To: <20200827041328.GA3346457@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 27 Aug 2020 00:13:28 -0400")
+Message-ID: <xmqqh7soso9v.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 00EAEDDE-E81E-11EA-86E1-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2A8F795C-E81E-11EA-8BB3-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,18 +70,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I've actually considered dropping child_process.argv entirely. Having
-> two separate ways to do the same thing gives the potential for
-> confusion. But I never dug into whether any existing callers would be
-> made worse for it (I kind of doubt it, though; worst case they can use
-> strvec_pushv). There are still several left after this patch, it seems.
->
-> Likewise for child_process.env_array.
+> Yep, this makes sense. I don't recall any reason to use the dashed form
+> back then, but probably it was just that I knew it was a separate
+> program. Doing it this way will mean an extra parent "git" process
+> hanging around, but I don't think it's that big a deal. We never try to
+> kill it by PID, etc (instead we connect to the socket and ask it to
+> exit). And anyway, it is becoming a builtin in a parallel topic, so that
+> extra process will go away. :)
 
-Yup, conversion similar to what I did in this patch may be too
-trivial for #microproject, but would nevertheless be a good
-#leftoverbits task.  The removal of .argv/.env is not entirely
-trivial but a good candidate for #microproject.
-
-Thanks.
+Yeah, this was discovered when I tentatively merged that "don't run
+built-in as git-foo" to the tip of seen.  Without your slimmed-down
+topic, it wouldn't have been caught.  Likewise for remote-ext.
 
