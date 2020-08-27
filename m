@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAF61C433E4
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A8C1C433DF
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC1BC2177B
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BBC72087D
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iZVYF49H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NhkK3oJx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728145AbgH0PqR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 11:46:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41928 "EHLO
+        id S1728130AbgH0PqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 11:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726995AbgH0PqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 11:46:05 -0400
+        with ESMTP id S1728063AbgH0PqC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 11:46:02 -0400
 Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52C06C061264
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:05 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id h12so3647569pgm.7
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C742C061264
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:02 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id g29so2632916pgl.2
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QzpVpH2QQIb6fCbHeazA0gPEJCh0ZbpnssJfToDB8rg=;
-        b=iZVYF49HWwFRoHjZAwwvDTBAYOsMhEWPSlOWqDRfTWWS8kdUGTzhzuceeOWUGaqxAE
-         nKq04g1TB5dSy6UwT3u+bqJ7Q2vafhCR4lpvk8WEdcI0XEgvaFnBvK2wqkqwRG4mDLTY
-         cQZTBHsrsUD3QNsW4Cu8sYL0xb0l4c0v5zIHdsec2trJDgJH9qnVrgVpbjSE5IMcdrTF
-         ZStipDXrS0qNbB3362rJFbusklOZxxgDkFpBe26rbMlv7lBohkHc43tugSwqBitur7uA
-         ehyCO3gkko/oConnpM8KU10otRQ01F8rVW/GhP9/1hKnp0yO7M+yKY9eyn+NbTaxFpPY
-         Jb6g==
+        bh=EJIwL0GuMSH7186cn3RBGxkVisJ7WkzCx/NSn6JCajM=;
+        b=NhkK3oJxU7wZOf52MgilkQNGfLxBzRrqGqA6dqcLjEwrP3vLKPfKnYHJGWrcGZGeIy
+         tEQsqvoUIeOFbtzXHohBS9gmKqRwIZd9qtIQcRtY3EGWqgfnciHjhlJRg2miTKZV8r1L
+         skieB1g8kqVUoBaQ7u5Qkx+8MlFpzZT9ok/yI9TplL2OuUwKGi84ptp8IfEIX+XifO9V
+         6uLrBsjwt62WTQhddnrp3DeeHkdgyezaJjR2+VVBfHZarxgMQq+Mqt/yQ+Spv4ttdrav
+         yyr4biYuWeaWdCdkY2CPFeJlJzgtx83HKonxsM5Hvq1hjPWuPqXBB2CM4XIBW26ixVG5
+         Ew1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QzpVpH2QQIb6fCbHeazA0gPEJCh0ZbpnssJfToDB8rg=;
-        b=qzH4GnHepu3U8X0Uo0KUfUd8fBUv6l2QCCHpgZT9YejqGtuSlaZgrNU8GNp0OYPEy0
-         +fBbr2z2qaqOtARtboSEFELf9k9fLDoJnQOp+1JZ+Os6JigSmcolnvkMEv1JHH885/tU
-         +wf7i8ub1zMkNLPuBXRyUQ3qi4i6vkYJK/txYyliFJgvM0ONhwY7PLo3DA8xXafYnJ+V
-         m+MnvrRla2XL3aRawOaWqEYj2YV60rwuiQ1u4VV7Yd73mxc8WvqdxhH+sZ0eGkdeEqdz
-         Ci2dpWTZY/MERsZuWJvouWrroWlFOdxWjEjbhpVEbSUJjytz6Tl02y0velUCH0E24JAd
-         UWzQ==
-X-Gm-Message-State: AOAM532t95RBKIGhZkeHRTgPNRNI5Kph8M2GKSsmPmtfC6Rp8/ibFrOn
-        41TaY8Qg1YuYs1eq74xy1OU=
-X-Google-Smtp-Source: ABdhPJxisEMIEK380upIXqFHk8A/nFowAY4DOLW5fITy6E4TkRqDfyY42G3JbEyx9BS30i8tA6qcMA==
-X-Received: by 2002:a17:902:7004:: with SMTP id y4mr16823892plk.52.1598543164899;
-        Thu, 27 Aug 2020 08:46:04 -0700 (PDT)
+        bh=EJIwL0GuMSH7186cn3RBGxkVisJ7WkzCx/NSn6JCajM=;
+        b=GgfYqvdHny+yj632SKiYoNa7TGLiA6Eh5dWx0o3HJN/7zrsN+8fGajy33KbGDo39Qz
+         DhkyTVZT9iejzb2Sto3lXqASHDP5G40KU//BUP6wE6GcAQb+KRz6THIDP2AwsMLubpNX
+         yxBRmZLV03wY1Q83E1cmPlCigiwl5M2PKU7HB4RjY3S9AbJ9Rzpmv2LQApEjK0s3ghjK
+         8Kwpqq1iTQJW8gh9wwPmoVA0BfPcZUerHXHElrzUP3GMFJL2mx0G3qltrhBXzVlaf/gZ
+         FQRgdv6UGC/00kHFLRdzl47tP6fNeLAuQ1r/Zo8UNrxz6h8O3owFt7otw2Ecvo9zZrcp
+         swpw==
+X-Gm-Message-State: AOAM531n6sTF5+UeZxSL/+uvyBXlFTv27nAablua1d7YagUqorUwlPP2
+        +DUEPboqa1jAwrB7rrZJPxs=
+X-Google-Smtp-Source: ABdhPJwSxaREb4QsR3ckw+Geb6u2RFxLlr8/ZVScebuZi8clTwxA2DQUZ4gsZCo6ZIzkJPND62yOvQ==
+X-Received: by 2002:a17:902:a714:: with SMTP id w20mr16937743plq.8.1598543162047;
+        Thu, 27 Aug 2020 08:46:02 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id x5sm3129218pfj.1.2020.08.27.08.46.04
+        by smtp.gmail.com with ESMTPSA id x5sm3129218pfj.1.2020.08.27.08.46.01
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Aug 2020 08:46:04 -0700 (PDT)
+        Thu, 27 Aug 2020 08:46:01 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v19 09/10] transport: parse report options for tracking refs
-Date:   Thu, 27 Aug 2020 11:45:50 -0400
-Message-Id: <20200827154551.5966-10-worldhello.net@gmail.com>
+Subject: [PATCH v19 06/10] doc: add document for capability report-status-v2
+Date:   Thu, 27 Aug 2020 11:45:47 -0400
+Message-Id: <20200827154551.5966-7-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200824174202.11710-1-worldhello.net@gmail.com>
 References: <20200824174202.11710-1-worldhello.net@gmail.com>
@@ -76,131 +76,116 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When pushing a pseudo reference (such as "refs/for/master/topic"), may
-create or update one or more references.  The real names of the
-references will be stored in the report options.  Parse report options
-to create or update remote-tracking branches properly.
+Add ABNF notation for capability 'report-status-v2' which extends
+capability 'report-status' by adding additional option lines.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- ...t-0036-report-multi-rewrite-for-one-ref.sh | 22 ++++++++---
- transport.c                                   | 37 +++++++++++++++----
- 2 files changed, 45 insertions(+), 14 deletions(-)
+ Documentation/technical/pack-protocol.txt     | 41 +++++++++++++++++--
+ .../technical/protocol-capabilities.txt       | 17 ++++++--
+ 2 files changed, 52 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-index 8eec3a1ed8..73283d81e8 100644
---- a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-+++ b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-@@ -78,10 +78,14 @@ test_expect_success "proc-receive: check remote-tracking #1 ($PROTOCOL)" '
- 		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
- 	make_user_friendly_and_stable_output <out >actual &&
- 	cat >expect <<-EOF &&
--	<COMMIT-A> refs/t/for/master/topic
-+	<COMMIT-A> refs/t/changes/24/124/1
-+	<COMMIT-B> refs/t/changes/25/125/1
-+	<COMMIT-B> refs/t/for/master/topic
- 	EOF
- 	test_cmp expect actual &&
--	git -C workbench update-ref -d refs/t/for/master/topic
-+	git -C workbench update-ref -d refs/t/for/master/topic &&
-+	git -C workbench update-ref -d refs/t/changes/24/124/1 &&
-+	git -C workbench update-ref -d refs/t/changes/25/125/1
- '
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index a4573d12ce..e13a2c064d 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -503,8 +503,8 @@ The reference discovery phase is done nearly the same way as it is in the
+ fetching protocol. Each reference obj-id and name on the server is sent
+ in packet-line format to the client, followed by a flush-pkt.  The only
+ real difference is that the capability listing is different - the only
+-possible values are 'report-status', 'delete-refs', 'ofs-delta' and
+-'push-options'.
++possible values are 'report-status', 'report-status-v2', 'delete-refs',
++'ofs-delta', 'atomic' and 'push-options'.
  
- test_expect_success "setup proc-receive hook (multiple rewrites for one ref, no refname for the 2nd rewrite, $PROTOCOL)" '
-@@ -151,10 +155,14 @@ test_expect_success "proc-receive: check remote-tracking #2 ($PROTOCOL)" '
- 		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
- 	make_user_friendly_and_stable_output <out >actual &&
- 	cat >expect <<-EOF &&
--	<COMMIT-A> refs/t/for/master/topic
-+	<COMMIT-A> refs/t/changes/24/124/1
-+	<COMMIT-A> refs/t/changes/25/125/1
-+	<COMMIT-B> refs/t/for/master/topic
- 	EOF
- 	test_cmp expect actual &&
--	git -C workbench update-ref -d refs/t/for/master/topic
-+	git -C workbench update-ref -d refs/t/for/master/topic &&
-+	git -C workbench update-ref -d refs/t/changes/24/124/1 &&
-+	git -C workbench update-ref -d refs/t/changes/25/125/1
- '
+ Reference Update Request and Packfile Transfer
+ ----------------------------------------------
+@@ -625,7 +625,7 @@ Report Status
+ -------------
  
- test_expect_success "setup proc-receive hook (multiple rewrites for one ref, $PROTOCOL)" '
-@@ -210,8 +218,10 @@ test_expect_success "proc-receive: check remote-tracking #3 ($PROTOCOL)" '
- 		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
- 	make_user_friendly_and_stable_output <out >actual &&
- 	cat >expect <<-EOF &&
--	<COMMIT-A> refs/t/for/master/topic
-+	<COMMIT-A> refs/t/changes/23/123/1
-+	<COMMIT-B> refs/t/changes/24/124/2
- 	EOF
- 	test_cmp expect actual &&
--	git -C workbench update-ref -d refs/t/for/master/topic
-+	git -C workbench update-ref -d refs/t/changes/24/124/1 &&
-+	git -C workbench update-ref -d refs/t/changes/25/125/2
- '
-diff --git a/transport.c b/transport.c
-index 75e97a0c20..213ec69d7a 100644
---- a/transport.c
-+++ b/transport.c
-@@ -436,29 +436,50 @@ int transport_refs_pushed(struct ref *ref)
- 	return 0;
- }
+ After receiving the pack data from the sender, the receiver sends a
+-report if 'report-status' capability is in effect.
++report if 'report-status' or 'report-status-v2' capability is in effect.
+ It is a short listing of what happened in that update.  It will first
+ list the status of the packfile unpacking as either 'unpack ok' or
+ 'unpack [error]'.  Then it will list the status for each of the references
+@@ -647,6 +647,41 @@ update was successful, or 'ng [refname] [error]' if the update was not.
+   error-msg         = 1*(OCTET) ; where not "ok"
+ ----
  
--void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose)
-+static void update_one_tracking_ref(struct remote *remote, char *refname,
-+				    struct object_id *new_oid, int deletion,
-+				    int verbose)
- {
- 	struct refspec_item rs;
- 
--	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
--		return;
--
- 	memset(&rs, 0, sizeof(rs));
--	rs.src = ref->name;
-+	rs.src = refname;
- 	rs.dst = NULL;
- 
- 	if (!remote_find_tracking(remote, &rs)) {
- 		if (verbose)
- 			fprintf(stderr, "updating local tracking ref '%s'\n", rs.dst);
--		if (ref->deletion) {
-+		if (deletion)
- 			delete_ref(NULL, rs.dst, NULL, 0);
--		} else
--			update_ref("update by push", rs.dst, &ref->new_oid,
-+		else
-+			update_ref("update by push", rs.dst, new_oid,
- 				   NULL, 0, 0);
- 		free(rs.dst);
- 	}
- }
- 
-+void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose)
-+{
-+	char *refname;
-+	struct object_id *new_oid;
-+	struct ref_push_report *report;
++The 'report-status-v2' capability extends the protocol by adding new option
++lines in order to support reporting of reference rewritten by the
++'proc-receive' hook.  The 'proc-receive' hook may handle a command for a
++pseudo-reference which may create or update one or more references, and each
++reference may have different name, different new-oid, and different old-oid.
 +
-+	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
-+		return;
++----
++  report-status-v2  = unpack-status
++		      1*(command-status-v2)
++		      flush-pkt
 +
-+	report = ref->report;
-+	if (!report)
-+		update_one_tracking_ref(remote, ref->name, &ref->new_oid,
-+					ref->deletion, verbose);
-+	else
-+		for (; report; report = report->next) {
-+			refname = report->ref_name ? (char *)report->ref_name : ref->name;
-+			new_oid = report->new_oid ? report->new_oid : &ref->new_oid;
-+			update_one_tracking_ref(remote, refname, new_oid,
-+						is_null_oid(new_oid), verbose);
-+		}
-+}
++  unpack-status     = PKT-LINE("unpack" SP unpack-result)
++  unpack-result     = "ok" / error-msg
 +
- static void print_ref_status(char flag, const char *summary,
- 			     struct ref *to, struct ref *from, const char *msg,
- 			     struct ref_push_report *report,
++  command-status-v2 = command-ok-v2 / command-fail
++  command-ok-v2     = command-ok
++		      *option-line
++
++  command-ok        = PKT-LINE("ok" SP refname)
++  command-fail      = PKT-LINE("ng" SP refname SP error-msg)
++
++  error-msg         = 1*(OCTET) ; where not "ok"
++
++  option-line       = *1(option-refname)
++		      *1(option-old-oid)
++		      *1(option-new-oid)
++		      *1(option-forced-update)
++
++  option-refname    = PKT-LINE("option" SP "refname" SP refname)
++  option-old-oid    = PKT-LINE("option" SP "old-oid" SP obj-id)
++  option-new-oid    = PKT-LINE("option" SP "new-oid" SP obj-id)
++  option-force      = PKT-LINE("option" SP "forced-update")
++
++----
++
+ Updates can be unsuccessful for a number of reasons.  The reference can have
+ changed since the reference discovery phase was originally sent, meaning
+ someone pushed in the meantime.  The reference being pushed could be a
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 124d716807..ba869a7d36 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -22,9 +22,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
+ and server advertised.  As a consequence of these rules, server MUST
+ NOT advertise capabilities it does not understand.
+ 
+-The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
+-capabilities are sent and recognized by the receive-pack (push to server)
+-process.
++The 'atomic', 'report-status', 'report-status-v2', 'delete-refs', 'quiet',
++and 'push-cert' capabilities are sent and recognized by the receive-pack
++(push to server) process.
+ 
+ The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
+ by both upload-pack and receive-pack protocols.  The 'agent' capability
+@@ -284,6 +284,17 @@ each reference was updated successfully.  If any of those were not
+ successful, it will send back an error message.  See pack-protocol.txt
+ for example messages.
+ 
++report-status-v2
++----------------
++
++Capability 'report-status-v2' extends capability 'report-status' by
++adding new "option" directives in order to support reference rewritten by
++the "proc-receive" hook.  The "proc-receive" hook may handle a command
++for a pseudo-reference which may create or update a reference with
++different name, new-oid, and old-oid.  While the capability
++'report-status' cannot report for such case.  See pack-protocol.txt
++for details.
++
+ delete-refs
+ -----------
+ 
 -- 
 2.26.2.543.g44b58e439b
 
