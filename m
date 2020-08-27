@@ -2,67 +2,53 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01FA5C433DF
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 05:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D48E6C433E1
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 06:00:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD4D82078A
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 05:44:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QvwGaQjm"
+	by mail.kernel.org (Postfix) with ESMTP id A405320786
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 06:00:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727030AbgH0Fos (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 01:44:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60466 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726175AbgH0Fos (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 01:44:48 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F1CFC061240
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 22:44:48 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id x7so4111712wro.3
-        for <git@vger.kernel.org>; Wed, 26 Aug 2020 22:44:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XXT4ORcuGS7hBV5p/QcY/xmLccMz+wojCf+8VsF2Km4=;
-        b=QvwGaQjmNvcppHjdLYNQmiUKQJug2KXpxOuOBx0rbr3po5NuLVPYDJC6XVuQ+Xt9D7
-         gguArklEJNoQkBY32rJSJ+LtV95U3ziPuKMNHoxOtZ1Ac+dYb9TgT/+BvFmEUIjQD7r1
-         /JE+mD+6DCJ+6Ytcn5UJG/RcU1QNRM2No1EA1EaiN4Zt9Bj6p3dQc1yfI5QwKmaN89nl
-         LcIlj5W20rUm4nwHqWVqbkNwA91KDt6hClsgQHkAVSMIBNj6temBGCkpauiRxF/xP5Fh
-         nQSO2Mwd8iWJMSfPJUSLGb893Nb/00q5tsxldEJedNoMR71eYiRWKOW3wNTOr1TJHasZ
-         pe8A==
+        id S1726123AbgH0F5C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 01:57:02 -0400
+Received: from mail-ej1-f65.google.com ([209.85.218.65]:42331 "EHLO
+        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbgH0F5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 01:57:00 -0400
+Received: by mail-ej1-f65.google.com with SMTP id j25so6004653ejk.9
+        for <git@vger.kernel.org>; Wed, 26 Aug 2020 22:56:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=XXT4ORcuGS7hBV5p/QcY/xmLccMz+wojCf+8VsF2Km4=;
-        b=eEUrypnpzuLcRXr0E4q3kRIYyl661ZIuxE9u7Lbk+RJWcNjRiaapl+WG21523D0ifQ
-         NbKpUCrhWon2556zTZUR5JcnsiJZFpruadRM+3Nz+k///7Zcsg79z9fzuDw35kCFVAOh
-         kNjC+oBfrh1qJz5XkdEJV2zRelr800ej/ZOtBxyMr8nnQ0FWFjZVgRzu9pNE3fXUWunK
-         dqPkpDxWW81RvJyesy+xNxvS2n4knZcNd29noMadI+uw5+DsO7R7VP/XeicF7xKhoRad
-         d0mD7PssdE54me3Pb1lTK5vfjjZ43dWZn0quzVB2p5Q300NMeu7RS1X3vpTKiQQ8Bt2x
-         CRGg==
-X-Gm-Message-State: AOAM531Sp6RfcUGf92WlrGyIfdLnxIPqr4NFSHTxOdKo2Z8hU/SVrFL0
-        Er0yKSCuYL7GNvyDgMgXKt5xkYZgX40ubDyea9w=
-X-Google-Smtp-Source: ABdhPJxfToM+CCO9x4kbdFu0cTkMw521ADAoBAOx2Ckhb9vXrHMjqB4owc2zI+D8vJZt2i0+TD/RdJSNN2cHQJPl6OY=
-X-Received: by 2002:adf:ed88:: with SMTP id c8mr17468514wro.233.1598507086521;
- Wed, 26 Aug 2020 22:44:46 -0700 (PDT)
+        bh=sRbT1fxxA/NHwiAarsbsyaS0HKzyJfx89gbbhWC1IUo=;
+        b=Us/u2PKVBYHrpw4VwT8gHP74o9uMb6ArchMdYauBqzd75scRb0+8YR01Cpp+8jnh2g
+         Lqq+QQIyUzh7qt11T7zlec9V1N8n2WZzfKTXWcHaWK73jGSPWpPbDQv59KsExnd/e3FL
+         Zht7gvZCG07ug3JCYUvUdCQAaKNAWvNQ3SFm2Ctro/lqhZ6tkXdklL2Zc6reCNU1LC6E
+         6o4oQdEF5fe/uf7mFujgLhCfqzkpO3c84q+D3tqqCueRqRSGPJZ3NBmxb80HLxYMCjxk
+         4fBvzvDJbahiyyQLAa/I+0Ex5xwKcTPZaIAUdLYCKFAgqGfuFKsK9wTNOT95/jsTwUE1
+         Cs3A==
+X-Gm-Message-State: AOAM5316qR2WoMe0WKo9zrXMqO1+4nNIlihfMRYQY6ETk8BsgP/s6xrS
+        OI850I/4Q9wuAPYfvr5fsFVmY7Mby8AilFCpbEE=
+X-Google-Smtp-Source: ABdhPJyEFtR1CEVBgQAxKgV/1Ff1d7p+Vp7k/2+Rra3twIqzrobq/8mwyfgUCxWm32rxCxjHtasYfFU5gDWVjYtBoTM=
+X-Received: by 2002:a17:906:80da:: with SMTP id a26mr18681014ejx.311.1598507818380;
+ Wed, 26 Aug 2020 22:56:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHr-Uu_KeAJZrd+GzymNP47iFi+dZkvVYsWQPtzT_FQrVnWTDg@mail.gmail.com>
- <xmqq7dtlt080.fsf@gitster.c.googlers.com> <xmqq3649szs8.fsf@gitster.c.googlers.com>
- <CAHr-Uu8umDQJ=LORaBNJX+wnmaeM1hHxxpG7xROPgCqgEPrwdw@mail.gmail.com>
-In-Reply-To: <CAHr-Uu8umDQJ=LORaBNJX+wnmaeM1hHxxpG7xROPgCqgEPrwdw@mail.gmail.com>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Wed, 26 Aug 2020 22:44:35 -0700
-Message-ID: <CAPx1GvfSt=s5VP9_+ZtndHWaBZ5W7nFxAf8bTF2tXnJkS95Dfg@mail.gmail.com>
-Subject: Re: post-checkout hook aborts rebase
-To:     Tom Rutherford <tmrutherford@gmail.com>
+References: <xmqqd03dwe2x.fsf@gitster.c.googlers.com> <20200826194650.4031087-1-gitster@pobox.com>
+ <20200826194650.4031087-3-gitster@pobox.com> <xmqqzh6ht7fg.fsf_-_@gitster.c.googlers.com>
+ <xmqqmu2ht58g.fsf_-_@gitster.c.googlers.com> <20200827042157.GC3346457@coredump.intra.peff.net>
+ <CAPig+cS1uMw6YDVjzb8FbBmC=iVjged-wHu0LF2+trmW-4ZfVw@mail.gmail.com>
+ <20200827044420.GA3360616@coredump.intra.peff.net> <CAPig+cSA56xgNN0WP4t+YoyNU8fGf5eaz__=4Vh+s=He-tG=DA@mail.gmail.com>
+ <20200827052504.GA3360984@coredump.intra.peff.net>
+In-Reply-To: <20200827052504.GA3360984@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 27 Aug 2020 01:56:47 -0400
+Message-ID: <CAPig+cQxvq3MzyB3e8-ZeVSdCot04=9p4L8CZRnpYbrmnR70_g@mail.gmail.com>
+Subject: Re: [PATCH] worktree: fix leak in check_clean_worktree()
+To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -70,35 +56,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 26, 2020 at 5:48 PM Tom Rutherford <tmrutherford@gmail.com> wrote:
+On Thu, Aug 27, 2020 at 1:25 AM Jeff King <peff@peff.net> wrote:
+> On Thu, Aug 27, 2020 at 01:03:43AM -0400, Eric Sunshine wrote:
+> > Right. I wonder why the author of 7f44e3d1de (worktree: make setup of
+> > new HEAD distinct from worktree population, 2015-07-17) chose to clear
+> > cp.args manually like that.
 >
-> Thank you for the response Junio.
+> I wondered if we might not have cleared the array automatically back
+> then, but it looks like we did.
+
+I had the same thought and came to the same conclusion. It's possible
+that the manual clearing of the array was leftover cruft as the
+implementation matured before the patch was submitted. I have a vague
+(perhaps false) recollection that a local argv_array was populated and
+assigned to cp.argv originally, until cp.args was discovered as a
+cleaner alternative and used instead. If that was the case, then the
+local argv_array wouldn't have been cleared automatically by
+run_command(), which would account for clearing it manually.
+
+> I do think this kind of child_process struct reuse is slightly sketchy
+> in general. Looking at child_process_clear(), we only free the memory,
+> but leave other fields set. And in fact we rely on that here; git_cmd
+> needs to remain set for both commands to work. But if the first command
+> had used, say, cp.in, then we'd be left with a bogus descriptor.
+
+Agreed. The current usage in worktree.c is a bit too familiar with the
+current internal implementation of run_command(). Reinitializing the
+child_process struct or using a separate one would be a good cleanup.
+
+> -- >8 --
+> Subject: [PATCH] worktree: fix leak in check_clean_worktree()
 >
-> For what it's worth, my hook does not make changes to the repo. It's
-> running a command to check that the installed version of our
-> dependencies match the version specified in the commit being checked
-> out, and merely warns if the two don't match (then exits with a
-> nonzero return code).
+> We allocate a child_env strvec but never free its memory. Instead, let's
+> just use the strvec that our child_process struct provides, which is
+> cleaned up automatically when we run the command.
+>
+> And while we're moving the initialization of the child_process around,
+> let's switch it to use the official init function (zero-initializing it
+> works OK, since strvec is happy enough with that, but it sets a bad
+> example).
 
-I've run into this before myself.  The core of the bug is that when
-`git checkout` runs the post-checkout hook, whatever exit status
-that hook has, `git checkout` has the same exit status.
+The various memset()'s in worktree.c seem to have been inherited (and
+multiplied) from Duy's original "git checkout --to" implementation
+(which later became the basis for "git worktree add" after which it
+mutated significantly), and "git checkout --to" predates introduction
+of child_process_init().
 
-This might be intended as a feature, but if so, the documentation
-needs a tweak: the githooks docs say in part
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -924,7 +924,6 @@ static int move_worktree(int ac, const char **av, const char *prefix)
+> -       struct strvec child_env = STRVEC_INIT;
+> @@ -935,15 +934,14 @@ static void check_clean_worktree(struct worktree *wt,
+> -       strvec_pushf(&child_env, "%s=%s/.git",
+> +       child_process_init(&cp);
+> +       strvec_pushf(&cp.env_array, "%s=%s/.git",
+>                      GIT_DIR_ENVIRONMENT, wt->path);
+> -       strvec_pushf(&child_env, "%s=%s",
+> +       strvec_pushf(&cp.env_array, "%s=%s",
+>                      GIT_WORK_TREE_ENVIRONMENT, wt->path);
+> -       memset(&cp, 0, sizeof(cp));
+> -       cp.env = child_env.v;
 
-    This hook cannot affect the outcome of git checkout.
+Looks good to me. For what it's worth:
 
-If "outcome" includes exit status -- to me, it does -- either the docs
-are wrong or the code is wrong.
-
-> For this reason it's been convenient that the hook runs during
-> rebases, but I find it surprising that the nonzero return code would
-> impact the rebase.
-
-I have to agree with this, too.
-
-(The simplest fix would be to have `git checkout` ignore the status
-from the post-checkout hook, of course, and just exit 0 for success.)
-
-Chris
+Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
