@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A8C1C433DF
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A62C5C433E5
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BBC72087D
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80E292177B
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 15:46:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NhkK3oJx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uBIsiGLc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728130AbgH0PqQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 11:46:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41908 "EHLO
+        id S1727990AbgH0PqV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 11:46:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728063AbgH0PqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 11:46:02 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C742C061264
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:02 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id g29so2632916pgl.2
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:02 -0700 (PDT)
+        with ESMTP id S1728111AbgH0PqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 11:46:08 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6C9C06121B
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:08 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id y206so3806133pfb.10
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 08:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EJIwL0GuMSH7186cn3RBGxkVisJ7WkzCx/NSn6JCajM=;
-        b=NhkK3oJxU7wZOf52MgilkQNGfLxBzRrqGqA6dqcLjEwrP3vLKPfKnYHJGWrcGZGeIy
-         tEQsqvoUIeOFbtzXHohBS9gmKqRwIZd9qtIQcRtY3EGWqgfnciHjhlJRg2miTKZV8r1L
-         skieB1g8kqVUoBaQ7u5Qkx+8MlFpzZT9ok/yI9TplL2OuUwKGi84ptp8IfEIX+XifO9V
-         6uLrBsjwt62WTQhddnrp3DeeHkdgyezaJjR2+VVBfHZarxgMQq+Mqt/yQ+Spv4ttdrav
-         yyr4biYuWeaWdCdkY2CPFeJlJzgtx83HKonxsM5Hvq1hjPWuPqXBB2CM4XIBW26ixVG5
-         Ew1g==
+        bh=+w/ZUEz9uwa4488MthxDSq8bg/8oMimN8qJZs+WIIbU=;
+        b=uBIsiGLcXFmAkW+m230FP9Ie74hHuhDVOTfrXnU9xYe3tnfPc8q2Y6lIHZ5apPutdb
+         UHXTThWZv/mnUTvJkO8L4h/hkEil0ohfJiwONPM2zgaPS5subFZd8dTHkEgsdSj1zPMv
+         9KjwhV0U3RwTbsztpg3cu92r/m+s5gR8TWvQqmHTUtvpEix87+07PI+Kh9pFUG3XNofm
+         /ooonaYHLgNNzt+u+xot5mGPbYlvHhKBMgtUkS1P4hRYAe3G10jiOdNdr7eStA8WGiCi
+         KGUMRvW7DGeV4jOd25mzG8w7kFR8rvfLbfTtTOmLkO9PCe8xu6OojHahL1eBdi2COlL8
+         4kYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EJIwL0GuMSH7186cn3RBGxkVisJ7WkzCx/NSn6JCajM=;
-        b=GgfYqvdHny+yj632SKiYoNa7TGLiA6Eh5dWx0o3HJN/7zrsN+8fGajy33KbGDo39Qz
-         DhkyTVZT9iejzb2Sto3lXqASHDP5G40KU//BUP6wE6GcAQb+KRz6THIDP2AwsMLubpNX
-         yxBRmZLV03wY1Q83E1cmPlCigiwl5M2PKU7HB4RjY3S9AbJ9Rzpmv2LQApEjK0s3ghjK
-         8Kwpqq1iTQJW8gh9wwPmoVA0BfPcZUerHXHElrzUP3GMFJL2mx0G3qltrhBXzVlaf/gZ
-         FQRgdv6UGC/00kHFLRdzl47tP6fNeLAuQ1r/Zo8UNrxz6h8O3owFt7otw2Ecvo9zZrcp
-         swpw==
-X-Gm-Message-State: AOAM531n6sTF5+UeZxSL/+uvyBXlFTv27nAablua1d7YagUqorUwlPP2
-        +DUEPboqa1jAwrB7rrZJPxs=
-X-Google-Smtp-Source: ABdhPJwSxaREb4QsR3ckw+Geb6u2RFxLlr8/ZVScebuZi8clTwxA2DQUZ4gsZCo6ZIzkJPND62yOvQ==
-X-Received: by 2002:a17:902:a714:: with SMTP id w20mr16937743plq.8.1598543162047;
-        Thu, 27 Aug 2020 08:46:02 -0700 (PDT)
+        bh=+w/ZUEz9uwa4488MthxDSq8bg/8oMimN8qJZs+WIIbU=;
+        b=oNA7daBl9BUTLCpavrRgXzvu1CeQJt/L+iLCYSavPRe9FMzJIttb5di3bUaaP/+uey
+         Uy/dY3gRyH8zcFJDWb2Ew5jfO2EhSLq3FesOYaHVcBsJG2icB0NCdqT/5RjFtJeIcsnu
+         OPGfjXs4/1tNynphtklnu9rKc9U9RyTEJgeHRMOgd8s7wTDnqFBWJOUsYhHSVsSBJyhy
+         ILn/l78CjA4wy/1MbUc37n50DBOlSZgs5lLEWTtRCfU1P5cVL7nlJImH4qn1hbfvc4jr
+         lWJno8vtBTmhyxtVuKLXoxJLEpVHZtQNnr53EQSMBO6qeHLgNz/epi9VCX7Qdm7hXrQc
+         O6IA==
+X-Gm-Message-State: AOAM533vbxCqiA3QuWJvzoFQe/47FmoBjGvXkpjc9h0K+Ul/ADCKA+CG
+        IRUqqLFLV6XBsFkWa8GTYYI=
+X-Google-Smtp-Source: ABdhPJwj0xt6H7Mtv38F2khC4irEc2kP49+VpdhdFzcsC6PaO+KBO+4rtX4g+iGRDH3iSBmqSGyfOg==
+X-Received: by 2002:a17:902:7582:: with SMTP id j2mr2944072pll.322.1598543165765;
+        Thu, 27 Aug 2020 08:46:05 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id x5sm3129218pfj.1.2020.08.27.08.46.01
+        by smtp.gmail.com with ESMTPSA id x5sm3129218pfj.1.2020.08.27.08.46.05
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Aug 2020 08:46:01 -0700 (PDT)
+        Thu, 27 Aug 2020 08:46:05 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v19 06/10] doc: add document for capability report-status-v2
-Date:   Thu, 27 Aug 2020 11:45:47 -0400
-Message-Id: <20200827154551.5966-7-worldhello.net@gmail.com>
+Subject: [PATCH v19 10/10] doc: add documentation for the proc-receive hook
+Date:   Thu, 27 Aug 2020 11:45:51 -0400
+Message-Id: <20200827154551.5966-11-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200824174202.11710-1-worldhello.net@gmail.com>
 References: <20200824174202.11710-1-worldhello.net@gmail.com>
@@ -76,116 +76,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add ABNF notation for capability 'report-status-v2' which extends
-capability 'report-status' by adding additional option lines.
+"git receive-pack" that accepts requests by "git push" learned to
+outsource some of the ref updates to the new "proc-receive" hook.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Documentation/technical/pack-protocol.txt     | 41 +++++++++++++++++--
- .../technical/protocol-capabilities.txt       | 17 ++++++--
- 2 files changed, 52 insertions(+), 6 deletions(-)
+ Documentation/githooks.txt | 62 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index a4573d12ce..e13a2c064d 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -503,8 +503,8 @@ The reference discovery phase is done nearly the same way as it is in the
- fetching protocol. Each reference obj-id and name on the server is sent
- in packet-line format to the client, followed by a flush-pkt.  The only
- real difference is that the capability listing is different - the only
--possible values are 'report-status', 'delete-refs', 'ofs-delta' and
--'push-options'.
-+possible values are 'report-status', 'report-status-v2', 'delete-refs',
-+'ofs-delta', 'atomic' and 'push-options'.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 31b601e4bc..2899e80445 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -333,6 +333,68 @@ The default 'update' hook, when enabled--and with
+ `hooks.allowunannotated` config option unset or set to false--prevents
+ unannotated tags to be pushed.
  
- Reference Update Request and Packfile Transfer
- ----------------------------------------------
-@@ -625,7 +625,7 @@ Report Status
- -------------
- 
- After receiving the pack data from the sender, the receiver sends a
--report if 'report-status' capability is in effect.
-+report if 'report-status' or 'report-status-v2' capability is in effect.
- It is a short listing of what happened in that update.  It will first
- list the status of the packfile unpacking as either 'unpack ok' or
- 'unpack [error]'.  Then it will list the status for each of the references
-@@ -647,6 +647,41 @@ update was successful, or 'ng [refname] [error]' if the update was not.
-   error-msg         = 1*(OCTET) ; where not "ok"
- ----
- 
-+The 'report-status-v2' capability extends the protocol by adding new option
-+lines in order to support reporting of reference rewritten by the
-+'proc-receive' hook.  The 'proc-receive' hook may handle a command for a
-+pseudo-reference which may create or update one or more references, and each
-+reference may have different name, different new-oid, and different old-oid.
++[[proc-receive]]
++proc-receive
++~~~~~~~~~~~~
 +
-+----
-+  report-status-v2  = unpack-status
-+		      1*(command-status-v2)
-+		      flush-pkt
++This hook is invoked by linkgit:git-receive-pack[1].  If the server has
++set the multi-valued config variable `receive.procReceiveRefs`, and the
++commands sent to 'receive-pack' have matching reference names, these
++commands will be executed by this hook, instead of by the internal
++`execute_commands()` function.  This hook is responsible for updating
++the relevant references and reporting the results back to 'receive-pack'.
 +
-+  unpack-status     = PKT-LINE("unpack" SP unpack-result)
-+  unpack-result     = "ok" / error-msg
++This hook executes once for the receive operation.  It takes no
++arguments, but uses a pkt-line format protocol to communicate with
++'receive-pack' to read commands, push-options and send results.  In the
++following example for the protocol, the letter 'S' stands for
++'receive-pack' and the letter 'H' stands for this hook.
 +
-+  command-status-v2 = command-ok-v2 / command-fail
-+  command-ok-v2     = command-ok
-+		      *option-line
++    # Version and features negotiation.
++    S: PKT-LINE(version=1\0push-options atomic...)
++    S: flush-pkt
++    H: PKT-LINE(version=1\0push-options...)
++    H: flush-pkt
 +
-+  command-ok        = PKT-LINE("ok" SP refname)
-+  command-fail      = PKT-LINE("ng" SP refname SP error-msg)
++    # Send commands from server to the hook.
++    S: PKT-LINE(<old-oid> <new-oid> <ref>)
++    S: ... ...
++    S: flush-pkt
++    # Send push-options only if the 'push-options' feature is enabled.
++    S: PKT-LINE(push-option)
++    S: ... ...
++    S: flush-pkt
 +
-+  error-msg         = 1*(OCTET) ; where not "ok"
++    # Receive result from the hook.
++    # OK, run this command successfully.
++    H: PKT-LINE(ok <ref>)
++    # NO, I reject it.
++    H: PKT-LINE(ng <ref> <reason>)
++    # Fall through, let 'receive-pack' to execute it.
++    H: PKT-LINE(ok <ref>)
++    H: PKT-LINE(option fall-through)
++    # OK, but has an alternate reference.  The alternate reference name
++    # and other status can be given in option directives.
++    H: PKT-LINE(ok <ref>)
++    H: PKT-LINE(option refname <refname>)
++    H: PKT-LINE(option old-oid <old-oid>)
++    H: PKT-LINE(option new-oid <new-oid>)
++    H: PKT-LINE(option forced-update)
++    H: ... ...
++    H: flush-pkt
 +
-+  option-line       = *1(option-refname)
-+		      *1(option-old-oid)
-+		      *1(option-new-oid)
-+		      *1(option-forced-update)
++Each command for the 'proc-receive' hook may point to a pseudo-reference
++and always has a zero-old as its old-oid, while the 'proc-receive' hook
++may update an alternate reference and the alternate reference may exist
++already with a non-zero old-oid.  For this case, this hook will use
++"option" directives to report extended attributes for the reference given
++by the leading "ok" directive.
 +
-+  option-refname    = PKT-LINE("option" SP "refname" SP refname)
-+  option-old-oid    = PKT-LINE("option" SP "old-oid" SP obj-id)
-+  option-new-oid    = PKT-LINE("option" SP "new-oid" SP obj-id)
-+  option-force      = PKT-LINE("option" SP "forced-update")
++The report of the commands of this hook should have the same order as
++the input.  The exit status of the 'proc-receive' hook only determines
++the success or failure of the group of commands sent to it, unless
++atomic push is in use.
 +
-+----
-+
- Updates can be unsuccessful for a number of reasons.  The reference can have
- changed since the reference discovery phase was originally sent, meaning
- someone pushed in the meantime.  The reference being pushed could be a
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 124d716807..ba869a7d36 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -22,9 +22,9 @@ was sent.  Server MUST NOT ignore capabilities that client requested
- and server advertised.  As a consequence of these rules, server MUST
- NOT advertise capabilities it does not understand.
- 
--The 'atomic', 'report-status', 'delete-refs', 'quiet', and 'push-cert'
--capabilities are sent and recognized by the receive-pack (push to server)
--process.
-+The 'atomic', 'report-status', 'report-status-v2', 'delete-refs', 'quiet',
-+and 'push-cert' capabilities are sent and recognized by the receive-pack
-+(push to server) process.
- 
- The 'ofs-delta' and 'side-band-64k' capabilities are sent and recognized
- by both upload-pack and receive-pack protocols.  The 'agent' capability
-@@ -284,6 +284,17 @@ each reference was updated successfully.  If any of those were not
- successful, it will send back an error message.  See pack-protocol.txt
- for example messages.
- 
-+report-status-v2
-+----------------
-+
-+Capability 'report-status-v2' extends capability 'report-status' by
-+adding new "option" directives in order to support reference rewritten by
-+the "proc-receive" hook.  The "proc-receive" hook may handle a command
-+for a pseudo-reference which may create or update a reference with
-+different name, new-oid, and old-oid.  While the capability
-+'report-status' cannot report for such case.  See pack-protocol.txt
-+for details.
-+
- delete-refs
- -----------
- 
+ [[post-receive]]
+ post-receive
+ ~~~~~~~~~~~~
 -- 
 2.26.2.543.g44b58e439b
 
