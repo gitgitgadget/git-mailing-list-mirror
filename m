@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F4C9C433E3
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70AC9C433E1
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7334920738
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3435E20738
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:23:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rG/wKWiP"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AN6O7SUs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728223AbgH0IXR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 04:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56982 "EHLO
+        id S1728228AbgH0IXS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 04:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728192AbgH0IXI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728193AbgH0IXI (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 27 Aug 2020 04:23:08 -0400
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92BD8C061264
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:07 -0700 (PDT)
-Received: by mail-il1-x142.google.com with SMTP id v2so4184045ilq.4
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:07 -0700 (PDT)
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE1EC06121A
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:08 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id s1so4920882iot.10
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HdQuL54/QmlfS75KksDb6aG7WJADBdeDPPR29tmxWiE=;
-        b=rG/wKWiPrq+F/N4qo5EAG3LZZQl+UxT9Wk4QxBjPuDl1GWrbonCOpE+Lb9F+foeLgL
-         VUglCvs+eWpSTCdJ1yiHbyPWcBDOqrCFKOvqLYkX/J3XP013nJ/x+sgWUGqFk+WeWdX4
-         Gwx4Nn7XLxK5MfDWGx3KO7cPPlkRIPet+DPc8kbcVzu6AYbMbRopvMZBqa9k+A+os6lP
-         DqkUWia+JTBCNmET7MSIgO1QMa4kHJBVX0WtSY27K8dGhBVACdn+idxDKJOzGGv7ex7Y
-         +PsOI1jWl3ygyy/c++n63g5Hfhy0n8EDPktk9Nq/i2sN32UY1H6YtWGGqCdfSlHd0Xvm
-         jDmA==
+        bh=/03OoE4WkbIsJYkdY0Cc19qSUlFqHgdfByfEkRUqR84=;
+        b=AN6O7SUsNJCOx9cEkU2fNmUP5n1pLPxHEgA3ZicRXsoYQO7IOBwZ6vspoilDvYofrJ
+         tTrTeHNVOWVAaEWKVZ7IE/xSQVF19RFtaOpRhrpgfZdsWptO/HolstrCZD+2hPSRqBus
+         QTKhWnfuncvDYcVLt/eptIaxhpUxw58WF8BRXpAEsJh/FD9dp9MtEWpX7ycb27X23ku6
+         X0Cqb+pYB/+E9IRPTLVxc4HmrCjr0pFVJ9RpxR0BQ+Z8WEPNcWmmTd1VTDf2V52VQ8K5
+         Mqn1+3i6F6Fv8QT8ul+DnV6vUTQmTIMjHdPcyvQVGbuTwu1PtM9ZeMaCZpSK4eRzAh2C
+         ZWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=HdQuL54/QmlfS75KksDb6aG7WJADBdeDPPR29tmxWiE=;
-        b=JwruGhhWVnZ2LfFvYxf2VBhG6lU/nhWzskJpmG+JHTfU92OW4oAYC0Zw9XWWV/Feun
-         wME2Nh9MDeLbd7hVXpRcUWz9kZTQkDaQlwCGJb4Xo2aphWERxX5MGyMUdYAAPBxLmniP
-         k7JZxWJZW4RZN2l0hxfmNuaJuJgQ7DQufuVmVuxYwx+FYUUcc3A4D2+k3PuAJn/U9tNb
-         ZJ8++cY9sVd5Q6p2myxPiohk8DFQL4bLQnh1u7Oy7joqwTVQ0yeMMkqj9BR/pcWBCuNF
-         ZgtohVLEvgOA0Wks8A5y9oEm1ghh8MO+ae6Jg8pF7AjgSrb2L6XssshFOEsBJfFdxK6C
-         yuPA==
-X-Gm-Message-State: AOAM530Q0vOnVledLeFSscD6KJMzJirI5mgRvBhnNRbyL3gy6nS9Xe19
-        l5Myy/6uvZc2kwyWCHVYGCt+I4z3PlU=
-X-Google-Smtp-Source: ABdhPJzk+oZsDEwL/9wqNxW7lAqOKYStTcAQw9S83vjKqhj4U8VDRlU6xO4LT7+thWuIdKoCUQ9+/w==
-X-Received: by 2002:a05:6e02:1107:: with SMTP id u7mr16575891ilk.165.1598516585981;
-        Thu, 27 Aug 2020 01:23:05 -0700 (PDT)
+        bh=/03OoE4WkbIsJYkdY0Cc19qSUlFqHgdfByfEkRUqR84=;
+        b=KVRb4Liy2c4dY/sAnoWzG7e7ouKESAX14WGv7ukTnRC2x4oHSBqgGzJRw6bvHvFJnE
+         nPDHJmLk67Y5ROesDPZ2UL3JjnP3qXBsUkp1urxoi4Z3pV3lO2PgV845R3pJ2N+4ivhl
+         QLhGWmWPC6C9ZacH8G0Qz4jIh8f0R+sXd12U6LoCDLxR96ZfZOLxCSgbUZRqBNEeAP4x
+         z58E/I6ViYVNZaGCbjuyKP3AG8CRDKG6lJITi+gPgOE04GAUZrb/UVFnOFxXBtdU7LnV
+         oBdnf8A+xlQsS4uBv8n+7M+Cnzy0JG4oD4wJhDTFFIR3zUXzbJ2ktfNosxBYsx3FD0tG
+         9YKA==
+X-Gm-Message-State: AOAM531zEC3XMZD0R7azr/7S6bRw3qrfMW56l31+GPHZj8+reSngdmGY
+        mQgfx/ibyU1SNVkXTSiWD3OsZL1kfzI=
+X-Google-Smtp-Source: ABdhPJxZytyJVgcbqbEo4bXocBQVhvjP1gKXX27yTzASg4mIQ2cvSr2KQsJIFwBRO4BKxYueogPuDg==
+X-Received: by 2002:a02:3445:: with SMTP id z5mr18101180jaz.134.1598516587111;
+        Thu, 27 Aug 2020 01:23:07 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id n15sm816553ioc.15.2020.08.27.01.23.04
+        by smtp.gmail.com with ESMTPSA id n15sm816553ioc.15.2020.08.27.01.23.06
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Aug 2020 01:23:05 -0700 (PDT)
+        Thu, 27 Aug 2020 01:23:06 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Henr=C3=A9=20Botha?= <henrebotha@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/5] worktree: teach "repair" to fix worktree back-links to main worktree
-Date:   Thu, 27 Aug 2020 04:21:26 -0400
-Message-Id: <20200827082129.56149-3-sunshine@sunshineco.com>
+Subject: [PATCH 3/5] worktree: teach "repair" to fix outgoing links to worktrees
+Date:   Thu, 27 Aug 2020 04:21:27 -0400
+Message-Id: <20200827082129.56149-4-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.28.0.461.g40977abb40
 In-Reply-To: <20200827082129.56149-1-sunshine@sunshineco.com>
 References: <20200827082129.56149-1-sunshine@sunshineco.com>
@@ -75,249 +75,300 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The .git file in a linked worktree is a "gitlink" which points back to
-the .git/worktrees/<id> entry in the main worktree or bare repository.
-If a worktree's .git file is deleted or becomes corrupted or outdated,
-then the linked worktree won't know how to find the repository or any of
-its own administrative files (such as 'index', 'HEAD', etc.). An easy
-way for the .git file to become outdated is for the user to move the
-main worktree or bare repository. Although it is possible to manually
-update each linked worktree's .git file to reflect the new repository
-location, doing so requires a level of knowledge about worktree
-internals beyond what a user should be expected to know offhand.
+The .git/worktrees/<id>/gitdir file points at the location of a linked
+worktree's .git file. Its content must be of the form
+/path/to/worktree/.git (from which the location of the worktree itself
+can be derived by stripping the "/.git" suffix). If the gitdir file is
+deleted or becomes corrupted or outdated, then Git will be unable to
+find the linked worktree. An easy way for the gitdir file to become
+outdated is for the user to move the worktree manually (without using
+"git worktree move"). Although it is possible to manually update the
+gitdir file to reflect the new linked worktree location, doing so
+requires a level of knowledge about worktree internals beyond what a
+user should be expected to know offhand.
 
 Therefore, teach "git worktree repair" how to repair broken or outdated
-worktree .git files automatically. (For this to work, the command must
-be invoked from within the main worktree or bare repository, or from
-within a worktree which has not become disconnected from the repository
--- such as one which was created after the repository was moved.)
+.git/worktrees/<id>/gitdir files automatically. (For this to work, the
+command must either be invoked from within the worktree whose gitdir
+file requires repair, or from within the main or any linked worktree by
+providing the path of the broken worktree as an argument to "git
+worktree repair".)
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-worktree.txt | 10 ++++-
- builtin/worktree.c             | 11 ++++++
- t/t2406-worktree-repair.sh     | 72 ++++++++++++++++++++++++++++++++++
- worktree.c                     | 53 +++++++++++++++++++++++++
- worktree.h                     | 11 ++++++
- 5 files changed, 156 insertions(+), 1 deletion(-)
+ Documentation/git-worktree.txt | 14 ++++--
+ builtin/worktree.c             |  7 ++-
+ t/t2406-worktree-repair.sh     | 86 ++++++++++++++++++++++++++++++++++
+ worktree.c                     | 74 +++++++++++++++++++++++++++++
+ worktree.h                     | 11 +++++
+ 5 files changed, 187 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index ae432d39a8..acb0ea1c2e 100644
+index acb0ea1c2e..a43a0af0af 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -98,7 +98,10 @@ with `--reason`.
- move::
+@@ -15,7 +15,7 @@ SYNOPSIS
+ 'git worktree move' <worktree> <new-path>
+ 'git worktree prune' [-n] [-v] [--expire <expire>]
+ 'git worktree remove' [-f] <worktree>
+-'git worktree repair'
++'git worktree repair' [<path>...]
+ 'git worktree unlock' <worktree>
  
- Move a working tree to a new location. Note that the main working tree
--or linked working trees containing submodules cannot be moved.
-+or linked working trees containing submodules cannot be moved with this
-+command. (The `git worktree repair` command, however, can reestablish
-+the connection with linked working trees if you move the main working
-+tree manually.)
+ DESCRIPTION
+@@ -114,7 +114,7 @@ and no modification in tracked files) can be removed. Unclean working
+ trees or ones with submodules can be removed with `--force`. The main
+ working tree cannot be removed.
  
- prune::
- 
-@@ -115,6 +118,11 @@ repair::
+-repair::
++repair [<path>...]::
  
  Repair working tree administrative files, if possible, if they have
  become corrupted or outdated due to external factors.
+@@ -123,6 +123,13 @@ For instance, if the main working tree (or bare repository) is moved,
+ linked working trees will be unable to locate it. Running `repair` in
+ the recently-moved main working tree will reestablish the connection
+ from linked working trees back to the main working tree.
 ++
-+For instance, if the main working tree (or bare repository) is moved,
-+linked working trees will be unable to locate it. Running `repair` in
-+the recently-moved main working tree will reestablish the connection
-+from linked working trees back to the main working tree.
++Similarly, if a linked working tree is moved without using `git worktree
++move`, the main working tree (or bare repository) will be unable to
++locate it. Running `repair` within the recently-moved working tree will
++reestablish the connection. If multiple linked working trees are moved,
++running `repair` from any working tree with each tree's new `<path>` as
++an argument, will reestablish the connection to all the specified paths.
  
  unlock::
  
+@@ -317,7 +324,8 @@ in the entry's directory. For example, if a linked working tree is moved
+ to `/newpath/test-next` and its `.git` file points to
+ `/path/main/.git/worktrees/test-next`, then update
+ `/path/main/.git/worktrees/test-next/gitdir` to reference `/newpath/test-next`
+-instead.
++instead. Better yet, run `git worktree repair` to reestablish the connection
++automatically.
+ 
+ To prevent a `$GIT_DIR/worktrees` entry from being pruned (which
+ can be useful in some situations, such as when the
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 88af412d4f..62e33eb7f5 100644
+index 62e33eb7f5..19bbc246ad 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -1030,6 +1030,16 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
- 	return ret;
- }
+@@ -1042,15 +1042,18 @@ static void repair_cb(int iserr, const char *path, const char *msg, void *cb_dat
  
-+static void repair_cb(int iserr, const char *path, const char *msg, void *cb_data)
-+{
-+	if (!iserr)
-+		printf_ln(_("repair: %s: %s"), msg, path);
-+	else {
-+		fprintf_ln(stderr, _("error: %s: %s"), msg, path);
-+		*(int *)cb_data = 1;
-+	}
-+}
-+
  static int repair(int ac, const char **av, const char *prefix)
  {
++	const char **p;
++	const char *self[] = { ".", NULL };
  	struct option options[] = {
-@@ -1040,6 +1050,7 @@ static int repair(int ac, const char **av, const char *prefix)
+ 		OPT_END()
+ 	};
+ 	int rc = 0;
+ 
  	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
- 	if (ac)
- 		usage_with_options(worktree_usage, options);
-+	repair_worktrees(repair_cb, &rc);
+-	if (ac)
+-		usage_with_options(worktree_usage, options);
+ 	repair_worktrees(repair_cb, &rc);
++	p = ac > 0 ? av : self;
++	for (; *p; p++)
++		repair_worktree_at_path(*p, repair_cb, &rc);
  	return rc;
  }
  
 diff --git a/t/t2406-worktree-repair.sh b/t/t2406-worktree-repair.sh
-index cc679e1a21..9379a63130 100755
+index 9379a63130..87bd8fc526 100755
 --- a/t/t2406-worktree-repair.sh
 +++ b/t/t2406-worktree-repair.sh
-@@ -8,4 +8,76 @@ test_expect_success setup '
- 	test_commit init
+@@ -80,4 +80,90 @@ test_expect_success 'repair .git file from bare.git' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'skip missing worktree' '
-+	test_when_finished "git worktree prune" &&
-+	git worktree add --detach missing &&
-+	rm -rf missing &&
-+	git worktree repair >out 2>err &&
++test_expect_success 'invalid worktree path' '
++	test_must_fail git worktree repair /notvalid >out 2>err &&
 +	test_must_be_empty out &&
-+	test_must_be_empty err
++	test_i18ngrep "not a valid path" err
 +'
 +
-+test_expect_success "don't clobber .git repo" '
-+	test_when_finished "rm -rf repo && git worktree prune" &&
-+	git worktree add --detach repo &&
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_must_fail git worktree repair >out 2>err &&
++test_expect_success 'repo not found; .git not file' '
++	test_when_finished "rm -rf not-a-worktree" &&
++	test_create_repo not-a-worktree &&
++	test_must_fail git worktree repair not-a-worktree >out 2>err &&
 +	test_must_be_empty out &&
 +	test_i18ngrep ".git is not a file" err
 +'
 +
-+test_corrupt_gitlink () {
-+	butcher=$1 &&
-+	problem=$2 &&
-+	repairdir=${3:-.} &&
-+	test_when_finished 'rm -rf corrupt && git worktree prune' &&
-+	git worktree add --detach corrupt &&
-+	git -C corrupt rev-parse --absolute-git-dir >expect &&
-+	eval "$butcher" &&
-+	git -C "$repairdir" worktree repair >out 2>err &&
-+	test_i18ngrep "$problem" out &&
-+	test_must_be_empty err &&
-+	git -C corrupt rev-parse --absolute-git-dir >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'repair missing .git file' '
-+	test_corrupt_gitlink "rm -f corrupt/.git" ".git link broken"
++test_expect_success 'repo not found; .git link broken' '
++	test_when_finished "rm -rf orig moved && git worktree prune" &&
++	git worktree add --detach orig &&
++	echo /invalid >orig/.git &&
++	mv orig moved &&
++	test_must_fail git worktree repair moved >out 2>err &&
++	test_must_be_empty out &&
++	test_i18ngrep ".git link broken" err
 +'
 +
-+test_expect_success 'repair bogus .git file' '
-+	test_corrupt_gitlink "echo \"gitdir: /nowhere\" >corrupt/.git" \
-+		".git link broken"
++test_expect_success 'repair broken gitdir' '
++	test_when_finished "rm -rf orig moved && git worktree prune" &&
++	git worktree add --detach orig &&
++	sed s,orig/\.git$,moved/.git, .git/worktrees/orig/gitdir >expect &&
++	rm .git/worktrees/orig/gitdir &&
++	mv orig moved &&
++	git worktree repair moved >out 2>err &&
++	test_cmp expect .git/worktrees/orig/gitdir &&
++	test_i18ngrep "gitdir unreadable" out &&
++	test_must_be_empty err
 +'
 +
-+test_expect_success 'repair incorrect .git file' '
-+	test_when_finished "rm -rf other && git worktree prune" &&
-+	test_create_repo other &&
-+	other=$(git -C other rev-parse --absolute-git-dir) &&
-+	test_corrupt_gitlink "echo \"gitdir: $other\" >corrupt/.git" \
-+		".git link incorrect"
++test_expect_success 'repair incorrect gitdir' '
++	test_when_finished "rm -rf orig moved && git worktree prune" &&
++	git worktree add --detach orig &&
++	sed s,orig/\.git$,moved/.git, .git/worktrees/orig/gitdir >expect &&
++	mv orig moved &&
++	git worktree repair moved >out 2>err &&
++	test_cmp expect .git/worktrees/orig/gitdir &&
++	test_i18ngrep "gitdir incorrect" out &&
++	test_must_be_empty err
 +'
 +
-+test_expect_success 'repair .git file from main/.git' '
-+	test_corrupt_gitlink "rm -f corrupt/.git" ".git link broken" .git
++test_expect_success 'repair gitdir (implicit) from linked worktree' '
++	test_when_finished "rm -rf orig moved && git worktree prune" &&
++	git worktree add --detach orig &&
++	sed s,orig/\.git$,moved/.git, .git/worktrees/orig/gitdir >expect &&
++	mv orig moved &&
++	git -C moved worktree repair >out 2>err &&
++	test_cmp expect .git/worktrees/orig/gitdir &&
++	test_i18ngrep "gitdir incorrect" out &&
++	test_must_be_empty err
 +'
 +
-+test_expect_success 'repair .git file from linked worktree' '
-+	test_when_finished "rm -rf other && git worktree prune" &&
-+	git worktree add --detach other &&
-+	test_corrupt_gitlink "rm -f corrupt/.git" ".git link broken" other
++test_expect_success 'unable to repair gitdir (implicit) from main worktree' '
++	test_when_finished "rm -rf orig moved && git worktree prune" &&
++	git worktree add --detach orig &&
++	cat .git/worktrees/orig/gitdir >expect &&
++	mv orig moved &&
++	git worktree repair >out 2>err &&
++	test_cmp expect .git/worktrees/orig/gitdir &&
++	test_must_be_empty out &&
++	test_must_be_empty err
 +'
 +
-+test_expect_success 'repair .git file from bare.git' '
-+	test_when_finished "rm -rf bare.git corrupt && git worktree prune" &&
-+	git clone --bare . bare.git &&
-+	git -C bare.git worktree add --detach ../corrupt &&
-+	git -C corrupt rev-parse --absolute-git-dir >expect &&
-+	rm -f corrupt/.git &&
-+	git -C bare.git worktree repair &&
-+	git -C corrupt rev-parse --absolute-git-dir >actual &&
-+	test_cmp expect actual
++test_expect_success 'repair multiple gitdir files' '
++	test_when_finished "rm -rf orig1 orig2 moved1 moved2 &&
++		git worktree prune" &&
++	git worktree add --detach orig1 &&
++	git worktree add --detach orig2 &&
++	sed s,orig1/\.git$,moved1/.git, .git/worktrees/orig1/gitdir >expect1 &&
++	sed s,orig2/\.git$,moved2/.git, .git/worktrees/orig2/gitdir >expect2 &&
++	mv orig1 moved1 &&
++	mv orig2 moved2 &&
++	git worktree repair moved1 moved2 >out 2>err &&
++	test_cmp expect1 .git/worktrees/orig1/gitdir &&
++	test_cmp expect2 .git/worktrees/orig2/gitdir &&
++	test_i18ngrep "gitdir incorrect:.*orig1/gitdir$" out &&
++	test_i18ngrep "gitdir incorrect:.*orig2/gitdir$" out &&
++	test_must_be_empty err
 +'
 +
  test_done
 diff --git a/worktree.c b/worktree.c
-index 62217b4a6b..029ce91fdf 100644
+index 029ce91fdf..6ade4f0d8b 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -571,3 +571,56 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
+@@ -624,3 +624,77 @@ void repair_worktrees(worktree_repair_cb *cb, void *cb_data)
+ 		repair_dotgit(*wt, cb, cb_data);
  	free_worktrees(worktrees);
- 	return ret;
  }
 +
++static int is_main_worktree_path(const char *path)
++{
++	struct strbuf target = STRBUF_INIT;
++	struct strbuf main = STRBUF_INIT;
++	int cmp;
++
++	strbuf_add_real_path(&target, path);
++	strbuf_strip_suffix(&target, "/.git");
++	strbuf_add_real_path(&main, get_git_common_dir());
++	strbuf_strip_suffix(&main, "/.git");
++	cmp = fspathcmp(main.buf, target.buf);
++
++	strbuf_release(&main);
++	strbuf_release(&target);
++	return !cmp;
++}
++
 +/*
-+ * Repair worktree's /path/to/worktree/.git link if missing, corrupt, or not
-+ * pointing at <repo>/worktrees/<id>.
++ * Repair <repo>/worktrees/<id>/gitdir if missing, corrupt, or not pointing at
++ * the worktree's path.
 + */
-+static void repair_dotgit(struct worktree *wt,
-+			  worktree_repair_cb *cb, void *cb_data)
++void repair_worktree_at_path(const char *path,
++			     worktree_repair_cb *cb, void *cb_data)
 +{
 +	struct strbuf dotgit = STRBUF_INIT;
-+	struct strbuf repo = STRBUF_INIT;
-+	char *backlink;
++	struct strbuf realdotgit = STRBUF_INIT;
++	struct strbuf gitdir = STRBUF_INIT;
++	struct strbuf olddotgit = STRBUF_INIT;
++	char *backlink = NULL;
 +	const char *repair = NULL;
 +	int err;
 +
-+	/* missing worktree can't be repaired */
-+	if (!file_exists(wt->path))
-+		return;
-+
-+	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
-+	strbuf_addf(&dotgit, "%s/.git", wt->path);
-+	backlink = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
-+
-+	if (err == READ_GITFILE_ERR_NOT_A_FILE)
-+		cb(1, wt->path, _(".git is not a file"), cb_data);
-+	else if (err)
-+		repair = _(".git link broken");
-+	else if (fspathcmp(backlink, repo.buf))
-+		repair = _(".git link incorrect");
-+
-+	if (repair) {
-+		cb(0, wt->path, repair, cb_data);
-+		write_file(dotgit.buf, "gitdir: %s", repo.buf);
-+	}
-+
-+	free(backlink);
-+	strbuf_release(&repo);
-+	strbuf_release(&dotgit);
-+}
-+
-+static void repair_noop_cb(int iserr, const char *path, const char *msg,
-+			   void *cb_data) {}
-+
-+void repair_worktrees(worktree_repair_cb *cb, void *cb_data)
-+{
-+	struct worktree **worktrees = get_worktrees();
-+	struct worktree **wt = worktrees + 1; /* +1 skips main worktree */
-+
 +	if (!cb)
 +		cb = repair_noop_cb;
-+	for (; *wt; wt++)
-+		repair_dotgit(*wt, cb, cb_data);
-+	free_worktrees(worktrees);
++
++	if (is_main_worktree_path(path))
++		goto done;
++
++	strbuf_addf(&dotgit, "%s/.git", path);
++	if (!strbuf_realpath(&realdotgit, dotgit.buf, 0)) {
++		cb(1, path, _("not a valid path"), cb_data);
++		goto done;
++	}
++
++	backlink = xstrdup_or_null(read_gitfile_gently(realdotgit.buf, &err));
++	if (err == READ_GITFILE_ERR_NOT_A_FILE) {
++		cb(1, realdotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
++		goto done;
++	} else if (err) {
++		cb(1, realdotgit.buf, _("unable to locate repository; .git link broken"), cb_data);
++		goto done;
++	}
++
++	strbuf_addf(&gitdir, "%s/gitdir", backlink);
++	if (strbuf_read_file(&olddotgit, gitdir.buf, 0) < 0)
++		repair = _("gitdir unreadable");
++	else {
++		strbuf_rtrim(&olddotgit);
++		if (fspathcmp(olddotgit.buf, realdotgit.buf))
++			repair = _("gitdir incorrect");
++	}
++
++	if (repair) {
++		cb(0, gitdir.buf, repair, cb_data);
++		write_file(gitdir.buf, "%s", realdotgit.buf);
++	}
++done:
++	free(backlink);
++	strbuf_release(&olddotgit);
++	strbuf_release(&gitdir);
++	strbuf_release(&realdotgit);
++	strbuf_release(&dotgit);
 +}
 diff --git a/worktree.h b/worktree.h
-index 516744c433..7d085c7b91 100644
+index 7d085c7b91..9cb7f05741 100644
 --- a/worktree.h
 +++ b/worktree.h
-@@ -89,6 +89,17 @@ int validate_worktree(const struct worktree *wt,
- void update_worktree_location(struct worktree *wt,
- 			      const char *path_);
+@@ -100,6 +100,17 @@ typedef void worktree_repair_cb(int iserr, const char *path, const char *msg,
+  */
+ void repair_worktrees(worktree_repair_cb *, void *cb_data);
  
-+typedef void worktree_repair_cb(int iserr, const char *path, const char *msg,
-+				void *cb_data);
-+
 +/*
-+ * Visit each registered linked worktree and repair corruptions. For each
-+ * repair made or error encountered while attempting a repair, the callback, if
-+ * non-NULL, is called with the path of the worktree and a description of the
-+ * repair or error, along with the callback user-data.
++ * Repair administrative files corresponding to the worktree at the given path.
++ * The worktree's .git link pointing at the repository must be intact for the
++ * repair to succeed. Useful for re-associating an orphaned worktree with the
++ * repository if the worktree has been moved manually (without using "git
++ * worktree move"). For each repair made or error encountered while attempting
++ * a repair, the callback, if non-NULL, is called with the path of the worktree
++ * and a description of the repair or error, along with the callback user-data.
 + */
-+void repair_worktrees(worktree_repair_cb *, void *cb_data);
++void repair_worktree_at_path(const char *, worktree_repair_cb *, void *cb_data);
 +
  /*
   * Free up the memory for worktree(s)
