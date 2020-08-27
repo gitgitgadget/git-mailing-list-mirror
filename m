@@ -2,128 +2,128 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B44C433E1
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D9FAC433E1
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 09:05:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FD8F22B47
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 08:31:05 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a4XF5qjG"
+	by mail.kernel.org (Postfix) with ESMTP id 455732080C
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 09:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726395AbgH0IbC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 04:31:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727999AbgH0IbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 04:31:00 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C834C061264
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:30:59 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id u18so4350185wmc.3
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 01:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=K6U6IwPGouraUiskgezSPqWb3nQvx+MFcaaSJXdtiEc=;
-        b=a4XF5qjGMss0ztALu4OL3/ZKnW+Zg3VUUkIhooCzAmENn3ru1nt/2h0Kc2dT0qn2h8
-         vj2L536GrVuQCIm65QehexMTUckFNBTxljfRGTc317h3cA334mbprLtbyii/+0EIus9I
-         vzdlXRh+uec6YBPsQzNGyQ7x2j1Ncs/SlmJKI53KB4Mmk3id6VMJkTUzUl8BzMlEGpj8
-         W37eGI/XoQy4yiVvNxVxUB3Ho3JCKRJWgCJlF4QXAv+w+8xR3U/ceRXnFe4aGnt1j/na
-         SXtQEuPEie1ps9CRkT1nSSxnMkoc9FXz0+U4+JZm/EoxXkWS0/oZ1aIrlEnTMpesoREd
-         VaYg==
+        id S1727970AbgH0JFk convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 27 Aug 2020 05:05:40 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:35053 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726266AbgH0JFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 05:05:39 -0400
+Received: by mail-qt1-f196.google.com with SMTP id y65so4019119qtd.2
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 02:05:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=K6U6IwPGouraUiskgezSPqWb3nQvx+MFcaaSJXdtiEc=;
-        b=VcMXW44PS2UwukuzWWfFjwFmXNNYFH5mH0MQXn8LP1Uss//csjm7wxVZOgMHu7Ix/d
-         28xR9JXyHYZ6TKK/qPgz3jH32wM3F32zW1FKXhSLUqEFutsxX7KmKz6iNaNYmVFQwvYJ
-         YEqBuE67Fyka4f2VCb26hLI8BDaJbAMgKA58OdqEdSTI3Dwa1LDl64MuXPc2dW3RjcYG
-         LKxzkKCZuBDI9zjwFiSwQQU0UFcR99iE4u2rFmSK2htXB8MDpzkcNqIWNx6nW+7zga2h
-         bD8IVbhZ2/fUQFDD4UC85YJhvD2mpCpQ5nRXX4YiUpRErRAvhyF1OR/aT+Xa3sEbBwX0
-         9wqw==
-X-Gm-Message-State: AOAM531AgpksaLUI9jaL23FFSetgWKYRlhPMTqcDXqhOfMObwygPcBXH
-        xkeodR5K0yzxN7h5m0jwTZg=
-X-Google-Smtp-Source: ABdhPJw+3Gjg422mMUTSZAEl5Ec7kD/GL8laK0EqHaxLCKr5FLP4vFhVF/cNNJQ0LCP/bGipMRFLlQ==
-X-Received: by 2002:a1c:e0d7:: with SMTP id x206mr11638946wmg.91.1598517058157;
-        Thu, 27 Aug 2020 01:30:58 -0700 (PDT)
-Received: from szeder.dev (78-131-17-40.pool.digikabel.hu. [78.131.17.40])
-        by smtp.gmail.com with ESMTPSA id n205sm3959776wma.47.2020.08.27.01.30.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Aug 2020 01:30:57 -0700 (PDT)
-Date:   Thu, 27 Aug 2020 10:30:54 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] ci: stop linking built-ins to the dashed versions
-Message-ID: <20200827083054.GD25052@szeder.dev>
-References: <pull.411.git.1597655273.gitgitgadget@gmail.com>
- <pull.411.v2.git.1598283480.gitgitgadget@gmail.com>
- <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com>
- <20200825134714.GC25052@szeder.dev>
- <xmqq364a3f6r.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2008260615280.56@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Pk0JZTxxholoRN3JQnXy4HwQ9tVs6bpInE3iy+iG8iU=;
+        b=Nldkipku/F9WSc7rqxzy0RREOkWibO/LfC1rIEMBZVIPgQV0wSDOCiRVtUvtaa2Hx+
+         fbB/knf9gZu3XQp1Zq9XuxFAewwFc1siCTpLP5G8BBiOaULzaWPFvpIvPYc50vmajIoQ
+         c+d/nukGBOSiNNIVb4ux1feAyIHRJW0A9W9+xbVUt5Q5WF8OZpiG9uUxRUBg7FJaPQD/
+         mtk4wXocn0WCLD/ikRjXxQXPUPs2qbbFLLUotpOV6oaA6tXz6k8vFnpvAMJq4VWSP4Kc
+         QQ26X9Vl8A44gYkaq3Q3+M589XHi1P4aj4QbC981h5Qenk+1HC9FDb2oFJBz5UHMbMTp
+         SgSQ==
+X-Gm-Message-State: AOAM532qWJjBQq96BaZllMa+FrOtQqUH9qxskV7uisvYfQtKz1FV9BZA
+        3zENeiNtPKHYZuGw9KG35Fmt1X9G96D3m3dL5ZEFdg4e
+X-Google-Smtp-Source: ABdhPJyLujavJMOOKO9lOYPNJOjRocUde5S80NIj5Gm7QTXhZNrwFkoABSKae+Um5qdeLOFnMfSUXuTD6lr4YQ4rxWk=
+X-Received: by 2002:ac8:2ab9:: with SMTP id b54mr17609974qta.323.1598519138055;
+ Thu, 27 Aug 2020 02:05:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.2008260615280.56@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <2639321.dTF8K4C05n@alien.lan> <b67eb51d-75e8-62c5-d1c4-fc3015e13fc6@web.de>
+In-Reply-To: <b67eb51d-75e8-62c5-d1c4-fc3015e13fc6@web.de>
+From:   Tilman Vogel <tilman.vogel@web.de>
+Date:   Thu, 27 Aug 2020 11:05:26 +0200
+Message-ID: <CAAbQbbDM-C3UzQVqm6tdUV+wztKVu-g=gLDKEp_oJQiaXVkbNQ@mail.gmail.com>
+Subject: Re: [PATCH] patch-id: ignore newline at end of file in diff_flush_patch_id()
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 26, 2020 at 06:19:52AM +0200, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 25 Aug 2020, Junio C Hamano wrote:
-> 
-> > SZEDER Gábor <szeder.dev@gmail.com> writes:
-> >
-> > > I'm afraid I don't understand this patch or the previous one (or
-> > > both?).  So this new Makefile knob stops hard-linking the dashed
-> > > builtins _during 'make install'_, but it doesn't affect how Git is
-> > > built by the default target.  And our CI jobs only build Git by the
-> > > default target, but don't run 'make install', so setting
-> > > SKIP_DASHED_BUILT_INS wouldn't have any affect anyway.
-> >
-> > Very very true.  Let's drop 3/3 if it is not testing anything new.
-> >
-> > I do understand the concern 2/3 wants to address, and it would be a
-> > real one to you especially if you come from Windows.  People on the
-> > platform wouldn't be able to use shell scripts written in 12 years
-> > ago or written with the promise we made to our users 12 years ago,
-> > and unlike hardlink-capable platforms it incurs real cost to install
-> > these individual binaries on disk.
-> 
-> Actually, `SKIP_DASHED_BUILT_INS` does not _only_ have an impact on `make
-> install`:
-> 
-> 	$ rm git-add.exe && make
-> 	    BUILTIN git-add.exe
-> 	    BUILTIN all
-> 	    SUBDIR git-gui
-> 	    SUBDIR gitk-git
-> 	    SUBDIR templates
-> 
-> 	$ rm git-add.exe && make SKIP_DASHED_BUILT_INS=1
-> 	    BUILTIN all
-> 	    SUBDIR git-gui
-> 	    SUBDIR gitk-git
-> 	    SUBDIR templates
-> 
-> See how `git-add.exe` is linked in the first, but not in the second run?
+That's great, thanks René! Looking forward to try that out!
 
-Ah, ok, so I did indeed misunderstand the previous patch.  Thanks.
+Tilman
 
+Am Mi., 19. Aug. 2020 um 00:09 Uhr schrieb René Scharfe <l.s.r@web.de>:
+>
+> Whitespace is ignored when calculating patch IDs.  This is done by
+> removing all whitespace from diff lines before hashing them, including
+> a newline at the end of a file.  If that newline is missing, however,
+> diff reports that fact in a separate line containing "\ No newline at
+> end of file\n", and this marker is hashed like a context line.
+>
+> This goes against our goal of making patch IDs independent of
+> whitespace.  Use the same heuristic that 2485eab55cc (git-patch-id: do
+> not trip over "no newline" markers, 2011-02-17) added to git patch-id
+> instead and skip diff lines that start with a backslash and a space
+> and are longer than twelve characters.
+>
+> Reported-by: Tilman Vogel <tilman.vogel@web.de>
+> Initial-test-by: Tilman Vogel <tilman.vogel@web.de>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  diff.c            |  2 ++
+>  t/t3500-cherry.sh | 23 +++++++++++++++++++++++
+>  2 files changed, 25 insertions(+)
+>
+> diff --git a/diff.c b/diff.c
+> index f9709de7b45..f175019eb7a 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -6044,6 +6044,8 @@ static void patch_id_consume(void *priv, char *line, unsigned long len)
+>         struct patch_id_t *data = priv;
+>         int new_len;
+>
+> +       if (len > 12 && starts_with(line, "\\ "))
+> +               return;
+>         new_len = remove_space(line, len);
+>
+>         the_hash_algo->update_fn(data->ctx, line, new_len);
+> diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
+> index f038f34b7c0..2b8d9cb38ed 100755
+> --- a/t/t3500-cherry.sh
+> +++ b/t/t3500-cherry.sh
+> @@ -55,4 +55,27 @@ test_expect_success \
+>       expr "$(echo $(git cherry master my-topic-branch) )" : "+ [^ ]* - .*"
+>  '
+>
+> +test_expect_success 'cherry ignores whitespace' '
+> +       git switch --orphan=upstream-with-space &&
+> +       test_commit initial file &&
+> +       >expect &&
+> +       git switch --create=feature-without-space &&
+> +
+> +       # A spaceless file on the feature branch.  Expect a match upstream.
+> +       printf space >file &&
+> +       git add file &&
+> +       git commit -m"file without space" &&
+> +       git log --format="- %H" -1 >>expect &&
+> +
+> +       # A further change.  Should not match upstream.
+> +       test_commit change file &&
+> +       git log --format="+ %H" -1 >>expect &&
+> +
+> +       git switch upstream-with-space &&
+> +       # Same as the spaceless file, just with spaces and on upstream.
+> +       test_commit "file with space" file "s p a c e" file-with-space &&
+> +       git cherry upstream-with-space feature-without-space >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
+> --
+> 2.28.0
