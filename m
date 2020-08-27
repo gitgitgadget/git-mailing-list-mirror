@@ -2,88 +2,141 @@ Return-Path: <SRS0=R9sp=CF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03A58C433E1
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 14:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B57C433DF
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 14:53:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D07A62087D
-	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 14:31:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E87222054F
+	for <git@archiver.kernel.org>; Thu, 27 Aug 2020 14:53:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tv4ljqmE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCqNa91Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728104AbgH0Obe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Aug 2020 10:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58310 "EHLO
+        id S1727866AbgH0Oxw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Aug 2020 10:53:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727048AbgH0ObT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Aug 2020 10:31:19 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 429EEC061264
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 07:31:19 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id m22so7907909eje.10
-        for <git@vger.kernel.org>; Thu, 27 Aug 2020 07:31:19 -0700 (PDT)
+        with ESMTP id S1727863AbgH0NP7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Aug 2020 09:15:59 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59542C06121B
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 06:15:58 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id o12so5738495qki.13
+        for <git@vger.kernel.org>; Thu, 27 Aug 2020 06:15:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=62xPqj1aycAYkVIs+FMGP2VelBgnqJcrkp6PmO5qMPI=;
-        b=Tv4ljqmEotJurEAqdlU5XSTZycwBeGP0lMuYppty7ce44Aqh0dnZgSqrT63SViI9Vk
-         NQqEeQ0M29igep5sPockIHNUbk1K+WrO0Rj7iEkS7JQuP2y+d7Z/S8b9urWb5r81xtOk
-         gan6J0dus/J2T0YprTfG+fPrZOnN/4fTD307oQycmmp/rxfWBrDvhVolljoxSDHMl/zr
-         dX47vVHREo8095PuYpi6E8esZzvWFVs1OYJTlsMDHK+QpVWYx59qa44TmXX9F+Ff/76w
-         enGriCDPc7Am9dPOVutFYO8oerdwsMThPDZ9zrrfel5/66Y0xHkgUAcd59Ybn644egDa
-         SBbA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=PfKa/v5U6FMVPvXJmgP6FpiQlSaYGckxVuFddgrtR1g=;
+        b=PCqNa91QbFlcNO0sxxA6f4SVD3S0jaMfreAM6hAoV9bMqMYif/HsZfnmCuGiweMerB
+         UUpd6iyGEkm7UyRr+91Zqa0uGneEnlDzDX7VeH1jkTAobqOn41b7UGZCXa1Yfs+V+N2/
+         tYDhfYEE+j0D76pmMS2z+lADvyJ5ltj5m7mrrmYSWtg3v6sNHsp9Vkuz8ao1RqhwFb2M
+         yYB0GW4J8YxFpAZTxG2k0h6+8oMYj6TnLzTdPH4GYRLhttawPcTWMJqMB1IIWIR/Er+r
+         16r35T2bIUBA88UJ1VPs/A2gji7482V5MWdRsGlgDz0/RbzUOyjqrrnTEqTGn1WMZd61
+         +bXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=62xPqj1aycAYkVIs+FMGP2VelBgnqJcrkp6PmO5qMPI=;
-        b=EU5J2vy/UyWiZfRjb6/2vXxiJ+v4/4KjRXTh2RZY7RZVD4fpSjTPn3n2aJHZO1V0k5
-         44x3wHiwrvu20bCEqIs4TSMAEbrh7AhadyKuk5uhELY8rPphFaCVpnI1zkvjtnm5r7+U
-         hPDItLLaFioVvBqryVus3mPa15NvPXa1Y/7B7+bCnjm+2I9KfXUJcuQ+y9Od5ZxEDWe3
-         6OInsaZa3mChGq6X+mvvJP8XeqCIbYZye2momiUJTm5QwxgtBWKs9HcgR884lt/rfXKC
-         QcK7p0DVbTdBdWW9GLzK718zyIEjjlo4CeGZNLxwFMol4ghNoWTgNX5lPxNJsajUN82y
-         isKQ==
-X-Gm-Message-State: AOAM532Dllxuf39TpXMwbQqY82Dy6+1jtwN3MgbCcw3XveDQ+sgNBWNp
-        aKiWEqXUjhpQ2nVQ1vz0sMPlMqMRBU35vEObIudl2Gk4FQm9Sg==
-X-Google-Smtp-Source: ABdhPJw9coueDIVPKgfr5vQj9rYxMOmfdZHAa3SYZXKMu8Va2+/0Y2fnF6aY9wTwLqIF4lMbbElBaElIR2qZwon1IHE=
-X-Received: by 2002:a17:906:25d3:: with SMTP id n19mr20356802ejb.551.1598538677684;
- Thu, 27 Aug 2020 07:31:17 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PfKa/v5U6FMVPvXJmgP6FpiQlSaYGckxVuFddgrtR1g=;
+        b=uF5tFCUBdebfNCBM3V6crdCoLb/4Uhe/sfVKSPfTB2E3kWXaEom8KXB5dsvxGDdLhg
+         TZAqlO54T4W3bFdrhcCbUQQq00inlX8RxiFGBLHZ/ohy4yvBfYDAWqeQFgmQFzc+tMKK
+         vsPKMLZRu9jii0mkuu4pE5sBVQ0lg888wDg/VnHZ2dYjTRflehtVqxOF14xm9AcA1auy
+         X+SDxOeKovuj2yJZ68kFBaobgNkypJFOXOXT35dOln6qL5QLJx6/92sjTqf6v7M06Oqo
+         t/1ki7Zr1KS0Of33h9XxK29ywd9xJDPqXv7VObykqO7XKJ+OD8FuY/4UGmJl2YPr7oNt
+         pOtg==
+X-Gm-Message-State: AOAM530U2QHNC1TOltW2nfvhkHjozifwtc/nmuf7Xu2tJnKJLYv07PKT
+        FvMQ+lrNwTjdUycgl2e3HoDWrlLE+0EnGUA3
+X-Google-Smtp-Source: ABdhPJxLENlSS9sHOAsdw44myUX6RWDNZDE7snaGb2yEkR1wOMXbjL370ARu5m5BJE8MKN21UDjZlA==
+X-Received: by 2002:a05:620a:4f6:: with SMTP id b22mr6420807qkh.489.1598534157444;
+        Thu, 27 Aug 2020 06:15:57 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:b932:a679:4c12:1a2a? ([2600:1700:e72:80a0:b932:a679:4c12:1a2a])
+        by smtp.gmail.com with ESMTPSA id y3sm1740700qkd.132.2020.08.27.06.15.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Aug 2020 06:15:56 -0700 (PDT)
+Subject: Re: [PATCH v3 11/11] doc: add corrected commit date info
+To:     85y2m6fhkm.fsf@gmail.com,
+        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org,
+        gitgitgadget@gmail.com, me@ttaylorr.com
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+ <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+ <f6f91af30587ec24e2eee052c89a536cbff42c4f.1597509583.git.gitgitgadget@gmail.com>
+ <85y2m6fhkm.fsf@gmail.com> <20200827063951.GA16268@Abhishek-Arch>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e7bbce30-93a6-b7e2-844b-5f2af4dbddf3@gmail.com>
+Date:   Thu, 27 Aug 2020 09:15:56 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 27 Aug 2020 16:31:06 +0200
-Message-ID: <CAP8UFD3uXLS3TqeQ=nKJqfkjMTMBfBWMSmb24=mAjSt14hsdCg@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 66
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>, lwn@lwn.net,
-        Chris Torek <chris.torek@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?5a2Z5LiW6b6ZIHN1bnNoaWxvbmc=?= <sunshilong369@gmail.com>,
-        Carlo Arenas <carenas@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200827063951.GA16268@Abhishek-Arch>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On 8/27/2020 2:39 AM, Abhishek Kumar wrote:
+> Thinking about this, I feel creating a new section called "Handling
+> Mixed Generation Number Chains" made more sense:
+> 
+>   ## Handling Mixed Generation Number Chains
+> 
+>   With the introduction of generation number v2 and generation data chunk,
+>   the following scenario is possible:
+> 
+>   1. "New" Git writes a commit-graph with a GDAT chunk.
+>   2. "Old" Git writes a split commit-graph on top without a GDAT chunk.
 
-The 66th edition of Git Rev News is now published:
+I like the idea of this section, and this setup is good.
 
-https://git.github.io/rev_news/2020/08/27/edition-66/
+>   The commits in the lower layer will be interpreted as having very large
+>   generation values (commit date plus offset) compared to the generation
+>   numbers in the top layer (toplogical level). This violates the
+>   expectation that the generation of a parent is strictly smaller than the
+>   generation of a child. In such cases, we revert to using topological
+>   levels for all layers to maintain backwards compatability.
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+s/toplogical/topological
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-https://github.com/git/git.github.io/issues/455
+But also, we don't want to phrase this as "in this case, we do the wrong
+thing" but instead
+
+  A naive approach of using the newest available generation number from
+  each layer would lead to violated expectations: the lower layer would
+  use corrected commit dates which are much larger than the topological
+  levels of the higher layer. For this reason, Git inspects each layer
+  to see if any layer is missing corrected commit dates. In such a case,
+  Git only uses topological levels.
+
+>   When writing a new layer in split commit-graph, we write a GDAT chunk
+>   only if the topmost layer has a GDAT chunk. This guarantees that if a
+>   lyer has GDAT chunk, all lower layers must have a GDAT chunk as well.
+
+s/lyer/layer
+
+Perhaps leaving this at a higher level than referencing "GDAT chunk" is
+advisable. Perhaps use "we write corrected commit dates" or "all lower
+layers must store corrected commit dates as well", for example.
+
+>   Rewriting layers follows similar approach: if the topmost layer below
+>   set of layers being rewriteen (in the split commit-graph chain) exists,
+>   and it does not contain GDAT chunk, then the result of rewrite does not
+>   have GDAT chunks either.
+
+This could use more positive language to make it clear that sometimes
+we _do_ want to write corrected commit dates when merging layers:
+
+  When merging layers, we do not consider whether the merged layers had
+  corrected commit dates. Instead, the new layer will have corrected
+  commit dates if and only if all existing layers below the new layer
+  have corrected commit dates.
+
+Thanks,
+-Stolee
