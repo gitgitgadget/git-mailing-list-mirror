@@ -2,91 +2,69 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24034C433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 16:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E43AEC433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 16:27:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2804207DF
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 16:11:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4CFB208D5
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 16:27:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726344AbgH1QLR convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 28 Aug 2020 12:11:17 -0400
-Received: from smtpfb2-g21.free.fr ([212.27.42.10]:46674 "EHLO
-        smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725814AbgH1QLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 12:11:17 -0400
-X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Aug 2020 12:11:15 EDT
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-        by smtpfb2-g21.free.fr (Postfix) with ESMTP id 94E204356E1
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 17:54:05 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:e110:de7a:39e9:b10d])
-        by smtp3-g21.free.fr (Postfix) with ESMTP id 16F2913F87C;
-        Fri, 28 Aug 2020 17:53:32 +0200 (CEST)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] po: add missing letter for French message
-Date:   Fri, 28 Aug 2020 17:53:32 +0200
-Message-ID: <2398329.Am1n9C2Xzm@cayenne>
-In-Reply-To: <xmqq8sdzpu71.fsf@gitster.c.googlers.com>
-References: <20200827223527.36788-1-sandals@crustytoothpaste.net> <xmqq8sdzpu71.fsf@gitster.c.googlers.com>
+        id S1727935AbgH1Q1o convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 28 Aug 2020 12:27:44 -0400
+Received: from mail-ej1-f66.google.com ([209.85.218.66]:40396 "EHLO
+        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726033AbgH1Q1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 12:27:43 -0400
+Received: by mail-ej1-f66.google.com with SMTP id o18so2292543eje.7
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 09:27:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=t9VMQU5TOXG2qoMsFktTxqx2/C7UKL0ZhMPNzEkkN8Y=;
+        b=ECR8gJq9aUkX57ZOuFhOvRWeXwQWiMgvubZHpxtgKaNWBrMPkcF9JxHTGo7r0p5Oj9
+         4o1P42xGzRtcmRb2u+KV+RPQbA1ZOKIB+3oPkBUR/mMbpLHkSpzJw9BpYxKarruH0Foh
+         zlxgQouZVcbfqfKVb69Tpj4Ha0i3ChFUwu4qgBRfUOrEZZ+mZSM5noEh0OLzJ7s3Vlxp
+         YTe15ETgXWopbYjAHHQhuIzKLDsYekz1eK6YDxymZXTS2w44cO/XnXe+hnWO23Du9UwE
+         iFh6vpYR98gnahtl1VNfnwf5MQbnlI0Jrbf1YAknxmUTIDk8NQ37vGVt1P/IVXae9O6D
+         qA6A==
+X-Gm-Message-State: AOAM5306AroibevQjGEYoow3R9HCXPVuyk4AcYzOukaZJyrdKH5mPV/C
+        hTVjAiQbVr3iTL8EYefxZBgPCg++ZPr/E2/w4fzz3XvDtNY=
+X-Google-Smtp-Source: ABdhPJzTQCOPiEB0ar8g5+n3hBREhJYaABytcjCOktjUNHcbXK9gnS+3/4HtH1mYQmFCNiWRhJs68MTSrhPbLcW6Abs=
+X-Received: by 2002:a17:906:2cc2:: with SMTP id r2mr2672111ejr.482.1598632061746;
+ Fri, 28 Aug 2020 09:27:41 -0700 (PDT)
 MIME-Version: 1.0
+References: <20200827082129.56149-1-sunshine@sunshineco.com>
+ <20200827082129.56149-4-sunshine@sunshineco.com> <nycvar.QRO.7.76.6.2008280413450.56@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2008280413450.56@tvgsbejvaqbjf.bet>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 28 Aug 2020 12:27:30 -0400
+Message-ID: <CAPig+cRt3-3g+GSDD9q6NkoaejwgKMPk6nuc+Lax9y8_ZFzZ6Q@mail.gmail.com>
+Subject: Re: [PATCH 3/5] worktree: teach "repair" to fix outgoing links to worktrees
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?SGVucsOpIEJvdGhh?= <henrebotha@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, 28 August 2020 01:04:02 CEST Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
-> > Add the missing "e" in "de".  While it is possible in French to omit it,
-> > that only occurs with an apostrophe and only when the next word starts
-> > with a vowel or mute h, which is not the case here.
-> >
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> > I noticed this the other day when trying to delete a remote branch that
-> > I'd already deleted.  I'm not sure what the preferred approach is for
-> > this, whether Junio should pick it up or whether Jean-Noël will want to
-> > incorporate it first, but I've CC'd both so y'all can fight it out.
-> 
-> Unless it is in the pre-release period (in which case I'd prefer not
-> to touch po/ myself at all, to give i18n/l10n teams a stable base to
-> work from), I can take it dircetly as long as somebody from the l10n
-> team for the language gives an Ack, as I cannot read most of the
-> files under po/ directory.
-> 
-> Thanks.
-> 
+On Fri, Aug 28, 2020 at 8:55 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 27 Aug 2020, Eric Sunshine wrote:
+> > +     struct strbuf main = STRBUF_INIT;
+>
+> This is needed to shut up GCC's "â€˜mainâ€™ is usually a function
+> [-Werror=main]" error.
 
-Acked-by: Jean-Noël Avila <jn.avila@free.fr>
+D'oh, thanks. I got hit by this just a couple months ago[1] and (for
+some reason) was even looking at [1] the same day I submitted this
+patch. Will fix it in the re-roll.
 
-
-> 
-> >  po/fr.po | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/po/fr.po b/po/fr.po
-> > index d20fc440ab..75b1e75f6a 100644
-> > --- a/po/fr.po
-> > +++ b/po/fr.po
-> > @@ -6503,7 +6503,7 @@ msgstr "'%s' ne peut pas être résolue comme une branche"
-> >  #: remote.c:1088
-> >  #, c-format
-> >  msgid "unable to delete '%s': remote ref does not exist"
-> > -msgstr "suppression d '%s' impossible : la référence distante n'existe pas"
-> > +msgstr "suppression de '%s' impossible : la référence distante n'existe pas"
-> >  
-> >  #: remote.c:1100
-> >  #, c-format
-
-
-
-
+[1]: https://lore.kernel.org/git/20200610063049.74666-1-sunshine@sunshineco.com/
