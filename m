@@ -2,118 +2,103 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8C3FC433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF81EC433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:27:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B289220936
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:09:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDA562074A
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:27:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="kWFFAvHW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RUiaavX8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbgH1SJm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 14:09:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33662 "EHLO
+        id S1727824AbgH1S15 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 14:27:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726824AbgH1SJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 14:09:40 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DB58C061264
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 11:09:40 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id s15so31172qvv.7
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 11:09:40 -0700 (PDT)
+        with ESMTP id S1726714AbgH1S1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 14:27:55 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFC5C061264
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 11:27:55 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id k20so57534otr.1
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 11:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lnWM1R7yk677Qta9uEV0onlehLiqa92bnYzCsq3CTyU=;
-        b=kWFFAvHWXcSDF2zVaw8MyDLUj0jVxjENAlLTdTv9NQ/jhOzhNpyP1h0gja10WzB248
-         sK2bPSRMOif+86yeWq594EUtBOiPIp5QQiU6HDkPzNq24HmiJd3dXUvwZy/TYbviJ16p
-         QAV51BJ8JTTc/CUPJSQjBNXKvUg3ZwvfH/AB3mj+dV8aZnpWF4GFRfjZ+e3HBjvBpRF1
-         gnIVwwQd6W5EycdSdnfHO5bCgtvVTf/0GcfIeFvnzhSOCl0PW6EupghlNM0p0ZGVxeTx
-         pujZiIkYhe70+1TbmAE6JHvKM0OP0YE5UHDWqw/eLUf3vmU4xzlwnDeY0S6pkwG6BAva
-         VJZA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fN80UYcD7MHMJrEHOMBvSSZ+SxUfK2isCUoTzdejJnM=;
+        b=RUiaavX8SbWNhjomhMv8uK1qG0Alj/rkP6cfayQv8ufFNUfm1VYmxyWsa8jyJTZGrg
+         ZsIgTBnrzUogi3Ou41/QdROnjFWapNRCvYjn0Aq19+AdK5FhxlB5PXMQkKUwoUZIMNS2
+         J5X9Vf929UxRc3zKVRgo37Vp2OjwDLl2B50o8P2gsPeEzX5y3pCGqNJcfwU8lFlSEalw
+         H6SROasU1wPW4WkD8DipchNwWv/ukKeDIXBBbapIlwsr9XGq62P4M2CRFilxT3RzmnB+
+         hOkkeEJlk10WPyPnMV+50Ir6zWD6gmq+CtPLcSb/Ka+orNaMEEtwGVkgwuki1S3tEWUD
+         e+jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lnWM1R7yk677Qta9uEV0onlehLiqa92bnYzCsq3CTyU=;
-        b=XUegiwxHqUuU0TogKWlZALJ4Fn2LB3UM2ovZBqcT1U8EZzBFY2O07uVF9RORIq8VNz
-         7wIyJwknMLcZOtc/FkCHuhi0j9YHsDIbXwxCKABXQViVFB1bgjCPtFZGSKsw8G0KsKjH
-         Rm/X6tFllC/QHbP8SORbP1dZgUGkNaUzHTrA3AuZL/ihbcZ2dTLIPBeHJsFKK1t2xDpE
-         6toy2OTxmF11jAoCnYplQ3sxTIgPOOczKPA78MjmpOHeEWhuzXqYLE2TuKm5C8NXBLRc
-         fDNkHYcD49IE5fh4eHkQ7+O3x2qLfZfl4ab7EB2nmDFB1iB6v+kX7PBuhRe+oLrE22xA
-         O2og==
-X-Gm-Message-State: AOAM531TXbltQgCyj2mo1yajz82eevL7j1OS4xVix6Mr3nwN5WNcMrrQ
-        GCaIxOKWMatO10NA+vM4F9rspQ==
-X-Google-Smtp-Source: ABdhPJw6MoTNgMbjcd6/ZgSCKBCnRLA1geRTx63mmufAWl9l96BcrtYR4Wk4hnYO5EnivsnGn9UkBA==
-X-Received: by 2002:a05:6214:1454:: with SMTP id b20mr3061365qvy.35.1598638179485;
-        Fri, 28 Aug 2020 11:09:39 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:f08e:2c2d:3ae3:2fac])
-        by smtp.gmail.com with ESMTPSA id f3sm1490267qth.56.2020.08.28.11.09.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Aug 2020 11:09:38 -0700 (PDT)
-Date:   Fri, 28 Aug 2020 14:09:36 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2020, #07; Thu, 27)
-Message-ID: <20200828180935.GB19328@nand.nand.local>
-References: <xmqqh7snpxy1.fsf@gitster.c.googlers.com>
- <20200827233454.GA3973432@coredump.intra.peff.net>
- <xmqqzh6foe44.fsf@gitster.c.googlers.com>
- <20200828003940.GA80266@syl.lan>
- <20200828062619.GA2100989@coredump.intra.peff.net>
- <20200828083125.GA2139751@coredump.intra.peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fN80UYcD7MHMJrEHOMBvSSZ+SxUfK2isCUoTzdejJnM=;
+        b=JujZmQH5BavfhNq1PvjsVpfJ5etCOXrLk9ZkgGUDwQl7eh7iuC79OdsYDQ1HXHd1lB
+         ayaHHuAdOH6e4AbAoGDn4QZV7YjffNTvy+0EO2FhiUYTEHdWMkWG7SrfrbbOkZgWHXb5
+         pEiRfOLVmOAiNi0whHo5mKnt6x1JhBSEev6huKZL12kW+FS+TYGxJIdpJhAUxHp1LUBs
+         19rJmBUnLMjgdmz+EXthDtWGtSjjJNK7mqFQ7d/Y/Zuw63TS1y7vrDhRerwJKcmOdnh+
+         YevKx7DT0wi/mYjinFRiR9V/1rBJ6jvrWA5D/oeFig1Cu5kMqj6vGU0SsTzjuZzs21q0
+         2jSA==
+X-Gm-Message-State: AOAM531iqYDmcDins9IGXQFCnnFobTucgywiuyDUdaYHU5Uc5sx5eYKm
+        BHrvim3qOVNBXFSGuyoOOck=
+X-Google-Smtp-Source: ABdhPJzBowEz236DxTrHDC24FfuNbZIHFgrBQTz8O4pg8waj3kJpF6bvkKwOLSYLWqzY3Gh9c1FTQA==
+X-Received: by 2002:a9d:734a:: with SMTP id l10mr2059539otk.240.1598639274824;
+        Fri, 28 Aug 2020 11:27:54 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:b1a6:3982:6cb3:22b6? ([2600:1700:e72:80a0:b1a6:3982:6cb3:22b6])
+        by smtp.gmail.com with ESMTPSA id j76sm4335oih.17.2020.08.28.11.27.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Aug 2020 11:27:54 -0700 (PDT)
+Subject: Re: [PATCH] midx: traverse the local MIDX first
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
+References: <20200828180621.GA9036@nand.nand.local>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9a599bb5-fb6f-1e35-6e02-d62703ebc420@gmail.com>
+Date:   Fri, 28 Aug 2020 14:27:53 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
+In-Reply-To: <20200828180621.GA9036@nand.nand.local>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200828083125.GA2139751@coredump.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 28, 2020 at 04:31:25AM -0400, Jeff King wrote:
-> On Fri, Aug 28, 2020 at 02:26:19AM -0400, Jeff King wrote:
->
-> > On Thu, Aug 27, 2020 at 08:39:40PM -0400, Taylor Blau wrote:
-> >
-> > If I'm understanding midx_contains_pack() correctly, then the code
-> > looking for ".pack" could never have matched, and we would never have
-> > deleted a midx here. Which makes me wonder why the "repack removes
-> > multi-pack-index when deleting packs" test ever succeeded.
->
-> Sorry, this is all nonsense.
->
-> I forgot about the hackery added in 013fd7ada3 (midx: check both pack
-> and index names for containment, 2019-04-05). And anyway, the patch
-> above is totally bogus because we need the ".pack" form in the buffer
-> when we call unlink_pack_path().
+On 8/28/2020 2:06 PM, Taylor Blau wrote:
+> This invariant is only preserved by the insertion order in
+> 'prepare_packed_git()', which traverses through the ODB's '->next'
+> pointer, meaning we visit the local object store first. This fragility
+> makes this an undesirable long-term solution, but it is acceptable for
+> now since this is the only caller.
+> 
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> This is kind of a hack, but the order that we call
+> 'prepare_multi_pack_index_one()' from 'prepare_packed_git()' makes it
+> acceptable, at least in my own assessment.
 
-Yeah, 013fd7ada3 is definitely a hack, but what you have is definitely
-incorrect.
+The natural alternative would be to scan the list _after_ all are
+inserted and pull any MIDX marked "local" to the front of the list.
+Such a check would need to happen in the same method that iterates
+over all alternates, so that seems a bit redundant.
 
-> So there's definitely something more odd going on in that failing test.
+While perhaps a bit hack-ish, I think this is a sound approach.
+And, we have a test that will detect change in behavior here!
 
-It's the funky order that we load the MIDX chain in (which is that the
-MIDX belonging to the deepest alternate shows up *first* as
-'r->objects->multi_pack_index', and that the local MIDX shows up as the
-last thing when traversing '->next').
+Thanks,
+-Stolee
 
-I sent what I consider to be a little bit of a hack in [1], but it's
-definitely enough to fix t7700.6.
-
-> -Peff
-
-Thanks for reporting it.
-
-Taylor
-
-[1]: https://lore.kernel.org/git/20200828180621.GA9036@nand.nand.local/T/#u
