@@ -2,73 +2,79 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8790EC433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78732C433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:05:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FF6E2075B
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:03:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 109542075B
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:05:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="EoSkSMDY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iknqjW8n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726460AbgH1VDH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 17:03:07 -0400
-Received: from mail.cmpwn.com ([45.56.77.53]:50298 "EHLO mail.cmpwn.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726338AbgH1VDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 17:03:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1598648586; bh=hlF+bXdYNwyrMS2YMDeUl0ivChDCUPOzAJY4/7atgz4=;
-        h=Cc:Subject:From:To:Date:In-Reply-To;
-        b=EoSkSMDYa8GHyCIsOMlFAQ269C/mAwiK7ZqD6ZfurNqDFdzF8zM50SqrJQvB9LN3F
-         gwom9+2TxJspwo0X0muXPbLM0K0yoT3bpFG1ZvYy7ICF6DtmEEa4GRvSr4r1/YwJOA
-         woR8IS81+H7MbfUhhZ4AhkM3dttVra09NyYhe+j8=
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Cc:     =?utf-8?q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        <git@vger.kernel.org>
-Subject: Re: [PATCH] send-email: do not prompt for In-Reply-To
-From:   "Drew DeVault" <sir@cmpwn.com>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Date:   Fri, 28 Aug 2020 17:01:46 -0400
-Message-Id: <C58XLLAE3SMA.3T1C6DXZ4VSWA@homura>
-In-Reply-To: <xmqqk0xio59r.fsf@gitster.c.googlers.com>
+        id S1726452AbgH1VFh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 17:05:37 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51329 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726338AbgH1VFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 17:05:35 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FE86D9C08;
+        Fri, 28 Aug 2020 17:05:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=urxSDWpENBO2dxd0RQjrTSAR7+w=; b=iknqjW
+        8nSGIa/XnsqdXvh6PSqYatAq7klDl0/WY5NIV5QXeL3Yw157nxdEfOSEInEb4RhJ
+        nJWdf0i00dWwD8FDV9xzcM73s/J4viusvI3tAhAumWcUG6TSFp4rFLiWqc0gihCQ
+        P4L+eZZSabOjjYAIRn7WyVGU0A663nnRKx76w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yfroUHUPMniRtql0409yZufdIAyw/gQF
+        YkMWkohATlr1ugXzs1jWdKyRxoHZ0fTlO6OhNbFM9SJxOqEWDbzZp1gIg/w4iNRz
+        xUZ5wtObiF0d8wbYqIfMJkzvPqUeaQIFzUCPoP/ytK9IwFR2GZ1vXpGuZ7SxMib0
+        TEB11maBeEg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3890FD9C07;
+        Fri, 28 Aug 2020 17:05:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.190.152.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7F3F8D9C06;
+        Fri, 28 Aug 2020 17:05:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Hugo Locurcio via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Hugo Locurcio <hugo.locurcio@hugo.pro>
+Subject: Re: [PATCH] bisect: swap command-line options in documentation
+References: <pull.711.git.1598628679830.gitgitgadget@gmail.com>
+Date:   Fri, 28 Aug 2020 14:05:28 -0700
+In-Reply-To: <pull.711.git.1598628679830.gitgitgadget@gmail.com> (Hugo
+        Locurcio via GitGitGadget's message of "Fri, 28 Aug 2020 15:31:19
+        +0000")
+Message-ID: <xmqqbliuo50n.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 348BDCE8-E972-11EA-91A4-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri Aug 28, 2020 at 5:00 PM EDT, Junio C Hamano wrote:
-> "Drew DeVault" <sir@cmpwn.com> writes:
->
-> > "You can give an empty answer if you are not responding to any message"
-> > could confuse users, because they might think -v2 is a "response", or
-> > maybe they've written the patch in response to a discussion on the
-> > -users mailing list, or any other number of reasons.
->
-> "Type the value you would have given to --in-reply-to command line
-> option (if you forgot to use it), or leave this field empty"
-> perhaps? Those who do not know should be able to learn what
-> "--in-reply-to" is. A prompt help is not the place to do a
-> documentation.
+"Hugo Locurcio via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This would be better, yeah, but at that point it's pretty weird, like
-why are we prompting for this CLI flag and not any others? The answer is
-just for legacy reasons. There's no inherent justification for it.
+> + git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
+>  		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]
 
-> > I hate to be a nuisance over such a seemingly simple problem, but there
-> > are a lot of new users who are struggling here and I care about their
-> > struggle. What path should we take to fixing this issue for them?
->
-> The ideal way would be to craft step (0) well enough so that new
-> users trigger the To: prompt in the first place, which would
-> automatically make the problem disappear ;-)
+Yeah, matching the --term-{bad,good} and the actual arguments may
+make it easier to see the correspondence between them.  Good idea.
 
-Do you mean teaching users how to use --to upfront? Honestly the prompt
-seems totally fine to me, there's nothing wrong with a use-case which
-calls for typing your To address into the prompt. Hell, often I'll use
-it, or I'll use --annotate and write my To addresses in vim.
+In the old days, back when there weren't "--term-*=<myword>", it was
+much simpler.  All people have to do was to remember that <bad> and
+<good> are ordered alphabetically.
+
+Will queue.  Thanks.
