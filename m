@@ -2,93 +2,104 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6547AC433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 20:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC34FC433E6
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 20:51:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8CD6207DA
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 20:46:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA33D207DA
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 20:51:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="jaMuq3D2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vC+GrfmO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbgH1Uq5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 16:46:57 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:33865 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbgH1Uq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 16:46:56 -0400
-Received: from [10.0.2.15] ([195.213.6.112])
-        by smtp with ESMTPA
-        id BlGvkgZgxrXCcBlGwkwGbe; Fri, 28 Aug 2020 21:46:55 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1598647615; bh=cxLV8x0hwBxhyv1CrQv8CWk7alOqiLsjrfCI9myyspU=;
-        h=To:Cc:From:Subject:Date;
-        b=jaMuq3D2zCcpNXzbcVGzgyYTLsFGiZvHTXlofgav0pRsN7j8ciIcg0t/Sopw7uVnx
-         bWYSpUL+MPBKQYs2chS1bg5QFX4nuvzForKm7HX1rQZIcKiG5FrjuKKBPSaopDIbx6
-         1m3Bp4C01q/Y99XMEuUj3n/3+VhpR1PTWrIHp4chjXYa8lX1ctJSgw6a+yGIwY82Sa
-         itTaeuMYYC5phl8DVohKpAFTpcefSp8rmNJOGboPN2pgbYlY3OYKjOhUCWJdeEvwn4
-         ZD6DTBlR/3+ioi5k11mWe8s6KURKAf9ctRwvdfT55bneSjJpUZ1F7STnyIN5BK0bFC
-         SjGzcbu9cqvIg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Q+xJH7+a c=1 sm=1 tr=0
- a=/rD2idLCdDHnmLflUbi9CQ==:117 a=/rD2idLCdDHnmLflUbi9CQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=-sCiuHgE3n1BY3n1CqcA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] builtin/init-db.c: fix a sparse warning
-Message-ID: <8d4b4011-b8a2-c0e0-a3f2-28c7bbec040b@ramsayjones.plus.com>
-Date:   Fri, 28 Aug 2020 21:46:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1726687AbgH1Uvl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 16:51:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54943 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726396AbgH1Uvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 16:51:41 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 55EB9FE908;
+        Fri, 28 Aug 2020 16:51:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XVwX6TQIMVe9d3wAsfMYxTJjvAY=; b=vC+Grf
+        mOHbupzih+uF9xqB2vhQP0HsvfZplkl+RZT/tVe5QI0a1YW7/qSVedSzrauDD76d
+        TOMEnV1qUrf285rZPeYkgcoE4OckvQ9ywsBoBEgqL/y6Ai+k8qNdJ4ynsQYAsfRP
+        op7rI6ejW8K4ZMWjYq7hiFfan2aUAhB91UXuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Wx7SY7ZwRlbUmShlHpkdDFMlvT51eiCW
+        DKi1b6VSzozhkrXG3+Qlekgne67eSFpeOmEtoxfWj8YLUNjHlFFP7HksgsmgbRFG
+        cRWAQtwJlzeImzTutCdmGgb2dSU4DOQGVHdzuROJKWsYQSk8KBb+NEKpyhFvQuKX
+        ATSmALJizts=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F3A5FE907;
+        Fri, 28 Aug 2020 16:51:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 94346FE906;
+        Fri, 28 Aug 2020 16:51:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hariom verma <hariom18599@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Aug 2020, #07; Thu, 27)
+References: <xmqqh7snpxy1.fsf@gitster.c.googlers.com>
+        <CA+CkUQ_=qm2x2zKvgHnvKLLA_A23gTNm8Q8CeWxLFGSBi=9gKw@mail.gmail.com>
+Date:   Fri, 28 Aug 2020 13:51:34 -0700
+In-Reply-To: <CA+CkUQ_=qm2x2zKvgHnvKLLA_A23gTNm8Q8CeWxLFGSBi=9gKw@mail.gmail.com>
+        (Hariom verma's message of "Sat, 29 Aug 2020 01:39:07 +0530")
+Message-ID: <xmqqo8muo5nt.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLktFKrVEwyK6rqY7zv9DvWpavxSUD9jHezJG6c3rUxUjjLWD5PI7cfRZwT5oLTTvN82xii3ukhe17TXJlJEjFCZbZjv1bwOiPlWmUNWi794h4cifzhc
- hshgpt71rWNdz/000PVXKf0EBLBHEuB0cmj4FoArAlHFZdwYAzCST0qOZsWVLReK58maKQfuyRx3+Q==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 437EC14A-E970-11EA-B51B-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hariom verma <hariom18599@gmail.com> writes:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+>> * hv/ref-filter-misc (2020-08-17) 9 commits
+>>   (merged to 'next' on 2020-08-27 at c015fa6b0f)
+>>  + ref-filter: add `sanitize` option for 'subject' atom
+>>  + format-support: move `format_sanitized_subject()` from pretty
+>>  + pretty: refactor `format_sanitized_subject()`
+>>  + ref-filter: add `short` modifier to 'parent' atom
+>>  + ref-filter: add `short` modifier to 'tree' atom
+>>  + ref-filter: rename `objectname` related functions and fields
+>>  + ref-filter: modify error messages in `grab_objectname()`
+>>  + ref-filter: refactor `grab_objectname()`
+>>  + ref-filter: support different email formats
+>>
+>>  The "--format=" option to the "for-each-ref" command and friends
+>>  learned a few more tricks, e.g. the ":short" suffix that applies to
+>>  "objectname" now also can be used for "parent", "tree", etc.
+>>
+>>  Will merge to 'master'.
+>
+> I sent an updated version of the patch series addressing your comment
+> concerning new file format-support.{c,h}[1].
 
-Hi Eric,
+Yikes, my mistake.  As long as you plan to vastly extend what would
+be in format-support.[ch], I do not mind to have a pair of separate
+files in the end, by the time when we have, say, unified "--format"
+support for for-each-ref family (e.g. "%(token)") and log family
+(e.g. "%x" fixed few letter combinations).  So the step that moves
+some from pretty.c to format-support.c does not bother me all that
+much.  It just felt unnecessary within the scope of this series.
 
-If you need to re-roll your 'es/worktree-repair' branch, could you
-please squash this into the relevant patch (commit 44a466ca7f (init:
-make --separate-git-dir work from within linked worktree, 27-08-2020)).
+But other stuff (like format-sanitized-subject having unnecessary
+allocation and unnecessary special casing of LF) are worth fixing in
+the version queued above.
 
-Thanks!
+Thanks for stopping me.
 
-ATB,
-Ramsay Jones
-
- builtin/init-db.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 6a94d20a2e..cd3e760541 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -661,7 +661,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 			if (chdir(mainwt.buf) < 0)
- 				die_errno(_("cannot chdir to %s"), mainwt.buf);
- 			strbuf_release(&mainwt);
--			git_dir = strbuf_detach(&sb, 0);
-+			git_dir = strbuf_detach(&sb, NULL);
- 		}
- 		strbuf_release(&sb);
- 	}
--- 
-2.28.0
+Let's revert the above out of 'next' and start afresh using v4.
