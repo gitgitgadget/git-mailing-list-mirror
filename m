@@ -2,103 +2,94 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF81EC433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D36DBC433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:49:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDA562074A
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:27:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A31F42075B
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 18:49:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RUiaavX8"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="bQCo/3bT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727824AbgH1S15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 14:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726714AbgH1S1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 14:27:55 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFC5C061264
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 11:27:55 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id k20so57534otr.1
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 11:27:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fN80UYcD7MHMJrEHOMBvSSZ+SxUfK2isCUoTzdejJnM=;
-        b=RUiaavX8SbWNhjomhMv8uK1qG0Alj/rkP6cfayQv8ufFNUfm1VYmxyWsa8jyJTZGrg
-         ZsIgTBnrzUogi3Ou41/QdROnjFWapNRCvYjn0Aq19+AdK5FhxlB5PXMQkKUwoUZIMNS2
-         J5X9Vf929UxRc3zKVRgo37Vp2OjwDLl2B50o8P2gsPeEzX5y3pCGqNJcfwU8lFlSEalw
-         H6SROasU1wPW4WkD8DipchNwWv/ukKeDIXBBbapIlwsr9XGq62P4M2CRFilxT3RzmnB+
-         hOkkeEJlk10WPyPnMV+50Ir6zWD6gmq+CtPLcSb/Ka+orNaMEEtwGVkgwuki1S3tEWUD
-         e+jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=fN80UYcD7MHMJrEHOMBvSSZ+SxUfK2isCUoTzdejJnM=;
-        b=JujZmQH5BavfhNq1PvjsVpfJ5etCOXrLk9ZkgGUDwQl7eh7iuC79OdsYDQ1HXHd1lB
-         ayaHHuAdOH6e4AbAoGDn4QZV7YjffNTvy+0EO2FhiUYTEHdWMkWG7SrfrbbOkZgWHXb5
-         pEiRfOLVmOAiNi0whHo5mKnt6x1JhBSEev6huKZL12kW+FS+TYGxJIdpJhAUxHp1LUBs
-         19rJmBUnLMjgdmz+EXthDtWGtSjjJNK7mqFQ7d/Y/Zuw63TS1y7vrDhRerwJKcmOdnh+
-         YevKx7DT0wi/mYjinFRiR9V/1rBJ6jvrWA5D/oeFig1Cu5kMqj6vGU0SsTzjuZzs21q0
-         2jSA==
-X-Gm-Message-State: AOAM531iqYDmcDins9IGXQFCnnFobTucgywiuyDUdaYHU5Uc5sx5eYKm
-        BHrvim3qOVNBXFSGuyoOOck=
-X-Google-Smtp-Source: ABdhPJzBowEz236DxTrHDC24FfuNbZIHFgrBQTz8O4pg8waj3kJpF6bvkKwOLSYLWqzY3Gh9c1FTQA==
-X-Received: by 2002:a9d:734a:: with SMTP id l10mr2059539otk.240.1598639274824;
-        Fri, 28 Aug 2020 11:27:54 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:b1a6:3982:6cb3:22b6? ([2600:1700:e72:80a0:b1a6:3982:6cb3:22b6])
-        by smtp.gmail.com with ESMTPSA id j76sm4335oih.17.2020.08.28.11.27.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Aug 2020 11:27:54 -0700 (PDT)
-Subject: Re: [PATCH] midx: traverse the local MIDX first
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-References: <20200828180621.GA9036@nand.nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <9a599bb5-fb6f-1e35-6e02-d62703ebc420@gmail.com>
-Date:   Fri, 28 Aug 2020 14:27:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
-MIME-Version: 1.0
-In-Reply-To: <20200828180621.GA9036@nand.nand.local>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1727793AbgH1Sty (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 14:49:54 -0400
+Received: from mail.cmpwn.com ([45.56.77.53]:50004 "EHLO mail.cmpwn.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726010AbgH1Stx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 14:49:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
+        t=1598640587; bh=uUT3amoJc84cMAKH0S5nH/eUMD0Fd6/fWUlMw+LivU0=;
+        h=Cc:Subject:From:To:Date:In-Reply-To;
+        b=bQCo/3bT5fWWsENidiwN03jUZBSZfOfwWN1/BYvwLYPyRpE/mPBoUU0SRS87z4wMm
+         wdU5nlz/M47OI19P4k58ZZaXUTOkavL+vHjXUvrmMeW/irM9lT3lu/I2QZXbTdV7Zd
+         uArHpjOOgub0uyW1Ru0t3+hsjvIp4paonFuxPYs0=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH] send-email: do not prompt for In-Reply-To
+From:   "Drew DeVault" <sir@cmpwn.com>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        =?utf-8?q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Date:   Fri, 28 Aug 2020 14:39:02 -0400
+Message-Id: <C58UKAYKF1ZY.V5LLW3DY1KAY@homura>
+In-Reply-To: <xmqqd03bpuh7.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2020 2:06 PM, Taylor Blau wrote:
-> This invariant is only preserved by the insertion order in
-> 'prepare_packed_git()', which traverses through the ODB's '->next'
-> pointer, meaning we visit the local object store first. This fragility
-> makes this an undesirable long-term solution, but it is acceptable for
-> now since this is the only caller.
-> 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
-> This is kind of a hack, but the order that we call
-> 'prepare_multi_pack_index_one()' from 'prepare_packed_git()' makes it
-> acceptable, at least in my own assessment.
+On Thu Aug 27, 2020 at 6:57 PM EDT, Junio C Hamano wrote:
+> To help those who do not want to add this header, it would probably
+> be more helpful to tell what to do when prompted (like "you can give
+> an empty answer to tell the command that you are not responding to
+> any message").
 
-The natural alternative would be to scan the list _after_ all are
-inserted and pull any MIDX marked "local" to the front of the list.
-Such a check would need to happen in the same method that iterates
-over all alternates, so that seems a bit redundant.
+I'm trying to come up with a message like this for a reduced-scope
+initial patch, but I'm drawing up a blank when the goal is to avoid
+confusing users who don't understand this. The goal is to remove
+domain-specific knowledge about email, namely how the In-Reply-To and
+Message-Id headers work, which is uncommon knowledge among new users.
 
-While perhaps a bit hack-ish, I think this is a sound approach.
-And, we have a test that will detect change in behavior here!
+"You can give an empty answer if you are not responding to any message"
+could confuse users, because they might think -v2 is a "response", or
+maybe they've written the patch in response to a discussion on the
+-users mailing list, or any other number of reasons. Now they have to
+figure out how to answer this prompt, even if the mailing list they're
+sending it to isn't expecting it to be a reply. I came up with a number
+of alternative wordings but they all ultimately failed to this same
+problem.
 
-Thanks,
--Stolee
+In-Reply-To is such an arcane and tangental piece of knowledge so far
+removed from git, and so little information is given to the user to help
+them understand (1) what it is, and (2) whether they need it or not, and
+(3) where to find it, that this prompt just seems totally awful to me.
+It'd be like if we prompted someone to enter their display EDID when
+filing a bug for a video game. Could it be useful? It's unlikely. Is the
+user likely to know what the hell an EDID is? Almost certainly not!
 
+"Legitimate" use-cases like qemu-devel or not, this is only ever going
+to confuse new users, and I think that qemu is wrong for encouraging
+users to deal with it.
+
+Or they would be wrong, but I looked into it and, the qemu wiki advises
+that the user does *not* use in-reply-to:
+
+https://wiki.qemu.org/Contribute/SubmitAPatch
+
+Nor does patchew make it easy to extract the message ID from their
+interface for this use-case. I'm not sure where this qemu idea is coming
+from.
+
+Is compatibility-breaking migrations a nightmare? Well, maybe.
+
+Is that nightmare worth such a trivial problem? Well, it seems trivial
+to those of us who have been using it for years, but I can assure you
+there are plenty of new users who shut down at this step.
+
+I hate to be a nuisance over such a seemingly simple problem, but there
+are a lot of new users who are struggling here and I care about their
+struggle. What path should we take to fixing this issue for them?
