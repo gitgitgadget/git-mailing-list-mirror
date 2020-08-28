@@ -8,182 +8,157 @@ X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B44CCC433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 12:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 857BDC433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 12:55:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 830B42086A
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 12:53:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FB672086A
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 12:55:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ewvhrUXq"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="B2cYuQjN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729353AbgH1Mxr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 08:53:47 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57299 "EHLO mout.gmx.net"
+        id S1729417AbgH1MzQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 08:55:16 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51581 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729506AbgH1MxT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 08:53:19 -0400
+        id S1729420AbgH1MzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 08:55:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1598619189;
-        bh=CTA7uZkpEcERz9w0QdX1sPAZw9DlmeB3BR1VB5nl02c=;
+        s=badeba3b8450; t=1598619306;
+        bh=QCLP81bexoAQjiDLZ/BWVisu9EftHe+IS1+nlCT26gw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ewvhrUXq3zrc3HHgRy9jVzp63mmmI97YNQ9wjXHLNbStRfNi2q8tkVKThSOr1jn8T
-         0mf97aDK/mX/y6p5hkgBqUuBHibjto87B1olYgVwvF7Vsy18ifTv8aG/gOKlpF746z
-         r67pDvnkw1uOewyNnJ0pLn3rMt59OLbG98gsVZWs=
+        b=B2cYuQjN4v9oLqop0Zo8iz56qBK0Vtz35Jr5nHZkXQAigVS0gYJlFecPIAlssOt1/
+         eXJRo5h73ZJF6VZRj1OIpVJWT+1DmZRT63Hko+RqXoMmlyb9i8/0+/B4DD0UEext7P
+         zifFY7WEmlpD9LgCrrvNFjw5mZ705P64yId0bPwY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.183.59] ([89.1.215.189]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MjS9C-1kro7D1jfG-00ktd2; Fri, 28
- Aug 2020 14:53:09 +0200
-Date:   Fri, 28 Aug 2020 04:13:15 +0200 (CEST)
+Received: from [172.24.183.59] ([89.1.215.189]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2V4J-1kbVkD0Txn-013uJ4; Fri, 28
+ Aug 2020 14:55:06 +0200
+Date:   Fri, 28 Aug 2020 04:15:12 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 3/3] git: catch an attempt to run "git-foo"
-In-Reply-To: <20200826011718.3186597-4-gitster@pobox.com>
-Message-ID: <nycvar.QRO.7.76.6.2008280412030.56@tvgsbejvaqbjf.bet>
-References: <xmqq1rjuz6n3.fsf_-_@gitster.c.googlers.com> <20200826011718.3186597-1-gitster@pobox.com> <20200826011718.3186597-4-gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Henr=C3=A9_Botha?= <henrebotha@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/5] worktree: teach "repair" to fix outgoing links to
+ worktrees
+In-Reply-To: <20200827082129.56149-4-sunshine@sunshineco.com>
+Message-ID: <nycvar.QRO.7.76.6.2008280413450.56@tvgsbejvaqbjf.bet>
+References: <20200827082129.56149-1-sunshine@sunshineco.com> <20200827082129.56149-4-sunshine@sunshineco.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:l6sBHifIguOlCEd6fjCxwc0JCXZ5V3P7O58j8ps+1i6B7vgtd5A
- LQupgHLu0MHRjKmm1DNUgmISJsS+2oTI3fMikWndlUn85IR65C6SXIkXgCsRowZAED4sgqo
- 7zkl5qy9td2zxDFeClf55YkUgSddKnnkkbzPcBa3XYscacL4DvktyE0LSWBR+GUt4BBrl2T
- GCmnnxIXcnmvcERzqbnig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:W+4Mw0+5UU4=:z3+rGBvFtgBTHPcU5iPDj5
- GcbEucmWMyGV5Egf1g5vn4w/4pJvX8kuo7qmsEqh7l0Xi9sWifFdRYrL1E6Ivgn8fdWBeuPZJ
- t2orKNyjCL6vt7IX6JU6k0Oo44koMrSXE9ZbTkHDnxkNJQKrtHpc6EG/VawfK7OZgLxIuEkbj
- PlpjDoFe7tNksJtTS6z0JNNzoqhDdqTK3PebkqTd+eQM3HL6TR7Yx0YY/DJ8qjSF75WJcceMX
- vt74q+6yk9bDf5UHSkBfXBEEBx6X0EPcEcvDjNt1yF58nFOr7/6PNk3IRUG050tYT6JnNG/7v
- EEIlSEp/zl1hUjMV8YfuNDk3pMFdXpn3/pzjeoka9z6z7oeWuI2NAppT70rjtwHyb+/Ft3toH
- k8GGLg5SmeiEjIORRiM/gyszJ0+8HJ96Gd75OXgpP6lufpuCZDWj/sdFN3j9KUOoYv5AFDApe
- YF/D182PH9tPYtJothaIh/cpYt+lszb5poyowRQ9NuoV41I9PKbhiSkc3ro8Vl3nW/k1Hi7+R
- iS5kcTvd4oVfIEEn62sgDWF/Bdg3DAnk+IuY7PIvXUZ8qGoRj9ELMfLbhWWzwIPMrI3FFXLVe
- YW2qGxinD/tpcN3z73YByltZCr+9c6lpmd31XbsdtHivI0sKe69YuXoq4izgQAF1TzENulqZ5
- 9MK4mIHarIg+cU5ulOjZKy5Hd+9KmEjE26ccDxbOGkmbAN9uzoKbSJ072UDx2NMLUGwpo2yNy
- Ug8hwc8Kw3XKLhGYK4hyI0C2y3eIa2XnwTRQtUHQ9I6hQpUG+gBIlWeyr2+oholzKyUlBlkxL
- klhX35PQVrTf+HWYGaZK66IVlMPShVFxnTAIGFbtc8iw0nJuzO/Wk/M7oBkfiWTWgEEVmbf1r
- 0ABIiAGxUORWVYm4kSEJO+nkrtiWOcxDeqE05A8Ftf+F8d82WrzxpKi/DvCWUFq0d/fYP39n/
- Z/LxcbE69erRk36PGtZB9NZkZ6cXMi0nWn70ZxBb1RfY45OHV3C5EC8k3P4vikeaoDXpE6CCI
- mbNfr1V1vYFZ+Ut/Ye9ZpawZBbSqzJ7CyY46ZckrMuW9dTx7PqwL9973BoO9W+I4ahAhufgSM
- B8E89p3+qN5dVrxYPlu9Lz5CyaqE2Bpqc7RKrO6inOFsUCwULA/0B5AamZkDCXL+yshM7scZk
- KJZS0lK263A49mR2S+MPSIOVom4S1Ohyx1R25yi5MTziKJLyRx1vPInuzlHyDfWoLTc7CTSTY
- ZVgDRSyHAXRwPZKupnB5b6V2JBCu45eSiUxNkBw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-50879584-1598580914=:56"
+X-Provags-ID: V03:K1:dR4rSBFsLuLZyO/8x07yPJDtQF+cUayeVJtVS3o/aibu3ch89+J
+ RzsGt2Bc3FmRephGaZhnoNH2nbysMVmW9l6Pj6WcCQ42PCUSHl703zq8/0aW/ekwbo17Lmk
+ g2W+sE/KUbBqJcHvjPmu9ytY3o2+/S5BlJ1EY6ivFgtF8P3Hs55OzdNdlD8Gr7FDxM4GjlP
+ 6XliqreiTLxbtLnaLoU9Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GEssbSMAZJE=:DSVA4TtRJDQTb18e0G8yv+
+ h7a0Ftajc5/rlTInGZCRky+7m01WsKi2ff2GVV5cVC0VaXFTD/Nun1uJcN73XSQqO80+QXIcv
+ VWbI/7kqfHbuZul31j7qbRkRjQaFYp2QNA7c98MOCmpuMF7YtNPKi9fqzJbsYrw83GX66zaBT
+ TdT7GRd7dvgozMxAWvWi9fp9NFj5rRJPK37R8aqCQ8SKGd3IhV9o/04t0C8xZtLL0JDs6rxcp
+ oZWX24DlyxU3NRkk0/Z6CIf4lQoXREYoJ1BG5gX0VzIFvOVvRdMS7dFWvl2/g8jAtbP2Qz4GZ
+ p0Ie2B09djXBhQe6sBPs5ndrEjNU/rtVxew/odYDHQHEUZ8gyoQ3gCM7nfSAqyFzMRdOh+JCl
+ olajSRx0rCIvxR2XICErPzShxY9aPcW7TCMfD35RRy5DJdYl0ScM1haVl4rpBK0Yk8hf6C8Ss
+ wPp73upokwt5P8amxCahP5Wkd49QyCkfMzHutCj7XdWyRwRBb9NfkbCxs76w7rlWtaCRdznSG
+ TnIyGsHiwGVrCIu4xVLlDJGCiDegtZFps3Cyf3gIaI0J1B2XyPXIM4BFllsrupYvfeunB8KRz
+ XVqJnCrCMHbCGn9zdklJ9ch7pGWbUWIyaKfWgvwg1wJWVkCmo8uiL/VCfq05vTpIk8ucWfpUf
+ JgNebpZq7OCiZfKJ7n9RGHHtP6OMibEkQTElQXvD8SyH/Sqoul+ujH3H160p5Wj7Yiav0cGG3
+ ryiOl4cJNi2noSTOeQ8W+UOgM+lxa62N3SVrtHutECqHJVEgAEajw/ATh0w8tFyTRJF9SjMi7
+ McvkC+ZA42OQwZKm9UPJzJp9kD8rm55aJPipp7VFzfBTMZ4Eq0EIh3DtCExnsAj6F43mHsb33
+ vE5d8wkHJaVHWQ97rxQKPTJgk7uK1uJbgcl9c5+tptPrDu9nTaZfuDhCQYpFMOqotnEikDULa
+ jxUJf4b01/cLz1+tc2XrbLMTOZF88qSC83OCf4X3sgr5VNOnRpnwynSpMRTZk7oys7bGRBd5m
+ gj2jnT3CMRPE3VgiK3cwPUM135ebJZwfMjXV8cQ1KfIBTX/z96tvnyuVT61xURqwBch6C/W1r
+ 8yYxDgRH6GOTE7Rwo+DYHm4dS0gzRDHbp2mwasEoxRnWRXHjYZ0jQFdaqcAu8fEjZKP8n3WkU
+ gnxkn2AshMFnA4DEGzhnBUfvud9A6FoemebwCxC44LsmwVe/CFXOOeB8OA+CvvB2nAgyIMZ0W
+ PhN0N+U8i6hIMT2W7gt9CixxDKWt3nFYhVXIkow==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 25 Aug 2020, Junio C Hamano wrote:
+--8323328-50879584-1598580914=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/git.c b/git.c
-> index 8bd1d7551d..927018bda7 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -839,6 +839,8 @@ int cmd_main(int argc, const char **argv)
->  	 * that one cannot handle it.
->  	 */
->  	if (skip_prefix(cmd, "git-", &cmd)) {
-> +		warn_on_dashed_git(argv[0]);
-> +
->  		argv[0] =3D cmd;
->  		handle_builtin(argc, argv);
->  		die(_("cannot handle %s as a builtin"), cmd);
-> diff --git a/help.c b/help.c
-> index d478afb2af..490d2bc3ae 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -720,3 +720,37 @@ NORETURN void help_unknown_ref(const char *ref, con=
-st char *cmd,
->  	string_list_clear(&suggested_refs, 0);
->  	exit(1);
+Hi Eric,
+
+On Thu, 27 Aug 2020, Eric Sunshine wrote:
+
+> diff --git a/worktree.c b/worktree.c
+> index 029ce91fdf..6ade4f0d8b 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -624,3 +624,77 @@ void repair_worktrees(worktree_repair_cb *cb, void =
+*cb_data)
+>  		repair_dotgit(*wt, cb, cb_data);
+>  	free_worktrees(worktrees);
 >  }
 > +
-> +static struct cmdname_help *find_cmdname_help(const char *name)
+> +static int is_main_worktree_path(const char *path)
 > +{
-> +	int i;
+> +	struct strbuf target =3D STRBUF_INIT;
+> +	struct strbuf main =3D STRBUF_INIT;
+> +	int cmp;
 > +
-> +	for (i =3D 0; i < ARRAY_SIZE(command_list); i++) {
-> +		if (!strcmp(command_list[i].name, name))
-> +			return &command_list[i];
-> +	}
-> +	return NULL;
-> +}
+> +	strbuf_add_real_path(&target, path);
+> +	strbuf_strip_suffix(&target, "/.git");
+> +	strbuf_add_real_path(&main, get_git_common_dir());
+> +	strbuf_strip_suffix(&main, "/.git");
+> +	cmp =3D fspathcmp(main.buf, target.buf);
 > +
-> +void warn_on_dashed_git(const char *cmd)
-> +{
-> +	struct cmdname_help *cmdname;
-> +	static const char *still_in_use_var =3D "GIT_I_STILL_USE_DASHED_GIT";
-> +	static const char *still_in_use_msg =3D
-> +		N_("Use of '%s' in the dashed-form is nominated for removal.\n"
-> +		   "If you still use it, export '%s=3Dtrue'\n"
-> +		   "and send an e-mail to <git@vger.kernel.org>\n"
-> +		   "to let us know and stop our removal plan.  Thanks.\n");
-> +
-> +	if (!cmd)
-> +		return; /* git-help is OK */
-> +
-> +	cmdname =3D find_cmdname_help(cmd);
-> +	if (cmdname && (cmdname->category & CAT_onpath))
-> +		return; /* git-upload-pack and friends are OK */
-> +
-> +	if (!git_env_bool(still_in_use_var, 0)) {
-> +		fprintf(stderr, _(still_in_use_msg), cmd, still_in_use_var);
-> +		exit(1);
-> +	}
+> +	strbuf_release(&main);
+> +	strbuf_release(&target);
+> +	return !cmp;
 > +}
 
-I need this on top, to make it work on Windows:
+This breaks our `linux-gcc` job, and I need this on top, to make it even
+build:
 
 =2D- snipsnap --
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] fixup??? git: catch an attempt to run "git-foo"
+Subject: [PATCH] fixup??? worktree: teach "repair" to fix outgoing links t=
+o worktrees
 
-This is needed to handle the case where `argv[0]` contains the full path
-(which is the case on Windows) and the suffix `.exe` (which is also the
-case on Windows).
+This is needed to shut up GCC's "=E2=80=98main=E2=80=99 is usually a funct=
+ion
+[-Werror=3Dmain]" error.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 =2D--
- git.c  | 3 ++-
- help.c | 5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ worktree.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/git.c b/git.c
-index 71ef4835b20e..863fd0c58a66 100644
-=2D-- a/git.c
-+++ b/git.c
-@@ -851,7 +851,8 @@ int cmd_main(int argc, const char **argv)
- 	 * that one cannot handle it.
- 	 */
- 	if (skip_prefix(cmd, "git-", &cmd)) {
--		warn_on_dashed_git(argv[0]);
-+		strip_extension(&cmd);
-+		warn_on_dashed_git(cmd);
-
- 		argv[0] =3D cmd;
- 		handle_builtin(argc, argv);
-diff --git a/help.c b/help.c
-index c93a76944b00..27b1b26890be 100644
-=2D-- a/help.c
-+++ b/help.c
-@@ -724,9 +724,12 @@ NORETURN void help_unknown_ref(const char *ref, const=
- char *cmd,
- static struct cmdname_help *find_cmdname_help(const char *name)
+diff --git a/worktree.c b/worktree.c
+index 6ade4f0d8b2b..5471915d4680 100644
+=2D-- a/worktree.c
++++ b/worktree.c
+@@ -628,16 +628,16 @@ void repair_worktrees(worktree_repair_cb *cb, void *=
+cb_data)
+ static int is_main_worktree_path(const char *path)
  {
- 	int i;
-+	const char *p;
+ 	struct strbuf target =3D STRBUF_INIT;
+-	struct strbuf main =3D STRBUF_INIT;
++	struct strbuf main_worktree =3D STRBUF_INIT;
+ 	int cmp;
 
-+	skip_prefix(name, "git-", &name);
- 	for (i =3D 0; i < ARRAY_SIZE(command_list); i++) {
--		if (!strcmp(command_list[i].name, name))
-+		if (skip_prefix(command_list[i].name, "git-", &p) &&
-+		    !strcmp(p, name))
- 			return &command_list[i];
- 	}
- 	return NULL;
+ 	strbuf_add_real_path(&target, path);
+ 	strbuf_strip_suffix(&target, "/.git");
+-	strbuf_add_real_path(&main, get_git_common_dir());
+-	strbuf_strip_suffix(&main, "/.git");
+-	cmp =3D fspathcmp(main.buf, target.buf);
++	strbuf_add_real_path(&main_worktree, get_git_common_dir());
++	strbuf_strip_suffix(&main_worktree, "/.git");
++	cmp =3D fspathcmp(main_worktree.buf, target.buf);
+
+-	strbuf_release(&main);
++	strbuf_release(&main_worktree);
+ 	strbuf_release(&target);
+ 	return !cmp;
+ }
 =2D-
 2.28.0.windows.1
 
+--8323328-50879584-1598580914=:56--
