@@ -2,80 +2,107 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7553AC433E6
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6636C433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:33:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 599222075B
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:19:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60ACD2080C
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 21:33:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mbUrKM7c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgH1VTd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 17:19:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44200 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726338AbgH1VTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 17:19:33 -0400
-Received: (qmail 29858 invoked by uid 109); 28 Aug 2020 21:19:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 28 Aug 2020 21:19:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13919 invoked by uid 111); 28 Aug 2020 21:19:32 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Aug 2020 17:19:32 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 28 Aug 2020 17:19:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH v2] midx: traverse the local MIDX first
-Message-ID: <20200828211931.GA2190002@coredump.intra.peff.net>
-References: <20200828180621.GA9036@nand.nand.local>
- <20200828202213.GA24009@nand.local>
+        id S1726396AbgH1Vd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 17:33:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50403 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726033AbgH1Vd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 17:33:56 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A6E88689C5;
+        Fri, 28 Aug 2020 17:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YKzOBt0VKPNJmhKi+o9SN2Mghas=; b=mbUrKM
+        7cRLd1SuymWDfYtfEBxTvtJj5DwRq8lI5vm95LF4BddPYQWuXPA7GZF0Alik8HjM
+        OWTHntiETZIo1ilSzHiUqDQlu8qlX0rczzqUL9AXmfnWdfkCK5STc+tQ7q3ADqKF
+        wv677uDAFnOQtTiuEvIvh4Jvspj+dzJH2PWpI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=De3LxWqUbZcXYzh+1rEZoQfKTjQ+4P84
+        +2XnXxuozjpB/j9VRZQwgjdUYH5fBUfEcb56MKglFvX0MBwPtZM2CdBQsxOUgoRJ
+        RaVzEk3dnd7Er+onJxVtaOAaN94ZQagRyzqo7itIR5V15Z3BfoRMzq/NGQxrjX+i
+        /TknG8manGs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D808689C3;
+        Fri, 28 Aug 2020 17:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 25B81689C2;
+        Fri, 28 Aug 2020 17:33:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Drew DeVault" <sir@cmpwn.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        <git@vger.kernel.org>
+Subject: Re: [PATCH] send-email: do not prompt for In-Reply-To
+References: <C58XLLAE3SMA.3T1C6DXZ4VSWA@homura>
+Date:   Fri, 28 Aug 2020 14:33:53 -0700
+In-Reply-To: <C58XLLAE3SMA.3T1C6DXZ4VSWA@homura> (Drew DeVault's message of
+        "Fri, 28 Aug 2020 17:01:46 -0400")
+Message-ID: <xmqq7dtio3pa.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200828202213.GA24009@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2BFE6614-E976-11EA-A49D-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 28, 2020 at 04:22:13PM -0400, Taylor Blau wrote:
+"Drew DeVault" <sir@cmpwn.com> writes:
 
-> This patch addresses that by:
-> 
->   - placing the local MIDX first in the chain when calling
->     'prepare_multi_pack_index_one()', and
-> 
->   - introducing a new 'get_local_multi_pack_index()', which explicitly
->     returns the repository-local MIDX, if any.
-> 
-> Don't impose an additional order on the MIDX's '->next' pointer beyond
-> that the first item in the chain must be local if one exists so that we
-> avoid a quadratic insertion.
+> This would be better, yeah, but at that point it's pretty weird, like
+> why are we prompting for this CLI flag and not any others? The answer is
+> just for legacy reasons. There's no inherent justification for it.
 
-This version looks fine to me.
+I suspect that the legacy reason exists only because it was (thought
+to be) (a) common enough to make a series in response to an existing
+message than a thread starter and (b) "to:" and "in-reply-to:" are
+quite close to make sense to be asked together [*1*], back when the
+current behaviour was established, ?  In other words, the "legacy
+reson" may have inherent justification for it.
 
-Thinking on it a bit more, we probably want this "local one is first"
-behavior even without it fixing this bug. For normal packs, we always
-prefer local copies over alternates, under the assumption that
-alternates are likely to be more expensive to access (e.g., shared nfs).
+Your primary and only argument to flip the default not to ask about
+in-reply-to is, because, in your opinion, more users would want to
+send thread-starters than responses.  I haven't seen the numbers,
+and more importantly I do not think anybody can expected to produce
+numbers that convince everybody (there are biases based on who's
+counting and what is counted), so I cannot buy such an argument
+blindly.
 
-Of course that somewhat goes out the window since we re-order lookups
-these days based on where we've found previous objects (my mru stuff,
-but even before that the single "last pack" variable). But it makes
-sense to at least start with the local ones being given priority.
+The weighing done, perhaps in the original author's mind, back when
+send-email was written would certainly not be based on any concrete
+numbers, either.  But as one undisputable fact we know [*2*] is that
+quite many people are already used to the behaviour we currently
+have.  While some of them may welcome change, others will complain
+if they are forced to relearn what they have committed to their
+muscle memory.  
 
-I don't think we do any mru tricks with the midx list, so it would stay
-in local-first mode always, which is reasonable (you probably don't have
-so many midx's that any reordering is worth it anyway).
+That makes it the safest thing to give users a new choice without
+changing the default.  That would allow us at least move forward.
 
-It does mean we may consult an alternates midx before any local non-midx
-packs, which _could_ be slower. But since this is all guesses and
-heuristics anyway, I'd wait until somebody has a concrete case where
-they can demonstrate a different ordering scheme works better.
 
--Peff
+
+[Footnote]
+
+*1* After all, these two affect where the readers find the message,
+    i.e. in the archive or mailbox of which mailing list, and where
+    in relation to other messages in the list.
+
+*2* Purely based on how widely git is used.
