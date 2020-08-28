@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48069C433E7
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C20C433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:45:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F5D020678
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:45:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B92C20678
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:45:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjnJ3fRC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G6iyo8tk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728305AbgH1Ppr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 11:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39492 "EHLO
+        id S1728335AbgH1Ppu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 11:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728235AbgH1PpZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 11:45:25 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2FC8C061234
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:45:24 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id y8so1076081wma.0
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:45:24 -0700 (PDT)
+        with ESMTP id S1728267AbgH1Ppf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 11:45:35 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B744FC061236
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:45:25 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id c19so1072679wmd.1
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:45:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PDiFpRI1L5D5O35ym9PuX4yaU0hZeV7/cS9qocmQuek=;
-        b=WjnJ3fRC/MO1tZ5tSJ94hYw74VFtvPr3yIvW19La36QM/JyJX9M/5ORnCO60+Mbwh2
-         aVDGQSBPdBoQ79lD2USRRgK5VnS4C4hgOD/IHGBkvYwD1tFCUx6eVaI0nPVHUR9hsXqs
-         89gSH2gMA2JiPzyy+n23/wGq0N8krHXBURmWliUOkg0L/6bt8BSjN8cWtc+rfDOWHM9t
-         P38EjMJIsFB2B9rDUndlTuxtmAfY70iDaE772IS3KHRjlsozgQiu84OHfvCWBZNPcOqa
-         o0iBXtxwiHIhuG6WRk4uMYd+Uwdi1T27HOT798N0SBZE41gY70CjwlAkjc9Su83D/5Qw
-         txFA==
+        bh=t13EbWJeubyTEm19LcAgWKvrkpEFAPWkjSKqbw4gHQE=;
+        b=G6iyo8tkrJcuE4ISzalx3ojtsg8tkWlUPpfA0qV7oHaMhO+3YOrcpCWXdE+RftE6Mg
+         +KISiHvZSc48S8dW+hmYSyx47i/MnrsWlEo9kNqfbgZAgMAY9Ml0mqfaHjdS+WxwpoG2
+         bFtmOm70UdJjro5uxByYXRUcaZWCE2O8rsq5g7EtWj28N7GYnk4DFRn4ZEsx2jqe6FoH
+         64VBxPMWu+hLQZN8Eo11uXN69FSWYcOgs04hs1KAsfmJm0YfrJ96RnKij2Ni75qVEafm
+         FSPa8Y0g0vT0sHSLVMiEcuWvSjKVVfDL/JFyG6RuESDfgYTQvUAQBYRH3BX3XRP/5OY2
+         scEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PDiFpRI1L5D5O35ym9PuX4yaU0hZeV7/cS9qocmQuek=;
-        b=BIpIm1kO1BZ9CKMrl1kTlLHx4eRiXaenAo0qwI7wuOtGasUm4GrDJzNaY6yNRg5JCz
-         hvH8WomHdE1OER/c+Fohq5RnDRpLK9aiL3X53ubl3xfuVzAiUKyAuAW+IRBbfUY60xvU
-         PNXoclfBIjcFwnCme4Xp5uZmJMtUkW277h+5gs1PZJRdSe8v/nlfnyVLBt4jiqkS/LU/
-         E5+FEKdpqsN2GIcLFlqrPjS26pvRMXWj6GNupO2VHOSB+Hs40DPfUHIzl0FXalmmrYQl
-         juwTwiDrt+kocGgJ5oZyJTDt9sOkkaVCQ6BO+jQEAQUxszQITwFadr6F7S+Eh2Q+kmPG
-         7iqg==
-X-Gm-Message-State: AOAM533XysG1dzLc+5SuWDtxQnNE37o3bWwDO7Td+AnA7VWRgx3WQyI7
-        hrSUmIsytZbbf3wLzGmvKjoo27ncl20=
-X-Google-Smtp-Source: ABdhPJxjsjWFvYjxGJMWYRLQS/m52veGJhHYtXC9m3l+0gzTYsNxSxgp9u7vWs214/VYVk9wWPseIw==
-X-Received: by 2002:a1c:2501:: with SMTP id l1mr2460375wml.16.1598629523070;
-        Fri, 28 Aug 2020 08:45:23 -0700 (PDT)
+        bh=t13EbWJeubyTEm19LcAgWKvrkpEFAPWkjSKqbw4gHQE=;
+        b=WI7ESevmczorSQBhPHE49q1OcfaeKxt5x18ioKUIxbiwqhbUZmdSDK0GtGcuxAq/GN
+         Ci2hL4/ed11bIEOT9Q+8X3NdUU8A54QxGLwIQk+mJxlLWHUGDOR0gsT08BiE/PXeQYsU
+         fNH6Vz4TXbNgeHwWPkqTiPpumd1hoffuemLRd255TrMMvEdq0XKiqvyAukKpYaCqpbjF
+         mnPytoSGBw0Ikk7zvUmMYceluWB1eyO6JdHNEuoEObEvP66HJaCzs44Tp2MZalh3xqYJ
+         fW+1W/ylFi2hGaoVPm7DyLawfSju9mUHM8S0UTeol4mZzhH/lXB/tXtXSGpwvhVW4pAv
+         iXPw==
+X-Gm-Message-State: AOAM532tkF/Z2ELY6Bc3UVMLjnNaDLxnHF3Lmlnw9hToh275Vryq/NgH
+        siwz0o1Y2IsWqzp2k49hXQ/P/HjUVCU=
+X-Google-Smtp-Source: ABdhPJwFovzorOd4vHJsVkRgmDS0/lWGpHPz+jwnufeSy/VZQPtcc9CiJFxC30GnnDNjm50yX2gwXg==
+X-Received: by 2002:a05:600c:10cf:: with SMTP id l15mr2240991wmd.149.1598629524046;
+        Fri, 28 Aug 2020 08:45:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y3sm2659091wrs.36.2020.08.28.08.45.22
+        by smtp.gmail.com with ESMTPSA id o5sm2707641wmc.33.2020.08.28.08.45.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Aug 2020 08:45:22 -0700 (PDT)
-Message-Id: <e9672c6a6c9ea2f9f42cf599f1726978d9629b71.1598629517.git.gitgitgadget@gmail.com>
+        Fri, 28 Aug 2020 08:45:23 -0700 (PDT)
+Message-Id: <62e8db8b2a8674fb40681478cbae8bbbd6936661.1598629517.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.680.v3.git.1598629517.gitgitgadget@gmail.com>
 References: <pull.680.v2.git.1598380805.gitgitgadget@gmail.com>
         <pull.680.v3.git.1598629517.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 28 Aug 2020 15:45:16 +0000
-Subject: [PATCH v3 5/6] maintenance: add start/stop subcommands
+Date:   Fri, 28 Aug 2020 15:45:17 +0000
+Subject: [PATCH v3 6/6] maintenance: recommended schedule in register/start
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,356 +79,145 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add new subcommands to 'git maintenance' that start or stop background
-maintenance using 'cron', when available. This integration is as simple
-as I could make it, barring some implementation complications.
+The 'git maintenance (register|start)' subcommands add the current
+repository to the global Git config so maintenance will operate on that
+repository. It does not specify what maintenance should occur or how
+often.
 
-The schedule is laid out as follows:
+If a user sets any 'maintenance.<task>.schedule' config value, then
+they have chosen a specific schedule for themselves and Git should
+respect that.
 
-  0 1-23 * * *   $cmd maintenance run --schedule=hourly
-  0 0    * * 1-6 $cmd maintenance run --schedule=daily
-  0 0    * * 0   $cmd maintenance run --schedule=weekly
+However, in an effort to recommend a good schedule for repositories of
+all sizes, set new config values for recommended tasks that are safe to
+run in the background while users run foreground Git commands. These
+commands are generally everything but the 'gc' task.
 
-where $cmd is a properly-qualified 'git for-each-repo' execution:
-
-$cmd=$path/git --exec-path=$path for-each-repo --config=maintenance.repo
-
-where $path points to the location of the Git executable running 'git
-maintenance start'. This is critical for systems with multiple versions
-of Git. Specifically, macOS has a system version at '/usr/bin/git' while
-the version that users can install resides at '/usr/local/bin/git'
-(symlinked to '/usr/local/libexec/git-core/git'). This will also use
-your locally-built version if you build and run this in your development
-environment without installing first.
-
-This conditional schedule avoids having cron launch multiple 'git
-for-each-repo' commands in parallel. Such parallel commands would likely
-lead to the 'hourly' and 'daily' tasks competing over the object
-database lock. This could lead to to some tasks never being run! Since
-the --schedule=<frequency> argument will run all tasks with _at least_
-the given frequency, the daily runs will also run the hourly tasks.
-Similarly, the weekly runs will also run the daily and hourly tasks.
-
-The GIT_TEST_CRONTAB environment variable is not intended for users to
-edit, but instead as a way to mock the 'crontab [-l]' command. This
-variable is set in test-lib.sh to avoid a future test from accidentally
-running anything with the cron integration from modifying the user's
-schedule. We use GIT_TEST_CRONTAB='test-tool crontab <file>' in our
-tests to check how the schedule is modified in 'git maintenance
-(start|stop)' commands.
+Author's Note: I feel we should do _something_ to recommend a good
+schedule to users, but I'm not 100% set on this schedule. This is the
+schedule we use in Scalar and VFS for Git for very large repositories
+using the GVFS protocol. While the schedule works in that environment,
+it is possible that "normal" Git repositories could benefit from
+something more obvious (such as running 'gc' weekly). However, this
+patch gives us a place to start a conversation on what we should
+recommend. For my purposes, Scalar will set these config values so we
+can always differ from core Git's recommendations.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-maintenance.txt |  11 +++
- Makefile                          |   1 +
- builtin/gc.c                      | 124 ++++++++++++++++++++++++++++++
- t/helper/test-crontab.c           |  35 +++++++++
- t/helper/test-tool.c              |   1 +
- t/helper/test-tool.h              |   1 +
- t/t7900-maintenance.sh            |  28 +++++++
- t/test-lib.sh                     |   6 ++
- 8 files changed, 207 insertions(+)
- create mode 100644 t/helper/test-crontab.c
+ Documentation/git-maintenance.txt |  6 ++++
+ builtin/gc.c                      | 46 +++++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh            | 16 +++++++++++
+ 3 files changed, 68 insertions(+)
 
 diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 78d0d8df91..7f8c279fe8 100644
+index 7f8c279fe8..364b3e32bf 100644
 --- a/Documentation/git-maintenance.txt
 +++ b/Documentation/git-maintenance.txt
-@@ -45,6 +45,17 @@ run::
- 	config options are true. By default, only `maintenance.gc.enabled`
- 	is true.
+@@ -37,6 +37,12 @@ register::
+ 	`maintenance.<task>.schedule`. The tasks that are enabled are safe
+ 	for running in the background without disrupting foreground
+ 	processes.
+++
++If your repository has no 'maintenance.<task>.schedule' configuration
++values set, then Git will set configuration values to some recommended
++settings. These settings disable foreground maintenance while performing
++maintenance tasks in the background that will not interrupt foreground Git
++operations.
  
-+start::
-+	Start running maintenance on the current repository. This performs
-+	the same config updates as the `register` subcommand, then updates
-+	the background scheduler to run `git maintenance run --scheduled`
-+	on an hourly basis.
-+
-+stop::
-+	Halt the background maintenance schedule. The current repository
-+	is not removed from the list of maintained repositories, in case
-+	the background maintenance is restarted later.
-+
- unregister::
- 	Remove the current repository from background maintenance. This
- 	only removes the repository from the configured list. It does not
-diff --git a/Makefile b/Makefile
-index 7c588ff036..c39b39bd7d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -690,6 +690,7 @@ TEST_BUILTINS_OBJS += test-advise.o
- TEST_BUILTINS_OBJS += test-bloom.o
- TEST_BUILTINS_OBJS += test-chmtime.o
- TEST_BUILTINS_OBJS += test-config.o
-+TEST_BUILTINS_OBJS += test-crontab.o
- TEST_BUILTINS_OBJS += test-ctype.o
- TEST_BUILTINS_OBJS += test-date.o
- TEST_BUILTINS_OBJS += test-delta.o
+ run::
+ 	Run one or more maintenance tasks. If one or more `--task` options
 diff --git a/builtin/gc.c b/builtin/gc.c
-index ec77e8d2fa..9914417e25 100644
+index 9914417e25..5f253d3458 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -32,6 +32,7 @@
- #include "remote.h"
- #include "midx.h"
- #include "object-store.h"
-+#include "exec-cmd.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -1456,6 +1457,125 @@ static int maintenance_unregister(void)
- 	return run_command(&config_unset);
+@@ -1408,6 +1408,49 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
+ 	return maintenance_run_tasks(&opts);
  }
  
-+#define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
-+#define END_LINE "# END GIT MAINTENANCE SCHEDULE"
-+
-+static int update_background_schedule(int run_maintenance)
++static int has_schedule_config(void)
 +{
-+	int result = 0;
-+	int in_old_region = 0;
-+	struct child_process crontab_list = CHILD_PROCESS_INIT;
-+	struct child_process crontab_edit = CHILD_PROCESS_INIT;
-+	FILE *cron_list, *cron_in;
-+	const char *crontab_name;
-+	struct strbuf line = STRBUF_INIT;
-+	struct lock_file lk;
-+	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
++	int i, found = 0;
++	struct strbuf config_name = STRBUF_INIT;
++	size_t prefix;
 +
-+	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
-+		return error(_("another process is scheduling background maintenance"));
++	strbuf_addstr(&config_name, "maintenance.");
++	prefix = config_name.len;
 +
-+	crontab_name = getenv("GIT_TEST_CRONTAB");
-+	if (!crontab_name)
-+		crontab_name = "crontab";
++	for (i = 0; !found && i < TASK__COUNT; i++) {
++		char *value;
 +
-+	strvec_split(&crontab_list.args, crontab_name);
-+	strvec_push(&crontab_list.args, "-l");
-+	crontab_list.in = -1;
-+	crontab_list.out = dup(lk.tempfile->fd);
-+	crontab_list.git_cmd = 0;
++		strbuf_setlen(&config_name, prefix);
++		strbuf_addf(&config_name, "%s.schedule", tasks[i].name);
 +
-+	if (start_command(&crontab_list)) {
-+		result = error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
-+		goto cleanup;
++		if (!git_config_get_string(config_name.buf, &value)) {
++			found = 1;
++			FREE_AND_NULL(value);
++		}
 +	}
 +
-+	/* Ignore exit code, as an empty crontab will return error. */
-+	finish_command(&crontab_list);
-+
-+	/*
-+	 * Read from the .lock file, filtering out the old
-+	 * schedule while appending the new schedule.
-+	 */
-+	cron_list = fdopen(lk.tempfile->fd, "r");
-+	rewind(cron_list);
-+
-+	strvec_split(&crontab_edit.args, crontab_name);
-+	crontab_edit.in = -1;
-+	crontab_edit.git_cmd = 0;
-+
-+	if (start_command(&crontab_edit)) {
-+		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
-+		goto cleanup;
-+	}
-+
-+	cron_in = fdopen(crontab_edit.in, "w");
-+	if (!cron_in) {
-+		result = error(_("failed to open stdin of 'crontab'"));
-+		goto done_editing;
-+	}
-+
-+	while (!strbuf_getline_lf(&line, cron_list)) {
-+		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
-+			in_old_region = 1;
-+		if (in_old_region)
-+			continue;
-+		fprintf(cron_in, "%s\n", line.buf);
-+		if (in_old_region && !strcmp(line.buf, END_LINE))
-+			in_old_region = 0;
-+	}
-+
-+	if (run_maintenance) {
-+		struct strbuf line_format = STRBUF_INIT;
-+		const char *exec_path = git_exec_path();
-+
-+		fprintf(cron_in, "%s\n", BEGIN_LINE);
-+		fprintf(cron_in,
-+			"# The following schedule was created by Git\n");
-+		fprintf(cron_in, "# Any edits made in this region might be\n");
-+		fprintf(cron_in,
-+			"# replaced in the future by a Git command.\n\n");
-+
-+		strbuf_addf(&line_format,
-+			    "%%s %%s * * %%s \"%s/git\" --exec-path=\"%s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%%s\n",
-+			    exec_path, exec_path);
-+		fprintf(cron_in, line_format.buf, "0", "1-23", "*", "hourly");
-+		fprintf(cron_in, line_format.buf, "0", "0", "1-6", "daily");
-+		fprintf(cron_in, line_format.buf, "0", "0", "0", "weekly");
-+		strbuf_release(&line_format);
-+
-+		fprintf(cron_in, "\n%s\n", END_LINE);
-+	}
-+
-+	fflush(cron_in);
-+	fclose(cron_in);
-+	close(crontab_edit.in);
-+
-+done_editing:
-+	if (finish_command(&crontab_edit)) {
-+		result = error(_("'crontab' died"));
-+		goto cleanup;
-+	}
-+	fclose(cron_list);
-+
-+cleanup:
-+	rollback_lock_file(&lk);
-+	return result;
++	strbuf_release(&config_name);
++	return found;
 +}
 +
-+static int maintenance_start(void)
++static void set_recommended_schedule(void)
 +{
-+	if (maintenance_register())
-+		warning(_("failed to add repo to global config"));
++	git_config_set("maintenance.auto", "false");
++	git_config_set("maintenance.gc.enabled", "false");
 +
-+	return update_background_schedule(1);
++	git_config_set("maintenance.prefetch.enabled", "true");
++	git_config_set("maintenance.prefetch.schedule", "hourly");
++
++	git_config_set("maintenance.commit-graph.enabled", "true");
++	git_config_set("maintenance.commit-graph.schedule", "hourly");
++
++	git_config_set("maintenance.loose-objects.enabled", "true");
++	git_config_set("maintenance.loose-objects.schedule", "daily");
++
++	git_config_set("maintenance.incremental-repack.enabled", "true");
++	git_config_set("maintenance.incremental-repack.schedule", "daily");
 +}
 +
-+static int maintenance_stop(void)
-+{
-+	return update_background_schedule(0);
-+}
-+
- static const char builtin_maintenance_usage[] =	N_("git maintenance <subcommand> [<options>]");
+ static int maintenance_register(void)
+ {
+ 	struct child_process config_set = CHILD_PROCESS_INIT;
+@@ -1417,6 +1460,9 @@ static int maintenance_register(void)
+ 	if (!the_repository || !the_repository->gitdir)
+ 		return 0;
  
- int cmd_maintenance(int argc, const char **argv, const char *prefix)
-@@ -1465,6 +1585,10 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
- 
- 	if (!strcmp(argv[1], "run"))
- 		return maintenance_run(argc - 1, argv + 1, prefix);
-+	if (!strcmp(argv[1], "start"))
-+		return maintenance_start();
-+	if (!strcmp(argv[1], "stop"))
-+		return maintenance_stop();
- 	if (!strcmp(argv[1], "register"))
- 		return maintenance_register();
- 	if (!strcmp(argv[1], "unregister"))
-diff --git a/t/helper/test-crontab.c b/t/helper/test-crontab.c
-new file mode 100644
-index 0000000000..f5db6319c6
---- /dev/null
-+++ b/t/helper/test-crontab.c
-@@ -0,0 +1,35 @@
-+#include "test-tool.h"
-+#include "cache.h"
++	if (!has_schedule_config())
++		set_recommended_schedule();
 +
-+/*
-+ * Usage: test-tool cron <file> [-l]
-+ *
-+ * If -l is specified, then write the contents of <file> to stdou.
-+ * Otherwise, write from stdin into <file>.
-+ */
-+int cmd__crontab(int argc, const char **argv)
-+{
-+	char a;
-+	FILE *from, *to;
-+
-+	if (argc == 3 && !strcmp(argv[2], "-l")) {
-+		from = fopen(argv[1], "r");
-+		if (!from)
-+			return 0;
-+		to = stdout;
-+	} else if (argc == 2) {
-+		from = stdin;
-+		to = fopen(argv[1], "w");
-+	} else
-+		return error("unknown arguments");
-+
-+	while ((a = fgetc(from)) != EOF)
-+		fputc(a, to);
-+
-+	if (argc == 3)
-+		fclose(from);
-+	else
-+		fclose(to);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 590b2efca7..432b49d948 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -18,6 +18,7 @@ static struct test_cmd cmds[] = {
- 	{ "bloom", cmd__bloom },
- 	{ "chmtime", cmd__chmtime },
- 	{ "config", cmd__config },
-+	{ "crontab", cmd__crontab },
- 	{ "ctype", cmd__ctype },
- 	{ "date", cmd__date },
- 	{ "delta", cmd__delta },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index ddc8e990e9..7c3281e071 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -8,6 +8,7 @@ int cmd__advise_if_enabled(int argc, const char **argv);
- int cmd__bloom(int argc, const char **argv);
- int cmd__chmtime(int argc, const char **argv);
- int cmd__config(int argc, const char **argv);
-+int cmd__crontab(int argc, const char **argv);
- int cmd__ctype(int argc, const char **argv);
- int cmd__date(int argc, const char **argv);
- int cmd__delta(int argc, const char **argv);
+ 	config_get.git_cmd = 1;
+ 	strvec_pushl(&config_get.args, "config", "--global", "--get", "maintenance.repo",
+ 		     the_repository->worktree ? the_repository->worktree
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 272d1605d2..8803fcf621 100755
+index 8803fcf621..5a31f3925b 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -319,4 +319,32 @@ test_expect_success 'register and unregister' '
- 	test_cmp before actual
- '
- 
-+test_expect_success 'start from empty cron table' '
-+	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
+@@ -309,7 +309,23 @@ test_expect_success 'register and unregister' '
+ 	git config --global --add maintenance.repo /existing1 &&
+ 	git config --global --add maintenance.repo /existing2 &&
+ 	git config --global --get-all maintenance.repo >before &&
 +
-+	# start registers the repo
-+	git config --get --global maintenance.repo "$(pwd)" &&
++	# We still have maintenance.<task>.schedule config set,
++	# so this does not update the local schedule
++	git maintenance register &&
++	test_must_fail git config maintenance.auto &&
 +
-+	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=daily" cron.txt &&
-+	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=hourly" cron.txt &&
-+	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=weekly" cron.txt
-+'
-+
-+test_expect_success 'stop from existing schedule' '
-+	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
-+
-+	# stop does not unregister the repo
-+	git config --get --global maintenance.repo "$(pwd)" &&
-+
-+	# Operation is idempotent
-+	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
-+	test_must_be_empty cron.txt
-+'
-+
-+test_expect_success 'start preserves existing schedule' '
-+	echo "Important information!" >cron.txt &&
-+	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
-+	grep "Important information!" cron.txt
-+'
-+
- test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ef31f40037..4a60d1ed76 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1702,3 +1702,9 @@ test_lazy_prereq SHA1 '
- test_lazy_prereq REBASE_P '
- 	test -z "$GIT_TEST_SKIP_REBASE_P"
- '
-+
-+# Ensure that no test accidentally triggers a Git command
-+# that runs 'crontab', affecting a user's cron schedule.
-+# Tests that verify the cron integration must set this locally
-+# to avoid errors.
-+GIT_TEST_CRONTAB="exit 1"
++	# Clear previous maintenance.<task>.schedule values
++	for task in loose-objects commit-graph incremental-repack
++	do
++		git config --unset maintenance.$task.schedule || return 1
++	done &&
+ 	git maintenance register &&
++	test_cmp_config false maintenance.auto &&
++	test_cmp_config false maintenance.gc.enabled &&
++	test_cmp_config true maintenance.prefetch.enabled &&
++	test_cmp_config hourly maintenance.commit-graph.schedule &&
++	test_cmp_config daily maintenance.incremental-repack.schedule &&
+ 	git config --global --get-all maintenance.repo >actual &&
+ 	cp before after &&
+ 	pwd >>after &&
 -- 
 gitgitgadget
-
