@@ -2,76 +2,94 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50335C433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 07:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E9FCC433E2
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 08:31:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3674320EDD
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 07:08:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A2722086A
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 08:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728210AbgH1HIE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 03:08:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43354 "EHLO cloud.peff.net"
+        id S1728614AbgH1Ib2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 04:31:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43404 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727971AbgH1HID (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 03:08:03 -0400
-Received: (qmail 23267 invoked by uid 109); 28 Aug 2020 07:08:03 -0000
+        id S1726834AbgH1Ib1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 04:31:27 -0400
+Received: (qmail 24120 invoked by uid 109); 28 Aug 2020 08:31:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 28 Aug 2020 07:08:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 28 Aug 2020 08:31:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3776 invoked by uid 111); 28 Aug 2020 07:08:02 -0000
+Received: (qmail 4163 invoked by uid 111); 28 Aug 2020 08:31:26 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Aug 2020 03:08:02 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Aug 2020 04:31:26 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 28 Aug 2020 03:08:02 -0400
+Date:   Fri, 28 Aug 2020 04:31:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] strmap: add strdup_strings option
-Message-ID: <20200828070802.GC2105050@coredump.intra.peff.net>
-References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
- <b3095d97d8ee9d6576292731cc100492e7c64f13.1598035949.git.gitgitgadget@gmail.com>
- <20200821200121.GF1165@coredump.intra.peff.net>
- <CABPp-BGJK4C7U+-MB-+TUgFAuuFJKE-E7y17FFJDRTyFydVX2A@mail.gmail.com>
- <20200821210301.GA11806@coredump.intra.peff.net>
- <CABPp-BE8tdpjx2RBGyZOYV4hsfjm5HF_dmehvX792x7TtWkLcA@mail.gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2020, #07; Thu, 27)
+Message-ID: <20200828083125.GA2139751@coredump.intra.peff.net>
+References: <xmqqh7snpxy1.fsf@gitster.c.googlers.com>
+ <20200827233454.GA3973432@coredump.intra.peff.net>
+ <xmqqzh6foe44.fsf@gitster.c.googlers.com>
+ <20200828003940.GA80266@syl.lan>
+ <20200828062619.GA2100989@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BE8tdpjx2RBGyZOYV4hsfjm5HF_dmehvX792x7TtWkLcA@mail.gmail.com>
+In-Reply-To: <20200828062619.GA2100989@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 21, 2020 at 03:25:44PM -0700, Elijah Newren wrote:
+On Fri, Aug 28, 2020 at 02:26:19AM -0400, Jeff King wrote:
 
-> >   - That sounds like a lot of maps. :) I guess you've looked at
-> >     compacting some of them into a single map-to-struct?
+> On Thu, Aug 27, 2020 at 08:39:40PM -0400, Taylor Blau wrote:
 > 
-> Oh, map-to-struct is the primary use.  But compacting them won't work,
-> because the reason for the additional maps is that they have different
-> sets of keys (this set of paths meet a certain condition...).  Only
-> one map contains all the paths involved in the merge.
+> > > >> * tb/repack-clearing-midx (2020-08-26) 1 commit
+> > > >>   (merged to 'next' on 2020-08-27 at a465875cbb)
+> > > >>  + builtin/repack.c: invalidate MIDX only when necessary
+> > [...]
+> > Thanks indeed. I started looking into this tonight thinking that it'd be
+> > an easy fix, but I think there is a deeper bug that is worth
+> > investigating further.
+> 
+> I imagine this is part of it:
+> 
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index f10f52779c..2cc05f968a 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -134,7 +134,7 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+>  	struct multi_pack_index *m = get_multi_pack_index(the_repository);
+> -	strbuf_addf(&buf, "%s.pack", base_name);
+> +	strbuf_addf(&buf, "%s.idx", base_name);
+>  	if (m && midx_contains_pack(m, buf.buf))
+>  		clear_midx_file(the_repository);
+>  	strbuf_insertf(&buf, 0, "%s/", dir_name);
+> 
+> but maybe that is just the "easy" part you meant. Several tests still
+> seem to fail, which I guess is the "deeper" part. :)
+> 
+> If I'm understanding midx_contains_pack() correctly, then the code
+> looking for ".pack" could never have matched, and we would never have
+> deleted a midx here. Which makes me wonder why the "repack removes
+> multi-pack-index when deleting packs" test ever succeeded.
 
-OK, I guess I'm not surprised that you would not have missed such an
-obvious optimization. :)
+Sorry, this is all nonsense.
 
-> Also, several of those maps don't even store a value; and are really
-> just a set implemented via strmap (thus meaning the only bit of data I
-> need for some conditions is whether any given path meets it).  It
-> seems slightly ugly to have to call strmap_put(map, string, NULL) for
-> those.  I wonder if I should have another strset type much like your
-> suggesting for strintmap.  Hmm...
+I forgot about the hackery added in 013fd7ada3 (midx: check both pack
+and index names for containment, 2019-04-05). And anyway, the patch
+above is totally bogus because we need the ".pack" form in the buffer
+when we call unlink_pack_path().
 
-FWIW, khash does have a "set" mode where it avoids allocating the value
-array at all.
-
-What's the easiest way to benchmark merge-ort? I suspect I could swap
-out hashmap for khash (messily) in an hour or less.
+So there's definitely something more odd going on in that failing test.
 
 -Peff
