@@ -2,123 +2,142 @@ Return-Path: <SRS0=bfGv=CG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F4D5C433E2
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB922C433E6
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:31:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17494208C9
-	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:30:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3D3520825
+	for <git@archiver.kernel.org>; Fri, 28 Aug 2020 15:31:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bvbbOoco"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dsa/LG2a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728217AbgH1P36 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Aug 2020 11:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
+        id S1728276AbgH1PbY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Aug 2020 11:31:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbgH1P34 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Aug 2020 11:29:56 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119D4C061264
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:29:56 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id w10so1169272oti.2
-        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:29:56 -0700 (PDT)
+        with ESMTP id S1725969AbgH1PbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Aug 2020 11:31:23 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D40C061264
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:31:22 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id x7so1684266wro.3
+        for <git@vger.kernel.org>; Fri, 28 Aug 2020 08:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wTzcoiYibaJMsEngIbbK60Unn6X0wupfZyDTm8zpLL4=;
-        b=bvbbOocoybtDDQeaU8yPFkPg00+Ikfy2knijp7cYNeJJ7UhgNkRi4mdKdDchOFjQmc
-         QwTlzYrEdl7QXp0Qd3YOzrOp70rVCP7EKQrG0x0S+vEMAqHwKuoJ+917cWZVAZTo5wwh
-         kKg8rABMjkvB75kI6eigqC4FgnYTtdsyuXXTMB62xoJDWBrvFTyxS4k4EoW2ZyKzoWaP
-         C7GwkBVj/jvj2z35ofrh12bTA5VHjvHM9G8ycFN00dumo9lJaP2ZJ0Xax4iIoIatr6+K
-         Zvi4lzadKljdNbiQV66WrUchUfEs4wZrG/mz80S+ABkxJfte3ptIaf+eUO66npIFtWIp
-         U6NA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=wvgSXlfFLmZGKA63lMmn0f297NVEThzdjT+gdqSgXr8=;
+        b=Dsa/LG2aznQ41doXxXtdHPpoo3fqz9l+dS67VNP0oKdQ+ulinw6o+sfA1oZ1XIrW+/
+         NJ5QeqsgwGyHLx5gDBS4+Qz20tz6BmSvJg26F6E/HfPIkSk1YJJe8Iijif7Jfr0Uz4KY
+         fE3S5mS+Tooo0cjfg4AmsMinYbaW+LYDcYpiXNBw5d+bM6o5/tOQL06NTDqiYJFHqgMc
+         4qmJgl6mJoAGTvrxqdMJW5uSZLe3n7DWS/IKhI4EUP3mo6ePyxxzPqCypd2VpMq0Ejjh
+         UNIPxr9yrqzMErnqIrJv1ZuHouf/L9VbP0VJL9/Mlu6ga0NMwfUROP5HNRnuTcSUzXF9
+         v8Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wTzcoiYibaJMsEngIbbK60Unn6X0wupfZyDTm8zpLL4=;
-        b=hPUD4tOTAEPIr1mLoek2f4kek+Gt2ffgXnQ5Bd8nIiP5wGKw+x1pWc7bJUcOQuzJTA
-         gJwu15BRGtf2g1xGhRuZGnP+VNFBx2MgZxvazRFIeIF2FAtBs7Jncs/lXqzy9+RfYzDV
-         CQ0vqc+wOIh9l6Kfl1rpiWneLYeusQ2IR8ZYSEr1JfCBZlzlWyT+tzE8Y6KYlZl89cVj
-         r5Tp6RXTbtY+MPQCFlusoJKhYXacYhdY9RKv7pqfX5JulOHVlNjwVmlG3CROnVg+At1F
-         kvKqGElbWEkf9OJpZj0Zs6HwKissfNEQtcgembMU2amyez9Ph+2Gbd6uy/zaw51JVKIk
-         dM+g==
-X-Gm-Message-State: AOAM5320ju1ElaWln078S3hbH8g+kApegBYd+fuSnJzM6i4CWw8d0K5c
-        QrQiuW3V4db4ZrJyti42e46l6vIuJI45Hp6twas=
-X-Google-Smtp-Source: ABdhPJy4TNIMkm/9VcyKJP9XsZC6+iJG9fyUJBxp5El5V54lkwUJtppOxSjqQZzQf6aqn8tDN3lYlr2tkc/0xkyxB50=
-X-Received: by 2002:a05:6830:1258:: with SMTP id s24mr1557158otp.162.1598628595203;
- Fri, 28 Aug 2020 08:29:55 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wvgSXlfFLmZGKA63lMmn0f297NVEThzdjT+gdqSgXr8=;
+        b=s1CsXUGWz6F5flrsUK2QVx77/IBO55yNrGcUayVpc5/1vmjKetBjS1KYQ28uK4A6/A
+         1yxZmH0MwBDMsQVU2rHR0qOvxyJtTG0Y8S+5FcvCToFX5U6jSUZ68sNPAAoMsXgicxUt
+         RB6k7D/ofzqqgyTRC5KFVhDZRSyq1EyACt4MsbRy8iLTDz61VhEtExhJAV1Ao1ondiVf
+         49SUGLPnsepuuizHExzzZt08tsDaaiM5Sf5mQ3O5OKeooRLsJLKg0cygrArgJSbWcE6R
+         XZzY5U1rxCKbUX6pmUovN/t7az1rrSqLFF9WHMVZC1fxrfaHNQJ1i6scG8dFQtr+qYg6
+         hsLQ==
+X-Gm-Message-State: AOAM533IGztAQlktc/64AYp/yRQq6ikSwHRi3mGTWM/MOOwVGj2tAIh/
+        Srxv9qL35/TLeZ5Q+Uf8G2MejGlnR+U=
+X-Google-Smtp-Source: ABdhPJxGBh5lKnb8NFm3hje7UJxrU+IH/5eqF4HiqDTJzSHOUzhRs+eWVxTP8nBSMU973hNJ8U28qQ==
+X-Received: by 2002:adf:ed05:: with SMTP id a5mr1454858wro.364.1598628680823;
+        Fri, 28 Aug 2020 08:31:20 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 8sm2712002wrl.7.2020.08.28.08.31.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Aug 2020 08:31:20 -0700 (PDT)
+Message-Id: <pull.711.git.1598628679830.gitgitgadget@gmail.com>
+From:   "Hugo Locurcio via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 28 Aug 2020 15:31:19 +0000
+Subject: [PATCH] bisect: swap command-line options in documentation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
- <20200821201648.GH1165@coredump.intra.peff.net> <CABPp-BGYiphp-93Bf=2z-ZLd-Y=buTA0BCp6zuTJF39n1x3Rfw@mail.gmail.com>
- <20200828070335.GB2105050@coredump.intra.peff.net>
-In-Reply-To: <20200828070335.GB2105050@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 Aug 2020 08:29:44 -0700
-Message-ID: <CABPp-BGQB8rD8KyzccTQQ_X3Puyy3g5OOSEQES8Lv8Qtb-zRPg@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Add struct strmap and associated utility functions
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Hugo Locurcio <hugo.locurcio@hugo.pro>,
+        Hugo Locurcio <hugo.locurcio@hugo.pro>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 28, 2020 at 12:03 AM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Aug 21, 2020 at 02:33:54PM -0700, Elijah Newren wrote:
->
-> > However, there's an important difference here between what I've done
-> > and what you've suggested for hashmap: my method did not deallocate
-> > hashmap->table in hashmap_clear() and then use lazy initialization.
-> > In fact, I think not deallocating the table was part of the charm --
-> > the table had already naturally grown to the right size, and because
-> > the repository has approximately the same number of paths in various
-> > commits, this provided me a way of getting a table preallocated to a
-> > reasonable size for all merges after the first (and there are multiple
-> > merges either when recursiveness is needed due to multiple merge
-> > bases, OR when rebasing or cherry-picking a sequence of commits).
-> > This prevented, as hashmap.h puts it, "expensive resizing".
-> >
-> > So, once again, my performance ideas might be clashing with some of
-> > your desires for the API.  Any clever ideas for resolving that?
->
-> If the magic is in pre-sizing the hash, then it seems like the callers
-> ought to be feeding the size hint. That does make a little more work for
-> them, but I think there's real value in having consistent semantics for
-> "clear" across our data structures.
+From: Hugo Locurcio <hugo.locurcio@hugo.pro>
 
-I thought about adding a size hint from the callers, but the thing is
-I don't know how to get a good one short of running a merge and
-querying how big things were sized in that merge.  (In some common
-cases I can get an upper bound, but I can't get it in all cases and
-that upper bound might be a couple orders of magnitude too big.)
-Thus, it's really a case where I just punt on pre-sizing for the first
-merge, and use the size from the previous merge for subsequent ones.
-If you have a non-recursive merge or are cherry-picking only a single
-commit, then no sizing hint is used.
+The positional arguments are specified in this order: "bad" then "good".
+To avoid confusion, the options above the positional arguments
+are now specified in the same order. They can still be specified in any
+order since they're options, not positional arguments.
 
-> However, one cheat would be to free the memory but retain the size hint
-> after a clear. And then if we lazy-init, grow immediately to the hint
-> size. That's more expensive than a true reuse, because we do reallocate
-> the memory. But it avoids the repeated re-allocation during growth.
->
-> It may also be a sign that we should be growing the hash more
-> aggressively in the first place. Of course all of this is predicated
-> having some benchmarks. It would be useful to know which part actually
-> provided the speedup.
+Signed-off-by: Hugo Locurcio <hugo.locurcio@hugo.pro>
+---
+    rebase: swap command-line options in documentation
+    
+    I wasted an hour because I thought I'd have to specify "good" then "bad"
+    since I followed the order of the options instead of the positional
+    arguments. Let's make this harder to happen in the future :)
 
-Your thoughts here are great; I also had another one this past week --
-I could introduce a hashmap_partial_clear() (in addition to
-hashmap_clear()) for the special usecase I have of leaving the table
-allocated and pre-sized.  It'd prevent people from accidentally using
-it and forgetting to free stuff, while still allowing me to take
-advantage.  But, as you say, more benchmarks would be useful to find
-which parts provided the speedup before taking any of these steps.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-711%2FCalinou%2Frebase-doc-swap-options-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-711/Calinou/rebase-doc-swap-options-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/711
+
+ Documentation/git-bisect.txt | 2 +-
+ builtin/bisect--helper.c     | 2 +-
+ git-bisect.sh                | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 0e993e4587..fbb39fbdf5 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -16,7 +16,7 @@ DESCRIPTION
+ The command takes various subcommands, and different options depending
+ on the subcommand:
+ 
+- git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
++ git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
+ 		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]
+  git bisect (bad|new|<term-new>) [<rev>]
+  git bisect (good|old|<term-old>) [<rev>...]
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index cdda279b23..7dcc1b5188 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -27,7 +27,7 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
+ 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
+ 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
+-	N_("git bisect--helper --bisect-start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
++	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
+ 					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
+ 	NULL
+ };
+diff --git a/git-bisect.sh b/git-bisect.sh
+index c7580e51a0..3ec7558bdc 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -3,7 +3,7 @@
+ USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
+ LONG_USAGE='git bisect help
+ 	print this long help message.
+-git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
++git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
+ 		 [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
+ 	reset bisect state and start bisection.
+ git bisect (bad|new) [<rev>]
+
+base-commit: 20de7e7e4f4e9ae52e6cc7cfaa6469f186ddb0fa
+-- 
+gitgitgadget
