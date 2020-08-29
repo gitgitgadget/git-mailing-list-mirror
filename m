@@ -2,138 +2,118 @@ Return-Path: <SRS0=eCeC=CH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EDFBC433E6
-	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 18:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB73C433E6
+	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 18:50:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E0742098B
-	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 18:44:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 03BC520774
+	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 18:50:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rQKAtqgH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VjVi4wCU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728373AbgH2Soa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Aug 2020 14:44:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53776 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728265AbgH2So1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Aug 2020 14:44:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 560D970126;
-        Sat, 29 Aug 2020 14:44:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BdUtguAFf/sdTynC66KjXa+sOac=; b=rQKAtq
-        gHJ9Om89r9SrShJpv2XLNh7cxoyKZd46flkPB+yVAVu6S5sCJNt8UppLp3EXOS0r
-        MOqAp5YmOY6w2F/1Hy76P98G3utZOCQk1UpvJD+8Kdc+EaeBIQwEzfeWL2f7eC3/
-        50hsh4mdf6tPrvwdbGo0P0oBhu2e860S/bbrQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qOb56fMCwmqiXCVTjeJocZ9wrqbFehLd
-        MN3WEUg8bs7qmjxxo/89EOYAT34CRlTKUtJ7eqxHdeVX659aPRnpOse+tCgCrmnw
-        eFRP8O2MB8a6AgaeaYdl1w51KwZSMzVaTXuHeyNjUY+k8C6HX2ALufA1tfjEZemr
-        AKD+pI4pmMA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D63570125;
-        Sat, 29 Aug 2020 14:44:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3D7E70124;
-        Sat, 29 Aug 2020 14:44:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH v2 1/2] sha1-name: replace unsigned int with option struct
-References: <20200513004058.34456-1-jonathantanmy@google.com>
-        <cover.1598662525.git.jonathantanmy@google.com>
-        <1ce44900a08857332ee70b916c3d9e7e76751221.1598662525.git.jonathantanmy@google.com>
-Date:   Sat, 29 Aug 2020 11:44:22 -0700
-In-Reply-To: <1ce44900a08857332ee70b916c3d9e7e76751221.1598662525.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Fri, 28 Aug 2020 18:02:26 -0700")
-Message-ID: <xmqqsgc5i96h.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728370AbgH2Su0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Aug 2020 14:50:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36440 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728265AbgH2SuZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Aug 2020 14:50:25 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 714BFC061236
+        for <git@vger.kernel.org>; Sat, 29 Aug 2020 11:50:25 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id 109so2086032otv.3
+        for <git@vger.kernel.org>; Sat, 29 Aug 2020 11:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3Z7XHIRLlP+CFfm4HNP1tXQDjIMos3p9a7qqkQdWH+0=;
+        b=VjVi4wCU9YsxyQx/FjdVgHulgUKSLLGoja7F/OvLLDpTW50dKdMBO2Q4vN9Ap5eqWs
+         yxyatqE2tVmo8N4jIHg16zIcS9KXTxZn3+Ij4PYyh0ODEtGZDLWiH0+qxh0yy9rL++/4
+         n4mg3XvlxmDXUp4AkEuunYfW3GTAKcqzPrWD3C68YjUwseY/A+DJkGXr4YcuqhVMoAGv
+         JsphuwkFuWXLn2pDtbEF1Rv6YVQg6cEyt2Yi2pGZUm2m+M4VP8MTt7vXepGElmEvh6CZ
+         RaunpXpEU80TR+yew1M4cbDi80CiL2Ug3O3SUEFagpUJ5V9SfITRZ6NYzJ6omZER40Qm
+         9yCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3Z7XHIRLlP+CFfm4HNP1tXQDjIMos3p9a7qqkQdWH+0=;
+        b=B2asHJfZ63GirOaRba4xwmt6qf2pHDvCyx7T3wi0sjxT6Em7ucOWSqoWTl89e7JsNW
+         Cq5uVupLifFoIM5s8GerO/FEZpjCtIxFrTd/m2ctbZ8LYWN+kmqU+S8Oer174d0QvLRI
+         WkXwKqtLngDYiTQ5d2gMPOje5pmfVzeO+HWm4sbO4CRRW+mLceyGcrKICy5Nbwhh1AMz
+         LTn/WnCnWFFjG17ftmmiqu1/+I6mtxnZ6ysCaPORtddBAvxsY0sCHfnJYmhSG1b8o1k5
+         rCw95vil5ATC2c9R2OhrV4g1GjG/Tiwy6FVcTtPMJXp3Bqtgyfaemou3ERPQFavbnOVq
+         tPZg==
+X-Gm-Message-State: AOAM533yfyFIAWBcF2EEaYbJGNdg0W2aSJeZ9s903scwHXPz4ZPkpfrT
+        IT9RlyeptqHsGO2+jnYken5WeqHvi3f3XlVKw6QxN70bnqU=
+X-Google-Smtp-Source: ABdhPJw6tiUP8NKKbKK5zrqPzBz7gsdMEgmT+2kNQXGu8pZWQ735w5F4dq6RpabwDF4cQT5043wAyXWBV5YlEnFQtUY=
+X-Received: by 2002:a9d:1c8f:: with SMTP id l15mr2796974ota.241.1598727021826;
+ Sat, 29 Aug 2020 11:50:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A7D874DA-EA27-11EA-9175-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <xmqqh7snpxy1.fsf@gitster.c.googlers.com> <CA+CkUQ-SsxrJk+7e-ygm8FfCto6XZt2Ts9UcTMpgkmAQWZkLhA@mail.gmail.com>
+ <xmqq1rjpjohy.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq1rjpjohy.fsf@gitster.c.googlers.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Sat, 29 Aug 2020 18:50:10 +0530
+Message-ID: <CA+CkUQ_3jvkwNvakGxCvDk-C2RMCfAd7pAxy8OmjwVvJT2S_Cw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2020, #07; Thu, 27)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi,
 
-> In preparation for a future patch adding a boolean parameter to
-> repo_interpret_branch_name(), which might be easily confused with an
-> existing unsigned int parameter, refactor repo_interpret_branch_name()
-> to take an option struct instead of the unsigned int parameter.
+On Sat, Aug 29, 2020 at 11:58 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Hariom verma <hariom18599@gmail.com> writes:
+>
+> > On Fri, Aug 28, 2020 at 3:14 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> [Cooking]
+> >>
+> >> * hv/ref-filter-trailers-atom-parsing-fix (2020-08-21) 2 commits
+> >>   (merged to 'next' on 2020-08-24 at 79b27f3263)
+> >>  + ref-filter: 'contents:trailers' show error if `:` is missing
+> >>  + t6300: unify %(trailers) and %(contents:trailers) tests
+> >> ...
+> >
+> > After a discussion, we agreed on keeping the helper function instead
+> > on duplicating code in "ref-filter: 'contents:trailers' show error if
+> > `:` is missing"
+> > There is a high possibility we might want to reuse helper in other places too.
+> > Especially in the case of newly added "%(subject:sanitize)", if we
+> > also want "%(contents:subject:sanitize)" to work.
+> >
+> > Full discussion:
+> > https://public-inbox.org/git/CA+CkUQ8Gst2RTaXY6t+ytWu_9Pu7eqnRYRrnawRwYd_NN=u0Lg@mail.gmail.com/
+> >
+> > I'm about to send the updated patch series soon.
+>
+> IIRC, the code in question is good for the purpose of what already
+> exists and is easier to follow without helper.  When we need to make
+> the code more elaborabed and/or when we actually have the second
+> callsite would be the ideal time to introduce such a helper as a
+> preliminay clean-up patch early in such a follow-on series that
+> would happen after the "fix" in question graduates, I would think.
+>
+> To be honest, I am not sure if we even need an incremental on top
+> right now, unless we want to delay the two patches to fix real
+> breakage above and make them wait for patches that adds features
+> that require to call the same helper from elsewhere.
+>
 
-Makes sense.
+Yeah, I agree with you.
+Let's not delay these 2 patches. Sorry for the noise though.
 
->  #define INTERPRET_BRANCH_LOCAL (1<<0)
->  #define INTERPRET_BRANCH_REMOTE (1<<1)
->  #define INTERPRET_BRANCH_HEAD (1<<2)
-> +struct interpret_branch_name_options {
-> +	/*
-> +	 * If "allowed" is non-zero, it is a treated as a bitfield of allowable
-> +	 * expansions: local branches ("refs/heads/"), remote branches
-> +	 * ("refs/remotes/"), or "HEAD". If no "allowed" bits are set, any expansion is
-> +	 * allowed, even ones to refs outside of those namespaces.
-> +	 */
-> +	unsigned allowed;
-> +};
->  int repo_interpret_branch_name(struct repository *r,
->  			       const char *str, int len,
->  			       struct strbuf *buf,
-> -			       unsigned allowed);
-> -#define interpret_branch_name(str, len, buf, allowed) \
-> -	repo_interpret_branch_name(the_repository, str, len, buf, allowed)
-> +			       const struct interpret_branch_name_options *options);
-> +#define interpret_branch_name(str, len, buf, options) \
-> +	repo_interpret_branch_name(the_repository, str, len, buf, options)
-
-I was debating myself if we want to have 
-
-    #define IBN_OPTIONS_INIT { 0 }
-
-or something similar (perhaps "#define IOI(abit) { .allowed = (abit) }"),
-but it probably is not worth it given that we have only 3 local
-sites that define it, 1 always initializes the field to 0, and the
-other just relay the value passed by its caller.
-
-> ...
-> diff --git a/sha1-name.c b/sha1-name.c
-> index 0b8cb5247a..a7a9de66c4 100644
-> --- a/sha1-name.c
-> +++ b/sha1-name.c
-> @@ -1427,9 +1427,12 @@ static int reinterpret(struct repository *r,
->  	struct strbuf tmp = STRBUF_INIT;
->  	int used = buf->len;
->  	int ret;
-> +	struct interpret_branch_name_options options = {
-> +		.allowed = allowed
-> +	};
->  
->  	strbuf_add(buf, name + len, namelen - len);
-> -	ret = repo_interpret_branch_name(r, buf->buf, buf->len, &tmp, allowed);
-> +	ret = repo_interpret_branch_name(r, buf->buf, buf->len, &tmp, &options);
-
-> @@ -1557,7 +1561,10 @@ int repo_interpret_branch_name(struct repository *r,
->  void strbuf_branchname(struct strbuf *sb, const char *name, unsigned allowed)
->  {
->  	int len = strlen(name);
-> -	int used = interpret_branch_name(name, len, sb, allowed);
-> +	struct interpret_branch_name_options options = {
-> +		.allowed = allowed
-> +	};
-> +	int used = interpret_branch_name(name, len, sb, &options);
-
-These are quite straight-forward rewrites.  Looking good.
-
-Thanks.
+Thanks,
+Hariom
