@@ -8,66 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B9D3C433E2
-	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 20:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E4F5C433E6
+	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 22:58:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFA5620774
-	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 20:12:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8AED20776
+	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 22:58:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m35QEMNX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uOdJ/z22"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728510AbgH2UMV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Aug 2020 16:12:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49064 "EHLO
+        id S1728187AbgH2W5L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Aug 2020 18:57:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728410AbgH2UMS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Aug 2020 16:12:18 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE09C061236
-        for <git@vger.kernel.org>; Sat, 29 Aug 2020 13:12:17 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id e11so2528820ljn.6
-        for <git@vger.kernel.org>; Sat, 29 Aug 2020 13:12:17 -0700 (PDT)
+        with ESMTP id S1727987AbgH2W5K (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Aug 2020 18:57:10 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CF5CC061573
+        for <git@vger.kernel.org>; Sat, 29 Aug 2020 15:57:09 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id z2so2283912qtv.12
+        for <git@vger.kernel.org>; Sat, 29 Aug 2020 15:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aNArhxIi92RreaCel7G3aEvzcVbTAJs9r7IpAPqLAbk=;
-        b=m35QEMNXdstGM3BY4PofDd10P1ECT9Atn+4WgOmwiRW52VcKdhzNw8sB0+DFT2cbAE
-         BByLGgOSs70LKC8WbeEMd7r8lprH2APnPVC004TCL5Fh1NJ0pYGh6/DoYDjfY1gYpo1Y
-         nn4w0oesv+qvuXzVe82qxo/Y8PxHwCJp8cm7Ua2AbfWs8tGyId8rvBPmYSNhfJjbLC10
-         aHX+2Q8XbtoGeO1PTgXSyueFUeABGz3VWXhOOHgm3Io2G77LbutTUWqNqz+x6l39ckwQ
-         4twomy+qbfbKIV8U+eNqipaqPcU5EbINWVdu6gs9+5gCyaQDLW+a9VYrHvyySDvJOibL
-         fK2Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TizANQBGCz+3bKkZSG+sHwWG+Fm/ik5G+UxP+cwypd0=;
+        b=uOdJ/z22eRY6mJNlXjxU2evzMWx7khqySU3fYG6MrgLv7e7U3SLXS9gZzcBoweQDZa
+         7xaFkUHrH21OZ7sLplHlPKppof+1xqIy0A8kkHvrxYvz2GWbqOeCYvQKSxHv+xXpFWme
+         tJ9wgu+/p2UKiPzKCHWpTcNVcI6lsxSh91Q9lOiRdmNQ3PmtKy6dLQdXMdi1mC6vnPqN
+         SDDc5EtruXt90vTfi1fb2hsdaBOdPypAz/fMHyjJOJYUkx07v87o2SHLuT5d+6kkQ7M0
+         H+bij9ZIQiebuI6n7DxliMANc8qtQTmYKh5Lmrd8XvAm0WMQ5HNDM/AFzY2lFVFir//Q
+         YiMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aNArhxIi92RreaCel7G3aEvzcVbTAJs9r7IpAPqLAbk=;
-        b=OYeuoXUqrb70EW0C3GmH1dxq2lm6EqqoSMjTJkWAF4t+D6UMSrdkz72s84aoN3UWfM
-         3/dcfGnEEEXkAw9QzjFJeocC1jGGx3Tkc2a+qSnyNO6m3BSXN7ZP+LyiT57RUMVf354h
-         ni9EFetX21XbliikG6dmR1SGps91stFxGk1pSmWbn/a7RJWxKm9cxB3XFass3c83dXWZ
-         vsEbtWueosh0uQaPXj/Fryo1pr7fWFvCIQGd2hEJKiKP0miQmqIieuWcQO59gvZU8XgY
-         00PKemgs4kY4en0qc+jj5R+6F0nZCFa3u4oYwi0j5X5yc4KLajEdZ+n8meZ3VStJ5TrV
-         Uv0g==
-X-Gm-Message-State: AOAM5300lNb9zbyWLfwEqMg/oyTNE7gEgraMKJS3Q+V6Mcq90P/Kv15S
-        yl5IxrUr9aFdKqPwR1flCpGqBwMkI04=
-X-Google-Smtp-Source: ABdhPJzVYSq9/gwCB8Y5E0BdsV3UOs3MFqinj1qYv3JiPN7IV2Z2sRTr8/owazaXrz3nHBvizd8oFQ==
-X-Received: by 2002:a2e:8ecc:: with SMTP id e12mr1894125ljl.33.1598731936421;
-        Sat, 29 Aug 2020 13:12:16 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u11sm657811ljh.17.2020.08.29.13.12.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Aug 2020 13:12:15 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v2] revision: add separate field for "-m" of "diff-index -m"
-Date:   Sat, 29 Aug 2020 23:11:40 +0300
-Message-Id: <20200829201140.23425-1-sorganov@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200829194634.23306-1-sorganov@gmail.com>
-References: <20200829194634.23306-1-sorganov@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TizANQBGCz+3bKkZSG+sHwWG+Fm/ik5G+UxP+cwypd0=;
+        b=mufT06oawNckNX5OV/8tYJsGrAqWy85T2sVFI/3289Q7Ow8cDZsWIJXRYGllf78RYM
+         cmk4v6P0YpQu3OJ1ljICLXcKD5wO/PJLgLGDXAKG/54RRQflBOPsCStFLY4T5+0eLwYX
+         Kato0tetxFIpg7OC714y1K8Mt3WFQ2GId91FJQJvQjI2LTDozmTQCUmCSnO3ZAk4La6B
+         yP2h7bE4rl2LHWMkDPmxMM4Ga3Ci9iZwOYU7EFbfY282diGk4EoV/0PjB4eZSEDX6ojh
+         kKCLonGCzjL10Tpuk1QNbQ4u84N66CkDhvJ8aECc/CEPYZV0NecLyDVSc8wE2Q6uinyr
+         DG0g==
+X-Gm-Message-State: AOAM531rSExNH1vZ+s6h3tRqK32slu1Sh9MNHIb2/iyvgYo5Z45KyGEf
+        FwWyzXsgtC9a1GhYd+oSpcD2+WfLBL/J2A==
+X-Google-Smtp-Source: ABdhPJzRF2WH6yzjIJ6ShxOUoU1ecM56hwHd8wUWVxTOrNxNSTAGza1mOqAHd6NYps60f2agqgGyEQ==
+X-Received: by 2002:ac8:3836:: with SMTP id q51mr7337527qtb.41.1598741827970;
+        Sat, 29 Aug 2020 15:57:07 -0700 (PDT)
+Received: from localhost.localdomain (c-98-229-3-81.hsd1.vt.comcast.net. [98.229.3.81])
+        by smtp.gmail.com with ESMTPSA id o13sm3910865qko.48.2020.08.29.15.57.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 29 Aug 2020 15:57:07 -0700 (PDT)
+From:   Aaron Lipman <alipman88@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Aaron Lipman <alipman88@gmail.com>
+Subject: [PATCH] t3200: clean side effect of git checkout --orphan
+Date:   Sat, 29 Aug 2020 18:56:48 -0400
+Message-Id: <20200829225648.11971-1-alipman88@gmail.com>
+X-Mailer: git-send-email 2.24.3 (Apple Git-128)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -75,78 +72,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Historically, in "diff-index -m", "-m" does not mean "do not ignore merges", but
-"match missing". Despite this, diff-index abuses 'ignore_merges' field being set
-by "-m", that in turn causes more troubles.
+The "refuse --edit-description on unborn branch for now" test in t3200
+switches to an orphan branch, causing subsequent git commands
+referencing HEAD to fail. Avoid this side-effect by switching back to
+master after that test finishes.
 
-Add separate 'diff_index_match_missing' field for diff-index to use and set it
-when we encounter "-m" option. This field won't then be cleared when primary
-meaning of "-m" is reverted (e.g., by "--no-diff-merges"), nor it will be
-affected by future option(s) that might drive 'ignore_merges' field.
+This has gone undetected, as the next effected test expects failure -
+but it currently fails for the wrong reason.
 
-Use this new field from diff-lib:do_oneway_diff() instead of abusing
-'ignore_merges' field.
+Verbose output of the next test referencing HEAD,
+"--merged is incompatible with --no-merged":
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
+  fatal: malformed object name HEAD
+
+Which this commit corrects to:
+
+  error: option `no-merged' is incompatible with --merged
+
+Signed-off-by: Aaron Lipman <alipman88@gmail.com>
 ---
+We might considered updating "--merged is incompatible with --no-merged"
+tests to not only test for failure, but check the contents of the error
+message to ensure they fail for the correct reason, e.g.:
 
-v2: rebased from 'maint' onto 'master'
+test_expect_success '--merged is incompatible with --no-merged' '
+  test_must_fail git branch --merged HEAD --no-merged HEAD 2>error &&
+  test_i18ngrep "is incompatible with --merged" error
+'
 
- diff-lib.c | 10 ++--------
- revision.c |  6 ++++++
- revision.h |  1 +
- 3 files changed, 9 insertions(+), 8 deletions(-)
+However, I intend to submit a patch enabling ref-filter to accept
+multiple merged/no-merged filters, which would make said updates
+irrelevant.
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 50521e2093fc..f2aee78e7aa2 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -405,14 +405,8 @@ static void do_oneway_diff(struct unpack_trees_options *o,
- 	/* if the entry is not checked out, don't examine work tree */
- 	cached = o->index_only ||
- 		(idx && ((idx->ce_flags & CE_VALID) || ce_skip_worktree(idx)));
--	/*
--	 * Backward compatibility wart - "diff-index -m" does
--	 * not mean "do not ignore merges", but "match_missing".
--	 *
--	 * But with the revision flag parsing, that's found in
--	 * "!revs->ignore_merges".
--	 */
--	match_missing = !revs->ignore_merges;
-+
-+	match_missing = revs->diff_index_match_missing;
+ t/t3200-branch.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 4c0734157b..028c88d1b2 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1287,6 +1287,7 @@ test_expect_success 'detect typo in branch name when using --edit-description' '
+ '
  
- 	if (cached && idx && ce_stage(idx)) {
- 		struct diff_filepair *pair;
-diff --git a/revision.c b/revision.c
-index 96630e31867d..64b16f7d1033 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2345,6 +2345,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->diffopt.flags.tree_in_recursive = 1;
- 	} else if (!strcmp(arg, "-m")) {
- 		revs->ignore_merges = 0;
-+		/*
-+		 * Backward compatibility wart - "diff-index -m" does
-+		 * not mean "do not ignore merges", but "match_missing",
-+		 * so set separate flag for it.
-+		 */
-+		revs->diff_index_match_missing = 1;
- 	} else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
- 		if (!strcmp(optarg, "off")) {
- 			revs->ignore_merges = 1;
-diff --git a/revision.h b/revision.h
-index c1e5bcf139d7..5ae8254ffaed 100644
---- a/revision.h
-+++ b/revision.h
-@@ -188,6 +188,7 @@ struct rev_info {
- 	unsigned int	diff:1,
- 			full_diff:1,
- 			show_root_diff:1,
-+			diff_index_match_missing:1,
- 			no_commit_id:1,
- 			verbose_header:1,
- 			combine_merges:1,
+ test_expect_success 'refuse --edit-description on unborn branch for now' '
++	test_when_finished "git checkout master" &&
+ 	write_script editor <<-\EOF &&
+ 		echo "New contents" >"$1"
+ 	EOF
 -- 
-2.25.1
+2.24.3 (Apple Git-128)
 
