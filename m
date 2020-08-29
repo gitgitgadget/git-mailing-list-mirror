@@ -2,86 +2,136 @@ Return-Path: <SRS0=eCeC=CH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D098C433E6
-	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 19:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 629E8C433E6
+	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 19:31:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F24120774
-	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 19:29:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37DEB2076D
+	for <git@archiver.kernel.org>; Sat, 29 Aug 2020 19:31:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lxm4VAAp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PRdALIvA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728462AbgH2T3w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Aug 2020 15:29:52 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58800 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728370AbgH2T3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Aug 2020 15:29:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E7DA9D6A0A;
-        Sat, 29 Aug 2020 15:29:51 -0400 (EDT)
+        id S1728499AbgH2TbX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Aug 2020 15:31:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53485 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728370AbgH2TbW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Aug 2020 15:31:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DBC04704A3;
+        Sat, 29 Aug 2020 15:31:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Dx7XrUSx1QVffQjq3mIA9BGVlWI=; b=lxm4VA
-        ApGFSS8e5MjWYr51xKQ62rS1L0c89/m2lCGZmjb/bTRgETxyeKcBUu5U2UXsm/Mq
-        OgRqHWbZNJMu9CuZoAMpGdnWixga2HAc0tCLK2QL41Kw+WZ+SAUYb2KuwUEJnR6r
-        nyybJrWltd+NFYfuxN6uboYhbkawalvn+j+xo=
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=1hp7SbyioiMz0a3ZNsdymQ8GQsQ=; b=PRdALIvAQeSM9cYtYv4S
+        ViFC1SrXyckXudln183hsTYasrVgkKYOgngyfVXBuFW1qpzOIrFcFZhDHchGGbX+
+        dYNDVXQibcZkHRd2AKL7eSmHnW2WAVZRSeWMP5Br4EBYGTLnS8y0JxiiiKQmnyYV
+        McEcyVMMy3I3WgMn5xqEo1w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q7KQ0DcaVXFuuK0bNxDRSOac9Dxd35Ez
-        poFvre9opej5uVHUC97HVhUx4Tl35xIwnTe+AhTkdLTFmhnjNm5gf2C7+jcNDf6B
-        X5yav+rr716kLflCLIp7JYpU6//ihG9QHUgj/8LMiEsatl+k8cfWnUU3uytTYeB0
-        ltrzBbdsDbY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E05FED6A07;
-        Sat, 29 Aug 2020 15:29:51 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=spBr+U8tB121Pe9a11blv0BpiwvWLKD3ELVsT6oiW12Uwh
+        PIKvacdTg8D/NFWofs9msAFM6HkHqHyPA1lEUVLkg2KjHhO1Cbejqvt59qP3piXt
+        Q2YAozofc61Dn7yfTCGWxvJG+RkogVyEVBovE7yVR2PYD43oOLWXhAoVMF5g8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB5D9704A2;
+        Sat, 29 Aug 2020 15:31:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 387ECD6A04;
-        Sat, 29 Aug 2020 15:29:49 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20CFD704A1;
+        Sat, 29 Aug 2020 15:31:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Vasyl Vavrychuk <vvavrychuk@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] Documentation/git-send-email.txt: Mention less secure app access might need to enable.
-References: <CAPig+cT8Kmh6LcoKqkcJX6imXaase07o8C_-7k7RkyhEyW02rQ@mail.gmail.com>
-        <20200829153920.17155-1-vvavrychuk@gmail.com>
-        <xmqqwo1hi9nv.fsf@gitster.c.googlers.com>
-Date:   Sat, 29 Aug 2020 12:29:47 -0700
-In-Reply-To: <xmqqwo1hi9nv.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 29 Aug 2020 11:33:56 -0700")
-Message-ID: <xmqqft85i72s.fsf@gitster.c.googlers.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v6 06/13] bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell functions in C
+References: <20200828124617.60618-1-mirucam@gmail.com>
+        <20200828124617.60618-7-mirucam@gmail.com>
+Date:   Sat, 29 Aug 2020 12:31:17 -0700
+Message-ID: <xmqq8sdxi70a.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 00E23C36-EA2E-11EA-A3C6-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 35E09E5A-EA2E-11EA-8444-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Miriam Rubio <mirucam@gmail.com> writes:
 
-> Vasyl Vavrychuk <vvavrychuk@gmail.com> writes:
+> diff --git a/bisect.c b/bisect.c
+> index c6aba2b9f2..f0fca5c6f3 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -988,6 +988,12 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
+>   * the bisection process finished successfully.
+>   * In this case the calling function or command should not turn a
+>   * BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND return code into an error or a non zero exit code.
+> + *
+> + * Checking BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND
+> + * in bisect_helper::bisect_next() and only transforming it to 0 at
+> + * the end of bisect_helper::cmd_bisect__helper() helps bypassing
+> + * all the code related to finding a commit to test.
+> + *
+>   * If no_checkout is non-zero, the bisection process does not
+>   * checkout the trial commit but instead simply updates BISECT_HEAD.
+>   */
 
-Another thing I forgot to say.
+Not a problem introduced by this step, but the above description on
+no_checkout describes a parameter that no longer exists.  
 
-Subject: [PATCH] Documentation/git-send-email.txt: Mention less secure app access might need to enable.
+The comments before a function is to guide the developers how to
+call the function correctly, so it should have been removed, moved
+to where no_checkout is used in the function, or moved to where
+BISECT_HEAD ref gets created, as necessary, but by mistake be5fe200
+(cmd_bisect__helper: defer parsing no-checkout flag, 2020-08-07),
+forgot to do any of the three.
 
-Especially with grammofix s/to enable/to be enabled/ applied, the
-above is way too long as a title and would stand out like a sore
-thumb in "git shortlog --no-merges v2.28.0..v2.29.0" output.
-Something like
 
-Subject: [PATCH] send-email doc: mention less secure app access with GMail
+> +static enum bisect_error bisect_next(struct bisect_terms *terms, const char *prefix)
+> +{
+> +	int no_checkout;
+> +	enum bisect_error res;
+> +
+> +	bisect_autostart(terms);
+> +	if (bisect_next_check(terms, terms->term_good))
+> +		return BISECT_FAILED;
+> +
+> +	no_checkout = ref_exists("BISECT_HEAD");
+> +
+> +	/* Perform all bisection computation */
+> +	res = bisect_next_all(the_repository, prefix);
+> +
+> +	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+> +		res = bisect_successful(terms);
+> +		return res ? res : BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
+> +	} else if (res == BISECT_ONLY_SKIPPED_LEFT) {
+> +		res = bisect_skipped_commits(terms);
+> +		return res ? res : BISECT_ONLY_SKIPPED_LEFT;
+> +	}
+> +	return res;
+> +}
+> +
 
-perhaps.
+The no_checkout local variable is assigned but never used.  It is
+understandable if a variable that used to be used becomes unused
+when some part (i.e. the part that used to use the variable) of a
+function is factored out, but it is rather unusual how a brand new
+function has such an unused code and stay to be that way throughout
+a topic.  Makes a reviewer suspect that there may be a code missing,
+that has to use the variable to decide to do things differently, in
+this function.  It seems to break -Werror builds.
 
 Thanks.
+
+
