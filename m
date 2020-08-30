@@ -2,248 +2,173 @@ Return-Path: <SRS0=qAd/=CI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAFAAC433E2
-	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 19:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25ABAC433E6
+	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 19:59:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A313206F0
-	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 19:28:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9CA120757
+	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 19:59:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ijhv6gUv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+MKH/pS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbgH3T2c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Aug 2020 15:28:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38472 "EHLO
+        id S1726394AbgH3T7I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Aug 2020 15:59:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbgH3T2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Aug 2020 15:28:31 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A004FC061573
-        for <git@vger.kernel.org>; Sun, 30 Aug 2020 12:28:30 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id o18so5721194eje.7
-        for <git@vger.kernel.org>; Sun, 30 Aug 2020 12:28:30 -0700 (PDT)
+        with ESMTP id S1726179AbgH3T7H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Aug 2020 15:59:07 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B1FC061573
+        for <git@vger.kernel.org>; Sun, 30 Aug 2020 12:59:06 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id mt12so1991834pjb.4
+        for <git@vger.kernel.org>; Sun, 30 Aug 2020 12:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=VdAmm0PXspUEfjWkOmbUAkdIpWG+fMFXT6DDsPIl7mA=;
-        b=Ijhv6gUvVdquEP6YcMD0cnTAi2KgmP6FJd7dS3+4lBWtY6OoenDRPCu4Aho9PUovf6
-         iKWrqYVzOhq+ubGTLo/Ik7i7fWObN6sbY3jckWn6+BNqKcFNEpoRbbYbp1fDaQ542BVF
-         yGs+tKjDXxx0vIK2LAReKVZvLrry1IQYZzEURHk0cB6pzO4gpwjmo9jTazQqnGYnFFG6
-         J6fGiUf+CtZEXcQg4GFc0Ans73kqdcxCh1jDp1/ZMMhNqxVYN9Ij5/uqDLa+5MEPUaBe
-         VOh74uNokBXaSxsy1Y0RpLrdvo9Kj6eRDZCeV+68ufQ6hh+VZLF5oFApoiI3rYekSrTz
-         WLUA==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=uXYkUIbtYRcK6cPKhy4g3K6swMALfoTYGP/3ZdRI5DM=;
+        b=V+MKH/pSh56tV/qhN9zj1NNnakXZ6a2yxKOK3RwwHSSpDRS3WuHDJK2DjNNB2rOh7H
+         KQaOgutNbhN+e6u6DjrgfesCYiGv+dMu/EwYzCNiI2et/MT10AFQboCO68ATMfHqg3dC
+         /QvidaUhXDOwaprBpCpPoOt06alofOwZ1BXltVPLAnwyV3ad6IzsXYrh5a0DAWAFxnsH
+         5kV6SZYtJz/n6e6/UnyHF2dwjqhuGNws/iiwuDzMex7n0DNkK+8ewK19f6huInGr1NJN
+         bUP1ynDcnVlIHlmX4FHoSPD6GBeTzJjKczKOVxqnxBuaFYwJYWxBo+fb25rQee1sJ+CC
+         8AOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VdAmm0PXspUEfjWkOmbUAkdIpWG+fMFXT6DDsPIl7mA=;
-        b=Xjq6AIMjcjhMaipe3h7XHiAk8r9Oa/usNkz5sfjbYv6jxBRzWOAMSgWaOVF1v/J7/6
-         wcmw6BH80nIXH9eJTG9tE/0qTxhrbDbiEYpSs62RxVvgsg8+EhY4qaYIHm1cPmSk3hsP
-         whBwSPZnnWz1l4l8SFXeZlOxvQKjHUmokbvNfXs0CKtquB4YATqdBM980quYD4kCQbd9
-         bgkq3pYdUrNJWP1wQcwI3m3LtsNvyWiWyqAcakDeiqadpXB6srvG6mCF5W2MGye+sS+7
-         87yr9+yVlak4xxC/5iQSqj2cwI2HCA5NpAvLG+UtxA4p8dUIYeHyxJkbuSNeN+QN4j/o
-         lG+A==
-X-Gm-Message-State: AOAM532UKLCPVYP5gE5Ddur9Oacnaq/4jA4o5OgWzjNUT0gstO+d6Xwb
-        qzdD1dMQ3OOySVNuIwC3Ft+iWhNx9Zk=
-X-Google-Smtp-Source: ABdhPJzS2uN+yisFW3ZxoBFKwi8RRguzBvz/0DNqO1dunsR1nKxGTkPWJQ04xl45ugs68Esyvu9jAw==
-X-Received: by 2002:a17:906:6055:: with SMTP id p21mr9287149ejj.173.1598815708874;
-        Sun, 30 Aug 2020 12:28:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c4sm5965243ejs.32.2020.08.30.12.28.27
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=uXYkUIbtYRcK6cPKhy4g3K6swMALfoTYGP/3ZdRI5DM=;
+        b=M3Kz1SdesenpJRaEeyf+c7Q/x94B5E/AhVlD3swR8IaTmuMak31e+NMvlVm8G6PFna
+         kWAzbyK9nFvrb69IVaM+1+Hg38lKLSDTsmlawid1mx/c4aQh7+MvhstjKUmEO0d7rYnS
+         kZoL30nr48Bc6qEHeIypNz4jj9dhzlM66mE7u7w94yq7IVh5zkMaoFOAQGP3ikf7VpD0
+         OtZCmt3bnnMJvVbKBojgU2GwpHaQr0xFU2zWzyHJGaSbyVymoLPQFD2SDrDYNnoqm7Db
+         PtpaJcOvOkjaxPTRjyxz++q4QpRLRKgt6brDewjPvbZbuzGBGu3pToezsgKJLuTw80pD
+         jeAg==
+X-Gm-Message-State: AOAM531IVI1A2w2+iGMyOtrcVJcUhgAzlfJv6LV03wIOBmNL9uasX9lU
+        6Zdnlx1boA43VoEymg/xiQ0=
+X-Google-Smtp-Source: ABdhPJwmYi7fD7sU+UArgOSkz0YBC8m1uro9lEC2+mekcBxbVxBzpm/UXmWAhHyP5ERRJVMnxQE9NA==
+X-Received: by 2002:a17:90a:bc94:: with SMTP id x20mr7338566pjr.45.1598817546046;
+        Sun, 30 Aug 2020 12:59:06 -0700 (PDT)
+Received: from lwitch-pc ([183.83.155.71])
+        by smtp.gmail.com with ESMTPSA id u3sm4810736pjn.29.2020.08.30.12.59.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Aug 2020 12:28:28 -0700 (PDT)
-Message-Id: <pull.714.git.1598815707540.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 30 Aug 2020 19:28:27 +0000
-Subject: [PATCH] Makefile: add support for generating JSON compilation
- database
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 30 Aug 2020 12:59:05 -0700 (PDT)
+Message-ID: <ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com>
+Subject: Re: [GSoC][PATCH] submodule: port submodule subcommand 'add' from
+ shell to C
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, johannes.schindelin@gmx.de,
+        liu.denton@gmail.com
+Date:   Mon, 31 Aug 2020 01:28:53 +0530
+In-Reply-To: <20200826091502.GA29471@konoha>
+References: <20200824090359.403944-1-shouryashukla.oo@gmail.com>
+         <xmqq8se36gev.fsf@gitster.c.googlers.com> <20200826091502.GA29471@konoha>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.1-2 
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Wed, 2020-08-26 at 14:45 +0530, Shourya Shukla wrote:
+> On 24/08 11:35, Junio C Hamano wrote:
+> > Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> > 
+> > The shell version would error out with anything in the index, so I'd
+> > expect that a faithful conversion would not call is_directory() nor
+> > submodule_from_path() at all---it would just look path up in the_index
+> > and complains if anything is found.  For example, the quoted part in
+> > the original above is what gives the error message when I do
+> > 
+> > 	$ git submodule add ./Makefile
+> > 	'Makefile' already exists in the index.
+> > 
+> > I think.  And the above code won't trigger the "already exists" at
+> > all because 'path' is not a directory.
+> 
+> Alright. That is correct. I tried to use a multitude of functions but
+> did not find luck with any of them. The functions I tried:
+> 
 
-Tools based on LibClang [1] can make use of a 'JSON Compilation
-Database' [2] that keeps track of the exact options used to compile a set
-of source files.
+It would've been nice to see the actual code you tried so that it's
+easier for others to more easily identify if you're using the wrong
+function or using the correct function in the wrong way.
 
-The Clang compiler can generate JSON fragments when compiling [3],
-using the `-MJ` flag. These JSON fragments (one per compiled source
-file) can then be concatenated to create the compilation database,
-commonly called 'compile_commands.json'.
+>     - index_path() to check if the path is in the index. For some
+>       reason, it switched to the 'default' case and return the
+>       'unsupported file type' error.
+> 
+>     - A combination of doing an OR with index_file_exists() and
+>       index_dir_exists(). Still no luck. t7406.43 fails.
+> 
+>     - Using index_name_pos() along with the above two functions. Again a
+>       failure in the same test.
+> 
+> I feel that index_name_pos() should suffice this task but it fails in
+> t7406.43. The SM is in index since 'git ls-files --error-unmatch s1'
+> does return 's1' (s1 is the submodule). What am I missing here?
+> 
 
-Add support to the Makefile for generating these JSON fragments as well
-as the compilation database itself, if the environment variable
-'GENERATE_COMPILATION_DATABASE' is set.
+You're likely missing the fact that you should call `read_cache` before
+using `index_name_pos` or the likes of it.
 
-If this variable is set, check that $(CC) indeed supports the `-MJ`
-flag, following what is done for automatic dependencies.
+For instance, the following works without issues for most cases (more
+on that below):
 
-All JSON fragments are placed in the 'compile_commands/' directory, and
-the compilation database 'compile_commands.json' is generated as a
-dependency of the 'all' target using a `sed` invocation.
+        if (read_cache() < 0)
+                die(_("index file corrupt"));
 
-[1] https://clang.llvm.org/docs/Tooling.html
-[2] https://clang.llvm.org/docs/JSONCompilationDatabase.html
-[3] https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mj-arg
+        cache_pos = cache_name_pos(path, strlen(path));
+        if (cache_pos >= 0) {
+                if (!force) {
+                        die(_("'%s' already exists in the index"),
+path);
+                }
+                else {
+                        struct cache_entry *ce = the_index.cache[cache_pos];
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    Add support for generating JSON compilation database
-    
-    I don't have a lot of knowledge of Make double-colon rules, or insight
-    into why they are used for the 'all' target, but I think the approach I
-    chose makes sense. In particular, I do not list any prerequisite for the
-    'compile_commands.json' file, but from what I tested it is still rebuilt
-    anytime the 'all' target is rebuilt, which is what we want.
-    
-    Note: CMakeLists.txt in contrib/buildsystems does not need to be updated
-    to also support this feature because CMake supports it out-of-the-box
-    [1].
-    
-    [1] 
-    https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html
+                        if (!S_ISGITLINK(ce->ce_mode))
+                                die(_("'%s' already exists in the index and is not a "
+                                      "submodule"), path);
+                }
+        }
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-714%2Fphil-blain%2Fcompiledb-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-714/phil-blain/compiledb-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/714
+This is more close to what the shell version did but misses one case
+which might or might not be covered by the test suite[1]. The case when
+path is a directory that has tracked contents. In the shell version we
+would get:
 
- .gitignore |  2 ++
- Makefile   | 52 +++++++++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 49 insertions(+), 5 deletions(-)
+   $ git submodule add ../git-crypt/ builtin
+   'builtin' already exists in the index
+   $ git submodule add --force ../git-crypt/ builtin
+   'builtin' already exists in the index and is not a submodule
 
-diff --git a/.gitignore b/.gitignore
-index ee509a2ad2..f4c51300e0 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -197,6 +197,7 @@
- /git.spec
- *.exe
- *.[aos]
-+*.o.json
- *.py[co]
- .depend/
- *.gcda
-@@ -218,6 +219,7 @@
- /tags
- /TAGS
- /cscope*
-+/compile_commands.json
- *.hcc
- *.obj
- *.lib
-diff --git a/Makefile b/Makefile
-index 65f8cfb236..954bd2aa47 100644
---- a/Makefile
-+++ b/Makefile
-@@ -462,6 +462,12 @@ all::
- # the global variable _wpgmptr containing the absolute path of the current
- # executable (this is the case on Windows).
- #
-+# Define GENERATE_COMPILATION_DATABASE to generate JSON compilation database
-+# entries during compilation if your compiler supports it, using the `-MJ` flag.
-+# The JSON entries will be placed in the `compile_commands/` directory,
-+# and the JSON compilation database can be created afterwards with
-+# `make compile_commands.json`.
-+#
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and family are auto detected, but could be overridden by defining
- # COMPILER_FEATURES (see config.mak.dev). You can still set
-@@ -1258,6 +1264,20 @@ $(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
- endif
- endif
- 
-+ifdef GENERATE_COMPILATION_DATABASE
-+compdb_check = $(shell $(CC) $(ALL_CFLAGS) \
-+	-c -MJ /dev/null \
-+	-x c /dev/null -o /dev/null 2>&1; \
-+	echo $$?)
-+ifeq ($(compdb_check),0)
-+override GENERATE_COMPILATION_DATABASE = yes
-+else
-+override GENERATE_COMPILATION_DATABASE = no
-+$(warning GENERATE_COMPILATION_DATABASE is set, but your compiler does not \
-+support generating compilation database entries)
-+endif
-+endif
-+
- ifdef SANE_TOOL_PATH
- SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
- BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
-@@ -2381,16 +2401,30 @@ missing_dep_dirs =
- dep_args =
- endif
- 
-+compdb_dir = compile_commands/
-+
-+ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
-+missing_compdb_dir = $(compdb_dir)
-+$(missing_compdb_dir):
-+	@mkdir -p $@
-+
-+compdb_file = $(compdb_dir)$(subst .-,,$(subst /,-,$(dir $@)))$(notdir $@).json
-+compdb_args = -MJ $(compdb_file)
-+else
-+missing_compdb_dir =
-+compdb_args =
-+endif
-+
- ASM_SRC := $(wildcard $(OBJECTS:o=S))
- ASM_OBJ := $(ASM_SRC:S=o)
- C_OBJ := $(filter-out $(ASM_OBJ),$(OBJECTS))
- 
- .SUFFIXES:
- 
--$(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs)
--	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
--$(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs)
--	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-+$(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-+$(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
- 
- %.s: %.c GIT-CFLAGS FORCE
- 	$(QUIET_CC)$(CC) -o $@ -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-@@ -2413,6 +2447,14 @@ else
- $(OBJECTS): $(LIB_H) $(GENERATED_H)
- endif
- 
-+ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
-+all:: compile_commands.json
-+compile_commands.json:
-+	@$(RM) $@
-+	$(QUIET_GEN)sed -e '1s/^/[/' -e '$$s/,$$/]/' $(compdb_dir)*.o.json > $@+
-+	@if test -s $@+; then mv $@+ $@; else $(RM) $@+; fi
-+endif
-+
- exec-cmd.sp exec-cmd.s exec-cmd.o: GIT-PREFIX
- exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
-@@ -3117,7 +3159,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
- 	$(RM) $(HCC)
--	$(RM) -r bin-wrappers $(dep_dirs)
-+	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
- 	$(RM) -r po/build/
- 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+   In the C version with the above snippet we get:
 
-base-commit: d9cd4331470f4d9d78677f12dc79063dab832f53
--- 
-gitgitgadget
+   $ git submodule add --force ../git-crypt/ builtin
+   fatal: 'builtin' does not have a commit checked out
+   $ git submodule add ../git-crypt/ builtin
+   fatal: 'builtin' does not have a commit checked out
+
+   That's not appropriate and should be fixed. I believe we could do
+   something with `cache_dir_exists` to fix this.
+
+
+   Footnote
+   ===
+
+   [1]: If it's not covered already, it might be a good idea to add a test
+   for the above case.
+
+   --
+   Sivaraam
+
+
