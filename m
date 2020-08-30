@@ -2,58 +2,119 @@ Return-Path: <SRS0=qAd/=CI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2655C433E6
-	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 10:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BDD7C433E6
+	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 10:58:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1205207BB
-	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 10:31:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6148207DA
+	for <git@archiver.kernel.org>; Sun, 30 Aug 2020 10:58:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="f6uuh9GH"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="L4TAUaM6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728757AbgH3KbX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Aug 2020 06:31:23 -0400
-Received: from mr85p00im-ztdg06021201.me.com ([17.58.23.189]:34233 "EHLO
-        mr85p00im-ztdg06021201.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726492AbgH3KbR (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Aug 2020 06:31:17 -0400
-X-Greylist: delayed 569 seconds by postgrey-1.27 at vger.kernel.org; Sun, 30 Aug 2020 06:31:17 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1598782907;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
-        b=f6uuh9GHGp6JRtN/BaJIVApyJzH1xjfAWCmvoXvqDWeJgWmKmvE/wqRo6IZxW7F4o
-         V+CiiiuBRlHJzpVAuq+7rJ9ITJKFUvSSRGRFqJ/OxEaJxJUDpUhDD5cRMWp+8ah6pN
-         yjc3XvIs8H8rbt4rfUeL4D7oGm7VNX2oYMUdDEZInzEnK/LwKVp5QoLI+W2llQDpMc
-         vUwWsbNLWZRXxLHECobNGcd4AMwdIGm1YzpOp0Ehx0nsltJ9ppkL+NZMuFv8pLzoRx
-         fLKeB5AlPJ1U4j/IbzuZ/TufHU57y2h9haYAqXsS/g1SonXdS0CNo0C/P4EdReksy0
-         M0yI6Bxttg9Qw==
-Received: from [192.168.1.109] (162-232-134-150.lightspeed.irvnca.sbcglobal.net [162.232.134.150])
-        by mr85p00im-ztdg06021201.me.com (Postfix) with ESMTPSA id AE2801201D2;
-        Sun, 30 Aug 2020 10:21:47 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From:   Danielle Akers <deroc3@icloud.com>
-Mime-Version: 1.0 (1.0)
-Date:   Sun, 30 Aug 2020 03:21:46 -0700
-Subject: Re: [PATCH] gitdiff: Introduce --index and deprecate --cached.
-Message-Id: <B13534C3-F89A-4D8E-8472-10FE98351050@icloud.com>
-Cc:     ae@op5.se, git@vger.kernel.org
-To:     junkio@cox.net
-X-Mailer: iPhone Mail (17G80)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
- definitions=2020-08-30_03:2020-08-28,2020-08-30 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=281 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-2006250000 definitions=main-2008300084
+        id S1726035AbgH3K4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Aug 2020 06:56:52 -0400
+Received: from mout.web.de ([212.227.15.4]:58047 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725845AbgH3K4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Aug 2020 06:56:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1598784977;
+        bh=i1vz6Amu2MN/qM75AGZ/RGjygu9iii0MzjFRBrGlxMI=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=L4TAUaM6wkOpQNUkEU7kGxoWzwDwz2pDVwJ2Z3I+GSzn80PCBMKlljEZ/CRjlvQkj
+         s+HZDR5tqbrKnqxoEV6kGLjN3W7KUKuc87DOkC1Dq4HqIuXanoLDjOiCVxQXgYnJAn
+         cepZn1Tv51gZi0AbXzAzSx7FOkHImenAj2IAXVuo=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MP2Sl-1kH1hW13Kx-006QPU; Sun, 30
+ Aug 2020 12:56:17 +0200
+Subject: Re: [PATCH] Avoid infinite loop in malformed packfiles
+To:     ori@eigenstate.org, gitster@pobox.com, peff@peff.net
+Cc:     git@vger.kernel.org
+References: <A1CA9D499EDDACBA275BA61E114645F0@eigenstate.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <59efeeab-49de-17e7-8b1c-355d6ef31b5d@web.de>
+Date:   Sun, 30 Aug 2020 12:56:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
+MIME-Version: 1.0
+In-Reply-To: <A1CA9D499EDDACBA275BA61E114645F0@eigenstate.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Rov8Xb0TiScqqAZZar8UJxFBA9wyNG6+AdZpm4yXniTnkb/H3Uy
+ Fu5RG+UHSMbUUVsqdM/5J8SnzQeice7xBvmDj9mKvPFD6XUb52ZqMwUXdnIaR2xoRN417hW
+ wS3aAYjo2MThuKo+hVDPVfwqFrhObVAp/Acxt6vjku4R+dA1WRGbAszwKQRJe0YQnnCRDrb
+ 6AjtveJyUXQ/69KylDdBA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:W8PbzNMhsXo=:nCkKFc1TmEf/LuDLvCsUSG
+ BGaEvS9g7Vbmq/4Nc9tK5visdHb+Oduex8f1UCi8meOZ4li9ZU0rTjVlxYrgdl0XqFuzqqxoG
+ VLTKJySvbLJ9N8/Lj6/UTr4ac4jufHwBoR0817geGix/+sLpxJWvK9dYiteMN0MH4jwNTsdGo
+ XgwW4jh6Wtfr4a4MH1Iu/x/E6hiPRwcgJqnQpwzMYaBX1XkvzjvOxmUtVJW4jrE0i0ORFzjX/
+ D5imL2f05Lyg5LiUOlRABS/Bsi+dygNMDo7sIFr4yOOydn7j0I7eoX92m/YVFbeF0uhD6mNXP
+ Y/UY/7uh/Af8P9qrTkCs8uAsekprNSgDuU0U8nmZwtWjCQpoyc9j7G3Cqh7Ni1sv2pxeOWoUt
+ S788jNenDrPQUuakRaFZCINZGaLVilLK2sbzl7b5mjVKcRrLlYJr5BWxVNzoMfQS0lApP90S/
+ znQqBJD2Yl/6JjAmgk/3L+GBe47uUifN18/BU+U8omvJ1y3/3h3YU+k5lqVwubbJMKvAHaPqM
+ W7sw/8SOOAQ7kHL/8J7QM75kzzGZ6aoOq04ldd7PsKKHAxz1HWk0HAegFyzw6V83rlrihrihv
+ 5yH0iFHy+mkKiHXLJu/6W6whflX6oVH8GKyd6+8dIAaMUWxRTDwV9gIsWwEr+fujhhTYwpfFM
+ 3j5xeWM7Tdylf6qZXo3oY2DN6x36HNNtgRX5nrQdqMY01vZc6PhKLubhWqx+udhkb4faaMziJ
+ RhHgbQI3RKxEWBenCXiPUqFJ1b9K6p2qAaw5MlhnVxgz0dhRGMzJM/tZeTJxSh6gAIqxUGJqO
+ +K9aQQRJW9c5ZAipq8lkTEMZN1qpIukLSNWZ9uU8EZC7QLWqJO//GxuOoDmQhUoEqps91KNCe
+ UjBObY7QOMSen9/m/yqLzdukIz6dB+2oVU3AJH23bVg+LcBAGTldS3AvwUi96AbUz4Fyu1yvc
+ RngAruAUDjuEshzlkkVz2FGho2x/86wjHbRFJqfBuZMUV1Msu2Sof8YmmbvfZgAn7TPuu2n74
+ s7B9mzAmDMGY4raRQKI47BZWMC4OsQrzBKc5wPxpYVQunqCdXf3KSPHQVeH5plmX69RI6uu3v
+ Duy6W0UOw1XsdtG17GFRjhiyKifhdke9XLG3JNyaxTqVvrSdvZcQBMzZkSHxHuA/jz45jTHZj
+ MZ2PUY0emG8WMhBubLar218CfHNGdYcAmgE/FaMxgq7F9PEnV93eI1SoVrq4K3oNFPGoKAFqm
+ dcsep0utenDJIomuZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+Am 30.08.20 um 05:33 schrieb ori@eigenstate.org:
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> It may be hard to test, as I suspect modern versions of Git are not
+>>> happy to create such a deep chain. We could test with a lowered value =
+of
+>>> the config option, though.
+>>
+>> Yes, that was what I meant.  Start from a 1KB text, create 50
+>> revisions of the file by adding a single line at its end at a time,
+>> pack with depth limit of 100, and then see "git log -p" die when the
+>> allowed max lowered to 10, or something like that.
+>
+> Sorry about the delay -- most of my time to poke at this is over the wee=
+kend.
+>
+> Will that work? I'd expect that modern pack files end up being
+> offset deltas, rather than reference deltas.
+
+True, but going down all the way would work:
+
+diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
+index 0f06c40eb1..7fd21cd3ce 100755
+=2D-- a/t/t5316-pack-delta-depth.sh
++++ b/t/t5316-pack-delta-depth.sh
+@@ -94,4 +94,15 @@ test_expect_success '--depth limits depth' '
+ 	test_i18ncmp expect actual
+ '
+
++test_expect_success 'maxAllowedDeltaDepth is respected' '
++	git clone . clone1 &&
++	(
++		cd clone1 &&
++		git repack -a -d &&
++		test_config core.maxAllowedDeltaDepth 0 &&
++		test_must_fail git fsck 2>err &&
++		test_i18ngrep "overlong delta chain" err
++	)
++'
++
+ test_done
 
 
