@@ -2,126 +2,138 @@ Return-Path: <SRS0=A5vO=CJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46977C433E2
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 17:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2252C433E2
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 17:24:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2108D206FA
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 17:17:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BFBB2071B
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 17:24:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="C2jHzzOX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GCt3mnV1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728834AbgHaRRh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Aug 2020 13:17:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43696 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727981AbgHaRRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Aug 2020 13:17:37 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4158EC061573
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 10:17:37 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id w17so9809665ybl.9
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 10:17:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=+5bFM9XoboMueLZKFAs+lsIrXzPnbrcRbyEPEgBnV7Q=;
-        b=C2jHzzOXAZ66VWHzbVLBGdbkqDno9AFokn+R2630mbyFK0NoRIaW6xZTmpNiBCqKLB
-         xpDTFGPNTPqk0YHy/Ccx9IXf/02Ec60CrFrlm5+tSetyI2uql2A50/RQAj9w8iJ6p4Wn
-         xScYEe53D1VzVEchqEpWD3MDPy70RegjYTkk3zuiKLnpEGhF6vpxFwDDnQuvsVNA0RNI
-         SXr3JqokI4pgBTM4wBrGeCsXuo6vGYoEyfWWRPwLBNdLcabPOMgDkNTJCtfKxLP23KVI
-         oRddh95zwptUljm80BQd8wjdeWfcY/LyXzixlr0hmjpaX9wgMIzZnl85guaVNvwmcgoJ
-         GtxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=+5bFM9XoboMueLZKFAs+lsIrXzPnbrcRbyEPEgBnV7Q=;
-        b=f2HvfCZNLJi4U6Z0jndscCE0+jAqTlG3J3t5lU1TPuRmIpBq71ISyLL31QAB1JJV0L
-         mWeOGwGH9RvaS3p7ydkLmrriJiNgVWMDyvoJEJtdSK7Pdzn7zxyj3enLl5YO0qEfY8oE
-         UvCBQTVPBjfHbW7U7LCC6GkWRvimS3jK0ioa8xR0PAXa3MVOgA3GsWVHCcSF5Uo2s+3o
-         LzQBcu1OsadRDdXbPU/A70gx2Lvtg2MMbcUVYqwBoOQg2OgapA0WJPJEmFeUkce2PNt2
-         QBtAFRkNeqVl36YDeQDKbloXzu4afKTRHd6p+r2OHWnfApmES8fEYhKulqPlSB2cRXiE
-         jjnw==
-X-Gm-Message-State: AOAM530auwaPktnIho9UV27atg2BPhLGwAzQf1UrIBHuir9/ZS+0dHPc
-        WxY2NlnJxOLlLNdOgY5mA2O4kIJPTTYuiDRWNEaP
-X-Google-Smtp-Source: ABdhPJywzg4Khlzykzxvlg5GZ2SgpF4see14Rx9YQjWbpbr8re5VF+PSni1dgohYmlcKxO1YhUpfARl7nvgfUTo21FtO
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:a25:880e:: with SMTP id
- c14mr3651828ybl.181.1598894256483; Mon, 31 Aug 2020 10:17:36 -0700 (PDT)
-Date:   Mon, 31 Aug 2020 10:17:32 -0700
-In-Reply-To: <xmqqo8mti8od.fsf@gitster.c.googlers.com>
-Message-Id: <20200831171732.1199755-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqo8mti8od.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.28.0.402.g5ffc5be6b7-goog
-Subject: Re: [PATCH v2 2/2] wt-status: tolerate dangling marks
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, jrnieder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1728480AbgHaRYA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Aug 2020 13:24:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56567 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726927AbgHaRYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Aug 2020 13:24:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6CA5F0974;
+        Mon, 31 Aug 2020 13:23:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9s4Gy/qEkIEw23IIuBrBK6JCpSU=; b=GCt3mn
+        V1ojtdcemubYiZ8Ghyh2ww9k7NDt/QtohPKp46r5O/8ubShsor0wIZSMiyoQ3DsV
+        U80zkSune2Fcs27XCBPYNcla08qYt4fXjARXzEqFdrKXKGgH+IhGgTZDAGcoG6Gl
+        lRNpK5+BWBXvSgzwN8ln5oYi7xXWop+WxQQNM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Gc9/0NkIDgmpJBx58b+K9F+rtTFf1TMU
+        pqPIP5rGUh41krAVbzByB4g1JUuiXz4V8UGwsj/pIizbx8DUEvjzFpgdKJoVYbX9
+        YlA5rIHmiGEml5MIpT2c/c0Hgr2kwDNDYdp2z3UN/sf687pRdCqbgNio3+TNQhie
+        VSdsZgngEHk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BF874F0973;
+        Mon, 31 Aug 2020 13:23:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E6314F0972;
+        Mon, 31 Aug 2020 13:23:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v3] revision: add separate field for "-m" of "diff-index -m"
+References: <20200829194634.23306-1-sorganov@gmail.com>
+        <20200831125350.26472-1-sorganov@gmail.com>
+Date:   Mon, 31 Aug 2020 10:23:51 -0700
+In-Reply-To: <20200831125350.26472-1-sorganov@gmail.com> (Sergey Organov's
+        message of "Mon, 31 Aug 2020 15:53:50 +0300")
+Message-ID: <xmqq4koihgpk.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BDCF9E5C-EBAE-11EA-894F-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > +
-> > +	/*
-> > +	 * If ^{upstream} or ^{push} (or equivalent) is requested, and the
-> > +	 * branch in question does not have such a reference, return -1 instead
-> > +	 * of die()-ing.
-> > +	 */
-> > +	unsigned nonfatal_dangling_mark : 1;
-> 
-> Micronit; I would have avoided "or equivalent" as the point of
-> parenthetical comment was not to say these two modifiers upstream
-> and push (and other forms that spell differently but invokes exactly
-> one of these two features) are special, but to say that these two
-> are merely examples, and any other ^{modifiers} we have or we will
-> add in the future would honor this bit.  Perhaps "(and the like)"?
+Sergey Organov <sorganov@gmail.com> writes:
 
-"(and the like)" sounds good.
+> Add separate 'diff_index_match_missing' field for diff-index to use and set it
+> when we encounter "-m" option. This field won't then be cleared when another
+> meaning of "-m" is reverted (e.g., by "--no-diff-merges"), nor it will be
+> affected by future option(s) that might drive 'ignore_merges' field.
+>
+> Use this new field from diff-lib:do_oneway_diff() instead of reusing
+> 'ignore_merges' field.
+>
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
 
-> Among these callers that reach substitute_branch_name(), how were
-> those that can specify the new bit chosen?
+Much easier to reason about.  As I said, I think we would ideally
+want to detect and diagnose --[no-]diff-merges on the command line
+of "diff" or "diff-{files,index,trees}" as an error, but for now
+this is a good first step.
 
-I just did the minimal change to fix the bug in the test.
+>  	} else if (!strcmp(arg, "-m")) {
+>  		revs->ignore_merges = 0;
+> +		/*
+> +		 * Backward compatibility wart - "diff-index -m" does
+> +		 * not mean "do not ignore merges", but "match_missing",
+> +		 * so set separate flag for it.
+> +		 */
+> +		revs->diff_index_match_missing = 1;
 
-> For example, what is the reasoning behind making dwim_ref() unable
-> to ask the "do so gently" variant, while allowing repo_dwim_ref()
-> to?
-> 
-> I am NOT necessarily saying these two functions MUST be able to
-> access the same set of features and the only difference between them
-> MUST be kept to the current "repo_* variant can work on an arbitrary
-> repository, while the variant without repo_* would work on the
-> primary repository only".  As long as there is a good reason to make
-> their power diverge, it is OK---I just do not see why and I'd like
-> to know.
+Half the wart has been removed thanks to this patch and the rest of
+the code can look at the right field for their purpose.  The parsing,
+unless we make a bigger change that allows us to detect and diagnose
+"diff-index --no-diff-merges" as an error, still needs to be tricky
+and may deserve a comment.
 
-Maybe add the following to the end of the last paragraph of the commit
-message:
+The comment should apply to and treat both fields equally, perhaps
+like this:
 
-  (dwim_ref() is unchanged because I expect more and more code to use
-  repo_dwim_ref(), and to reduce the size of the diff.)
+	} else if (!strcmp(arg, "-m")) {
+		/*
+		 * To "diff-index", "-m" means "match missing", and to
+		 * the "log" family of commands, it means "keep merges".
+		 * Set both fields appropriately.
+		 */
+		revs->ignore_merges = 0;
+		revs->match_missing = 1;
+	}
 
-If you prefer not to make this change locally, let me know and I'll
-resend one with the updated commit message and the "(and the like)"
-change above.
+By the way, let's drop diff_index_ prefix from the name of the new
+field.  I do not see a strong reason to object to a possible update
+to "diff-files" to match the behaviour of "diff-index".  
 
-> The same question about not allowing the gentler variant while
-> drimming the reflog.
+In a sparsely checked out working tree (e.g. start from "clone
+--no-checkout"), you can check out only paths that you want to
+modify, edit them, and then "git diff-files -m" would be able to
+show useful result without having to show deletions to all other
+files you are not interested in.  And that is exactly the same use
+case as "git diff-index -m HEAD" was invented for.
 
-Same as above - I only did the minimal change to fix the bug.
-Admittedly, if a reflog-accessing command could fail in the same way
-(dangling mark), we would need to fix repo_dwim_log() and then we could
-simplify substitute_branch_name() to not take the nonfatal_dangling_mark
-parameter (since all dangling marks would now be nonfatal), but I
-haven't looked beyond this.
+Thanks.
+
+> diff --git a/revision.h b/revision.h
+> index c1e5bcf139d7..5ae8254ffaed 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -188,6 +188,7 @@ struct rev_info {
+>  	unsigned int	diff:1,
+>  			full_diff:1,
+>  			show_root_diff:1,
+> +			diff_index_match_missing:1,
+>  			no_commit_id:1,
+>  			verbose_header:1,
+>  			combine_merges:1,
