@@ -2,149 +2,209 @@ Return-Path: <SRS0=A5vO=CJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E32EC433E6
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 12:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29F49C433E7
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 13:12:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 381EB20866
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 12:54:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 049A320EDD
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 13:12:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9qtxSxR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oe8Hs5rM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbgHaMyV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Aug 2020 08:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59126 "EHLO
+        id S1726144AbgHaNL5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Aug 2020 09:11:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbgHaMyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Aug 2020 08:54:08 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2599CC061573
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 05:54:07 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id y4so5472483ljk.8
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 05:54:07 -0700 (PDT)
+        with ESMTP id S1726167AbgHaNLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Aug 2020 09:11:46 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC02C061573
+        for <git@vger.kernel.org>; Mon, 31 Aug 2020 06:04:56 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id q3so2986693pls.11
+        for <git@vger.kernel.org>; Mon, 31 Aug 2020 06:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AYjuehw4UGZd5FnOTEvhaTWSB2JJSNMUGp3AoC0j1L0=;
-        b=K9qtxSxRcg9kZe6XeInpL3sH7WANjX5c2JUcZqnb1q4OPM22TPfsYk4vMiTw+Z1Slf
-         n2YioQYNGKiyr+b2U0Y5dpKGYDS2E9j4jjQULRl4Q5hWxpZ0phNozBpSNTCXs5ji57Nd
-         2HU4SVSByws3U430i/Z/8fTvhbzsq+8xZ6Di7GhIxsmCn0JsWe4YYfDp2yjVc6169dg8
-         8HORNFLKBlrK1hVuaRNylmsntoxkLVj028VSb+AhBq14g0pGRAjoT1hBKGmdQBy7E1+t
-         WITCZ9KzPaVUK98DjDoSaD6Q2lzZyRZyI/G6Ta+Zy/4czBaBFIx949x7nw2IRc4mPhPg
-         1a9A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xhecWVwTg79GsngLXXeYS8ltRCLyqTfbV4XM2b48u54=;
+        b=oe8Hs5rMVbSWz+3CVpXg2TEm6oD1Bnv2QtEeywaUMMLC7/BD94MNBCRuvgyM2Du2fK
+         0kMgHPjZuJr9yzoK42u9azu7p8kuMCNfA42AQjH7o4rG1CwZcpdEbn/N9h6MfmiWzgK6
+         G4Gj+/VoNKrPd8xwUCr9gXPzrGxoE69DTF8pThOSiTKViMxSiVAouTmoas+izlJ6zE2m
+         vuUOeFHmohHp1JC4heZp5fRfOdMQjqfNUJz7vONrBg+NuO0/AcN7zfoe1kvJ1Hnpun89
+         d4O+EMhrfqEnSlLECerIb+UMS3Lc0KPMACk5xUC1H7LF07XNebwktQ5LrgtO0qlDt89H
+         Gt1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AYjuehw4UGZd5FnOTEvhaTWSB2JJSNMUGp3AoC0j1L0=;
-        b=TyKEkVdGw6R45rqlUAbc6EbDAvLALw6CcozP8GvH31eYtx5jXVEl49pIcGYYJ1ZeJV
-         Df/kZs6QUjaQlTB88tJbDbXShqo0xmXrMqDCN9MIfplilmLaBEW5EDwg+B/BXx92+Fsi
-         X6LtCx16M7um6WIv9JrR/Xa0gLJudq8iWp/jjwV5Hu0UASNlbOVGvpEXC44wszB96O7p
-         lOHs1a4Cqevk14KUGAAahZWJWJf1KnB+SMI7qFyd5TYmyPiFtQzJlzMa/zyd2gXC2f8Y
-         qn0yQ20wcgEayKVEG2zasEHOxJhNbb8jNWZZ+UOuiHZPlWVLe3SGIJy/0LQzl6apax1S
-         me3A==
-X-Gm-Message-State: AOAM530/FimLqpIMODqzjM3rtc17sRBxRxSbmzT7IalIIZ+cnNv85x+u
-        W/leCazLkBlrecyi2XRMcc8=
-X-Google-Smtp-Source: ABdhPJzF9asW5Z2Yu0lmY96zBTAFYRqwgLWoYPwWp7TJJ01xCjeiZEeSR6p5AqwIAImMzWmc0wMaJw==
-X-Received: by 2002:a2e:a483:: with SMTP id h3mr647261lji.76.1598878445467;
-        Mon, 31 Aug 2020 05:54:05 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id h22sm336685ljl.101.2020.08.31.05.54.04
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xhecWVwTg79GsngLXXeYS8ltRCLyqTfbV4XM2b48u54=;
+        b=bdGMTpG/W4WXL6kxFDaJ285W9qcwrJJ2pzv+XGTbZz4S+8LWzK0YxiPMCprJVXHogy
+         C+NeoJwVq66OPsDjiDrTB8e57pQjZ79Ks3yHNYKHvg8tVn94F/LRv31QFauuHARgggH8
+         M5A1k7rFCj2XrwLaSOnhBC3iE71b5jdtZxG5Uq4OnRQiy4FdoXqkshn8dN7fhFRfS6ZJ
+         OQBPlsm9ITtVp2nVSGBI2ZfTDhDfs+sICI8BYDQMM2PAhinVBcOvE0q+A56PJc5RKZTY
+         02gImRWA6u1JFpZpcAtxEhx6soNr+33e1Itz1ZtEwmPlt/NZVC167s/qFg8CccNIRdDw
+         JcKg==
+X-Gm-Message-State: AOAM5322hKcbmRSmkiHoI1yN9HGT05nDj1S//QF0Smby33cNFDsbTL80
+        1j9ubU/Um1FYBKwSa0xR0TA3vlv6gpnpVQ==
+X-Google-Smtp-Source: ABdhPJwoIMF7Jppu4kXdXs7PISwx0H6bmxewRKY++64qbq6g9GcPVA6t3XuhD/uAG6q1+f0n5d6EVg==
+X-Received: by 2002:a17:90b:110a:: with SMTP id gi10mr1337048pjb.206.1598879096253;
+        Mon, 31 Aug 2020 06:04:56 -0700 (PDT)
+Received: from konoha ([116.72.196.122])
+        by smtp.gmail.com with ESMTPSA id ih11sm3596717pjb.51.2020.08.31.06.04.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 05:54:04 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v3] revision: add separate field for "-m" of "diff-index -m"
-Date:   Mon, 31 Aug 2020 15:53:50 +0300
-Message-Id: <20200831125350.26472-1-sorganov@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200829194634.23306-1-sorganov@gmail.com>
-References: <20200829194634.23306-1-sorganov@gmail.com>
+        Mon, 31 Aug 2020 06:04:55 -0700 (PDT)
+Date:   Mon, 31 Aug 2020 18:34:48 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, liu.denton@gmail.com
+Subject: Re: [GSoC][PATCH] submodule: port submodule subcommand 'add' from
+ shell to C
+Message-ID: <20200831130448.GA119147@konoha>
+References: <20200824090359.403944-1-shouryashukla.oo@gmail.com>
+ <xmqq8se36gev.fsf@gitster.c.googlers.com>
+ <20200826091502.GA29471@konoha>
+ <ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add separate 'diff_index_match_missing' field for diff-index to use and set it
-when we encounter "-m" option. This field won't then be cleared when another
-meaning of "-m" is reverted (e.g., by "--no-diff-merges"), nor it will be
-affected by future option(s) that might drive 'ignore_merges' field.
+On 31/08 01:28, Kaartic Sivaraam wrote:
+> On Wed, 2020-08-26 at 14:45 +0530, Shourya Shukla wrote:
+> > On 24/08 11:35, Junio C Hamano wrote:
+> > > Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> > > 
+> > > The shell version would error out with anything in the index, so I'd
+> > > expect that a faithful conversion would not call is_directory() nor
+> > > submodule_from_path() at all---it would just look path up in the_index
+> > > and complains if anything is found.  For example, the quoted part in
+> > > the original above is what gives the error message when I do
+> > > 
+> > > 	$ git submodule add ./Makefile
+> > > 	'Makefile' already exists in the index.
+> > > 
+> > > I think.  And the above code won't trigger the "already exists" at
+> > > all because 'path' is not a directory.
+> > 
+> > Alright. That is correct. I tried to use a multitude of functions but
+> > did not find luck with any of them. The functions I tried:
+> > 
+> 
+> It would've been nice to see the actual code you tried so that it's
+> easier for others to more easily identify if you're using the wrong
+> function or using the correct function in the wrong way.
 
-Use this new field from diff-lib:do_oneway_diff() instead of reusing
-'ignore_merges' field.
+Yeah, that is my fault. I will tag along below.
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> >     - index_path() to check if the path is in the index. For some
+> >       reason, it switched to the 'default' case and return the
+> >       'unsupported file type' error.
+> > 
+> >     - A combination of doing an OR with index_file_exists() and
+> >       index_dir_exists(). Still no luck. t7406.43 fails.
+> > 
+> >     - Using index_name_pos() along with the above two functions. Again a
+> >       failure in the same test.
+> > 
+> > I feel that index_name_pos() should suffice this task but it fails in
+> > t7406.43. The SM is in index since 'git ls-files --error-unmatch s1'
+> > does return 's1' (s1 is the submodule). What am I missing here?
+> > 
+> 
+> You're likely missing the fact that you should call `read_cache` before
+> using `index_name_pos` or the likes of it.
+
+Alright, called it.
+
+> For instance, the following works without issues for most cases (more
+> on that below):
+> 
+>         if (read_cache() < 0)
+>                 die(_("index file corrupt"));
+> 
+>         cache_pos = cache_name_pos(path, strlen(path));
+>         if (cache_pos >= 0) {
+>                 if (!force) {
+>                         die(_("'%s' already exists in the index"),
+> path);
+>                 }
+>                 else {
+>                         struct cache_entry *ce = the_index.cache[cache_pos];
+> 
+>                         if (!S_ISGITLINK(ce->ce_mode))
+>                                 die(_("'%s' already exists in the index and is not a "
+>                                       "submodule"), path);
+>                 }
+>         }
+
+I actually did this only using 'index_*()' functions. But made a very
+very very silly mistake:
+I did a sizeof() instead of strlen() and I did not notice this until
+I saw what you did. IDK how I made this mistake.
+
+This is what I have done finally:
+---
+	if (read_cache() < 0)
+		die(_("index file corrupt"));
+
+	if (!force) {
+		if (cache_file_exists(path, strlen(path), ignore_case) ||
+		    cache_dir_exists(path, strlen(path)))
+			die(_("'%s' already exists in the index"), path);
+	} else {
+		int cache_pos = cache_name_pos(path, strlen(path));
+		struct cache_entry *ce = the_index.cache[cache_pos];
+		if (cache_pos >= 0 && !S_ISGITLINK(ce->ce_mode))
+			die(_("'%s' already exists in the index and is not a "
+			      "submodule"), path);
+	}
 ---
 
-v3: improve commit message
+I did not put the 'cache_pos >= 0' at the start since I thought that it
+will unnecessarily increase an indentation level. Since we are using
+'cache_{file,dir}_exists' in the first check and 'cache_name_pos()' in
+the second, the placement of check at another indentation level would be
+unnecessary. What do you think about this?
 
-v2: rebased from 'maint' onto 'master'
+> This is more close to what the shell version did but misses one case
+> which might or might not be covered by the test suite[1]. The case when
+> path is a directory that has tracked contents. In the shell version we
+> would get:
+> 
+>    $ git submodule add ../git-crypt/ builtin
+>    'builtin' already exists in the index
+>    $ git submodule add --force ../git-crypt/ builtin
+>    'builtin' already exists in the index and is not a submodule
+> 
+>    In the C version with the above snippet we get:
+> 
+>    $ git submodule add --force ../git-crypt/ builtin
+>    fatal: 'builtin' does not have a commit checked out
+>    $ git submodule add ../git-crypt/ builtin
+>    fatal: 'builtin' does not have a commit checked out
+> 
+>    That's not appropriate and should be fixed. I believe we could do
+>    something with `cache_dir_exists` to fix this.
+> 
+> 
+>    Footnote
+>    ===
+> 
+>    [1]: If it's not covered already, it might be a good idea to add a test
+>    for the above case.
 
- diff-lib.c | 10 ++--------
- revision.c |  6 ++++++
- revision.h |  1 +
- 3 files changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/diff-lib.c b/diff-lib.c
-index 50521e2093fc..f2aee78e7aa2 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -405,14 +405,8 @@ static void do_oneway_diff(struct unpack_trees_options *o,
- 	/* if the entry is not checked out, don't examine work tree */
- 	cached = o->index_only ||
- 		(idx && ((idx->ce_flags & CE_VALID) || ce_skip_worktree(idx)));
--	/*
--	 * Backward compatibility wart - "diff-index -m" does
--	 * not mean "do not ignore merges", but "match_missing".
--	 *
--	 * But with the revision flag parsing, that's found in
--	 * "!revs->ignore_merges".
--	 */
--	match_missing = !revs->ignore_merges;
-+
-+	match_missing = revs->diff_index_match_missing;
- 
- 	if (cached && idx && ce_stage(idx)) {
- 		struct diff_filepair *pair;
-diff --git a/revision.c b/revision.c
-index 96630e31867d..64b16f7d1033 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2345,6 +2345,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->diffopt.flags.tree_in_recursive = 1;
- 	} else if (!strcmp(arg, "-m")) {
- 		revs->ignore_merges = 0;
-+		/*
-+		 * Backward compatibility wart - "diff-index -m" does
-+		 * not mean "do not ignore merges", but "match_missing",
-+		 * so set separate flag for it.
-+		 */
-+		revs->diff_index_match_missing = 1;
- 	} else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
- 		if (!strcmp(optarg, "off")) {
- 			revs->ignore_merges = 1;
-diff --git a/revision.h b/revision.h
-index c1e5bcf139d7..5ae8254ffaed 100644
---- a/revision.h
-+++ b/revision.h
-@@ -188,6 +188,7 @@ struct rev_info {
- 	unsigned int	diff:1,
- 			full_diff:1,
- 			show_root_diff:1,
-+			diff_index_match_missing:1,
- 			no_commit_id:1,
- 			verbose_header:1,
- 			combine_merges:1,
--- 
-2.25.1
+Like Junio said, we do not care if it is a file or a directory of any
+sorts, we will give the error if it already exists. Therefore, even if
+it is an untracked or a tracked one, it should not matter to us. Hence
+testing for it may not be necessary is what I feel. Why should we test
+it?
 
