@@ -2,132 +2,108 @@ Return-Path: <SRS0=A5vO=CJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DAD9C433E2
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 21:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8910C433E6
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 22:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49F01208CA
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 21:59:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8877920719
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 22:57:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gO22cApz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iTbU+P3f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727852AbgHaV7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Aug 2020 17:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60262 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbgHaV7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Aug 2020 17:59:43 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BD2BC061573
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 14:59:42 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id b79so826541wmb.4
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 14:59:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=0L/vAq5AnWPynhjSrjdBZVknNePpw8XK6dwAPvFcWqM=;
-        b=gO22cApzkqgDfiZQZCKOfUxWoSE0u+qdtUHipAE4NjbDMAI6qwI53ECGvmLSNAfjjS
-         Oo1g6z9oafrz9fPlKzLjuIYDUoNNCd5z8pIEe4DEWm2T3YOcMPA4ihxx3M2MEXaHpOd3
-         AUCUu3q3SPV2wSw38WZwbXGEPmGR4xhLLxXqlPaNjY7Dox5ChytQzYHLIa+NwF0l+L9/
-         ShBPC+8CC/tvuB+08zuOBq0bIv1gxDWHW+FGsQeTr1lms3YSHIwBgnJyZqpfE/BgYrw7
-         763kR0UDVieD5vEPo0to2HbjpZzLkBZXBDWh82dxUiCNP866A/UIF0ZW59aF5WT8byh+
-         wexA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=0L/vAq5AnWPynhjSrjdBZVknNePpw8XK6dwAPvFcWqM=;
-        b=JDCTw7RuIzRVYRVSgaOSdS+JpdnO8AHAbwgPvNfiaBWICKDErDsShXNoAySJGUFmP4
-         TgnJfTIS7+TLXSMeS5ExtR4lYqLcBqaRhX1sRMsUPZOL4cbRkjI6XrsU404DNac502j9
-         mDK9sPvDyjNz4N9j9aXqXbNQ3Hdo6Fl1V9fG+XP9sV8cbHK7l6E35/MM201GaoHahMHx
-         gk6LU6xLiMVwHlFeaI6syYdgPiVWiKnRmumyRdDYzFTK23i0bT9UaN1TjDyJRlRrjxoh
-         iY5m8teaanHkghwb9SStvZqGu0SVxZGBzTYXdbdw+CCw9lqCTk52lrhozvst2SRTs8Cg
-         ydng==
-X-Gm-Message-State: AOAM5328hyvqiz9H6M2l8l3TyaSBtek77ykUoTxT1oKJGP99UnUZBPjP
-        Gs25aIYx5sgDax+gQhrlijPquFHezm8=
-X-Google-Smtp-Source: ABdhPJypWk0Qz55C8Q29f93mvl95T0aMU4PoQp6xg1EbnXmT/SPUz9Insxi16OT19599cDaYJp84Sw==
-X-Received: by 2002:a05:600c:c7:: with SMTP id u7mr1214800wmm.135.1598911180974;
-        Mon, 31 Aug 2020 14:59:40 -0700 (PDT)
-Received: from mbp-de-thomas.home (lfbn-tou-1-1379-99.w90-89.abo.wanadoo.fr. [90.89.187.99])
-        by smtp.gmail.com with ESMTPSA id w15sm1664098wro.46.2020.08.31.14.59.40
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Mon, 31 Aug 2020 14:59:40 -0700 (PDT)
-From:   =?utf-8?Q?Thomas_B=C3=A9tous?= <th.betous@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Bug Report: "git reset --hard" does not cancel an on-going rebase
-Message-Id: <34B7EFB9-8710-4993-ACCD-604313D543E7@gmail.com>
-Date:   Mon, 31 Aug 2020 23:59:38 +0200
+        id S1726794AbgHaW4F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Aug 2020 18:56:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53085 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726537AbgHaW4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Aug 2020 18:56:04 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5168F83007;
+        Mon, 31 Aug 2020 18:56:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ab5UdJMM9Yv/FEbJZIyYFpGYSJI=; b=iTbU+P
+        3flL8xJi9MPQ7cNXyE8BMSvC+HXGeEvFjvlN/894ZqzqTY3Wj31Ee1GTcHksbjoz
+        vnUwOF3SbBcaU2O/xr9fF3MRgrpop2kRkwC1gYNr1q4E3NBBpH0VqX/hgnCaBiPR
+        brvaU6gNXvNZJB14qUfqBRwwHJkQQg1GUmqCc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IOKy7AaqGse+hu/dP3q1hkizN7vtxJGH
+        rhDVnI40SaGeKbd+MClsShCXlJsDz78Gx20syr6D3GvHGLjl+WyKy0665dWM09Me
+        SPsq3k2rzUZD53Do0+KQJD16SpKVAgndT0HuJa+fM9KQzDJzCNTFxauE52Z3kZM2
+        HCFtBWqeg3g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4709183006;
+        Mon, 31 Aug 2020 18:56:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 52C5F83005;
+        Mon, 31 Aug 2020 18:56:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+Cc:     Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/2] credential-cache: use child_process.args
+References: <xmqqd03dwe2x.fsf@gitster.c.googlers.com>
+        <20200826194650.4031087-1-gitster@pobox.com>
+        <20200826194650.4031087-3-gitster@pobox.com>
+        <xmqqzh6ht7fg.fsf_-_@gitster.c.googlers.com>
+Date:   Mon, 31 Aug 2020 15:56:00 -0700
+In-Reply-To: <xmqqzh6ht7fg.fsf_-_@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 26 Aug 2020 14:37:39 -0700")
+Message-ID: <xmqqpn76e873.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24106556-EBDD-11EA-83F2-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I would like to report an inconsistent behavior of the rebase/reset =
-commands. I don=E2=80=99t know whether it is an actual bug or something =
-else but according to me something is not right.
-When a rebase gets paused (because of a conflict for instance) I would =
-expect the command "git reset --hard" to cancel this on-going rebase but =
-it does not.
-I expect this because for instance "git reset --hard" cancels a =
-cherry-pick in the same use case so I think the behavior of these 2 =
-commands should be consistent.
+> As child_process structure has an embedded strvec args for
+> formulating the command line, let's use it instead of using
+> an out-of-line argv[] whose length needs to be maintained
+> correctly. 
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/credential-cache.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+> index d0fafdeb9e..195335a783 100644
+> --- a/builtin/credential-cache.c
+> +++ b/builtin/credential-cache.c
+> @@ -42,13 +42,13 @@ static int send_request(const char *socket, const struct strbuf *out)
+>  static void spawn_daemon(const char *socket)
+>  {
+>  	struct child_process daemon = CHILD_PROCESS_INIT;
+> -	const char *argv[] = { NULL, NULL, NULL };
+>  	char buf[128];
+>  	int r;
+>  
+> -	argv[0] = "git-credential-cache--daemon";
+> -	argv[1] = socket;
+> -	daemon.argv = argv;
+> +	strvec_pushl(&daemon.args, 
+> +		     "credential-cache--daemon", socket,
+> +		     NULL);
+> +	daemon.git_cmd = 1;
+>  	daemon.no_stdin = 1;
+>  	daemon.out = -1;
+>  
 
-The issue can be reproduced with the following commands:
-# First trigger a rebase that will paused because of a conflict
-# (there is probably a simpler way to end up in this use case)
-$ git init test-repo-rebase-reset
-$ cd test-repo-rebase-reset/
-$ touch file
-$ git add file
-$ git commit file -m 'First commit=E2=80=99
-$ echo "dummy line" > file
-$ git commit --all -m 'Second commit=E2=80=99
-$ git switch --create new-branch HEAD~1
-$ git rm file
-$ git commit -m 'Remove file=E2=80=99
-$ git rebase master
-# Let=E2=80=99s check that the rebase got paused because of the conflict
-$ git status
-$ git reset --hard
-# Even after the =E2=80=9Cgit reset --hard=E2=80=9C the rebase was not =
-aborted
-$ git status
-# Now let=E2=80=99s check what happens with the cherry-pick command
-$ git rebase --abort
-$ git switch master
-$ git cherry-pick $(git rev-parse -1 new-branch)
-# The cherry-pick got paused because of the same conflict
-git status
-# Let=E2=80=99s try to abort the cherry-pick with the reset command
-git reset --hard
-# Double check the cherry-pick was aborted
-git status
+By the way, an interesting fact is that this cannot graduate UNTIL
+credential-cache becomes a built-in.  Having an intermediate level
+process seems to break t0301.
 
-I think the behavior will be the same on all OS but if it helps I was =
-able to reproduce it on Cygwin/Windows 10 with git 2.28.0 and Mac OS =
-with git 2.26.0
-
-Note that in the commands above I didn=E2=80=99t give any revision to =
-the reset command but the issue would be the same if I did. Moreover it =
-makes it even more confusing I think: you can move your HEAD to any =
-revision while the rebase is still waiting to be completed.
-
-What do you think? Does this behavior seems normal to you?
-
-Thank you in advance for your answer.
-
-Best regards,
-
-Thomas=
