@@ -8,63 +8,66 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA236C433E2
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 10:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2DD2C433E2
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 10:52:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B53F2206F0
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 10:52:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1676206F0
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 10:52:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NmvjQ+h9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QSx1nccn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726507AbgHaKv7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Aug 2020 06:51:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39676 "EHLO
+        id S1726839AbgHaKwH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Aug 2020 06:52:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727105AbgHaKvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Aug 2020 06:51:18 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE48C061755
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 03:51:16 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id e17so4798635wme.0
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 03:51:16 -0700 (PDT)
+        with ESMTP id S1726312AbgHaKvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Aug 2020 06:51:20 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE8AEC061575
+        for <git@vger.kernel.org>; Mon, 31 Aug 2020 03:51:19 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id c19so4166603wmd.1
+        for <git@vger.kernel.org>; Mon, 31 Aug 2020 03:51:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2I9Y2hRuXgRqT6FgB1KECR88tDHWd7i0V/IscrZ+zbo=;
-        b=NmvjQ+h9yl7Jvlrc91falnnqQJZKq1nTMgDSKywBooTVkwHSyyQ8cidCZl3VBJf0bE
-         hwRCtJpgCDpQM08wlzrd4dyww9zthZlRroo3UeKMM3+vZEl6/FWj+uSRqcVQt5jWcesx
-         yLUHSe5KOgnSNrAWOV4+QJlmDDRlZrdlOq02/6Qkx7MDhxuCM8R1eq2gdSbDm99cCnKe
-         Ix+f4RjAF9oqU7jrfDo2FtbxgARRnQrW+M2MGskaNAku7xGnxMFrpYZCrWIOtjQQ1M6O
-         jE3XNLuJyfF7NiYoQhuiZRxYfk9MtCCkhrf36xveTkAId0jvEUthrlx5lCRIAdPTgmss
-         9p9A==
+        bh=LTDMjVi2Mz9bRPnbb6JXdOSiMTMzq1b0Krp0/r9I70g=;
+        b=QSx1nccn3Q6/kTzoNgW3L9k4oVjx1y2VLonVu1fTNoz3uaiZhQCyxWf9ASfmpTVU8F
+         1OAXaNuHDtSWD8MrMZuusc/cxb9LXY/DjTB5mzRcrv/nRsv6LPoqLPDrUYaaNgOf6hpU
+         MuPpzzttFhe0zG658vCSvXVymiI4Lx1ANtTUaY7w7Fr3+6QzGoEzRQ/+b8ZrZB55Ehh4
+         XNk+W0w3l2ylHSeEnIMaTVmdPPovaZ4svaMrZ6l6DTQ+yWvhXi+ba+FMVJN4xZ507aTU
+         BWjNE/20Uz4isG94HSuXJU8o48PLotP5xapPgibQuDt6i2o3CjYVPwPn5Ms9KFdlZOOd
+         Frdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2I9Y2hRuXgRqT6FgB1KECR88tDHWd7i0V/IscrZ+zbo=;
-        b=U4irJkq7wulMkHJY80q5bBDvrdXMVPWDg3cypKTOR9kwXAVCkZ883xTDKu0mqku17f
-         RmkA2LTVBYVfIyo2BKVPqW9fciEn7PmK/nJNjNJkeRPLKSyup3aLia9WUTem7A59ihIF
-         47r+YZod9XWPjEr16EP+kJ9/p83+skC9xxUvbZVSa6krkRk+yH1hp6dGv9qGUJskgJ1U
-         nnLKX3T8RRx6De+bg+w48zAw+FBuW2xWEa8mOLRKtA2cwwjp9c4YIMjDSxhMdENKyyCz
-         hSbnspT2KInqZqg8CbThLNKqiCPGJpi5YARC3D/fSMuNqbpqLRBoLU12g/893kKk2Vd6
-         s4EQ==
-X-Gm-Message-State: AOAM531GV8m+IIY3fGjL0wLk595dC5AqHSyHgRTlnIgmXY5TNafReTRf
-        mmhaDnKmUGRvtZn7fXqAa9SnspMg7OQ=
-X-Google-Smtp-Source: ABdhPJy8dWp4D5JWhqpgcSmE+xMzrTGfSiC90wPJGt66ttM/ZoKhY5JHLJVhhSruztjsT+m1fMBXXw==
-X-Received: by 2002:a1c:b703:: with SMTP id h3mr783714wmf.131.1598871075064;
-        Mon, 31 Aug 2020 03:51:15 -0700 (PDT)
+        bh=LTDMjVi2Mz9bRPnbb6JXdOSiMTMzq1b0Krp0/r9I70g=;
+        b=VVkbLagCKfW5EjvZ0OiEEF2N24STRLMiRzqNZbrk5kBIVgK5F4y/c4CiDcHEKcoFSs
+         2ZSJCrk/SJXn+G+BTooA18O0rxk0ZJvMOLs30K1AVztfBm42tve3mIbpsoFZhvn0uD6u
+         pJm5qvdqEEHjTltwlxDmOwMWlMiPgMXAm5IghEpgqQBBTCKg6hscdqPzaH2t1KPelP6S
+         iUEpSFyl0mQviuGfxHYEnZVyzCfuGLTtARCJN2NWXFcgSJIa7buWo9xtnqeq/Ffj9YLY
+         nJ37IsDhgEZhDc0q68BPTZeqOHxz8pl/b9Eoscs16FXNk1HLioKjJjrq40LpQ2KQoKdN
+         exWw==
+X-Gm-Message-State: AOAM531N0ZmtInJ3oHMUqp79XsE3jzEM9AR8nZpUaQJGUIM1Z9AmjPkz
+        EjcnZTngu0FCbtbjA5eTsHC/GsiNuD0=
+X-Google-Smtp-Source: ABdhPJzTVp5AhjQrqG1JWeKGeRJYBcRg7cgz4w5sVOewj280rq8GFOTw0SGJAxZSSbJgoOuQAy2sUQ==
+X-Received: by 2002:a1c:6254:: with SMTP id w81mr824064wmb.94.1598871078427;
+        Mon, 31 Aug 2020 03:51:18 -0700 (PDT)
 Received: from localhost.localdomain ([178.237.236.228])
-        by smtp.gmail.com with ESMTPSA id k84sm7674454wmf.6.2020.08.31.03.51.12
+        by smtp.gmail.com with ESMTPSA id k84sm7674454wmf.6.2020.08.31.03.51.17
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 31 Aug 2020 03:51:14 -0700 (PDT)
+        Mon, 31 Aug 2020 03:51:17 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 05/13] bisect: call 'clear_commit_marks_all()' in 'bisect_next_all()'
-Date:   Mon, 31 Aug 2020 12:50:35 +0200
-Message-Id: <20200831105043.97665-6-mirucam@gmail.com>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>
+Subject: [PATCH v7 08/13] bisect--helper: retire `--bisect-clean-state` subcommand
+Date:   Mon, 31 Aug 2020 12:50:38 +0200
+Message-Id: <20200831105043.97665-9-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200831105043.97665-1-mirucam@gmail.com>
 References: <20200831105043.97665-1-mirucam@gmail.com>
@@ -75,29 +78,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As there can be other revision walks after bisect_next_all(),
-let's add a call to a function to clear all the marks at the
-end of bisect_next_all().
+From: Pranit Bauva <pranit.bauva@gmail.com>
 
+The `--bisect-clean-state` subcommand is no longer used from the
+git-bisect.sh shell script. Instead the function
+`bisect_clean_state()` is directly called from the C
+implementation.
+
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- bisect.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/bisect--helper.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index d42a3a3767..c6aba2b9f2 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -1082,6 +1082,8 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 		  "Bisecting: %d revisions left to test after this %s\n",
- 		  nr), nr, steps_msg);
- 	free(steps_msg);
-+	/* Clean up objects used, as they will be reused. */
-+	clear_commit_marks_all(ALL_REV_FLAGS);
- 
- 	return bisect_checkout(bisect_rev, no_checkout);
- }
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index b40369e8aa..b8b8a7473c 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -22,7 +22,6 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all"),
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+-	N_("git bisect--helper --bisect-clean-state"),
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
+@@ -869,7 +868,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	enum {
+ 		NEXT_ALL = 1,
+ 		WRITE_TERMS,
+-		BISECT_CLEAN_STATE,
+ 		CHECK_EXPECTED_REVS,
+ 		BISECT_RESET,
+ 		BISECT_WRITE,
+@@ -887,8 +885,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+-		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
+-			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
+ 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
+ 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+@@ -930,10 +926,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			return error(_("--write-terms requires two arguments"));
+ 		return write_terms(argv[0], argv[1]);
+-	case BISECT_CLEAN_STATE:
+-		if (argc != 0)
+-			return error(_("--bisect-clean-state requires no arguments"));
+-		return bisect_clean_state();
+ 	case CHECK_EXPECTED_REVS:
+ 		check_expected_revs(argv, argc);
+ 		return 0;
 -- 
 2.25.0
 
