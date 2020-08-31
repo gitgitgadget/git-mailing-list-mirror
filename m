@@ -2,97 +2,107 @@ Return-Path: <SRS0=A5vO=CJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00EA5C433E2
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 18:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA82BC433E2
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 18:22:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA30320866
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 18:05:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 962DF20678
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 18:22:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jo1DqsXx"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pMqUGjGt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728426AbgHaSFp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Aug 2020 14:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51440 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726226AbgHaSFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Aug 2020 14:05:44 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67B56C061573
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 11:05:44 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id f18so1003382pfa.10
-        for <git@vger.kernel.org>; Mon, 31 Aug 2020 11:05:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rznkEpMMLUi3Z+NFiIvRWKUZyxh1dllZSPrbCGZoFzs=;
-        b=jo1DqsXxGa7nzJmV0KVR68KRT49TjI0bPH1YnrcSVtOjO7FvTx4JHccHtaCqGZCqZl
-         89JhfONe9KHyP5SXft2ueEvBfbiNQury/aV8p9a/q4xlGSuIQ9krnAenb6p509sDoRG4
-         qh3zZiI8nMmyRWY7E6cY1U3V7mEAb7h41NOr6MMsrLIaZBIMgDDwjjtJ45EEZTuXLJwh
-         a969wMBQmTZ6Wbdylx20wbAEs6IY2eRMCZnw/UcjwJ1GOeCpQ4NkzDgAlDyAddItSTKb
-         4AM86hhjGuLvhM+Q+TrfPTplUJ3f+Pe0PYgZJKzYwituEkWDPvwKdIN+DxCd9i8CrRK+
-         Fp8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rznkEpMMLUi3Z+NFiIvRWKUZyxh1dllZSPrbCGZoFzs=;
-        b=HZlH6oJ28yYV4OfO/3WryyPLHGUtYWF3+PsfEzG4W2ElJ9Ud+dEZFBsFv0eF7kjANs
-         q3D2P8GscIiCqit5al3kVYwqR98JaRHRq+uwrPFnIzoK3csPIujLDw2bIy/LW+7VQ7R7
-         HT/i5p5AwKJAfKAz3QAXFp+KKeYkmCZA5r3n4J/OTuUk/iyAjr9N0c6rTWYWzmRVv9aQ
-         Jd+RRYl+dihEANLrOoH3b/f6QVq9Jnx1I3e/qa/9G7LfHwGOrdIoqxoTM7LJACqwA7sE
-         wQeqsqa1iJ6Ip5/KDIKn5yJpsfJHSHhAXEmcU8+mXrTZ3VTvv9oGTDOBhdOO62pRYQ89
-         ox6g==
-X-Gm-Message-State: AOAM531B7OVrpXMje/XZzj7Zz8nXkk2ztdxH3diEdOMSnCRCduNOFSMR
-        vu8ZpODlIpd+/OSCHlwBr4CwZO9xK6h22g==
-X-Google-Smtp-Source: ABdhPJyGJMEqz3skrn3KrPGphnXs8UG3kxjPH2Tmwu3rSE1b1l1aA9Mg2qb1CTdNiVzrAd5UXP9B+A==
-X-Received: by 2002:a65:52c5:: with SMTP id z5mr2175896pgp.105.1598897142379;
-        Mon, 31 Aug 2020 11:05:42 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id m190sm8439799pfm.184.2020.08.31.11.05.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2020 11:05:41 -0700 (PDT)
-Date:   Mon, 31 Aug 2020 11:05:37 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git in Outreachy?
-Message-ID: <20200831180537.GC331156@google.com>
-References: <20200828065609.GA2105118@coredump.intra.peff.net>
+        id S1729889AbgHaSV7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Aug 2020 14:21:59 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61109 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729043AbgHaSV5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Aug 2020 14:21:57 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B54E1E7D5F;
+        Mon, 31 Aug 2020 14:21:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1oTnhKpav5ydLig7yTzsDc91vtA=; b=pMqUGj
+        GtYi/hKN6shu48cKUUJLiE7EoszVTbuGF4WP2PK7lMxOSGWUvcx7Wu3CNGV9dZ4C
+        0E/WTAXpGIF71OR/CzqkiLMsrknhR7Gw6G5KBJtZaA0nqwdxChBXxoaduiR3+crv
+        MykUkgtJh/bpgYcOSMNRHWPyg+NL+6+9Cbafw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yGeNAQXpQt+O3ZGkwVhdHoXmpLD2qXkz
+        XOGZ7m+f1VmwgGAyTkCgRY44Wrh3TPksBK1h+to92DF07jrGOQNb+/toc8npc548
+        R4R9T4cb9YBi4/rSJmzDFqlipP5CsInFi3pcduF5geCF0ZIxDduFHJLhGn9xRVcn
+        A3A/ySqGD4c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE0F9E7D5E;
+        Mon, 31 Aug 2020 14:21:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EF446E7D5A;
+        Mon, 31 Aug 2020 14:21:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Aaron Lipman <alipman88@gmail.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] t3200: clean side effect of git checkout --orphan
+References: <20200829225648.11971-1-alipman88@gmail.com>
+        <CAPig+cQeYz9Mh+26YshuCQSzXCCUyKNGGr1wJ3FNNLpf=9QRuw@mail.gmail.com>
+Date:   Mon, 31 Aug 2020 11:21:51 -0700
+In-Reply-To: <CAPig+cQeYz9Mh+26YshuCQSzXCCUyKNGGr1wJ3FNNLpf=9QRuw@mail.gmail.com>
+        (Eric Sunshine's message of "Sun, 30 Aug 2020 01:35:05 -0400")
+Message-ID: <xmqqimcyfzgg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200828065609.GA2105118@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D8137D9E-EBB6-11EA-B854-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 28, 2020 at 02:56:09AM -0400, Jeff King wrote:
-> 
-> Are we interested in participating in the December 2020 round of
-> Outreachy? The community application period is now open.
-> 
-> I can look into lining up funding, but we'd also need:
-> 
->   - volunteers to act as mentors
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I'm interested in mentoring or co-mentoring this term. (I'm not working
-this week but I didn't want to miss a deadline to volunteer.)
+> On Sat, Aug 29, 2020 at 6:57 PM Aaron Lipman <alipman88@gmail.com> wrote:
+>> The "refuse --edit-description on unborn branch for now" test in t3200
+>> switches to an orphan branch, causing subsequent git commands
+>> referencing HEAD to fail. Avoid this side-effect by switching back to
+>> master after that test finishes.
+>>
+>> This has gone undetected, as the next effected test expects failure -
+>> but it currently fails for the wrong reason.
+>
+> s/effected/affected
+>
+> In fact, the three tests following the orphan test all expect failure
+> (though I didn't check if they also fail for the wrong reason), and
+> the following test which doesn't expect failure has an explicit "git
+> checkout master" early on, which explains why it was not impacted by
+> this problem.
+>
+>> Verbose output of the next test referencing HEAD,
+>> "--merged is incompatible with --no-merged":
+>>
+>>   fatal: malformed object name HEAD
+>>
+>> Which this commit corrects to:
+>>
+>>   error: option `no-merged' is incompatible with --merged
+>>
+>> Signed-off-by: Aaron Lipman <alipman88@gmail.com>
+>
+> Description and actual fix make perfect sense.
 
-> 
->   - updates to our applicant materials (proposed projects, but also
->     microproject / patch suggestions)
+Yeah, looks good.  Of course, the affected test can be made more
+defensive to protect the precondition it relies on from getting
+broken by other tests (i.e. if it refers to HEAD, it should make
+sure it is on an actual commit).   Each test cleaning up after
+itself is a good discipline to have, but what is "clean" is quite
+subjective and depends on each test piece in the script X-<.
 
-One thought I had was whether it might be cool to shop for another
-co-mentor from Wireshark and have an intern teach Wireshark how to
-decipher Git protocol. But it seems large, and maybe last-minute for
-this term.
-
- - Emily
+Thanks, will queue.
