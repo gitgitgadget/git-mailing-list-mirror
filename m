@@ -2,97 +2,142 @@ Return-Path: <SRS0=A5vO=CJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC10FC433E6
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 19:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66CDBC433E2
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 19:41:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A55292100A
-	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 19:23:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37B97206E3
+	for <git@archiver.kernel.org>; Mon, 31 Aug 2020 19:41:59 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kp+2aSQO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729508AbgHaTXE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Aug 2020 15:23:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45684 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726526AbgHaTXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Aug 2020 15:23:04 -0400
-Received: (qmail 21397 invoked by uid 109); 31 Aug 2020 19:23:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 31 Aug 2020 19:23:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19854 invoked by uid 111); 31 Aug 2020 19:23:02 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 31 Aug 2020 15:23:02 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 31 Aug 2020 15:23:02 -0400
-From:   Jeff King <peff@peff.net>
+        id S1729592AbgHaTl6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Aug 2020 15:41:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728414AbgHaTl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Aug 2020 15:41:57 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7039AC061573
+        for <git@vger.kernel.org>; Mon, 31 Aug 2020 12:41:57 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id i10so8129221ljn.2
+        for <git@vger.kernel.org>; Mon, 31 Aug 2020 12:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CDItFA5PV7lT7RuJlW76tsxycCpYYmuVYL2hpCpQIes=;
+        b=Kp+2aSQOApKfWFKbGsdirG7M7hLtpKjOGjwPV8zl5NtNrvCLySsKHsdZd1/A8pcydl
+         JiHKx6tHCs7rN+8PQGTJY57DHQ9QhGtCzHkf774YZ/X8QiYCMmxiQ/fwFEZIk1Vz+qOO
+         wk+XnEN+7PLKT276Hw4pUxvYcVwTzLdimau7s10bTWxTBL1I9UpmwCvNTsggbsxYmwko
+         FqgEwpPU8Zqd+R63Ucpx8Uvi2W4wR5gXSKoT3NnsH6BY4aSB3dGBT1gnx7VmAM4EsSmt
+         lbJkSldvHpGYjVGxEKF370APyMqSb0coHbsUJUWeTBJzpNQch/pLnBB5UkY3opwaDZNt
+         9PpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=CDItFA5PV7lT7RuJlW76tsxycCpYYmuVYL2hpCpQIes=;
+        b=HWYr+Q9X+LJs+csFYMMjkBAjiEI8f+PL5jHfaMG/0qWyg5XRa9csPrfnFsdEcPwlEd
+         hs1FA0PaZZ7JwNsBA0igUqrwxfM70xwb/5KCrvK16HrKI+zPcIqKsA35JEiZbvTMyzkz
+         DVEx/hH4u4CJsiFtxd9+i2JmDark8NFXvBFK8o6x+PxqYFqjUi5UGnv1MIjyYWS75bwR
+         55SXCeTn4qGErDRleMLKi4AiXmXpF98Ln2TOQVs44d3vKlozIDlg2HbEvBIZkKsa0/bz
+         ymllgOwYA/fDpk9a90xHOQg2JSZM1DLXFyGR7IIo6M5u8T7WpdgaNre9wxKFccZjRDTS
+         4TYA==
+X-Gm-Message-State: AOAM530odT63qm15K9w9EIRm0gcBZrzotrdQdEPvhcmRkevX8X7obJ8v
+        x/rpViLxInjSb7MjpFl2xPmZOWrkb3o=
+X-Google-Smtp-Source: ABdhPJzhMILniRtAtr/pdwdVD6YDzF3c/dmsoeut0Noscl3cBosdAvWG8NyWjnSpqn2hwCvtcIiLyg==
+X-Received: by 2002:a2e:a54f:: with SMTP id e15mr1196973ljn.115.1598902913767;
+        Mon, 31 Aug 2020 12:41:53 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id g63sm2171093lfd.28.2020.08.31.12.41.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2020 12:41:53 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ori@eigenstate.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Avoid infinite loop in malformed packfiles
-Message-ID: <20200831192302.GA2819760@coredump.intra.peff.net>
-References: <A1CA9D499EDDACBA275BA61E114645F0@eigenstate.org>
- <59efeeab-49de-17e7-8b1c-355d6ef31b5d@web.de>
- <xmqqwo1gglf5.fsf@gitster.c.googlers.com>
- <20200831092946.GA2812764@coredump.intra.peff.net>
- <xmqqk0xehj38.fsf@gitster.c.googlers.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v3] revision: add separate field for "-m" of "diff-index
+ -m"
+References: <20200829194634.23306-1-sorganov@gmail.com>
+        <20200831125350.26472-1-sorganov@gmail.com>
+        <xmqq4koihgpk.fsf@gitster.c.googlers.com>
+Date:   Mon, 31 Aug 2020 22:41:51 +0300
+In-Reply-To: <xmqq4koihgpk.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 31 Aug 2020 10:23:51 -0700")
+Message-ID: <87wo1eob5s.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk0xehj38.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 31, 2020 at 09:32:27AM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > A related point is that delta chains might be composed of both types. If
-> > we don't differentiate between the two types, then the limit is clearly
-> > total chain length. If we do, then is the limit the total number of
-> > ref-deltas found in the current lookup, or is it the number of
-> > consecutive ref-deltas? I guess it would have to be the former if our
-> > goal is to catch cycles (since a cycle could include an ofs-delta, as
-> > long as a ref-delta is the part that forms the loop).
-> 
-> Ah, OK, you've thought about it already.
-> 
-> I wonder we can just count both and limit the chain length to the
-> total number of objects in the pack we are currently looking at? 
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Add separate 'diff_index_match_missing' field for diff-index to use
+>> and set it
+>> when we encounter "-m" option. This field won't then be cleared when another
+>> meaning of "-m" is reverted (e.g., by "--no-diff-merges"), nor it will be
+>> affected by future option(s) that might drive 'ignore_merges' field.
+>>
+>> Use this new field from diff-lib:do_oneway_diff() instead of reusing
+>> 'ignore_merges' field.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>
+> Much easier to reason about.  As I said, I think we would ideally
+> want to detect and diagnose --[no-]diff-merges on the command line
+> of "diff" or "diff-{files,index,trees}" as an error, but for now
+> this is a good first step.
+>
+>>  	} else if (!strcmp(arg, "-m")) {
+>>  		revs->ignore_merges = 0;
+>> +		/*
+>> +		 * Backward compatibility wart - "diff-index -m" does
+>> +		 * not mean "do not ignore merges", but "match_missing",
+>> +		 * so set separate flag for it.
+>> +		 */
+>> +		revs->diff_index_match_missing = 1;
+>
+> Half the wart has been removed thanks to this patch and the rest of
+> the code can look at the right field for their purpose.  The parsing,
+> unless we make a bigger change that allows us to detect and diagnose
+> "diff-index --no-diff-merges" as an error, still needs to be tricky
+> and may deserve a comment.
+>
+> The comment should apply to and treat both fields equally, perhaps
+> like this:
+>
+> 	} else if (!strcmp(arg, "-m")) {
+> 		/*
+> 		 * To "diff-index", "-m" means "match missing", and to
+> 		 * the "log" family of commands, it means "keep merges".
+> 		 * Set both fields appropriately.
+> 		 */
+> 		revs->ignore_merges = 0;
+> 		revs->match_missing = 1;
+> 	}
+>
+> By the way, let's drop diff_index_ prefix from the name of the new
+> field.  I do not see a strong reason to object to a possible update
+> to "diff-files" to match the behaviour of "diff-index".  
+>
+> In a sparsely checked out working tree (e.g. start from "clone
+> --no-checkout"), you can check out only paths that you want to
+> modify, edit them, and then "git diff-files -m" would be able to
+> show useful result without having to show deletions to all other
+> files you are not interested in.  And that is exactly the same use
+> case as "git diff-index -m HEAD" was invented for.
 
-That's an interesting suggestion. Within a single pack, it does prevent
-cycles, and it does so without needing a separate knob, which is nice.
+Fine with me, thanks! I'll re-roll soon.
 
-As you note, it only works as long as packs aren't thin. That shouldn't
-matter for the current scheme (where all on-disk packs are
-self-contained with respect to deltas), but I do wonder if we'll
-eventually want to support on-disk thin packs (coupled with a
-multi-pack-index, that eliminates most of the reason that one needs
-repack existing objects; it's probably a necessary step in scaling to
-repos with hundreds of millions of objects). We could still auto-bound
-it with the total number of packed objects in the repository, though.
-
-> It
-> guarantees to catch any cycle as long as pack is not thin, but is
-> that too lenient and likely to bust the stack while counting?  On
-> the other side of the coin, we saw 10000 as a hard-coded limit in
-> the patch, but do we know 10000 is low enough that most boxes have
-> no trouble recursing that deep?
-
-I don't think we have to worry about stack size. We already ran into
-stack-busting problems with non-broken cases. ;) That led to 790d96c023
-(sha1_file: remove recursion in packed_object_info, 2013-03-25) using
-its own stack.
-
-I do wonder about CPU, though. We might have tens of millions of objects
-in a single pack file. How long does it take to convince ourselves we're
-cycling (even if the cycle itself might only involve a handful of
-objects)? I'm not sure we care too much about this being a fast
-operation (after all, the point is that it should never happen and we're
-just trying not to spin forever). But if it takes 60 minutes to detect
-the cycle, from a user's perspective that might not be any different
-than an infinite loop.
-
--Peff
+Thanks,
+-- Sergey
