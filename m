@@ -2,139 +2,145 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA3C2C433E2
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8767FC433E6
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:27:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3BA5207EA
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:22:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 604DF20767
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:27:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N2DnvpcZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hvIIwLfB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728030AbgIANWH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 09:22:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34052 "EHLO
+        id S1728057AbgIAN1b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 09:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728018AbgIANUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 09:20:24 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A872DC061244
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 06:20:18 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id o5so1478205wrn.13
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 06:20:18 -0700 (PDT)
+        with ESMTP id S1727025AbgIANSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 09:18:08 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A47A4C061245
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 06:18:07 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id u3so835407qkd.9
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 06:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=56t6yj1alMCTpjUopvExQ5j9/jbTl8WTrrDWEBWQadg=;
-        b=N2DnvpcZB2jwMgbKpMDZfEpiHlWOoPVGpN++IgUuelZ2iuMAEL6+Pri+/6ghC5sJcR
-         39wzYDKqzJAI3TZC9keTDABcfrH7R2le/i9gkAJXFYES4iZDXHQuE9lE2Em4ff8OEi4f
-         oASMPPPICQPbSgr/qjtKLaU3BM+QJ/Ud8yWpYZOSxlnvkplZoc3JqaENLRH0ubRW8acn
-         vvTeW1LBTnxWbJn5qGO+r5zy+YOytLdcigKPqI4SjwRfpNAnrub1ggR3J56Ssz8H/Bur
-         7syeNbIN1eqbA2uPwLSfjmH167V5e+4gcYoTZcTvB8zJ9AFRiyOISzp8+y9rp3bbC+e0
-         k1mQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=0iNexRwKalRj7dyWZH8QN8nWfCNx0bqs2we8Q0+XWIQ=;
+        b=hvIIwLfBytfHTZ74eTyWLmZbOZMTay4L6s4vIJk8zoZCWsY9G9Do8YSvKSpwQQNAuu
+         VSnH0ceiPvgM4gO84V0OxwxysXeHbHqwynAC+6LHFM7nQJH/bOG88QGRzRpWjPRWR4wH
+         /v6sGaQf9RSe1A7gRcVlAah+9FWrigPliJkeVOKwbLlBDEXfy2z/R6t292WuBShIeYSE
+         /F/AGhcIZOF74db7i7jGuCwgPYl97cm7nveW9boTNYKNZnRHpLkoFqCUBj20bpqcM7Hp
+         TfPOJTfPELN6GgG6Mwcwy4wDv0Asgw/QpsBj9Z7PRZQtwlHaEwLW3GL+knR+byZG9h5v
+         6kVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=56t6yj1alMCTpjUopvExQ5j9/jbTl8WTrrDWEBWQadg=;
-        b=RdtzbwxVX048078hzgWborBC/tDfzZCnqcwoNrMjjCMf/y7540PvtpLBC06/iSWJ7p
-         Dp5Sp12Klu7MY8DyYe5Jq4oGIfG7ySYG3ctpD1sp1cE0a7+5YRaq5vaxfJC6ro9DMQuS
-         uXnnPg6mFLjtIRqi0oa63cSFlwLk8Gqwp5Ob4k6nN0+i1d4vi9QgTrQhzcIzXCdy2Qc8
-         uHSBdNaeaeEM8p1krKnqdZwQXGToPoKqUAO1UdxZ3rXpaixH1j+OZ0dJ8KGGc2LZ71LF
-         lcO3c/KuRYYMzGYaJneG2Fcj8zMyDS8+sSsaRc6SzmIqB1boudDMugfbWrJ/bR3Zpaow
-         W+4Q==
-X-Gm-Message-State: AOAM530DpC+mmnHIPm8tU5ldCq47Omi1yHk+IIIBR2PKYkbqxlsOjUkq
-        fsRxWJ5/Gp9Myq7//Ve+odln6Ez7f5c=
-X-Google-Smtp-Source: ABdhPJzanAORHk+sPR8SnlBAALzarXBfnjq7VlXA3iQyxgjWK5GkVqT+RxpEbuwJFwslt3RsRhZqnw==
-X-Received: by 2002:adf:f511:: with SMTP id q17mr1881966wro.414.1598966413457;
-        Tue, 01 Sep 2020 06:20:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w1sm1909567wmc.18.2020.09.01.06.20.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 06:20:12 -0700 (PDT)
-Message-Id: <pull.718.git.1598966412371.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Sep 2020 13:20:12 +0000
-Subject: [PATCH] git.txt: correct stale 'GIT_EXTERNAL_DIFF' description
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sean Estabrooks <seanlkml@sympatico.ca>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=0iNexRwKalRj7dyWZH8QN8nWfCNx0bqs2we8Q0+XWIQ=;
+        b=jrXDJwztwZuCzfNoM6lF4JsUQwfkwVyyABa82+zPT5clBdZZKXwtW3M1eQcttXhCj8
+         cJ/3h3lBiMEn7Mew+XYjsR/9/9nIifm0bFcPWdASFExg2Sb550RSJwPjU2pgPzUvtSWY
+         QpVtgL4uLxAzZs6Fv8yYkbhWyYBnFcHskch91X6Gy4dGWVwj0NS9yD/NG5hO7TMZJPSz
+         9ihJ191QH2MF1V1JTTnN1wPXE3Gygat3CY7llNvBi+IsYV3byRpu9K2XzF6l+pbMCrln
+         ZYipjMt/1YgEpemJKtxT299by0Zq4NvL82ddUoccubl82qXCqgg6sUsP3H5wTxJZhFqY
+         3hyw==
+X-Gm-Message-State: AOAM532inVdR6UF419W93UFfPPVOhdNBnRGUoc/M48LE0k5iMb9wrJHy
+        eyCrnK6eai9p3ue40zrQMlQ=
+X-Google-Smtp-Source: ABdhPJySF91yRM3LGR+eCm120dGT6kdK/82CRL6xePkx5fz38Sh9rQU0/noGIwfhqum2FUsIMWuukg==
+X-Received: by 2002:a05:620a:4c3:: with SMTP id 3mr1862281qks.105.1598966286403;
+        Tue, 01 Sep 2020 06:18:06 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id m3sm1529547qkh.3.2020.09.01.06.18.04
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 01 Sep 2020 06:18:05 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] Makefile: add support for generating JSON compilation database
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <20200901073827.GA3967005@coredump.intra.peff.net>
+Date:   Tue, 1 Sep 2020 09:18:01 -0400
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <867D6718-E377-47B8-BD32-0800872B3DE0@gmail.com>
+References: <pull.714.git.1598815707540.gitgitgadget@gmail.com> <20200830221004.GB241078@camp.crustytoothpaste.net> <xmqqsgc3h28s.fsf@gitster.c.googlers.com> <20200901073827.GA3967005@coredump.intra.peff.net>
+To:     Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-In fde97d8ac6 (Update documentation to remove incorrect GIT_DIFF_OPTS
-example., 2006-11-27), the description of the 'GIT_EXTERNAL_DIFF'
-variable was moved from 'diff-format.txt' to 'git.txt', and the
-documentation was updated to remove a 'diff(1)' invocation since Git did
-not use an external diff program anymore by default.
+> Le 1 sept. 2020 =C3=A0 03:38, Jeff King <peff@peff.net> a =C3=A9crit :
+>=20
+> On Sun, Aug 30, 2020 at 09:24:03PM -0700, Junio C Hamano wrote:
+>=20
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>>=20
+>>> On 2020-08-30 at 19:28:27, Philippe Blain via GitGitGadget wrote:
+>>>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>>>=20
+>>>> Tools based on LibClang [1] can make use of a 'JSON Compilation
+>>>> Database' [2] that keeps track of the exact options used to compile =
+a set
+>>>> of source files.
+>>>=20
+>>> For additional context why this is valuable, clangd, which is a C
+>>> language server protocol implementation, can use these files to
+>>> determine the flags needed to compile a file so it can provide =
+proper
+>>> editor integration.  As a result, editors supporting the language =
+server
+>>> protocol (such as VS Code, or Vim with a suitable plugin) can =
+provide
+>>> better searching, integration, and refactoring tools.
+>>=20
+>> I found that the proposed commit log was very weak to sell the
+>> change; some of what you gave above should definitely help strenthen
+>> it.
+>=20
+> Likewise. Looking at the output, I'm confused how it would help with
+> things like searching and refactoring. It might be nice to spell it =
+out
+> for those of us exposed to it for the first time (I tried following =
+the
+> links but remained unenlightened).
 
-However, the description of 'GIT_EXTERNAL_DIFF' still mentions "instead
-of the diff invocation described above", which is confusing.
+OK, I'll improve the commit message. I'm not at all an expert in this =
+subject,
+I just had to generate a compilation database myself to use the =
+Sourcetrail source
+explorer [1] with Git so I figured I'd share what I had done. Further =
+exploration of the=20
+topic are in [2] and [3]. Note that I did try some of the tools listed =
+in [2] before resorting
+to modifying the Makefile, but these tools either did not work at all or =
+produced wrong=20
+output (ex. strings in the JSON were not properly quoted, etc.)
 
-Correct that outdated sentence.
+> I'd also be curious to hear what advantages it gives to add a new
+> Makefile knob rather than just letting interested parties add -MJ to
+> their CFLAGS. Is it just a convenience to create the concatenated =
+form?
 
-Also, link to git(1) in 'diff-generate-patch.txt' when GIT_DIFF_OPTS and
-GIT_EXTERNAL_DIFF are mentioned, so that users can easily know what
-these variables are about.
+Unfortunately this would not work because the '-MJ' flag needs a file =
+name
+to know where to put the JSON fragment.
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    git.txt: correct stale 'GIT_EXTERNAL_DIFF' description
+Thanks,
+Philippe.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-718%2Fphil-blain%2Fgit-external-diff-wording-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-718/phil-blain/git-external-diff-wording-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/718
 
- Documentation/diff-generate-patch.txt | 3 ++-
- Documentation/git.txt                 | 5 +++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+[1] www.sourcetrail.com
+[2] https://sarcasm.github.io/notes/dev/compilation-database.html
+[3] =
+https://eli.thegreenplace.net/2014/05/21/compilation-databases-for-clang-b=
+ased-tools
 
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index e8ed6470fb..b10ff4caa6 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -10,7 +10,8 @@ linkgit:git-diff-tree[1], or
- linkgit:git-diff-files[1]
- with the `-p` option produces patch text.
- You can customize the creation of patch text via the
--`GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
-+`GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables
-+(see linkgit:git[1]).
- 
- What the -p option produces is slightly different from the traditional
- diff format:
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 2fc92586b5..98bdf0983c 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -551,8 +551,9 @@ Git Diffs
- 
- `GIT_EXTERNAL_DIFF`::
- 	When the environment variable `GIT_EXTERNAL_DIFF` is set, the
--	program named by it is called, instead of the diff invocation
--	described above.  For a path that is added, removed, or modified,
-+	program named by it is called to generate diffs, and Git
-+	does not use its builtin diff machinery.
-+	For a path that is added, removed, or modified,
- 	`GIT_EXTERNAL_DIFF` is called with 7 parameters:
- 
- 	path old-file old-hex old-mode new-file new-hex new-mode
-
-base-commit: d9cd4331470f4d9d78677f12dc79063dab832f53
--- 
-gitgitgadget
