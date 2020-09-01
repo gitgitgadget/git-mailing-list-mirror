@@ -2,111 +2,103 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15AE7C433E6
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01FD5C433E2
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:56:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3069208CA
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:51:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D484E206EB
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:56:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="paLIE1sY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BNM4qjpr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbgIAPvP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 11:51:15 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60436 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732158AbgIAPuD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 11:50:03 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFB4CEF7AD;
-        Tue,  1 Sep 2020 11:50:00 -0400 (EDT)
+        id S1732134AbgIAP4o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 11:56:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51605 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731619AbgIAP4m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 11:56:42 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30E1EF8418;
+        Tue,  1 Sep 2020 11:56:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BdO0lSz/x0J2xaY7YKc1Tq08i4I=; b=paLIE1
-        sY43eyr1pxEqQWVFG2zNZ+wtezNyUixImhy++Ua8zArw8yIf797RDGlLzsQsMsLO
-        vpDS57rJnE6U5KREQkufggCHeix6sNWc8/yz4CwOMlkmQPR+vQl4Wt147lVaoohA
-        Lzz2XGGAtLvSmpkSEZjaORsFXLO9q/33Xd3Mk=
+        :content-type; s=sasl; bh=ridvdjQ82aqr/VU3oeYgKw9Uycc=; b=BNM4qj
+        pr0sZTtnwGkmJBsUkmbveNlckRd+TCqt6BPDridYOXO5DJ7NOCV8DnGpv+uAfxXe
+        2TlrEwRc7tJoptTVd3HgiF1xwsPbBYkuyt1tfnbeKIlgzHtAxsh9v1Obn6bBDG7Y
+        JKjtSD+vGRmKCDH322CqGWQU6aPV7xI8MxTr4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=teqm/IC/NpS/yM4P+1B+tgBrkKBbUytU
-        Xy0PKUm6XH1JaZSZHmtCbctLOrZ/09qGmuB9f/nEup2VthAskwyFgwcdJAqmcQ36
-        4m3Gz7nnIbAXxRfbZVZZW4Xpb1f/vEgcD97okFC0+SwWTfTzKgtGut9ddGj2XBF2
-        2pX0uWV1WCw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8AAA1EF7AC;
-        Tue,  1 Sep 2020 11:50:00 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=tdqDtHMInyKYupA2VBMLw/n0HlkFZvh9
+        nH0FitWt7r3h7sZHUioGy1zWR7ywYPgou+eVav1g8UE60jEHCqoK2e5UA1DHwlqT
+        6O4aTGl+t1StTE1PEJGyWitZpCYGJB4bRxV+vttJiGWa+Dq+WbYxcTLK4IE6T5ne
+        vSjd3p4YjeU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 28DF3F8417;
+        Tue,  1 Sep 2020 11:56:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C305CEF7AB;
-        Tue,  1 Sep 2020 11:49:57 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5A1BBF8415;
+        Tue,  1 Sep 2020 11:56:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] core.abbrev <off|false|no> disables abbreviations
-References: <20200901074355.GA4498@dcvr>
-        <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com>
-Date:   Tue, 01 Sep 2020 08:49:55 -0700
-In-Reply-To: <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com> (Derrick
-        Stolee's message of "Tue, 1 Sep 2020 08:14:32 -0400")
-Message-ID: <xmqqblipebto.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] xrealloc: do not reuse pointer freed by zero-length realloc()
+References: <20200901111800.GA3115584@coredump.intra.peff.net>
+Date:   Tue, 01 Sep 2020 08:56:35 -0700
+In-Reply-To: <20200901111800.GA3115584@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 1 Sep 2020 07:18:00 -0400")
+Message-ID: <xmqq7dtdebik.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C96B0C1C-EC6A-11EA-B88C-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B7946136-EC6B-11EA-B8E2-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> +		else if (!strcasecmp(value, "false") ||
->> +			 !strcasecmp(value, "no") ||
->> +			 !strcasecmp(value, "off"))
->> +			default_abbrev = the_hash_algo->hexsz;
+> The simplest fix here is to just pass "ret" (which we know to be NULL)
+> to the follow-up realloc(). That does mean that a system which _doesn't_
+> free the original pointer would leak it. But that interpretation of the
+> standard seems unlikely (if a system didn't deallocate in this case, I'd
+> expect it to simply return the original pointer). If it turns out to be
+> an issue, we can handle the "!size" case up front instead, before we
+> call realloc() at all.
 >
-> I'm not sure we need three synonyms for "no-abbrev" here.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  wrapper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/wrapper.c b/wrapper.c
+> index 4ff4a9c3db..b0d375beee 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -120,7 +120,7 @@ void *xrealloc(void *ptr, size_t size)
+>  	memory_limit_check(size, 0);
+>  	ret = realloc(ptr, size);
+>  	if (!ret && !size)
+> -		ret = realloc(ptr, 1);
+> +		ret = realloc(ret, 1);
 
-I do not particularly mind, but if we imitate the variety of various
-boolean false, I'd prefer to see the code to parse them shared to
-avoid them drifting apart over time.
+The original does look bogus.
 
-> "false" would be natural, except I think in a few places
-> the config value "0" is also interpreted as "false", but
-> as seen below a value of "0" snaps up to the minimum
-> allowed abbreviation.
-
-I was in the vicinity of this code recently for reviewing another
-topic, but IIRC, 0 came from the UI level does get rounded up to the
-minimum accepted and never reach "default_abbrev", but if you manage
-to place 0 or -1 in default_abbrev here (e.g. with additional code,
-like the above part with the right hand side of the assignment
-updated), I think the value will propagate throughout the codepath
-and causes the downstream code to do the right thing.  0 will give
-you no-abbreviation (i.e. full length depending on the length of the
-hash) and -1 will give you the "scale as appropriate for the size of
-the object store".
-
-I have mild preference for using 0 over hardcoded single "full
-length" here.  Even though we currently do not plan to allow
-multiple hashes in use simultaneously in a single invocation of Git,
-if that ever happens, we will regret hardcoding the_hash_algo->hexsz
-on the right hand side of the assignment here, like this patch does.
-
-Telling the downstream code in the control flow that we want no
-truncation by using 0 would keep both 40-hexdigit and 64-hexdigit
-hashes to their original length (as opposed to telling it to
-truncate at 40 or 64 by using the_hash_algo->hexsz).
+It however may be easier to reason about if we used malloc(1) in the
+fallback path for "we got NULL after asking for 0-byte" instead.  I
+would have a hard time guessing the reason why we are reallocating
+NULL without going back to this commit, reading the log and seeing
+the original to see that the reason why we didn't use malloc() but
+realloc() is we aimed for a minimum change, if I encounter this code
+after I forgot this discussion.
 
 Thanks.
-
-
-
