@@ -2,316 +2,111 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1009C433E2
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 23:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A436C433E6
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 23:38:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0242206FA
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 23:09:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29C84206F0
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 23:38:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hwM7gbI4"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IXc9aUNo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726307AbgIAXJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 19:09:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbgIAXJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 19:09:25 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3492C061244
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 16:09:22 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id c15so3217042wrs.11
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 16:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=oXUU1SsvYVm0EOBKMU4nDH9nFgJu+E8DOWVTJsM2oBY=;
-        b=hwM7gbI4/AR45d3BPiaMqFSGxiv3zb2JdJJW5lvLCSGuOvzOlFUPNb0Ktqk2ILOyc8
-         y9n6CUUNxqYMzvSE+xx0kJiWp5ED4WBnh0iLFA0xUlxK01NQx7LHSWJd0zg82ThIPZii
-         jjBQvCPBKT6e5YIzQYttL+hdb9Umzhu/MeSmQPXgy12rO/xBS3q9YwPu51gGywPtkKTH
-         LhFrBxXLjej/WO3XnS26GLfdeFoZKuE49z1TEKaisng2TW5JLCD811hnxmhhYF8wuH+c
-         78AyV+Nn7penNzeyFV3yJG3863jnS5tiwwPn+MpWQvmIKTHhIoNz/xAA6p4laqsKIp3O
-         6L+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oXUU1SsvYVm0EOBKMU4nDH9nFgJu+E8DOWVTJsM2oBY=;
-        b=Fq6vTAF5mp+/tmGT5H+nMAQZF0hCQbM8+WAQnN+IlSoTKsBXeD8gvWWD2LrUbzHVSP
-         WbOuchgA3Ia0lHZ3Ai+NgwykLndllVvQ8CfBCXHjJNtT1feqBlOmASyI8QnjJEPxcpSD
-         hEwbF7amq2M+FA2DnQHYa4g1fyqzXRTh75406Zmp5olOyRm0k44Bpig+aXrBuajNiP89
-         xaNK3dGrbPPxHHUBnke07tkXgqm4yTLC8cBbiFxy0ZGtCn9+4TpmkrJuXQUf9iYM7+cX
-         X7O0z3Oc+4rY/olOiBQpwQvthJ8lPyMIfjRosP2aaIifpXc1lX7auuaT+4WM6SKXdJka
-         qOww==
-X-Gm-Message-State: AOAM530tKuC3Hnc6RAOhszb1Md6+c5BaEajvZdqvtP4UvhtHtxiZjmqN
-        8w0PSyVXpcuXl/EK1ObKGWQGQvAevfE=
-X-Google-Smtp-Source: ABdhPJygxwA4OpYfT73hSE+4yxb2+w6hqwshoXEj0m4vlbz3W6EGL5wK+Gn6+HX1f5XFCyhYeVnXFQ==
-X-Received: by 2002:a5d:4d01:: with SMTP id z1mr4074804wrt.366.1599001760809;
-        Tue, 01 Sep 2020 16:09:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j7sm4649570wrs.11.2020.09.01.16.09.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 16:09:20 -0700 (PDT)
-Message-Id: <pull.714.v2.git.1599001759548.gitgitgadget@gmail.com>
-In-Reply-To: <pull.714.git.1598815707540.gitgitgadget@gmail.com>
-References: <pull.714.git.1598815707540.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Sep 2020 23:09:19 +0000
-Subject: [PATCH v2] Makefile: add support for generating JSON compilation
- database
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726124AbgIAXie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 19:38:34 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51772 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726105AbgIAXia (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 Sep 2020 19:38:30 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8E5EA60129;
+        Tue,  1 Sep 2020 23:37:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1599003478;
+        bh=cdpYkdCKvUsWlz3Ybvou2YgoCrxU8hyvEuhM9Kafjgs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=IXc9aUNoigVgXLQXCO5/poLudullmLE4VoBSbEYsKG+UyHdkCmgniMTUmawxr6FPv
+         M7OZud2NBzb3aNBt1BRHryfZgoouUy8jFLIsjZcRrmkrbpZ2v7w2gcUCGcgxnqETgz
+         uhHvL49xg/k5Kh1ELuP7DCVilmb36DkVJPpjR5cx+0CDvxa/AhOSzqmKdJ8Ya3oNjW
+         nZclTfdcj1aFeY+lL0FZ8KG2mhPJW2Jr9EbBI2rZPvN8icJhXONnBwZ/cRhGiWB6y0
+         reLQauELMQz7N0uKJ3K4aDftKS61qFxvXuIVuoy0cnqN5cc7GCz/kHGAbNm5p+BfWA
+         sOesT5hP9GBTzfPqfYFroe6zfU9f0480t34sHZRJwF6NZPH3AK3U7DxPw8cFLVtMbn
+         xrlJ4lHN+26xot8dFkDIWAw/aYtiX2chl6UWOvV+D5N7nGpzHldPqdI7BKxHMHQjoj
+         CrySSTUnhTh6kAwxwuClceG0JXADCPkEzUrSpvnAdwOnvG7PccQ
+Date:   Tue, 1 Sep 2020 23:37:52 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] core.abbrev <off|false|no> disables abbreviations
+Message-ID: <20200901233752.GC241078@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Eric Wong <e@80x24.org>,
+        git@vger.kernel.org
+References: <20200901074355.GA4498@dcvr>
+ <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com>
+ <xmqqblipebto.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+xNpyl7Qekk2NvDX"
+Content-Disposition: inline
+In-Reply-To: <xmqqblipebto.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Tools based on LibClang [1] can make use of a 'JSON Compilation
-Database' [2] that keeps track of the exact options used to compile a set
-of source files.
+--+xNpyl7Qekk2NvDX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-For example, clangd [3], which is a C language server protocol
-implementation, can use a JSON compilation database to determine the
-flags needed to compile a file so it can provide proper editor
-integration.  As a result, editors supporting the language server
-protocol (such as VS Code, Emacs, or Vim, with suitable plugins) can
-provide better searching, integration, and refactoring tools.
+On 2020-09-01 at 15:49:55, Junio C Hamano wrote:
+> I was in the vicinity of this code recently for reviewing another
+> topic, but IIRC, 0 came from the UI level does get rounded up to the
+> minimum accepted and never reach "default_abbrev", but if you manage
+> to place 0 or -1 in default_abbrev here (e.g. with additional code,
+> like the above part with the right hand side of the assignment
+> updated), I think the value will propagate throughout the codepath
+> and causes the downstream code to do the right thing.  0 will give
+> you no-abbreviation (i.e. full length depending on the length of the
+> hash) and -1 will give you the "scale as appropriate for the size of
+> the object store".
+>=20
+> I have mild preference for using 0 over hardcoded single "full
+> length" here.  Even though we currently do not plan to allow
+> multiple hashes in use simultaneously in a single invocation of Git,
+> if that ever happens, we will regret hardcoding the_hash_algo->hexsz
+> on the right hand side of the assignment here, like this patch does.
 
-The Clang compiler can generate JSON fragments when compiling [4],
-using the `-MJ` flag. These JSON fragments (one per compiled source
-file) can then be concatenated to create the compilation database,
-commonly called 'compile_commands.json'.
+I think we have some commands that accept --abbrev=3D0 as a value meaning
+"no abbreviation", because I've touched that code as part of the SHA-256
+work.  So as far as the option value is concerned, I think it may make
+sense to use 0 for that meaning and just document it.
+--=20
+brian m. carlson: Houston, Texas, US
 
-Add support to the Makefile for generating these JSON fragments as well
-as the compilation database itself, if the environment variable
-'GENERATE_COMPILATION_DATABASE' is set.
+--+xNpyl7Qekk2NvDX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If this variable is set, check that $(CC) indeed supports the `-MJ`
-flag, following what is done for automatic dependencies.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-All JSON fragments are placed in the 'compile_commands/' directory, and
-the compilation database 'compile_commands.json' is generated as a
-dependency of the 'all' target using a `sed` invocation.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX07bUAAKCRB8DEliiIei
+geXbAP9kK2hEAzfbcWx1wYZLDL1YrahFNBZPb03qzbUbKjxVggD+LALK8T0UuMYt
+B/qHMWxQHK4BS3v5HrCBQcN9rIz2PQg=
+=3sLg
+-----END PGP SIGNATURE-----
 
-[1] https://clang.llvm.org/docs/Tooling.html
-[2] https://clang.llvm.org/docs/JSONCompilationDatabase.html
-[3] https://clangd.llvm.org/
-[4] https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mj-arg
-
-Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    Add support for generating JSON compilation database
-    
-    Changes since v1:
-    
-     * Added a paragraph to the commit message to better explain why this
-       feature would help Git developers (Thanks Brian!)
-     * Corrected the description of the new GENERATE_COMPILATION_DATABASE 
-       Makefile knob to make it reflect its actual behavior (cf. 
-       https://lore.kernel.org/git/FC95CFF7-F9DA-4CDA-9923-99C3432DCAD5@gmail.com/
-       )
-    
-    v1: I don't have a lot of knowledge of Make double-colon rules, or
-    insight into why they are used for the 'all' target, but I think the
-    approach I chose makes sense. In particular, I do not list any
-    prerequisite for the 'compile_commands.json' file, but from what I
-    tested it is still rebuilt anytime the 'all' target is rebuilt, which is
-    what we want.
-    
-    Note: CMakeLists.txt in contrib/buildsystems does not need to be updated
-    to also support this feature because CMake supports it out-of-the-box
-    [1].
-    
-    [1] 
-    https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-714%2Fphil-blain%2Fcompiledb-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-714/phil-blain/compiledb-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/714
-
-Range-diff vs v1:
-
- 1:  411fefaafb ! 1:  da9544e4aa Makefile: add support for generating JSON compilation database
-     @@ Commit message
-          Database' [2] that keeps track of the exact options used to compile a set
-          of source files.
-      
-     -    The Clang compiler can generate JSON fragments when compiling [3],
-     +    For example, clangd [3], which is a C language server protocol
-     +    implementation, can use a JSON compilation database to determine the
-     +    flags needed to compile a file so it can provide proper editor
-     +    integration.  As a result, editors supporting the language server
-     +    protocol (such as VS Code, Emacs, or Vim, with suitable plugins) can
-     +    provide better searching, integration, and refactoring tools.
-     +
-     +    The Clang compiler can generate JSON fragments when compiling [4],
-          using the `-MJ` flag. These JSON fragments (one per compiled source
-          file) can then be concatenated to create the compilation database,
-          commonly called 'compile_commands.json'.
-     @@ Commit message
-      
-          [1] https://clang.llvm.org/docs/Tooling.html
-          [2] https://clang.llvm.org/docs/JSONCompilationDatabase.html
-     -    [3] https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mj-arg
-     +    [3] https://clangd.llvm.org/
-     +    [4] https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mj-arg
-      
-     +    Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-          Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-      
-       ## .gitignore ##
-     @@ Makefile: all::
-      +# Define GENERATE_COMPILATION_DATABASE to generate JSON compilation database
-      +# entries during compilation if your compiler supports it, using the `-MJ` flag.
-      +# The JSON entries will be placed in the `compile_commands/` directory,
-     -+# and the JSON compilation database can be created afterwards with
-     -+# `make compile_commands.json`.
-     ++# and the JSON compilation database 'compile_commands.json' will be created 
-     ++# at the root of the repository. 
-      +#
-       # Define DEVELOPER to enable more compiler warnings. Compiler version
-       # and family are auto detected, but could be overridden by defining
-
-
- .gitignore |  2 ++
- Makefile   | 52 +++++++++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 49 insertions(+), 5 deletions(-)
-
-diff --git a/.gitignore b/.gitignore
-index ee509a2ad2..f4c51300e0 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -197,6 +197,7 @@
- /git.spec
- *.exe
- *.[aos]
-+*.o.json
- *.py[co]
- .depend/
- *.gcda
-@@ -218,6 +219,7 @@
- /tags
- /TAGS
- /cscope*
-+/compile_commands.json
- *.hcc
- *.obj
- *.lib
-diff --git a/Makefile b/Makefile
-index 65f8cfb236..51cd0f302b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -462,6 +462,12 @@ all::
- # the global variable _wpgmptr containing the absolute path of the current
- # executable (this is the case on Windows).
- #
-+# Define GENERATE_COMPILATION_DATABASE to generate JSON compilation database
-+# entries during compilation if your compiler supports it, using the `-MJ` flag.
-+# The JSON entries will be placed in the `compile_commands/` directory,
-+# and the JSON compilation database 'compile_commands.json' will be created 
-+# at the root of the repository. 
-+#
- # Define DEVELOPER to enable more compiler warnings. Compiler version
- # and family are auto detected, but could be overridden by defining
- # COMPILER_FEATURES (see config.mak.dev). You can still set
-@@ -1258,6 +1264,20 @@ $(error please set COMPUTE_HEADER_DEPENDENCIES to yes, no, or auto \
- endif
- endif
- 
-+ifdef GENERATE_COMPILATION_DATABASE
-+compdb_check = $(shell $(CC) $(ALL_CFLAGS) \
-+	-c -MJ /dev/null \
-+	-x c /dev/null -o /dev/null 2>&1; \
-+	echo $$?)
-+ifeq ($(compdb_check),0)
-+override GENERATE_COMPILATION_DATABASE = yes
-+else
-+override GENERATE_COMPILATION_DATABASE = no
-+$(warning GENERATE_COMPILATION_DATABASE is set, but your compiler does not \
-+support generating compilation database entries)
-+endif
-+endif
-+
- ifdef SANE_TOOL_PATH
- SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
- BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
-@@ -2381,16 +2401,30 @@ missing_dep_dirs =
- dep_args =
- endif
- 
-+compdb_dir = compile_commands/
-+
-+ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
-+missing_compdb_dir = $(compdb_dir)
-+$(missing_compdb_dir):
-+	@mkdir -p $@
-+
-+compdb_file = $(compdb_dir)$(subst .-,,$(subst /,-,$(dir $@)))$(notdir $@).json
-+compdb_args = -MJ $(compdb_file)
-+else
-+missing_compdb_dir =
-+compdb_args =
-+endif
-+
- ASM_SRC := $(wildcard $(OBJECTS:o=S))
- ASM_OBJ := $(ASM_SRC:S=o)
- C_OBJ := $(filter-out $(ASM_OBJ),$(OBJECTS))
- 
- .SUFFIXES:
- 
--$(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs)
--	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
--$(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs)
--	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-+$(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-+$(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-+	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
- 
- %.s: %.c GIT-CFLAGS FORCE
- 	$(QUIET_CC)$(CC) -o $@ -S $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
-@@ -2413,6 +2447,14 @@ else
- $(OBJECTS): $(LIB_H) $(GENERATED_H)
- endif
- 
-+ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
-+all:: compile_commands.json
-+compile_commands.json:
-+	@$(RM) $@
-+	$(QUIET_GEN)sed -e '1s/^/[/' -e '$$s/,$$/]/' $(compdb_dir)*.o.json > $@+
-+	@if test -s $@+; then mv $@+ $@; else $(RM) $@+; fi
-+endif
-+
- exec-cmd.sp exec-cmd.s exec-cmd.o: GIT-PREFIX
- exec-cmd.sp exec-cmd.s exec-cmd.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_EXEC_PATH="$(gitexecdir_SQ)"' \
-@@ -3117,7 +3159,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
- 	$(RM) $(HCC)
--	$(RM) -r bin-wrappers $(dep_dirs)
-+	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
- 	$(RM) -r po/build/
- 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
-
-base-commit: d9cd4331470f4d9d78677f12dc79063dab832f53
--- 
-gitgitgadget
+--+xNpyl7Qekk2NvDX--
