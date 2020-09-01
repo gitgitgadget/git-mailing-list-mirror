@@ -2,99 +2,106 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09BE0C433E6
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 19:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C697C433E2
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 20:07:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFDEE207D3
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 19:16:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 163062078B
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 20:07:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qHYHC+OK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvsnunYB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730406AbgIATQb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 15:16:31 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54122 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbgIATQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 15:16:29 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 13B0BD92ED;
-        Tue,  1 Sep 2020 15:16:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FaCOyX+gjPM7s0yxfcur+mmvI58=; b=qHYHC+
-        OK5xZsbKz5huzAVFQsSTOmpLUw8OlUSOh/gZkQZd7PguITMiCU8eIetGIN8PGGO2
-        Vh0JIJL/vZ70sm10rMfz98gA68oNvIJEbHDl9VHagmQzXs4QMaDH607Q6sWLpGok
-        wgVNZ0+MVpFJTxXogfUAnXpX7VAPiXUTU3HWY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GxJbHYCOhalhW4xsF8pGtt/xo3dd59cV
-        CYPs4C1tRYA8/taCB4O+rIiItUatgzYzAZPwd6Irc1sjIev2zAPz1CbImXI5gk7E
-        HwK1A8kq8/r18TkB4nlIPMxkSxlC+A3cLM2WW2qPXjmthqwJcL8pYQZ3Nvlg0N7y
-        VCr+XqpGFDg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0B46BD92EC;
-        Tue,  1 Sep 2020 15:16:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.190.152.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 02024D92EB;
-        Tue,  1 Sep 2020 15:16:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sean Estabrooks <seanlkml@sympatico.ca>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] git.txt: correct stale 'GIT_EXTERNAL_DIFF' description
-References: <pull.718.git.1598966412371.gitgitgadget@gmail.com>
-Date:   Tue, 01 Sep 2020 12:16:22 -0700
-In-Reply-To: <pull.718.git.1598966412371.gitgitgadget@gmail.com> (Philippe
-        Blain via GitGitGadget's message of "Tue, 01 Sep 2020 13:20:12 +0000")
-Message-ID: <xmqqpn75cnp5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728572AbgIAUHh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 16:07:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40684 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728064AbgIAUHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 16:07:35 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7513C061244
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 13:07:34 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id m6so2903714wrn.0
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 13:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=uek73eyIFxWid8QmXHJBLByrWaNOW33sEDmXcp8Zkbo=;
+        b=WvsnunYBPA6wvHBjAmx/83v/Q/mG3VVwr+qMT4g9tcUFMzMkuyPVfmOnfYXVwGiYp2
+         rrbxKOf0vbDC0639uxrSVq+Q+r5OdwZbeQr+RjhZs5i1PDskYp2+ylVMIxXDpbqPXLZz
+         QFyKq4sbdOjA8fphYdmsE7XVVlp+Qc3+VEL/YA0ibQenJMis+qSmmdcXYjXD2yldzFa4
+         YiUX0dwZT+2oAvhAx9qYf2so7HGcgQTFlxaN6DRYjlnBwEqG39DIg088P2YJtRVkva75
+         kN0OySQMYL2B0zG7hnbcHzz0tvMK2hjLwaAVsF0YZGSEirPVvCNuBhMNIjE0ghpN5JFs
+         keUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=uek73eyIFxWid8QmXHJBLByrWaNOW33sEDmXcp8Zkbo=;
+        b=XQqYmN4ovQi7wVE+7kqDUVfOg7webuWsgV8uXRG4PlsEqRpgnxrOXxbyZ1OVGr1F9q
+         sIvCwaiItMrlaIfsEdkXF665i+Pf3i577vhP3xPdamLo4L9HQNAg3PSmBvVyi17Z4q2b
+         SKH4qzviDuVjxPeExA15w5e/gDQRC1o+xDM6/eCtKc9VDhJEat2SYD+4C+1ClKf311PO
+         jvrypZJCn5YquAdZYiJv0Kuj5ZC3VNrZvEY/YkTPI6js6hBE/rmPH79o8VccKHc+ipyO
+         eKpoODStKCGi+A8EiItBhPiu06LsQELm9C9c4criZiB5XLI8QG6uowzAR/hev5HLeBoB
+         TyTQ==
+X-Gm-Message-State: AOAM5309H4SQjKWAMhVxi/rUmLM/MfvEyqtUpnFG/AK8MQJLL7GJ75tf
+        yas6ygEiufENW+T9+65+uE2QchFp8Uk=
+X-Google-Smtp-Source: ABdhPJwEUSUq36KBz5tjlQOAVYD66iqJuaDO+1tjxXmot6XqF0NsVeOExDoTfBpC1N62lmbgU03jMw==
+X-Received: by 2002:a05:6000:1248:: with SMTP id j8mr3894810wrx.292.1598990851407;
+        Tue, 01 Sep 2020 13:07:31 -0700 (PDT)
+Received: from debian1 (79-64-23-13.host.pobb.as13285.net. [79.64.23.13])
+        by smtp.gmail.com with ESMTPSA id q186sm3338744wma.45.2020.09.01.13.07.30
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Sep 2020 13:07:30 -0700 (PDT)
+Message-ID: <f3253a90491a76e755f0cd7d2b80032e6ea6ac88.camel@gmail.com>
+Subject: [gitk] bad quoting of user input for command line injection, with
+ possible unintended side effects
+From:   Lyndon Brown <jnqnfe@gmail.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 01 Sep 2020 21:07:29 +0100
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A0C56088-EC87-11EA-8B99-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-> index e8ed6470fb..b10ff4caa6 100644
-> --- a/Documentation/diff-generate-patch.txt
-> +++ b/Documentation/diff-generate-patch.txt
-> @@ -10,7 +10,8 @@ linkgit:git-diff-tree[1], or
->  linkgit:git-diff-files[1]
->  with the `-p` option produces patch text.
->  You can customize the creation of patch text via the
-> -`GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
-> +`GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables
-> +(see linkgit:git[1]).
->  
->  What the -p option produces is slightly different from the traditional
->  diff format:
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 2fc92586b5..98bdf0983c 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -551,8 +551,9 @@ Git Diffs
->  
->  `GIT_EXTERNAL_DIFF`::
->  	When the environment variable `GIT_EXTERNAL_DIFF` is set, the
-> -	program named by it is called, instead of the diff invocation
-> -	described above.  For a path that is added, removed, or modified,
-> +	program named by it is called to generate diffs, and Git
-> +	does not use its builtin diff machinery.
-> +	For a path that is added, removed, or modified,
->  	`GIT_EXTERNAL_DIFF` is called with 7 parameters:
+So I pasted the following line (without quotes) into the 'find' textbox
+of gitk, whilst in 'touching paths' mode, intending to switch to
+add/remove afterwards.
 
-Excellent.  Thanks.   Will queue.
+"*pp_es = (i_es > 0) ? calloc( i_es, sizeof(**pp_es) ) : NULL;"
+
+This results in an error dialog stating the following:
+
+----
+can't read output from command: standard output was redirected
+can't read output from command: standard output was redirected
+    while executing
+"open $cmd r+"
+    (procedure "do_file_hl" line 28)
+    invoked from within
+"do_file_hl 46"
+    ("after" script)
+----
+
+What prompted me to report this at this time (I've encountered and
+ignored this previously) is that subsequently I switched back to git-
+gui and refreshed, and was surprised to find that a new empty file had
+been created called "0)".
+
+Clearly the text has made it into some commandline execution without
+proper quoting, thus the "> 0)" portion of the text has resulted in
+creation of the file.
+
+I'm using version 1:2.28.0-1 on Debian.
+
