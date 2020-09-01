@@ -2,108 +2,139 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31C03C433E6
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA3C2C433E2
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:22:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B9E7207EA
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:10:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3BA5207EA
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 13:22:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mV/e//0F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N2DnvpcZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727981AbgIANHm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 09:07:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59888 "EHLO
+        id S1728030AbgIANWH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 09:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728012AbgIANFF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 09:05:05 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4784EC061245
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 06:04:39 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id f2so805202qkh.3
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 06:04:39 -0700 (PDT)
+        with ESMTP id S1728018AbgIANUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 09:20:24 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A872DC061244
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 06:20:18 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id o5so1478205wrn.13
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 06:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=d24TDz5zL5cLZTJq1t7Ks1/3+oLFvU+KeenJy9vY2JI=;
-        b=mV/e//0F9Wt5LTYPBchKKBl+pt1gSvQMkNTptCq/s18b1q2SOcPgJG9V3/yhXb9bSb
-         zqiEvsC5BLDhLHarpH47NtWG33XzZSkpiBWJWekiQ9K774rX3C2tydj14ZLwpyTD/hFJ
-         UzXfxLwmHRdaH2iHGA1XJjbIKFTND0kSSqTbjvDysSQPx67ISfekpUb46njpbKVHhqeJ
-         W5p5fRunAhL4nLbwpEyn3Ty0k3sewR6wHUoBYd6/VP86LZtzNbUnAT7EJP2c4ORdCuR9
-         NasTn7ITCD/I6qAxNeNQfWKSpdmiwyA+aLeoc31LaruOKjNuHCsApjR6xjQWy3YIQ0Fk
-         cSvg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=56t6yj1alMCTpjUopvExQ5j9/jbTl8WTrrDWEBWQadg=;
+        b=N2DnvpcZB2jwMgbKpMDZfEpiHlWOoPVGpN++IgUuelZ2iuMAEL6+Pri+/6ghC5sJcR
+         39wzYDKqzJAI3TZC9keTDABcfrH7R2le/i9gkAJXFYES4iZDXHQuE9lE2Em4ff8OEi4f
+         oASMPPPICQPbSgr/qjtKLaU3BM+QJ/Ud8yWpYZOSxlnvkplZoc3JqaENLRH0ubRW8acn
+         vvTeW1LBTnxWbJn5qGO+r5zy+YOytLdcigKPqI4SjwRfpNAnrub1ggR3J56Ssz8H/Bur
+         7syeNbIN1eqbA2uPwLSfjmH167V5e+4gcYoTZcTvB8zJ9AFRiyOISzp8+y9rp3bbC+e0
+         k1mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=d24TDz5zL5cLZTJq1t7Ks1/3+oLFvU+KeenJy9vY2JI=;
-        b=FVrXJu2dVD7lA+mWT5uA8QR8cbeeCIz/vx6JJY8WnE10+AWqAYyhD91P4BkKLv4mUy
-         PTCjgWTBj6KikxcExXwTIT8LQWtc0BXk8AuYktUkMFS8FBhixPjhNl5s4oNHwfrv5TMg
-         5gh4r3j6saxZ2kyxPWxeqJ+ekssvJya/f6BmCseyP4ALt7h+U2ir1wUINvo9GpEB9yb5
-         iJ1UO66eYG+aCZru7rsJwWMxmu/tSho+S+3F20f3XTgHb9QLF+i95JStmPdGP51K2MVH
-         Np+YkVM0M+QlBR72WC7htpBqq8O0J81v4f/MJmFNMcdB1yEyHN6SCpLPf+ufE28BM/Pd
-         vmtw==
-X-Gm-Message-State: AOAM533TKtP+ezt8pLqQsY+z5dSI99XtAMogR4mxjJYhIW9ptJQO8a4e
-        cniMSY323Kk2Ysr7H5AqaWgSRPeIdm8lEQ==
-X-Google-Smtp-Source: ABdhPJx66NJFZCzZffpNWQkoQg0BhlGuUuIBbODbxU4WzGuZhGDPtXoMVzKvOhuG9r2z+PQTrdUMkg==
-X-Received: by 2002:ae9:ebcf:: with SMTP id b198mr1751195qkg.488.1598965478116;
-        Tue, 01 Sep 2020 06:04:38 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:5166:a025:6686:ff84? ([2600:1700:e72:80a0:5166:a025:6686:ff84])
-        by smtp.gmail.com with ESMTPSA id e90sm1186116qtd.4.2020.09.01.06.04.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Sep 2020 06:04:36 -0700 (PDT)
-Subject: Re: [PATCH] xrealloc: do not reuse pointer freed by zero-length
- realloc()
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20200901111800.GA3115584@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c81b7225-a663-1598-62b3-bd80457d5648@gmail.com>
-Date:   Tue, 1 Sep 2020 09:04:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
- Thunderbird/80.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=56t6yj1alMCTpjUopvExQ5j9/jbTl8WTrrDWEBWQadg=;
+        b=RdtzbwxVX048078hzgWborBC/tDfzZCnqcwoNrMjjCMf/y7540PvtpLBC06/iSWJ7p
+         Dp5Sp12Klu7MY8DyYe5Jq4oGIfG7ySYG3ctpD1sp1cE0a7+5YRaq5vaxfJC6ro9DMQuS
+         uXnnPg6mFLjtIRqi0oa63cSFlwLk8Gqwp5Ob4k6nN0+i1d4vi9QgTrQhzcIzXCdy2Qc8
+         uHSBdNaeaeEM8p1krKnqdZwQXGToPoKqUAO1UdxZ3rXpaixH1j+OZ0dJ8KGGc2LZ71LF
+         lcO3c/KuRYYMzGYaJneG2Fcj8zMyDS8+sSsaRc6SzmIqB1boudDMugfbWrJ/bR3Zpaow
+         W+4Q==
+X-Gm-Message-State: AOAM530DpC+mmnHIPm8tU5ldCq47Omi1yHk+IIIBR2PKYkbqxlsOjUkq
+        fsRxWJ5/Gp9Myq7//Ve+odln6Ez7f5c=
+X-Google-Smtp-Source: ABdhPJzanAORHk+sPR8SnlBAALzarXBfnjq7VlXA3iQyxgjWK5GkVqT+RxpEbuwJFwslt3RsRhZqnw==
+X-Received: by 2002:adf:f511:: with SMTP id q17mr1881966wro.414.1598966413457;
+        Tue, 01 Sep 2020 06:20:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w1sm1909567wmc.18.2020.09.01.06.20.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Sep 2020 06:20:12 -0700 (PDT)
+Message-Id: <pull.718.git.1598966412371.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 01 Sep 2020 13:20:12 +0000
+Subject: [PATCH] git.txt: correct stale 'GIT_EXTERNAL_DIFF' description
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <20200901111800.GA3115584@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Sean Estabrooks <seanlkml@sympatico.ca>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/1/2020 7:18 AM, Jeff King wrote:
-> This patch fixes a bug where xrealloc(ptr, 0) can double-free and
-> corrupt the heap on some platforms (including at least glibc).
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-!!! Good find !!!
+In fde97d8ac6 (Update documentation to remove incorrect GIT_DIFF_OPTS
+example., 2006-11-27), the description of the 'GIT_EXTERNAL_DIFF'
+variable was moved from 'diff-format.txt' to 'git.txt', and the
+documentation was updated to remove a 'diff(1)' invocation since Git did
+not use an external diff program anymore by default.
 
-> The simplest fix here is to just pass "ret" (which we know to be NULL)
-> to the follow-up realloc(). That does mean that a system which _doesn't_
-> free the original pointer would leak it. But that interpretation of the
-> standard seems unlikely (if a system didn't deallocate in this case, I'd
-> expect it to simply return the original pointer). If it turns out to be
-> an issue, we can handle the "!size" case up front instead, before we
-> call realloc() at all.
+However, the description of 'GIT_EXTERNAL_DIFF' still mentions "instead
+of the diff invocation described above", which is confusing.
 
-Adding an `if (!size) {free(ptr); return NULL;}` block was what I
-expected. Was that chosen just so we can rely more on the system
-realloc(), or is there a performance implication that I'm not
-seeing?
+Correct that outdated sentence.
 
-> @@ -120,7 +120,7 @@ void *xrealloc(void *ptr, size_t size)
->  	memory_limit_check(size, 0);
->  	ret = realloc(ptr, size);
->  	if (!ret && !size)
-> -		ret = realloc(ptr, 1);
-> +		ret = realloc(ret, 1);
+Also, link to git(1) in 'diff-generate-patch.txt' when GIT_DIFF_OPTS and
+GIT_EXTERNAL_DIFF are mentioned, so that users can easily know what
+these variables are about.
 
-I appreciate all the additional context for such a small change.
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+    git.txt: correct stale 'GIT_EXTERNAL_DIFF' description
 
-LGTM.
--Stolee
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-718%2Fphil-blain%2Fgit-external-diff-wording-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-718/phil-blain/git-external-diff-wording-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/718
+
+ Documentation/diff-generate-patch.txt | 3 ++-
+ Documentation/git.txt                 | 5 +++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+index e8ed6470fb..b10ff4caa6 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -10,7 +10,8 @@ linkgit:git-diff-tree[1], or
+ linkgit:git-diff-files[1]
+ with the `-p` option produces patch text.
+ You can customize the creation of patch text via the
+-`GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables.
++`GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables
++(see linkgit:git[1]).
+ 
+ What the -p option produces is slightly different from the traditional
+ diff format:
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 2fc92586b5..98bdf0983c 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -551,8 +551,9 @@ Git Diffs
+ 
+ `GIT_EXTERNAL_DIFF`::
+ 	When the environment variable `GIT_EXTERNAL_DIFF` is set, the
+-	program named by it is called, instead of the diff invocation
+-	described above.  For a path that is added, removed, or modified,
++	program named by it is called to generate diffs, and Git
++	does not use its builtin diff machinery.
++	For a path that is added, removed, or modified,
+ 	`GIT_EXTERNAL_DIFF` is called with 7 parameters:
+ 
+ 	path old-file old-hex old-mode new-file new-hex new-mode
+
+base-commit: d9cd4331470f4d9d78677f12dc79063dab832f53
+-- 
+gitgitgadget
