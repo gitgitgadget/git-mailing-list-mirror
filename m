@@ -2,64 +2,66 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01FD5C433E2
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3428C433E6
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:59:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D484E206EB
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:56:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEAFB207D3
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 15:59:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BNM4qjpr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XA/axarn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732134AbgIAP4o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 11:56:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51605 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731619AbgIAP4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 11:56:42 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30E1EF8418;
-        Tue,  1 Sep 2020 11:56:40 -0400 (EDT)
+        id S1731965AbgIAP7G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 11:59:06 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59457 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732248AbgIAP7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 11:59:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 55C02EF9B4;
+        Tue,  1 Sep 2020 11:58:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ridvdjQ82aqr/VU3oeYgKw9Uycc=; b=BNM4qj
-        pr0sZTtnwGkmJBsUkmbveNlckRd+TCqt6BPDridYOXO5DJ7NOCV8DnGpv+uAfxXe
-        2TlrEwRc7tJoptTVd3HgiF1xwsPbBYkuyt1tfnbeKIlgzHtAxsh9v1Obn6bBDG7Y
-        JKjtSD+vGRmKCDH322CqGWQU6aPV7xI8MxTr4=
+        :content-type; s=sasl; bh=W2fmwKiWxcAkIdjCITi4m6ZrBlQ=; b=XA/axa
+        rnv3RWiCiTtKuDEQE7s6UbzxSl2Ex5WmSNpvaSxCKO+SqXmSSGdBcn8+1J8WZ/36
+        8npJfK3XKukfmWAkRqsGFypxQKkGJT7s5Bq85BpDo/THC4xTNRIAva29Y29eWMvo
+        QrqMb2zOhPFlDye4m8WbfTvlDQYcZEPx2JlEQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tdqDtHMInyKYupA2VBMLw/n0HlkFZvh9
-        nH0FitWt7r3h7sZHUioGy1zWR7ywYPgou+eVav1g8UE60jEHCqoK2e5UA1DHwlqT
-        6O4aTGl+t1StTE1PEJGyWitZpCYGJB4bRxV+vttJiGWa+Dq+WbYxcTLK4IE6T5ne
-        vSjd3p4YjeU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 28DF3F8417;
-        Tue,  1 Sep 2020 11:56:40 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=HDGV/25LJ9mINWNTuSyLPJnDGcr5R/xD
+        3RvFkVsO6tFjuQqgRRW5EywHgqWfE6ldg7weptHkHlRNadegfXFanH+TPnuiJ/id
+        QCWIc4fjlOc2l7zSfVhOMtHgk0mHFWU8tLG4nx/rwo7nuhiteO6AEIXnJHgpbbX0
+        j1ygwYxZU8o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F6CDEF9B3;
+        Tue,  1 Sep 2020 11:58:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
+Received: from pobox.com (unknown [35.190.152.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5A1BBF8415;
-        Tue,  1 Sep 2020 11:56:37 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 88C8DEF9B2;
+        Tue,  1 Sep 2020 11:58:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH] xrealloc: do not reuse pointer freed by zero-length realloc()
 References: <20200901111800.GA3115584@coredump.intra.peff.net>
-Date:   Tue, 01 Sep 2020 08:56:35 -0700
-In-Reply-To: <20200901111800.GA3115584@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 1 Sep 2020 07:18:00 -0400")
-Message-ID: <xmqq7dtdebik.fsf@gitster.c.googlers.com>
+        <c81b7225-a663-1598-62b3-bd80457d5648@gmail.com>
+        <20200901135105.GA3284077@coredump.intra.peff.net>
+Date:   Tue, 01 Sep 2020 08:58:54 -0700
+In-Reply-To: <20200901135105.GA3284077@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 1 Sep 2020 09:51:05 -0400")
+Message-ID: <xmqq3641ebep.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B7946136-EC6B-11EA-B8E2-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 0A8B90A8-EC6C-11EA-969D-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,38 +69,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> The simplest fix here is to just pass "ret" (which we know to be NULL)
-> to the follow-up realloc(). That does mean that a system which _doesn't_
-> free the original pointer would leak it. But that interpretation of the
-> standard seems unlikely (if a system didn't deallocate in this case, I'd
-> expect it to simply return the original pointer). If it turns out to be
-> an issue, we can handle the "!size" case up front instead, before we
-> call realloc() at all.
+> If we do handle it up-front, then I think we'd actually want:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  wrapper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   if (!size) {
+>           free(ptr);
+> 	  return xmalloc(0);
+>   }
 >
-> diff --git a/wrapper.c b/wrapper.c
-> index 4ff4a9c3db..b0d375beee 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -120,7 +120,7 @@ void *xrealloc(void *ptr, size_t size)
->  	memory_limit_check(size, 0);
->  	ret = realloc(ptr, size);
->  	if (!ret && !size)
-> -		ret = realloc(ptr, 1);
-> +		ret = realloc(ret, 1);
+> (i.e., to never return NULL for consistency with xmalloc() and
+> xcalloc()).
 
-The original does look bogus.
+Makes sense.  I suspect that this is optimizing for a wrong case,
+but in practice that should not matter.  Not having to worry about
+a request to resize to 0-byte in the remainder of the function is
+actually a plus for readability, I would say.
 
-It however may be easier to reason about if we used malloc(1) in the
-fallback path for "we got NULL after asking for 0-byte" instead.  I
-would have a hard time guessing the reason why we are reallocating
-NULL without going back to this commit, reading the log and seeing
-the original to see that the reason why we didn't use malloc() but
-realloc() is we aimed for a minimum change, if I encounter this code
-after I forgot this discussion.
-
-Thanks.
+>> > @@ -120,7 +120,7 @@ void *xrealloc(void *ptr, size_t size)
+>> >  	memory_limit_check(size, 0);
+>> >  	ret = realloc(ptr, size);
+>> >  	if (!ret && !size)
+>> > -		ret = realloc(ptr, 1);
+>> > +		ret = realloc(ret, 1);
+>> 
+>> I appreciate all the additional context for such a small change.
+>
+> Somebody's got to complete with you for ratio of commit message to diff
+> lines. :)
+>
+> -Peff
