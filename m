@@ -2,159 +2,141 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5431FC433E2
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 10:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF162C43461
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:01:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AE3720C56
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 10:28:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6DB0206EF
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:01:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X1L1Q00t"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CHVZi6Om"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726131AbgIAK2r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 06:28:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35820 "EHLO
+        id S1726326AbgIAK6O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 06:58:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbgIAK2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 06:28:44 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED5D2C061244
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 03:28:42 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id o16so404907pjr.2
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 03:28:42 -0700 (PDT)
+        with ESMTP id S1725989AbgIAK6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 06:58:11 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC068C061245
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 03:58:10 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id b79so700875wmb.4
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 03:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=NovdcSUPG6fV87BQH7paSSwRIKWmdzO8IsGAtayeH48=;
-        b=X1L1Q00trQJ9WuHeCLOX2Mcwmg4c8UsKAf2RxpRtstmjPmp4NhLUGBiKcpGChRa0vu
-         sdZQgcyYhNy5TMpUoKhy1ZqFK4RCF9vzP4Xnm7M7Dhgt4pRoIyxOAvIBvr/VqEYyS3Bw
-         xOJ6koGMl1p2tWx+FluirNdEMMTv/WB1jye8qZJIzAFsVIjhbZZ2Vov9x1Xq2RiTwdx6
-         vcU82C3rTg39DopJkdO2MOq9x1qSbi2hDIfQgdPNtCaTF8AwwTICKuOHzCR0yT+QRdZX
-         VLDovUAEfTBbbi59l85Tk8G4RJfU2/0LfX7RU+fkWwqbp6NHRubEt9k+zBd6qKIk5NyY
-         yh1w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CLVtIX3yBCG3bHaRqEUcybh6RsscPvkDjj+OpK0wslg=;
+        b=CHVZi6OmdLVuXpx8Py2AQzVH/iETRZA4ebxxq5Mi+vX6ZabK4JGSONKBrv96/CZhmw
+         q4QZ0OVBjPYcSIeBQ2um5jbbPCJVHgp7OR3xdIOhy2ydMZERNRQJUpMN49OQrhUw6JYP
+         qOqk/+XyeX5xrXmzJ6anWZ/Jnu9X0EcZUDj93f2Tgi/qcFwC7/Qt6z+Zuf5db7HBqcyv
+         /2Buu8VkVWr6ZnkJgSPEZeJ7s2MdbaNrGz7nEyvzTCAmLWl0gQiKPWA1yXWhcq+bkYcG
+         DW69/61/VGHlkvPiQdr3mfkwXnsguSTSRxBzei676xYcFa8BMm/Ea0Y/mV6fOqBkzfNo
+         8UyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=NovdcSUPG6fV87BQH7paSSwRIKWmdzO8IsGAtayeH48=;
-        b=fuspzEu5ZwW0ZqtAN/OoKKxqST2UhIk6z3ujhfmWzcjEYS+tMNkPcic5oY9FTjJFFF
-         2afGXkt67Fl4ahaJuvVP3s7JLBuKX06HVnZWKyIH39/UDhGArZdRpBySFUraBGSIQR5q
-         NNSS4gOxGu1D0WqIBTeudjFnqaS0MYIuD80cUhZHBKxmyz4Jfufo406OLrhWZpojv72T
-         YjNSPZbDtSfny04WtjhyocwDFwto/H+6dJEuYJQ93waLJuCCc9jeb9lIPEz0rKVkTfA4
-         YZooCbhA1I3aqEcOTxKBedxUfeXRltrOT5Zsyf1owTwjhrRQJf/DrNCjoE8tfyqNbBvq
-         0tSA==
-X-Gm-Message-State: AOAM530Dat4NYvtLD9FxOD9Vw36eA7JTDEV6J2jPTHSMZB/MQ+VYBK/4
-        +5OIq+JTLmfRwRnmoup7WVs=
-X-Google-Smtp-Source: ABdhPJzyZPgVPfYG3HW1+76JA/NZ6vuouXAVgXOManTrhYg0Xq9QJz1OUytuNo8XW03fV/Em8xgMVQ==
-X-Received: by 2002:a17:90b:3004:: with SMTP id hg4mr911720pjb.7.1598956121575;
-        Tue, 01 Sep 2020 03:28:41 -0700 (PDT)
-Received: from Abhishek-Arch ([2409:4064:79b:52ed:48f6:b1a4:ca3c:754b])
-        by smtp.gmail.com with ESMTPSA id t10sm1436207pfq.52.2020.09.01.03.28.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=CLVtIX3yBCG3bHaRqEUcybh6RsscPvkDjj+OpK0wslg=;
+        b=CLsq2+rTe6AuYV3c1cX2TbK7jyVqyTe3NAncucu7KDZ4pu1hzIpriS5estVtTUV9bk
+         CBmo/TZoU9b5U5ECgxNOZi5pMMG48aQdlUyPHT+LVMCegOxwo8SSc+FTvcfS7u6KeMJy
+         QzQOVM4PFVkkXcN6s72U31Ss4xfJwjXaQB1edVIbnlY/dvV+GyH/oai9LU0SqVEalqQC
+         0y7Oo0VVpeqMGo8KaPiCLybr9HFOkZJF/z/UcHpOcczK2EoSnMCeEzkxmAgMhubpY2Nc
+         ewEyzegwWAup8OQy3xus7XRvvisu1lzfsnPoFkxs8/ktfIMP1awzEh0MsM+pMWoKtp5Q
+         ds9A==
+X-Gm-Message-State: AOAM530uEhjdu2yEXcgUT1F83Voe9XbZxLAzDHMjTIyx286EE6Rsxj6t
+        9z8IlVHRXbithDiaM4UdTFbO+k3Y6Gc=
+X-Google-Smtp-Source: ABdhPJwfmAIsqmW1tZw/B0IfvfoI1ZXy+P+FInxIpLFc6YwXa7AueFCRoBFUJg+4czb7u3p6LOD80Q==
+X-Received: by 2002:a7b:c359:: with SMTP id l25mr1154308wmj.187.1598957889130;
+        Tue, 01 Sep 2020 03:58:09 -0700 (PDT)
+Received: from ylate.lan (atoulouse-654-1-378-135.w86-199.abo.wanadoo.fr. [86.199.233.135])
+        by smtp.googlemail.com with ESMTPSA id x16sm1705875wrq.62.2020.09.01.03.58.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 03:28:40 -0700 (PDT)
-Date:   Tue, 1 Sep 2020 15:56:24 +0530
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org,
-        gitgitgadget@gmail.com, stolee@gmail.com
-Subject: Re: [PATCH v3 06/11] commit-graph: add a slab to store topological
- levels
-Message-ID: <20200901102624.GB10388@Abhishek-Arch>
-Reply-To: CANQwDwdsV0mSos7M_d7UP1CjT1rCyA_GfaYarMKUZaFdDZ0WRg@mail.gmail.com
-References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
- <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
- <b347dbb01b9254ab8d79fbbd0f7c2b637efde62e.1597509583.git.gitgitgadget@gmail.com>
- <85d03jlu05.fsf@gmail.com>
- <20200825061418.GA629699@Abhishek-Arch>
- <855z97dvsp.fsf@gmail.com>
- <CANQwDwdsV0mSos7M_d7UP1CjT1rCyA_GfaYarMKUZaFdDZ0WRg@mail.gmail.com>
+        Tue, 01 Sep 2020 03:58:08 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [PATCH v2 01/11] t6027: modernise tests
+Date:   Tue,  1 Sep 2020 12:56:55 +0200
+Message-Id: <20200901105705.6059-2-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200901105705.6059-1-alban.gruin@gmail.com>
+References: <20200625121953.16991-1-alban.gruin@gmail.com>
+ <20200901105705.6059-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANQwDwdsV0mSos7M_d7UP1CjT1rCyA_GfaYarMKUZaFdDZ0WRg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 25, 2020 at 09:56:44AM +0200, Jakub Narębski wrote:
-> On Tue, 25 Aug 2020 at 09:33, Jakub Narębski <jnareb@gmail.com> wrote:
->
-> ...
->
-> >
-> > All right, we might want to make use of the fact that the value of 0 for
-> > topological level here always mean that its value for a commit needs to
-> > be computed, that 0 is not a valid value for topological levels.
-> > - if the value 0 came from commit-graph file, it means that it came
-> >   from Git version that used commit-graph but didn't compute generation
-> >   numbers; the value is GENERATION_NUMBER_ZERO
-> > - the value 0 might came from the fact that commit is not in graph,
-> >   and that commit-slab zero-initializes the values stored; let's
-> >   call this value GENERATION_NUMBER_UNINITIALIZED
-> >
-> > If we ensure that corrected commit date can never be zero (which is
-> > extremely unlikely, as one of root commits would have to be malformed or
-> > written on badly misconfigured computer, with value of 0 for committer
-> > timestamp), then this "happy accident" can keep working.
-> >
-> >   As a special case, commit date with timestamp of zero (01.01.1970 00:00:00Z)
-> >   has corrected commit date of one, to be able to distinguish
-> >   uninitialized values.
-> >
-> > Or something like that.
-> >
-> > Actually, it is not even necessary, as corrected commit date of 0 just
-> > means that this single value (well, for every root commit with commit
-> > date of 0) would be unnecessary recomputed in compute_generation_numbers().
-> >
-> > Anyway, we would want to document this fact in the commit message.
-> 
-> Alternatively, instead of comparing 'level' (and later in series also
-> 'corrected_commit_date') against GENERATION_NUMBER_INFINITY,
-> we could load at no extra cost `graph_pos` value and compare it
-> against COMMIT_NOT_FROM_GRAPH.
-> 
-> But with this solution we could never get rid of graph_pos, if we
-> think it is unnecessary. If we split commit_graph_data into separate
-> slabs (as it was in early versions of respective patch series), we
-> would have to pay additional cost.
-> 
-> But it is an alternative.
-> 
-> Best,
-> -- 
-> Jakub Narębski
+Some tests in t6027 uses a if/then/else to check if a command failed or
+not, but we have the `test_must_fail' function to do it correctly for us
+nowadays.
 
-I think updating a commit date with timestampt of zero to use corrected
-commit date of one would leave us more options down the line.
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
+ t/t6407-merge-binary.sh | 27 ++++++---------------------
+ 1 file changed, 6 insertions(+), 21 deletions(-)
 
-Changing this is easy enough.
-
-For a root commit with timestamp zero, current->date would be zero and 
-max_corrected_commit_date would be zero as well. So we can set 
-corrected commit date as `max_corrected_commit_date + 1`, instead of the
-earlier `(current->date - 1) + 1`.
-
-----
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 7ed0a33ad6..e3c5e30405 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1389,7 +1389,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 					max_level = GENERATION_NUMBER_V1_MAX - 1;
- 				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+diff --git a/t/t6407-merge-binary.sh b/t/t6407-merge-binary.sh
+index 4e6c7cb77e..071d3f7343 100755
+--- a/t/t6407-merge-binary.sh
++++ b/t/t6407-merge-binary.sh
+@@ -5,7 +5,6 @@ test_description='ask merge-recursive to merge binary files'
+ . ./test-lib.sh
  
--				if (current->date > max_corrected_commit_date)
-+				if (current->date && current->date > max_corrected_commit_date)
- 					max_corrected_commit_date = current->date - 1;
- 				commit_graph_data_at(current)->generation = max_corrected_commit_date + 1;
- 			}
+ test_expect_success setup '
+-
+ 	cat "$TEST_DIRECTORY"/test-binary-1.png >m &&
+ 	git add m &&
+ 	git ls-files -s | sed -e "s/ 0	/ 1	/" >E1 &&
+@@ -35,33 +34,19 @@ test_expect_success setup '
+ '
+ 
+ test_expect_success resolve '
+-
+ 	rm -f a* m* &&
+ 	git reset --hard anchor &&
+-
+-	if git merge -s resolve master
+-	then
+-		echo Oops, should not have succeeded
+-		false
+-	else
+-		git ls-files -s >current
+-		test_cmp expect current
+-	fi
++	test_must_fail git merge -s resolve master &&
++	git ls-files -s >current &&
++	test_cmp expect current
+ '
+ 
+ test_expect_success recursive '
+-
+ 	rm -f a* m* &&
+ 	git reset --hard anchor &&
+-
+-	if git merge -s recursive master
+-	then
+-		echo Oops, should not have succeeded
+-		false
+-	else
+-		git ls-files -s >current
+-		test_cmp expect current
+-	fi
++	test_must_fail git merge -s recursive master &&
++	git ls-files -s >current &&
++	test_cmp expect current
+ '
+ 
+ test_done
+-- 
+2.28.0.370.g2c2dc3cc62
+
