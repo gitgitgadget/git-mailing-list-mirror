@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1374C433E2
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E6EDC433E6
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:02:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA0A1207BC
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:02:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5E06206EF
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:02:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pjqOjqy8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tka0Ly/D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbgIALBz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 07:01:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40448 "EHLO
+        id S1726419AbgIALCH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 07:02:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbgIAK6f (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726355AbgIAK6f (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 1 Sep 2020 06:58:35 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C408C061244
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 03:58:28 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id z4so1014663wrr.4
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 03:58:27 -0700 (PDT)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF93C061249
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 03:58:16 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id z1so1014392wrt.3
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 03:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0pr1Gd+Ek5pDCQCmeXlkHdr6MiTLqu52D33OKTohdKA=;
-        b=pjqOjqy83UgMV2g0oQN0+A6/83Yga8UWunhgJn1z5QbQ7ffLe7nxz1HrDLTQT7sWV2
-         w62bzXkFQDp/2BGZHt/jYBxOEuObKOyWMmVXa1WcOoSxPSffr6ZDqtths4lHk7YK+u8d
-         8oVUUf14zWUR0hPlYZaNHLli3GBeZDqrVWA3C5/UvLbFluipL4YBOv1jUqw7bJCEqGP6
-         mKPTfnTbqtuX/OL8MPc8jZFtJFwyfF03AN9rSoq90h1E5Zs9FovhJFhD237/c0QkRjS/
-         W37sf9y9JEI9w2gtIPXpf8vNfYMtsRqq4xGPpxt/VSccijVx1brgpzAqxc0/1y5NJT83
-         ++HA==
+        bh=j7siHblmT3Fve+Txumf4Gb9yaF4pMwR81p9zh4wQF5A=;
+        b=Tka0Ly/D4jaIpU31pQpoZCoY5/6EKUcNaVr+WuFko7B1E2IAu5k6gU1Gis9cQ91TLy
+         H7+RloBQiY5WXnOCkT6YrprYkr5y7ZBo1DSX02uC083nHENk4dse/qAH/tWiPK4ATp//
+         6X4btfHLqB9KCJR5JJO2+hx7bqdKTqbu+e2h6eczaCm0spIEzeZ7HqtVhQY7lpR/2okX
+         9yZ8RjHp/lmsf5TyTkFHgJnPhDc7bQkboMTjKoIF2xfLTaK9PmuXg6sz2FykwHML71iF
+         hOV7zvEVorezufvwg9ddNE5sOrLTO/HVVlbaVHKgP6pq3gNaJLIq7FWWvezuVBCGfOJ3
+         u7IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0pr1Gd+Ek5pDCQCmeXlkHdr6MiTLqu52D33OKTohdKA=;
-        b=D6kPjUQW6aHpET5IIVWKV13N9L9hWDftro7QCDmn6BkaS3n9+Z8QfDpTPOydGfDChX
-         /n1E3BSvVV6ze+66XDNjYROgAn6/dj1UUFXZ9ZT5pL8Dw2+aNNzHdEIhnTOxifc10ApP
-         nIjFntcVIZBGKxQ1AZfdBtjxTs6PD1/ATBHOEclDMMfliQIwmIwaK0ZsEHgHnzeVq/yy
-         ib3B2Ngb/CvBg1KJUOZf0iS59lG6oyfXQsSAPH+j7qv1pEDp3IBsxWjg8S4Wi1QsfRsd
-         3zjflwryP2/zoKBeQnCkikBMsjh+2N+yOw/HDwmUQ+a0Sad6U4s5anrUCJ8RWoACLKmf
-         YfxQ==
-X-Gm-Message-State: AOAM532Nic+I2NcWJEeSUULVhpGFmTg1CWPLV4KhK2l12qlzeNrvs9fE
-        LCDpKQfcffz45uTwqTxQMR/+LlWIg34=
-X-Google-Smtp-Source: ABdhPJwPZMStdGoxFsSnhHCoJz5SFj4DZ1rzG+A6GLk6Dq6var4sXQos+wQsqBP/dgCoKRF/2Q6YEA==
-X-Received: by 2002:a5d:5150:: with SMTP id u16mr1236219wrt.197.1598957897185;
-        Tue, 01 Sep 2020 03:58:17 -0700 (PDT)
+        bh=j7siHblmT3Fve+Txumf4Gb9yaF4pMwR81p9zh4wQF5A=;
+        b=SE4cLWrd1GiA0mA0fJPoJas0zJlGEkOj3oy9boay5zk0skB9RxhL1GFdyXC9PSVDoY
+         ULzFImi/caDxmQxB4fckzP0VwwQGOzVOKZky/IDCl/6RUwiDwu90R1ZX67I1+DlOt96N
+         TVyGOv5l+bz4n2S93ZujcjKuWU5c/KXZT2KfTzQg8jRYmh2qCEJHXNXR2b/u90hMuMH2
+         g7Nv/KdLv+f/ciZUzeiZAij+67lnYKCNxPoHyc+mKfKzLBDrry5twiTV16JxkOtAmlz7
+         W/re7TYnrTVYvIdWGArxL+pP0YRUoRFUYxozGSBCxJrfCySQGCnrJBGabAQGrBpp0Kbq
+         Piww==
+X-Gm-Message-State: AOAM5312LeUyX1Opb3aZ5eyoC4YrnEsd8U2/YJEQVyOL1aiZPNhUOLaa
+        0z5NSYEn6NjYzzzAJ5Lu+aeJ5kK4SSM=
+X-Google-Smtp-Source: ABdhPJyKQael+JwYM3mQgb3guFS7PQgEzsBJ5Wg0JWAeikTlO769mWUFUWw52CnoVUFBzydT6i4a9A==
+X-Received: by 2002:adf:94c1:: with SMTP id 59mr1368794wrr.29.1598957894573;
+        Tue, 01 Sep 2020 03:58:14 -0700 (PDT)
 Received: from ylate.lan (atoulouse-654-1-378-135.w86-199.abo.wanadoo.fr. [86.199.233.135])
-        by smtp.googlemail.com with ESMTPSA id x16sm1705875wrq.62.2020.09.01.03.58.15
+        by smtp.googlemail.com with ESMTPSA id x16sm1705875wrq.62.2020.09.01.03.58.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 03:58:16 -0700 (PDT)
+        Tue, 01 Sep 2020 03:58:14 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v2 07/11] merge-octopus: rewrite in C
-Date:   Tue,  1 Sep 2020 12:57:01 +0200
-Message-Id: <20200901105705.6059-8-alban.gruin@gmail.com>
+Subject: [PATCH v2 05/11] merge-resolve: rewrite in C
+Date:   Tue,  1 Sep 2020 12:56:59 +0200
+Message-Id: <20200901105705.6059-6-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200901105705.6059-1-alban.gruin@gmail.com>
 References: <20200625121953.16991-1-alban.gruin@gmail.com>
@@ -76,112 +76,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites `git merge-octopus' from shell to C.  As for the two last
-conversions, this port removes calls to external processes to avoid
-reading and writing the index over and over again.
+This rewrites `git merge-resolve' from shell to C.  As for `git
+merge-one-file', this port is not completely straightforward and removes
+calls to external processes to avoid reading and writing the index over
+and over again.
 
- - Calls to `read-tree -u -m (--aggressive)?' are replaced by calls to
-   unpack_trees().
+ - The call to `update-index -q --refresh' is replaced by a call to
+   refresh_index().
+
+ - The call to `read-tree' is replaced by a call to unpack_trees() (and
+   all the setup needed).
 
  - The call to `write-tree' is replaced by a call to
    write_index_as_tree().
 
- - The call to `diff-index ...' is replaced by a call to
-   repo_index_has_changes(), and is moved from cmd_merge_octopus() to
-   merge_octopus().
-
  - The call to `merge-index', needed to invoke `git merge-one-file', is
-   replaced by a call to merge_all().
+   replaced by a call to the new merge_all() function.  A callback
+   function, merge_one_file_cb(), is added to allow it to call
+   merge_one_file() without forking.
 
-The index is read in cmd_merge_octopus(), and is wrote back by
-merge_strategies_octopus().
+Here too, the index is read in cmd_merge_resolve(), but
+merge_strategies_resolve() takes care of writing it back to the disk.
 
-Here to, merge_strategies_octopus() takes two commit lists and a string
-to reduce frictions when try_merge_strategies() will be modified to call
-it directly.
+The parameters of merge_strategies_resolve() will be surprising at first
+glance: why using a commit list for `bases' and `remote', where we could
+use an oid array, and a pointer to an oid?  Because, in a later commit,
+try_merge_strategy() will be able to call merge_strategies_resolve()
+directly, and it already uses a commit list for `bases' (`common') and
+`remote' (`remoteheads'), and a string for `head_arg'.  To reduce
+frictions later, merge_strategies_resolve() takes the same types of
+parameters.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- Makefile                |   2 +-
- builtin.h               |   1 +
- builtin/merge-octopus.c |  65 +++++++++++++
- git-merge-octopus.sh    | 112 ----------------------
- git.c                   |   1 +
- merge-strategies.c      | 200 ++++++++++++++++++++++++++++++++++++++++
- merge-strategies.h      |   3 +
- 7 files changed, 271 insertions(+), 113 deletions(-)
- create mode 100644 builtin/merge-octopus.c
- delete mode 100755 git-merge-octopus.sh
+ Makefile                |  2 +-
+ builtin.h               |  1 +
+ builtin/merge-resolve.c | 69 +++++++++++++++++++++++++++++++++
+ git-merge-resolve.sh    | 54 --------------------------
+ git.c                   |  1 +
+ merge-strategies.c      | 85 +++++++++++++++++++++++++++++++++++++++++
+ merge-strategies.h      |  5 +++
+ 7 files changed, 162 insertions(+), 55 deletions(-)
+ create mode 100644 builtin/merge-resolve.c
+ delete mode 100755 git-merge-resolve.sh
 
 diff --git a/Makefile b/Makefile
-index 929c3dc3eb..2fb26d9692 100644
+index 8849d54063..929c3dc3eb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -595,7 +595,6 @@ unexport CDPATH
- SCRIPT_SH += git-bisect.sh
+@@ -596,7 +596,6 @@ SCRIPT_SH += git-bisect.sh
  SCRIPT_SH += git-difftool--helper.sh
  SCRIPT_SH += git-filter-branch.sh
--SCRIPT_SH += git-merge-octopus.sh
+ SCRIPT_SH += git-merge-octopus.sh
+-SCRIPT_SH += git-merge-resolve.sh
  SCRIPT_SH += git-mergetool.sh
  SCRIPT_SH += git-quiltimport.sh
  SCRIPT_SH += git-request-pull.sh
-@@ -1088,6 +1087,7 @@ BUILTIN_OBJS += builtin/mailsplit.o
- BUILTIN_OBJS += builtin/merge-base.o
- BUILTIN_OBJS += builtin/merge-file.o
- BUILTIN_OBJS += builtin/merge-index.o
-+BUILTIN_OBJS += builtin/merge-octopus.o
+@@ -1092,6 +1091,7 @@ BUILTIN_OBJS += builtin/merge-index.o
  BUILTIN_OBJS += builtin/merge-one-file.o
  BUILTIN_OBJS += builtin/merge-ours.o
  BUILTIN_OBJS += builtin/merge-recursive.o
++BUILTIN_OBJS += builtin/merge-resolve.o
+ BUILTIN_OBJS += builtin/merge-tree.o
+ BUILTIN_OBJS += builtin/merge.o
+ BUILTIN_OBJS += builtin/mktag.o
 diff --git a/builtin.h b/builtin.h
-index 6ea207c9fd..5a587ab70c 100644
+index 9205d5ecdc..6ea207c9fd 100644
 --- a/builtin.h
 +++ b/builtin.h
-@@ -170,6 +170,7 @@ int cmd_mailsplit(int argc, const char **argv, const char *prefix);
- int cmd_merge(int argc, const char **argv, const char *prefix);
- int cmd_merge_base(int argc, const char **argv, const char *prefix);
- int cmd_merge_index(int argc, const char **argv, const char *prefix);
-+int cmd_merge_octopus(int argc, const char **argv, const char *prefix);
- int cmd_merge_ours(int argc, const char **argv, const char *prefix);
+@@ -174,6 +174,7 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix);
  int cmd_merge_file(int argc, const char **argv, const char *prefix);
  int cmd_merge_one_file(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/merge-octopus.c b/builtin/merge-octopus.c
+ int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
++int cmd_merge_resolve(int argc, const char **argv, const char *prefix);
+ int cmd_merge_tree(int argc, const char **argv, const char *prefix);
+ int cmd_mktag(int argc, const char **argv, const char *prefix);
+ int cmd_mktree(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/merge-resolve.c b/builtin/merge-resolve.c
 new file mode 100644
-index 0000000000..37bbdf11cc
+index 0000000000..59f734473b
 --- /dev/null
-+++ b/builtin/merge-octopus.c
-@@ -0,0 +1,65 @@
++++ b/builtin/merge-resolve.c
+@@ -0,0 +1,69 @@
 +/*
-+ * Builtin "git merge-octopus"
++ * Builtin "git merge-resolve"
 + *
 + * Copyright (c) 2020 Alban Gruin
 + *
-+ * Based on git-merge-octopus.sh, written by Junio C Hamano.
++ * Based on git-merge-resolve.sh, written by Linus Torvalds and Junio C
++ * Hamano.
 + *
-+ * Resolve two or more trees.
++ * Resolve two trees, using enhanced multi-base read-tree.
 + */
 +
 +#include "cache.h"
 +#include "builtin.h"
-+#include "commit.h"
 +#include "merge-strategies.h"
 +
-+static const char builtin_merge_octopus_usage[] =
-+	"git merge-octopus [<bases>...] -- <head> <remote1> <remote2> [<remotes>...]";
++static const char builtin_merge_resolve_usage[] =
++	"git merge-resolve <bases>... -- <head> <remote>";
 +
-+int cmd_merge_octopus(int argc, const char **argv, const char *prefix)
++int cmd_merge_resolve(int argc, const char **argv, const char *prefix)
 +{
-+	int i, sep_seen = 0;
-+	struct commit_list *bases = NULL, *remotes = NULL;
-+	struct commit_list **next_base = &bases, **next_remote = &remotes;
-+	const char *head_arg = NULL;
++	int i, is_baseless = 1, sep_seen = 0;
++	const char *head = NULL;
++	struct commit_list *bases = NULL, *remote = NULL;
++	struct commit_list **next_base = &bases;
 +
 +	if (argc < 5)
-+		usage(builtin_merge_octopus_usage);
++		usage(builtin_merge_resolve_usage);
 +
 +	setup_work_tree();
 +	if (repo_read_index(the_repository) < 0)
-+		die("corrupted cache");
++		die("invalid index");
 +
 +	/* The first parameters up to -- are merge bases; the rest are
 +	 * heads. */
@@ -189,50 +196,49 @@ index 0000000000..37bbdf11cc
 +		if (strcmp(argv[i], "--") == 0)
 +			sep_seen = 1;
 +		else if (strcmp(argv[i], "-h") == 0)
-+			usage(builtin_merge_octopus_usage);
-+		else if (sep_seen && !head_arg)
-+			head_arg = argv[i];
-+		else {
++			usage(builtin_merge_resolve_usage);
++		else if (sep_seen && !head)
++			head = argv[i];
++		else if (remote) {
++			/* Give up if we are given two or more remotes.
++			 * Not handling octopus. */
++			return 2;
++		} else {
 +			struct object_id oid;
 +
 +			get_oid(argv[i], &oid);
++			is_baseless &= sep_seen;
 +
 +			if (!oideq(&oid, the_hash_algo->empty_tree)) {
 +				struct commit *commit;
 +				commit = lookup_commit_or_die(&oid, argv[i]);
 +
 +				if (sep_seen)
-+					next_remote = commit_list_append(commit, next_remote);
++					commit_list_append(commit, &remote);
 +				else
 +					next_base = commit_list_append(commit, next_base);
 +			}
 +		}
 +	}
 +
-+	/* Reject if this is not an octopus -- resolve should be used
-+	 * instead. */
-+	if (commit_list_count(remotes) < 2)
++	/* Give up if this is a baseless merge. */
++	if (is_baseless)
 +		return 2;
 +
-+	return merge_strategies_octopus(the_repository, bases, head_arg, remotes);
++	return merge_strategies_resolve(the_repository, bases, head, remote);
 +}
-diff --git a/git-merge-octopus.sh b/git-merge-octopus.sh
+diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
 deleted file mode 100755
-index 7d19d37951..0000000000
---- a/git-merge-octopus.sh
+index 343fe7bccd..0000000000
+--- a/git-merge-resolve.sh
 +++ /dev/null
-@@ -1,112 +0,0 @@
+@@ -1,54 +0,0 @@
 -#!/bin/sh
 -#
+-# Copyright (c) 2005 Linus Torvalds
 -# Copyright (c) 2005 Junio C Hamano
 -#
--# Resolve two or more trees.
--#
--
--. git-sh-setup
--
--LF='
--'
+-# Resolve two trees, using enhanced multi-base read-tree.
 -
 -# The first parameters up to -- are merge bases; the rest are heads.
 -bases= head= remotes= sep_seen=
@@ -254,324 +260,167 @@ index 7d19d37951..0000000000
 -	esac
 -done
 -
--# Reject if this is not an octopus -- resolve should be used instead.
+-# Give up if we are given two or more remotes -- not handling octopus.
 -case "$remotes" in
 -?*' '?*)
--	;;
--*)
 -	exit 2 ;;
 -esac
 -
--# MRC is the current "merge reference commit"
--# MRT is the current "merge result tree"
--
--if ! git diff-index --quiet --cached HEAD --
+-# Give up if this is a baseless merge.
+-if test '' = "$bases"
 -then
--    gettextln "Error: Your local changes to the following files would be overwritten by merge"
--    git diff-index --cached --name-only HEAD -- | sed -e 's/^/    /'
--    exit 2
+-	exit 2
 -fi
--MRC=$(git rev-parse --verify -q $head)
--MRT=$(git write-tree)
--NON_FF_MERGE=0
--OCTOPUS_FAILURE=0
--for SHA1 in $remotes
--do
--	case "$OCTOPUS_FAILURE" in
--	1)
--		# We allow only last one to have a hand-resolvable
--		# conflicts.  Last round failed and we still had
--		# a head to merge.
--		gettextln "Automated merge did not work."
--		gettextln "Should not be doing an octopus."
--		exit 2
--	esac
 -
--	eval pretty_name=\${GITHEAD_$SHA1:-$SHA1}
--	if test "$SHA1" = "$pretty_name"
+-git update-index -q --refresh
+-git read-tree -u -m --aggressive $bases $head $remotes || exit 2
+-echo "Trying simple merge."
+-if result_tree=$(git write-tree 2>/dev/null)
+-then
+-	exit 0
+-else
+-	echo "Simple merge failed, trying Automatic merge."
+-	if git merge-index -o git-merge-one-file -a
 -	then
--		SHA1_UP="$(echo "$SHA1" | tr a-z A-Z)"
--		eval pretty_name=\${GITHEAD_$SHA1_UP:-$pretty_name}
+-		exit 0
+-	else
+-		exit 1
 -	fi
--	common=$(git merge-base --all $SHA1 $MRC) ||
--		die "$(eval_gettext "Unable to find common commit with \$pretty_name")"
--
--	case "$LF$common$LF" in
--	*"$LF$SHA1$LF"*)
--		eval_gettextln "Already up to date with \$pretty_name"
--		continue
--		;;
--	esac
--
--	if test "$common,$NON_FF_MERGE" = "$MRC,0"
--	then
--		# The first head being merged was a fast-forward.
--		# Advance MRC to the head being merged, and use that
--		# tree as the intermediate result of the merge.
--		# We still need to count this as part of the parent set.
--
--		eval_gettextln "Fast-forwarding to: \$pretty_name"
--		git read-tree -u -m $head $SHA1 || exit
--		MRC=$SHA1 MRT=$(git write-tree)
--		continue
--	fi
--
--	NON_FF_MERGE=1
--
--	eval_gettextln "Trying simple merge with \$pretty_name"
--	git read-tree -u -m --aggressive  $common $MRT $SHA1 || exit 2
--	next=$(git write-tree 2>/dev/null)
--	if test $? -ne 0
--	then
--		gettextln "Simple merge did not work, trying automatic merge."
--		git merge-index -o git-merge-one-file -a ||
--		OCTOPUS_FAILURE=1
--		next=$(git write-tree 2>/dev/null)
--	fi
--
--	MRC="$MRC $SHA1"
--	MRT=$next
--done
--
--exit "$OCTOPUS_FAILURE"
+-fi
 diff --git a/git.c b/git.c
-index 794ca6e9f0..df0bebdafc 100644
+index c97fea36c1..794ca6e9f0 100644
 --- a/git.c
 +++ b/git.c
-@@ -533,6 +533,7 @@ static struct cmd_struct commands[] = {
- 	{ "merge-base", cmd_merge_base, RUN_SETUP },
- 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
- 	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
-+	{ "merge-octopus", cmd_merge_octopus, RUN_SETUP | NO_PARSEOPT },
- 	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
- 	{ "merge-one-file", cmd_merge_one_file, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+@@ -538,6 +538,7 @@ static struct cmd_struct commands[] = {
  	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
++	{ "merge-resolve", cmd_merge_resolve, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
+ 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
 diff --git a/merge-strategies.c b/merge-strategies.c
-index 6b905dfc38..dee86389e3 100644
+index 00738863e4..6b905dfc38 100644
 --- a/merge-strategies.c
 +++ b/merge-strategies.c
-@@ -1,5 +1,6 @@
+@@ -1,8 +1,11 @@
  #include "cache.h"
- #include "cache-tree.h"
-+#include "commit-reach.h"
++#include "cache-tree.h"
  #include "dir.h"
  #include "ll-merge.h"
- #include "lockfile.h"
-@@ -392,3 +393,202 @@ int merge_strategies_resolve(struct repository *r,
- 	rollback_lock_file(&lock);
- 	return 2;
++#include "lockfile.h"
+ #include "merge-strategies.h"
+ #include "run-command.h"
++#include "unpack-trees.h"
+ #include "xdiff-interface.h"
+ 
+ static int add_to_index_cacheinfo(struct index_state *istate,
+@@ -307,3 +310,85 @@ int merge_all(struct index_state *istate, int oneshot, int quiet,
+ 
+ 	return err;
  }
 +
-+static int fast_forward(struct repository *r, const struct object_id *oids,
-+			int nr, int aggressive)
++static int add_tree(const struct object_id *oid, struct tree_desc *t)
 +{
-+	int i;
-+	struct tree_desc t[MAX_UNPACK_TREES];
-+	struct unpack_trees_options opts;
-+	struct lock_file lock = LOCK_INIT;
++	struct tree *tree;
 +
-+	repo_read_index_preload(r, NULL, 0);
-+	if (refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL))
++	tree = parse_tree_indirect(oid);
++	if (parse_tree(tree))
 +		return -1;
 +
++	init_tree_desc(t, tree->buffer, tree->size);
++	return 0;
++}
++
++int merge_strategies_resolve(struct repository *r,
++			     struct commit_list *bases, const char *head_arg,
++			     struct commit_list *remote)
++{
++	int i = 0;
++	struct lock_file lock = LOCK_INIT;
++	struct tree_desc t[MAX_UNPACK_TREES];
++	struct unpack_trees_options opts;
++	struct object_id head, oid;
++	struct commit_list *j;
++
++	if (head_arg)
++		get_oid(head_arg, &head);
++
 +	repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
++	refresh_index(r->index, 0, NULL, NULL, NULL);
 +
 +	memset(&opts, 0, sizeof(opts));
 +	opts.head_idx = 1;
 +	opts.src_index = r->index;
 +	opts.dst_index = r->index;
-+	opts.merge = 1;
 +	opts.update = 1;
-+	opts.aggressive = aggressive;
++	opts.merge = 1;
++	opts.aggressive = 1;
 +
-+	for (i = 0; i < nr; i++) {
-+		struct tree *tree;
-+		tree = parse_tree_indirect(oids + i);
-+		if (parse_tree(tree))
-+			return -1;
-+		init_tree_desc(t + i, tree->buffer, tree->size);
++	for (j = bases; j && j->item; j = j->next) {
++		if (add_tree(&j->item->object.oid, t + (i++)))
++			goto out;
 +	}
 +
-+	if (nr == 1)
++	if (head_arg && add_tree(&head, t + (i++)))
++		goto out;
++	if (remote && add_tree(&remote->item->object.oid, t + (i++)))
++		goto out;
++
++	if (i == 1)
 +		opts.fn = oneway_merge;
-+	else if (nr == 2) {
++	else if (i == 2) {
 +		opts.fn = twoway_merge;
 +		opts.initial_checkout = is_index_unborn(r->index);
-+	} else if (nr >= 3) {
++	} else if (i >= 3) {
 +		opts.fn = threeway_merge;
-+		opts.head_idx = nr - 1;
++		opts.head_idx = i - 1;
 +	}
 +
-+	if (unpack_trees(nr, t, &opts))
-+		return -1;
++	if (unpack_trees(i, t, &opts))
++		goto out;
 +
-+	if (write_locked_index(r->index, &lock, COMMIT_LOCK))
-+		return error(_("unable to write new index file"));
++	puts(_("Trying simple merge."));
++	write_locked_index(r->index, &lock, COMMIT_LOCK);
++
++	if (write_index_as_tree(&oid, r->index, r->index_file,
++				WRITE_TREE_SILENT, NULL)) {
++		int ret;
++
++		puts(_("Simple merge failed, trying Automatic merge."));
++		repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
++		ret = merge_all(r->index, 0, 0, merge_one_file_cb, r);
++
++		write_locked_index(r->index, &lock, COMMIT_LOCK);
++		return !!ret;
++	}
 +
 +	return 0;
-+}
 +
-+static int write_tree(struct repository *r, struct tree **reference_tree)
-+{
-+	struct object_id oid;
-+	int ret;
-+
-+	ret = write_index_as_tree(&oid, r->index, r->index_file, 0, NULL);
-+	if (!ret)
-+		*reference_tree = lookup_tree(r, &oid);
-+
-+	return ret;
-+}
-+
-+int merge_strategies_octopus(struct repository *r,
-+			     struct commit_list *bases, const char *head_arg,
-+			     struct commit_list *remotes)
-+{
-+	int non_ff_merge = 0, ret = 0, references = 1;
-+	struct commit **reference_commit;
-+	struct tree *reference_tree;
-+	struct commit_list *j;
-+	struct object_id head;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	get_oid(head_arg, &head);
-+
-+	reference_commit = xcalloc(commit_list_count(remotes) + 1, sizeof(struct commit *));
-+	reference_commit[0] = lookup_commit_reference(r, &head);
-+	reference_tree = repo_get_commit_tree(r, reference_commit[0]);
-+
-+	if (repo_index_has_changes(r, reference_tree, &sb)) {
-+		error(_("Your local changes to the following files "
-+			"would be overwritten by merge:\n  %s"),
-+		      sb.buf);
-+		strbuf_release(&sb);
-+		ret = 2;
-+		goto out;
-+	}
-+
-+	for (j = remotes; j && j->item; j = j->next) {
-+		struct commit *c = j->item;
-+		struct object_id *oid = &c->object.oid;
-+		struct commit_list *common, *k;
-+		char *branch_name;
-+		int can_ff = 1;
-+
-+		if (ret) {
-+			/* We allow only last one to have a
-+			   hand-resolvable conflicts.  Last round failed
-+			   and we still had a head to merge. */
-+			puts(_("Automated merge did not work."));
-+			puts(_("Should not be doing an octopus."));
-+
-+			ret = 2;
-+			goto out;
-+		}
-+
-+		branch_name = merge_get_better_branch_name(oid_to_hex(oid));
-+		common = get_merge_bases_many(c, references, reference_commit);
-+
-+		if (!common)
-+			die(_("Unable to find common commit with %s"), branch_name);
-+
-+		for (k = common; k && !oideq(&k->item->object.oid, oid); k = k->next);
-+
-+		if (k) {
-+			printf(_("Already up to date with %s\n"), branch_name);
-+			free(branch_name);
-+			free_commit_list(common);
-+			continue;
-+		}
-+
-+		if (!non_ff_merge) {
-+			int i;
-+
-+			for (i = 0, k = common; k && i < references && can_ff; k = k->next, i++) {
-+				can_ff = oideq(&k->item->object.oid,
-+					       &reference_commit[i]->object.oid);
-+			}
-+		}
-+
-+		if (!non_ff_merge && can_ff) {
-+			/* The first head being merged was a
-+			   fast-forward.  Advance the reference commit
-+			   to the head being merged, and use that tree
-+			   as the intermediate result of the merge.  We
-+			   still need to count this as part of the
-+			   parent set. */
-+			struct object_id oids[2];
-+			printf(_("Fast-forwarding to: %s\n"), branch_name);
-+
-+			oidcpy(oids, &head);
-+			oidcpy(oids + 1, oid);
-+
-+			ret = fast_forward(r, oids, 2, 0);
-+			if (ret) {
-+				free(branch_name);
-+				free_commit_list(common);
-+				goto out;
-+			}
-+
-+			references = 0;
-+			write_tree(r, &reference_tree);
-+		} else {
-+			int i = 0;
-+			struct tree *next = NULL;
-+			struct object_id oids[MAX_UNPACK_TREES];
-+
-+			non_ff_merge = 1;
-+			printf(_("Trying simple merge with %s\n"), branch_name);
-+
-+			for (k = common; k; k = k->next)
-+				oidcpy(oids + (i++), &k->item->object.oid);
-+
-+			oidcpy(oids + (i++), &reference_tree->object.oid);
-+			oidcpy(oids + (i++), oid);
-+
-+			if (fast_forward(r, oids, i, 1)) {
-+				ret = 2;
-+
-+				free(branch_name);
-+				free_commit_list(common);
-+
-+				goto out;
-+			}
-+
-+			if (write_tree(r, &next)) {
-+				struct lock_file lock = LOCK_INIT;
-+
-+				puts(_("Simple merge did not work, trying automatic merge."));
-+				repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
-+				ret = !!merge_all(r->index, 0, 0, merge_one_file_cb, r);
-+				write_locked_index(r->index, &lock, COMMIT_LOCK);
-+
-+				write_tree(r, &next);
-+			}
-+
-+			reference_tree = next;
-+		}
-+
-+		reference_commit[references++] = c;
-+
-+		free(branch_name);
-+		free_commit_list(common);
-+	}
-+
-+out:
-+	free(reference_commit);
-+	return ret;
++ out:
++	rollback_lock_file(&lock);
++	return 2;
 +}
 diff --git a/merge-strategies.h b/merge-strategies.h
-index 778f8ce9d6..938411a04e 100644
+index 40e175ca39..778f8ce9d6 100644
 --- a/merge-strategies.h
 +++ b/merge-strategies.h
-@@ -37,5 +37,8 @@ int merge_all(struct index_state *istate, int oneshot, int quiet,
- int merge_strategies_resolve(struct repository *r,
- 			     struct commit_list *bases, const char *head_arg,
- 			     struct commit_list *remote);
-+int merge_strategies_octopus(struct repository *r,
+@@ -1,6 +1,7 @@
+ #ifndef MERGE_STRATEGIES_H
+ #define MERGE_STRATEGIES_H
+ 
++#include "commit.h"
+ #include "object.h"
+ 
+ int merge_strategies_one_file(struct repository *r,
+@@ -33,4 +34,8 @@ int merge_one_path(struct index_state *istate, int oneshot, int quiet,
+ int merge_all(struct index_state *istate, int oneshot, int quiet,
+ 	      merge_cb cb, void *data);
+ 
++int merge_strategies_resolve(struct repository *r,
 +			     struct commit_list *bases, const char *head_arg,
 +			     struct commit_list *remote);
- 
++
  #endif /* MERGE_STRATEGIES_H */
 -- 
 2.28.0.370.g2c2dc3cc62
