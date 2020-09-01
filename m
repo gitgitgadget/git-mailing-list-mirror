@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DAEFC2BC11
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1EA5C2BD11
 	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:01:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 293EC206EF
+	by mail.kernel.org (Postfix) with ESMTP id 7F02A206EF
 	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:01:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pxOevdNC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uLyO2LzU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726521AbgIAK7A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 06:59:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
+        id S1726594AbgIAK7S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 06:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbgIAK61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 06:58:27 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F4CC061247
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 03:58:14 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id z1so1014314wrt.3
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 03:58:14 -0700 (PDT)
+        with ESMTP id S1726419AbgIAK6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 06:58:35 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CCEEC06124F
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 03:58:17 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id t10so167156wrv.1
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 03:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9u6VhGt9mdyc7EjCCutN9MD/zciOgZS2KPfC/PQ6IoA=;
-        b=pxOevdNCCbKKjzKcp2Av9ahz7pgSU1Vib4PI2H+37GcJlyP0kqYzqAL7r7mKv0QJYz
-         QxPbGZ4mSk6kzeYrFZ3fRRKfTe7TMvsePThcvAJOxVyPWOtDYN7ZRbr46i6Vs6aG3Jno
-         L5yb4Qz+A5hysSGqdE+7W14pQur7PH4W1JJEd4w+OKqxMmoQj9CCY7mfPYrSnB/oTj2/
-         iySaTkSpaG0ROUYSqLP9p1NpjNrYd1KplS391Dl+dQUVNN3nzEdyGp/EUvBOwn//4JhL
-         SQ8O/qu2I7GLMt86TpOpOh4fhXUFjxFdq6Ee3SFuz3NuaJYK31r6wFVtPoBcZCsoMvJo
-         ZAYw==
+        bh=1pPjLdjLHw6XH236q6sVPtEcsHTz241ZzunGG6JLbsI=;
+        b=uLyO2LzUoZvXNEGfHaxFFSlU1cmXWY2wSdTrdJnIXy5gU3QKOuNtbEZA77TuvwbkvJ
+         QPr292vVJ5hhLbRPfJCfuRsjCLrvbrF2ASip0VCQ7NaLM0JQFO9vzni6wi0dHrgOZxue
+         yS3mJnLl72A/k/EjNmM7hOB5sTVif8r5J38NWi15/MMQW3dS14swWjViXdvaYtvUxpUM
+         I7agNbZ6djN69faq/AU6XwXVK4CNaCOQRF4Rd2O3XVOIx4ik8HQODgPHfauUwuwV9M6M
+         wvLSAr2vI7YoS9abn1MrqizPQNJesQzcoAhStT35oUUpuFVuy1RpL+rMK7/SL+zeh0lR
+         0LzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9u6VhGt9mdyc7EjCCutN9MD/zciOgZS2KPfC/PQ6IoA=;
-        b=j54lVqac+X+061yygQZhkpa+gWiyHNQO8jgFCIdOl4abf3ZcO5fxnb0VLa9+pyOBms
-         jiIMMe8c+5+WdVQlgf1s78eJOU55tj7Iwu9MR6eesCjz124YJs/wUBgJLGLaDYpdvt+B
-         pBA1vx44m8E+mAFCFGLTYaBrPnfYi0mII7489hOx7bwSnygDEBquv9jvqPWEbJ3FCMp/
-         rRlh8pr2TuOAqN61kB6kkSMK52FVllgCdZNSmOgd3yB1QI2YTKDreCJpT5yjySQ2IKho
-         gTPy4vE0XGVWqj+XteKEgb4Mm+6SUWzAYj22bO1Go0S5tYYwJPFTsqWdVSjFm0iNVVSf
-         elng==
-X-Gm-Message-State: AOAM533T09NzkQIhpIr4cRPv/t1ZYdZBt79dCDzBrNTvxV0RTl6CrW7M
-        r4jEYQXpTgAdbbJ6LauIxx2M3FadJnw=
-X-Google-Smtp-Source: ABdhPJwJq9G4XHkbw1N0cIOMlZHEHZ5oajErmD1Q51MVWIP4cOgfMev91Y9atQ5QwhLVOd3+ywunIQ==
-X-Received: by 2002:adf:ab57:: with SMTP id r23mr1315038wrc.386.1598957893282;
-        Tue, 01 Sep 2020 03:58:13 -0700 (PDT)
+        bh=1pPjLdjLHw6XH236q6sVPtEcsHTz241ZzunGG6JLbsI=;
+        b=nai1eK9HVZZpGhQRhgbXj4NTi8nGJ45YwMBsu/5a1wjKBFDA1uXq9aTVG1mlWkhvbJ
+         Bf6cSNgPN423ZhvgR9NGJk2Dn7CSxH7E1O8vcmF21l7ogykhgZWqwxcF5qi1BQDKIs/h
+         6L59OXvrLeN8j6gd7XjZ6PiN5TsCKjIeBzrIDLYQvrUvLRZQt9lsvXWiNR6A0FSTqTi8
+         fpILqfD4Vn8dS+bS0QFLo9Bmgwg3e8lgOkxyLmfr29eR60Sof49nbzmyuuSlPaS0dUC3
+         mpb47Ivku42AALB2U1lI1MBsyDNylKO74sAvAM1veJYjP+1KFsC/grOvCwNgPOcbD8x+
+         XdGQ==
+X-Gm-Message-State: AOAM532VQa6hjwcfJd3b+gdJDRDtXo98w1tXQEKCO4rBquakchfrPGla
+        /0UWlVMUcDl+V0hkK8RRZav1bqr0oSo=
+X-Google-Smtp-Source: ABdhPJwhtfqykXHG9ysQcn/rroPRsEWS4CD4FqRhSMTlvHQ0JS/ZzX78fJe4xT5xQ5EgGZls5HJAAQ==
+X-Received: by 2002:adf:81e6:: with SMTP id 93mr616322wra.412.1598957895640;
+        Tue, 01 Sep 2020 03:58:15 -0700 (PDT)
 Received: from ylate.lan (atoulouse-654-1-378-135.w86-199.abo.wanadoo.fr. [86.199.233.135])
-        by smtp.googlemail.com with ESMTPSA id x16sm1705875wrq.62.2020.09.01.03.58.12
+        by smtp.googlemail.com with ESMTPSA id x16sm1705875wrq.62.2020.09.01.03.58.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 03:58:12 -0700 (PDT)
+        Tue, 01 Sep 2020 03:58:15 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v2 04/11] merge-index: don't fork if the requested program is `git-merge-one-file'
-Date:   Tue,  1 Sep 2020 12:56:58 +0200
-Message-Id: <20200901105705.6059-5-alban.gruin@gmail.com>
+Subject: [PATCH v2 06/11] merge-recursive: move better_branch_name() to merge.c
+Date:   Tue,  1 Sep 2020 12:57:00 +0200
+Message-Id: <20200901105705.6059-7-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200901105705.6059-1-alban.gruin@gmail.com>
 References: <20200625121953.16991-1-alban.gruin@gmail.com>
@@ -76,121 +76,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since `git-merge-one-file' has been rewritten and libified, this teaches
-`merge-index' to call merge_strategies_one_file() without forking using
-a new callback, merge_one_file_cb().
+get_better_branch_name() will be used by rebase-octopus once it is
+rewritten in C, so instead of duplicating it, this moves this function
+preventively inside an appropriate file in libgit.a.  This function is
+also renamed to reflect its usage by merge strategies.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- builtin/merge-index.c | 29 +++++++++++++++++++++++++++--
- merge-strategies.c    | 11 +++++++++++
- merge-strategies.h    |  6 ++++++
- 3 files changed, 44 insertions(+), 2 deletions(-)
+ builtin/merge-recursive.c | 16 ++--------------
+ cache.h                   |  2 +-
+ merge.c                   | 12 ++++++++++++
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index 6cb666cc78..19fff9a113 100644
---- a/builtin/merge-index.c
-+++ b/builtin/merge-index.c
-@@ -1,11 +1,15 @@
- #define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
-+#include "lockfile.h"
- #include "merge-strategies.h"
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index a4bfd8fc51..972243b5e9 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -8,18 +8,6 @@
+ static const char builtin_merge_recursive_usage[] =
+ 	"git %s <base>... -- <head> <remote> ...";
  
- int cmd_merge_index(int argc, const char **argv, const char *prefix)
+-static char *better_branch_name(const char *branch)
+-{
+-	static char githead_env[8 + GIT_MAX_HEXSZ + 1];
+-	char *name;
+-
+-	if (strlen(branch) != the_hash_algo->hexsz)
+-		return xstrdup(branch);
+-	xsnprintf(githead_env, sizeof(githead_env), "GITHEAD_%s", branch);
+-	name = getenv(githead_env);
+-	return xstrdup(name ? name : branch);
+-}
+-
+ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
  {
- 	int i, force_file = 0, err = 0, one_shot = 0, quiet = 0;
- 	const char *pgm;
-+	void *data;
-+	merge_cb merge_action;
-+	struct lock_file lock = LOCK_INIT;
+ 	const struct object_id *bases[21];
+@@ -75,8 +63,8 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 	if (get_oid(o.branch2, &h2))
+ 		die(_("could not resolve ref '%s'"), o.branch2);
  
- 	/* Without this we cannot rely on waitpid() to tell
- 	 * what happened to our children.
-@@ -26,7 +30,19 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
- 		quiet = 1;
- 		i++;
- 	}
-+
- 	pgm = argv[i++];
-+	if (!strcmp(pgm, "git-merge-one-file")) {
-+		merge_action = merge_one_file_cb;
-+		data = (void *)the_repository;
-+
-+		setup_work_tree();
-+		hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
-+	} else {
-+		merge_action = merge_program_cb;
-+		data = (void *)pgm;
-+	}
-+
- 	for (; i < argc; i++) {
- 		const char *arg = argv[i];
- 		if (!force_file && *arg == '-') {
-@@ -36,13 +52,22 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
- 			}
- 			if (!strcmp(arg, "-a")) {
- 				err |= merge_all(&the_index, one_shot, quiet,
--						 merge_program_cb, (void *)pgm);
-+						 merge_action, data);
- 				continue;
- 			}
- 			die("git merge-index: unknown option %s", arg);
- 		}
- 		err |= merge_one_path(&the_index, one_shot, quiet, arg,
--				      merge_program_cb, (void *)pgm);
-+				      merge_action, data);
-+	}
-+
-+	if (merge_action == merge_one_file_cb) {
-+		if (err) {
-+			rollback_lock_file(&lock);
-+			return err;
-+		}
-+
-+		return write_locked_index(&the_index, &lock, COMMIT_LOCK);
- 	}
- 	return err;
- }
-diff --git a/merge-strategies.c b/merge-strategies.c
-index ffd6cf77d6..00738863e4 100644
---- a/merge-strategies.c
-+++ b/merge-strategies.c
-@@ -199,6 +199,17 @@ int merge_strategies_one_file(struct repository *r,
+-	o.branch1 = better1 = better_branch_name(o.branch1);
+-	o.branch2 = better2 = better_branch_name(o.branch2);
++	o.branch1 = better1 = merge_get_better_branch_name(o.branch1);
++	o.branch2 = better2 = merge_get_better_branch_name(o.branch2);
+ 
+ 	if (o.verbosity >= 3)
+ 		printf(_("Merging %s with %s\n"), o.branch1, o.branch2);
+diff --git a/cache.h b/cache.h
+index 4cad61ffa4..a926b0bc87 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1917,7 +1917,7 @@ int checkout_fast_forward(struct repository *r,
+ 			  const struct object_id *from,
+ 			  const struct object_id *to,
+ 			  int overwrite_ignore);
+-
++char *merge_get_better_branch_name(const char *branch);
+ 
+ int sane_execvp(const char *file, char *const argv[]);
+ 
+diff --git a/merge.c b/merge.c
+index 5fb88af102..801d673c5f 100644
+--- a/merge.c
++++ b/merge.c
+@@ -109,3 +109,15 @@ int checkout_fast_forward(struct repository *r,
+ 		return error(_("unable to write new index file"));
  	return 0;
  }
- 
-+int merge_one_file_cb(const struct object_id *orig_blob,
-+		      const struct object_id *our_blob,
-+		      const struct object_id *their_blob, const char *path,
-+		      unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
-+		      void *data)
++
++char *merge_get_better_branch_name(const char *branch)
 +{
-+	return merge_strategies_one_file((struct repository *)data,
-+					 orig_blob, our_blob, their_blob, path,
-+					 orig_mode, our_mode, their_mode);
++	static char githead_env[8 + GIT_MAX_HEXSZ + 1];
++	char *name;
++
++	if (strlen(branch) != the_hash_algo->hexsz)
++		return xstrdup(branch);
++	xsnprintf(githead_env, sizeof(githead_env), "GITHEAD_%s", branch);
++	name = getenv(githead_env);
++	return xstrdup(name ? name : branch);
 +}
-+
- int merge_program_cb(const struct object_id *orig_blob,
- 		     const struct object_id *our_blob,
- 		     const struct object_id *their_blob, const char *path,
-diff --git a/merge-strategies.h b/merge-strategies.h
-index cf78d7eaf4..40e175ca39 100644
---- a/merge-strategies.h
-+++ b/merge-strategies.h
-@@ -16,6 +16,12 @@ typedef int (*merge_cb)(const struct object_id *orig_blob,
- 			unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
- 			void *data);
- 
-+int merge_one_file_cb(const struct object_id *orig_blob,
-+		      const struct object_id *our_blob,
-+		      const struct object_id *their_blob, const char *path,
-+		      unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
-+		      void *data);
-+
- int merge_program_cb(const struct object_id *orig_blob,
- 		     const struct object_id *our_blob,
- 		     const struct object_id *their_blob, const char *path,
 -- 
 2.28.0.370.g2c2dc3cc62
 
