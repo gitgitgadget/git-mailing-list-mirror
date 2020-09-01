@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB4F0C433E7
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 20:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA65FC433E2
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 20:19:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B269206FA
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 20:19:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 867FE206FA
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 20:19:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rmJs55CS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvNOgb7v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729362AbgIAUTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 16:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42562 "EHLO
+        id S1729150AbgIAUTh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 16:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728622AbgIAUTc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729108AbgIAUTc (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 1 Sep 2020 16:19:32 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BACC061245
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 13:19:31 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id a9so2407655wmm.2
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 13:19:31 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DC78C061246
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 13:19:32 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id c18so2898435wrm.9
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 13:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=s+zHR3Bi0aSN7VexU6w+KSamEHrE3KpyFdDeDHhtATo=;
-        b=rmJs55CSgThRXhdaC+BXUhHr4sIjnXA84XVWQoszidjjdRpHA9m+jVvVBOi/1lapkh
-         pVV3kSUQbq/4LzkRd1sJ+mthjAzjqbDhyWxBU7w1+g32W4I6ose/dvGjKeMZsVYOBcw7
-         iFBoqiKawPCdBK+/SyCPVk/RLTFYu7keNcl6FxKJ3lob65sllZbDWFPYsWb0kc++8spm
-         w5Ubbkx0L2l3++GXqmRPOu68i58QAoXkWO26btyUt/WRfMZZms6AROlO4Q91kZbhiLV8
-         bTdQP1p0Kj2zl6zXN2Q1B8Uwzfey2DE7GO7UGXSyVB3ISDXRK/BefXCvjD7Nhxkr5ndR
-         CoDA==
+        bh=9jb40Gp76eexJeMaf5rCu91lOnGbcHdsXaHvdA6AtYs=;
+        b=IvNOgb7v+rkVA1UaDjglTf1rRUQnSO5AAi+RyXgSVT/S7X2CjaYl89KPAxTbcZAy/k
+         C4xeAFqcGi60IJFTsp6Kgk3BcBE3lzKfn4UoVBLPv0ZR3he4TuVvqbaE0F+Likz7sgEL
+         7pvxOm6YCnUyVXVJGXsDkpul7asB3lyj/aEkShFlsD/EZZyNbKXJkoI7m8iuQqhNfYiK
+         Dz+17njvr0/kS/6cruUF006F22WU8t/6QzyA+fRX1rxcapO4UOZFoK66Ka87l0Ld3eda
+         kZz7/VNrSxjKfIxqz/xy5ZxxusNCk3V9cl0JE8JZ1lmCjZbNAlRx29tLml/5R9qZok3s
+         NETA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s+zHR3Bi0aSN7VexU6w+KSamEHrE3KpyFdDeDHhtATo=;
-        b=BpjN3WzFiTmJnPuKKdVvNq6fFunoyBnCWTd9uVMeHOJ0w71suhiEcJ3uNnsjKJOwxs
-         pbwtzsPzesH+x2BkGqKXf7yK+vRfRGLvPPQGfKgoU5RC4dxbu8Jg1tKqYsKTz4rDyw+q
-         WhedEt71pcMT4Gmw62bRtDrFrV561YZu6J2AbSEa4heBuTglsyI92Y2OGq3qu7HiiN2A
-         y6FGROV/GBPZO4T/Th996MbZEZrM1wQlkbpzrRaS40q3ynb1Z9zNV66op6YWAB/kazyv
-         D0bzfaxGD0CjaYzTWNwdexiw3uwo9IxKMHGzxHZIAabmyJWAiMMI7iKkFJP5sLzuFocB
-         PH1Q==
-X-Gm-Message-State: AOAM5324299HKH4crPr9fCN1YhCZ4AUH1MF4Usu/zjrtSEbpq4BCTdUZ
-        LHQQ7smSvP2X3UbCJcutIvc5OE7Dhgg=
-X-Google-Smtp-Source: ABdhPJxtYi0W7nsSujTwplXw2seeu6IE+lqbgjaH2uWoiEWkyeNFO2nzZPqZMc9xHywGXNIjPgX9jw==
-X-Received: by 2002:a7b:ce96:: with SMTP id q22mr3146362wmj.132.1598991570101;
+        bh=9jb40Gp76eexJeMaf5rCu91lOnGbcHdsXaHvdA6AtYs=;
+        b=LLUBC08J9LZh3H0gZBm+ALbOo4hZlxjZgzcLOHDy0pDUIBiIz+ecOGNIsvBWYV7ooi
+         sAI+M2ScXzV1oUippRK5IiKVL396RFgd85zWPpWSPyMzIM0AyURchtenNZ2mlmab1Jwt
+         2ai7t6Extum1DEtOjl5BmrmjO5s/HbgCDUs5vazCI+2bYjKv4NX3cXXTRDCBRXdHbLu9
+         w7MEDMA1+vLfkZTiVB/0ymPj6dXKgVCL5p5of3cmN4iUCf08o3RJPJVnsZ6Tahjx13Iz
+         k/ZM29gK5wtEGT8Ohh7Nv/varhzwkQNrlN53/werCbF3RD5wr3WWLRz2ZDPGOSVEyXxN
+         f0rg==
+X-Gm-Message-State: AOAM530TSceJRx5m9/nTSsJgqftewiHSDJ7Ghg7AGc5P2j0AC8K7Wzzv
+        WPf5BLzVpW0Kj5+Ni/Zeq9lAdNBZBs8=
+X-Google-Smtp-Source: ABdhPJwHxNDn9DRBauKJ+QTZt22OWtElS2qd3vlhrbOzEf9eWlg7j/56WNxkRhnb8RZR6vKZQolF3w==
+X-Received: by 2002:adf:fbc7:: with SMTP id d7mr3715041wrs.208.1598991570891;
         Tue, 01 Sep 2020 13:19:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h5sm3826173wrt.31.2020.09.01.13.19.29
+        by smtp.gmail.com with ESMTPSA id r15sm3204498wmn.24.2020.09.01.13.19.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 13:19:29 -0700 (PDT)
-Message-Id: <b5363e282f69570e34ffb806f7a62e00e39b98bc.1598991568.git.gitgitgadget@gmail.com>
+        Tue, 01 Sep 2020 13:19:30 -0700 (PDT)
+Message-Id: <b92374e69192d57bcb11fb2573beb4e9aee339a9.1598991568.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.719.git.1598991568.gitgitgadget@gmail.com>
 References: <pull.719.git.1598991568.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Sep 2020 20:19:26 +0000
-Subject: [PATCH 1/2] ci: fix indentation of the `ci-config` job
+Date:   Tue, 01 Sep 2020 20:19:27 +0000
+Subject: [PATCH 2/2] ci: avoid ugly "failure" in the `ci-config` job
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,36 +78,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The section added in e76eec35540f (ci: allow per-branch config for
-GitHub Actions, 2020-05-07) contains a `&&`-chain that connects several
-commands. The first command is actually so long that it stretches over
-multiple lines, and as per usual, the continuation lines are indented one
-more level than the first.
+In the common case where users have _not_ pushed a `ci-config` branch to
+configure which branches should be included in the GitHub workflow runs,
+there is a big fat ugly annotation about a failure in the run's log:
 
-However, the subsequent commands in the `&&`-chain were also indented
-one more level than the first command, which was almost certainly
-unintended.
+	X Check failure on line 1 in .github
+
+	  @github-actions github-actions / ci-config
+
+	  .github#L1
+
+	  Process completed with exit code 128.
+
+The reason is that the `ci-config` job tries to clone that `ci-config`
+branch, and even if it is configured to continue on error, the
+annotation is displayed, and it is distracting.
+
+Let's just handle this on the shell script level, so that the job's step
+is not marked as a failure.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/main.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .github/workflows/main.yml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 30425404eb..6fd1d1a2c8 100644
+index 6fd1d1a2c8..fcfd138ff1 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -23,8 +23,8 @@ jobs:
-             --filter=blob:none \
+@@ -12,7 +12,6 @@ jobs:
+       enabled: ${{ steps.check-ref.outputs.enabled }}
+     steps:
+       - name: try to clone ci-config branch
+-        continue-on-error: true
+         run: |
+           git -c protocol.version=2 clone \
+             --no-tags \
+@@ -24,7 +23,7 @@ jobs:
              https://github.com/${{ github.repository }} \
              config-repo &&
--            cd config-repo &&
--            git checkout HEAD -- ci/config
-+          cd config-repo &&
-+          git checkout HEAD -- ci/config
+           cd config-repo &&
+-          git checkout HEAD -- ci/config
++          git checkout HEAD -- ci/config || : ignore
        - id: check-ref
          name: check whether CI is enabled for ref
          run: |
 -- 
 gitgitgadget
-
