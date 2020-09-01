@@ -2,169 +2,127 @@ Return-Path: <SRS0=kr1+=CK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C465CC433E7
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 686F1C433E2
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 12:23:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4A74206FA
-	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 11:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40DE920767
+	for <git@archiver.kernel.org>; Tue,  1 Sep 2020 12:23:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="phz8zva1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E87S0FML"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726929AbgIALl7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Sep 2020 07:41:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46460 "EHLO
+        id S1727780AbgIAMXF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Sep 2020 08:23:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727038AbgIALhm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Sep 2020 07:37:42 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F414C061245
-        for <git@vger.kernel.org>; Tue,  1 Sep 2020 04:37:42 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id m8so633428pfh.3
-        for <git@vger.kernel.org>; Tue, 01 Sep 2020 04:37:42 -0700 (PDT)
+        with ESMTP id S1728084AbgIAMVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Sep 2020 08:21:45 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3CADC061244
+        for <git@vger.kernel.org>; Tue,  1 Sep 2020 05:14:35 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id t20so635610qtr.8
+        for <git@vger.kernel.org>; Tue, 01 Sep 2020 05:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=S3TBF1siDHqeOJ2bLpiFyaS3fCbK91HdCDP+gPuKiCg=;
-        b=phz8zva1jhWzELEUBK+1flsY+QOaLRW7WqTzMC+zQOYonGiOJFntP/LRxJZBu7f9pB
-         dBsnje7Q7bmdZKtZel7fZg1zFNirfgkt0V6F1j9raur5gOSSzPMg8W7pAPqNTJfFLRO/
-         7NrQSkjNkObZRBU7Q9fTE1gREtdxqwJwyrFzyMxbii/J4dDIrgrPH5RvBl+Irkv7sHEr
-         rnvxhyHC/d96hauKOgsJEbch6AXyMlkPzVDVwymjs4lQwTCN8wQsfFfAxbQqDizcBRgS
-         SakTnqDXraxhALQW1G5ovzjNYUOJaKRNgVysvgWFOjYlhffuTpjBb0JBAdS1JSTRHFYa
-         r99Q==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nDVcdGQigE4iq6koljsMTC3gneha9vUDN3Wd0jjVuUY=;
+        b=E87S0FML5XJuGNzIWOIPTzPnyZxrKZ2CmGrQm7wrTxVd+jT/yM9trRWL+3BhMd1Nfw
+         9ElqcO6sZZotCAKgVZxhZvhVFnzl8Vm71meJZIpnEegEF2NziDBgoKF11AQ6stwJkanJ
+         ZZ9lrUdfxrLy8Sb3IlZ4RdJr0N/ftt46f7JWHIPydHfe3YDPW1theEG1/HXxpuxB4Dx8
+         ESYG89QKot1B0hWSHsUP6jobOwNEmJeI9puAIOFIueqKL4GUlyY4Z947/AW4W6/BDaWH
+         n6KejqNTT56DsRFGiSKE+5z9eBH0GS73tnJ0WXPJobbAw1gA3lQ4FCqyrNZtm6ccYxWS
+         AMgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=S3TBF1siDHqeOJ2bLpiFyaS3fCbK91HdCDP+gPuKiCg=;
-        b=j8aAQ2LH/b/P8i1dQpFcuWXPRWXGO1xwQCGCi9snoFcHCqorKlpyw8bPmFaxTmIRe4
-         bOmaLPnp1Mpj+FSM5AViZ/s3EidGw2CNtewwoDiQG6JFjBt7IejbguwLNCL/V8u3oaOU
-         ZstsAW/4IGRAgEXvv+8Y0rbQb60E/o0svSJw/gAvanpZ4VAquw981jW63MgZ2EhO3iUA
-         osOxAEru90FzFS9lLnqjvj2h/Ne2FEpgzqgXMuY1nQtfmM+3KnwZVST5F6+NcGbvhbZ7
-         hST6WW6hTQoVONHRKeEhRGDHsKGDvl2l8ECPb/TOXwL0Wm6Ih0DnQZwIE4muY/IXQov6
-         h4PQ==
-X-Gm-Message-State: AOAM530vccXp7sbi+V9l7cfUzLpvvRuFdiTeU3Z0tTjAOXdL2HKEY6mr
-        O24huEcc+EtVIZbblMrnh7I=
-X-Google-Smtp-Source: ABdhPJyhbpO4XAohU1cfDHAxfn2ec2MVRQp6UYg14SdO+B2wT9lKRhTCoODVuWBsZA/8UGD8A+ItzQ==
-X-Received: by 2002:a62:2cc2:: with SMTP id s185mr1487981pfs.10.1598960261686;
-        Tue, 01 Sep 2020 04:37:41 -0700 (PDT)
-Received: from Abhishek-Arch ([2409:4064:79b:52ed:48f6:b1a4:ca3c:754b])
-        by smtp.gmail.com with ESMTPSA id g9sm1669876pfr.172.2020.09.01.04.37.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Sep 2020 04:37:40 -0700 (PDT)
-Date:   Tue, 1 Sep 2020 17:05:24 +0530
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org,
-        gitgitgadget@gmail.com, stolee@gmail.com
-Subject: Re: [PATCH v3 03/11] commit-graph: consolidate fill_commit_graph_info
-Message-ID: <20200901113524.GD10388@Abhishek-Arch>
-Reply-To: 85mu2jc75c.fsf@gmail.com
-References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
- <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
- <18d5864f81e89585cc94cd12eca166a9d8b929a5.1597509583.git.gitgitgadget@gmail.com>
- <857dtuo71v.fsf@gmail.com>
- <20200821041124.GA39355@Abhishek-Arch>
- <85mu2jc75c.fsf@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nDVcdGQigE4iq6koljsMTC3gneha9vUDN3Wd0jjVuUY=;
+        b=pISI+MasaqWT65dz20VhriD2T0SHEj5YtGmNOkPpudX4TGxkmFW3QUScTcOOTU4i5J
+         g3CIUx8ljn/eTFb015OlQ1Tcau3nNe4l/Y0lRi7jcduOxu2X0+LuFhWihaaV+LEV4y/b
+         t7hULD35OH9vXw+imm1NNo/kvg8hE3B5I4Fmbzb5saI0RcG8au6FW5Gcg3YjDJum8CRy
+         VAkZhAdao3EG74KziK0aM7J6Y9zkcrf8Y5UWMeCqKlo/1UHGACQbbxxip/V0yAmrqOyc
+         dRxhv/oKE3xX5HnC9GB+DkeMwtk4hAaZUqabATj/k/O4g2KqmMHPeCpZ9PPMoSr2ivBy
+         5P8Q==
+X-Gm-Message-State: AOAM5325yaN0b2uTbK5GRQ9CyzpbaURWpDO7Q45K0X49acDuJgK3mIwD
+        pwTijkNJucYNJ8Gr6P5xfKXcl/Bby5GuhA==
+X-Google-Smtp-Source: ABdhPJyXamw6GS63Sq4UHpsYlbKTyLiiPKqYTJrOdJUCNoOKG9IireFaJis1XfIcytErtNvyrt+fRA==
+X-Received: by 2002:aed:3c4c:: with SMTP id u12mr1322544qte.312.1598962473788;
+        Tue, 01 Sep 2020 05:14:33 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:5166:a025:6686:ff84? ([2600:1700:e72:80a0:5166:a025:6686:ff84])
+        by smtp.gmail.com with ESMTPSA id 184sm1301281qkl.104.2020.09.01.05.14.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Sep 2020 05:14:33 -0700 (PDT)
+Subject: Re: [PATCH] core.abbrev <off|false|no> disables abbreviations
+To:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20200901074355.GA4498@dcvr>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com>
+Date:   Tue, 1 Sep 2020 08:14:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
+In-Reply-To: <20200901074355.GA4498@dcvr>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <85mu2jc75c.fsf@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 25, 2020 at 01:11:11PM +0200, Jakub Narębski wrote:
-> Hello,
+On 9/1/2020 3:43 AM, Eric Wong wrote:
+> These allows users to write hash-agnostic scripts and configs to
+> disable abbreviations.  Using "-c core.abbrev=40" will be
+> insufficient with SHA-256, and "-c core.abbrev=64" won't work
+> with SHA-1 repos today.
 > 
-> ...
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+>   I kinda wanted to allow a value of "max", but I figured the existing
+>   boolean falsiness words might make more sense with `--no-abbrev' in
+>   for some commands...  Naming is hard :x
 > 
-> All right.
+>  config.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> We might want to add here the information that we also move loading the
-> commit date from the commit-graph file from fill_commit_in_graph() down
-> the [new] call chain into fill_commit_graph_info().  The commit date
-> would be needed in fill_commit_graph_info() in the next commit to
-> compute corrected commit date out of corrected commit date offset, and
-> store it as generation number.
-> 
-> 
-> NOTE that this means that if we switch to storing 64-bit corrected
-> commit date directly in the commit-graph file, instead of storing 32-bit
-> offsets, neither this Move Statement Into Function Out of Caller
-> refactoring nor change to the 'generate tar with future mtime' test
-> would be necessary.
-> 
-> >
-> > The test 'generate tar with future mtime' creates a commit with commit
-> > time of (2 ^ 36 + 1) seconds since EPOCH. The CDAT chunk provides
-> > 34-bits for storing commiter date, thus committer time overflows into
-> > generation number (within CDAT chunk) and has undefined behavior.
-> >
-> > The test used to pass as fill_commit_graph_info() would not set struct
-> > member `date` of struct commit and loads committer date from the object
-> > database, generating a tar file with the expected mtime.
-> 
-> I guess that in the case of generating a tar file we would read the
-> commit out of 'object database', and then only add commit-graph specific
-> info with fill_commit_graph_info().  Possibly because we need more
-> information that commit-graph provides for a commit.
-> 
-> >
-> > However, with corrected commit date, we will load the committer date
-> > from CDAT chunk (truncated to lower 34-bits) to populate the generation
-> > number. Thus, fill_commit_graph_info() sets date and generates tar file
-> > with the truncated mtime and the test fails.
-> >
-> > Let's fix the test by setting a timestamp of (2 ^ 34 - 1) seconds, which
-> > will not be truncated.
-> 
-> Now I got interested why the value of (2 ^ 36 + 1) seconds since EPOCH
-> was used.
-> 
-> The commit that introduced the 'generate tar with future mtime' test,
-> namely e51217e15 (t5000: test tar files that overflow ustar headers,
-> 30-06-2016), says:
-> 
-> 	The ustar format only has room for 11 (or 12, depending on
-> 	some implementations) octal digits for the size and mtime of
-> 	each file. For values larger than this, we have to add pax
-> 	extended headers to specify the real data, and git does not
-> 	yet know how to do so.
-> 
-> 	Before fixing that, let's start off with some test
-> 	infrastructure [...]
-> 
-> The value of 2 ^ 36 equals 2 ^ 3*12 = (2 ^ 3) ^ 12 = 8 ^ 12.
-> So we need the value of (2 ^ 36 + 1) for this test do do its job.
-> Possibly the value of 8 ^ 11 + 1 = 2 ^ 33 + 1 would be enough
-> (if we skip testing "some implementations").
-> 
-> So I think to make this test more clear (for inquisitive minds) we
-> should set a timestamp of (2 ^ 33 + 1), not (2 ^ 34 - 1) seconds
-> since EPOCH.  Maybe even add a variant of this test that uses the
-> origial value of (2 ^ 36 + 1) seconds since EPOCH, but turns off
-> use of serialized commit-graph.
+> diff --git a/config.c b/config.c
+> index 2bdff4457b..f2e09c72ca 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1217,6 +1217,10 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+>  			return config_error_nonbool(var);
+>  		if (!strcasecmp(value, "auto"))
+>  			default_abbrev = -1;
+> +		else if (!strcasecmp(value, "false") ||
+> +			 !strcasecmp(value, "no") ||
+> +			 !strcasecmp(value, "off"))
+> +			default_abbrev = the_hash_algo->hexsz;
 
-That's pretty interesting! I didn't look into this either, will modify
-the existing test and add a new test for it.
+I'm not sure we need three synonyms for "no-abbrev" here.
 
-Thanks for investigating this further.
+"false" would be natural, except I think in a few places
+the config value "0" is also interpreted as "false", but
+as seen below a value of "0" snaps up to the minimum
+allowed abbreviation.
 
-> 
-> I'm sorry for not checking this earlier.
-> 
-> Best,
-> -- 
-> Jakub Narębski
+>  		else {
+>  			int abbrev = git_config_int(var, value);
+>  			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
 
-Thanks
-- Abhishek
+Perhaps "core.abbrev = never" would be a good option?
+
+After we decide on the word, this patch needs:
+
+* Updates to Documentation/config/core.txt
+* A test that works with both hash versions.
+
+Thanks,
+-Stolee
