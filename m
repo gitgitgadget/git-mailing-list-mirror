@@ -2,136 +2,172 @@ Return-Path: <SRS0=xf+W=CL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28EF1C433E7
-	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 15:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F745C433E2
+	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 16:16:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E16E7207EA
-	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 15:37:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64EC820829
+	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 16:16:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQCEnOCe"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="QbLxUFOR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727095AbgIBPhX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Sep 2020 11:37:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
+        id S1728628AbgIBQQh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Sep 2020 12:16:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726618AbgIBPhI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Sep 2020 11:37:08 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70068C061244
-        for <git@vger.kernel.org>; Wed,  2 Sep 2020 08:37:08 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id o5so5697032wrn.13
-        for <git@vger.kernel.org>; Wed, 02 Sep 2020 08:37:08 -0700 (PDT)
+        with ESMTP id S1728724AbgIBQQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Sep 2020 12:16:20 -0400
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D5AC061244
+        for <git@vger.kernel.org>; Wed,  2 Sep 2020 09:16:19 -0700 (PDT)
+Received: by mail-lj1-x241.google.com with SMTP id v12so6622274ljc.10
+        for <git@vger.kernel.org>; Wed, 02 Sep 2020 09:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=m3xFvyC/eparpnJd335nMSJ3AYZcHlqDpK8JXNeWo24=;
-        b=eQCEnOCeAwAYuBXMGlTJNoOEKQh9C+2+NXam9QUIznB7wySyprCSIgvvD3RJAADZsU
-         mU+k3q9tCMaAaCp9WTn6kzDYaLviogQjxDd3DOfAmQMpc/Ky2rcAyVN9GL7Pm3BePqSS
-         qXZ8iKPntK5Fg3mVzUA0Vy9bqrEgsxy6ohrp0NDE479vS6ouQ/s9iCPvoSE2XgbEVsME
-         MVk8+YQwCCytvQN3vqX6g7DqwoQtiJ8P/Beew18kUYkrqzgrGmUpuZe0M8lCT9NW+5De
-         PqwKgzdyt9ySaf0Fkqe3CEttR2PAnorSYzERuaiYf3oxsdKV4vzqh6DCvoH3Ggm16Hkf
-         Qd3w==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MyjgLDyQZGFMYBWrgezgwPq/6H4UlTM/V9XPK/xWH6k=;
+        b=QbLxUFORu7qV3X0EbdUkUpHvUayIT0dnWa8ikLy08tNZAHG1tF9CVnJ2xhz+ifgP3G
+         uNg+6uoO0gIcnnc85ITWvq412EcDNlbZrxZWfsQhT+mmbuyFHDACEUikTJWuUph6MQPl
+         h4dud6sEckVjhH+Yovp+mzaI5+szxLkNRnyuwb73VGDjjdjXkyQtT8W6D8T+bOvoHd9B
+         6OA6ljgDbp7BiZMlW9uaGqxym0KQJLKSb3tFsl8tk5Z3MKksz99X6fVmCWG52pboYWJC
+         ds0pw5EZU+iAvwOBPHHZXulG8mrt+g/0sGzL6FDB/R7vhW3Jm6PrFLLLi8IWwoA6ATt4
+         Nezg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=m3xFvyC/eparpnJd335nMSJ3AYZcHlqDpK8JXNeWo24=;
-        b=oV8/NWkqQL6ixkCDI+UZqm9nPlxOLeR+LU7T+aPbTxcSQy6LJe31mkM737e8aQrOO1
-         l/s1T+tEQZcYnEXRdoCR20TGsTWkWir7t1hDarTe3vz1sG6KlG4+bQHRwYr9KCBxH9DR
-         JBlzvc819AMDvpijXja1NA6nYMY7EX3MkNeIz1PALDB8Ayt+yj7vMa9HDyOVy9de/A50
-         xQPoC58hp3OKbIxWr8YQ+sxnniPwwl22o0T6iHZpMROcEYwb4XKNdJXK4EXxvRq04Jet
-         jmBA9GISAUpOfDVH02PQNBj2ElhPeG1FigN2X0gJRnpmKnP3Mq1B9FIB7i9wctBn6+LN
-         ZhJg==
-X-Gm-Message-State: AOAM530+xY3IfFMycH/ExWtM5eKuMHl+K78zBkPqLclbpi1u04jexAWe
-        Apsdeo1xDOEEGbFNElZOSwEcT734cjY=
-X-Google-Smtp-Source: ABdhPJwB+rzrXAWT4pZ40bHvXaa90dZsJHT/qvl+gF481YvHqn8/gw/Y1mFscrN9Slk8YZi6kRx+cw==
-X-Received: by 2002:adf:eb05:: with SMTP id s5mr8540470wrn.0.1599061026927;
-        Wed, 02 Sep 2020 08:37:06 -0700 (PDT)
-Received: from [192.168.0.104] (atoulouse-654-1-378-135.w86-199.abo.wanadoo.fr. [86.199.233.135])
-        by smtp.gmail.com with ESMTPSA id n124sm55620wmn.29.2020.09.02.08.37.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Sep 2020 08:37:06 -0700 (PDT)
-Subject: Re: [PATCH v2 03/11] merge-index: libify merge_one_path() and
- merge_all()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
-References: <20200625121953.16991-1-alban.gruin@gmail.com>
- <20200901105705.6059-1-alban.gruin@gmail.com>
- <20200901105705.6059-4-alban.gruin@gmail.com>
- <xmqqft81cidt.fsf@gitster.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- mQINBFcsWp4BEAC6dalBNr/CZCvvfeARylnjAaZCxMPwUHXAyf4xotA59sNcyVmaFQ6KxQEs
- R20CSJhO6HqCh4bR9/994vdc4cGuNaWf82eYRYzqCzwFWvFJHj83QgDR2cjtz4frKpj3jSFJ
- No3KBlMmpU8yvSnYaCxjqHxBB+fZwkmmONj/57KdFRU83DvDllQdAxXfxEavL3qUKjVbld29
- o82M2xsN8ZN5KTw7rAMHcigYVnlrgP50euxz3WvfrV+Mky2W7q7m5rTK7eXqOKhewsKcxo0I
- AP+H0Nt91YTmMIAX2Ba25IfHI99kUCLpbHX9xdvj5UH1SZsG84APahdI3CXYibfYIS+qssoo
- 72qj7eBIoCFbVS4Q5AINxojio32orGBDE8CaCy3EzTF+vwJ+h4uUKrTX4wyUMy8nXS0UxZqD
- aQsS7Di6LdAHu+4uf064mXdgjehJ2uHAydFnCThMoxckRoSZ70iCPwgconhNrnuTmunJ43BF
- YjAurjg8y3WrMPJuJaI42q0sYbAX21XeayyMI8dzoNwyG6s+v0Udb/uxdYnHhsGx1oXjYCeR
- nyBdVwdMLWFP4XmJH7JueGUZ37TLh719ME6HYRpfM3sh915ywPxKxQYmGC9iXRThXdGK7ipq
- hJM5RtMq4QPGg+/ShgTZaDdFuMnG8Zrq6W+O29h9NB5rQ/UvBwARAQABtCNBbGJhbiBHcnVp
- biA8YWxiYW4uZ3J1aW5AZ21haWwuY29tPokCcAQTAQIAWgIbAwIeAQIXgAULBwgJCgQVCAkK
- BRYAAQIDHxhoa3A6Ly9wb29sLnNrcy1rZXlzZXJ2ZXJzLm5ldC8CGQEWIQS1T1bLFrFdtpxn
- TIMOC58lWpNWKgUCWRSuYAAKCRAOC58lWpNWKoCfEACHmff95NF5OrBKN+GPYo3TOojjgjio
- CREt9BNIU1ltbks33N/84QF1ifjFF5xjK1XpNhZdk2Nxk+Uf3ByAS24i0b7/BM58RX3sJMHd
- mklCbqBGLBTS+bO/3nc+1snb7FPmjoi3IXznQ25ZXiV/9MUABUBZi7odwNhxeI3Hd2PaX/x5
- ZM0BApqhmBrueUd0JKqY7f/7a+0rTJ8fIHV9ml3cVWf72t2BVnxJMeNLSAIT1FaL8Okp8ViO
- t7RfjF0JZsYZouhCcw2fx7U0VxXGu6bONdVGxu07I7G3+vjhd2C/ld0dgRRjx8viA5HecUSf
- bwbviEXlc44TVo8D6tkrKOezctqNTLII498C7gIQZjc+6HmIIQrOzzLX/C27JQbXch+6KtHO
- ThYGzmD0d7EttTRtXnFJFTMbQMMFnc2X+Rh1ubvfp4Zp2U3a7Nh1//4+ikqIAPV8poJcEdQ0
- A6CaGD8pTCMdExDovizfJRU0ZN3AU9UgFsZWkMK7MFyJneRObUf26oXCQH8zVuJEJHrEsYPk
- VHdV1G86d++CdipKqe9iDNBGNa/5Q9IvYEKK6vj4wLS5ZaOwLGfApbsOcDJvFA1ll/KeHvzx
- Ig9dhUnNCtYXKJ1npChigwRbAiAADoTFI2rI69g6ZTTzBd0+9GM4z6RcOJvtGLnViO4tOCmy
- sbwbxA==
-Message-ID: <6e16673b-2c66-ddaf-5dec-abdd770adcff@gmail.com>
-Date:   Wed, 2 Sep 2020 17:37:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MyjgLDyQZGFMYBWrgezgwPq/6H4UlTM/V9XPK/xWH6k=;
+        b=MsRBMr6U3gUaTSqEVnGmG0cmnGAF1/0jzvTxd7tpuddDybOKHZWhHxp9sI85Xr7NYU
+         lZQG/H5eBVJTkV51Oy2WC5yd/zI5iTzufAd/5RVsxdh+OpeQwz8xkpO0kPn4Wcy8wZY2
+         /a4XIli068y6s/8BzxfSwP0fOPtJymE8BzpNDw/ug0q2XgClhcmKCH2xpJiefhEtonic
+         1R6ObVbcQ4jp+ETap6h3uXER/Q0iMebnUQ2ELH9TEDuuVRGolqBfEMyY2Jmqz36370/p
+         2o8BClUR/T0KuvKYvOb/yURIYtkeBYGs+ol3iHjLXmDMtbTPwAm6wcFD4AvWG/WC+L3F
+         750w==
+X-Gm-Message-State: AOAM530Uvx24yqdpyAPJvboHGY87N8+dFuaW4Z+GewZJVKyYiuqxqFfY
+        /6JmjgZXxvYG7dmzOiq9OrHBdp8HEFbjrelaKNYeVQ==
+X-Google-Smtp-Source: ABdhPJzTbga6B+NAIA4ca4xgso6DnejyooyWUENZJc/lkqWtiLQyPiN37egHQHV5DvAPnmYfOjM+HFYzkBHC+mKBME0=
+X-Received: by 2002:a2e:a370:: with SMTP id i16mr3812863ljn.22.1599063377440;
+ Wed, 02 Sep 2020 09:16:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqft81cidt.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+References: <cover.1599026986.git.matheus.bernardino@usp.br>
+ <f53782f14c5f53da5d5537b369a810a94f9ce184.1599026986.git.matheus.bernardino@usp.br>
+ <CAPig+cSLjMabeLgkg9N7+ZJ1jotbpJx0FAnjkpNSt0Lf+Q0wNQ@mail.gmail.com>
+In-Reply-To: <CAPig+cSLjMabeLgkg9N7+ZJ1jotbpJx0FAnjkpNSt0Lf+Q0wNQ@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 2 Sep 2020 13:16:06 -0300
+Message-ID: <CAHd-oW5gk16=Tmhi_e43vVCufM9=zd8jtZJ_EFJVLmC4dJ06=w@mail.gmail.com>
+Subject: Re: [PATCH v5 2/8] t1308-config-set: avoid false positives when using test-config
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 01/09/2020 à 23:11, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
-> 
->> The "resolve" and "octopus" merge strategies do not call directly `git
->> merge-one-file', they delegate the work to another git command, `git
->> merge-index', that will loop over files in the index and call the
->> specified command.  Unfortunately, these functions are not part of
->> libgit.a, which means that once rewritten, the strategies would still
->> have to invoke `merge-one-file' by spawning a new process first.
->>
->> To avoid this, this moves merge_one_path(), merge_all(), and their
->> helpers to merge-strategies.c.  They also take a callback to dictate
->> what they should do for each file.  For now, only one launching a new
->> process is defined to preserve the behaviour of the builtin version.
-> 
-> ... of the "builtin" version?  I thought this series is introducing
-> a new builtin version?  Puzzled...
-> 
+On Wed, Sep 2, 2020 at 3:57 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Wed, Sep 2, 2020 at 2:18 AM Matheus Tavares
+> <matheus.bernardino@usp.br> wrote:
+> > One test in t1308 expects test-config to fail with exit code 128 due to
+> > a parsing error in the config machinery. But test-config might also exit
+> > with 128 for any other reason that leads it to call die(). Therefore the
+> > test can potentially succeed for the wrong reason. To avoid false
+> > positives, let's check test-config's output, in addition to the exit
+> > code, and make sure that the cause of the error is the one we expect in
+> > this test.
+> >
+> > Moreover, the test was using the auxiliary function check_config which
+> > optionally takes a string to compare the test-config stdout against.
+> > Because this string is optional, there is a risk that future callers may
+> > also check only the exit code and not the output. To avoid that, make
+> > the string parameter of this function mandatory.
+> >
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > ---
+> > diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+> > @@ -14,10 +14,7 @@ check_config () {
+> >                 expect_code=0
+> >         fi &&
+> >         op=$1 key=$2 && shift && shift &&
+> > -       if test $# != 0
+> > -       then
+> > -               printf "%s\n" "$@"
+> > -       fi >expect &&
+> > +       printf "%s\n" "$@" >expect &&
+>
+> This change in behavior is quite subtle. With the original code,
+> "expect" will be entirely empty if no argument is provided, whereas
+> with the revised code, "expect" will contain a single newline. This
+> could be improved by making the argument genuinely mandatory as stated
+> in the commit message. Perhaps something like this:
+>
+>     if test $# -eq 0
+>     then
+>         BUG "check_config 'value' argument missing"
+>     fi &&
+>     printf "%s\n" "$@" >expect &&
 
-`merge-index' is already a builtin, this step libifies it.  Its core
-feature is to call repeatedly a command (usually it's
-`git-merge-one-file'), but the new version will call a callback instead,
-so its behaviour is not hardcoded.  This patch only provides a callback
-starting a new command to preserve its behaviour.
+Thanks for catching this. I will add the check.
 
-Perhaps rewording the last sentence like this would be better?
+> > @@ -130,7 +127,8 @@ test_expect_success 'check line error when NULL string is queried' '
+> >  test_expect_success 'find integer if value is non parse-able' '
+> > -       check_config expect_code 128 get_int lamb.head
+> > +       test_expect_code 128 test-tool config get_int lamb.head 2>result &&
+> > +       test_i18ngrep "fatal: bad numeric config value '\'none\'' for '\'lamb.head\''" result
+> >  '
+>exit
+> The complex '\'quoting\'' magic leaves and re-enters the single-quote
+> context of the test body and makes it difficult to reason about. Since
+> this is a pattern argument to grep, a simpler alternative would be:
+>
+>     test_i18ngrep "fatal: bad numeric config value .none. for
+> .lamb.head." result
 
-  For now, only one launching a new process is defined, to preserve the
-behaviour of `merge-index'.
+Will do, thanks.
 
+> Aside from that, do I understand correctly that all other callers
+> which expect a non-zero exit code will find the error message on
+> stdout, but this case will find it on stderr?
+
+Right. This happens because, for a "value not found" error,
+test-config will exit with code 1 and print to stdout. This is the
+only case where it exits with a non-zero code and prints to stdout
+instead of stderr.
+
+With that said, I'm wondering now whether we should change the
+function's signature from:
+
+`check_config [expect_code <code>] <cmd> <key> <expected_value>`
+
+to:
+
+`check_config <cmd> <key> <expected_value>`
+`check_config expect_not_found <cmd> <key> <value>`
+
+The second form would then automatically expect exit code 1 and check
+stdout for the message 'Value not found for "<value>"'. With this we
+can avoid wrong uses of check_config to check an arbitrary error code
+without also checking stderr.
+
+> That makes one wonder
+> if, rather than dropping use of check_config() here, instead
+> check_config() should be enhanced to accept an additional option, such
+> as 'stderr' which causes it to check stderr rather than stdout
+> (similar to how 'expect_code' allows the caller to override the
+> expected exit code). But perhaps that would be overengineered if this
+> case is not expected to come up again as more callers are added in the
+> future?
+
+That's an interesting idea. However, because some callers may want to
+use test_i18ngrep instead of test_cmp, I think the required logic
+would become too complex.
