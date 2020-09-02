@@ -2,115 +2,197 @@ Return-Path: <SRS0=xf+W=CL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C8A9C433E2
-	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 11:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E73DC433E7
+	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 12:04:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68275206E7
-	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 11:56:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2760E2078B
+	for <git@archiver.kernel.org>; Wed,  2 Sep 2020 12:04:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="f5ckn1pV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBuykkMv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726268AbgIBL4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Sep 2020 07:56:00 -0400
-Received: from mout.gmx.net ([212.227.17.22]:45971 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726124AbgIBLzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Sep 2020 07:55:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1599047746;
-        bh=Jgarqf4llV0K/2YEsu1VMkES5S7X/QJKTn12dvdx+PI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=f5ckn1pVvUQGC9IY4QxfJ0CTAhePaRM+ZxTICWVatc74C0u0akalcruO+f2Z3kGrL
-         n30FhQ02ZhH6yzwYO7sfeF8ikR+Qt/ax/IPJEfkEp1n4Yn68EPvLxWzhxPFrp6jQ+u
-         hug57lwPSsRhK+fs0vVPsWCyl7f7hgEhKLEZ5mEA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.169.176] ([89.1.214.253]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MoO24-1kxXli0yW8-00ojp7; Wed, 02
- Sep 2020 13:55:46 +0200
-Date:   Wed, 2 Sep 2020 09:06:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] ci: stop linking built-ins to the dashed
- versions
-In-Reply-To: <xmqq5z95xu5f.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2009020902080.56@tvgsbejvaqbjf.bet>
-References: <pull.411.git.1597655273.gitgitgadget@gmail.com> <pull.411.v2.git.1598283480.gitgitgadget@gmail.com> <ea23ba5e269305b660a1722254e2a933c14e5b57.1598283480.git.gitgitgadget@gmail.com> <20200825134714.GC25052@szeder.dev> <xmqq364a3f6r.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2008260615280.56@tvgsbejvaqbjf.bet> <xmqq5z95xu5f.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726791AbgIBMEg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Sep 2020 08:04:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726285AbgIBMEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Sep 2020 08:04:30 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A590C061244
+        for <git@vger.kernel.org>; Wed,  2 Sep 2020 05:04:30 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id k13so2173362plk.13
+        for <git@vger.kernel.org>; Wed, 02 Sep 2020 05:04:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sQ/tsba5gMJ8ZYvLA3eSMpLof1RCKOdzuviKOyEBsio=;
+        b=rBuykkMvFReWfkSd6hAEYp//PnH/VW3fSPRgVIeTz/bxESzne8JHmkiK+EKQnA5pFS
+         0HRZGofOVIKsDkn3hnIQqrnJW7fIz0tqDBrVDOh61FoL3N3i+HNT/Y9bJWVEV7CtEhLA
+         nhfaqIOo7UU42IM3e6prl8usdWnaRkaGRlXZTzNCAvbq4ilicRxdoZheq6DAJJOZdh7l
+         VfaXEnDpsX2mXHtv064AmCfckbJ6WOVgkvFcM/lAOh8WdmPaXyKv1EUy+Dl/8G+ubfoo
+         fVu7sVsAwIXEGIzWqi8roUafVs6jLmQFvW3BqjnwxWxyPNYFTC0IZc0+sOAFQ+Qv24uy
+         PfMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sQ/tsba5gMJ8ZYvLA3eSMpLof1RCKOdzuviKOyEBsio=;
+        b=UJA2NfXAUY8vjToaC43ozX8+qdrsAs5TWPdEkg57Swmy8JqKDnnLJnoQJxRoXfL1Th
+         Ctm9OK7w1e8jvp1p/XZq08rA0Q5EzpwHoC/SjCuBWMMyIhHy/rpw6hL8FkfXfEKCHxLS
+         SZOetHhKxBE3U9E1kjZ3GsHoc4b4k0v97nw4PGF1MWivgDcD8kEDbXj3vB46Q5Rn+/iI
+         X56+g/SWq+eTcqgRzR4uQ5oVMyrkMTmkgKxRNI6wd174g9jBzAkAXraCVA+uTVKIoa53
+         LVS85VczV/Q7AJCpGaFz2d7Z+ECu+FWd9SoIi2rrVCuTTuiuZ7QpeaonnoENgZBckbvK
+         jekA==
+X-Gm-Message-State: AOAM531MLgI8HPJjqe4C0Tsh9/eAcWw3Kp9NFkOEwtVHaVYLJmDeY8jz
+        fvdNWRTxBWWqKvw3NQGrtb+bd6EzPRk7Jw==
+X-Google-Smtp-Source: ABdhPJxf5OBQXZ23COWQ+7zqWN+O+uibWXqJIU2exCt3onEW9EUQLAEWAFWae270NFRUzA9eW6y/Cw==
+X-Received: by 2002:a17:902:d68f:: with SMTP id v15mr1039233ply.251.1599048269386;
+        Wed, 02 Sep 2020 05:04:29 -0700 (PDT)
+Received: from konoha ([27.5.26.254])
+        by smtp.gmail.com with ESMTPSA id v12sm5406645pgk.81.2020.09.02.05.04.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2020 05:04:28 -0700 (PDT)
+Date:   Wed, 2 Sep 2020 17:34:22 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, liu.denton@gmail.com
+Subject: Re: [GSoC][PATCH] submodule: port submodule subcommand 'add' from
+ shell to C
+Message-ID: <20200902120422.GA28650@konoha>
+References: <20200824090359.403944-1-shouryashukla.oo@gmail.com>
+ <xmqq8se36gev.fsf@gitster.c.googlers.com>
+ <20200826091502.GA29471@konoha>
+ <ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com>
+ <20200831130448.GA119147@konoha>
+ <31e40c63bbac03d261ac6f46a0d2f6ae90a21038.camel@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ArQWUBXzlUoed25yu4ax4nXv2PYRjBDbNob5ILFTte8pXsJ40ad
- vXk4M4pyMnR4S//LtBfGlVz0c9Qwtv/Jl4Gf3pBGMRU/l6dia4cH5cQyvSgQBVhG08TVvK/
- SLjhFbOSQ0khsTdtExr++x0izvfuukj96GHEmxxL7ByNbQcG6PAdkIT8gylcd4W4RP6wUtJ
- LOmrrYE24VXOE7B2UnrDA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:G/cCoHZG1F0=:xQLU2V048X4sFLKU143bfl
- fL8pEIrn7oYtt3I5JR0+o3ALQvqkq7z6GMftHNgxpmDaUn89HDK6HcUcIfBWSpJcKyEaOpV+G
- /lpulxu+aNCJzRGgtHzVRlzJizt95ZtLcrAQvgJ9hwjctl33LK7EW/R7lS6jrHWXRp6See6yQ
- M+Fb0E0PEtZ9VpVKibDAO6BQf1+nxIOOvu2k8sm+pdIBAOp3qAjrCRcDnZ8+OCGt1jRDciGd0
- nAjNhAuiWJ6HgJfBbgevP3QV9Na/INyLf+q/2Kcjf2ZfHwqwVYQDBK6wxPAGM6TjFaDwRlCk3
- sTaZCsv1j+LufmM1i/sz36VZCASQwBXyoHmO1BfUMaNqzwZvFi6SKb9h6fONOF0sAZ+ZFBZUj
- sp8YdBUzrxwmn1UCz/XshmZe/ZTqte9Ks/fJJlOycddiwq+PAwBpAkK2XNsONajACVB9Yc28A
- 3faVQKSNVwiGtTPbwhZRr+2G3EwtwUmlrNsZn3FbO62egfNtDlAVf1MU7AQxdEYhbB6y/2lmv
- 7021KQhY/3VW1AsJGx1+ZVQnQSc8lnjQx1yNEpEh38UrUHqZvAMTpe9/P+B2RdyqrYlatMny9
- DjKn8PtkIeHi09ZZMVS+0WmlRm4WIX/+xLXcKX5O7k8t+355M7A9Ez64HxMGbR5cjbT2ESgww
- QEt7QTBpthIMHdzp3c8/toVVH+addqQIzHPOUkK9PfVxwROjetCWo0e6Gwu1dWuniS0n7IvK5
- R0/6o+4U6RUwCATtiMUyltOQEvvhK8WbS1xpcBzgD+p/zxsK21k6bkOtylxMLpASifMTkyHSi
- GVBRKVjfxghD6wtXgDHn57q571AfDfzgX9jsK9VcPtBmQVgYHDhcPyJ1qGzs2AOGSjKLTYKOj
- hm/pqD4XDNqLkRxhkxrjv4q5bZpg8fyM+48OtlN4KhXZ4eaZI2l4PTAHd5meAr8Hb6r/4h980
- A1WH+JRQhE3RhIqcM/l1lSPCYN7BCgqBBSwLO/fgWYt0HpadKwnF+2Lu1LiX3BFU9Uynk5fq9
- 01jkD424vpHHpof0z1sGcrBTexyilzWbf0th7CUNyfafAr9GYG1P65zklmE3wj9An7Wyoqxsn
- Z8LzVFrVHN2zDkpUGpwSi45Yn8435x5y2teT7NFk3OmJA5euqawxPIS7qFBd1BsJWDcbtX36I
- u3BC+f+5YcaEu55fNPTtjhJtMkTiRzyPXJl08wV4SZ5+UNQj7taSTzzzhvJGv/KGnYrdhb/AE
- YSQZ2FKVvP0DIbJouXUWV9j++jCgF+/PleEfMpQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31e40c63bbac03d261ac6f46a0d2f6ae90a21038.camel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 02/09 02:05, Kaartic Sivaraam wrote:
+> On Mon, 2020-08-31 at 18:34 +0530, Shourya Shukla wrote:
+> > On 31/08 01:28, Kaartic Sivaraam wrote:
+> > 
+> > This is what I have done finally:
+> > ---
+> > 	if (read_cache() < 0)
+> > 		die(_("index file corrupt"));
+> > 
+> > 	if (!force) {
+> > 		if (cache_file_exists(path, strlen(path), ignore_case) ||
+> > 		    cache_dir_exists(path, strlen(path)))
+> > 			die(_("'%s' already exists in the index"), path);
+> > 	} else {
+> > 		int cache_pos = cache_name_pos(path, strlen(path));
+> > 		struct cache_entry *ce = the_index.cache[cache_pos];
+> > 		if (cache_pos >= 0 && !S_ISGITLINK(ce->ce_mode))
+> > 			die(_("'%s' already exists in the index and is not a "
+> > 			      "submodule"), path);
+> > 	}
+> > ---
+> > 
+> > I did not put the 'cache_pos >= 0' at the start since I thought that it
+> > will unnecessarily increase an indentation level. Since we are using
+> > 'cache_{file,dir}_exists' in the first check and 'cache_name_pos()' in
+> > the second, the placement of check at another indentation level would be
+> > unnecessary. What do you think about this?
+> > 
+> 
+> Interestingly. 'cache_dir_exists' seems to work as expected only when
+> the global ignore_case whose value seems to depend on core.ignorecase.
+> So, we can't just rely on 'cache_dir_exists to identify a directory
+> that has tracked contents. Apparently, the 'directory_exists_in_index'
+> in 'dir.c' seems to have the code that we want here (which is also the
+> only user of 'index_dir_exists'; the function for which
+> 'cache_dir_exists' is a convenience wrapper.
 
-On Wed, 26 Aug 2020, Junio C Hamano wrote:
+I think both 'cache_{dir,file}_exists()' depend on 'core.ignorecase'
+though I am not able to confirm this for 'cache_dir_exists()'. Where
+exactly does this happen for the function? The function you mention
+seems perfect to me, though, we will also have to make the enum
+'exist_status' visible. Will that be fine? The final output will be:
+---
+	if (!force) {
+		if (directory_exists_in_index(&the_index, path, strlen(path)))
+			die(_("'%s' already exists in the index"), path);
+	} else {
+		int cache_pos = cache_name_pos(path, strlen(path));
+		struct cache_entry *ce = the_index.cache[cache_pos];
+		if (cache_pos >= 0 && !S_ISGITLINK(ce->ce_mode))
+			die(_("'%s' already exists in the index and is not a "
+			      "submodule"), path);
+	}
+---
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Actually, `SKIP_DASHED_BUILT_INS` does not _only_ have an impact on `m=
-ake
-> > install`:
-> > ...
-> > See how `git-add.exe` is linked in the first, but not in the second ru=
-n?
->
-> OK, that is one more reason why we do want to have 3/3 applied not
-> for all tasks in the CI , but for subset of tasks that includes the
-> Windows task.  If we had multiple Windows tasks, it may even be
-> better to have only to some tasks, and allow other tasks build
-> git-add.exe, so that both can be tested for the primary intended
-> platform.
 
-If you want to skip this patch, that's fine with me.
+And obviously an extra commit changing the visibility of the function
+and the enum.
+ 
+> > > This is more close to what the shell version did but misses one case
+> > > which might or might not be covered by the test suite[1]. The case when
+> > > path is a directory that has tracked contents. In the shell version we
+> > > would get:
+> > > 
+> > >    $ git submodule add ../git-crypt/ builtin
+> > >    'builtin' already exists in the index
+> > >    $ git submodule add --force ../git-crypt/ builtin
+> > >    'builtin' already exists in the index and is not a submodule
+> > > 
+> > >    In the C version with the above snippet we get:
+> > > 
+> > >    $ git submodule add --force ../git-crypt/ builtin
+> > >    fatal: 'builtin' does not have a commit checked out
+> > >    $ git submodule add ../git-crypt/ builtin
+> > >    fatal: 'builtin' does not have a commit checked out
+> > > 
+> > >    That's not appropriate and should be fixed. I believe we could do
+> > >    something with `cache_dir_exists` to fix this.
+> > > 
+> > > 
+> > >    Footnote
+> > >    ===
+> > > 
+> > >    [1]: If it's not covered already, it might be a good idea to add a test
+> > >    for the above case.
+> > 
+> > Like Junio said, we do not care if it is a file or a directory of any
+> > sorts, we will give the error if it already exists. Therefore, even if
+> > it is an untracked or a tracked one, it should not matter to us. Hence
+> > testing for it may not be necessary is what I feel. Why should we test
+> > it?
+> 
+> I'm guessing you misunderstood. A few things:
+> 
+> - We only care about tracked contents for the case in hand.
+> 
+> - Identifying whether a given path corresponds to a directory
+>   which has tracked contents is tricky. Neither 'cache_name_pos'
+>   nor 'cache_file_exists' handle this. 'cache_dir_exists' is also
+>   not very useful as mentioned above.
+> 
+> So, we do have to take care when handling that case as Junio pointed
+> out.
 
-But I would like to clarify what I perceive as a misunderstanding: this
-patch is not about testing whether it would install the necessary files
-or not.
+I still do not understand this case. Let's say this was our
+superproject:
 
-What this patch does is simply to complete the mission of e4597aae6590
-(run test suite without dashed git-commands in PATH, 2009-12-02): to make
-sure that our very own scripts do not use dashed invocations of built-in
-commands.
+.gitmodules .git/ a.txt dir1/
 
-In that respect, I find it to make more sense to either do it, or not do
-it (even if I don't quite understand why we wouldn't do it), instead of
-doing it only for one platform.
+And we did:
+    $ git submodule add <url> dir1/
 
-Ciao,
-Dscho
+Now, at this point, how does it matter if 'dir1/' has tracked content or
+not right? A directory exists with that name and now we do not add the
+SM to that path.
+
