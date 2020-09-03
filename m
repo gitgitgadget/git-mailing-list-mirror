@@ -2,111 +2,144 @@ Return-Path: <SRS0=Hc2o=CM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38BF2C43461
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 21:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60385C433E2
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 21:31:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B912206CA
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 21:22:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 355E4206D4
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 21:31:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fe5sP4n1"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ut1vZTEj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728015AbgICVWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Sep 2020 17:22:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43374 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726323AbgICVWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Sep 2020 17:22:32 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D08C061244
-        for <git@vger.kernel.org>; Thu,  3 Sep 2020 14:22:31 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id z1so4726946wrt.3
-        for <git@vger.kernel.org>; Thu, 03 Sep 2020 14:22:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=82bMWLnROgQ1nmD5L7kPPlWh3QwNfrBc8nuDeXBGFDA=;
-        b=fe5sP4n1ZT1Z5E4v58zHGvFlgPB4XD/RfhBbjUqoub/agl5f2yOfU/RY61YpiRde4j
-         lVsLpQ8DfU7J8almRTs+dLXhQsdDWtaKhM28a997LpMW5wwfbdruS9RFpkdGo9j8WzJt
-         +SXnrBKBvc6ztjjdMbgZgoKc/0EIDV6lSDNQHQQhP27m5MX4uK//GNucve7hcVb2uw7h
-         nqb+HMGfvYuPWZ8CJuWZUfg/AZdZSiM1eipF0Ez9lmUKa5S2vl2owxJ6rm7viOSTS1fm
-         PhtHyus8H+08s+MDgl3YWiScxtTV1ys/lHf4Oq8MYv2lc2aX/1on7xEpZ0PsTQm8dVos
-         jUUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=82bMWLnROgQ1nmD5L7kPPlWh3QwNfrBc8nuDeXBGFDA=;
-        b=sZfcNN3jiGClkwFufc9uh1Rk+GUQyT8jCsyDOeB+FOUC+HUfrv1D+6M9NM5kKHgDFj
-         NMTBAJ5lryLkYzw1fxyxB13B/wANWS2jbuHbtqy4NIXKearopdlDsEPdIsOVbwIzBVx0
-         uZy1YSva37TQ7b/DELKUwyZv1VrTZ4+pyAkIxo9coKDWl+tQ2zALOoYZ+fgYRlCwshbY
-         sqDNbrBJME8LZ51fp1eWc7eOA5riHlGNMh9NbGFeiokNpnxyYPSN6KGMejBfDLbRSJKV
-         ldcNQ5dDVLHrcYJ0aACU6jNjzt1C56T4WkuyzR3MsDs3Bx0tLSaAZNBSAlP1f/SjG0/T
-         xrCw==
-X-Gm-Message-State: AOAM531wPhZpQLkdXtEbklIhoRM68McxLO4FGskdKaxdELNcUyg6JYon
-        535+k27YOC8htdz1DDunvda6Uaf31F8VNAcn1g+ms4pc
-X-Google-Smtp-Source: ABdhPJzx6umx7M72nYxvy2RU/pTql8PfgjRj9Yv0quwkl/82iidQs1kfvmwQZyfncQ1Y9UUm01XYmZH46+XitJuLFQs=
-X-Received: by 2002:a5d:4844:: with SMTP id n4mr551394wrs.141.1599168149144;
- Thu, 03 Sep 2020 14:22:29 -0700 (PDT)
+        id S1728309AbgICVby (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Sep 2020 17:31:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58729 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726679AbgICVbw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Sep 2020 17:31:52 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E09F75796;
+        Thu,  3 Sep 2020 17:31:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XqXL7uTsPU+FGRiRX2LGDT1j8x0=; b=Ut1vZT
+        EjfOE0ulNM+33xMdCtgs09PeTMtOXi4T/0aEtaXxnmVytVsDEP7dJlK+Pw+oigrO
+        VmK+rW4TJe3Rl7cwVFkCivcTCrnYfg5ErgD44wKHFqFzmk264l6UGmso+zUZAcm+
+        i8YDRepEEt8TXuYCyy/4D2R5zzMVFFZgod04k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tSKYEdXdMoNBntJ9RyJhswMaqWlLCDLi
+        ZcxkW2ON73Yl0AyODQr9wuZuqUYxSVt/ybV1LYvLhKG7EiJB0bovGmNKTZc/rUUy
+        tXBFbnuNOwd9mwd9JTpv7mAmPvWWxkfLeBxCJlZzirkQGsrErZ5RB3lmwqpC6QYx
+        cjrvF7b6WQw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04BA675795;
+        Thu,  3 Sep 2020 17:31:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8561775794;
+        Thu,  3 Sep 2020 17:31:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Makefile: add support for generating JSON compilation database
+References: <pull.714.git.1598815707540.gitgitgadget@gmail.com>
+        <pull.714.v2.git.1599001759548.gitgitgadget@gmail.com>
+        <xmqq1rjkccw8.fsf@gitster.c.googlers.com>
+        <41D647C5-BC9E-431F-BEF9-C0040F4E0C94@gmail.com>
+Date:   Thu, 03 Sep 2020 14:31:48 -0700
+In-Reply-To: <41D647C5-BC9E-431F-BEF9-C0040F4E0C94@gmail.com> (Philippe
+        Blain's message of "Thu, 3 Sep 2020 17:17:23 -0400")
+Message-ID: <xmqqpn728s3f.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAG0OSgeb0jcUmkjp+yzCPYkxQWCZFy3gYM9o7TfBGvtf4M08NQ@mail.gmail.com>
- <xmqqa6y6ah8h.fsf@gitster.c.googlers.com> <CAG0OSgcUi6sKJQmUEd4-Lu5qAiQqKk7X7aSRvRtcBWkcKj4f1g@mail.gmail.com>
- <xmqqtuwe8t5s.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtuwe8t5s.fsf@gitster.c.googlers.com>
-From:   Victor Toni <victor.toni@gmail.com>
-Date:   Thu, 3 Sep 2020 23:21:59 +0200
-Message-ID: <CAG0OSgdT+ZCT0dN29A89XhWi65SFepwyGA0SoS22TYGrvNnWqw@mail.gmail.com>
-Subject: Re: Aborting git rebase --edit-todo
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: E0331A98-EE2C-11EA-9CD2-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
+
+> This addition to the .gitignore is for the individual JSON files (one per source file), 
+> that are placed in the $(compdb_dir). 
+> I think naming "rebase.o.json" the JSON file that describes how to compile "rebase.c"
+> into "rebase.o" makes sense. I don't know what is the convention for other projects.
+
+I agree rebase.o.$somesuffix does make sense, but I do not know
+'json' is a great value for $somesuffix.  I wouldn't be surprised if
+'cdb' or some other silly abbreviation for "compilation database" is
+how other people use this feature.
+
+Those watching from the sidelines.  Does anybody know if there is an
+established convention used by other projects?  If we hear nothing
+by early next week, let's declare 'json' is good enough and move on.
+
+> The name `compile_commands.json` for the database itself is standard. 
+> The name of the directory where the '*.o.json' files are placed is a name
+> I chose, and I don't feel strongly about it. I thought it made sense to name
+> it like that, then its purpose is clear.  We could make it a hidden directory 
+> if we don't want to add a new folder to the root of the repo when using this feature.
+
+I think both of these are sensible.  Again if we hear nothing about
+common practice, let's move on with these constants as-is.
+
+>>> +ifdef GENERATE_COMPILATION_DATABASE
+>>> +compdb_check = $(shell $(CC) $(ALL_CFLAGS) \
+>>> +	-c -MJ /dev/null \
+>>> +	-x c /dev/null -o /dev/null 2>&1; \
+>>> +	echo $$?)
+>>> +ifeq ($(compdb_check),0)
+>>> +override GENERATE_COMPILATION_DATABASE = yes
+>> 
+>> This feels strange.  If the end user said to GENERATE and we find we
+>> are capable, we still override to 'yes'?  What if the end user set
+>> 'no' to the GENERATE_COMPILATION_DATABASE macro?  Shouldn't we be
+>> honoring that wish?
 >
-> Victor Toni <victor.toni@gmail.com> writes:
+> We should. I'll tweak (and simplify) that for v3.
+
+I think
+
+ - GENERATE_COMPILATION_DATABASE is set to 'no': don't even probe
+
+ - GENERATE_COMPILATION_DATABASE is set to 'yes': probe and turn it
+   to 'no' if unavailable.
+
+ - GENERATE_COMPILATION_DATABASE is set to anything else: either
+   error out, or turn it into 'no' (I have no preference between
+   them).
+
+would cover all the cases.
+
+>>> +compdb_file = $(compdb_dir)$(subst .-,,$(subst /,-,$(dir $@)))$(notdir $@).json
+>> 
+>> This detail does not matter as long as the end result ensures unique
+>> output for all source files, but I am having trouble guessing what
+>> the outermost subst, which removes ".-" sequence, is trying to make
+>> prettier.  Care to explain?
 >
-> >> I think the implementor chose the first interpretation.  The "drop"
-> >> insn is a relatively recent invention, and back when it was missing
-> >> from the vocabulary, I do not think it was possible to say " discard
-> >> all the rest" without emptying the todo list, so that design is
-> >> understandable.
-> >>
-> >> Now we have the "drop" verb, the latter interpretation becomes
-> >> possible without making it impossible for the user to express the
-> >> former.  It might be a good idea to
-> >>
-> >>  (1) save away the original before allowing --edit-todo to edit,
-> >>
-> >>  (2) open the editor, and
-> >>
-> >>  (3) when getting an empty buffer back, go back to step (2) using
-> >>      the back-up made in step (1).
-> >>
-> >> Either way, the todo list editor buffer can have additional comment
-> >> instructing what happens when the buffer is emptied.
-> >>
-> > Personally I would like to see your approach (1,2,3) implemented
-> > because it is not destructive. If the user wants to achieve something
-> > different he can retry.
->
-> Obviously I agree that the approach would be nicer than the status
-> quo.  It would not be as trivial as a microproject, but would be a
-> good bite-sized starter-task for those aspiring developers who want
-> to dip their toes in the water to start hacking on the codebase ;-)
->
-Nice try ;) Speaking of toes ... I'm currently involved in another
-project from tip to toe.
-I would like to come back to your offer sometime next year when I've
-completed the other one.
-Especially since I'd have to polish up my buried C skills... C didn't
-get GC lately, did it? ;)
+> Yes, it is because the `$(dir $@)` Makefile function will return `./` for source files 
+> at the base of the repo, so the JSON files get named eg. `.-rebase.o.json` and then they are 
+> hidden. So it's just to make them non-hidden, so as not to confuse someone that would
+> count the number of source files and compare with the number of (non-hidden)
+>  '*.o.json' files in $(comdb_dir) and get a different number.
+
+Hmph.  Would $(subst /,-,$@) instead of "only substitute leading
+directory part, and concatenate the basename part unmolested" work
+better then?  After all, by definition the basename part would not
+have a slash in it, so substituting all '/' to '-' in the whole
+pathname should do the same thing and we won't have to worry about
+the spurious './', no?
+
