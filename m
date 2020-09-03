@@ -8,119 +8,130 @@ X-Spam-Status: No, score=-14.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA471C433E2
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 10:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B136C433E2
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 10:19:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADC5E2086A
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 10:15:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FE3D20767
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 10:19:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TLXgWM8J"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KVNE6q/5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbgICKP1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Sep 2020 06:15:27 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58661 "EHLO mout.gmx.net"
+        id S1728057AbgICKTv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Sep 2020 06:19:51 -0400
+Received: from mout.gmx.net ([212.227.15.18]:40803 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726162AbgICKPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Sep 2020 06:15:24 -0400
+        id S1726109AbgICKTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Sep 2020 06:19:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1599128122;
-        bh=yzCv5tiu4LzU7hoFD/ZfJ7w2tk9Oe9XlEjLxZy+eIJg=;
+        s=badeba3b8450; t=1599128384;
+        bh=hTFR658Z7wU1gdKxdlggpqmFQlRm7OS+AjBN5HlnHrE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TLXgWM8JzHIQLJlITbWcmVLdvU9c5/y/KYe0ZXXTVhCswdEdSPuUoOWnRR/mJy8HL
-         VWK9Zz6XOTl9Xl0ph7Zy9imqKhAoTpYGaOI8/+wLRMlQkkSBfNS/rT6p65KrLhUSNZ
-         sg/BJAZMrvGFt+TxjUlXwnAzybWankqmWc1FtOpI=
+        b=KVNE6q/54bcaWF9/3bqXuvH8eUC+tmh81g8jUUcwDggXJDC7S/UvHrPGTmD+OtLV7
+         ylR//NCuUTigcoMKKNlRKKN8V2EFO3exroegIRKvhHrpqWmQFbuJs4fQsHPrkkE8CO
+         SyTm+aMbGR7AOoJBEmdw2ePsMi7aAj6zYSpRVGsM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.169.176] ([213.196.212.246]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHoRA-1kJsfU1Yyk-00EwEL; Thu, 03
- Sep 2020 12:15:22 +0200
-Date:   Thu, 3 Sep 2020 03:50:58 +0200 (CEST)
+Received: from [172.18.169.176] ([213.196.212.246]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmDEg-1kvfoe1WTY-00i9ko; Thu, 03
+ Sep 2020 12:19:44 +0200
+Date:   Thu, 3 Sep 2020 03:55:20 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
-        Orgad Shaneh <orgads@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
 Subject: Re: [PATCH] vcbuild: fix batch file name in README
-In-Reply-To: <pull.721.git.1599077900986.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2009030349000.56@tvgsbejvaqbjf.bet>
-References: <pull.721.git.1599077900986.gitgitgadget@gmail.com>
+In-Reply-To: <20200903000236.GC4035286@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2009030353500.56@tvgsbejvaqbjf.bet>
+References: <pull.721.git.1599077900986.gitgitgadget@gmail.com> <20200903000236.GC4035286@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bL8oTHqKBnjNlve77jeHtSuue3vDCjqCfLusEVBHOLztvyzypU6
- ddgREwwfTu8rCtMXoUSNxEBjE6T9TTdMDRYLMka5R0uZGtt9TbI2VPzJznHj8S66D5HwJKT
- Ai01+1xTZABLlFcltpDZuvndgYkeUKa/Da5O1r246cUhUxSSKuITLjV+QH/i0uMa23yereM
- 3G1CN63Rm8c6WkBytrg2A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XWV7ASPMBv8=:AnfzeNzqqB5B9GVJ2+HtQO
- /vTGu+9LER/fKBkFJJ05Ioo5+H0u1YiwMFGaVziR2j/XMNrg39STZJX0yGukfhH2MeVrSDhIf
- LeO8/KOxOSZ1o7Fn7Tvq140WPmB748EuIiXyuOtnKSTLGYxgdkm9YfpHbgqcr4/HTYUtM3Tq9
- HHZvFEb4vQkyx+zW2RtBHUwK5/IRn1EEPP4VKPJJpK9r2inFZmTAAc+iNGyTsNkzSUHb2JygH
- OXl7P4O7WFKuawppxo5Nbe5IDgY11rMAs5yUqUOlIl1aiHh/chngipiTdzMQsbZD1+BObupAv
- OCYb/kr8Sf0Bn9jXALzW8gcbkwx35HozO1q93IHB3U2GIbo22w/xTWALYlaTS8+xxm5Ywn/RC
- HsfQyehJ5Fkc/CFaDdQ8RitfaQbdPWNgvCTEJ0VZrPDf9is51Np3DVYezJVk8dDsrZXOyn4CR
- Uo7gwEXtEfXaNe7jUdV3TxZgyGlNWtL7Hu0jj3fsdejyck57a5Nm7ZWn9Tm2nEC8+ZR51+lgr
- 5VtBbDbt0/Tgoqlq+MSpvYiH7RJZgPFkJ8L4Iq2fZL7hnrspE3Je5cybtp2SIFDMqpxxCUUzH
- lLxkRcWdAvqWeHVIbE2wh/r+isYSpEfqRCcbJjhgHgkiZmDMkKPto+bijgI2W9VdklJm6JB4+
- KxZM/4LHyb9boSPXaGMAEwJgmHHVw7n7KW/oy81waWIVg2Xn8b0uNjQ2lmiGa8bcd9nyPJRni
- j57ypdCR8nkjTWYkgiLDIw8XxZRv0wnd16cJ2qE8lmUuTfUv1FHrz15LZMA+myFEu16PNpPLF
- SMXI76M64dzIoyyFvMcs1aMurOLrM7W8B7S2qyALBgnafVFTjJObv542tZmGfzWobJZC7IPlE
- 5Jy2Qha43kIdL9CGvRpVSDJV6oOaqjJochjOJyBaoKu0tRB2SoBr1seMR97SlWxBB7Y5rnL1a
- apap0zZkR/ciJtRSOef4hH6s80dgOE2F4gNE7yEUu1HBL0rqqWbRhc/gDjpJ1jLwRpHKpjeYw
- FLuLAoqiCYH2Ng5MLDUlYez021vc7iAGBMfPr+UpUGn8n5eX09gsY+mEobta7xuWxNPTt9wqF
- 6uXlfE9Bzgdj7I2p9o5FPp++DOhiBUws2xv5tuXZ09ydN7mkGgwrd43KPe+brL8E/IcNNaEX6
- 49EMADaPI7W2DriQM5ehuM9AXMySVrXN+b/0Hsar5mwJt5+nb8KRjIxHfWKOKnyrAeCWee8eY
- YGkU2MIQCR2J4crcScil8V4BLlDAlWC8CMyBkLQ==
+X-Provags-ID: V03:K1:wIYz6E0Kz5I4h6WKC7mCtzQoKYrVXTW4IXnH9hf/MFsCQQYi1kV
+ BSGccK4LxTGWf9AR3smKquKunWlPquWNUH6YQqs1GxFtznM8zPh1/mCqP8giHDDDswp3Q8T
+ wO3wGB8gDC7NsI99wO5hnKIZLNOQjg3M+xY9jbq/1KQ9IXnoSYG81epy4qm0z007OQIvu80
+ vcne8Hb/bXDOi+s2jJ0Jw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jLmq9hyAaN4=:qE4/1Yof1FRPGGzsdSG3ul
+ 5ltmINC9tOO1sgymh7eZu72iIMEowrEQmRf94ScxWbgpsWWc9HyM+d+RYb4+nNIK+R/09eLz3
+ QLghlH3PjRA6XZg6MHJSgsPI8PW0yumn9DFGEg/rOuDJqd6a0xQG9KvkFDtqn8G2aPdPexLGY
+ rmgSPKFEWxWGy0CCjaKuUR32G9Ses679cw63iwi004rUnj8tfcPo5mCuMWgsBY71/l7djcNja
+ LeL2gVfmFjeu0ABZII3QFUgBLhNMZffseKsI4/gVpJAPbH+ma2EEb0/6B3upIVzw4sILvMwKx
+ cyQchG3iDIWTIDI/Rkfl3itQsEZyxCgW+aARHTGGYKqvjiYbMC2ClubGMmnkbs7z6/uvdiZ9/
+ zLJLjMOUJroG7cF7TvpfZzjbAqpYtvjT6C+uAh6D7ePR0zpQChF3ruUfPPaFbbgwaK1Oa3AyT
+ f5WUlSFyGocMVihzJ/D4Mhvie8CF1m02fUxCdso8OL6kTilDR66SO1JgWVBIh3AQxz+ClvGk8
+ Qpqf8UuXe87XPMXh4aZhf3IMXjtlLr2hCTeP1/JpYv9H3TzcAlZSAvg97JOC/iGCDeltMnqS4
+ tTQiEUxm4qRA3nxIItkPUzPy9jKyIFhcalzKMDwvY14Dbauzbff5UA47Cj0GbjKxFPYBKm4e+
+ 9iH0LQovhW/ocrhsjTeIAD/dB8nRfEEvFv/dkrVoE4b82yrMonZeowqATNwwzAQ7oOeM32Hdx
+ 4wjZvS4Q/ja4RbWeNHBmONnR13Ck8YxbEMTvWBA+3OudLO4yMGLYvCno8gWOwMcmq+Yown42E
+ IRtr0OL0vYZeho160sPvAI0ax2QnoyTCkfaEEgq2bZPXkIUY2ezklVnQW1/RaIKo30gG8zkVT
+ zH9K53H5Jn2rQgflvnXNhcO3RC8KmSSquQ1oR426upW25scr7b0Q+9DWk1OTGHsZogylKY5Un
+ IknorLZ5tC618E8s4b7E3aJu0zcAO92yF4n3Ismp9KYvQsVuhyv/xbD3HOhtSCau9BeTBknKk
+ WeXFWN/7YqerNQ4SWD2ENkIwcR/nvVbLUfb2w3YTuDFXxzRyhPorxhnRZG7YDQ6kyt08CQAHO
+ nFdE6X/3C1l/NLttizOp81TUgRmXTol2IPRsUC9zfDLHJuOjBOi3iJmgMQ29O+XuBNNd8x52j
+ rhhTeQ5reVV/YAKHjoNo3fMBV1kv/F4lRlaEWasYZj6SqgsJFh7kM8ZsO3Xpgq+h1au7fOtWK
+ 3/qwVj5nyCuH5vhiqXhcBI/sNj40LG3H/dgzrSA==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Orgad,
+Hi Jonathan,
 
-On Wed, 2 Sep 2020, Orgad Shaneh via GitGitGadget wrote:
+On Wed, 2 Sep 2020, Jonathan Nieder wrote:
 
-> From: Orgad Shaneh <orgads@gmail.com>
+> (cc-ing Jeff Hostetler, vcbuild expert)
+> Orgad Shaneh wrote:
 >
-> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-> ---
->     vcbuild: Fix batch file name in README
+> > Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+> > ---
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-721%=
+2Forgads%2Fvcbuild-readme-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-721/org=
+ads/vcbuild-readme-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/721
+> >
+> >  compat/vcbuild/README | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 >
->     Signed-off-by: Orgad Shaneh orgads@gmail.com [orgads@gmail.com]
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-721%2F=
-orgads%2Fvcbuild-readme-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-721/orgad=
-s/vcbuild-readme-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/721
->
->  compat/vcbuild/README | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-> index 42292e7c09..51fb083dbb 100644
-> --- a/compat/vcbuild/README
-> +++ b/compat/vcbuild/README
-> @@ -26,8 +26,8 @@ The Steps to Build Git with VS2015 or VS2017 from the =
-command line.
->     Use ONE of the following forms which should match how you want to
->     compile git.exe.
->
-> -   $ ./compat/vcbuild/vcpkg_copy_packages.bat debug
-> -   $ ./compat/vcbuild/vcpkg_copy_packages.bat release
-> +   $ ./compat/vcbuild/vcpkg_copy_dlls.bat debug
-> +   $ ./compat/vcbuild/vcpkg_copy_dlls.bat release
+> Makes sense.  This discrepancy is already present in the initial
+> contribution dce7d295514 (msvc: support building Git using MS Visual
+> C++, 2019-06-25), so it's probably from documentation going out of
+> date between review rounds.
 
-Good catch! Somewhere in my refactoring spree, I must have overlooked this
-reference.
+Not in _public_ review rounds, as even the first version I sent did not
+have that `.bat` file anymore:
+https://github.com/gitgitgadget/git/tree/pr-149/dscho/msvc-v1/compat/vcbui=
+ld
 
-ACK & Thanks,
+FWIW the old name was a hold-over from the time when we tried to use NuGet
+packages (and I think this is the first time I mentioned this on this here
+mailing list), which we were able to abandon in favor of using `vcpkg`.
+
+Ciao,
 Dscho
 
 >
->  3. Build git using MSVC from an SDK bash window using one of the
->     following commands:
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 >
-> base-commit: e19713638985533ce461db072b49112da5bd2042
-> --
-> gitgitgadget
+> > diff --git a/compat/vcbuild/README b/compat/vcbuild/README
+> > index 42292e7c09..51fb083dbb 100644
+> > --- a/compat/vcbuild/README
+> > +++ b/compat/vcbuild/README
+> > @@ -26,8 +26,8 @@ The Steps to Build Git with VS2015 or VS2017 from th=
+e command line.
+> >     Use ONE of the following forms which should match how you want to
+> >     compile git.exe.
+> >
+> > -   $ ./compat/vcbuild/vcpkg_copy_packages.bat debug
+> > -   $ ./compat/vcbuild/vcpkg_copy_packages.bat release
+> > +   $ ./compat/vcbuild/vcpkg_copy_dlls.bat debug
+> > +   $ ./compat/vcbuild/vcpkg_copy_dlls.bat release
+> >
+> >  3. Build git using MSVC from an SDK bash window using one of the
+> >     following commands:
+> >
+> > base-commit: e19713638985533ce461db072b49112da5bd2042
+> > --
+> > gitgitgadget
 >
