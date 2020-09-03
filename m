@@ -2,362 +2,189 @@ Return-Path: <SRS0=Hc2o=CM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1CDC433E7
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 08:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E429C433E2
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 09:25:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEE21206EB
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 08:46:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B9DD2071B
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 09:25:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mpb0c3k9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oCW79lPZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728089AbgICIq2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Sep 2020 04:46:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39642 "EHLO
+        id S1726726AbgICJZf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Sep 2020 05:25:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726493AbgICIq1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Sep 2020 04:46:27 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 567D4C061244
-        for <git@vger.kernel.org>; Thu,  3 Sep 2020 01:46:27 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id o68so1768148pfg.2
-        for <git@vger.kernel.org>; Thu, 03 Sep 2020 01:46:27 -0700 (PDT)
+        with ESMTP id S1726025AbgICJZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Sep 2020 05:25:33 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 318C7C061244
+        for <git@vger.kernel.org>; Thu,  3 Sep 2020 02:25:31 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id c2so2733710ljj.12
+        for <git@vger.kernel.org>; Thu, 03 Sep 2020 02:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=EIkEBP7wK2RYxF8Qdlxzsc35ljo7B/r/24+XYdVMBxk=;
-        b=Mpb0c3k9PKG60AuZ6r6Nxxyc8JP37m7WZJ/0Rjq8X/QMKYR7jN1cGimepdqWJDoE2D
-         HPOnuT+TgWG8m4jxPoU2FSqibGA87iG47fbkfuSrqJTNWyZ82WlgiBEgOJfs64lg8R4q
-         TAFYUmFAxbxs+E8EZ72peXS3Cn8IHdHOaGvd4CpI9Bhh2kMBb7A9mIDZpsmwHXUpN9zJ
-         fNNFTrgHqva6AE21bpmkxb7atBYMJ7UAnCSxQj9rgzIrUFHUv9cGB9ibFsab+J+YZ2hX
-         ZZB3SvYSS+afed6velV4JXuEQFCuGHgImPyvMtXpsipVrh5mPQCBhNDFbqEwU7832seP
-         0QCw==
+        bh=fagUWaUJszYLKHmOJ1eNwdsDLk5E54tG52azLjQE0J4=;
+        b=oCW79lPZZ7+yUYnnu2PypuTY/ZNME/FddHxF+oHvY+pCtuDTfjMOV6jDnqnbc9qA5Z
+         gL7xqt/67j+/DVhY07ZzsyuEbux96Nqeh+jH2cCVzenoyTf57JjvNC5UDC/r5t+mEizm
+         BVFkunUELKjZG+TxDTb5vfKOEtz/xsFx0kz1xd+jbwpnn7u52Int1ycMQirQIJOpTXLG
+         Ddy/ppIH265ua7h20az5ge/EVgvedtusVd5dJRGe7r+iRkpuW0kW1x8OpNa7wrU3nw6g
+         gdsZ46PkarbCg2ay1zcg/q/CLNG1w+lQLfnKPHjJWa/f8tu8QGx1ZpupbG8rPqweXzFK
+         jP4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=EIkEBP7wK2RYxF8Qdlxzsc35ljo7B/r/24+XYdVMBxk=;
-        b=SREjGQH/rNbR76QGbvhLXXtj1qBY8QEwLmcPiizeaGacEme7Y6uCcqNzNUDYsCjacl
-         WQ3srps0vME/XCXpagTKb6wXBY/zKopsYyHYeq6Kbgjsln6omz+rxXHQvUyr4yjS7SBW
-         AB5vYwJ5w06KRc4B8adcgNwdY+5+j9MXwfedhdt8lIZ/i3eHX3sqc7l1mLe8XjBtOLp5
-         OrsW62w+aVmdH5W6hP0XoOUzStd7xCQ3EKGWjxTpQ0NEXgnRrzp0fmxV9eOzlENpV70d
-         m2Z9eavSyGaqFOQIRcmiXO3yX1SA7h86B1cNDvfnRL0FNhRomSy393AJQy9MjDsZ0QBb
-         6bBg==
-X-Gm-Message-State: AOAM532S4sFxDtFUULa3qldNHMIXZsuwhdtYSBLpSHaPoMUPuorVuNju
-        PoBmGa3GUJCkZJthj2c06AE=
-X-Google-Smtp-Source: ABdhPJxDC+4O3XgrFGQjXgrEN4zW//7tF1SwmP09FFzv6p0Gnxb6XOUdGBM+6Fev3+l8aUeHgiFAGQ==
-X-Received: by 2002:aa7:8e8f:: with SMTP id a15mr2811052pfr.135.1599122786638;
-        Thu, 03 Sep 2020 01:46:26 -0700 (PDT)
-Received: from lwitch-pc ([49.207.133.82])
-        by smtp.gmail.com with ESMTPSA id k6sm2209764pfh.92.2020.09.03.01.46.23
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=fagUWaUJszYLKHmOJ1eNwdsDLk5E54tG52azLjQE0J4=;
+        b=t5Nze4w2aKiwGhxxD9ZVTL4LDkU+uSOU3mj87pTzBVUPgvOZYm45nFZ4AqZoPCp7se
+         JEwxnZ/8yPT2LxQzZN65bS0kH4kXrB4xHv9heBQauDeN6y5YjU8l7lS6jUAGSc2Xn4st
+         IUejAFykFnGE21K7GGBuIfyKtX84GhA6WR2fHI5SHiIy+UgKCBln52zSNysR+eou9qrw
+         6VI6l5uzOdxoCVUvcIWOyRA4atUiqYXIgdl+k6tCvmNZsOlR9o0TmgqD4W7//gOk+oph
+         L/AilUzsiMWyaywxOLla6knwrITIH6Ls8Y60apJRoNDC9Q9gPz+gohz8zarftHcwIMN2
+         ZNBg==
+X-Gm-Message-State: AOAM530w8nQ+x1kgdBDrwLcav+J9+DG6uaaQIrD8WTG57aLJMyClJk4O
+        KDnscjwH0AUy8Msm5CXEzhc=
+X-Google-Smtp-Source: ABdhPJy3kt3L0TrjpFHBxSvKD/+L/457+u+0Sp2Lw9qW11MZUyMQQ3dC0jdfEiWWC3Ofm2KSw0TOgQ==
+X-Received: by 2002:a2e:9dca:: with SMTP id x10mr763637ljj.396.1599125129359;
+        Thu, 03 Sep 2020 02:25:29 -0700 (PDT)
+Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id e15sm481008ljn.49.2020.09.03.02.25.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 01:46:26 -0700 (PDT)
-Message-ID: <dba90fee82a709538b9bff015e56a3c4834a42ca.camel@gmail.com>
-Subject: Re: [GSoC][PATCH] submodule: port submodule subcommand 'add' from
- shell to C
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, liu.denton@gmail.com,
-        Elijah Newren <newren@gmail.com>,
-        Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Date:   Thu, 03 Sep 2020 14:16:17 +0530
-In-Reply-To: <20200902120422.GA28650@konoha>
-References: <20200824090359.403944-1-shouryashukla.oo@gmail.com>
-         <xmqq8se36gev.fsf@gitster.c.googlers.com> <20200826091502.GA29471@konoha>
-         <ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com>
-         <20200831130448.GA119147@konoha>
-         <31e40c63bbac03d261ac6f46a0d2f6ae90a21038.camel@gmail.com>
-         <20200902120422.GA28650@konoha>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.1-2 
+        Thu, 03 Sep 2020 02:25:28 -0700 (PDT)
+From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git@vger.kernel.org,
+        Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3 06/11] commit-graph: add a slab to store topological levels
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+        <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+        <b347dbb01b9254ab8d79fbbd0f7c2b637efde62e.1597509583.git.gitgitgadget@gmail.com>
+        <85d03jlu05.fsf@gmail.com> <20200825061418.GA629699@Abhishek-Arch>
+        <855z97dvsp.fsf@gmail.com>
+        <CANQwDwdsV0mSos7M_d7UP1CjT1rCyA_GfaYarMKUZaFdDZ0WRg@mail.gmail.com>
+        <20200901102624.GB10388@Abhishek-Arch>
+Date:   Thu, 03 Sep 2020 11:25:27 +0200
+In-Reply-To: <20200901102624.GB10388@Abhishek-Arch> (Abhishek Kumar's message
+        of "Tue, 1 Sep 2020 15:56:24 +0530")
+Message-ID: <85imcvb4ag.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+Cc: Elijah Newren, Martin Ågren
+Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+> On Tue, Aug 25, 2020 at 09:56:44AM +0200, Jakub Nar=C4=99bski wrote:
+>> On Tue, 25 Aug 2020 at 09:33, Jakub Nar=C4=99bski <jnareb@gmail.com> wro=
+te:
+>>
+>> ...
+>>
+>>>
+>>> All right, we might want to make use of the fact that the value of 0 for
+>>> topological level here always mean that its value for a commit needs to
+>>> be computed, that 0 is not a valid value for topological levels.
+>>> - if the value 0 came from commit-graph file, it means that it came
+>>>   from Git version that used commit-graph but didn't compute generation
+>>>   numbers; the value is GENERATION_NUMBER_ZERO
+>>> - the value 0 might came from the fact that commit is not in graph,
+>>>   and that commit-slab zero-initializes the values stored; let's
+>>>   call this value GENERATION_NUMBER_UNINITIALIZED
+>>>
+>>> If we ensure that corrected commit date can never be zero (which is
+>>> extremely unlikely, as one of root commits would have to be malformed or
+>>> written on badly misconfigured computer, with value of 0 for committer
+>>> timestamp), then this "happy accident" can keep working.
+>>>
+>>>   As a special case, commit date with timestamp of zero (01.01.1970 00:=
+00:00Z)
+>>>   has corrected commit date of one, to be able to distinguish
+>>>   uninitialized values.
+>>>
+>>> Or something like that.
+>>>
+>>> Actually, it is not even necessary, as corrected commit date of 0 just
+>>> means that this single value (well, for every root commit with commit
+>>> date of 0) would be unnecessary recomputed in compute_generation_number=
+s().
+>>>
+>>> Anyway, we would want to document this fact in the commit message.
+>>=20
+>> Alternatively, instead of comparing 'level' (and later in series also
+>> 'corrected_commit_date') against GENERATION_NUMBER_INFINITY,
+>> we could load at no extra cost `graph_pos` value and compare it
+>> against COMMIT_NOT_FROM_GRAPH.
+>>=20
+>> But with this solution we could never get rid of graph_pos, if we
+>> think it is unnecessary. If we split commit_graph_data into separate
+>> slabs (as it was in early versions of respective patch series), we
+>> would have to pay additional cost.
+>>=20
+>> But it is an alternative.
+>
+> I think updating a commit date with timestampt of zero to use corrected
+> commit date of one would leave us more options down the line.
+>
+> Changing this is easy enough.
+>
+> For a root commit with timestamp zero, current->date would be zero and=20
+> max_corrected_commit_date would be zero as well. So we can set=20
+> corrected commit date as `max_corrected_commit_date + 1`, instead of the
+> earlier `(current->date - 1) + 1`.
+>
+> ----
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 7ed0a33ad6..e3c5e30405 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1389,7 +1389,7 @@ static void compute_generation_numbers(struct write=
+_commit_graph_context *ctx)
+>  					max_level =3D GENERATION_NUMBER_V1_MAX - 1;
+>  				*topo_level_slab_at(ctx->topo_levels, current) =3D max_level + 1;
+>=20=20
+> -				if (current->date > max_corrected_commit_date)
+> +				if (current->date && current->date > max_corrected_commit_date)
+>  					max_corrected_commit_date =3D current->date - 1;
+>  				commit_graph_data_at(current)->generation =3D max_corrected_commit_d=
+ate + 1;
+>  			}
 
-On Wed, 2020-09-02 at 17:34 +0530, Shourya Shukla wrote:
-> On 02/09 02:05, Kaartic Sivaraam wrote:
-> > On Mon, 2020-08-31 at 18:34 +0530, Shourya Shukla wrote:
-> > > On 31/08 01:28, Kaartic Sivaraam wrote:
-> > > 
-> > > This is what I have done finally:
-> > > ---
-> > > 	if (read_cache() < 0)
-> > > 		die(_("index file corrupt"));
-> > > 
-> > > 	if (!force) {
-> > > 		if (cache_file_exists(path, strlen(path), ignore_case) ||
-> > > 		    cache_dir_exists(path, strlen(path)))
-> > > 			die(_("'%s' already exists in the index"), path);
-> > > 	} else {
-> > > 		int cache_pos = cache_name_pos(path, strlen(path));
-> > > 		struct cache_entry *ce = the_index.cache[cache_pos];
-> > > 		if (cache_pos >= 0 && !S_ISGITLINK(ce->ce_mode))
-> > > 			die(_("'%s' already exists in the index and is not a "
-> > > 			      "submodule"), path);
-> > > 	}
-> > > ---
-> > > 
-> > > I did not put the 'cache_pos >= 0' at the start since I thought that it
-> > > will unnecessarily increase an indentation level. Since we are using
-> > > 'cache_{file,dir}_exists' in the first check and 'cache_name_pos()' in
-> > > the second, the placement of check at another indentation level would be
-> > > unnecessary. What do you think about this?
-> > > 
-> > 
-> > Interestingly. 'cache_dir_exists' seems to work as expected only when
-> > the global ignore_case whose value seems to depend on core.ignorecase.
-> > So, we can't just rely on 'cache_dir_exists to identify a directory
-> > that has tracked contents. Apparently, the 'directory_exists_in_index'
-> > in 'dir.c' seems to have the code that we want here (which is also the
-> > only user of 'index_dir_exists'; the function for which
-> > 'cache_dir_exists' is a convenience wrapper.
-> 
-> I think both 'cache_{dir,file}_exists()' depend on 'core.ignorecase'
-> though I am not able to confirm this for 'cache_dir_exists()'. Where
-> exactly does this happen for the function?
+It turned out to be much easier than I have expected: a one-line change,
+adding simply a new condition.  Good work!
 
-As you can see in 'name-hash.c', 'index_file_exists' and there by
-'cache_dir_exists' work using the 'name_hash' stored in the index. If
-you look at the flow of 'lazy_init_name_hash', you'll see how
-'name_hash' gets initialized and populated despite the value of
-'ignore_case'. OTOH, dir_hash is populted only when 'ignore_case' is
-true. So, it seems to be that only 'cache_dir_exists' depends on the
-value of 'ignore_case'.
+Perhaps it would be better to write it as current->date =3D=3D GENERATION_N=
+UMBER_UNINITIALIZED
+(or *_ZERO, or *_NO_DATA,...), but current version is quite idiomatic
+and easy to read.
 
->  The function you mention
-> seems perfect to me, though, we will also have to make the enum
-> 'exist_status' visible. Will that be fine?
-
-To me that appears to be the only way forward other than spawning a
-call to ls-files as was done in one of the earlier versions tat was not
-sent to the list. Anyways, I'm not the best person to answer this
-question. So, I've CC-ed a couple of people who might be able to shed
-some light for us.
-
->  The final output will be:
-> ---
-> 	if (!force) {
-> 		if (directory_exists_in_index(&the_index, path, strlen(path)))
-> 			die(_("'%s' already exists in the index"), path);
-> 	} else {
-> 		int cache_pos = cache_name_pos(path, strlen(path));
-> 		struct cache_entry *ce = the_index.cache[cache_pos];
-> 		if (cache_pos >= 0 && !S_ISGITLINK(ce->ce_mode))
-> 			die(_("'%s' already exists in the index and is not a "
-> 			      "submodule"), path);
-> 	}
-> ---
-> 
-> 
-
-The above doesn't handle all cases. In particular, we want to handle
-the case of tracked files when `force` is not given
-(directory_exists_in_index certainly doesn't handle that). We also need
-to handle directories with tracked contents when force is given (we
-already know cache_name_pos is not sufficient to handle them). So, I
-think we would want something along the lines of the following:
-
-        if (read_cache() < 0)
-                die(_("index file corrupt"));
-
-        cache_pos = cache_name_pos(path, strlen(path));
-        if (cache_pos < 0 &&
-            directory_exists_in_index(&the_index, path, strlen(path)) == index_directory) {
-                directory_in_cache = 1;
-        }
-
-        if (!force) {
-               if (cache_pos >= 0 || directory_in_cache)
-                        die(_("'%s' already exists in the index"), path);
-        }
-        else {
-                struct cache_entry *ce = NULL;
-                if (cache_pos >= 0)
-                {
-                        ce = the_index.cache[cache_pos];
-                }
-
-                if (directory_in_cache || (ce && !S_ISGITLINK(ce->ce_mode))) {
-                        die(_("'%s' already exists in the index and is not a "
-                              "submodule"), path);
-                }
-        }
-
-After seeing this, I'm starting to think it's better have this in a
-separate helper function instead of making the `module_add` function
-even more longer than it already is.
-
-> And obviously an extra commit changing the visibility of the function
-> and the enum.
->  
-> > > > This is more close to what the shell version did but misses one case
-> > > > which might or might not be covered by the test suite[1]. The case when
-> > > > path is a directory that has tracked contents. In the shell version we
-> > > > would get:
-> > > > 
-> > > >    $ git submodule add ../git-crypt/ builtin
-> > > >    'builtin' already exists in the index
-> > > >    $ git submodule add --force ../git-crypt/ builtin
-> > > >    'builtin' already exists in the index and is not a submodule
-> > > > 
-> > > >    In the C version with the above snippet we get:
-> > > > 
-> > > >    $ git submodule add --force ../git-crypt/ builtin
-> > > >    fatal: 'builtin' does not have a commit checked out
-> > > >    $ git submodule add ../git-crypt/ builtin
-> > > >    fatal: 'builtin' does not have a commit checked out
-> > > > 
-> > > >    That's not appropriate and should be fixed. I believe we could do
-> > > >    something with `cache_dir_exists` to fix this.
-> > > > 
-> > > > 
-> > > >    Footnote
-> > > >    ===
-> > > > 
-> > > >    [1]: If it's not covered already, it might be a good idea to add a test
-> > > >    for the above case.
-> > > 
-> > > Like Junio said, we do not care if it is a file or a directory of any
-> > > sorts, we will give the error if it already exists. Therefore, even if
-> > > it is an untracked or a tracked one, it should not matter to us. Hence
-> > > testing for it may not be necessary is what I feel. Why should we test
-> > > it?
-> > 
-> > I'm guessing you misunderstood. A few things:
-> > 
-> > - We only care about tracked contents for the case in hand.
-> > 
-> > - Identifying whether a given path corresponds to a directory
-> >   which has tracked contents is tricky. Neither 'cache_name_pos'
-> >   nor 'cache_file_exists' handle this. 'cache_dir_exists' is also
-> >   not very useful as mentioned above.
-> > 
-> > So, we do have to take care when handling that case as Junio pointed
-> > out.
-> 
-> I still do not understand this case. Let's say this was our
-> superproject:
-> 
-> .gitmodules .git/ a.txt dir1/
-> 
-> And we did:
->     $ git submodule add <url> dir1/
-> 
-> Now, at this point, how does it matter if 'dir1/' has tracked content or
-> not right? A directory exists with that name and now we do not add the
-> SM to that path.
-> 
-
-I'm guessing you're looking at it in a more general sense of the
-command workflow. I was speaking only about the following snippet of
-the shell script which we're trying to emulate now:
-
-        if test -z "$force"
-        then
-                git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
-                die "$(eval_gettext "'\$sm_path' already exists in the index")"
-        else
-                git ls-files -s "$sm_path" | sane_grep -v "^160000" > /dev/null 2>&1 &&
-                die "$(eval_gettext "'\$sm_path' already exists in the index and is not a submodule")"
-        fi
-
-When sm_path is an empty directory or a directory that has no tracked
-contents the 'ls-files' command would fail and we apparently will *not*
-get an error stating the path already exists in the index. The command
-might fail in a later part of the code but that's not what I'm talking
-about.
-
-A few other things I noticed:
-
-> +       strbuf_addstr(&sb, path);
-> +       if (is_directory(path)) {
-
-I remember mentioning to you that the 'is_directory' check is
-sufficient here and the 'is_nonbare_repository_dir' is not necessary
-here as 'resolve_gitlink_ref' already takes care of it. Unfortunately,
-looks like without the 'is_nonbare_repository_dir' check we get the
-following unhelpful error message when the path is a directory that
-_exists_ and is ignored in .gitignore:
-
-   $ git submodule add ../git-crypt/ Debug
-   fatal: 'Debug' does not have a commit checked out
-
-   The shell version did not have this problem and gave the following
-   appropriate error message:
-
-   $ git submodule add ../git-crypt/ Debug
-   The following paths are ignored by one of your .gitignore files:
-   Debug
-   hint: Use -f if you really want to add them.
-   hint: Turn this message off by running
-   hint: "git config advice.addIgnoredFile false"
-
-      So, we should check whether the given directory is a non-bare
-      repository before calling 'resolve_gitlink_ref' to be consistent with
-      what the shell version does.
-
-      For the note, this isn't caught by the 'submodule add to .gitignored
-      path fails' in t7400 as the corresponding directory doesn't exist
-      there. So, our 'is_directory' check fails and we don't call
-      'resolve_gitlink_ref'.
-
-      > +               struct object_id oid;
-> +               if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-> +                       die(_("'%s' does not have a commit checked out"), path);
-> +       }
-> +
-> +       if (!force) {
-> +               struct strbuf sb = STRBUF_INIT;
-> +               struct child_process cp = CHILD_PROCESS_INIT;
-> +               cp.git_cmd = 1;
-> +               cp.no_stdout = 1;
-> +               strvec_pushl(&cp.args, "add", "--dry-run", "--ignore-missing",
-> +                            "--no-warn-embedded-repo", path, NULL);
-> +               if (pipe_command(&cp, NULL, 0, NULL, 0, &sb, 0))
-> +                       die(_("%s"), sb.buf);
-
-Using 'die' to print an already formatted error message of a command
-results in an additional newline which looks ugly. For reference, here
-are the output from the shell and C versions of the command:
-
--- 8< --
-$ # Shell version
-$ git submodule add ../parent/ submod
-The following paths are ignored by one of your .gitignore files:
-submod
-hint: Use -f if you really want to add them.
-hint: Turn this message off by running
-hint: "git config advice.addIgnoredFile false"
-$ # C version
-$ git submodule add ../parent/ submod
-fatal: The following paths are ignored by one of your .gitignore files:
-submod
-hint: Use -f if you really want to add them.
-hint: Turn this message off by running
-hint: "git config advice.addIgnoredFile false"
-
-$
--- >8 --
-
-So, it would be nice if we use 'fprintf(stderr, ...)' or something like
-that so that we don't get the additional newline.
-
-> +               strbuf_release(&sb);
-> +       }
-> 
-
--- 
-Sivaraam
+With this change we should, of course, also change the commit-graph
+format docs.
 
 
+On the other hand it is a bit unnecessary.  If `generation` is zero,
+using it would still work, and it would just mean that it would be
+unnecessarily recomputed - but corrected commit date equal zero is
+possible only for root commits.
+
+But the above solution is more consistent, using 0 to mark not
+initialized values...  it is cleaner, at the cost of one more corner
+case, single line change, and possibly an insignificant amount of
+performance penalty due to adding unlikely true branch to the
+conditional.
+
+Best,
+--=20
+Jakub Nar=C4=99bski
