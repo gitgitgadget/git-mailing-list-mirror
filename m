@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E3EFC43461
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 22:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A81C433E2
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 22:47:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39FE220716
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 22:47:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0E2620716
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 22:47:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="hD8Bjt6a"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="KamWqJFu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729624AbgICWrC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Sep 2020 18:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56612 "EHLO
+        id S1729627AbgICWrH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Sep 2020 18:47:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729468AbgICWrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Sep 2020 18:47:01 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9274C061244
-        for <git@vger.kernel.org>; Thu,  3 Sep 2020 15:47:00 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id f142so4646993qke.13
-        for <git@vger.kernel.org>; Thu, 03 Sep 2020 15:47:00 -0700 (PDT)
+        with ESMTP id S1729468AbgICWrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Sep 2020 18:47:06 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51D56C061244
+        for <git@vger.kernel.org>; Thu,  3 Sep 2020 15:47:06 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id v54so3262735qtj.7
+        for <git@vger.kernel.org>; Thu, 03 Sep 2020 15:47:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=1pgZgw01AY2qiT2UbLacvXpIDOczgfjTcvIITIWv/Z0=;
-        b=hD8Bjt6asK+zEtHduJPsdOOHa5mmLkC7EzHJaC02kI6Rl5QB32PuyWELll2H4HfCUV
-         O79l9hKzULXiPnRexKYiR5MleyXlrWEXkxa8Hm5NHo5qstn958gWZcQpdIKy80PSuD71
-         ZVW3L+qnEIVSMa5P4b+fNjkxQ1rPqJzUqgN99/haHeifMWdvs8hD3+3sqIiOrpABNx7i
-         UQqT1z/mAB5XjLNhWrEsCiwEFiqx6jkXLZZoaZcfd/FDED6/G2GSV5iA/If5Zp2lNEX2
-         iAFq7yq71AehmuHDBRxcr8jql5zvacpuh1FW7rJX3sWspi+JJ9GMVG4DvYRHj7nxLa/f
-         ft4A==
+        bh=oYpSjtOpe7DlSv/ZCosDwLkRD+e5p4idW8ckKahgFaI=;
+        b=KamWqJFuBBlIX7jALdGF+dci8xOJf3bGgjyobej34aPQa6MZJLnbEJXJbJBNF/O6W+
+         jHum/H/AsoDugK1JQ2c8FSO+gJUOZeHX/V1ib4Ax6X35cMhPuXnCJaf2+pXLSCZNPqjH
+         YkP0LTQvKnHOrC1loe9nVPjjJU6MUzNnUc0KVhuITd4nxYOXW9TeHFPtJ9Z8HRDud1Io
+         PaPnbgh8rYJ618hjEHkjnpKvUfAdH/l8SDxL1dy7Ks9Xoiv+L4NtjDoIXG+0XpA/JVfQ
+         sG6fwXkyg2uBjHU3koh87sA+hP0DR7ZjaAVxZyPKgyvIytZP78r2k9wZ3XXkmHt2TQlE
+         EfWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1pgZgw01AY2qiT2UbLacvXpIDOczgfjTcvIITIWv/Z0=;
-        b=f2Pg8Wx8nhaxAJNUMk5xFeI1LugEbKGS/JYpKlYGHzP1HzPmvK/RaSkw55/6CAT3Kw
-         bS9JQ4CqgWskvsJiAP6XVBuDeCxowA2snDvrbJ5kn+7QZS2yV3iwhAZ/FBQDIXFDscAL
-         qNp/mi2AB+M7pWYd1yhvHbBgfvEJyRsaX/ngYKNPZqSld8imUSiGE6804od+cz0M7zPI
-         VudmDnGHd9NPs9KMScOgz9pNhmVEOcrzqsTs019YvV3KfG6kb28K24OozsxUB/Z/930t
-         3mpS4u4aNWkOfq0NYD1+4P0tLvWOBnM3car0I4zfcxenu55b4mqWFBO6IaEDHwMooAs3
-         zasg==
-X-Gm-Message-State: AOAM531sOsyPLva5Tzmu6sW1/BfvSQ6Alozag5SDADO7WSm1dJuCgvbg
-        crxJ++yROZ/GAN2+AvziEvGlXYDJs3eOEsBb
-X-Google-Smtp-Source: ABdhPJwic6XJ0uhZIOJq68xXGNSgSlyUuhvRuKrmNgiAZprURzQWiLjanvt9hhAqOTkUZUa8T3nwcw==
-X-Received: by 2002:a37:b57:: with SMTP id 84mr5111235qkl.433.1599173219715;
-        Thu, 03 Sep 2020 15:46:59 -0700 (PDT)
+        bh=oYpSjtOpe7DlSv/ZCosDwLkRD+e5p4idW8ckKahgFaI=;
+        b=b0rIlEBVbD48QiL2xKxM6MRWgJ+Kuow5LlYR5uEgIzbTjP9XIdGf4O6KjECFVXViyO
+         jYKDfzs75ukoVlyuiKmKDgCESqGP3RMtqRbVbj2CfSNa+Q+RlvJvUc9t9FxEwOLLOhln
+         TL9eycxgBA7tsPCWCiKXdHdYzlyXq751NmsC9vjMX1JZrXPDFvpJUPhXYsAB3D/WlDpG
+         QKIm4kliY1UuO927rayx36j9wVZ5jOTMeKybkKvy+kEFD27JOdoX4GHHoy2PYqJGSYqD
+         wRZB1KXBWOLVK3/SCgtvqVDSlhAAMsjtEsIul/TFFcDIYrr7mL+xkbJBqIn22n9LbtWu
+         9wpw==
+X-Gm-Message-State: AOAM533ecEhH5QyRIr4Uyph9z+J+Sl0PxYhPeWt+LJ6W8/KqnHbSK87s
+        xGVKavCUbZc+3Z4LkKPMh7v7uJKgPl3vom/W
+X-Google-Smtp-Source: ABdhPJx+YxrEQ5FBnzF+YjALGZO9cYdJnRldYfZLIZasPHhqusDnEk2WjB3I4yXn5Cg7tvzmTPAgzQ==
+X-Received: by 2002:aed:38c9:: with SMTP id k67mr2353072qte.6.1599173224988;
+        Thu, 03 Sep 2020 15:47:04 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:a97c:6dae:76a4:c715])
-        by smtp.gmail.com with ESMTPSA id l38sm3233994qtl.58.2020.09.03.15.46.58
+        by smtp.gmail.com with ESMTPSA id t20sm3283487qke.79.2020.09.03.15.47.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Sep 2020 15:46:59 -0700 (PDT)
-Date:   Thu, 3 Sep 2020 18:46:57 -0400
+        Thu, 03 Sep 2020 15:47:04 -0700 (PDT)
+Date:   Thu, 3 Sep 2020 18:47:01 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         szeder.dev@gmail.com
-Subject: [PATCH v4 13/14] commit-graph: rename 'split_commit_graph_opts'
-Message-ID: <ee0bc109f3db7caf59f55736744646a9ee047b01.1599172908.git.me@ttaylorr.com>
+Subject: [PATCH v4 14/14] builtin/commit-graph.c: introduce
+ '--max-new-filters=<n>'
+Message-ID: <cd0a9da6390bb110ac787135e9e5cf343ffef550.1599172908.git.me@ttaylorr.com>
 References: <cover.1596480582.git.me@ttaylorr.com>
  <cover.1599172907.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,244 +76,328 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the subsequent commit, additional options will be added to the
-commit-graph API which have nothing to do with splitting.
+Introduce a command-line flag and configuration variable to fill in the
+'max_new_filters' variable introduced two patches ago.
 
-Rename the 'split_commit_graph_opts' structure to the more-generic
-'commit_graph_opts' to encompass both. Likewise, rename the 'flags'
-member to instead be 'split_flags' to clarify that it only has to do
-with the behavior implied by '--split'.
+The command-line option '--max-new-filters' takes precedence over
+'commitGraph.maxNewFilters', which is the default value.
+'--no-max-new-filters' can also be provided, which sets the value back
+to '-1', indicating that an unlimited number of new Bloom filters may be
+generated. (OPT_INTEGER only allows setting the '--no-' variant back to
+'0', hence a custom callback was used instead).
 
-Suggested-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/commit-graph.c | 20 ++++++++++----------
- commit-graph.c         | 40 ++++++++++++++++++++--------------------
- commit-graph.h         |  8 ++++----
- make: *** [Makefile    |  0
- 4 files changed, 34 insertions(+), 34 deletions(-)
- create mode 100644 make: *** [Makefile
+ Documentation/config/commitgraph.txt |  4 +++
+ Documentation/git-commit-graph.txt   |  6 ++++
+ bloom.c                              | 13 +++++---
+ builtin/commit-graph.c               | 39 ++++++++++++++++++++++--
+ commit-graph.c                       | 27 ++++++++++++++---
+ commit-graph.h                       |  4 ++-
+ t/t4216-log-bloom.sh                 | 44 ++++++++++++++++++++++++++++
+ 7 files changed, 125 insertions(+), 12 deletions(-)
 
+diff --git a/Documentation/config/commitgraph.txt b/Documentation/config/commitgraph.txt
+index cff0797b54..4582c39fc4 100644
+--- a/Documentation/config/commitgraph.txt
++++ b/Documentation/config/commitgraph.txt
+@@ -1,3 +1,7 @@
++commitGraph.maxNewFilters::
++	Specifies the default value for the `--max-new-filters` option of `git
++	commit-graph write` (c.f., linkgit:git-commit-graph[1]).
++
+ commitGraph.readChangedPaths::
+ 	If true, then git will use the changed-path Bloom filters in the
+ 	commit-graph file (if it exists, and they are present). Defaults to
+diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+index 17405c73a9..81a2e65903 100644
+--- a/Documentation/git-commit-graph.txt
++++ b/Documentation/git-commit-graph.txt
+@@ -67,6 +67,12 @@ this option is given, future commit-graph writes will automatically assume
+ that this option was intended. Use `--no-changed-paths` to stop storing this
+ data.
+ +
++With the `--max-new-filters=<n>` option, generate at most `n` new Bloom
++filters (if `--changed-paths` is specified). If `n` is `-1`, no limit is
++enforced. Commits whose filters are not calculated are stored as a
++length zero Bloom filter, and their bit is marked in the `BFXL` chunk.
++Overrides the `commitGraph.maxNewFilters` configuration.
+++
+ With the `--split[=<strategy>]` option, write the commit-graph as a
+ chain of multiple commit-graph files stored in
+ `<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
+diff --git a/bloom.c b/bloom.c
+index ed54e96e57..34503898ac 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -197,16 +197,21 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 
+ 	if (!filter->data) {
+ 		load_commit_graph_info(r, c);
+-		if (commit_graph_position(c) != COMMIT_NOT_FROM_GRAPH &&
+-			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c))
+-				return filter;
++		if (commit_graph_position(c) != COMMIT_NOT_FROM_GRAPH)
++			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c);
+ 	}
+ 
+-	if (filter->data)
++	if (filter->data && filter->len)
+ 		return filter;
+ 	if (!compute_if_not_present)
+ 		return NULL;
+ 
++	if (filter && !filter->len &&
++	    get_bloom_filter_large_in_graph(r->objects->commit_graph, c,
++					    settings->max_changed_paths))
++		return filter;
++
++
+ 	repo_diff_setup(r, &diffopt);
+ 	diffopt.flags.recursive = 1;
+ 	diffopt.detect_rename = 0;
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index ba5584463f..f3243bd982 100644
+index f3243bd982..e7a1539b08 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -119,7 +119,7 @@ static int graph_verify(int argc, const char **argv)
+@@ -13,7 +13,8 @@ static char const * const builtin_commit_graph_usage[] = {
+ 	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
+ 	N_("git commit-graph write [--object-dir <objdir>] [--append] "
+ 	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
+-	   "[--changed-paths] [--[no-]progress] <split options>"),
++	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] "
++	   "<split options>"),
+ 	NULL
+ };
+ 
+@@ -25,7 +26,8 @@ static const char * const builtin_commit_graph_verify_usage[] = {
+ static const char * const builtin_commit_graph_write_usage[] = {
+ 	N_("git commit-graph write [--object-dir <objdir>] [--append] "
+ 	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
+-	   "[--changed-paths] [--[no-]progress] <split options>"),
++	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] "
++	   "<split options>"),
+ 	NULL
+ };
+ 
+@@ -162,6 +164,23 @@ static int read_one_commit(struct oidset *commits, struct progress *progress,
+ 	return 0;
  }
  
- extern int read_replace_refs;
--static struct split_commit_graph_opts split_opts;
-+static struct commit_graph_opts write_opts;
- 
- static int write_option_parse_split(const struct option *opt, const char *arg,
- 				    int unset)
-@@ -187,24 +187,24 @@ static int graph_write(int argc, const char **argv)
- 		OPT_BOOL(0, "changed-paths", &opts.enable_changed_paths,
- 			N_("enable computation for changed paths")),
- 		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
--		OPT_CALLBACK_F(0, "split", &split_opts.flags, NULL,
-+		OPT_CALLBACK_F(0, "split", &write_opts.split_flags, NULL,
- 			N_("allow writing an incremental commit-graph file"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			write_option_parse_split),
--		OPT_INTEGER(0, "max-commits", &split_opts.max_commits,
-+		OPT_INTEGER(0, "max-commits", &write_opts.max_commits,
- 			N_("maximum number of commits in a non-base split commit-graph")),
--		OPT_INTEGER(0, "size-multiple", &split_opts.size_multiple,
-+		OPT_INTEGER(0, "size-multiple", &write_opts.size_multiple,
++static int write_option_max_new_filters(const struct option *opt,
++					const char *arg,
++					int unset)
++{
++	int *to = opt->value;
++	if (unset)
++		*to = -1;
++	else {
++		const char *s;
++		*to = strtol(arg, (char **)&s, 10);
++		if (*s)
++			return error(_("%s expects a numerical value"),
++				     optname(opt, opt->flags));
++	}
++	return 0;
++}
++
+ static int graph_write(int argc, const char **argv)
+ {
+ 	struct string_list pack_indexes = STRING_LIST_INIT_NODUP;
+@@ -197,6 +216,9 @@ static int graph_write(int argc, const char **argv)
  			N_("maximum ratio between two levels of a split commit-graph")),
--		OPT_EXPIRY_DATE(0, "expire-time", &split_opts.expire_time,
-+		OPT_EXPIRY_DATE(0, "expire-time", &write_opts.expire_time,
+ 		OPT_EXPIRY_DATE(0, "expire-time", &write_opts.expire_time,
  			N_("only expire files older than a given date-time")),
++		OPT_CALLBACK_F(0, "max-new-filters", &write_opts.max_new_filters,
++			NULL, N_("maximum number of changed-path Bloom filters to compute"),
++			0, write_option_max_new_filters),
  		OPT_END(),
  	};
  
- 	opts.progress = isatty(2);
- 	opts.enable_changed_paths = -1;
--	split_opts.size_multiple = 2;
--	split_opts.max_commits = 0;
--	split_opts.expire_time = 0;
-+	write_opts.size_multiple = 2;
-+	write_opts.max_commits = 0;
-+	write_opts.expire_time = 0;
+@@ -205,6 +227,7 @@ static int graph_write(int argc, const char **argv)
+ 	write_opts.size_multiple = 2;
+ 	write_opts.max_commits = 0;
+ 	write_opts.expire_time = 0;
++	write_opts.max_new_filters = -1;
  
  	trace2_cmd_mode("write");
  
-@@ -232,7 +232,7 @@ static int graph_write(int argc, const char **argv)
- 	odb = find_odb(the_repository, opts.obj_dir);
+@@ -270,6 +293,16 @@ static int graph_write(int argc, const char **argv)
+ 	return result;
+ }
  
- 	if (opts.reachable) {
--		if (write_commit_graph_reachable(odb, flags, &split_opts))
-+		if (write_commit_graph_reachable(odb, flags, &write_opts))
- 			return 1;
- 		return 0;
- 	}
-@@ -261,7 +261,7 @@ static int graph_write(int argc, const char **argv)
- 			       opts.stdin_packs ? &pack_indexes : NULL,
- 			       opts.stdin_commits ? &commits : NULL,
- 			       flags,
--			       &split_opts))
-+			       &write_opts))
- 		result = 1;
++static int git_commit_graph_config(const char *var, const char *value, void *cb)
++{
++	if (!strcmp(var, "commitgraph.maxnewfilters")) {
++		write_opts.max_new_filters = git_config_int(var, value);
++		return 0;
++	}
++
++	return git_default_config(var, value, cb);
++}
++
+ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+ {
+ 	static struct option builtin_commit_graph_options[] = {
+@@ -283,7 +316,7 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_commit_graph_usage,
+ 				   builtin_commit_graph_options);
  
- cleanup:
+-	git_config(git_default_config, NULL);
++	git_config(git_commit_graph_config, &opts);
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_commit_graph_options,
+ 			     builtin_commit_graph_usage,
 diff --git a/commit-graph.c b/commit-graph.c
-index 68ffa6ec35..33fcf01a7a 100644
+index 33fcf01a7a..243c7253ff 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1012,7 +1012,7 @@ struct write_commit_graph_context {
- 		 changed_paths:1,
- 		 order_by_pack:1;
+@@ -953,7 +953,8 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
+ }
  
--	const struct split_commit_graph_opts *split_opts;
-+	const struct commit_graph_opts *opts;
- 	size_t total_bloom_filter_data_size;
- 	const struct bloom_filter_settings *bloom_settings;
- 
-@@ -1353,8 +1353,8 @@ static void close_reachable(struct write_commit_graph_context *ctx)
+ int get_bloom_filter_large_in_graph(struct commit_graph *g,
+-				    const struct commit *c)
++				    const struct commit *c,
++				    uint32_t max_changed_paths)
  {
+ 	uint32_t graph_pos;
+ 	if (!find_commit_in_graph(c, g, &graph_pos))
+@@ -976,6 +977,17 @@ int get_bloom_filter_large_in_graph(struct commit_graph *g,
+ 
+ 	if (!g->bloom_large)
+ 		return 0;
++	if (g->bloom_filter_settings->max_changed_paths != max_changed_paths) {
++		/*
++		 * Force all commits which are subject to a different
++		 * 'max_changed_paths' limit to be recomputed from scratch.
++		 *
++		 * Note that this could likely be improved, but is ignored since
++		 * all real-world graphs set the maximum number of changed paths
++		 * at 512.
++		 */
++		return 0;
++	}
+ 	return bitmap_get(g->bloom_large, graph_pos - g->num_commits_in_base);
+ }
+ 
+@@ -1481,6 +1493,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
  	int i;
- 	struct commit *commit;
--	enum commit_graph_split_flags flags = ctx->split_opts ?
--		ctx->split_opts->flags : COMMIT_GRAPH_SPLIT_UNSPECIFIED;
-+	enum commit_graph_split_flags flags = ctx->opts ?
-+		ctx->opts->split_flags : COMMIT_GRAPH_SPLIT_UNSPECIFIED;
+ 	struct progress *progress = NULL;
+ 	int *sorted_commits;
++	int max_new_filters;
  
- 	if (ctx->report_progress)
- 		ctx->progress = start_delayed_progress(
-@@ -1554,7 +1554,7 @@ static int add_ref_to_set(const char *refname,
+ 	init_bloom_filters();
+ 	ctx->bloom_large = bitmap_word_alloc(ctx->commits.nr / BITS_IN_EWORD + 1);
+@@ -1497,10 +1510,15 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 		ctx->order_by_pack ? commit_pos_cmp : commit_gen_cmp,
+ 		&ctx->commits);
  
- int write_commit_graph_reachable(struct object_directory *odb,
- 				 enum commit_graph_write_flags flags,
--				 const struct split_commit_graph_opts *split_opts)
-+				 const struct commit_graph_opts *opts)
- {
- 	struct oidset commits = OIDSET_INIT;
- 	struct refs_cb_data data;
-@@ -1571,7 +1571,7 @@ int write_commit_graph_reachable(struct object_directory *odb,
- 	stop_progress(&data.progress);
- 
- 	result = write_commit_graph(odb, NULL, &commits,
--				    flags, split_opts);
-+				    flags, opts);
- 
- 	oidset_clear(&commits);
- 	return result;
-@@ -1686,8 +1686,8 @@ static uint32_t count_distinct_commits(struct write_commit_graph_context *ctx)
- static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
- {
- 	uint32_t i;
--	enum commit_graph_split_flags flags = ctx->split_opts ?
--		ctx->split_opts->flags : COMMIT_GRAPH_SPLIT_UNSPECIFIED;
-+	enum commit_graph_split_flags flags = ctx->opts ?
-+		ctx->opts->split_flags : COMMIT_GRAPH_SPLIT_UNSPECIFIED;
- 
- 	ctx->num_extra_edges = 0;
- 	if (ctx->report_progress)
-@@ -1973,13 +1973,13 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
- 	int max_commits = 0;
- 	int size_mult = 2;
- 
--	if (ctx->split_opts) {
--		max_commits = ctx->split_opts->max_commits;
-+	if (ctx->opts) {
-+		max_commits = ctx->opts->max_commits;
- 
--		if (ctx->split_opts->size_multiple)
--			size_mult = ctx->split_opts->size_multiple;
-+		if (ctx->opts->size_multiple)
-+			size_mult = ctx->opts->size_multiple;
- 
--		flags = ctx->split_opts->flags;
-+		flags = ctx->opts->split_flags;
- 	}
- 
- 	g = ctx->r->objects->commit_graph;
-@@ -2157,8 +2157,8 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
- 	size_t dirnamelen;
- 	timestamp_t expire_time = time(NULL);
- 
--	if (ctx->split_opts && ctx->split_opts->expire_time)
--		expire_time = ctx->split_opts->expire_time;
-+	if (ctx->opts && ctx->opts->expire_time)
-+		expire_time = ctx->opts->expire_time;
- 	if (!ctx->split) {
- 		char *chain_file_name = get_chain_filename(ctx->odb);
- 		unlink(chain_file_name);
-@@ -2209,7 +2209,7 @@ int write_commit_graph(struct object_directory *odb,
- 		       struct string_list *pack_indexes,
- 		       struct oidset *commits,
- 		       enum commit_graph_write_flags flags,
--		       const struct split_commit_graph_opts *split_opts)
-+		       const struct commit_graph_opts *opts)
- {
- 	struct write_commit_graph_context *ctx;
- 	uint32_t i, count_distinct = 0;
-@@ -2226,7 +2226,7 @@ int write_commit_graph(struct object_directory *odb,
- 	ctx->append = flags & COMMIT_GRAPH_WRITE_APPEND ? 1 : 0;
- 	ctx->report_progress = flags & COMMIT_GRAPH_WRITE_PROGRESS ? 1 : 0;
- 	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
--	ctx->split_opts = split_opts;
-+	ctx->opts = opts;
- 	ctx->total_bloom_filter_data_size = 0;
- 
- 	bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
-@@ -2274,15 +2274,15 @@ int write_commit_graph(struct object_directory *odb,
++	max_new_filters = ctx->opts && ctx->opts->max_new_filters >= 0 ?
++		ctx->opts->max_new_filters : ctx->commits.nr;
++
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+ 		int pos = sorted_commits[i];
+ 		struct commit *c = ctx->commits.list[pos];
+-		if (get_bloom_filter_large_in_graph(ctx->r->objects->commit_graph, c)) {
++		if (get_bloom_filter_large_in_graph(ctx->r->objects->commit_graph,
++						    c,
++						    ctx->bloom_settings->max_changed_paths)) {
+ 			bitmap_set(ctx->bloom_large, pos);
+ 			ctx->count_bloom_filter_known_large++;
+ 		} else {
+@@ -1508,7 +1526,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 			struct bloom_filter *filter = get_or_compute_bloom_filter(
+ 				ctx->r,
+ 				c,
+-				1,
++				ctx->count_bloom_filter_computed < max_new_filters,
+ 				ctx->bloom_settings,
+ 				&computed);
+ 			if (computed) {
+@@ -1518,7 +1536,8 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 					ctx->count_bloom_filter_found_large++;
+ 				}
  			}
+-			ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
++			if (filter)
++				ctx->total_bloom_filter_data_size += sizeof(unsigned char) * filter->len;
  		}
- 
--		if (ctx->split_opts)
--			replace = ctx->split_opts->flags & COMMIT_GRAPH_SPLIT_REPLACE;
-+		if (ctx->opts)
-+			replace = ctx->opts->split_flags & COMMIT_GRAPH_SPLIT_REPLACE;
+ 		display_progress(progress, i + 1);
  	}
- 
- 	ctx->approx_nr_objects = approximate_object_count();
- 	ctx->oids.alloc = ctx->approx_nr_objects / 32;
- 
--	if (ctx->split && split_opts && ctx->oids.alloc > split_opts->max_commits)
--		ctx->oids.alloc = split_opts->max_commits;
-+	if (ctx->split && opts && ctx->oids.alloc > opts->max_commits)
-+		ctx->oids.alloc = opts->max_commits;
- 
- 	if (ctx->append) {
- 		prepare_commit_graph_one(ctx->r, ctx->odb);
 diff --git a/commit-graph.h b/commit-graph.h
-index 9afb1477d5..fe798a4047 100644
+index fe798a4047..eac4efc7a6 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -115,11 +115,11 @@ enum commit_graph_split_flags {
- 	COMMIT_GRAPH_SPLIT_REPLACE          = 2
- };
+@@ -52,7 +52,8 @@ struct tree *get_commit_tree_in_graph(struct repository *r,
+ 				      const struct commit *c);
  
--struct split_commit_graph_opts {
-+struct commit_graph_opts {
- 	int size_multiple;
+ int get_bloom_filter_large_in_graph(struct commit_graph *g,
+-				    const struct commit *c);
++				    const struct commit *c,
++				    uint32_t max_changed_paths);
+ 
+ struct commit_graph {
+ 	const unsigned char *data;
+@@ -120,6 +121,7 @@ struct commit_graph_opts {
  	int max_commits;
  	timestamp_t expire_time;
--	enum commit_graph_split_flags flags;
-+	enum commit_graph_split_flags split_flags;
+ 	enum commit_graph_split_flags split_flags;
++	int max_new_filters;
  };
  
  /*
-@@ -130,12 +130,12 @@ struct split_commit_graph_opts {
-  */
- int write_commit_graph_reachable(struct object_directory *odb,
- 				 enum commit_graph_write_flags flags,
--				 const struct split_commit_graph_opts *split_opts);
-+				 const struct commit_graph_opts *opts);
- int write_commit_graph(struct object_directory *odb,
- 		       struct string_list *pack_indexes,
- 		       struct oidset *commits,
- 		       enum commit_graph_write_flags flags,
--		       const struct split_commit_graph_opts *split_opts);
-+		       const struct commit_graph_opts *opts);
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index fed4929af3..571676cef2 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -291,4 +291,48 @@ test_expect_success 'Bloom generation does not recompute too-large filters' '
+ 	)
+ '
  
- #define COMMIT_GRAPH_VERIFY_SHALLOW	(1 << 0)
- 
-diff --git a/make: *** [Makefile b/make: *** [Makefile
-new file mode 100644
-index 0000000000..e69de29bb2
++test_expect_success 'Bloom generation is limited by --max-new-filters' '
++	(
++		cd limits &&
++		test_commit c2 filter &&
++		test_commit c3 filter &&
++		test_commit c4 no-filter &&
++		test_bloom_filters_computed "--reachable --changed-paths --split=replace --max-new-filters=2" \
++			2 0 2
++	)
++'
++
++test_expect_success 'Bloom generation backfills previously-skipped filters' '
++	(
++		cd limits &&
++		test_bloom_filters_computed "--reachable --changed-paths --split=replace --max-new-filters=1" \
++			2 0 1
++	)
++'
++
++test_expect_success 'Bloom generation backfills empty commits' '
++	git init empty &&
++	test_when_finished "rm -fr empty" &&
++	(
++		cd empty &&
++		for i in $(test_seq 1 6)
++		do
++			git commit --allow-empty -m "$i"
++		done &&
++
++		# Generate Bloom filters for empty commits 1-6, two at a time.
++		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
++			0 2 2 &&
++		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
++			2 2 2 &&
++		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
++			4 2 2 &&
++
++		# Finally, make sure that once all commits have filters, that
++		# none are subsequently recomputed.
++		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
++			6 0 0
++	)
++'
++
+ test_done
 -- 
 2.27.0.2918.gc99a27ff8f
-
