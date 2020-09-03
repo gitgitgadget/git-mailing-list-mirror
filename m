@@ -2,80 +2,127 @@ Return-Path: <SRS0=Hc2o=CM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2108C433E7
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 09:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2F53C433E2
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 10:06:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E8C9206A5
-	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 09:39:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A3FA207EA
+	for <git@archiver.kernel.org>; Thu,  3 Sep 2020 10:06:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cjtJEvjY"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="MEsOtA3B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726567AbgICJji (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Sep 2020 05:39:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726323AbgICJji (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Sep 2020 05:39:38 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E313BC061244
-        for <git@vger.kernel.org>; Thu,  3 Sep 2020 02:39:37 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id j2so2437119wrx.7
-        for <git@vger.kernel.org>; Thu, 03 Sep 2020 02:39:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+N1mp7Sp3vJI2PRJBRrFrY58m7ZI0KwbGlgZ7qfurB8=;
-        b=cjtJEvjYMdzgICjXHhHeIPN/sFSqgC7d8RdrpwRcDhLy65k1YFT2Y0RaeyVn3bwmvW
-         k6tgmVt5XZnWsOOwH2jc8eFbWXmQ2O/8e+FOzz8rGOVHmjmJOYEhjMQ8kD4Lstb77Frp
-         gFd+e1C9nw+CIzWKhnLV1cOBb80xgD5Y5p27V/1YpCGN52VHdOE7sHbIqCVOtWKuo6ND
-         /QaU8J5x9/SXwN9AV5tZyNia1myosIXtbr0wxV9FXim0kkhDh/w4v3hYuyY8ieD3fETj
-         WFbk1gBTTueuUt+2fEhAbVununKzZPbftrbQzSMEnQnIfUD26wi4zm2kepFzRx5qgSZX
-         C+Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+N1mp7Sp3vJI2PRJBRrFrY58m7ZI0KwbGlgZ7qfurB8=;
-        b=BAZqFSSBdfJCZuJxkhWJ4QuQ/Z2dIkRfyOCRwOLxaFWfFD2CmdeTOAMVn3rTpA1SDu
-         YpGSMWBHsDC8zg5kaB4yOgD/BfTybsu/LU2kSfxMx9M02N+kFm4DsyaSbcJuCj0MwuJm
-         /oOXNT/hLUq1oTIoJHkx6eN4L+4A+Ej6Kf5jZQX6Yb5sMxFiZRJkEEn/dhXTIBxaNg4o
-         rbUm99EYilNpYIG7CQOfRE5tchXzSvmI2FIZ1q6RKUTUmVKtDbrtssFDyIukiWxf/6ah
-         SnwZ9eR5HZp99rBx6RMfQB318yx9KzMp46QI08ZpdzJucd16xHGlRte6aE4YvoT4s0sI
-         YICA==
-X-Gm-Message-State: AOAM530rCQWolXUXybYq4xV/zQbBxitTUlhIqSwxjTjFETsrAOs+nEK9
-        MT4B2mMDe3QTL+o6RJvoJYItdYaITIgbdV57WuLt5A67TnM=
-X-Google-Smtp-Source: ABdhPJyVwG69XipAHLEbqA262OMEgzSOCO1QwjjpR82ckh5XvVNOFKqsL0N6JETFWt5xvPPR881ddj9z8WhKgnG4iko=
-X-Received: by 2002:a5d:5090:: with SMTP id a16mr1558433wrt.247.1599125974592;
- Thu, 03 Sep 2020 02:39:34 -0700 (PDT)
+        id S1726323AbgICKGp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Sep 2020 06:06:45 -0400
+Received: from mout.gmx.net ([212.227.15.15]:46937 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725984AbgICKGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Sep 2020 06:06:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1599127603;
+        bh=V40UBeS10vyBuVk4mHmZDBuVS/wJEFlBP/TSy3fS5ZI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MEsOtA3B2Y4LuxTEuod2qtDfHGxfVrUtZPmPP07q1iWk0M0lDF5kw+GrbXqyq8D3s
+         fgQgkY5/z5j6CZBiiacO6VjbfGINUUsf0QiRVBpvt0coy1LVdoFISigmWT7+rK1/TZ
+         s75Hx/Nlo4aHYo5S9ZcJ4+WvNoXGwQnl5O9OWXeI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.169.176] ([213.196.212.246]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTRR0-1k8FqB0CPk-00ThqI; Thu, 03
+ Sep 2020 12:06:43 +0200
+Date:   Thu, 3 Sep 2020 03:42:19 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
+        Orgad Shaneh <orgads@gmail.com>
+Subject: Re: [PATCH] vcbuild: fix library name for expat with make MSVC=1
+In-Reply-To: <pull.722.git.1599077798953.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009030341540.56@tvgsbejvaqbjf.bet>
+References: <pull.722.git.1599077798953.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Victor Toni <victor.toni@gmail.com>
-Date:   Thu, 3 Sep 2020 11:39:06 +0200
-Message-ID: <CAG0OSgeb0jcUmkjp+yzCPYkxQWCZFy3gYM9o7TfBGvtf4M08NQ@mail.gmail.com>
-Subject: Aborting git rebase --edit-todo
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WeVDpwzv2ORyS2Yana9lJqYjlkN9PMt92mw1kZYOlNKwtSEkTSi
+ r+6lg2G+9Qu0lH1kcN6hRkqBzZOtbkBWMhT8iuq0FrMlYZe2elR/JgbbBejz/tjtDkJOXrl
+ Dxh7rmpALwpoqbezQH2aWbEPf8dO6RlvHhNI3nPlAq9V+Q5iU0pv37FgQUQWR+OeN0PVaIW
+ arL9YCXTysgzTmSPeq35g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1HaoQ+fTWmg=:sVUiR+yCjQ/lGUpyTqIhz5
+ ++HHkH/sy/HhBIVb5R4lDvJkxdmPzyFJXIuqsRo39poT9FeN3SPgboSe09hrvhgrih5729GHd
+ jVhkHewolijiEF7e9lyT2Z3wYOqRq1jcpJ/JE6AAFifRJCjTEi3xsk/CBlvFR3458WfAIhK9W
+ Yrfk1WBhsxqqkscICc0lZEyd00sJEolcU8IKR6x5dqlcZpcIVfdkuIQzhdSq9fnk2wrY5eXb6
+ RvvcDVKZGNpha4UL1n/hVXLr2cYI2m3IbqRzQv2jgf56Meqa7WjcrXME35pI/B8nYoVT0Xi/B
+ 7B/SrmVoc8dIias+2gel1RhyOIpiVy+jLVmzkM/dEmqjWY9uiCDL4Oybwbk6wJlT5hcaFNIZD
+ WZWntvPKnvp/roLzHGIEoYXhjl5eabfOfcCAOc+dKEcgRw7ldkHag4+aEc2z0559DroZhejhf
+ ifda4ViKcG4lKOoWfWsf06iKsnNqqEYVvDC44W+cPgA+cX/9hXIcieOUsIbNStpg/j4BEnWoW
+ fcMtokRvxhMyjpCihui6bl+86Ob3Q8VCCnn8l2hR5LvxD9BxhJthLxCK71JX9FcJl4I3pZtM9
+ 7reyceYXjBnF52jZkgBFMk/T58CnE03OuNaxypaWy5dlMEm79pyPTXetQYa2bRUeUqdg/kdgt
+ CGb4HHWAzhHXKdZPtRbrNFIcwtQ7sDNEULPC//d8QRzN4Ggg8OFLytsZbVBhvpRAQtycnHWFg
+ OjCqitl1dMNrk5JHExuSlQSLQKQjmH2djoz4u64oFxQlY7YRhgwblYJ7sRDprkvVnX5hNjZHP
+ EucV4GfKf8BoRSw/a9hW4PEdgrLB9hMKTWDnQZMZHf1mFobMTRIWOb/Ju4rph2O82rfR5O5is
+ a0XnWhePODdXrqyL5KrasdwMrrlyPgGWWFfnBSkNwGHygarFl7zcMBwvg3JwsTB1s2gE51OIO
+ GVDyjhw667M3a4U7qCBMWJyiSnS4uv+w4p4R0gzndPTj9jtnL9NdKoPFR6kQDQcUeH4//KjRr
+ QeTHE4Kc/gDOB1moblUyQryVCFzco7IBgZLzYv+eYXll2pmyKhH009Hgdrnhmf3cDzPLdrS8C
+ j35/Q2RBITfnLQ5vHHy9fabC0L+A+ibLwfaA1EyMhTGDb3EpzsqaMKF/69eUQblk2sIfUYOkl
+ wpgm47jJ54fGykW6lROyfGdsSBSb4ic6PxfLGKARGV7+j/ZIujj+POj1l5QOOZNk+eZ8c5ERc
+ v38+NStuLHJZwCMcB8j4x4CHDXivTaYI/qf4BIQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When doing a commit or choosing what to do for an interactive rebase
-one can just wipe the whole content of the editor, save and close to
-abort the action.
-While doing a `git rebase --edit-todo` I came to the conclusion that I
-would like to abort the edit and did the same. The final `git rebase
---continue` got me rid of the rest of the commits...
-(Fortunately the "missing" commits could be rescued by looking into
-`.git/logs/HEAD` so thumbs up for that. )
-Unfortunately the behaviour of `--edit-todo` was a bit surprising and
-somehow doesn't feel consistent with the other actions involving an
-editor.
+Hi Orgad,
 
-Can this be considered a bug?
+On Wed, 2 Sep 2020, Orgad Shaneh via GitGitGadget wrote:
 
-Best regards,
-Victor
+> From: Orgad Shaneh <orgads@gmail.com>
+>
+> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+> ---
+>     vcbuild: fix library name for expat with make MSVC=3D1
+>
+>     Signed-off-by: Orgad Shaneh orgads@gmail.com [orgads@gmail.com]
+
+As can be seen at
+https://dev.azure.com/git/git/_build/results?buildId=3D2065&view=3Dartifac=
+ts&type=3DpublishedArtifacts,
+this change is correct.
+
+ACK.
+
+Thank you,
+Dscho
+
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-722%2F=
+orgads%2Fvcbuild-expat-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-722/orgad=
+s/vcbuild-expat-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/722
+>
+>  compat/vcbuild/scripts/clink.pl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/cl=
+ink.pl
+> index 61ad084a7b..df167d1e1a 100755
+> --- a/compat/vcbuild/scripts/clink.pl
+> +++ b/compat/vcbuild/scripts/clink.pl
+> @@ -66,7 +66,7 @@
+>  		}
+>  		push(@args, $lib);
+>  	} elsif ("$arg" eq "-lexpat") {
+> -		push(@args, "expat.lib");
+> +		push(@args, "libexpat.lib");
+>  	} elsif ("$arg" =3D~ /^-L/ && "$arg" ne "-LTCG") {
+>  		$arg =3D~ s/^-L/-LIBPATH:/;
+>  		push(@lflags, $arg);
+>
+> base-commit: e19713638985533ce461db072b49112da5bd2042
+> --
+> gitgitgadget
+>
