@@ -2,76 +2,76 @@ Return-Path: <SRS0=BZy3=CN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69ADEC43461
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 10:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBD6DC433E2
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 12:19:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1974220791
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 10:05:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87D192137B
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 12:19:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hBCqQ3gZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dAiFDQRB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729872AbgIDKFx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Sep 2020 06:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47722 "EHLO
+        id S1729930AbgIDMTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Sep 2020 08:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726811AbgIDKFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Sep 2020 06:05:53 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F41C061244
-        for <git@vger.kernel.org>; Fri,  4 Sep 2020 03:05:53 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id e17so5542645wme.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2020 03:05:52 -0700 (PDT)
+        with ESMTP id S1729297AbgIDMTj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Sep 2020 08:19:39 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8FA2C061244
+        for <git@vger.kernel.org>; Fri,  4 Sep 2020 05:19:38 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id n133so6003637qkn.11
+        for <git@vger.kernel.org>; Fri, 04 Sep 2020 05:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=88OjMXMQmn0TYD7ht06J7Xr5DIkfa0UkgOUEvKkGQjk=;
-        b=hBCqQ3gZcTfpfk56v6w3pBAUA1qo/a/vHhj3iK1mBb5jhIPSLL+i0GbMk0cYpLKHx4
-         vg8mkGfxQv5x9yfBo+0Q8HAj5e7MC3MsF+nXETEzFpDPDM3BdwPd0JUMN33K5xvzZanp
-         QdaFp260bKAmE9lHxRjSCBzW2QweRIwXiOvgts/a3Z+wAq0AvyiMWkxuhFZHLZt5OFa8
-         S07mFsNEDZQNz1UXf0ovItsrVzZlz4h7Y1bwVZiB1serBxfG2RqS8uGBcD8IeUlWto95
-         WWjM8cfsVgrF+ww7jOKnqlkliK39DR4yT2siBF1PakoUR75pJDyAqDBd9ED8Kvv9WXox
-         +BkA==
+        bh=Wuf/zwckl8PXFIkDCljlsO/RXjdCYc+nWbjDyadcpBM=;
+        b=dAiFDQRBfEo3KHigeRBskQsaX1VBGt1GeJUlNK91SnnMqR93Lkk5Mel3lxQr869qjw
+         t1e1PMJmOLbpuwrIs1PGN38ZqGLfG+qOA+SgKQElB99dvynoTwes4zgElRbK8qgUBHHB
+         bMAIl/HFg/pBoyTbcueGFKZ3Dg6BeRs63Upe0GJhqr8rbmXleUyhachNco/izheBx4xl
+         qvWNSX95oqhOlbktXP1/Tt8Bu+uLfqlxmuF3aw0mWQI5xJokctIoB2MaJjuOFyxsKjPJ
+         ydlRxuq50oKTTtZgoH9S82dtrZ9h9wevN3mGUpHvPsA7cFt/rMiH6gVWeHRbNDJ2r5JV
+         Gc1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=88OjMXMQmn0TYD7ht06J7Xr5DIkfa0UkgOUEvKkGQjk=;
-        b=L5PMew2cYDJgkmDMw3ZnqXEPNrUkf6+jZY3AnO0UtpuHgrb8WR0FWtRur+JM+RtXEB
-         esESepDGjBJbGkkSlzsGlRoc5VlRcl3StH5aLknkrylLelVrTewIc4DIjkT5oCYfCCfo
-         qmeZzWsX02IbTDXrdtNaiJLYAfgpDQr26LAi838pyB35AWL+rQtCzqCfA9M+CKcYQCjK
-         ODM0yx9fMnELrQrg6MYxNgegayY/Odz07GhnTnx/sZzcRxsnij5icXuiHSnw0AdIEJ7h
-         XCTU8uel0Ak2eBDcSn5fJmlWL58a6EM+c6nMbcui2XwZ2ChzGxY9qCREaHbttjJ3CswH
-         vr+Q==
-X-Gm-Message-State: AOAM531CYKR9cIxYJCIDfpFGb+OAbikQ2n3VIHhR5IZis0CplXu/8HaT
-        nnZZksipcwwjkyLX+W0BmVnzRynymyY=
-X-Google-Smtp-Source: ABdhPJwJL3cWvxgzAyQyZ2HU/6NkMjMA7eYR77HVNffA1ETXb1XZvGQdTGyMNWTHuixeh18HS6iXdQ==
-X-Received: by 2002:a1c:f00a:: with SMTP id a10mr6668960wmb.84.1599213951594;
-        Fri, 04 Sep 2020 03:05:51 -0700 (PDT)
-Received: from [192.168.1.201] (31.35.7.51.dyn.plus.net. [51.7.35.31])
-        by smtp.googlemail.com with ESMTPSA id f6sm14059044wme.32.2020.09.04.03.05.49
+        bh=Wuf/zwckl8PXFIkDCljlsO/RXjdCYc+nWbjDyadcpBM=;
+        b=oPcjbeiWguxu+qUpgHTVHO0Wm1v19ycxD5BFarhVaNUHIaqKC75xi1vCooO/vnt9Ms
+         DLrkwDeqxX0w6JPeogiJiWxOwo3QxXueHMYyZOpQA48UCoDxN2jpcMfDnbDlGI3vKqNK
+         rFCoAr/EEJdr09Ah03OkxbXGtrQmaO9vJtn/1DcMWKxoDMrqUKhiTDsDKOlibHp+K/jo
+         9oRteYixwnnnJSq7A8N1VEYrv31GdJ47YedYCwI+/5jOQO02zwDyQ0h3nal0jHp3mw87
+         9VZTZa0cdkqXKr+pUDnstKOclQ4BDZE4fsA0UYjdxdOGmGOwaeg77sgY1AthWiZHCQWs
+         exFw==
+X-Gm-Message-State: AOAM531giAdMT9QNKNDSfjgZRqDG4nMnhx9xodSjxD03jL7MRhDyd419
+        T5ZfDtZ5dK5h0StpU0gO37sI3DdiTlM36g==
+X-Google-Smtp-Source: ABdhPJxvxJWhfrNL8BlV87VavpIvrYo22TUjhvW9hP/heINAX/mVyAluVdASM4ex5vuYIEhnR8x5Jg==
+X-Received: by 2002:a05:620a:13f9:: with SMTP id h25mr7234267qkl.283.1599221976631;
+        Fri, 04 Sep 2020 05:19:36 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:5990:be8:9229:d426? ([2600:1700:e72:80a0:5990:be8:9229:d426])
+        by smtp.gmail.com with ESMTPSA id x26sm4271048qtr.78.2020.09.04.05.19.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2020 03:05:50 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: git add intent-to-add then git add patch no longer allows edit
-To:     "Raymond E. Pasco" <ray@ameretat.dev>, phillip.wood@dunelm.org.uk,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Sullivan <tom@msbit.com.au>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <C55J4YTSBL48.171K3FSJLUQOA@ziyou.local>
-Message-ID: <1071d841-a030-30c2-e50e-6d97eb494fea@gmail.com>
-Date:   Fri, 4 Sep 2020 11:05:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Fri, 04 Sep 2020 05:19:36 -0700 (PDT)
+Subject: Re: [PATCH 1/2] revision: use repository from rev_info when parsing
+ commits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
+References: <20200623205659.14297-1-mforney@mforney.org>
+ <88d8b24c-a0ae-bbbf-dd1f-5adb7a36ee95@gmail.com>
+ <xmqqzh667ca4.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <181e95c7-8b43-e548-7fc9-36fca140645d@gmail.com>
+Date:   Fri, 4 Sep 2020 08:19:35 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
+ Thunderbird/81.0
 MIME-Version: 1.0
-In-Reply-To: <C55J4YTSBL48.171K3FSJLUQOA@ziyou.local>
+In-Reply-To: <xmqqzh667ca4.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,284 +80,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/08/2020 22:03, Raymond E. Pasco wrote:
-> On Mon Aug 24, 2020 at 1:28 PM EDT, Phillip Wood wrote:
->> The patch I was referring to is 2c8bd8471a ("checkout -p: handle new
->> files correctly", 2020-05-27)
+On 9/3/2020 5:58 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> On 6/23/2020 4:56 PM, Michael Forney wrote:
+>>> This is needed when repo_init_revisions() is called with a repository
+>>> that is not the_repository to ensure appropriate repository is used
+>>> in repo_parse_commit_internal(). If the wrong repository is used,
+>>> a fatal error is the commit-graph machinery occurs:
+>>>
+>>>   fatal: invalid commit position. commit-graph is likely corrupt
+>>>
+>>> Since revision.c was the only user of the parse_commit_gently
+>>> compatibility define, remove it from commit.h.
 >>
->> I tested seen at 3981657b13 ("Merge branch 'rp/apply-cached-doc' into
->> seen", 2020-08-21). I was using the C version of 'add -p' which is
->> opt-in at the moment by setting add.interactive.usebuiltin=true in your
->> config (or with git -c). I hope that helps, I'm going off line now for
->> 10-14 days
+>> Is this demonstrable in a test case, to prevent regressions?
 > 
-> Indeed, this works and restores my workflow (although it errors out if I
-> don't manually edit the range information, which isn't necessary with
-> diffs to existing files). It's a bit unsatisfying as it stands, but
-> perhaps there are patches I can write.
+> It appears that Michael tried and failed.  Even if we do not
+> currently have a caller that asks these functions in revision.c to
+> work on a repository that is not the primary one (i.e. in a
+> submodule), in which case these patches may not be fixing any bug
+> that can be triggered in the current code, it is quite obvious that
+> these functions misbehave once a caller starts asking them to work
+> on a repository other than the primary one.
 > 
-> No need to reply, enjoy your vacation!
+> So, given that ... 
+> 
+>>
+>> I counted 9 copies of parse_commit[_gently]() in my version
+>> of revision.c, so it looks like you caught them all.
+> 
+> ... we should be able to proceed with the code as-is, I guess
+Yes, I think this is an improvement regardless.
 
-Thanks, it was really good to get a change of scene. The patch below
-fixes the hunk editing for new files in the C version of `add -p` if
-anyone wants to try it out. I haven't looked at fixing the perl
-version yet - dscho what are your plans for switching over to the C
-version?
+Thanks, for the reminder.
 
-Best Wishes
-
-Phillip
-
----- >8 ----
-From b0df1953308f8de5224a2d99d435f93cc4093a17 Mon Sep 17 00:00:00 2001
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Date: Wed, 2 Sep 2020 15:25:55 +0100
-Subject: [PATCH] add -p: fix editing of intent-to-add paths
-
-A popular way of partially staging a new file is to run `git add -N
-<path>` and then use the hunk editing of `git add -p` to select the
-part of the file that the user wishes to stage. Since
-85953a3187 ("diff-files --raw: show correct post-image of
-intent-to-add files", 2020-07-01) this has stopped working as
-intent-to-add paths are now show as new files rather than changes to
-an empty blob and `git apply` refused to apply a creation patch for a
-path that was marked as intent-to-add. 7cfde3fa0f ("apply: allow "new
-file" patches on i-t-a entries", 2020-08-06) fixed the problem with
-apply but it still wasn't possible to edit the added hunk properly.
-
-2c8bd8471a ("checkout -p: handle new files correctly", 2020-05-27)
-had previously changed `add -p` to handle new files but it did not
-implement patch editing correctly. The perl version simply forbade
-editing and the C version opened the editor with the full diff rather
-that just the hunk which meant that the user had to edit the hunk
-header manually to get it to work.
-
-This patch only fixes the C version to correctly edit new file
-patches. To test the C version the tests must be run with
-GIT_TEST_ADD_I_USE_BUILTIN=1. It is best viewed with 
---color-moved-ws=allow-indentation-change
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Reported-by: Thomas Sullivan <tom@msbit.com.au>
----
- add-patch.c                | 83 +++++++++++++++++++++-----------------
- t/t3701-add-interactive.sh | 44 +++++++++++++++++++-
- 2 files changed, 89 insertions(+), 38 deletions(-)
-
-diff --git a/add-patch.c b/add-patch.c
-index f67b304a55..209a63e4f2 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -451,7 +451,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 	pend = p + plain->len;
- 	while (p != pend) {
- 		char *eol = memchr(p, '\n', pend - p);
--		const char *deleted = NULL, *added = NULL, *mode_change = NULL;
-+		const char *mode_change = NULL;
- 
- 		if (!eol)
- 			eol = pend;
-@@ -470,12 +470,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 		} else if (p == plain->buf)
- 			BUG("diff starts with unexpected line:\n"
- 			    "%.*s\n", (int)(eol - p), p);
--		else if (file_diff->deleted || file_diff->added)
--			; /* keep the rest of the file in a single "hunk" */
--		else if (starts_with(p, "@@ ") ||
--			 (hunk == &file_diff->head &&
--			  (skip_prefix(p, "deleted file", &deleted) ||
--			   skip_prefix(p, "new file", &added)))) {
-+		else if (starts_with(p, "@@ ")) {
- 			if (marker == '-' || marker == '+')
- 				/*
- 				 * Should not happen; previous hunk did not end
-@@ -493,18 +488,20 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 			if (colored)
- 				hunk->colored_start = colored_p - colored->buf;
- 
--			if (deleted)
--				file_diff->deleted = 1;
--			else if (added)
--				file_diff->added = 1;
--			else if (parse_hunk_header(s, hunk) < 0)
-+			if (parse_hunk_header(s, hunk) < 0)
- 				return -1;
- 
- 			/*
- 			 * Start counting into how many hunks this one can be
- 			 * split
- 			 */
- 			marker = *p;
-+		} else if (hunk == &file_diff->head &&
-+			   starts_with(p, "new file")) {
-+			file_diff->added = 1;
-+		} else if (hunk == &file_diff->head &&
-+			   starts_with(p, "deleted file")) {
-+			file_diff->deleted = 1;
- 		} else if (hunk == &file_diff->head &&
- 			   skip_prefix(p, "old mode ", &mode_change) &&
- 			   is_octal(mode_change, eol - mode_change)) {
-@@ -1358,39 +1355,46 @@ static int patch_update_file(struct add_p_state *s,
- 	int colored = !!s->colored.len, quit = 0;
- 	enum prompt_mode_type prompt_mode_type;
- 
--	if (!file_diff->hunk_nr)
-+	/* Empty added and deleted files have no hunks */
-+	if (!file_diff->hunk_nr && !file_diff->added && !file_diff->deleted)
- 		return 0;
- 
- 	strbuf_reset(&s->buf);
- 	render_diff_header(s, file_diff, colored, &s->buf);
- 	fputs(s->buf.buf, stdout);
- 	for (;;) {
--		if (hunk_index >= file_diff->hunk_nr)
--			hunk_index = 0;
--		hunk = file_diff->hunk + hunk_index;
-+		if (file_diff->hunk_nr) {
-+			if (hunk_index >= file_diff->hunk_nr)
-+				hunk_index = 0;
-+			hunk = file_diff->hunk + hunk_index;
- 
--		undecided_previous = -1;
--		for (i = hunk_index - 1; i >= 0; i--)
--			if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
--				undecided_previous = i;
--				break;
--			}
-+			undecided_previous = -1;
-+			for (i = hunk_index - 1; i >= 0; i--)
-+				if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
-+					undecided_previous = i;
-+					break;
-+				}
- 
--		undecided_next = -1;
--		for (i = hunk_index + 1; i < file_diff->hunk_nr; i++)
--			if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
--				undecided_next = i;
--				break;
--			}
-+			undecided_next = -1;
-+			for (i = hunk_index + 1; i < file_diff->hunk_nr; i++)
-+				if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
-+					undecided_next = i;
-+					break;
-+				}
- 
--		/* Everything decided? */
--		if (undecided_previous < 0 && undecided_next < 0 &&
--		    hunk->use != UNDECIDED_HUNK)
--			break;
-+			/* Everything decided? */
-+			if (undecided_previous < 0 && undecided_next < 0 &&
-+			    hunk->use != UNDECIDED_HUNK)
-+				break;
- 
--		strbuf_reset(&s->buf);
--		render_hunk(s, hunk, 0, colored, &s->buf);
--		fputs(s->buf.buf, stdout);
-+			strbuf_reset(&s->buf);
-+			render_hunk(s, hunk, 0, colored, &s->buf);
-+			fputs(s->buf.buf, stdout);
-+		} else {
-+			hunk = &file_diff->head;
-+			undecided_next = -1;
-+			undecided_previous = -1;
-+		}
- 
- 		strbuf_reset(&s->buf);
- 		if (undecided_previous >= 0)
-@@ -1421,7 +1425,9 @@ static int patch_update_file(struct add_p_state *s,
- 		color_fprintf(stdout, s->s.prompt_color,
- 			      "(%"PRIuMAX"/%"PRIuMAX") ",
- 			      (uintmax_t)hunk_index + 1,
--			      (uintmax_t)file_diff->hunk_nr);
-+			      (uintmax_t)(file_diff->hunk_nr
-+						? file_diff->hunk_nr
-+						: 1));
- 		color_fprintf(stdout, s->s.prompt_color,
- 			      _(s->mode->prompt_mode[prompt_mode_type]),
- 			      s->buf.buf);
-@@ -1601,14 +1607,17 @@ static int patch_update_file(struct add_p_state *s,
- 						 "%.*s", (int)(eol - p), p);
- 			}
- 		}
-+		if (!file_diff->hunk_nr)
-+			break;
- 	}
- 
- 	/* Any hunk to be used? */
- 	for (i = 0; i < file_diff->hunk_nr; i++)
- 		if (file_diff->hunk[i].use == USE_HUNK)
- 			break;
- 
--	if (i < file_diff->hunk_nr) {
-+	if (i < file_diff->hunk_nr ||
-+	    (!file_diff->hunk_nr && file_diff->head.use == USE_HUNK)) {
- 		/* At least one hunk selected: apply */
- 		strbuf_reset(&s->buf);
- 		reassemble_patch(s, file_diff, 0, &s->buf);
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index fb73a847cb..49d597979a 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -47,7 +47,11 @@ test_expect_success 'setup (initial)' '
- 	echo content >file &&
- 	git add file &&
- 	echo more >>file &&
--	echo lines >>file
-+	echo lines >>file &&
-+	if test -n "$GIT_TEST_ADD_I_USE_BUILTIN"
-+	then
-+		test_set_prereq BUILTIN_ADD_I
-+	fi
- '
- test_expect_success 'status works (initial)' '
- 	git add -i </dev/null >output &&
-@@ -814,6 +818,44 @@ test_expect_success 'checkout -p works with pathological context lines' '
- 	test_cmp expect a
- '
- 
-+# This should be called from a subshell as it sets a temporary editor
-+setup_new_file() {
-+	write_script new-file-editor.sh <<-\EOF &&
-+	sed /^#/d "$1" >patch &&
-+	sed /^+c/d patch >"$1"
-+	EOF
-+	test_set_editor "$(pwd)/new-file-editor.sh" &&
-+	test_write_lines a b c d e f >new-file &&
-+	test_write_lines a b d e f >new-file-expect &&
-+	test_write_lines "@@ -0,0 +1,6 @@" +a +b +c +d +e +f >patch-expect
-+}
-+
-+test_expect_success BUILTIN_ADD_I 'add -N followed by add -p patch editing' '
-+	git reset --hard &&
-+	(
-+		setup_new_file &&
-+		git add -N new-file &&
-+		test_write_lines e n q | git add -p &&
-+		git cat-file blob :new-file >actual &&
-+		test_cmp new-file-expect actual &&
-+		test_cmp patch-expect patch
-+	)
-+'
-+
-+test_expect_success BUILTIN_ADD_I 'checkout -p patch editing of added file' '
-+	git reset --hard &&
-+	(
-+		setup_new_file &&
-+		git add new-file &&
-+		git commit -m "add new file" &&
-+		git rm new-file &&
-+		git commit -m "remove new file" &&
-+		test_write_lines e n q | git checkout -p HEAD^ &&
-+		test_cmp new-file-expect new-file &&
-+		test_cmp patch-expect patch
-+	)
-+'
-+
- test_expect_success 'show help from add--helper' '
- 	git reset --hard &&
- 	cat >expect <<-EOF &&
--- 
-2.25.1.551.gd3318bf0d3.dirty
+-Stolee
