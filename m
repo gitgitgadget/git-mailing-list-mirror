@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F080FC433E2
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 07:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E98FC433E2
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 07:08:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE58C206D4
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 07:08:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5CB8206D4
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 07:08:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HODFVf4c"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c7QBS38w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727083AbgIDHIp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Sep 2020 03:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48606 "EHLO
+        id S1726667AbgIDHIr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Sep 2020 03:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbgIDHIo (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726597AbgIDHIo (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 4 Sep 2020 03:08:44 -0400
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A615DC061244
-        for <git@vger.kernel.org>; Fri,  4 Sep 2020 00:08:43 -0700 (PDT)
-Received: by mail-il1-x142.google.com with SMTP id x2so5519339ilm.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2020 00:08:43 -0700 (PDT)
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ABBDC061245
+        for <git@vger.kernel.org>; Fri,  4 Sep 2020 00:08:42 -0700 (PDT)
+Received: by mail-il1-x144.google.com with SMTP id t13so5464792ile.9
+        for <git@vger.kernel.org>; Fri, 04 Sep 2020 00:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=y7edZzxRMYWOYMK4RX7tgA1J0yGQOgeOuW3LE5RNHKM=;
-        b=HODFVf4cudO70vuc1p8ljOLI0TZgai1mQj4XITS83DpcrHcw/GnjMWdSPJclqoBgee
-         S5X6JenIh3X9esQX8WfWOeGY40rRuhQNIrbdao90zu8B4020SJjoyFPcasXoluHhHqh8
-         YKn0VOlCZczPjmFu2ZwBh6on2+J92hsapHCdjYj6n7V8Xr06N0pICMYjGddNx67OckbO
-         ZlPP+66BHnhgIwgTqehPFIaU9uMHDzppS1foUgDzlKULWQABDnvD+SqZ5KGDvZJrXXE2
-         /BsOGM1I8zEbNvIRXn/lipvdJYUDeouiWPnJSNxg52bUakUXqBqkC7PuPEZOfLUO7dNC
-         wfog==
+        bh=udNH8yeHpFWVdd6YQu9UgrG4522T0NXseoi3Jzs2Z0A=;
+        b=c7QBS38wNxpR9RFK+PyhnCBJJgMwvOKa5s1Y0tin9lutXzASV2txj3BEWPhanT8O+E
+         MBO6yw39tiU33Z3Jq73TEMClBjz4kfawdRg9ImQzdAb3+n9tfE+i1rlvhdsUarqEghEe
+         rXYntbKNyRlBjbyljFcdimB+0w28PRjaskBAx/veQAIn/MZtt4aZpuGjrvesOGP9Kdlm
+         cgIlerk1A9aygxE7MUa5cB/F2jcDO+fsacxeLbw3WRvVtdwe7doi7U5zVkDUm1oIlzTi
+         67ICBZzTKntCQb9naYSjcrB7vys94b8ZZ54RgxwF7L6SbsqAcrBNRHOSsQJ93mZlrvMA
+         IcMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=y7edZzxRMYWOYMK4RX7tgA1J0yGQOgeOuW3LE5RNHKM=;
-        b=YmTbFzfoZy8iyHsJvR26ox/cRC3fEZi3vIdEh+PEH9o+UmzSc+GwI41/cBJcLT45gP
-         PndmE+WooD94wayUJXtg98Uu7TFE4Ew4V+D57qNtjzbBvm4FaKE6e1nN7HnO4N1+VKNt
-         DydIVTTFn2SEB5gIWDnVz2Hs35pcvgdiPKGSFDMlS9o7+7HFhzHVqppvMFJURQOO7Ima
-         8kF0O7xrm7W5Z/DgT7/OFLkcDSqe5bhSNY9KbfEJh65Nz7AaNViZ4LNnBRFzarEA5nxT
-         fBVcqCuMUrrybqPhhQURJNwaf+/JLumdH+Kd/YvgOumdEO3ixiuKrOZsCXuicWkRTGHg
-         LYMA==
-X-Gm-Message-State: AOAM5301AQS9PEZ9ahSmIqxsbVCek5hOJfgPM7B+K9Wge5v6f5nSaNch
-        tD7EmuzsgnMifjcQjv/sajdqSjkwt+s=
-X-Google-Smtp-Source: ABdhPJwSqSMi/JWGBcMShJLBEVjA6zxUrLf2vwIaU3GCM/ZEKm4WMUKzoYNOFm18c8AZqfhKtxYeBQ==
-X-Received: by 2002:a05:6e02:1303:: with SMTP id g3mr3541333ilr.218.1599203322685;
-        Fri, 04 Sep 2020 00:08:42 -0700 (PDT)
+        bh=udNH8yeHpFWVdd6YQu9UgrG4522T0NXseoi3Jzs2Z0A=;
+        b=YZ3u1f/FhG43WuSRbmmc4KDwwCBQ5hOaptZ3wOAJMbcUotlJ51eDZYQutHShiRlfHt
+         HhCuxrxPZnTUbFSgYhKgvwk4HTKr104F7oBp+W7A2C7begOXziI6eXlofKOdq6/198FP
+         getsIGsuBbDZqhhAUjKDRVZ/XPsPpkLCnEQ67q8/zzPzfrYgKhmXdFubvthM9SewT5Qq
+         x2/z1AEx24xQeI3nuYjSO0K/Njt2VQuMe1PoLOf28f3w+hZSBqxjpAKsntVcrP+stt0A
+         0AKj1bTe+6c8C669jzKkcJ1cAZlCup9V1GJvXQfnMEQAt7TxCideywqgw6cL5q1/6jNJ
+         YDTg==
+X-Gm-Message-State: AOAM530TqmwlkwKbMNBWwNNPWjfGJAkOGDBxuk8dsR40+nTvWtsj8pLK
+        g0A4Xn0HQrjbvD3TWpa5uuL66RBgPLA=
+X-Google-Smtp-Source: ABdhPJxNmiCTxUI4dedIh6IbchRGiiZY84eXAWZ5o3H9Md2t0E8ocUycONrTEsoPvEfu7UKvZaxT6A==
+X-Received: by 2002:a05:6e02:ee9:: with SMTP id j9mr4509233ilk.18.1599203321489;
+        Fri, 04 Sep 2020 00:08:41 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id n62sm2881950ild.36.2020.09.04.00.08.41
+        by smtp.gmail.com with ESMTPSA id n62sm2881950ild.36.2020.09.04.00.08.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Sep 2020 00:08:42 -0700 (PDT)
+        Fri, 04 Sep 2020 00:08:41 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Pratyush Yadav <me@yadavpratyush.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/3] worktree: add -d short option for --detach
-Date:   Fri,  4 Sep 2020 03:07:02 -0400
-Message-Id: <20200904070703.47898-3-sunshine@sunshineco.com>
+Subject: [PATCH 1/3] git-checkout.txt: document -d short option for --detach
+Date:   Fri,  4 Sep 2020 03:07:01 -0400
+Message-Id: <20200904070703.47898-2-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7
 In-Reply-To: <20200904070703.47898-1-sunshine@sunshineco.com>
 References: <20200904070703.47898-1-sunshine@sunshineco.com>
@@ -76,44 +76,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Like git-switch and git-checkout, git-worktree can check out a branch or
-set up a detached HEAD. However, unlike git-switch and git-checkout,
-git-worktree does not understand -d as shorthand for --detach, which may
-confound users accustomed to using -d for this purpose. Address this
-shortcoming by adding -d as shorthand for --detach in order to bring
-git-worktree in line with the other commands.
+git-checkout learned -d as short option for --detach in 163e3b2975
+(switch: add short option for --detach, 2019-03-29) but the
+documentation was never updated to reflect the change.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-worktree.txt | 1 +
- builtin/worktree.c             | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ Documentation/git-checkout.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 6ee6ec7982..d252b6873b 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -143,6 +143,7 @@ To remove a locked working tree, specify `--force` twice.
- 	exists. `-B` overrides this safeguard, resetting `<new-branch>` to
- 	`<commit-ish>`.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 5b697eee1b..afa5c11fd3 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -198,6 +198,7 @@ Use `--no-guess` to disable this.
+ 	Create the new branch's reflog; see linkgit:git-branch[1] for
+ 	details.
  
 +-d::
  --detach::
- 	With `add`, detach `HEAD` in the new working tree. See "DETACHED HEAD"
- 	in linkgit:git-checkout[1].
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 378f332b5d..1737165d2d 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -555,7 +555,7 @@ static int add(int ac, const char **av, const char *prefix)
- 			   N_("create a new branch")),
- 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
- 			   N_("create or reset a branch")),
--		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
-+		OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
- 		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
- 		OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+ 	Rather than checking out a branch to work on it, check out a
+ 	commit for inspection and discardable experiments.
 -- 
 2.28.0.618.gf4bc123cb7
 
