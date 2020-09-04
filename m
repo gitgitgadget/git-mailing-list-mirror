@@ -2,202 +2,158 @@ Return-Path: <SRS0=BZy3=CN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5604DC433E2
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 13:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 506D3C433E2
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 13:56:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17CC2204FD
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 13:51:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A5842073B
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 13:56:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vNB9VlhX"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PVTmhJgv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730411AbgIDNvc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Sep 2020 09:51:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54214 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730599AbgIDNux (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Sep 2020 09:50:53 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C559DC061244
-        for <git@vger.kernel.org>; Fri,  4 Sep 2020 06:50:52 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id e11so7581145wme.0
-        for <git@vger.kernel.org>; Fri, 04 Sep 2020 06:50:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OMHN2sRDo3HISlS+djK3EIMG9CH7BF9zgiacvZ4DG7I=;
-        b=vNB9VlhXfjxio2c21P7JQyFAwGuxnl+PzjxAKK/HikmT6dt8lP/4zwPPoDj/mYaE9f
-         8Qgp7tT6rIbU/HgJsX34AkcSu4oYHcCI6kAF1il6JYzlntLRs7WQ7Mfehp2xpvIoxO/l
-         zdhBqIBXxXP7ruqHxWd2Qk6FlfJGHUMBW+6KbQe4XocJsG3LWQKRMhudnnOfj5fOPSSt
-         unn8gKoJVbtWuhk7nUcWV4CPa87/o+5mwct1SHHiWJskqtkIQywEBathFndtcZRDXHm4
-         JkvVRfn3i1PPeV7TkmW52lMYJ8pSeAQi6dpDG01l6zXT04nau7l7R17Mxd0SuZxd1Mv0
-         0BJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OMHN2sRDo3HISlS+djK3EIMG9CH7BF9zgiacvZ4DG7I=;
-        b=fHbTFyIwcIv5yQqAurCdfLZ9Yfbu5yjSBMl4U+E6H5cMukyMrGclPee5jgKKn1fgDc
-         6KQQBQsL87v5Qvzvf9bDTnlulMaNZgw/zpMJKEO/cMCJOpaxvKezXzehN1p+rnPH1BmM
-         Rj9zrSJ8D2IWN20hvHPvjcU5L9XpS54x3mSVwNtX6T8ObxdBOdLvOV4cw9BaWeYOTSFK
-         xCELxJc9JkkZoTGw7aIpOzNBG4FR0T1x8VAX4a1IDAvb2ALzPORMZbx9ANGog7VxZvbn
-         I9HPGX4N4Y0emUa21zFYgJDH460/YJ3dEINKUnOxQUZierVXQ0uu6Y1gutSPWhwhp0Y6
-         t3qA==
-X-Gm-Message-State: AOAM530KXth/dZHH/hhxo/Buh7hk+9lUenlIGq/rJF0/AN6QtkwvC5QP
-        B1uozLn3qctDmPCMJAnGp69yIYm6PhA=
-X-Google-Smtp-Source: ABdhPJwtxonkNFUXxurdK1bYAJsH1l1eV1LmNypIvjBOWS7s/u+tElEcsGRdYnGMDsUIBihb4tho0w==
-X-Received: by 2002:a1c:2cd7:: with SMTP id s206mr8005599wms.165.1599227451142;
-        Fri, 04 Sep 2020 06:50:51 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t22sm2984138wmt.1.2020.09.04.06.50.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Sep 2020 06:50:50 -0700 (PDT)
-Message-Id: <pull.720.v2.git.1599227449987.gitgitgadget@gmail.com>
-In-Reply-To: <pull.720.git.1599056635276.gitgitgadget@gmail.com>
-References: <pull.720.git.1599056635276.gitgitgadget@gmail.com>
-From:   "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Sep 2020 13:50:49 +0000
-Subject: [PATCH v2] fetch: do not look for submodule changes in unchanged refs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1730727AbgIDN4z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Sep 2020 09:56:55 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50975 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730551AbgIDN4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Sep 2020 09:56:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1599227794;
+        bh=YJnVBkj1fOLO8HcOFCqwfdjhsoVxJT2K9QC818qj7Lc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PVTmhJgvNj/+EBYh1PT6LLVv/w0wUauoRyFnHh9qmrI7OtlCKupwhg9+f94J9bY5L
+         Poge39gz3+v3tfTTkk5JQ023drzVMLHnMJrepj9utEUPu13P6Ecycgcd7u//m5xf6a
+         ZifQSzvpXAg6M7wDaSEOU/bSohAP1Pkru24/A5mE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.169.176] ([89.1.212.11]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwZ4-1kZAR33Z1Q-00uFnp; Fri, 04
+ Sep 2020 15:56:33 +0200
+Date:   Fri, 4 Sep 2020 07:32:11 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Victor Toni <victor.toni@gmail.com>, git@vger.kernel.org
+Subject: Re: Aborting git rebase --edit-todo
+In-Reply-To: <xmqqa6y6ah8h.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2009040729010.56@tvgsbejvaqbjf.bet>
+References: <CAG0OSgeb0jcUmkjp+yzCPYkxQWCZFy3gYM9o7TfBGvtf4M08NQ@mail.gmail.com> <xmqqa6y6ah8h.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Orgad Shaneh <orgads@gmail.com>, Orgad Shaneh <orgads@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:IFOfEEUcVZtOtTZA095VGlpRNht/sakqjjtPGHLYW9SGrkVquWB
+ MHApz12+NCFiSFqK24wVqFfB1FvWe/iI9kuErecbewEv25+fQ2jK823ODujk7zkNSpX7cGD
+ 1jUOwwzCjjwAwQlbB00wDk8k66dCAYeZl6ezxjA9qcvVYu+0R03PZM2rBu0Jtj2C+s85AmO
+ 89TDVBGJGH2j/6TOvZ5pg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:keqhWLM/Nv8=:FdWCdjtWT8TkB5l3Qw6zUG
+ hVBXXXfVIhhBGsXK1uXpdGfCBJl8WLr0uJ8Rrr9JmFPyQKcGKgGFN61DbgtpmZF+GFu4PdPxO
+ RUP6WCg8D1lvpOLpxxNeut6iPmFj6NVmbcSCJ6xEQYunmnh1cyT/JiH4kFAKMDFK4KhFzu+Rr
+ eqTPq3fSGcGbO2FYydUuyZ1IhNV6HJ3tu9df1ncjgywb4nL/fe7K5ZBMJoK6ZuDW9WgzAebFD
+ sGJuNu7nsbNmkrHsGfpsdqHixqfmzrhlHskrHliFrBzu3s1ozsq7FmbFF0zJJkr3rKLXepO9J
+ RHOmeIwCMwdf8e7GIq03DpEI3+FIlRi2d3gHrPRYX0I5cuGxcmrVLuoGrMxreFPX9zHkKdfdU
+ kBBkP9DxO2jRUj7zkTTENJBO49XMdEyzPq8CU69ORpH719Jr8+8aycDNWTWrzUJwdT4k8AjOz
+ 6S8Lwaz0iXrNcq0LlG6g0xUAuiJIB1MQJaXhsb+4CY9htsibGcDGOYJuLbvwxKXach9BkXpx3
+ wg6qcf1Qe0uIjmEZdb9an+2cegkDS5xWRl0Fclbcpf1WYvNPu0Xjg5NPT+kUBE+MWLnRc0ypl
+ LSWlYi2nU19AwnvrAI1gkPuNsFB3MyuKYDla2l++XdTDgbmVZd2J9LJBpBDjeFk2r1+tILspY
+ l3LOItxLtv6N7cPZJUW0vmxlYU/+oy/AuMvL9D3sL1+27qQkvEMFW/yxHAWwQNTWANa9R/bUi
+ LWEzUz77Q4f0QcGXMdHcpKGE9Fogv6NeabZK/0FD5YnbCwwWUXO/z5CMyKFudeWl9vX0pWdLp
+ tzP5sNc5hLQlca7XgZrAqe0T68UeqWOiELcjFjB8D9/QyDhWPPf2uz2YjgBDchJt6PUoyRZ2r
+ YbeWhSIwufrDGZm1QEtlF11PehevpNiQr/E3Q+Z0gNXtINvFqYVe5fsre1W9wvN0dY3uOKaBv
+ CdlwvcJlj8ErEzxYWJHuwsChYWm+6ZHv8b44pK+BUlexyIMj7xu36yZWmQSRK82DrY65U3a93
+ gX8IN5NTiqIgmdi/oTX6ZFMUxRO8ruB/4ImDEZMcZ28bIX3C3kb0+aE2vPW6nToUjhS+oAKGC
+ lFU6dGqpXEXfEJMDd0ODI/PmYFbqnMBSq03/1/AQyx+68SJJBZAUn1/vyi+B87HKY3mCUilIt
+ zgI/5DfE1spYmob5quvo1c0xO7tKMBU+OO2gl0wS33Y5HGq0pUa3v7X0xJhlWOcLhKu0Hi65E
+ /mntPMN1eDklRrrnTudLszpal21isKaM+SEqbWQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Orgad Shaneh <orgads@gmail.com>
+Hi Junio & Victor,
 
-When fetching recursively with submodules, for each ref in the
-superproject, we call check_for_new_submodule_commits() which collects all
-the objects that have to be checked for submodule changes on
-calculate_changed_submodule_paths(). On the first call, it also collects all
-the existing refs for excluding them from the scan.
+On Thu, 3 Sep 2020, Junio C Hamano wrote:
 
-calculate_changed_submodule_paths() creates an argument array with all the
-collected new objects, followed by --not and all the old objects. This argv
-is passed to setup_revisions, which parses each argument, converts it back
-to an oid and resolves the object. The parsing itself also does redundant
-work, because it is treated like user input, while in fact it is a full
-oid. So it needlessly attempts to look it up as ref (checks if it has ^, ~
-etc.), checks if it is a file name etc.
+> Victor Toni <victor.toni@gmail.com> writes:
+>
+> > When doing a commit or choosing what to do for an interactive rebase
+> > one can just wipe the whole content of the editor, save and close to
+> > abort the action.
+> > While doing a `git rebase --edit-todo` I came to the conclusion that I
+> > would like to abort the edit and did the same. The final `git rebase
+> > --continue` got me rid of the rest of the commits...
+> > (Fortunately the "missing" commits could be rescued by looking into
+> > `.git/logs/HEAD` so thumbs up for that. )
+> > Unfortunately the behaviour of `--edit-todo` was a bit surprising and
+> > somehow doesn't feel consistent with the other actions involving an
+> > editor.
+> >
+> > Can this be considered a bug?
+>
+> It is rather unusual (or almost always wrong) to have a totally
+> empty commit log or initial todo list, so it is understandable for
+> Git in these situations to stop without doing anything further.
+>
+> There is no other sensible interpretations of what you are telling
+> Git to you by returning an empty buffer---it is extremely unlikely
+> you want to create a commit with no log message (without explicitly
+> allowing it with --allow-empty-message, the command is likely to
+> fail anyway), and it is extremely unlikely that you wanted to just
+> reset the tip of the branch to the --onto commit.
+>
+> Once an interactive rebase session has started and you are given the
+> remainder of the steps to edit and you give an empty buffer back,
+> however, there are two possible interpretations that are equally
+> sensible, I would think.
+>
+>  - One is that you are signaling that you are done with the rebase
+>    session and all the remaining commits are to be discarded.
+>
+>  - The other is that you botched editing the todo list, and you wish
+>    Git to give you another chance to edit it again.
+>
+> I think the implementor chose the first interpretation.  The "drop"
+> insn is a relatively recent invention, and back when it was missing
+> from the vocabulary, I do not think it was possible to say " discard
+> all the rest" without emptying the todo list, so that design is
+> understandable.
+>
+> Now we have the "drop" verb, the latter interpretation becomes
+> possible without making it impossible for the user to express the
+> former.  It might be a good idea to
+>
+>  (1) save away the original before allowing --edit-todo to edit,
+>
+>  (2) open the editor, and
+>
+>  (3) when getting an empty buffer back, go back to step (2) using
+>      the back-up made in step (1).
+>
+> Either way, the todo list editor buffer can have additional comment
+> instructing what happens when the buffer is emptied.
+>
+> I have no strong opinion on this one myself.  Deferring to Dscho,
+> who may have a lot more to say on the design issue around this
+> feature than I do.
 
-For a repository with many refs, all of this is expensive. But if the fetch
-in the superproject did not update the ref (i.e. the objects that are
-required to exist in the submodule did not change), there is no need to
-include it in the list.
+First of all, some historical background: the idea that deleting
+everything in the todo list aborts the rebase *predates* `git rebase
+=2D-edit-todo` by quite a bit, in fact, that idea was implemented in eithe=
+r
+the very first version of `git rebase -i` or at least very, very short
+thereafter.
 
-Before commit be76c212 (fetch: ensure submodule objects fetched,
-2018-12-06), submodule reference changes were only detected for refs that
-were changed, but not for new refs. This commit covered also this case, but
-what it did was to just include every ref.
+This idea came from the fact that deleting the commit message would abort
+a `git commit`.
 
-This change should reduce the number of scanned refs by about half (except
-the case of a no-op fetch, which will not scan any ref), because all the
-existing refs will still be listed after --not.
+In the meantime, `--edit-todo` is a thing (where this behavior makes a lot
+less sense), and `drop` is also a thing.
 
-The regression was reported here:
-https://public-inbox.org/git/CAGHpTBKSUJzFSWc=uznSu2zB33qCSmKXM-
-iAjxRCpqNK5bnhRg@mail.gmail.com/
+I agree that it may be a good time to deprecate that behavior, after
+introducing a new verb `abort` or something like that.
 
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
----
-    fetch: do not look for submodule changes in unchanged refs
-    
-    This operation is very expensive, as it scans all the refs using
-    setup_revisions, which resolves each ref, including checking if it is
-    ambiguous, or if it is a file name etc.
-    
-    There is no reason to do all that for refs that hasn't changed in this
-    fetch.
-    
-    Reported here:
-    https://public-inbox.org/git/CAGHpTBKSUJzFSWc=uznSu2zB33qCSmKXM-iAjxRCpqNK5bnhRg@mail.gmail.com/
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-720%2Forgads%2Ffetch-less-submodules-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-720/orgads/fetch-less-submodules-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/720
-
-Range-diff vs v1:
-
- 1:  0f978f487d ! 1:  5348cd7ec8 fetch: do not look for submodule changes in unchanged refs
-     @@ Metadata
-       ## Commit message ##
-          fetch: do not look for submodule changes in unchanged refs
-      
-     -    This operation is very expensive, as it scans all the refs using
-     -    setup_revisions, which resolves each ref, including checking if it
-     -    is ambiguous, or if it is a file name etc.
-     +    When fetching recursively with submodules, for each ref in the
-     +    superproject, we call check_for_new_submodule_commits() which collects all
-     +    the objects that have to be checked for submodule changes on
-     +    calculate_changed_submodule_paths(). On the first call, it also collects all
-     +    the existing refs for excluding them from the scan.
-      
-     -    There is no reason to do all that for refs that haven't changed in this
-     -    fetch.
-     +    calculate_changed_submodule_paths() creates an argument array with all the
-     +    collected new objects, followed by --not and all the old objects. This argv
-     +    is passed to setup_revisions, which parses each argument, converts it back
-     +    to an oid and resolves the object. The parsing itself also does redundant
-     +    work, because it is treated like user input, while in fact it is a full
-     +    oid. So it needlessly attempts to look it up as ref (checks if it has ^, ~
-     +    etc.), checks if it is a file name etc.
-      
-     -    Reported here:
-     -    https://public-inbox.org/git/CAGHpTBKSUJzFSWc=uznSu2zB33qCSmKXM-iAjxRCpqNK5bnhRg@mail.gmail.com/
-     +    For a repository with many refs, all of this is expensive. But if the fetch
-     +    in the superproject did not update the ref (i.e. the objects that are
-     +    required to exist in the submodule did not change), there is no need to
-     +    include it in the list.
-      
-     -    Amends commit be76c2128234d94b47f7087152ee55d08bb65d88.
-     +    Before commit be76c212 (fetch: ensure submodule objects fetched,
-     +    2018-12-06), submodule reference changes were only detected for refs that
-     +    were changed, but not for new refs. This commit covered also this case, but
-     +    what it did was to just include every ref.
-     +
-     +    This change should reduce the number of scanned refs by about half (except
-     +    the case of a no-op fetch, which will not scan any ref), because all the
-     +    existing refs will still be listed after --not.
-     +
-     +    The regression was reported here:
-     +    https://public-inbox.org/git/CAGHpTBKSUJzFSWc=uznSu2zB33qCSmKXM-
-     +    iAjxRCpqNK5bnhRg@mail.gmail.com/
-      
-          Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-      
-
-
- builtin/fetch.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 0f23dd4b8c..d3f922fc89 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -958,8 +958,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				ref->force = rm->peer_ref->force;
- 			}
- 
--			if (recurse_submodules != RECURSE_SUBMODULES_OFF)
-+			if (recurse_submodules != RECURSE_SUBMODULES_OFF &&
-+			    (!rm->peer_ref || !oideq(&ref->old_oid, &ref->new_oid))) {
- 				check_for_new_submodule_commits(&rm->old_oid);
-+			}
- 
- 			if (!strcmp(rm->name, "HEAD")) {
- 				kind = "";
-
-base-commit: e19713638985533ce461db072b49112da5bd2042
--- 
-gitgitgadget
+Ciao,
+Dscho
