@@ -2,109 +2,537 @@ Return-Path: <SRS0=BZy3=CN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5F91C52D6D
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 18:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06479C433E2
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 18:53:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8219225372
-	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 18:04:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B89A620665
+	for <git@archiver.kernel.org>; Fri,  4 Sep 2020 18:53:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="KnKqp4hM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qUzkSJ3W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726938AbgIDReE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Sep 2020 13:34:04 -0400
-Received: from mout.web.de ([212.227.17.12]:34249 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725984AbgIDReD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Sep 2020 13:34:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1599240838;
-        bh=th+ztNrkvD4FWRDp/HMYuSRXUbqfrC/v7PV/c8Nx24U=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=KnKqp4hMPNe/xveDUnXFw3EJ4AONay2emNR9HqVOUpcmTh4wmJmGZrv2f57+0QRa3
-         2s/jzor3X8VHRkTu1mtktRjKLHOzvcPfXcoj/TMFd8h5rXrc0pCvRQqQnvBjsnBV3l
-         ONB+8TaOz/euLMQuPzBhGXJeO6stfvvFr0242l0A=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSJGB-1k7GPN3Dsx-00TRFK; Fri, 04
- Sep 2020 19:33:58 +0200
-Subject: [PATCH] read-cache: fix mem-pool allocation for multi-threaded index
- loading
-To:     Sandor Bodo-Merle <sbodomerle@gmail.com>, newren@gmail.com
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <CABLWAfQhWUSUS8p2XoGcNMUAp-vatD+-pDMngiJJW5qHG2CYCQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <dbccbf13-9ebb-2464-4325-cac4c7767f74@web.de>
-Date:   Fri, 4 Sep 2020 19:33:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726208AbgIDSxG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Sep 2020 14:53:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726047AbgIDSxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Sep 2020 14:53:05 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2D2DC061244
+        for <git@vger.kernel.org>; Fri,  4 Sep 2020 11:53:05 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id s10so1586446plp.1
+        for <git@vger.kernel.org>; Fri, 04 Sep 2020 11:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=heycKceXRpDyKao0Ponuo8xJ4NCCAuzU/z8yPsvKof4=;
+        b=qUzkSJ3Wt0wCJecRt3emmFNa79d2MB6Fqgdz36m/UsvokzsWQDv3AGlDu2Tw3zNNs+
+         uNhBqdvEgi6fbkahSHzQ1SRvhMEW2QFseb2XPDnpdxHwZpQF30eq5ncV663RnO+XipDX
+         Tfq3OegLe2dh+1ezg3GfrqQWgiRDv9nQSgWyYJpOCCuk0mtp6tsGMAUYE8rVIYyBzNLW
+         WaM6J8U7CN1uFSaIiK7kTAem/QYqyXZCVuRHOzpIFJq15ceFjvp7SXuIjdDcKXjFfL3j
+         Ei9zJwYQy6n+kc0wX+8d7cdCINJN+Clupf85ly5pyOmUbLQhwiPlcrOAX0PuVMm49kHI
+         Rq8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=heycKceXRpDyKao0Ponuo8xJ4NCCAuzU/z8yPsvKof4=;
+        b=HnL0QLOqroEJ3Kp0UPZL8dFlG3SlQp4mECNFNo4y37IqTLf7TApRs2N+7nYV8GJJb6
+         fL7tjSArXV5jx58k8ywALGwoHqdj3bJ1aw8lPoI4fID28KkmaNkLVlgMHUcWDakrxm7Y
+         rktU6wBK6fMswKyZLCu7/pNsba2NTXqSXg3Qi53wA2NaCnIitrTUMUXwEgH0rIybkw0F
+         2GKodnTwDrg0w11Zmf6THe6ZadV6ErbO4UyH6C0mxXsgqApk0wWmV2NfQE4bcP2DwMFa
+         sdsm3XAd0rntbZG+CpQkgnF4zaZKLvmvZ4fPO/6Q8+wNDUQjmDhCmrIMb9ABxG5TUMpl
+         rBAw==
+X-Gm-Message-State: AOAM530DY6Vf7+BC9DuPiDhwBGrfAL+Fl3JnY5AlTKHnr0PT97Dvg3DU
+        thopzrT/MeazCT3EoM+M+91TPaIWZppKZ0mX
+X-Google-Smtp-Source: ABdhPJx0/yEbccWh2SIJc+/N1SwvcGGfVHXat+Dk5cCZFtjZlZozP6k/H7axEwGb4O1FZqb2rHJ4CA==
+X-Received: by 2002:a17:90a:8c8f:: with SMTP id b15mr9373226pjo.84.1599245584382;
+        Fri, 04 Sep 2020 11:53:04 -0700 (PDT)
+Received: from localhost.localdomain ([124.123.105.81])
+        by smtp.gmail.com with ESMTPSA id u15sm6143651pjx.50.2020.09.04.11.53.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Sep 2020 11:53:03 -0700 (PDT)
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+Subject: [PATCH] push: make `--force-with-lease[=<ref>]` safer
+Date:   Sat,  5 Sep 2020 00:21:47 +0530
+Message-Id: <20200904185147.77439-1-shrinidhi.kaushik@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <CABLWAfQhWUSUS8p2XoGcNMUAp-vatD+-pDMngiJJW5qHG2CYCQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0eT7ykbDYjzFEXh726y/J438IwvwbvufF4nSig0TKN9NqYI+r4U
- mJ+6VeLYSLL2l7jYqNDH+WSXMML5vt50L1C5S0TifqT73daZm2PXrik8ylm3jr6CCXOa9Rv
- QvvpHoVJCgSChXXf4snlczcGJM71FHERmjtf0GNOy0dxvp9X/X3E1n7BrMAMfmbbTvv7Yyb
- ib1UqIQm94oasQIyW5W1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:j10N6kB5YwI=:NC42E+QCN78OR/hW8oSdZ/
- aMEKsk9clICr1FkeKpGHVwU+IeR+TQD0JgtTlwFZ1+gc+2BeWjJoATJExrmJrG6gdideE57lt
- HHPxRfE4IGgMH1OrQ6Wilw9tVaqQt2nnzhfe2RvHAY1/oS16pG1OAkXAagvM4vI3lillgr8SO
- YuCifCOCFsxAFlpn5iKP/pTHWdTDPrrVDv51MVqPUi9iR+HILhnw3s2qYd0wT/fvRjhhg6seX
- FfXM8YQdezH3y8hSIxH18yyt+cLCNflVtkG1JK90VBHgmOrtettmc7kKyFRW1zVR2P/jFK0/k
- EX9MkUMuQfXgQhM3AwbwUa0Mfj+M3I26QXgTNf6tglRdL0Nyzrw/xFlyDUIyKMGuv3AopnMYY
- RM5pM3hDtL6yegej5E8eeTmpkOVbDPuEY5LnRdFObPYvfolnhk3elvI4+1VkrmiUm5Yo/I5f6
- G+eHFLvZMru7ztxHXfNzGO59Ua9wn3WDAvYGYm/7ggfJt0rLHlGeJf7SpVUIo5kMebrkb0M1/
- cfSAa0YlU7geoeLqqePJYLo6mZRju9pvWn4cbR6qPqmMuLSLa4Hb/2VT0G6t5tx3M8HbJFgaK
- LoTJW/ZeRDfN2QMTX7bGDYoUtK4Dcb+TorTou9ocohF0WttTCJ8j1iwjyq+Y+j1herbfNgw6P
- p/q53eWDw92xueRVNKtmcL27qHqX4BHPcuOGCpvRo9pqXstUluMclmKyL1G2hhCfgRsAyxO4f
- 1UzdXF9/l5USXOzI2khV0tXvtVWU18zCxJTPym85h4MXItbvulvGoXP6qWGJqGcoGMqw8eNB+
- z+HN4l7A9QjODGfyPu4eKPfmESLZVeckBbti2Ks49uwx0GLt/1CeC0DI56vIb42359jqfjCAL
- m4/UZewVlORy4r4sfwb8zo6xh4Glasse/37SgXYZF8xCINoUaeJ4MYEOHzB6xDQEN6bElGVNS
- VTIrqZUA2SEjncSDkwqDFPOZ6EwjrlQAWj+b91sisz0BzGF/wDyFnuYu2X9fUk7EY03kuYgly
- DwUrION3nQLz0FbjO9oAX0aSqRfK1ZVh64eQbaEaaGuxalQmA0d+XcxSVWeohs1PNQJy5v9iI
- 8e8onpDM2EOskyJElG/CqcGy4i50/hv+sxgOhC5rPp/w0Jt+AfGk64fUTiaHiIpMdX2MZdXb7
- nQq/0bZxEMnpBKGd+G7njEbA313kj+d/ZlHHdI6njy7PiEnj2Kh9ZpnWpSj71ZAUWOlysfjmB
- LNWrdqwtePs3YV5a/
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-44c7e1a7e0 (mem-pool: use more standard initialization and finalization,
-2020-08-15) moved the allocation of the mem-pool structure to callers.
-It also added an allocation to load_cache_entries_threaded(), but for an
-unrelated mem-pool.  Fix that by allocating the correct one instead --
-the one that is initialized two lines later.
+The `--force-with-lease` option in `git-push`, makes sure that
+refs on remote aren't clobbered by unexpected changes when the
+"<expect>" ref value is explicitly specified.
 
-Reported-by: Sandor Bodo-Merle <sbodomerle@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-"GIT_TEST_INDEX_THREADS=3D3 make test" passes with this patch, but fails a
-lot without it.
+For other cases (i.e., `--force-with-lease[=<ref>]`) where the tip
+of the remote tracking branch is populated as the "<expect>" value,
+there is a possibility of allowing unwanted overwrites on the remote
+side when some tools that implicitly fetch remote-tracking refs in
+the background are used with the repository. If a remote-tracking ref
+was updated when a rewrite is happening locally and if those changes
+are pushed by omitting the "<expect>" value in `--force-with-lease`,
+any new changes from the updated tip will be lost locally and will
+be overwritten on the remote.
 
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This problem can be addressed by checking the `reflog` of the branch
+that is being pushed and verify if there in a entry with the remote
+tracking ref. By running this check, we can ensure that refs being
+are fetched in the background while a "lease" is being held are not
+overlooked before a push, and any new changes can be acknowledged
+and (if necessary) integrated locally.
 
-diff --git a/read-cache.c b/read-cache.c
-index fa291cdbee..ecf6f68994 100644
-=2D-- a/read-cache.c
-+++ b/read-cache.c
-@@ -2101,7 +2101,7 @@ static unsigned long load_cache_entries_threaded(str=
-uct index_state *istate, con
- 		nr =3D 0;
- 		for (j =3D p->ieot_start; j < p->ieot_start + p->ieot_blocks; j++)
- 			nr +=3D p->ieot->entries[j].nr;
--		istate->ce_mem_pool =3D xmalloc(sizeof(*istate->ce_mem_pool));
-+		p->ce_mem_pool =3D xmalloc(sizeof(*istate->ce_mem_pool));
- 		if (istate->version =3D=3D 4) {
- 			mem_pool_init(p->ce_mem_pool,
- 				estimate_cache_size_from_compressed(nr));
-=2D-
+The new check will cause `git-push` to fail if it detects the presence
+of any updated refs that we do not have locally and reject the push
+stating `implicit fetch` as the reason.
+
+An experimental configuration setting: `push.rejectImplicitFetch`
+which defaults to `true` (when `features.experimental` is enabled)
+has been added, to allow `git-push` to reject a push if the check
+fails.
+
+Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+---
+
+Hello,
+I picked this up from #leftoverbits over at GitHub [1] from the open
+issues list. This idea [2], for a safer `--force-with-lease` was
+originally proposed by Johannes on the mailing list.
+
+[1]: https://github.com/gitgitgadget/git/issues/640
+[2]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.1808272306271.73@tvgsbejvaqbjf.bet/
+
+Thanks.
+
+ Documentation/config/feature.txt |  3 +
+ Documentation/config/push.txt    | 14 +++++
+ Documentation/git-push.txt       |  6 ++
+ builtin/send-pack.c              |  5 ++
+ remote.c                         | 96 +++++++++++++++++++++++++++++---
+ remote.h                         |  4 +-
+ send-pack.c                      |  1 +
+ t/t5533-push-cas.sh              | 86 ++++++++++++++++++++++++++++
+ transport-helper.c               |  5 ++
+ transport.c                      |  5 ++
+ 10 files changed, 217 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+index c0cbf2bb1c..f93e9fd898 100644
+--- a/Documentation/config/feature.txt
++++ b/Documentation/config/feature.txt
+@@ -18,6 +18,9 @@ skipping more commits at a time, reducing the number of round trips.
+ * `protocol.version=2` speeds up fetches from repositories with many refs by
+ allowing the client to specify which refs to list before the server lists
+ them.
+++
++* `push.rejectImplicitFetch=true` runs additional checks for linkgit:git-push[1]
++`--force-with-lease` to mitigate implicit updates of remote-tracking refs.
+
+ feature.manyFiles::
+ 	Enable config options that optimize for repos with many files in the
+diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+index f5e5b38c68..1a7184034d 100644
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -114,3 +114,17 @@ push.recurseSubmodules::
+ 	specifying '--recurse-submodules=check|on-demand|no'.
+ 	If not set, 'no' is used by default, unless 'submodule.recurse' is
+ 	set (in which case a 'true' value means 'on-demand').
++
++push.rejectImplicitFetch::
++	If set to `true`, runs additional checks for the `--force-with-lease`
++	option when used with linkgit:git-push[1] if the expected value for
++	the remote ref is unspecified (`--force-with-lease[=<ref>]`), and
++	instead asked depend on the current value of the remote-tracking ref.
++	The check ensures that the commit at the tip of the remote-tracking
++	branch -- which may have been implicitly updated by tools that fetch
++	remote refs by running linkgit:git-fetch[1] in the background -- has
++	been integrated locally, when holding the "lease". If the new changes
++	from such remote-tracking refs have not been updated locally before
++	pushing, linkgit:git-push[1] will fail indicating the reject reason
++	as `implicit fetch`. Enabling `feature.experimental` makes this option
++	default to `true`.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 3b8053447e..2176a743f3 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -320,6 +320,12 @@ seen and are willing to overwrite, then rewrite history, and finally
+ force push changes to `master` if the remote version is still at
+ `base`, regardless of what your local `remotes/origin/master` has been
+ updated to in the background.
+++
++Alternatively, setting the (experimental) `push.rejectImplicitFetch` option
++to `true` will ensure changes from remote-tracking refs that are updated in the
++background using linkgit:git-fetch[1] are accounted for (either by integrating
++them locally, or explicitly specifying an overwrite), by rejecting to update
++such refs.
+
+ -f::
+ --force::
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 2b9610f121..6500a8267a 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -69,6 +69,11 @@ static void print_helper_status(struct ref *ref)
+ 			msg = "stale info";
+ 			break;
+
++		case REF_STATUS_REJECT_IMPLICIT_FETCH:
++			res = "error";
++			msg = "implicit fetch";
++			break;
++
+ 		case REF_STATUS_REJECT_ALREADY_EXISTS:
+ 			res = "error";
+ 			msg = "already exists";
+diff --git a/remote.c b/remote.c
+index c5ed74f91c..ee2dedd15b 100644
+--- a/remote.c
++++ b/remote.c
+@@ -49,6 +49,8 @@ static const char *pushremote_name;
+ static struct rewrites rewrites;
+ static struct rewrites rewrites_push;
+
++static struct object_id cas_reflog_check_oid;
++
+ static int valid_remote(const struct remote *remote)
+ {
+ 	return (!!remote->url) || (!!remote->foreign_vcs);
+@@ -1446,6 +1448,22 @@ int match_push_refs(struct ref *src, struct ref **dst,
+ 	return 0;
+ }
+
++/*
++ * Consider `push.rejectImplicitFetch` to be set to true if experimental
++ * features are enabled; use user-defined value if set explicitly.
++ */
++int reject_implicit_fetch()
++{
++	int conf = 0;
++	if (!git_config_get_bool("push.rejectImplicitFetch", &conf))
++		return conf;
++
++	if (!git_config_get_bool("feature.experimental", &conf))
++		return conf;
++
++	return conf;
++}
++
+ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 			     int force_update)
+ {
+@@ -1471,16 +1489,21 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		 * If the remote ref has moved and is now different
+ 		 * from what we expect, reject any push.
+ 		 *
+-		 * It also is an error if the user told us to check
+-		 * with the remote-tracking branch to find the value
+-		 * to expect, but we did not have such a tracking
+-		 * branch.
++		 * It also is an error if the user told us to check with the
++		 * remote-tracking branch to find the value to expect, but we
++		 * did not have such a tracking branch, or we have one that
++		 * has new changes.
+ 		 */
+ 		if (ref->expect_old_sha1) {
+ 			if (!oideq(&ref->old_oid, &ref->old_oid_expect))
+ 				reject_reason = REF_STATUS_REJECT_STALE;
++			else if (reject_implicit_fetch() && ref->implicit_fetch)
++				reject_reason = REF_STATUS_REJECT_IMPLICIT_FETCH;
+ 			else
+-				/* If the ref isn't stale then force the update. */
++				/*
++				 * If the ref isn't stale, or there was no
++				 * implicit fetch, force the update.
++				 */
+ 				force_ref_update = 1;
+ 		}
+
+@@ -2272,23 +2295,67 @@ static int remote_tracking(struct remote *remote, const char *refname,
+ 	return 0;
+ }
+
++static int oid_in_reflog_ent(struct object_id *ooid, struct object_id *noid,
++			     const char *ident, timestamp_t timestamp, int tz,
++			     const char *message, void *cb_data)
++{
++	return oideq(noid, &cas_reflog_check_oid);
++}
++
++/*
++ * Iterate through the reflog of a local branch and check if the tip of the
++ * remote-tracking branch is reachable from one of the entries.
++ */
++static int remote_ref_in_reflog(const struct object_id *r_oid,
++				const struct object_id *l_oid,
++				const char *local_ref_name)
++{
++	int ret = 0;
++	cas_reflog_check_oid = *r_oid;
++
++	struct commit *r_commit, *l_commit;
++	l_commit = lookup_commit_reference(the_repository, l_oid);
++	r_commit = lookup_commit_reference(the_repository, r_oid);
++
++	/*
++	 * If the remote-tracking ref is an ancestor of the local ref (a merge,
++	 * for instance) there is no need to iterate through the reflog entries
++	 * to ensure reachability; it can be skipped to return early instead.
++	 */
++	ret = (r_commit && l_commit) ? in_merge_bases(r_commit, l_commit) : 0;
++	if (ret)
++		goto skip;
++
++	ret = for_each_reflog_ent_reverse(local_ref_name,
++					  oid_in_reflog_ent,
++					  NULL);
++skip:
++	return ret;
++}
++
+ static void apply_cas(struct push_cas_option *cas,
+ 		      struct remote *remote,
+ 		      struct ref *ref)
+ {
+-	int i;
++	int i, do_reflog_check = 0;
++	struct object_id oid;
++	struct ref *local_ref = get_local_ref(ref->name);
+
+ 	/* Find an explicit --<option>=<name>[:<value>] entry */
+ 	for (i = 0; i < cas->nr; i++) {
+ 		struct push_cas *entry = &cas->entry[i];
+ 		if (!refname_match(entry->refname, ref->name))
+ 			continue;
++
+ 		ref->expect_old_sha1 = 1;
+ 		if (!entry->use_tracking)
+ 			oidcpy(&ref->old_oid_expect, &entry->expect);
+ 		else if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
+ 			oidclr(&ref->old_oid_expect);
+-		return;
++		else
++			do_reflog_check = 1;
++
++		goto reflog_check;
+ 	}
+
+ 	/* Are we using "--<option>" to cover all? */
+@@ -2298,6 +2365,21 @@ static void apply_cas(struct push_cas_option *cas,
+ 	ref->expect_old_sha1 = 1;
+ 	if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
+ 		oidclr(&ref->old_oid_expect);
++	else
++		do_reflog_check = 1;
++
++reflog_check:
++	/*
++	 * For cases where "--force-with-lease[=<refname>]" i.e., when the
++	 * "<expect>" value is unspecified, run additional checks to verify
++	 * if the tip of the remote-tracking branch (if implicitly updated
++	 * when a "lease" is being held) is reachable from at least one entry
++	 * in the reflog of the local branch that is being pushed, ensuring
++	 * new changes (if any) have been integrated locally.
++	 */
++	if (do_reflog_check && local_ref && !read_ref(local_ref->name, &oid))
++		ref->implicit_fetch = !remote_ref_in_reflog(&ref->old_oid, &oid,
++							    local_ref->name);
+ }
+
+ void apply_push_cas(struct push_cas_option *cas,
+diff --git a/remote.h b/remote.h
+index 5e3ea5a26d..f859fa5fed 100644
+--- a/remote.h
++++ b/remote.h
+@@ -104,7 +104,8 @@ struct ref {
+ 		forced_update:1,
+ 		expect_old_sha1:1,
+ 		exact_oid:1,
+-		deletion:1;
++		deletion:1,
++		implicit_fetch:1;
+
+ 	enum {
+ 		REF_NOT_MATCHED = 0, /* initial value */
+@@ -133,6 +134,7 @@ struct ref {
+ 		REF_STATUS_REJECT_FETCH_FIRST,
+ 		REF_STATUS_REJECT_NEEDS_FORCE,
+ 		REF_STATUS_REJECT_STALE,
++		REF_STATUS_REJECT_IMPLICIT_FETCH,
+ 		REF_STATUS_REJECT_SHALLOW,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+diff --git a/send-pack.c b/send-pack.c
+index 632f1580ca..fe7f14add4 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -240,6 +240,7 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
+ 	case REF_STATUS_REJECT_FETCH_FIRST:
+ 	case REF_STATUS_REJECT_NEEDS_FORCE:
+ 	case REF_STATUS_REJECT_STALE:
++	case REF_STATUS_REJECT_IMPLICIT_FETCH:
+ 	case REF_STATUS_REJECT_NODELETE:
+ 		return CHECK_REF_STATUS_REJECTED;
+ 	case REF_STATUS_UPTODATE:
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index 0b0eb1d025..840b2a95f9 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -13,6 +13,41 @@ setup_srcdst_basic () {
+ 	)
+ }
+
++setup_implicit_fetch () {
++	rm -fr src dup dst &&
++	git init --bare dst &&
++	git clone --no-local dst src &&
++	git clone --no-local dst dup
++	(
++		cd src &&
++		test_commit A &&
++		git push
++	) &&
++	(
++		cd dup &&
++		git fetch &&
++		git merge origin/master &&
++		test_commit B &&
++		git switch -c branch master~1 &&
++		test_commit C &&
++		test_commit D &&
++		git push --all
++	) &&
++	(
++		cd src &&
++		git switch master &&
++		git fetch --all &&
++		git branch branch --track origin/branch &&
++		git merge origin/master
++	) &&
++	(
++		cd dup &&
++		git switch master &&
++		test_commit E &&
++		git push origin master:master
++	)
++}
++
+ test_expect_success setup '
+ 	# create template repository
+ 	test_commit A &&
+@@ -256,4 +291,55 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
+ 	)
+ '
+
++test_expect_success 'implicit updates to remote-tracking refs with `push.rejectImplicitFetch` set (protected, all refs)' '
++	setup_implicit_fetch &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	git ls-remote dst refs/heads/master >expect.branch &&
++	(
++		cd src &&
++		git switch master &&
++		test_commit G &&
++		git switch branch &&
++		test_commit H &&
++		git fetch --all &&
++		git config --local feature.experimental true &&
++		test_must_fail git push --force-with-lease --all 2>err &&
++		grep "implicit fetch" err
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	git ls-remote dst refs/heads/master >actual.branch &&
++	test_cmp expect.master actual.master &&
++	test_cmp expect.branch actual.branch &&
++	(
++		cd src &&
++		git config --local feature.experimental false &&
++		git push --force-with-lease --all 2>err &&
++		grep "forced update" err
++	)
++'
++
++test_expect_success 'implicit updates to remote-tracking refs with `push.rejectImplicitFetch` set (protected, specific ref)' '
++	setup_implicit_fetch &&
++	git ls-remote dst refs/heads/master >actual &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit F &&
++		git switch master &&
++		test_commit G &&
++		git fetch  &&
++		git config --local push.rejectImplicitFetch true &&
++		test_must_fail git push --force-with-lease=master --all 2>err &&
++		grep "implicit fetch" err
++	) &&
++	git ls-remote dst refs/heads/master >expect &&
++	test_cmp expect actual &&
++	(
++		cd src &&
++		git push --force --force-with-lease --all 2>err &&
++		grep "forced update" err
++	)
++'
++
+ test_done
+diff --git a/transport-helper.c b/transport-helper.c
+index c52c99d829..75b4c1b758 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -779,6 +779,10 @@ static int push_update_ref_status(struct strbuf *buf,
+ 			status = REF_STATUS_REJECT_STALE;
+ 			FREE_AND_NULL(msg);
+ 		}
++		else if (!strcmp(msg, "ignored fetch")) {
++			status = REF_STATUS_REJECT_IMPLICIT_FETCH;
++			FREE_AND_NULL(msg);
++		}
+ 		else if (!strcmp(msg, "forced update")) {
+ 			forced = 1;
+ 			FREE_AND_NULL(msg);
+@@ -896,6 +900,7 @@ static int push_refs_with_push(struct transport *transport,
+ 		switch (ref->status) {
+ 		case REF_STATUS_REJECT_NONFASTFORWARD:
+ 		case REF_STATUS_REJECT_STALE:
++		case REF_STATUS_REJECT_IMPLICIT_FETCH:
+ 		case REF_STATUS_REJECT_ALREADY_EXISTS:
+ 			if (atomic) {
+ 				reject_atomic_push(remote_refs, mirror);
+diff --git a/transport.c b/transport.c
+index 43e24bf1e5..588575498f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -567,6 +567,10 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count,
+ 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+ 				 "stale info", porcelain, summary_width);
+ 		break;
++	case REF_STATUS_REJECT_IMPLICIT_FETCH:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++				 "implicit fetch", porcelain, summary_width);
++		break;
+ 	case REF_STATUS_REJECT_SHALLOW:
+ 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+ 				 "new shallow roots not allowed",
+@@ -1101,6 +1105,7 @@ static int run_pre_push_hook(struct transport *transport,
+ 		if (!r->peer_ref) continue;
+ 		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
+ 		if (r->status == REF_STATUS_REJECT_STALE) continue;
++		if (r->status == REF_STATUS_REJECT_IMPLICIT_FETCH) continue;
+ 		if (r->status == REF_STATUS_UPTODATE) continue;
+
+ 		strbuf_reset(&buf);
+--
 2.28.0
-
