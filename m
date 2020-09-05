@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27E74C433E2
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 590B4C43461
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:09:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9AA22074B
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:08:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A1B920757
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:09:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMU5Fjp8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGtU21L7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728507AbgIETIr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Sep 2020 15:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41184 "EHLO
+        id S1728585AbgIETJE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Sep 2020 15:09:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728449AbgIETIj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Sep 2020 15:08:39 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F342C061244
-        for <git@vger.kernel.org>; Sat,  5 Sep 2020 12:08:37 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id b124so6413916pfg.13
-        for <git@vger.kernel.org>; Sat, 05 Sep 2020 12:08:37 -0700 (PDT)
+        with ESMTP id S1728449AbgIETJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Sep 2020 15:09:03 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04C75C061244
+        for <git@vger.kernel.org>; Sat,  5 Sep 2020 12:09:03 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id h2so2661770plr.0
+        for <git@vger.kernel.org>; Sat, 05 Sep 2020 12:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=4AVt485aTuo7yvtGO3YBhuaEV0nIIPDV4HX+ZW+Zhak=;
-        b=eMU5Fjp8FqNu3xPQ5JkG8MUxQS4jW80XinlZGleO6gN5kOhD/0i/qNJPbAt4WC9TdS
-         a97B3LZYrkLvCampHLDwyc7VKYs0W7Z5JyjeUfClaSM5Wn7+2/qqOXVdNuGxooBZx9yU
-         XMDuhgYoyhQoElip7oBHkDf5nWEbq8VTostxICUHdLikxd70VS45Sa1H2MjdZ81IouOU
-         woRYT00dTdsXyMeAZjBXZ6TPzz2iwK8LKdvvl9ANbq/rpxLKccLFvsg9ZUo5I2JQObrh
-         Ziqw6GUkktupoCHF8En2fyYUxDBQ4n0nuN/3JrXrYi0TqIn26468mbDVo+y9R9z9uiAP
-         Mlnw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=plN2wm577lGn+Pqcavnl6I6FixoCaKw1gMizd1/qJ3Q=;
+        b=bGtU21L7pgvdFH4DQzSbMyyOVp+gND9VlEpjXt3oHIEOpjgs61hf0NmWoasSmLdFpf
+         /fJmxKZQDEKb5SANNw+fcMOBpfgbMvWqLHo2koYX98EkDy1j80iGBQs6prcoY239dMcY
+         6OmYgNGBnOpJpbPDPNYF58XEHGQ9vLaJ7j5l8JnXSgDEarA7A/D6KvtXceeiwSVvtK9f
+         OL3NPNsHDqj2G+O7zX3DoKNYb1N7kM4lIugRheJg0z7XzplT+f0SA/hTNz+WUcTD3La1
+         1LS26NMeWAgI9nxPuf9G0XgCtmdDuFIDXwtl+1dndZvQtSpSw0QUpHDr/kdFIEVWpDn0
+         uf+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4AVt485aTuo7yvtGO3YBhuaEV0nIIPDV4HX+ZW+Zhak=;
-        b=JIvf+40qsXQNlR8dT00W2i2BCEDui7Yd49VufxanTiFW9MryW/X+8mGaiZskoQx37p
-         q/KV7rmCg+6YaCiQPDIkJ7we6wNgp7tKWgmxUvZAy0dCc+oKO3D35lYBw0K9s58+8g/l
-         KpXhBs+yCh4QKN0Ht66sydyV5m94WxPlwueNeqUrJNdbHyXgsjSow0UCmEhDPCeZ3vTo
-         d2aM9W7D8v9cqcUP0d8bM7Zqn8QdliweGH+IlyFqUE9U6oHoAlodY/ZCK1PtCgP0jve0
-         AvF1R+7+6pxvjudKLtznB03wVKURgei2JvBqZ8Qr0NrYvYPlgDSMYueINTIvwQqqjF6U
-         /nMQ==
-X-Gm-Message-State: AOAM531QzZm5+VoegikdRhCVJxea3JlxSJOTwW+6zR49b6sS2TN/rZ1F
-        L3JE3+8O16x+q6KWSNttkpkHeK1IcRQ=
-X-Google-Smtp-Source: ABdhPJwfHixVUve4iLLVuVSlMq2aTUFpYpnq9tW7npGKnqAEX0zKyPqMwVGX2pVk33UBkCvDMedLfg==
-X-Received: by 2002:a62:1b56:: with SMTP id b83mr12005281pfb.15.1599332916668;
-        Sat, 05 Sep 2020 12:08:36 -0700 (PDT)
+        bh=plN2wm577lGn+Pqcavnl6I6FixoCaKw1gMizd1/qJ3Q=;
+        b=pZkjnerqHGO7tXkzgHGjoDo48WkH2KK9dogaJ2SUlz1JTUKnQ0LPsfdyRxn22oRcdY
+         0tTk8e01hBwE0726naiF5KPI9uN4b7nA9RhbzZ7HiIe+8GHQjUs9ylq+3c9/9ClGgoWY
+         Eix0XW8Ypjwf5yw1+b969AlGUGhDT1yk848w6lfjLKvxdR96nucXci/QFGJd12L3GI4O
+         74NwWsc6SFn2ndl1U2+sPQvqhytFhMhqr5J5Shll+PQFgLDM6Zu7j2ULGJ+ikDO/mX2v
+         +NGsOh0yM6Y9cbXOqJBX3rY/VMUYyv8B3bRPFcbvRh6TVaFe2WmdXE+KZTXNMtDQAomg
+         KAXw==
+X-Gm-Message-State: AOAM5300xXhnArv2++gDBQiBqOghFQ4SNUfDp5PSNuTv7ape+bqmne96
+        cyF3D2AQ7lBLDkM0Xnn4rM93Wo6OWzQ=
+X-Google-Smtp-Source: ABdhPJyORdAmeTZ6IoQbeQ4D7BGhFSspgAkI0t9nb9d4cCTihLjdfuvDU7AXCuC2LHh5sYu0qI8dfw==
+X-Received: by 2002:a17:902:d904:: with SMTP id c4mr13125077plz.115.1599332940651;
+        Sat, 05 Sep 2020 12:09:00 -0700 (PDT)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:5900:d670::1ab5])
-        by smtp.gmail.com with ESMTPSA id u5sm3045459pfh.215.2020.09.05.12.08.35
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id u5sm3045459pfh.215.2020.09.05.12.08.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Sep 2020 12:08:36 -0700 (PDT)
+        Sat, 05 Sep 2020 12:08:59 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/4] git-diff.txt: backtick quote command text
-Date:   Sat,  5 Sep 2020 12:08:19 -0700
-Message-Id: <8e72bd8fea276d40729705eb8dcc63bcc9faef2c.1599332861.git.liu.denton@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 4/4] builtin/diff: learn --merge-base
+Date:   Sat,  5 Sep 2020 12:08:21 -0700
+Message-Id: <231ba3f661cc4aa7a55c44e339e187c6d70c5507.1599332861.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.28.0.rc0.135.gc7877b767d
 In-Reply-To: <cover.1599332861.git.liu.denton@gmail.com>
 References: <cover.1599332861.git.liu.denton@gmail.com>
@@ -74,74 +74,261 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The modern way to quote commands in the documentation is to use
-backticks instead of double-quotes as this renders the text with the
-code style. Convert double-quoted command text to backtick-quoted
-commands. While we're at it, quote one instance of `^@`.
+In order to get the diff between a commit and its merge base, the
+currently preferred method is to use `git diff A...B`. However, the
+range-notation with diff has, time and time again, been noted as a point
+of confusion and thus, it should be avoided. Although we have a
+substitute for the double-dot notation, we don't have any replacement
+for the triple-dot notation.
 
+Introduce the `--merge-base` flag as a replacement for triple-dot
+notation. Thus, we would be able to write the above as
+`git diff --merge-base A B`, allowing us to gently deprecate
+range-notation completely.
+
+Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-diff.txt | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ Documentation/git-diff.txt | 24 ++++++++++--
+ builtin/diff.c             | 59 ++++++++++++++++++++++++++++
+ t/t4068-diff-symmetric.sh  | 79 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 159 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 727f24d16e..8f7b4ed3ca 100644
+index 8f7b4ed3ca..0031729794 100644
 --- a/Documentation/git-diff.txt
 +++ b/Documentation/git-diff.txt
-@@ -68,13 +68,13 @@ files on disk.
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git diff' [<options>] [<commit>] [--] [<path>...]
+ 'git diff' [<options>] --cached [<commit>] [--] [<path>...]
+ 'git diff' [<options>] <commit> [<commit>...] <commit> [--] [<path>...]
+-'git diff' [<options>] <commit>...<commit> [--] [<path>...]
++'git diff' [<options>] --merge-base [--cached] [<commit> [<commit>]] [--] [<path>...]
+ 'git diff' [<options>] <blob> <blob>
+ 'git diff' [<options>] --no-index [--] <path> <path>
+ 
+@@ -63,6 +63,24 @@ files on disk.
+ 	This is to view the changes between two arbitrary
+ 	<commit>.
+ 
++'git diff' [<options>] --merge-base [--cached] [<commit> [<commit>]] [--] [<path>...]::
++
++	In this form, the "before" side will be the merge base of the
++	two given commits.  If either commit is omitted, it will default
++	to HEAD.
+++
++In the case where two commits are given, a diff is displayed between the
++merge base and the second commit.  `git diff --merge-base A B` is
++equivalent to `git diff $(git merge-base A B) B`.
+++
++In the case where one commit is given, a diff is displayed between the
++merge base and the working tree or the index if `--cached` is given.
++`git diff --merge-base A` is equivalent to `git diff $(git merge-base A
++HEAD)`.
+++
++In the case where no commits are given, this form behaves identically to
++as if no `--merge-base` were supplied.
++
+ 'git diff' [<options>] <commit> <commit>... <commit> [--] [<path>...]::
+ 
  	This form is to view the results of a merge commit.  The first
- 	listed <commit> must be the merge itself; the remaining two or
- 	more commits should be its parents.  A convenient way to produce
--	the desired set of revisions is to use the {caret}@ suffix.
-+	the desired set of revisions is to use the `^@` suffix.
- 	For instance, if `master` names a merge commit, `git diff master
- 	master^@` gives the same combined diff as `git show master`.
- 
- 'git diff' [<options>] <commit>..<commit> [--] [<path>...]::
- 
--	This is synonymous to the earlier form (without the "..") for
-+	This is synonymous to the earlier form (without the `..`) for
- 	viewing the changes between two arbitrary <commit>.  If <commit> on
- 	one side is omitted, it will have the same effect as
- 	using HEAD instead.
-@@ -83,20 +83,20 @@ files on disk.
- 
- 	This form is to view the changes on the branch containing
- 	and up to the second <commit>, starting at a common ancestor
--	of both <commit>.  "git diff A\...B" is equivalent to
--	"git diff $(git merge-base A B) B".  You can omit any one
-+	of both <commit>.  `git diff A...B` is equivalent to
-+	`git diff $(git merge-base A B) B`.  You can omit any one
- 	of <commit>, which has the same effect as using HEAD instead.
+@@ -89,8 +107,8 @@ files on disk.
  
  Just in case you are doing something exotic, it should be
  noted that all of the <commit> in the above description, except
--in the last two forms that use ".." notations, can be any
-+in the last two forms that use `..` notations, can be any
- <tree>.
+-in the last two forms that use `..` notations, can be any
+-<tree>.
++in the `--merge-base` case and the last two forms that use `..`
++notations, can be any <tree>.
  
  For a more complete list of ways to spell <commit>, see
  "SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
- However, "diff" is about comparing two _endpoints_, not ranges,
--and the range notations ("<commit>..<commit>" and
--"<commit>\...<commit>") do not mean a range as defined in the
-+and the range notations (`<commit>..<commit>` and
-+`<commit>...<commit>`) do not mean a range as defined in the
- "SPECIFYING RANGES" section in linkgit:gitrevisions[7].
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 0e086ed7c4..0af5a6c8c9 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -19,6 +19,7 @@
+ #include "builtin.h"
+ #include "submodule.h"
+ #include "oid-array.h"
++#include "commit-reach.h"
  
- 'git diff' [<options>] <blob> <blob>::
-@@ -144,9 +144,9 @@ $ git diff HEAD       <3>
- +
- <1> Changes in the working tree not yet staged for the next commit.
- <2> Changes between the index and your last commit; what you
--    would be committing if you run "git commit" without "-a" option.
-+    would be committing if you run `git commit` without `-a` option.
- <3> Changes in the working tree since your last commit; what you
--    would be committing if you run "git commit -a"
-+    would be committing if you run `git commit -a`
+ #define DIFF_NO_INDEX_EXPLICIT 1
+ #define DIFF_NO_INDEX_IMPLICIT 2
+@@ -371,6 +372,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	int blobs = 0, paths = 0;
+ 	struct object_array_entry *blob[2];
+ 	int nongit = 0, no_index = 0;
++	int merge_base = 0;
+ 	int result = 0;
+ 	struct symdiff sdiff;
+ 	struct option options[] = {
+@@ -378,6 +380,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 			   N_("compare the given paths on the filesystem"),
+ 			   DIFF_NO_INDEX_EXPLICIT,
+ 			   PARSE_OPT_NONEG),
++		OPT_BOOL(0, "merge-base", &merge_base,
++			 N_("use the merge base between the two commits as the diff base")),
+ 		OPT_END(),
+ 	};
  
- Comparing with arbitrary commits::
- +
+@@ -457,6 +461,9 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	rev.diffopt.flags.allow_external = 1;
+ 	rev.diffopt.flags.allow_textconv = 1;
+ 
++	if (no_index && merge_base)
++		die(_("--no-index and --merge-base are mutually exclusive"));
++
+ 	/* If this is a no-index diff, just run it and exit there. */
+ 	if (no_index)
+ 		exit(diff_no_index(&rev, no_index == DIFF_NO_INDEX_IMPLICIT,
+@@ -513,6 +520,58 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	symdiff_prepare(&rev, &sdiff);
++
++	if (merge_base && rev.pending.nr) {
++		int i;
++		struct commit *mb_child[2] = {0};
++		struct commit_list *merge_bases;
++		int old_nr;
++
++		for (i = 0; i < rev.pending.nr; i++) {
++			struct object *obj = rev.pending.objects[i].item;
++			if (obj->flags)
++				die(_("--merge-base does not work with ranges"));
++			if (obj->type != OBJ_COMMIT)
++				die(_("--merge-base only works with commits"));
++		}
++
++		/*
++		 * This check must go after the for loop above because A...B
++		 * ranges produce three pending commits, resulting in a
++		 * misleading error message.
++		 */
++		if (rev.pending.nr > ARRAY_SIZE(mb_child))
++			die(_("--merge-base does not work with more than two commits"));
++
++		for (i = 0; i < rev.pending.nr; i++)
++			mb_child[i] = lookup_commit_reference(the_repository, &rev.pending.objects[i].item->oid);
++		if (rev.pending.nr < ARRAY_SIZE(mb_child)) {
++			struct object_id oid;
++
++			if (rev.pending.nr != 1)
++				BUG("unexpected rev.pending.nr: %d", rev.pending.nr);
++
++			if (get_oid("HEAD", &oid))
++				die(_("unable to get HEAD"));
++
++			mb_child[1] = lookup_commit_reference(the_repository, &oid);
++		}
++
++		merge_bases = repo_get_merge_bases(the_repository, mb_child[0], mb_child[1]);
++		if (!merge_bases)
++			die(_("no merge base found"));
++		if (merge_bases->next)
++			die(_("multiple merge bases found"));
++
++		old_nr = rev.pending.nr;
++		rev.pending.nr = 1;
++		object_array_pop(&rev.pending);
++		add_object_array(&merge_bases->item->object, oid_to_hex(&merge_bases->item->object.oid), &rev.pending);
++		rev.pending.nr = old_nr;
++
++		free_commit_list(merge_bases);
++	}
++
+ 	for (i = 0; i < rev.pending.nr; i++) {
+ 		struct object_array_entry *entry = &rev.pending.objects[i];
+ 		struct object *obj = entry->item;
+diff --git a/t/t4068-diff-symmetric.sh b/t/t4068-diff-symmetric.sh
+index 60c506c2b2..0e43ed7660 100755
+--- a/t/t4068-diff-symmetric.sh
++++ b/t/t4068-diff-symmetric.sh
+@@ -88,4 +88,83 @@ test_expect_success 'diff with ranges and extra arg' '
+ 	test_i18ngrep "usage" err
+ '
+ 
++test_expect_success 'diff --merge-base with two commits' '
++	git diff commit-C master >expect &&
++	git diff --merge-base br2 master >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --merge-base with no commits' '
++	git diff --merge-base >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'diff --merge-base with one commit' '
++	git checkout master &&
++	git diff commit-C >expect &&
++	git diff --merge-base br2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --merge-base with one commit and unstaged changes' '
++	git checkout master &&
++	test_when_finished git reset --hard &&
++	echo unstaged >>c &&
++	git diff commit-C >expect &&
++	git diff --merge-base br2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --merge-base with one commit and staged and unstaged changes' '
++	git checkout master &&
++	test_when_finished git reset --hard &&
++	echo staged >>c &&
++	git add c &&
++	echo unstaged >>c &&
++	git diff commit-C >expect &&
++	git diff --merge-base br2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --merge-base --cached with one commit and staged and unstaged changes' '
++	git checkout master &&
++	test_when_finished git reset --hard &&
++	echo staged >>c &&
++	git add c &&
++	echo unstaged >>c &&
++	git diff --cached commit-C >expect &&
++	git diff --cached --merge-base br2 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --merge-base with --no-index' '
++	test_must_fail git diff --merge-base --no-index expect actual 2>err &&
++	test_i18ngrep "fatal: --no-index and --merge-base are mutually exclusive" err
++'
++
++test_expect_success 'diff --merge-base with range' '
++	test_must_fail git diff --merge-base br2..br3 2>err &&
++	test_i18ngrep "fatal: --merge-base does not work with ranges" err
++'
++
++test_expect_success 'diff --merge-base non-commit' '
++	test_must_fail git diff --merge-base master^{tree} 2>err &&
++	test_i18ngrep "fatal: --merge-base only works with commits" err
++'
++
++test_expect_success 'diff --merge-base with three commits' '
++	test_must_fail git diff --merge-base br1 br2 master 2>err &&
++	test_i18ngrep "fatal: --merge-base does not work with more than two commits" err
++'
++
++test_expect_success 'diff --merge-base with no merge bases' '
++	test_must_fail git diff --merge-base br2 br3 2>err &&
++	test_i18ngrep "fatal: no merge base found" err
++'
++
++test_expect_success 'diff --merge-base with multiple merge bases' '
++	test_must_fail git diff --merge-base master br1 2>err &&
++	test_i18ngrep "fatal: multiple merge bases found" err
++'
++
+ test_done
 -- 
 2.28.0.rc0.135.gc7877b767d
 
