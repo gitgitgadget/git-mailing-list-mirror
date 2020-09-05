@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06830C43461
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D423C433E2
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:08:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF3922074B
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:08:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A5882074B
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:08:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uVdybtNL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9dvZMG5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728483AbgIETIk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Sep 2020 15:08:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41176 "EHLO
+        id S1728502AbgIETIn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Sep 2020 15:08:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728400AbgIETIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Sep 2020 15:08:37 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90166C061245
-        for <git@vger.kernel.org>; Sat,  5 Sep 2020 12:08:36 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id t7so1566879pjd.3
-        for <git@vger.kernel.org>; Sat, 05 Sep 2020 12:08:36 -0700 (PDT)
+        with ESMTP id S1728397AbgIETIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Sep 2020 15:08:38 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80AEAC061245
+        for <git@vger.kernel.org>; Sat,  5 Sep 2020 12:08:38 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id 31so6013569pgy.13
+        for <git@vger.kernel.org>; Sat, 05 Sep 2020 12:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=uG+rdFBgQ4d6bYL826YwKc7u6DJg+MMEMJJlHeoU3VI=;
-        b=uVdybtNL0Zy+eebTEz9AmnCD41cpFOXQCON7p2vkTWdvfgpF7N7NqqM7VOYzchyuBf
-         uhj3dRMSgGWe/UImnux49or3f6haK+lSxDdHwbkpqIGTkFFTLBbgeyZ3IaRM+WYvjfSl
-         lMtJ+EcDf4oxBj+8Jy8pQvkETphq+NWreJ8k/Unmys87F5y5hB2dBFT+I1LDXVLQ+SV/
-         OHE1BHjiyUiLY5bN5o3Jr/Y6TMV7z4XcJoBSx4gf+pJR6kdq1zs6//Ixxn2S5q7MP+2J
-         RYoBDshJFbf28+9hj1uUDkG0leh//N82bGcah1ribb48Fzjh3V6zOxj9hLDz+XCF6HnE
-         91FQ==
+        bh=xQI/6CNpU4SSYBeNcucHOniADlACfETmjQN7IYpwlBY=;
+        b=K9dvZMG5JcusoezR1IVNvqHRlidxp8fVQyOHcVuY6cPL1llJd+Kvi9ddKHJ0CjnCVA
+         FuwtLw2FqVaS7ovSqatxXAEPqfIzrjFu+Axk4WhIkyC3+f9Knbs3EmdHwjYPr+mwzJpo
+         5nc5MJNS6EMuEkEyX3/KIbVS2w8tWRCHk9omjrbHKfB52Qyt+SpZ128cZ+HXgy2Lj4iA
+         2TqMH4vRhxRhd1gC419EiD7i6opNpYN6jWo/yufoJtXC0LxNhQqoBkVQvvTpJokExq07
+         8zDi/RmV4IHmvvFMcL2+0xSOpgYSqeX+QTburcFAPFLj3Ps2vgt5PyX/b2EDVR0EGyh+
+         +ZfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uG+rdFBgQ4d6bYL826YwKc7u6DJg+MMEMJJlHeoU3VI=;
-        b=L+UuaX8N4E+qwm/FYbKS2ZQEbbUTqzoxsb8QuxEMTNE9bJ7pVlxl+5mYfr4rwDtwke
-         FJjfvkwSfw/MOMEhLxflXUaQCRY7E36BLsUJXivpMAIq/Rc8p+7RMcL1N9pVTOnFUjrX
-         HmvTSaTqSKpo3dWICC/kK6cy7RuaclWuL0JRnBsRWKR6m75QGZmcGnopwzu1PoTXpe0t
-         WX4/AGQ8ah8UwpLl08ymHefJExl2hoqJnylzKOHlH7GjkEyr7T9vDEz1LM6Gfic6Q/eK
-         DQ9cb6LD04wosTo9mWkzsZgKnc8PS6Zw6KTMrjx1uoXuNol9Fy4gpEdhnkZWQ9+LMFjO
-         9XNA==
-X-Gm-Message-State: AOAM531/0VhmslsvslG3bqZJYM13/Oz293sf/wgBUD/TT5Ap2X8cw0zH
-        YPa2QifX6geefM9yfNJYo53A42Pl8AM=
-X-Google-Smtp-Source: ABdhPJyV11/Ir30gEdGk/YGRz8jWsp7CC9yAjpPOWOdwbXQAEsre1IKV7KwHxh8fIg02OJ3pw4+R3w==
-X-Received: by 2002:a17:90a:9708:: with SMTP id x8mr1447815pjo.213.1599332915730;
-        Sat, 05 Sep 2020 12:08:35 -0700 (PDT)
+        bh=xQI/6CNpU4SSYBeNcucHOniADlACfETmjQN7IYpwlBY=;
+        b=ARKMbGN++8ec1xUnhFEndlGbc+m0VcS6+vTH7NZBH4TRk+Mpw5SJD4ozuTAsW0NV+y
+         njrwQhYQ41YAAhzHj97ifl6L0bhad283LhkhSSDeZrlY6cNMsvXEQ9/zpdZBbeHUvmEH
+         4PLqiofsYnVyEs1KNfzuMnTy9H9yTspbF9oG6lK8aVdidgGRMzQ6+zWlKaKbBiHaNaKN
+         fn7N//Dmdcki9b8Zr35SuZmU7EBB3hQGweNHWG+iNEbebQ9BbDuNV2M3dq0dAowqT9Zt
+         UxyBPe3+1p/10g1jeDJZ+CRwOHAaOYQSziP+FuExi3YI7l/L4zown1PfZd6F9I3NeJBg
+         mHqQ==
+X-Gm-Message-State: AOAM530I1WPbxK29M7uma9U6qog6G1JHPjSpukJtua9/XuV5QMZqZCJp
+        +dK5/FUnlm66sIJroDjwQpU0lLDPrvs=
+X-Google-Smtp-Source: ABdhPJw+MYGrAud8wXy8OzNeaelB87nOoMJmu/fmmtC/CfJ8GJ1YraKdIMXjDVQBYGfKFxZ+HN1yNw==
+X-Received: by 2002:a63:7b54:: with SMTP id k20mr11443058pgn.75.1599332917743;
+        Sat, 05 Sep 2020 12:08:37 -0700 (PDT)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:5900:d670::1ab5])
-        by smtp.gmail.com with ESMTPSA id u5sm3045459pfh.215.2020.09.05.12.08.34
+        by smtp.gmail.com with ESMTPSA id u5sm3045459pfh.215.2020.09.05.12.08.36
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Sep 2020 12:08:34 -0700 (PDT)
+        Sat, 05 Sep 2020 12:08:36 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 1/4] t4068: remove unnecessary >tmp
-Date:   Sat,  5 Sep 2020 12:08:18 -0700
-Message-Id: <80e9066a59524ededbb0d0191a93e6e3154c5623.1599332861.git.liu.denton@gmail.com>
+Subject: [PATCH 3/4] builtin/diff: parse --no-index using parse_options()
+Date:   Sat,  5 Sep 2020 12:08:20 -0700
+Message-Id: <ea6717e7b3a8b89fc3750505678321803cde78dc.1599332861.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.28.0.rc0.135.gc7877b767d
 In-Reply-To: <cover.1599332861.git.liu.denton@gmail.com>
 References: <cover.1599332861.git.liu.denton@gmail.com>
@@ -74,52 +74,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The many `git diff` invocations have a `>tmp` redirection even though
-the file is not being used afterwards. Remove these unnecessary
-redirections.
+Instead of parsing the `--no-index` option with a plain strcmp, use
+parse_options() to parse options. This allows us to easily add more
+options in a future commit.
+
+As a result of this change, `--no-index` is removed from `argv` so, as a
+result, we no longer need to handle it in diff_no_index().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4068-diff-symmetric.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/diff.c  | 33 ++++++++++++++++++++++-----------
+ diff-no-index.c | 15 +++------------
+ 2 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/t/t4068-diff-symmetric.sh b/t/t4068-diff-symmetric.sh
-index 31d17a5af0..60c506c2b2 100755
---- a/t/t4068-diff-symmetric.sh
-+++ b/t/t4068-diff-symmetric.sh
-@@ -64,27 +64,27 @@ test_expect_success 'diff with two merge bases' '
- '
+diff --git a/builtin/diff.c b/builtin/diff.c
+index cb98811c21..0e086ed7c4 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -373,6 +373,13 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	int nongit = 0, no_index = 0;
+ 	int result = 0;
+ 	struct symdiff sdiff;
++	struct option options[] = {
++		OPT_SET_INT_F(0, "no-index", &no_index,
++			   N_("compare the given paths on the filesystem"),
++			   DIFF_NO_INDEX_EXPLICIT,
++			   PARSE_OPT_NONEG),
++		OPT_END(),
++	};
  
- test_expect_success 'diff with no merge bases' '
--	test_must_fail git diff br2...br3 >tmp 2>err &&
-+	test_must_fail git diff br2...br3 2>err &&
- 	test_i18ngrep "fatal: br2...br3: no merge base" err
- '
+ 	/*
+ 	 * We could get N tree-ish in the rev.pending_objects list.
+@@ -406,21 +413,25 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	 * Other cases are errors.
+ 	 */
  
- test_expect_success 'diff with too many symmetric differences' '
--	test_must_fail git diff br1...master br2...br3 >tmp 2>err &&
-+	test_must_fail git diff br1...master br2...br3 2>err &&
- 	test_i18ngrep "usage" err
- '
+-	/* Were we asked to do --no-index explicitly? */
+-	for (i = 1; i < argc; i++) {
+-		if (!strcmp(argv[i], "--")) {
+-			i++;
+-			break;
+-		}
+-		if (!strcmp(argv[i], "--no-index"))
+-			no_index = DIFF_NO_INDEX_EXPLICIT;
+-		if (argv[i][0] != '-')
+-			break;
+-	}
++	argc = parse_options(argc, argv, prefix, options, NULL,
++			     PARSE_OPT_KEEP_DASHDASH |
++			     PARSE_OPT_KEEP_ARGV0 |
++			     PARSE_OPT_KEEP_UNKNOWN |
++			     PARSE_OPT_NO_INTERNAL_HELP);
  
- test_expect_success 'diff with symmetric difference and extraneous arg' '
--	test_must_fail git diff master br1...master >tmp 2>err &&
-+	test_must_fail git diff master br1...master 2>err &&
- 	test_i18ngrep "usage" err
- '
+ 	prefix = setup_git_directory_gently(&nongit);
  
- test_expect_success 'diff with two ranges' '
--	test_must_fail git diff master br1..master br2..br3 >tmp 2>err &&
-+	test_must_fail git diff master br1..master br2..br3 2>err &&
- 	test_i18ngrep "usage" err
- '
+ 	if (!no_index) {
++		int i;
++		for (i = 1; i < argc; i++) {
++			if (!strcmp(argv[i], "--")) {
++				i++;
++				break;
++			}
++			if (argv[i][0] != '-')
++				break;
++		}
++
+ 		/*
+ 		 * Treat git diff with at least one path outside of the
+ 		 * repo the same as if the command would have been executed
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 7814eabfe0..da82e2d090 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -243,28 +243,19 @@ int diff_no_index(struct rev_info *revs,
+ 		  int implicit_no_index,
+ 		  int argc, const char **argv)
+ {
+-	int i, no_index;
++	int i;
+ 	const char *paths[2];
+ 	struct strbuf replacement = STRBUF_INIT;
+ 	const char *prefix = revs->prefix;
+-	struct option no_index_options[] = {
+-		OPT_BOOL_F(0, "no-index", &no_index, "",
+-			   PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
+-		OPT_END(),
+-	};
+-	struct option *options;
  
- test_expect_success 'diff with ranges and extra arg' '
--	test_must_fail git diff master br1..master commit-D >tmp 2>err &&
-+	test_must_fail git diff master br1..master commit-D 2>err &&
- 	test_i18ngrep "usage" err
- '
- 
+-	options = parse_options_concat(no_index_options,
+-				       revs->diffopt.parseopts);
+-	argc = parse_options(argc, argv, revs->prefix, options,
++	argc = parse_options(argc, argv, revs->prefix, revs->diffopt.parseopts,
+ 			     diff_no_index_usage, 0);
+ 	if (argc != 2) {
+ 		if (implicit_no_index)
+ 			warning(_("Not a git repository. Use --no-index to "
+ 				  "compare two paths outside a working tree"));
+-		usage_with_options(diff_no_index_usage, options);
++		usage_with_options(diff_no_index_usage, revs->diffopt.parseopts);
+ 	}
+-	FREE_AND_NULL(options);
+ 	for (i = 0; i < 2; i++) {
+ 		const char *p = argv[argc - 2 + i];
+ 		if (!strcmp(p, "-"))
 -- 
 2.28.0.rc0.135.gc7877b767d
 
