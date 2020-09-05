@@ -2,124 +2,114 @@ Return-Path: <SRS0=od8b=CO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DC8BC43461
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4660C43461
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:52:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC5642074D
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:49:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 683A22074D
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 19:52:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="DzzM8ylu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="II8XKzOH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728633AbgIETtd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Sep 2020 15:49:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47376 "EHLO
+        id S1728643AbgIETwX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Sep 2020 15:52:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728400AbgIETtb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Sep 2020 15:49:31 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9014BC061244
-        for <git@vger.kernel.org>; Sat,  5 Sep 2020 12:49:31 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id o5so9545628qke.12
-        for <git@vger.kernel.org>; Sat, 05 Sep 2020 12:49:31 -0700 (PDT)
+        with ESMTP id S1728400AbgIETwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Sep 2020 15:52:22 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44092C061244
+        for <git@vger.kernel.org>; Sat,  5 Sep 2020 12:52:22 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id z15so2668663plo.7
+        for <git@vger.kernel.org>; Sat, 05 Sep 2020 12:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=h2yXzuGkZL6hX9Dw9d6UZ7NwmtwQj23V2uwE/HYPMsQ=;
-        b=DzzM8ylueK8dg9EW0AA63MYf4rpfkNnQCvX5Xn/moABw9mlydT6mlCocJj5wxXUptO
-         5nH5pUxgS4pey7w8Uapa5g0/6Q+lJXll1r9h2Qp8RNKASHvqZ/JVmbteSy01Wy5Cqz07
-         VPGCjRwJyedL7ruTx1BFzbFTcjnCqvbxVBNyZokg/fIXclpqn5aC81DVm+yRYWU7YNL8
-         WI0hD2qWCi10Aq8WCblH9+BZjHKOLYV7RJ9rr9sPFegSkIq9I6rQ67l4mn3XhV6PRzaV
-         MiuP6cS0NLOunOAO2CxkLnlECPEFd+QPOKKOjM3VumYBwvMn/OYr16TeuBfgM00xY1se
-         xq5g==
+         :content-disposition:in-reply-to;
+        bh=Kaci144wwqJh61xpQbUIzwDsuDAuXrQJafYuKuD7Ou0=;
+        b=II8XKzOHlJsYiv8j4LoHkzcvQpoZrQ1iG3dH3ZimkogJJ6iJgNuixB63JVWq8Fuf+8
+         CJnpvxKDAFrwX7JUAEkhOLBF+h8wB8IW8hcI4pHBlb+uA765tspjAGHO01c1xcdTTlJG
+         VFDgDPH/rOZkIvnTVdSJ7vL/nrkPFtIhoRPS325sUzFEZTiksFJwNv2UECZ0I9GRZCxn
+         rCowJidaR3iMvGwddP9at3wbJUIhZGcPDoHkyw8gyYMizPTobSz9bHBEpa/6nKPRzAuJ
+         pljMqOYjCtP2WECeIjqjWBntpUa1Be3R3FvZGP+gqbVIgmW6/aVJoEmdC0dFIfR5plZX
+         2EBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=h2yXzuGkZL6hX9Dw9d6UZ7NwmtwQj23V2uwE/HYPMsQ=;
-        b=jRoX/ixZIabXOELdCqhdGH+g76/iQzdVk7CEdE+EAab9+IeUxF4Hv9DkCdLEyRXOxM
-         tZzHMEhUtOszORjn9/769AaQG5TQoopbKR1LkpIadD3xrMndHTF+Biek0rPik0SA1vO8
-         SF0S0MZ0Zm5CBoxRSq0ut5i32GEB5Ts6pdipXSNLAi+BcL6SogUhtvz2PtU9arvccx9z
-         f6dSsyiFfa+SLr9DsjpciGdzT3Lt+Z/c6pzIfaCPQypMbEQrG+2grP/KhgIJb7dicQfU
-         0j/Jddez56PJbTdIIpEOoSUeS7Y9np78Yh754gJORv2QJX98oxUgL8yfdnwBJrNic2Qa
-         0IBA==
-X-Gm-Message-State: AOAM532FgNHJZpZ18aAY14G+8R9WFfWWJmNM4FMOvxZ8dROG9bcwPZNA
-        WTM/fosNVTfcSJ2VSPjHLywQrw==
-X-Google-Smtp-Source: ABdhPJzaR2ssEqFxhhlBZeNDkIgogRQvNgHTpEMjUnt+AovurapqRvyptORzZWHQUFny7ELZeEemAw==
-X-Received: by 2002:a37:745:: with SMTP id 66mr13069232qkh.344.1599335370443;
-        Sat, 05 Sep 2020 12:49:30 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:f423:2c6a:683a:2c57])
-        by smtp.gmail.com with ESMTPSA id d9sm7762286qtg.51.2020.09.05.12.49.29
+         :mime-version:content-disposition:in-reply-to;
+        bh=Kaci144wwqJh61xpQbUIzwDsuDAuXrQJafYuKuD7Ou0=;
+        b=JMFN+EDnMAPmO2WhC5ujIT5GiVAfkMBcoHSVXQXqUCii+/CISJ3//uCal8I02VuFxq
+         B+r/LIublrItOQSCocN2WWLH511gRIBZYH2i5mswV1trRCMxj6RtNNLOMegR0ut9gkdf
+         /tdlnX963JcVYjWYtOVed4ZyWY6L8QB8OhSnSt30CdOPlgXgUrisw5nWRHgQSEh9sReO
+         tA3j6FadhecTmoiYwWuU5ri6k5wVk/YdxlZDOB22zJ1ztBQf3EmJQCKbakNCXC6OvwoS
+         9VrEa9ExlbMJ8qD7oeTJ+A8UBQc7Nxhty4an80tYy0xPnTZcrCsx2g4H/M2SMe5+t6Ic
+         ZkNA==
+X-Gm-Message-State: AOAM531GlguFzlXkrMn5ARTiE7FHy7+QSOP10WG5TTJbS00cpLXMuNAY
+        UACkLQFZ/tIf8PfBCx3JW+RuXqo+BRI=
+X-Google-Smtp-Source: ABdhPJyr+fFr+H7Yd4j2R64Th2glO2griYqeISkkQ2A9wxhZNpdeMjCuscghyHrDXEe1LrOkjthg/Q==
+X-Received: by 2002:a17:90a:e015:: with SMTP id u21mr7712241pjy.33.1599335541045;
+        Sat, 05 Sep 2020 12:52:21 -0700 (PDT)
+Received: from generichostname ([2601:647:5900:d670::1ab5])
+        by smtp.gmail.com with ESMTPSA id h65sm10586556pfb.210.2020.09.05.12.52.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Sep 2020 12:49:29 -0700 (PDT)
-Date:   Sat, 5 Sep 2020 15:49:26 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        git <git@vger.kernel.org>, Junio Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 07/14] bloom: split 'get_bloom_filter()' in two
-Message-ID: <20200905194926.GA7964@nand.local>
-References: <cover.1599172907.git.me@ttaylorr.com>
- <ba89a0cb837abc5fadbaa9514169636d85ee50cf.1599172908.git.me@ttaylorr.com>
- <85h7sc9m0v.fsf@gmail.com>
- <20200905173825.GA6820@nand.local>
- <CANQwDwcWveN03h=Ex0GFo-Mm89UT8_HXFMQcZWdDx9MPZYYodQ@mail.gmail.com>
- <20200905180120.GB6820@nand.local>
- <CANQwDwcD5XD3e7ar=8HPupobOZGDN4bgQJBS1Ad1m2NDx8eurw@mail.gmail.com>
- <20200905183854.GC6820@nand.local>
- <20200905185534.GA7416@nand.local>
- <20200905190449.GB6209@szeder.dev>
+        Sat, 05 Sep 2020 12:52:20 -0700 (PDT)
+Date:   Sat, 5 Sep 2020 12:52:18 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] pretty: allow to override the built-in formats
+Message-ID: <20200905195218.GA892287@generichostname>
+References: <20200905192406.74411-1-dev+git@drbeat.li>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200905190449.GB6209@szeder.dev>
+In-Reply-To: <20200905192406.74411-1-dev+git@drbeat.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 05, 2020 at 09:04:50PM +0200, SZEDER Gábor wrote:
-> On Sat, Sep 05, 2020 at 02:55:34PM -0400, Taylor Blau wrote:
-> > On Sat, Sep 05, 2020 at 02:38:54PM -0400, Taylor Blau wrote:
-> > > I don't know. I think my biggest objection is the size: we use the BIDX
-> > > chunk today to avoid having to write the length-zero Bloom filters; your
-> > > scheme would force us to write every filter. On the other hand, we could
-> > > continue to avoid writing length-zero filters, so long as the
-> > > commit-graph indicates that it knows this optimization.
-> >
-> > Thinking about it a little bit more, I'm pretty sure that this isn't as
-> > easy as it sounds. Say that we:
-> >
-> >   - continued to encode length-zero Bloom filters as equal adjacent
-> >     entries in the BIDX, but reserve the length-zero filter for commits
-> >     with no changed-paths, _or_ commits whose Bloom filters have not yet
-> >     been computed
->
-> No, use zero-length filters for commits whose Bloom filters have not
-> yet been computed, and use a one-byte all zero bits Bloom filter for
-> commits with no modified paths.
->
-> And this is exactly what I proposed earlier.
+Hi Beat,
 
-Fair enough, I bet that would work.
+Thanks for doing this. It was on my todo list but I've been quite busy
+recently.
 
-Junio, let's eject this series while I try to see if SZEDER's idea is
-workable.
+On Sat, Sep 05, 2020 at 09:24:06PM +0200, Beat Bolli wrote:
+> In 1f0fc1db8599 (pretty: implement 'reference' format, 2019-11-19), the
+> "reference" format was added. As a built-in format, it cannot be
+> overridden, although different projects may have divergent conventions
+> on how to format a commit reference. E.g., Git uses
+> 
+>     <hash> (<subject>, <short-date>) [1]
+> 
+> while Linux uses
+> 
+>     <hash> ("<subject>") [2]
+> 
+> Teach pretty to look at a different set of config variables, all
+> starting with "override" (e.g. "pretty.overrideReference"), to override
+> the built-in formats. Note that a format called "override" by itself is
+> not affected. The prefix was chosen to make it clear to the user that
+> this should not be done without thought, as it may cause issues with
+> other tools that expect the built-in formats to be immutable.
 
-> > I don't see a non-convoluted way to split the overloaded length-zero
-> > case into something that is distinguishable without a format extension.
->
-> See above, no format extension needed.
+Hmm, I'm not sure how I feel about being able to override formats other
+than "reference". Perhaps we could special-case "reference" instead of
+providing users with a possible foot-gun?
 
-Where?
+> [1] https://github.com/git/git/blob/3a238e539bcdfe3f9eb5010fd218640c1b499f7a/Documentation/SubmittingPatches#L144
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/submitting-patches.rst?h=v5.9-rc3#n167
+> 
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+> I intend to also submit a patch to gitk that will use "git show -s
+> --pretty=reference" if it is available, with a fallback to reading
+> "pretty.overrideReference", so there's a single point of configuration
+> for the reference format.
 
-Thanks,
-Taylor
+Very good, I'm in favour of this.
