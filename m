@@ -8,251 +8,322 @@ X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B36C433E2
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 14:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60927C433E2
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 14:50:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 143072078E
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 14:48:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0ACD1206B8
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 14:50:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="DxtojWCy"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="FKd2EgOu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728663AbgIEOsA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Sep 2020 10:48:00 -0400
-Received: from mout.web.de ([212.227.15.4]:54827 "EHLO mout.web.de"
+        id S1728649AbgIEOuF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Sep 2020 10:50:05 -0400
+Received: from mout.web.de ([212.227.15.4]:50721 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728727AbgIEOr7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Sep 2020 10:47:59 -0400
+        id S1728659AbgIEOtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Sep 2020 10:49:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1599317272;
-        bh=grZbJtl4Ka3z+v9d2SgX8Qim7YxE08XvueFbcFBl0dg=;
-        h=X-UI-Sender-Class:From:Subject:To:Cc:Date;
-        b=DxtojWCyqYo3dqRmQGXrYftyq2PrnjsAq1SabJcy7egSeXBcrC9//KWlLwU9SC4Jw
-         p4doOz9xx2fNyEUMXruiSsmjnbVD0mx5wGbg7j6a9D+cE6WPbwISiVgVvabREjRaV4
-         BGIa0FfAp9n95vTqkyLGvQTduGhh6URyLn4S3E1I=
+        s=dbaedf251592; t=1599317370;
+        bh=HZUVjSqKSCvWwxhzpeBgaDHpQv8Qr+lhpKY/07kwEmo=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=FKd2EgOuJG8AEsstZyJ77GaGo/OZSiAeGGQC+X+VqpeN6mB1kV792X9/Oxby3w4W2
+         mdQ2titR4KYSGoxw5GDYxjalFG2htQSK6umwYZY++q+sMm1UYspQZKuEvsKwA6mXa3
+         uRjWCjqTbzRCkLf63HnBhi+99ufJKzy37DQjDMMg=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LgYRZ-1kspmn2xFt-00nyrL; Sat, 05
- Sep 2020 16:47:52 +0200
+Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MKJAE-1kF7TI2rHa-001fES; Sat, 05
+ Sep 2020 16:49:30 +0200
+Subject: [PATCH 2/2] refspec: add and use refspec_appendf()
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] push: release strbufs used for refspec formatting
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Message-ID: <e0c7b847-b8c7-6880-748e-1e5b32934ed5@web.de>
-Date:   Sat, 5 Sep 2020 16:47:47 +0200
+References: <e0c7b847-b8c7-6880-748e-1e5b32934ed5@web.de>
+Message-ID: <e49140b8-25d6-0e5b-b1da-468a40c4a687@web.de>
+Date:   Sat, 5 Sep 2020 16:49:30 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
+In-Reply-To: <e0c7b847-b8c7-6880-748e-1e5b32934ed5@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Os/mdZA5JNmvIvWW91dnceTa6grC9uzi3eB0dNetAkd5+rlnr4B
- o5H01o/8xcbkD/fY8FloDij/6r58i8kokySynXz7arb/enkF5uA47uxlErXal13TXUHdNSH
- bEh3UOIGovukJhEDoVKtU7P6SB5k6pZIsoFraTQKeLaEEaoP9P8BEdTLdDcyYHCI2RU733q
- agUNYgjRxNQ1af7Ks19ow==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C4472qY+iQc=:/sn+EAknt4REGRcq1ACUBZ
- xZU1lecYlRWftDAzAwe3M9i2Eb8zsCM7ZUk86cwt++ZGZPIwnYNK0iv1bbGT1j2NMk05ZN5KO
- bsTWrTq5uRvRTU2s1O7gVbsrvPCcKfEJ1Uyc6Ndp55CnfQosPr14NwaIDjKdiiWxRoXWJ9JMv
- +D8A7vuOw99uJZFwTIfYKEj0VCqcA4/FacmHSrF84CuQDeLr9u4yt3NHf5Q4+IhKa1Ae+/1Fo
- 8HlDpAHcK1/SsubEyNCpy+QDo6mMiCUZD/wiA2+elhJwGqlsgVXkjWYUsG5V3Lvet/SeTjlnb
- Pppl5rPMpoK86JahEYqAhPqL8L7Raq/3iW2/s9YGLeDYqMLE2rAir9IeA/6Q8g13eEBHuYLIm
- ly2HZHdLxRWAwC4v4mZC/OBgP7Lh9541AsicdDhB1dECUD8kQjHNSFqO0XQvxuBAxivwsS6gd
- 0H9JTqbfpXb5gFtyTrpMt54BOO8+t/EWjgoqf5PTY6CWwZxDu4GnRj25HDASI5gXmTnlMf/fa
- +X7au5FrAu9RqTo609kTM1AIEumJtGpTYD+Hf4OLIISV/AMi6Vl6WXc5fPp5YlpOZY9106YUQ
- aF22jSxBxB/J/XDZ0RPMbw4IvlVlSN3/AIYBCPzwnfy+CBdjUbwCjCvKUuoxc++GQwBzVy1gL
- lvm0Ljsw4SHdvKJq0pWCbS6qDykyy1FqJyLOdYlnrC2QLSebT8e9Z2QSEEbluZgUkOWRrbVVn
- uFztYeNfLn6RJk2KN7zscreZtR8Kn/FShiA9C4ud+i78SJJ3RXYGHUq2Kb6ID7qDqqPQRmCYc
- qXaRzvZunrtZKMwXMqryXKiNIpLYA9/BRPTBkWBeLxzeVFgJZLE9+i01SXQN7Z2oHINxttE+8
- OQDE7UKF8QhrHbJD0TTqSxX+n72/oKsbVjKgxsCfBi6lkRuZtPW9E4VHUt8ekBY6Yr8NxWtl0
- tRdosXtUxz/t6X4wferyTZp9isw2mb7GhALNLhn69Kog46FGT7s1w28XgJ0Ovo0RMldu3fDhq
- ToUrewWEsCJDVs1zMKFpy5seSP6sDR1VBeviWWBT8DPAxRY7XyJrOcAro0W0suN4rVJTow+6s
- xltr9EVZJrFx8FU+Yrdk4DEC5gJ7IMqhYjFGWPsXNjnYlupQ2aR36FgOkAlAhYNUBZrUhb0N7
- 9r3/AcPyKbtSxdVtIM3UiRgQfNLMgm1ZTtRuGGiyGaX7tW2be7pPUEr/HCi4Pi+i1F3+Sfgbj
- qFYPsIFimQwHYi4MJ
+X-Provags-ID: V03:K1:rq1CylbHsjPyjZxMwAvE9M0aerWI7g5IrUyaCXYgJCdyhHuhxFZ
+ Aj3nx6ui5TN9itPnKCI7P6rk/feqQAi+JdiZ6RyzoUUsEUzSGpsMafLUFLsBpVBUAdwt6Vk
+ 8+PSYKk1ju149Sait+y0cYNzDnRsxinElaxeOtcMTFQcgIfzuXQvbJQDDwkpYgTAXvPdeou
+ kXjLgokobvn+E9r6FgpKg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LnP3QbX5Kng=:L+daEQRGV9UbgJWL2LIfhM
+ odpzZf6478hC7LuExy/8YNJE/Wt33Be3XM8hKjcyLdNOUx5+WMEzqSGaXJjdUUXflPCyV1lin
+ oFaSFG2D36NSV+7PF89mRGrWRs7jr0v9nmcaoRoz6KFmoKVqq/zOLaUJlwOIpHWMiCKsNVSDy
+ PzHI3tCGk9jVNdl8A8tDAu2qx1GtnWMC/QD90EBJ1OhQZLI/9/WQ1c/XyddXmc76ULG6ghfNt
+ eU46xrU3v5Jc2QnclRKZqFPhM+lNizpz7YgDTUeYLacFYZkvOHU/b3QhyXxoPLLAgMZZl2L6v
+ DCP27aa47EqpoJQ1ld7GNUzMLjZZgyxtVQekB8L7yhaxItctrGvdb9cwVlVJel56nnuae8hfG
+ JPkHvmT8O9x/3M9NaOqlxb+emrlx3OC3nl7IcTiuqETmSqJA5qv5aWrrzAZOXRxydHusAfNtK
+ dmaPVniC9TKtpApe4TdRy3eIF0OPlWsOcnIdBlT+q1v0eScB1LkZct1EyddlBtJzUQp5Rh9+w
+ Z5HU7jtpo2DIJiGFudHihT9DdNTV3M8tIZ2X5HnGAF3ttYBtCfVOwhwKKvaGEMUtylRVvf+rn
+ s9+VlZVSoZVXaSx6gH35Q6/UzCs9bi35wYvljFiJbfgjmEvyZJ9vOek/rE05CxJK2NyKg9Dau
+ KiFbmAHpjWnVpvOSGlOha4wflDD5WVxGV/rrPsh8zbLQG/oNhz46t1zLdvj+BZxYijQA2gVeF
+ IDhgkcVsBOSk2r6vXSlyngWzuJZOwtN+lvY25R6gHZmsVB+6Ku3zkwvf15vmVQxsDVmYRWZHa
+ yDtFAAoao9HVJdizKGDuMFKMppiJ4Udn0yKpXjNVAY2TO28lm2HesAEMckazWvli7Cfwh/zK/
+ 6kMURzHfNY4hc3e4zvvLyBdiDolOUFLMNlGuUIcI5Rdh35+BuREdrELwFK7TPeeoEhGMQlwz/
+ oxFLQrkNxmKD/y2KDmB4rPUDaGY+oNtHrlQiII5qrsHuPBlVPYNgZ+/myfp5koVtx+MhtSoaO
+ RsShJYKCydbc+J4zyVy03wjD9z+p9vMqFSsUB0XhDamEzuzvc4tpyQd8u8pkpCicbRrNZNVJE
+ yQlj+i7p1gLEp/hSpVQOO5QfqwDcx/oXkg2c1V0jqUv1rdTKJjuJUhpXFvZlk19wHKlABT5ed
+ fWzy8tgtkojgIKnF9BiCLHIDNQ6Vy/qiVeb899xCPeeXpAx55OAVk/Cmx4HfmyW4f8/FmlpWg
+ dhzT7rO2S9v8SxZxW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-map_refspec() either returns the passed in ref string or a detached
-strbuf.  This makes it hard for callers to release the possibly
-allocated memory, and set_refspecs() consequently leaks it.
-
-Let map_refspec() append any refspecs directly and release its own
-strbufs after use.  Rename it to refspec_append_mapped() and don't
-return anything to reflect its increased responsibility.
-
-set_refspecs() also leaks its strbufs.  Do the same here and directly
-call refspec_append() in each if branch instead of holding onto a
-detached strbuf, then dispose of the allocated memory after use.  We
-need to add an else branch for the final call because all the other
-conditional branches already add their formatted refspec now.
-
-setup_push_upstream() and setup_push_current() forgot to release their
-strbufs as well; plug these leaks, too, while at it.
-
-None of these leaks were likely to impact users, because the number
-and sizes of refspecs are usually small and the allocations are only
-done once per program run.  Clean them up nevertheless, as another
-step on the long road towards zero memory leaks.
+Add a function for building a refspec using printf-style formatting.  It
+frees callers from managing their own buffer.  Use it throughout the
+tree to shorten and simplify its callers.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
-Patch generated with --function-context for easier review.
+ builtin/clone.c |  7 ++-----
+ builtin/fetch.c |  7 ++-----
+ builtin/push.c  | 40 ++++++++++------------------------------
+ refspec.c       | 18 ++++++++++++++++--
+ refspec.h       |  2 ++
+ remote.c        | 10 +++-------
+ 6 files changed, 35 insertions(+), 49 deletions(-)
 
- builtin/push.c | 34 ++++++++++++++++++++++------------
- 1 file changed, 22 insertions(+), 12 deletions(-)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index b087ee40c2..fbfd6568cd 100644
+=2D-- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -953,7 +953,6 @@ int cmd_clone(int argc, const char **argv, const char =
+*prefix)
+ 	struct ref *mapped_refs;
+ 	const struct ref *ref;
+ 	struct strbuf key =3D STRBUF_INIT;
+-	struct strbuf default_refspec =3D STRBUF_INIT;
+ 	struct strbuf branch_top =3D STRBUF_INIT, reflog_msg =3D STRBUF_INIT;
+ 	struct transport *transport =3D NULL;
+ 	const char *src_ref_prefix =3D "refs/heads/";
+@@ -1157,9 +1156,8 @@ int cmd_clone(int argc, const char **argv, const cha=
+r *prefix)
 
+ 	remote =3D remote_get(option_origin);
+
+-	strbuf_addf(&default_refspec, "+%s*:%s*", src_ref_prefix,
+-		    branch_top.buf);
+-	refspec_append(&remote->fetch, default_refspec.buf);
++	refspec_appendf(&remote->fetch, "+%s*:%s*", src_ref_prefix,
++			branch_top.buf);
+
+ 	transport =3D transport_get(remote, remote->url[0]);
+ 	transport_set_verbosity(transport, option_verbosity, option_progress);
+@@ -1332,7 +1330,6 @@ int cmd_clone(int argc, const char **argv, const cha=
+r *prefix)
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+-	strbuf_release(&default_refspec);
+ 	junk_mode =3D JUNK_LEAVE_ALL;
+
+ 	strvec_clear(&ref_prefixes);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index a6d3268661..c555836937 100644
+=2D-- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1738,15 +1738,12 @@ static int fetch_one(struct remote *remote, int ar=
+gc, const char **argv,
+
+ 	for (i =3D 0; i < argc; i++) {
+ 		if (!strcmp(argv[i], "tag")) {
+-			char *tag;
+ 			i++;
+ 			if (i >=3D argc)
+ 				die(_("You need to specify a tag name."));
+
+-			tag =3D xstrfmt("refs/tags/%s:refs/tags/%s",
+-				      argv[i], argv[i]);
+-			refspec_append(&rs, tag);
+-			free(tag);
++			refspec_appendf(&rs, "refs/tags/%s:refs/tags/%s",
++					argv[i], argv[i]);
+ 		} else {
+ 			refspec_append(&rs, argv[i]);
+ 		}
 diff --git a/builtin/push.c b/builtin/push.c
-index bc94078e72..0f3c108c93 100644
+index 0f3c108c93..0eeb2c8dd5 100644
 =2D-- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -61,76 +61,84 @@ static struct refspec rs =3D REFSPEC_INIT_PUSH;
-
- static struct string_list push_options_config =3D STRING_LIST_INIT_DUP;
-
--static const char *map_refspec(const char *ref,
--			       struct remote *remote, struct ref *local_refs)
-+static void refspec_append_mapped(struct refspec *refspec, const char *re=
-f,
-+				  struct remote *remote, struct ref *local_refs)
- {
- 	const char *branch_name;
- 	struct ref *matched =3D NULL;
-
- 	/* Does "ref" uniquely name our ref? */
--	if (count_refspec_match(ref, local_refs, &matched) !=3D 1)
--		return ref;
-+	if (count_refspec_match(ref, local_refs, &matched) !=3D 1) {
-+		refspec_append(refspec, ref);
-+		return;
-+	}
-
- 	if (remote->push.nr) {
- 		struct refspec_item query;
+@@ -78,12 +78,9 @@ static void refspec_append_mapped(struct refspec *refsp=
+ec, const char *ref,
  		memset(&query, 0, sizeof(struct refspec_item));
  		query.src =3D matched->name;
  		if (!query_refspecs(&remote->push, &query) && query.dst) {
- 			struct strbuf buf =3D STRBUF_INIT;
- 			strbuf_addf(&buf, "%s%s:%s",
- 				    query.force ? "+" : "",
- 				    query.src, query.dst);
--			return strbuf_detach(&buf, NULL);
-+			refspec_append(refspec, buf.buf);
-+			strbuf_release(&buf);
-+			return;
+-			struct strbuf buf =3D STRBUF_INIT;
+-			strbuf_addf(&buf, "%s%s:%s",
+-				    query.force ? "+" : "",
+-				    query.src, query.dst);
+-			refspec_append(refspec, buf.buf);
+-			strbuf_release(&buf);
++			refspec_appendf(refspec, "%s%s:%s",
++					query.force ? "+" : "",
++					query.src, query.dst);
+ 			return;
  		}
  	}
-
- 	if (push_default =3D=3D PUSH_DEFAULT_UPSTREAM &&
+@@ -92,11 +89,8 @@ static void refspec_append_mapped(struct refspec *refsp=
+ec, const char *ref,
  	    skip_prefix(matched->name, "refs/heads/", &branch_name)) {
  		struct branch *branch =3D branch_get(branch_name);
  		if (branch->merge_nr =3D=3D 1 && branch->merge[0]->src) {
- 			struct strbuf buf =3D STRBUF_INIT;
- 			strbuf_addf(&buf, "%s:%s",
- 				    ref, branch->merge[0]->src);
--			return strbuf_detach(&buf, NULL);
-+			refspec_append(refspec, buf.buf);
-+			strbuf_release(&buf);
-+			return;
+-			struct strbuf buf =3D STRBUF_INIT;
+-			strbuf_addf(&buf, "%s:%s",
+-				    ref, branch->merge[0]->src);
+-			refspec_append(refspec, buf.buf);
+-			strbuf_release(&buf);
++			refspec_appendf(refspec, "%s:%s",
++					ref, branch->merge[0]->src);
+ 			return;
  		}
  	}
-
--	return ref;
-+	refspec_append(refspec, ref);
- }
-
- static void set_refspecs(const char **refs, int nr, const char *repo)
- {
- 	struct remote *remote =3D NULL;
- 	struct ref *local_refs =3D NULL;
- 	int i;
-
+@@ -113,23 +107,17 @@ static void set_refspecs(const char **refs, int nr, =
+const char *repo)
  	for (i =3D 0; i < nr; i++) {
  		const char *ref =3D refs[i];
  		if (!strcmp("tag", ref)) {
- 			struct strbuf tagref =3D STRBUF_INIT;
+-			struct strbuf tagref =3D STRBUF_INIT;
  			if (nr <=3D ++i)
  				die(_("tag shorthand without <tag>"));
  			ref =3D refs[i];
  			if (deleterefs)
- 				strbuf_addf(&tagref, ":refs/tags/%s", ref);
+-				strbuf_addf(&tagref, ":refs/tags/%s", ref);
++				refspec_appendf(&rs, ":refs/tags/%s", ref);
  			else
- 				strbuf_addf(&tagref, "refs/tags/%s", ref);
--			ref =3D strbuf_detach(&tagref, NULL);
-+			refspec_append(&rs, tagref.buf);
-+			strbuf_release(&tagref);
+-				strbuf_addf(&tagref, "refs/tags/%s", ref);
+-			refspec_append(&rs, tagref.buf);
+-			strbuf_release(&tagref);
++				refspec_appendf(&rs, "refs/tags/%s", ref);
  		} else if (deleterefs) {
- 			struct strbuf delref =3D STRBUF_INIT;
+-			struct strbuf delref =3D STRBUF_INIT;
  			if (strchr(ref, ':'))
  				die(_("--delete only accepts plain target ref names"));
- 			strbuf_addf(&delref, ":%s", ref);
--			ref =3D strbuf_detach(&delref, NULL);
-+			refspec_append(&rs, delref.buf);
-+			strbuf_release(&delref);
+-			strbuf_addf(&delref, ":%s", ref);
+-			refspec_append(&rs, delref.buf);
+-			strbuf_release(&delref);
++			refspec_appendf(&rs, ":%s", ref);
  		} else if (!strchr(ref, ':')) {
  			if (!remote) {
  				/* lazily grab remote and local_refs */
- 				remote =3D remote_get(repo);
- 				local_refs =3D get_local_heads();
- 			}
--			ref =3D map_refspec(ref, remote, local_refs);
--		}
--		refspec_append(&rs, ref);
-+			refspec_append_mapped(&rs, ref, remote, local_refs);
-+		} else
-+			refspec_append(&rs, ref);
- 	}
- }
-
-@@ -192,45 +200,47 @@ static const char message_detached_head_die[] =3D
+@@ -200,8 +188,6 @@ static const char message_detached_head_die[] =3D
  static void setup_push_upstream(struct remote *remote, struct branch *bra=
 nch,
  				int triangular, int simple)
  {
- 	struct strbuf refspec =3D STRBUF_INIT;
-
+-	struct strbuf refspec =3D STRBUF_INIT;
+-
  	if (!branch)
  		die(_(message_detached_head_die), remote->name);
  	if (!branch->merge_nr || !branch->merge || !branch->remote_name)
- 		die(_("The current branch %s has no upstream branch.\n"
- 		    "To push the current branch and set the remote as upstream, use\n"
- 		    "\n"
- 		    "    git push --set-upstream %s %s\n"),
- 		    branch->name,
- 		    remote->name,
- 		    branch->name);
- 	if (branch->merge_nr !=3D 1)
- 		die(_("The current branch %s has multiple upstream branches, "
- 		    "refusing to push."), branch->name);
- 	if (triangular)
- 		die(_("You are pushing to remote '%s', which is not the upstream of\n"
- 		      "your current branch '%s', without telling me what to push\n"
- 		      "to update which remote branch."),
- 		    remote->name, branch->name);
-
- 	if (simple) {
- 		/* Additional safety */
- 		if (strcmp(branch->refname, branch->merge[0]->src))
+@@ -227,20 +213,14 @@ static void setup_push_upstream(struct remote *remot=
+e, struct branch *branch,
  			die_push_simple(branch, remote);
  	}
 
- 	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->merge[0]->src);
- 	refspec_append(&rs, refspec.buf);
-+	strbuf_release(&refspec);
+-	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->merge[0]->src);
+-	refspec_append(&rs, refspec.buf);
+-	strbuf_release(&refspec);
++	refspec_appendf(&rs, "%s:%s", branch->refname, branch->merge[0]->src);
  }
 
  static void setup_push_current(struct remote *remote, struct branch *bran=
 ch)
  {
- 	struct strbuf refspec =3D STRBUF_INIT;
-
+-	struct strbuf refspec =3D STRBUF_INIT;
+-
  	if (!branch)
  		die(_(message_detached_head_die), remote->name);
- 	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->refname);
- 	refspec_append(&rs, refspec.buf);
-+	strbuf_release(&refspec);
+-	strbuf_addf(&refspec, "%s:%s", branch->refname, branch->refname);
+-	refspec_append(&rs, refspec.buf);
+-	strbuf_release(&refspec);
++	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
  }
 
  static int is_workflow_triangular(struct remote *remote)
+diff --git a/refspec.c b/refspec.c
+index f10ef284ce..8d0affc34a 100644
+=2D-- a/refspec.c
++++ b/refspec.c
+@@ -153,7 +153,7 @@ void refspec_init(struct refspec *rs, int fetch)
+ 	rs->fetch =3D fetch;
+ }
+
+-void refspec_append(struct refspec *rs, const char *refspec)
++static void refspec_append_nodup(struct refspec *rs, char *refspec)
+ {
+ 	struct refspec_item item;
+
+@@ -163,7 +163,21 @@ void refspec_append(struct refspec *rs, const char *r=
+efspec)
+ 	rs->items[rs->nr++] =3D item;
+
+ 	ALLOC_GROW(rs->raw, rs->raw_nr + 1, rs->raw_alloc);
+-	rs->raw[rs->raw_nr++] =3D xstrdup(refspec);
++	rs->raw[rs->raw_nr++] =3D refspec;
++}
++
++void refspec_append(struct refspec *rs, const char *refspec)
++{
++	refspec_append_nodup(rs, xstrdup(refspec));
++}
++
++void refspec_appendf(struct refspec *rs, const char *fmt, ...)
++{
++	va_list ap;
++
++	va_start(ap, fmt);
++	refspec_append_nodup(rs, xstrvfmt(fmt, ap));
++	va_end(ap);
+ }
+
+ void refspec_appendn(struct refspec *rs, const char **refspecs, int nr)
+diff --git a/refspec.h b/refspec.h
+index 8d654e3a3a..7569248d11 100644
+=2D-- a/refspec.h
++++ b/refspec.h
+@@ -56,6 +56,8 @@ void refspec_item_init_or_die(struct refspec_item *item,=
+ const char *refspec,
+ void refspec_item_clear(struct refspec_item *item);
+ void refspec_init(struct refspec *rs, int fetch);
+ void refspec_append(struct refspec *rs, const char *refspec);
++__attribute__((format (printf,2,3)))
++void refspec_appendf(struct refspec *rs, const char *fmt, ...);
+ void refspec_appendn(struct refspec *rs, const char **refspecs, int nr);
+ void refspec_clear(struct refspec *rs);
+
+diff --git a/remote.c b/remote.c
+index c5ed74f91c..5c04275342 100644
+=2D-- a/remote.c
++++ b/remote.c
+@@ -287,19 +287,15 @@ static void read_branches_file(struct remote *remote=
+)
+ 		frag =3D (char *)git_default_branch_name();
+
+ 	add_url_alias(remote, strbuf_detach(&buf, NULL));
+-	strbuf_addf(&buf, "refs/heads/%s:refs/heads/%s",
+-		    frag, remote->name);
+-	refspec_append(&remote->fetch, buf.buf);
++	refspec_appendf(&remote->fetch, "refs/heads/%s:refs/heads/%s",
++			frag, remote->name);
+
+ 	/*
+ 	 * Cogito compatible push: push current HEAD to remote #branch
+ 	 * (master if missing)
+ 	 */
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "HEAD:refs/heads/%s", frag);
+-	refspec_append(&remote->push, buf.buf);
++	refspec_appendf(&remote->push, "HEAD:refs/heads/%s", frag);
+ 	remote->fetch_tags =3D 1; /* always auto-follow */
+-	strbuf_release(&buf);
+ }
+
+ static int handle_config(const char *key, const char *value, void *cb)
 =2D-
 2.28.0
