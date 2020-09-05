@@ -7,134 +7,173 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40BCCC43461
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 17:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A3AC433E2
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 17:23:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDA7B2078E
-	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 17:22:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 452162078E
+	for <git@archiver.kernel.org>; Sat,  5 Sep 2020 17:23:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOBV9zdm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDXHLn+7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728248AbgIERWP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Sep 2020 13:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53134 "EHLO
+        id S1728301AbgIERX6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Sep 2020 13:23:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726568AbgIERWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Sep 2020 13:22:12 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414E4C061244
-        for <git@vger.kernel.org>; Sat,  5 Sep 2020 10:22:12 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id z19so5481558lfr.4
-        for <git@vger.kernel.org>; Sat, 05 Sep 2020 10:22:12 -0700 (PDT)
+        with ESMTP id S1726568AbgIERX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Sep 2020 13:23:56 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271F9C061244
+        for <git@vger.kernel.org>; Sat,  5 Sep 2020 10:23:55 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id m5so5947416pgj.9
+        for <git@vger.kernel.org>; Sat, 05 Sep 2020 10:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=mJEvDkjvpKvVKhyQZHFu42UJBcx/e2EONWi8Np7yKCo=;
-        b=ZOBV9zdm3NKKAI03rNZVm1+ze8yYqKIcYyzLpdPsOmtYbBUrCmmQ3FSmrfz6lRp6lM
-         mki8peiYxbBGl5K2g3MI+VlE149Ocv/168tY2qM1AALNARdmxtiVhRmW3IQkYXA/P0nh
-         jy3hUsBirj4qQ0nrXLp6VVwL33oPpNRWrAO3CeYLTbs03BgNfwquZ+tJ0epJoJWboyyp
-         RYOFxHwfqntQL0dAt15U8/vjj72NdVWBMHUnzyKd+PgHdIX3d8Q3JPT9jk3jTwjwAPvd
-         07sLLi5liS/kSn4Zs+L1Ot1iobFlRXge1H8wELOF895fLWDw/IFXIC9esf7G7i0mOaxB
-         6TnQ==
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=IATNSDWlr6MUOZS/TvjCWPfxL3fJq1IxrmPqHQaAHzc=;
+        b=PDXHLn+7ivZxuHyyCzLwrrQvlqqpGTEG7CmdEsn0XLxHGQHikGesIaUxWy/rC9I70F
+         alaThH7qZ2l7LjXYGD/BZmj8TegkbdGdJ8WAy3YoPTKYFmAGO8xoWlalrXdjWKot1MXU
+         3g0EaVsQEN8AXcO8wLJZMsdgeyIb5FbzwLu2srG++ds190iu+3YG5Q5jfGC813G3PgYY
+         Bh4bqpKPsfJEhcG9sQZPxQbHtuZbie+UT7gwPhlTqt53tWdxavmQiaZe0ggjkWUws+iy
+         an0FMmqEdOWZR3V43bhvFyqfh6DyHUWHHPThNyJdVkcVsHwqTQN3IEGXsyqJ7AWivmeJ
+         qOZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=mJEvDkjvpKvVKhyQZHFu42UJBcx/e2EONWi8Np7yKCo=;
-        b=uHXHjd0hXG1OYW4CjQrHtjYpp0Vmp8WPDmv3rKEO3KULTWs7T5/eo/yHDMHIGkuWzL
-         xx+zlPpwdt5JzWMe92pxitIry//SpC2j0Rc/UTMsA3ylC8jZzOhNmtPVnWkZXqfHw/lL
-         z6iMmxU/yjJqEanAjQ4uJF6zjQDq8FFlHsEMoQkUY6ovuAX0UMkhKMq+NSWWqveDpPHk
-         vUUG6cTfkpMjXtpzD2U4DYAAq13xMALuzwS+9ZveKIYMjQb8MSzjjqxnIuagFWtpsH+1
-         T2LNFQ/Kb2kZXoVdHz/EIanT76pmtZ/ngyc9TdPuYldRhUFzgp3IrYKmXLeYdFDctsuc
-         LPoA==
-X-Gm-Message-State: AOAM532olfprIoYPoyAFZohQ8Kgrkj1F70gZRaS+xKhB0zx+JDhepPpU
-        MAVUoKa5OLmX0yDUa3AsRZY=
-X-Google-Smtp-Source: ABdhPJy7YX09FxXYKoovD01/fYp4Dm/EUhziJLvT4p3KyL2LqkBbfhHWwBfLlga81HiqV3wgJukNgw==
-X-Received: by 2002:a05:6512:31c2:: with SMTP id j2mr6670502lfe.85.1599326530067;
-        Sat, 05 Sep 2020 10:22:10 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id g63sm2579796lfd.28.2020.09.05.10.22.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=IATNSDWlr6MUOZS/TvjCWPfxL3fJq1IxrmPqHQaAHzc=;
+        b=LZQkjr00S7qLc/J1XQfVJFF5J7wutRwSkS3xgvcIX+aqQNFA7Ngp3hG+DC4qIzoev4
+         2Gn7eFVMkpo6TpRVNjYQqStie8mpNIlEt9hT9mxsXxSVmC9NfYrNwgnPb55JuhtNrG+f
+         c+XrEeRfZgB26CcDNkoWQ20c+LIjpOfwbZmoXO/579J/plRzuBSnZprXF0K6N5EUiTbW
+         pH1i73ci8IosE6i62wsBprzANmptwvtY1T8tUuCYUExj/pY64tJmZ6s2VDPcFvxq/YRA
+         QN9jLzRK90mHLOZzJ0nwJEt7KpR0WVoyBUYh9FJc1YvCPItSrBd8mVV/kY80Mh3ut+Hf
+         rNpQ==
+X-Gm-Message-State: AOAM532NfO2fFkhH+2oHI5oxnGPKJ9KNUrjTxwUrCFyjxbgdLHd9ADuO
+        Wy3kcMH60X6T3eIpI3lHfxTzprmSjALPSw==
+X-Google-Smtp-Source: ABdhPJyq3kF8zGPWuJovQWbzmrvM9mKg6Faz2EEVyWlQ0dcYqDTAGMGycjB3hKa6VgiEL07NzJxbKA==
+X-Received: by 2002:a63:754:: with SMTP id 81mr11165277pgh.435.1599326634422;
+        Sat, 05 Sep 2020 10:23:54 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:4e05:5392:130e:dca6:bf2a:67c9])
+        by smtp.gmail.com with ESMTPSA id u63sm10415668pfu.34.2020.09.05.10.23.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Sep 2020 10:22:09 -0700 (PDT)
-From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Junio Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jakub =?utf-8?Q?Nar=C4=99?= =?utf-8?Q?bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v4 07/14] bloom: split 'get_bloom_filter()' in two
-References: <cover.1596480582.git.me@ttaylorr.com>
-        <cover.1599172907.git.me@ttaylorr.com>
-        <ba89a0cb837abc5fadbaa9514169636d85ee50cf.1599172908.git.me@ttaylorr.com>
-Date:   Sat, 05 Sep 2020 19:22:08 +0200
-In-Reply-To: <ba89a0cb837abc5fadbaa9514169636d85ee50cf.1599172908.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Thu, 3 Sep 2020 18:46:28 -0400")
-Message-ID: <85h7sc9m0v.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        Sat, 05 Sep 2020 10:23:53 -0700 (PDT)
+Date:   Sat, 5 Sep 2020 22:51:27 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org, stolee@gmail.com,
+        gitgitgadget@gmail.com
+Subject: Re: [PATCH v3 05/11] commit-graph: return 64-bit generation number
+Message-ID: <20200905172127.GA1382@Abhishek-Arch>
+Reply-To: 851rjjasdo.fsf@gmail.com
+References: <pull.676.v2.git.1596941624.gitgitgadget@gmail.com>
+ <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+ <6be759a9542114e4de41422efa18491085e19682.1597509583.git.gitgitgadget@gmail.com>
+ <85d03km98l.fsf@gmail.com>
+ <20200825050448.GA21012@Abhishek-Arch>
+ <85ft8adilr.fsf@gmail.com>
+ <20200901120653.GA59580@Abhishek-Arch>
+ <851rjjasdo.fsf@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <851rjjasdo.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Thu, Sep 03, 2020 at 03:42:43PM +0200, Jakub Narębski wrote:
+> Hi,
+> 
+> Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+> > On Tue, Aug 25, 2020 at 02:18:24PM +0200, Jakub Narębski wrote:
+> >> Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+> >> 
+> >> ...
+> >> 
+> >> However, as I wrote, handling GENERATION_NUMBER_V2_OFFSET_MAX is
+> >> difficult.  As far as I can see, we can choose one of the *three*
+> >> solutions (the third one is _new_):
+> >> 
+> >> a. store 64-bit corrected commit date in the GDAT chunk
+> >>    all possible values are able to be stored, no need for
+> >>    GENERATION_NUMBER_V2_MAX,
+> >> 
+> >> b. store 32-bit corrected commit date offset in the GDAT chunk,
+> >>    if its value is larger than GENERATION_NUMBER_V2_OFFSET_MAX,
+> >>    do not write GDAT chunk at all (like for backward compatibility
+> >>    with mixed-version chains of split commit-graph layers),
+> >> 
+> >> c. store 32-bit corrected commit date offset in the GDAT chunk,
+> >>    using some kind of overflow handling scheme; for example if
+> >>    the most significant bit of 32-bit value is 1, then the
+> >>    rest 31-bits are position in GDOV chunk, which uses 64-bit
+> >>    to store those corrected commit date offsets that do not
+> >>    fit in 32 bits.
+> 
+> Note that I have posted more detailed analysis of advantages and
+> disadvantages of each of the above solutions in response to 11/11
+> https://public-inbox.org/git/85o8mwb6nq.fsf@gmail.com/
+> 
+> I can think of yet another solution, a variant of approach 'c' with
+> different overflow handling scheme:
+> 
+> c'.  Store 32-bit corrected commit date offset in the GDAT chunk,
+>      using the following overflow handling scheme: if the value
+>      is 0xFFFFFFFF (all bits set to 1, the maximum possible value
+>      for uint32_t), then the corrected commit date or corrected
+>      commit date offset can be found in GDOV chunk (Generation
+>      Data OVerflow handling).
+> 
+>      The GDOV chunk is composed of:
+>      - H bytes of commit OID, or 4 bytes (32 bits) of commit pos
+>      - 8 bytes (64 bits) of corrected commit date or its offset
+>      
+>      Commits in GDOV chunk are sorted; as we expect for the number
+>      of commits that require GDOV to be zero or a very small number
+>      there is no need for GDO Fanout chunk.
+>      
+>    - advantages:
+>      * commit-graph is smaller, increasing for abnormal repos
+>      * overflow limit reduced only by 1 (a single value)
+>    - disadvantages:
+>      * most complex code of all proposed solutions
+>        even more complicated than for solution 'c',
+>        different from EDGE chunk handling
+>      * tests would be needed to exercise the overflow code
+> 
+> Or we can split overflow handling into two chunks: GDOI (Generation Data
+> Overflow Index) and GDOV, where GDOI would be composed of H bytes of
+> commit OID or 4 bytes of commit graph position (sorted), and GDOV would
+> be composed oly of 8 bytes (64 bits) of corrected commit date data.
+> 
+> This c'') variant has the same advantages and disadvantages as c'), with
+> negligibly slightly larger disk size and possibly slightly better
+> performance because of better data locality.
+> 
 
-[...]
-> While we're at it, instrument the new 'get_or_compute_bloom_filter()'
-> with two counters in the 'write_commit_graph_context' struct which store
-> the number of filters that we computed, and the number of those which
-> were too large to store.
+The primary benefit of c') over c) seems to the range of valid offsets -
+c') can range from [0, 0xFFFFFFFF) whereas offsets for c) can range
+betwen [0, 0x7FFFFFF].
 
-[...]
-> @@ -1414,12 +1433,25 @@ static void compute_bloom_filters(struct write_co=
-mmit_graph_context *ctx)
->  		QSORT(sorted_commits, ctx->commits.nr, commit_gen_cmp);
->=20=20
->  	for (i =3D 0; i < ctx->commits.nr; i++) {
-> +		int computed =3D 0;
->  		struct commit *c =3D sorted_commits[i];
-> -		struct bloom_filter *filter =3D get_bloom_filter(ctx->r, c, 1);
-> +		struct bloom_filter *filter =3D get_or_compute_bloom_filter(
-> +			ctx->r,
-> +			c,
-> +			1,
-> +			&computed);
-> +		if (computed) {
-> +			ctx->count_bloom_filter_computed++;
-> +			if (filter && !filter->len)
-> +				ctx->count_bloom_filter_found_large++;
+In other words, we should prefer c') over c) only if the offsets are
+usually in the range [0x7FFFFFFF + 1, 0xFFFFFFFF)
 
-How do you distinguish between no changed paths stored because there
-were no changes (which should not count as *_found_large), and no
-changed paths stored because there were too many changes?  If I remember
-it correctly in current implemetation both are represented as
-zero-length filter (no changed paths could have been represented as all
-zeros filter, too many changed paths could have been represented as all
-ones filter).
+Commits were overflowing corrected committer date offsets are rare, and
+offsets in that particular range are doubly rare. To be wrong within
+the range would be have an offset of 68 to 136 years, so that's possible
+only if the corrupted timestamp is in future (it's been 50.68 years since
+Unix epoch 0 so far).
 
-No changes to store in filter can happen not only with `--allow-empty`
-(e.g. via interactive rebase), but also with merge where all changes
-came from the second parent -- we are storing only changes to first
-parent, if I remember it correctly.
+Thikning back to the linux repository, the largest offset was around of
+the order of 2 ^ 25 (offset of 1.06 years) and I would assume that holds
 
-This is a minor issue, though.
+Overall, I don't think the added complexity (compared to c) approach)
+makes up for by greater versatility.
 
-> +		}
->  		ctx->total_bloom_filter_data_size +=3D sizeof(unsigned char) * filter-=
->len;
->  		display_progress(progress, i + 1);
->  	}
->=20=20
-> +	if (trace2_is_enabled())
-> +		trace2_bloom_filter_write_statistics(ctx);
-> +
->  	free(sorted_commits);
->  	stop_progress(&progress);
->  }
+[1]: https://lore.kernel.org/git/20200703082842.GA28027@Abhishek-Arch/
 
-Best,
---=20
-Jakub Nar=C4=99bski
+Thanks
+- Abhishek
