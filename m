@@ -6,85 +6,80 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1644C43461
-	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 21:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE160C433E2
+	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 21:58:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 606ED207BB
-	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 21:58:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88D87207BB
+	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 21:58:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vUEF4Q2M"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ntDP62MQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726608AbgIFV6K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Sep 2020 17:58:10 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59712 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726292AbgIFV6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Sep 2020 17:58:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E2AAFFC15A;
-        Sun,  6 Sep 2020 17:58:08 -0400 (EDT)
+        id S1726675AbgIFV6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Sep 2020 17:58:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59077 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726620AbgIFV62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Sep 2020 17:58:28 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4243679CE5;
+        Sun,  6 Sep 2020 17:58:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=Ci1XXBKRmKBcoYV7RSFIj3BUtF8=; b=vUEF4Q2MxGPR6bXkeTRl
-        Bq7VdDR7yl4Xmx4WPfM8C47+1u/9N5CsRN0fIgGFm7Mrg2GG36jo1LdaN05re7e3
-        DAYYVr27RTc9BhyNr0gntv65wWWct2QkAsw/CPn1IjWz9fr1tCajyVsdsM4I4S77
-        5F6FCTME7tb7GFX0Ou3EOZo=
+         s=sasl; bh=k1+ABF/UWCAmsMtTGCREAkn+AYY=; b=ntDP62MQR5SiLX4K5YxJ
+        3sMcvi8zsWmkU2t9HAk8H7TtYA1O0mPHRxD+xsOvxm/ztowkqIOu1IFkpnsjU2o1
+        UrAyyv4h/9Hc4IB0j5ocdEnY2IXBkQq7W1CCRbek2Kzj3UcwsyLcYoeDoMvGDUcq
+        kbKudSw897ElsKUzhOoUgXo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=NJZ9PjSLHrtpK9XS8ROElh5fIDsWI5B/5l5+Aqnpi0osnM
-        fysTzoOse+s66EopvYRxJlz1gGzGhakjffRm3L0xzo6c/Ro/vHZ6CApncfXepKxg
-        ofeDXLzA2UvTmXGYBJDfRZ2kKPfb4M05sOF/IBplOSGJIv251ej1TmCPjSuf4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DB18EFC159;
-        Sun,  6 Sep 2020 17:58:08 -0400 (EDT)
+         q=dns; s=sasl; b=uLQR1wLDBDnZmjukknhi4HUr1v327ZYVRNxt6hNt1Ik/Rk
+        LiOyqYpCxJd9DJQX9Z1fZiUfZOWvVOthGIcznodwPOeXOTz8KKisEpf+NSywgkEN
+        HUYzmCJTqJzmKCfY719Ld4g9GpIStw5TP62cCw2iuJWdL5HVO0lZ/SAW8XJh4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3ACB079CE4;
+        Sun,  6 Sep 2020 17:58:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2852FFC158;
-        Sun,  6 Sep 2020 17:58:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBDF979CE3;
+        Sun,  6 Sep 2020 17:58:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/4] builtin/diff: learn --merge-base
-References: <cover.1599332861.git.liu.denton@gmail.com>
-        <231ba3f661cc4aa7a55c44e339e187c6d70c5507.1599332861.git.liu.denton@gmail.com>
-Date:   Sun, 06 Sep 2020 14:58:04 -0700
-Message-ID: <xmqqsgbu36vn.fsf@gitster.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org, Pratyush Yadav <me@yadavpratyush.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 0/3] worktree: add -d shorthand for --detach & improve documentation
+References: <20200904070703.47898-1-sunshine@sunshineco.com>
+Date:   Sun, 06 Sep 2020 14:58:25 -0700
+Message-ID: <xmqqlfhm36v2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0B2D0D4C-F08C-11EA-A49B-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 16DCDB5E-F08C-11EA-B0D4-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> +In the case where one commit is given, a diff is displayed between the
-> +merge base and the working tree or the index if `--cached` is given.
+> This series grew directly out of suggestions proposed in [1]. Its
+> purpose is twofold. First, it brings git-worktree in line with the other
+> "checkout a branch" commands git-switch and git-checkout by teaching it
+> -d as shorthand for --detach (which those other commands already
+> understand).
 
-s/merge base/& between the commit and the HEAD/
+Hmph, "checkout" would not affect list of worktrees, but "worktree"
+could be used to delete an worktree, so I (or any other naive user
+like me) may mistake "-d" to mean "delete a worktree".
 
-As "merge base" in the context of talking about "one commit" does
-not make sense, such a clarification would be necessary.
+But it is not "teach 'worktree' that -d is shorthand for --detach";
+it is "teach 'worktree add' that -d is for --detach".  And in that
+context, when adding a new worktree, there is no room for such a
+confusion to come into the picture.
 
-Jonathan suggested "--fork-point A B"; this replaces it with
-"--merge-base A B".  Neither is quite satisfying, but other
-people might be able to come up with a better names.
+So I think it is just the way the series is marketted that triggered
+a potential negative reaction from me.
 
-In any case, "git diff $(git merge-base MERGE_HEAD HEAD)" while
-merging to see how the changes in the working tree look like is
-something I've always felt cumbersome to spell, and this is a good
-addition.
-
-> +		OPT_BOOL(0, "merge-base", &merge_base,
-> +			 N_("use the merge base between the two commits as the diff base"))
-
-Define "diff base".  Eh, that was rhetoric---do not use such an
-undefined word.  "compare with the merge base between two commits"
-may work better.
+>   worktree: add -d short option for --detach
