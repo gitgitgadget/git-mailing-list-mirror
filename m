@@ -8,110 +8,103 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62356C43461
-	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 08:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B3B1C433E2
+	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 08:59:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7BDA2074D
-	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 08:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA576207BB
+	for <git@archiver.kernel.org>; Sun,  6 Sep 2020 08:59:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="FwE9aMLV"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ZTZKL6d1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725997AbgIFIjk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Sep 2020 04:39:40 -0400
-Received: from mout.web.de ([212.227.15.3]:49631 "EHLO mout.web.de"
+        id S1726642AbgIFI7P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Sep 2020 04:59:15 -0400
+Received: from mout.web.de ([212.227.15.4]:45581 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725497AbgIFIjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Sep 2020 04:39:39 -0400
+        id S1725788AbgIFI7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Sep 2020 04:59:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1599381575;
-        bh=hhU+wNU9+seJSUUF7ZNfa9I4PhOoSfBPXs0WkWaRi1U=;
+        s=dbaedf251592; t=1599382743;
+        bh=Nja/3Lbg1ZLojgsuCdmbvBpvpnS0z0KSV1qZ7IjWOWk=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=FwE9aMLV0azhKhXI3J9LRs5L4yi0AAyBHdr11ImApsipi5gXaue8JpBRiv6JL/Gpg
-         PzuEW7QDirsd+tC6rHuo5r4vRe4IOYtWBEExbe2oEIuMGi5kxcUACLcd0dgv7t9Vhf
-         5Yvt/ggNT0XYKgVh+PTtMiMnsLLfXD8BdvptoKzY=
+        b=ZTZKL6d1BKBiXo0Pcl7+9rmUhaL7UBDDYz9OeaplkXeOKvSnNXXImGokuGn9HjI5+
+         Qh0RZAeQyhFBNtrX7HaZLW1er3GrTStU8GH4O7w2CgcsQDDjFntC7zxDW5539WRAZr
+         K8QpCrB6zFnM27CA1bE84+0yV9apPbgoI41MvdY4=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MZB01-1k1yAZ3rFJ-00V6tF; Sun, 06
- Sep 2020 10:39:34 +0200
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mcpqo-1koSRh0Rs2-00Znok; Sun, 06
+ Sep 2020 10:59:03 +0200
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] fast-import: use write_pack_header()
-Message-ID: <7613ef32-f39c-ea4b-1cfc-88d255307186@web.de>
-Date:   Sun, 6 Sep 2020 10:39:23 +0200
+Subject: [PATCH] midx: use hashwrite_u8() in write_midx_header()
+Message-ID: <ae03833d-d597-f902-38d5-9e67bd768d93@web.de>
+Date:   Sun, 6 Sep 2020 10:59:02 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:AxwhgIdCP0y63MqJLEBSmZa1Npg70MrxrK0jjXRALws1WXiIZ9L
- I1V3zR/P+tlpxiM/D5jd4clXQ7lzBqDk8V6cdYj1M41fa4uA6ycjocDpaemiJE+JdxWT64e
- k1WHXbtmyAUlDGlbouVJCcVIyHIfNZ4BFFDO5rXwM4J+qKJwvPrpJxeoHoBTOtpM7zxctC7
- n4NUv/s9X7n+/luXFLo6g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qr/EP5/pwIU=:Dh2A6ZikpzippXc0YudBLM
- jorAhsDPcDKTyQNj+wKaFFXrc3ZsMPN255UeIaqlQWLP//gZv4vaRcgi/jbMuWcsLfsglbOOz
- Ua7N+QqioOEDH5iKjts7GOgh7nMrqOTAx6AHb5gfdDzUN3zW8JMRhqzo60/SfKHs8gUt1C2bs
- Ckjsvd9oYIYIkPV0r732Z7c6eiWhn78q+wqyu2GTxDw6qjIIxFLbv9WWSX1HnNWiEws0UsKF5
- 63JMWp0I3HqCRoeUjYiQdOVdY2oW50gVoUYjcAU9BH6TjGFjwIYesWYMXmHqz96f8jEXzhOPy
- 0HmN6ebUsI7yDdl2Q3epN9yzrYwVSTrplazW+C4J0IhWGxEy7CZnHFn9h+FdPu1OVx/2+2X9r
- mjhXIaMCVn081ztkKrH+ZBRhhADZXLzk3Py5XFfRXVyR8FeG0NMPJWUHSJjwGP60wjl2II1xH
- U9tMnCtM/sRe0l7uCzKvbJJYBo3no3wOqpDA5YLNsOuPEEzI7Je2h6tVynMGrrST6a1sCkgnu
- gmVUQIg7YhvgcUIlq/pkU3pXJWPPW0B9XG+7iO/Hawf4K3gRINWjNv5dzjs+DhsFJVBGYAMRu
- o6Cpm/WiK9sYuPrXjbcudwpHB2wKQH/9Ezj95yPkCgwZqv6N/PavQBGBVeNpPhBTYgtnOibwm
- SQTXb4SFsMLMl0npdhQIwAJgDUUNRPQhtIsNcUkgWtDKnz/uZG2h+3uaWFDxHBjoY8HVqwQr3
- 6O2BqTn66U+DuIVE5tg/WMr2dUiLvJFp/6Z2TkK+5CbMcGtHn3WbiYKXl5B/4mT+wv1jRPUZS
- y/8E3AamGYCw2Y8+IwGypl+PcjXE1DCJhf/7KkwWdkWyOwME2wXA1EWiU9jQiLAIz9EPDPgPM
- bOdxIDSiEs2ISI+uBmdXcM2liMDLoOj4YT0bEZ4SK1o+L5twdYt+MD5HGPKA5AVPcXX5wwg84
- hcnRPIo9fk7u+LkxCNcHx2SEVOeNM9BIKHZlMFnnQLxhFPJ/zHkbYgaqH+Ukr2jiHn4rxM1WO
- 90zymIB1Kvj5tn8tyISES4t5jrdGHcNn25tycW7+weaQV1tOdZnTTn1N4eIrL9fauFnm2/Hpo
- BBcUdzCwScQkIoJLHi3IdK/yps18Y0ThRBCijYeM1sCdYRS+Pp71h6qO+9ldQrFHAfjC9kCht
- Xwe0sB0RQIh2t518wkhjx+hmfmdEp4P8mpWpfqLjWvrHS0zE03PFDvJoEiwo0rNEkgsttr0Vv
- n7SHJIHBQYfARcCi7
+X-Provags-ID: V03:K1:Olt4uSmlZo9e1aGd0TBV3PXiw86l6mVnzjZT2gmZR7NFktXV3Qr
+ VtiJgDM+/Gv3m+ZaUMnchs0ywi+qrWe2kjp1DpcSGRK2CzdFCMfvcdgoLZrZwf9tozlPxW/
+ ZnoSMWr0VgcC/pNlxqvHjx3bWrY4C/+uWwEjJ/aXVhxMCR5LQ2fYYxZ/yQg5pXODUewdoOS
+ MdsLn4nm3JyIR5dOtr7Gw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9LQTAjtG0As=:jfRoxGjYljXDkHdDr+mbsp
+ B6NfwfNtOemBhhzZHNon0zg/ScEZqDDiOCJTySsq1JeLxyzoAoxm6MhJIGRATsmWZzkPOAIn4
+ Of1IyRoZYYCXKwvT0glMBKXe/0G2UeMSHmOqbV9q8qErNOndczwujzEVLg0Pnla7vyio6sVx/
+ EtYKKug6E+jhoxGt5rfV/OuZ5b4iSIcIwgRMxKSCEfTXWQmwrKTuydDLi7/qAgoNOccIUhmP8
+ PPqumGE92owBfvIZp0hxhLouJZdvzXicTFD4h3mnN4R/TsnXmPvq6tfu+LO+Ayv1+udIyEAxJ
+ 4cAVG4vVt5A4gzdgUjZcR4xxwMFyG9grlYjmq+Iwlih1017cU3hx0D23KgGPf06hSCbZcByoq
+ Rw+L+jFAERAGFqfgr2rlatgmGKUmLWyyndW2XD0xhfIKMBRCkmb8r2HMpmbH6+D2vxCb4k5JT
+ qTDWN0CMgxMcxNQBUY/LofJmXtuHmyx5XEfAlSQNVisVFT5GVCJXHTg8/85d9OMd+Es+rTZw4
+ mwtk3ZDe1Jf0gjfBReU2lsdNBJHb25uqp4VxpiwBk1gLxN6WcjOjsOFkHR8LZSqBxgI0sdn+O
+ 979p08RBhsZmlWe5DJV09nkfcMscVWdYmXXuXfbWZweJG+bx9ps495uwQZsWaqVpMo5eZuQV/
+ g26Mov4V6tJGxb0llSBwDyDJ8SkjtnqtySrfItW+S45j+4AWxBh63Jn3LNojiBCUWjOguq+EL
+ 9QZ2hNSqrd/KOju1s5fLYf3CQY2sWWVraMu/DzRyQlWKyl4JcBBBVuFoo36alr+OQiKmeIGOO
+ 4tLuLafSXf0yOSwOYIN3ctquIleAGyr1kygEtJPBwBZw7OOWQqhW2dv6flMLjp3ljVw0CAeSt
+ Lsw3Ay9SAAshYJ4tnZNjxgywVgGclnZUgsFxmFwavnEf27YrjUf3n3H9eCS/Mcj7qHJunsXN1
+ 84FzqCLAtgQczUOtjdTUjPfPLL5xKWfDoCD8/1qIrlkEcYIYIp3XB63iRbCjidSix7GZ0lMGV
+ 8gyT4ttKIqfsTOgUuT3juqyGrLK/XHdjkY7rGpwyaaxjAgZqHnU8V6fG5ouBsJSzEj9aR6GLt
+ +MxmVH7geMTdopH7RpBF0Sxds056tQ9p0jhDg+o62Tf7wVNa+kpir/inH6iNvaGOTywnokiTF
+ 6LpvEtDO2OrL4BNeckFNhnKWvHbbgkL51/83Prf2hXopX0y/8TiN8vEVdPpyFB7txE6Cgenuk
+ cYOVXzIhiYv1Efk5h
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call write_pack_header() to hash and write a pack header instead of
-open-coding this function.  This gets rid of duplicate code and of the
-magic version number 2 -- which has been used here since c90be46abd
-(Changed fast-import's pack header creation to use pack.h, 2006-08-16)
-and in pack.h (again) since 29f049a0c2 (Revert "move pack creation to
-version 3", 2006-10-14).
+Emit byte-sized values using hashwrite_u8() instead of buffering them
+locally first.  The hashwrite functions already do their own buffering,
+so this double-buffering does not reduce the number of system calls.
+Getting rid of it shortens and simplifies the code a bit.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/fast-import.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ midx.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 1c85eafe43..1bf50a73dc 100644
-=2D-- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -739,7 +739,6 @@ static void start_packfile(void)
+diff --git a/midx.c b/midx.c
+index e9b2e1253a..6326ae17c6 100644
+=2D-- a/midx.c
++++ b/midx.c
+@@ -428,14 +428,11 @@ static size_t write_midx_header(struct hashfile *f,
+ 				unsigned char num_chunks,
+ 				uint32_t num_packs)
  {
- 	struct strbuf tmp_file =3D STRBUF_INIT;
- 	struct packed_git *p;
--	struct pack_header hdr;
- 	int pack_fd;
-
- 	pack_fd =3D odb_mkstemp(&tmp_file, "pack/tmp_pack_XXXXXX");
-@@ -750,13 +749,8 @@ static void start_packfile(void)
- 	p->do_not_close =3D 1;
- 	pack_file =3D hashfd(pack_fd, p->pack_name);
-
--	hdr.hdr_signature =3D htonl(PACK_SIGNATURE);
--	hdr.hdr_version =3D htonl(2);
--	hdr.hdr_entries =3D 0;
--	hashwrite(pack_file, &hdr, sizeof(hdr));
+-	unsigned char byte_values[4];
 -
- 	pack_data =3D p;
--	pack_size =3D sizeof(hdr);
-+	pack_size =3D write_pack_header(pack_file, 0);
- 	object_count =3D 0;
+ 	hashwrite_be32(f, MIDX_SIGNATURE);
+-	byte_values[0] =3D MIDX_VERSION;
+-	byte_values[1] =3D oid_version();
+-	byte_values[2] =3D num_chunks;
+-	byte_values[3] =3D 0; /* unused */
+-	hashwrite(f, byte_values, sizeof(byte_values));
++	hashwrite_u8(f, MIDX_VERSION);
++	hashwrite_u8(f, oid_version());
++	hashwrite_u8(f, num_chunks);
++	hashwrite_u8(f, 0); /* unused */
+ 	hashwrite_be32(f, num_packs);
 
- 	REALLOC_ARRAY(all_packs, pack_id + 1);
+ 	return MIDX_HEADER_SIZE;
 =2D-
 2.28.0
