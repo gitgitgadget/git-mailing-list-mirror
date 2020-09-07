@@ -2,162 +2,114 @@ Return-Path: <SRS0=kCdt=CQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BCF7C43461
-	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 18:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC8BC433E2
+	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 18:56:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FAF22145D
-	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 18:51:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D551C2067C
+	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 18:56:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lng6lWqd"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gVlpLcEu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729404AbgIGSvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Sep 2020 14:51:08 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55506 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729204AbgIGSvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Sep 2020 14:51:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 885A9E4495;
-        Mon,  7 Sep 2020 14:51:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TEbg9p0mJi0RUJvjPue2ecFg+bo=; b=Lng6lW
-        qd2YA0ilLUNb8aKTFZoPi+siZQtunP5fSVCYsYXTYFDkE8qdzRuAIF9X6p1JnMWb
-        4ce1fHzGMBNvsCSFMNrx+tRUw67fpfGLax+zTK5t7PTsbfuvp/R27ZYNHriRrd9W
-        3Fd3XiqyG38PHZKX6dl9MYI7nHUiBi0pGHLik=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YuZYfEl85Jl2LKRNZyPeEMSFzPFWbflv
-        ENO52083EITx9y/8GNbToDts9dljUaM/eItdZ6sjDt8nESIGXZGBWYs95kaQkVDC
-        uB/0WrA3SUKRNNqIKEuMlP2QVXe86M3DhlV2ip5Jfa3SzBs4XpxCJbWi4gibg3tC
-        Dv7QKy1QbXg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 815DEE4494;
-        Mon,  7 Sep 2020 14:51:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C141BE4492;
-        Mon,  7 Sep 2020 14:51:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Drew DeVault" <sir@cmpwn.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: Proposal: server-advertised config options
-References: <C5HAJYI9RDPU.1CPN4E1JCQCAQ@homura>
-Date:   Mon, 07 Sep 2020 11:51:00 -0700
-In-Reply-To: <C5HAJYI9RDPU.1CPN4E1JCQCAQ@homura> (Drew DeVault's message of
-        "Mon, 07 Sep 2020 12:52:12 -0400")
-Message-ID: <xmqqimcp1kvf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730249AbgIGS4g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Sep 2020 14:56:36 -0400
+Received: from mout.gmx.net ([212.227.15.15]:45447 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729822AbgIGSz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Sep 2020 14:55:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1599504950;
+        bh=oXGzwL4bnro0aLRBO6MWjQgTddoXvR0IPBjBBrjQYWE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gVlpLcEuepb+dxz+EgP5QPJD1/cF5dWJhZj8DlfivTdRdg8aaE5EflJuzfhuaHQnk
+         5OFhdl+3iBNVLdrI7pVKHTptTn914QboaKSE1shXOXqJ3eZK/MeNq/3DbjofTtWoqr
+         R1cDRHAHpgR4rR5A/vl4Wg+gP/ffRN/eghQu0uQE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.169.176] ([89.1.215.223]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3UZ6-1kEo4d3b2A-000eZL; Mon, 07
+ Sep 2020 20:55:49 +0200
+Date:   Mon, 7 Sep 2020 20:55:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Git in Outreachy?
+In-Reply-To: <441bd08b-ca7d-5977-a455-c4c2a4bd4bc9@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009072051470.56@tvgsbejvaqbjf.bet>
+References: <20200828065609.GA2105118@coredump.intra.peff.net> <441bd08b-ca7d-5977-a455-c4c2a4bd4bc9@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 13571D00-F13B-11EA-AB58-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jX+uAsQetdE1bw/+XovaMOzwYqrJN7yYRzdXcDaTQRNQEURjU1G
+ VeT2sAMG9CPpfbyvxlfi7poRhovgnWKy+HYF0HZjy26Nf/qkEics+394VzztPK87+YpqzDU
+ jvdKbegevJMfTwh5t/6lvs0EjOZXM8L2A1zreE/L2J5rI10ivKl2fcJwgQu/Q009kE9Okvu
+ Ja69ZJUgYHG4A2qJpJpIA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k0jx/oEoiBs=:zL0g5Hf2qUvEeSh36rVAJW
+ wSd/9mERTwenItrM5vXzx/EI+18giWcPwlmC811/FfxxIm8zV99CvE4QM5jjUL+ZJ/52pwlhK
+ cL05ZQg4frs1DJmfpRvdJEPm7+fvfnf+lZehcYuEuMU08IOFbtYRn0VSMv/LH/l8qGQc6QzRD
+ t7M5Rf4EG6tWVnes7mDK/nHu+nfXJWlwvl4uENZrbm6aJOCwZl/8+/yQ0T0UPXYWurVfXnQMG
+ 5gSj9wPFsSUlXY1UOrfPr28gwktVnLXznAUIkCk0z/uO5SyMmWEwYXLDxCba4KharBKjIejNt
+ eDs04sZ7in+GJEMNSOCOgmRlIaH0TqsoVNbPb9RXbFxL3qM6RY7Rnj+xfqUhNXdkg8hTY9ylR
+ FSdVQPt3ieK4yRtCGGlPBtIhi3ISuYUdeQxc2mlDtmtXF/MNk3UY1q8INmFABkoEpWOmvWVir
+ 709UHFfQoyMyyBfQlVHEpu7NoIs5EIdB1ufZKk8a6hQspOk33PmPJ10+i5Go0XAKncZjk+RNw
+ F+VNurD0Ij63hIvbZev95qHsBza/43ClG46oWwJVoBvKJu+jnU8LV++7kCjAJJA+S9klJKUE1
+ DMGctdaxfYlU4B5pN55sG0o0f907AfLcHWfity1lvH3OJdrQPdEa055I/YxGAB3uyQMev+kwk
+ 9foK7aFZOc+EhM1RfNc4xUtuKnHLCQ6SHczUWfI6lXm/FC+6T3ro9oIT9w8e8tjhsk43Ep9Qw
+ 9b+iBbvn3cRX3volJlhJAjA9v+r1iSRNLEmHSkGkHaAmVlIwi7EaqtOHuBeZowO7oIT2fvD3r
+ LyNIgk5djVGho6BR36vS6/A8Zm2E5oOkNuqhpWDlkuRPw+oxPoXz0Q8InHohKXfpMMWehH54w
+ a5qNnFf/hINUYB+7pbPi56fuHo9B+jkJiLvY0WTssJVz6m+WcIrXfhHZTt/3UbM5vddJomk4w
+ yeUWpT+oCIlk9s3LQ3Lrchfrg0kv4GFG+y8q/IwMTfmfdUrM1ZdIJ1Cl1I3wyyw45+wDH7ixJ
+ sx6CNrXMhNm7uQW6Ti/sCJZ4if42oUqvbeRjF/36hgX+jDW06/0Nn21hg6TvxLKq2YKI5Y+Ok
+ jL3M9IoSjGJP+vrYN3UvKItqxsCcY34dpFjyn4a4wfjIb2K4Mf287r0zMDuHp6gfO6QsbmhTr
+ yQNHbOWWvxiklamTeTfwgdrWXH/F5T0AQe7/qT+nzYaD2BbaRMHlr2c3NWfulbMhAn7jnpK4a
+ 7fZy07RHmSTA7Z02Efy8XdHRc7wlOp3Tw4KInvQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Drew DeVault" <sir@cmpwn.com> writes:
+Hi Kaartic,
 
-> The basic idea is that the server could advertise some config options
-> which it recommends the client sets for a given repo after a fetch. Some
-> possible use-cases for this feature include setting:
+On Mon, 7 Sep 2020, Kaartic Sivaraam wrote:
+
+> On 28-08-2020 12:26, Jeff King wrote:
+> > Are we interested in participating in the December 2020 round of
+> > Outreachy? The community application period is now open.
+> >
+> > I can look into lining up funding, but we'd also need:
+> >
+> >   - volunteers to act as mentors
+> >
 >
-> - format.subjectPrefix to 'PATCH my-project'
-> - sendemail.to to the mailing list address
-> - push.pushOption to recommended push options
+> I'm willing to co-mentor a project for this term. I don't have any
+> particular preference of projects, though.
 >
-> Upon cloning, each recommended config option would be displayed to the
-> user, and they would be prompted ([Y/n]) to agree to set that value in
-> the config file for that repository. Additionally, there would be a
-> config option which white-lists a list of config options which are
-> automatically agreed to without prompting, and each config option would
-> have one of the following states:
+> > I would appreciate help to find project ideas though. Are there still
+> > scripts that are worth converting to C (excluding git-bisect.sh and
+> > git-submodule.sh that are still worked on)?
 >
-> - accept-silent: set the option without printing a message
-> - accept-verbose: set the option and display a message
-> - prompt: prompt the user to set this config option
-> - reject-silent: silently refuse to set this config option
-> - reject-verbose: refuse to set this config option and display a message
+> I think Dscho's e-mail linked below gives a nice overview of the various
+> scripts and their likely status as of Jan2020:
 >
-> We would default to reject-verbose for all unknown config options and
-> include a set of defaults which specifies the appropriate trust level
-> for various useful benign options (such as the examples above).
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2001301154170.46@tvgsbejva=
+qbjf.bet/
 >
-> The implementation would involve advertising config-advertisement in the
-> fetch protocol. Both the client and server would have to agree to use
-> it. If the server supports it but the client does not (in the case of an
-> old client), it could fall back to printing the list of recommended
-> options to stderr.
->
-> To choose which config options to advertise, a new option would be
-> introduced (uploadpack.advertiseOptions) for example, which has a list
-> of .git/config options from the remote repository to forward to the
-> client.
->
-> This would be a lot of work so I'd like to float it for discussion
-> before getting started. What do you guys think?
+> I'm guessing only the status of submodule has changed as it's being
+> worked on now.
 
-Assuming I am among the guys (do you solicit opinions from gals, by
-the way?), here are a few unconnected random thoughts.
+No, not quite. The `git-merge-*.sh` ones I called "trivial" are already
+being worked on by Alban Gruin:
+https://lore.kernel.org/git/20200901105705.6059-1-alban.gruin@gmail.com/
 
-I do not want to see this as a "server" thing.  All the examples are
-"per project preference" and I do agree it would be nice to have a
-standardised way for projects to communicate their preference to
-their participants.  Regardless of the hosting site I clone and
-fetch my project from, I'd want to see it communicated consistently
-to them.
+And `git-legacy-stash.sh` is no more, as of v2.27.0~180^2.
 
-Which means that it must not be a patch to the "server" component to
-what responds to your "git fetch" and "git clone" (i.e. upload-pack)
-as some hosting sites do not even use upload-pack.
+But yes, other than that, my summary still holds.
 
-Also, I do not want to see this as a "git" thing and I mean it in
-two ways.  
-
-In addition to your examples of "per project preference", there are
-projects' coding style guides, etc., that we do not enforce as git
-config at all, e.g. how wide your editors TAB and single level of
-indentation should be.  It will unnecessarily narrow your view to
-assume that the kind of "per project preference" you convey from the
-project to its participants need to be the Git configuration and
-nothing else.
-
-And this should not be a "git the SCM" thing.  If you download and
-extract a release tarball and write a patch on top of it, you should
-be able to learn what the project convention of what the "[PATCH]"
-prefix looks like and what the mailing list address is, even though
-you did not clone with "git".
-
-All of the above leads to a design to have a common convention
-widely shared among projects to express project preferences over
-different kind of tools, among which Git is one of them, and store
-it in a known location in the projects' trees.  Most importantly,
-there must not be any Git protocol extension for doing this kind of
-thing.  
-
-Don't limit the user's choice in either of these two ways.  The
-preferences for tools other than Git should be sharable with the
-same ease as preference for Git, and the preference should be
-sharable with the same ease to those who use Git and those who
-don't.
-
-Perhaps have a .project-preference/ directory at the root level of
-the project tree, talk with other SCM vendors and editor vendors to
-design what kind of information are recorded in that directory and
-how, and write a script to work on that to map the project
-preference information to git configuration while other SCM vendors
-and editor vendors write their scripts to help their users to map
-the project preference information to the configuration files that
-their tools use.  Then you can either write a wrapper around "git
-clone" to first run "git clone" and then run these scripts you
-prepare to process the contents of the .project-preference
-directory, or perhaps trigger these scripts from the post-clone hook.
+Ciao,
+Dscho
