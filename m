@@ -2,143 +2,152 @@ Return-Path: <SRS0=kCdt=CQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47D07C433E2
-	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 20:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BFC3C433E2
+	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 20:52:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF4EA2145D
-	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 20:09:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cuOpu0OO"
+	by mail.kernel.org (Postfix) with ESMTP id D60DC217A0
+	for <git@archiver.kernel.org>; Mon,  7 Sep 2020 20:52:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728879AbgIGUJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Sep 2020 16:09:34 -0400
-Received: from mout.gmx.net ([212.227.17.22]:39607 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728834AbgIGUJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Sep 2020 16:09:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1599509370;
-        bh=Yn9bL0e/X/PAnr1blDQdf8ex/P+pOW5KZ8h2u72O9s4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cuOpu0OOOQ73WON9T9DVL4LiLXSl5SAhcvDl2EyEhLqC3qaJy62pAnbXOJdyYM8+k
-         2tS3nDeNfJNn4OPZWPIUdmgP090zMcCRdSDg2U7rL6HlWCAfJfaUYzhb1WcDsIu74N
-         Pc/f9gPBcBzD14MoMx9hX6bukdNYMhZaTsmY26GE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.169.176] ([89.1.215.223]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0G1n-1kR7JF0BqJ-00xMyY; Mon, 07
- Sep 2020 22:09:30 +0200
-Date:   Mon, 7 Sep 2020 22:09:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
-        Orgad Shaneh <orgads@gmail.com>
-Subject: Re: [PATCH] contrib/buildsystems: fix expat library name for generated
- vcxproj
-In-Reply-To: <pull.728.git.1599458405948.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2009072208430.56@tvgsbejvaqbjf.bet>
-References: <pull.728.git.1599458405948.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726925AbgIGUwv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Sep 2020 16:52:51 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55330 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726735AbgIGUwu (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 Sep 2020 16:52:50 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 98E0D60489;
+        Mon,  7 Sep 2020 20:52:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1599511968;
+        bh=MWtOgnzo6q+5XSk/CX/cQZ6AfXKtFyBRRzjuc5X1vao=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Lr6XRjpOQQI8AKMZJs9yKNUEEDGgjH0vFTSqHEEZ0p468C59Jv16MDHGhXjXJPzWS
+         4aV8P3FuMb8BQokrrC0BUWkcSfgNB61IhLV9H8JTbGBOqdChaum/i82UO9R1wsc1zB
+         K2CSwMJ6qIOFYcAF+wmU2/YgkCF+Wwqc2HEhl2/MN+AmGt8pEPl/v4lSsQ4qyiR195
+         4cRE1hdbxHX4lwz8nUW7XIFaR2mgWa+OhfwrBP3TYAXDnjflc0xTd+eOlPqtJaVKVP
+         EvVu+YMdeYQBbchnCtNYCNt+TxXINJjsASe/berPHfWI6/fqCowZFDLl0VOzW18Tp1
+         VqDmMr/RAP1uWczaqsqmHSV6ehDlqek4PH5uJ0IFEFG3DPzwcqc+cm5BkPqyDf4Vwc
+         +EBCY1eokcSBkrdkPIlC7EA+O/16wU1FYFEcBREkoQUXMTGNXJpSunR1BjjiY2AuHX
+         5jaZkbNCL2HapDXmV5Tc1mjafhmhjMZLUSi2hKlS1Jp4JycU4i+
+Date:   Mon, 7 Sep 2020 20:52:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Proposal: server-advertised config options
+Message-ID: <20200907205242.GF241078@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Drew DeVault <sir@cmpwn.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+References: <xmqqimcp1kvf.fsf@gitster.c.googlers.com>
+ <C5HDRLX7ZPR5.1TFS72T7PBXSJ@homura>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QgtrLpgvz7EwYuCQVnHBnkJrzu3MlmiBXyiNUgV6qi3GcefowBQ
- Elsdras8lE59BhHCyOL3p2aLk06LjQqckSoAszv9Sixqfp+kV4pjsXCSNocBNh9j3Ujjmqd
- BpvBxQitmirXpNL3MiFCJA6WmmZUBdkOxt6oaKW2z4e1aTDH4q+DYeK0OXtuEEH8lxiJkyy
- GqTakDzVnWeToE/NUAtAA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xiAcVDVRI9s=:nnyoJXTQd5o5O/uRxRDBK3
- 5et31SqrGfIsUA2XhAGm55O3Ml3uN8A2Qa4o854eKCc1ZPd3wrstXJ8NHox4yS1wQfq8yOViA
- i6Y+rBoe+igFQiNa9aThQ8HQLqMBLvHnW4467Ky0fjDxjzbcOmVc2p5QKAa7A9hCYwd1xUgJh
- tiswh/GGZ29lv/ZJHuDzZxYVbUNY/f9j5NkfCBuzNWKJnAdqoIGgRfTWdCTVfHybp9yB9wXgN
- LChQ546IXS+1CYuqfRM7ALGNujmqRymjTm1B35bDDdJInyWuNfTw55dpBMqeEAsWlfzVBFTo6
- KzAjrQpYWwbxT3JcCMfyP3ZkGmw3DUJFkVjF7gU5wRgdDDriySo6N/NX+tMM0m78WArn5tJNg
- Zm4qrsug12tV5FPoR4RSJE3CUwg8v0xCl81U0Inz3/N5zIFOOyBDSkUxaBSIQYl33L4AuG2VV
- LYEjYMNA5rYL+nNAye7dYijFeJYZ7rV6n1gRU9AUfSaVminKo9U7IurNNqnYAurP6QAjqpTka
- 0WFQB8BQ4/53TtujcWw3bcHxZKLTsDmU0t2r5kM3uds3hqHgW8OFkvJ+SddlFwRtxcoCyCYOr
- E+JY3V868RZyLZ/gngjsrmGcPsPQF+CyVr3grV5io5BlpyUjoWphbHbyDv+nMhL4uLyuTH/FD
- 1JgA5xz0vPALKvDBIFAgSOcQ6cEOEFDEgcF23tRQaWeLg4ZRhRy6dnrQECKtJR1UYcxjrAfWZ
- FUjcdKZ5so19LaA+Ik46QSAxcaTRVoU3GF6NZBkG0/C3DbRcJ5pZGbFZMxH+yUI9gLOQ4slTb
- gP4l1Trct0rzRekpuSDWS81kz1ov1pe/peFQAffe3oWDhh/TbC13fUG4Zk3UQqN8xJ6Hjn4bc
- +Pb3jOEt+0cyQybD8YL62wFOfUm9mGV3tyi2KNjAIMohjLKVw3vwJ2fY3Lan7qugmDtYpwOUw
- AjlclXDA19tZ1BMyyiUpkSDkr48kOk8M1zFrUBp+z0MgabcR4qCjGutU7Q+DfbHMfmrs7pEvJ
- ASxUdSzcfL6RY9T1bewNGOYCxuHNj57WlsgzXWDb2QyNhbbSkv1HGW3ukAO7XD5ib/uSBhyTs
- /6jiQMcr5iWw31oQBGKyb0aDIwDrCfkSb84X4+mx+4KDv1vGNkiEm7uBX5gWdsEdyIdZrlz24
- 5MeehKfcBao6WC5S9SVCaengfFFoHl4xYZmZpyS4qigWPdAG9XaNwTWDdC/CCT9PPU/HtGcP5
- 2q1Xr/2NUrpbo3XyFjgmK0mKSzFn4lm0w+hrM0g==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="w3uUfsyyY1Pqa/ej"
+Content-Disposition: inline
+In-Reply-To: <C5HDRLX7ZPR5.1TFS72T7PBXSJ@homura>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Orgad,
 
-On Mon, 7 Sep 2020, Orgad Shaneh via GitGitGadget wrote:
+--w3uUfsyyY1Pqa/ej
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> From: Orgad Shaneh <orgads@gmail.com>
->
-> expat.lib -> libexpat.lib (libexpatd.lib for debug build).
+On 2020-09-07 at 19:23:15, Drew DeVault wrote:
+> On Mon Sep 7, 2020 at 2:51 PM EDT, Junio C Hamano wrote:
+> > I do not want to see this as a "server" thing. All the examples are
+> > "per project preference" and I do agree it would be nice to have a
+> > standardised way for projects to communicate their preference to
+> > their participants. Regardless of the hosting site I clone and
+> > fetch my project from, I'd want to see it communicated consistently
+> > to them.
+>=20
+> The server I have in mind (git.sr.ht) is a little bit different in that
+> most of those examples I gave would be configured automatically on the
+> server side. My server software knows where your mailing list is, for
+> example. My goal is to try and make this as hands-off and "it just
+> works" as possible.
 
-Good point, I forgot to verify that this is also needed for `vcxproj`, not
-only for `MSVC=3D1`...
+The Git security model doesn't permit untrusted config options, so I
+think it's risky to add support for config options from the server
+side.  We need to consider not only advanced users who are going to be
+able to make a good decision here, but novice users who are struggling
+to understand how Git works and are prone to social engineering.  Just
+because your server is not malicious does not mean that others aren't.
 
-Thanks,
-Dscho
+In addition, if I'm cloning a repository just to build it, I don't want
+to be prompted to set those configuration options at all.  My experience
+in Git hosting is that clones and fetches far, far outnumber pushes, so
+adding a prompting feature adds a bunch of impediment with little gain
+for the vast majority of users.
 
->
-> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-> ---
->     contrib/buildsystems: fix expat library name for generated vcxproj
->
->     expat.lib -> libexpat.lib (libexpatd.lib for debug build).
->
->     Signed-off-by: Orgad Shaneh orgads@gmail.com [orgads@gmail.com]
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-728%2F=
-orgads%2Fvcxproj-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-728/orgad=
-s/vcxproj-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/728
->
->  contrib/buildsystems/Generators/Vcxproj.pm | 1 +
->  contrib/buildsystems/engine.pl             | 2 +-
->  2 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/builds=
-ystems/Generators/Vcxproj.pm
-> index 5c666f9ac0..d2584450ba 100644
-> --- a/contrib/buildsystems/Generators/Vcxproj.pm
-> +++ b/contrib/buildsystems/Generators/Vcxproj.pm
-> @@ -80,6 +80,7 @@ sub createProject {
->        $libs_release =3D join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib=
-\.lib|vcs-svn\/lib\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
->        $libs_debug =3D $libs_release;
->        $libs_debug =3D~ s/zlib\.lib/zlibd\.lib/g;
-> +      $libs_debug =3D~ s/libexpat\.lib/libexpatd\.lib/g;
->        $libs_debug =3D~ s/libcurl\.lib/libcurl-d\.lib/g;
->      }
->
-> diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engin=
-e.pl
-> index 070978506a..2ff9620459 100755
-> --- a/contrib/buildsystems/engine.pl
-> +++ b/contrib/buildsystems/engine.pl
-> @@ -349,7 +349,7 @@ sub handleLinkLine
->          } elsif ("$part" eq "-lcurl") {
->              push(@libs, "libcurl.lib");
->          } elsif ("$part" eq "-lexpat") {
-> -            push(@libs, "expat.lib");
-> +            push(@libs, "libexpat.lib");
->          } elsif ("$part" eq "-liconv") {
->              push(@libs, "libiconv.lib");
->          } elsif ($part =3D~ /^[-\/]/) {
->
-> base-commit: e19713638985533ce461db072b49112da5bd2042
-> --
-> gitgitgadget
->
+> > All of the above leads to a design to have a common convention
+> > widely shared among projects to express project preferences over
+> > different kind of tools, among which Git is one of them, and store
+> > it in a known location in the projects' trees. Most importantly,
+> > there must not be any Git protocol extension for doing this kind of
+> > thing.
+>=20
+> Storing a file in your project tree to handle this configuration would
+> eliminate the "hands off" feature I was aiming for. We also have a
+> policy which forbids our software from making any automated changes to
+> the contents of your git repository - we just don't consider it
+> appropriate in the domain of our server software's responsibilities.
+
+That doesn't mean you can't provide a downloadable shell script that
+people could check into their repositories to configure this for the
+user.  That's the typical way that projects that use standardized hooks
+work, for example, and it lets the user decide whether they want to
+configure these things (by running the script) or not (by not running
+it).  Users who are not interested in becoming contributors need not
+ever be bothered with it at all.
+
+It doesn't automatically "just work", but it also lets projects decide
+for themselves what their settings should be.  Just because a site
+offers, say, mailing lists, doesn't mean that folks will want to use
+those mailing lists.  For example, the Go language repository is hosted
+on GitHub, but uses Gerrit for code review, not GitHub pull requests.
+
+> Also, the conventions for tooling-related files in-tree like this is
+> currently very disorganized within the ecosystem. Between .editorconfig,
+> .gitattributes, .github/funding.yml, a dozen CI systems, and who knows
+> what else, there's no common consensus on where to put files like this
+> or what they should look like. I think that securing consensus for this
+> would involve reaching out to these projects, and the scope of that
+> effort and the necessary follow-up developments and compatibility
+> planning on behalf of these projects would be...  astonishingly large.
+
+You can try to standardize all repository dotfiles, or you can just
+provide a configuration file and documentation and let people adopt it
+as you go, which is how most of these work.  If your design is
+desirable, people will adopt it and spread it across projects.
+--=20
+brian m. carlson: Houston, Texas, US
+
+--w3uUfsyyY1Pqa/ej
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX1admgAKCRB8DEliiIei
+gRBPAQDtYh78XP/9nSxyXwpje+GJLnJoz72C1HcHf/BOzxcwqgD/dc14FP5ofc2V
+CVQjwqNd9K+NMuVDDLyWz3ex+t/kkgs=
+=bOrw
+-----END PGP SIGNATURE-----
+
+--w3uUfsyyY1Pqa/ej--
