@@ -2,82 +2,87 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19AF6C43461
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 22:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB664C43461
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 23:25:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF1D3207DE
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 22:57:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCFA520732
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 23:25:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iKIooB5H"
+	dkim=pass (2048-bit key) header.d=schrab.com header.i=@schrab.com header.b="q/56EL2Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728899AbgIHW5I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 18:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        id S1729048AbgIHXZs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 19:25:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726657AbgIHW5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 18:57:08 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7180C061573
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 15:57:07 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id k15so846295wrn.10
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 15:57:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ki5O1ohrKZ1RzJcn816UfwYPQhg3R3cVL1GH5hIK/TU=;
-        b=iKIooB5HhdD1EWGelrF8VbY8etY94+NwsdUIx4eV9PcHoBpJy0Vji5jn/BmrJaadO1
-         dqC117ByxG3tdvHuzcNYPvZ+6WDyaKPcJpfU+bNBZfBIvAmVlhqJy2WAn7wPVopFeGW5
-         SMn076KUzU/r7r1HGsF7jsQXAwEM65vGdLwgEjrAqBi+kLl3VzVMXQqnsudZvbQW9OSQ
-         YyjwVUoHFhLP69XIYmXlWO1m7VrEvaRCvdYj+R2j7l3y+fe4BTK9VJEaP4uOAt1H2RIM
-         xZa99Ka9VA96b1aZ4g8PWks2Lc6Ung/L128osG0jUqes1NEZP1s0DQeTwd8Wg5GWGNhA
-         D9lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ki5O1ohrKZ1RzJcn816UfwYPQhg3R3cVL1GH5hIK/TU=;
-        b=FV8FsXnjGCPGFYaNq39Jb8KtolwSkfqsHM5uI66UATlTLN19RCJmLIhnu/Hd4MrZjH
-         dB4tYHN5/ptt9+g8+Q4QC2I/SLQD0om+Ka6yjgkOTHXLdfWCSjax0KNoU46YuV1Gh+sB
-         D1tsYe0T94XrYGzev8F2MNP7+/ooMenJYQlDf7IsKlytL5wlGfOxfKsvCRLI4Cgg/lpH
-         TVhTXAJmNME+fiyn8YYI2sDm2jt/uVx/4FyXFwTADEzGD/4GiSzX8yk5HYy+gQ36rDge
-         CfrSuvLcONijkAZMb4/R55hl9eQeHBfcc2ahDW0v/nhGGyOeHSZJyTe03I0r8Fg7cj3A
-         e47g==
-X-Gm-Message-State: AOAM532r1zGWkPnBIwkCJkeF7dvbMjXbZaVDoktFm63uLl3MjWhjUEpE
-        blN52iX18LfS1vqCObig8WZuCKnEjNGYXVyBMEU=
-X-Google-Smtp-Source: ABdhPJxYG6XEU4t+G0Uwn4llq33dUtynSPT/R/MIQIzkrMJxHnWJ3yislXxlBcpOfeXRgP0iV54ooFE95jsP51FG4yM=
-X-Received: by 2002:adf:a443:: with SMTP id e3mr817705wra.146.1599605826480;
- Tue, 08 Sep 2020 15:57:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200908013013.1099937-1-sandals@crustytoothpaste.net> <20200908205224.4126551-1-gitster@pobox.com>
-In-Reply-To: <20200908205224.4126551-1-gitster@pobox.com>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Tue, 8 Sep 2020 15:56:56 -0700
-Message-ID: <CAPx1GvddM_B9Lehg8pX2yEXgiHL5vKYiabiCsjKhKHDnhQTx4g@mail.gmail.com>
-Subject: Re: [PATCH 0/6] quote_path() clean-ups
+        with ESMTP id S1726591AbgIHXZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 19:25:46 -0400
+X-Greylist: delayed 530 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Sep 2020 16:25:46 PDT
+Received: from pug.qqx.org (pug.qqx.org [IPv6:2600:3c02:e000:5::3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C6DCC061573
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 16:25:45 -0700 (PDT)
+Received: by pug.qqx.org (Postfix, from userid 1000)
+        id D67BC2B30B; Tue,  8 Sep 2020 19:16:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schrab.com; s=mail;
+        t=1599607012; bh=/OhI4YiDeH5hPPkP/sw5Li1aBd3qTtRn99HHbOdFmvM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=q/56EL2YkvjjIVyBglFRiU5+mz+P3R5mUyoU3kiGh4ddXXvyM6jh5gzIY4A2pkK3B
+         6c/Fy8t3ikeo/nyd8B9ezUDVlUhfsfAh7ALq9LrP1+JuIybCl9fpYpAt55cI8cMWFp
+         oLFn4u6C1KHXWSo0xjVXuKdAW+0UTuWBzuBMZ3hRFo58/eaJDWWVcQMP9cTP05znjt
+         45vdxUFEL1hj4HpEqhSv5O06MEKwwuIGwzJWuEbTos1a4Uddftc2r6FknHIQD8ywE3
+         aT+gQBI5h/ti18V8NX53hBZz1Z8wCFvxYZL0zpML2gwOd5Jk1jhqf+SEGeaf12JBnM
+         OY+CeqxVJ9nMg==
+Date:   Tue, 8 Sep 2020 19:16:52 -0400
+From:   Aaron Schrab <aaron@schrab.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Ash Holland <ash@sorrel.sh>, git@vger.kernel.org
+Subject: Re: `git describe --dirty` doesn't consider untracked files to be
+ dirty
+Message-ID: <20200908231652.GC1014@pug.qqx.org>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+        Ash Holland <ash@sorrel.sh>, git@vger.kernel.org
+References: <CAHJUbDg2KA9Xo_CAO=cgrZewOH0zfEhOVydhMN8fLvVDmji4sQ@mail.gmail.com>
+ <xmqqh7s8z0qw.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqh7s8z0qw.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 8, 2020 at 1:56 PM Junio C Hamano <gitster@pobox.com> wrote:
+At 09:33 -0700 08 Sep 2020, Junio C Hamano <gitster@pobox.com> wrote:
+>Ash Holland <ash@sorrel.sh> writes:
 >
-> So, this is an alternative approach to tackle the same issue
-> <xmqq4ko8yxp9.fsf@gitster.c.googlers.com> tried to address.  It
-> ended up to be more involved than I would have liked, but it was
-> primarily because it needed some function signature changes.
+>> There seems to be a discrepancy between how `git describe --dirty` is
+>> documented and how it actually behaves. The documentation describes
+>> the --dirty flag like this:
+>>
+>>> If the working tree has local modification "-dirty" is appended to it.
+>
+>Not limited to what "describe" does, whenever we mention "local
+>modification", we only mean modification to tracked contents,
+>because by definition we do not detect or track "modifications" to
+>anything that is not tracked.  Untracked paths may have been
+>modified multiple times, but since they are not even added, we do
+>not notice nor care.
 
+It's perhaps worth noting that submodules are already considered dirty 
+when untracked files are added:
 
-Not that it necessarily means much, but I gave the whole series
-a quick eyeball scan and it looks good. I like the idea of using one
-consistent "quote the path" routine.
+$ git diff vim/bundle/fugitive
 
-Chris
+$ echo foo >vim/bundle/fugitive/foo
+
+$ git diff vim/bundle/fugitive
+diff --git i/vim/bundle/fugitive w/vim/bundle/fugitive
+--- i/vim/bundle/fugitive
++++ w/vim/bundle/fugitive
+@@ -1 +1 @@
+-Subproject commit caf3b1d5696e8d39a905e48f1e89d8c0c565168c
++Subproject commit caf3b1d5696e8d39a905e48f1e89d8c0c565168c-dirty
