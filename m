@@ -2,101 +2,89 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FEB6C43461
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F85C433E2
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:26:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B03A207DE
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:12:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 959822080A
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:26:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O1yH1qUv"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A+ruOg4t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731800AbgIHSMW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 14:12:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59170 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731791AbgIHSMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 14:12:17 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0A991E50F0;
-        Tue,  8 Sep 2020 14:12:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KHcwVpoFO3JLxjr2HjSItrhpEiU=; b=O1yH1q
-        UvHdQTrI43VJ8zC6trjPhBh/DZEUpedfsFt/xdV8lGdL1LYMjjRfcatROuePeol2
-        GAxL04pU4b2yUBGkFHMk0Wfpmas2NUmeTSTaX1nC1wz3f6cgXQbaqCtNaagLcBjX
-        tYliBRzEIR2YOtu0ObGtIr7OwYqxeYzArX4sE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jjq7w3ZcT9ViKVcmhvMz11wqXnumm4aZ
-        OKC3SPWOpLJwWkdCyk06FZuOfQ5LpA6swPsg1hfG9u8fz6fn9GC+Fb7LreHEUFuV
-        AmvukUmhz8eZx3mWEjEHlii7if3b/WASdHl8TffNuHdc/SvuXNZLNEAhElQ4WbtV
-        51OdODtd/AY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02A4EE50EF;
-        Tue,  8 Sep 2020 14:12:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0B1F0E50EE;
-        Tue,  8 Sep 2020 14:12:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Beat Bolli <dev+git@drbeat.li>, Denton Liu <liu.denton@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] pretty: allow to override the built-in formats
-References: <20200905192406.74411-1-dev+git@drbeat.li>
-        <20200905195218.GA892287@generichostname>
-        <xmqqeene36t7.fsf@gitster.c.googlers.com>
-        <8bb68268-8e4c-749e-b2e0-21b38b70c8bf@drbeat.li>
-        <xmqqtuwa13gt.fsf@gitster.c.googlers.com>
-        <20200908135303.GA2448968@coredump.intra.peff.net>
-Date:   Tue, 08 Sep 2020 11:12:11 -0700
-In-Reply-To: <20200908135303.GA2448968@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 8 Sep 2020 09:53:03 -0400")
-Message-ID: <xmqqzh60xhms.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1731481AbgIHSTv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 14:19:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731556AbgIHSR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 14:17:27 -0400
+Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AF1C0613ED
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 11:17:27 -0700 (PDT)
+Received: by mail-vk1-xa33.google.com with SMTP id d2so39327vkd.13
+        for <git@vger.kernel.org>; Tue, 08 Sep 2020 11:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mxqBxKqEoaTRh0L3jiA92zTsgi5AH3aJawYPN1FtGBU=;
+        b=A+ruOg4tFIZTYjfBWJWyNvtfW4OJtc139/PisNwbxIQA+i4Y18H70SqxjtF/fwksZ3
+         PtWztKL7QpVLglXjRSmD6UAzbuKapsA8Wy+Q2rNl/bb2CH8Sm2avtEqQvtOP6oHKepZ+
+         iuPKKOCM/UaEICO28mBm1snkvJgETCR0/BMzAlrVPKorAAxxJm5Ub6XJ/wbGhaFNKqYn
+         DjqJNBKsn0BXgpVu1ZaOhYB0kdLhEoVggdAGSKPHDLm/HTADTPMSX+Es79wKZkP90n5f
+         9A6DJw/LuXgCpO2LWTymrTHw2TsYXUEh0j0xGEZWMds51Fs/K7cIYBNxRcrA5UqrjrY3
+         AtbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mxqBxKqEoaTRh0L3jiA92zTsgi5AH3aJawYPN1FtGBU=;
+        b=XtMW+ojVLcmg62zx7dyI2jyM3TQ1bVAew9zHGn81fnPlSq5CjCg2sNKgYY8UNfBXhz
+         XYvn6b0WKMv82u0wAC4LaJW8Zf/BPBHp1QhvpPZax9oNLL6+tfYIAfdSdSQR3Kv9IuUZ
+         IaZ0n1u/v8HE1ikZwArEA8vWDYvbnNMjJjdAtCR/wKje4W/WdFHFm7O3q+eozO9DCrzZ
+         as9pppS5Dhm9YeHwKFIFy41+BBEH4gg5T4+B5ppn/CHaN3+u5D2MYe581WxRxDmlnyzR
+         g7325vXUbY8E9zwwUTd5l2JgTbVF+7PzyYqQXor4N5zX6kYQm3lrBUrOZG4UtAczCBAb
+         xXgA==
+X-Gm-Message-State: AOAM530ENgxmfO97guvb4HjbXnlBZeetcYq6pKnD5ibYTxcoeEqBVwPf
+        sr0uX58rzWaj6oxYAQqazn7IC0CQzrbkwOKt+UziC4USYdY=
+X-Google-Smtp-Source: ABdhPJw+UJxgVqQxybvLTq2L0CeDaIXq+ecoDzqWUH/dDH6LNA4CEr2i1GEfdl8uUKn5md7gr+fTw0Qp7wh7WhidG8A=
+X-Received: by 2002:a1f:5f05:: with SMTP id t5mr302996vkb.8.1599589045899;
+ Tue, 08 Sep 2020 11:17:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D1B617F6-F1FE-11EA-AF9D-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+References: <pull.712.git.1598628333959.gitgitgadget@gmail.com>
+In-Reply-To: <pull.712.git.1598628333959.gitgitgadget@gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 8 Sep 2020 20:17:14 +0200
+Message-ID: <CAFQ2z_MJ8nD3Z3m8P9HS4O6jbs7u3y5h8a6Nvy3Pa=d6s40=9g@mail.gmail.com>
+Subject: Re: [PATCH] refs: move REF_LOG_ONLY to refs-internal.h
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Aug 28, 2020 at 5:25 PM Han-Wen Nienhuys via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> REF_LOG_ONLY is used in the transaction preparation: if a symref is invol=
+ved in
+> a transaction, the referent of the symref should be updated, and the symr=
+ef
+> itself should only be updated in the reflog.
 
-> You could accomplish something similar by having gitk look up
-> pretty.userReference, and defaulting to something sensible if it's not
-> defined. For a big script like gitk that's not too much of an
-> imposition. But it's awfully convenient to be able to just say
-> --format=reference in any script and get the user's preferred format.
+Jun, are you waiting for me to do anything with this patch?
 
-Or --format=userReference in any script, and then allow it to fall
-back to pretty.reference that is otherwise ignored?  Ah, that indeed
-is what you suggested with --format=loose:reference already.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
 
-> So of any of the formats, it seems like the most likely candidate for
-> such a feature (setting "pretty.raw" would be a pretty big foot-gun, for
-> instance). I don't like the inconsistency it introduces between formats,
-> though.
-
-Yes, the inconsistency was what primarily disturbed me.
-
-> Here's a slightly different proposal. I'm not sure if I like it or not,
-> but just thinking out loud for a moment. The issue is that we're worried
-> the consumer of the output may be surprised by a user-configured pretty
-> format. Can we give them a way to say "I don't care about the exact
-> output; pick what the user configured for this name, or some sane
-> default". I.e., something like:
->
->   git log --format=loose:reference
-
-Yeah, that, or with s/loose/user/ or something.
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
