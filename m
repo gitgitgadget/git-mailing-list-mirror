@@ -2,89 +2,424 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F85C433E2
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D62F8C433E2
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:52:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 959822080A
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:26:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A+ruOg4t"
+	by mail.kernel.org (Postfix) with ESMTP id 9C34E2080A
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 18:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731481AbgIHSTv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 14:19:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731556AbgIHSR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 14:17:27 -0400
-Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AF1C0613ED
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 11:17:27 -0700 (PDT)
-Received: by mail-vk1-xa33.google.com with SMTP id d2so39327vkd.13
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 11:17:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mxqBxKqEoaTRh0L3jiA92zTsgi5AH3aJawYPN1FtGBU=;
-        b=A+ruOg4tFIZTYjfBWJWyNvtfW4OJtc139/PisNwbxIQA+i4Y18H70SqxjtF/fwksZ3
-         PtWztKL7QpVLglXjRSmD6UAzbuKapsA8Wy+Q2rNl/bb2CH8Sm2avtEqQvtOP6oHKepZ+
-         iuPKKOCM/UaEICO28mBm1snkvJgETCR0/BMzAlrVPKorAAxxJm5Ub6XJ/wbGhaFNKqYn
-         DjqJNBKsn0BXgpVu1ZaOhYB0kdLhEoVggdAGSKPHDLm/HTADTPMSX+Es79wKZkP90n5f
-         9A6DJw/LuXgCpO2LWTymrTHw2TsYXUEh0j0xGEZWMds51Fs/K7cIYBNxRcrA5UqrjrY3
-         AtbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mxqBxKqEoaTRh0L3jiA92zTsgi5AH3aJawYPN1FtGBU=;
-        b=XtMW+ojVLcmg62zx7dyI2jyM3TQ1bVAew9zHGn81fnPlSq5CjCg2sNKgYY8UNfBXhz
-         XYvn6b0WKMv82u0wAC4LaJW8Zf/BPBHp1QhvpPZax9oNLL6+tfYIAfdSdSQR3Kv9IuUZ
-         IaZ0n1u/v8HE1ikZwArEA8vWDYvbnNMjJjdAtCR/wKje4W/WdFHFm7O3q+eozO9DCrzZ
-         as9pppS5Dhm9YeHwKFIFy41+BBEH4gg5T4+B5ppn/CHaN3+u5D2MYe581WxRxDmlnyzR
-         g7325vXUbY8E9zwwUTd5l2JgTbVF+7PzyYqQXor4N5zX6kYQm3lrBUrOZG4UtAczCBAb
-         xXgA==
-X-Gm-Message-State: AOAM530ENgxmfO97guvb4HjbXnlBZeetcYq6pKnD5ibYTxcoeEqBVwPf
-        sr0uX58rzWaj6oxYAQqazn7IC0CQzrbkwOKt+UziC4USYdY=
-X-Google-Smtp-Source: ABdhPJw+UJxgVqQxybvLTq2L0CeDaIXq+ecoDzqWUH/dDH6LNA4CEr2i1GEfdl8uUKn5md7gr+fTw0Qp7wh7WhidG8A=
-X-Received: by 2002:a1f:5f05:: with SMTP id t5mr302996vkb.8.1599589045899;
- Tue, 08 Sep 2020 11:17:25 -0700 (PDT)
+        id S1731509AbgIHSvr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 14:51:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55908 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729014AbgIHSuk (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 8 Sep 2020 14:50:40 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D7B960459;
+        Tue,  8 Sep 2020 18:50:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1599591037;
+        bh=410NCARAJvkNgEslhFNP+3x6GpGOjOyluvcimKqq5Es=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ViQ9zpH3wBy+h+Wn4ni8l6Lx+Mtb1poezZ+LYwDNDDcElMtiMuJa5t/lfzyWWuT12
+         75RAQuszJMnP22oJNeXIPxPF5ss4UJuNsW0anOIRl7wiXTrF3Oz4FOSnWampVgf0i/
+         k9RtJr0dUZZlsNQijTHzVDKnhjTwdS9iyC6pBRQeGJhEkzsw+RsiO1EoYIjMK+FvsI
+         p4jNMGI2NFhz3ZC9aTsYxQ2YKEY/KvB08b9rB06gvXBuSIKAuB/NtisNzupIqgjm/F
+         8/T9WTqzhrVLoBf54blXrLPybedY06yDZfjTDqddTFYGIOIQHRWygcu5BMVVIHcwor
+         Hf9HXDjfvZJ6GYyit1AFdJbftV/uKmUX8PCYNRV1oA572up8sSMlAbsjpRdkusoCle
+         odCXBcOEC2vFJlP3SPJhKmezY2/9wnR8lay0CNnJZ1B1T+VxUvYktVAn0sg5T4h3rp
+         ViD9+saoITx8jE96XPdD1Ab6spizjxw7N1rU1X+/StGf3O5Spar
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rev-parse: add option for absolute or relative path formatting
+Date:   Tue,  8 Sep 2020 18:50:17 +0000
+Message-Id: <20200908185017.2005159-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
 MIME-Version: 1.0
-References: <pull.712.git.1598628333959.gitgitgadget@gmail.com>
-In-Reply-To: <pull.712.git.1598628333959.gitgitgadget@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 8 Sep 2020 20:17:14 +0200
-Message-ID: <CAFQ2z_MJ8nD3Z3m8P9HS4O6jbs7u3y5h8a6Nvy3Pa=d6s40=9g@mail.gmail.com>
-Subject: Re: [PATCH] refs: move REF_LOG_ONLY to refs-internal.h
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 28, 2020 at 5:25 PM Han-Wen Nienhuys via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> REF_LOG_ONLY is used in the transaction preparation: if a symref is invol=
-ved in
-> a transaction, the referent of the symref should be updated, and the symr=
-ef
-> itself should only be updated in the reflog.
+git rev-parse has several options which print various paths.  Some of
+these paths are printed relative to the current working directory, and
+some are absolute.
 
-Jun, are you waiting for me to do anything with this patch?
+Normally, this is not a problem, but there are times when one wants
+paths entirely in one format or another.  This can be done trivially if
+the paths are canonical, but canonicalizing paths is not possible on
+some shell scripting environments which lack realpath(1) and also in Go,
+which lacks functions that properly canonicalize paths on Windows.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+To help out the scripter, let's provide an option which turns most of
+the paths printed by git rev-parse to be either relative to the current
+working directory or absolute and canonical.  Document which options are
+affected and which are not so that users are not confused.
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+This approach is cleaner and tidier than providing duplicates of
+existing options which are either relative or absolute.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+This impetus for this patch is Git LFS, which is written in Go.  Go
+lacks a cross-platform way to canonicalize paths in the same way that
+Git does, so when Git produces relative paths, such as in some cases
+with --git-common-dir, we end up with problems when users are doing
+things with unusual paths on Windows, such as when using SUBST or
+OneDrive or various other edge cases.  Go upstream does not appear eager
+to address this problem.
+
+The obvious solution to this is to have Git canonicalize all paths, and
+rather than adding yet another one-off, I decided to implement a more
+generic solution.  This can also be valuable for shell scripting
+environments which lack realpath(1) (e.g. macOS, IIRC).
+
+Dscho CC'd for visibility into how this will work on Windows.
+
+ Documentation/git-rev-parse.txt | 71 ++++++++++++++++------------
+ builtin/rev-parse.c             | 84 ++++++++++++++++++++++++++++-----
+ t/t1500-rev-parse.sh            | 36 +++++++++++++-
+ 3 files changed, 148 insertions(+), 43 deletions(-)
+
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 19b12b6d43..6b95292559 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -208,6 +208,15 @@ Options for Files
+ 	Only the names of the variables are listed, not their value,
+ 	even if they are set.
+ 
++--path-format=(absolute|relative)::
++	Controls the behavior of certain other options following it on the command
++	line. If specified as absolute, the paths printed by those options will be
++	absolute and canonical. If specified as relative, the paths will be relative
++	to the current working directory if that is possible.  The default is option
++	specific.
++
++The following options are modified by `--path-format`:
++
+ --git-dir::
+ 	Show `$GIT_DIR` if defined. Otherwise show the path to
+ 	the .git directory. The path shown, when relative, is
+@@ -217,13 +226,42 @@ If `$GIT_DIR` is not defined and the current directory
+ is not detected to lie in a Git repository or work tree
+ print a message to stderr and exit with nonzero status.
+ 
++--git-common-dir::
++	Show `$GIT_COMMON_DIR` if defined, else `$GIT_DIR`.
++
++--resolve-git-dir <path>::
++	Check if <path> is a valid repository or a gitfile that
++	points at a valid repository, and print the location of the
++	repository.  If <path> is a gitfile then the resolved path
++	to the real repository is printed.
++
++--git-path <path>::
++	Resolve "$GIT_DIR/<path>" and takes other path relocation
++	variables such as $GIT_OBJECT_DIRECTORY,
++	$GIT_INDEX_FILE... into account. For example, if
++	$GIT_OBJECT_DIRECTORY is set to /foo/bar then "git rev-parse
++	--git-path objects/abc" returns /foo/bar/abc.
++
++--show-toplevel::
++	Show the (by default, absolute) path of the top-level directory
++	of the working tree. If there is no working tree, report an error.
++
++--show-superproject-working-tree::
++	Show the absolute path of the root of the superproject's
++	working tree (if exists) that uses the current repository as
++	its submodule.  Outputs nothing if the current repository is
++	not used as a submodule by any project.
++
++--shared-index-path::
++	Show the path to the shared index file in split index mode, or
++	empty if not in split-index mode.
++
++The following options are unaffected by `--path-format`:
++
+ --absolute-git-dir::
+ 	Like `--git-dir`, but its output is always the canonicalized
+ 	absolute path.
+ 
+---git-common-dir::
+-	Show `$GIT_COMMON_DIR` if defined, else `$GIT_DIR`.
+-
+ --is-inside-git-dir::
+ 	When the current working directory is below the repository
+ 	directory print "true", otherwise "false".
+@@ -238,19 +276,6 @@ print a message to stderr and exit with nonzero status.
+ --is-shallow-repository::
+ 	When the repository is shallow print "true", otherwise "false".
+ 
+---resolve-git-dir <path>::
+-	Check if <path> is a valid repository or a gitfile that
+-	points at a valid repository, and print the location of the
+-	repository.  If <path> is a gitfile then the resolved path
+-	to the real repository is printed.
+-
+---git-path <path>::
+-	Resolve "$GIT_DIR/<path>" and takes other path relocation
+-	variables such as $GIT_OBJECT_DIRECTORY,
+-	$GIT_INDEX_FILE... into account. For example, if
+-	$GIT_OBJECT_DIRECTORY is set to /foo/bar then "git rev-parse
+-	--git-path objects/abc" returns /foo/bar/abc.
+-
+ --show-cdup::
+ 	When the command is invoked from a subdirectory, show the
+ 	path of the top-level directory relative to the current
+@@ -261,20 +286,6 @@ print a message to stderr and exit with nonzero status.
+ 	path of the current directory relative to the top-level
+ 	directory.
+ 
+---show-toplevel::
+-	Show the absolute path of the top-level directory of the working
+-	tree. If there is no working tree, report an error.
+-
+---show-superproject-working-tree::
+-	Show the absolute path of the root of the superproject's
+-	working tree (if exists) that uses the current repository as
+-	its submodule.  Outputs nothing if the current repository is
+-	not used as a submodule by any project.
+-
+---shared-index-path::
+-	Show the path to the shared index file in split index mode, or
+-	empty if not in split-index mode.
+-
+ --show-object-format[=(storage|input|output)]::
+ 	Show the object format (hash algorithm) used for the repository
+ 	for storage inside the `.git` directory, input, or output. For
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 669dd2fd6f..311a56ba01 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -583,6 +583,55 @@ static void handle_ref_opt(const char *pattern, const char *prefix)
+ 	clear_ref_exclusion(&ref_excludes);
+ }
+ 
++enum format_type {
++	/* We would like a relative path. */
++	FORMAT_RELATIVE,
++	/* We would like a canonical absolute path. */
++	FORMAT_CANONICAL,
++	/* We would like the default behavior. */
++	FORMAT_DEFAULT,
++};
++
++enum default_type {
++	/* Our default is a relative path. */
++	DEFAULT_RELATIVE,
++	/* Our default is a relative path if there's a shared root. */
++	DEFAULT_RELATIVE_IF_SHARED,
++	/* Our default is a canonical absolute path. */
++	DEFAULT_CANONICAL,
++	/* Our default is not to modify the item. */
++	DEFAULT_UNMODIFIED,
++};
++
++static void print_path(const char *path, const char *prefix, enum format_type format, enum default_type def)
++{
++	char *cwd = NULL;
++	/*
++	 * We don't ever produce a relative path if prefix is NULL, so set the
++	 * prefix to the current directory so that we can produce a relative
++	 * path whenever possible.  If we're using RELATIVE_IF_SHARED mode, then
++	 * we want an absolute path unless the two share a common prefix, so don't
++	 * set it in that case, since doing so causes a relative path to always
++	 * be produced if possible.
++	 */
++	if (!prefix && (format != FORMAT_DEFAULT || def != DEFAULT_RELATIVE_IF_SHARED))
++		prefix = cwd = xgetcwd();
++	if (format == FORMAT_DEFAULT && def == DEFAULT_UNMODIFIED) {
++		puts(path);
++	} else if (format == FORMAT_RELATIVE ||
++		  (format == FORMAT_DEFAULT && def == DEFAULT_RELATIVE) ||
++		  (format == FORMAT_DEFAULT && def == DEFAULT_RELATIVE_IF_SHARED)) {
++		struct strbuf buf = STRBUF_INIT;
++		puts(relative_path(path, prefix, &buf));
++		strbuf_reset(&buf);
++	} else {
++		char *real = real_pathdup(path, 1);
++		puts(real);
++		free(real);
++	}
++	free(cwd);
++}
++
+ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, as_is = 0, verify = 0, quiet = 0, revs_count = 0, type = 0;
+@@ -595,6 +644,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 	struct object_context unused;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const int hexsz = the_hash_algo->hexsz;
++	enum format_type format = FORMAT_DEFAULT;
+ 
+ 	if (argc > 1 && !strcmp("--parseopt", argv[1]))
+ 		return cmd_parseopt(argc - 1, argv + 1, prefix);
+@@ -650,8 +700,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			if (!argv[i + 1])
+ 				die("--git-path requires an argument");
+ 			strbuf_reset(&buf);
+-			puts(relative_path(git_path("%s", argv[i + 1]),
+-					   prefix, &buf));
++			print_path(git_path("%s", argv[i + 1]), prefix, format, DEFAULT_RELATIVE_IF_SHARED);
+ 			i++;
+ 			continue;
+ 		}
+@@ -683,6 +732,16 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 					show_file(arg, 0);
+ 				continue;
+ 			}
++			if (opt_with_value(arg, "--path-format", &arg)) {
++				if (!strcmp(arg, "absolute")) {
++					format = FORMAT_CANONICAL;
++				} else if (!strcmp(arg, "relative")) {
++					format = FORMAT_RELATIVE;
++				} else {
++					die("unknown argument to --path-format: %s", arg);
++				}
++				continue;
++			}
+ 			if (!strcmp(arg, "--default")) {
+ 				def = argv[++i];
+ 				if (!def)
+@@ -803,7 +862,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			if (!strcmp(arg, "--show-toplevel")) {
+ 				const char *work_tree = get_git_work_tree();
+ 				if (work_tree)
+-					puts(work_tree);
++					print_path(work_tree, prefix, format, DEFAULT_CANONICAL);
+ 				else
+ 					die("this operation must be run in a work tree");
+ 				continue;
+@@ -811,7 +870,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			if (!strcmp(arg, "--show-superproject-working-tree")) {
+ 				struct strbuf superproject = STRBUF_INIT;
+ 				if (get_superproject_working_tree(&superproject))
+-					puts(superproject.buf);
++					print_path(superproject.buf, prefix, format, DEFAULT_CANONICAL);
+ 				strbuf_release(&superproject);
+ 				continue;
+ 			}
+@@ -846,16 +905,18 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+ 				char *cwd;
+ 				int len;
++				enum format_type wanted = format;
+ 				if (arg[2] == 'g') {	/* --git-dir */
+ 					if (gitdir) {
+-						puts(gitdir);
++						print_path(gitdir, prefix, format, DEFAULT_UNMODIFIED);
+ 						continue;
+ 					}
+ 					if (!prefix) {
+-						puts(".git");
++						print_path(".git", prefix, format, DEFAULT_UNMODIFIED);
+ 						continue;
+ 					}
+ 				} else {		/* --absolute-git-dir */
++					wanted = FORMAT_CANONICAL;
+ 					if (!gitdir && !prefix)
+ 						gitdir = ".git";
+ 					if (gitdir) {
+@@ -868,14 +929,14 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				}
+ 				cwd = xgetcwd();
+ 				len = strlen(cwd);
+-				printf("%s%s.git\n", cwd, len && cwd[len-1] != '/' ? "/" : "");
++				strbuf_reset(&buf);
++				strbuf_addf(&buf, "%s%s.git", cwd, len && cwd[len-1] != '/' ? "/" : "");
+ 				free(cwd);
++				print_path(buf.buf, prefix, wanted, DEFAULT_CANONICAL);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--git-common-dir")) {
+-				strbuf_reset(&buf);
+-				puts(relative_path(get_git_common_dir(),
+-						   prefix, &buf));
++				print_path(get_git_common_dir(), prefix, format, DEFAULT_RELATIVE_IF_SHARED);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--is-inside-git-dir")) {
+@@ -905,8 +966,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				if (the_index.split_index) {
+ 					const struct object_id *oid = &the_index.split_index->base_oid;
+ 					const char *path = git_path("sharedindex.%s", oid_to_hex(oid));
+-					strbuf_reset(&buf);
+-					puts(relative_path(path, prefix, &buf));
++					print_path(path, prefix, format, DEFAULT_RELATIVE);
+ 				}
+ 				continue;
+ 			}
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 408b97d5af..6f3811d189 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -3,6 +3,16 @@
+ test_description='test git rev-parse'
+ . ./test-lib.sh
+ 
++test_one () {
++	dir="$1" &&
++	expect="$2" &&
++	shift &&
++	shift &&
++	echo "$expect" >expect &&
++	git -C "$dir" rev-parse "$@" >actual
++	test_cmp expect actual
++}
++
+ # usage: [options] label is-bare is-inside-git is-inside-work prefix git-dir absolute-git-dir
+ test_rev_parse () {
+ 	d=
+@@ -60,7 +70,13 @@ ROOT=$(pwd)
+ 
+ test_expect_success 'setup' '
+ 	mkdir -p sub/dir work &&
+-	cp -R .git repo.git
++	cp -R .git repo.git &&
++	git checkout -b main &&
++	test_commit abc &&
++	git checkout -b side &&
++	test_commit def &&
++	git checkout main &&
++	git worktree add worktree side
+ '
+ 
+ test_rev_parse toplevel false false true '' .git "$ROOT/.git"
+@@ -88,6 +104,24 @@ test_rev_parse -C work -g ../repo.git -b t 'GIT_DIR=../repo.git, core.bare = tru
+ 
+ test_rev_parse -C work -g ../repo.git -b u 'GIT_DIR=../repo.git, core.bare undefined' false false true ''
+ 
++test_expect_success 'rev-parse --path-format=absolute' '
++	test_one "." "$ROOT/.git" --path-format=absolute --git-dir &&
++	test_one "." "$ROOT/.git" --path-format=absolute --git-common-dir &&
++	test_one "worktree" "$ROOT/.git/worktrees/worktree" --path-format=absolute --git-dir &&
++	test_one "worktree" "$ROOT/.git" --path-format=absolute --git-common-dir &&
++	test_one "." "$ROOT" --path-format=absolute --show-toplevel &&
++	test_one "." "$ROOT/.git/objects" --path-format=absolute --git-path objects
++'
++
++test_expect_success 'rev-parse --path-format=relative' '
++	test_one "." ".git" --path-format=relative --git-dir &&
++	test_one "." ".git" --path-format=relative --git-common-dir &&
++	test_one "worktree" "../.git/worktrees/worktree" --path-format=relative --git-dir &&
++	test_one "worktree" "../.git" --path-format=relative --git-common-dir &&
++	test_one "." "./" --path-format=relative --show-toplevel &&
++	test_one "." ".git/objects" --path-format=relative --git-path objects
++'
++
+ test_expect_success 'git-common-dir from worktree root' '
+ 	echo .git >expect &&
+ 	git rev-parse --git-common-dir >actual &&
