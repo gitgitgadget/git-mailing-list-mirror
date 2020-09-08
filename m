@@ -2,106 +2,97 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39C04C433E2
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 00:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF38C43461
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 01:13:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 017232137B
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 00:29:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB4BA208C7
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 01:13:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZGxZWhkG"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jbGTaJO9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728197AbgIHA3a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Sep 2020 20:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52718 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728184AbgIHA33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Sep 2020 20:29:29 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 338C5C061573
-        for <git@vger.kernel.org>; Mon,  7 Sep 2020 17:29:25 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id w3so17806701ljo.5
-        for <git@vger.kernel.org>; Mon, 07 Sep 2020 17:29:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=oqDLBChWRgkE0l81JOOVM2H1kXCG4O2V69NnUy99PWM=;
-        b=ZGxZWhkG+0sVbG0dFtE0mzteh+YWXQxUsi9r01CE/EkZ6A/53ICBZw0XuboahUCUZm
-         cgpeh7Jfq1rScsy8mcK1U/6Y00sK9WYJ8b3203h53BR0sxNPloAk0LdZQSC8VPpDlsI3
-         UGnWIfAhVDBbkWMneovp6yJcqpZ6yXqRknl+Azb0UJRomR5YrHXWwsGJvyOeFVT/2Ama
-         B50DzhDvBkTeWBy3lNeZK8yU5IaHPk8oFaUR7A9g2xo/dNebtlIOZyEzX3n/l5xv5Hyr
-         imuLYnnF+5Y88QDICqNaRd0nqRi3s1VsEt6u1Y1e5Qw03NqtSZmWKLyBvMzphwDd49T1
-         LTCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oqDLBChWRgkE0l81JOOVM2H1kXCG4O2V69NnUy99PWM=;
-        b=O7OWnOcWObXUl1Wo50xxqXcPfqAfF7mfH4gqceE5FLOqmfhedT0RVAFwGKtbUCxgTb
-         ui5o3RZINXQywXhY3d+cauOi81GNuqgwQ//2Oo2Kc0djTx8688MLhydAYYHfENf07LFw
-         cUgILCnRWmUcLq0X6f5UlbngkEW2qyBEd/+vooDkRyk6qtLkoKSOzuNpbulrVz+aNCbH
-         fqZF5Tjg7m++rev5HvV13WZbwiHIaexUUYt/YD6GA1EF1SrIyreeBE/VIfjA983U+QMD
-         NZgnplPA3YkSOf9j43WTNAQzc4hYL8Xe4gq3BJJ9vhS92G4eIr/mR9A5qEXAblZ7wQhy
-         hmSg==
-X-Gm-Message-State: AOAM532aM4CFYh5L0Quhy2Mb+T/vLPVyg2ka1epDMElOqW+X7iVHemer
-        KX5pO9lciJU4JOQhQ6f7o+dQKDpK9qkC9p5VCnkxBfgExMpfDA==
-X-Google-Smtp-Source: ABdhPJxMzVsAfJ6wISK3JpYo6CJ9TR2C4xgRB7I0MzZSuihWCA0Hwwbb5lZR+ZcJ9d7XisVFPu48rcaoTH41mRITRh0=
-X-Received: by 2002:a2e:9d19:: with SMTP id t25mr10982878lji.222.1599524963192;
- Mon, 07 Sep 2020 17:29:23 -0700 (PDT)
+        id S1728264AbgIHBNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Sep 2020 21:13:46 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52263 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728056AbgIHBNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Sep 2020 21:13:45 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B646EE6E24;
+        Mon,  7 Sep 2020 21:13:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Ls/YN5srAbBQHTF6ccCOH+BR+Gc=; b=jbGTaJ
+        O91kSqKNP0oBSp8pvGm7KZfmqx8fFAIhEf/wZ8EjZw8oNTNcsCko8+MIFIaBhwJa
+        c8veN82lJigV7gyRTPNE01JyILWTbWxlt3UXw2eTgMo/u/sPtkciZIBoK5Mhn/oF
+        nFvEubZHgM43uZPMn1Ku0x5RzUWvlMhn22UZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Y5+D7JOA/CWBAe5AzmTnWvtrJYsqW2je
+        LhLC6XVWbn+HEWF4hx8Iel6CrzAWD75HGBwgMyrMmKg9rcR90fZf15LUTZWgX0U+
+        GbVrNIrl8hZjc6S1QozVYyJDbRDXMMZRVE4wwawubRKGV/cMQOYexjJ8FZHxYFXF
+        GV0KZnwVMAU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFD38E6E23;
+        Mon,  7 Sep 2020 21:13:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EC75AE6E22;
+        Mon,  7 Sep 2020 21:13:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Fong <patrickf3139@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug report] git status doesn't escape paths of untracked files
+References: <CAMRL+qb0YC1EOTM-LDfMpJ=AJJ014LT5ufBcs0v77byN74A0vw@mail.gmail.com>
+Date:   Mon, 07 Sep 2020 18:13:39 -0700
+In-Reply-To: <CAMRL+qb0YC1EOTM-LDfMpJ=AJJ014LT5ufBcs0v77byN74A0vw@mail.gmail.com>
+        (Patrick Fong's message of "Mon, 7 Sep 2020 17:28:57 -0700")
+Message-ID: <xmqqa6y1135o.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Patrick Fong <patrickf3139@gmail.com>
-Date:   Mon, 7 Sep 2020 17:28:57 -0700
-Message-ID: <CAMRL+qb0YC1EOTM-LDfMpJ=AJJ014LT5ufBcs0v77byN74A0vw@mail.gmail.com>
-Subject: [Bug report] git status doesn't escape paths of untracked files
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 88139558-F170-11EA-8F05-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-touch "this is escaped"
-touch "this is not escaped"
-git add "this is escaped"
-git status --short
+Patrick Fong <patrickf3139@gmail.com> writes:
 
-What did you expect to happen? (Expected behavior)
-I expected that git status --short would string escape both "this is
-escaped" and "this is not escaped" since they both contain spaces that
-need escaping.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> touch "this is escaped"
+> touch "this is not escaped"
+> git add "this is escaped"
+> git status --short
+>
+> What did you expect to happen? (Expected behavior)
+> I expected that git status --short would string escape both "this is
+> escaped" and "this is not escaped" since they both contain spaces that
+> need escaping.
+>
+> What happened instead? (Actual behavior)
+> git status did not string escape "this is not escaped" but it does if
+> you add it to the index.
 
-What happened instead? (Actual behavior)
-git status did not string escape "this is not escaped" but it does if
-you add it to the index.
+It indeed is a disturbing inconsistency, and the code that shows the
+untracked paths should be fixed.  I wonder what is done to ignored
+paths when the "--ignored" option is given.
 
-What's different between what you expected and what actually happened?
+wt-status.c::wt_shortstatus_status() has a strange special case that
+says "whitespace alone does not usually deserve quoting, but we
+special case it and manually quote"; this discrepancy/special casing
+was introduced at dbfdc625 (status: Quote paths with spaces in short
+format, 2010-11-08).  A fix would probably be to port the same fix
+to wt-status.c::wt_shortstatus_other().
 
-Anything else you want to add:
-Once you add "this is not escaped", git status will output it with
-quotes. git status --short seems to change its behavior of escaping
-based on whether the path is tracked or untracked.
+In the longer term, quote.c::quote_path() may want to learn an
+optional flag to tell it to do the the special casing.
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.28.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 19.5.0 Darwin Kernel Version 19.5.0: Tue May 26 20:41:44
-PDT 2020; root:xnu-6153.121.2~2/RELEASE_X86_64 x86_64
-compiler info: clang: 11.0.3 (clang-1103.0.32.62)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /usr/local/bin/fish
-
-
-[Enabled Hooks]
+Thanks.  
