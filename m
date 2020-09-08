@@ -2,93 +2,97 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6770AC43461
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 23:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37313C433E2
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 23:59:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED33720EDD
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 23:58:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C817320757
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 23:59:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t3kkuvhb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p4An7m4q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728347AbgIHX6G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 19:58:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726708AbgIHX6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 19:58:04 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E5CC061573
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 16:58:03 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id j10so642582qvk.11
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 16:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nuN5XLfrnd4i3R3/5l6b3NCMJiMdmn8fZz0NXavy+hU=;
-        b=t3kkuvhbRnMdl+nN8Irv9NJGwVBx99PvfzyX07lFiNXFU6he7WLT/vUnDAUszbMhHo
-         hKix3mgVInYvWd+lEp8kv/mMVig0AeHP2dfaS0pEN9lwMEuTuFAL/7i69LKRgWHJ8u4k
-         ismN0+wNc25Rtbj4dUleESqNhuc8SEHLxPnzzcy7H1Qq4jwlvc6Xupe7r2il1ZwTxhRk
-         o7xAwy5AtCfxkHl+Fdvkz7kkOHIUd0ALyI7il8LU7sfIWJh9Q6CxolMCUqQv7+1HBXxh
-         QaeSX+EBZqkrS4rb4i0hr2vD8CmohyPW43vDyItbHsqBUiPDTOYHJvu4AMg5xYuiOi6Z
-         PM2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nuN5XLfrnd4i3R3/5l6b3NCMJiMdmn8fZz0NXavy+hU=;
-        b=tyJYvkfF1B8NMZpAFGZXCJFfBvPmUGRNhKD+jujLij1ZyXgjd9ioZFY8QhYvu1ldIL
-         6PTtsylKfnewh7L+gMg7fSlaSFDZwnbGxtcf1inrMUXf0fmRY+dfDJVQJJBjmASqrMO4
-         HUfzXvEzYsDMcSbYPKl2LByAXX7L9COXYVEeX5jtx64Khp59X3AH0w1rpAAvhATM+I/O
-         Xp9LD1Hea+j5mWZpRx/DB4Rv+EMnPeoCpvT66CuBDMufKO/A4wBsL9xWjxabxtRCG7JS
-         1d6Jxinw476THCXfuWw2leqiiPRFSJJjDKNdJQzRjCFDHPO5nhDiQVxv+0uGV92DYJRW
-         QmFw==
-X-Gm-Message-State: AOAM532oMWbSVlln1/FyYRXXSM8lZ/C/U9AG0JA8c+0ltw5hAeUF7sOV
-        K8yhW5mbwhPDb/L5KJ+u69DKPqmFQV/JUdUL4GT0JNVqw/Z2RA==
-X-Google-Smtp-Source: ABdhPJwlhqqVlDiYgqOlqthSJrXjljiOD0Sd8dFb3GBoICBy4YxUxl7/Op0lJKIzn0/+Oz5m1fbYc4nz7mg0oCT55+Y=
-X-Received: by 2002:a05:6214:4f:: with SMTP id c15mr1626977qvr.28.1599609482796;
- Tue, 08 Sep 2020 16:58:02 -0700 (PDT)
+        id S1728442AbgIHX7Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 19:59:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64955 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbgIHX7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 19:59:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E0C483FC0;
+        Tue,  8 Sep 2020 19:59:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oe8RDV5u4Cuqx/TZND9gf8qC7Pw=; b=p4An7m
+        4q3M4FpDZFWo+bvv43gEwgOpjPmKN/mUovJ0nXUQtmIUib6WWCsNXgm5rKWFhGn8
+        LCXYYkmbqicIDs2l09xWZhD4weFncEEQgvemxRS2/9zy+OP/O6asW9Q2QAyRS9qq
+        9W50uPBq/rDfFdvIJ4SwxP0Fg7eduvkcBNa1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UGRRdG3e9a2hW15jZgZaUD7HCAcNv8An
+        6/1l7NtjSiNm62jzPuYXIUXo1XrAB9ZUyHICFDhdNk6VDvPpQVM403KaXNRaNhp/
+        TDE6ALzhM+GPj/9qcQ28/Wb7gqQQIh8Mo1QNXtDRrxV8aL5V4QLsBln7Rwt+yB9Z
+        Q9zi92RsBtM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5426F83FBF;
+        Tue,  8 Sep 2020 19:59:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2C6B83FBE;
+        Tue,  8 Sep 2020 19:59:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Aaron Schrab <aaron@schrab.com>
+Cc:     Ash Holland <ash@sorrel.sh>, git@vger.kernel.org
+Subject: Re: `git describe --dirty` doesn't consider untracked files to be dirty
+References: <CAHJUbDg2KA9Xo_CAO=cgrZewOH0zfEhOVydhMN8fLvVDmji4sQ@mail.gmail.com>
+        <xmqqh7s8z0qw.fsf@gitster.c.googlers.com>
+        <20200908231652.GC1014@pug.qqx.org>
+Date:   Tue, 08 Sep 2020 16:59:20 -0700
+In-Reply-To: <20200908231652.GC1014@pug.qqx.org> (Aaron Schrab's message of
+        "Tue, 8 Sep 2020 19:16:52 -0400")
+Message-ID: <xmqqft7rx1k7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200908153759.36504-1-alipman88@gmail.com> <xmqqsgbrx4xo.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqsgbrx4xo.fsf@gitster.c.googlers.com>
-From:   Aaron Lipman <alipman88@gmail.com>
-Date:   Tue, 8 Sep 2020 19:57:52 -0400
-Message-ID: <CAEJZ43ivtDS4mG35gt7HyKVWqLdS6XCwt5j8ZEYgDZDTdwE0OA@mail.gmail.com>
-Subject: Re: [PATCH] ref-filter: allow merged and no-merged filters
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 500FA934-F22F-11EA-B4F4-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> That would mean the rule would be "refs must be reachable by any one
-> (or more) of the <merged> commits, and must be reachable by none of
-> the <no-merged> commits".  I am not using the same phrasing you used
-> (i.e. "must satisify ... filter"), but are we saying the same thing?
+Aaron Schrab <aaron@schrab.com> writes:
 
-Yes, that is how I've implemented this. (Your wording may be more
-clear, I'll plan on updating the commit message.)
+> It's perhaps worth noting that submodules are already considered dirty
+> when untracked files are added:
+>
+> $ git diff vim/bundle/fugitive
+>
+> $ echo foo >vim/bundle/fugitive/foo
+>
+> $ git diff vim/bundle/fugitive
+> diff --git i/vim/bundle/fugitive w/vim/bundle/fugitive
+> --- i/vim/bundle/fugitive
+> +++ w/vim/bundle/fugitive
+> @@ -1 +1 @@
+> -Subproject commit caf3b1d5696e8d39a905e48f1e89d8c0c565168c
+> +Subproject commit caf3b1d5696e8d39a905e48f1e89d8c0c565168c-dirty
 
-> The expectation is that topics in flight are either reachable from
-> 'next' or 'seen' (there can be commits in 'next' but not in 'seen'
-> when fixes to mismerges are involved) and those already graduated
-> are either in 'master' or 'maint', and the above "log" and "branch"
-> would show the stuff still in flight.
+It gives one vote for (1) to the part you did not quote from the
+message you are responding to, which was:
 
-I think we're on the same page: If a branch is merged into 'seen' but
-not 'next', it should show up in the output of
-"git branch --merged seen --merged next".
+>> I do not think this is something we want to hide behind a
+>> configuration knob, but I am undecided between (1) declare that this
+>> is a bug and change the behaviour of "--dirty" and (2) declare that
+>> we discovered another useful behaviour and add a new option next to
+>> "--dirty".
 
-If a branch is merged into 'master' but not 'maint', it should not
-show up in the output of
-"git branch --no-merged master --no-merged maint".
-
-To clarify, is that the behavior that makes sense/seems useful to you?
-If so, I can add some test cases for those filter combinations in v2.
+I tend to agree the consistency with that behaviour would be more
+useful.  The discrepanthy shows the relative age of features and how
+our thinking has changed over time ;-)
