@@ -7,179 +7,127 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A47DEC2BC11
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 20:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21A39C2D0E2
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 20:52:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75FE42098B
+	by mail.kernel.org (Postfix) with ESMTP id E23E52145D
 	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 20:52:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NCJIa10H"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SfuNjeOe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728709AbgIHUwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 16:52:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64572 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730111AbgIHUwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 16:52:40 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 462DF827ED;
-        Tue,  8 Sep 2020 16:52:37 -0400 (EDT)
+        id S1730369AbgIHUwr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 16:52:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62517 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730104AbgIHUwj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 16:52:39 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D20B8B6C6;
+        Tue,  8 Sep 2020 16:52:35 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=2j7UAr0wmr8cY4TrZcwJR/Jtr
-        gk=; b=NCJIa10HU0Zqrm7kGPsjboy50QpclkYBCFCSROQPn5qM3rQj4EpwAJcJe
-        Jb5kRSLJ5BA8s/uImCjOgl6qFGrFlrhPv/klRDWxiu3C0bYk+hAsGNYnVsTTGjib
-        89krF46eiFJ6WiiohT+JHvz925VYrfHINPwOWq6Vi8HqEgnFxs=
+        :content-transfer-encoding; s=sasl; bh=ROfCNOzMFGP0ILtWEJfnlBEUG
+        OA=; b=SfuNjeOeunycyIARvJsFb/RsLUgQf4mEHbPsJbjk9m0OxBOpp2aw9/EPY
+        Hy3+S6prEYQSyJTb+WJF/BbZLKwVjJPPiGV0Y5G3O7tXzGaimyshcS1Gsz8JnMZo
+        cXJb/y6dC4peXs1sJ4P1BPVdPUuAIwd1hCthCsxiXWfLUip+8c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
         :date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=nKqaaffnytKKBn856tj
-        HkQO7pKZUhy9pRw6jc5yEpuG0PDfJz2S289rtI6V8dYJgpGmk+FiILJ3YqyvhZZO
-        rM9Nd86Z/Eb+YQXEntZvet9kOlgXVW+iG54REo22jPxXndcENohC82ckN5CJAttZ
-        J1pbZZb/ku8HtQIBB4DrxCgg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EC24827EC;
-        Tue,  8 Sep 2020 16:52:37 -0400 (EDT)
+        :content-transfer-encoding; q=dns; s=sasl; b=KeID8r2ApmbOfjP5Kph
+        qcxQAZi8P1nC+EPWtpItbh6XHtt3RGg9NjYUetmaGI0YBCExitwZsbkqK5CJ3jpr
+        Jl/HvVx8634LFzSTinnRXULQ+eyi3RdLW61he7i4gbsYiXUQnCO/174g4IJQPXte
+        CM3j8oSOpE72iNVxH8mUo96s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73F388B6C5;
+        Tue,  8 Sep 2020 16:52:35 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A47B0827EB;
-        Tue,  8 Sep 2020 16:52:35 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E49D48B6C4;
+        Tue,  8 Sep 2020 16:52:34 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 6/6] quote: turn 'nodq' parameter into a set of flags
-Date:   Tue,  8 Sep 2020 13:52:24 -0700
-Message-Id: <20200908205224.4126551-7-gitster@pobox.com>
+Subject: [PATCH 5/6] quote: rename misnamed sq_lookup[] to cq_lookup[]
+Date:   Tue,  8 Sep 2020 13:52:23 -0700
+Message-Id: <20200908205224.4126551-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.28.0-539-g66371d8995
 In-Reply-To: <20200908205224.4126551-1-gitster@pobox.com>
 References: <20200908013013.1099937-1-sandals@crustytoothpaste.net>
  <20200908205224.4126551-1-gitster@pobox.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 393E94B4-F215-11EA-80D0-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 38CF05D6-F215-11EA-B067-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-quote_c_style() and its friend quote_two_c_style() both take an
-optional "please omit the double quotes around the quoted body"
-parameter.  Turn it into a flag word, assign one bit out of it,
-and call it CQUOTE_NODQ bit.
+This table is used to see if each byte needs quoting when responding
+to a request to C-quote the string, not quoting with single-quote in
+the shell style.  Similarly, sq_must_quote() is fed each byte from
+the string being C-quoted.
 
 No behaviour change intended.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c  |  8 ++++----
- quote.c | 15 +++++++++------
- quote.h |  7 +++++--
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ quote.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 0299a73079..e7d6e60b23 100644
---- a/diff.c
-+++ b/diff.c
-@@ -482,14 +482,14 @@ int git_diff_basic_config(const char *var, const ch=
-ar *value, void *cb)
-=20
- static char *quote_two(const char *one, const char *two)
- {
--	int need_one =3D quote_c_style(one, NULL, NULL, 1);
--	int need_two =3D quote_c_style(two, NULL, NULL, 1);
-+	int need_one =3D quote_c_style(one, NULL, NULL, CQUOTE_NODQ);
-+	int need_two =3D quote_c_style(two, NULL, NULL, CQUOTE_NODQ);
- 	struct strbuf res =3D STRBUF_INIT;
-=20
- 	if (need_one + need_two) {
- 		strbuf_addch(&res, '"');
--		quote_c_style(one, &res, NULL, 1);
--		quote_c_style(two, &res, NULL, 1);
-+		quote_c_style(one, &res, NULL, CQUOTE_NODQ);
-+		quote_c_style(two, &res, NULL, CQUOTE_NODQ);
- 		strbuf_addch(&res, '"');
- 	} else {
- 		strbuf_addstr(&res, one);
 diff --git a/quote.c b/quote.c
-index 016ebf8873..b2f38d0e57 100644
+index aa9a37b1b1..016ebf8873 100644
 --- a/quote.c
 +++ b/quote.c
-@@ -256,7 +256,7 @@ static size_t next_quote_pos(const char *s, ssize_t m=
-axlen)
-  *     Return value is the same as in (1).
+@@ -210,7 +210,7 @@ int sq_dequote_to_strvec(char *arg, struct strvec *ar=
+ray)
   */
- static size_t quote_c_style_counted(const char *name, ssize_t maxlen,
--				    struct strbuf *sb, FILE *fp, int no_dq)
-+				    struct strbuf *sb, FILE *fp, unsigned flags)
+ #define X8(x)   x, x, x, x, x, x, x, x
+ #define X16(x)  X8(x), X8(x)
+-static signed char const sq_lookup[256] =3D {
++static signed char const cq_lookup[256] =3D {
+ 	/*           0    1    2    3    4    5    6    7 */
+ 	/* 0x00 */   1,   1,   1,   1,   1,   1,   1, 'a',
+ 	/* 0x08 */ 'b', 't', 'n', 'v', 'f', 'r',   1,   1,
+@@ -223,9 +223,9 @@ static signed char const sq_lookup[256] =3D {
+ 	/* 0x80 */ /* set to 0 */
+ };
+=20
+-static inline int sq_must_quote(char c)
++static inline int cq_must_quote(char c)
  {
- #undef EMIT
- #define EMIT(c)                                 \
-@@ -272,6 +272,7 @@ static size_t quote_c_style_counted(const char *name,=
- ssize_t maxlen,
- 		count +=3D (l);                           \
- 	} while (0)
-=20
-+	int no_dq =3D !!(flags & CQUOTE_NODQ);
- 	size_t len, count =3D 0;
- 	const char *p =3D name;
-=20
-@@ -309,19 +310,21 @@ static size_t quote_c_style_counted(const char *nam=
-e, ssize_t maxlen,
- 	return count;
+-	return sq_lookup[(unsigned char)c] + quote_path_fully > 0;
++	return cq_lookup[(unsigned char)c] + quote_path_fully > 0;
  }
 =20
--size_t quote_c_style(const char *name, struct strbuf *sb, FILE *fp, int =
-nodq)
-+size_t quote_c_style(const char *name, struct strbuf *sb, FILE *fp, unsi=
-gned flags)
+ /* returns the longest prefix not needing a quote up to maxlen if positi=
+ve.
+@@ -235,9 +235,9 @@ static size_t next_quote_pos(const char *s, ssize_t m=
+axlen)
  {
--	return quote_c_style_counted(name, -1, sb, fp, nodq);
-+	return quote_c_style_counted(name, -1, sb, fp, flags);
- }
-=20
--void quote_two_c_style(struct strbuf *sb, const char *prefix, const char=
- *path, int nodq)
-+void quote_two_c_style(struct strbuf *sb, const char *prefix, const char=
- *path,
-+		       unsigned flags)
- {
-+	int nodq =3D !!(flags & CQUOTE_NODQ);
- 	if (quote_c_style(prefix, NULL, NULL, 0) ||
- 	    quote_c_style(path, NULL, NULL, 0)) {
- 		if (!nodq)
- 			strbuf_addch(sb, '"');
--		quote_c_style(prefix, sb, NULL, 1);
--		quote_c_style(path, sb, NULL, 1);
-+		quote_c_style(prefix, sb, NULL, CQUOTE_NODQ);
-+		quote_c_style(path, sb, NULL, CQUOTE_NODQ);
- 		if (!nodq)
- 			strbuf_addch(sb, '"');
+ 	size_t len;
+ 	if (maxlen < 0) {
+-		for (len =3D 0; !sq_must_quote(s[len]); len++);
++		for (len =3D 0; !cq_must_quote(s[len]); len++);
  	} else {
-diff --git a/quote.h b/quote.h
-index 823f56cb94..0e49c61144 100644
---- a/quote.h
-+++ b/quote.h
-@@ -64,8 +64,11 @@ struct strvec;
- int sq_dequote_to_strvec(char *arg, struct strvec *);
-=20
- int unquote_c_style(struct strbuf *, const char *quoted, const char **en=
-dp);
--size_t quote_c_style(const char *name, struct strbuf *, FILE *, int no_d=
-q);
--void quote_two_c_style(struct strbuf *, const char *, const char *, int)=
-;
-+
-+/* Bits in the flags parameter to quote_c_style() */
-+#define CQUOTE_NODQ 01
-+size_t quote_c_style(const char *name, struct strbuf *, FILE *, unsigned=
-);
-+void quote_two_c_style(struct strbuf *, const char *, const char *, unsi=
-gned);
-=20
- void write_name_quoted(const char *name, FILE *, int terminator);
- void write_name_quoted_relative(const char *name, const char *prefix,
+-		for (len =3D 0; len < maxlen && !sq_must_quote(s[len]); len++);
++		for (len =3D 0; len < maxlen && !cq_must_quote(s[len]); len++);
+ 	}
+ 	return len;
+ }
+@@ -291,8 +291,8 @@ static size_t quote_c_style_counted(const char *name,=
+ ssize_t maxlen,
+ 		ch =3D (unsigned char)*p++;
+ 		if (maxlen >=3D 0)
+ 			maxlen -=3D len + 1;
+-		if (sq_lookup[ch] >=3D ' ') {
+-			EMIT(sq_lookup[ch]);
++		if (cq_lookup[ch] >=3D ' ') {
++			EMIT(cq_lookup[ch]);
+ 		} else {
+ 			EMIT(((ch >> 6) & 03) + '0');
+ 			EMIT(((ch >> 3) & 07) + '0');
 --=20
 2.28.0-539-g66371d8995
 
