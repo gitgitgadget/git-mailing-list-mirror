@@ -2,438 +2,125 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40955C433E2
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DD10C43461
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:52:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0518720768
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:50:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 494F920658
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:52:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egbSMZDS"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aQGmvMj4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732345AbgIHTuU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 15:50:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730813AbgIHPuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 11:50:46 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE2FC061362
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 08:38:23 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id 19so10733568qtp.1
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 08:38:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=np0+At6oyHjrnLpCb3rxyiIKmlL3dZueBXmHrGWAiPA=;
-        b=egbSMZDShKWqQzJ7+gU7932b5VIlb4GqTOEYVhq/JX9eT6tsRBXNVemZDSLSaMd0Hn
-         WHUgjnaYdu11XerZssAtbeIWc0dyVNjcTL+a3hkEBwCqyp6GjJJVOIV6W+LksdWoOpLS
-         a+iwXuUc/45hd9SjYHPGU7Et1GaUOnr1Hm9ML01z5Dv9jOpK/0A+vKhypOdxM9Q67Yyr
-         /XbmHZ5T6V7neVXPWY5pXWjD5s9iY2rLPPzN8JoXwEwW1fH2wGxweCuBXmtIYltnUw1C
-         nI6halqIFkGOaRrxwEaVfeanz0kbBeNeEBfUF1qCu2coJ6HMQC66gRi612Ur3PFCpN42
-         f0Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=np0+At6oyHjrnLpCb3rxyiIKmlL3dZueBXmHrGWAiPA=;
-        b=Jn9a2PyyZmzKZ5J174WHuUEb4VQrnk1lBimQWWiuzq2LABG8/0XjlnxWTLEkG7J7kB
-         uamxzz0x1/zjO92ejmOi1Zy+eoSRPMTHwlKrC5fu6eSQ30s7ES4O+FPVRWLnu3xpUMZ/
-         4e93C3Xye3ylvLsIKjIybyLZAfNUDgAFWN7MGEMDEQTOs49FwI38bqA4RBTAE10O13MI
-         0rS9osbOLYsF5A0IiY3p60+6ywxMcY9fHN2xsxdt0txdjag3TseEQ8BJjEDtToX1GdcJ
-         L/jwmmr4r8nB1rCEkuoD4/ldEXli3+Dk/6vEKg4Nu5L9vs5sGFLyiq0FPgIF8oBx6TtV
-         z0Bw==
-X-Gm-Message-State: AOAM530SXDq69C+RjvkEoj1crASIp+sz4rpgJv1VBj6J6bYmxIKxWzUZ
-        DL7u9hTo3ym1n1GFY7dWIOppXCHYwIZOKg==
-X-Google-Smtp-Source: ABdhPJwHdQj8wRmWyE10eyfpuZHTEsi2PVZi78i8qiR85Sp+NnlNl9ih7Uu63wIB3viB/OORXp5aDQ==
-X-Received: by 2002:ac8:100c:: with SMTP id z12mr623267qti.81.1599579501699;
-        Tue, 08 Sep 2020 08:38:21 -0700 (PDT)
-Received: from localhost.localdomain (c-98-229-3-81.hsd1.vt.comcast.net. [98.229.3.81])
-        by smtp.gmail.com with ESMTPSA id d49sm15274286qtc.55.2020.09.08.08.38.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Sep 2020 08:38:20 -0700 (PDT)
-From:   Aaron Lipman <alipman88@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Aaron Lipman <alipman88@gmail.com>
-Subject: [PATCH] ref-filter: allow merged and no-merged filters
-Date:   Tue,  8 Sep 2020 11:37:59 -0400
-Message-Id: <20200908153759.36504-1-alipman88@gmail.com>
-X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+        id S1730707AbgIHTwg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 15:52:36 -0400
+Received: from mout.gmx.net ([212.227.17.20]:45243 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730813AbgIHTwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 15:52:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1599594736;
+        bh=Ctq5vaInbs33pGqsyMFwxJzgwrZ0J1HWq+8b3prCr4w=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=aQGmvMj4vdSf+8SZ5ycVe0YwNkdvQXonS+p04kCX2wKX4eKW5Gp0Ubi88iTGDnFeX
+         0dEVW2kfUYkv3gAdNf0/2vzpBWFa0vrNIw4oS8NIu0ky/8OEwZ6TD5xd+KOCCNWL3W
+         FFJVTBmy1OcKJzAH8qBN0jaRdY3MuKpjDeL2Ngq8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.21.2] ([89.1.215.189]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M42jQ-1kFjf53ftY-0004DF; Tue, 08
+ Sep 2020 21:52:16 +0200
+Date:   Tue, 8 Sep 2020 21:52:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        "Raymond E. Pasco" <ray@ameretat.dev>, phillip.wood@dunelm.org.uk,
+        Thomas Sullivan <tom@msbit.com.au>, git@vger.kernel.org
+Subject: Re: git add intent-to-add then git add patch no longer allows edit
+In-Reply-To: <xmqqsgbsz22t.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2009082151520.54@tvgsbejvaqbjf.bet>
+References: <C55J4YTSBL48.171K3FSJLUQOA@ziyou.local> <1071d841-a030-30c2-e50e-6d97eb494fea@gmail.com> <nycvar.QRO.7.76.6.2009040831570.56@tvgsbejvaqbjf.bet> <xmqqd02y7rwj.fsf@gitster.c.googlers.com> <a8099cb4-97e0-5596-72a1-10402762015b@gmail.com>
+ <xmqqsgbsz22t.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:sRIEyUyFVZZ/KoBVN0gdQ+7gqFoV2nR1rGizopWMGtlXwLdiKO+
+ ttM+mw9kHccnTdGMdtm+PdFR9t7/j07+Zdt7E2vGs7H4f7oSgYAhNuotybPcfpbMxEhE5g0
+ OydYLWQwkVd0QhH9MN5VgOv3adA8KClAao0o5+Uu73OVcEeQHljWWyKldQNSdmeQsJREI/9
+ EdavwWdr34horPIzbwPkg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QrByI5Rc3Dw=:wPvaS4qVR4oG/auOPoDVFp
+ oGqQPUnuypsptFnyLZpFdomRJdlOcNTqzjXbIrD9mRGoJw4RhQtBTA5Flp7RVRiQhOCudjODU
+ d0Gb+SbbfGuY+ys8XSML3QGNsCqeR6Ad1k4Mu3tbGSxs0S1zY9RkXt9SrDjAp3LdGS4avr3xT
+ CxLjO8MwWIqAvwTmoUSQQHlCrhCcfFUsGA02LSjV9mSYLKSQGH7tgLe218kCFubQJHUk1pJE0
+ 8M7Zg6lSmsRCVyjXQ9VK0L1pg8eO3DKmGlRIdf0ccDQlSiutmpI0zJhkuVHJzwsOus0cAE/mX
+ t3eako86+6TF5f2PzmQgYIaFLSNMPspgbGYrJq9iTv1TeypwXvRUqNu+F9nNnNV+2LXcfL+g5
+ kVycTBRhOjyRi98NkDVxEKUnCMQwHhmCIxkyIOXAvrZfTaV1o9s6GozL8DQN9xrXHNf2nLZl2
+ JcX+XTF1PawXA5+Z3bIaSev6F4jioZ5TAwhLr5bt7JnJ3gzSWEQ1AjhOXfsK7m2l4cFMFFFAg
+ Tm9WJeBfj9Dtk/MwgzAFXr1bO5v5M7aphUy/oj/zUvBKifjuKsPqvHmFD1LXIclRS4IcSYQsj
+ 5Ji8HOaQB1U89PtWDdQmQghzmf35U4B8J+Gn0ncFN5bEEmYBMyPycQ9Folihr5+rTBCjL72/V
+ o4PWzOliRFaN7IyQ+lyWvkLEE0P+7AKtISdCdgFvXe4w89BEkmyH56F8M4PLzCbVV8YqXwFGq
+ 64TKNBrgZrt9eS1FW/rXAQ8wK42JlV3teydzCCqAKBG7T233w1vq3KzPVK3wwHnnp5oWgUD0G
+ ZwG3L73AaIpEEFUIbsYHROJtoc/ZpJnxeUkxUPvxERUDOCX96xbdoZn6H5VTQXx8SDUQ5kVnV
+ q70urBAGCVeeWrjocqvF3pLLZkrNwclG1P4c0XkmrPJk9x+55Pr3sz6OHw12VlFdKBu130V+b
+ NWmFZnoq/DlEQ58Xv9+kMigJ+/ZiV1uLGERXnj5s/6nmCyt79fIuS8SPtINZkZIGUZ8PB8i4W
+ hjcPlEIW4pjtA005tk1tfiBG3rSMpW9qMRKcKE+KSCEtEFQe/X1EMtemqShjOb3mEvtLJS/M9
+ yh3So6a/pQ8koqZPPd9Z445moJKS6ZeEAKXwCZjxBOXZHQkujyEMtqSL+9sbBc7v4hoyoMdno
+ 0J8dya+uDQr6PeQqneedWbuXnFnBkgInOy7G9FXXeWMpZW8UPJEp0mlXBDkB7R+nHNm5135wu
+ oaUDWWGd+4n9KqPUaYAzO5xC44n/8wQ6RWJWd9A==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Enable ref-filter to process multiple merged and no-merged filters, and
-extend functionality to git branch, git tag and git for-each-ref. This
-provides an easy way to check for branches that are "graduation
-candidates:"
+Hi Junio,
 
-$ git branch --no-merged master --merged next
+On Tue, 8 Sep 2020, Junio C Hamano wrote:
 
-To accomplish this, store the merged and no-merged filters in two
-commit_list structs (reachable_from and unreachable_from) rather than
-using a single commit struct (merge_commit).
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> >>  If we do not flip the
+> >> "use the built-in variant" for those with feature.experimental we
+> >> really should do so to widen the canarying population immediately.
+> >
+> > That's a good idea
+>
+> Like this?  If the more specific one is specifically set, we do not
+> look at experimental bit, but otherwise we use the built-in version.
 
-If passed more than one merged (or more than one no-merged) filter,
-mirror the existing boolean logic used by contains/no-contains filters:
-refs must satisfy any of the merged filters, and all of the no-merged
-filters.
+Looks fine to me,
+Dscho
 
-Signed-off-by: Aaron Lipman <alipman88@gmail.com>
----
-This functionality was originally proposed in 2013:
-https://lore.kernel.org/git/87fvzwmp23.fsf@59A2.org/T/
-
-In deciding how to handle multiple merged or multiple no-merged
-filters, I mirrored the existing behavior for contains/no-contains
-filters. However, I noticed this existing behavior isn't documented or
-covered by tests. I think it makes sense to hold off on officially
-documenting this behavior for now in case we wish to refine it later,
-but I'm curious what others think.
-
-If merging into next, please be sure to also include my previous
-patch correcting tests in t3200:
-https://lore.kernel.org/git/20200830224200.21103-1-alipman88@gmail.com
-
-(Apologies, realizing I should have submitted both together.)
-
-
- Documentation/git-branch.txt       |  6 +--
- Documentation/git-for-each-ref.txt |  6 +--
- Documentation/git-tag.txt          |  4 +-
- builtin/branch.c                   |  4 +-
- builtin/tag.c                      |  6 +--
- ref-filter.c                       | 71 ++++++++++++++++--------------
- ref-filter.h                       |  9 +---
- t/t3200-branch.sh                  |  4 +-
- t/t3201-branch-contains.sh         | 12 +++++
- t/t6302-for-each-ref-filter.sh     |  4 +-
- t/t7004-tag.sh                     |  2 +-
- 11 files changed, 68 insertions(+), 60 deletions(-)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 03c0824d52..8f0dbcd0ac 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -252,13 +252,11 @@ start-point is either a local or remote-tracking branch.
- 
- --merged [<commit>]::
- 	Only list branches whose tips are reachable from the
--	specified commit (HEAD if not specified). Implies `--list`,
--	incompatible with `--no-merged`.
-+	specified commit (HEAD if not specified). Implies `--list`.
- 
- --no-merged [<commit>]::
- 	Only list branches whose tips are not reachable from the
--	specified commit (HEAD if not specified). Implies `--list`,
--	incompatible with `--merged`.
-+	specified commit (HEAD if not specified). Implies `--list`.
- 
- <branchname>::
- 	The name of the branch to create or delete.
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 2ea71c5f6c..bb113da5a2 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -76,13 +76,11 @@ OPTIONS
- 
- --merged[=<object>]::
- 	Only list refs whose tips are reachable from the
--	specified commit (HEAD if not specified),
--	incompatible with `--no-merged`.
-+	specified commit (HEAD if not specified).
- 
- --no-merged[=<object>]::
- 	Only list refs whose tips are not reachable from the
--	specified commit (HEAD if not specified),
--	incompatible with `--merged`.
-+	specified commit (HEAD if not specified).
- 
- --contains[=<object>]::
- 	Only list refs which contain the specified commit (HEAD if not
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index f6d9791780..786d4dfd6f 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -149,11 +149,11 @@ This option is only applicable when listing tags without annotation lines.
- 
- --merged [<commit>]::
- 	Only list tags whose commits are reachable from the specified
--	commit (`HEAD` if not specified), incompatible with `--no-merged`.
-+	commit (`HEAD` if not specified).
- 
- --no-merged [<commit>]::
- 	Only list tags whose commits are not reachable from the specified
--	commit (`HEAD` if not specified), incompatible with `--merged`.
-+	commit (`HEAD` if not specified).
- 
- --points-at <object>::
- 	Only list tags of the given object (HEAD if not
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e82301fb1b..4bdb700dd5 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -688,8 +688,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	    !show_current && !unset_upstream && argc == 0)
- 		list = 1;
- 
--	if (filter.with_commit || filter.merge != REF_FILTER_MERGED_NONE || filter.points_at.nr ||
--	    filter.no_commit)
-+	if (filter.with_commit || filter.no_commit ||
-+	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
- 		list = 1;
- 
- 	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 5cbd80dc3e..b1a0398c85 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -457,8 +457,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		if (argc == 0)
- 			cmdmode = 'l';
- 		else if (filter.with_commit || filter.no_commit ||
--			 filter.points_at.nr || filter.merge_commit ||
--			 filter.lines != -1)
-+			 filter.reachable_from || filter.unreachable_from ||
-+			 filter.points_at.nr || filter.lines != -1)
- 			cmdmode = 'l';
- 	}
- 
-@@ -509,7 +509,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("--no-contains option is only allowed in list mode"));
- 	if (filter.points_at.nr)
- 		die(_("--points-at option is only allowed in list mode"));
--	if (filter.merge_commit)
-+	if (filter.reachable_from || filter.unreachable_from)
- 		die(_("--merged and --no-merged options are only allowed in list mode"));
- 	if (cmdmode == 'd')
- 		return for_each_tag_name(argv, delete_tag, NULL);
-diff --git a/ref-filter.c b/ref-filter.c
-index 8ba0e31915..21dca5e68b 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2119,9 +2119,9 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 	 * obtain the commit using the 'oid' available and discard all
- 	 * non-commits early. The actual filtering is done later.
- 	 */
--	if (filter->merge_commit || filter->with_commit || filter->no_commit || filter->verbose) {
--		commit = lookup_commit_reference_gently(the_repository, oid,
--							1);
-+	if (filter->reachable_from || filter->unreachable_from ||
-+	    filter->with_commit || filter->no_commit || filter->verbose) {
-+		commit = lookup_commit_reference_gently(the_repository, oid, 1);
- 		if (!commit)
- 			return 0;
- 		/* We perform the filtering for the '--contains' option... */
-@@ -2183,11 +2183,17 @@ void ref_array_clear(struct ref_array *array)
- 	}
- }
- 
--static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
-+static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata, int reachable)
- {
-+	struct commit_list *check_reachable_list = reachable ?
-+		ref_cbdata->filter->reachable_from :
-+		ref_cbdata->filter->unreachable_from;
-+
-+	if (!check_reachable_list)
-+		return;
-+
- 	struct rev_info revs;
- 	int i, old_nr;
--	struct ref_filter *filter = ref_cbdata->filter;
- 	struct ref_array *array = ref_cbdata->array;
- 	struct commit **to_clear = xcalloc(sizeof(struct commit *), array->nr);
- 
-@@ -2199,12 +2205,15 @@ static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
- 		to_clear[i] = item->commit;
- 	}
- 
--	filter->merge_commit->object.flags |= UNINTERESTING;
--	add_pending_object(&revs, &filter->merge_commit->object, "");
-+	for (struct commit_list *rl = check_reachable_list; rl; rl = rl->next) {
-+		struct commit *merge_commit = rl->item;
-+		merge_commit->object.flags |= UNINTERESTING;
-+		add_pending_object(&revs, &merge_commit->object, "");
- 
--	revs.limited = 1;
--	if (prepare_revision_walk(&revs))
--		die(_("revision walk setup failed"));
-+		revs.limited = 1;
-+		if (prepare_revision_walk(&revs))
-+			die(_("revision walk setup failed"));
-+	}
- 
- 	old_nr = array->nr;
- 	array->nr = 0;
-@@ -2215,14 +2224,19 @@ static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
- 
- 		int is_merged = !!(commit->object.flags & UNINTERESTING);
- 
--		if (is_merged == (filter->merge == REF_FILTER_MERGED_INCLUDE))
-+		if (is_merged == reachable)
- 			array->items[array->nr++] = array->items[i];
- 		else
- 			free_array_item(item);
--	}
-+  }
- 
- 	clear_commit_marks_many(old_nr, to_clear, ALL_REV_FLAGS);
--	clear_commit_marks(filter->merge_commit, ALL_REV_FLAGS);
-+
-+	while (check_reachable_list) {
-+		struct commit *merge_commit = pop_commit(&check_reachable_list);
-+		clear_commit_marks(merge_commit, ALL_REV_FLAGS);
-+	}
-+
- 	free(to_clear);
- }
- 
-@@ -2274,8 +2288,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
- 	clear_contains_cache(&ref_cbdata.no_contains_cache);
- 
- 	/*  Filters that need revision walking */
--	if (filter->merge_commit)
--		do_merge_filter(&ref_cbdata);
-+	do_merge_filter(&ref_cbdata, 1);
-+	do_merge_filter(&ref_cbdata, 0);
- 
- 	return ret;
- }
-@@ -2493,31 +2507,22 @@ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
- {
- 	struct ref_filter *rf = opt->value;
- 	struct object_id oid;
--	int no_merged = starts_with(opt->long_name, "no");
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	if (rf->merge) {
--		if (no_merged) {
--			return error(_("option `%s' is incompatible with --merged"),
--				     opt->long_name);
--		} else {
--			return error(_("option `%s' is incompatible with --no-merged"),
--				     opt->long_name);
--		}
--	}
--
--	rf->merge = no_merged
--		? REF_FILTER_MERGED_OMIT
--		: REF_FILTER_MERGED_INCLUDE;
--
- 	if (get_oid(arg, &oid))
- 		die(_("malformed object name %s"), arg);
- 
--	rf->merge_commit = lookup_commit_reference_gently(the_repository,
--							  &oid, 0);
--	if (!rf->merge_commit)
-+	struct commit *merge_commit = lookup_commit_reference_gently(the_repository,
-+								     &oid, 0);
-+
-+	if (!merge_commit)
- 		return error(_("option `%s' must point to a commit"), opt->long_name);
- 
-+	if (starts_with(opt->long_name, "no"))
-+		commit_list_insert(merge_commit, &rf->unreachable_from);
-+	else
-+		commit_list_insert(merge_commit, &rf->reachable_from);
-+
- 	return 0;
- }
-diff --git a/ref-filter.h b/ref-filter.h
-index 8ecc33cdfa..feaef4a8fd 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -54,13 +54,8 @@ struct ref_filter {
- 	struct oid_array points_at;
- 	struct commit_list *with_commit;
- 	struct commit_list *no_commit;
--
--	enum {
--		REF_FILTER_MERGED_NONE = 0,
--		REF_FILTER_MERGED_INCLUDE,
--		REF_FILTER_MERGED_OMIT
--	} merge;
--	struct commit *merge_commit;
-+	struct commit_list *reachable_from;
-+	struct commit_list *unreachable_from;
- 
- 	unsigned int with_commit_tag_algo : 1,
- 		match_as_path : 1,
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 028c88d1b2..be8f61b751 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1299,8 +1299,8 @@ test_expect_success '--merged catches invalid object names' '
- 	test_must_fail git branch --merged 0000000000000000000000000000000000000000
- '
- 
--test_expect_success '--merged is incompatible with --no-merged' '
--	test_must_fail git branch --merged HEAD --no-merged HEAD
-+test_expect_success '--merged is compatible with --no-merged' '
-+	git branch --merged master --no-merged master
- '
- 
- test_expect_success '--list during rebase' '
-diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
-index 40251c9f8f..6e73789995 100755
---- a/t/t3201-branch-contains.sh
-+++ b/t/t3201-branch-contains.sh
-@@ -211,4 +211,16 @@ test_expect_success 'branch --contains combined with --no-contains' '
- 
- '
- 
-+test_expect_success 'branch --merged combined with --no-merged' '
-+	git checkout master &&
-+	git checkout -b next &&
-+	git merge side &&
-+	git branch --merged next --no-merged master >actual &&
-+	cat >expect <<-\EOF &&
-+	* next
-+	  side
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 35408d53fd..781e470aea 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -437,8 +437,8 @@ test_expect_success 'check %(if:notequals=<string>)' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '--merged is incompatible with --no-merged' '
--	test_must_fail git for-each-ref --merged HEAD --no-merged HEAD
-+test_expect_success '--merged is compatible with --no-merged' '
-+	git for-each-ref --merged HEAD --no-merged HEAD
- '
- 
- test_expect_success 'validate worktree atom' '
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 74b637deb2..7d544eceda 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -2016,7 +2016,7 @@ test_expect_success '--merged can be used in non-list mode' '
- '
- 
- test_expect_success '--merged is incompatible with --no-merged' '
--	test_must_fail git tag --merged HEAD --no-merged HEAD
-+	git tag --merged HEAD --no-merged HEAD
- '
- 
- test_expect_success '--merged shows merged tags' '
--- 
-2.24.3 (Apple Git-128)
-
+>
+>  builtin/add.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index b36a99eb7c..26b6ced09e 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -192,9 +192,15 @@ int run_add_interactive(const char *revision, const=
+ char *patch_mode,
+>  	int use_builtin_add_i =3D
+>  		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
+>
+> -	if (use_builtin_add_i < 0)
+> -		git_config_get_bool("add.interactive.usebuiltin",
+> -				    &use_builtin_add_i);
+> +	if (use_builtin_add_i < 0) {
+> +		int experimental;
+> +		if (!git_config_get_bool("add.interactive.usebuiltin",
+> +					 &use_builtin_add_i))
+> +			; /* ok */
+> +		else if (!git_config_get_bool("feature.experimental", &experimental) =
+&&
+> +			 experimental)
+> +			use_builtin_add_i =3D 1;
+> +	}
+>
+>  	if (use_builtin_add_i =3D=3D 1) {
+>  		enum add_p_mode mode;
+>
