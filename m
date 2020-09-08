@@ -2,364 +2,242 @@ Return-Path: <SRS0=ga/5=CR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B37C43461
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16D87C43461
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:44:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17BA821741
-	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:39:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF7E720578
+	for <git@archiver.kernel.org>; Tue,  8 Sep 2020 19:44:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AjjaBihF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bW/GiX2H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730684AbgIHTjZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 15:39:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53424 "EHLO
+        id S1732404AbgIHToW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 15:44:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730952AbgIHPzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 11:55:36 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30E21C0612A6
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 06:07:55 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id e33so10022152pgm.0
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 06:07:55 -0700 (PDT)
+        with ESMTP id S1729791AbgIHPvq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 11:51:46 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8463CC061348
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 08:49:08 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id v123so4280181qkd.9
+        for <git@vger.kernel.org>; Tue, 08 Sep 2020 08:49:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5JDXnmiZ3KT9K+DwmYweEGlu8Ft/PcX3PxTJWAn7UqM=;
-        b=AjjaBihFoWTWcUZpDY67CHKc//BfVPEHk44D8YmBu2LESHW/b96qOPlIPbMHtpYU6C
-         w3cjZXYGqJ8ChYcIzDgGmZwiUqRHfOvjzCJMwzT+OCadBlT7BxIrjY9j9vtC5yJj3o1+
-         WPvASDwoPCqNJfW7FcrWsmzVzMLJzmYuY4vM1g7j4lnsHJpuf+GvDcgF/+DgbnuF+8Eb
-         byIw2G2BG7YBJ8jeZIV3mj/9GU0+psKGH/W+CsE2tQaG2S0APx9eg8mXb8eCzF07rAHc
-         6E4HCRJN68Vq32SsK6tAWkfD9Ii4bKcXMaURhiVdwG1fBAwasgrfmt/An1p1hAU0y8nh
-         mYlg==
+        bh=9rJz2VuY4IfP7+nNqN3pctJ1eYK9/4qdDjNdgoSdskE=;
+        b=bW/GiX2HvwqykRQ3T3WXu/i7Ok7/+isz+XLXd2SlmmgcZku6VQoY9F5bHwSBxh8XAW
+         voFc0DbJ05d8gg3hTpEUJZ8eqXdb4JXGeoULh6ohw2hL/AesLStUx1Uo8DKUiuNscfKo
+         VjXNaCzq5u0e/J1u9t3dXi2vUuBFqZrAoVFPg6VWCqIeYSgmYpY8pCNO/ZKZXwxFZe42
+         Uuq6I4ueXtvwscMWo5eoBfznNQ2GSA+yPctMkUbTm1t28n/uuQhUPK4WO/DMPsKmZnQ0
+         2+ynw8awddZ3Mar8AlgIjIfHAH06ZLxPc7Z/wryZ8gFmd5RRlg37G4iF8EG4K7OiZQo4
+         V60g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5JDXnmiZ3KT9K+DwmYweEGlu8Ft/PcX3PxTJWAn7UqM=;
-        b=Olyao1hmFMa0zWFKNGLjvsm6LbIvRkDoS8VfPPeon2WwgGMjWU/YmGg1m7/r5azfZk
-         BnucnBVIdZLKEci32zaygdpr4c9LQLj+bTZ8cDrgwJ/U/vXuahbyayPBgFPmdVffW1QU
-         kHM2ETbkDCXfHO9R9sSt5lZI/d8ZqAssv0W9B577CurUp4wfbIJirYag4XpPMY63iLin
-         a0B9fAii/OTfsphFfukxLe/4IefFOVDy9YZYC7qBE+lNzKDiq0s+HBVs2xmI8k5njBkw
-         U7XNGjjp65zlp5WSYx2NHxBraD0prtj+g73tGVDYz7aT6+qaGNfZ8JcMRuqkT8gfUbaV
-         DJiQ==
-X-Gm-Message-State: AOAM533SDtUAAtGl9nl0F2c3k0HvdSAsS7TUYyUh1TqpZJx11dnnbzR9
-        QunSVjsVvZ687pe8VcUGUVE=
-X-Google-Smtp-Source: ABdhPJx/7S7uPDE4vRdmQxFFXUJtHb4InyH7sIRtRoYEJjX2q4WoX1zTUDi0lq3TWaXNhFZqKc/W/w==
-X-Received: by 2002:a17:902:ee03:: with SMTP id z3mr24159127plb.68.1599570474520;
-        Tue, 08 Sep 2020 06:07:54 -0700 (PDT)
-Received: from localhost ([2402:800:63a8:ba63:875b:77ee:3774:2c12])
-        by smtp.gmail.com with ESMTPSA id l22sm18985146pfc.27.2020.09.08.06.07.51
+        bh=9rJz2VuY4IfP7+nNqN3pctJ1eYK9/4qdDjNdgoSdskE=;
+        b=ZZDXAONC3Vzy+lRqPTd9SsLPKD/7jemM9cHqdER93/Rzx750chpOArhdxhAcwb3Xah
+         7f/GfhlTSa1HFQnlrdjrYx66oE6uUftqVxOATgsU8uyC+v88yrnx83c0cw7z/co+ESAk
+         kFWWDWQ5gV4gAhcKfUZyc3ABwueGVTSjYrOqZ/2p3HtBx+rylLBD/UHNbmS2Q6x13hkI
+         6iXBj6akVEdfF+98U7H9TPMF7wC2XL5qWL7ycceBQ+/Q7x4yWIDKCGdHTzRowpeu3fez
+         +Eb5m2VAOXzOAybVVSTEVmxiKN/3b3YZGJtNg2E+EKngs58Vypg0w30ffIK2RKL1CsWp
+         /lUA==
+X-Gm-Message-State: AOAM5321XOtRK5YJFx+xzv0NYV+NOllk6ZpzPlvnk5ikpi6722rFCMQz
+        185NvG8UldNzoknB484Sh2Nb41TgfNPqWQ==
+X-Google-Smtp-Source: ABdhPJxuCMYl5Gyqmlh+OdzyanaIYKsfBEkeA8V1x3xHDE2DwCbEHd9NkeA7gMVJX55eRERwe38YOQ==
+X-Received: by 2002:a37:68d4:: with SMTP id d203mr631049qkc.125.1599580147448;
+        Tue, 08 Sep 2020 08:49:07 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([124.123.105.42])
+        by smtp.gmail.com with ESMTPSA id h68sm11306521qkf.30.2020.09.08.08.49.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2020 06:07:53 -0700 (PDT)
-Date:   Tue, 8 Sep 2020 20:07:49 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 2/7] maintenance: add --schedule option and config
-Message-ID: <20200908130738.GB25593@danh.dev>
-References: <pull.724.git.1599234126.gitgitgadget@gmail.com>
- <1783e80b8d3b8361d1d62947a49ba584685dacc4.1599234126.git.gitgitgadget@gmail.com>
+        Tue, 08 Sep 2020 08:49:06 -0700 (PDT)
+Date:   Tue, 8 Sep 2020 21:18:59 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] push: make `--force-with-lease[=<ref>]` safer
+Message-ID: <20200908154859.GA40807@mail.clickyotomy.dev>
+References: <20200904185147.77439-1-shrinidhi.kaushik@gmail.com>
+ <624d9e35-29b8-4012-a3d6-e9b00a9e4485@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1783e80b8d3b8361d1d62947a49ba584685dacc4.1599234126.git.gitgitgadget@gmail.com>
+In-Reply-To: <624d9e35-29b8-4012-a3d6-e9b00a9e4485@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-09-04 15:42:01+0000, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> A user may want to run certain maintenance tasks based on frequency, not
-> conditions given in the repository. For example, the user may want to
+Hi Phillip,
 
-Hm, sorry but I couldn't decipher "not conditions" here. :|
+On 09/07/2020 16:23, Phillip Wood wrote:
+> [...]
+> Thanks for working on this, making --force-with-lease safer would be a
+> valuable contribution
 
-> perform a 'prefetch' task every hour, or 'gc' task every day. To assist,
+:)
 
-I think it's better to say: "To assist those users", at least it's
-easier to read for non-native English like me.
+> > The `--force-with-lease` option in `git-push`, makes sure that
+> > refs on remote aren't clobbered by unexpected changes when the
+> > "<expect>" ref value is explicitly specified.
+>
+> I think it would help to write out
+> `--force-with-lease[=<refname>[:<expect>]]` so readers know what
+> "<expect>" is referring to
 
-> update the 'git maintenance run' command to include a
-> '--schedule=<frequency>' option. The allowed frequencies are 'hourly',
+That makes sense; noted.
 
-So, we have "--schedule=" here, ...
+> > For other cases (i.e., `--force-with-lease[=<ref>]`) where the tip
+> > of the remote tracking branch is populated as the "<expect>" value,
+> > there is a possibility of allowing unwanted overwrites on the remote
+> > side when some tools that implicitly fetch remote-tracking refs in
+> > the background are used with the repository. If a remote-tracking ref
+> > was updated when a rewrite is happening locally and if those changes
+> > are pushed by omitting the "<expect>" value in `--force-with-lease`,
+> > any new changes from the updated tip will be lost locally and will
+> > be overwritten on the remote.
+> >
+> > This problem can be addressed by checking the `reflog` of the branch
+> > that is being pushed and verify if there in a entry with the remote
+> > tracking ref. By running this check, we can ensure that refs being
+> > are fetched in the background while a "lease" is being held are not
+> > overlooked before a push, and any new changes can be acknowledged
+> > and (if necessary) integrated locally.
 
-> 'daily', and 'weekly'. These values are also allowed in a new config
-> value 'maintenance.<task>.schedule'.
-> 
-> The 'git maintenance run --schedule=<frequency>' checks the '*.schedule'
+> An addition safety measure would be to check the reflog of the local
+> commit and the tip of the remote tracking branch dates overlap.
+> Otherwise if there is an implicit fetch of a remote head that has been
+> rewound we still push the local branch when we shouldn't.
 
-and here, ...
+This sounds much better. My initial description of the check was perhaps
+a bit confusing.
 
-> config value for each enabled task to see if the configured frequency is
-> at least as frequent as the frequency from the '--schedule' argument. We
-> use the following order, for full clarity:
-> 
-> 	'hourly' > 'daily' > 'weekly'
-> 
-> Use new 'enum schedule_priority' to track these values numerically.
-> 
-> The following cron table would run the scheduled tasks with the correct
-> frequencies:
-> 
->   0 1-23 * * *    git -C <repo> maintenance run --scheduled=hourly
->   0 0    * * 1-6  git -C <repo> maintenance run --scheduled=daily
->   0 0    * * 0    git -C <repo> maintenance run --scheduled=weekly
+> > The new check will cause `git-push` to fail if it detects the presence
+> > of any updated refs that we do not have locally and reject the push
+> > stating `implicit fetch` as the reason.
+>
+> 'implicit fetch' is a rather terse message - can we say something along
+> the lines of "the remote has been updated since the last merge/push"?
 
-but it's spelt with "--scheduled=", here and below, mispell, I guess.
+I was going by the "two-word" approach like "stale info", "fetch first",
+"no match", and so on. But, I'll look into wording the reject reason
+along those lines.
 
-Reading the patch, it looks like "--scheduled=" is mispelt.
+> > An experimental configuration setting: `push.rejectImplicitFetch`
+> > which defaults to `true` (when `features.experimental` is enabled)
+> > has been added, to allow `git-push` to reject a push if the check
+> > fails.
+>
+> Making this available with features.experimental initially is probably a
+> good idea, I hope it will become the default if in future versions.
 
-> This cron schedule will run --scheduled=hourly every hour except at
-> midnight. This avoids a concurrent run with the --scheduled=daily that
-> runs at midnight every day except the first day of the week. This avoids
-> a concurrent run with the --scheduled=weekly that runs at midnight on
-> the first day of the week. Since --scheduled=daily also runs the
-> 'hourly' tasks and --scheduled=weekly runs the 'hourly' and 'daily'
-> tasks, we will still see all tasks run with the proper frequencies.
-> 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/config/maintenance.txt |  5 +++
->  Documentation/git-maintenance.txt    | 13 +++++-
->  builtin/gc.c                         | 67 +++++++++++++++++++++++++---
->  t/t7900-maintenance.sh               | 40 +++++++++++++++++
->  4 files changed, 119 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-> index 06db758172..70585564fa 100644
-> --- a/Documentation/config/maintenance.txt
-> +++ b/Documentation/config/maintenance.txt
-> @@ -10,6 +10,11 @@ maintenance.<task>.enabled::
->  	`--task` option exists. By default, only `maintenance.gc.enabled`
->  	is true.
->  
-> +maintenance.<task>.schedule::
-> +	This config option controls whether or not the given `<task>` runs
-> +	during a `git maintenance run --schedule=<frequency>` command. The
-> +	value must be one of "hourly", "daily", or "weekly".
-> +
->  maintenance.commit-graph.auto::
->  	This integer config option controls how often the `commit-graph` task
->  	should be run as part of `git maintenance run --auto`. If zero, then
-> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-> index b44efb05a3..3af5907b01 100644
-> --- a/Documentation/git-maintenance.txt
-> +++ b/Documentation/git-maintenance.txt
-> @@ -107,7 +107,18 @@ OPTIONS
->  	only if certain thresholds are met. For example, the `gc` task
->  	runs when the number of loose objects exceeds the number stored
->  	in the `gc.auto` config setting, or when the number of pack-files
-> -	exceeds the `gc.autoPackLimit` config setting.
-> +	exceeds the `gc.autoPackLimit` config setting. Not compatible with
-> +	the `--schedule` option.
-> +
-> +--schedule::
-> +	When combined with the `run` subcommand, run maintenance tasks
-> +	only if certain time conditions are met, as specified by the
-> +	`maintenance.<task>.schedule` config value for each `<task>`.
-> +	This config value specifies a number of seconds since the last
-> +	time that task ran, according to the `maintenance.<task>.lastRun`
-> +	config value. The tasks that are tested are those provided by
-> +	the `--task=<task>` option(s) or those with
-> +	`maintenance.<task>.enabled` set to true.
->  
->  --quiet::
->  	Do not report progress or other information over `stderr`.
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index f8459df04c..85a3370692 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -704,14 +704,51 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->  	return 0;
->  }
->  
-> -static const char * const builtin_maintenance_run_usage[] = {
-> -	N_("git maintenance run [--auto] [--[no-]quiet] [--task=<task>]"),
-> +static const char *const builtin_maintenance_run_usage[] = {
-> +	N_("git maintenance run [--auto] [--[no-]quiet] [--task=<task>] [--schedule]"),
->  	NULL
->  };
->  
-> +enum schedule_priority {
-> +	SCHEDULE_NONE = 0,
-> +	SCHEDULE_WEEKLY = 1,
-> +	SCHEDULE_DAILY = 2,
-> +	SCHEDULE_HOURLY = 3,
-> +};
-> +
-> +static enum schedule_priority parse_schedule(const char *value)
-> +{
-> +	if (!value)
-> +		return SCHEDULE_NONE;
-> +	if (!strcasecmp(value, "hourly"))
-> +		return SCHEDULE_HOURLY;
-> +	if (!strcasecmp(value, "daily"))
-> +		return SCHEDULE_DAILY;
-> +	if (!strcasecmp(value, "weekly"))
-> +		return SCHEDULE_WEEKLY;
-> +	return SCHEDULE_NONE;
-> +}
-> +
-> +static int maintenance_opt_schedule(const struct option *opt, const char *arg,
-> +				    int unset)
-> +{
-> +	enum schedule_priority *priority = opt->value;
-> +
-> +	if (unset)
-> +		die(_("--no-schedule is not allowed"));
-> +
-> +	*priority = parse_schedule(arg);
-> +
-> +	if (!*priority)
-> +		die(_("unrecognized --schedule argument '%s'"), arg);
-> +
-> +	return 0;
-> +}
-> +
->  struct maintenance_run_opts {
->  	int auto_flag;
->  	int quiet;
-> +	enum schedule_priority schedule;
->  };
->  
->  /* Remember to update object flag allocation in object.h */
-> @@ -1159,6 +1196,8 @@ struct maintenance_task {
->  	maintenance_auto_fn *auto_condition;
->  	unsigned enabled:1;
->  
-> +	enum schedule_priority schedule;
-> +
->  	/* -1 if not selected. */
->  	int selected_order;
->  };
-> @@ -1250,8 +1289,10 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
->  			continue;
->  
->  		if (opts->auto_flag &&
-> -		    (!tasks[i].auto_condition ||
-> -		     !tasks[i].auto_condition()))
-> +		    (!tasks[i].auto_condition || !tasks[i].auto_condition()))
-> +			continue;
+I hope so. :)
 
-This line only add unnecessary noise to this patch.
+> > [...]
+> > +		case REF_STATUS_REJECT_IMPLICIT_FETCH:
+> > +			res = "error";
+> > +			msg = "implicit fetch";
+> > +			break;
+> > +
+> >   		case REF_STATUS_REJECT_ALREADY_EXISTS:
+> >   			res = "error";
+> >   			msg = "already exists";
+> > diff --git a/remote.c b/remote.c
+> > index c5ed74f91c..ee2dedd15b 100644
+> > --- a/remote.c
+> > +++ b/remote.c
+> > @@ -49,6 +49,8 @@ static const char *pushremote_name;
+> >   static struct rewrites rewrites;
+> >   static struct rewrites rewrites_push;
+> >
+> > +static struct object_id cas_reflog_check_oid;
+> > +
+>
+> rather than using a global variable I think it would be better just to
+> pass this value around using the cb_data argument of the reflog callback
+> function
 
--- 
-Danh
-> +
-> +		if (opts->schedule && tasks[i].schedule < opts->schedule)
->  			continue;
->  
->  		trace2_region_enter("maintenance", tasks[i].name, r);
-> @@ -1274,13 +1315,23 @@ static void initialize_task_config(void)
->  
->  	for (i = 0; i < TASK__COUNT; i++) {
->  		int config_value;
-> +		char *config_str;
->  
-> -		strbuf_setlen(&config_name, 0);
-> +		strbuf_reset(&config_name);
->  		strbuf_addf(&config_name, "maintenance.%s.enabled",
->  			    tasks[i].name);
->  
->  		if (!git_config_get_bool(config_name.buf, &config_value))
->  			tasks[i].enabled = config_value;
-> +
-> +		strbuf_reset(&config_name);
-> +		strbuf_addf(&config_name, "maintenance.%s.schedule",
-> +			    tasks[i].name);
-> +
-> +		if (!git_config_get_string(config_name.buf, &config_str)) {
-> +			tasks[i].schedule = parse_schedule(config_str);
-> +			free(config_str);
-> +		}
->  	}
->  
->  	strbuf_release(&config_name);
-> @@ -1324,6 +1375,9 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
->  	struct option builtin_maintenance_run_options[] = {
->  		OPT_BOOL(0, "auto", &opts.auto_flag,
->  			 N_("run tasks based on the state of the repository")),
-> +		OPT_CALLBACK(0, "schedule", &opts.schedule, N_("frequency"),
-> +			     N_("run tasks based on frequency"),
-> +			     maintenance_opt_schedule),
->  		OPT_BOOL(0, "quiet", &opts.quiet,
->  			 N_("do not report progress or other information over stderr")),
->  		OPT_CALLBACK_F(0, "task", NULL, N_("task"),
-> @@ -1344,6 +1398,9 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
->  			     builtin_maintenance_run_usage,
->  			     PARSE_OPT_STOP_AT_NON_OPTION);
->  
-> +	if (opts.auto_flag && opts.schedule)
-> +		die(_("use at most one of --auto and --schedule=<frequency>"));
-> +
->  	if (argc != 0)
->  		usage_with_options(builtin_maintenance_run_usage,
->  				   builtin_maintenance_run_options);
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index e0ba19e1ff..328bbaa830 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -264,4 +264,44 @@ test_expect_success 'maintenance.incremental-repack.auto' '
->  	done
->  '
->  
-> +test_expect_success '--auto and --schedule incompatible' '
-> +	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
-> +	test_i18ngrep "at most one" err
-> +'
-> +
-> +test_expect_success 'invalid --schedule value' '
-> +	test_must_fail git maintenance run --schedule=annually 2>err &&
-> +	test_i18ngrep "unrecognized --schedule" err
-> +'
-> +
-> +test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
-> +	git config maintenance.loose-objects.enabled true &&
-> +	git config maintenance.loose-objects.schedule hourly &&
-> +	git config maintenance.commit-graph.enabled true &&
-> +	git config maintenance.commit-graph.schedule daily &&
-> +	git config maintenance.incremental-repack.enabled true &&
-> +	git config maintenance.incremental-repack.schedule weekly &&
-> +
-> +	GIT_TRACE2_EVENT="$(pwd)/hourly.txt" \
-> +		git maintenance run --schedule=hourly 2>/dev/null &&
-> +	test_subcommand git prune-packed --quiet <hourly.txt &&
-> +	test_subcommand ! git commit-graph write --split --reachable \
-> +		--no-progress <hourly.txt &&
-> +	test_subcommand ! git multi-pack-index write --no-progress <hourly.txt &&
-> +
-> +	GIT_TRACE2_EVENT="$(pwd)/daily.txt" \
-> +		git maintenance run --schedule=daily 2>/dev/null &&
-> +	test_subcommand git prune-packed --quiet <daily.txt &&
-> +	test_subcommand git commit-graph write --split --reachable \
-> +		--no-progress <daily.txt &&
-> +	test_subcommand ! git multi-pack-index write --no-progress <daily.txt &&
-> +
-> +	GIT_TRACE2_EVENT="$(pwd)/weekly.txt" \
-> +		git maintenance run --schedule=weekly 2>/dev/null &&
-> +	test_subcommand git prune-packed --quiet <weekly.txt &&
-> +	test_subcommand git commit-graph write --split --reachable \
-> +		--no-progress <weekly.txt &&
-> +	test_subcommand git multi-pack-index write --no-progress <weekly.txt
-> +'
-> +
->  test_done
-> -- 
-> gitgitgadget
-> 
+I have to admit that I was hesitant to use the global variable when
+writing this. For some reason I thought the callback data was used to
+store results from the called function only and not pass arguments.
+Will fix that in v2.
 
--- 
-Danh
+> > [...]
+> > +static int oid_in_reflog_ent(struct object_id *ooid, struct object_id *noid,
+> > +			     const char *ident, timestamp_t timestamp, int tz,
+> > +			     const char *message, void *cb_data)
+> > +{
+>
+> using the callback data we would have something like
+>
+> struct oid *remote_head = cb_data;
+> return oideq(noid, remote_head);
+
+Got it; this and the callback argument to the reflog entry function
+will be updated accordingly.
+
+> > [...]
+> > +{
+> > +	int ret = 0;
+> > +	cas_reflog_check_oid = *r_oid;
+> > +
+> > +	struct commit *r_commit, *l_commit;
+>
+> Our coding style is to declare all variables before any statements, so
+> this should come above `cas_reflog_check_oid = *r_oid` but that line
+> wants to go away anyway.
+
+Noted; `cas_reflog_check_oid` will go away as suggested above.
+
+> > [...]
+> > +	ret = (r_commit && l_commit) ? in_merge_bases(r_commit, l_commit) : 0;
+> > +	if (ret)
+> > +		goto skip;
+>
+> Rather than using a goto it would perhaps be better to do
+>
+> if (!ret)
+>	ret = for_each_reflog_...
+>
+>
+
+OK, yes. The `goto` can be avoided here.
+
+> > +
+> > +	ret = for_each_reflog_ent_reverse(local_ref_name,
+> > +					  oid_in_reflog_ent,
+> > +					  NULL);
+>
+> using the callback data we'd pass r_oid rather than NULL as the last
+> argument
+
+
+> > [...]
+> >   		else if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
+> >   			oidclr(&ref->old_oid_expect);
+> > -		return;
+> > +		else
+> > +			do_reflog_check = 1;
+> > +
+> > +		goto reflog_check;
+>
+> I'm not too keen in jumping here, can't we just check `do_reflog_check`
+> below?
+
+Yes, of course. I was trying conserve the original flow of returning
+from the function right after the loop. Since this is just one condition
+to check if `do_reflog_check` is set to 1; we can get rid of the `goto`
+and use a `break` instead.
+
+> [...]
+
+Thanks for a thorough review.
+--
+Srinidhi Kaushik
