@@ -2,148 +2,137 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8332C10DAA
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 839A2C433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:44:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 739E421D79
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:44:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 440E621D79
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:44:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rl8H7gn0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjkJNmb3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730315AbgIIJoG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 05:44:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50198 "EHLO
+        id S1730323AbgIIJoK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 05:44:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730285AbgIIJnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 05:43:46 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DA2C061755
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 02:43:46 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id e41so666568uad.6
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 02:43:46 -0700 (PDT)
+        with ESMTP id S1726169AbgIIJoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 05:44:03 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C754C061573
+        for <git@vger.kernel.org>; Wed,  9 Sep 2020 02:44:03 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id z4so2219388wrr.4
+        for <git@vger.kernel.org>; Wed, 09 Sep 2020 02:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+B3Vz7Rc2kdxZa02hHoNRQtf8bNNM7Fmj5fsMr8IIWo=;
-        b=rl8H7gn0NXTm3KgYQxvfM8Gbqxbnqfxm/xpHb+1Yyim9fDBQQDtk7cWUCO4BfTise5
-         JyO67C1gQJ63TzxACebm6ONxm7zcTesOIkN76mZQZG9LsTwIW2CAjcxobE8c8zDGYOpr
-         QmzR23hRHmahL449E2QJZt9gJSho3LkfPJCsHmv4zSQAKsISpXl1M4EQ2F1lknZ0nlAd
-         8YYJ3Rno15+hAt/8iUzvcQq76tjPgnVvXArwcAvpp4fgI5wiFsAV8d2S/6k6BbrvZReF
-         oGPFCLtpFU9Zt6cHcyHQVo0y/KVsX07EZXyx+zo4vrFL4MkrKx4kAAYFtNhHe1jF4jIw
-         gkHQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9DUK7dzl/673KMyPKdvBHBwjRO4qvt1712UsIjg34Sk=;
+        b=gjkJNmb3gYO3wfzrmJRMjCodVFN/SIQBRRnO0uEYOEIpqiSObsDKliJTv78nJczXfK
+         eoBClt2laZ5MfnOwT5zniBZ2K8ttzbPg1k4UYfVmwyVaRT6/8GC1a/VfDL4/9MUXc6La
+         E83+s1GnrZJd0/T5D3pw+HjrNMlNnC0IVq7cnCs4VXWhek7HP0k5BujD3AzF8zYp4uf9
+         pi+A5qovMReF0oFXlfMXp7QxoWKh2MmlOcaSfWfbv1vxGDw5P0Kj+Mauh0GFZRF4Qzd9
+         EErZU7PqIfZSgTqvznKJ3+araqwVvqpuJQkHZm5g+KodLHptls4opGzXuBFVM3pSgUi3
+         534w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+B3Vz7Rc2kdxZa02hHoNRQtf8bNNM7Fmj5fsMr8IIWo=;
-        b=f4HBlvJlG3p7rl1IVZ89FXxoijRw/IkCFjemq299wZIPRCJCLO8IhjH/Jr7KDQdN3z
-         QVn8q7Bp1Zo69yugqmnAJ3A8bEgk6/elC5LMKvenmrsKwCoaxwxTlNWprxIaJgbdN0fK
-         RkSlhZDSGXFsylN5Gfyrcac92NmWwXv+wMdvj2C0IDsoij+lTZNcszV/W7ySswpuk1uY
-         f3tpyEXYWLBNCdXF3ZECFIKH3Cq3LVVKUGEWMtCgPovOARjqOUjhCcQEm0Yhzn6TQbkl
-         GiwFwM485IVTHMunZewFJG9ZpKJ8AzYIFSVd8R7YpuVblltGm2OOwg/a65DQCNVLozGn
-         Tnrw==
-X-Gm-Message-State: AOAM533khV86hfxVx2g5Oe6TTyGyLPkvzH+LxLZdgumaSXzG8mRIzQEd
-        6FhIOJuU+FhLCkXj+VIvcyfzgBDTem5WGop4ZyrE5A==
-X-Google-Smtp-Source: ABdhPJzHW3kH2gGhlb/mG3YS/j0lrx3eqqWHdEybPvrg14KXhg3O9xcWiPWE47oj+CgKFZ+PHhTNbq7DyGRduJWf5DM=
-X-Received: by 2002:ab0:455:: with SMTP id 79mr29772uav.83.1599644625463; Wed,
- 09 Sep 2020 02:43:45 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9DUK7dzl/673KMyPKdvBHBwjRO4qvt1712UsIjg34Sk=;
+        b=ZQosJKpCjMNB/nl+z/2hwQbt+eiTBQVQU3n3Wlxliz6ViP9EGZmh2soGRLGTHcgAKx
+         4+vaJLj1lHD6dUSjjRaMHHzkxmQ9/8Umtsa0UQQiHh7G7KbKDDSIh/syMCV52Ue+Tgnk
+         7MNiJ3VIZQOV22Rg2NXth3pckoaTRugZbvdg7k4IVrYWrLcs4EgHecV8HcQ1r6ykb3yd
+         9hI+ycLHr/YS5qjGHy4+kEe9S8g1a438dEWKi/M10cIWsh2g+rQ5O0QJDQs0fHSrLZpd
+         Hg0SrsSMtgEJroUS8uYutk9Laehjk2VOHANha9ZrtnLaK7RHdgjvDh+KxhvXmdboAyXM
+         5/ig==
+X-Gm-Message-State: AOAM532QL6wAUB2MKD8VD9rJgHRF7xf5T6ipzHVsa4zZZ3yjfkaod6Q8
+        6AFl6++aTyW1qHgHQjY8yrcOfEScDDI=
+X-Google-Smtp-Source: ABdhPJzlO7ko2LJ4xD+CJUAgTG/Dc7qHgqD6tw8b2fS1CgzaKGkrrkUfIZ0p6Pj+D7rQAE0hu53A2w==
+X-Received: by 2002:adf:eb04:: with SMTP id s4mr2299356wrn.81.1599644641208;
+        Wed, 09 Sep 2020 02:44:01 -0700 (PDT)
+Received: from [192.168.1.201] (151.252.189.80.dyn.plus.net. [80.189.252.151])
+        by smtp.googlemail.com with ESMTPSA id d3sm3273724wrr.84.2020.09.09.02.44.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Sep 2020 02:44:00 -0700 (PDT)
+Subject: Re: post-checkout hook aborts rebase
+To:     Tom Rutherford <tmrutherford@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <CAHr-Uu_KeAJZrd+GzymNP47iFi+dZkvVYsWQPtzT_FQrVnWTDg@mail.gmail.com>
+ <xmqq7dtlt080.fsf@gitster.c.googlers.com>
+ <xmqq3649szs8.fsf@gitster.c.googlers.com>
+ <CAHr-Uu8umDQJ=LORaBNJX+wnmaeM1hHxxpG7xROPgCqgEPrwdw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <dc9b58c4-96f1-2270-406b-781f8d0a4f22@gmail.com>
+Date:   Wed, 9 Sep 2020 10:43:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <pull.713.git.1598628529512.gitgitgadget@gmail.com>
- <pull.713.v2.git.1599492274909.gitgitgadget@gmail.com> <xmqq7dt4x957.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq7dt4x957.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 9 Sep 2020 11:43:34 +0200
-Message-ID: <CAFQ2z_OOCvFH-+FNdPWjQ=vGwgeBdVzMjt8avm6AkX=H81kPdQ@mail.gmail.com>
-Subject: Re: [PATCH v2] refs: add GIT_TRACE_REFS debugging mechanism
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHr-Uu8umDQJ=LORaBNJX+wnmaeM1hHxxpG7xROPgCqgEPrwdw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 8, 2020 at 11:15 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Cute.  I like it.
+Hi Tom
 
-thanks :)
+On 27/08/2020 01:44, Tom Rutherford wrote:
+> Thank you for the response Junio.
+> 
+> For what it's worth, my hook does not make changes to the repo. It's
+> running a command to check that the installed version of our
+> dependencies match the version specified in the commit being checked
+> out, and merely warns if the two don't match (then exits with a
+> nonzero return code).
+> 
+> For this reason it's been convenient that the hook runs during
+> rebases, but I find it surprising that the nonzero return code would
+> impact the rebase.
 
-> > +     res =3D malloc(sizeof(struct debug_ref_store));
-> > +     be_copy =3D malloc(sizeof(*be_copy));
->
-> Not xmalloc() and friends?
+If the checkout succeeds that rebase does not print any of checkout's
+output so unfortunately you wouldn't see the message from your hook.
 
-done.
+I tend to agree with Junio that we shouldn't be running the 
+post-checkout hook when rebasing.
 
->
-> > +     *be_copy =3D refs_be_debug;
-> > +     be_copy->name =3D store->be->name;
->
-> I guess we never destroy the ref-store instances so it is OK to
-> assume that it would not cause problems later by sharing pieces of
-> memory with underlying "real" thing like this.
+Best Wishes
 
-correct. But changed to xstrdup to avoid confusion.
+Phillip
 
-> > +     char o[200] =3D "null";
-> > +     char n[200] =3D "null";
->
-> I thought we had better constant than 200 (later you use 100 in the
+> 
+> Tom
+> 
+> On Wed, Aug 26, 2020 at 5:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> ...  If "git rebase" or whatever
+>>> command wanted to place files and the index into some state by using
+>>> "git checkout" command, and if the post-checkout hook mucked with
+>>> the state in such a way that contradicts with what the "git rebase"
+>>> command wanted them to be in, it is not surprising the hook's behavior
+>>> broke "git rebase"'s operation.
+>>
+>> Having said all that, I actually think that "rebase" shouldn't be
+>> invoking "git checkout" (and its equivalent) internally when
+>> switching to a specific version, in such a way that it would trigger
+>> any end-user specified hooks and allow them to muck with the working
+>> tree and the index state.
+>>
+>> I haven't checked the actual implementation of "git rebase" for
+>> quite some time to be sure, but we have lower-level plumbing
+>> commands that are not affected by the end-user hooks for exactly
+>> that kind of "build higher-level commands by synthesis of
+>> lower-level machinery", and it is very possible that what we are
+>> looking at is actually a bug that needs to be fixed.  I dunno.
+>>
+>> Thanks.
 
-done.
-
-> same patch).  I am not sure how I feel about "null"; all places in
-> Git, we tend to use 0{length-of-the-hash} for "no object name on
-> this side", I think.
-
-Some functions take NULL as a legitimate parameter, eg. a transaction
-update with NULL as old OID (don't check old OID) is different from an
-update with 0{40} as old OID. (ref must not exist yet).
-
-> > +     for (int i =3D 0; i < transaction->nr; i++) {
->
-> We still do not allow variable decl inside the set-up part of a
-> for(;;) statement, if I recall Documentation/CodingGuidelines
-> correctly.
-
-Fixed.
-
-> > +static int debug_delete_refs(struct ref_store *ref_store, const char *=
-msg,
-> > +                          struct string_list *refnames, unsigned int f=
-lags)
-> > +{
-> > +     struct debug_ref_store *drefs =3D (struct debug_ref_store *)ref_s=
-tore;
-> > +     int res =3D
-> > +             drefs->refs->be->delete_refs(drefs->refs, msg, refnames, =
-flags);
-> > +     int i =3D 0;
->
-> No need to initialize 'i' here.
-
-Fixed.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
