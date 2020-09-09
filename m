@@ -2,103 +2,146 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DD17C433E2
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7647C433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:40:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39B1A21D7A
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:36:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63BA82087C
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:40:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gzs4O6tE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bo6ZZylY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730068AbgIIJfx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 05:35:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48934 "EHLO
+        id S1727085AbgIIJkI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 05:40:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726005AbgIIJfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 05:35:48 -0400
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB368C061573
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 02:35:48 -0700 (PDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id s62so959979vsc.7
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 02:35:48 -0700 (PDT)
+        with ESMTP id S1726036AbgIIJkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 05:40:06 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71438C061573
+        for <git@vger.kernel.org>; Wed,  9 Sep 2020 02:40:06 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id z4so2206202wrr.4
+        for <git@vger.kernel.org>; Wed, 09 Sep 2020 02:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wHJK/HA8irhDOOhyjpkFmniXORsOPvOfzG30W8RJ/Ds=;
-        b=gzs4O6tEWbeuLIiPwJOHNe2XLQVGInSh48jIcoBQmj/CVrGsJa7u91y08PfhlWUYB/
-         YyubR3wiOWCn7sy9H5EPNg6B3EnEuYnnPGr6BksngWwc/wuhBWdq4zNczNM5AzSK3g4a
-         FoBjzoqMJKXSnyBnzGObQzNqobS2eeRPRo/zl2DbodD8ZQhpI8lWkAwcq64n3RdyzXT7
-         Rvf2jpL6oOXbKAotm6l9ZDGK4i3l491lgtUjxlKvNDA2SOBFsAP370Pk0eU81aEcEXjR
-         mty/nsWk3xZUPV2/iS2uXxM5Ek0LILHQx70aZwLrmM4b19fxApGHmdXbYUR+MccujWtq
-         mFbQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=T7+IV0hVkKT7FI4C1Pe372LbEj52eqbfcnoWhjrV1eg=;
+        b=bo6ZZylYWcOM0ItGmDIFK94erv7agRV9UVAZHXgV9cgnYOtoMwgD2XfCU882QAaTjp
+         hIHlJ/LvRqCdFYUVs4MQCU/2Fhvpps0DkvhfYNFXxfX16ab6C9XzBKD8S3cprpgVDfCr
+         qAW1o4vX6ZjIi9075USOtpXbTktosetZ4K8ccbKYN9/hvQqZvxoY64Kj3KN+w1I3rC5m
+         liqQ2nhI0+t+xcKp4Hrjtt/GIoJKMB39h+EemRJrXITivJ/rTOaG/Un64IJPRpZTnXYZ
+         aUv/zoHBLsG6mWbVO11CvENrT/4okbzdx7kGjRZk1DjT9uoFRIv1PxXqIJc2qmBxXv9m
+         27rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wHJK/HA8irhDOOhyjpkFmniXORsOPvOfzG30W8RJ/Ds=;
-        b=n2BTST5G6EwKjJsekNyfZ6qgkcXqtgt+DygLCZrwlOrIPF5f9OZ4AZxozBts8SQYSm
-         /xu6l27MBlL9ky3PdfdcA/PRoH8co4lkwQn0clXyrwTg8ojEt6iNbAzialKR9oMKLuYb
-         u22yQC7uJ3GRif3h99FZEtP24U3bkUaxkfjU1amXiBoGZvOUwOy9E8av2kWIGuwMdakW
-         XvUGCkmJZOEo1c9m+WBmxhKCjZcdpcLdzzV6yhI2z+T0jA1SJnnk6mVkGNAOKbrHZAvu
-         Ixtf26gNu3TeGJI9DX0PCFOUEwW5q2zEIG4mAAuzgZxNmZKC2ll7mxxqnHE+tOAFnfz5
-         hFkw==
-X-Gm-Message-State: AOAM533qN+gFqGcGD4I+Fz2NMauqq3NY9Wp37ELZU89p+UuG9ya7jxKl
-        N+5C1i96w5g1sf8Dz1TZAFwhK1jzJrvQjT3dRsPaxg==
-X-Google-Smtp-Source: ABdhPJz34UGFcjcPPYs2uFDyZNxDWYrBDDX2LM0U84ZdzgGBa3EeDl/Ggz0BYIVBroOYm2YjQ+KF7yG9xMbvtxjTejk=
-X-Received: by 2002:a67:5d07:: with SMTP id r7mr1952686vsb.69.1599644145880;
- Wed, 09 Sep 2020 02:35:45 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=T7+IV0hVkKT7FI4C1Pe372LbEj52eqbfcnoWhjrV1eg=;
+        b=LK1Wvxdyxtth0YQtmlfsM413A9fTFL0yYjoTbbRNA1e5BaVge/QlS1c03WNHVrR3Sg
+         lKdB6XpSFP4KyPR8yrhM0EqGCpY9gSgtr3DWVYuDg38XTZNUArTUAJkX4VzF5OTRfMFx
+         GVi3IW3VoScQ/O/Sve9U8yli9QmfoexBPwykYKijdC0RVSn9meRWk1rcgVNPsFV+W1Jk
+         p7hzGI9w0T/J0AjqA4Mun4czue1QqRZ0FLDtBMUjxmRezEBqsGpZKduYsv9tRH5wSzPk
+         /mzZW4P3upgWwJnEjJ8sZcVD921WfP+Nc6clr3H6Lm7bO8MUAvP0S84Vl+3HPvxRN7gr
+         Lc8A==
+X-Gm-Message-State: AOAM5309ACQ3FFvFYaPS4bibz9o3L8HjareQerUGNz9surBhHPpI8iGy
+        HuGOZbWQCJGVfHkVyb110v/pFEXIvNs=
+X-Google-Smtp-Source: ABdhPJxZCW5qoYjEbl2/ZdvCJzHLAoRS9oDY8Qb4LMrc5yPX7JDxeFi+p/64enjqgQ12VIUNauEPmw==
+X-Received: by 2002:adf:f88b:: with SMTP id u11mr2812860wrp.376.1599644404936;
+        Wed, 09 Sep 2020 02:40:04 -0700 (PDT)
+Received: from [192.168.1.201] (151.252.189.80.dyn.plus.net. [80.189.252.151])
+        by smtp.googlemail.com with ESMTPSA id p9sm2922686wma.42.2020.09.09.02.40.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Sep 2020 02:40:04 -0700 (PDT)
+Subject: Re: git add intent-to-add then git add patch no longer allows edit
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "Raymond E. Pasco" <ray@ameretat.dev>, phillip.wood@dunelm.org.uk,
+        Thomas Sullivan <tom@msbit.com.au>, git@vger.kernel.org
+References: <C55J4YTSBL48.171K3FSJLUQOA@ziyou.local>
+ <1071d841-a030-30c2-e50e-6d97eb494fea@gmail.com>
+ <nycvar.QRO.7.76.6.2009040831570.56@tvgsbejvaqbjf.bet>
+ <xmqqd02y7rwj.fsf@gitster.c.googlers.com>
+ <a8099cb4-97e0-5596-72a1-10402762015b@gmail.com>
+ <xmqqsgbsz22t.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2009082151520.54@tvgsbejvaqbjf.bet>
+ <xmqq363sx71g.fsf@gitster.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <b0e42884-0d12-d78d-a34b-d6bc9c69ca5d@gmail.com>
+Date:   Wed, 9 Sep 2020 10:40:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <pull.712.git.1598628333959.gitgitgadget@gmail.com> <xmqqo8mfx4qd.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqo8mfx4qd.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 9 Sep 2020 11:35:34 +0200
-Message-ID: <CAFQ2z_OYn6cC5SCgv-49pa9VQ2ZEhbeZ9aGn4e-C7tsnQ=qWow@mail.gmail.com>
-Subject: Re: [PATCH] refs: move REF_LOG_ONLY to refs-internal.h
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq363sx71g.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 9, 2020 at 12:50 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Hmph, I am not necessarily sure about "need to duplicate" [*1*], but
-> I do agree with the patch text---the bit should not belong to a
-> single "files-backend" backend.
->
-> [Footnote]
->
-> *1* obviously, a better alternative, if possible, would be to let
->     the more generic layer do so without forcing the backends to
->     duplicate.  But even if such a change were possible and we
->     decide to avoid duplication, it does not make sense to have this
->     bit specifically defined for the files-backend and nobody else.
+On 08/09/2020 23:00, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>>> Like this?  If the more specific one is specifically set, we do not
+>>> look at experimental bit, but otherwise we use the built-in version.
+>>
+>> Looks fine to me,
+>> Dscho
+> 
+> Thanks, with the proposed log message this time...
+> 
+> -- >8 --
+> Subject: [PATCH] add -i: use the built-in version when feature.experimental is set
+> 
+> We have had parallel implementations of "add -i/-p" since 2.25 and
+> have been using them from various codepaths since 2.26 days, but
+> never made the built-in version the default.
+> 
+> We have found and fixed a handful of corner case bugs in the
+> built-in version, and it may be a good time to start switching over
+> the user base from the scripted version to the built-in version.
+> Let's enable the built-in version for those who opt into the
+> feature.experimental guinea-pig program to give wider exposure.
+> 
+> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/add.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/add.c b/builtin/add.c
+> index b36a99eb7c..26b6ced09e 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -192,9 +192,15 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+>  	int use_builtin_add_i =
+>  		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
+>  
+> -	if (use_builtin_add_i < 0)
+> -		git_config_get_bool("add.interactive.usebuiltin",
+> -				    &use_builtin_add_i);
+> +	if (use_builtin_add_i < 0) {
+> +		int experimental;
+> +		if (!git_config_get_bool("add.interactive.usebuiltin",
+> +					 &use_builtin_add_i))
+> +			; /* ok */
+> +		else if (!git_config_get_bool("feature.experimental", &experimental) &&
+> +			 experimental)
+> +			use_builtin_add_i = 1;
+> +	}
+>  
+>  	if (use_builtin_add_i == 1) {
+>  		enum add_p_mode mode;
+> 
 
-I'm not sure if it is possible. REFS_LOG_ONLY is used in the
-split_head_update() which is called from the middle of the
-files_transaction_prepare(). In particular, it can happen after a
-number of locks have already been taken. If this moves into the
-generic layer, the head split happens before the locks are taken,
-which could alter behavior.
+Looks good to me as well, Thanks
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Phillip
