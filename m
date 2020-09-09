@@ -2,67 +2,67 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-12.5 required=3.0 tests=BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E7ACC433E2
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03E77C43461
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64E842177B
+	by mail.kernel.org (Postfix) with ESMTP id BF3D32177B
 	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="R9MoF8pB"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="NnbZENiS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729692AbgIIAuU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 20:50:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52848 "EHLO
+        id S1729789AbgIIAuX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 20:50:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729717AbgIIAuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 20:50:01 -0400
+        with ESMTP id S1729719AbgIIAuC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 20:50:02 -0400
 Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41713C061573
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:49:59 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id j20so874239ybt.10
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:49:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2576C061756
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:50:00 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id a6so902793ybr.4
+        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=nhZYNCfrc7LBG0PG1IIHge72kRRdZrR0w3xUUNmrkO0=;
-        b=R9MoF8pBGF3FCk0DUyQKVgz/HnRa39m2fdOxRkUapW1BNk6vQ4lv9ZRCuHPnCh4Qdz
-         AcXzsEldW1/0OkwiWOKDFTPRp/lM6wKu957tC8Yy6kG0wMV6wW8p9oAHULSU9R+sIrR8
-         8SE/MoK67NqEZJyfKrS3CYRza2Av+l0591xVaLnRCEqTuv3X9ByqK3ucM2PtpR2tSO2Q
-         w9Z29QNBLs445HXqWmqVwS5Ze+4DcWGqp7VZqgNUHhTpJn6WLhK21kTrjozBJZ+pLzRk
-         /gQ4qYlJA9aFDKJP3CX8c/QSRwC3jhB1ulsZ0DTaIAgX8kGQQk5QIcP8gtt1a+dtWzi7
-         Wd/Q==
+        bh=MakHIgd9qKExhWlDsWfoivIcevisorK5QVctfKnPPMo=;
+        b=NnbZENiSLp+n0fgna7ArOxYnZuEA7w55zqqPqJquJQR2Ic57kGpTV6sAWOPWvCefzM
+         Y/nQ/msyCyO+qoSMekouoomI1Yk1oLitbrHJXtIs6IOR8s95IxKRaQeuczINWs11rdVB
+         YtUg8i8aiCs/JvETfMjchavR76SeRdoloWYffpOv1QVLgSEamMZxtG6V4Idg/Eh95P4v
+         deadnYBdA1uC0KhOmhnoHLxLJKXc/H5MJClMzoHtvXQlrs0XKOOgcj7lO7X2y86kbcmO
+         1WOBCGS0jL4djzij9kYGvbf0wx1xvFNAsXFwhdIqsZVCjDFVfTVUgJKaU30PYHiLpMBv
+         hemg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=nhZYNCfrc7LBG0PG1IIHge72kRRdZrR0w3xUUNmrkO0=;
-        b=txLMXXxA/Lak3tZjS+yeZycBhyo1cUmYBK3tDnv0L/OV2mK+CfYQSA9rSVs7YM3rNh
-         DR6OGBh21bnzYO51TCRiUWhaHL5RCk2p2GE7t8KhwOZ2c9IoUhsRf8OXTNaTAfFfhbbo
-         746aJXQpg7z9jhbE6ki0IOC+f1AnM//N6tYO4bLB0vjmv7F2aHIhbl6oxnY9RbC7oxan
-         BxAXuOwB0A3nHiCCKB5MLlIcyKdtoNxhX8FjRjt8iJ3dPWTV4i+OSBZBI/QFxW5j/pbV
-         uIqKIFqpIJKw4S6+ErW+WP8WxXGQifqbf4NuxOgrOuZMa2XX1qHa+4e8wtHuow0jpzbZ
-         cz8Q==
-X-Gm-Message-State: AOAM533OzoRz9dHCNzchazlnOzuTYwfp4ZSOIH3uThEfWTF0mqOeD742
-        +NfI3htxuKsALW0IaQ3dIYwduEpBrIHLe7vQgzlV9Wf6QCG6N4ihNT9khVF4uPqtYgpsjcIeDpL
-        Lo5Kt1FGsOKks8W/rUfBHg7zAZtdSNEDI1QLs4X/1it5WK2nCQGQMNs/BV/x+pgpLxFWVRYKgYQ
+        bh=MakHIgd9qKExhWlDsWfoivIcevisorK5QVctfKnPPMo=;
+        b=Hu5Z0QAXy83IflIaGlXnjt/dFXvmQ3jiJC6UFn6oFvhKyYwacVGNYueEnwyRpE7NLP
+         skvae2t5W5ZRtkhoE46aGZX1PrkeYVsGeKjxkBsRYmWr64s2D+MzdADdyXyxOt2qUP6L
+         93Y8VipTqhNtrgKFFSqmGOeuzyBUIk+NtSyPVPcOG78jFgKv722q5L+GJ0jzL39ByeZL
+         ffDrS7fPLEaiceddz4WWWPGe33jKiSnJciE9Jp27USvpi68JdbWQtr3rm1R8AL8o15Dv
+         FOVBjcnWS/hf6PksxuyfIHQuV1wJ1fFO/TSEw736Jh6DAJwZjEr58hfsTLamd+bGoIbY
+         cyzQ==
+X-Gm-Message-State: AOAM533/vBpW2NnkPeBL46jw85YA+Jtd95GTAWLbIfs8AOHhLX1jK7RH
+        2y2mz0Csn1fz6FQXGvgoQLNvZYvL5sNlYYjCeYc3vmX0At1QUwkoj/Zq/wHqxZ/9Ga4X6s+WNnW
+        dQOfFtvA/By8Z47jw1yEkwCu7/IPP0PZO6b9Wy4eboxRYo+gD6BV+eIfz4x1jNoBL3RrDd+asgw
         ==
-X-Google-Smtp-Source: ABdhPJwUKf3hD+TcsmSPmXi0Ect3wB56VFqkSie0w1Ht72Se/kkNcRy6QTlIMQsgWGYAvUw7gJk6MvcO0vtCITx3G3s=
+X-Google-Smtp-Source: ABdhPJyy5I9ov5/opipe6xRM7NKDuMuQLA/tzyHWjq72kH6EbHbRjyHjrsuRrj86Jw/23oWC3olsGGydKORJcOMnBcQ=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a25:2611:: with SMTP id
- m17mr14666ybm.442.1599612598351; Tue, 08 Sep 2020 17:49:58 -0700 (PDT)
-Date:   Tue,  8 Sep 2020 17:49:35 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a25:7608:: with SMTP id
+ r8mr2546031ybc.518.1599612600114; Tue, 08 Sep 2020 17:50:00 -0700 (PDT)
+Date:   Tue,  8 Sep 2020 17:49:36 -0700
 In-Reply-To: <20200909004939.1942347-1-emilyshaffer@google.com>
-Message-Id: <20200909004939.1942347-6-emilyshaffer@google.com>
+Message-Id: <20200909004939.1942347-7-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200909004939.1942347-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-Subject: [PATCH v4 5/9] parse-options: parse into strvec
+Subject: [PATCH v4 6/9] hook: add 'run' subcommand
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,92 +72,245 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-parse-options already knows how to read into a string_list, and it knows
-how to read into an strvec as a passthrough (that is, including the
-argument as well as its value). string_list and strvec serve similar
-purposes but are somewhat painful to convert between; so, let's teach
-parse-options to read values of string arguments directly into an
-strvec without preserving the argument name.
+In order to enable hooks to be run as an external process, by a
+standalone Git command, or by tools which wrap Git, provide an external
+means to run all configured hook commands for a given hook event.
 
-This is useful if collecting generic arguments to pass through to
-another command, for example, 'git hook run --arg "--quiet" --arg
-"--format=pretty" some-hook'. The resulting strvec would contain
-{ "--quiet", "--format=pretty" }.
+For now, the hook commands will in config order, in series. As alternate
+ordering or parallelism is supported in the future, we should add knobs
+to use those to the command line as well.
 
-The implementation is based on that of OPT_STRING_LIST.
+As with the legacy hook implementation, all stdout generated by hook
+commands is redirected to stderr. Piping from stdin is not yet
+supported.
+
+Legacy hooks (those present in $GITDIR/hooks) are run at the end of the
+execution list. For now, there is no way to disable them.
+
+Users may wish to provide hook commands like 'git config
+hook.pre-commit.command "~/linter.sh --pre-commit"'. To enable this, the
+contents of the 'hook.*.command' and 'hookcmd.*.command' strings are
+first split by space or quotes into an argv_array, then expanded with
+'expand_user_path()'.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/technical/api-parse-options.txt |  5 +++++
- parse-options-cb.c                            | 16 ++++++++++++++++
- parse-options.h                               |  4 ++++
- 3 files changed, 25 insertions(+)
+ builtin/hook.c                | 30 ++++++++++++++++++++
+ hook.c                        | 52 ++++++++++++++++++++++++++++++++---
+ hook.h                        |  3 ++
+ t/t1360-config-based-hooks.sh | 28 +++++++++++++++++++
+ 4 files changed, 109 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index 5a60bbfa7f..b4f1fc4a1a 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -173,6 +173,11 @@ There are some macros to easily define options:
- 	The string argument is stored as an element in `string_list`.
- 	Use of `--no-option` will clear the list of preceding values.
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 0d92124ca6..a8f8b03699 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -5,9 +5,11 @@
+ #include "hook.h"
+ #include "parse-options.h"
+ #include "strbuf.h"
++#include "strvec.h"
  
-+`OPT_ARGV_ARRAY(short, long, &struct argv_array, arg_str, description)`::
-+	Introduce an option with a string argument.
-+	The string argument is stored as an element in `argv_array`.
-+	Use of `--no-option` will clear the list of preceding values.
-+
- `OPT_INTEGER(short, long, &int_var, description)`::
- 	Introduce an option with integer argument.
- 	The integer is put into `int_var`.
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index d9d3b0819f..d2b8b7b98a 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -205,6 +205,22 @@ int parse_opt_string_list(const struct option *opt, const char *arg, int unset)
+ static const char * const builtin_hook_usage[] = {
+ 	N_("git hook list <hookname>"),
++	N_("git hook run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] <hookname>"),
+ 	NULL
+ };
+ 
+@@ -62,6 +64,32 @@ static int list(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
-+int parse_opt_strvec(const struct option *opt, const char *arg, int unset)
++static int run(int argc, const char **argv, const char *prefix)
 +{
-+	struct strvec *v = opt->value;
++	struct strbuf hookname = STRBUF_INIT;
++	struct strvec envs = STRVEC_INIT;
++	struct strvec args = STRVEC_INIT;
 +
-+	if (unset) {
-+		strvec_clear(v);
-+		return 0;
-+	}
++	struct option run_options[] = {
++		OPT_STRVEC('e', "env", &envs, N_("var"),
++			   N_("environment variables for hook to use")),
++		OPT_STRVEC('a', "arg", &args, N_("args"),
++			   N_("argument to pass to hook")),
++		OPT_END(),
++	};
 +
-+	if (!arg)
-+		return -1;
++	argc = parse_options(argc, argv, prefix, run_options,
++			     builtin_hook_usage, 0);
 +
-+	strvec_push(v, arg);
-+	return 0;
++	if (argc < 1)
++		usage_msg_opt(_("a hookname must be provided to operate on."),
++			      builtin_hook_usage, run_options);
++
++	strbuf_addstr(&hookname, argv[0]);
++
++	return run_hooks(envs.v, &hookname, &args);
 +}
 +
- int parse_opt_noop_cb(const struct option *opt, const char *arg, int unset)
+ int cmd_hook(int argc, const char **argv, const char *prefix)
  {
+ 	struct option builtin_hook_options[] = {
+@@ -72,6 +100,8 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!strcmp(argv[1], "list"))
+ 		return list(argc - 1, argv + 1, prefix);
++	if (!strcmp(argv[1], "run"))
++		return run(argc - 1, argv + 1, prefix);
+ 
+ 	usage_with_options(builtin_hook_usage, builtin_hook_options);
+ }
+diff --git a/hook.c b/hook.c
+index b006950eb8..0dab981681 100644
+--- a/hook.c
++++ b/hook.c
+@@ -2,6 +2,7 @@
+ 
+ #include "hook.h"
+ #include "config.h"
++#include "run-command.h"
+ 
+ /*
+  * NEEDSWORK: a stateful hook_head means we can't run two hook events in the
+@@ -21,13 +22,15 @@ void free_hook(struct hook *ptr)
+ 	}
+ }
+ 
+-static void emplace_hook(struct list_head *pos, const char *command)
++static void emplace_hook(struct list_head *pos, const char *command, int quoted)
+ {
+ 	struct hook *to_add = malloc(sizeof(struct hook));
+ 	to_add->origin = current_config_scope();
+ 	strbuf_init(&to_add->command, 0);
+-	/* even with use_shell, run_command() needs quotes */
+-	strbuf_addf(&to_add->command, "'%s'", command);
++	if (quoted)
++		strbuf_addf(&to_add->command, "'%s'", command);
++	else
++		strbuf_addstr(&to_add->command, command);
+ 
+ 	list_add_tail(&to_add->list, pos);
+ }
+@@ -78,7 +81,7 @@ static int hook_config_lookup(const char *key, const char *value, void *hook_key
+ 			if (0 == strcmp(hook->command.buf, command))
+ 				remove_hook(pos);
+ 		}
+-		emplace_hook(pos, command);
++		emplace_hook(pos, command, 0);
+ 	}
+ 
  	return 0;
-diff --git a/parse-options.h b/parse-options.h
-index 46af942093..177259488b 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -177,6 +177,9 @@ struct option {
- #define OPT_STRING_LIST(s, l, v, a, h) \
- 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
- 				      (h), 0, &parse_opt_string_list }
-+#define OPT_STRVEC(s, l, v, a, h) \
-+				    { OPTION_CALLBACK, (s), (l), (v), (a), \
-+				      (h), 0, &parse_opt_strvec }
- #define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG, &parse_opt_tertiary }
- #define OPT_EXPIRY_DATE(s, l, v, h) \
-@@ -296,6 +299,7 @@ int parse_opt_commits(const struct option *, const char *, int);
- int parse_opt_commit(const struct option *, const char *, int);
- int parse_opt_tertiary(const struct option *, const char *, int);
- int parse_opt_string_list(const struct option *, const char *, int);
-+int parse_opt_strvec(const struct option *, const char *, int);
- int parse_opt_noop_cb(const struct option *, const char *, int);
- enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
- 					   const struct option *,
+@@ -87,6 +90,7 @@ static int hook_config_lookup(const char *key, const char *value, void *hook_key
+ struct list_head* hook_list(const struct strbuf* hookname)
+ {
+ 	struct strbuf hook_key = STRBUF_INIT;
++	const char *legacy_hook_path = NULL;
+ 
+ 	if (!hookname)
+ 		return NULL;
+@@ -98,5 +102,45 @@ struct list_head* hook_list(const struct strbuf* hookname)
+ 
+ 	git_config(hook_config_lookup, (void*)hook_key.buf);
+ 
++	legacy_hook_path = find_hook(hookname->buf);
++
++	/* TODO: check hook.runHookDir */
++	if (legacy_hook_path)
++		emplace_hook(&hook_head, legacy_hook_path, 1);
++
+ 	return &hook_head;
+ }
++
++int run_hooks(const char *const *env, const struct strbuf *hookname,
++	      const struct strvec *args)
++{
++	struct list_head *to_run, *pos = NULL, *tmp = NULL;
++	int rc = 0;
++
++	to_run = hook_list(hookname);
++
++	list_for_each_safe(pos, tmp, to_run) {
++		struct child_process hook_proc = CHILD_PROCESS_INIT;
++		struct hook *hook = list_entry(pos, struct hook, list);
++
++		/* add command */
++		strvec_push(&hook_proc.args, hook->command.buf);
++
++		/*
++		 * add passed-in argv, without expanding - let the user get back
++		 * exactly what they put in
++		 */
++		if (args)
++			strvec_pushv(&hook_proc.args, args->v);
++
++		hook_proc.env = env;
++		hook_proc.no_stdin = 1;
++		hook_proc.stdout_to_stderr = 1;
++		hook_proc.trace2_hook_name = hook->command.buf;
++		hook_proc.use_shell = 1;
++
++		rc |= run_command(&hook_proc);
++	}
++
++	return rc;
++}
+diff --git a/hook.h b/hook.h
+index aaf6511cff..d020788a6b 100644
+--- a/hook.h
++++ b/hook.h
+@@ -1,6 +1,7 @@
+ #include "config.h"
+ #include "list.h"
+ #include "strbuf.h"
++#include "strvec.h"
+ 
+ struct hook
+ {
+@@ -10,6 +11,8 @@ struct hook
+ };
+ 
+ struct list_head* hook_list(const struct strbuf *hookname);
++int run_hooks(const char *const *env, const struct strbuf *hookname,
++	      const struct strvec *args);
+ 
+ void free_hook(struct hook *ptr);
+ void clear_hook_list(void);
+diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
+index ebf8f38d68..ee8114250d 100755
+--- a/t/t1360-config-based-hooks.sh
++++ b/t/t1360-config-based-hooks.sh
+@@ -84,4 +84,32 @@ test_expect_success 'git hook list --porcelain prints just the command' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'inline hook definitions execute oneliners' '
++	test_config hook.pre-commit.command "echo \"Hello World\"" &&
++
++	echo "Hello World" >expected &&
++
++	# hooks are run with stdout_to_stderr = 1
++	git hook run pre-commit 2>actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'inline hook definitions resolve paths' '
++	cat >~/sample-hook.sh <<-EOF &&
++	echo \"Sample Hook\"
++	EOF
++
++	test_when_finished "rm ~/sample-hook.sh" &&
++
++	chmod +x ~/sample-hook.sh &&
++
++	test_config hook.pre-commit.command "~/sample-hook.sh" &&
++
++	echo \"Sample Hook\" >expected &&
++
++	# hooks are run with stdout_to_stderr = 1
++	git hook run pre-commit 2>actual &&
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
