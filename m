@@ -2,148 +2,220 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F37C433E2
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 15:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7450FC43461
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 15:29:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DDDB21D7D
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 15:00:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 286A122274
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 15:29:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JFGCUj3b"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="fORIFwlm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730408AbgIIO7i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 10:59:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46448 "EHLO
+        id S1729663AbgIIP3U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 11:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730092AbgIIMWW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 08:22:22 -0400
+        with ESMTP id S1728442AbgIIP1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 11:27:24 -0400
 Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04C34C061573
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 05:14:56 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id q63so1371339qkf.3
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 05:14:56 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B9FC0619CB
+        for <git@vger.kernel.org>; Wed,  9 Sep 2020 08:23:00 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id q63so2002506qkf.3
+        for <git@vger.kernel.org>; Wed, 09 Sep 2020 08:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wECv5/S28QMHurqm7XK6ztbNZ6aztfBqHaEXNmMSoLY=;
-        b=JFGCUj3bNA4yn2i+kFdZdJPBYDiiSb4MGlLpZ2n5q6Z9K/zut30R6Nk2iMtpl3Rnd7
-         ONY6ErCwYHrT7Qp4zrUoE4jNXQZYcKPTz4LN1UQ1xMxUtcwX3x6ALvMXPW9FpG6CngQ5
-         Q0Q0aUaVbgxt0TwXij+q6O108YRF2YMIF7HV6Oz8ZDkEQ5Afku4U2R+W/utb3BFp7NSE
-         7mYVlysW9Ob3Ruae2lUIgIbntmuM/IWKgEwfmP8mItsBhnQwPfSVGxOpajqJoWB7OSCp
-         fWcA50synVaeFE7Tx0E8RRmqpLYYW9ec//AcLnZzl+Pcv4CK4I01tiC1cGDyxf7FDdma
-         /diw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ye5G3SmcAbeoLvNM8waHHba3R+gSvPixSydParYIhyg=;
+        b=fORIFwlmqglP9fObDFglm1FudL/XWUGofxmVlAQVS4zSKKzsOeBVuXimsXJujmwGdg
+         ISQJZNrO3KviXoSJFdX3ICcSNhvPdf1mmvpiJfhosAGkEZJlJyXWhMSw76pnrX6y+WVR
+         PHiQwqYT8qt0cvKqwBWr9JMiLn2mc+Gt/IISjOSc6T/KkauYB5YWDRquVRCyOTNWzoVF
+         5/oFGOsfjSXEpAkuzsJ8/3nZbMDta86ZGxAGfFyBvvFLbxUC7UZaoanZ1oZwiydYDQ1j
+         yeuvCKdatWE/XL0/lPNEWRp4CI483bsjU9rgUe1PjlKbCwX77hInD5zm6KtBt88d668k
+         1uHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wECv5/S28QMHurqm7XK6ztbNZ6aztfBqHaEXNmMSoLY=;
-        b=B7541eMCSCUEUUs4eflckzK+m5XQBhQD50BYDClFzYf874y586Fzq/HE6wcQGOJGj6
-         FXlamH+VL1BePxLLSnzhNHorFYG+/nGP3qInn1X9Pshho+PwQRhfJornNjwjI2Dm3mH2
-         yEebDvNKeDMPKAQNR3XKeayGJ2yyJqUUwuxIVFEzN/WM9MTg0ZMjXoE0xyxD0+U4zVnm
-         Lm62oSs16gJGJRJiIV/jsP8CgPZAdoR9BeVwW+dOaVwXiH26LAgMyo0O6K+8a5BdbYTj
-         oTUKaQS2VmdUAcgiC6rMGt3Gvbu4MMCrPHwYCG4ie499q8a3o/EuFuaTwXEo8M7Moym7
-         wvlQ==
-X-Gm-Message-State: AOAM530nG8q1DkH8tmeUmxYGxUmF6xCp/az4mBPhsmw4hIAoycIvBa3R
-        J+ZGGjJHwnFx5DIKVo3eaf4=
-X-Google-Smtp-Source: ABdhPJwmvUTmaUyc1YOwhZOhZMb3gwYLLZH2szn3PZvwjbc/YZe5ohFmT0gTHZF10Oy2pRnNcxiKcw==
-X-Received: by 2002:a37:65c8:: with SMTP id z191mr3102759qkb.161.1599653695808;
-        Wed, 09 Sep 2020 05:14:55 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:84a2:b0cb:7621:10c7? ([2600:1700:e72:80a0:84a2:b0cb:7621:10c7])
-        by smtp.gmail.com with ESMTPSA id p63sm2380241qkc.4.2020.09.09.05.14.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2020 05:14:55 -0700 (PDT)
-Subject: Re: [PATCH 2/7] maintenance: add --schedule option and config
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.724.git.1599234126.gitgitgadget@gmail.com>
- <1783e80b8d3b8361d1d62947a49ba584685dacc4.1599234126.git.gitgitgadget@gmail.com>
- <20200908130738.GB25593@danh.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f1d8e155-2f9e-b0ea-6845-4c0e0d7c94d6@gmail.com>
-Date:   Wed, 9 Sep 2020 08:14:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
- Thunderbird/81.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ye5G3SmcAbeoLvNM8waHHba3R+gSvPixSydParYIhyg=;
+        b=WBNjqK3nqyivB7gWFN9AEZHhSJSfDp7Jc7k+UKkv/0vqv8qgGsSm/RkxDZvsmSGt6q
+         aRlHRpazM3JWLEN4c+rH5Zi4LVpACMi/3fJCclLvJJjxGQyZSc++Z84USXOq+QM2W24t
+         hqbE4cF3/T38/xVjkK38JUw60T/ldIjv/CJFCCKtwOPMmU4jX5uU3FFMfPGkVEZObVM9
+         Jjat/UCj4LOV0Ao1cGm6RHYGWZ8x7p5K/udp8RtiXl1fYKibQstELOzesQfr4Vqyxrdb
+         ju2+ERPsWn7O6dgDyRMAdQAwlviQ5CJhUiqLnNzX9+mMXqWl71U0dXwfSESPNj5zAl8l
+         PWaQ==
+X-Gm-Message-State: AOAM5306BhlCLqjJLpsEZD2pD91oW9R3nYKY0VZY8GDp0BCrbpHlV3ot
+        uKbHn1mh7UQzG9el/0qVw+HIC8og+yFAXLxA
+X-Google-Smtp-Source: ABdhPJxGlx2oe3AH1K8Th2cP1nzh/lVuHXFvMPH6wBO8n+SfJXhNb46ZdJDrzGuw6A0h0tEaV1KHpw==
+X-Received: by 2002:a37:6248:: with SMTP id w69mr3567104qkb.448.1599664979197;
+        Wed, 09 Sep 2020 08:22:59 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:10e2:cf5e:922:2af0])
+        by smtp.gmail.com with ESMTPSA id j1sm3371152qtk.91.2020.09.09.08.22.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2020 08:22:58 -0700 (PDT)
+Date:   Wed, 9 Sep 2020 11:22:56 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
+        szeder.dev@gmail.com
+Subject: [PATCH 03/12] commit-graph: pass a 'struct repository *' in more
+ places
+Message-ID: <0817b0f618700ced34af6c597eee7312993b0d1f.1599664389.git.me@ttaylorr.com>
+References: <cover.1599664389.git.me@ttaylorr.com>
 MIME-Version: 1.0
-In-Reply-To: <20200908130738.GB25593@danh.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <cover.1599664389.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/8/2020 9:07 AM, Đoàn Trần Công Danh wrote:
-> On 2020-09-04 15:42:01+0000, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> A user may want to run certain maintenance tasks based on frequency, not
->> conditions given in the repository. For example, the user may want to
-> 
-> Hm, sorry but I couldn't decipher "not conditions" here. :|
+In a future commit, some commit-graph internals will want access to
+'r->settings', but we only have the 'struct object_directory *'
+corresponding to that repository.
 
-Awkward, yes. I intended to contrast frequency-based maintenance with
-threshold-based maintenance (git gc --auto).
+Add an additional parameter to pass the repository around in more
+places.
 
->> perform a 'prefetch' task every hour, or 'gc' task every day. To assist,
-> 
-> I think it's better to say: "To assist those users", at least it's
-> easier to read for non-native English like me.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/commit-graph.c |  2 +-
+ commit-graph.c         | 17 ++++++++++-------
+ commit-graph.h         |  6 ++++--
+ fuzz-commit-graph.c    |  5 +++--
+ 4 files changed, 18 insertions(+), 12 deletions(-)
 
-Thanks.
-
->> update the 'git maintenance run' command to include a
->> '--schedule=<frequency>' option. The allowed frequencies are 'hourly',
-> 
-> So, we have "--schedule=" here, ...
-> 
->> 'daily', and 'weekly'. These values are also allowed in a new config
->> value 'maintenance.<task>.schedule'.
->>
->> The 'git maintenance run --schedule=<frequency>' checks the '*.schedule'
-> 
-> and here, ...
-> 
->> config value for each enabled task to see if the configured frequency is
->> at least as frequent as the frequency from the '--schedule' argument. We
->> use the following order, for full clarity:
->>
->> 	'hourly' > 'daily' > 'weekly'
->>
->> Use new 'enum schedule_priority' to track these values numerically.
->>
->> The following cron table would run the scheduled tasks with the correct
->> frequencies:
->>
->>   0 1-23 * * *    git -C <repo> maintenance run --scheduled=hourly
->>   0 0    * * 1-6  git -C <repo> maintenance run --scheduled=daily
->>   0 0    * * 0    git -C <repo> maintenance run --scheduled=weekly
-> 
-> but it's spelt with "--scheduled=", here and below, mispell, I guess.> 
-> Reading the patch, it looks like "--scheduled=" is mispelt.
-
-Yes, a previous version used "scheduled" and I didn't fix it here.
-
->> @@ -1250,8 +1289,10 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
->>  			continue;
->>  
->>  		if (opts->auto_flag &&
->> -		    (!tasks[i].auto_condition ||
->> -		     !tasks[i].auto_condition()))
->> +		    (!tasks[i].auto_condition || !tasks[i].auto_condition()))
->> +			continue;
-> 
-> This line only add unnecessary noise to this patch.
-
-Thanks,
--Stolee
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 523501f217..ba5584463f 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -106,7 +106,7 @@ static int graph_verify(int argc, const char **argv)
+ 	FREE_AND_NULL(graph_name);
  
+ 	if (open_ok)
+-		graph = load_commit_graph_one_fd_st(fd, &st, odb);
++		graph = load_commit_graph_one_fd_st(the_repository, fd, &st, odb);
+ 	else
+ 		graph = read_commit_graph_one(the_repository, odb);
+ 
+diff --git a/commit-graph.c b/commit-graph.c
+index 6a36ed0b06..72a838bd00 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -231,7 +231,8 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
+ 	return 1;
+ }
+ 
+-struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
++struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
++						 int fd, struct stat *st,
+ 						 struct object_directory *odb)
+ {
+ 	void *graph_map;
+@@ -247,7 +248,7 @@ struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
+ 	}
+ 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+-	ret = parse_commit_graph(graph_map, graph_size);
++	ret = parse_commit_graph(r, graph_map, graph_size);
+ 
+ 	if (ret)
+ 		ret->odb = odb;
+@@ -287,7 +288,8 @@ static int verify_commit_graph_lite(struct commit_graph *g)
+ 	return 0;
+ }
+ 
+-struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size)
++struct commit_graph *parse_commit_graph(struct repository *r,
++					void *graph_map, size_t graph_size)
+ {
+ 	const unsigned char *data, *chunk_lookup;
+ 	uint32_t i;
+@@ -452,7 +454,8 @@ struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size)
+ 	return NULL;
+ }
+ 
+-static struct commit_graph *load_commit_graph_one(const char *graph_file,
++static struct commit_graph *load_commit_graph_one(struct repository *r,
++						  const char *graph_file,
+ 						  struct object_directory *odb)
+ {
+ 
+@@ -464,7 +467,7 @@ static struct commit_graph *load_commit_graph_one(const char *graph_file,
+ 	if (!open_ok)
+ 		return NULL;
+ 
+-	g = load_commit_graph_one_fd_st(fd, &st, odb);
++	g = load_commit_graph_one_fd_st(r, fd, &st, odb);
+ 
+ 	if (g)
+ 		g->filename = xstrdup(graph_file);
+@@ -476,7 +479,7 @@ static struct commit_graph *load_commit_graph_v1(struct repository *r,
+ 						 struct object_directory *odb)
+ {
+ 	char *graph_name = get_commit_graph_filename(odb);
+-	struct commit_graph *g = load_commit_graph_one(graph_name, odb);
++	struct commit_graph *g = load_commit_graph_one(r, graph_name, odb);
+ 	free(graph_name);
+ 
+ 	return g;
+@@ -557,7 +560,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 		valid = 0;
+ 		for (odb = r->objects->odb; odb; odb = odb->next) {
+ 			char *graph_name = get_split_graph_filename(odb, line.buf);
+-			struct commit_graph *g = load_commit_graph_one(graph_name, odb);
++			struct commit_graph *g = load_commit_graph_one(r, graph_name, odb);
+ 
+ 			free(graph_name);
+ 
+diff --git a/commit-graph.h b/commit-graph.h
+index 0677dd1031..d9acb22bac 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -75,11 +75,13 @@ struct commit_graph {
+ 	struct bloom_filter_settings *bloom_filter_settings;
+ };
+ 
+-struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
++struct commit_graph *load_commit_graph_one_fd_st(struct repository *r,
++						 int fd, struct stat *st,
+ 						 struct object_directory *odb);
+ struct commit_graph *read_commit_graph_one(struct repository *r,
+ 					   struct object_directory *odb);
+-struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size);
++struct commit_graph *parse_commit_graph(struct repository *r,
++					void *graph_map, size_t graph_size);
+ 
+ /*
+  * Return 1 if and only if the repository has a commit-graph
+diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
+index 430817214d..e7cf6d5b0f 100644
+--- a/fuzz-commit-graph.c
++++ b/fuzz-commit-graph.c
+@@ -1,7 +1,8 @@
+ #include "commit-graph.h"
+ #include "repository.h"
+ 
+-struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size);
++struct commit_graph *parse_commit_graph(struct repository *r,
++					void *graph_map, size_t graph_size);
+ 
+ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+ 
+@@ -10,7 +11,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+ 	struct commit_graph *g;
+ 
+ 	initialize_the_repository();
+-	g = parse_commit_graph((void *)data, size);
++	g = parse_commit_graph(the_repository, (void *)data, size);
+ 	repo_clear(the_repository);
+ 	free_commit_graph(g);
+ 
+-- 
+2.28.0.462.g4ff11cec37
+
