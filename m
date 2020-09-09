@@ -2,86 +2,138 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1469EC10DAA
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 18:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54D12C43461
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 18:36:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C90D0208FE
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 18:33:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AF5721D6C
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 18:36:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XEK0RHZC"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h+xFWrzg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726738AbgIISdj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 14:33:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbgIISdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 14:33:37 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35F6C061573
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 11:33:36 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id o5so3375684qke.12
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 11:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=gaB5PhimwU+z31/0b0NozEmimmGSK5JPb08M0RZu7Ro=;
-        b=XEK0RHZCXOCeBBrcTMZrLLg3S7Ub0FM5aIuaf2hKHz5XPLCnHbatYzel6Fcop8Cic1
-         eeslAFSn8Zb/aGwUxpFamd8z4ISH+ZolUAh7rSVdK9NQG18UUp4qIyPKOjvo9Q5/C80L
-         IDl5EgjiSVofb7h4ggAueW02e6CkW8/YMn3Txu+klFXEHswDRXjvH9pj///qJcjUi3PA
-         EmJuOwBKGwOgErKV6z1I4/XASm46YHlU/Ci9wCSu9FN1JKBTuk4v1aSCUV+RUeRm5fYM
-         tKm0lpLOH34vO69GwclcMgsrjL62K3CMU4XMyVyKep6haL3q2pnGjWt+rCr9YoHdbQm4
-         pNuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gaB5PhimwU+z31/0b0NozEmimmGSK5JPb08M0RZu7Ro=;
-        b=YdPqQnn9GmwrM1ji7LWF5VNczWttGIMAjYbX/tBPi6WoSgBVKBDdDILks7HsJDtYVN
-         f4lo510KLuirjFKXkBtQB7GlgBX3eSunIE0AjpZ0pIs7iF0VCdnBEglwuupRF0KBVysI
-         0rVHifRjmHe1Q7E3X6YM7Pa36TYqU/ZVoHUkWXRyRrclOQxBVJvDxeCCT8/ZKVnCW3M6
-         1kYfjVGKWAEE4/1cxeXaic0AozI1q+Ma4Vrt125dXE/u08JbvCKEB1p54+Ws0bUOsZ1M
-         L0QWEmve1zX6zp8ur3nMRiV61CMLmf3Cd1pnXAHuE+fhuYGB8OYCKWXRjVA1yMdeIXgX
-         PskQ==
-X-Gm-Message-State: AOAM533oCGvWKLMesZi2+G43+cVMFc8YLlebovkqrTPtGxRBi/JNSXCp
-        F6s1A2bqHOThD5yrxsOkBO0=
-X-Google-Smtp-Source: ABdhPJy5m5tMMjdmOumNmULGgiKiGc2WjJyxDtVMEVA8TbLV2CSxFWynbr5sh2WfUu4cPCGfobHAbQ==
-X-Received: by 2002:a37:a00d:: with SMTP id j13mr4623341qke.349.1599676415640;
-        Wed, 09 Sep 2020 11:33:35 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:495f:b5b2:ee15:2605? ([2600:1700:e72:80a0:495f:b5b2:ee15:2605])
-        by smtp.gmail.com with ESMTPSA id k63sm3470865qkf.33.2020.09.09.11.33.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2020 11:33:35 -0700 (PDT)
-Subject: Re: [PATCH v3] blame.c: replace instance of !oidcmp for oideq
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>,
+        id S1726426AbgIISgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 14:36:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58291 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726293AbgIISgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 14:36:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E8126F6CC7;
+        Wed,  9 Sep 2020 14:36:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=M9dqTy/BwnSdB5Evzs6PBYY/SKc=; b=h+xFWr
+        zgjIRt+k+YWy0vEN9dzR4fqrgjl4uAdiiVzjAhIhUSZaWtyhOR8o+PILzutCR7Oo
+        yrdLL0VsXXG1VAhb3Tr4de9MHdQiD0IHqyovR7QBNQrZkBM/VI39uzPWw2aTVLQs
+        75naZSqY84x3qU+iQcHIZDj2BH3fWQhXyy4NQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RU03P2vFGJrCVxHCkecQDLywn0glsYdb
+        OQ6T+cv0K5dXWBvU999CUiyXz6we6qSMBNARloBC+ZtTkHfaUx7NAAyxBw0ey1+v
+        pt07OLpkltppO6h47+Bn4A7vUbZ/wIVdpsgDc/xo1lQuL17XkZfkJomq3q847nVX
+        V/68ThR8tn8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D08E2F6CC4;
+        Wed,  9 Sep 2020 14:36:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0E0F8F6CC2;
+        Wed,  9 Sep 2020 14:35:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>,
         dstolee@microsoft.com, git@vger.kernel.org, peff@peff.net
-References: <20200909131550.826462-1-eantoranz@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1c9dd960-b15e-b942-fc35-c1ae82b7549f@gmail.com>
-Date:   Wed, 9 Sep 2020 14:33:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
- Thunderbird/81.0
+Subject: Re: [PATCH v2] blame.c: replace instance of !oidcmp for oideq
+References: <20200908211053.807194-1-eantoranz@gmail.com>
+        <6b84f112-7e3f-3a78-3766-033fcf494464@gmail.com>
+Date:   Wed, 09 Sep 2020 11:35:56 -0700
+In-Reply-To: <6b84f112-7e3f-3a78-3766-033fcf494464@gmail.com> (Derrick
+        Stolee's message of "Wed, 9 Sep 2020 08:39:56 -0400")
+Message-ID: <xmqqmu1yvlv7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200909131550.826462-1-eantoranz@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D7FE76E-F2CB-11EA-91A0-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/9/2020 9:15 AM, Edmundo Carmona Antoranz wrote:
+Derrick Stolee <stolee@gmail.com> writes:
+
+> On 9/8/2020 5:10 PM, Edmundo Carmona Antoranz wrote:
+>> 0906ac2b54b introduced a call to oidcmp() that should be
+>> replaced by oideq() (the latter introduced in 14438c4).
+>
+> Short-OIDs on their own are not enough. Please use the
+> format "abbreviated hash (subject, date)" as mentioned
+> in my earlier reply:
+>
 > 0906ac2b (blame: use changed-path Bloom filters, 2020-04-16)
-> introduced a call to oidcmp() that should be replaced with oideq()
-> defined in 14438c4 (introduce hasheq() and oideq(), 2018-08-28)
+>
+> 14438c4 (introduce hasheq() and oideq(), 2018-08-28)
+>
+> See Documentation/SubmittingPatches [1] for more information
+> on this.
+>
+> [1] https://github.com/git/git/blob/3a238e539bcdfe3f9eb5010fd218640c1b499f7a/Documentation/SubmittingPatches#L144-L165
 
-LGTM. Thanks.
+Thanks for saving me from having to say it ;-)
 
--Stolee
+I've reworded these while queuing.  See below.
+
+Note that I toned "should be replaced" down to "should have been".
+
+I'd consider this kind of change falls into the "Yes, it would have
+been better if it were written like so from the beginning, but it is
+dubious that it is worth the engineering time and effort to go back
+and change it spending reviewers' bandwidth" category.  I'll still
+take this patch as it is a contribution from a new contributor,
+though (it's like reviewing and queuing microproject---the cost in
+such cases is not attributed to code churning alone, but it also
+benefits onboarding).
+
+Thanks.
+
+-- >8 --
+From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Date: Tue, 8 Sep 2020 15:10:53 -0600
+Subject: [PATCH] blame.c: replace instance of !oidcmp for oideq
+
+0906ac2b (blame: use changed-path Bloom filters, 2020-04-16)
+introduced a call to oidcmp() that should have been oideq(), which
+was introduced in 14438c44 (introduce hasheq() and oideq(),
+2018-08-28).
+
+Signed-off-by: Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ blame.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/blame.c b/blame.c
+index da7e28800e..a8abe86ae4 100644
+--- a/blame.c
++++ b/blame.c
+@@ -1352,8 +1352,8 @@ static struct blame_origin *find_origin(struct repository *r,
+ 	else {
+ 		int compute_diff = 1;
+ 		if (origin->commit->parents &&
+-		    !oidcmp(&parent->object.oid,
+-			    &origin->commit->parents->item->object.oid))
++		    oideq(&parent->object.oid,
++			  &origin->commit->parents->item->object.oid))
+ 			compute_diff = maybe_changed_path(r, origin, bd);
+ 
+ 		if (compute_diff)
+-- 
+2.28.0-558-g7a0184fd7b
+
