@@ -2,307 +2,201 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A8EC433E2
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 20:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B8D4C43461
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 20:43:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4391E2064B
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 20:43:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C8E721D43
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 20:43:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vFphdfYr"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="O4GjTt07"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbgIIUnX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 16:43:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55892 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726426AbgIIUnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 16:43:22 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA3CA8B89C;
-        Wed,  9 Sep 2020 16:43:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dSvGywLKCEod
-        wi4zoqwdH4elAjg=; b=vFphdfYrXCAqRInXDbOooMrfdjCmp5fLUR/rkPMDNIiQ
-        lBTE98E0H7kbSZnLi7jJXTyEiks8h5cW7PUIVKMqu4kj3TNNRKYHYNCpS6nArzJ/
-        wM/tsBFY2VDejzN+MQO9LCj4LTkCPb9JlIGMuwlUSLzY0+gN5hAmHjkMpFJv+zw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nkjM3w
-        Zhu8XdbxN7pFuCx1ImobzUBFkICa8FPYM85yLOuvZQ2rZJPZj14/ev3fB96J+rO4
-        k3DwMzRlQphMXDAK7pl9tYjgSZh2cwXv57rjCLfSCljFntj0Fa5ygmNByJ0m4nX3
-        +jx02yBMbWMdN8i4Bl4FMX0NNvuXrablU2SWI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1B6F8B89B;
-        Wed,  9 Sep 2020 16:43:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3A6CF8B89A;
-        Wed,  9 Sep 2020 16:43:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lin Sun <lin.sun@zoom.us>
-Cc:     sunlin via GitGitGadget <gitgitgadget@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        sunlin <sunlin7@yahoo.com>
-Subject: Re: [PATCH v17] Support auto-merge for meld to follow the vim-diff behavior
-References: <pull.781.v16.git.git.1594544903477.gitgitgadget@gmail.com>
-        <pull.781.v17.git.git.1594596738929.gitgitgadget@gmail.com>
-        <xmqqv9idn2yr.fsf@gitster.c.googlers.com>
-        <xmqq4koe8rav.fsf@gitster.c.googlers.com>
-        <C35AC799-B4F6-4A5E-92FA-21065310B379@hxcore.ol>
-        <CAKu6+JEctLopX2O2MmPNnSxqMPXjAqeXjpMPdrtY0J8AWd9L_A@mail.gmail.com>
-Date:   Wed, 09 Sep 2020 13:43:14 -0700
-In-Reply-To: <CAKu6+JEctLopX2O2MmPNnSxqMPXjAqeXjpMPdrtY0J8AWd9L_A@mail.gmail.com>
-        (Lin Sun's message of "Wed, 9 Sep 2020 09:31:38 +0800")
-Message-ID: <xmqqo8meu1el.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729296AbgIIUnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 16:43:50 -0400
+Received: from mout.web.de ([212.227.15.14]:45793 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726440AbgIIUnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 16:43:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1599684219;
+        bh=VkFcADl7SUeh4J8Ujn9U9eZ56kt10loFNm0pmUzEzI4=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=O4GjTt0705z4bmBya6XvNA0CRoj/QZu9z66hDBTzIWgJw83o0h+hz9SbyKLpEep/V
+         xmOk4AA5zGAHouhCmX584VC+0c1AytyuheAkKG8Me5jiGp5pnnLojrVHaZJCIvNWXm
+         1+ZdvV0tzFJ87TAq4fiHhmrWFeVfvtUgQ0zYEjv8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N7xeZ-1kcXQf3z8d-014tGi; Wed, 09
+ Sep 2020 22:43:39 +0200
+Subject: Re: [PATCH] blame.c: replace instance of !oidcmp for oideq
+To:     Jeff King <peff@peff.net>,
+        Edmundo Carmona Antoranz <eantoranz@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, whydoubt@gmail.com,
+        Git List <git@vger.kernel.org>
+References: <20200907171639.766547-1-eantoranz@gmail.com>
+ <ce94b41f-e829-d7ca-a5f5-e41748caea81@gmail.com>
+ <20200909091149.GB2496536@coredump.intra.peff.net>
+ <CAOc6etZS3mGxsPPh25XFi2-qR0TNzq0Gx1NrydgQwmHbsjxejA@mail.gmail.com>
+ <20200909191345.GA2511547@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <84ce64d0-996a-33f6-53be-e47120da81a7@web.de>
+Date:   Wed, 9 Sep 2020 22:43:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
+In-Reply-To: <20200909191345.GA2511547@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 159D6CE2-F2DD-11EA-9F34-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:GgDVypMWkP+NkzPgD2Ggba3CLzPU4eYrZZIWZWn4K/tLjKVJrOC
+ PtDyzJVvjFyczHN0xzULEXqcUrNk/GAaJhcrZGIg8Vrw6loapkbpuIVHA01xoaIEHWUk/C6
+ C+16Tmy3TT90QxykmIrEax0qgpsjKujkd1qBiHWBo+UQ2RtmVJG8DDMsLiLP8UtWzToWxYL
+ fzrXqjKswqYiq//K9pEHw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:f4X5Bcw0J3g=:6ilCr3DMCfJllkkSVOV74C
+ gz4aoNocJBVfniGzGQIYbLWqISgWcpeI+tYausAa+Qmyt1hd0Ra04XqOEN1TB1Z4DU5A8OMXC
+ MTuFmWYzczzV+Tiz++xNtbqG2Jmoc+IDdtvKmnuxhOVvO5HEN9Yp9daGwpdk8UG31CnW+Hl2p
+ 03hoTGIkrHKjpbsglK5iplBylEuvkZklBDHXCrXn/we7GDi22XGdBNoNOZoIj8Bh4QD2H8LLa
+ zwnZgPoTZBb+j/l5AW/sTbJb387xuw2+VhK+0uOJdYlZcy1VWxcGX6KN9UchuxzBWnlOWKTCp
+ L8cOaS3dmM42ksJhyUgsLcKHm+xJwTf+ESG0wSgYWJx0IaAjcWcPmVutSDH5UxqtGWkgkWhsN
+ lbFpjRcoRwlGuPz4OqfxqkK4HvWaje9UfR/9h2LRhyD8ktglXY8W8rt9KQyLQy6CE/1lJ8Y+Q
+ YbSMsVAweHv12VO7r0AfDu0s+WXbsAf0cwuWrfzXnTf8/5VOKul0e7cROL+LQx8kH0gubGbbs
+ XN8WT7slc9EsFHQ1GJWmEZXbm1sgdk6aCXyTKzrAQTrfEwGICSTokZxDImGrgYmKvCRTgV+zk
+ qWNG3tsDAvmbmIZvm6f52U4nGy7N39jXKhXuYwWrxmzZOwP12a0wtihSVmcA1Hofa6OvwYKp9
+ htSnKWhHNPrsG9Nws2E37239WLQ0KyWsq/dNcm/luq23D294v41PYW3c+IXkWyhaid+jzIFST
+ 6JCC2LRa4/KWXLbJsLR4x58cckaLT0D/VSoo4a+kf9w/5unzgZy4PLcNXhwgA08Ffmbcg1QNx
+ ViwuN7/JOLnuf93cursb+BQc9l5KxgeMEhAQv0LaBd/wSuDJXo41mD7OfsLSyyg3iR8U0P334
+ Iava1m02b6VRmxz3JKfGCwDd/HuhQnyLVMeovCS2sU+JzW78AN6ptBoAv08+SorJV5Kbu/p/0
+ SRB5xa/e+DgxefGkM0yFoQS+55LJEeaEn2dOfFgqQbQPOKDSgoDt4liwXCeI8h/Vf50SwJUe/
+ hr8hU54bBkFDLT02Z0U6ZOtdUzaI6fGG7ugpSOjKzBujpPQv3MVJUDbkQlfJmk+7e1jsQLRRJ
+ Yf7XvcvK4viyAAo/EVb+bS10dAZOj02JwBb9Y0ABPJnxucus2QTBfi46oH0D2Q3hVO+7mwA0i
+ CNkT0h81laFD4eHkDOrmSD2ZycuyBAWbVZruBJo6UWPguJUB/BExQKf+4JA3/RW9XouVEiaAj
+ gPHoe0tOyzeAI9Gz6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.  Will replace.
+Am 09.09.20 um 21:13 schrieb Jeff King:
+> On Wed, Sep 09, 2020 at 08:00:57AM -0600, Edmundo Carmona Antoranz wrote=
+:
+>
+>> On Wed, Sep 9, 2020 at 3:11 AM Jeff King <peff@peff.net> wrote:
+>>>
+>>> Yeah, it looks obviously correct. I am puzzled why "make coccicheck"
+>>> doesn't find this, though. +cc Ren=C3=A9, as my favorite target for
+>>> coccinelle nerd-snipes. :)
+>>>
+>>
+>> I added this to contrib/coccinelle/object_id.cocci in v2.27.0
+>>
+>> @@
+>> identifier f !=3D oideq;
+>> expression E1, E2;
+>> @@
+>> - !oidcmp(E1, E2)
+>> + oideq(E1, E2)
+>>
+>> And it found it:
+>
+> Interesting. The existing rule is:
+>
+>   struct object_id *OIDPTR1;
+>   struct object_id *OIDPTR2;
+>   @@
+>   - oidcmp(OIDPTR1, OIDPTR2) =3D=3D 0
+>   + oideq(OIDPTR1, OIDPTR2)
+>
+> The "=3D=3D 0" part looks like it might be significant, but it's not.
+> Coccinelle knows that "!foo" is the same as "foo =3D=3D 0" (and you can
+> confirm by tweaking it).
 
-For those who are watching from the sideline, here is the patch inline.
+It is significant in the sense that "x =3D=3D 0" in the semantic patch als=
+o
+matches "!x" in the code, but "!x" in the semantic patch doesn't match
+"x =3D=3D 0".  That's because coccinelle has this isomorphism built in
+(in /usr/lib/coccinelle/standard.iso on my machine):
 
--- >8 --
-From: Lin Sun <lin.sun@zoom.us>
-Date: Thu, 7 May 2020 07:31:14 +0800
-Subject: [PATCH] Support auto-merge for meld to follow the vim-diff behav=
-ior
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+Expression
+@ not_int1 @
+int X;
+@@
+ !X =3D> X =3D=3D 0
 
-Make the mergetool used with "meld" backend behave similarly to "vimdiff"=
- by
-telling it to auto-merge non-conflicting parts and highlight the conflict=
-ing
-parts when `mergetool.meld.useAutoMerge` is configured with `true`, or `a=
-uto`
-for detecting the `--auto-merge` option automatically.
+It's a one-way isomorphism (i.e. a rule that says that certain
+expressions have the same meaning).  So we should use "x =3D=3D 0" over "!=
+x"
+in semantic patches to cover both cases.
 
-Helped-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail.c=
-om>
-Helped-by: David Aguilar <davvid@gmail.com>
-Signed-off-by: Lin Sun <lin.sun@zoom.us>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/mergetool.txt | 10 ++++
- builtin/config.c                   | 17 ++++++
- mergetools/meld                    | 85 ++++++++++++++++++++++++------
- 3 files changed, 96 insertions(+), 16 deletions(-)
+> So the relevant part is probably that our existing rule specifies the
+> exact type, whereas your rule allows any expression.
+>
+> And indeed, if I do this, it works:
+>
+> diff --git a/contrib/coccinelle/object_id.cocci b/contrib/coccinelle/obj=
+ect_id.cocci
+> index ddf4f22bd7..62a6cee0eb 100644
+> --- a/contrib/coccinelle/object_id.cocci
+> +++ b/contrib/coccinelle/object_id.cocci
+> @@ -55,8 +55,8 @@ struct object_id OID;
+>  + oidcmp(&OID, OIDPTR)
+>
+>  @@
+> -struct object_id *OIDPTR1;
+> -struct object_id *OIDPTR2;
+> +expression OIDPTR1;
+> +expression OIDPTR2;
+>  @@
+>  - oidcmp(OIDPTR1, OIDPTR2) =3D=3D 0
+>  + oideq(OIDPTR1, OIDPTR2)
+>
+> Which really _seems_ like a bug in coccinelle, unless I am missing
+> something. Because both of those parameters look like object_id pointers
+> (and the compiler would be complaining if it were not the case).
+Yes, seems it looks like coccinelle gives up trying to determine the
+type of these things.
 
-diff --git a/Documentation/config/mergetool.txt b/Documentation/config/me=
-rgetool.txt
-index 09ed31dbfa..16a27443a3 100644
---- a/Documentation/config/mergetool.txt
-+++ b/Documentation/config/mergetool.txt
-@@ -30,6 +30,16 @@ mergetool.meld.hasOutput::
- 	to `true` tells Git to unconditionally use the `--output` option,
- 	and `false` avoids using `--output`.
-=20
-+mergetool.meld.useAutoMerge::
-+	When the `--auto-merge` is given, meld will merge all non-conflicting
-+	parts automatically, highlight the conflicting parts and wait for
-+	user decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells
-+	Git to unconditionally use the `--auto-merge` option with `meld`.
-+	Setting this value to `auto` makes git detect whether `--auto-merge`
-+	is supported and will only use `--auto-merge` when available.  A
-+	value of `false` avoids using `--auto-merge` altogether, and is the
-+	default value.
-+
- mergetool.keepBackup::
- 	After performing a merge, the original file with conflict markers
- 	can be saved as a file with a `.orig` extension.  If this variable
-diff --git a/builtin/config.c b/builtin/config.c
-index ee4aef6a35..7891e070a4 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -65,6 +65,7 @@ static int show_scope;
- #define TYPE_PATH		4
- #define TYPE_EXPIRY_DATE	5
- #define TYPE_COLOR		6
-+#define TYPE_BOOL_OR_STR	7
-=20
- #define OPT_CALLBACK_VALUE(s, l, v, h, i) \
- 	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
-@@ -94,6 +95,8 @@ static int option_parse_type(const struct option *opt, =
-const char *arg,
- 			new_type =3D TYPE_INT;
- 		else if (!strcmp(arg, "bool-or-int"))
- 			new_type =3D TYPE_BOOL_OR_INT;
-+		else if (!strcmp(arg, "bool-or-str"))
-+			new_type =3D TYPE_BOOL_OR_STR;
- 		else if (!strcmp(arg, "path"))
- 			new_type =3D TYPE_PATH;
- 		else if (!strcmp(arg, "expiry-date"))
-@@ -149,6 +152,7 @@ static struct option builtin_config_options[] =3D {
- 	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\"=
-"), TYPE_BOOL),
- 	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE=
-_INT),
- 	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --in=
-t"), TYPE_BOOL_OR_INT),
-+	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or stri=
-ng"), TYPE_BOOL_OR_STR),
- 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or direc=
-tory name)"), TYPE_PATH),
- 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date=
-"), TYPE_EXPIRY_DATE),
- 	OPT_GROUP(N_("Other")),
-@@ -250,6 +254,12 @@ static int format_config(struct strbuf *buf, const c=
-har *key_, const char *value
- 				strbuf_addstr(buf, v ? "true" : "false");
- 			else
- 				strbuf_addf(buf, "%d", v);
-+		} else if (type =3D=3D TYPE_BOOL_OR_STR) {
-+			int v =3D git_parse_maybe_bool(value_);
-+			if (v < 0)
-+				strbuf_addstr(buf, value_);
-+			else
-+				strbuf_addstr(buf, v ? "true" : "false");
- 		} else if (type =3D=3D TYPE_PATH) {
- 			const char *v;
- 			if (git_config_pathname(&v, key_, value_) < 0)
-@@ -411,6 +421,13 @@ static char *normalize_value(const char *key, const =
-char *value)
- 		else
- 			return xstrdup(v ? "true" : "false");
- 	}
-+	if (type =3D=3D TYPE_BOOL_OR_STR) {
-+		int v =3D git_parse_maybe_bool(value);
-+		if (v < 0)
-+			return xstrdup(value);
-+		else
-+			return xstrdup(v ? "true" : "false");
-+	}
- 	if (type =3D=3D TYPE_COLOR) {
- 		char v[COLOR_MAXLEN];
- 		if (git_config_color(v, key, value))
-diff --git a/mergetools/meld b/mergetools/meld
-index 7a08470f88..aab4ebb935 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -3,34 +3,87 @@ diff_cmd () {
- }
-=20
- merge_cmd () {
--	if test -z "${meld_has_output_option:+set}"
-+	check_meld_for_features
-+
-+	option_auto_merge=3D
-+	if test "$meld_use_auto_merge_option" =3D true
- 	then
--		check_meld_for_output_version
-+		option_auto_merge=3D"--auto-merge"
- 	fi
-=20
- 	if test "$meld_has_output_option" =3D true
- 	then
--		"$merge_tool_path" --output=3D"$MERGED" \
-+		"$merge_tool_path" $option_auto_merge --output=3D"$MERGED" \
- 			"$LOCAL" "$BASE" "$REMOTE"
- 	else
--		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-+		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
- 	fi
- }
-=20
--# Check whether we should use 'meld --output <file>'
--check_meld_for_output_version () {
--	meld_path=3D"$(git config mergetool.meld.path)"
--	meld_path=3D"${meld_path:-meld}"
-+# Get meld help message
-+init_meld_help_msg () {
-+	if test -z "$meld_help_msg"
-+	then
-+		meld_path=3D"$(git config mergetool.meld.path || echo meld)"
-+		meld_help_msg=3D$("$meld_path" --help 2>&1)
-+	fi
-+}
-=20
--	if meld_has_output_option=3D$(git config --bool mergetool.meld.hasOutpu=
-t)
-+# Check the features and set flags
-+check_meld_for_features () {
-+	# Check whether we should use 'meld --output <file>'
-+	if test -z "$meld_has_output_option"
- 	then
--		: use configured value
--	elif "$meld_path" --help 2>&1 |
--		grep -e '--output=3D' -e '\[OPTION\.\.\.\]' >/dev/null
-+		meld_has_output_option=3D$(git config --bool mergetool.meld.hasOutput)
-+		case "$meld_has_output_option" in
-+		true | false)
-+			: use configured value
-+			;;
-+		*)
-+			: empty or invalid configured value, detecting "--output" automatical=
-ly
-+			init_meld_help_msg
-+
-+			case "$meld_help_msg" in
-+			*"--output=3D"* | *'[OPTION...]'*)
-+				# All version that has [OPTION...] supports --output
-+				meld_has_output_option=3Dtrue
-+				;;
-+			*)
-+				meld_has_output_option=3Dfalse
-+				;;
-+			esac
-+			;;
-+		esac
-+	fi
-+	# Check whether we should use 'meld --auto-merge ...'
-+	if test -z "$meld_use_auto_merge_option"
- 	then
--		: old ones mention --output and new ones just say OPTION...
--		meld_has_output_option=3Dtrue
--	else
--		meld_has_output_option=3Dfalse
-+		meld_use_auto_merge_option=3D$(
-+			git config --bool-or-str mergetool.meld.useAutoMerge
-+		)
-+		case "$meld_use_auto_merge_option" in
-+		true | false)
-+			: use well formatted boolean value
-+			;;
-+		auto)
-+			# testing the "--auto-merge" option only if config is "auto"
-+			init_meld_help_msg
-+
-+			case "$meld_help_msg" in
-+			*"--auto-merge"* | *'[OPTION...]'*)
-+				meld_use_auto_merge_option=3Dtrue
-+				;;
-+			*)
-+				meld_use_auto_merge_option=3Dfalse
-+				;;
-+			esac
-+			;;
-+		"")
-+			meld_use_auto_merge_option=3Dfalse
-+			;;
-+		*)
-+			die "unknown mergetool.meld.useAutoMerge: $meld_use_auto_merge_option=
-"
-+			;;
-+		esac
- 	fi
- }
---=20
-2.28.0-558-g7a0184fd7b
+And while this one here matches the example in blame.c:
 
+@@
+expression A, B;
+@@
+- 0 =3D=3D oidcmp(A, B)
++ oideq(A, B)
+
+... and this one does as well:
+
+@@
+expression A, B;
+@@
+- !oidcmp
++ oideq
+  (A, B)
+
+... the following one doesn't:
+
+@@
+expression A, B;
+@@
+- 0 =3D=3D oidcmp
++ oideq
+  (A, B)
+
+... and neither does this one:
+
+@@
+expression A, B;
+@@
+- oidcmp
++ oideq
+  (A, B)
+- =3D=3D 0
+
+So it helps to try some variants in the hope to bypass some of the
+restrictions/bugs/misunderstandings. O_o
+
+Ren=C3=A9
