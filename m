@@ -2,67 +2,67 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03E77C43461
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7CAC433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF3D32177B
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4590721973
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="NnbZENiS"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="HwCXkwKk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729789AbgIIAuX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 20:50:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52850 "EHLO
+        id S1729808AbgIIAuY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 20:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729719AbgIIAuC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 20:50:02 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2576C061756
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:50:00 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id a6so902793ybr.4
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:50:00 -0700 (PDT)
+        with ESMTP id S1729738AbgIIAuF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 20:50:05 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AE6C061757
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:50:02 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id z22so553641pjr.8
+        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:50:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=MakHIgd9qKExhWlDsWfoivIcevisorK5QVctfKnPPMo=;
-        b=NnbZENiSLp+n0fgna7ArOxYnZuEA7w55zqqPqJquJQR2Ic57kGpTV6sAWOPWvCefzM
-         Y/nQ/msyCyO+qoSMekouoomI1Yk1oLitbrHJXtIs6IOR8s95IxKRaQeuczINWs11rdVB
-         YtUg8i8aiCs/JvETfMjchavR76SeRdoloWYffpOv1QVLgSEamMZxtG6V4Idg/Eh95P4v
-         deadnYBdA1uC0KhOmhnoHLxLJKXc/H5MJClMzoHtvXQlrs0XKOOgcj7lO7X2y86kbcmO
-         1WOBCGS0jL4djzij9kYGvbf0wx1xvFNAsXFwhdIqsZVCjDFVfTVUgJKaU30PYHiLpMBv
-         hemg==
+        bh=VF7oE5YMw0/GxqChNnx/6uPxfpcAkfxdnUX1Fq0B3aE=;
+        b=HwCXkwKk1LA0vjcwJEVa1FqIrxlEmpPUQ72elMT5MVFx5YZoY/d/q9Z+QLEr6g0/UZ
+         RbJgvS/nk/3Vh5fhx19QE8etns0HUFEgQEvt1Lns3bBYXxTbvIC/2mst9XV1u92wQFE4
+         W2pE6wYBxncaZ7rpzrHiYBWzZnRIf1Q4H3CoivLMbdDc2E+MGXsXiDg8YZkwse3emDWy
+         pncD2gYmXF8/fX8RIz7/zyie6WOzNqXtNpscwyE6/6weXjI2JcpcQPdIZQSkWUEaFHDC
+         50wVKLyJS6OtHaHATQ6NIxLx+LgrhkuDN68eClHEWUMpyPGFkNn1vIY6k/PIGj2cKXjI
+         E3nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=MakHIgd9qKExhWlDsWfoivIcevisorK5QVctfKnPPMo=;
-        b=Hu5Z0QAXy83IflIaGlXnjt/dFXvmQ3jiJC6UFn6oFvhKyYwacVGNYueEnwyRpE7NLP
-         skvae2t5W5ZRtkhoE46aGZX1PrkeYVsGeKjxkBsRYmWr64s2D+MzdADdyXyxOt2qUP6L
-         93Y8VipTqhNtrgKFFSqmGOeuzyBUIk+NtSyPVPcOG78jFgKv722q5L+GJ0jzL39ByeZL
-         ffDrS7fPLEaiceddz4WWWPGe33jKiSnJciE9Jp27USvpi68JdbWQtr3rm1R8AL8o15Dv
-         FOVBjcnWS/hf6PksxuyfIHQuV1wJ1fFO/TSEw736Jh6DAJwZjEr58hfsTLamd+bGoIbY
-         cyzQ==
-X-Gm-Message-State: AOAM533/vBpW2NnkPeBL46jw85YA+Jtd95GTAWLbIfs8AOHhLX1jK7RH
-        2y2mz0Csn1fz6FQXGvgoQLNvZYvL5sNlYYjCeYc3vmX0At1QUwkoj/Zq/wHqxZ/9Ga4X6s+WNnW
-        dQOfFtvA/By8Z47jw1yEkwCu7/IPP0PZO6b9Wy4eboxRYo+gD6BV+eIfz4x1jNoBL3RrDd+asgw
+        bh=VF7oE5YMw0/GxqChNnx/6uPxfpcAkfxdnUX1Fq0B3aE=;
+        b=kt09wpLjjCNwQ4wPEIPLpZiInNxVMnauOSfco4bE/Bk3hpOLad46YhjgZUEh0F6Nvn
+         CFxGD7R8L+AsrFmWBHiGJR1eqYVJ4trrFjXiPFccOdycqD76mrdps20QnwFFKTbMfYs3
+         lDeYHz60i9McegrOiiliPziID1S6ZrPK6ZwvA04QUHMRj8zjHI4qcn4FFQiGnn7Lcx1v
+         8XTevroYbAs+Uxra/SYXO2gaW3sKBZtL5lXJYXGzk1dxCSm0t+HIOXFPzwxDVpOuA8UJ
+         ny4NEZDU5E+KoD6eQPY3vQ+1cjj/FjuD8wdNLHHI/J4yCz6F6zixErXwDvEUtECla7GS
+         BsQw==
+X-Gm-Message-State: AOAM5335TmCtCXVwtcJ3k9r3bUgzFZG6a9EbzIVDvAp/DztuezEAtmxB
+        JyA8NjZCeQ63SP1ME7nnN8R9VuzK0RN1SOwOSAVjUuTTmBe/1du7FaxWxU/4Q6XiTuvnFLvFPqm
+        Vob504qo9EDavWKK472IyH7gg4c/AdWfuC4X7S1ToRhqw4cMtfAom5rkFL9wEEkoOQ4RLplm6aQ
         ==
-X-Google-Smtp-Source: ABdhPJyy5I9ov5/opipe6xRM7NKDuMuQLA/tzyHWjq72kH6EbHbRjyHjrsuRrj86Jw/23oWC3olsGGydKORJcOMnBcQ=
+X-Google-Smtp-Source: ABdhPJxdhwxQ8DmT2IIKYIvwSDpZ4Oup9fu36A0Vm1bHKRCJgIcAk54DAckIJgHXh5M++atW14FxANyV1TjDENYpVj8=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a25:7608:: with SMTP id
- r8mr2546031ybc.518.1599612600114; Tue, 08 Sep 2020 17:50:00 -0700 (PDT)
-Date:   Tue,  8 Sep 2020 17:49:36 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a17:90b:941:: with SMTP id
+ dw1mr145986pjb.1.1599612602109; Tue, 08 Sep 2020 17:50:02 -0700 (PDT)
+Date:   Tue,  8 Sep 2020 17:49:37 -0700
 In-Reply-To: <20200909004939.1942347-1-emilyshaffer@google.com>
-Message-Id: <20200909004939.1942347-7-emilyshaffer@google.com>
+Message-Id: <20200909004939.1942347-8-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200909004939.1942347-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-Subject: [PATCH v4 6/9] hook: add 'run' subcommand
+Subject: [PATCH v4 7/9] hook: replace run-command.h:find_hook
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,245 +72,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to enable hooks to be run as an external process, by a
-standalone Git command, or by tools which wrap Git, provide an external
-means to run all configured hook commands for a given hook event.
-
-For now, the hook commands will in config order, in series. As alternate
-ordering or parallelism is supported in the future, we should add knobs
-to use those to the command line as well.
-
-As with the legacy hook implementation, all stdout generated by hook
-commands is redirected to stderr. Piping from stdin is not yet
-supported.
-
-Legacy hooks (those present in $GITDIR/hooks) are run at the end of the
-execution list. For now, there is no way to disable them.
-
-Users may wish to provide hook commands like 'git config
-hook.pre-commit.command "~/linter.sh --pre-commit"'. To enable this, the
-contents of the 'hook.*.command' and 'hookcmd.*.command' strings are
-first split by space or quotes into an argv_array, then expanded with
-'expand_user_path()'.
+Add a helper to easily determine whether any hooks exist for a given
+hook event.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- builtin/hook.c                | 30 ++++++++++++++++++++
- hook.c                        | 52 ++++++++++++++++++++++++++++++++---
- hook.h                        |  3 ++
- t/t1360-config-based-hooks.sh | 28 +++++++++++++++++++
- 4 files changed, 109 insertions(+), 4 deletions(-)
+ hook.c | 9 +++++++++
+ hook.h | 1 +
+ 2 files changed, 10 insertions(+)
 
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 0d92124ca6..a8f8b03699 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -5,9 +5,11 @@
- #include "hook.h"
- #include "parse-options.h"
- #include "strbuf.h"
-+#include "strvec.h"
- 
- static const char * const builtin_hook_usage[] = {
- 	N_("git hook list <hookname>"),
-+	N_("git hook run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] <hookname>"),
- 	NULL
- };
- 
-@@ -62,6 +64,32 @@ static int list(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int run(int argc, const char **argv, const char *prefix)
-+{
-+	struct strbuf hookname = STRBUF_INIT;
-+	struct strvec envs = STRVEC_INIT;
-+	struct strvec args = STRVEC_INIT;
-+
-+	struct option run_options[] = {
-+		OPT_STRVEC('e', "env", &envs, N_("var"),
-+			   N_("environment variables for hook to use")),
-+		OPT_STRVEC('a', "arg", &args, N_("args"),
-+			   N_("argument to pass to hook")),
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, run_options,
-+			     builtin_hook_usage, 0);
-+
-+	if (argc < 1)
-+		usage_msg_opt(_("a hookname must be provided to operate on."),
-+			      builtin_hook_usage, run_options);
-+
-+	strbuf_addstr(&hookname, argv[0]);
-+
-+	return run_hooks(envs.v, &hookname, &args);
-+}
-+
- int cmd_hook(int argc, const char **argv, const char *prefix)
- {
- 	struct option builtin_hook_options[] = {
-@@ -72,6 +100,8 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
- 
- 	if (!strcmp(argv[1], "list"))
- 		return list(argc - 1, argv + 1, prefix);
-+	if (!strcmp(argv[1], "run"))
-+		return run(argc - 1, argv + 1, prefix);
- 
- 	usage_with_options(builtin_hook_usage, builtin_hook_options);
- }
 diff --git a/hook.c b/hook.c
-index b006950eb8..0dab981681 100644
+index 0dab981681..7c7b922369 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -2,6 +2,7 @@
- 
- #include "hook.h"
- #include "config.h"
-+#include "run-command.h"
- 
- /*
-  * NEEDSWORK: a stateful hook_head means we can't run two hook events in the
-@@ -21,13 +22,15 @@ void free_hook(struct hook *ptr)
- 	}
- }
- 
--static void emplace_hook(struct list_head *pos, const char *command)
-+static void emplace_hook(struct list_head *pos, const char *command, int quoted)
- {
- 	struct hook *to_add = malloc(sizeof(struct hook));
- 	to_add->origin = current_config_scope();
- 	strbuf_init(&to_add->command, 0);
--	/* even with use_shell, run_command() needs quotes */
--	strbuf_addf(&to_add->command, "'%s'", command);
-+	if (quoted)
-+		strbuf_addf(&to_add->command, "'%s'", command);
-+	else
-+		strbuf_addstr(&to_add->command, command);
- 
- 	list_add_tail(&to_add->list, pos);
- }
-@@ -78,7 +81,7 @@ static int hook_config_lookup(const char *key, const char *value, void *hook_key
- 			if (0 == strcmp(hook->command.buf, command))
- 				remove_hook(pos);
- 		}
--		emplace_hook(pos, command);
-+		emplace_hook(pos, command, 0);
- 	}
- 
- 	return 0;
-@@ -87,6 +90,7 @@ static int hook_config_lookup(const char *key, const char *value, void *hook_key
- struct list_head* hook_list(const struct strbuf* hookname)
- {
- 	struct strbuf hook_key = STRBUF_INIT;
-+	const char *legacy_hook_path = NULL;
- 
- 	if (!hookname)
- 		return NULL;
-@@ -98,5 +102,45 @@ struct list_head* hook_list(const struct strbuf* hookname)
- 
- 	git_config(hook_config_lookup, (void*)hook_key.buf);
- 
-+	legacy_hook_path = find_hook(hookname->buf);
-+
-+	/* TODO: check hook.runHookDir */
-+	if (legacy_hook_path)
-+		emplace_hook(&hook_head, legacy_hook_path, 1);
-+
+@@ -111,6 +111,15 @@ struct list_head* hook_list(const struct strbuf* hookname)
  	return &hook_head;
  }
-+
-+int run_hooks(const char *const *env, const struct strbuf *hookname,
-+	      const struct strvec *args)
+ 
++int hook_exists(const char *hookname)
 +{
-+	struct list_head *to_run, *pos = NULL, *tmp = NULL;
-+	int rc = 0;
++	const char *value = NULL;
++	struct strbuf hook_key = STRBUF_INIT;
++	strbuf_addf(&hook_key, "hook.%s.command", hookname);
 +
-+	to_run = hook_list(hookname);
-+
-+	list_for_each_safe(pos, tmp, to_run) {
-+		struct child_process hook_proc = CHILD_PROCESS_INIT;
-+		struct hook *hook = list_entry(pos, struct hook, list);
-+
-+		/* add command */
-+		strvec_push(&hook_proc.args, hook->command.buf);
-+
-+		/*
-+		 * add passed-in argv, without expanding - let the user get back
-+		 * exactly what they put in
-+		 */
-+		if (args)
-+			strvec_pushv(&hook_proc.args, args->v);
-+
-+		hook_proc.env = env;
-+		hook_proc.no_stdin = 1;
-+		hook_proc.stdout_to_stderr = 1;
-+		hook_proc.trace2_hook_name = hook->command.buf;
-+		hook_proc.use_shell = 1;
-+
-+		rc |= run_command(&hook_proc);
-+	}
-+
-+	return rc;
++	return (!git_config_get_value(hook_key.buf, &value)) || !!find_hook(hookname);
 +}
++
+ int run_hooks(const char *const *env, const struct strbuf *hookname,
+ 	      const struct strvec *args)
+ {
 diff --git a/hook.h b/hook.h
-index aaf6511cff..d020788a6b 100644
+index d020788a6b..d94511b609 100644
 --- a/hook.h
 +++ b/hook.h
-@@ -1,6 +1,7 @@
- #include "config.h"
- #include "list.h"
- #include "strbuf.h"
-+#include "strvec.h"
- 
- struct hook
- {
-@@ -10,6 +11,8 @@ struct hook
+@@ -11,6 +11,7 @@ struct hook
  };
  
  struct list_head* hook_list(const struct strbuf *hookname);
-+int run_hooks(const char *const *env, const struct strbuf *hookname,
-+	      const struct strvec *args);
++int hook_exists(const char *hookname);
+ int run_hooks(const char *const *env, const struct strbuf *hookname,
+ 	      const struct strvec *args);
  
- void free_hook(struct hook *ptr);
- void clear_hook_list(void);
-diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-index ebf8f38d68..ee8114250d 100755
---- a/t/t1360-config-based-hooks.sh
-+++ b/t/t1360-config-based-hooks.sh
-@@ -84,4 +84,32 @@ test_expect_success 'git hook list --porcelain prints just the command' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'inline hook definitions execute oneliners' '
-+	test_config hook.pre-commit.command "echo \"Hello World\"" &&
-+
-+	echo "Hello World" >expected &&
-+
-+	# hooks are run with stdout_to_stderr = 1
-+	git hook run pre-commit 2>actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'inline hook definitions resolve paths' '
-+	cat >~/sample-hook.sh <<-EOF &&
-+	echo \"Sample Hook\"
-+	EOF
-+
-+	test_when_finished "rm ~/sample-hook.sh" &&
-+
-+	chmod +x ~/sample-hook.sh &&
-+
-+	test_config hook.pre-commit.command "~/sample-hook.sh" &&
-+
-+	echo \"Sample Hook\" >expected &&
-+
-+	# hooks are run with stdout_to_stderr = 1
-+	git hook run pre-commit 2>actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
