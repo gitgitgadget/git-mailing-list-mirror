@@ -2,130 +2,132 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E31C2C43461
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A9EBC43461
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:49:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 948882145D
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:09:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 165832177B
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:49:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HPKDxmeV"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="D2OIRqSg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726708AbgIIAJl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 20:09:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58444 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726560AbgIIAJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 20:09:40 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1B3CB8CB1E;
-        Tue,  8 Sep 2020 20:09:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uVzE+coDRhc9wE2Hr1pMShmsHUI=; b=HPKDxm
-        eVdtivjKT8fqDwO/xrmq6WXYJL1s6wasIJ0nJbI/NbFoFgVbHcGke+RYDA4PcFhV
-        mxlIjbSMaofbMKdR0O7ISFu37f9WRXsxItiYX6dMHYWeOLTj67doRl7nQfYfEAX8
-        8gtCtQsGff1EJ8onygGlNjVLd4g1DYntq08GU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VcsrQxbOnYvgbhPyLA2xSVXYR3D5JNdU
-        D6InHuA/dTAzf3/lhNFOwFAYeQp1wqTiqyIeg+qpVgWfzU4VnXudcfOokD3PrH+B
-        MpVQgBwJ+TAqEP+u0z+fiIh7RsDf7T0urAuWSu8EvdTmaCmti4rId58u2dBM1CHo
-        QY9Y7FRX7jw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 120878CB1D;
-        Tue,  8 Sep 2020 20:09:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 81E0C8CB1C;
-        Tue,  8 Sep 2020 20:09:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Villeneuve <dvilleneuve.4142@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: permissions of main folder for git-manpages.tar.gz
-References: <cc8487b0-c23f-46c3-b8c3-e3188b7c0d0e@gmail.com>
-Date:   Tue, 08 Sep 2020 17:09:35 -0700
-In-Reply-To: <cc8487b0-c23f-46c3-b8c3-e3188b7c0d0e@gmail.com> (Daniel
-        Villeneuve's message of "Tue, 8 Sep 2020 11:56:47 -0400")
-Message-ID: <xmqq7dt3x134.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF072C3A-F230-11EA-B07B-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1729670AbgIIAt5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 20:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52808 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726801AbgIIAtt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 20:49:49 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BC12C061573
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:49:49 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id v3so842673ybb.22
+        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=z/XTynXML4jGnkGkgvARRXdzsZzlJ753dCYPVs0WIHg=;
+        b=D2OIRqSg3BrGQFBpahLeOW8Bzoqb3oLZuW5IyCuhlW6quG91zj4ug39C9fAAEqB5EL
+         9vt3VABe7QOmrMevwCiI5qu0Sm+hrDbJhtPIWfRzTOpVi2B4v4ZAyo2aRDC1YdD+0dh5
+         gWFutjfDl1ZzQMIwVQIt/nPGM5Clx+xG61tDq0Fq2su5epx3LL+ZqTDw5Z18FUM1texs
+         OgNDfYQjM31I1TIebaNG9Rm/giW5Cu2PM+SssYhgxJhR9KT+HT7Fzfm8akiGeQ6SxetG
+         uRUjayYz2hRBAiqn8FTonQrqHePVtn3CDu/edipG0cZ42ELOZ+TJ8hoc5FibIzPelsHQ
+         awsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :subject:from:to:cc;
+        bh=z/XTynXML4jGnkGkgvARRXdzsZzlJ753dCYPVs0WIHg=;
+        b=tmRz8Kcuwlvdtz06qa8fIVgJezY/9JWwetEbfVBWPG855UYJV7ukU9fWq6ux6lTYzE
+         08RnNzxb4OsiJtBMTLwHX7SIHnviZ2Ad7/dvMVFOlDt8+RdTyGxL2lw/0jxclUw3nyzb
+         DzyhltaG80x/Hb7nf2gbKy9XipV7azpU4rJO+yBwe6R2aPyMV5wSn6DV0xC1jdFP8OQF
+         t1evwZFr11Gj3hNm22Hja7jZ4aqeKSaO6SGfx1RIIhO4Dk29kSiO4zqy4IvmkUhHRTA+
+         83XrwWMhB8xeHHIBAyyl7nDp7GKohCVYiyY9nw5o+8wVTRQ7cjQkI620Q4nWDPK//yUq
+         iDIA==
+X-Gm-Message-State: AOAM530Dce/ym5ZtkNVsWB2eHcnGCadZ+tpmm358HWleHAPEle20+cwc
+        yTGdA5xwBZZonMjdSgJcv8eyioPOe7fdPKEqPpcyFrpwS5mLA8bL6Ci06w29sa93wxBCqAh6sW2
+        y+DTaJtaUCbpYg0zYfbKV/N5X8jlMnmxo/9a7o+FG311x66nIoCHK207bpBm6qYeYO73yFg4VpA
+        ==
+X-Google-Smtp-Source: ABdhPJxqrrD3YNdu/mfC1EiBn03odiUumu3VZm0ueav+c6YP/h6UdCBNvL6+BmurQSkxISbGBQtrWKq7Jq1HY00Ey/4=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:1f44:: with SMTP id
+ f65mr2460155ybf.438.1599612588127; Tue, 08 Sep 2020 17:49:48 -0700 (PDT)
+Date:   Tue,  8 Sep 2020 17:49:30 -0700
+In-Reply-To: <20200728222455.3023400-1-emilyshaffer@google.com>
+Message-Id: <20200909004939.1942347-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
+Subject: [PATCH v4 0/9] propose config-based hooks
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Villeneuve <dvilleneuve.4142@gmail.com> writes:
+Since v3, the biggest change is the conversion of commit hooks to use the new
+hook machinery. The first change ("commit: use config-based hooks") is the
+important part; the second change ("run_commit_hook: take strvec instead of varargs")
+is probably subjective, but I thought it was a decent tech debt reduction.
 
-> I am using
-> https://mirrors.edge.kernel.org/pub/software/scm/git/git-manpages-2.28.0.tar.gz
-> to get the manpages part of git.
->
-> There has been a change in the permissions of the top-level
-> folder, from 2.22 (perms 2750) to 2.25 (perms 0700) to 2.28 (perms
-> 2700).  However, the permissions of other files/directories allow
-> group/others read/execute, as before.
->
-> This change broke my latest installations by preventing group
-> members to see manpages (I did a chmod to fix that).
->
-> Just sharing this observation, in case the change was not
-> intentional.
+I wanted to send this reroll quickly since I had promised it in standup last
+week, but I've got pretty good progress locally on the patch for configuring
+"hook.runHookDir"; I'm planning to send that soon, probably this week.
 
-Thanks for letting me know.  
+ - Emily
 
-The build procedure of these documentation tarballs pretty much just
-snapshots how I personally have these files locally and not
-something that was carefully designed to produce files for public
-consumption.
+Emily Shaffer (9):
+  doc: propose hooks managed by the config
+  hook: scaffolding for git-hook subcommand
+  hook: add list command
+  hook: add --porcelain to list command
+  parse-options: parse into strvec
+  hook: add 'run' subcommand
+  hook: replace run-command.h:find_hook
+  commit: use config-based hooks
+  run_commit_hook: take strvec instead of varargs
 
-I'm contemplating to apply something like the following patch to the
-build procedure so that I can externally control the mode bits
-recorded in the tarball by setting TAR_C_EXTRA_OPTS to options that
-overrides mode bits and stuff (it takes GNU tar unfortunately, but
-I suspect I am the only person that runs dist-doc target anyway)
+ .gitignore                                    |   1 +
+ Documentation/Makefile                        |   1 +
+ Documentation/git-hook.txt                    |  63 ++++
+ Documentation/technical/api-parse-options.txt |   5 +
+ .../technical/config-based-hooks.txt          | 354 ++++++++++++++++++
+ Makefile                                      |   2 +
+ builtin.h                                     |   1 +
+ builtin/commit.c                              |  49 +--
+ builtin/hook.c                                | 107 ++++++
+ builtin/merge.c                               |  23 +-
+ commit.c                                      |  12 +-
+ commit.h                                      |   5 +-
+ git.c                                         |   1 +
+ hook.c                                        | 155 ++++++++
+ hook.h                                        |  19 +
+ parse-options-cb.c                            |  16 +
+ parse-options.h                               |   4 +
+ sequencer.c                                   |  15 +-
+ t/t1360-config-based-hooks.sh                 | 115 ++++++
+ ...3-pre-commit-and-pre-merge-commit-hooks.sh |  13 +
+ 20 files changed, 918 insertions(+), 43 deletions(-)
+ create mode 100644 Documentation/git-hook.txt
+ create mode 100644 Documentation/technical/config-based-hooks.txt
+ create mode 100644 builtin/hook.c
+ create mode 100644 hook.c
+ create mode 100644 hook.h
+ create mode 100755 t/t1360-config-based-hooks.sh
 
- Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 86e5411f39..2a8510f6e6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3041,6 +3041,7 @@ artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
- 	$(TAR) czf "$(ARTIFACTS_DIRECTORY)/artifacts.tar.gz" $^ templates/blt/
- .PHONY: artifacts-tar
- 
-+TAR_C_EXTRA_OPTS =
- htmldocs = git-htmldocs-$(GIT_VERSION)
- manpages = git-manpages-$(GIT_VERSION)
- .PHONY: dist-doc distclean
-@@ -3048,7 +3049,7 @@ dist-doc:
- 	$(RM) -r .doc-tmp-dir
- 	mkdir .doc-tmp-dir
- 	$(MAKE) -C Documentation WEBDOC_DEST=../.doc-tmp-dir install-webdoc
--	cd .doc-tmp-dir && $(TAR) cf ../$(htmldocs).tar .
-+	cd .doc-tmp-dir && $(TAR) cf ../$(htmldocs).tar $(TAR_C_EXTRA_OPTS) .
- 	gzip -n -9 -f $(htmldocs).tar
- 	:
- 	$(RM) -r .doc-tmp-dir
-@@ -3058,7 +3059,7 @@ dist-doc:
- 		man5dir=../.doc-tmp-dir/man5 \
- 		man7dir=../.doc-tmp-dir/man7 \
- 		install
--	cd .doc-tmp-dir && $(TAR) cf ../$(manpages).tar .
-+	cd .doc-tmp-dir && $(TAR) cf ../$(manpages).tar $(TAR_C_EXTRA_OPTS) .
- 	gzip -n -9 -f $(manpages).tar
- 	$(RM) -r .doc-tmp-dir
- 
+-- 
+2.28.0.rc0.142.g3c755180ce-goog
 
