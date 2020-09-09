@@ -2,112 +2,144 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8547C43461
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 17:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4B77C43461
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 17:19:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E037206D4
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 17:19:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DC692166E
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 17:19:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Fgs0yulu"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wWOjYB7F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730500AbgIIRTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 13:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45960 "EHLO
+        id S1730111AbgIIRTo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 13:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726883AbgIIP1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726642AbgIIP1Y (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Sep 2020 11:27:24 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5D3C0619CA
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 08:22:56 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id y11so2205253qtn.9
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 08:22:56 -0700 (PDT)
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A299AC0619C8
+        for <git@vger.kernel.org>; Wed,  9 Sep 2020 08:22:39 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id h1so1685610qvo.9
+        for <git@vger.kernel.org>; Wed, 09 Sep 2020 08:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cPefqbMWPlnCd/bpwOqnWQD/4KM4Ty9r1KCsjRikXYI=;
-        b=Fgs0yulu+gvCuz7l4g0dMUY93O8tdCefqx+VcxOegkKCbif2TMv1zBp7cSv6XmEzYn
-         1eK73XOq00w4l0EFHP+ujziCxY/wF+C5Y87181TFlrBL8vNIRvU1uXlDOV9D+CbVWCvi
-         DmPOAE8MVKvQvBGH3UWYHySFZFFQCxLs6SeyNDCrUS6KNcVEqS7DDpt0/w5V6hzjeaYi
-         cT/bk66Gtb6Jg5PpBPrT2uQBSmfOtwphHSLloNeARFWBidLj7AC8MbXa4Ha7k0NBKti8
-         DnKzxuUXd+N9Se8+tL+QAmeDRnVBIQZ+WD5Nnuxj8jVtgP7EwquPqaCT0dbtqAgw/8tE
-         FI/g==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=hUAsz5RCiWx9RNNoVMQv/0ENuouUgQPdVmwy0soTBYs=;
+        b=wWOjYB7FbbGVIXMJpPtypd4BRaPNdARkYhCwC7O2G9BTvAH8g+uWBNPLB/V8N2wSZS
+         ojbUVDJKS5CjpHURoB566EMzojnfmRFLxHBpqp7g+J0rzy1H7uqEuFLHZbJInZl1t50a
+         XMOSgM6EZgkv3v92Hn4/QOZiWpKdWA0Ptb91OAlV9lbPGwrfi9HNQd3rN5th5eI1Iu8J
+         vfqz2J4FUzvGn6Rc8nEn6uAFe1BH0PkbmI9VE/1isnrbpu1tMymp36+s3FEHPbhjDU9j
+         RssFmk7F6CvLyuRvtNHeo8cl/LPlRaf4fqBLrhRPufH3O6jQkUX8gLKTSBvqV/yM1sql
+         sJCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cPefqbMWPlnCd/bpwOqnWQD/4KM4Ty9r1KCsjRikXYI=;
-        b=UB6RWbRvhyR+6z/ahonW6C3vCbts/ZA7JEqXSrgh8q/OOxyHBtE1/LTys2K0fhS94i
-         z/lDDA/HvYt2gurjcPIIti1XSypH87yciCL/qnsumKlxfYS0lkw7ldfqOPA6Jz3e3gaf
-         JKO6xHoPInfIm10+uMLx3TXmtPh9nNJo9sRy3imx7vNwkMl2L4wKmJu/QwRD2OD2ZXKr
-         pq/JkM3LY0O2DNV7TWcL3W11UekkYp7tUtqZGRG1MSzoUzlX+g1ePw9jL5M6pLpl0A7h
-         DaMKLSbcnrPUkWDgt4LaO+jYD4o1WhwaU5P7b71NEvcu30kVf+CkPjbltPonwHkiKDBr
-         0c5A==
-X-Gm-Message-State: AOAM532wJXJputaGpurAZDE2d2wqZnUFai9TeYY5f7c72yVv2s3N2Qs0
-        xKnZpG5Apqh93C8y6XEYIwxIAHOUM/7zmgWh
-X-Google-Smtp-Source: ABdhPJzJsiUM2T9uH/0K0hB8QvVxW0ibRXlmic8wPG3AtAG9oO/g5IHvFIu1ZBeFBiTNqJdGnkM+rg==
-X-Received: by 2002:ac8:12c1:: with SMTP id b1mr3845397qtj.148.1599664973461;
-        Wed, 09 Sep 2020 08:22:53 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=hUAsz5RCiWx9RNNoVMQv/0ENuouUgQPdVmwy0soTBYs=;
+        b=aFmebC0R/TonJkoCKDBbM+Kp/GU2CspbZ6b0n/KV8iGDKF0YHG6tj683iAHBWM39fD
+         kDwT8DKg/FijK9bqEdOUPmhv8I+teZzNOUcNEAvEvGAdOMvH/8WaFD+C5ihYHiFIdCY5
+         hkImlEB9QSikyYHCLMwDxVagHEp6+HPvpjAsYLqfrNSb3d3iKQVW7JiA+7lVmrSa9Faf
+         QfNOL/QoTMWWX1i/ZXChmPrA2y37R9GHoRLNeOo8C7Qu/yKGmdkK3E8cSPgjjDZ0y61i
+         r7LlSPMBl/d/om9dTXWwqaJhopu/CFzQzu8+wbyREHeQlmGrneLtUA7d/LyCvsciTx99
+         upWQ==
+X-Gm-Message-State: AOAM530eLIVMECGR/uj1SGTLb25qVFvj42HXNK5uET/fQ3PcqIjpe5qO
+        f8jdmFea7VLMfk+R28RVMvtAl92/NHqUGiY8
+X-Google-Smtp-Source: ABdhPJyI7XjjUQpp+u4918ygMIF9H79IaqE22NtaM26CVFmQAtw40P4e7zRSHHtLHSHg8PVJwIo2Sw==
+X-Received: by 2002:a0c:a085:: with SMTP id c5mr4726502qva.30.1599664958290;
+        Wed, 09 Sep 2020 08:22:38 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:10e2:cf5e:922:2af0])
-        by smtp.gmail.com with ESMTPSA id g131sm2777880qkb.135.2020.09.09.08.22.52
+        by smtp.gmail.com with ESMTPSA id k6sm3311918qti.23.2020.09.09.08.22.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2020 08:22:52 -0700 (PDT)
-Date:   Wed, 9 Sep 2020 11:22:50 -0400
+        Wed, 09 Sep 2020 08:22:37 -0700 (PDT)
+Date:   Wed, 9 Sep 2020 11:22:33 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         szeder.dev@gmail.com
-Subject: [PATCH 02/12] t4216: use an '&&'-chain
-Message-ID: <44df936e51e88e41d5ed9aa02d0bd3ca86696f09.1599664389.git.me@ttaylorr.com>
-References: <cover.1599664389.git.me@ttaylorr.com>
+Subject: [PATCH 00/12] more miscellaneous Bloom filter improvements, redux
+Message-ID: <cover.1599664389.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1599664389.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a759bfa9ee (t4216: add end to end tests for git log with Bloom
-filters, 2020-04-06), a 'rm' invocation was added without a
-corresponding '&&' chain.
+Here is a rejiggered version of my series in [1], which accomplishes the
+same without changing any of the on-disk commit-graph format.
 
-When 'trace.perf' already exists, everything works fine. However, the
-function can be executed without 'trace.perf' on disk (eg., when the
-subset of tests run is altered with '--run'), and so the bare 'rm'
-complains about a missing file.
+As a reminder, the main goal of this series is to introduce a
+'--max-new-filters' flag to 'git commit-graph write' to place a limit on
+the number of new Bloom filters a writer is willing to compute from
+scratch. The main difficulty is disambiguating between empty/too-large
+filters and ones that haven't been computed yet. See "bloom: encode
+out-of-bounds filters as non-empty" for the details.
 
-To remove some noise from the test log, invoke 'rm' with '-f', at which
-point it is sensible to place the 'rm -f' in an '&&'-chain, which is
-both (1) our usual style, and (2) avoids a broken chain in the future if
-more commands are added at the beginning of the function.
+The series is organized as follows:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/t4216-log-bloom.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  * Patches 1-4 are uninteresting preparatory steps.,
+  * Patch 5 introduces the 'commitGraph.readChangedPaths' configuration.
+  * Patches 6-8 are more preparation.
+  * Patch 9 is from Stolee and fixes a bug where computing Bloom filters
+    from scratch wouldn't stop at the limit of 512.
+  * Patches 10-12 prepares for and then introduces '--max-new-filters'.
 
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 715912ad0f..cd89c75002 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -58,7 +58,7 @@ sane_unset GIT_TRACE2_PERF_BRIEF
- sane_unset GIT_TRACE2_CONFIG_PARAMS
- 
- setup () {
--	rm "$TRASH_DIRECTORY/trace.perf"
-+	rm -f "$TRASH_DIRECTORY/trace.perf" &&
- 	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
- 	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.perf" git -c core.commitGraph=true log --pretty="format:%s" $1 >log_w_bloom
- }
--- 
+The first nine patches are basically unchanged from [1] where they were
+thoroughly reviewed. The tenth patch is new, and the final two patches
+are only touched up and simplified to work with this new approach, but
+they have otherwise been reviewed.
+
+Since the old thread was getting long, and this is a substantially new
+approach, I'm sending this as "v1" of a new series, which hopefully
+nobody minds.
+
+[1]: https://lore.kernel.org/git/cover.1596480582.git.me@ttaylorr.com/
+
+Derrick Stolee (1):
+  bloom/diff: properly short-circuit on max_changes
+
+Taylor Blau (11):
+  commit-graph: introduce 'get_bloom_filter_settings()'
+  t4216: use an '&&'-chain
+  commit-graph: pass a 'struct repository *' in more places
+  t/helper/test-read-graph.c: prepare repo settings
+  commit-graph: respect 'commitGraph.readChangedPaths'
+  commit-graph.c: store maximum changed paths
+  bloom: split 'get_bloom_filter()' in two
+  bloom: use provided 'struct bloom_filter_settings'
+  bloom: encode out-of-bounds filters as non-empty
+  commit-graph: rename 'split_commit_graph_opts'
+  builtin/commit-graph.c: introduce '--max-new-filters=<n>'
+
+ Documentation/config.txt                      |   2 +
+ Documentation/config/commitgraph.txt          |   8 +
+ Documentation/git-commit-graph.txt            |   6 +
+ .../technical/commit-graph-format.txt         |   2 +-
+ blame.c                                       |   8 +-
+ bloom.c                                       |  53 +++--
+ bloom.h                                       |  29 ++-
+ builtin/commit-graph.c                        |  61 ++++--
+ commit-graph.c                                | 148 ++++++++++----
+ commit-graph.h                                |  17 +-
+ diff.h                                        |   2 -
+ fuzz-commit-graph.c                           |   5 +-
+ line-log.c                                    |   2 +-
+ repo-settings.c                               |   3 +
+ repository.h                                  |   1 +
+ revision.c                                    |   7 +-
+ t/helper/test-bloom.c                         |   4 +-
+ t/helper/test-read-graph.c                    |   3 +-
+ t/t0095-bloom.sh                              |   4 +-
+ t/t4216-log-bloom.sh                          | 181 ++++++++++++++++--
+ t/t5324-split-commit-graph.sh                 |  13 ++
+ tree-diff.c                                   |   5 +-
+ 22 files changed, 442 insertions(+), 122 deletions(-)
+ create mode 100644 Documentation/config/commitgraph.txt
+
+--
 2.28.0.462.g4ff11cec37
-
