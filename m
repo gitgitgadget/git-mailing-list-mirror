@@ -2,67 +2,67 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D37C2BC11
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E7ACC433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B6A621973
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64E842177B
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 00:50:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="lmBcbjfz"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="R9MoF8pB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbgIIAuQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Sep 2020 20:50:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52836 "EHLO
+        id S1729692AbgIIAuU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Sep 2020 20:50:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729663AbgIIAt5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Sep 2020 20:49:57 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6961C061755
-        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:49:56 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id k13so739882pfh.4
-        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:49:56 -0700 (PDT)
+        with ESMTP id S1729717AbgIIAuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Sep 2020 20:50:01 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41713C061573
+        for <git@vger.kernel.org>; Tue,  8 Sep 2020 17:49:59 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id j20so874239ybt.10
+        for <git@vger.kernel.org>; Tue, 08 Sep 2020 17:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=6OE/uE69yRebrRJPaGprkkwEu88LuiF7HtXoJUEcU5w=;
-        b=lmBcbjfzcpREcxEpKM0AE/wx5vYybx1v3I84ILQt7GbYIutEJWiFoy3w7k+GBduQ5S
-         5MKCmkVIS9Lpeu/rtt/VIdACpjBPTh2g6HuQqnrL7NPCkaQ56vxPxorUoWkw8Sq3XJM7
-         e1lJUs+TG7xuoSb8tXxmjJDk36v9Cvd/6dYBDjNNW9bc3PNbv41YD2vfXEh1g9v/7plY
-         U8QAKo4CInSi+sWRX17wQLU/9/Gr/aYgd6Y/G5R9NGBClkY4UK664mMR+iIJi1ssJVLm
-         h4cAzQApSpA2HjRrPTBMd+7GihLvZfnngRDn8IwJSoukNYX4ekWvYicnchGADERscKx7
-         0gpw==
+        bh=nhZYNCfrc7LBG0PG1IIHge72kRRdZrR0w3xUUNmrkO0=;
+        b=R9MoF8pBGF3FCk0DUyQKVgz/HnRa39m2fdOxRkUapW1BNk6vQ4lv9ZRCuHPnCh4Qdz
+         AcXzsEldW1/0OkwiWOKDFTPRp/lM6wKu957tC8Yy6kG0wMV6wW8p9oAHULSU9R+sIrR8
+         8SE/MoK67NqEZJyfKrS3CYRza2Av+l0591xVaLnRCEqTuv3X9ByqK3ucM2PtpR2tSO2Q
+         w9Z29QNBLs445HXqWmqVwS5Ze+4DcWGqp7VZqgNUHhTpJn6WLhK21kTrjozBJZ+pLzRk
+         /gQ4qYlJA9aFDKJP3CX8c/QSRwC3jhB1ulsZ0DTaIAgX8kGQQk5QIcP8gtt1a+dtWzi7
+         Wd/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=6OE/uE69yRebrRJPaGprkkwEu88LuiF7HtXoJUEcU5w=;
-        b=pFd/+CFuKkU7Kk330sGHQbqEivyuVo0J1w+iQFENQPtjuYKm/udE/Vhsyl0ZxO+aiU
-         2GUchQmrb1wRh7kisIMuJP3SIpm4cys4zET4TTXEZN6wdr9l3dS1UyB5/mMeNQOqMwj+
-         bFkPMvskqj5owSfKMl7XuzE3+hYKjVWYXORk0CmVFUcAm6R1Qikv9c6ZwQ8NtfOYCNdG
-         q10wGJKJFQaxhb+boYbrFfePFSHOtorhkOWQa1k5Tp7RDIkZ0DqhsEtegSQ9b0yHHnvn
-         7g3yeTF52uovxq+ust6RbhCnqB0CahdU7ZczjW3/cSIpHZIaA9L9s7+XqAHmSPZaMpRs
-         l59A==
-X-Gm-Message-State: AOAM530LnL1QUM+IBZjgwkZ/ahjT98KTSAj47YDSauoC4z8/iQp39H6I
-        R8Ui1hUPdJRN/HnB8vc92P0A4udqyONDgMQMJ8SOTkXLH0T9H5XGrmr1u7kwEL5HS+CQKVls8YS
-        brMcG15/YwKJ5CzJtodZUK6uXekEOeRXu1Y9I75MQqBDMe5obH1iyNlKSpMpP45XqmQl8gED/Xg
+        bh=nhZYNCfrc7LBG0PG1IIHge72kRRdZrR0w3xUUNmrkO0=;
+        b=txLMXXxA/Lak3tZjS+yeZycBhyo1cUmYBK3tDnv0L/OV2mK+CfYQSA9rSVs7YM3rNh
+         DR6OGBh21bnzYO51TCRiUWhaHL5RCk2p2GE7t8KhwOZ2c9IoUhsRf8OXTNaTAfFfhbbo
+         746aJXQpg7z9jhbE6ki0IOC+f1AnM//N6tYO4bLB0vjmv7F2aHIhbl6oxnY9RbC7oxan
+         BxAXuOwB0A3nHiCCKB5MLlIcyKdtoNxhX8FjRjt8iJ3dPWTV4i+OSBZBI/QFxW5j/pbV
+         uIqKIFqpIJKw4S6+ErW+WP8WxXGQifqbf4NuxOgrOuZMa2XX1qHa+4e8wtHuow0jpzbZ
+         cz8Q==
+X-Gm-Message-State: AOAM533OzoRz9dHCNzchazlnOzuTYwfp4ZSOIH3uThEfWTF0mqOeD742
+        +NfI3htxuKsALW0IaQ3dIYwduEpBrIHLe7vQgzlV9Wf6QCG6N4ihNT9khVF4uPqtYgpsjcIeDpL
+        Lo5Kt1FGsOKks8W/rUfBHg7zAZtdSNEDI1QLs4X/1it5WK2nCQGQMNs/BV/x+pgpLxFWVRYKgYQ
         ==
-X-Google-Smtp-Source: ABdhPJxXYd/rQKPLUicoCrMdUqbvOi67eAWo9NiHlfmlRWoMKJwP0oIV+Domi8kGvobi9vwaZpKn9zuwa7c1wR8ZzII=
+X-Google-Smtp-Source: ABdhPJwUKf3hD+TcsmSPmXi0Ect3wB56VFqkSie0w1Ht72Se/kkNcRy6QTlIMQsgWGYAvUw7gJk6MvcO0vtCITx3G3s=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a63:2d0:: with SMTP id
- 199mr1021013pgc.408.1599612596270; Tue, 08 Sep 2020 17:49:56 -0700 (PDT)
-Date:   Tue,  8 Sep 2020 17:49:34 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a25:2611:: with SMTP id
+ m17mr14666ybm.442.1599612598351; Tue, 08 Sep 2020 17:49:58 -0700 (PDT)
+Date:   Tue,  8 Sep 2020 17:49:35 -0700
 In-Reply-To: <20200909004939.1942347-1-emilyshaffer@google.com>
-Message-Id: <20200909004939.1942347-5-emilyshaffer@google.com>
+Message-Id: <20200909004939.1942347-6-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200909004939.1942347-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-Subject: [PATCH v4 4/9] hook: add --porcelain to list command
+Subject: [PATCH v4 5/9] parse-options: parse into strvec
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,129 +72,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'git hook list --porcelain <hookname>', which prints simply the
-commands to be run in the order suggested by the config. This option is
-intended for use by user scripts, wrappers, or out-of-process Git
-commands which still want to execute hooks. For example, the following
-snippet might be added to git-send-email.perl to introduce a
-`pre-send-email` hook:
+parse-options already knows how to read into a string_list, and it knows
+how to read into an strvec as a passthrough (that is, including the
+argument as well as its value). string_list and strvec serve similar
+purposes but are somewhat painful to convert between; so, let's teach
+parse-options to read values of string arguments directly into an
+strvec without preserving the argument name.
 
-  sub pre_send_email {
-    open(my $fh, 'git hook list --porcelain pre-send-email |');
-    chomp(my @hooks = <$fh>);
-    close($fh);
+This is useful if collecting generic arguments to pass through to
+another command, for example, 'git hook run --arg "--quiet" --arg
+"--format=pretty" some-hook'. The resulting strvec would contain
+{ "--quiet", "--format=pretty" }.
 
-    foreach $hook (@hooks) {
-            system $hook
-    }
+The implementation is based on that of OPT_STRING_LIST.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/git-hook.txt    | 13 +++++++++++--
- builtin/hook.c                | 17 +++++++++++++----
- t/t1360-config-based-hooks.sh | 12 ++++++++++++
- 3 files changed, 36 insertions(+), 6 deletions(-)
+ Documentation/technical/api-parse-options.txt |  5 +++++
+ parse-options-cb.c                            | 16 ++++++++++++++++
+ parse-options.h                               |  4 ++++
+ 3 files changed, 25 insertions(+)
 
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index e458586e96..0854035ce2 100644
---- a/Documentation/git-hook.txt
-+++ b/Documentation/git-hook.txt
-@@ -8,7 +8,7 @@ git-hook - Manage configured hooks
- SYNOPSIS
- --------
- [verse]
--'git hook' list <hook-name>
-+'git hook' list [--porcelain] <hook-name>
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index 5a60bbfa7f..b4f1fc4a1a 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -173,6 +173,11 @@ There are some macros to easily define options:
+ 	The string argument is stored as an element in `string_list`.
+ 	Use of `--no-option` will clear the list of preceding values.
  
- DESCRIPTION
- -----------
-@@ -43,11 +43,20 @@ Local config
- COMMANDS
- --------
- 
--list <hook-name>::
-+list [--porcelain] <hook-name>::
- 
- List the hooks which have been configured for <hook-name>. Hooks appear
- in the order they should be run, and note the config scope where the relevant
- `hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
-++
-+If `--porcelain` is specified, instead print the commands alone, separated by
-+newlines, for easy parsing by a script.
++`OPT_ARGV_ARRAY(short, long, &struct argv_array, arg_str, description)`::
++	Introduce an option with a string argument.
++	The string argument is stored as an element in `argv_array`.
++	Use of `--no-option` will clear the list of preceding values.
 +
-+OPTIONS
-+-------
-+--porcelain::
-+	With `list`, print the commands in the order they should be run,
-+	separated by newlines, for easy parsing by a script.
+ `OPT_INTEGER(short, long, &int_var, description)`::
+ 	Introduce an option with integer argument.
+ 	The integer is put into `int_var`.
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index d9d3b0819f..d2b8b7b98a 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -205,6 +205,22 @@ int parse_opt_string_list(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
  
- GIT
- ---
-diff --git a/builtin/hook.c b/builtin/hook.c
-index a0759a4c26..0d92124ca6 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -16,8 +16,11 @@ static int list(int argc, const char **argv, const char *prefix)
- 	struct list_head *head, *pos;
- 	struct hook *item;
- 	struct strbuf hookname = STRBUF_INIT;
-+	int porcelain = 0;
- 
- 	struct option list_options[] = {
-+		OPT_BOOL(0, "porcelain", &porcelain,
-+			 "format for execution by a script"),
- 		OPT_END(),
- 	};
- 
-@@ -29,6 +32,8 @@ static int list(int argc, const char **argv, const char *prefix)
- 			      builtin_hook_usage, list_options);
- 	}
- 
++int parse_opt_strvec(const struct option *opt, const char *arg, int unset)
++{
++	struct strvec *v = opt->value;
 +
++	if (unset) {
++		strvec_clear(v);
++		return 0;
++	}
 +
- 	strbuf_addstr(&hookname, argv[0]);
- 
- 	head = hook_list(&hookname);
-@@ -41,10 +46,14 @@ static int list(int argc, const char **argv, const char *prefix)
- 
- 	list_for_each(pos, head) {
- 		item = list_entry(pos, struct hook, list);
--		if (item)
--			printf("%s:\t%s\n",
--			       config_scope_name(item->origin),
--			       item->command.buf);
-+		if (item) {
-+			if (porcelain)
-+				printf("%s\n", item->command.buf);
-+			else
-+				printf("%s:\t%s\n",
-+				       config_scope_name(item->origin),
-+				       item->command.buf);
-+		}
- 	}
- 
- 	clear_hook_list();
-diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-index 46d1ed354a..ebf8f38d68 100755
---- a/t/t1360-config-based-hooks.sh
-+++ b/t/t1360-config-based-hooks.sh
-@@ -72,4 +72,16 @@ test_expect_success 'git hook list reorders on duplicate commands' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'git hook list --porcelain prints just the command' '
-+	setup_hooks &&
++	if (!arg)
++		return -1;
 +
-+	cat >expected <<-EOF &&
-+	$ROOT/path/def
-+	$ROOT/path/ghi
-+	EOF
++	strvec_push(v, arg);
++	return 0;
++}
 +
-+	git hook list --porcelain pre-commit >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+ int parse_opt_noop_cb(const struct option *opt, const char *arg, int unset)
+ {
+ 	return 0;
+diff --git a/parse-options.h b/parse-options.h
+index 46af942093..177259488b 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -177,6 +177,9 @@ struct option {
+ #define OPT_STRING_LIST(s, l, v, a, h) \
+ 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
+ 				      (h), 0, &parse_opt_string_list }
++#define OPT_STRVEC(s, l, v, a, h) \
++				    { OPTION_CALLBACK, (s), (l), (v), (a), \
++				      (h), 0, &parse_opt_strvec }
+ #define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG, &parse_opt_tertiary }
+ #define OPT_EXPIRY_DATE(s, l, v, h) \
+@@ -296,6 +299,7 @@ int parse_opt_commits(const struct option *, const char *, int);
+ int parse_opt_commit(const struct option *, const char *, int);
+ int parse_opt_tertiary(const struct option *, const char *, int);
+ int parse_opt_string_list(const struct option *, const char *, int);
++int parse_opt_strvec(const struct option *, const char *, int);
+ int parse_opt_noop_cb(const struct option *, const char *, int);
+ enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
+ 					   const struct option *,
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
