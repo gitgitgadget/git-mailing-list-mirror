@@ -2,201 +2,303 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B8D4C43461
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 20:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E10EC433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 21:05:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C8E721D43
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 20:43:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDADC21D6C
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 21:05:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="O4GjTt07"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EV4b+ipr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729296AbgIIUnu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 16:43:50 -0400
-Received: from mout.web.de ([212.227.15.14]:45793 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726440AbgIIUnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 16:43:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1599684219;
-        bh=VkFcADl7SUeh4J8Ujn9U9eZ56kt10loFNm0pmUzEzI4=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=O4GjTt0705z4bmBya6XvNA0CRoj/QZu9z66hDBTzIWgJw83o0h+hz9SbyKLpEep/V
-         xmOk4AA5zGAHouhCmX584VC+0c1AytyuheAkKG8Me5jiGp5pnnLojrVHaZJCIvNWXm
-         1+ZdvV0tzFJ87TAq4fiHhmrWFeVfvtUgQ0zYEjv8=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N7xeZ-1kcXQf3z8d-014tGi; Wed, 09
- Sep 2020 22:43:39 +0200
-Subject: Re: [PATCH] blame.c: replace instance of !oidcmp for oideq
-To:     Jeff King <peff@peff.net>,
-        Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, whydoubt@gmail.com,
-        Git List <git@vger.kernel.org>
-References: <20200907171639.766547-1-eantoranz@gmail.com>
- <ce94b41f-e829-d7ca-a5f5-e41748caea81@gmail.com>
- <20200909091149.GB2496536@coredump.intra.peff.net>
- <CAOc6etZS3mGxsPPh25XFi2-qR0TNzq0Gx1NrydgQwmHbsjxejA@mail.gmail.com>
- <20200909191345.GA2511547@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <84ce64d0-996a-33f6-53be-e47120da81a7@web.de>
-Date:   Wed, 9 Sep 2020 22:43:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726642AbgIIVFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 17:05:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56146 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726408AbgIIVFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 17:05:04 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 940C28BB2F;
+        Wed,  9 Sep 2020 17:04:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FP6JTzzSO7IydlFMobTwAEoUbnk=; b=EV4b+i
+        pr9dnM2ySQVj3n83L8/IPmJRu7sxskI1pdEhCvcVgLxRlF+hkWG1UTjetCNCdZsd
+        DCiCaxF4qMudqtfV+era09l/eZMAOc33QWCLOiKYeXkWMJ2ABWLny71T7wSk0bml
+        Ix+MyVuBKRpB1MWrWTJ/7XsRezumyGqIgIA5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=k+cmPa3jsJwfc4SzuvCr2yTwgIIyRStL
+        C/fayPUqlZ/aaYiyQYpKMc2ObNtx5s2bf2L13nrpjQRItgD7JFpwLPDMeg94Wybo
+        /rtW7sS9qZgzU5gW25HnuLcKlbB3J3tVNW21QEXATpRGGMW19tctJ6LBXIJ6XRK7
+        0SL8G7+SF4o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8AE778BB2E;
+        Wed,  9 Sep 2020 17:04:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 147B88BB2D;
+        Wed,  9 Sep 2020 17:04:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6?= =?utf-8?Q?r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 0/9] propose config-based hooks
+References: <20200909004939.1942347-1-emilyshaffer@google.com>
+Date:   Wed, 09 Sep 2020 14:04:55 -0700
+In-Reply-To: <20200909004939.1942347-1-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Tue, 8 Sep 2020 17:49:30 -0700")
+Message-ID: <xmqqeenau0eg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200909191345.GA2511547@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GgDVypMWkP+NkzPgD2Ggba3CLzPU4eYrZZIWZWn4K/tLjKVJrOC
- PtDyzJVvjFyczHN0xzULEXqcUrNk/GAaJhcrZGIg8Vrw6loapkbpuIVHA01xoaIEHWUk/C6
- C+16Tmy3TT90QxykmIrEax0qgpsjKujkd1qBiHWBo+UQ2RtmVJG8DDMsLiLP8UtWzToWxYL
- fzrXqjKswqYiq//K9pEHw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:f4X5Bcw0J3g=:6ilCr3DMCfJllkkSVOV74C
- gz4aoNocJBVfniGzGQIYbLWqISgWcpeI+tYausAa+Qmyt1hd0Ra04XqOEN1TB1Z4DU5A8OMXC
- MTuFmWYzczzV+Tiz++xNtbqG2Jmoc+IDdtvKmnuxhOVvO5HEN9Yp9daGwpdk8UG31CnW+Hl2p
- 03hoTGIkrHKjpbsglK5iplBylEuvkZklBDHXCrXn/we7GDi22XGdBNoNOZoIj8Bh4QD2H8LLa
- zwnZgPoTZBb+j/l5AW/sTbJb387xuw2+VhK+0uOJdYlZcy1VWxcGX6KN9UchuxzBWnlOWKTCp
- L8cOaS3dmM42ksJhyUgsLcKHm+xJwTf+ESG0wSgYWJx0IaAjcWcPmVutSDH5UxqtGWkgkWhsN
- lbFpjRcoRwlGuPz4OqfxqkK4HvWaje9UfR/9h2LRhyD8ktglXY8W8rt9KQyLQy6CE/1lJ8Y+Q
- YbSMsVAweHv12VO7r0AfDu0s+WXbsAf0cwuWrfzXnTf8/5VOKul0e7cROL+LQx8kH0gubGbbs
- XN8WT7slc9EsFHQ1GJWmEZXbm1sgdk6aCXyTKzrAQTrfEwGICSTokZxDImGrgYmKvCRTgV+zk
- qWNG3tsDAvmbmIZvm6f52U4nGy7N39jXKhXuYwWrxmzZOwP12a0wtihSVmcA1Hofa6OvwYKp9
- htSnKWhHNPrsG9Nws2E37239WLQ0KyWsq/dNcm/luq23D294v41PYW3c+IXkWyhaid+jzIFST
- 6JCC2LRa4/KWXLbJsLR4x58cckaLT0D/VSoo4a+kf9w/5unzgZy4PLcNXhwgA08Ffmbcg1QNx
- ViwuN7/JOLnuf93cursb+BQc9l5KxgeMEhAQv0LaBd/wSuDJXo41mD7OfsLSyyg3iR8U0P334
- Iava1m02b6VRmxz3JKfGCwDd/HuhQnyLVMeovCS2sU+JzW78AN6ptBoAv08+SorJV5Kbu/p/0
- SRB5xa/e+DgxefGkM0yFoQS+55LJEeaEn2dOfFgqQbQPOKDSgoDt4liwXCeI8h/Vf50SwJUe/
- hr8hU54bBkFDLT02Z0U6ZOtdUzaI6fGG7ugpSOjKzBujpPQv3MVJUDbkQlfJmk+7e1jsQLRRJ
- Yf7XvcvK4viyAAo/EVb+bS10dAZOj02JwBb9Y0ABPJnxucus2QTBfi46oH0D2Q3hVO+7mwA0i
- CNkT0h81laFD4eHkDOrmSD2ZycuyBAWbVZruBJo6UWPguJUB/BExQKf+4JA3/RW9XouVEiaAj
- gPHoe0tOyzeAI9Gz6
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1CFAB604-F2E0-11EA-87FB-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.09.20 um 21:13 schrieb Jeff King:
-> On Wed, Sep 09, 2020 at 08:00:57AM -0600, Edmundo Carmona Antoranz wrote=
-:
+Emily Shaffer <emilyshaffer@google.com> writes:
+
+> Since v3, the biggest change is the conversion of commit hooks to use the new
+> hook machinery. The first change ("commit: use config-based hooks") is the
+> important part; the second change ("run_commit_hook: take strvec instead of varargs")
+> is probably subjective, but I thought it was a decent tech debt reduction.
 >
->> On Wed, Sep 9, 2020 at 3:11 AM Jeff King <peff@peff.net> wrote:
->>>
->>> Yeah, it looks obviously correct. I am puzzled why "make coccicheck"
->>> doesn't find this, though. +cc Ren=C3=A9, as my favorite target for
->>> coccinelle nerd-snipes. :)
->>>
->>
->> I added this to contrib/coccinelle/object_id.cocci in v2.27.0
->>
->> @@
->> identifier f !=3D oideq;
->> expression E1, E2;
->> @@
->> - !oidcmp(E1, E2)
->> + oideq(E1, E2)
->>
->> And it found it:
->
-> Interesting. The existing rule is:
->
->   struct object_id *OIDPTR1;
->   struct object_id *OIDPTR2;
->   @@
->   - oidcmp(OIDPTR1, OIDPTR2) =3D=3D 0
->   + oideq(OIDPTR1, OIDPTR2)
->
-> The "=3D=3D 0" part looks like it might be significant, but it's not.
-> Coccinelle knows that "!foo" is the same as "foo =3D=3D 0" (and you can
-> confirm by tweaking it).
+> I wanted to send this reroll quickly since I had promised it in standup last
+> week, but I've got pretty good progress locally on the patch for configuring
+> "hook.runHookDir"; I'm planning to send that soon, probably this week.
 
-It is significant in the sense that "x =3D=3D 0" in the semantic patch als=
-o
-matches "!x" in the code, but "!x" in the semantic patch doesn't match
-"x =3D=3D 0".  That's because coccinelle has this isomorphism built in
-(in /usr/lib/coccinelle/standard.iso on my machine):
+I've had the attached merge-fix patch as a way to adjust argv_array
+to strvec transition [*1*], but now *most* but not all parts of this
+series have been migrated to the strvec API, you should apply some
+parts in the merge-fix patch to your copy.  I think the changes in
+the old "merge-fix" patch to *.c and *.h are already in your series
+that has been rebased on a newer 'master' that has strvec, but
+documentation and possibly in-code comments may need to be adjusted.
 
-Expression
-@ not_int1 @
-int X;
-@@
- !X =3D> X =3D=3D 0
+Another way to sanity check the result would be to run this:
 
-It's a one-way isomorphism (i.e. a rule that says that certain
-expressions have the same meaning).  So we should use "x =3D=3D 0" over "!=
-x"
-in semantic patches to cover both cases.
+    $ git diff master..es/config-hooks | grep -i argv.array
 
-> So the relevant part is probably that our existing rule specifies the
-> exact type, whereas your rule allows any expression.
->
-> And indeed, if I do this, it works:
->
-> diff --git a/contrib/coccinelle/object_id.cocci b/contrib/coccinelle/obj=
-ect_id.cocci
-> index ddf4f22bd7..62a6cee0eb 100644
-> --- a/contrib/coccinelle/object_id.cocci
-> +++ b/contrib/coccinelle/object_id.cocci
-> @@ -55,8 +55,8 @@ struct object_id OID;
->  + oidcmp(&OID, OIDPTR)
->
->  @@
-> -struct object_id *OIDPTR1;
-> -struct object_id *OIDPTR2;
-> +expression OIDPTR1;
-> +expression OIDPTR2;
->  @@
->  - oidcmp(OIDPTR1, OIDPTR2) =3D=3D 0
->  + oideq(OIDPTR1, OIDPTR2)
->
-> Which really _seems_ like a bug in coccinelle, unless I am missing
-> something. Because both of those parameters look like object_id pointers
-> (and the compiler would be complaining if it were not the case).
-Yes, seems it looks like coccinelle gives up trying to determine the
-type of these things.
+Thanks.  
 
-And while this one here matches the example in blame.c:
+[Footnote]
 
-@@
-expression A, B;
-@@
-- 0 =3D=3D oidcmp(A, B)
-+ oideq(A, B)
+*1* The way I work with a topic that causes conflicts with other
+    topics is to merge a new version of topic and letting the rerere
+    records I created while resolving the conflicts with the
+    previous round.  After textual conflicts are thusly resolved, if
+    there are further changes that do not cause textual conflict
+    that are necessary, they are written in the form of a
+    "merge-fix" patch like the attached.
 
-... and this one does as well:
+-- >8 --
 
-@@
-expression A, B;
-@@
-- !oidcmp
-+ oideq
-  (A, B)
+ Documentation/technical/api-parse-options.txt  |  4 ++--
+ Documentation/technical/config-based-hooks.txt |  4 ++--
+ builtin/hook.c                                 | 16 ++++++++--------
+ hook.c                                         |  6 +++---
+ hook.h                                         |  4 ++--
+ parse-options-cb.c                             |  8 ++++----
+ parse-options.h                                |  6 +++---
+ 7 files changed, 24 insertions(+), 24 deletions(-)
 
-... the following one doesn't:
+diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+index b4f1fc4a1a..679bd98629 100644
+--- a/Documentation/technical/api-parse-options.txt
++++ b/Documentation/technical/api-parse-options.txt
+@@ -173,9 +173,9 @@ There are some macros to easily define options:
+ 	The string argument is stored as an element in `string_list`.
+ 	Use of `--no-option` will clear the list of preceding values.
+ 
+-`OPT_ARGV_ARRAY(short, long, &struct argv_array, arg_str, description)`::
++`OPT_STRVEC(short, long, &struct strvec, arg_str, description)`::
+ 	Introduce an option with a string argument.
+-	The string argument is stored as an element in `argv_array`.
++	The string argument is stored as an element in `strvec`.
+ 	Use of `--no-option` will clear the list of preceding values.
+ 
+ `OPT_INTEGER(short, long, &int_var, description)`::
+diff --git a/Documentation/technical/config-based-hooks.txt b/Documentation/technical/config-based-hooks.txt
+index c6e762b192..4443f70ded 100644
+--- a/Documentation/technical/config-based-hooks.txt
++++ b/Documentation/technical/config-based-hooks.txt
+@@ -106,10 +106,10 @@ a concise config afterwards. It may take a form similar to `git rebase
+ `hook.c` and `hook.h` are responsible for interacting with the config files. In
+ the case when the code generating a hook event doesn't have special concerns
+ about how to run the hooks, the hook library will provide a basic API to call
+-all hooks in config order with an `argv_array` provided by the code which
++all hooks in config order with an `strvec` provided by the code which
+ generates the hook event:
+ 
+-*`int run_hooks(const char *hookname, struct argv_array *args)`*
++*`int run_hooks(const char *hookname, struct strvec *args)`*
+ 
+ This call includes the hook command provided by `run-command.h:find_hook()`;
+ eventually, this legacy hook will be gated by a config `hook.runHookDir`. The
+diff --git a/builtin/hook.c b/builtin/hook.c
+index cd61fad5fb..debcb5a77a 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -5,7 +5,7 @@
+ #include "hook.h"
+ #include "parse-options.h"
+ #include "strbuf.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ static const char * const builtin_hook_usage[] = {
+ 	N_("git hook list <hookname>"),
+@@ -67,14 +67,14 @@ static int list(int argc, const char **argv, const char *prefix)
+ static int run(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf hookname = STRBUF_INIT;
+-	struct argv_array env_argv = ARGV_ARRAY_INIT;
+-	struct argv_array arg_argv = ARGV_ARRAY_INIT;
++	struct strvec env_argv = STRVEC_INIT;
++	struct strvec arg_argv = STRVEC_INIT;
+ 
+ 	struct option run_options[] = {
+-		OPT_ARGV_ARRAY('e', "env", &env_argv, N_("var"),
+-			       N_("environment variables for hook to use")),
+-		OPT_ARGV_ARRAY('a', "arg", &arg_argv, N_("args"),
+-			       N_("argument to pass to hook")),
++		OPT_STRVEC('e', "env", &env_argv, N_("var"),
++			   N_("environment variables for hook to use")),
++		OPT_STRVEC('a', "arg", &arg_argv, N_("args"),
++			   N_("argument to pass to hook")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -87,7 +87,7 @@ static int run(int argc, const char **argv, const char *prefix)
+ 
+ 	strbuf_addstr(&hookname, argv[0]);
+ 
+-	return run_hooks(env_argv.argv, &hookname, &arg_argv);
++	return run_hooks(env_argv.v, &hookname, &arg_argv);
+ }
+ 
+ int cmd_hook(int argc, const char **argv, const char *prefix)
+diff --git a/hook.c b/hook.c
+index 902e213173..40d319adb1 100644
+--- a/hook.c
++++ b/hook.c
+@@ -98,7 +98,7 @@ struct list_head* hook_list(const struct strbuf* hookname)
+ }
+ 
+ int run_hooks(const char *const *env, const struct strbuf *hookname,
+-	      const struct argv_array *args)
++	      const struct strvec *args)
+ {
+ 	struct list_head *to_run, *pos = NULL, *tmp = NULL;
+ 	int rc = 0;
+@@ -110,14 +110,14 @@ int run_hooks(const char *const *env, const struct strbuf *hookname,
+ 		struct hook *hook = list_entry(pos, struct hook, list);
+ 
+ 		/* add command */
+-		argv_array_push(&hook_proc.args, hook->command.buf);
++		strvec_push(&hook_proc.args, hook->command.buf);
+ 
+ 		/*
+ 		 * add passed-in argv, without expanding - let the user get back
+ 		 * exactly what they put in
+ 		 */
+ 		if (args)
+-			argv_array_pushv(&hook_proc.args, args->argv);
++			strvec_pushv(&hook_proc.args, args->v);
+ 
+ 		hook_proc.env = env;
+ 		hook_proc.no_stdin = 1;
+diff --git a/hook.h b/hook.h
+index cf598d6ccb..d020788a6b 100644
+--- a/hook.h
++++ b/hook.h
+@@ -1,7 +1,7 @@
+ #include "config.h"
+ #include "list.h"
+ #include "strbuf.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ struct hook
+ {
+@@ -12,7 +12,7 @@ struct hook
+ 
+ struct list_head* hook_list(const struct strbuf *hookname);
+ int run_hooks(const char *const *env, const struct strbuf *hookname,
+-	      const struct argv_array *args);
++	      const struct strvec *args);
+ 
+ void free_hook(struct hook *ptr);
+ void clear_hook_list(void);
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 4f993cd734..d2b8b7b98a 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -205,19 +205,19 @@ int parse_opt_string_list(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
+-int parse_opt_argv_array(const struct option *opt, const char *arg, int unset)
++int parse_opt_strvec(const struct option *opt, const char *arg, int unset)
+ {
+-	struct argv_array *v = opt->value;
++	struct strvec *v = opt->value;
+ 
+ 	if (unset) {
+-		argv_array_clear(v);
++		strvec_clear(v);
+ 		return 0;
+ 	}
+ 
+ 	if (!arg)
+ 		return -1;
+ 
+-	argv_array_push(v, arg);
++	strvec_push(v, arg);
+ 	return 0;
+ }
+ 
+diff --git a/parse-options.h b/parse-options.h
+index e2e2de75c8..177259488b 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -177,9 +177,9 @@ struct option {
+ #define OPT_STRING_LIST(s, l, v, a, h) \
+ 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
+ 				      (h), 0, &parse_opt_string_list }
+-#define OPT_ARGV_ARRAY(s, l, v, a, h) \
++#define OPT_STRVEC(s, l, v, a, h) \
+ 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
+-				      (h), 0, &parse_opt_argv_array }
++				      (h), 0, &parse_opt_strvec }
+ #define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG, &parse_opt_tertiary }
+ #define OPT_EXPIRY_DATE(s, l, v, h) \
+@@ -299,7 +299,7 @@ int parse_opt_commits(const struct option *, const char *, int);
+ int parse_opt_commit(const struct option *, const char *, int);
+ int parse_opt_tertiary(const struct option *, const char *, int);
+ int parse_opt_string_list(const struct option *, const char *, int);
+-int parse_opt_argv_array(const struct option *, const char *, int);
++int parse_opt_strvec(const struct option *, const char *, int);
+ int parse_opt_noop_cb(const struct option *, const char *, int);
+ enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
+ 					   const struct option *,
+-- 
+2.28.0-558-g7a0184fd7b
 
-@@
-expression A, B;
-@@
-- 0 =3D=3D oidcmp
-+ oideq
-  (A, B)
-
-... and neither does this one:
-
-@@
-expression A, B;
-@@
-- oidcmp
-+ oideq
-  (A, B)
-- =3D=3D 0
-
-So it helps to try some variants in the hope to bypass some of the
-restrictions/bugs/misunderstandings. O_o
-
-Ren=C3=A9
