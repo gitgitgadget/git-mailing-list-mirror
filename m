@@ -2,174 +2,132 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D32CCC433E2
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 19:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E96DC433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 19:47:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F1AA21D6C
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 19:17:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B95A20897
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 19:47:40 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ht6ze2U/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726534AbgIITRu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 15:17:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52538 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725772AbgIITRs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 15:17:48 -0400
-Received: (qmail 6996 invoked by uid 109); 9 Sep 2020 19:17:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Sep 2020 19:17:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4841 invoked by uid 111); 9 Sep 2020 19:17:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Sep 2020 15:17:48 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 9 Sep 2020 15:17:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        whydoubt@gmail.com, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] blame.c: replace instance of !oidcmp for oideq
-Message-ID: <20200909191746.GA2514794@coredump.intra.peff.net>
-References: <20200907171639.766547-1-eantoranz@gmail.com>
- <ce94b41f-e829-d7ca-a5f5-e41748caea81@gmail.com>
- <20200909091149.GB2496536@coredump.intra.peff.net>
- <CAOc6etZS3mGxsPPh25XFi2-qR0TNzq0Gx1NrydgQwmHbsjxejA@mail.gmail.com>
- <20200909191345.GA2511547@coredump.intra.peff.net>
+        id S1726440AbgIITrj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 15:47:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63647 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726184AbgIITri (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 15:47:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C3E56F757A;
+        Wed,  9 Sep 2020 15:47:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZO7TUsaq+UF/L1dpHdE6Cg9JLnQ=; b=ht6ze2
+        U/xLXPgwzIkSkivDWnCl+83ubGZg057bep8NWBpLBAr1Zb+rSqAXbMThdld0tNZ7
+        SqHlJXdAI3ot4527N0Zph1XHwoI69Udlt8dy8iOIWIEu2oJojdfEsVuADmZH+I4t
+        Z+XvTWQhbP7IQ1/kZx/P7lm7+aUWJUWeOItAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QIUIQsmwncGERFYU/OHD7TWNh7+NTzOh
+        2GLfn4XODHEyqMMVLlnPPP1A2kj/6dLqcVP1KpEHANuohWe8Y7dNADu9zy6ojFNz
+        8jDeExyht7d5YD4JRIuF6pI8fIkyz6rd/DzON0taRsMIcnI2RmZvdi1hmcponkqz
+        BcEa/T7kQQk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BD076F7579;
+        Wed,  9 Sep 2020 15:47:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1783CF7578;
+        Wed,  9 Sep 2020 15:47:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] config: complain about --worktree outside of a git repo
+References: <3dfd33eda3f9cbd0d87ba7bb31f4501aa7b8b8a8.1599657308.git.matheus.bernardino@usp.br>
+Date:   Wed, 09 Sep 2020 12:47:30 -0700
+In-Reply-To: <3dfd33eda3f9cbd0d87ba7bb31f4501aa7b8b8a8.1599657308.git.matheus.bernardino@usp.br>
+        (Matheus Tavares's message of "Wed, 9 Sep 2020 10:16:08 -0300")
+Message-ID: <xmqqeenavijx.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200909191345.GA2511547@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4CF1E360-F2D5-11EA-939D-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 09, 2020 at 03:13:46PM -0400, Jeff King wrote:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-> Which really _seems_ like a bug in coccinelle, unless I am missing
-> something. Because both of those parameters look like object_id pointers
-> (and the compiler would be complaining if it were not the case).  But I
-> also wonder if giving the specific types in the coccinelle rule is
-> buying us anything. If you passed two void pointers or ints or whatever
-> to !oidcmp(), we'd still want to rewrite it as oideq().
+> Running `git config --worktree` outside of a git repository hits a BUG()
+> when trying to enumerate the worktrees. Let's catch this error earlier
+> and die() with a friendlier message.
+>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+>  builtin/config.c  | 12 ++++++++----
+>  t/t1300-config.sh | 13 ++++++++-----
+>  2 files changed, 16 insertions(+), 9 deletions(-)
+>
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 5e39f61885..53e411d68a 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -628,11 +628,15 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  		usage_builtin_config();
+>  	}
+>  
+> -	if (use_local_config && nongit)
+> -		die(_("--local can only be used inside a git repository"));
+> +	if (nongit) {
+> +		if (use_local_config)
+> +			die(_("--local can only be used inside a git repository"));
+> +		if (given_config_source.blob)
+> +			die(_("--blob can only be used inside a git repository"));
+> +		if (use_worktree_config)
+> +			die(_("--worktree can only be used inside a git repository"));
+>  
+> -	if (given_config_source.blob && nongit)
+> -		die(_("--blob can only be used inside a git repository"));
+> +	}
 
-And indeed, just blindly swapping out "struct object_id" for
-"expression" in the coccinelle file (patch below), shows another spot
-that was missed:
+OK.  The updated structure makes it more obvious that we handle
+three special cases.  Good jobs.
 
-diff -u -p a/packfile.c b/packfile.c
---- a/packfile.c
-+++ b/packfile.c
-@@ -735,7 +735,7 @@ struct packed_git *add_packed_git(const
- 	p->mtime = st.st_mtime;
- 	if (path_len < the_hash_algo->hexsz ||
- 	    get_sha1_hex(path + path_len - the_hash_algo->hexsz, p->hash))
--		hashclr(p->hash);
-+		oidclr(p);
- 	return p;
- }
- 
+Thanks.
 
-Maybe it's worth being looser in our cocci patch definitions. I'm having
-trouble thinking of a downside...
-
--Peff
-
--- >8 --
-Here's the patch to loosen object_id.cocci. Perhaps we'd want to do the
-same in other files.
-
-diff --git a/contrib/coccinelle/object_id.cocci b/contrib/coccinelle/object_id.cocci
-index ddf4f22bd7..738c60923e 100644
---- a/contrib/coccinelle/object_id.cocci
-+++ b/contrib/coccinelle/object_id.cocci
-@@ -1,62 +1,62 @@
- @@
--struct object_id OID;
-+expression OID;
- @@
- - is_null_sha1(OID.hash)
- + is_null_oid(&OID)
- 
- @@
--struct object_id *OIDPTR;
-+expression *OIDPTR;
- @@
- - is_null_sha1(OIDPTR->hash)
- + is_null_oid(OIDPTR)
- 
- @@
--struct object_id OID;
-+expression OID;
- @@
- - hashclr(OID.hash)
- + oidclr(&OID)
- 
- @@
- identifier f != oidclr;
--struct object_id *OIDPTR;
-+expression *OIDPTR;
- @@
-   f(...) {<...
- - hashclr(OIDPTR->hash)
- + oidclr(OIDPTR)
-   ...>}
- 
- @@
--struct object_id OID1, OID2;
-+expression OID1, OID2;
- @@
- - hashcmp(OID1.hash, OID2.hash)
- + oidcmp(&OID1, &OID2)
- 
- @@
- identifier f != oidcmp;
--struct object_id *OIDPTR1, OIDPTR2;
-+expression *OIDPTR1, OIDPTR2;
- @@
-   f(...) {<...
- - hashcmp(OIDPTR1->hash, OIDPTR2->hash)
- + oidcmp(OIDPTR1, OIDPTR2)
-   ...>}
- 
- @@
--struct object_id *OIDPTR;
--struct object_id OID;
-+expression *OIDPTR;
-+expression OID;
- @@
- - hashcmp(OIDPTR->hash, OID.hash)
- + oidcmp(OIDPTR, &OID)
- 
- @@
--struct object_id *OIDPTR;
--struct object_id OID;
-+expression *OIDPTR;
-+expression OID;
- @@
- - hashcmp(OID.hash, OIDPTR->hash)
- + oidcmp(&OID, OIDPTR)
- 
- @@
--struct object_id *OIDPTR1;
--struct object_id *OIDPTR2;
-+expression OIDPTR1;
-+expression OIDPTR2;
- @@
- - oidcmp(OIDPTR1, OIDPTR2) == 0
- + oideq(OIDPTR1, OIDPTR2)
-@@ -71,8 +71,8 @@ expression E1, E2;
-   ...>}
- 
- @@
--struct object_id *OIDPTR1;
--struct object_id *OIDPTR2;
-+expression *OIDPTR1;
-+expression *OIDPTR2;
- @@
- - oidcmp(OIDPTR1, OIDPTR2) != 0
- + !oideq(OIDPTR1, OIDPTR2)
+>  
+>  	if (given_config_source.file &&
+>  			!strcmp(given_config_source.file, "-")) {
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 97ebfe1f9d..825d9a184f 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1836,11 +1836,14 @@ test_expect_success '--show-scope with --show-origin' '
+>  	test_cmp expect output
+>  '
+>  
+> -test_expect_success '--local requires a repo' '
+> -	# we expect 128 to ensure that we do not simply
+> -	# fail to find anything and return code "1"
+> -	test_expect_code 128 nongit git config --local foo.bar
+> -'
+> +for opt in --local --worktree
+> +do
+> +	test_expect_success "$opt requires a repo" '
+> +		# we expect 128 to ensure that we do not simply
+> +		# fail to find anything and return code "1"
+> +		test_expect_code 128 nongit git config $opt foo.bar
+> +	'
+> +done
+>  
+>  cat >.git/config <<-\EOF &&
+>  [core]
