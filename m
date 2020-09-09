@@ -2,105 +2,132 @@ Return-Path: <SRS0=4khD=CT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E48FC433E2
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 02:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E23C43461
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 02:47:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D325A21D40
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 02:46:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B3D421D40
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 02:47:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=lufia-org.20150623.gappssmtp.com header.i=@lufia-org.20150623.gappssmtp.com header.b="y7hdj7AD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKQfRn/S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730425AbgIJCAd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 22:00:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51338 "EHLO
+        id S1730413AbgIJCAZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 22:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730159AbgIJByb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 21:54:31 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7465CC06134B
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 17:35:56 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id nw23so6156787ejb.4
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 17:35:56 -0700 (PDT)
+        with ESMTP id S1730116AbgIJBwb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 21:52:31 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26679C0617AB
+        for <git@vger.kernel.org>; Wed,  9 Sep 2020 16:32:51 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id c196so3670809pfc.0
+        for <git@vger.kernel.org>; Wed, 09 Sep 2020 16:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lufia-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0ULL4dLCx4B2UD26X9wsvj8SeopXu+E+4KRUEZJttjs=;
-        b=y7hdj7ADn64SnzXvdjqaXDYA7+QXtolmKkok9xOk4U7YQ56sCLpxL4xzqGx4PDGvpv
-         PZjzWgwL49lM5LEJ8uxlB3kn5ow6q5HWMs0MARKqgB66RFPGjTD9Z8zmeOYgv3RmpEfD
-         ViPMSKE+sJlTv8E6VdMth2EqQXzC5YS4P9tX16Sij5/NbOqnjXlMQfXrNpnAx2fHhhAT
-         En4Mpmi56ysiMKGD2XQfc6pkGCS1YAcYnxYyoRLAgoOoDpsFkUNEIFjkV5IdoGcmc2Zp
-         I17K9XOeAgOmAI+oxQx2fUZuOFby1odCKq4CaSo23Pe5mFyQtpM78S7ohAzEm5pojZV5
-         C3Ew==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ejk7ltELmW/MvSu2OKAJSK1SrjjHZjUu7YypBs/pKkY=;
+        b=QKQfRn/Sr2inUm/JF8NfVFXWjezzGcno5nDSFZOiZYmeqRRaYCB1kEhrxPpdCuGCCJ
+         A8R9meVoYYdfv3zYFUTgIqEM8ehQYaDmd0tbv99N16Lh0+8i+zTULmt6YfA6YOGariD+
+         NZdJnQOZ1iRaRrjTqV0nGCwzEtLbImpnvTHER4ocrJxUBtHnZR5th1UCfkbMN3bJH6A3
+         HhOgThAKq9RbKRxuPN4VIYgtKZ09f8P95ggN2dlvNG7IhYA2YeuzF1PhJXpzN47rbT2n
+         ByCiptoIQN4fwZb7q6MBjKcQ4/M4Dl/rajV/TegokDom+vAKNNrzM+KJCyZFP7zOLqMC
+         X1nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0ULL4dLCx4B2UD26X9wsvj8SeopXu+E+4KRUEZJttjs=;
-        b=HZ3pKsDZ5/P+3nh9gbf2Nndc20VhqL1PKLVOJLudlVLQeBwbJdOI99dm5oG8bWDcDq
-         bhw4K1Do6/VlHeGHFyQ91Y/Fg8fTsbRnEZ00Gc9oqXDI20w7oQCDBYlG0670XNZ5b2TN
-         R4j2FUxIQE+0SuMESLs/xiGSIZ/QpMiGwl+gNZJF2dsNT7ureSWenQ4yQXOx0j/ptYXk
-         f9eFe8mczCjcpeWCmVqy2qqtu3azTPXJ04SwLmYYMHDaowUc+bPy0aiJ/POgdyNIlex9
-         yg/8XDgdspHY/oEn9jeLIK34NZWq4wVLuWQNgnOutiTedfor/GBnTECwPFgwCtr3OsUw
-         T6aA==
-X-Gm-Message-State: AOAM533J+bG0Ca1jHC3nf5xXTtyFNoODMKoqB7P7dL6oa/92h/clZh3h
-        0jmyYz0wEmn3AqhW2cFKlLvDoGeTKB07mB58l5E++J8KPXhSxAqHq3E=
-X-Google-Smtp-Source: ABdhPJwDeYLGx80/Fw21hDgD3rCqNeipvnfRL1eEOdmKmh3VxZb/0eNo+4azW61cXQsEukcOcDU11gVtz/2Rix8uig4=
-X-Received: by 2002:a17:906:ce3b:: with SMTP id sd27mr6218685ejb.433.1599698150457;
- Wed, 09 Sep 2020 17:35:50 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ejk7ltELmW/MvSu2OKAJSK1SrjjHZjUu7YypBs/pKkY=;
+        b=EyjTeFuwaw7YK7XCH990r3vH3ur6nT0hlwg/XaKSJWy6qU7NvG/l3YL1wG5NHqqQkX
+         /ysFfhxr7bG2C+c72Q7G8sZy8+KkeOMr353NvaW7Zo7AT7ejj6RVnK8Uw3W3cRzgeUIf
+         wCvVTLNZAsBOTsn33jZ+hjIOAreLDx6vlNhNjqak8kGvu3Sc+ZBAtJgfi4xyWiM8eMFv
+         8M+zq/le01OP3NL+UHsHF9u4/zxdWdsbaAySV2ZXuSNl90YE6RtVruSpvWWGgJ8fHtRy
+         nHjF1uMBYm8rMyQzqBa0EdL3XINn9q3Y4HePYyH6zIutghjodY2iUiHj+rR/UPw0NvDG
+         9SpA==
+X-Gm-Message-State: AOAM530RgRiJEe0lzQDTbC0YvTkqsbd14xujEPiJFOBUi7GGJCLzDTxG
+        uHzy7ft8ohpeoCHRmObd/whRXdBRa1E=
+X-Google-Smtp-Source: ABdhPJwoDaR9RcAEJVI/iLlMZwLV/nn/bhIbE0loUBa/XEeBAINiJ+en0skUkAt6oqFBX5kLlekl7g==
+X-Received: by 2002:a17:902:d354:: with SMTP id l20mr2999329plk.81.1599694370603;
+        Wed, 09 Sep 2020 16:32:50 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id 20sm3846300pfv.87.2020.09.09.16.32.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Sep 2020 16:32:49 -0700 (PDT)
+Date:   Wed, 9 Sep 2020 16:32:47 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v5 6/8] config: correctly read worktree configs in
+ submodules
+Message-ID: <20200909233247.GA667601@google.com>
+References: <cover.1599026986.git.matheus.bernardino@usp.br>
+ <3e02e1bd248438e0b435a19d857432edcaa15a2c.1599026986.git.matheus.bernardino@usp.br>
+ <20200902201523.GA3941032@google.com>
+ <CAHd-oW6jCiaXdsKnhde0iBDWXpZyh4cf5j_8zW7x=W3BaZ9Kbg@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.694.git.1596675905.gitgitgadget@gmail.com>
- <pull.694.v2.git.1599680861.gitgitgadget@gmail.com> <c850888c25d4d1e1c6b0ca40ab4638462c1649fa.1599680861.git.gitgitgadget@gmail.com>
- <CAPig+cQ_KCAGpmfBAymBefB2JSVpw0-bk5HOnm41=SpADEyDnA@mail.gmail.com>
-In-Reply-To: <CAPig+cQ_KCAGpmfBAymBefB2JSVpw0-bk5HOnm41=SpADEyDnA@mail.gmail.com>
-From:   Kyohei Kadota <lufia@lufia.org>
-Date:   Thu, 10 Sep 2020 09:35:39 +0900
-Message-ID: <CAFMepc=wvY3zycHbJkX3Av55SgCPLExnqaxEUP_F403KTsz49A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] Fit to Plan 9's ANSI/POSIX compatibility layer
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd-oW6jCiaXdsKnhde0iBDWXpZyh4cf5j_8zW7x=W3BaZ9Kbg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your review!
+Hi,
 
-2020=E5=B9=B49=E6=9C=8810=E6=97=A5(=E6=9C=A8) 4:56 Eric Sunshine <sunshine@=
-sunshineco.com>:
->
-> On Wed, Sep 9, 2020 at 3:48 PM Kyohei Kadota via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > And its sed(1)'s label is limited to maximum seven characters.
-> > Therefore I replaced some labels to drop a character.
-> >
-> > * close -> cl
-> > * continue -> cont (cnt is used for count)
-> > * line -> ln
-> > * hered -> hdoc
-> > * shell -> sh
-> > * string -> str
->
-> These are reasonable. "cl" feels a little odd, but I can't think of
-> anything better.
->
-> > diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> > @@ -24,7 +24,7 @@ category_list () {
-> >  get_synopsis () {
-> >         sed -n '
-> > -               /^NAME/,/'"$1"'/H
-> > +               /^NAME/,/'"$1"'/h
->
-> This change is not mentioned in the commit message. "H" and "h" are
-> very different commands, so it's difficult, at a glance, to tell if
-> this change is even valid. Some explanation in the commit message
-> would help (if it is indeed valid).
+Matheus Tavares Bernardino wrote:
 
-I missed, this change was not needed. It is remnants of trial and error.
+> Sorry for the late reply, last week was quite busy.
+
+No problem.  It's an unusual time for everyone.
+
+[...]
+> On Wed, Sep 2, 2020 at 5:15 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>> @@ -1824,27 +1824,33 @@ void read_early_config(config_fn_t cb, void *data)
+>>         struct config_options opts = {0};
+>>         struct strbuf commondir = STRBUF_INIT;
+>>         struct strbuf gitdir = STRBUF_INIT;
+>> +       struct repository the_early_repo = {0};
+>>
+>>         opts.respect_includes = 1;
+>>
+>>         if (have_git_dir()) {
+>> -               opts.commondir = get_git_common_dir();
+>> -               opts.git_dir = get_git_dir();
+>> +               opts.repo = the_repository;
+>
+> I'm not very familiar with the code in setup.c so I apologize for the
+> noob question: have_git_dir() returns `startup_info->have_repository
+> || the_repository->gitdir`; so is it possible that it returns true but
+> the_repository->gitdir is not initialized yet? If so, should we also
+> check the_repository->gitdir here (before assigning opts.repo), and
+> call BUG() when it is NULL, like get_git_dir() does?
+>
+> Hmm, nevertheless, I see that you already check `opts.repo &&
+> opts.repo->gitdir` before trying to use it in
+> do_git_config_sequence(). So it should already cover this case, right?
+
+Right --- the main point is that a BUG() call represents "this can't
+happen", or in other words, it's an assertion failure.  As a matter of
+defensive coding functions like get_git_dir() guard against such cases
+to make debugging a little easier and exploitation a little more
+difficult when the impossible happens.
+
+[...]
+> Thanks a lot for this :) I was thinking of adding it as a preparatory
+> patch before the fix itself. May I have your S-o-B as the author?
+
+Sure!
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks,
+Jonathan
