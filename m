@@ -2,115 +2,103 @@ Return-Path: <SRS0=gV3S=CS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8970C43461
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DD17C433E2
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:36:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70BDF216C4
-	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:33:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39B1A21D7A
+	for <git@archiver.kernel.org>; Wed,  9 Sep 2020 09:36:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIIOofh0"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gzs4O6tE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbgIIJdX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Sep 2020 05:33:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48550 "EHLO
+        id S1730068AbgIIJfx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Sep 2020 05:35:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725826AbgIIJdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Sep 2020 05:33:21 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F6C1C061573
-        for <git@vger.kernel.org>; Wed,  9 Sep 2020 02:33:20 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id e16so2185521wrm.2
-        for <git@vger.kernel.org>; Wed, 09 Sep 2020 02:33:20 -0700 (PDT)
+        with ESMTP id S1726005AbgIIJfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Sep 2020 05:35:48 -0400
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB368C061573
+        for <git@vger.kernel.org>; Wed,  9 Sep 2020 02:35:48 -0700 (PDT)
+Received: by mail-vs1-xe2a.google.com with SMTP id s62so959979vsc.7
+        for <git@vger.kernel.org>; Wed, 09 Sep 2020 02:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=0WOzhSpzgc/CnwT1503MxDFZaAq3KBaYzU0B5OAVXSs=;
-        b=LIIOofh0XncJwbvZP1t1UaFamx2XHqwH2RSZIJ5SCMt/uu1OxIfB0tsNk+2gkZ67H2
-         1OEzWFwIP+ChL0FCA+tIkuF3JZsqa+NIs0ETqjYjpBqiqsxUjLcrpDxRBjqlXYNbigmd
-         qxpHi/1loajQ9onvq+CtXS7gxWWnN+QX8RDHRXYdzp573zBnNMBMyUrqxdbBJJDpkQRp
-         yW7OvbwX81B6mTtCGFn1VMEuoUoaTz0pphVyRTNkRzpdUA5+yriWM1gBP3wWuQzxboiU
-         qpdD8rlYSDxEgO6Rj9g/sW9/wq1ARluBs7L4WY78ukJTaF2l1cXeQRbWN5LfO0p8xM9i
-         U+DQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wHJK/HA8irhDOOhyjpkFmniXORsOPvOfzG30W8RJ/Ds=;
+        b=gzs4O6tEWbeuLIiPwJOHNe2XLQVGInSh48jIcoBQmj/CVrGsJa7u91y08PfhlWUYB/
+         YyubR3wiOWCn7sy9H5EPNg6B3EnEuYnnPGr6BksngWwc/wuhBWdq4zNczNM5AzSK3g4a
+         FoBjzoqMJKXSnyBnzGObQzNqobS2eeRPRo/zl2DbodD8ZQhpI8lWkAwcq64n3RdyzXT7
+         Rvf2jpL6oOXbKAotm6l9ZDGK4i3l491lgtUjxlKvNDA2SOBFsAP370Pk0eU81aEcEXjR
+         mty/nsWk3xZUPV2/iS2uXxM5Ek0LILHQx70aZwLrmM4b19fxApGHmdXbYUR+MccujWtq
+         mFbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0WOzhSpzgc/CnwT1503MxDFZaAq3KBaYzU0B5OAVXSs=;
-        b=hLGZiHFpFBH+w/taBI5G+wVbfp/j/Frt8zT61OrMvTD0Zg+JlEFw6f57sve5geV5NM
-         4gHddH74ChKxUd6IsTzVvUZ2Xh9UeJ6urPrWyuOFsmGOjk2RL69E72bRFgTif7x4plTF
-         4DQH05d+DJs3mNCn+VUr6hU0R6WB6ke1cYQJ78rasLAW3xIpe2gC220N0J90qc5OI+km
-         a8BCvRrh27YeMB3TDTooMnKOT0QjMH0SpOD9M1PyaLbQvtGHeOpu2scbaIsgUCJcMb20
-         hSlK+HibHl48ri7qnchEsY2kUbieRbzadAgWR1wyshlODoUsUSf6S64My399g4K/JwCD
-         /P0Q==
-X-Gm-Message-State: AOAM533qIetX37zipJDnfqRYKfW1/K6ysdFTOEl6M1AOuvEzto9Vjiys
-        27c07FOOZPoDpvt4VKxmaZ6gkEbXLxk=
-X-Google-Smtp-Source: ABdhPJwd7sTUb8XjYxYi8wWS+e/kndyopA7Svh+yEOSwXXUDNh0cEtTqIP+PerMnLwIVPveBTK/AMQ==
-X-Received: by 2002:a5d:4ccb:: with SMTP id c11mr2883933wrt.159.1599643997708;
-        Wed, 09 Sep 2020 02:33:17 -0700 (PDT)
-Received: from [192.168.1.201] (151.252.189.80.dyn.plus.net. [80.189.252.151])
-        by smtp.googlemail.com with ESMTPSA id a74sm3171722wme.11.2020.09.09.02.33.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2020 02:33:17 -0700 (PDT)
-Subject: Re: No edit option when "git add --patch" a new file
-To:     Yuchen Ying <ych@google.com>, git@vger.kernel.org
-References: <CAF6j4hcSEhNvS-DYgNLNn3TdH1vkhgHZRC0fqWer_XM0PQxgYA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <4eb2c8ec-3ee3-5097-9cff-b650caf2c888@gmail.com>
-Date:   Wed, 9 Sep 2020 10:33:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wHJK/HA8irhDOOhyjpkFmniXORsOPvOfzG30W8RJ/Ds=;
+        b=n2BTST5G6EwKjJsekNyfZ6qgkcXqtgt+DygLCZrwlOrIPF5f9OZ4AZxozBts8SQYSm
+         /xu6l27MBlL9ky3PdfdcA/PRoH8co4lkwQn0clXyrwTg8ojEt6iNbAzialKR9oMKLuYb
+         u22yQC7uJ3GRif3h99FZEtP24U3bkUaxkfjU1amXiBoGZvOUwOy9E8av2kWIGuwMdakW
+         XvUGCkmJZOEo1c9m+WBmxhKCjZcdpcLdzzV6yhI2z+T0jA1SJnnk6mVkGNAOKbrHZAvu
+         Ixtf26gNu3TeGJI9DX0PCFOUEwW5q2zEIG4mAAuzgZxNmZKC2ll7mxxqnHE+tOAFnfz5
+         hFkw==
+X-Gm-Message-State: AOAM533qN+gFqGcGD4I+Fz2NMauqq3NY9Wp37ELZU89p+UuG9ya7jxKl
+        N+5C1i96w5g1sf8Dz1TZAFwhK1jzJrvQjT3dRsPaxg==
+X-Google-Smtp-Source: ABdhPJz34UGFcjcPPYs2uFDyZNxDWYrBDDX2LM0U84ZdzgGBa3EeDl/Ggz0BYIVBroOYm2YjQ+KF7yG9xMbvtxjTejk=
+X-Received: by 2002:a67:5d07:: with SMTP id r7mr1952686vsb.69.1599644145880;
+ Wed, 09 Sep 2020 02:35:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAF6j4hcSEhNvS-DYgNLNn3TdH1vkhgHZRC0fqWer_XM0PQxgYA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.712.git.1598628333959.gitgitgadget@gmail.com> <xmqqo8mfx4qd.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8mfx4qd.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 9 Sep 2020 11:35:34 +0200
+Message-ID: <CAFQ2z_OYn6cC5SCgv-49pa9VQ2ZEhbeZ9aGn4e-C7tsnQ=qWow@mail.gmail.com>
+Subject: Re: [PATCH] refs: move REF_LOG_ONLY to refs-internal.h
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/09/2020 17:16, Yuchen Ying wrote:
-> Hi list,
-> 
-> I was attempting to "add --patch" a newly created file but the "edit"
-> option is not provided.
-> 
-> Steps to reproduce this problem:
-> 
-> $ echo "test\ntest" > test
-> $ git add -N test
-> $ git add -p test
-> 
-> Expected: e is an option
-> Got:
-> 
-> $ git add -p
-> diff --git a/terraform/test b/terraform/test
-> index 0000000..992533b
-> --- /dev/null
-> +++ b/terraform/test
-> new file mode 100644
-> @@ -0,0 +1,2 @@
-> +asdf
-> +asdf
-> (1/1) Stage addition [y,n,q,a,d,?]? e
-> Sorry, cannot edit this hunk
+On Wed, Sep 9, 2020 at 12:50 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Hmph, I am not necessarily sure about "need to duplicate" [*1*], but
+> I do agree with the patch text---the bit should not belong to a
+> single "files-backend" backend.
+>
+> [Footnote]
+>
+> *1* obviously, a better alternative, if possible, would be to let
+>     the more generic layer do so without forcing the backends to
+>     duplicate.  But even if such a change were possible and we
+>     decide to avoid duplication, it does not make sense to have this
+>     bit specifically defined for the files-backend and nobody else.
 
-Thanks for taking the time to report this issue. I'm currently working
-on a fix which I hope to post later today as the issue was previously
-reported at
-https://public-inbox.org/git/CAB+jsAW_+NTJjDLG9uMrf4cc5rcwHLD5kTLk7QgvFCgryb22Gw@mail.gmail.com/
-I'll Cc you on the patch
+I'm not sure if it is possible. REFS_LOG_ONLY is used in the
+split_head_update() which is called from the middle of the
+files_transaction_prepare(). In particular, it can happen after a
+number of locks have already been taken. If this moves into the
+generic layer, the head split happens before the locks are taken,
+which could alter behavior.
 
-Best Wishes
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-Phillip
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
