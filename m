@@ -2,133 +2,75 @@ Return-Path: <SRS0=4khD=CT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA886C43461
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8249EC43461
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:51:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7EC8C21556
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:48:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmyWnPpo"
+	by mail.kernel.org (Postfix) with ESMTP id 4F265221E2
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:51:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726419AbgIJTss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 15:48:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49664 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725951AbgIJTsa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Sep 2020 15:48:30 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB37FC061757
-        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:48:26 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id y194so4092903vsc.4
-        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:48:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=k26pko0hwwBRW4jXrgO5W/RVo8ZUdiObIhHWpcvYn6M=;
-        b=hmyWnPpo3YeLQvoKy74o7HRd6S/7EGePUlH31IVrzHxME3mJJFbLPKSCebzseIivDy
-         lczjp142rx48hktXrkuYJ+8aVOoa3WXZpEIu5wVrWAtjda84TfQnIYSfHuDjSgDGmuby
-         d6PtprTzbugzeePKf9CVSvvQGJ2kXZ3ZWeA5mDbUYvjbpeDcpk97+PyMH0Rg4DxpkvYp
-         oYoMdl7K8gfN4hhuLK0Z1Qlsbz3QgyaVNMXLwBYsObXt1n679qRCWTlv8hpNPrH5/D+L
-         2JSnCB13DPu3TZZPzIuRutZQzoUgIpCcvuxPBU17ugykg/zGExPBmEYvny98qFFnrBln
-         QX3w==
+        id S1726951AbgIJTuf convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 10 Sep 2020 15:50:35 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42204 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbgIJTtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Sep 2020 15:49:20 -0400
+Received: by mail-ed1-f68.google.com with SMTP id l63so7560100edl.9
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:49:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=k26pko0hwwBRW4jXrgO5W/RVo8ZUdiObIhHWpcvYn6M=;
-        b=PI8nVQu9eCWLdKbfWRxzKJqcSUFXNRgugcLAQwu7z5XitV74q1PzrJGopGKcCzJxRL
-         F3jaR1RKg+UZ3bJAQFWoGA9/ba8EtW6qXz8BVaW6MKCY8Y9tBaJ6Z0nYdrJhpOzJi1ab
-         le4u1RBdAnJeuFuyrrRHwSJipUCcOHVnuFQD9LsMWWZjbUiq+KaHgGe/bGaR1EwrP2PL
-         JlUPkpv/cc0Bgm45ZEPlmVfhJusTOiK8ClKYGcOV4bnIO2RLRW22AOXKr8VRxQ5AQ4Ks
-         YrnoYalybc5KQ26bK1ocz5Sta/BEnTwOaq5m8fzXhUThtmjiD3glO3WjDBdhov3B4E9B
-         cwvA==
-X-Gm-Message-State: AOAM533iW0qqTGe9KWrA7ca1NXlpUZLoPwUgr1rOJE9RgKBCodgLan25
-        bps9j5mvMSbI3JUzN7KPkxgkrw1vHsbL1vEs74I=
-X-Google-Smtp-Source: ABdhPJxKQy+jVkwn/kxzCi5+aN7XYbEiJ6QPg9/mbrjf8RHb1NTZg7OnskEFEfTzTmxMXaxlV2VT7tYlHgT90Ffbg1U=
-X-Received: by 2002:a67:7d52:: with SMTP id y79mr5474338vsc.34.1599767305797;
- Thu, 10 Sep 2020 12:48:25 -0700 (PDT)
+        bh=+sOYINgFCXLhwZt1eg0i6a7v6552cIND0pBZm021SHo=;
+        b=oQeGGPDMol6Z/7rtR6LJih/lX192elMdlhjmSHdvfVLwmrTkfQjmbk30w0hxRlofXT
+         pSogsu681E3nhdiMegUJnJ+HpcemDqEkoeTurrhjRS4OkmOKyBagLSO5GpGm+fqTmcdf
+         K8LOyYtNAP5mFgiH/VzdvPXACctiFICZSx1Kg32kI5HErU9k0NIwZULY5vggi/DdNXW8
+         O5DMyZqctNkrFPFQFnQ4wsC7SwQwTMEa0AM1yeWGAs75j0B7ScUFFarvKSHGivxFsyYr
+         yIZD+bonztAaJZd6FK90avIH3PtUOdUrkxHVe82DEV8EDWHIO7Rg/0wt4Cy80hiUvqAF
+         hBzg==
+X-Gm-Message-State: AOAM533BZltmQ21YkKPChYd3RoliDgjZYTW9EQ7Z3sm73z8E4kA2MAOd
+        eCPwPi92FSrdG/qgMJPdxgtDLIHtV6kZThde+DCQkl6jRHY=
+X-Google-Smtp-Source: ABdhPJx7yAqiOHX9xi9yBM7WI5iZkmBkOw9Z/flgMyP250ge0cc4zXlbt/25NeHT2c19iyS2YgW2OMUv4YnqLERmcrg=
+X-Received: by 2002:aa7:d15a:: with SMTP id r26mr11123974edo.181.1599767358213;
+ Thu, 10 Sep 2020 12:49:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1599762679.git.martin.agren@gmail.com> <8383c246f8c23e61dedd69d6e69c72d51fd6b469.1599762679.git.martin.agren@gmail.com>
- <CAPig+cT_VvOiKBCC=E_P0R8SXkoWPVUxxOOLovOmr8N377YNdQ@mail.gmail.com>
-In-Reply-To: <CAPig+cT_VvOiKBCC=E_P0R8SXkoWPVUxxOOLovOmr8N377YNdQ@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 10 Sep 2020 21:48:13 +0200
-Message-ID: <CAN0heSrUWiZ_xar3G5rZG-c=8OVp5-eByS6rMXOw9wfTA8kmbA@mail.gmail.com>
-Subject: Re: [PATCH 8/8] worktree: simplify search for unique worktree
-To:     Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1599762679.git.martin.agren@gmail.com> <58a2469cc18839e57b45f687b6e484d69161a34c.1599762679.git.martin.agren@gmail.com>
+ <CAPig+cTZLqFayp0wZEFYkaXtoOx8HedUK1oQoOa+zq=Yrgvjbg@mail.gmail.com> <CAN0heSrQT9N3=e70qkgS_rOQ0oy0rrHqud=rRtr-r5JaL=ofNQ@mail.gmail.com>
+In-Reply-To: <CAN0heSrQT9N3=e70qkgS_rOQ0oy0rrHqud=rRtr-r5JaL=ofNQ@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 10 Sep 2020 15:49:07 -0400
+Message-ID: <CAPig+cSEOUebNV90Gec2KqskZgAmX=jd++s4tfAyYN6Up4_O3A@mail.gmail.com>
+Subject: Re: [PATCH 4/8] worktree: drop useless call to strbuf_reset
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 10 Sep 2020 at 21:28, Eric Sunshine <sunshine@sunshineco.com> wrote=
-:
+On Thu, Sep 10, 2020 at 3:40 PM Martin Ågren <martin.agren@gmail.com> wrote:
+> On Thu, 10 Sep 2020 at 21:15, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > I think this patch is wrong and should be dropped. That strbuf is
+> > static, and the called strbuf_worktree_ref() does not reset it, so
+> > each call to worktree_ref() will now merely append to the existing
+> > content (which is undesirable) following this change.
 >
-> On Thu, Sep 10, 2020 at 3:08 PM Martin =C3=85gren <martin.agren@gmail.com=
-> wrote:
-> > We track the number of worktrees we've found and break out of the loop
-> > early once we hit 2. This is because we're not really interested in the
-> > number of matches -- we just want to make sure that we don't find more
-> > than one worktree that matches the suffix. This can be done just as wel=
-l
-> > by checking the NULL-ness of the pointer where we collect our
-> > answer-to-be. Drop the redundant `nr_found` variable.
-> >
-> > Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> > ---
-> > diff --git a/worktree.c b/worktree.c
-> > @@ -172,13 +172,13 @@ static struct worktree *find_worktree_by_suffix(s=
-truct worktree **list,
-> >                                                 const char *suffix)
-> >  {
-> > -       for (; *list && nr_found < 2; list++) {
-> > +       for (; *list; list++) {
-> > @@ -186,11 +186,12 @@ static struct worktree *find_worktree_by_suffix(s=
-truct worktree **list,
-> >                 if ((!start || (start > 0 && is_dir_sep(path[start - 1]=
-))) &&
-> >                     !fspathcmp(suffix, path + start)) {
-> > +                       if (found)
-> > +                               return NULL;
-> >                         found =3D *list;
-> > -                       nr_found++;
-> >                 }
-> >         }
-> > -       return nr_found =3D=3D 1 ? found : NULL;
-> > +       return found;
->
-> Although this change appears to be correct and does simplify the code,
-> I think it also makes it a bit more opaque. With the explicit
-> `nr_found =3D=3D 1`, it is quite obvious that the function considers
-> "success" to be when one and only one entry is found and any other
-> number is failure. But with the revised code, it is harder to work out
-> precisely what the conditions are.
+> That's not to say this optimization won't ever be useful, of course. I
+> also begin to hope that no caller keeps their returned pointer around
+> for long. It only seems to be used from `other_ref_heads()` and that
+> looks ok. If we do want this strbuf reuse, maybe that function could
+> just keep its own strbuf and reuse it (not necessarily having it be
+> static) and learn not to call `worktree_ref(wt, "HEAD")` twice.
 
-Thanks for commenting. I found the original trickier than it had to be.
-It spreads out the logic in several places and is careful to short-cut
-the loop. My first thought was "why doesn't this just use the standard
-form?". But I'm open to the idea that it might be a fairly personal
-standard form... If there's any risk that someone else comes along and
-simplifies this to use a `nr_found` variable, then maybe file this under
-code churning?
-
-> Having said that, I think a simple
-> comment before the function would suffice to clear up the opaqueness.
-> Perhaps something like:
->
->     /* If exactly one worktree matches 'target', return it, else NULL. */
-
-That's a good suggestion regardless.
-
-Thanks
-Martin
+Yep, I wouldn't be unhappy to see worktree_ref() disappear altogether.
+There are no external callers and it would be easy enough to retrofit
+the lone internal caller to use the safer strbuf_worktree_ref()
+anyhow. Plus, both calls to worktree_ref() in other_head_refs() invoke
+it with the exact same arguments, `worktree_ref(wt, "HEAD")`, which
+makes one wonder if it need be called twice at all in that particular
+scenario.
