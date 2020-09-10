@@ -2,102 +2,133 @@ Return-Path: <SRS0=4khD=CT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6322DC43461
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA886C43461
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:48:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14DFA21D92
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:45:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EC8C21556
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:48:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iZKGbjCf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmyWnPpo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbgIJTox (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 15:44:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57709 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730727AbgIJPcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Sep 2020 11:32:47 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 962226AB89;
-        Thu, 10 Sep 2020 11:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WVdYgRmtBSMB
-        PV4rXg3lZ9SPI8c=; b=iZKGbjCfrq1aDJXdLtSk9DsGLQPNQefp2fCvBGReTU+i
-        Oy4QFF/FKFRwY96G6jhTUVseZ5sB2knw4pfqEWuPLMifWmumC2vxqI/mxsgxYc3Q
-        r2q/0nFcf2a4j5bLM7MWtupZ+JV3XBN52DF3wOyZGcGBCUdSVsrgOcg8yxUGz/w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=lOQegn
-        zettXJh3dh2qfrb6ebnSqt0pQCYRAcG6ZzmYo0aLVxI6arD0juHWNrFtEVmeb4zA
-        M8erHAJJW/FlI21u3hMuQ4SIf+y0is4yFnpMrS+G554uTiUGhbXh5hv0UWGq/X6D
-        sXb7MV82x+vysvbmlT5iGV1kYm8saDy+MQZ2s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D88A6AB88;
-        Thu, 10 Sep 2020 11:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F7036AB87;
-        Thu, 10 Sep 2020 11:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Patrick Fong <patrickf3139@gmail.com>, git@vger.kernel.org
-Subject: Re: [Bug report] git status doesn't escape paths of untracked files
-References: <CAMRL+qb0YC1EOTM-LDfMpJ=AJJ014LT5ufBcs0v77byN74A0vw@mail.gmail.com>
-        <20200908011756.GG241078@camp.crustytoothpaste.net>
-        <xmqq5z8p12ds.fsf@gitster.c.googlers.com>
-        <xmqq4ko8yxp9.fsf@gitster.c.googlers.com>
-        <3a72c5f2-35cc-a865-d5f2-02706c48d8ec@web.de>
-        <xmqqa6xytwtn.fsf@gitster.c.googlers.com>
-        <b48b2be0-c417-9140-54f1-73d0c59c40d5@web.de>
-Date:   Thu, 10 Sep 2020 08:28:13 -0700
-In-Reply-To: <b48b2be0-c417-9140-54f1-73d0c59c40d5@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 10 Sep 2020 16:23:02 +0200")
-Message-ID: <xmqq363pr6r6.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726419AbgIJTss (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Sep 2020 15:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725951AbgIJTsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Sep 2020 15:48:30 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB37FC061757
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:48:26 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id y194so4092903vsc.4
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:48:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=k26pko0hwwBRW4jXrgO5W/RVo8ZUdiObIhHWpcvYn6M=;
+        b=hmyWnPpo3YeLQvoKy74o7HRd6S/7EGePUlH31IVrzHxME3mJJFbLPKSCebzseIivDy
+         lczjp142rx48hktXrkuYJ+8aVOoa3WXZpEIu5wVrWAtjda84TfQnIYSfHuDjSgDGmuby
+         d6PtprTzbugzeePKf9CVSvvQGJ2kXZ3ZWeA5mDbUYvjbpeDcpk97+PyMH0Rg4DxpkvYp
+         oYoMdl7K8gfN4hhuLK0Z1Qlsbz3QgyaVNMXLwBYsObXt1n679qRCWTlv8hpNPrH5/D+L
+         2JSnCB13DPu3TZZPzIuRutZQzoUgIpCcvuxPBU17ugykg/zGExPBmEYvny98qFFnrBln
+         QX3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=k26pko0hwwBRW4jXrgO5W/RVo8ZUdiObIhHWpcvYn6M=;
+        b=PI8nVQu9eCWLdKbfWRxzKJqcSUFXNRgugcLAQwu7z5XitV74q1PzrJGopGKcCzJxRL
+         F3jaR1RKg+UZ3bJAQFWoGA9/ba8EtW6qXz8BVaW6MKCY8Y9tBaJ6Z0nYdrJhpOzJi1ab
+         le4u1RBdAnJeuFuyrrRHwSJipUCcOHVnuFQD9LsMWWZjbUiq+KaHgGe/bGaR1EwrP2PL
+         JlUPkpv/cc0Bgm45ZEPlmVfhJusTOiK8ClKYGcOV4bnIO2RLRW22AOXKr8VRxQ5AQ4Ks
+         YrnoYalybc5KQ26bK1ocz5Sta/BEnTwOaq5m8fzXhUThtmjiD3glO3WjDBdhov3B4E9B
+         cwvA==
+X-Gm-Message-State: AOAM533iW0qqTGe9KWrA7ca1NXlpUZLoPwUgr1rOJE9RgKBCodgLan25
+        bps9j5mvMSbI3JUzN7KPkxgkrw1vHsbL1vEs74I=
+X-Google-Smtp-Source: ABdhPJxKQy+jVkwn/kxzCi5+aN7XYbEiJ6QPg9/mbrjf8RHb1NTZg7OnskEFEfTzTmxMXaxlV2VT7tYlHgT90Ffbg1U=
+X-Received: by 2002:a67:7d52:: with SMTP id y79mr5474338vsc.34.1599767305797;
+ Thu, 10 Sep 2020 12:48:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3E16A8C6-F37A-11EA-840C-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <cover.1599762679.git.martin.agren@gmail.com> <8383c246f8c23e61dedd69d6e69c72d51fd6b469.1599762679.git.martin.agren@gmail.com>
+ <CAPig+cT_VvOiKBCC=E_P0R8SXkoWPVUxxOOLovOmr8N377YNdQ@mail.gmail.com>
+In-Reply-To: <CAPig+cT_VvOiKBCC=E_P0R8SXkoWPVUxxOOLovOmr8N377YNdQ@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 10 Sep 2020 21:48:13 +0200
+Message-ID: <CAN0heSrUWiZ_xar3G5rZG-c=8OVp5-eByS6rMXOw9wfTA8kmbA@mail.gmail.com>
+Subject: Re: [PATCH 8/8] worktree: simplify search for unique worktree
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
-
->>> +	struct strbuf sb =3D STRBUF_INIT;
->>> +	const char *rel =3D relative_path(in, prefix, &sb);
->>> +	int need_quotes =3D *rel !=3D '"' && strchr(rel, ' ');
->>
->> relative_path() does not quote, so "begins with a dq" is not a good
->> test to see "if we were to pass this string to quote_c_style(), would
->> we get it back quoted already so we won't have to surround the
->> result with an extra pair of dq ourselves?".
+On Thu, 10 Sep 2020 at 21:28, Eric Sunshine <sunshine@sunshineco.com> wrote=
+:
 >
-> Ha!, that's true.  Makes me wonder how it was still able to pass the
-> test suite, though..
+> On Thu, Sep 10, 2020 at 3:08 PM Martin =C3=85gren <martin.agren@gmail.com=
+> wrote:
+> > We track the number of worktrees we've found and break out of the loop
+> > early once we hit 2. This is because we're not really interested in the
+> > number of matches -- we just want to make sure that we don't find more
+> > than one worktree that matches the suffix. This can be done just as wel=
+l
+> > by checking the NULL-ness of the pointer where we collect our
+> > answer-to-be. Drop the redundant `nr_found` variable.
+> >
+> > Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> > ---
+> > diff --git a/worktree.c b/worktree.c
+> > @@ -172,13 +172,13 @@ static struct worktree *find_worktree_by_suffix(s=
+truct worktree **list,
+> >                                                 const char *suffix)
+> >  {
+> > -       for (; *list && nr_found < 2; list++) {
+> > +       for (; *list; list++) {
+> > @@ -186,11 +186,12 @@ static struct worktree *find_worktree_by_suffix(s=
+truct worktree **list,
+> >                 if ((!start || (start > 0 && is_dir_sep(path[start - 1]=
+))) &&
+> >                     !fspathcmp(suffix, path + start)) {
+> > +                       if (found)
+> > +                               return NULL;
+> >                         found =3D *list;
+> > -                       nr_found++;
+> >                 }
+> >         }
+> > -       return nr_found =3D=3D 1 ? found : NULL;
+> > +       return found;
+>
+> Although this change appears to be correct and does simplify the code,
+> I think it also makes it a bit more opaque. With the explicit
+> `nr_found =3D=3D 1`, it is quite obvious that the function considers
+> "success" to be when one and only one entry is found and any other
+> number is failure. But with the revised code, it is harder to work out
+> precisely what the conditions are.
 
-The logic to refrain from ading extra dq-pair around the output from
-quote-c-style is "if it is already in a dq-pair, don't bother".  The
-bug will trigger only when the input string has a character that
-needs to be quoted *and* SP in it.  In such a case, relative_path()
-is likely to return *rel !=3D '"' and you declare "we need to add a
-dq-pair ourselves", quote-c-style would give us a result in a
-dq-pair, and you add one extra layer. =20
+Thanks for commenting. I found the original trickier than it had to be.
+It spreads out the logic in several places and is careful to short-cut
+the loop. My first thought was "why doesn't this just use the standard
+form?". But I'm open to the idea that it might be a fairly personal
+standard form... If there's any risk that someone else comes along and
+simplifies this to use a `nr_found` variable, then maybe file this under
+code churning?
 
-But without a test with a path with both '"' and ' ' in it, such a
-bug would not trigger.  Brian's test only checks what happens to a
-path with SP in it, without any other funny characters that need
-quoting with quote-c-style.
+> Having said that, I think a simple
+> comment before the function would suffice to clear up the opaqueness.
+> Perhaps something like:
+>
+>     /* If exactly one worktree matches 'target', return it, else NULL. */
 
+That's a good suggestion regardless.
 
+Thanks
+Martin
