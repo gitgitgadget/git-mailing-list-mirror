@@ -2,72 +2,96 @@ Return-Path: <SRS0=4khD=CT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5798FC43461
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 691A0C433E2
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:18:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2850F21556
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:17:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BF1621D91
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:18:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=arista.com header.i=@arista.com header.b="VFVHOvhw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726738AbgIJTRZ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 10 Sep 2020 15:17:25 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39290 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgIJTPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Sep 2020 15:15:37 -0400
-Received: by mail-ed1-f66.google.com with SMTP id c10so7486945edk.6
-        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:15:21 -0700 (PDT)
+        id S1726853AbgIJTRv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Sep 2020 15:17:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44740 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726848AbgIJTRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Sep 2020 15:17:09 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278EBC061756
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:17:09 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id c17so4806227ybe.0
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:17:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=arista.com; s=googlenew;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=h2vDcvlIr4BYmjqxz9k8Jce3rPfht/vpsAmz6smZ7AU=;
+        b=VFVHOvhwaHVYQvwA4+BqkTwiwsuXDVjVF5XD8Be5WEj48IO6qoX/NO+Ld7pSirqcgo
+         +xkzC48kaNlJblEWDUB7LnDN6pMe2q4VlnbUx9cESTXPkBNXfa9oIFFPNbivSOqdox7T
+         U3h1giz3/jgSHkU8CoHSlNTLjHpetVx8uq9MxdlmTcTwTMEqF7jgyrBbLg3o+tubENk1
+         K5YWFWbqQrVSqtuesXZPrjsOkCwzKD0w0Vf4C3TANqDByIgWEcU2TVylIhetTfzhhn7q
+         5QBJxx2IUCV7sUucfE+DXzbjkV6XiiVSTLq3m5S2zMtRIWLk+8VhKIQKq3WSUeXuPX6a
+         Jy/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qWZ9YvcMcrK62d5QvxhiDZb1ZNHiC5j0HhwuF2EqRIc=;
-        b=lcmSXNERDyBKfkMVdHqFUBkpqCZGXKftdfFlxtT62SAkvKYaspkaEIdAuYv5mdIZKS
-         O1BKXfzzQiUUDCQwQaFWiotdRsy6K82etL51juDcRc/PfAU63HQdqMJD8lj7A2QOKXnp
-         HdbXPBZJNs7yxVaYjFkraVIvEU1/NzpIH6tplM1maVsF0zgJZPGJB5y9GejYpqcW2dU2
-         Pqy7PgSVKa+juoMoClCQQEMR9yfd2x4+nhFGLosdAVhj4GF5Wo/vddZoB8Jik+DVXL7w
-         0zHkNJyGxduBqRS4vu9PmN8f76iN2BlKsXXtYZBOHYIeZz5DtDjMbq46236pqDVPXcmB
-         bsXw==
-X-Gm-Message-State: AOAM530+en3DlPsJ0PlaA1c3SHcOsxGp739IVfmrW6l62M1nvoVVIrxw
-        XLEKUbipPJKxPgkrXQV/8KBGAQV7JR6Qg7OHx3s=
-X-Google-Smtp-Source: ABdhPJxfBhEmoLWcsuz1RLVvrsAFohI7Hydgsi+xVrCe/S1y10yHcRTRRuLa5wBGKdMtwMkFQRyLYnOe5TQOR0OiwJE=
-X-Received: by 2002:a05:6402:17ed:: with SMTP id t13mr11162684edy.163.1599765320665;
- Thu, 10 Sep 2020 12:15:20 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=h2vDcvlIr4BYmjqxz9k8Jce3rPfht/vpsAmz6smZ7AU=;
+        b=OL8B+AC/oF0SqGdpdWKlGbjFeNGk8jnYnLzNSgONVuPifh+d1L4HRAbScBlDG7fFXa
+         5Xz/qZGURDcpTgpOzQRudAtfEs3sFBbUMThJ35ohtFp8ABWbpK+sPoaRQfVEACG3LWja
+         Chsth8XivrkgZLF7dXwX1BKl5YRAmeJgTZBh0L+Ki6613gygHW5pzyzuvvSn4pBgxGho
+         gLzfKxTiaxhRFJfF6n8z5sfJ5OwXxTZtGRclrLJiSd+FMXAPhl748sk3KBO6FzgfePoh
+         KEsG08zeT5MtndDwD0wCqEZ/HJpu8Hwz1HEiGM16J7b2ZQj0JYCPX2FRo5zZChC/VT0k
+         +oJA==
+X-Gm-Message-State: AOAM530bWHVyx6kwI80Gsa2pEPc8gtRmz9WmaihK/UkQTjaLVcMOm87n
+        EId1JSKSwCVMpPUl/aCD8Ty51Gw3Lwy1d3E7VLalcetsCThIAA==
+X-Google-Smtp-Source: ABdhPJxmtdliG60Bf7zsIvZ0Rrj3QbKz9Lp3a4tTYUINkXmTT79gaIPv/v2Gs0yJMzUCWTaWPUZIvGISGaC2h+WAcbY=
+X-Received: by 2002:a25:cb57:: with SMTP id b84mr14869945ybg.425.1599765426872;
+ Thu, 10 Sep 2020 12:17:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1599762679.git.martin.agren@gmail.com> <58a2469cc18839e57b45f687b6e484d69161a34c.1599762679.git.martin.agren@gmail.com>
-In-Reply-To: <58a2469cc18839e57b45f687b6e484d69161a34c.1599762679.git.martin.agren@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 10 Sep 2020 15:15:09 -0400
-Message-ID: <CAPig+cTZLqFayp0wZEFYkaXtoOx8HedUK1oQoOa+zq=Yrgvjbg@mail.gmail.com>
-Subject: Re: [PATCH 4/8] worktree: drop useless call to strbuf_reset
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   Ethan Rahn <erahn@arista.com>
+Date:   Thu, 10 Sep 2020 12:16:56 -0700
+Message-ID: <CAMk6QYPgC1ch_umvGvYRa8F97iY6ynO-ApYC8zHwGzPY3TauDg@mail.gmail.com>
+Subject: Enterprise wide Git commit signing
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 10, 2020 at 3:08 PM Martin Ågren <martin.agren@gmail.com> wrote:
-> There's no need to reset the strbuf immediately after initializing it.
->
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -552,7 +552,6 @@ const char *worktree_ref(const struct worktree *wt, const char *refname)
->  {
->         static struct strbuf sb = STRBUF_INIT;
->
-> -       strbuf_reset(&sb);
->         strbuf_worktree_ref(wt, &sb, refname);
->         return sb.buf;
->  }
+Hello Git Users,
 
-I think this patch is wrong and should be dropped. That strbuf is
-static, and the called strbuf_worktree_ref() does not reset it, so
-each call to worktree_ref() will now merely append to the existing
-content (which is undesirable) following this change.
+My name is Ethan Rahn and I lead Product Security at Arista Networks.
+I recently completed work on a project which I wanted to highlight for
+everyone on this list. This is a means for allowing an enterprise to
+centrally manage code signing keys for all engineers, enforce the
+signing of all git commits, and audit that the source code repository
+was not altered after signing. You can read the full blog post here:
+https://eos.arista.com/commit-signing-with-git-at-enterprise-scale/ .
+Part of what makes this so exciting to me is that I haven't seen
+commit signing done at this level before, especially not with having
+the repo be auditable after the fact. By having the repo be auditable
+the level of vulnerable infrastructure can be reduced to the code
+signing keystore; in other words the code repository can be validated
+at any time to ensure it was not tampered with.
+
+I think that the work done here is very interesting because I have not
+seen it done elsewhere. Supply chain attacks through source code
+repositories are a real problem. The solution in most cases seems to
+be setting up a security perimeter around the repository and checking
+for unauthorized accesses. If an unauthorized access does occur, or
+credentials are stolen, it is hard to know the complete set of
+unauthorized changes made, especially if they are mixed with
+legitimate work of a number of users over a period of time.
+
+Happy to answer any questions around this or take comments. The work
+around key management has been open sourced ( references in the blog
+post ) so that the open source community can benefit from this.
+
+Cheers,
+
+Ethan
