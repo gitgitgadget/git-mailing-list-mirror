@@ -7,190 +7,143 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 069F4C433E2
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 17:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAE6AC43461
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 17:03:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA94F20C09
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 17:03:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83DF020C09
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 17:03:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TTHbfdmq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g9dhL6Qg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727771AbgIJRDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 13:03:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57588 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727099AbgIJRCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Sep 2020 13:02:36 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21B2F6BA64;
-        Thu, 10 Sep 2020 13:02:18 -0400 (EDT)
+        id S1727775AbgIJRDL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Sep 2020 13:03:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53474 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727083AbgIJRCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Sep 2020 13:02:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 074297605D;
+        Thu, 10 Sep 2020 13:02:14 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=gi/0O/860iMuLPQHGXZ+SO4iR
-        0c=; b=TTHbfdmqjXuJz7VYC3/nE1PkGn4gKhUyh4RzNT4Tv5e8Dtnx3y4rA6pxr
-        8jokejc3fXcGQH12t1IWO0+P5UodYT6PQVkttLfopdxhyaQvNlVz4ZGRV2E08fFT
-        tqPqE7UrfLTorZeIleqUqjU3IxHYJpvySahxc7dGY1ajX2zWVY=
+        :content-transfer-encoding; s=sasl; bh=Hp0YNOY8GAT7/AkLoLsHudX6+
+        oE=; b=g9dhL6QgxY2WlJs8v5uxWVdzWG+wiEsrX04jye19GG+vndo778mLASxv5
+        0uFrkW0TJ7BEe6IYXdJVkLLNmeqeHENIoh/FbVGVE5DmXKqNt5W0Am+/FcVqcYnq
+        uITUE9i3CSvaO3qEsCxkri5lK6aHFmS1iMytJFw1sURW41UjSY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
         :date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=cgAn7sX+e3T93naQ6pe
-        ur3hQEBS5iHJNgOscqSkqs18rg9thPK5W/o1GZWpyhBnLgxVAiqS0ZIhVojiyRBd
-        rh5ozBkRUF7Y5HQeWp7JxdJEARQ6jO/NJhWay7oL3SEkNZSwej4RcpbDKj61j8x1
-        kKTqn1uc//VctZG6tPtzPFj0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1993C6BA63;
-        Thu, 10 Sep 2020 13:02:18 -0400 (EDT)
+        :content-transfer-encoding; q=dns; s=sasl; b=l9bS0M3fRWxxrTlVOgw
+        NOwF/bX419umPhl4C5Dp61M8gQu0W3chzkmD/R/2VO2b5XXU2oY2lZIERLxlVKtf
+        v7heY/y8qiaGc0QfvMXNYSXMHvW0rjYxevDEcAfS6cPLq9MQ8N45HqrEBwGPT96L
+        J1DiwHUM34RU92wk3vj1KztA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3BF67605C;
+        Thu, 10 Sep 2020 13:02:13 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [35.190.152.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 993FC6BA60;
-        Thu, 10 Sep 2020 13:02:17 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FE4F7605A;
+        Thu, 10 Sep 2020 13:02:13 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 7/7] quote: turn 'nodq' parameter into a set of flags
-Date:   Thu, 10 Sep 2020 10:01:59 -0700
-Message-Id: <20200910170159.1278781-8-gitster@pobox.com>
+Subject: [PATCH v2 5/7] wt-status: consistently quote paths in "status --short" output
+Date:   Thu, 10 Sep 2020 10:01:57 -0700
+Message-Id: <20200910170159.1278781-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.28.0-603-ga98dad7d4d
 In-Reply-To: <20200910170159.1278781-1-gitster@pobox.com>
 References: <20200908205224.4126551-1-gitster@pobox.com>
  <20200910170159.1278781-1-gitster@pobox.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 61E043A4-F387-11EA-B898-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5F6387B2-F387-11EA-8EFC-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-quote_c_style() and its friend quote_two_c_style() both take an
-optional "please omit the double quotes around the quoted body"
-parameter.  Turn it into a flag word, assign one bit out of it,
-and call it CQUOTE_NODQ bit.
+Tracked paths with SP in them were cquoted in "git status --short"
+output, but untracked, ignored, and unmerged paths weren't.
 
-No behaviour change intended.
+The test was stolen from a patch to fix output for the 'untracked'
+paths by brian m. carlson, with similar tests added for 'ignored'
+ones.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c  |  8 ++++----
- quote.c | 18 +++++++++++-------
- quote.h |  7 +++++--
- 3 files changed, 20 insertions(+), 13 deletions(-)
+ t/t7508-status.sh | 27 +++++++++++++++++++++++++++
+ wt-status.c       |  4 ++--
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 0299a73079..e7d6e60b23 100644
---- a/diff.c
-+++ b/diff.c
-@@ -482,14 +482,14 @@ int git_diff_basic_config(const char *var, const ch=
-ar *value, void *cb)
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index e81759319f..2e9c6daf1a 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -814,6 +814,33 @@ test_expect_success 'status -s without relative path=
+s' '
 =20
- static char *quote_two(const char *one, const char *two)
- {
--	int need_one =3D quote_c_style(one, NULL, NULL, 1);
--	int need_two =3D quote_c_style(two, NULL, NULL, 1);
-+	int need_one =3D quote_c_style(one, NULL, NULL, CQUOTE_NODQ);
-+	int need_two =3D quote_c_style(two, NULL, NULL, CQUOTE_NODQ);
- 	struct strbuf res =3D STRBUF_INIT;
+ '
 =20
- 	if (need_one + need_two) {
- 		strbuf_addch(&res, '"');
--		quote_c_style(one, &res, NULL, 1);
--		quote_c_style(two, &res, NULL, 1);
-+		quote_c_style(one, &res, NULL, CQUOTE_NODQ);
-+		quote_c_style(two, &res, NULL, CQUOTE_NODQ);
- 		strbuf_addch(&res, '"');
- 	} else {
- 		strbuf_addstr(&res, one);
-diff --git a/quote.c b/quote.c
-index 9a6e0e7dea..69f4ca45da 100644
---- a/quote.c
-+++ b/quote.c
-@@ -256,7 +256,7 @@ static size_t next_quote_pos(const char *s, ssize_t m=
-axlen)
-  *     Return value is the same as in (1).
-  */
- static size_t quote_c_style_counted(const char *name, ssize_t maxlen,
--				    struct strbuf *sb, FILE *fp, int no_dq)
-+				    struct strbuf *sb, FILE *fp, unsigned flags)
- {
- #undef EMIT
- #define EMIT(c)                                 \
-@@ -272,6 +272,7 @@ static size_t quote_c_style_counted(const char *name,=
- ssize_t maxlen,
- 		count +=3D (l);                           \
- 	} while (0)
-=20
-+	int no_dq =3D !!(flags & CQUOTE_NODQ);
- 	size_t len, count =3D 0;
- 	const char *p =3D name;
-=20
-@@ -309,19 +310,21 @@ static size_t quote_c_style_counted(const char *nam=
-e, ssize_t maxlen,
- 	return count;
- }
-=20
--size_t quote_c_style(const char *name, struct strbuf *sb, FILE *fp, int =
-nodq)
-+size_t quote_c_style(const char *name, struct strbuf *sb, FILE *fp, unsi=
-gned flags)
- {
--	return quote_c_style_counted(name, -1, sb, fp, nodq);
-+	return quote_c_style_counted(name, -1, sb, fp, flags);
- }
-=20
--void quote_two_c_style(struct strbuf *sb, const char *prefix, const char=
- *path, int nodq)
-+void quote_two_c_style(struct strbuf *sb, const char *prefix, const char=
- *path,
-+		       unsigned flags)
- {
-+	int nodq =3D !!(flags & CQUOTE_NODQ);
- 	if (quote_c_style(prefix, NULL, NULL, 0) ||
- 	    quote_c_style(path, NULL, NULL, 0)) {
- 		if (!nodq)
- 			strbuf_addch(sb, '"');
--		quote_c_style(prefix, sb, NULL, 1);
--		quote_c_style(path, sb, NULL, 1);
-+		quote_c_style(prefix, sb, NULL, CQUOTE_NODQ);
-+		quote_c_style(path, sb, NULL, CQUOTE_NODQ);
- 		if (!nodq)
- 			strbuf_addch(sb, '"');
- 	} else {
-@@ -367,7 +370,8 @@ char *quote_path(const char *in, const char *prefix, =
-struct strbuf *out, unsigne
- 	 */
- 	if (force_dq)
- 		strbuf_addch(out, '"');
--	quote_c_style_counted(rel, strlen(rel), out, NULL, !!force_dq);
-+	quote_c_style_counted(rel, strlen(rel), out, NULL,
-+			      force_dq ? CQUOTE_NODQ : 0);
- 	if (force_dq)
- 		strbuf_addch(out, '"');
- 	strbuf_release(&sb);
-diff --git a/quote.h b/quote.h
-index 1918d1e00e..4b72a583cf 100644
---- a/quote.h
-+++ b/quote.h
-@@ -64,8 +64,11 @@ struct strvec;
- int sq_dequote_to_strvec(char *arg, struct strvec *);
-=20
- int unquote_c_style(struct strbuf *, const char *quoted, const char **en=
-dp);
--size_t quote_c_style(const char *name, struct strbuf *, FILE *, int no_d=
-q);
--void quote_two_c_style(struct strbuf *, const char *, const char *, int)=
-;
++cat >expect <<\EOF
++ M dir1/modified
++A  dir2/added
++A  "file with spaces"
++?? dir1/untracked
++?? dir2/modified
++?? dir2/untracked
++?? "file with spaces 2"
++?? untracked
++EOF
 +
-+/* Bits in the flags parameter to quote_c_style() */
-+#define CQUOTE_NODQ 01
-+size_t quote_c_style(const char *name, struct strbuf *, FILE *, unsigned=
++test_expect_success 'status -s without relative paths' '
++	test_when_finished "git rm --cached \"file with spaces\"; rm -f file*" =
+&&
++	>"file with spaces" &&
++	>"file with spaces 2" &&
++	>"expect with spaces" &&
++	git add "file with spaces" &&
++
++	git status -s >output &&
++	test_cmp expect output &&
++
++	git status -s --ignored >output &&
++	grep "^!! \"expect with spaces\"$" output &&
++	grep -v "^!! " output >output-wo-ignored &&
++	test_cmp expect output-wo-ignored
++'
++
+ test_expect_success 'dry-run of partial commit excluding new file in ind=
+ex' '
+ 	cat >expect <<EOF &&
+ On branch master
+diff --git a/wt-status.c b/wt-status.c
+index adbf6958bd..7139623025 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1848,7 +1848,7 @@ static void wt_shortstatus_unmerged(struct string_l=
+ist_item *it,
+ 	} else {
+ 		struct strbuf onebuf =3D STRBUF_INIT;
+ 		const char *one;
+-		one =3D quote_path(it->string, s->prefix, &onebuf, 0);
++		one =3D quote_path(it->string, s->prefix, &onebuf, QUOTE_PATH_QUOTE_SP=
 );
-+void quote_two_c_style(struct strbuf *, const char *, const char *, unsi=
-gned);
-=20
- void write_name_quoted(const char *name, FILE *, int terminator);
- void write_name_quoted_relative(const char *name, const char *prefix,
+ 		printf(" %s\n", one);
+ 		strbuf_release(&onebuf);
+ 	}
+@@ -1896,7 +1896,7 @@ static void wt_shortstatus_other(struct string_list=
+_item *it,
+ 	} else {
+ 		struct strbuf onebuf =3D STRBUF_INIT;
+ 		const char *one;
+-		one =3D quote_path(it->string, s->prefix, &onebuf, 0);
++		one =3D quote_path(it->string, s->prefix, &onebuf, QUOTE_PATH_QUOTE_SP=
+);
+ 		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
+ 		printf(" %s\n", one);
+ 		strbuf_release(&onebuf);
 --=20
 2.28.0-603-ga98dad7d4d
 
