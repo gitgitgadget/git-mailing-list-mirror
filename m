@@ -2,94 +2,84 @@ Return-Path: <SRS0=4khD=CT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2786C433E2
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 20:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20338C43461
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 21:00:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47D56221E5
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 20:49:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A443E2080A
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 21:00:28 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q2FrVayI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbgIJUri (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 16:47:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53988 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726978AbgIJU1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Sep 2020 16:27:02 -0400
-Received: (qmail 24575 invoked by uid 109); 10 Sep 2020 20:26:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Sep 2020 20:26:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23214 invoked by uid 111); 10 Sep 2020 20:26:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Sep 2020 16:26:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 10 Sep 2020 16:26:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/6] quote_path: give flags parameter to quote_path()
-Message-ID: <20200910202655.GA1938792@coredump.intra.peff.net>
-References: <20200908013013.1099937-1-sandals@crustytoothpaste.net>
- <20200908205224.4126551-1-gitster@pobox.com>
- <20200908205224.4126551-3-gitster@pobox.com>
- <20200910122111.GA57925@coredump.intra.peff.net>
- <xmqqo8mdr7ve.fsf@gitster.c.googlers.com>
- <xmqq7dt1r78z.fsf@gitster.c.googlers.com>
+        id S1726612AbgIJVAY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Sep 2020 17:00:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51899 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730676AbgIJOqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Sep 2020 10:46:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6DAC74A35;
+        Thu, 10 Sep 2020 10:46:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=K8rsTQxuC0pCJ0XD6asUWuuKgTg=; b=Q2FrVayIno9eCfc4jKWI
+        X94HlmOMg9i4CreJYiYxtDMNfYgXQn3HJ3bG7JVEfe32U6xHPvXDpto0hf0afRbz
+        myjh9S34zlh+F4CDCiZBEQzBr3FOFE/wqSPXe1A2F/xXpRWWZu/qMRZblBWWtcDk
+        CMbmNJxSDr8jpHu7ftUK+QA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=A9Rs4f9yNrRovVx8HxiKvjsEp26Pu88PgSw19VALFlDBR7
+        ykaGCebMim3NqjFqnr+gs3B0xwD/wr7HWcTS8AJwxqhXv3OI3Urk7TnW/MbhkHf/
+        xsX01QM6ENYfiBO9ba9id1fry7xmO41FigYEZKtrum7pfczZA+ldrHe+kpDP8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBF8274A34;
+        Thu, 10 Sep 2020 10:46:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 597A774A33;
+        Thu, 10 Sep 2020 10:46:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] push: make `--force-with-lease[=<ref>]` safer
+References: <20200904185147.77439-1-shrinidhi.kaushik@gmail.com>
+        <nycvar.QRO.7.76.6.2009072119350.56@tvgsbejvaqbjf.bet>
+        <xmqqr1rcxdsu.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2009090542430.54@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.2009101220400.56@tvgsbejvaqbjf.bet>
+Date:   Thu, 10 Sep 2020 07:46:43 -0700
+Message-ID: <xmqqsgbpr8oc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7dt1r78z.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7212D48E-F374-11EA-BEB5-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 10, 2020 at 08:17:32AM -0700, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Of course none of the above becomes unnecessary if we scan the whole
-> > string for SP before the main loop in quote-c-style-counted, but the
-> > function was written to process the input in a single pass and such
-> > a change defeats its design.  If we need to do it in two passes, we
-> > can have the caller do so anyway, at least for now.  That thinking
-> > lead to the final organization of the series, with two steps that
-> > used to be preparatory for passing the flag down thru to the bottom
-> > layer rebased out as a discardable appendix at the end.
-> 
-> Actually, this made me realize that another variant is possible.
-> It might be easier to read, or it might not.  Since I cannot tell
-> without actually writing one, let's see ...
+>> In contrast, when you want to make sure that you _actually_ incorporated
+>> the revision that is currently the remote tip, e.g. via `git pull
+>> --rebase` with a possible additional rebase on top that makes this _not_ a
+>> fast-forward, you totally have to force the push, otherwise it won't work.
+>
+> Maybe `--force-if-incorporated`? Originally, I had in mind to call it
+> `--safe-force`, but that might be too vague.
 
-Vger seems to be delivering slowly and out-of-order the last day or two,
-so I got rather confused to receive this after seeing your v2. :)
+Yup.  "safe force" indeed feels like a misnomer.  The assumption of
+safety relies heavily on the workflow.
 
-> I don't know if this is easier to follow or not.  I do think so
-> right now but that is only because it is still fresh in my brain.
-
-I do think it is easier to read than the original.
-
-One minor nit with your analysis, though: the current code is actually
-two-pass already. One pass finds the next quoted character, but then we
-have to take another pass to copy it into place. That second pass can be
-done with a memcpy(), which helps.
-
-If you know you are quoting, you can do a true single-pass
-character-by-character. But of course part of our task is to find out
-_if_ we are quoting. And even if that were not the case, on modern
-processors it is not always true that single-pass is going to be faster.
-This code is definitely not such a hot-spot that it's worth doing that
-kind of micro-optimization.
-
-  Aside: We _do_ have spots where that is not true. When I looked at
-  replacing xdiff's hash the sticking point was that we compute the
-  newlines _and_ hash in a single pass. Most "fast" hash functions are
-  optimized to take bigger sequences of data, but splitting out the
-  newline-finding eliminated any gains.
-
--Peff
-
-
+I might even say --force-if-merged even if the way the to-be-lost
+changes have become part of what you are pushing out is not
+technically a merge, but there may be shorter and sweeter way to
+express it than 'merge' and 'incorporate'.
