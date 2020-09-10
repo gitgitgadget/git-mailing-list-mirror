@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F96C433E2
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE75C433E2
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:05:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 996AF207DE
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C3A92075B
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:05:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hXZy9Z2h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fKDtvmrR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727041AbgIJTFT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 15:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42792 "EHLO
+        id S1726927AbgIJTF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Sep 2020 15:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727001AbgIJTEt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727007AbgIJTEt (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Sep 2020 15:04:49 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E15C061798
-        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:13 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id q8so4199142lfb.6
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDF6C061799
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:14 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id b22so625667lfs.13
         for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kO9q9kW9UN3frhajJtx1JcSBjIZpukmwshqHlQdrHUo=;
-        b=hXZy9Z2hY8DpULOhY8dlB/Dml737OXDDdgC6i4DnXZGJDOKGFZBtWn+8+LT+EruIOB
-         hHpoOcC83sniW+NJEsN+k31gCIe73moI6KP8WEeqal5SSIuB/H6o/UCyXo+bIm1Di5uQ
-         lK5JlKyDoWoVL4QFy5yviYLi811HcStNSUs7LMX87JUmZmurOdWPTMcVKpi74rymeXC5
-         MJfq9YrJ6DqgxWqpLNw6qMHnOFOHjEVS/pIldxU2T+NqpLhVi1i0vQTA38FQC29d+QJ6
-         xJjPeBk2XBRw9uzXhaL6ragZ9w6pO3Ewa/xXz3rQJ9jCPDqNBsEad8QwLx6KcAiOsTM+
-         iP5w==
+        bh=xnVS8SVkF/VPsWN5tE7dSjuaShxo7UkMgytOJqiyMvM=;
+        b=fKDtvmrRZwoWH3z6WU5IbrNSaho5EmXc8olFeUAIogA8d6qOoReL3AGOE7M6s9eIYb
+         lD59kjezn7EQnoXz51vdwgIGOB0hB3z4w5DFUcwyZTKShIM4UNoCGhlIk9jpxt36Ot/A
+         MlICq8v5xZOyw6laPcnbcA8E2TsM4Im2HCdxB6w8jQHpqFBFaN/sLLK0Z1q6zpPL4gHe
+         IVL/oo/NoR5k8wTlbGICIh/wIJaaItv9yocTPNuP7w4tYiEXZ9sVgD7ed/8bhTQXMITs
+         Hydbu+D9tnWptrYb/xZ0go5b9s749Zc1JOBNhIpvUERTeZNXKSL50wMcnJt0Uq3o9euc
+         ZxRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kO9q9kW9UN3frhajJtx1JcSBjIZpukmwshqHlQdrHUo=;
-        b=hl1sFYJ6feZCm7q7t9+kW82gmPqhPbWmoi8/ZRq7VLK8Cj/NCEOtKk94LdqMwn3Tv9
-         5IVgIMaHMUlRhL94MlRV7onBrVwjKrmai7L8AadW0UCT256fuMprF3NibT5jVahT5Ct+
-         ts0VTHImXRhj6dAHVTGZjktdJ7wysK7HNhaJBCgQ2L1CRJquyq/Droc28rn7LDQ2OxnE
-         ihE8HM2hyoyUt65XjPG5DaaSks85MH9rzxx+kqItmJ21mujoARjfpZa+p4obJh8WBR0i
-         zpeROU1VkKfAm15oNpp3Shti+5NnjPdj4dDFPzWyUQMEmX/iwasAmrfaaFai+aSw6WOX
-         pYxw==
-X-Gm-Message-State: AOAM530m5YYpBDzfNCi6fIF69o+OCa8t4YyEwkhq2oWIyq/3Mfo6yDoi
-        cFOCqx/j5TkIvHTbjbvJdGK3aCnQN7I=
-X-Google-Smtp-Source: ABdhPJwF/eZ2CnqlKf3HVk449VfneilJmYGJoDgg9wleHCTIiLsl/dEUtqr2nS5jCHnJYdEaoKg4nQ==
-X-Received: by 2002:a19:834a:: with SMTP id f71mr5052331lfd.59.1599764650798;
-        Thu, 10 Sep 2020 12:04:10 -0700 (PDT)
+        bh=xnVS8SVkF/VPsWN5tE7dSjuaShxo7UkMgytOJqiyMvM=;
+        b=tL974X5iMIqQwIepdy9umZV/lobj4npcr1muB9nbfZTvUMCSZ0RUYuV9MjnV1N3RHy
+         lscmZ2UQ0Gbkf7mhYxCTSFkaiNxu5cjg+jxYFP4c9CsEU57ZoICVfhhNJymJXa4T2Wdc
+         kfYdIu4GJlePtIPIyTdKlpHn/05KJMOPw7aLvNI3PXxWVUeWRFResO87z0FsefZ623Qy
+         XZoGsoikW8naaQHMnpiJ/5xgVCKac/58xSlVHM0SxfgM1YN/uBVETIZ+tNalj+UpTSad
+         FHEqDhW1NUaJEfjcoBQcOwAv060T3OILjAgHWk+k6bFqqJsQ2wS9o3ANzJrBr/cv3BQY
+         0eNg==
+X-Gm-Message-State: AOAM531fg1VB7pl+OYEgxpzkMhDXHNm3Vl/NDFQI8LC3ohBH5XoFeNfK
+        5gOuO6GUCxZRKZhAKWA56QepigDwTGM=
+X-Google-Smtp-Source: ABdhPJwKqMrC22brO4mA+oosckNTVl/C6FWqMBgV6+jHjNNedkYmU5C2O4yxRzRfwKVc+2AI+VDpyQ==
+X-Received: by 2002:a05:6512:512:: with SMTP id o18mr4870967lfb.98.1599764652243;
+        Thu, 10 Sep 2020 12:04:12 -0700 (PDT)
 Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id v11sm1549815lfg.39.2020.09.10.12.04.09
+        by smtp.gmail.com with ESMTPSA id v11sm1549815lfg.39.2020.09.10.12.04.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2020 12:04:10 -0700 (PDT)
+        Thu, 10 Sep 2020 12:04:11 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/8] worktree: rename copy-pasted variable
-Date:   Thu, 10 Sep 2020 21:03:40 +0200
-Message-Id: <6d913ea3e0c30cc1dbcff05974b5d990797e8dc2.1599762679.git.martin.agren@gmail.com>
+Subject: [PATCH 7/8] worktree: use skip_prefix to parse target
+Date:   Thu, 10 Sep 2020 21:03:41 +0200
+Message-Id: <872dc384c53dac61717639cdeccb44a08d5f024d.1599762679.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.28.0.277.g9b3c35fffd
 In-Reply-To: <cover.1599762679.git.martin.agren@gmail.com>
 References: <cover.1599762679.git.martin.agren@gmail.com>
@@ -75,47 +75,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the commit message of 04a3dfb8b5 ("worktree.c: check whether branch
-is bisected in another worktree", 2016-04-22) indicates, the function
-`is_worktree_being_bisected()` is based on the older function
-`is_worktree_being_rebased()`. This heritage can also be seen in the
-name of the variable where we store our return value: It was never
-adapted while copy-editing and remains as `found_rebase`.
+Instead of checking for "refs/heads/" using `starts_with()`, then
+skipping past "refs/heads/" using `strlen()`, just use `skip_prefix()`.
 
-Rename the variable to make clear that we're looking for a bisect(ion),
-nothing else.
+In `is_worktree_being_rebased()`, we can adjust the indentation while
+we're here and lose a pair of parentheses which isn't needed and which
+might even make the reader wonder what they're missing and why that
+grouping is there.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- worktree.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ worktree.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/worktree.c b/worktree.c
-index 050f22dd65..a2d0d20564 100644
+index a2d0d20564..faac87422c 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -377,15 +377,15 @@ int is_worktree_being_bisected(const struct worktree *wt,
- 			       const char *target)
- {
- 	struct wt_status_state state;
--	int found_rebase;
-+	int found_bisect;
+@@ -364,11 +364,11 @@ int is_worktree_being_rebased(const struct worktree *wt,
  
  	memset(&state, 0, sizeof(state));
--	found_rebase = wt_status_check_bisect(wt, &state) &&
--		state.branch &&
--		starts_with(target, "refs/heads/") &&
--		!strcmp(state.branch, target + strlen("refs/heads/"));
-+	found_bisect = wt_status_check_bisect(wt, &state) &&
+ 	found_rebase = wt_status_check_rebase(wt, &state) &&
+-		((state.rebase_in_progress ||
+-		  state.rebase_interactive_in_progress) &&
+-		 state.branch &&
+-		 starts_with(target, "refs/heads/") &&
+-		 !strcmp(state.branch, target + strlen("refs/heads/")));
++		       (state.rebase_in_progress ||
++			state.rebase_interactive_in_progress) &&
 +		       state.branch &&
-+		       starts_with(target, "refs/heads/") &&
-+		       !strcmp(state.branch, target + strlen("refs/heads/"));
++		       skip_prefix(target, "refs/heads/", &target) &&
++		       !strcmp(state.branch, target);
  	wt_status_state_free_buffers(&state);
--	return found_rebase;
-+	return found_bisect;
+ 	return found_rebase;
  }
- 
- /*
+@@ -382,8 +382,8 @@ int is_worktree_being_bisected(const struct worktree *wt,
+ 	memset(&state, 0, sizeof(state));
+ 	found_bisect = wt_status_check_bisect(wt, &state) &&
+ 		       state.branch &&
+-		       starts_with(target, "refs/heads/") &&
+-		       !strcmp(state.branch, target + strlen("refs/heads/"));
++		       skip_prefix(target, "refs/heads/", &target) &&
++		       !strcmp(state.branch, target);
+ 	wt_status_state_free_buffers(&state);
+ 	return found_bisect;
+ }
 -- 
 2.28.0.277.g9b3c35fffd
 
