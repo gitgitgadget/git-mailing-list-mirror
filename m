@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 409B8C43461
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D549FC433E2
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:08:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D354D20795
-	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:07:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 772A820795
+	for <git@archiver.kernel.org>; Thu, 10 Sep 2020 19:08:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gXMyOmcN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dgDZxEGq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbgIJTHu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 15:07:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42814 "EHLO
+        id S1727119AbgIJTH6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Sep 2020 15:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726812AbgIJTEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Sep 2020 15:04:53 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC13C06179A
-        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:15 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id s205so9599938lja.7
-        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:15 -0700 (PDT)
+        with ESMTP id S1726853AbgIJTEt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Sep 2020 15:04:49 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C1EDC061795
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:07 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id b12so4169556lfp.9
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 12:04:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4a1LPn6RpS2ZYMcSASWXRo5meExpp02Y5LHw0fw9Qe4=;
-        b=gXMyOmcNwc9lNRVAeBNh089jadeawpMEcE57tHE9ld3LUULdKi0js53R7lUh7e9nb5
-         xOazRBW5gGoNTvE6oWlbEQ/+M59xUCuuZqGEo+IyWvkv35NHIxZpzWMgKd+uoUtJ5H4N
-         exQdRpK0zHcguNsEmhFpn+pV7gOJWwYgDWdVHtD+zD02qBNtDZnXh9+69rxz2Q5Meyt1
-         QjQgqSfz4KRr2FEW3kNJfidHdLbIWWdlW4WoeExyMeDLTwRQuC1jQn5ISuBLjTBFtPMX
-         iXsc+l6AbzYvJij2ePx8lBYY996odJxDjBEOa9w55i1BF4fOP82b5RtaksRP/8vQe4iD
-         1K3g==
+        bh=QBUA3jj+YP61Y3WKAoytR+bVRW6HWGsJZ+tg3CvYGwg=;
+        b=dgDZxEGqV4JXAxotNK5+6a3elE6TnahP4/ba64OReAWw9lxannAEjmyQjlyUwUpIgz
+         UXX8fYgZ+s6OHMxHAFRvs+rbIiwt722RvQyD3UseDktR4UlW5DA5gesBMud8AgZi+xIU
+         u3I48fFHrCtzv275iRitaGUSxbjqGUpttjylDXND+z/Ri1La9LcHb0R8RVIzetJ8wV8K
+         aPIHTiQ95fYqabi86o1i8GfawfibsdzhyehUh/rJx+b+ryQFosyMFo8DwevM1TivbpMn
+         oknb9s/AIyeCQtUgj/nNn1GFjE5slNBULgUcFK55CQNmUMDQM9KN6vflAqwmuewjeTb6
+         flkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4a1LPn6RpS2ZYMcSASWXRo5meExpp02Y5LHw0fw9Qe4=;
-        b=CYAijRoJ7Tos6Sr9STONV0y79dI+4fzJZve0c5jlZmtWSRDVqpeNP9IPrN6RR9blIT
-         miazOS83fhK/lIsZFKMhxnkHYWHB2sCUfQd+gJ0i0yqVk1O62z8UayRDpElCCH3yC8kJ
-         YNDn8c+3rpDlBSH9vVeqYrKOpm3m2WYMoAc6z4ufUw5p8PCyuc/5I+yLjDDsJTuO80Ff
-         kicX56RpLP/nlQk+FhUdnOYSPVxtIO57AcdWYVGEiNSOJhhICZMpOJeR5p07M9dDNWJ2
-         Y+oi/JT7Y+nxnwLWTyWx0CON2UzTpCflIBYPosPBlF1KXh819nwzMosMa0pwMuGgIoKP
-         eBJQ==
-X-Gm-Message-State: AOAM53340jEveKpfTA/M8W4Vpu7uXtDg2tFP4B0E6jHWWohD5pqs26h2
-        7JGSiMwCZqylo/YVPb35zhpHmTfNgDo=
-X-Google-Smtp-Source: ABdhPJxOCn1AEI+177rbfbgD1PLK+uYix4EtSFYn5dKI07jmADck+FCfZUCKs8SUZr9nTI/zp3zO0g==
-X-Received: by 2002:a2e:b610:: with SMTP id r16mr5518177ljn.226.1599764653867;
-        Thu, 10 Sep 2020 12:04:13 -0700 (PDT)
+        bh=QBUA3jj+YP61Y3WKAoytR+bVRW6HWGsJZ+tg3CvYGwg=;
+        b=hnxvbHQJT9IuZCLuyvdERJYS6goxWHYCzHBbd7rsLpwone2w4ceGE5nXMABgu1S7G1
+         2pu2cynCvJ7/0MCxeyW3oC7YPDKoeecpzssil/eIqvV5lkPApfqGFOlSREUCCNQ+JFiK
+         ivI2UygovIIyjdDThDqwhSwkLYw2fr4vtSPGrejbIt7R84JKF/hEHJy83c2gXg8A85V+
+         dbreJ1efzG0vlJxDN/BIn5q5JbfhcAK/yJ+Lldfk2KCuEaKwNwlzp7pMoCk0fyI7njHT
+         UuFzqfCvNoQ+smDF9J1WZ0jdAqBuZMHhmGFLEA/yrb25LxyUGex5+2bAVgWArYLeSPCx
+         XNKw==
+X-Gm-Message-State: AOAM531TAEbCilIVbFWbgU4C2MIhi9VjaGxVUA0x0lLLZ4OBqSjY5CKY
+        Piu4yMBBQKgCG4avraTGuF3kWlzEAzA=
+X-Google-Smtp-Source: ABdhPJywZDoGK8VhECz3GRpeC86NKe6HHLD7CECWgP6ixz50FdVbW17xd4sjmgUlAc5X/raPGoTBzA==
+X-Received: by 2002:a19:3fc9:: with SMTP id m192mr4944807lfa.36.1599764645695;
+        Thu, 10 Sep 2020 12:04:05 -0700 (PDT)
 Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id v11sm1549815lfg.39.2020.09.10.12.04.13
+        by smtp.gmail.com with ESMTPSA id v11sm1549815lfg.39.2020.09.10.12.04.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2020 12:04:13 -0700 (PDT)
+        Thu, 10 Sep 2020 12:04:05 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 8/8] worktree: simplify search for unique worktree
-Date:   Thu, 10 Sep 2020 21:03:42 +0200
-Message-Id: <8383c246f8c23e61dedd69d6e69c72d51fd6b469.1599762679.git.martin.agren@gmail.com>
+Subject: [PATCH 4/8] worktree: drop useless call to strbuf_reset
+Date:   Thu, 10 Sep 2020 21:03:38 +0200
+Message-Id: <58a2469cc18839e57b45f687b6e484d69161a34c.1599762679.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.28.0.277.g9b3c35fffd
 In-Reply-To: <cover.1599762679.git.martin.agren@gmail.com>
 References: <cover.1599762679.git.martin.agren@gmail.com>
@@ -75,53 +75,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We track the number of worktrees we've found and break out of the loop
-early once we hit 2. This is because we're not really interested in the
-number of matches -- we just want to make sure that we don't find more
-than one worktree that matches the suffix. This can be done just as well
-by checking the NULL-ness of the pointer where we collect our
-answer-to-be. Drop the redundant `nr_found` variable.
+There's no need to reset the strbuf immediately after initializing it.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- worktree.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ worktree.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/worktree.c b/worktree.c
-index faac87422c..ac754b88ff 100644
+index 23dd547e44..64a9e78997 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -172,13 +172,13 @@ static struct worktree *find_worktree_by_suffix(struct worktree **list,
- 						const char *suffix)
+@@ -552,7 +552,6 @@ const char *worktree_ref(const struct worktree *wt, const char *refname)
  {
- 	struct worktree *found = NULL;
--	int nr_found = 0, suffixlen;
-+	int suffixlen;
+ 	static struct strbuf sb = STRBUF_INIT;
  
- 	suffixlen = strlen(suffix);
- 	if (!suffixlen)
- 		return NULL;
- 
--	for (; *list && nr_found < 2; list++) {
-+	for (; *list; list++) {
- 		const char	*path	 = (*list)->path;
- 		int		 pathlen = strlen(path);
- 		int		 start	 = pathlen - suffixlen;
-@@ -186,11 +186,12 @@ static struct worktree *find_worktree_by_suffix(struct worktree **list,
- 		/* suffix must start at directory boundary */
- 		if ((!start || (start > 0 && is_dir_sep(path[start - 1]))) &&
- 		    !fspathcmp(suffix, path + start)) {
-+			if (found)
-+				return NULL;
- 			found = *list;
--			nr_found++;
- 		}
- 	}
--	return nr_found == 1 ? found : NULL;
-+	return found;
+-	strbuf_reset(&sb);
+ 	strbuf_worktree_ref(wt, &sb, refname);
+ 	return sb.buf;
  }
- 
- struct worktree *find_worktree(struct worktree **list,
 -- 
 2.28.0.277.g9b3c35fffd
 
