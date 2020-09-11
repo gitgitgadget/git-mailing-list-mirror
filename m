@@ -2,68 +2,65 @@ Return-Path: <SRS0=PYw/=CU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D665C433E2
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 11:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A892C433E2
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 12:16:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F63F2220A
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 11:47:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3A7521D40
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 12:16:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABtzJUtC"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="enQ46mJV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725847AbgIKLrc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Sep 2020 07:47:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbgIKLrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Sep 2020 07:47:14 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD747C0613ED
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 04:46:56 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id p13so8714859ils.3
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 04:46:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tXqAt7N55GycjIdyeQ5esKO6pn3zH1M4nKJafOQQqZE=;
-        b=ABtzJUtCu4iBfEtADsyCHud8I3vZMxavpsL+vpjbPu/T6/64C/rZIg2jpegusyN5yP
-         zKzs1z1HxjMju5KdEDJA0tw59FY8rhPPILZTAqwQvAtE3niKa965euWymdMDO2ta8xAc
-         zmmq+7YqgsXlVZzZfOLk2/Z3jBtg1anbXukXCp2gp1iwAKtJpVZlsh9TMD/0cHgthHoF
-         qNkohootVlGIgFWcF6PCnB91mvA8Hqft41n+YYwScSqBpv4y2JcnfblMxIbBegGwkvsW
-         JV5NvY9AMTWf6Z9VZGQzkJulBwWrDgfYgJdo4PQ5HolOq80dw9yTZFcGuM7K2b6YFLTI
-         RWew==
+        id S1725819AbgIKMQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Sep 2020 08:16:19 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:24070 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1725710AbgIKMQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 08:16:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1599826575;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=X99g0q3bD7Wp2VLPKmcBz9je5sABShgxPObL6i633lI=;
+        b=enQ46mJV0ING1sdscHQFnv3ho2eGNuP/GxKg9MEKA2ApUI+eV6qnfTPR94cdLDfS36qEqN
+        wACfW9cI+CbEBBUBP+KQVn55wlgRfDRIYOYBp+/an8JcmJTUtI5WXTwR4Qzt29IhsLTkOq
+        XMUAIDWU2FhDSQnuFNlzDpM2DDgjAe8=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-241-boCybrp2N76b-nrunfpyPA-1; Fri, 11 Sep 2020 08:16:11 -0400
+X-MC-Unique: boCybrp2N76b-nrunfpyPA-1
+Received: by mail-ej1-f69.google.com with SMTP id qn7so4478825ejb.15
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 05:16:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tXqAt7N55GycjIdyeQ5esKO6pn3zH1M4nKJafOQQqZE=;
-        b=R+jAE5lHEvZQNyT+yYSZfMfvbSfFRGz1noTINzLJGPo+lqR7SKrlmvmFIEEslYur9r
-         k7Fw4DTqnzLjh5SDH3LB8em5dlTBNtMqXMH1ozkWbjUiLBCyGgOm18juLw9arCdvaJ8n
-         jW2qprdPJfGi9VeOG5GlLjI/kTI6fEdkk6y/tM6Irtjl7BmCqgwdS5zFKK64A2dTQ9y8
-         5DjIcpzm9mhfX7jTVdpGF6TM+2rlv+uerqEA5YYr1rq2yN6S0h2ts2d/LD1iqf3hB/h0
-         zW98FasqZSswYTsXCUEPKoR+lCgMslT/kWUCsCACMRse24gxGoOA6gCAXKHv6ojBseEN
-         BVgg==
-X-Gm-Message-State: AOAM532KpcbN/44DP6CV5Wa3OioFgMtZCcYUkkEX16snrCgrsJYxM3Tl
-        pQxi7SrQ2eUA76M343BevsMxbktbKtT2iD2lzL8v7iOuo4k=
-X-Google-Smtp-Source: ABdhPJweaXhzs72d+9d9erfXQQCgD5X/B/g0QsUzF+yTe5WaPZ6O5nIIN1F3KvlLYdfJ0zslchsxwIHkHwsExwq6Hqo=
-X-Received: by 2002:a92:6a0c:: with SMTP id f12mr1313187ilc.213.1599824815643;
- Fri, 11 Sep 2020 04:46:55 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=X99g0q3bD7Wp2VLPKmcBz9je5sABShgxPObL6i633lI=;
+        b=LRsp/sl9KYGwfSbT5c75L447tRu6JHOzCCieM5XFSBvPUALwNdyg5+R3pqdEMB6MO6
+         5070nVSoc2wodRHp8N7KcmzDDYIl8xgopzSKf+MMsZu1KU8scDrTqA1ZfCzv+7uKOTHr
+         jgd9qfKDeS8irYu9yT0YXtV9pzAX+xeSyZYv7uEm1C3gMIRU++BWdzwenjSPTVFRiFcJ
+         5bynBhfItatVzFmCMN8JTUkrLmPee6K4KltyaIxY7hEHgPS5lrt+DE26o/DBdI6nJWZp
+         k2GDfG55Y9sJbL0rAxGYY8dwdClQu3FT04afNg1Av4AIvaqqeOQNlIpz4cnhE2rZrIwS
+         Apuw==
+X-Gm-Message-State: AOAM532mkAXaFUXvguiPwXsSBwRbX5WG2Hy1X5t63lRSY9Zd5LlK3aqN
+        HX1IkR6t1NM1roZ0XTVq7cLYzmmtEXSY0Ne829JUZttmWi+KbiXeuklco68ekKhfCCbO2af3mgc
+        uxFElunDzkPv4Lw1rHvEVsEv4XJvO
+X-Received: by 2002:a50:f081:: with SMTP id v1mr1707244edl.161.1599826570235;
+        Fri, 11 Sep 2020 05:16:10 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJymTWmQ8v63mlUE8MtiiH6/0xmq7VYWBxdUSqr/jZO4viBVU6npoWaPVJHPGW8ATknUuHbvQc5HI9eYfiehoBk=
+X-Received: by 2002:a50:f081:: with SMTP id v1mr1707222edl.161.1599826570031;
+ Fri, 11 Sep 2020 05:16:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABJqhQNh2Qc2Btp==bGUbT-AaSjGdGEmhtphQQyX=nqjWOis0A@mail.gmail.com>
- <CA+kUOan0N32W22xkoYsGYqM7rJDnc=tjQe_2Hnh2H47=19bbeQ@mail.gmail.com>
-In-Reply-To: <CA+kUOan0N32W22xkoYsGYqM7rJDnc=tjQe_2Hnh2H47=19bbeQ@mail.gmail.com>
-From:   =?UTF-8?Q?J=C4=99drzej_Dudkiewicz?= <jedrzej.dudkiewicz@gmail.com>
-Date:   Fri, 11 Sep 2020 13:46:43 +0200
-Message-ID: <CABJqhQMST-n6-uEDpFCUSsYueF_=7ZLPCtj_mQnu679oY99ZVg@mail.gmail.com>
-Subject: Re: Cannot run `git submodule init` on Cygwin from script with strict
- error checking
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Ondrej Pohorelsky <opohorel@redhat.com>
+Date:   Fri, 11 Sep 2020 14:15:59 +0200
+Message-ID: <CA+B51BGRuLfF7FpiK93Wih0XhsC7rJLGjkF2CzrEsUkBEif+jw@mail.gmail.com>
+Subject: Git doesn't honor NO_PROXY environment variable while cloning
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -71,36 +68,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 11, 2020 at 1:30 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
->
-> Hi J=C4=99drzej,
+Hi,
 
-> I think there's something odd about the way you're calling `git
-> submodule init`: it should normally be a separate execution that
-> wouldn't inherit the `-aeu` or `-x` settings from the parent Bash
-> process.
+we've got a bug[0] reported in Red Hat Bugzilla. It seems like Git
+doesn't honor NO_PROXY environment variable while cloning repositories
 
-Sorry for not including the test script. Here it is:
+Reporter has provided these steps to reproduce using Git version 2.18.4:
 
-----8<----8<----8<-- CUT HERE--8<----8<----8<----8<----
-#!/bin/bash
+1. Start a ubi8 container with podman:
+```
+$ podman run --rm -it registry.access.redhat.com/ubi8/ubi /bin/bash
+```
+2. Install git in the container - `# yum install -y git`
+3. Add "bad" _PROXY environment variables:
+```
+# export HTTP_PROXY=3Dhttp://user:pass@bad.proxy
+# export HTTPS_PROXY=3Dhttps://user:pass@bad.proxy
+```
+4. Add Github as an ignorable proxy domain:
+```
+# export NO_PROXY=3Dgithub.com
+```
+5. Clone a github repo:
+```
+# mkdir -p /tmp/clone-test
+# cd /tmp/clone-test
+# git clone https://github.com/sclorg/nodejs-ex.git
+# echo $?
+```
 
-set -aeu
+Actual results:
+```
+# git clone https://github.com/sclorg/nodejs-ex.git
+Cloning into 'nodejs-ex'...
+# echo $?
+128
+```
 
-export SHELLOPTS
+Expected results:
 
-set -x
+Git clone succeeds, bypassing the proxy.
 
-git submodule init
-----8<----8<----8<-- CUT HERE--8<----8<----8<----8<----
 
-I use "export SHELLOPTS" because I want these flags to be effective in
-subshells. As a workaround I'm currently calling "set +u" before each
-execution of "git submodule init" and my script works, but it isn't
-very nice and IMHO shouldn't be required (i.e. it would be extremely
-nice if someone fixed it).
---=20
-J=C4=99drzej Dudkiewicz
 
-I really hate this damn machine, I wish that they would sell it.
-It never does just what I want, but only what I tell it.
+However I've found out that this possible issue is present even in
+newer versions e.g. 2.28.0.
+
+There is a workaround. You can rewrite proxy to be blank in .gitconfig
+for specific websites.
+```
+[http "https://github.com/"]
+        proxy =3D ""
+```
+
+Is this an issue or expected behaviour? And if it is expected
+behaviour, then why?
+
+Best regards,
+Ond=C5=99ej Poho=C5=99elsk=C3=BD
+
+
+[0]https://bugzilla.redhat.com/show_bug.cgi?id=3D1875639
+
