@@ -2,68 +2,69 @@ Return-Path: <SRS0=PYw/=CU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4361C433E2
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 18:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5CDC43461
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 18:25:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3A5D2075B
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 18:25:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1D78208E4
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 18:25:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uU3bjdk5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CL/LDJD7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725884AbgIKSZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Sep 2020 14:25:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33694 "EHLO
+        id S1725917AbgIKSZn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Sep 2020 14:25:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725864AbgIKSZb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Sep 2020 14:25:31 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B07CC061757
+        with ESMTP id S1725867AbgIKSZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 14:25:32 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88920C061573
         for <git@vger.kernel.org>; Fri, 11 Sep 2020 11:25:31 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id a65so5242714wme.5
+Received: by mail-wr1-x42b.google.com with SMTP id c18so12364824wrm.9
         for <git@vger.kernel.org>; Fri, 11 Sep 2020 11:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lKnTUaXU42KOdD+nLg+EAN4a8kOc4vtItw71t0XzJ+w=;
-        b=uU3bjdk5qbSHimKwKqz7OlIaqFuJzI64EaBTttM4+wjH0qE64T28maHHX/ThQNkbTB
-         IHKwZozS7ROjg0J+eDccgTmWqTO/nAATKgj2iM/1DpgyXL7Ynbi9JVB58xthr98ngOYT
-         omZ0OyGriypsKGK54Yx/+4XhGI2TgRQ5IZVXRiRwusEDRr/tjWbESl6XBG/R1U21tVw8
-         zWvla94qOtTHvJ2lxsLwZXTlsnNsuKM/crMcg1X48X/8OY971FTbFD6jYDWrgLmo5y7w
-         qgUyzl2dWihrWgmEyYTOoSzOdH1Jk4TUoW/3N26H2PXom4HhWqSNhX7OpmyJ8deycp1g
-         +KCQ==
+        bh=ekSrOQKMCsry37eLIl1yJ3SMCc2KAst0M+YuBeb2DWo=;
+        b=CL/LDJD7b4itIv/BUPHDuIXFM4a1UxpmHkoY03J8a8tv3FpFQB8AdnaYquQCxFpdPU
+         7yPPNcKu28+HS0TSupwu9oE4Kua/pd/kQF5rI0m4WDelJOGxlcjm9bHORoCVlYaPt7Hv
+         IZ5Uz0ZED4R7DlnGIiiy4kiQKFWX2phINJA92Vmj8YzhDwVl8tht35pysTue3Db0M6hx
+         m8heRpqY9pKM/7lAMgAsHWHXqUeXSiM0cP3D+k8SqpDwEalbQckwESMEkrAXzVgFrBwc
+         49+TQU/s0yx3gKw2sNWsk0EQ9cQBIfNLsLcEXywsffBDrc5vxnuU4520ahDDZTS7r1zF
+         B6HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lKnTUaXU42KOdD+nLg+EAN4a8kOc4vtItw71t0XzJ+w=;
-        b=FqTj+Hg6BGJlmrEJGRdESsY3KPcqz+GLgYRn7worq2xo1SZsUPgmTz2xjDdvUhdhBb
-         RfDff7HgcUCq16JqJpA8SmxKUkfimQyhwLXXXFEuLUl7zXhMU8337UB2OLjcXt6CKmmp
-         iGITLoWYTqP8gJ/OWtu698RSAmLP5HkHkDMoM9L+S0jz1Tge9wrG2KegMOg4OqODSH9S
-         J5vZ3+aq/NwgE/769+5xX8vAYCMPf2ndJPDHeu9hgtG2JFp8qWrtdHARNBqwNvH4dOTd
-         vu2jXt7JxhyD/ZP6i8ITo7uVCMbRZTzpsn/OdlOZdc0WEYSUqnhZvnVF93f9/9uYVs1+
-         BHIQ==
-X-Gm-Message-State: AOAM532H0zkRVnNzCuZygQrQjdT+aJOsu3e3LCYosvEb+P0H+MSRFmlX
-        MlSVYA7I/qplYkkVAgDGnAYwWXmggvc=
-X-Google-Smtp-Source: ABdhPJzdbGsJiHTSAQDbYiHpGoFu4eTFron9vwTy9294RMKOWxlKFPRqOOlqDHsgVvUWA3W09Jn4Bg==
-X-Received: by 2002:a1c:988d:: with SMTP id a135mr3439260wme.8.1599848729673;
-        Fri, 11 Sep 2020 11:25:29 -0700 (PDT)
+        bh=ekSrOQKMCsry37eLIl1yJ3SMCc2KAst0M+YuBeb2DWo=;
+        b=BY6NkZFOI/4n+v4gAeF9jGKEBXzc6wKnaxW31u08wAFBWOlKCKE50vGtCgV+GGK8Rw
+         BmuGJ0Zpnjoh1NHjcMcRonD4KmvVay6KNI5OX8xJ1BwtT95PHKS89n32I33pB9Oxg8q8
+         JPDeR31jyC6rm4BhONYeGB25YDxqK6km2bMex+KerGJK2dTIODOgvC9GZv/e+LUrwBRl
+         qvf67m6fNDqnj4KwT5/Bv8BfL7XblK9kl6tRuLMd8BU6gKFmnAiv4Wve/isfI3T0Y0ky
+         /k0ZbO30agWuJ0YLlJ84v86rHgCp9sYfqqOpvrnYBiexw3iyQTlr+RHjvKQz0eKW7QVm
+         5+oA==
+X-Gm-Message-State: AOAM533XsHMd+m0JK5E0+OmYgNNP19DAtcMkBXVuqAkqp2F1FfqKMwtp
+        t/X7xlqBVfPop01DMAX0LJzZeg5v4j4=
+X-Google-Smtp-Source: ABdhPJyULhTPQWsOn5V6R95Lk6U8DXezleAFM5LZTzSK3TcjW3b3qdz6XV9CNwsgAUdLjm4GgoYkvw==
+X-Received: by 2002:adf:df81:: with SMTP id z1mr3441147wrl.9.1599848728913;
+        Fri, 11 Sep 2020 11:25:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15sm5845973wrv.94.2020.09.11.11.25.29
+        by smtp.gmail.com with ESMTPSA id d6sm6136057wrq.67.2020.09.11.11.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Sep 2020 11:25:29 -0700 (PDT)
-Message-Id: <51ef776f8523d29dfe03d15f0d1958f5c456c057.1599848727.git.gitgitgadget@gmail.com>
+        Fri, 11 Sep 2020 11:25:28 -0700 (PDT)
+Message-Id: <4cdcedff313751da8c91d701c095f1051e759ce2.1599848727.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.727.git.1599848727.gitgitgadget@gmail.com>
 References: <pull.727.git.1599848727.gitgitgadget@gmail.com>
 From:   "Sean Barag via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Sep 2020 18:25:25 +0000
-Subject: [PATCH 2/4] clone: call git_config before parse_options
+Date:   Fri, 11 Sep 2020 18:25:24 +0000
+Subject: [PATCH 1/4] clone: add tests for --template and some disallowed
+ option pairs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,81 +80,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sean Barag <sean@barag.org>
 
-While Junio's request [1] was to avoids the unusual  "write config then
-immediately read it" pattern that exists in `cmd_clone`, Johannes
-mentioned that --template can write new config values that aren't
-automatically included in the environment [2]. This requires a config
-re-read after `init_db` is called.
-
-Moving the initial config up does allow settings from config to be
-overwritten by ones provided via CLI options in a more natural way
-though, so that part of Junio's suggestion remains.
-
-[1] https://lore.kernel.org/git/pull.710.git.1598456751674.gitgitgadget@gmail.com/
-[2] https://github.com/gitgitgadget/git/pull/727#issuecomment-689740195
+Some combinations of command-line options to `git clone` are invalid,
+but there were previously no tests ensuring those combinations reported
+errors.  Similarly, `git clone --template` didn't appear to have any
+tests.
 
 Signed-off-by: Sean Barag <sean@barag.org>
-Thanks-to: Junio C Hamano <gitster@pobox.com>
-Thanks-to: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/clone.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ t/t5606-clone-options.sh | 44 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index b087ee40c2..bf095815f0 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -851,8 +851,21 @@ static int checkout(int submodule_progress)
- 	return err;
- }
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index e69427f881..d20a78f84b 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -19,6 +19,50 @@ test_expect_success 'clone -o' '
  
-+static int git_clone_config(const char *k, const char *v, void *cb)
-+{
-+	return git_default_config(k, v, cb);
-+}
+ '
+ 
++test_expect_success 'disallows --bare with --origin' '
 +
- static int write_one_config(const char *key, const char *value, void *data)
- {
-+	/*
-+	 * give git_config_default a chance to write config values back to the environment, since
-+	 * git_config_set_multivar_gently only deals with config-file writes
-+	 */
-+	int apply_failed = git_default_config(key, value, data);
-+	if (apply_failed)
-+		return apply_failed;
++	test_expect_code 128 git clone -o foo --bare parent clone-bare-o 2>err &&
++	test_debug "cat err" &&
++	test_i18ngrep "\-\-bare and --origin foo options are incompatible" err
 +
- 	return git_config_set_multivar_gently(key,
- 					      value ? value : "true",
- 					      CONFIG_REGEX_NONE, 0);
-@@ -964,6 +977,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	struct strvec ref_prefixes = STRVEC_INIT;
- 
- 	packet_trace_identity("clone");
++'
 +
-+	git_config(git_clone_config, NULL);
++test_expect_success 'disallows --bare with --separate-git-dir' '
 +
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
++	test_expect_code 128 git clone --bare --separate-git-dir dot-git-destiation parent clone-bare-sgd 2>err &&
++	test_debug "cat err" &&
++	test_i18ngrep "\-\-bare and --separate-git-dir are incompatible" err
++
++'
++
++test_expect_success 'uses "origin" for default remote name' '
++
++	git clone parent clone-default-origin &&
++	(cd clone-default-origin && git rev-parse --verify refs/remotes/origin/master)
++
++'
++
++test_expect_success 'prefers --template config over normal config' '
++
++	template="$TRASH_DIRECTORY/template-with-config" &&
++	mkdir "$template" &&
++	git config --file "$template/config" foo.bar from_template &&
++	test_config_global foo.bar from_global &&
++	git clone "--template=$template" parent clone-template-config &&
++	(cd clone-template-config && test "$(git config --local foo.bar)" = "from_template")
++
++'
++
++test_expect_success 'prefers -c config over --template config' '
++
++	template="$TRASH_DIRECTORY/template-with-ignored-config" &&
++	mkdir "$template" &&
++	git config --file "$template/config" foo.bar from_template &&
++	git clone "--template=$template" -c foo.bar=inline parent clone-template-inline-config &&
++	(cd clone-template-inline-config && test "$(git config --local foo.bar)" = "inline")
++
++'
++
+ test_expect_success 'redirected clone does not show progress' '
  
-@@ -1125,9 +1141,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (real_git_dir)
- 		git_dir = real_git_dir;
- 
-+	/*
-+	 * additional config can be injected with -c, make sure it's included
-+	 * after init_db, which clears the entire config environment.
-+	 */
- 	write_config(&option_config);
- 
--	git_config(git_default_config, NULL);
-+	/*
-+	 * re-read config after init_db and write_config to pick up any config
-+	 * injected by --template and --config, respectively
-+	 */
-+	git_config(git_clone_config, NULL);
- 
- 	if (option_bare) {
- 		if (option_mirror)
+ 	git clone "file://$(pwd)/parent" clone-redirected >out 2>err &&
 -- 
 gitgitgadget
 
