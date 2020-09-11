@@ -2,138 +2,93 @@ Return-Path: <SRS0=PYw/=CU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D097CC433E2
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 19:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C34DC43461
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 19:08:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7179922208
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 19:00:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EE4722208
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 19:08:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c3vXDsQh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="matNG7/W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725876AbgIKTAD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Sep 2020 15:00:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbgIKTAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Sep 2020 15:00:02 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 191BFC061573
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 12:00:02 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id f142so10872295qke.13
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 12:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=AVWr/SwVQq/ptDW5kQeAr7S/+z2mYqzuhzPcdoFeEGE=;
-        b=c3vXDsQh9GYBA7UoHsbYMtUBVupmoRQ8LFHwxn9LBW4icgrMulff1n9sjiyedL4bUt
-         MpbGfb3tnMn4QG4EQrShX4a4B/Hr5zpKfqc/j7cXtnfox1yb8viN9jxmkAfh3IeZsXcH
-         wygH+EFtHoF76q2CMMD4JwxFIDVerVX07i3zc7GYN0eNNZjLRiySsc1vJ+BVFoHSTrzm
-         i5nJIC2W5/AxA10VvkYzsBsihHT3BPOaKv0CowC2VMDAwz0pHVPZK63tGOT3sXR6iMWb
-         21vDV2XSyYAS9hFj8Ou01E7dfcKAxL7K0eeTLxxJ6M5vbPX5pR3oz9RsaG8X9WV4lr08
-         sfhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=AVWr/SwVQq/ptDW5kQeAr7S/+z2mYqzuhzPcdoFeEGE=;
-        b=K0y66TL3eW8Zj6nk3rQ8zfnWXpfExj9qxy79IcWCWUyNdLyltGJVHDggr4dTXxBx5q
-         03TnaW7PhOLpGhncLn0ZkwjF7oWQJvxxa9GqB4lfZAyKptCtv7ia8nrfY1R7U/3D1nC+
-         UhuQQACW7UyuN5rC5me3i6La/dQL+i7HZ4SbYyTpI59wPOvc8GSoDIS9BMY5d/GKCQX2
-         yf7AqonVt6EGg0RjeICq6qY1R5Y/LoJn5IpYeDkd0pBAe6nYhDzC57yrnYZyaWfdotX7
-         FbXPWI8ODQ7/y3dDXVGZsfBeqV2NHpT9upBB6sp4v7/Pt5jLEVYfgE34kY+q/yuapdC3
-         6nSA==
-X-Gm-Message-State: AOAM533foHi1yTPUN2UvxHdhaVNLe2Vm3EWsgOaqCDaH9iFCz3BIkDRa
-        5cZwRNnsiwMepXRQlasD0eI=
-X-Google-Smtp-Source: ABdhPJw0JV4FUaRuzntymNkabolLw39B8PZPAHrAPEUdhGTxNxXLPU+KYyESkST73ivy18Yl2TkE5g==
-X-Received: by 2002:a37:7286:: with SMTP id n128mr2783546qkc.423.1599850801247;
-        Fri, 11 Sep 2020 12:00:01 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:3846:6663:b768:1725? ([2600:1700:e72:80a0:3846:6663:b768:1725])
-        by smtp.gmail.com with ESMTPSA id e26sm3737071qka.24.2020.09.11.11.59.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2020 12:00:00 -0700 (PDT)
-Subject: Re: [PATCH 2/4] clone: call git_config before parse_options
-To:     Sean Barag via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Sean Barag <sean@barag.org>
-References: <pull.727.git.1599848727.gitgitgadget@gmail.com>
- <51ef776f8523d29dfe03d15f0d1958f5c456c057.1599848727.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <48b160f0-0cb3-e120-dc11-1d5de7e02af1@gmail.com>
-Date:   Fri, 11 Sep 2020 14:59:59 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
- Thunderbird/81.0
+        id S1725790AbgIKTID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Sep 2020 15:08:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51148 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725786AbgIKTIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 15:08:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0C751EC452;
+        Fri, 11 Sep 2020 15:07:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=LZMBPiq/dGnQ
+        5jl/0e8dqG65h4g=; b=matNG7/WbZlQNyao//Me5BRRomh0WgLbvYfozvzA9FY+
+        dzOwUgWUtAn0oCK6IYYB+7DFXqc5ZLLpROxJdoTMpTyPlnbo6WAk1Sxh02edb8EN
+        JJMly/DQU1qLFy9mWbmZ0YGoQ8PMJ/eBwFKJuKB4EgEAHqJ6P/nZJn7oWCW5HRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=evoBz/
+        hWs6U9B9oujUk9DMIZ4+EVfqSMxBUnoFcIJf+l29dTsC0PZQmzgtmQ2xtKRhB4Zl
+        4HkPyiSRNIHI36wp0ov2avuLWwXp3aJCeRqUpTMJpMmjclS6d5Cit+Yqa8awGzxJ
+        SXliwdqq+ysEjHfzibHIyhBiKFA7GlTW8oCtE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 03633EC451;
+        Fri, 11 Sep 2020 15:07:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8388DEC44E;
+        Fri, 11 Sep 2020 15:07:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?utf-8?Q?J=C4=99drzej?= Dudkiewicz 
+        <jedrzej.dudkiewicz@gmail.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Cannot run `git submodule init` on Cygwin from script with strict error checking
+References: <CABJqhQNh2Qc2Btp==bGUbT-AaSjGdGEmhtphQQyX=nqjWOis0A@mail.gmail.com>
+        <CA+kUOan0N32W22xkoYsGYqM7rJDnc=tjQe_2Hnh2H47=19bbeQ@mail.gmail.com>
+        <CABJqhQMST-n6-uEDpFCUSsYueF_=7ZLPCtj_mQnu679oY99ZVg@mail.gmail.com>
+        <20200911131943.GA23146@szeder.dev>
+Date:   Fri, 11 Sep 2020 12:07:51 -0700
+In-Reply-To: <20200911131943.GA23146@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Fri, 11 Sep 2020 15:19:43 +0200")
+Message-ID: <xmqqsgbonnco.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <51ef776f8523d29dfe03d15f0d1958f5c456c057.1599848727.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 18A346B0-F462-11EA-89D6-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/11/2020 2:25 PM, Sean Barag via GitGitGadget wrote:
-> From: Sean Barag <sean@barag.org>
-> 
-> While Junio's request [1] was to avoids the unusual  "write config then
-> immediately read it" pattern that exists in `cmd_clone`, Johannes
-> mentioned that --template can write new config values that aren't
-> automatically included in the environment [2]. This requires a config
-> re-read after `init_db` is called.
-> 
-> Moving the initial config up does allow settings from config to be
-> overwritten by ones provided via CLI options in a more natural way
-> though, so that part of Junio's suggestion remains.
-> 
-> [1] https://lore.kernel.org/git/pull.710.git.1598456751674.gitgitgadget@gmail.com/
-> [2] https://github.com/gitgitgadget/git/pull/727#issuecomment-689740195
-> 
-> Signed-off-by: Sean Barag <sean@barag.org>
-> Thanks-to: Junio C Hamano <gitster@pobox.com>
-> Thanks-to: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/clone.c | 26 +++++++++++++++++++++++++-
->  1 file changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index b087ee40c2..bf095815f0 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -851,8 +851,21 @@ static int checkout(int submodule_progress)
->  	return err;
->  }
->  
-> +static int git_clone_config(const char *k, const char *v, void *cb)
-> +{
-> +	return git_default_config(k, v, cb);
-> +}
-> +
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Introducing this no-op seems a bit premature, but as long
-as it makes your future patches cleaner, then it is
-appropriate.
+> Having said that, unlike 'git submodule', 'git-sh-setup' is meant to
+> be dot-sourced into users' shell scripts, and, therefore, should work
+> with the shell options set in users' scripts, including even 'set -u'.
 
->  static int write_one_config(const char *key, const char *value, void *data)
->  {
-> +	/*
-> +	 * give git_config_default a chance to write config values back to the environment, since
-> +	 * git_config_set_multivar_gently only deals with config-file writes
-> +	 */
-> +	int apply_failed = git_default_config(key, value, data);
+Is it and should it?
 
-However, you change this to git_clone_config() in patch 4. Perhaps
-use git_clone_config() here instead?
+git-sh-setup was meant to be an implementation detail for our own
+scripts and we know don't use "-u -e".  We never cared about
+backward compatibility for such use by end-users when we made any
+update to the git-sh-setup scriptlet.  We freely changed existing
+features and squatted on good names for variables and functions we
+used in it, because it is designed as a private helper library.
 
-Thanks,
--Stolee
+Having said that, we do protect from end-user misconfiguration like
+exporting CDPATH, and protecting ourselves from exporting SHELLOPTS
+is not something I would oppose.
 
+Thanks.
