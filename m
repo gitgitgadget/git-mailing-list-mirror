@@ -2,54 +2,66 @@ Return-Path: <SRS0=PYw/=CU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.3 required=3.0 tests=BAYES_50,
+	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C7D9C433E2
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 17:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F08AC43461
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 17:44:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36336214F1
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 17:08:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17D54221EB
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 17:44:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726203AbgIKRII (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Sep 2020 13:08:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54492 "EHLO cloud.peff.net"
+        id S1725931AbgIKMfX convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 11 Sep 2020 08:35:23 -0400
+Received: from mx2.homebroker.pl ([91.228.88.39]:36310 "EHLO mx2.homebroker.pl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726249AbgIKPCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Sep 2020 11:02:04 -0400
-Received: (qmail 898 invoked by uid 109); 11 Sep 2020 14:01:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Sep 2020 14:01:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2718 invoked by uid 111); 11 Sep 2020 14:01:20 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Sep 2020 10:01:20 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Sep 2020 10:01:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ondrej Pohorelsky <opohorel@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git doesn't honor NO_PROXY environment variable while cloning
-Message-ID: <20200911140119.GA2072036@coredump.intra.peff.net>
-References: <CA+B51BGRuLfF7FpiK93Wih0XhsC7rJLGjkF2CzrEsUkBEif+jw@mail.gmail.com>
- <20200911135928.GA1986935@coredump.intra.peff.net>
-MIME-Version: 1.0
+        id S1725813AbgIKMdm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 08:33:42 -0400
+X-Greylist: delayed 495 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Sep 2020 08:33:42 EDT
+Received: from localhost (unknown [127.0.0.1])
+        by mx2.homebroker.pl (Postfix) with ESMTP id 5F09C1C36F7
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 12:25:08 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at homebroker.pl
+Received: from mx2.homebroker.pl ([127.0.0.1])
+        by localhost (hb-mailgw-ext-2.adm [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id IpU1r3M9pdQi for <git@vger.kernel.org>;
+        Fri, 11 Sep 2020 14:25:08 +0200 (CEST)
+Received: from mail.homebroker.pl (unknown [10.84.8.11])
+        by mx2.homebroker.pl (Postfix) with ESMTPS id 45BB31C3691
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 12:25:08 +0000 (UTC)
+Received: from juy (unknown [194.36.191.80])
+        (Authenticated sender: kzorawski)
+        by mail.homebroker.pl (Postfix) with ESMTPSA id 17B7AE0D1F
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 14:25:08 +0200 (CEST)
+From:   "Chan Wong Kee" <kzorawski@hb-partners.pl>
+Subject: Invoice #2334889 is one week overdue
+To:     "git" <git@vger.kernel.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200911135928.GA1986935@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Reply-To: "Chan Wong Kee" <greeleal1981@gmail.com>
+Organization: Lfi industrial co., ltd.
+Date:   Fri, 11 Sep 2020 08:25:07 -0700
+Message-Id: <20200911122508.5F09C1C36F7@mx2.homebroker.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 11, 2020 at 09:59:28AM -0400, Jeff King wrote:
+Dear Mr. or Ms.
 
-> So I dunno. This seems like a libcurl bug, but it's possible we're feeding
-> it data wrong somehow.
+Our records show that we haven’t yet received payment of $7,980 for Invoice #2334889, which is overdue by one week.
+I would appreciate if you could check this out on your end.
 
-I forgot to mention: I'm using libcurl 7.72.0 (the current in debian
-unstable). But it also reproduces on my debian stable machine with
-libcurl 7.64.0.
+If the payment has already been sent, please disregard this notice. And if you’ve lost this invoice, please let me know, and I’d be happy to send you another copy.
 
--Peff
+
+-------
+
+Sales Manager, Chan Wong Kee
+Lfi industrial co., ltd.
+Tel 86-750-2633159
+Fax 86-750-2633151
+
+
