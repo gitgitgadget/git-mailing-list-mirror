@@ -2,490 +2,257 @@ Return-Path: <SRS0=PYw/=CU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA1AC43461
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 13:43:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BF97C2BC11
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 14:04:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71BEA22273
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 13:43:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32BCC221EF
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 14:04:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjqGd628"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rIuJxXwG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726080AbgIKNng (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Sep 2020 09:43:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
+        id S1726248AbgIKOEZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Sep 2020 10:04:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726258AbgIKN2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Sep 2020 09:28:25 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46E9C061757
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:27:45 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id j2so11490277wrx.7
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:27:45 -0700 (PDT)
+        with ESMTP id S1726259AbgIKNUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 09:20:23 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB753C061573
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:19:50 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id lo4so13743093ejb.8
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:19:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=vd2BKUYLqnV4ROPk5QYa0SSW68SArgKUPTrh2yHOLG0=;
-        b=FjqGd6286/1GppydIzOjnwCyvlpwgDGoluXaQmC29CWo+Vmuuh0YCxAOuvOOcY9LPZ
-         5kpGwEBwSa+TNDOQ5tI26C7gFzoZp8BT/KKrum8O+ol8umrGNm+SFe7SqxLd7f0ukeGt
-         mqMJixnn3xOWxT0hgRBtMVuvMOmq1hUuAEHHz40tAVT2Ddbl6qKCMZXgN85CmL1ajtLR
-         q4OcWcXE4QoCoC1iPtco4jfUKsLhcfY3NNeoM6qtT0t/nbZii4FVuiYf9sTYhDi7tW/Y
-         vl6oWyiVb/jp/ncAZRYgWhvXOXAero6f+6YBHNxyhGF1QYob0Uom0tNbF9/w1rN0Oplr
-         OTuQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7wObJFSQyVY/hsjQFc3gE26zkuwkPQkj8/OkOFr52NA=;
+        b=rIuJxXwGSUXaCkIU1LKqmGSnAOvWADQ6RYA4e+pswRkzVike3qcrg+hKEMJwX7osEu
+         z2MTPc1/a8oJyPetbi5DF9AGp/ZAoTvWUMjz7Obq18KyKskOQN13XTut5R0kWdyk9Ppo
+         9NwSuaSRQ0DAzaSVEm4GIpecMvD3ECexOQP/fu48WWm/BeegZZHr2FkrMgTNvRApswUr
+         IStRsHkve2kj4pfy+hWs4TQZ4kjDaHUtMWnkAtgYPw9FNLnm9oL8VRW7gPuugki5hBLu
+         qG4XHL87cXKig0UCBCPda4t4ZCm8S0x1ownYes9iTiCbQh+ZwMtQ8s8i0IdawjmOCZtg
+         FpqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=vd2BKUYLqnV4ROPk5QYa0SSW68SArgKUPTrh2yHOLG0=;
-        b=BBz4xdALRRFd8w5Xs1FBBm8L0ZyxrnkW9/eVm+91RN828jiPbD9h6gnlk6tjsFSeqG
-         qNJG8cecHM/4OL9eIy+jQVp8YDaDeUrLtVqS+GuW2w3mrmI8T1mdlUd+5tNkfafbjghM
-         k/wMZOiYmMd2IwUSDL9G1JyjTkyXMRS9tAITn7JzqoThSLUoBhxK1m1YoREerF4jzI46
-         5V7jihAtXsM059CBvCSoyVKCIulZG8DuMSaHxGHh1VBBUVXz8PZHrBuYiymCbbH71Yms
-         1uVQiPDrLX4LUYOaRXmMwFduWk5VKwwyeaCA2Bmkz4tJzLnx17Dc2w/wcJNn5XdwaNfK
-         EgFQ==
-X-Gm-Message-State: AOAM533Rl2Bd6uzUyklEQXgx5M0tgKR350j3fp/2VSikIusEQdY/ylsi
-        7LyhsdZLwK02Obo3nPCUXhlJxvn66Gw=
-X-Google-Smtp-Source: ABdhPJy/Is6PFe7gwyiVjjzFsL+y+Qu6AFMqfEVPBSCCGDG1wntHF7eF6Hco7Fw90vLBzee7OBzm0A==
-X-Received: by 2002:adf:e5c8:: with SMTP id a8mr2142365wrn.5.1599830863560;
-        Fri, 11 Sep 2020 06:27:43 -0700 (PDT)
-Received: from [192.168.1.201] (151.252.189.80.dyn.plus.net. [80.189.252.151])
-        by smtp.googlemail.com with ESMTPSA id 11sm4529053wmi.14.2020.09.11.06.27.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2020 06:27:43 -0700 (PDT)
-Subject: Re: [PATCH v4 3/9] hook: add list command
-To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <20200909004939.1942347-1-emilyshaffer@google.com>
- <20200909004939.1942347-4-emilyshaffer@google.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <9146d342-7b3c-091f-4904-e7d8696544be@gmail.com>
-Date:   Fri, 11 Sep 2020 14:27:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7wObJFSQyVY/hsjQFc3gE26zkuwkPQkj8/OkOFr52NA=;
+        b=qPlND94IT1sV+4/drgncmm0ZVOuzMwYL6Z9lhFHBtPxlnkeQ7QJr/rT0Jzi2hJjf0W
+         K+Gn8HjEzm8cMTVwjvbh5AE6QqHLRy4QyvqsTKPfaeHJ6dXUhdymUzZL/6+GLRXCLyVw
+         ERWTeD5dE9kUF1dg37hzdYkdTzaCS8HULCIfkmt6t//hwR0kT91zJyWc8Pyst2cwvhD0
+         sbrKY1GEb8S19fVfYPyoYriqNzyTA4CK7wy7ww+SA3CZd4MEntii/kS2XjQhX1EGCH5H
+         tx9Qo7MJHZ+UMiVZkNwmUz2UqvkJrIXywTc0Y4/Os7Q2goKgAhamXVsChtvM9oR37jlH
+         pWVA==
+X-Gm-Message-State: AOAM531FTEHOrBnIw7LXQDE1kwKA2S/AbvVH4it3DW140e9gOf/tMWVk
+        0bQo5rzQrVykByzegXIs89k=
+X-Google-Smtp-Source: ABdhPJz7P3AJ0XaSAf5Hk7dOaA4wW3qQYOk7/TWbif++DcKPC2rSSb87wciao0T97l+wMLkxTDJ+ZQ==
+X-Received: by 2002:a17:906:1186:: with SMTP id n6mr1900850eja.331.1599830389427;
+        Fri, 11 Sep 2020 06:19:49 -0700 (PDT)
+Received: from szeder.dev (94-21-23-168.pool.digikabel.hu. [94.21.23.168])
+        by smtp.gmail.com with ESMTPSA id i15sm1686481edf.82.2020.09.11.06.19.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Sep 2020 06:19:48 -0700 (PDT)
+Date:   Fri, 11 Sep 2020 15:19:43 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?Q?J=C4=99drzej?= Dudkiewicz <jedrzej.dudkiewicz@gmail.com>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Cannot run `git submodule init` on Cygwin from script with
+ strict error checking
+Message-ID: <20200911131943.GA23146@szeder.dev>
+References: <CABJqhQNh2Qc2Btp==bGUbT-AaSjGdGEmhtphQQyX=nqjWOis0A@mail.gmail.com>
+ <CA+kUOan0N32W22xkoYsGYqM7rJDnc=tjQe_2Hnh2H47=19bbeQ@mail.gmail.com>
+ <CABJqhQMST-n6-uEDpFCUSsYueF_=7ZLPCtj_mQnu679oY99ZVg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200909004939.1942347-4-emilyshaffer@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABJqhQMST-n6-uEDpFCUSsYueF_=7ZLPCtj_mQnu679oY99ZVg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily
-
-On 09/09/2020 01:49, Emily Shaffer wrote:
-> Teach 'git hook list <hookname>', which checks the known configs in
-> order to create an ordered list of hooks to run on a given hook event.
+On Fri, Sep 11, 2020 at 01:46:43PM +0200, Jędrzej Dudkiewicz wrote:
+> On Fri, Sep 11, 2020 at 1:30 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> >
+> > Hi Jędrzej,
 > 
-> Multiple commands can be specified for a given hook by providing
-> multiple "hook.<hookname>.command = <path-to-hook>" lines. Hooks will be
-> run in config order. If more properties need to be set on a given hook
-> in the future, commands can also be specified by providing
-> "hook.<hookname>.command = <hookcmd-name>", as well as a "[hookcmd
-> <hookcmd-name>]" subsection; at minimum, this subsection must contain a
-> "hookcmd.<hookcmd-name>.command = <path-to-hook>" line.
+> > I think there's something odd about the way you're calling `git
+> > submodule init`: it should normally be a separate execution that
+> > wouldn't inherit the `-aeu` or `-x` settings from the parent Bash
+> > process.
 > 
-> For example:
+> Sorry for not including the test script. Here it is:
 > 
->    $ git config --list | grep ^hook
->    hook.pre-commit.command=baz
->    hook.pre-commit.command=~/bar.sh
->    hookcmd.baz.command=~/baz/from/hookcmd.sh
+> ----8<----8<----8<-- CUT HERE--8<----8<----8<----8<----
+> #!/bin/bash
 > 
->    $ git hook list pre-commit
->    ~/baz/from/hookcmd.sh
->    ~/bar.sh
+> set -aeu
 > 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->   Documentation/git-hook.txt    |  37 +++++++++++-
->   Makefile                      |   1 +
->   builtin/hook.c                |  55 ++++++++++++++++--
->   hook.c                        | 102 ++++++++++++++++++++++++++++++++++
->   hook.h                        |  15 +++++
->   t/t1360-config-based-hooks.sh |  68 ++++++++++++++++++++++-
->   6 files changed, 271 insertions(+), 7 deletions(-)
->   create mode 100644 hook.c
->   create mode 100644 hook.h
+> export SHELLOPTS
 > 
-> diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-> index 2d50c414cc..e458586e96 100644
-> --- a/Documentation/git-hook.txt
-> +++ b/Documentation/git-hook.txt
-> @@ -8,12 +8,47 @@ git-hook - Manage configured hooks
->   SYNOPSIS
->   --------
->   [verse]
-> -'git hook'
-> +'git hook' list <hook-name>
->   
->   DESCRIPTION
->   -----------
->   You can list, add, and modify hooks with this command.
->   
-> +This command parses the default configuration files for sections "hook" and
-> +"hookcmd". "hook" is used to describe the commands which will be run during a
-> +particular hook event; commands are run in config order. "hookcmd" is used to
-> +describe attributes of a specific command. If additional attributes don't need
-> +to be specified, a command to run can be specified directly in the "hook"
-> +section; if a "hookcmd" by that name isn't found, Git will attempt to run the
-> +provided value directly. For example:
-> +
-> +Global config
-> +----
-> +  [hook "post-commit"]
-> +    command = "linter"
-> +    command = "~/typocheck.sh"
-> +
-> +  [hookcmd "linter"]
-> +    command = "/bin/linter --c"
-> +----
-> +
-> +Local config
-> +----
-> +  [hook "prepare-commit-msg"]
-> +    command = "linter"
-> +  [hook "post-commit"]
-> +    command = "python ~/run-test-suite.py"
-> +----
-
-I think it would be helpful to have a couple of lines explaining what 
-the example configuration sets up
-
-> +COMMANDS
-> +--------
-> +
-> +list <hook-name>::
-> +
-> +List the hooks which have been configured for <hook-name>. Hooks appear
-> +in the order they should be run, and note the config scope where the relevant
-> +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
-
-Thanks for clarifying that it is the origin of the 
-hook.<hook-name>.command that is printed. An example of the output of 
-the config above would be useful I think.
-
->   GIT
->   ---
->   Part of the linkgit:git[1] suite
-> diff --git a/Makefile b/Makefile
-> index 6eee75555e..804de45b16 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -890,6 +890,7 @@ LIB_OBJS += grep.o
->   LIB_OBJS += hashmap.o
->   LIB_OBJS += help.o
->   LIB_OBJS += hex.o
-> +LIB_OBJS += hook.o
->   LIB_OBJS += ident.o
->   LIB_OBJS += interdiff.o
->   LIB_OBJS += json-writer.o
-> diff --git a/builtin/hook.c b/builtin/hook.c
-> index b2bbc84d4d..a0759a4c26 100644
-> --- a/builtin/hook.c
-> +++ b/builtin/hook.c
-> @@ -1,21 +1,68 @@
->   #include "cache.h"
->   
->   #include "builtin.h"
-> +#include "config.h"
-> +#include "hook.h"
->   #include "parse-options.h"
-> +#include "strbuf.h"
->   
->   static const char * const builtin_hook_usage[] = {
-> -	N_("git hook"),
-> +	N_("git hook list <hookname>"),
->   	NULL
->   };
->   
-> -int cmd_hook(int argc, const char **argv, const char *prefix)
-> +static int list(int argc, const char **argv, const char *prefix)
->   {
-> -	struct option builtin_hook_options[] = {
-> +	struct list_head *head, *pos;
-> +	struct hook *item;
-> +	struct strbuf hookname = STRBUF_INIT;
-> +
-> +	struct option list_options[] = {
->   		OPT_END(),
->   	};
->   
-> -	argc = parse_options(argc, argv, prefix, builtin_hook_options,
-> +	argc = parse_options(argc, argv, prefix, list_options,
->   			     builtin_hook_usage, 0);
->   
-> +	if (argc < 1) {
-> +		usage_msg_opt("a hookname must be provided to operate on.",
-> +			      builtin_hook_usage, list_options);
-> +	}
-> +
-> +	strbuf_addstr(&hookname, argv[0]);
-> +
-> +	head = hook_list(&hookname);
-> +
-> +	if (list_empty(head)) {
-> +		printf(_("no commands configured for hook '%s'\n"),
-> +		       hookname.buf);
-> +		return 0;
-> +	}
-> +
-> +	list_for_each(pos, head) {
-> +		item = list_entry(pos, struct hook, list);
-> +		if (item)
-> +			printf("%s:\t%s\n",
-> +			       config_scope_name(item->origin),
-> +			       item->command.buf);
-> +	}
-> +
-> +	clear_hook_list();
-> +	strbuf_release(&hookname);
-> +
->   	return 0;
->   }
-> +
-> +int cmd_hook(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct option builtin_hook_options[] = {
-> +		OPT_END(),
-> +	};
-> +	if (argc < 2)
-> +		usage_with_options(builtin_hook_usage, builtin_hook_options);
-> +
-> +	if (!strcmp(argv[1], "list"))
-> +		return list(argc - 1, argv + 1, prefix);
-> +
-> +	usage_with_options(builtin_hook_usage, builtin_hook_options);
-> +}
-> diff --git a/hook.c b/hook.c
-> new file mode 100644
-> index 0000000000..b006950eb8
-> --- /dev/null
-> +++ b/hook.c
-> @@ -0,0 +1,102 @@
-> +#include "cache.h"
-> +
-> +#include "hook.h"
-> +#include "config.h"
-> +
-> +/*
-> + * NEEDSWORK: a stateful hook_head means we can't run two hook events in the
-> + * background at the same time - which might be ok, or might not.
-> + *
-> + * Maybe it's better to cache a list head per hookname, since we can probably
-> + * guess that the hook list won't change during a user-initiated operation. For
-> + * now, within list_hooks, call clear_hook_list() at the outset.
-> + */
-> +static LIST_HEAD(hook_head);
-
-I can see a cache might be useful for the sequencer which needs to run 
-the prepare-msg hook for each commit (it should probably not be running 
-the post-commit hook but does at the moment) and for am which runs some 
-hooks for each patch but until then I'm not sure why we need a global 
-variable here, can't we just declare `hook_head` in `list_hook()`?
-
-> +void free_hook(struct hook *ptr)
-> +{
-> +	if (ptr) {
-> +		strbuf_release(&ptr->command);
-> +		free(ptr);
-> +	}
-> +}
-> +
-> +static void emplace_hook(struct list_head *pos, const char *command)
-> +{
-> +	struct hook *to_add = malloc(sizeof(struct hook));
-> +	to_add->origin = current_config_scope();
-> +	strbuf_init(&to_add->command, 0);
-> +	/* even with use_shell, run_command() needs quotes */
-> +	strbuf_addf(&to_add->command, "'%s'", command);
-> +
-> +	list_add_tail(&to_add->list, pos);
-> +}
-> +
-> +static void remove_hook(struct list_head *to_remove)
-> +{
-> +	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
-> +	list_del(to_remove);
-> +	free_hook(hook_to_remove);
-> +}
-> +
-> +void clear_hook_list(void)
-> +{
-> +	struct list_head *pos, *tmp;
-> +	list_for_each_safe(pos, tmp, &hook_head)
-> +		remove_hook(pos);
-> +}
-> +
-> +static int hook_config_lookup(const char *key, const char *value, void *hook_key_cb)
-> +{
-> +	const char *hook_key = hook_key_cb;
-> +
-> +	if (!strcmp(key, hook_key)) {
-> +		const char *command = value;
-> +		struct strbuf hookcmd_name = STRBUF_INIT;
-> +		struct list_head *pos = NULL, *tmp = NULL;
-> +
-> +		/* Check if a hookcmd with that name exists. */
-> +		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
-> +		git_config_get_value(hookcmd_name.buf, &command);
-> +
-> +		if (!command)
-> +			BUG("git_config_get_value overwrote a string it shouldn't have");
-> +
-> +		/*
-> +		 * TODO: implement an option-getting callback, e.g.
-> +		 *   get configs by pattern hookcmd.$value.*
-> +		 *   for each key+value, do_callback(key, value, cb_data)
-> +		 */
-> +
-> +		list_for_each_safe(pos, tmp, &hook_head) {
-> +			struct hook *hook = list_entry(pos, struct hook, list);
-> +			/*
-> +			 * The list of hooks to run can be reordered by being redeclared
-> +			 * in the config. Options about hook ordering should be checked
-> +			 * here.
-> +			 */
-> +			if (0 == strcmp(hook->command.buf, command))
-
-We normally write this as !strcmp(...)
-
-> +				remove_hook(pos);
-> +		}
-> +		emplace_hook(pos, command);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +struct list_head* hook_list(const struct strbuf* hookname)
-> +{
-> +	struct strbuf hook_key = STRBUF_INIT;
-> +
-> +	if (!hookname)
-> +		return NULL;
-> +
-> +	/* hook_head is stateful */
-> +	clear_hook_list();
-> +
-> +	strbuf_addf(&hook_key, "hook.%s.command", hookname->buf);
-> +
-> +	git_config(hook_config_lookup, (void*)hook_key.buf);
-> +
-> +	return &hook_head;
-> +}
-> diff --git a/hook.h b/hook.h
-> new file mode 100644
-> index 0000000000..aaf6511cff
-> --- /dev/null
-> +++ b/hook.h
-> @@ -0,0 +1,15 @@
-> +#include "config.h"
-> +#include "list.h"
-> +#include "strbuf.h"
-> +
-> +struct hook
-> +{
-> +	struct list_head list;
-> +	enum config_scope origin;
-> +	struct strbuf command;
-> +};
-> +
-> +struct list_head* hook_list(const struct strbuf *hookname);
-> +
-> +void free_hook(struct hook *ptr);
-> +void clear_hook_list(void);
-> diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-> index 34b0df5216..46d1ed354a 100755
-> --- a/t/t1360-config-based-hooks.sh
-> +++ b/t/t1360-config-based-hooks.sh
-> @@ -4,8 +4,72 @@ test_description='config-managed multihooks, including git-hook command'
->   
->   . ./test-lib.sh
->   
-> -test_expect_success 'git hook command does not crash' '
-> -	git hook
-> +ROOT=
-> +if test_have_prereq MINGW
-> +then
-> +	# In Git for Windows, Unix-like paths work only in shell scripts;
-> +	# `git.exe`, however, will prefix them with the pseudo root directory
-> +	# (of the Unix shell). Let's accommodate for that.
-> +	ROOT="$(cd / && pwd)"
-> +fi
-> +
-> +setup_hooks () {
-> +	test_config hook.pre-commit.command "/path/ghi" --add
-> +	test_config_global hook.pre-commit.command "/path/def" --add
-> +}
-> +
-> +setup_hookcmd () {
-> +	test_config hook.pre-commit.command "abc" --add
-> +	test_config_global hookcmd.abc.command "/path/abc" --add
-> +}
-> +
-> +test_expect_success 'git hook rejects commands without a mode' '
-> +	test_must_fail git hook pre-commit
-> +'
-
-Thanks for changing the tests to be independent of each other
-
-Best Wishes
-
-Phillip
-
-> +
-> +test_expect_success 'git hook rejects commands without a hookname' '
-> +	test_must_fail git hook list
-> +'
-> +
-> +test_expect_success 'git hook list orders by config order' '
-> +	setup_hooks &&
-> +
-> +	cat >expected <<-EOF &&
-> +	global:	$ROOT/path/def
-> +	local:	$ROOT/path/ghi
-> +	EOF
-> +
-> +	git hook list pre-commit >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'git hook list dereferences a hookcmd' '
-> +	setup_hooks &&
-> +	setup_hookcmd &&
-> +
-> +	cat >expected <<-EOF &&
-> +	global:	$ROOT/path/def
-> +	local:	$ROOT/path/ghi
-> +	local:	$ROOT/path/abc
-> +	EOF
-> +
-> +	git hook list pre-commit >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'git hook list reorders on duplicate commands' '
-> +	setup_hooks &&
-> +
-> +	test_config hook.pre-commit.command "/path/def" --add &&
-> +
-> +	cat >expected <<-EOF &&
-> +	local:	$ROOT/path/ghi
-> +	local:	$ROOT/path/def
-> +	EOF
-> +
-> +	git hook list pre-commit >actual &&
-> +	test_cmp expected actual
->   '
->   
->   test_done
+> set -x
 > 
+> git submodule init
+> ----8<----8<----8<-- CUT HERE--8<----8<----8<----8<----
+> 
+> I use "export SHELLOPTS" because I want these flags to be effective in
+> subshells.
+
+You don't need 'export SHELLOPTS' to make those flags effective in
+_subshells_:
+
+  $ cat test.sh 
+  #!/bin/sh
+  
+  set -ex
+  
+  (
+          false
+          echo "after false"
+  )
+  exit 0
+  $ ./test.sh
+  + false
+  1
+  $ echo $?
+  1
+
+What 'export SHELLOPTS' does is make those flags effective even in
+separate shell scripts executed by your script, but, as you just found
+out, that's not really a good idea, because those scripts are beyond
+your control.
+
+> As a workaround I'm currently calling "set +u" before each
+> execution of "git submodule init" and my script works, but it isn't
+> very nice and IMHO shouldn't be required (i.e. it would be extremely
+> nice if someone fixed it).
+
+The right workaround would be to apply those shell options only to
+your script, i.e. to remove that 'export SHELLOPTS'.
+
+Having said that, unlike 'git submodule', 'git-sh-setup' is meant to
+be dot-sourced into users' shell scripts, and, therefore, should work
+with the shell options set in users' scripts, including even 'set -u'.
+
+The patch below may or may not make it work; it's well over two years
+old, and I haven't tested it at all since then.
+
+
+  ---  >8  ---
+
+Subject: [PATCH] git-sh-setup, git-sh-i18n: make our shell libraries work with
+ 'set -u'
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ git-sh-i18n.sh  |  6 +++---
+ git-sh-setup.sh | 14 +++++++-------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
+index 8eef60b43f..4eb2a7ad70 100644
+--- a/git-sh-i18n.sh
++++ b/git-sh-i18n.sh
+@@ -7,7 +7,7 @@
+ # Export the TEXTDOMAIN* data that we need for Git
+ TEXTDOMAIN=git
+ export TEXTDOMAIN
+-if test -z "$GIT_TEXTDOMAINDIR"
++if test -z "${GIT_TEXTDOMAINDIR-}"
+ then
+ 	TEXTDOMAINDIR="@@LOCALEDIR@@"
+ else
+@@ -17,7 +17,7 @@ export TEXTDOMAINDIR
+ 
+ # First decide what scheme to use...
+ GIT_INTERNAL_GETTEXT_SH_SCHEME=fallthrough
+-if test -n "$GIT_TEST_GETTEXT_POISON" &&
++if test -n "${GIT_TEST_GETTEXT_POISON-}" &&
+ 	    git env--helper --type=bool --default=0 --exit-code \
+ 		GIT_TEST_GETTEXT_POISON
+ then
+@@ -25,7 +25,7 @@ then
+ elif test -n "@@USE_GETTEXT_SCHEME@@"
+ then
+ 	GIT_INTERNAL_GETTEXT_SH_SCHEME="@@USE_GETTEXT_SCHEME@@"
+-elif test -n "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
++elif test -n "${GIT_INTERNAL_GETTEXT_TEST_FALLBACKS-}"
+ then
+ 	: no probing necessary
+ elif type gettext.sh >/dev/null 2>&1
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 10d9764185..1cb1c8a2e8 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -66,16 +66,16 @@ say () {
+ 	fi
+ }
+ 
+-if test -n "$OPTIONS_SPEC"; then
++if test -n "${OPTIONS_SPEC-}"; then
+ 	usage() {
+ 		"$0" -h
+ 		exit 1
+ 	}
+ 
+ 	parseopt_extra=
+-	[ -n "$OPTIONS_KEEPDASHDASH" ] &&
++	[ -n "${OPTIONS_KEEPDASHDASH-}" ] &&
+ 		parseopt_extra="--keep-dashdash"
+-	[ -n "$OPTIONS_STUCKLONG" ] &&
++	[ -n "${OPTIONS_STUCKLONG-}" ] &&
+ 		parseopt_extra="$parseopt_extra --stuck-long"
+ 
+ 	eval "$(
+@@ -89,7 +89,7 @@ else
+ 		die "$(eval_gettext "usage: \$dashless \$USAGE")"
+ 	}
+ 
+-	if [ -z "$LONG_USAGE" ]
++	if [ -z "${LONG_USAGE-}" ]
+ 	then
+ 		LONG_USAGE="$(eval_gettext "usage: \$dashless \$USAGE")"
+ 	else
+@@ -98,7 +98,7 @@ else
+ $LONG_USAGE")"
+ 	fi
+ 
+-	case "$1" in
++	case "${1-}" in
+ 		-h)
+ 		echo "$LONG_USAGE"
+ 		case "$0" in *git-legacy-stash) exit 129;; esac
+@@ -366,7 +366,7 @@ esac
+ # if we require to be in a git repository.
+ git_dir_init () {
+ 	GIT_DIR=$(git rev-parse --git-dir) || exit
+-	if [ -z "$SUBDIRECTORY_OK" ]
++	if [ -z "${SUBDIRECTORY_OK-}" ]
+ 	then
+ 		test -z "$(git rev-parse --show-cdup)" || {
+ 			exit=$?
+@@ -381,7 +381,7 @@ git_dir_init () {
+ 	: "${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}"
+ }
+ 
+-if test -z "$NONGIT_OK"
++if test -z "${NONGIT_OK-}"
+ then
+ 	git_dir_init
+ fi
+-- 
+2.28.0.820.g0db9d372c0
+
+  ---  >8  ---
 
