@@ -5,303 +5,487 @@ X-Spam-Level:
 X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F32C43461
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 13:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA1AC43461
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 13:43:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3051620770
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 13:23:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71BEA22273
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 13:43:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GWIUzaOm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjqGd628"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726087AbgIKNW4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Sep 2020 09:22:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
+        id S1726080AbgIKNng (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Sep 2020 09:43:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbgIKNUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Sep 2020 09:20:24 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB18CC061756
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:20:03 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id j2so11464621wrx.7
-        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:20:03 -0700 (PDT)
+        with ESMTP id S1726258AbgIKN2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 09:28:25 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46E9C061757
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:27:45 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id j2so11490277wrx.7
+        for <git@vger.kernel.org>; Fri, 11 Sep 2020 06:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:reply-to:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lkzI4fmJgGLtynvKt2BccEk4/mcg0685C5iIB8etrNQ=;
-        b=GWIUzaOmQHJa9RMQx7G3M+Fgl/Ex35HLuWuWpmbZD6CvsaJmKc3HiRcMiivfHHXqd6
-         SdGP7YhlwEUJQcBRpKJWezTv3kZ2WRvEUtVdHsT9sRktn0s+ctHx3Yf5mF1uk0688KGV
-         MsVE5RlVfZYO5qKKK7H2d+yzjYwNzaXE16+5b12wXCxSVg1Cic+7Znvk3orjgckUYdA/
-         Ax6BHpXRgWtp3c8Sw7cBFrwUGeI4ehQlDC1tGPKtSKpil4+z8m8rDec1aI9Q9j77Gm0K
-         qAuGDzAtc2EdG+35unp6vhN9YhfbnbSTi2OTlYh1BuchV2TmF6cKQR3iPH9OV7WDnWqT
-         x13g==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=vd2BKUYLqnV4ROPk5QYa0SSW68SArgKUPTrh2yHOLG0=;
+        b=FjqGd6286/1GppydIzOjnwCyvlpwgDGoluXaQmC29CWo+Vmuuh0YCxAOuvOOcY9LPZ
+         5kpGwEBwSa+TNDOQ5tI26C7gFzoZp8BT/KKrum8O+ol8umrGNm+SFe7SqxLd7f0ukeGt
+         mqMJixnn3xOWxT0hgRBtMVuvMOmq1hUuAEHHz40tAVT2Ddbl6qKCMZXgN85CmL1ajtLR
+         q4OcWcXE4QoCoC1iPtco4jfUKsLhcfY3NNeoM6qtT0t/nbZii4FVuiYf9sTYhDi7tW/Y
+         vl6oWyiVb/jp/ncAZRYgWhvXOXAero6f+6YBHNxyhGF1QYob0Uom0tNbF9/w1rN0Oplr
+         OTuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:reply-to:references:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=lkzI4fmJgGLtynvKt2BccEk4/mcg0685C5iIB8etrNQ=;
-        b=BXcjQ5jVsPzx9sfAfOKIJv2KdhigMk/0woygqgLMUIWQIUmG4ToB9GWpWkaTeamUp0
-         LF6+RCsHOst/Qw12FA61mpbjJ3w9eDTfL7Nf1+Pl1MC9h4SIPP4VTIBSTyQWJC0W/qy7
-         +5QzZSiqiBUBd1wH+tWPDHFo2+8xoqYK9m6cHCvp08t76uckmdCXERQ/nFaQ7sAM3rhq
-         pVQDjBXDczZ929Ii2vgvrZdY1mk3nSYUFTTIGyE7/xBHdFdfBCL4XJHG+XiusjXsgqQq
-         6kuTwRYzg+DNHYKGQ8ZzT8uhhrV2rk3mVeFYrp/pIXWJzw/JjH+4gqJQ4f184Ajvu8OS
-         Je1Q==
-X-Gm-Message-State: AOAM530Vu6tdivZ55SRiYqn6dnlifPCFXP51INjvSURI79OQdRIQDE4+
-        EjNR9OCwFS/nMgcaNqAyVtmEWA/q9vA=
-X-Google-Smtp-Source: ABdhPJxBt+Tq/9LP9mXuNVYIXSeQkS0kZ+fI+RHuDWuW0IgF8cWxga1WcajVbIlm2uzG5hksVmdT9Q==
-X-Received: by 2002:adf:dd0b:: with SMTP id a11mr2021842wrm.422.1599830402004;
-        Fri, 11 Sep 2020 06:20:02 -0700 (PDT)
+        bh=vd2BKUYLqnV4ROPk5QYa0SSW68SArgKUPTrh2yHOLG0=;
+        b=BBz4xdALRRFd8w5Xs1FBBm8L0ZyxrnkW9/eVm+91RN828jiPbD9h6gnlk6tjsFSeqG
+         qNJG8cecHM/4OL9eIy+jQVp8YDaDeUrLtVqS+GuW2w3mrmI8T1mdlUd+5tNkfafbjghM
+         k/wMZOiYmMd2IwUSDL9G1JyjTkyXMRS9tAITn7JzqoThSLUoBhxK1m1YoREerF4jzI46
+         5V7jihAtXsM059CBvCSoyVKCIulZG8DuMSaHxGHh1VBBUVXz8PZHrBuYiymCbbH71Yms
+         1uVQiPDrLX4LUYOaRXmMwFduWk5VKwwyeaCA2Bmkz4tJzLnx17Dc2w/wcJNn5XdwaNfK
+         EgFQ==
+X-Gm-Message-State: AOAM533Rl2Bd6uzUyklEQXgx5M0tgKR350j3fp/2VSikIusEQdY/ylsi
+        7LyhsdZLwK02Obo3nPCUXhlJxvn66Gw=
+X-Google-Smtp-Source: ABdhPJy/Is6PFe7gwyiVjjzFsL+y+Qu6AFMqfEVPBSCCGDG1wntHF7eF6Hco7Fw90vLBzee7OBzm0A==
+X-Received: by 2002:adf:e5c8:: with SMTP id a8mr2142365wrn.5.1599830863560;
+        Fri, 11 Sep 2020 06:27:43 -0700 (PDT)
 Received: from [192.168.1.201] (151.252.189.80.dyn.plus.net. [80.189.252.151])
-        by smtp.googlemail.com with ESMTPSA id h5sm5321793wrc.45.2020.09.11.06.20.00
+        by smtp.googlemail.com with ESMTPSA id 11sm4529053wmi.14.2020.09.11.06.27.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2020 06:20:01 -0700 (PDT)
-Subject: Re: [PATCH v4 9/9] run_commit_hook: take strvec instead of varargs
-From:   Phillip Wood <phillip.wood123@gmail.com>
+        Fri, 11 Sep 2020 06:27:43 -0700 (PDT)
+Subject: Re: [PATCH v4 3/9] hook: add list command
 To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Reply-To: phillip.wood@dunelm.org.uk
 References: <20200909004939.1942347-1-emilyshaffer@google.com>
- <20200909004939.1942347-10-emilyshaffer@google.com>
- <6ed77ee3-4d75-9ef9-0621-13a056e8ca14@gmail.com>
-Message-ID: <753f9bef-29ae-88b7-336e-fd799ffd1e9a@gmail.com>
-Date:   Fri, 11 Sep 2020 14:20:00 +0100
+ <20200909004939.1942347-4-emilyshaffer@google.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <9146d342-7b3c-091f-4904-e7d8696544be@gmail.com>
+Date:   Fri, 11 Sep 2020 14:27:42 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <6ed77ee3-4d75-9ef9-0621-13a056e8ca14@gmail.com>
+In-Reply-To: <20200909004939.1942347-4-emilyshaffer@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/09/2020 15:16, Phillip Wood wrote:
-> Hi Emily
-> 
-> On 09/09/2020 01:49, Emily Shaffer wrote:
->> Taking varargs in run_commit_hook() led to some bizarre patterns, like
->> callers using two string variables (which may or may not be filled) to
->> express different argument lists for the commit hooks. Because
->> run_commit_hook() no longer needs to call a variadic function for the
->> hook run itself, we can use strvec to make the calling code more
->> conventional.
->>
->> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
->> ---
->>   builtin/commit.c | 46 +++++++++++++++++++++++-----------------------
->>   builtin/merge.c  | 20 ++++++++++++++++----
->>   commit.c         | 13 ++-----------
->>   commit.h         |  5 +++--
->>   sequencer.c      | 15 ++++++++-------
->>   5 files changed, 52 insertions(+), 47 deletions(-)
->>
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index a19c6478eb..f029d4f5ac 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -691,8 +691,7 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>       struct strbuf committer_ident = STRBUF_INIT;
->>       int committable;
->>       struct strbuf sb = STRBUF_INIT;
->> -    const char *hook_arg1 = NULL;
->> -    const char *hook_arg2 = NULL;
->> +    struct strvec hook_args = STRVEC_INIT;
->>       int clean_message_contents = (cleanup_mode != 
->> COMMIT_MSG_CLEANUP_NONE);
->>       int old_display_comment_prefix;
->>       int merge_contains_scissors = 0;
->> @@ -700,7 +699,8 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>       /* This checks and barfs if author is badly specified */
->>       determine_author_info(author_ident);
->> -    if (!no_verify && run_commit_hook(use_editor, index_file, 
->> "pre-commit", NULL))
->> +    if (!no_verify && run_commit_hook(use_editor, index_file, 
->> "pre-commit",
->> +                      &hook_args))
->>           return 0;
->>       if (squash_message) {
->> @@ -722,27 +722,28 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>           }
->>       }
->> +    strvec_push(&hook_args, git_path_commit_editmsg());
-> 
-> This is a long way from the call where we use hook_args. With the 
-> variadic interface it is clear by looking at the call to 
-> run_commit_hook() what the first argument is and that is always the same.
-> 
->>       if (have_option_m && !fixup_message) {
->>           strbuf_addbuf(&sb, &message);
->> -        hook_arg1 = "message";
->> +        strvec_push(&hook_args, "message");
->>       } else if (logfile && !strcmp(logfile, "-")) {
->>           if (isatty(0))
->>               fprintf(stderr, _("(reading log message from standard 
->> input)\n"));
->>           if (strbuf_read(&sb, 0, 0) < 0)
->>               die_errno(_("could not read log from standard input"));
->> -        hook_arg1 = "message";
->> +        strvec_push(&hook_args, "message");
->>       } else if (logfile) {
->>           if (strbuf_read_file(&sb, logfile, 0) < 0)
->>               die_errno(_("could not read log file '%s'"),
->>                     logfile);
->> -        hook_arg1 = "message";
->> +        strvec_push(&hook_args, "message");
->>       } else if (use_message) {
->>           char *buffer;
->>           buffer = strstr(use_message_buffer, "\n\n");
->>           if (buffer)
->>               strbuf_addstr(&sb, skip_blank_lines(buffer + 2));
->> -        hook_arg1 = "commit";
->> -        hook_arg2 = use_message;
->> +        strvec_pushl(&hook_args, "commit", use_message, NULL);
->>       } else if (fixup_message) {
->>           struct pretty_print_context ctx = {0};
->>           struct commit *commit;
->> @@ -754,7 +755,7 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>                         &sb, &ctx);
->>           if (have_option_m)
->>               strbuf_addbuf(&sb, &message);
->> -        hook_arg1 = "message";
->> +        strvec_push(&hook_args, "message");
->>       } else if (!stat(git_path_merge_msg(the_repository), &statbuf)) {
->>           size_t merge_msg_start;
->> @@ -765,9 +766,9 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>           if (!stat(git_path_squash_msg(the_repository), &statbuf)) {
->>               if (strbuf_read_file(&sb, 
->> git_path_squash_msg(the_repository), 0) < 0)
->>                   die_errno(_("could not read SQUASH_MSG"));
->> -            hook_arg1 = "squash";
->> +            strvec_push(&hook_args, "squash");
->>           } else
->> -            hook_arg1 = "merge";
->> +            strvec_push(&hook_args, "merge");
->>           merge_msg_start = sb.len;
->>           if (strbuf_read_file(&sb, 
->> git_path_merge_msg(the_repository), 0) < 0)
->> @@ -781,11 +782,11 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>       } else if (!stat(git_path_squash_msg(the_repository), &statbuf)) {
->>           if (strbuf_read_file(&sb, 
->> git_path_squash_msg(the_repository), 0) < 0)
->>               die_errno(_("could not read SQUASH_MSG"));
->> -        hook_arg1 = "squash";
->> +        strvec_push(&hook_args, "squash");
->>       } else if (template_file) {
->>           if (strbuf_read_file(&sb, template_file, 0) < 0)
->>               die_errno(_("could not read '%s'"), template_file);
->> -        hook_arg1 = "template";
->> +        strvec_push(&hook_args, "template");
->>           clean_message_contents = 0;
->>       }
->> @@ -794,11 +795,9 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>        * just set the argument(s) to the prepare-commit-msg hook.
->>        */
->>       else if (whence == FROM_MERGE)
->> -        hook_arg1 = "merge";
->> -    else if (is_from_cherry_pick(whence) || whence == 
->> FROM_REBASE_PICK) {
->> -        hook_arg1 = "commit";
->> -        hook_arg2 = "CHERRY_PICK_HEAD";
->> -    }
->> +        strvec_push(&hook_args, "merge");
->> +    else if (is_from_cherry_pick(whence) || whence == FROM_REBASE_PICK)
->> +        strvec_pushl(&hook_args, "commit", "CHERRY_PICK_HEAD", NULL);
->>       if (squash_message) {
->>           /*
->> @@ -806,8 +805,8 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>            * then we're possibly hijacking other commit log options.
->>            * Reset the hook args to tell the real story.
->>            */
->> -        hook_arg1 = "message";
->> -        hook_arg2 = "";
->> +        strvec_clear(&hook_args);
->> +        strvec_pushl(&hook_args, git_path_commit_editmsg(), 
->> "message", NULL);
-> 
-> It's a shame we have to clear the strvec and remember to re-add 
-> git_path_commit_editmsg() here.
-> 
->>       }
->>       s->fp = fopen_for_writing(git_path_commit_editmsg());
->> @@ -1001,8 +1000,7 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>           return 0;
->>       }
->> -    if (run_commit_hook(use_editor, index_file, "prepare-commit-msg",
->> -                git_path_commit_editmsg(), hook_arg1, hook_arg2, NULL))
->> +    if (run_commit_hook(use_editor, index_file, "prepare-commit-msg", 
->> &hook_args))
->>           return 0;
->>       if (use_editor) {
->> @@ -1017,8 +1015,10 @@ static int prepare_to_commit(const char 
->> *index_file, const char *prefix,
->>           strvec_clear(&env);
->>       }
->> +    strvec_clear(&hook_args);
->> +    strvec_push(&hook_args, git_path_commit_editmsg());
->>       if (!no_verify &&
->> -        run_commit_hook(use_editor, index_file, "commit-msg", 
->> git_path_commit_editmsg(), NULL)) {
->> +        run_commit_hook(use_editor, index_file, "commit-msg", 
->> &hook_args)) {
->>           return 0;
->>       }
- >[...]
-> 
-> I don't have a strong opinion about these changes (though I'm not 
-> particularly enthusiastic). Having to push the arguments in order is not 
-> particularly convenient and the use of strvec_pushl() means we are 
-> replacing a small number of variadic calls to run_commit_hook() with a 
-> larger number of calls to a different variadic interface.
+Hi Emily
 
-On reflection I think it is the conversion in builtin/commit.c rather 
-than the change in the API that makes me uncomfortable. If it kept 
-`hook_arg1` and `hook_arg2` and just did
+On 09/09/2020 01:49, Emily Shaffer wrote:
+> Teach 'git hook list <hookname>', which checks the known configs in
+> order to create an ordered list of hooks to run on a given hook event.
+> 
+> Multiple commands can be specified for a given hook by providing
+> multiple "hook.<hookname>.command = <path-to-hook>" lines. Hooks will be
+> run in config order. If more properties need to be set on a given hook
+> in the future, commands can also be specified by providing
+> "hook.<hookname>.command = <hookcmd-name>", as well as a "[hookcmd
+> <hookcmd-name>]" subsection; at minimum, this subsection must contain a
+> "hookcmd.<hookcmd-name>.command = <path-to-hook>" line.
+> 
+> For example:
+> 
+>    $ git config --list | grep ^hook
+>    hook.pre-commit.command=baz
+>    hook.pre-commit.command=~/bar.sh
+>    hookcmd.baz.command=~/baz/from/hookcmd.sh
+> 
+>    $ git hook list pre-commit
+>    ~/baz/from/hookcmd.sh
+>    ~/bar.sh
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+>   Documentation/git-hook.txt    |  37 +++++++++++-
+>   Makefile                      |   1 +
+>   builtin/hook.c                |  55 ++++++++++++++++--
+>   hook.c                        | 102 ++++++++++++++++++++++++++++++++++
+>   hook.h                        |  15 +++++
+>   t/t1360-config-based-hooks.sh |  68 ++++++++++++++++++++++-
+>   6 files changed, 271 insertions(+), 7 deletions(-)
+>   create mode 100644 hook.c
+>   create mode 100644 hook.h
+> 
+> diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+> index 2d50c414cc..e458586e96 100644
+> --- a/Documentation/git-hook.txt
+> +++ b/Documentation/git-hook.txt
+> @@ -8,12 +8,47 @@ git-hook - Manage configured hooks
+>   SYNOPSIS
+>   --------
+>   [verse]
+> -'git hook'
+> +'git hook' list <hook-name>
+>   
+>   DESCRIPTION
+>   -----------
+>   You can list, add, and modify hooks with this command.
+>   
+> +This command parses the default configuration files for sections "hook" and
+> +"hookcmd". "hook" is used to describe the commands which will be run during a
+> +particular hook event; commands are run in config order. "hookcmd" is used to
+> +describe attributes of a specific command. If additional attributes don't need
+> +to be specified, a command to run can be specified directly in the "hook"
+> +section; if a "hookcmd" by that name isn't found, Git will attempt to run the
+> +provided value directly. For example:
+> +
+> +Global config
+> +----
+> +  [hook "post-commit"]
+> +    command = "linter"
+> +    command = "~/typocheck.sh"
+> +
+> +  [hookcmd "linter"]
+> +    command = "/bin/linter --c"
+> +----
+> +
+> +Local config
+> +----
+> +  [hook "prepare-commit-msg"]
+> +    command = "linter"
+> +  [hook "post-commit"]
+> +    command = "python ~/run-test-suite.py"
+> +----
 
-strvec_push(&hook_args, git_path_commit_editmsg())\
-strvec_push(&hook_args, hook_arg1);
-if (hook_arg2)
-	strvec_push(&hook_args, hook_arg2);
-run_commit_hook(..., &hook_args);
+I think it would be helpful to have a couple of lines explaining what 
+the example configuration sets up
 
-It would keep the fixed first argument near the call to 
-run_commit_hook() and avoid the problem of having to clear hook_args in 
-the hunk at line 806.
+> +COMMANDS
+> +--------
+> +
+> +list <hook-name>::
+> +
+> +List the hooks which have been configured for <hook-name>. Hooks appear
+> +in the order they should be run, and note the config scope where the relevant
+> +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
 
-Thank you for adding the last couple of patches that show an example 
-conversion, it is really helpful to see how the API would be used.
+Thanks for clarifying that it is the origin of the 
+hook.<hook-name>.command that is printed. An example of the output of 
+the config above would be useful I think.
+
+>   GIT
+>   ---
+>   Part of the linkgit:git[1] suite
+> diff --git a/Makefile b/Makefile
+> index 6eee75555e..804de45b16 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -890,6 +890,7 @@ LIB_OBJS += grep.o
+>   LIB_OBJS += hashmap.o
+>   LIB_OBJS += help.o
+>   LIB_OBJS += hex.o
+> +LIB_OBJS += hook.o
+>   LIB_OBJS += ident.o
+>   LIB_OBJS += interdiff.o
+>   LIB_OBJS += json-writer.o
+> diff --git a/builtin/hook.c b/builtin/hook.c
+> index b2bbc84d4d..a0759a4c26 100644
+> --- a/builtin/hook.c
+> +++ b/builtin/hook.c
+> @@ -1,21 +1,68 @@
+>   #include "cache.h"
+>   
+>   #include "builtin.h"
+> +#include "config.h"
+> +#include "hook.h"
+>   #include "parse-options.h"
+> +#include "strbuf.h"
+>   
+>   static const char * const builtin_hook_usage[] = {
+> -	N_("git hook"),
+> +	N_("git hook list <hookname>"),
+>   	NULL
+>   };
+>   
+> -int cmd_hook(int argc, const char **argv, const char *prefix)
+> +static int list(int argc, const char **argv, const char *prefix)
+>   {
+> -	struct option builtin_hook_options[] = {
+> +	struct list_head *head, *pos;
+> +	struct hook *item;
+> +	struct strbuf hookname = STRBUF_INIT;
+> +
+> +	struct option list_options[] = {
+>   		OPT_END(),
+>   	};
+>   
+> -	argc = parse_options(argc, argv, prefix, builtin_hook_options,
+> +	argc = parse_options(argc, argv, prefix, list_options,
+>   			     builtin_hook_usage, 0);
+>   
+> +	if (argc < 1) {
+> +		usage_msg_opt("a hookname must be provided to operate on.",
+> +			      builtin_hook_usage, list_options);
+> +	}
+> +
+> +	strbuf_addstr(&hookname, argv[0]);
+> +
+> +	head = hook_list(&hookname);
+> +
+> +	if (list_empty(head)) {
+> +		printf(_("no commands configured for hook '%s'\n"),
+> +		       hookname.buf);
+> +		return 0;
+> +	}
+> +
+> +	list_for_each(pos, head) {
+> +		item = list_entry(pos, struct hook, list);
+> +		if (item)
+> +			printf("%s:\t%s\n",
+> +			       config_scope_name(item->origin),
+> +			       item->command.buf);
+> +	}
+> +
+> +	clear_hook_list();
+> +	strbuf_release(&hookname);
+> +
+>   	return 0;
+>   }
+> +
+> +int cmd_hook(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct option builtin_hook_options[] = {
+> +		OPT_END(),
+> +	};
+> +	if (argc < 2)
+> +		usage_with_options(builtin_hook_usage, builtin_hook_options);
+> +
+> +	if (!strcmp(argv[1], "list"))
+> +		return list(argc - 1, argv + 1, prefix);
+> +
+> +	usage_with_options(builtin_hook_usage, builtin_hook_options);
+> +}
+> diff --git a/hook.c b/hook.c
+> new file mode 100644
+> index 0000000000..b006950eb8
+> --- /dev/null
+> +++ b/hook.c
+> @@ -0,0 +1,102 @@
+> +#include "cache.h"
+> +
+> +#include "hook.h"
+> +#include "config.h"
+> +
+> +/*
+> + * NEEDSWORK: a stateful hook_head means we can't run two hook events in the
+> + * background at the same time - which might be ok, or might not.
+> + *
+> + * Maybe it's better to cache a list head per hookname, since we can probably
+> + * guess that the hook list won't change during a user-initiated operation. For
+> + * now, within list_hooks, call clear_hook_list() at the outset.
+> + */
+> +static LIST_HEAD(hook_head);
+
+I can see a cache might be useful for the sequencer which needs to run 
+the prepare-msg hook for each commit (it should probably not be running 
+the post-commit hook but does at the moment) and for am which runs some 
+hooks for each patch but until then I'm not sure why we need a global 
+variable here, can't we just declare `hook_head` in `list_hook()`?
+
+> +void free_hook(struct hook *ptr)
+> +{
+> +	if (ptr) {
+> +		strbuf_release(&ptr->command);
+> +		free(ptr);
+> +	}
+> +}
+> +
+> +static void emplace_hook(struct list_head *pos, const char *command)
+> +{
+> +	struct hook *to_add = malloc(sizeof(struct hook));
+> +	to_add->origin = current_config_scope();
+> +	strbuf_init(&to_add->command, 0);
+> +	/* even with use_shell, run_command() needs quotes */
+> +	strbuf_addf(&to_add->command, "'%s'", command);
+> +
+> +	list_add_tail(&to_add->list, pos);
+> +}
+> +
+> +static void remove_hook(struct list_head *to_remove)
+> +{
+> +	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
+> +	list_del(to_remove);
+> +	free_hook(hook_to_remove);
+> +}
+> +
+> +void clear_hook_list(void)
+> +{
+> +	struct list_head *pos, *tmp;
+> +	list_for_each_safe(pos, tmp, &hook_head)
+> +		remove_hook(pos);
+> +}
+> +
+> +static int hook_config_lookup(const char *key, const char *value, void *hook_key_cb)
+> +{
+> +	const char *hook_key = hook_key_cb;
+> +
+> +	if (!strcmp(key, hook_key)) {
+> +		const char *command = value;
+> +		struct strbuf hookcmd_name = STRBUF_INIT;
+> +		struct list_head *pos = NULL, *tmp = NULL;
+> +
+> +		/* Check if a hookcmd with that name exists. */
+> +		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
+> +		git_config_get_value(hookcmd_name.buf, &command);
+> +
+> +		if (!command)
+> +			BUG("git_config_get_value overwrote a string it shouldn't have");
+> +
+> +		/*
+> +		 * TODO: implement an option-getting callback, e.g.
+> +		 *   get configs by pattern hookcmd.$value.*
+> +		 *   for each key+value, do_callback(key, value, cb_data)
+> +		 */
+> +
+> +		list_for_each_safe(pos, tmp, &hook_head) {
+> +			struct hook *hook = list_entry(pos, struct hook, list);
+> +			/*
+> +			 * The list of hooks to run can be reordered by being redeclared
+> +			 * in the config. Options about hook ordering should be checked
+> +			 * here.
+> +			 */
+> +			if (0 == strcmp(hook->command.buf, command))
+
+We normally write this as !strcmp(...)
+
+> +				remove_hook(pos);
+> +		}
+> +		emplace_hook(pos, command);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +struct list_head* hook_list(const struct strbuf* hookname)
+> +{
+> +	struct strbuf hook_key = STRBUF_INIT;
+> +
+> +	if (!hookname)
+> +		return NULL;
+> +
+> +	/* hook_head is stateful */
+> +	clear_hook_list();
+> +
+> +	strbuf_addf(&hook_key, "hook.%s.command", hookname->buf);
+> +
+> +	git_config(hook_config_lookup, (void*)hook_key.buf);
+> +
+> +	return &hook_head;
+> +}
+> diff --git a/hook.h b/hook.h
+> new file mode 100644
+> index 0000000000..aaf6511cff
+> --- /dev/null
+> +++ b/hook.h
+> @@ -0,0 +1,15 @@
+> +#include "config.h"
+> +#include "list.h"
+> +#include "strbuf.h"
+> +
+> +struct hook
+> +{
+> +	struct list_head list;
+> +	enum config_scope origin;
+> +	struct strbuf command;
+> +};
+> +
+> +struct list_head* hook_list(const struct strbuf *hookname);
+> +
+> +void free_hook(struct hook *ptr);
+> +void clear_hook_list(void);
+> diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
+> index 34b0df5216..46d1ed354a 100755
+> --- a/t/t1360-config-based-hooks.sh
+> +++ b/t/t1360-config-based-hooks.sh
+> @@ -4,8 +4,72 @@ test_description='config-managed multihooks, including git-hook command'
+>   
+>   . ./test-lib.sh
+>   
+> -test_expect_success 'git hook command does not crash' '
+> -	git hook
+> +ROOT=
+> +if test_have_prereq MINGW
+> +then
+> +	# In Git for Windows, Unix-like paths work only in shell scripts;
+> +	# `git.exe`, however, will prefix them with the pseudo root directory
+> +	# (of the Unix shell). Let's accommodate for that.
+> +	ROOT="$(cd / && pwd)"
+> +fi
+> +
+> +setup_hooks () {
+> +	test_config hook.pre-commit.command "/path/ghi" --add
+> +	test_config_global hook.pre-commit.command "/path/def" --add
+> +}
+> +
+> +setup_hookcmd () {
+> +	test_config hook.pre-commit.command "abc" --add
+> +	test_config_global hookcmd.abc.command "/path/abc" --add
+> +}
+> +
+> +test_expect_success 'git hook rejects commands without a mode' '
+> +	test_must_fail git hook pre-commit
+> +'
+
+Thanks for changing the tests to be independent of each other
 
 Best Wishes
 
 Phillip
 
-> Best Wishes
+> +
+> +test_expect_success 'git hook rejects commands without a hookname' '
+> +	test_must_fail git hook list
+> +'
+> +
+> +test_expect_success 'git hook list orders by config order' '
+> +	setup_hooks &&
+> +
+> +	cat >expected <<-EOF &&
+> +	global:	$ROOT/path/def
+> +	local:	$ROOT/path/ghi
+> +	EOF
+> +
+> +	git hook list pre-commit >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'git hook list dereferences a hookcmd' '
+> +	setup_hooks &&
+> +	setup_hookcmd &&
+> +
+> +	cat >expected <<-EOF &&
+> +	global:	$ROOT/path/def
+> +	local:	$ROOT/path/ghi
+> +	local:	$ROOT/path/abc
+> +	EOF
+> +
+> +	git hook list pre-commit >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'git hook list reorders on duplicate commands' '
+> +	setup_hooks &&
+> +
+> +	test_config hook.pre-commit.command "/path/def" --add &&
+> +
+> +	cat >expected <<-EOF &&
+> +	local:	$ROOT/path/ghi
+> +	local:	$ROOT/path/def
+> +	EOF
+> +
+> +	git hook list pre-commit >actual &&
+> +	test_cmp expected actual
+>   '
+>   
+>   test_done
 > 
-> Phillip
-> 
->>       } else {
->> -        arg1 = "message";
->> +        strvec_push(&args, "message");
->>       }
->> -    if (run_commit_hook(0, r->index_file, "prepare-commit-msg", name,
->> -                arg1, arg2, NULL))
->> +    if (run_commit_hook(0, r->index_file, "prepare-commit-msg", &args))
->>           ret = error(_("'prepare-commit-msg' hook failed"));
->> +    strvec_clear(&args);
->>       return ret;
->>   }
->>
 
