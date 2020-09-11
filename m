@@ -2,132 +2,81 @@ Return-Path: <SRS0=PYw/=CU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PDS_TONAME_EQ_TOLOCAL_SHORT,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69E40C43461
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 00:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE607C43461
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 04:25:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 322C02087D
-	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 00:03:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84297221E5
+	for <git@archiver.kernel.org>; Fri, 11 Sep 2020 04:25:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tkLdMmTD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725768AbgIKAD5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Sep 2020 20:03:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57298 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725764AbgIKADy (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Sep 2020 20:03:54 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 38F3660489;
-        Fri, 11 Sep 2020 00:03:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1599782600;
-        bh=rLvyRvGonBlrzUMCbeXoDTuSf4L0ANj0IeW4GKf8pWs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YD6oi0D3J3Gv+dE4mBd01wH+Pt91pKoGt5AwTh69vVdocM2NYDbvqka4JAzFVwwwf
-         +F7a3HYJisJ1TkevB+DxvH6yqq00FXQ28nzkuRsyPusgF+oYZMFFBxzLGSEJPlo9xm
-         JO678cjss2oTgkMUlQsjDWVYrtK/z5Az7XPCS5qIeiXnpZcPcMj371UH2Bw1mGq9D7
-         sl+9lDbhBlsQ8ZeK/Q894Hdiil+Iq6hFeu4jzre5YlZbiwAEkfUP22iedWw77TG9o+
-         p/eFx5KfYvrg4lXgi6uEnF8N1H8SvROlyIvZx0a6oMzRZDuHDBNV7OecaHaTmbc6s1
-         qCFzrlTYe8k2nXn2T7eeBzaCGkuqr+ZZ0bLNvJCVIMnKy5CUCRc2NTNTLITuX1EYvr
-         afTvZgUCAiq+6ei5PYqCBkU2VHEtZU8Nj0++UT6E0UThka9Ko0T5gK5PnQiTPZFRPZ
-         A8jlh9BmxBxxmH7H5IyoTXrjdGVfTdDSH/HDXiZg3o6X89PymQp
-Date:   Fri, 11 Sep 2020 00:03:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rev-parse: add option for absolute or relative path
- formatting
-Message-ID: <20200911000315.GL241078@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20200908185017.2005159-1-sandals@crustytoothpaste.net>
- <20200909145114.GE6209@szeder.dev>
- <20200909222333.GH241078@camp.crustytoothpaste.net>
- <20200910151935.GA5265@szeder.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="zH41lVBEV8cLJnCl"
-Content-Disposition: inline
-In-Reply-To: <20200910151935.GA5265@szeder.dev>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+        id S1725763AbgIKEZF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Sep 2020 00:25:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725355AbgIKEZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Sep 2020 00:25:04 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F6B3C061573
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 21:25:03 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id o68so6412152pfg.2
+        for <git@vger.kernel.org>; Thu, 10 Sep 2020 21:25:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=1bTbEqG7ULCnP6lGuV9xbLuLIB30/3kHlma4yrwZLtI=;
+        b=tkLdMmTDlxCa53Mmhvum7uw0d+BRqnF9wT/qJquZb9Pv65S5kYKcTvhdVhg4wTfzSZ
+         kC+mLSDTxd9lB+6Rpk9bxdJNSybcDgAlKzqe0VvoLbxmK3RXRxAHqt7hgI0PJPXY8TRX
+         oi4fe2M4FIzNVhfAFIovcd86wh4GEmt4U9CSGNFB4GbTd+bYGSR1vjBAuNItbcHPqiVv
+         ErK636RID5tvHL2gtqpyouTIMcPr9Up8On841oeKixcDKwtvw3cREUMCCiwKWCQTM1B9
+         Cuf6lDF84dTVp1n0A4OHDmuTpR7krYtRIEluG15Kyq6nzBWljtUmG7v9Sj0ivf+3bkxs
+         76QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=1bTbEqG7ULCnP6lGuV9xbLuLIB30/3kHlma4yrwZLtI=;
+        b=rmccIzTBPCdR+nYF6nDExWjN6ePLAuOFIzXyBbtXHE+3+L98Y6NgCaWZdLLkRfkZa3
+         LhprJ+q4afBWhWkBqk/0ZlcaO7JuCu+HOGnHyBUoC/98MfsiKebAZ5jXr94aGQ7tUgWl
+         tA8WFEkBAL6m9sIiTDkhJieRhTFx3haBV6PPcLzWpJmZ1XD4e3fZ7Dg545C/E+kyfUC1
+         dVuZ9/3q0ACcx88zdlo2DxT+tay8rYnarXf+6bn5G86MzYM68kKsCb7zLVxxSYLmt8gU
+         7LwDsxaTg4eJySfWPj0pa54IP7Mm3hfDZKiUH9CKzoOSnPYQ6NdYmWLd1XSoeARqigdN
+         Lspg==
+X-Gm-Message-State: AOAM531dypFMk2U4E5yILrpydMx31/Cq1GQrX2ksdCt1Zmm1RS8/NJOo
+        AxmlZk9aAbb4eutAeDeVR7FoVy8AZgXV6d3K
+X-Google-Smtp-Source: ABdhPJyvwN/HJYgmWLdn+G/R77rG493PQXOA6ppvOmFp7nxJlfv6WeZHOGzmBxrXiP6kMrdj11Viqg==
+X-Received: by 2002:a63:d04b:: with SMTP id s11mr320145pgi.241.1599798302821;
+        Thu, 10 Sep 2020 21:25:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.70.3.170])
+        by smtp.gmail.com with ESMTPSA id m13sm519262pjl.45.2020.09.10.21.25.01
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Sep 2020 21:25:02 -0700 (PDT)
+From:   gmail <coolnavy2010@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Combine submodule and worktree with a center cache
+Message-Id: <8FA765EA-D06C-4569-9921-DC333809E2F7@gmail.com>
+Date:   Fri, 11 Sep 2020 12:24:59 +0800
+To:     git <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello, It is possible to combine submodule and worktree with a center =
+cache like `$HOME/.git-modules`=20
+to speed up `git submodule update =E2=80=94init` and save disk space. =
+Now I managed them manually. I suppose it will=20
+be support by git automatically.
 
---zH41lVBEV8cLJnCl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2020-09-10 at 15:19:35, SZEDER G=C3=A1bor wrote:
-> Well, on first sight it seems nice that scripts have to specify
-> '--path-format=3Dabsolute' only once when querying multiple paths at
-> once, though on second thought no prudent script would query multiple
-> paths at once, because they might contain newlines.
-
-We do that in Git LFS at the cost of not handling paths with newlines
-because calling out to Git multiple times is expensive, very especially
-on Windows.  Of course, Windows doesn't allow newlines in paths, but it
-seems silly to have two different code paths for the same thing,
-especially on top of the different paths we have for versions of Git
-with and without worktrees (and therefore --git-common-dir).
-
-If you're writing a script, you're not expecting great performance (or
-you wouldn't be writing shell), so it's less of a problem and you can
-actually afford the cost of being a little more correct.
-
-I think if we wanted to prudently handle paths with newlines, we'd want
-to add a -z option to rev-parse (think about the case in shell where the
-path ends with a trailing newline).  I may get around to that at some
-point, but anyone is welcome to pick it up before me.
-
-> Yeah, I think I found trouble that way, too.  I wonder whether
-> '--path-format=3Drelative' is really worth having, though.  Clearly
-> there's a need for absolute paths, because getting relative paths
-> causes difficulties for some scripts; I described one such use case in
-> a2f5a87626 (rev-parse: add '--absolute-git-dir' option, 2017-02-03),
-> and you just ran into another with Git LFS.  However, is there really
-> a use case that requires relative paths, because an absolute path
-> would cause similar difficulties?  I couldn't come with any.
-
-The only case I can come up with is possibly wanting to know if a path
-is within another path, or if it's outside, and doing that with relative
-paths may be easier.
-
-> So perhaps it would be sufficient to introduce only
-> '--path-format=3Dabsolute' (or equivalent) for now, and add a relative
-> path variant only when there will be an actual compelling reason to do
-> so.  And that would save you from the pain of addressing these bugs
-> shown above.
-
-I'll consider it when I do my reroll, which will probably be this
-weekend.
---=20
-brian m. carlson: Houston, Texas, US
-
---zH41lVBEV8cLJnCl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX1q+wwAKCRB8DEliiIei
-gaCLAQCsFn9FvkMUMNg3airUfdXKjEmbUBq8AaIoHUWGkDQZNwD/TA0T9k/C3+5x
-Eb6Y8Bm1p2dBWT34t4eFuIewR3Fe6QM=
-=J0A5
------END PGP SIGNATURE-----
-
---zH41lVBEV8cLJnCl--
+Best wishes.=
