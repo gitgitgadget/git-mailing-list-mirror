@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CC47C43461
-	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 20:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08F1CC43461
+	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 20:52:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDB892151B
-	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 20:51:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C510621531
+	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 20:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725971AbgILUvp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Sep 2020 16:51:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58468 "EHLO
+        id S1725918AbgILUwO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Sep 2020 16:52:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58476 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725891AbgILUvn (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Sep 2020 16:51:43 -0400
+        by vger.kernel.org with ESMTP id S1725908AbgILUwN (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Sep 2020 16:52:13 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0DA4260892;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 993A96088D;
         Sat, 12 Sep 2020 20:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1599943902;
-        bh=ffOrMOTqbMSnRIB6DVpqNkv0X12CC7ko+e2Gm55K6es=;
+        s=default; t=1599943901;
+        bh=sUhIsFR1Lz2uRf9wmUDKEHdYIlXBrbDSM99R9FQLBVY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=CoYNA/61IPb5RYflH0N9OqyhZeU6RneoscS18EHKtGXSRt5GcWeIolzwU1ArQ1oE1
-         vhzzqjc6OvNqSxYm/axwAbmQRP/ki0TADcmi+rbpUwaKrflYq39rK6Wydj72kM9lbb
-         wQp11S183OKeowstdk3VAoZi2hsR6k8r1seV/HYV2WJzQjhgfPcmhujxoF68cQ2J9b
-         0BkE5sIEw6vfQpfknCCii8pbbyAU3eWM1vhcai0fsxRMFx+a90vXYhLPTskvot2+c4
-         6J9fsCMk7+iVb66jvT+01YZSUlopPSGN1akd0ZjbJjJ2yULGN0F33SZiNz/E3r5Xrd
-         OU9ZnkqPYC+EF1SJD4D6vW8y9kkAhtM4B/h6a5bZeUieU6rrK2yOu5EPnYdxWuTXrQ
-         EKIq5G63rwkpN/U62WPeYF048luUDAmsADiQTbhOtuAMNLXl+ujM5UdUwVHAnAv2YE
-         Y2Vm1nIRQONypRPB2wtSnImL8eHhKQ66D/2ajNLyJ7og/bgEW/R
+        b=T4jCkMnXv0aQQKIY39t2hIC1cpmvo0AhVBu1lMgEpRvalwegGiW4GZxRRC702ur5h
+         d+Z8ggIMt/B24JNW4JdFbEnBZymCUlHwBIlEnsLGqBSKxOrMUyLiqv3ddWgSQMxJ8p
+         y4OQiPDLFFkAvM+PVvIBSJw2tfD7QQFhxbVJaee9yqLnN1TKO2xr0pU6MMS3VIa5Cw
+         8exdpJEPzd4Z5aeDxEb2ddsWQguJ9B7iGxCQucDvgNn+6pUOokc7BIXaAaMEUERWJs
+         PK5B77JfCwoBkm2ez2Ao0o6vZU3XPFcipUocIfQDXVjBrJ00Cnbv8VkVd2a9HGasa/
+         JLkMKz3rrDnHA7Bww5FR/R2eAcuplhjglgiTs4YFU15FZp3NXtzUtFnL6a7+ZI9ryh
+         HegE5evp06SfLv5yDIcXkzw21CRfG4DNxwODEoRya5Dh4CoT/Tw6h6PIIVBUJ0nwU2
+         UQEIxzzQxeNU3ybPeRMlXZWajpwiTYGJwB0Ebl9P48lX5t70ZbW
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH 3/3] docs: explain how to deal with files that are always modified
-Date:   Sat, 12 Sep 2020 20:48:24 +0000
-Message-Id: <20200912204824.2824106-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 2/3] docs: explain why reverts are not always applied on merge
+Date:   Sat, 12 Sep 2020 20:48:23 +0000
+Message-Id: <20200912204824.2824106-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
 In-Reply-To: <20200912204824.2824106-1-sandals@crustytoothpaste.net>
 References: <20200912204824.2824106-1-sandals@crustytoothpaste.net>
@@ -54,61 +54,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users frequently have problems where two files differ only in case,
-causing one of those files to show up consistently as being modified.
-Let's add a FAQ entry that explains how to deal with that.
+A common scenario is for a user to apply a change to one branch and
+cherry-pick it into another, then later revert it in the first branch.
+This results in the change being present when the two branches are
+merge, which is confusing to many users.
 
-In addition, let's explain another common case where files are
-consistently modified, which is when files using a smudge or clean
-filter have not been run through that filter.  Explain the way to fix
-this as well.
+We already have documentation for how this works in `git merge`, but it
+is clear from the frequency with which this is asked that it's hard to
+grasp.  We also don't explain to users that they are better off doing a
+rebase in this case, which will do what they intended.  Let's add an
+entry to the FAQ telling users what's happening and advising them to use
+rebase here.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/gitfaq.txt | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ Documentation/gitfaq.txt | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index 154f0cce54..494ec5dce5 100644
+index 550f4e30d6..154f0cce54 100644
 --- a/Documentation/gitfaq.txt
 +++ b/Documentation/gitfaq.txt
-@@ -362,6 +362,39 @@ information about how to configure files as text or binary.
- You can also control this behavior with the `core.whitespace` setting if you
- don't wish to remove the carriage returns from your line endings.
+@@ -274,6 +274,25 @@ original merge base.
+ As a consequence, if you want to merge two long-running branches, it's best to
+ always use a regular merge commit.
  
-+[[always-modified-files-case]]
-+Why do I have a file that's always modified?::
-+	Internally, Git always stores file names as sequences of bytes and doesn't
-+	perform any encoding or case folding.  However, Windows and macOS by default
-+	both perform case folding on file names.  As a result, it's possible to end up
-+	with multiple files or directories that differ in case.  Git can handle this
-+	just fine, but the file system can store only one of these files, so when Git
-+	reads the other file to see its contents, it looks modified.
++[[merge-two-revert-one]]
++If I make a change on two branches but revert it on one, why does the merge of those branches include the change?::
++	By default, when Git does a merge, it uses a strategy called the recursive
++	strategy, which does a fancy three-way merge.  In such a case, when Git
++	performs the merge, it considers exactly three points: the two heads and a
++	third point, called the _merge base_, which is usually the common ancestor of
++	those commits.  Git does not consider the history or the individual commits
++	that have happened on those branches at all.
 ++
-+It's best to remove one of the files such that you only have one file.  You can
-+do this with commands like the following (assuming two files `AFile.txt` and
-+`afile.txt`) on an otherwise clean working tree:
++As a result, if both sides have a change and one side has reverted that change,
++the result is to include the change.  This is because the code has changed on
++one side and there is no net change on the other, and in this scenario, Git
++adopts the change.
 ++
-+----
-+$ git rm --cached AFile.txt
-+$ git commit -m 'Remove files conflicting in case'
-+$ git checkout .
-+----
-++
-+This avoids touching the disk, but removes the additional file.  Your project
-+may prefer to adopt a naming convention, such as all-lowercase names, to avoid
-+this problem from occurring again; such a convention can be checked using a
-+`pre-receive` hook or as part of a continuous integration (CI) system.
-++
-+It is also possible for perpetually modified files to occur on any platform if a
-+smudge or clean filter is in use on your system but a file was previously
-+committed without running the smudge or clean filter.  To fix this, run the
-+following on an otherwise clean working tree:
-++
-+----
-+$ git add --renormalize .
-+----
++If this is a problem for you, you can do a rebase instead, rebasing the branch
++with the revert onto the other branch.  A rebase in this scenario will revert
++the change, because a rebase applies each individual commit, including the
++revert.
 +
- [[recommended-storage-settings]]
- What's the recommended way to store files in Git?::
- 	While Git can store and handle any file of any type, there are some
+ Hooks
+ -----
+ 
