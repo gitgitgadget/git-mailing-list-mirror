@@ -2,113 +2,113 @@ Return-Path: <SRS0=gF6X=CV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23534C433E2
-	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 20:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7D71C433E2
+	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 21:03:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E610E2151B
-	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 20:52:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 593792087C
+	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 21:03:18 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rXCQjxT+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725911AbgILUwO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Sep 2020 16:52:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58474 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725891AbgILUwN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Sep 2020 16:52:13 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3004060756;
-        Sat, 12 Sep 2020 20:51:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1599943901;
-        bh=wXC2RcfHHv/YCZRaSLpV/xx31Ylw5A7Fgi4uuEQadEA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=fTPosqXh3++JFjvx+aX+erD1xJpM8VD3vVvC4c0MKQ3Yt1shk08tFp45oV+47B1gA
-         /VPevuC/nLvDS0edEuvHJipMDW8HyJGgKbCqDbS12yU3MkbCvaOeoMc8+HeYcL9OTw
-         OllM+P04v4GZK1GTHdA2hL+VknIj9HxDLxvuaZu0xcMFlGILv5C/2Vr4YfDyMjJ/Q/
-         lp+Rv2aX1chGDXUd2F1NhTG+f2W8/zxVJIBXrT4eLrbWxYyn6wt0lZxLzclF+9llAg
-         t7ynvIFifXzUHeABdCnG7VX46u6x4JhIJN3rOMiX7ahUwVe0wa3u+rwXovMej+tdWR
-         Ibk12jipAF0cZWXrcRxQipb3pvSOUAT4cMgeEw/3nfSgMWwmsJqR7pv2GbtuE7cs0F
-         gzKvuaMFmrsd6pvYp77XJrXh8zuR9kwC1IaA2hrI/dOV0XEIuXsU6pA0oYMs+05MYJ
-         gv+SNGsyFGYkeviPBQT5APbIe2/LnwSdBxhemRzewcVsNcvQfYu
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH 1/3] docs: explain why squash merges are broken with long-running branches
-Date:   Sat, 12 Sep 2020 20:48:22 +0000
-Message-Id: <20200912204824.2824106-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <20200912204824.2824106-1-sandals@crustytoothpaste.net>
-References: <20200912204824.2824106-1-sandals@crustytoothpaste.net>
+        id S1725893AbgILVDQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Sep 2020 17:03:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52892 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725885AbgILVDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Sep 2020 17:03:14 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B5DC061573
+        for <git@vger.kernel.org>; Sat, 12 Sep 2020 14:03:13 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id 7so8674456pgm.11
+        for <git@vger.kernel.org>; Sat, 12 Sep 2020 14:03:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uUI95V2Myh81NTXEix3QX+POn+tkd10ivPTFSbGO4JM=;
+        b=rXCQjxT+Xcr7QsHL93/BMXRiWy1NMtVJVK2zhRDXrFWJcdpjvgsSGYRxETnETM6qau
+         jOMirmUUw3luXRkmPmHPjL27shrB5FlXdFqy1zPjylYdbFYwpFg5IMXfJDsLF7RhQmuE
+         W92pgpKKc9OwYXZ9lQFcPQwXcTGkHxextQEhBnJUpLnJr4nn1qzu1Fm4cHFadjeXE6Ue
+         5JBnT4gQ5ExUWpMOLxzeOaXOdiRJeqPUquFzQuEXe64l5NRJQQqmuGbhEm1I2l72CMBW
+         IUaAykFZJVR711gjQ8pYocGDTa7aeMvxkw9rB3vhCcGG1SF4OnzIkk4mOak+6g7INq7y
+         GVoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uUI95V2Myh81NTXEix3QX+POn+tkd10ivPTFSbGO4JM=;
+        b=PGCRGDBQ0oziVmdt1Wc0JuIrccj3xkugbZuv74MNBue8u/JmoAlvFjUYRRDYcD+62o
+         Eyxh+hEkSNGCGV0F0NZZvLWArza6xi+3XHpEOLpn7g39Z13GcyAVss/RNosdRZiQJUgg
+         aNtjg2eZI0RY2khIMz3uhPim0BYnFGFUq0Pv2uFUsFQdRBHmKb4/Cc3p7qZZll26oKcU
+         adWW46DF3RMAF6Jm1Bo7V3F4h6Zt3cyoW1C0nA5nebfrMvW7jxqQOIO5JFSs79C0r8Dq
+         jrZyWTjIXcptSGnJSzuT3rTqSf13k5qsxTC3yG2mmLgJgVjIeVl2UMJ0c271VZz8kzs7
+         xZRA==
+X-Gm-Message-State: AOAM533FZ57724SAUwUj+BiWsbYp5YmmMvXJlXj9ayuePYlgg9t9NyBZ
+        c4apU9SFV0oI1OY1/+bOPVBXOgRXyaJ+e6sx
+X-Google-Smtp-Source: ABdhPJzi+CimJQhqZzufrye0cCDzGNl1oM8cvxJq+vwpHqLiMX19N7dRRxlviITko+sD7NkJH0oNdg==
+X-Received: by 2002:a62:1b56:: with SMTP id b83mr7465248pfb.15.1599944593298;
+        Sat, 12 Sep 2020 14:03:13 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([124.123.104.38])
+        by smtp.gmail.com with ESMTPSA id x3sm5134802pjf.42.2020.09.12.14.03.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Sep 2020 14:03:12 -0700 (PDT)
+Date:   Sun, 13 Sep 2020 02:33:07 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 0/2] push: make "--force-with-lease" safer
+Message-ID: <20200912210307.GA55022@mail.clickyotomy.dev>
+References: <20200904185147.77439-1-shrinidhi.kaushik@gmail.com>
+ <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
+ <xmqqa6xuoo8h.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa6xuoo8h.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In many projects, squash merges are commonly used, primarily to keep a
-tidy history in the face of developers who do not use logically
-independent, bisectable commits.  As common as this is, this tends to
-cause significant problems when squash merges are used to merge
-long-running branches due to the lack of any new merge bases.  Even very
-experienced developers may make this mistakes, so let's add a FAQ entry
-explaining why this is problematic and explaining that regular merge
-commits should be used to merge two long-running branches.
+Hi Junio,
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/gitfaq.txt | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+On 09/12/2020 11:15, Junio C Hamano wrote:
+> Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
+> 
+> > The `--force-with-lease[=<refname>[:<expect]]` option in `git-push`
+> > makes sure that refs on remote aren't clobbered by unexpected changes
+> > when the "<refname>" and "<expect>" ref values are explicitly specified.
+> 
+> If you did a feature with different semantics to satisfy Dscho's
+> need, then this is no longer "make force-with-lease safer", I would
+> think.  Hopefully it is just the cover letter.
 
-diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index 9cd7a592ac..550f4e30d6 100644
---- a/Documentation/gitfaq.txt
-+++ b/Documentation/gitfaq.txt
-@@ -241,6 +241,39 @@ How do I know if I want to do a fetch or a pull?::
- 	ignore the upstream changes.  A pull consists of a fetch followed
- 	immediately by either a merge or rebase.  See linkgit:git-pull[1].
+Yes, this patch is about the new option, but I thought of keeping the
+original reason for introducing it  in the cover letter for context.
+I will add this as a note and change subjject cover letter in v3.
  
-+Merging and Rebasing
-+--------------------
-+
-+[[long-running-squash-merge]]
-+What kinds of problems can occur when merging long-running branches with squash merges?::
-+	In general, there are a variety of problems that can occur when using squash
-+	merges with long-running branches.  These can include seeing extra commits in
-+	`git log` output, with a GUI, or when using the `...` notation to express a
-+	range, as well as the possibility of needing to re-resolve conflicts again and
-+	again.
-++
-+When Git does a normal merge between two branches, it considers exactly three
-+points: the two branches and a third commit, called the _merge base_, which is
-+usually the common ancestor of the commits.  The result of the merge is the sum
-+of the changes between the merge base and each head.  When you merge two
-+long-running branches with a regular merge commit, this results in a new commit
-+which will end up as a merge base when they're merged again, because there is
-+now a new common ancestor.  Git doesn't have to consider changes that occurred
-+before the merge base, so you don't have to re-resolve any conflicts you
-+resolved before.
-++
-+When you perform a squash merge, a merge commit isn't created; instead, the
-+changes from one side are applied as a regular commit to the other side.  This
-+means that the merge base for these branches won't have changed, and so when Git
-+goes to perform its next merge, it considers all of the changes that it
-+considered the last time plus the new changes.  That means any conflicts may
-+need to be re-resolved.  Similarly, anything using the `...` notation in `git
-+diff`, `git log`, or a GUI will result in showing all of the changes since the
-+original merge base.
-++
-+As a consequence, if you want to merge two long-running branches, it's best to
-+always use a regular merge commit.
-+
- Hooks
- -----
- 
+> > The new option `--force-if-includes` will allow forcing an update only
+> > if the tip of the remote-tracking ref has been integrated locally.
+> > Using this along with `--force-with-lease`, during the time of push
+> > can help preventing unintended remote overwrites.
+> 
+> "if-includes" sounds quite sensible.  I think you want to lose the
+> word "lease" from the configuration variable name.  I do not think
+> it should be on by default, though.
+
+Thanks; that makes sense. I am thinking of  just adding the option
+as a command line argument without a configuration option. Will change
+this in the next patch-set.
+
+> [...]
+
+Thanks again, for reviewing this.
+-- 
+Srinidhi Kaushik
