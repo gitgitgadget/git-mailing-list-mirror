@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46AEFC43461
-	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DAAAC43461
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08D3921D7E
-	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FA272151B
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMQdtSZP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oy2uRU9u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725968AbgIMOzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Sep 2020 10:55:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46692 "EHLO
+        id S1725971AbgIMOzX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Sep 2020 10:55:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgIMOyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Sep 2020 10:54:45 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4452DC06178C
-        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:43 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id s65so8433893pgb.0
-        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:43 -0700 (PDT)
+        with ESMTP id S1725950AbgIMOyw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Sep 2020 10:54:52 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D852C06174A
+        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:49 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id 34so9478050pgo.13
+        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GV6Sb7OJ4njbdFgNDyK6TG1dhsyvC+/pWkmKFIL2Wt0=;
-        b=FMQdtSZPP4Vdsy1KqM+Mua1R+ezzV7YfzcV6awYwaF6C2HgL2E8YLQZtWERWUiAvxN
-         e256EJqF9zYBYE6Gy3rqcLQvvzOIk0LBDZHuMFMJRrEBYm6T8VXkr9KF+pg4YRNzsfaY
-         sbzuJ7eVOVlm5SleDh4BeJvCw721F4uec6uO4HIyX/oOzSDYJQaLlM3bocbMv/h/xOVN
-         /KR/DgJyfmgKmbKmmMuuDTU3Bn85WkWBsjDGzuBZ8wXhu5apSWwe3IOmrwZZIozjg6b3
-         kmKcCx2u6S4PEeiohIg2jIeDwlmzg3qrVQbLQngzY7MnIBAFYt8wpqRP67qHOMM5UhZf
-         r4Sw==
+        bh=WjIEd6L3pTCTHBWUYunr67NGJoW05SWEjdvDtuaeO3c=;
+        b=oy2uRU9ujafhA3ue/lQBpPbnWKCinnHN8bAotlajXEXFjEtuyIol3R1Zx9zAP0oRg4
+         WQZSCmmKEA/5DUYG7UlZmcSoD/3SKvmlqVP7E9MGGyIZx6F/HSJXG6MDzpfJRJtxVIEX
+         lQABn7oBWv/Jbfm0phERo8OmmV6kSqTxbu5cR2cwSjfOdpf95krKz0gKkqd6+9dh9tKv
+         KZfcyLKzd58LYmRRHrw7fuE8r3n9KeoVUDEGDl7YViMW1oTbVdnWybDj+WQc48pwgi8i
+         LWlaKjcdqO6rmppE6Su9XTu3N0cNdK6EPhJ7GJklcWl8zcoIxmD3+uhDcy9GESaqpqTU
+         6VCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GV6Sb7OJ4njbdFgNDyK6TG1dhsyvC+/pWkmKFIL2Wt0=;
-        b=s8Jg6nqm+u6DzblROpPBcVa2vE40pJHVNFCkgxenoa00Hs5UVYj9NroAzwi+x4w1Wp
-         Un5C2yk9TgeCU5kC0HHdoIHdySd6346MGhlLeFaZuwPPFWZPspC8OxzuaTj8EHmZA+sG
-         D3lN//Tzgr8pYymhAegn2vH7eVNWhfrrjmLp1E/fGY56nubIYC+3y1MqA2B6byOPgftp
-         IataUH/vWPDyDFTZnIL3TkbEc2PmnedVw8HrQ3eXRwSx5LZG/NHmNhRTE9e8koqqUjqI
-         2kYSJbpSILatpzwrmkqPbtKa69KhfiKEG4TyD7eKXB81PUAqFY5Wga/OqZZYvjeNlXVq
-         f9Eg==
-X-Gm-Message-State: AOAM531S+1z2Z8Q/c8QmlZblJ81JxLbK0/6yUHdnj4VECTxXb35tKAl4
-        qiVtvWZzd6f7yta7ZeT3bbZFOuxuF2Lr6ifqfNI=
-X-Google-Smtp-Source: ABdhPJyhdY4yLuKSoev7XjCrRXvJ/bsS+Z6CNV1iNJ6R1vesBO03Wl0nD1dRl1rhQcY2sCD1kvIsSg==
-X-Received: by 2002:a63:5363:: with SMTP id t35mr7867290pgl.443.1600008882514;
-        Sun, 13 Sep 2020 07:54:42 -0700 (PDT)
+        bh=WjIEd6L3pTCTHBWUYunr67NGJoW05SWEjdvDtuaeO3c=;
+        b=mfcXd+g/UcbtgSjSIn8SknET1m6Z3MKvmBMQaeJy/Iu8+QY3jA3q3pT/gYSe1Psc0X
+         b6+tj+2Y9Ts+wIE0Fduntd007UVGmzh3ZSeLk/wLs4jBu9Ta86g/BqnSYC8nTV40D+8m
+         0FyzOY4Cx+wRZYWfMBg4ZERQ9Op2KcOtxZo2xRefZpTF9xfpFig7ELbqyNWa9XzO6e07
+         tR7DHTSnCTWmI8XxPcM/6fVijTx0UBGX0P9hWBU4wElR/MgPFY6lq94xDAMNKnCopoS4
+         DdzWoUcf7wcn/ny9YwbCUMc/CUSgJI3M587bN0q/DVeZefAUBZIVxMFLakzCaFZgep/d
+         +TiA==
+X-Gm-Message-State: AOAM533IbGaDfzjdQRqzXe3S8qr3DPzsVPIGE5ctbeTFHd1ZpKjOZCVu
+        RE2RFHh2+pyXRnB1DlS7WDJ9lY+UvM4+4UwYmzg=
+X-Google-Smtp-Source: ABdhPJwUeK2gA8C2dB2VnIOAt3lbFasmZAbwBhmSRAhwbksUPJaYLkTWywDOZQxqttBch2G3yX1uYw==
+X-Received: by 2002:a62:5586:0:b029:13e:d13d:a12c with SMTP id j128-20020a6255860000b029013ed13da12cmr9618345pfb.20.1600008885062;
+        Sun, 13 Sep 2020 07:54:45 -0700 (PDT)
 Received: from localhost.localdomain ([66.115.146.77])
-        by smtp.gmail.com with ESMTPSA id z1sm2774650pfj.113.2020.09.13.07.54.40
+        by smtp.gmail.com with ESMTPSA id z1sm2774650pfj.113.2020.09.13.07.54.42
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 13 Sep 2020 07:54:41 -0700 (PDT)
+        Sun, 13 Sep 2020 07:54:44 -0700 (PDT)
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v3 6/7] doc: add reference for "--[no-]force-if-includes"
-Date:   Sun, 13 Sep 2020 20:24:12 +0530
-Message-Id: <20200913145413.18351-7-shrinidhi.kaushik@gmail.com>
+Subject: [PATCH v3 7/7] t: add tests for "force-if-includes"
+Date:   Sun, 13 Sep 2020 20:24:13 +0530
+Message-Id: <20200913145413.18351-8-shrinidhi.kaushik@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200913145413.18351-1-shrinidhi.kaushik@gmail.com>
 References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
@@ -75,81 +75,233 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add documentation for using the new option; append notes for
-"--force-with-lease" about using the new option to prevent
-unintended remote overwrites when being used in setups where a
-tool implicitly updates remote-tracking refs in the background.
+t/5533:
+  * Add a test cases to verify when "--force-if-includes" is used
+    along with "--force-with-lease[=<refname>[:expect]]" (when the
+    "<expect>" value is unspecified) can help prevent unintended
+    remote overwrites when remote refs are updated in the background.
+
+t/t5549:
+  * Add test for the new option to cover the following scenarios:
+    - Reject forced updates to remote, if the remote ref is updated
+      in-between the time of checkout, rewrite and before the push,
+      with cases for a specific ref, and "--all".
+    - Allow forced updates for "--force", or if the refspec is
+      prepended with a "+".
+    - Allow deletes on the remote for "--delete", or if refspec is
+      specified as ":<ref>".
+    - Skip the reflog check introduced by the new option if `git-push`
+      is specified with "--force-with-lease=<refname>:<expect>".
 
 Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 ---
- Documentation/config/advice.txt |  9 ++++++---
- Documentation/git-push.txt      | 19 +++++++++++++++++++
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ t/t5533-push-cas.sh               |  26 +++++
+ t/t5549-push-force-if-includes.sh | 161 ++++++++++++++++++++++++++++++
+ 2 files changed, 187 insertions(+)
+ create mode 100755 t/t5549-push-force-if-includes.sh
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index bdd37c3eaa..acbd0c09aa 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -10,9 +10,8 @@ advice.*::
- 		that the check is disabled.
- 	pushUpdateRejected::
- 		Set this variable to 'false' if you want to disable
--		'pushNonFFCurrent',
--		'pushNonFFMatching', 'pushAlreadyExists',
--		'pushFetchFirst', and 'pushNeedsForce'
-+		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
-+		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
- 		simultaneously.
- 	pushNonFFCurrent::
- 		Advice shown when linkgit:git-push[1] fails due to a
-@@ -41,6 +40,10 @@ advice.*::
- 		we can still suggest that the user push to either
- 		refs/heads/* or refs/tags/* based on the type of the
- 		source object.
-+	pushRefNeedsUpdate::
-+		Shown when linkgit:git-push[1] rejects a forced update of
-+		a branch when its remote-tracking ref has updates that we
-+		do not have locally.
- 	statusAheadBehind::
- 		Shown when linkgit:git-status[1] computes the ahead/behind
- 		counts for a local ref compared to its remote tracking ref,
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 3b8053447e..b40fe7e7cf 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -320,6 +320,12 @@ seen and are willing to overwrite, then rewrite history, and finally
- force push changes to `master` if the remote version is still at
- `base`, regardless of what your local `remotes/origin/master` has been
- updated to in the background.
-++
-+Alternatively, specifying `--force-if-includes` an an ancillary option along
-+with `--force-with-lease[=<refname>[:expect]]` (when "<refname>" or "<expect>"
-+values are unspecified) at the time of `push` will verify if updates from the
-+remote-tracking refs that may have been implicitly updated in the background
-+are integrated locally before allowing a forced update.
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index 0b0eb1d025..6580aab49c 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -256,4 +256,30 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
+ 	)
+ '
  
- -f::
- --force::
-@@ -341,6 +347,19 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
- origin +master` to force a push to the `master` branch). See the
- `<refspec>...` section above for details.
- 
-+--[no-]force-if-includes::
-+	Force an update only if the tip of the remote-tracking ref
-+	has been integrated locally.
-++
-+This option verifies if the tip of the remote-tracking ref on which
-+a local branch has based on (for a rewrite), is reachable from at
-+least one of the `reflog` entries of the local branch about to be
-+updated by force on the remote. The check ensures that any updates
-+from the remote have been incorporated locally by rejecting a push
-+if that is not the case.
-++
-+Specifying `--no-force-if-includes` disables this behavior.
++test_expect_success 'background updates of REMOTE can be mitigated with "--force-if-includes"' '
++	rm -rf src dst &&
++	git init --bare src.bare &&
++	test_when_finished "rm -rf src.bare" &&
++	git clone --no-local src.bare dst &&
++	test_when_finished "rm -rf dst" &&
++	(
++		cd dst &&
++		test_commit G &&
++		git push origin master:master
++	) &&
++	git clone --no-local src.bare dst2 &&
++	test_when_finished "rm -rf dst2" &&
++	(
++		cd dst2 &&
++		test_commit H &&
++		git push
++	) &&
++	(
++		cd dst &&
++		test_commit I &&
++		git fetch origin &&
++		test_must_fail git push --force-with-lease --force-if-includes origin
++	)
++'
 +
- --repo=<repository>::
- 	This option is equivalent to the <repository> argument. If both
- 	are specified, the command-line argument takes precedence.
+ test_done
+diff --git a/t/t5549-push-force-if-includes.sh b/t/t5549-push-force-if-includes.sh
+new file mode 100755
+index 0000000000..e5d1675478
+--- /dev/null
++++ b/t/t5549-push-force-if-includes.sh
+@@ -0,0 +1,161 @@
++test_description='Test push "--force-if-includes" forced update safety.'
++
++. ./test-lib.sh
++
++setup_src_dup_dst () {
++	rm -fr src dup dst &&
++	git init --bare dst &&
++	git clone --no-local dst src &&
++	git clone --no-local dst dup
++	(
++		cd src &&
++		test_commit foo &&
++		git push
++	) &&
++	(
++		cd dup &&
++		git fetch &&
++		git merge origin/master &&
++		test_commit bar &&
++		git switch -c branch master~1 &&
++		test_commit baz &&
++		test_commit D &&
++		git push --all
++	) &&
++	(
++		cd src &&
++		git switch master &&
++		git fetch --all &&
++		git branch branch --track origin/branch &&
++		git rebase origin/master
++	) &&
++	(
++		cd dup &&
++		git switch master &&
++		test_commit qux &&
++		git switch branch &&
++		test_commit quux &&
++		git push origin --all
++	)
++}
++
++test_expect_success 'reject push if remote changes are not integrated locally (protected, all refs)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	git ls-remote dst refs/heads/master >expect.branch &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		git fetch --all &&
++		test_must_fail git push --force-if-includes --all
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	git ls-remote dst refs/heads/master >actual.branch &&
++	test_cmp expect.master actual.master &&
++	test_cmp expect.branch actual.branch
++'
++
++test_expect_success 'reject push if remote changes are not integrated locally (protected, specific ref)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		git fetch --all &&
++		test_must_fail git push --force-if-includes origin master
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	test_cmp expect.master actual.master
++'
++
++test_expect_success 'allow force push if "--force" is specified (forced, all refs)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		git fetch --all &&
++		git push --force --force-if-includes origin --all 2>err &&
++		grep "forced update" err
++	)
++'
++
++test_expect_success 'allow force push if "--delete" is specified' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		git fetch --all &&
++		git push --delete --force-if-includes origin branch 2>err &&
++		grep "deleted" err
++	)
++'
++
++test_expect_success 'allow forced updates if specified with refspec (forced, specific ref)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		git fetch --all &&
++		git push --force-if-includes origin +branch 2>err &&
++		grep "forced update" err
++	)
++'
++
++test_expect_success 'allow deletes if specified with refspec (delete, specific ref)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		git fetch --all &&
++		git push --force-if-includes origin :branch 2>err &&
++		grep "deleted" err
++	)
++'
++
++test_expect_success 'must be disabled for --force-with-lease="<ref>:<expect>" (protected, specific ref)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	git ls-remote dst refs/heads/master >expect.branch &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit wobble &&
++		git switch master &&
++		test_commit wubble &&
++		r_head="$(git rev-parse refs/remotes/origin/master)" &&
++		git fetch --all &&
++		test_must_fail git push --force-if-includes --force-with-lease="master:$r_head" 2>err &&
++		grep "stale info" err
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	git ls-remote dst refs/heads/master >actual.branch &&
++	test_cmp expect.master actual.master &&
++	test_cmp expect.branch actual.branch
++'
++
++test_done
 -- 
 2.28.0
 
