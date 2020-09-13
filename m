@@ -6,84 +6,123 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87430C43461
-	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 21:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F56C43461
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 21:57:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44D1120672
-	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 21:45:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA0C420756
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 21:57:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OFhV9d3D"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l2ELzOML"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725956AbgIMVpg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Sep 2020 17:45:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62505 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgIMVpc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Sep 2020 17:45:32 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 174F86A9FA;
-        Sun, 13 Sep 2020 17:45:30 -0400 (EDT)
+        id S1725942AbgIMV4o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Sep 2020 17:56:44 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51602 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbgIMV4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Sep 2020 17:56:44 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DC9E1FB73B;
+        Sun, 13 Sep 2020 17:56:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GppzPFISj9BuUiENOkJ41I7wRUQ=; b=OFhV9d
-        3DcRODUaLStkn1rY/1WOMafid6rGq1gpmmK6PplXdcfDQbf/r6BOuIJQ8RrDoeSC
-        +oDZdJfd4JL+xj6pe8lkUbS28yaR5Q5llCqqNAwdLN5SyfQLM596R6YixlS7oton
-        mXoPQNUY7ED+RfGjnO4GxjflLikMTBbBTwcZY=
+        :content-type; s=sasl; bh=3Dcsf37wv5hO8ggXa4F3C9Ru/Sc=; b=l2ELzO
+        MLC2wndh3o9Kybgh+MLWv80/8I/fpnDKpkHudiTkPXOwUTzCfxwKoHDdZcHCYj4H
+        V/ZF51Zc+Rx97faTJMxxkpBQoohGMzbcp6cxvfkJ4Nug3it61HHX0eWZ+uwrKpzY
+        9aW50pCGqatG9uDqzb0vGhJ1b4BGxsMGgwfIs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uOG/KI7h9hhsU0vz6/Lk4svM5tvtAj9O
-        cXlTfQDNfCXfNBi5WzdNixNCyUaOvDWNsIS5UMBsqoDtXYF2xSIzbgn+LzfaQ8Kn
-        MvLYyshu/YLxKP6BhPt8sMNTqyqmagijDjxxnF3xnoYTrAg6eyQoPgDudbd83sH1
-        Ub7M2O+x/5E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0EE196A9F9;
-        Sun, 13 Sep 2020 17:45:30 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=VDhwh8wyCdMU3m1LrRwXeEXbz301K9n+
+        2y60S7ofkF0Hk01riwuQQ9W9lyUfiIrAn8FvscuvVBUNpM3ALB7NXp2wWiqfHP21
+        qXRnd0aTDKTiOKbkUXgmW4tZhGar8xJcyQzKexjWq1km8LptuLkec7Q7lL+Mbzb+
+        egKHgk4ZkW8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D5784FB73A;
+        Sun, 13 Sep 2020 17:56:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.190.152.57])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 83D926A9F8;
-        Sun, 13 Sep 2020 17:45:29 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2C471FB739;
+        Sun, 13 Sep 2020 17:56:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 3/4] builtin/diff: parse --no-index using parse_options()
-References: <cover.1599332861.git.liu.denton@gmail.com>
-        <cover.1599723087.git.liu.denton@gmail.com>
-        <ea6717e7b3a8b89fc3750505678321803cde78dc.1599723087.git.liu.denton@gmail.com>
-        <xmqqo8mdpji9.fsf@gitster.c.googlers.com>
-        <20200913083122.GA189023@generichostname>
-Date:   Sun, 13 Sep 2020 14:45:28 -0700
-In-Reply-To: <20200913083122.GA189023@generichostname> (Denton Liu's message
-        of "Sun, 13 Sep 2020 01:31:22 -0700")
-Message-ID: <xmqqsgblmjuv.fsf@gitster.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Aaron Lipman <alipman88@gmail.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 3/3] ref-filter: allow merged and no-merged filters
+References: <20200911185754.64173-3-alipman88@gmail.com>
+        <20200913193140.66906-1-alipman88@gmail.com>
+        <20200913193140.66906-4-alipman88@gmail.com>
+        <CAPig+cTNp84Dm=0n-Bb9o=1nZNDFRE20XDWUPJT8yjdefv15rA@mail.gmail.com>
+Date:   Sun, 13 Sep 2020 14:56:36 -0700
+In-Reply-To: <CAPig+cTNp84Dm=0n-Bb9o=1nZNDFRE20XDWUPJT8yjdefv15rA@mail.gmail.com>
+        (Eric Sunshine's message of "Sun, 13 Sep 2020 17:36:39 -0400")
+Message-ID: <xmqqo8m9mjcb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7115EF24-F60A-11EA-9119-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FF9FAA36-F60B-11EA-B110-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> It should be taught to be handled by
->> diff.c::diff_opt_parse() instead, like all other "diff" options.  I
->> simply do not see what makes "--merge-base" so special compared to
->> other options like "-R", "--color-words", etc.
+>> +       struct commit_list *check_reachable_list = reachable ?
+>> +               ref_cbdata->filter->reachable_from :
+>> +               ref_cbdata->filter->unreachable_from;
+>> +
+>> +       if (!check_reachable_list)
+>> +               return;
 >
-> Unfortunately, despite the above, I don't think we'll be able to handle
-> this in diff_opt_parse(). --merge-base won't be common to all diff
-> modes. It'll only work with diff-index and diff-tree, so it'll have to
-> be handled in those modes specifically.
+> Rather than adding a boolean 'reachable' parameter to the function
+> signature, you could instead directly pass in the `struct commit_list
+> *` upon which to operate, which would allow you to drop the ternary
+> operator here, and...
+>
+>> @@ -2322,8 +2337,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+>> -       if (filter->merge_commit)
+>> -               do_merge_filter(&ref_cbdata);
+>> +       do_merge_filter(&ref_cbdata, 1);
+>> +       do_merge_filter(&ref_cbdata, 0);
+>
+> ... make the callers a bit less opaque by eliminating the
+> less-than-meaningful 0-or-1, and making it obvious which list is being
+> consulted:
+>
+>     do_merge_filter(&ref_cbdata, ref_cbdata->filter->reachable_from);
+>     do_merge_filter(&ref_cbdata, ref_cbdata->filter->unreachable_from);
 
-Yes, I think we can follow precedences, like the "--cached" option,
-"builtin/diff-index.c::cmd_diff_index()" knows about it and it is
-also handled by "builtin/diff.c::builtin_diff_index()".
+
+There is this code in do_merge_filter(), though.
+
+		if (is_merged == reachable)
+ 			array->items[array->nr++] = array->items[i];
+ 		else
+ 			free_array_item(item);
+
+This is a body of the loop that runs over (surviving) tips of ref,
+after painting the commits from the tips of refs (interesting) and
+the [un]reachable_from commits (uninteresting).  The temporary
+variable is_merged signals if the tip after revision walk is painted
+uninteresting, i.e. some of the [un]reachable_from commits reach the
+tip.
+
+If 'reachable' and 'is_merged' are the same, that means either
+
+ (1) the tip is reachable from some commit given as --merged
+     <commit>; or
+
+ (2) the tip is NOT reachable from any commit given as --no-merged
+     <commit>
+
+which means it survives this round of filtering.
+
+By losing the 'reachable' bit, you make this switch impossible.
+
+I do not mind making the 0/1 a symbolic constant between
+do_emreg_filter() and filter_refs() for enhanced readability,
+though.
 
 Thanks.
-
-
