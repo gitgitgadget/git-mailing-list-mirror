@@ -1,75 +1,75 @@
-Return-Path: <SRS0=gF6X=CV=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=WTnS=CW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADB6DC433E2
-	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 21:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C2DC43461
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 04:50:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57D252078B
-	for <git@archiver.kernel.org>; Sat, 12 Sep 2020 21:48:17 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZEHm3dXt"
+	by mail.kernel.org (Postfix) with ESMTP id 9B9B120829
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 04:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725904AbgILVsN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Sep 2020 17:48:13 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58328 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725884AbgILVsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Sep 2020 17:48:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 21B3BF3B0E;
-        Sat, 12 Sep 2020 17:48:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xxemC8pmphxax4ZeHjjuZVUY/ZE=; b=ZEHm3d
-        XtqwapuJ/ZqKIV7e8Zkalc4i7Eh2Mpyjj7P3lRsu8ZUFxIXpC8iQtp6DBhUhnnLq
-        yx9JR4THWA3mi15UW2NHmo8FeVc1L9dSIAMF927uxXkfAUKrfb3zwYV41Mt5mgM0
-        ryZmc4qSICV3UastDYsCgC7k/v3AjEsRdjHjk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bQG9B3hbh94F3bUIRZeIjltV9ANrq/Vl
-        pGiEdscxEFVZlZllj9IxMGpYmnnVUn2T3d0JzhsziB/9eMwSYeikOQcacBkZAJKZ
-        Ap5bf0c2N7+0JgtCSH3ta97Te2oa3WWnaXjK3KcEuhuxqPC4kwicA4Fa4HmS/mjd
-        R3khLAZUw9Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1A683F3B0D;
-        Sat, 12 Sep 2020 17:48:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 48ADAF3B0C;
-        Sat, 12 Sep 2020 17:48:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH 0/3] FAQ entries for merges and modified files
-References: <20200912204824.2824106-1-sandals@crustytoothpaste.net>
-Date:   Sat, 12 Sep 2020 14:48:05 -0700
-In-Reply-To: <20200912204824.2824106-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sat, 12 Sep 2020 20:48:21 +0000")
-Message-ID: <xmqqwo0ymzu2.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725927AbgIMEuQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Sep 2020 00:50:16 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:43715 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725806AbgIMEuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Sep 2020 00:50:12 -0400
+Received: by mail-ed1-f54.google.com with SMTP id n13so14336800edo.10
+        for <git@vger.kernel.org>; Sat, 12 Sep 2020 21:50:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wtkqVkxYGJOivGh0bZaAzDo8g6dKWXpZis2cfb4FeqI=;
+        b=HLg5yB7vOuAfhoi7pWwDPMkOAVv2tr1r8MFFBVAJ/MhFiyskLU8rS+cUfIPX97eAzZ
+         CVsnB33HS2csMfPGSmSWp3et2ZuM8eaBHmyt3Yq2frSftpGz4dvJqoQn0fQA3Vo9yuJi
+         q6Ey0zIGUOBzixYHFOO/2rpG3oJ9Azwl0HlYUeolr2cct8z4hqjyOLCjKAtetkpqgsOM
+         CPyR1nCav+QTVBklKJUrGVCGGU6ZPG1bpZ/gpDIMV2vQn37/mjyB4gdzr+2ipwxzcEvP
+         /pFpVjrDF8D9SePwGT9+wJEBMUlOXobXUKwAB6L9Y5Q87oP3zC6uacHTCju77lsKY1EK
+         LvcQ==
+X-Gm-Message-State: AOAM531IAdiUYcB6KjwMatLqjlBnQa89WJA/LEjwSIpq99UKVEeoYE4T
+        HS176fOnkFUV6VoXbzXhyYJeNuSEU1cmWPsnk00=
+X-Google-Smtp-Source: ABdhPJysNHZ23AdWwQ5SbcemEKZEHz7dQ8bwTJfTHX9YkPmsFRCY+MMWvI1l6Uqkc3/YO303KLJMULzAUynoLa0yH6Q=
+X-Received: by 2002:aa7:d15a:: with SMTP id r26mr11303733edo.181.1599972610600;
+ Sat, 12 Sep 2020 21:50:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A54C1C60-F541-11EA-8759-843F439F7C89-77302942!pb-smtp21.pobox.com
+References: <3b57a5b2-a34e-de95-38c7-9bc6923a8eba@yandex.ru>
+In-Reply-To: <3b57a5b2-a34e-de95-38c7-9bc6923a8eba@yandex.ru>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 13 Sep 2020 00:49:59 -0400
+Message-ID: <CAPig+cRqkzPzNX8UN4OcgEOOKbtZRLCjNNiZsOVkGBy0pvsEkQ@mail.gmail.com>
+Subject: Re: Worktrees attached to bare repo don't work
+To:     Lobachevksiy Vitaliy <numzer0@yandex.ru>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Sat, Sep 12, 2020 at 4:01 PM Lobachevksiy Vitaliy <numzer0@yandex.ru> wrote:
+> I have a bare repository and several worktrees attached to it. That was
+> working fine until recent update. Now when I try virtually any git
+> command like `git status` in any attached worktree, or even in a new
+> one, it prints `fatal: this operation must be run in a work tree`.
+> The workaround is simply `git config --worktree --add core.bare false`
+> in each worktree.
 
-> This series introduces a few new FAQ entries on various topics.
+This is happening because you have apparently set the configuration
+variable extensions.worktreeConfig to true. As far as I can tell by
+reading the "Configuration File" section of the "git worktree"
+documentation and by consulting the commit[1] which introduced
+extensions.worktreeConfig, this is working as intended. According to
+the "git worktree" documentation, configuration core.bare is no longer
+specially filtered out when inside a worktree once
+extensions.worktreeConfig is enabled, so you need to move the
+core.bare=true setting out of the bare.git/config and into
+bare.git/config.worktree to prevent the worktrees from seeing that
+setting. Once that's done, you don't need the per-worktree
+core.bare=false setting you've been using as a workaround.
 
-All look like topics worth covering.
-
-Thanks.
+[1]: https://lore.kernel.org/git/20181021140228.24941-3-pclouds@gmail.com/
