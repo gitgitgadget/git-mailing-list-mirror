@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9047C43461
-	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46AEFC43461
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70CFB2151B
-	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08D3921D7E
+	for <git@archiver.kernel.org>; Sun, 13 Sep 2020 14:55:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FOOD4vRP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMQdtSZP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725966AbgIMOzJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Sep 2020 10:55:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46680 "EHLO
+        id S1725968AbgIMOzL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Sep 2020 10:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725932AbgIMOyl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Sep 2020 10:54:41 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8528C06178B
-        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:40 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id w7so10442275pfi.4
-        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:40 -0700 (PDT)
+        with ESMTP id S1725933AbgIMOyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Sep 2020 10:54:45 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4452DC06178C
+        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:43 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id s65so8433893pgb.0
+        for <git@vger.kernel.org>; Sun, 13 Sep 2020 07:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aBgatEu4PbcfLkhZema0WcpwWzOIo/lwCYN5CuDldHk=;
-        b=FOOD4vRPCbhP+LIgKwhag9L8OVUq5ix7hpkydJQWi8CXOP/IMWxI4DPPL+CRp/mvmN
-         ABi240s2VTBpLbUkIEGB2FZPqXXiitXDbXRmhN75NyNE1+v+o9YQRr0N+iE5xbnWltU3
-         +rBnHmPxtekUEVQPlZT6tooD9DHz7cAkOTvyC6ieQepABwEO6dYKXM1XU6Iz8gjDfWGm
-         NfFF5EmPcE5uGTz+cQ4C3hMdgmxU3QX5Jhp58AyDn6tvqhWO2ztRIEt9tgNmVMYfv4/9
-         pRHJbcdkH61MidwmXIRaMyyemGyfVcLS7RA7rKonyBv8GGYk8awnof3eajvYesONM8ky
-         LWJA==
+        bh=GV6Sb7OJ4njbdFgNDyK6TG1dhsyvC+/pWkmKFIL2Wt0=;
+        b=FMQdtSZPP4Vdsy1KqM+Mua1R+ezzV7YfzcV6awYwaF6C2HgL2E8YLQZtWERWUiAvxN
+         e256EJqF9zYBYE6Gy3rqcLQvvzOIk0LBDZHuMFMJRrEBYm6T8VXkr9KF+pg4YRNzsfaY
+         sbzuJ7eVOVlm5SleDh4BeJvCw721F4uec6uO4HIyX/oOzSDYJQaLlM3bocbMv/h/xOVN
+         /KR/DgJyfmgKmbKmmMuuDTU3Bn85WkWBsjDGzuBZ8wXhu5apSWwe3IOmrwZZIozjg6b3
+         kmKcCx2u6S4PEeiohIg2jIeDwlmzg3qrVQbLQngzY7MnIBAFYt8wpqRP67qHOMM5UhZf
+         r4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aBgatEu4PbcfLkhZema0WcpwWzOIo/lwCYN5CuDldHk=;
-        b=rN5dG/eZAJQ/fmPEpssuuQP7Gpe5cg1JBM6oRgeaY7V40hUEEwtXjrDOV2sE512S/f
-         VqN6MWXzcXhJjY+EiXlmy19xe/fcTUObbfrYOKwDJLBwqTwnGYR7VOxUrXXzExV6ZGz+
-         bfYnHgSHSbNBogSTT6BfqfUlDzg0tcHGBDLFSANi4D7LYnS4U3/Xrc9mcc00fHlK/xRV
-         vM7/416z6GWkam2jIcjZCbWveJNKC2PnrX1klKuJs0a1ABRP2N3OcUFDW+c1lzvYasYt
-         Y5NrdWstfUbjWQyVU4J3UsUHteP9sHAlfoAizIZpS7EKmlkQfIClIJBDI3ABNxxmY7W8
-         oJEQ==
-X-Gm-Message-State: AOAM532Be7DoIsq7D2+jNNW4Ow3Zj0Put9r2VVIk9p8t6u5SLF5G2nHv
-        f3vUyQtpJgKJEJx+FvCNyCOdjxMCdkEZP6GjWDg=
-X-Google-Smtp-Source: ABdhPJy7iTQDj0j9K++VmcMAsBPEd+U7xtnfdjIKOwAa/kVrwUEqZfv9aeJ1TBfhRMYsCvvR0zb6Xw==
-X-Received: by 2002:a62:e501:0:b029:13c:1611:6527 with SMTP id n1-20020a62e5010000b029013c16116527mr9877057pff.7.1600008879905;
-        Sun, 13 Sep 2020 07:54:39 -0700 (PDT)
+        bh=GV6Sb7OJ4njbdFgNDyK6TG1dhsyvC+/pWkmKFIL2Wt0=;
+        b=s8Jg6nqm+u6DzblROpPBcVa2vE40pJHVNFCkgxenoa00Hs5UVYj9NroAzwi+x4w1Wp
+         Un5C2yk9TgeCU5kC0HHdoIHdySd6346MGhlLeFaZuwPPFWZPspC8OxzuaTj8EHmZA+sG
+         D3lN//Tzgr8pYymhAegn2vH7eVNWhfrrjmLp1E/fGY56nubIYC+3y1MqA2B6byOPgftp
+         IataUH/vWPDyDFTZnIL3TkbEc2PmnedVw8HrQ3eXRwSx5LZG/NHmNhRTE9e8koqqUjqI
+         2kYSJbpSILatpzwrmkqPbtKa69KhfiKEG4TyD7eKXB81PUAqFY5Wga/OqZZYvjeNlXVq
+         f9Eg==
+X-Gm-Message-State: AOAM531S+1z2Z8Q/c8QmlZblJ81JxLbK0/6yUHdnj4VECTxXb35tKAl4
+        qiVtvWZzd6f7yta7ZeT3bbZFOuxuF2Lr6ifqfNI=
+X-Google-Smtp-Source: ABdhPJyhdY4yLuKSoev7XjCrRXvJ/bsS+Z6CNV1iNJ6R1vesBO03Wl0nD1dRl1rhQcY2sCD1kvIsSg==
+X-Received: by 2002:a63:5363:: with SMTP id t35mr7867290pgl.443.1600008882514;
+        Sun, 13 Sep 2020 07:54:42 -0700 (PDT)
 Received: from localhost.localdomain ([66.115.146.77])
-        by smtp.gmail.com with ESMTPSA id z1sm2774650pfj.113.2020.09.13.07.54.37
+        by smtp.gmail.com with ESMTPSA id z1sm2774650pfj.113.2020.09.13.07.54.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 13 Sep 2020 07:54:39 -0700 (PDT)
+        Sun, 13 Sep 2020 07:54:41 -0700 (PDT)
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v3 5/7] builtin/push: add option "--[no-]force-if-includes"
-Date:   Sun, 13 Sep 2020 20:24:11 +0530
-Message-Id: <20200913145413.18351-6-shrinidhi.kaushik@gmail.com>
+Subject: [PATCH v3 6/7] doc: add reference for "--[no-]force-if-includes"
+Date:   Sun, 13 Sep 2020 20:24:12 +0530
+Message-Id: <20200913145413.18351-7-shrinidhi.kaushik@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200913145413.18351-1-shrinidhi.kaushik@gmail.com>
 References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
@@ -75,125 +75,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update the option parser to set the flag for "force-if-includes";
-add an (optional) advice message to print when the push fails and
-the reject reason is "REJECT_REF_NEEDS_UPDATE".
+Add documentation for using the new option; append notes for
+"--force-with-lease" about using the new option to prevent
+unintended remote overwrites when being used in setups where a
+tool implicitly updates remote-tracking refs in the background.
 
 Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 ---
- advice.c       |  3 +++
- advice.h       |  2 ++
- builtin/push.c | 20 ++++++++++++++++++--
- 3 files changed, 23 insertions(+), 2 deletions(-)
+ Documentation/config/advice.txt |  9 ++++++---
+ Documentation/git-push.txt      | 19 +++++++++++++++++++
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index f0a3d32d20..164742305f 100644
---- a/advice.c
-+++ b/advice.c
-@@ -11,6 +11,7 @@ int advice_push_already_exists = 1;
- int advice_push_fetch_first = 1;
- int advice_push_needs_force = 1;
- int advice_push_unqualified_ref_name = 1;
-+int advice_push_ref_needs_update = 1;
- int advice_status_hints = 1;
- int advice_status_u_option = 1;
- int advice_status_ahead_behind_warning = 1;
-@@ -72,6 +73,7 @@ static struct {
- 	{ "pushFetchFirst", &advice_push_fetch_first },
- 	{ "pushNeedsForce", &advice_push_needs_force },
- 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
-+	{ "pushRefNeedsUpdate", &advice_push_ref_needs_update },
- 	{ "statusHints", &advice_status_hints },
- 	{ "statusUoption", &advice_status_u_option },
- 	{ "statusAheadBehindWarning", &advice_status_ahead_behind_warning },
-@@ -116,6 +118,7 @@ static struct {
- 	[ADVICE_PUSH_ALREADY_EXISTS]			= { "pushAlreadyExists", 1 },
- 	[ADVICE_PUSH_FETCH_FIRST]			= { "pushFetchFirst", 1 },
- 	[ADVICE_PUSH_NEEDS_FORCE]			= { "pushNeedsForce", 1 },
-+	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate", 1 },
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index bdd37c3eaa..acbd0c09aa 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -10,9 +10,8 @@ advice.*::
+ 		that the check is disabled.
+ 	pushUpdateRejected::
+ 		Set this variable to 'false' if you want to disable
+-		'pushNonFFCurrent',
+-		'pushNonFFMatching', 'pushAlreadyExists',
+-		'pushFetchFirst', and 'pushNeedsForce'
++		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
++		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
+ 		simultaneously.
+ 	pushNonFFCurrent::
+ 		Advice shown when linkgit:git-push[1] fails due to a
+@@ -41,6 +40,10 @@ advice.*::
+ 		we can still suggest that the user push to either
+ 		refs/heads/* or refs/tags/* based on the type of the
+ 		source object.
++	pushRefNeedsUpdate::
++		Shown when linkgit:git-push[1] rejects a forced update of
++		a branch when its remote-tracking ref has updates that we
++		do not have locally.
+ 	statusAheadBehind::
+ 		Shown when linkgit:git-status[1] computes the ahead/behind
+ 		counts for a local ref compared to its remote tracking ref,
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 3b8053447e..b40fe7e7cf 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -320,6 +320,12 @@ seen and are willing to overwrite, then rewrite history, and finally
+ force push changes to `master` if the remote version is still at
+ `base`, regardless of what your local `remotes/origin/master` has been
+ updated to in the background.
+++
++Alternatively, specifying `--force-if-includes` an an ancillary option along
++with `--force-with-lease[=<refname>[:expect]]` (when "<refname>" or "<expect>"
++values are unspecified) at the time of `push` will verify if updates from the
++remote-tracking refs that may have been implicitly updated in the background
++are integrated locally before allowing a forced update.
  
- 	/* make this an alias for backward compatibility */
- 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward", 1 },
-diff --git a/advice.h b/advice.h
-index 16f2c11642..bc2432980a 100644
---- a/advice.h
-+++ b/advice.h
-@@ -11,6 +11,7 @@ extern int advice_push_already_exists;
- extern int advice_push_fetch_first;
- extern int advice_push_needs_force;
- extern int advice_push_unqualified_ref_name;
-+extern int advice_push_ref_needs_update;
- extern int advice_status_hints;
- extern int advice_status_u_option;
- extern int advice_status_ahead_behind_warning;
-@@ -60,6 +61,7 @@ extern int advice_add_empty_pathspec;
- 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
- 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
- 	ADVICE_PUSH_UPDATE_REJECTED,
-+	ADVICE_PUSH_REF_NEEDS_UPDATE,
- 	ADVICE_RESET_QUIET_WARNING,
- 	ADVICE_RESOLVE_CONFLICT,
- 	ADVICE_RM_HINTS,
-diff --git a/builtin/push.c b/builtin/push.c
-index bc94078e72..d23b4678b4 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -300,6 +300,12 @@ static const char message_advice_ref_needs_force[] =
- 	   "or update a remote ref to make it point at a non-commit object,\n"
- 	   "without using the '--force' option.\n");
+ -f::
+ --force::
+@@ -341,6 +347,19 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
+ origin +master` to force a push to the `master` branch). See the
+ `<refspec>...` section above for details.
  
-+static const char message_advice_ref_needs_update[] =
-+	N_("Updates were rejected because the tip of the remote-tracking\n"
-+	   "branch has been updated since the last checkout. You may want\n"
-+	   "to integrate those changes locally (e.g., 'git rebase ...')\n"
-+	   "before forcing an update.\n");
++--[no-]force-if-includes::
++	Force an update only if the tip of the remote-tracking ref
++	has been integrated locally.
+++
++This option verifies if the tip of the remote-tracking ref on which
++a local branch has based on (for a rewrite), is reachable from at
++least one of the `reflog` entries of the local branch about to be
++updated by force on the remote. The check ensures that any updates
++from the remote have been incorporated locally by rejecting a push
++if that is not the case.
+++
++Specifying `--no-force-if-includes` disables this behavior.
 +
- static void advise_pull_before_push(void)
- {
- 	if (!advice_push_non_ff_current || !advice_push_update_rejected)
-@@ -335,6 +341,13 @@ static void advise_ref_needs_force(void)
- 	advise(_(message_advice_ref_needs_force));
- }
- 
-+static void advise_ref_needs_update(void)
-+{
-+	if (!advice_push_ref_needs_update || !advice_push_update_rejected)
-+		return;
-+	advise(_(message_advice_ref_needs_update));
-+}
-+
- static int push_with_options(struct transport *transport, struct refspec *rs,
- 			     int flags)
- {
-@@ -384,8 +397,9 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
- 		advise_ref_fetch_first();
- 	} else if (reject_reasons & REJECT_NEEDS_FORCE) {
- 		advise_ref_needs_force();
-+	} else if (reject_reasons & REJECT_REF_NEEDS_UPDATE) {
-+		advise_ref_needs_update();
- 	}
--
- 	return 1;
- }
- 
-@@ -521,7 +535,6 @@ static int git_push_config(const char *k, const char *v, void *cb)
- 			return config_error_nonbool(k);
- 		return color_parse(v, push_colors[slot]);
- 	}
--
- 	return git_default_config(k, v, NULL);
- }
- 
-@@ -551,6 +564,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 			       N_("require old value of ref to be at this value"),
- 			       PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option),
-+		OPT_BIT(0, "force-if-includes", &flags,
-+			N_("require remote updates to be integrated locally"),
-+			TRANSPORT_PUSH_FORCE_IF_INCLUDES),
- 		OPT_CALLBACK(0, "recurse-submodules", &recurse_submodules, "(check|on-demand|no)",
- 			     N_("control recursive pushing of submodules"), option_parse_recurse_submodules),
- 		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
+ --repo=<repository>::
+ 	This option is equivalent to the <repository> argument. If both
+ 	are specified, the command-line argument takes precedence.
 -- 
 2.28.0
 
