@@ -2,55 +2,72 @@ Return-Path: <SRS0=aDBb=CX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CEFC43461
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 19:49:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42D80C433E2
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:06:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3535215A4
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 19:49:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB980208DB
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:06:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="micTbNZC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725990AbgINTty (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Sep 2020 15:49:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56496 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725914AbgINTtx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Sep 2020 15:49:53 -0400
-Received: (qmail 7867 invoked by uid 109); 14 Sep 2020 19:49:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 14 Sep 2020 19:49:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10013 invoked by uid 111); 14 Sep 2020 19:49:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 14 Sep 2020 15:49:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 14 Sep 2020 15:49:51 -0400
-From:   Jeff King <peff@peff.net>
+        id S1726007AbgINUGg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Sep 2020 16:06:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61467 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725951AbgINUGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Sep 2020 16:06:35 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3E6C69DC5;
+        Mon, 14 Sep 2020 16:06:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=k/i/sBam3AbHle4SlbCnyCzJOqI=; b=micTbN
+        ZC0koyQVOIwg1Orf1btbGJOJgwUGuvfkf9eLVUgKN64Gli/P2QG1c6n2XMq15DR3
+        Jghua6XLI987QFGZdxUmWxm8Ms7AnzWgar0y7n3ZbtNp8CE+xkjTVkICZd4AwNkf
+        gqagKziuKBv5nNV4DPJ8jqlEaW4kfkTuJB9Fg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=twHXrU8qXJHrcuifasP+X7V/jCBmsK20
+        GOwI8mvRfd9/5vCFXItcVUtd/N2Dg+zSe1ZwIZ1gCvk8inRdmAkW5xHAV9CKBviu
+        yr/XDg1UnbmeRy7922BkcKm7DeQFaic3wL/usv69IZJqDBjnFpASTJmz3wZCx9u3
+        JNxeFxsoO2s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB98D69DC4;
+        Mon, 14 Sep 2020 16:06:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B4B969DC3;
+        Mon, 14 Sep 2020 16:06:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Alex Riesen <alexander.riesen@cetitec.com>
 Cc:     git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-        Junio C Hamano <gitster@pobox.com>
+        Jeff King <peff@peff.net>
 Subject: Re: sub-fetches discard --ipv4|6 option
-Message-ID: <20200914194951.GA2819729@coredump.intra.peff.net>
 References: <20200914121906.GD4705@pflmari>
+Date:   Mon, 14 Sep 2020 13:06:32 -0700
+In-Reply-To: <20200914121906.GD4705@pflmari> (Alex Riesen's message of "Mon,
+        14 Sep 2020 14:19:06 +0200")
+Message-ID: <xmqqk0wwktrr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200914121906.GD4705@pflmari>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C9301C46-F6C5-11EA-A82A-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 14, 2020 at 02:19:06PM +0200, Alex Riesen wrote:
+Alex Riesen <alexander.riesen@cetitec.com> writes:
 
-> Unfortunately, it only worked for the fetches which didn't use --all or
-> --multiple. After a light searching, I failed to find an explanation as to
-> why --all|--multiple are handled so inconsistently with single remote fetches
-> and added the options (similar to --force or --keep) to the argument list for
-> sub-fetches:
-> 
 > diff --git a/builtin/fetch.c b/builtin/fetch.c
 > index 82ac4be8a5..5e06c07106 100644
 > --- a/builtin/fetch.c
@@ -68,25 +85,18 @@ On Mon, Sep 14, 2020 at 02:19:06PM +0200, Alex Riesen wrote:
 >  
 > Am I missing something obvious?
 
-I don't think so. When we're starting fetch sub-processes, some options
-will make sense to pass along and some won't. The parent has to either
-pass all options and omit some, or explicitly pass ones it knows are
-useful. It looks like the code chooses the latter, but these particular
-options never got added (and it seems like they should be, as they are
-only useful to the child fetch processes that actually touch the
-network).
+I think something obvious was missed back wne -4/-6 was added at
+c915f11e (connect & http: support -4 and -6 switches for remote
+operations, 2016-02-03) ;-).
 
-So your patch above looks quite sensible (modulo useful bits like a
-signoff and maybe a test, though I guess the impact of those options
-is probably hard to cover in our tests).
+The other candidate was 9c4a036b (Teach the --all option to 'git
+fetch', 2009-11-09) that introduced this helper to relay various
+options, but back then there weren't -4/-6 invented yet, so...
 
-It is rather unfortunate that anybody adding new fetch options needs to
-remember to (maybe) add them to add_options_to_argv() themselves.
+It is somewhat sad that we need to manually relay these down, but I
+do not offhand think of a way to automate this sensibly.
 
-Also, regarding these two specific options, it sounds like you'd want
-them set for all fetches during the time your IPv6 setup is broken. In
-which case I think a config option might have served you better. So that
-might be something worth implementing (though either way I think the fix
-above is worth doing independently).
+Thanks for noticing.
 
--Peff
+
+
