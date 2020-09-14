@@ -2,101 +2,103 @@ Return-Path: <SRS0=aDBb=CX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42D80C433E2
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAC5CC43461
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:07:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB980208DB
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:06:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60B79208DB
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:07:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="micTbNZC"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QoTo17r/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726007AbgINUGg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Sep 2020 16:06:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61467 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725951AbgINUGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Sep 2020 16:06:35 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3E6C69DC5;
-        Mon, 14 Sep 2020 16:06:33 -0400 (EDT)
+        id S1726097AbgINUHk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Sep 2020 16:07:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53908 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725961AbgINUHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Sep 2020 16:07:32 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF2C473F60;
+        Mon, 14 Sep 2020 16:07:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k/i/sBam3AbHle4SlbCnyCzJOqI=; b=micTbN
-        ZC0koyQVOIwg1Orf1btbGJOJgwUGuvfkf9eLVUgKN64Gli/P2QG1c6n2XMq15DR3
-        Jghua6XLI987QFGZdxUmWxm8Ms7AnzWgar0y7n3ZbtNp8CE+xkjTVkICZd4AwNkf
-        gqagKziuKBv5nNV4DPJ8jqlEaW4kfkTuJB9Fg=
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=64jeV8DTD78IgdBGNfSUx3sfX/I=; b=QoTo17r/iue/loD6uu8q
+        gLzx78/fUdm5vD62sptZc1fr4LXxTaNbTPQxD4UaXqn3Eu3LxSAJb0NJ70j8nYo4
+        OQujdFCozYxO3MG8Tn2JoBKoBSx4URqTREDApVAtLGBFHC9vRVDL6FB7a1Maj/kA
+        kg/EdqZJHst9FZyqUp0NIJ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=twHXrU8qXJHrcuifasP+X7V/jCBmsK20
-        GOwI8mvRfd9/5vCFXItcVUtd/N2Dg+zSe1ZwIZ1gCvk8inRdmAkW5xHAV9CKBviu
-        yr/XDg1UnbmeRy7922BkcKm7DeQFaic3wL/usv69IZJqDBjnFpASTJmz3wZCx9u3
-        JNxeFxsoO2s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB98D69DC4;
-        Mon, 14 Sep 2020 16:06:33 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=rGIFJCgyTZGDXynVGE70XD89O6uNCdtqOUSspyeUAjk6g9
+        ItUpP57xTWjZHHx7+eHIKG46LLA8+XV+KuJOQHCUzUS2MmGmDhFORl5zZ+YaAq8T
+        PEA6WaMq0Dx8LEq8+U9yp14I7RSAMOc+vuyeyQ8mlRq+JpcU6tM7XxMae5poc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6A0973F5D;
+        Mon, 14 Sep 2020 16:07:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B4B969DC3;
-        Mon, 14 Sep 2020 16:06:33 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 679F373F5C;
+        Mon, 14 Sep 2020 16:07:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Riesen <alexander.riesen@cetitec.com>
-Cc:     git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-        Jeff King <peff@peff.net>
-Subject: Re: sub-fetches discard --ipv4|6 option
-References: <20200914121906.GD4705@pflmari>
-Date:   Mon, 14 Sep 2020 13:06:32 -0700
-In-Reply-To: <20200914121906.GD4705@pflmari> (Alex Riesen's message of "Mon,
-        14 Sep 2020 14:19:06 +0200")
-Message-ID: <xmqqk0wwktrr.fsf@gitster.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Aaron Lipman <alipman88@gmail.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 1/3] t3201: test multiple branch filter combinations
+References: <20200911185754.64173-3-alipman88@gmail.com>
+        <20200913193140.66906-1-alipman88@gmail.com>
+        <20200913193140.66906-2-alipman88@gmail.com>
+        <CAPig+cRrgC5vz9S1qDpEjoEvniBLCbuWt=bkpa2fj=suUm3Bog@mail.gmail.com>
+Date:   Mon, 14 Sep 2020 13:07:27 -0700
+Message-ID: <xmqqd02oktq8.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C9301C46-F6C5-11EA-A82A-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: EA148D20-F6C5-11EA-9D75-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Riesen <alexander.riesen@cetitec.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 82ac4be8a5..5e06c07106 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1531,6 +1531,10 @@ static void add_options_to_argv(struct argv_array *argv)
->  		argv_array_push(argv, "-v");
->  	else if (verbosity < 0)
->  		argv_array_push(argv, "-q");
-> +	if (family == TRANSPORT_FAMILY_IPV4)
-> +		argv_array_push(argv, "--ipv4");
-> +	else if (family == TRANSPORT_FAMILY_IPV6)
-> +		argv_array_push(argv, "--ipv6");
->  
->  }
->  
-> Am I missing something obvious?
+> A few comments:
+>
+> I didn't examine it too closely, so this may be a silly question, but
+> is there a reason to start from scratch (by deleting all the branches)
+> rather than simply using or extending the existing branches like the
+> other tests do?
+>
+> If it really does make sense to start from scratch (ignoring the
+> existing branches), then an alternative would be to create a new
+> repository and run the tests in that repository instead. Whether or
+> not doing so makes sense in this case is a judgment call. For
+> instance:
+>
+>     test_create_repo features
+>     (
+>         cd features
+>         ...setup stuff...
+>     )
 
-I think something obvious was missed back wne -4/-6 was added at
-c915f11e (connect & http: support -4 and -6 switches for remote
-operations, 2016-02-03) ;-).
+Good comments; I agree with both.
 
-The other candidate was 9c4a036b (Teach the --all option to 'git
-fetch', 2009-11-09) that introduced this helper to relay various
-options, but back then there weren't -4/-6 invented yet, so...
+> It's a bit concerning to see output from porcelain git-branch being
+> fed to 'grep' and 'xargs'. More typically, you would instead rely upon
+> the (stable) output of a plumbing command. For instance:
+>
+>     git for-each-ref --format="%(refname:short)" refs/heads/ | ...
+>
+> In new test code, normally avoid having a Git command upstream of a
+> pipe since its exit code will be lost. Thus, you might instead write:
+>
+>     git for-each-ref ... >heads &&
+>     grep -v master heads | xargs git branch -D &&
 
-It is somewhat sad that we need to manually relay these down, but I
-do not offhand think of a way to automate this sensibly.
+Again, good recommendation.
 
-Thanks for noticing.
-
-
-
+Thank you always for helpful reviews.
