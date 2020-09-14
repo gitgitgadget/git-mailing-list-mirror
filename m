@@ -2,216 +2,170 @@ Return-Path: <SRS0=aDBb=CX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE7F3C43461
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2437C43461
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:48:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A64D921741
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:37:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4EAD215A4
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 20:48:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="g7+6qT9w"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lj5vItpT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbgINUhG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Sep 2020 16:37:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38518 "EHLO
+        id S1726022AbgINUsk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Sep 2020 16:48:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725979AbgINUhD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Sep 2020 16:37:03 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F8BFC06174A
-        for <git@vger.kernel.org>; Mon, 14 Sep 2020 13:37:03 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id ef16so538639qvb.8
-        for <git@vger.kernel.org>; Mon, 14 Sep 2020 13:37:03 -0700 (PDT)
+        with ESMTP id S1725997AbgINUsi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Sep 2020 16:48:38 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 253B5C06174A
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 13:48:38 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id c18so1287616qtw.5
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 13:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZDWhizkTH4SNEgpOBIwjAsZvqYbIHwZueShOWjR5ikQ=;
-        b=g7+6qT9w3TU+EZD/MjUcW0jhTqWWjgTmgSmg70pp6/BrdgLuLzpYcXiqeIppsFu8Pc
-         1wI1syutvITWly2thnhRAG7usvX/vNjMjuAK9Zr/iD5vKPerykxdOx0Pi6OzFHIoi9H+
-         W1i7pefK9jMLq6/dVGZzY/q5qAwe8NB91mL9CPO59zgOGLtwuuFNOnCRMwC1wl23WRr8
-         BzsqydthVcct4MtXsW74+zIytE/zfS/L4U07lyVgr7Y0EsHVYIUlbLemVOMxAUbh8bWB
-         T6nUoX5pUkzDbpPxXP24uVtsRcjrxYKlnVEzDgg5+iOkisD7k+yUoKgtVkwxtCuSLHHb
-         sgvg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RAiMy8VLP5+yJEgI2GoMzXIB7Zj2+bDVPolRRZH5GpE=;
+        b=lj5vItpTsf/Sx7B8zLUUzS8WGiVNs1H9pnxw1lRvJ2b5wFgEoI/Kak41+uRRIwetw9
+         BfQUs/YD3QC24hmi8fsQuPt0jWTa4vgpsZ509eTh3HR0c4I5t4ffyf+7J9iv8TS6Z4Lz
+         bjRUweZIYPHdNGMcyT9SJKol9DEiU5W7mcr/zaIeL4TCCYsbmRZ0Jfm3rB7xRadgqhUD
+         x/12M3w59zApEqSkA6ZOFqE3muJHl0JZPZ8gFoyaHSZvdLOcTAcn+manxqNAaOycxBp9
+         SJMJcDxcSHpOvqScuLw+/rsyTJHV7TsUcmYXVZ9CnUNc8TXWCBw5uDDNdS/BQhk2rYRP
+         9yxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZDWhizkTH4SNEgpOBIwjAsZvqYbIHwZueShOWjR5ikQ=;
-        b=YiA69onqAYE00ptX5Fe1K879VyWvo3K2Pd0xubuen0oIYhgZs3Nszu9EpEjBEa4jsU
-         BhEoWUF1eenoeHKnMQcoD4AU9tOejRLbYvGqpErEhzxh5ELM4BYp1O/nDdqB4krvHf+v
-         YzEgCRO/CUj5T21ZP/NlNwI5KRxTh2+OyS9sKdb2aGcQZL4gjRndyEalplhaLDgAX/ZQ
-         z3pvFV6HoDVG8CbpbUatfuFnYNw5MUgfxTE4Ap2cFKuHwqaWZeN58w4Fr/dkWmpZDpkU
-         rX2p/Gw2tjQHg94i5/hQYRMZIlAE62vEc95Dbrh++2NM+/cjYM01AV+fXl4Go1mX2cd7
-         bf6w==
-X-Gm-Message-State: AOAM533VOcGL6psfTX2D5kt6gq5HJ/56FTDouheScWBiMhC48GQsS/Pb
-        jSRpLkbTBOZNgb16t7UAEXFMaQ==
-X-Google-Smtp-Source: ABdhPJz2UE3QrNx7Vgx9LBeSEwdTsHmRui3IB64LBAWVky3ltA4nmLnJG/6WLAHnXs4aW3rSv6ha8w==
-X-Received: by 2002:a0c:d682:: with SMTP id k2mr15379331qvi.27.1600115822316;
-        Mon, 14 Sep 2020 13:37:02 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:bc05:1f7d:98e:e354])
-        by smtp.gmail.com with ESMTPSA id t140sm15650187qke.125.2020.09.14.13.37.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 13:37:01 -0700 (PDT)
-Date:   Mon, 14 Sep 2020 16:36:59 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, szeder.dev@gmail.com,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 12/12] builtin/commit-graph.c: introduce
- '--max-new-filters=<n>'
-Message-ID: <20200914203659.GA12855@nand.local>
-References: <cover.1599664389.git.me@ttaylorr.com>
- <4ff11cec37d17d788a3ee076b7c3de1c873a5fbd.1599664389.git.me@ttaylorr.com>
- <20200911175216.GA2693949@coredump.intra.peff.net>
- <20200911185934.GA2871@xor.lan>
- <20200911192555.GA3612@nand.local>
- <20200914201258.GA12431@nand.local>
- <134d64a0-abb6-bdc9-2c05-7aded01a906a@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RAiMy8VLP5+yJEgI2GoMzXIB7Zj2+bDVPolRRZH5GpE=;
+        b=GdS1/oUj3h7dLA+L6z3ayE8e7OCAnr51OI1AKbcxwDQbhMdOwVruop5I6CDXYGW2MH
+         ODW6yvLTvdh93S3IMKXrdfDrvTixtc0nkKOto0YFp4cbi05tA+88hV92JQfrbGeJoxAc
+         iiUW3Nhnqb0y/zFwbIMpOujrVZjDg/6OglwaJp/2eSTCujaMpBYFcjCbaiwDNmAB89Mh
+         XHAH5K6/HUpHGVFgMuU3woq0G/ouKQH+nb2VrUGv+2I4F29YONdBDEE7ErH28IJbe5DN
+         kXCER2NMJ9FEtTr4mDPDIr0//ItD9pe7dH2RSwamu3yLj08YF04DzWEEEGM909Q2SX0q
+         mqWA==
+X-Gm-Message-State: AOAM530m/JUZSOwRPuvbTaA4L6Ce9WUTr7xT7ClSZrHfVJrx1ZJYDJLN
+        CgjTxLTlgcNqVL5c93KoUbM=
+X-Google-Smtp-Source: ABdhPJxZ3AVLBydUxEy0zZRn29Fx5aKiEc/hhva0+xhaBgcIEL66lNZgXyHY4xIIfpCZIZRnYUowdg==
+X-Received: by 2002:ac8:1c16:: with SMTP id a22mr14292091qtk.85.1600116516798;
+        Mon, 14 Sep 2020 13:48:36 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:6091:313a:250c:77ff? ([2600:1700:e72:80a0:6091:313a:250c:77ff])
+        by smtp.gmail.com with ESMTPSA id p187sm5353115qkd.129.2020.09.14.13.48.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Sep 2020 13:48:36 -0700 (PDT)
+Subject: Re: bug found on the new git maintenance builtin command
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>, git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com
+References: <20200914194938.GA4235@contrib-buster.localdomain>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0b35829f-a83b-a093-2dc5-0e7d3b42fd15@gmail.com>
+Date:   Mon, 14 Sep 2020 16:48:35 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
+ Thunderbird/81.0
 MIME-Version: 1.0
+In-Reply-To: <20200914194938.GA4235@contrib-buster.localdomain>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <134d64a0-abb6-bdc9-2c05-7aded01a906a@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 14, 2020 at 04:31:03PM -0400, Derrick Stolee wrote:
-> On 9/14/2020 4:12 PM, Taylor Blau wrote:
-> >   - This patch (attached below the scisors) instead of 12/12, and
-> >
-> >   - This [1] patch instead of 10/12.
-> >
-> > [1]: https://lore.kernel.org/git/20200910154516.GA32117@nand.local/
-> >
-> > Let me know if you'd rather have a full re-roll.
->
-> It's getting a bit difficult to track all of these "use this instead"
-> patches. But, I'm not the one applying them, so maybe that's not actually
-> a problem.
+On 9/14/2020 3:49 PM, Rafael Silva wrote:
+> Hi Everyone,
+> 
+> I found a minor bug when testing the new maintenance built-in command that was
+> introduced on 679768e2a1 (maintenance: create basic maintenance runner, 2020-08-25) submitted in [1]
 
-The above list is the only changes that I've made, so I'm happy if Junio
-wants to follow what's written there, but I'm equally happy to send a
-new reroll.
+Thank you for identifying the original patch! My gut reaction was that
+this is just in the Part III code which adds subcommands, but that is
+incorrect.
 
-> You might need a re-roll, anyway, as I have a few comments here:
+> (gdb) list
+> 1628    int cmd_maintenance(int argc, const char **argv, const char *prefix)
+> 1629    {
+> 1630        if (argc == 2 && !strcmp(argv[1], "-h"))
+> 1631            usage(builtin_maintenance_usage);
+> 1632
+> 1633        fprintf(stdout, "run");
+> 1634        if (!strcmp(argv[1], "run"))
+> 1635            return maintenance_run(argc - 1, argv + 1, prefix);
+> 1636        if (!strcmp(argv[1], "start"))
+> 1637            return maintenance_start();
+> (gdb) print argc
+> $5 = 1
+> (gdb) print argv[1]
+> $6 = 0x0
+> 
+> Hope all this information helps with the fixing it
 
-Let's take a look...
+Thank you so much for the report!
 
-> You also introduce commitGraph.maxNewFitlers here, which is not
-> mentioned in the commit message anywhere. In fact, it might be
-> good to include it as a separate patch so its implementation and
-> tests can be isolated from the command-line functionality.
+The patch below applies to ds/maintenance-part-1, to fix the problem.
+Hopefully it also merges cleanly with the changes in ds/maintenance-part-3,
+but I can deal with that when I submit my next re-roll.
 
-I could go either way on both of these, to be honest. I don't think
-there's anything interesting that isn't said in the documentation
-changes introduced by that commit that is worth convering there, so I'm
-not sue 'commitGraph.maxNewFilters' needs the additional call-out.
+Thanks!
+-Stolee
 
-> > +length zero Bloom filter. Overrides the `commitGraph.maxNewFilters`
-> > +configuration.
->
-> We have found it valuable to demonstrate these overrides in tests.
-> Let's inspect your tests for this.
->
-> > +test_bloom_filters_computed () {
-> > +	commit_graph_args=$1
-> > +	rm -f "$TRASH_DIRECTORY/trace.event" &&
-> > +	GIT_TRACE2_EVENT="$TRASH_DIRECTORY/trace.event" git commit-graph write \
-> > +		$commit_graph_args &&
-> > +	grep "\"filter_not_computed\":$2" "$TRASH_DIRECTORY/trace.event" &&
-> > +	grep "\"filter_trunc_large\":$3" "$TRASH_DIRECTORY/trace.event" &&
-> > +	grep "\"filter_computed\":$4" "$TRASH_DIRECTORY/trace.event"
-> > +}
->
-> If the arguments were moved to the last parameter, then we could do a few
-> interesting things here.
->
-> test_bloom_filters_computed () {
-> 	NOT_COMPUTED="\"filter_not_computed\":$1" &&
-> 	shift &&
-> 	TRUNCATED="\"filter_trunc_large\":$1" &&
-> 	shift &&
-> 	COMPUTED="\"filter_computed\":$1" &&
-> 	shift &&
-> 	rm -f "$TRASH_DIRECTORY/trace.event" &&
-> 	GIT_TRACE2_EVENT="$TRASH_DIRECTORY/trace.event" git commit-graph write $@ &&
-> 	grep "$NOT_COMPUTED" "$TRASH_DIRECTORY/trace.event" &&
-> 	grep "$TRUNCATED" "$TRASH_DIRECTORY/trace.event" &&
-> 	grep "$COMPUTED" "$TRASH_DIRECTORY/trace.event"
-> }
->
->
-> (I have not tested this script. It might need some work.)
-> This would make your callers a bit cleaner-looking, for example:
->
-> test_expect_success 'Bloom generation is limited by --max-new-filters' '
-> 	(
-> 		cd limits &&
-> 		test_commit c2 filter &&
-> 		test_commit c3 filter &&
-> 		test_commit c4 no-filter &&
-> 		test_bloom_filters_computed 3 0 2 \
-> 			--reachable --changed-paths --split=replace --max-new-filters=2
-> 	)
-> '
->
-> At least, this looks nicer to me.
+-- >8 --
 
-Yeah, but I think we're still stuck with the test_config below unless
-you write "git $@" instead of "git commit-graph write $@". I don't think
-that I have strong feelings about this unless you do.
+From 8cd793e16cd8521f4f8d7ccf2b93492ba444e8e7 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Mon, 14 Sep 2020 16:42:36 -0400
+Subject: [PATCH] maintenance: correctly handle missing subcommand
 
-> > +test_expect_success 'Bloom generation backfills previously-skipped filters' '
-> > +	# Check specifying commitGraph.maxNewFilters over "git config" works.
-> > +	test_config -C limits commitGraph.maxNewFilters 1 &&
-> > +	(
-> > +		cd limits &&
-> > +		test_bloom_filters_computed "--reachable --changed-paths --split=replace" \
-> > +			4 0 1
-> > +	)
-> > +'
->
-> Adding a case for `commitGraph.maxNewFilters=1` and `--max-new-filters=2` might
-> be interesting for the override rules.
+The maintenance builtin created in 679768e2a12 (maintenance: create
+basic maintenance runner, 2020-08-25) has a flaw in that it does not
+protect against a user running "git maintenance" without any additional
+parameters. Correct this by adding a check on argc before looking for
+the -h option.
 
-Potentially. I'm equally happy to do it in a follow-up series. I worry
-slightly about adding too many test-cases for somewhat trivial behavior.
+Reported-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/gc.c           | 3 ++-
+ t/t7900-maintenance.sh | 4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-> > +
-> > +test_expect_success 'Bloom generation backfills empty commits' '
-> > +	git init empty &&
-> > +	test_when_finished "rm -fr empty" &&
-> > +	(
-> > +		cd empty &&
-> > +		for i in $(test_seq 1 6)
-> > +		do
-> > +			git commit --allow-empty -m "$i"
-> > +		done &&
-> > +
-> > +		# Generate Bloom filters for empty commits 1-6, two at a time.
-> > +		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
-> > +			4 0 2 &&
-> > +		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
-> > +			4 0 2 &&
-> > +		test_bloom_filters_computed "--reachable --changed-paths --max-new-filters=2" \
-> > +			4 0 2 &&
->
-> I'm concerned that the max-new-filters limit (2) is a divisor
-> of the full number of commits (6). It might be good to add one
-> more commit here and test again with a limit of 2. That would
-> handle both "equal to limit" and "less than limit" cases.
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c3bcdc1167a..090959350e0 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1027,7 +1027,8 @@ static const char builtin_maintenance_usage[] = N_("git maintenance run [<option
+ 
+ int cmd_maintenance(int argc, const char **argv, const char *prefix)
+ {
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
++	if (argc < 2 ||
++	    (argc == 2 && !strcmp(argv[1], "-h")))
+ 		usage(builtin_maintenance_usage);
+ 
+ 	if (!strcmp(argv[1], "run"))
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 4f6a04ddb1e..53c883531e4 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -10,7 +10,9 @@ test_expect_success 'help text' '
+ 	test_expect_code 129 git maintenance -h 2>err &&
+ 	test_i18ngrep "usage: git maintenance run" err &&
+ 	test_expect_code 128 git maintenance barf 2>err &&
+-	test_i18ngrep "invalid subcommand: barf" err
++	test_i18ngrep "invalid subcommand: barf" err &&
++	test_expect_code 129 git maintenance 2>err &&
++	test_i18ngrep "usage: git maintenance" err
+ '
+ 
+ test_expect_success 'run [--auto|--quiet]' '
+-- 
+2.28.0.vfs.0.0
 
-That case is already covered in the test two above this one ("Bloom
-generation is limited by --max-new-filters").
 
-> Thanks,
-> -Stolee
 
-Thanks,
-Taylor
