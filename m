@@ -2,102 +2,116 @@ Return-Path: <SRS0=aDBb=CX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0210C43461
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 17:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FEAC43461
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 19:49:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA31D20732
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 17:43:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A2CB207EA
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 19:49:47 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hIsHTNoa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726047AbgINRnZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Sep 2020 13:43:25 -0400
-Received: from mout.kundenserver.de ([217.72.192.75]:52407 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbgINMTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Sep 2020 08:19:33 -0400
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 1MTRIg-1k5eNG0BcC-00TlKr; Mon, 14 Sep 2020 14:19:02 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id 1F3231E01E7;
-        Mon, 14 Sep 2020 12:19:01 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 9PCofhs3QeK3; Mon, 14 Sep 2020 14:19:00 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.5.94])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id E2FC01E01E6;
-        Mon, 14 Sep 2020 14:19:00 +0200 (CEST)
-Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
-        id BE78480518; Mon, 14 Sep 2020 14:19:06 +0200 (CEST)
-Date:   Mon, 14 Sep 2020 14:19:06 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
+        id S1725987AbgINTtp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Sep 2020 15:49:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59286 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbgINTto (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Sep 2020 15:49:44 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EC31C06174A
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 12:49:42 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id i26so1613210ejb.12
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 12:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=RV2Oiz7/YPIvF5tGQV6EUgwwEZEegxn/L4Wkh6YyAG0=;
+        b=hIsHTNoaBex0nQsvR9LgK53Se9Olq3Xnl0kIJgxQXaaDMtibxD3NzkeevxoY0fqIF0
+         bN6Anv3wXYqFZpKeNKT9WytA++apr1Cr0aHLJorQi+MwGzZevxBJBcOJmr6X4l8aDVki
+         M75UADOGE+JgBYBX7X7iwBOs5o3KSQLEE81zDTM9TXJdcILLeX0eOnGS2qFGg6O+Vb+m
+         PBc+jyMXi21BkAdJoL4bHtkQrHkB7V0I5nT7JCUhHTSIEaLAdXF/xouTPnsrdmPI/oQw
+         a3jxHk4hlwcKzZKgZNNCr91zcHbTHOSLygGXCRjIClUN6Ko0Bv5PCOR0OLDKJM1T2qfa
+         iYUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=RV2Oiz7/YPIvF5tGQV6EUgwwEZEegxn/L4Wkh6YyAG0=;
+        b=I4hcE8gunCXQZPuEJNlUMuBXMWQHgtCNH2h3WnUK7vjGcqx93xTtYDdBY4JxSGZNck
+         OochIKiMKgHsab1X+Hp/SXKUtJibM7DOWbKABtyeSEYCUkXyWqMxGQmVXNAuYycWPHk9
+         lYgolw0VLHxjdGEIZtOyw9Q7BWEZ7V7iacDvnl+6zXR7NkpvFzjSRa+TWwiEOnNxti8q
+         pWzEbqj+NjpL1ojXk0dSiEklpeNvzzWG2y2wkL+YYAAldI9zDd4HMFBueguK6xZBmvMz
+         kq9MmEc0sMC325ytSU9Xc8tJjkRJ1DxtNGvJf0cANNAYLqlqbeLxk0eYRRJZA55QNKp0
+         sfVw==
+X-Gm-Message-State: AOAM530mNiNygCNjXOfVX6am9fjecb/5pwBqevaGOevt+PTLF3+RbxUl
+        THObxcA/EKq9yiy9RklAqUSSPyiKySY=
+X-Google-Smtp-Source: ABdhPJzeyjVg0GkrgadSLKMNRdFLvgV864jlV5AxVjsIDfIOOntbZ0EHScvxXhP9fh0sL6WHSuBoxA==
+X-Received: by 2002:a17:906:4d97:: with SMTP id s23mr16886036eju.157.1600112980800;
+        Mon, 14 Sep 2020 12:49:40 -0700 (PDT)
+Received: from contrib-buster.localdomain ([212.86.35.156])
+        by smtp.gmail.com with ESMTPSA id n26sm8218672ejz.89.2020.09.14.12.49.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2020 12:49:40 -0700 (PDT)
+Date:   Mon, 14 Sep 2020 19:49:38 +0000
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Eric Wong <normalperson@yhbt.net>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: sub-fetches discard --ipv4|6 option
-Message-ID: <20200914121906.GD4705@pflmari>
+Cc:     dstolee@microsoft.com, gitster@pobox.com
+Subject: bug found on the new git maintenance builtin command
+Message-ID: <20200914194938.GA4235@contrib-buster.localdomain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-Provags-ID: V03:K1:POhfEKciG2/X/6yr9QNG4gBUNju+G7IlHpHquhe9eVt4LlMXSkQ
- jgk5rSatwgR2mTibTHi3D0BmZ0dbhfxRHIelKNAHPN6Ninc0oQ1lXnkx4jdjqyXNiGLtRdK
- qsyjsI3F/xG5ekfV+2D6dzVw/GRTQcWdf6StK36Bb6uizDhxQIsf8MwlbHMXfarFG7szAFe
- L4W3rsVLj2U4BuMrK0c+g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ukPNx49RFV0=:GWNwnjib1+DdONv4chyguc
- OmjqnVN3gxWcN9+Gi7qsPi1SzqGW5Toz/J/yHpffL7PMB0hdZ11Huar3pExqjXqdILMCFvzXa
- Ied3sPqwk/rsOvxlfNZoR7xA4zve4uJomo4nao0G2xT7sob5tF7lD7dGtBxfSLuxMs2ndpVqE
- O7ipz8PswNYtMJh1ro/V9HurURV7r9tCXUVxvmyArO4a6BC7+5cL35ZIbt+WTSknGZsIMUUv1
- wCMIwEjOfx2SdV8oGca4gsAT+lQjZI2qjN68Vfaj+HJ2LvaQ5amS86SPS1QT0gM5PZ4pna7JS
- rRNF+Vq4ZMJdrdS5dCgF4IzLWMUOsVlGXNUeIPCUcc2N/Pz51V+Eku1R98z+KIW1rY+IfK/Zg
- JwoWfhKTgAr/g8WoN1LkrzJ5Wi+njaubE8i2wVWz7Kp1tSEw5oDcxzFwtJppZ85hm7h/CaOoe
- A3AJoasA8qEM1wf0z0Eitz4+RLV/xvEU8ZyZhr0vjiFXBejF4luM890oBFffZXJBkbLyzKNMS
- kjNm6Xvm8YftaS/HqY4Wr7EIVbE1MkWNXoGttwbxt8DUTU/RS519cOHjlNxi9ZLitqB/BK41Y
- epoCXaTPvomcfdwAdLTZUnC+i3I8i9/KYHmnVtjAUU9bn6WR/2ZcpXymzzxjJlmj9Zs9pyQAi
- XpwaBIAP/hOLcunE315bXmaHGIymq4o/ZI4PCdNBWFo0I7zMuuTGLR+ed0DJ0Sn2djTmZzGeB
- spAyguRv29T+sHVTtsLL8f0H/wtA1agAhDYF+BktM5GL9Q5NKQ7/ID/28a42hRz+0SaLSV48K
- g/p9GeoPVBXp5TqZM++NevfDFuUaI+axHcZz4p78YSwkUHbcoLNkAqiCl3pE3OHcPIJ+5hVYa
- 0DUTAVDyxqJSxCIXbHWw==
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Hi Everyone,
 
-I have a slight problem with IPv6 configuration in my local network (connect
-works but transfers do not) and would like to temporarily disable use of the
-transport for a series of fetches. The fetches are all done from within a
-script to which I can pass options for "git fetch" commands in its
-command-line. The options will be appended to the fetch commands, i.e.:
+I found a minor bug when testing the new maintenance built-in command that was
+introduced on 679768e2a1 (maintenance: create basic maintenance runner, 2020-08-25) submitted in [1]
 
-    git fetch <hard-coded-script-options> --ipv4
+When running `git maintenance` without argument it receives
+a segmentation fault. I'm running git built on the current `seen` branch that is pointing
+to bf3e2864f3 (Merge branch 'ds/maintenance-part-3' into seen, 2020-09-11)
 
-Unfortunately, it only worked for the fetches which didn't use --all or
---multiple. After a light searching, I failed to find an explanation as to
-why --all|--multiple are handled so inconsistently with single remote fetches
-and added the options (similar to --force or --keep) to the argument list for
-sub-fetches:
+I did a little investigation and it seems the command needs to check when no arguments
+are passed to the cmd_maintanance() function and either quit with usage or redirect to man.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 82ac4be8a5..5e06c07106 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1531,6 +1531,10 @@ static void add_options_to_argv(struct argv_array *argv)
- 		argv_array_push(argv, "-v");
- 	else if (verbosity < 0)
- 		argv_array_push(argv, "-q");
-+	if (family == TRANSPORT_FAMILY_IPV4)
-+		argv_array_push(argv, "--ipv4");
-+	else if (family == TRANSPORT_FAMILY_IPV6)
-+		argv_array_push(argv, "--ipv6");
- 
- }
- 
-Am I missing something obvious?
+To reproduce the error, just run the `git maintenance` without any arguments
+
+$ git maintenance
+Segmentation fault
+
+Analysign with GDB right before the SEGFAULT are thrown, we can see
+the argv[1] pointing to NULL as follows: 
+
+(gdb) list
+1628    int cmd_maintenance(int argc, const char **argv, const char *prefix)
+1629    {
+1630        if (argc == 2 && !strcmp(argv[1], "-h"))
+1631            usage(builtin_maintenance_usage);
+1632
+1633        fprintf(stdout, "run");
+1634        if (!strcmp(argv[1], "run"))
+1635            return maintenance_run(argc - 1, argv + 1, prefix);
+1636        if (!strcmp(argv[1], "start"))
+1637            return maintenance_start();
+(gdb) print argc
+$5 = 1
+(gdb) print argv[1]
+$6 = 0x0
+
+Hope all this information helps with the fixing it
+
+[1] Patch submission can be found in:
+https://public-inbox.org/git/aa961af387b7f458f75ad60b9a2a45da4bb43794.1599224956.git.gitgitgadget@gmail.com/
 
 Regards,
-Alex
+Rafael Silva
