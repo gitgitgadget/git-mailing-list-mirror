@@ -2,92 +2,121 @@ Return-Path: <SRS0=aDBb=CX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E92C43461
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 05:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7B6EC433E2
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 08:39:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5E0321655
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 05:27:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 921C621BE5
+	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 08:39:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sKSxf9QO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726054AbgINF1l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Sep 2020 01:27:41 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:46697 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726010AbgINF1k (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 14 Sep 2020 01:27:40 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 95B2C3D1
-        for <git@vger.kernel.org>; Mon, 14 Sep 2020 01:27:39 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 14 Sep 2020 01:27:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emailplus.org;
-         h=to:from:subject:message-id:date:mime-version:content-type
-        :content-transfer-encoding; s=fm1; bh=jD1sxzRIdkShZ8pFOdTqwJc7Rv
-        Md8df1Igk/5cjVGL4=; b=MtsuazPTDRbvLF3sl1jF+X9mR436DjmwfeVaFcnVtd
-        OQ6jMGkx8WPODG5ok6+QBf6/6RQwo/XPQPaXtxe0rHav1xrTIajJkqDc0U8YINry
-        cFVJVV8yfG2yrrUgBbc2ZhULwH4FrJDTrZ1bB/kVNPJXQgiQ2ZKSYQEUsAbdDyVz
-        /g8zPUuY+Dr/cxAi49CU46CiVC8Iv1m9JxgQW5VEZwaOKT2Ce8q6rVLzPVE9HAFZ
-        voqoUhBzppuJWdiAG7r9o80WD1luj70wGeC7UmVyR7Fl71SP9LjYmNfzzuo0S5Z7
-        WBAauFHV/IZZakM7MjWTVfDaJ3LRr11LT1EfAuJZTKGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=jD1sxz
-        RIdkShZ8pFOdTqwJc7RvMd8df1Igk/5cjVGL4=; b=u+pvKgkXKNB+zHSh91DpBB
-        Wo4sw1wkTkGdQ2gVe04Md2YLOY+jq6qYG9MYq8ct74v1Dy4H2HiY6b4NYLSXnzs1
-        ImRz19fumVB64Hzt2vtvcI5Oonojql3GXVb8l2zhXDluxCjtcj5zfvP3+8iBVSEj
-        G/5ppvtDKa4hH97ifvxaTCWCHPELL2bbUfbfSMCev1VKQk8+hpeypQRv2lSAtmPE
-        kX52v6sSF1cdaSW1OWY5mCaCHx2SrwD5ctVESTDyuKt/IhWts9mRoiD74rYgMFl6
-        bLZWLa8p7/SXJ3h0hgJSSJ2K3vSfETULX7eqzZoaf0NnSYrMa7btc3sLOfG6K0qQ
-        ==
-X-ME-Sender: <xms:S_9eX8vnF6MS2y6mhaIS7yePtlLBnmFD3BcGyEHWmRIxcSoYWM-A0g>
-    <xme:S_9eX5cviOzFYrdIafqq72z0J8jahiBRzXjC-JEt0YOoswwpmu_5_wu3d00Ig9z2e
-    ZDAFSi5O7qcWmz3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudeihedgleehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefvhffukffffgggtgfgsehtjeertd
-    dtfeejnecuhfhrohhmpeeuvghnshhonhcuofhuihhtvgcuoegsvghnshhonhgpmhhuihht
-    vgesvghmrghilhhplhhushdrohhrgheqnecuggftrfgrthhtvghrnhepgffgleeugfetfe
-    elueegvddtjeeiffdtfeeiteejleffheevheevgfeuvddvudelnecukfhppeduleejrddu
-    heeirddufeejrddugeeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepsggvnhhsohhnpghmuhhithgvsegvmhgrihhlphhluhhsrdhorhhg
-X-ME-Proxy: <xmx:S_9eX3xFUtmYf9dOrkqzg8GcpAecGRiqYdeRysym-r74Ze-hFgWvqA>
-    <xmx:S_9eX_NpqE2iQEcxqsSQPcAl2HWR4IBuV6nANELOgT1SFTjnKzFvPg>
-    <xmx:S_9eX88yLQJW-kDXPGlS-Z4KPJNijEwsvu3Ytlb0UDsLweo2SOCx4Q>
-    <xmx:S_9eX_JgswDBO3NBRe_6SMYnmyBmLDmNEQp974vWp_vjiKEtG0934w>
-Received: from localhost.localdomain (unknown [197.156.137.148])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 4B6F83280063
-        for <git@vger.kernel.org>; Mon, 14 Sep 2020 01:27:37 -0400 (EDT)
-To:     git@vger.kernel.org
-From:   Benson Muite <benson_muite@emailplus.org>
-Subject: Caching Git Pull
-Message-ID: <492d0f93-578a-cf71-4d62-140471b33ae6@emailplus.org>
-Date:   Mon, 14 Sep 2020 08:27:34 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1726218AbgINIjI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Sep 2020 04:39:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39928 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726172AbgINIjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Sep 2020 04:39:04 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329A0C06174A
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 01:39:02 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id z22so22001827ejl.7
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 01:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=p+69g8zKtwHuSJSREZ3oQ+ovY0PMd7IWjImkMhGPIl8=;
+        b=sKSxf9QOSzsoDptVjJ6rIcjNsaRk6UbhdgmItAxwKQg8PwUcTmzEikF44d7rT+foc/
+         WqNs+NtSsdDu3666WLrrNy2MSsXw1iCtwUVZg+hzSi0cXxP7mtWMKw+JIrJUYfoBBn9C
+         JhMWYk/bQe0ZCcSev0eRVVPaLQg4SxpWIIeF8EMsqvTweRCMX64cJ1cpFCe08CwsYanP
+         /C8NeFOdtgqoDkj2+KAJrHwxOYoS6sp8xP5Cucy63gF8qfQN9dr3nex+v/Fdr5A4wJ/l
+         SmKMW76WteS0DfBb4LoJYPYLEKt0vyxJnwQGPRylGADI1I1EOXYd8sGKOumxmyGsaiT8
+         hr6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=p+69g8zKtwHuSJSREZ3oQ+ovY0PMd7IWjImkMhGPIl8=;
+        b=OBsloTkMWIAAnNdUFWz1kvoA/rZ+wsLGmuVVHQ3Y5wj7AYfNrYC205rtN5ymEIS7qX
+         5GaShLvhofFVOIaibru+BMtraS2Z1zczlrcNcisLmVuEMlhwyGu8w4zOFKfxWskNpNTr
+         HG4ErYVAktp7ULhsSTttzjuSUE+BJyICDidOmkpaPe7s2WYmO/i0/jLmii74uOC4zbFx
+         KUAV2OabpBIzGeNQYLqpzTMkTdMuga/+YYOKJnDqY71gDzntLfhbnnLgvhDBoSgTPQZW
+         1GzRWbleRZth4hhj9zZhaPVizrqjmSr27ZYGmVS5OGOMi8E1zCkXfH4DzwMnqiwNilSD
+         VSdQ==
+X-Gm-Message-State: AOAM533+FQMDSMvYSe2mwKlrAVFqgtuK4PEAarD8Yl3q4go4q+hwnfnE
+        1JZWxlkaUd8xIRpXSFEwAFU=
+X-Google-Smtp-Source: ABdhPJywL0kCSWELJ+7uOvUWwkeMiQAzCdhBP8RceOjAgJTjFC63iEjdjvTQo0PYYlXhPhI6uV4mew==
+X-Received: by 2002:a17:906:b146:: with SMTP id bt6mr13398513ejb.287.1600072741416;
+        Mon, 14 Sep 2020 01:39:01 -0700 (PDT)
+Received: from ?IPv6:2a02:a210:ca2:9c00:b065:302e:2d15:edcc? ([2a02:a210:ca2:9c00:b065:302e:2d15:edcc])
+        by smtp.gmail.com with ESMTPSA id p17sm6924708ejw.125.2020.09.14.01.39.00
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Sep 2020 01:39:00 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: Caching Git Pull
+From:   Son Luong Ngoc <sluongng@gmail.com>
+In-Reply-To: <70DB3786-CB8E-4D82-9774-439AB2A79A8D@gmail.com>
+Date:   Mon, 14 Sep 2020 10:39:00 +0200
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <90AE4B78-36E8-40B6-9D7C-E198E3004941@gmail.com>
+References: <492d0f93-578a-cf71-4d62-140471b33ae6@emailplus.org>
+ <70DB3786-CB8E-4D82-9774-439AB2A79A8D@gmail.com>
+To:     Benson Muite <benson_muite@emailplus.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Note: resend with plain-text format
 
-Is there some way I can add functionality for caching git pull to allow 
-continuation of a partially complete pull from a git repository to a 
-local machine. As an example the command wget -c allows continuation of 
-a partially complete download. This would be very helpful for large 
-commits which fail with:
+Hi Benson,
 
-fatal: the remote end hung up unexpectedly
-fatal: early EOF
+> On Sep 14, 2020, at 07:27, Benson Muite <benson_muite@emailplus.org> =
+wrote:
+>=20
+> Hi,
+>=20
+> Is there some way I can add functionality for caching git pull to =
+allow continuation of a partially complete pull from a git repository to =
+a local machine.=20
 
-Regards,
-Benson
+I believe there has been some recent works toward this direction with =
+Packfile Uri feature [1] [2] where a packfile could be uploaded to
+CDN and then advertised by the hosting remote so that clients who =
+enabled the feature can download the big part of the clone
+via CDN instead.
+
+[1]: =
+https://github.com/git/git/blob/master/Documentation/technical/packfile-ur=
+i.txt
+[2]: =
+https://public-inbox.org/git/cover.1591821067.git.jonathantanmy@google.com=
+/
+
+However I don't think any major Git hosting provider (Github, Bitbucket, =
+Gitlab etc...) have started using this feature.
+
+> As an example the command wget -c allows continuation of a partially =
+complete download. This would be very helpful for large commits which =
+fail with:
+>=20
+> fatal: the remote end hung up unexpectedly
+> fatal: early EOF
+>=20
+> Regards,
+> Benson
+
+I will cc Jonathan Tan(author) to discuss more regarding path toward =
+resumable git clone.
+
+Cheers,
+Son Luong.=
