@@ -1,94 +1,95 @@
-Return-Path: <SRS0=aDBb=CX=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=NngS=CY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7162EC43461
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 22:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9644AC43461
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 00:14:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26067208E4
-	for <git@archiver.kernel.org>; Mon, 14 Sep 2020 22:21:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58106212CC
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 00:14:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p83EEYPJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FAYpEUTE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726009AbgINWVb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Sep 2020 18:21:31 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50354 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725986AbgINWV3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Sep 2020 18:21:29 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9F227103C1E;
-        Mon, 14 Sep 2020 18:21:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gFX1XmmGc8hOAtHmOATntBFFz7A=; b=p83EEY
-        PJd2VuNt+W2/Mq7UI2/7upa0HTyRtzCi/4YFirO82zmOeUfGj2UKy4OPPidu5DXH
-        njXRI95H6nLMhjFaDKo2l1Y8lrJ3L4HB27cYO0B+FT9xp/obJS7zPinyOgCRH9uu
-        j1cVmG2BfFA50mOPh1fGpvtmWN1a/km/JY+mE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EuWzNMG9rAUKmhMWwZXYS/anuVZvG85f
-        2AfIOO8gYCjmMhu2mUHokdNusVRuR8A14REFrtI9EWQjqVPiZuos8Ctaen/Zrbl+
-        Gb5YKuaeRf8K4VJ1iiltRHCB54XvfrqdhN30yyFsxgj8UZAMqC0aYin9/b3AGsZH
-        nVLLaLWZ20E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9626E103C1D;
-        Mon, 14 Sep 2020 18:21:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D6D54103C1B;
-        Mon, 14 Sep 2020 18:21:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Damien Robert <damien.olivier.robert@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v8 1/1] remote.c: fix handling of %(push:remoteref)
-References: <20200312164558.2388589-1-damien.olivier.robert+git@gmail.com>
-        <20200416150355.635436-1-damien.olivier.robert+git@gmail.com>
-        <20200416152145.wp2zeibxmuyas6y6@feanor>
-        <xmqqv9gu7c61.fsf@gitster.c.googlers.com>
-        <20200911214358.acl3hy2e763begoo@feanor>
-Date:   Mon, 14 Sep 2020 15:21:22 -0700
-In-Reply-To: <20200911214358.acl3hy2e763begoo@feanor> (Damien Robert's message
-        of "Fri, 11 Sep 2020 23:43:58 +0200")
-Message-ID: <xmqqft7k0zkt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726154AbgIOAOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Sep 2020 20:14:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726118AbgIOANo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Sep 2020 20:13:44 -0400
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A347C061788
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 17:13:43 -0700 (PDT)
+Received: by mail-ua1-x935.google.com with SMTP id o14so442383ual.11
+        for <git@vger.kernel.org>; Mon, 14 Sep 2020 17:13:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=dXXOY3fDFP778EZejGfdO08kM1ij19l7uPbw0Tgsiys=;
+        b=FAYpEUTEBQlG2+V4WlsRYXQ9+o3cgvi3mXMuLW+FbOkrxs6S7wkUFMczuB6cIDHjEs
+         oVERmnPQYSh1hXY5cAITSlQuNngHSD0U2j1PYf6mKa1xOCGYR5but+J0HFEUMgheOr4G
+         4gQQYgG/Ukvp3eY/nn0Qpz2og+bVl40zjb1UpMYWphWxWF+fxPLZmuRCZUT6rtDKEzgy
+         IfxUAWTk8Gq69gcPKIxusB+J3rJQOMGSP49T8y9v04hBG8kNk+G6O9GAt17EQf3IPFeg
+         iNEwYpEnBq+cNQKd2Wp5vuQIMClpAhFeviHBlkOZ7UME3xThyLWgCOIwnPy76w5IwW+w
+         Lbmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=dXXOY3fDFP778EZejGfdO08kM1ij19l7uPbw0Tgsiys=;
+        b=cxSvUsDemqJ7D7FBJbLZTFTogI7fV6aU0OPr5a3lozV/knkDvYSD8YY02jfDXdu87E
+         4ArdFM7c7K8kG5EEP+AFjnwDuRYEMsopdzZUMZoQ+BgEFLuo6gqG1n/xwNXTyKQhPh1Q
+         Xxv1YYyGPlp2RlQR4efsmbY3KKX7D6n4oDSsn5pGInCrJWcaGlqaTcMOOiMlpXId7ftc
+         iZ6kCRImq6YiRRWuYVpOu3mTBLUsCKdbQArwhh45za2iPnilvv9abMQJSa1Aa6TOR6vl
+         Ad9DNU8QO6GvWT5ysOovV7d9tOxQOd1vO3YeCAkqnV3IEZ88yyCK4LC8n3r7KYQmyVdo
+         P8dw==
+X-Gm-Message-State: AOAM531KtZAuMUe9jVRjCd2hYt7tkCiTZ5xuO76zr+3A3Ts4rCDuqTvm
+        Vx7Jh2ZaOYtRjKg3VaUbDwja3nLhHw365lqQQS6HT9dkK9n9mw==
+X-Google-Smtp-Source: ABdhPJzXq/T90SEY3mndP4atw5on4xwr754YG0yaFMZT/4Ns0a+mq1Qaz7jNvRIuA90Pjl9RkJqZ8GYAhrw45xGoMvw=
+X-Received: by 2002:ab0:1450:: with SMTP id c16mr8147444uae.27.1600128820631;
+ Mon, 14 Sep 2020 17:13:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F953FC0-F6D8-11EA-BFE7-843F439F7C89-77302942!pb-smtp21.pobox.com
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 14 Sep 2020 17:13:29 -0700
+Message-ID: <CA+P7+xpjSxEmB0qpWkhkd=yeA9xF-ssVdW1J5NyJdkqfza=GPg@mail.gmail.com>
+Subject: git format-patch with useAutoBase = true
+To:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Damien Robert <damien.olivier.robert@gmail.com> writes:
+Hi,
 
-> Hum, what about migrating the version that was in next to master? I am not
-> fond of it because the series is not perfect and I am not satisfied with a
-> patch series that is not as good as I would like it to be. So that was why
-> I was arguing against merging it back then.
->
-> On the other hand it does correct existing bugs, and the bugs it leaves
-> remaining (apart from the memory leak) happens only in exotic cases. So I
-> would not want my sense of perfection to prevent this series from graduating
-> too long.
->
-> And unfortunately I cannot give you an ETA for a fully satisfying series as
-> I envision it.
+I just ran into a surprising and unexpected issue with git format-patch.
 
-That's OK---that is what "no rush" means.
+$  git format-patch -1 f7529b4ba3c98470b0e367ba447ad0da84dc308
+fatal: base commit shouldn't be in revision list
 
-We can throw the one bug it fixes together with the "bugs it leaves"
-into the same category, i.e. happens only in narrow cases.  We now
-know that you won't be actively working on the topic right now,
-perhaps others can pick up where you left off and perhaps you can
-help reviewing such a follow-up work ;-)
+It took me about 15 minutes to figure out this was referring to the
+fact that I have "useAutoBase" set to true in the git config, so that
+I get --base=auto by default.
 
-Thanks.
+It turns out, that if you, while this config is active, try to format
+an ancient patch that is historical, you will get this failure.
+Because --base wasn't specified on the command line, this made it very
+unintuitive what was going wrong.
+
+(I started to try a git bisect thinking it was a some bug in my
+current version of git from the repo, which still failed..)
+
+The failure occurs because the "automatic" base is newer than the
+requested commit. I am wondering if it would make sense to relax this
+restriction and make the format-patch automatically disable
+useAutoBase if it would conflict like this?
+
+At the very least it would be helpful if the error message was more
+intuitive and potentially explained what was going on a bit better...
+:)
+
+Thanks,
+Jake
