@@ -2,113 +2,112 @@ Return-Path: <SRS0=NngS=CY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCFABC433E2
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 04:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1CF3C43461
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 09:58:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8620621655
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 04:32:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 560F52080C
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 09:58:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="GNF2WmXe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c35QBtw7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726118AbgIOEb7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 00:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55018 "EHLO
+        id S1726244AbgIOJ6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 05:58:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbgIOEb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Sep 2020 00:31:58 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA77C06174A
-        for <git@vger.kernel.org>; Mon, 14 Sep 2020 21:31:57 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id t20so2227667qtr.8
-        for <git@vger.kernel.org>; Mon, 14 Sep 2020 21:31:57 -0700 (PDT)
+        with ESMTP id S1726169AbgIOJ6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Sep 2020 05:58:34 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E616C06174A
+        for <git@vger.kernel.org>; Tue, 15 Sep 2020 02:58:34 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id r19so1074478pls.1
+        for <git@vger.kernel.org>; Tue, 15 Sep 2020 02:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ABeXY6Y6sbEgqeoe2ObAEItHh3Q1CYvFqd4+0x6ZBNQ=;
-        b=GNF2WmXeHExIy2KTZlevc/QnHwLHNCqOpjecNLnVCWRLKAmWiEe3aCNo3bs2E8LD8I
-         Q3sLmvJkfBKj5mciLFl/uK3AvgXcom71la/8zfHexd4TjnVv1O7KPeRdfzaZI69VdeNC
-         hXHm3/q+3pY/bEbFO3DRCwP4XqUUu7Pj7zWGoNMnUugeEXpdxd/iZKV2AWzJXQkw1Dv2
-         bVZxbQAVqnhHwlxPY2oT0MgVUENW826ryDMesEf39wkKq9TL/+BBPmLegSUagGyGFIXe
-         yn8qG/1zsVdaY8ikAjLkOadrfwf+eWh+XBdbnyKhB396mZBrch51tHkOP4Xf39ZG4ZSx
-         gTlw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7IoT8GOmscal161OYichbAoqU3UPkvQAY6LdkJudSZ8=;
+        b=c35QBtw7KJ0ztnc4GJvGJIxTS8JnIUFtWvobcMGWuRABvbWuJ9Qt1Y5PxFAabDl9MZ
+         70ia/Rp7GoEcglpC7yCOKLx1Cf840565HRs36rRa4edyFMwf05ySBIDHMttaGcj++0BF
+         g7GW2nMNGVo4u8zswYVeiGclIIyRqd4SEFuZSl4yag3y4PgK7Are9tZ5HZ6Dd+nE+Fv9
+         Jqy4ICOYl0eVLmPewXkMfyQbC2RpNntv6nVpDzE3W/Sx3iA8MFAs2KTlRDh2cMCTXGjk
+         GD/x2mGEZczFeqZniJ0wZyUP1r+NBjwhv4g6Y5fUfbldU9+wB2d+Zg5V+30Rp0LgeeV+
+         uyKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ABeXY6Y6sbEgqeoe2ObAEItHh3Q1CYvFqd4+0x6ZBNQ=;
-        b=dVR33rM/Xgwyn6U4d1uHUIAw1aDrTg96iXecj4f91/8sdmmOff4F+bOXyCPXDEYOxP
-         X1NoVpxijkaVQuRH2ohTsFY45n3solre/M4uZHQw7ywie1WCe9dnI+0iANLB5tIOCDtZ
-         JG3sORCffob7/aewGFMRi5S7ViltI9EtrfVMg3WwLDxiFzXOa9tIM9Hv0HgOK8Eq+nxi
-         31okvorbIt2ymPsm/2nXWSP8E4UrdpSpXJJf2JVb/IyFhHNhIVr4Bu3NBoFiXBtDvbLw
-         yB/QXHo6oIZSdg0CvPvB65o7nojvVY2quVmn7g+zaDpcwaQGjSNqUerILMZJ/V72Z1Dv
-         Xkfw==
-X-Gm-Message-State: AOAM531L0BTtjo1VWG9El1gXzhYakPyWoePFPyMv6ni+a47ruTQwM7C+
-        /09+e5X49KiwJgh28dOyNGC9WQ==
-X-Google-Smtp-Source: ABdhPJztxpYhmrMLS3eARskONTVpWmKED86cUkYkLCDW9vZb3uFqFVPqdPqIZcnfuRaltK3hAJgfhA==
-X-Received: by 2002:ac8:7108:: with SMTP id z8mr17022153qto.55.1600144316895;
-        Mon, 14 Sep 2020 21:31:56 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:bc05:1f7d:98e:e354])
-        by smtp.gmail.com with ESMTPSA id i5sm16096082qko.86.2020.09.14.21.31.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2020 21:31:56 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 00:31:54 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, dstolee@microsoft.com, szeder.dev@gmail.com,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 12/12] builtin/commit-graph.c: introduce
- '--max-new-filters=<n>'
-Message-ID: <20200915043154.GA19585@nand.local>
-References: <cover.1599664389.git.me@ttaylorr.com>
- <4ff11cec37d17d788a3ee076b7c3de1c873a5fbd.1599664389.git.me@ttaylorr.com>
- <20200911175216.GA2693949@coredump.intra.peff.net>
- <20200911185934.GA2871@xor.lan>
- <20200911192555.GA3612@nand.local>
- <20200914201258.GA12431@nand.local>
- <134d64a0-abb6-bdc9-2c05-7aded01a906a@gmail.com>
- <20200914203659.GA12855@nand.local>
- <aa53f17a-6e48-f4e7-821c-1db35cf48652@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7IoT8GOmscal161OYichbAoqU3UPkvQAY6LdkJudSZ8=;
+        b=C5W5uWz8Uf0ufuK3reGsN5Nm6NL9+ygnKgq1mg/71pYAO5BeT0Q5Q+pr4V0npH3uqR
+         I3xe4FRKEkFgZIIuQf4a0MgMs05SQ8U2H5VtoxAPfD3UZkeJq+KM16pPRUTGOwt74ZXg
+         j+HdnuoG2Mbuiz3+wLSD6ulLFYsf0eqFUr3gFYmSOmMooCEgdJSix1wvUIyQlcZQl0HL
+         eaTZmPrmkjFYx2eNXBt8ZuZfB3jVIbh5P6iFN1OFTqwmMFaH50u7KAs/EFWZkP5WQlmx
+         NtReOlNmrNfENiUbU/8jHvsp6/jaZiruy/WrMEQ0eS+wiDHi67ZuYqZywf+MMYPhRzRW
+         +I2A==
+X-Gm-Message-State: AOAM5306J/vijbto8s/VlA75loBDSdFa0lMiPQIJvjbOfNXEYbdxzrAt
+        dCs871GmGunq714TfHvci1M=
+X-Google-Smtp-Source: ABdhPJxJORJ5hrB3G4iJiyxgq/uAFru4+4nfcVJhtpqIlZoL7IldNMPIibuf94Xrr39eFOdzrtHJ1g==
+X-Received: by 2002:a17:90a:d702:: with SMTP id y2mr3469043pju.216.1600163913736;
+        Tue, 15 Sep 2020 02:58:33 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.14])
+        by smtp.gmail.com with ESMTPSA id i62sm12839400pfe.140.2020.09.15.02.58.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Sep 2020 02:58:33 -0700 (PDT)
+From:   Han Xin <chiyutianyi@gmail.com>
+X-Google-Original-From: Han Xin <hanxin.hx@alibaba-inc.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 1/2] t5534: new test case for atomic signed push
+Date:   Tue, 15 Sep 2020 17:58:26 +0800
+Message-Id: <20200915095827.52047-1-hanxin.hx@alibaba-inc.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aa53f17a-6e48-f4e7-821c-1db35cf48652@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 14, 2020 at 08:59:28PM -0400, Derrick Stolee wrote:
-> This is fine. Adding an option along with the config version of it
-> is easy enough. Just a thought for future series.
->
-> I'm fine with the series as-is. My nits are just that.
+In order to test signed atomic push, add a new test case.
 
-Thanks for your review, and for all of your thoughts and help on this
-series in general. I'm sorry if I seemed dismissive; I just wanted to
-avoid holding up some important fixes besides the '--max-new-filters'
-feature.
+Reviewed-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+---
+ t/t5534-push-signed.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-I'm not quite sure how to handle series like these. On the one hand, I'd
-like to send a couple of small series to fix the important bugs quickly.
-On the other hand, the small series can generate a lot of noise and
-burden reviewers and the maintainer when the dependencies between those
-series aren't straightforward.
+diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
+index 030331f1c5..d0fcdc900e 100755
+--- a/t/t5534-push-signed.sh
++++ b/t/t5534-push-signed.sh
+@@ -273,4 +273,21 @@ test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
+ 	test_cmp expect dst/push-cert-status
+ '
+ 
++test_expect_failure GPG 'check atomic push before running GPG' '
++	prepare_dst &&
++	git -C dst config receive.certnonceseed sekrit &&
++	write_script gpg <<-EOF &&
++	echo >&2 "Fake gpg is called."
++	exit 1
++	EOF
++	test_must_fail env PATH="$TRASH_DIRECTORY:$PATH" git push --signed --atomic \
++			dst noop ff noff >out 2>&1 &&
++	grep "^error:" out >actual &&
++	cat >expect <<-EOF &&
++	error: atomic push failed for ref refs/heads/noff. status: 2
++	error: failed to push some refs to '"'"'dst'"'"'
++	EOF
++	test_i18ncmp expect actual
++'
++
+ test_done
+-- 
+2.28.0
 
-So, I dunno. That's at least shedding a little bit of light on how this
-series came to be / got so large, which is part of the reason that it
-took so long.
-
-Anyway, thank you again. I'm looking forward to seeing this merged
-hopefully soon.
-
-> Thanks,
-> -Stolee
-
-Thanks,
-Taylor
