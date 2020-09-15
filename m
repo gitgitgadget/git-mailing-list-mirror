@@ -2,84 +2,85 @@ Return-Path: <SRS0=NngS=CY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B1AC2D0E3
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11085C43461
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:32:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ACA920936
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:21:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8EC020809
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:32:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="tdxTAX/I"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mnVqIcEL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727740AbgIOWVz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 18:21:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52668 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727521AbgIOQ1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Sep 2020 12:27:01 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B676C06178B
-        for <git@vger.kernel.org>; Tue, 15 Sep 2020 09:26:59 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id 16so4845588qkf.4
-        for <git@vger.kernel.org>; Tue, 15 Sep 2020 09:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Jc8fGethuH/996bOnmXNyo18JlQ9lNGVgLyncON7+NQ=;
-        b=tdxTAX/IQV7P7jUGiS/THAyUWTP9tH4D9xfGl3VHPVrXpC7j0Icy8ORjJ1lVkd7qjj
-         hPzcD2F33ImXLonlrx+3w4HbPxQbtoqpqi3DQgTbbxoToAFPphXmIyEItAz4ZxwaL7Yy
-         82sxjgbNBsz2Sj1AVOL5MNuuqkJFljd3kHCiKL7ZzrKVbTjyiEFxbDYdrtgdxy0D1kjP
-         wxap/FFn/VZzDZQ/S/Zwuc0T0Dzd4hwCbTod8KsYt5e4C+Is/Ze94xpJSpq8U0tFD7In
-         qhKSjlpnU6ZoZPj1TfBRt3NlHqPLwspyYUzFGlIM0gfj6tLZSCc6g1kugN4QCHahNWMd
-         gwkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Jc8fGethuH/996bOnmXNyo18JlQ9lNGVgLyncON7+NQ=;
-        b=Z094YGukrJetpI0xuQnrRhn2eyHYKy3YY3V1080CXiLMAEGuwo+jtzW3QQoxr+ODfb
-         HYeZAia7DLhR3Xg0Fnkc8EFncVe8rVv05ooZbOiQ3Mu7+3ZlD9fkkod306UQ7mHdJH7v
-         goRshYlSgsiumcMkUsqJSESjMDZKbV4OXk/z78sJb3hIzldfs7Iou09RqItxEPIxsZqi
-         2PhX2JTyOMzRqXh1/dd/QlfFwqGOBqOIJI8WQRmrBVaakPcPk0i07WofpyXGqfp2mSOZ
-         /nERMsNqHPabPWX8PWfPrw0Z7obhfCoZ7hqgRBgwfpy4IB242jSx1rQ8L5R16tLTXmaF
-         FCIw==
-X-Gm-Message-State: AOAM532Jq9yCIyelQU7Mqn/PTVGAsqTHqaj7RY2ebrhCAidilbNJwOyk
-        KYMd3qnKXdJBp8sN+6ANp1ZJz/Uwqcy+NSkU
-X-Google-Smtp-Source: ABdhPJwNVPLFDJ5K1tFcl/19ut01HfZD/MaVFqBrE7B9Og4nwc5JL1P7pjDjFpQWSbb8ZSxLs8LoIA==
-X-Received: by 2002:a37:4f47:: with SMTP id d68mr18399244qkb.6.1600187218724;
-        Tue, 15 Sep 2020 09:26:58 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:209c:e081:d56c:21a0])
-        by smtp.gmail.com with ESMTPSA id g5sm16928356qtx.43.2020.09.15.09.26.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 09:26:58 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 12:26:54 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     "Liu, Xuhui (Jackson)" <Xuhui.Liu@amd.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Recall: But : git-p4 unshelve
-Message-ID: <20200915162654.GA27715@nand.local>
-References: <DM6PR12MB3194FC0CE3C2B8C78BC5B613FA200@DM6PR12MB3194.namprd12.prod.outlook.com>
+        id S1727543AbgIOWc2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 18:32:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55555 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727409AbgIOWcU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Sep 2020 18:32:20 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 587827F6EF;
+        Tue, 15 Sep 2020 18:32:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0z0psLbDhL4MFaspurS8BI5Nyqs=; b=mnVqIc
+        EL+C/N5x/RY1ClQOBXnWrL7DwIrWaGSjZgfcCOE6Q679cOP0V2odg/IrvRohbSwf
+        mLrKzkfTJbIiHyG6ZQCM9adMM01CSLiBwKwqRgK9yONExF0uMi24kjYzsp788adQ
+        dvWImzPuYUY+i49lZWdxiL7XT2ftD8OEjhVbQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=E/rTvVOFT4qcgw6CDMKG4GbgugtWE4wH
+        IB/4aytUOJASZRCnBEX2fI6ii3znHLHrdc0o0ciUWXDR/qXtoL75xLH56D1oHsON
+        d1De6U6wEvja3omSsYJO/QD6g7kq2wiWtSc3+zXn0jJsngnhMn4kNoR4sNTNurL6
+        ftLjxdahAik=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F1F87F6ED;
+        Tue, 15 Sep 2020 18:32:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BF4497F6EC;
+        Tue, 15 Sep 2020 18:32:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        git <git@vger.kernel.org>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2020, #03; Wed, 9)
+References: <xmqq4ko6twc9.fsf@gitster.c.googlers.com>
+        <85ft7ivp1t.fsf@LAPTOP-ACER-ASPIRE-F5.i-did-not-set--mail-host-address--so-tickle-me>
+        <xmqqimcezqs5.fsf@gitster.c.googlers.com>
+        <CANQwDwc3-n4X16F1Xuf-y-yLeXoGRTeT5c=kVVFXH1E6P=ZEqA@mail.gmail.com>
+        <xmqqzh5qyar4.fsf@gitster.c.googlers.com>
+        <20200915214802.GB1741@nand.local>
+Date:   Tue, 15 Sep 2020 15:32:16 -0700
+In-Reply-To: <20200915214802.GB1741@nand.local> (Taylor Blau's message of
+        "Tue, 15 Sep 2020 17:48:02 -0400")
+Message-ID: <xmqqr1r2y8lr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DM6PR12MB3194FC0CE3C2B8C78BC5B613FA200@DM6PR12MB3194.namprd12.prod.outlook.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4FC1B48A-F7A3-11EA-833D-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Taylor Blau <me@ttaylorr.com> writes:
 
-On Tue, Sep 15, 2020 at 12:45:38AM +0000, Liu, Xuhui (Jackson) wrote:
-> Liu, Xuhui (Jackson) would like to recall the message, "But : git-p4 unshelve ".
+> I completely agree with Junio's sentiment here. The overflow handling
+> needs to exist no matter what, but let's remember what's common and what
+> isn't.
+>
+> Since it's not common to be towards the end of even just the 32-bit
+> range, let's "optimize" for that and store the fields as 32 bits wide.
 
-The mailing list does not support recalling messages. Once you have sent
-something to the list, it is there forever (and note that the mailing
-list is mirrored on lore.kernel.org, public-inbox.org, and so on).
-
-Thanks,
-Taylor
+Thanks.  I realize I wasn't clear but that is what I meant.  If we
+need to deal with overflowing situation sensibly anyway, there may
+not be much advantage in using 64-bit until year 2038.
