@@ -2,99 +2,84 @@ Return-Path: <SRS0=NngS=CY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0653C43461
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2C1C43461
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:55:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC2DE20770
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:52:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 229AD20872
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 22:55:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MuaHZpVS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727689AbgIOWw1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 18:52:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60396 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727410AbgIOWwI (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Sep 2020 18:52:08 -0400
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727481AbgIOWyx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 18:54:53 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55416 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727672AbgIOWyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Sep 2020 18:54:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C68C4DF7FB;
+        Tue, 15 Sep 2020 18:54:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GYfBwPlF8DFaZ0GBoU1/ZXxndxs=; b=MuaHZp
+        VSIExjVWFy9wwmPGnYEKIS8RthbcWQfBkAX+oW0Bnuw3BU2amS9RrAfmEee0KwPY
+        FX8qBjgIs2rKfLgQ+xjuxJaXsfAQMFGTB/dlWNqrKwf4JwshdCYpmFrpvfVjWaAm
+        0qax59DeCEjyyO5N9hUmg8agvHtnsAOaR6nWs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JEwfp4Knhgo43E3Sq8fiafe+W6Jgsh67
+        NGUz27/P7OMR6UhcWzQxCsCQ1LZxTlL3I++dtszdE4i+U1YIiBeJ0gAxpJz4WPcR
+        Ntgg/5dZhKSmvO2aiGZ4ZFhMHQjXn7ngNkK5k94+O8jjgpnd3z486z0sVMA8LcUz
+        +I1hX5OJ4Xo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BEFBCDF7F9;
+        Tue, 15 Sep 2020 18:54:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 176E860457;
-        Tue, 15 Sep 2020 22:51:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1600210296;
-        bh=hO6eQCu3bL8wpSQvVLSYyMQyiD5Zvqp4wNDO4aWhtos=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=qcPUQQhXCAl8UZSLBioR/KcLFRAtmar9Fx64ZnGkqSATUyh0q6qTfp3gfcGXKGv6r
-         xxLSA6dtqeuahkuzn2uG1eUbSxCRK9LoYvY5EzzDeXzTgqsEzgZix+RPqLca1k6Mkc
-         u3jlEYpApQWlprxEG4doMQpDj3GGFpdfH665nNMMwAHYGG+mOLGrAA/pW7CIzZb/iw
-         G6+sFlisxLDyB6kewsaWD49j2AroB+JTS5KIuFAagiHqQRtWDoJ+HAjCQcOWf3TvKz
-         FKkslkHJ0+JCiUGVoAHw+nPTWQ97jL2k70nW20zVMg8HStr9WQ4N8A9gQXMqxJh3+i
-         5KfkycReh9w86b95Z+QuhfHJNI7NZbqxZe4NI+acohfzeB6zGHooyZvw2zwUFo8/B8
-         g4WQ3+aG2zOyDHoeaPvV0sIj04h8Q1FNJ0z8ucF6+T2cy5dTNW8eBbtVJfNS/m8HE9
-         JrY5jHPyT7IgKc8221BdcNdzLUn8R08v5Ek6cMvzvfrwOt7Y+Aa
-Date:   Tue, 15 Sep 2020 22:51:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>
-Subject: Re: [PATCH v2] builtin/clone: avoid failure with GIT_DEFAULT_HASH
-Message-ID: <20200915225131.GG2866143@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>
-References: <20200911233815.2808426-1-sandals@crustytoothpaste.net>
- <20200915015845.4149976-1-sandals@crustytoothpaste.net>
- <xmqq8sdb1x0t.fsf@gitster.c.googlers.com>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 14ED9DF7F8;
+        Tue, 15 Sep 2020 18:54:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Sep 2020, #03; Wed, 9)
+References: <xmqq4ko6twc9.fsf@gitster.c.googlers.com>
+        <CAPig+cQnnukVoJTgsu1sGFWkAYv7V38-0s-CgYuMyizYHhSFQQ@mail.gmail.com>
+        <xmqqimcms06h.fsf@gitster.c.googlers.com>
+        <CAPig+cQenifmJ5TW1Sh0zimmbAGDXvfkJRTVDg0nyRJ1vfU+wQ@mail.gmail.com>
+Date:   Tue, 15 Sep 2020 15:54:38 -0700
+In-Reply-To: <CAPig+cQenifmJ5TW1Sh0zimmbAGDXvfkJRTVDg0nyRJ1vfU+wQ@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 15 Sep 2020 18:48:32 -0400")
+Message-ID: <xmqqmu1qy7kh.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cyV/sMl4KAhiehtf"
-Content-Disposition: inline
-In-Reply-To: <xmqq8sdb1x0t.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6FD3F014-F7A6-11EA-A3D9-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
---cyV/sMl4KAhiehtf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Thu, Sep 10, 2020 at 12:52 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> >     "git worktree add" learns "-d" as short for "--detach".
+>>
+>> Thanks.
+>
+> Since this thread is active again, I guess I'll nudge this a bit. The
+> es/wt-add-detach topic still seems to need the above tweak to prevent
+> it from being inaccurate[1]. (At least I don't see the updated merge
+> message in 'seen' yet.) Thanks.
 
-On 2020-09-15 at 04:31:14, Junio C Hamano wrote:
-> > Changes since v1:
-> > * Use git_config_set_gently to make things work with SHA-1 repos as well
-> >   as SHA-256 repos.
->=20
-> Hmph, the reason why v1's bug weren't caught was because it was only
-> tested with GIT_TEST_DEFAULT_HASH=3Dsha256, right?  I am wondering if
-> adding two new tests that run the same end-user scenario except
-> for the choice of hash algorithms would be a good way to ensure this
-> will stay fixed.  Am I mistaken?
+Thanks.  https://github.com/git/git/commit/698501fba3
 
-Sure, I can do that.  I'll try to get a v3 out soon.
---=20
-brian m. carlson: Houston, Texas, US
-
---cyV/sMl4KAhiehtf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2FFcwAKCRB8DEliiIei
-gd/UAP96cdAF54aGFQV3YDBODlrrlE+9wMg8Y+scrE58FkLZDgD/VLDhhwLtwmri
-aGYZknTa/FDqR2aEhNOMnDzSFq8lQwA=
-=f8K7
------END PGP SIGNATURE-----
-
---cyV/sMl4KAhiehtf--
