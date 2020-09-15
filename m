@@ -2,112 +2,91 @@ Return-Path: <SRS0=NngS=CY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 760F0C43461
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA82C433E2
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:50:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3ABAD207DE
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:49:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5897E218AC
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:50:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="tYdjY/mi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BrNMS2N8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727894AbgIOVsw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 17:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46632 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728026AbgIOVsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Sep 2020 17:48:20 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277C8C06174A
-        for <git@vger.kernel.org>; Tue, 15 Sep 2020 14:48:09 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id g72so5984582qke.8
-        for <git@vger.kernel.org>; Tue, 15 Sep 2020 14:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=GYarg4nSezFLyxPIMHUPQqMdkdIwlr5vwWjLJiNR9ks=;
-        b=tYdjY/miwsd9tiPQPXsX5A/gYmXRCoiUbaL+xPsUNJ83cfgWJWO8PoVyKyCiWr/adM
-         ktZ/E9RkUO6lqldnvhKjC+iZXg4FU02htw79SliXlfGLW2gvAScT0frjOOB9r2GPj9fE
-         FCzgtFuNY41BnAeJM3QA+SDN5HZzzK/NYI4f2z3pBh1LPWUboMsPEnJ/qzt3VDOcnlRb
-         LH9dwZire8Dtsjw2tz+fTK/Mur/hvcxc4HYV0kwZE7pKVawH2axpnaG9p4xEvRADRMw6
-         a7oKdHlyn8q83VmQlYke2GyQNrmuxZ1LUB+QuAYFAR2GpXQ2KEmEjZqmbogkhWa2oiLq
-         yvIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=GYarg4nSezFLyxPIMHUPQqMdkdIwlr5vwWjLJiNR9ks=;
-        b=hmY75Od8e0GXeII1HWpfWNkrR5x5cZVDGDxZIHDa8D9xAasmgwuDjB09ozEfDcsQsM
-         OA4yut4nsKyszMv50LBpx4m0VsFPwhF3N/cmyNuMagWiCFdi5Gu9bwjl5/ipBqVh+LUl
-         G4w344c63M7xhZldQl/F5227C/dZeWd10fg+I699FoMGmyHDlqObttWBmjE+GeaPNiyQ
-         DkHLcTBoDj0GNkpuWsQ0ukylxEbB7yXGJkHQRsdrUsg368W8o4ioWs3Zheo7e0EdFWJ0
-         wQzmuYLj4ud7J6Frp3R9/CkDpxhNRXyKmKtny4WVT5LC7hOp58iznPKHy9Hq8eaYryLy
-         WkJg==
-X-Gm-Message-State: AOAM530ZPmDXhamN5uVPAPOj4akk+sGC9styzi4407ZC+tMdv3CTyzET
-        5sJLp/PZOEzFckh6q4J+1hfReA==
-X-Google-Smtp-Source: ABdhPJzrtYPB5DLNuIed9bKHFb1TSkOwra6z4/F6irKxpsReex1Nz7yswwMv+eaWaXhB2twMnL/pMA==
-X-Received: by 2002:a37:5dc6:: with SMTP id r189mr19574986qkb.364.1600206487261;
-        Tue, 15 Sep 2020 14:48:07 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:209c:e081:d56c:21a0])
-        by smtp.gmail.com with ESMTPSA id z37sm19100875qtz.67.2020.09.15.14.48.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2020 14:48:06 -0700 (PDT)
-Date:   Tue, 15 Sep 2020 17:48:02 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        git <git@vger.kernel.org>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: What's cooking in git.git (Sep 2020, #03; Wed, 9)
-Message-ID: <20200915214802.GB1741@nand.local>
-References: <xmqq4ko6twc9.fsf@gitster.c.googlers.com>
- <85ft7ivp1t.fsf@LAPTOP-ACER-ASPIRE-F5.i-did-not-set--mail-host-address--so-tickle-me>
- <xmqqimcezqs5.fsf@gitster.c.googlers.com>
- <CANQwDwc3-n4X16F1Xuf-y-yLeXoGRTeT5c=kVVFXH1E6P=ZEqA@mail.gmail.com>
- <xmqqzh5qyar4.fsf@gitster.c.googlers.com>
+        id S1727982AbgIOVtu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 17:49:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59021 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728110AbgIOVtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Sep 2020 17:49:40 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 325F87F0DB;
+        Tue, 15 Sep 2020 17:49:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ihb+E1flYbzzK8omC7cyMZRDMRY=; b=BrNMS2
+        N82Rtzv7td9vKNxnNi9R22jj07xnO8+ULCv9KVMb+VeTcoK0XUcrA6zNEm/C0FnC
+        f/uxsJ+o7Nm3PPXVQ2boFn9iVhEFRLif0W6aJCApfB73L1xxd7FfgO5RXNdQs32I
+        CFV8KyM50skQ/Fx/0BwSYewpoNSG4/d1S/JyE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PHRhybwua9k6X3Ma+OVeum6snpG3/7zL
+        nbC3fHtJqyaqYdwrQeTZOfqxxFtifLHiUSgHy78gk/HWD3GGscQZBtKzhCnvqchP
+        WjMdapVvJmbrSQ0in4E8abH6PWSemnig6fuUstsmggX3GI/iIkrQjpxFUAS11bkR
+        5Q38w1z7K4A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 298EC7F0DA;
+        Tue, 15 Sep 2020 17:49:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7FC97F0D8;
+        Tue, 15 Sep 2020 17:49:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, szeder.dev@gmail.com,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 12/12] builtin/commit-graph.c: introduce
+ '--max-new-filters=<n>'
+References: <cover.1599664389.git.me@ttaylorr.com>
+        <4ff11cec37d17d788a3ee076b7c3de1c873a5fbd.1599664389.git.me@ttaylorr.com>
+        <20200911175216.GA2693949@coredump.intra.peff.net>
+        <20200911185934.GA2871@xor.lan> <20200911192555.GA3612@nand.local>
+        <20200914201258.GA12431@nand.local>
+        <134d64a0-abb6-bdc9-2c05-7aded01a906a@gmail.com>
+        <20200914203659.GA12855@nand.local>
+Date:   Tue, 15 Sep 2020 14:49:37 -0700
+In-Reply-To: <20200914203659.GA12855@nand.local> (Taylor Blau's message of
+        "Mon, 14 Sep 2020 16:36:59 -0400")
+Message-ID: <xmqqv9geyaku.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqzh5qyar4.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 59D1CCA4-F79D-11EA-B97B-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 15, 2020 at 02:45:51PM -0700, Junio C Hamano wrote:
-> Jakub Narębski <jnareb@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
+
+>> It's getting a bit difficult to track all of these "use this instead"
+>> patches. But, I'm not the one applying them, so maybe that's not actually
+>> a problem.
 >
->
-> >> My gut feeling is that overflow handling needs to be there whether the
-> >> field is 32-bit or 64-bit.
-> >
-> > Not if the size on-disk is the same as the size in memory:
-> > timestamp_t is usually 64 bit (and even unsigned 64 bit epoch
-> > would be enough - its range is over twenty times the present
-> > age of the universe per direction).
->
-> Yes, and "corrected commit dates" is about accommodating commits
-> with absurd out-of-sync timestamp mixed in a history with commits
-> with correct timestamp, right?  What happens if the absurd timestamp
-> is near the limit of the range?  You do not have to live through the
-> end of the universe---you only have to create a commit object that
-> records such a timestamp, no?
+> The above list is the only changes that I've made, so I'm happy if Junio
+> wants to follow what's written there, but I'm equally happy to send a
+> new reroll.
 
-I completely agree with Junio's sentiment here. The overflow handling
-needs to exist no matter what, but let's remember what's common and what
-isn't.
+It's getting so unorganized to follow from sidelines.  Even
+resending just the few steps that needs replacement, indicating
+which ones are replaced with them, would be easier to manage (and
+full replacement would be the easiest to handle).
 
-Since it's not common to be towards the end of even just the 32-bit
-range, let's "optimize" for that and store the fields as 32 bits wide.
-
-
-Thanks,
-Taylor
+Thanks.
