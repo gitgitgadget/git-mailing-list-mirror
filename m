@@ -2,120 +2,129 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDB60C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE18C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:39:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 939902078E
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:35:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D1F020809
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbgIPAfK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 20:35:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60440 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726905AbgIPAey (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Sep 2020 20:34:54 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ACA7D60489;
-        Wed, 16 Sep 2020 00:34:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1600216493;
-        bh=AF5mM1l3n/7zHeFJuQn73beAdGy6jU3w2mvE2M8979s=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=SAu1YM6jeCOVMmun+L5J0KrscjYHtcn9rAflY1KbETmTLRNlJNt4VWACgiTtTVaMF
-         g/TG8F1LYUKw6Yq85kxYQLgo7JO2pJxaiJMylNEjzBd/YvvdSHo2YrIl1Pvl1p/v14
-         lncLiF0GvqHIyhwOzCzCSKVyJ7dvjloDDL0vzcq8w0aj4P6YPFIzcQlm7Xc1LJvBdI
-         w0JcF7OyXutTA6l1Rhqdn5G/yX0r81uu/0Wk6NCQtBrCqUuTozhJR3RGtsIVLjygR1
-         mhIyRZ9PDJBtJYrcCHjVWXg0xmxS1oJxROinS38luAbQkLh0PtlpTMJ5uNQ7cGS/aR
-         uCMJBYAl8fxq+oARsOi15FWQ1h84DLQM68HtTLjbNBuMph0Oo4rrXnVgI5drundB+8
-         4/AveW8xgqBq8VHXSimRItg1DwFEDMHr91FLIcerXS8XyNOmDhKpMbQu8Ko2edORTS
-         Q6hk2XL8zOrQijAPzV9RmLVBwgoDFIO5b2hTH4AdDKpBx5P/wgX
-Date:   Wed, 16 Sep 2020 00:34:48 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han Xin <chiyutianyi@gmail.com>, Git List <git@vger.kernel.org>,
-        Han Xin <hanxin.hx@alibaba-inc.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 1/2] t5534: new test case for atomic signed push
-Message-ID: <20200916003448.GH2866143@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, Han Xin <chiyutianyi@gmail.com>,
-        Git List <git@vger.kernel.org>, Han Xin <hanxin.hx@alibaba-inc.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-References: <20200915095827.52047-1-hanxin.hx@alibaba-inc.com>
- <xmqqv9gezsr9.fsf@gitster.c.googlers.com>
+        id S1726462AbgIPAjw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 20:39:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57010 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726543AbgIONFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Sep 2020 09:05:18 -0400
+Received: (qmail 12225 invoked by uid 109); 15 Sep 2020 13:05:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 15 Sep 2020 13:05:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17783 invoked by uid 111); 15 Sep 2020 13:05:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 15 Sep 2020 09:05:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 15 Sep 2020 09:05:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Alex Riesen <alexander.riesen@cetitec.com>
+Cc:     git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: sub-fetches discard --ipv4|6 option
+Message-ID: <20200915130506.GA2839276@coredump.intra.peff.net>
+References: <20200914121906.GD4705@pflmari>
+ <20200914194951.GA2819729@coredump.intra.peff.net>
+ <20200915115025.GA18984@pflmari>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ewQ5hdP4CtoTt3oD"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv9gezsr9.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+In-Reply-To: <20200915115025.GA18984@pflmari>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Sep 15, 2020 at 01:50:25PM +0200, Alex Riesen wrote:
 
---ewQ5hdP4CtoTt3oD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > So your patch above looks quite sensible (modulo useful bits like a
+> > signoff and maybe a test, though I guess the impact of those options
+> > is probably hard to cover in our tests).
+> 
+> I tried to come up with one, but (aside from rather pointless checking of
+> option presence in the trace output) failed to.
+> 
+> Or may be precisely this could be the point of the test: just do a fetch with
+> all options we intend to pass down to sub-fetches and check that they are
+> indeed present in the invocation of fetch --all/--multiple/--recurse-submodules?
 
-On 2020-09-15 at 20:31:38, Junio C Hamano wrote:
-> Han Xin <chiyutianyi@gmail.com> writes:
->=20
-> > In order to test signed atomic push, add a new test case.
-> >
-> > Reviewed-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> > ---
->=20
-> Thanks, but nowhere in the above it does not say what is being
-> tested.  By looking at 2/2 (by the way, these should be a single
-> atomic patch, not a "failure turns into success", as it is not even
-> a bug fix), readers may be able to guess that you want to enforce
-> that with even broken implementation of GPG, an immediate failure to
-> push one of the refs will be noticed by looking at their refs, but
-> it is unclear why that is even desirable---if you combine the two
-> patches, you may have a better place to argue why it is a good idea,
-> but a test-only patch makes it even less clear why the new behavior
-> expected by this test is desirable.
+Unfortunately I don't think that accomplishes much, since the main bug
+we're worried about is missing options. And it would require somebody
+adding the new options to the test, at which point you could just assume
+they would add it to add_options_to_argv().
 
-Yeah, I find myself a little confused by this, and I think maybe a more
-verbose commit message could be valuable in clearing that up.  I think
-what this series is trying to do is check that if we can tell on the
-client side that the push will be rejected, then not to invoke GnuPG to
-generate the push certificate.
+Though I guess we can automatically get the list of options these days.
+So perhaps something like:
 
-If so, that would be a nice change; after all, the user's key may
-involve a smartcard or a passphrase and avoiding needless hassle for the
-user would be desirable.  But even after reading the series, it's not
-clear to me that that _is_ what the goal is here or that this is
-necessarily the best way of going about it.  Telling us more about the
-reason for the patch would help us understand the change and why it's
-valuable better.
---=20
-brian m. carlson: Houston, Texas, US
+  subopts=
+  for opt in $(git fetch --git-completion-helper)
+  do
+        case "$opt" in
+        # options that we know do not go to sub-fetches
+        --all|--jobs|etc...)
+                ;;
+	# try/match only the positive versions
+	--no-*)
+	        ;;
+	# give a fake value for options with values
+	*=)
+                subopts="$subopts ${opt}1"
+		;;
+	# and pass through any boolean options
+	*)
+                subopts="$subopts $opt"
+		;;
+        esac
+  done
+  GIT_TRACE=$PWD/trace.out git fetch --all $subopts
+  perl -lne '
+    BEGIN { @want = @ARGV; @ARGV = () }
+    /run_command: git fetch (.*)/ and $seen{$_}++ for split(/ /, $1);
+    END { print for grep { !$seen{$_} } @want }
+  ' <trace.out -- $subopts
 
---ewQ5hdP4CtoTt3oD
-Content-Type: application/pgp-signature; name="signature.asc"
+Except that doesn't quite work, because the parent fetch will complain
+about nonsense values (e.g., --filter=1). So it would probably need a
+bit more manual intelligence to cover those options. It looks like some
+options are mutually exclusive, too (--deepen/--depth), so maybe we'd
+need to run an individual "fetch --all" for each option.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+I dunno. It's getting pretty complicated. :)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2FdqAAKCRB8DEliiIei
-gTumAP968QaneoIWUQxm3TNr4jJzL0DBXfyewoIzzkRQPgl2fwD/YrMJHwvkCk6j
-Z2Eu9BZEhYSHtDP/+PdVz1rNUT7qQQo=
-=XIPT
------END PGP SIGNATURE-----
+> > It is rather unfortunate that anybody adding new fetch options needs to
+> > remember to (maybe) add them to add_options_to_argv() themselves.
+> 
+> Maybe make add_options_to_argv to go through builtin_fetch_options[] and copy
+> the options with a special marker if they were provided?
+> And use the word "recursive" in help text as the marker :)
 
---ewQ5hdP4CtoTt3oD--
+Yeah, that would solve the duplication problem. We could probably add a
+"recursive" bit to the parse-options flag variable. Even if
+parse-options itself doesn't use it, it could be a convenience for
+callers like this one. It is a little inconvenient to set flags there,
+just because it usually means ditching our wrapper macros in favor of a
+raw struct declaration.
+
+> Sure! Thinking about it, I actually would have preferred to have both: a
+> config option and a command-line option. So that I can set --ipv4 in, say,
+> ~/.config/git/config file, but still have the option to try --ipv6 from time
+> to time to check if the network setup magically fixed itself.
+> 
+> What would the preferred name for that config option be? fetch.ipv?
+
+It looks like we've got similar options for clone/pull (which are really
+fetch under the hood of course) and push. We have the "transfer.*"
+namespace which applies to both already. So maybe "transfer.ipversion"
+or something?
+
+-Peff
