@@ -6,175 +6,117 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E1DC43461
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 697A9C2D0E3
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:16:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E13120756
-	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:06:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E2CA212CC
+	for <git@archiver.kernel.org>; Tue, 15 Sep 2020 21:16:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V6DWn10l"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QAsKI8pH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728049AbgIOVFZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 17:05:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64777 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728065AbgIOVCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Sep 2020 17:02:45 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2DAA8DC710;
-        Tue, 15 Sep 2020 17:02:40 -0400 (EDT)
+        id S1728047AbgIOVQY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 17:16:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51131 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727708AbgIOVOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Sep 2020 17:14:40 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FF3374EC9;
+        Tue, 15 Sep 2020 17:14:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TQsueLYMzLCuS5JfJONhOo8MTcI=; b=V6DWn1
-        0l7WhnpKlhkOQhDNO9TQY/1ND4DEbJJhJgWcdzfFtSsj3HlZXuIj5AcV+He6i2TT
-        Z4xlKvCa6AYr8oviY4Z/GWIYxNLXMsz8cs0/5laFzDVqjx9nNf1OxrJNxs0giGSv
-        5eOacDQyNmgvyE5R6St1aRBXWfRE2s+er9tqM=
+        :content-type:content-transfer-encoding; s=sasl; bh=QCzV14LLTnpG
+        1ashGTz85KxYsC8=; b=QAsKI8pH2plxU538eQrf33pg2cdgG6dpGyum73+JcyiS
+        DXsZK3vQ+WZXQsquTj40cKg+RzCN/ipGQuZaUqTsS+gGrH9XUv+IxDYdtYijI2+B
+        a/pKjCZ1XMbA37IIe3AI5PJ/Hv9IZuSD3hLqm1+UuOk/MpzI8kF3uVAQgiuvbfc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w5aP5w/vG83KXbpMgi9az4Z6087vsKbq
-        o02tJGvkeoDOESuxE7wjurbkLKyr/Z/ReCbbYFDQeuyi9EWijbptcWi0MFSXTNgn
-        iuB6zHq/LSZYJMCOA/0RrldfVc4aTbFNhRLdmfnQ2/II2+8CwjJGC93ur9jIBkqS
-        cYJpnXBEgDs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 259B7DC70F;
-        Tue, 15 Sep 2020 17:02:40 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=eoGHGZ
+        wxxC2Ae9J/0VWtF0w+8mUTfxLfHyVYDvvUuT8/s51DAKdMYQYhzIl70LH1O+/QPx
+        jmnLiXCpJIHDERQTv+62TPUvRKB+o+rdseqi9DcmQ4yHrDoS01vGBbFyQhOz/UOo
+        2xDXlIXfKt6SqUxwWAYg7+UPtw8hlvQqVFW7U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9682A74EC8;
+        Tue, 15 Sep 2020 17:14:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6B4B7DC70E;
-        Tue, 15 Sep 2020 17:02:37 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2416874EC6;
+        Tue, 15 Sep 2020 17:14:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Han Xin <hanxin.hx@alibaba-inc.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 2/2] send-pack: check atomic push before running GPG
-References: <20200915095827.52047-1-hanxin.hx@alibaba-inc.com>
-        <20200915095827.52047-2-hanxin.hx@alibaba-inc.com>
-Date:   Tue, 15 Sep 2020 14:02:35 -0700
-In-Reply-To: <20200915095827.52047-2-hanxin.hx@alibaba-inc.com> (Han Xin's
-        message of "Tue, 15 Sep 2020 17:58:27 +0800")
-Message-ID: <xmqqmu1qzrbo.fsf@gitster.c.googlers.com>
+To:     jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
+Cc:     git@vger.kernel.org, Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (Sep 2020, #03; Wed, 9)
+References: <xmqq4ko6twc9.fsf@gitster.c.googlers.com>
+        <85ft7ivp1t.fsf@LAPTOP-ACER-ASPIRE-F5.i-did-not-set--mail-host-address--so-tickle-me>
+Date:   Tue, 15 Sep 2020 14:14:18 -0700
+In-Reply-To: <85ft7ivp1t.fsf@LAPTOP-ACER-ASPIRE-F5.i-did-not-set--mail-host-address--so-tickle-me>
+        ("Jakub =?utf-8?Q?Nar=C4=99bski=22's?= message of "Tue, 15 Sep 2020
+ 21:05:18 +0200")
+Message-ID: <xmqqimcezqs5.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8D161CA-F796-11EA-8B13-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6B1201A0-F798-11EA-BF87-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han Xin <chiyutianyi@gmail.com> writes:
+jnareb@gmail.com (Jakub Nar=C4=99bski) writes:
 
-> Atomic push may be rejected, which makes it meanigless to generate push
-> cert first. Therefore, the push cert generation was moved after atomic
-> check.
+> Those are patches that are part of GSoC project of Shourya Shukla:
+> 'Convert submodule to builtin'.
+> ...
+> Those are patches that are part of GSoC project of Hariom Verma:
+> 'Unify ref-filter formats with other --pretty formats'
 
-The overstatement "may be rejected" is probably a bit misleading the
-readers and reviewers.  REF_STATUS_REJECT_NONFASTFORWARD may be
-observed by check_to_send_update() but the reason is set in
-set_ref_status_for_push(), which locally decides not to propose a
-no-ff ref update to the other side.  At this point of the control
-flow, the other side hasn't have a chance to reject the push,
-because "we want you to update these refs to these new values" is
-yet to be sent (it is done after composing the push certificate).
+Yes and yes.  What is your intention for highlighting that these two
+are GSoC originated projects, by the way? =20
 
-    We may decide not to push (e.g. their ref may not fast forward
-    to what we are pushing) at this point in the code.  Checking the
-    condition first will save us to ask GPG to sign the push
-    certificate, since we will not send it to the other side.
+These entries in the What's cooking report will eventually be part
+of the Release Notes, it is tempting to mention it there for
+publicity of the GSoC program (and I happen to work for OSPO that
+runs the program).
 
+But at the same time, it becomes part of the published history
+(i.e. commit log for the merge commits) and over there, I am not
+sure if we want to mention GSoC---who the changes came from and in
+what context is much less important than what the actual changes are
+while reading the history of the project, trying to understand the
+current state of the code [*1*].
 
-> -	if (!args->dry_run)
-> -		advertise_shallow_grafts_buf(&req_buf);
+> I'd like to point out that latest series of patches by Abhishek Kumar
+> which are final part of 'Implement Generation Number v2' is at what I
+> believe is next to final iteration:
 
-Why should this be moved?  It doesn't seem to have anything to do
-with the push certificate.
+Yup, I've been watching from the sideline and appreciate that you've
+given the author quite a lot of help to make the series into a good
+shape.
 
-> -
-> -	if (!args->dry_run && push_cert_nonce)
-> -		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
-> -					       cap_buf.buf, push_cert_nonce);
-> -
->  	/*
->  	 * Clear the status for each ref and see if we need to send
->  	 * the pack data.
+> Because corrected commit date offsets are not monotone, that is after
+> value that doesn't fit in 32 bits (in parent) there can be one that doe=
+s
+> (in child).  It is extremely unlikely that in real repositories there
+> would be that large corrections needed, but it can happen in theory, an=
+d
+> therfore we need some way to handle overflow if we choose this option.
+> And of course we should test that overflow handling works correctly.
 
-This "Clear the status for each ref" worries me.  
-
-The generate_push_cert() function RELIES on ref->status and filters
-out the ref that failed to pass the local check from the generated
-push certificate.  If you let the loop (post context of this hunk)
-run, ref->status will be updated by it, so the net effect of this
-patch is that it breaks "non-atomic" case that pushes multiple refs
-and one of ref fails to pass the local check.
-
-IOW, generate_push_cert() MUST be called before this loop "clears
-the status for each ref" by assigning to ref->status.
-
-> @@ -489,6 +482,13 @@ int send_pack(struct send_pack_args *args,
->  			ref->status = REF_STATUS_EXPECTING_REPORT;
->  	}
->  
-> +	if (!args->dry_run)
-> +		advertise_shallow_grafts_buf(&req_buf);
-> +
-> +	if (!args->dry_run && push_cert_nonce)
-> +		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
-> +					       cap_buf.buf, push_cert_nonce);
-> +
-
-So, this change as-is is probably a bad idea.
-
-I wonder if generate_push_cert() can be told about atomicity of the
-push, though.  There is this loop in the function:
-
-	int update_seen = 0;
-
-	...
-	for (ref = remote_refs; ref; ref = ref->next) {
-		if (check_to_send_update(ref, args) < 0)
-			continue;
-		update_seen = 1;
-		strbuf_addf(&cert, "%s %s %s\n",
-			    oid_to_hex(&ref->old_oid),
-			    oid_to_hex(&ref->new_oid),
-			    ref->name);
-	}
-	if (!update_seen)
-		goto free_return;
-
-that makes it a no-op without invoking GPG if no update is needed.
-Perhaps we can extend it to
-
-	int failure_seen = 0;
-        int update_seen = 0;
-
-	...
-	for (ref = remote_refs; ref; ref = ref->next) {
-		switch (check_to_send_update(ref, args)) {
-		case CHECK_REF_STATUS_REJECTED:
-			failure_seen = 1;
-			break;
-		case 0:
-			update_seen = 1;
-			break;
-                case REF_STATUS_UPTODATE:
-			break; /* OK */
-		default:
-			BUG("should not happen");
-		}
-		strbuf_addf(&cert, "%s %s %s\n",
-			    oid_to_hex(&ref->old_oid),
-			    oid_to_hex(&ref->new_oid),
-			    ref->name);
-	}
-	if (!update_seen || (use_atomic && failure_seen))
-		goto free_return;
-
-to make it also a no-op when any local rejection under atomic mode?
+My gut feeling is that overflow handling needs there whether the
+field is 32-bit or 64-bit.
 
 Thanks.
+
+
+[Footnote]
+
+*1* Unless you want to have more cues to notice commits by less
+    experienced contributors and want to focus more carefully while
+    bisecting the history or something like that, that is.
