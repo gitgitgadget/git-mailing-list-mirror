@@ -2,103 +2,98 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98209C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 07:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C02AC43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 08:45:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EABD2076C
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 07:27:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BC7C20872
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 08:45:27 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IgPQewiu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbgIPH14 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 03:27:56 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:40021 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726262AbgIPH1y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 03:27:54 -0400
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 1MOAFl-1k7DYw2ZOD-00OWBE; Wed, 16 Sep 2020 09:27:39 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id 3A5DB1E01E7;
-        Wed, 16 Sep 2020 07:27:39 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 1OiA4Y9E048a; Wed, 16 Sep 2020 09:27:39 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.5.94])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 009301E01E6;
-        Wed, 16 Sep 2020 09:27:38 +0200 (CEST)
-Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
-        id CCC748051F; Wed, 16 Sep 2020 09:27:38 +0200 (CEST)
-Date:   Wed, 16 Sep 2020 09:27:38 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Pass --ipv4 and --ipv6 options to sub-fetches when
- fetching multiple remotes and submodules
-Message-ID: <20200916072738.GB15595@pflmari>
-References: <20200915115025.GA18984@pflmari>
- <20200915115407.GA31786@pflmari>
- <20200915130606.GB2839276@coredump.intra.peff.net>
- <xmqqimcexsm2.fsf@gitster.c.googlers.com>
+        id S1726424AbgIPIpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 04:45:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbgIPIpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 04:45:20 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3BDEC06174A
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 01:45:19 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id i22so9180747eja.5
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 01:45:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vFwnz8My2aB1yFy0zWt3Sr/GKwI6p39MzB5DMH+JhAA=;
+        b=IgPQewiu7EpZMngg90HQd1A9ozIcMVDA9FNfWUCbzYvdzPJouPDpo2oYf7FeN6ubpR
+         SFUSAHMpvqH1GLcTxplkVLNYhHJjSSi6F/sBwVz+AO4G0LC0o7w98wIFexSD5bXCTBtp
+         HbTyh/XDW4AVMzO1yNAc017ZHtyScKuyNiLz7oSw8Sz4w52gXMyeRz8cq2xYSSJgBHIp
+         GSKRVhmds3dVwDPP3Ot2R/c3pEEkK5jRd05QMtn7t7GWnJdVl8Toosu8Gmd/OTuZKBHb
+         /lW9Nfx/O5xWe2Gl13pGYpgWnjCbQV/OhyLCZIQnkUUuT6iKhFJn9I24OpocG3zb5i1G
+         T9YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vFwnz8My2aB1yFy0zWt3Sr/GKwI6p39MzB5DMH+JhAA=;
+        b=RCod0/1aKe9E6J/y47rn28cfa9sVQYoDN0yiMAl9xgUzvjY8nXclTBB4j/ozIByCFp
+         ke+icwfTyWEAo7PpxZ4gy/y8mJMWjmo2sD/jRLfoDLEgvNuwNEH7gEsE1ixlpfogQs4E
+         5jelJ5mnoE3VlkY5xmm06d/UOybyZ85z1YVL3Ejzecx2eB66FJ0DyNLsC03GmsMgf4ak
+         FGf+8dWU3PWzshu/A5ZMIpZu0Li1fFXyzdsg0goKBUse4X/IxKmpi+oXYlP+SW6P0t9R
+         +ELkRytHhCofzzyf+v9FNxci5TvykxvPiK1vEznofk24Ot/AbGXd+IARZN4PlzHw/GUO
+         srDQ==
+X-Gm-Message-State: AOAM530lMcEQmjzEVOAlhJE/jGa21p+eXS2fqY/2gJsEw17/FgwgJdk4
+        P0vV6VDKeDADe9PP4JBf56oBAQAcPyiRvNQ8Fnk=
+X-Google-Smtp-Source: ABdhPJzojDOIUvuyFwj7IQey+5Fa7opCnmgGlcNs3uz2v3moUNSQngEHhlTiMnt/e3v/GvmMH1MEhxBzhXQasl6iGhQ=
+X-Received: by 2002:a17:906:819:: with SMTP id e25mr24901108ejd.211.1600245918241;
+ Wed, 16 Sep 2020 01:45:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqimcexsm2.fsf@gitster.c.googlers.com>
-X-Provags-ID: V03:K1:4QM1vKZqkNgRqenZ3NL2EFMB8BQ2bSwzy0318+phXKhJr4MWGs8
- pVC7/j2V0Mi5Ui3zuBJxjZdPTZaBs1CcoiqA81WvCjS4mK7wQGgOpGYE5BvqOuoHXaXplrw
- e26VjnWV/oTs7xdA6daGUXr3vXpB+DnpDxlyT1wsXcy4Q0B81DNCXXmNP/NXZYxzaKfw/NE
- 7ATy9y5Hy+AE/17MDjRyQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AW4KJjKgtK8=:xRMokQ7h/7rxPkx1vlzQP5
- r09RACqSGpKBa/T4cejva2S1ZqgthlpmrG1L7rLdLvMMnrxUeo1ffeFRI+LWA5ZuPkjK+qpic
- juk/B6zEV2s3CzGLyr3BHW7BwXwxzSC94BGdtcTEkZl76u4iXc8gOoKPEzec//JoejOIYegcc
- 6swFHayM/3iCNlJodV6IvCKcPXdj8UI+ALxHv9DmMQKcMdejUB2vyD7JRF5P5Op5gvGbKRbnF
- 7Xb0BfZcOnNdp05xLrJGfThm4mtBxbmpycZYsfCqrqZqNIu2wnQ/5MYggqbwDDpWVTvvfVLnZ
- DvCUgCCEOOavdhstohWVEgmMQnxP4k5YfuK210KX1NRQcibZFRpBQJLOawttwCilvNO+TIU3K
- LfkRWPdlClLx9SJncWYx+Q7O91f/TW0ka9Ye8ToG9j/CeqOTyCnxLGlr6h7XJWUYNg9YRwR3Z
- Q4mwrC/QjQyy88uRe1Vsp271yA7beffPM670BmlHBbQH6fpTs2VEyntutJY+zWeB3xbucm9XJ
- NMOThxkr53bl/rWPkiyaund+4meLYt5JUo/4Vi24E0FhDpDHzNUMTzAd0JLL0HdI/i3PDT7xV
- YejABfPxbRbxpeG4+KL4Xj1ppbZ1D4+x/Ig11jCn3wCSyVAGL/fqX8T5XbRvSeeWG+bpnMrvd
- QQftn1sSE5L4CSBlA4YQqZVYbPASxO14fVzbEpgCEsy5E7VjMFSXUmzHrdHqzuaRgiXDQg1iT
- deHYS8hZUONH+f3QEgY+qCppr2hqpofe3eAAt4ZHB49erxISyudG2IpLtGa7D7oF606R0R+1t
- UCY75umGq74j7Wrb8ZYOvGLVy2O5EwagPTKp3UqSqIWSqeBsKKg3kGz1szt0NqkAZBfq7MmZ+
- o/0zFfxu35yUCQPpLusg==
+References: <20200828065609.GA2105118@coredump.intra.peff.net>
+ <20200831180537.GC331156@google.com> <20200901125119.GA3250129@coredump.intra.peff.net>
+In-Reply-To: <20200901125119.GA3250129@coredump.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 16 Sep 2020 10:45:07 +0200
+Message-ID: <CAP8UFD0FGs8UNwu9i7aZt4wfr7=bOgZSVtJ9XAbSkMCY8V8fEQ@mail.gmail.com>
+Subject: Re: Git in Outreachy?
+To:     Jeff King <peff@peff.net>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Wed, Sep 16, 2020 06:17:41 +0200:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Tue, Sep 15, 2020 at 01:54:07PM +0200, Alex Riesen wrote:
-> >
-> >> The options indicate user intent for the whole fetch operation, and
-> >> ignoring them in sub-fetches is quite unexpected when, for instance,
-> >> it is intended to limit all of the communication to a specific transport
-> >> protocol for some reason.
-> >> 
-> >> Signed-off-by: Alex Riesen <alexander.riesen@cetitec.com>
-> >> ---
-> >
-> > Regardless of whether we move forward with the parse-options flag or
-> > config discussed in the other thread, I think this is an obvious
-> > improvement that we should take in the meantime.
-> 
-> Yes.  Others can wait.  ipversion configuration variable is probably
-> easier to sell; ...
+On Tue, Sep 1, 2020 at 2:51 PM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Aug 31, 2020 at 11:05:37AM -0700, Emily Shaffer wrote:
+>
+> > I'm interested in mentoring or co-mentoring this term. (I'm not working
+> > this week but I didn't want to miss a deadline to volunteer.)
+>
+> OK, between you and Christian, then, it sounds like it's worth pursuing.
+> I'll sign us up and try to arrange funding.
 
-Is its choice of namespace (transfer.) alright, too?
+Thanks for signing up and for having arranged some funding already! I
+might get further funding from GitLab too.
 
-> ... parse_options thing deserves a longer and deeper
-> thought as it will affect the API future codebase would rely on.
+> > One thought I had was whether it might be cool to shop for another
+> > co-mentor from Wireshark and have an intern teach Wireshark how to
+> > decipher Git protocol. But it seems large, and maybe last-minute for
+> > this term.
+>
+> That sounds neat. I don't think it would be too large (in fact, I think
+> it might end up being a bit small for a whole-term project). It would
+> definitely require somebody from Wireshark being a co-mentor, though.
 
-Of course.
-
-Regards,
-Alex
-
+I agree that it doesn't look too large. If it appears to be too large,
+it could be finished later either by the Outreachy intern who started
+it or by someone else like a GSoC student. Also it looks like all the
+projects will be last minute anyway.
