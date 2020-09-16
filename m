@@ -2,128 +2,134 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1879DC2BB84
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF777C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:59:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ACD65208E4
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:51:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F676208E4
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:59:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZDlkZYTd"
+	dkim=pass (1024-bit key) header.d=alibaba-inc.com header.i=@alibaba-inc.com header.b="R8Tw4kaW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727269AbgIPTvp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 15:51:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727251AbgIPRhz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:37:55 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDBDC0086BF
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 06:47:33 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id mm21so1630769pjb.4
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 06:47:33 -0700 (PDT)
+        id S1728277AbgIPT7i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 15:59:38 -0400
+Received: from out0-148.mail.aliyun.com ([140.205.0.148]:52655 "EHLO
+        out0-148.mail.aliyun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726596AbgIPRfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 13:35:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=+j/DsGa0OXakGfVB/mEOcx6WQzh+Hk4nahaqoHGizvg=;
-        b=ZDlkZYTd0FQiuylydqlVrKMlruNU6o+R8gmKXj+9LkyvQmmQOiF3NkN7Kv0lwVixSk
-         E2gvLlgCZwdyCN0dsNkR4AtPNWWznVlhyvyjzOGE42Xo+oLzegnxZqL2kOkuZtdT8wzm
-         dWIUhYoVzwSlI6wvv7QmlFcbAet1JB53C3euSX+AQcNkMZK+qKkpUtwXhmPgAUMj7mrP
-         ddPEo3jOfwW06opcMRvCeo2JKnsU0v77Rc+fJ8oigQbApzIz5HChXF4otqUfPWq+BgtC
-         h0YWTxoZAmodnZqQgsljxba04De3C9GUasKW/qQQWmMp7YrY0oEmiIzj0qTNGaKVHW76
-         B9vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=+j/DsGa0OXakGfVB/mEOcx6WQzh+Hk4nahaqoHGizvg=;
-        b=JvMZAfWxPoGFe4vvKdUpl2c2O9bzinv3V/fLlWgV8FdiTAzT+mEe2/hs6ZeTVnQHlk
-         K6V64FmGrbAjmZrVjCH3sGV/63Gk8H+eIh0qGtNnKcPoJavBaVZjJ8UCyYNTbetCzM6U
-         XFpva0ZqHMz7wevk3A40OGDpQ4QpGauD+xmW+SeYHi0qAbhICh9fiBxfxLr+LO0KZGYI
-         ljlgCzpPomF4LBHljQnIFxJ1gmG2WMb//zYnu+hR5f+prqpMREAx8yPUXmwBpQDghX4T
-         iwYXpf8NWAEMsI8Tz+UPGzZFbiUcU92dRZGc0O7hwYEcx2CNV50Rg+AfEX8tvg/qsrLj
-         t9TA==
-X-Gm-Message-State: AOAM530hTVjRv/tUxs00OcMcs37tSlXgWmzN3UKdDTbDabuHLP8KsnYb
-        WMTpEIolrpbHUbwpfqTAhZs=
-X-Google-Smtp-Source: ABdhPJx/saujDO3JaBnrXTglxieC23F68ygYcd3e0tgljMM5Vt224qq2HpRMV0/cGJYH94p9Np7Kkg==
-X-Received: by 2002:a17:902:b718:b029:d0:92cc:a449 with SMTP id d24-20020a170902b718b02900d092cca449mr23725043pls.9.1600264053341;
-        Wed, 16 Sep 2020 06:47:33 -0700 (PDT)
-Received: from localhost ([2402:800:63a8:edfa:1ca8:8e9c:e6de:6bb2])
-        by smtp.gmail.com with ESMTPSA id r3sm16977428pfh.88.2020.09.16.06.47.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 06:47:32 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 20:47:30 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>
-Subject: Re: [PATCH 03/15] remote-mediawiki doc: bump recommended PHP version
- to 7.3
-Message-ID: <20200916134730.GA10150@danh.dev>
-References: <20200916102918.29805-1-avarab@gmail.com>
- <20200916102918.29805-4-avarab@gmail.com>
+        d=alibaba-inc.com; s=default;
+        t=1600277706; h=Subject:From:Message-ID:Date:MIME-Version:Content-Type;
+        bh=tCViVwE7V8tHH/vANRq+ZxTjZU9jw8Ojm6xLuwsUNyM=;
+        b=R8Tw4kaWGJ4VJYCqJwhL5p9hvtJkz7XAqhra2zkQLMkxTI0CS8sdnUgd1QWtffp98/T16Q3UE52a6FkjJju94lwi66WENitxULBUGOkDRiCC4Fq4/NP3dCZDXE8p0L3OySfRD9CkDpVIPc+pQZX6JUrsr9Ntu/q2kEuetbM2Z6o=
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R131e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e02c03294;MF=hanxin.hx@alibaba-inc.com;NM=1;PH=DS;RN=1;SR=0;TI=SMTPD_---.IXvQe0L_1600277706;
+Received: from chitiandeMacBook-Pro-3.local(mailfrom:hanxin.hx@alibaba-inc.com fp:SMTPD_---.IXvQe0L_1600277706)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Thu, 17 Sep 2020 01:35:06 +0800
+Subject: Re: [PATCH 2/2] send-pack: check atomic push before running GPG
+References: <20200915095827.52047-1-hanxin.hx@alibaba-inc.com>
+ <20200915095827.52047-2-hanxin.hx@alibaba-inc.com>
+ <xmqqmu1qzrbo.fsf@gitster.c.googlers.com>
+ <CANYiYbHYi70ZcjDTyQ++_+njuZMF=TksPepH+wP+zNmhBABNAg@mail.gmail.com>
+ <xmqqeen2xrok.fsf@gitster.c.googlers.com>
+Cc:     Git List <git@vger.kernel.org>
+From:   "=?UTF-8?B?6Z+p5qyjKOeCveWkqSk=?=" <hanxin.hx@alibaba-inc.com>
+Message-ID: <c1af693a-b861-6b37-96a6-9d121a3a3f99@alibaba-inc.com>
+Date:   Thu, 17 Sep 2020 01:35:05 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <xmqqeen2xrok.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200916102918.29805-4-avarab@gmail.com>
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-09-16 12:29:06+0200, √Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com> wrote:
-> Change the version in the documentation to what's currently in Debian
-> stable. Ideally we wouldn't have to keep changing this version, but if
-> it's going to be hardcoded let's use something that works on a modern
-> installation.
-> 
-> Signed-off-by: √Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com>
-> ---
->  contrib/mw-to-git/t/README | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/contrib/mw-to-git/t/README b/contrib/mw-to-git/t/README
-> index 2ee34be7e4..d9c85e2c63 100644
-> --- a/contrib/mw-to-git/t/README
-> +++ b/contrib/mw-to-git/t/README
-> @@ -14,11 +14,11 @@ install the following packages (Debian/Ubuntu names, may need to be
->  adapted for another distribution):
->  
->  * lighttpd
-> -* php5
-> -* php5-cgi
-> -* php5-cli
-> -* php5-curl
-> -* php5-sqlite
-> +* php7.3
-> +* php7.3-cgi
-> +* php7.3-cli
-> +* php7.3-curl
-> +* php7.3-sqlite
 
-Debian also provides meta package for those packages, built from
-php-defaults [1]:
+‘⁄ 2020/9/16 œ¬ŒÁ12:37, Junio C Hamano –¥µ¿:
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+>>>> -
+>>>> -     if (!args->dry_run && push_cert_nonce)
+>>>> -             cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
+>>>> -                                            cap_buf.buf, push_cert_nonce);
+>>>> -
+>>>>        /*
+>>>>         * Clear the status for each ref and see if we need to send
+>>>>         * the pack data.
+>>> This "Clear the status for each ref" worries me.
+>>>
+>>> The generate_push_cert() function RELIES on ref->status and filters
+>>> out the ref that failed to pass the local check from the generated
+>>> push certificate.  If you let the loop (post context of this hunk)
+>>> run, ref->status will be updated by it, so the net effect of this
+>>> patch is that it breaks "non-atomic" case that pushes multiple refs
+>>> and one of ref fails to pass the local check.
+>>>
+>>> IOW, generate_push_cert() MUST be called before this loop "clears
+>>> the status for each ref" by assigning to ref->status.
+>> The next block ("Finally, tell the other end!") is what we send
+>> commands to "receive-pack", right after some of the status are reset
+>> to REF_STATUS_OK or REF_STATUS_EXPECTING_REPORT by this chunk of code.
+>> So moving the generate_push_cert() part right before the "Finally,
+>> tell the other end!" part LGTM.
+> Sorry, I do not follow.  The loop in question is the one before
+> "Finally tell the other end".  The loop ends like so:
+>
+> 	for (ref = remote_refs; ref; ref = ref->next) {
+> 		...
+> 		if (args->dry_run || !status_report)
+> 			ref->status = REF_STATUS_OK;
+> 		else
+> 			ref->status = REF_STATUS_EXPECTING_REPORT;
+> 	}
+>
+> and the patch moves a call to generate_push_cert() that looks at
+> remote_refs _after_ this loop, but generate_push_cert() function
+> uses a loop over remote_refs that uses check_to_send_update(), which
+> looks at ref->status's value to decide what to do.  Its correct
+> operation relies on ref->status NOT updated by the above loop.
+>
+> The loop prepares the status field so that we can then read and
+> record the response against each ref updates from the other side.
+>
+> The ref->status field is set to EXPECTING_REPORT, later to be
+> updated to REF_STATUS_OK or REF_STATUS_REMOTE_REJECT.  We can
+> clobber the original value of ref->status at this point only because
+> the loop depends on the fact that no check_to_send_update() call
+> will happen after the loop (because the ref->status field the
+> helper's operation depends on is already reset for the next phase of
+> operation).  The patch that moves generate_push_cert() call below
+> the loop, whether it is before or after the "Finally tell the other
+> end" loop, is therefore fundamentally broken, isn't it?
+>
+> I do not think it would introduce such breakage if we teach
+> generate_push_cert() to pay attention to the atomicity, and that can
+> be done without reordering the calls in send_pack() to break the
+> control flow.
 
-* php
-* php-cgi
-* php-cli
-* php-curl
-* php-sqlite3
+Thank you for your reply. These loops here really confuse me at first.
 
-They'll pull current php7.3-* packages as dependencies.
+But I found that the main effect of "Clear the status for each ref and
+see if we need to send the pack data" is to help us do a pre-check on
+the client side whether the push should be rejected. When the reference
+should be pushed, whether the status was changed to REF_STATUS_OK or
+REF_STATUS_EXPECTING_REPORT, it does not seem to affect the result of
+function generate_push_cert(). check_to_send_update() in
+generate_push_cert() only filters out references that needn't to be pushed.
 
-1: https://packages.debian.org/source/buster/php-defaults
+Just like brian m. carlson said, "that would be a nice change; after
+all, the user's key may involve a smartcard or a passphrase and avoiding
+needless hassle for the user would be desirable". It increase the
+perforcemance a little bit for failed atomic push and make it clear that
+client side requirements and the other side requirements.
 
--- 
-Danh
+If there is something wrong with my understanding, I am very grateful
+\that you can help me point out the problems.
