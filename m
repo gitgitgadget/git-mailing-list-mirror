@@ -2,150 +2,92 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 074A8C35257
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C54C3C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:47:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADD30206BE
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:47:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NQJxPxeS"
+	by mail.kernel.org (Postfix) with ESMTP id 7B5E920770
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728520AbgIPUrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 16:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726707AbgIPRBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:01:23 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A19A7C0073F2
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 07:04:10 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z18so1501116pfg.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 07:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Ue3/Ibk7EXHjW+9w4j0DgFsER9TmHC5GA0fZ632QJrw=;
-        b=NQJxPxeSaO5jIL/La/doAAqFCuvZt7ILeW6VHIEunvBTuqGPdFGGlfw+cX5UkbTOp7
-         3/W+CXONDFBLuiE2SoXaLKrLwqTftS5Cl+Mqb7RVFyEaK+gb4tnzYK0FPtP/3Y5tw/xv
-         bxKWYNem3ja0DEUhhPg2BjWejIRFNR84NuTibdY9tI1lhn6EIITx/yUh+cZf1XnBTlUM
-         tDTWHybMVGlj3+fg7x+e7ckI5pXdCqpicm7ZHW7EDUAYEahTU2OdT0OThTKnWfo7T8Ue
-         pxm1rHeCpTJpmddRcXwkV+UcaxwxeCoYEPOV+LJwbOYVOqVmxxLkZgIkyEHp1khgkL1I
-         mcGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Ue3/Ibk7EXHjW+9w4j0DgFsER9TmHC5GA0fZ632QJrw=;
-        b=fqvsWy+5FSevhUaU2ICutCcX6lYEhG3Ywgkl6shl87FQaQLfmKIfblLSMEsm7b8uXm
-         yeWGcWXu9pJMZu6mq+h8QRWcwZsoaWPTjFpURhqhFAQYdB5kEPlQp16ZPa9IK7PSMKeO
-         RFaTu6u7Lja2KIYN2XDc0NZRDGlit3/1tjT2cshIi9Ne/v5ig85SQLWPNptcVcZ0I9Np
-         9mpI3GwxqidLpTlbPCTTuH6UHFpLW+CCnuy9cVLa5+37m4ji6YRv8xwtrmtc0p3ar1tG
-         sS/F4tcyayiY06JIQNeSvhwPamdkXyZOMYld3OwuCapOPN/lYqb+r+PeqMyV0QAXnF9l
-         4M9Q==
-X-Gm-Message-State: AOAM532x6+FtKLAJRObWPYWZoePSbNYyEHptYLF79tVX2aobgEA5iNo0
-        VL/vjkhXVqjXk2lvm/QL/t4=
-X-Google-Smtp-Source: ABdhPJzTaIae/BO+FbKyli8dkf1yBMaeA97YFrUs/9FpSCwUYmA5SN72BFY9F+JO8XEH+4/Ui9TK5Q==
-X-Received: by 2002:a63:f53:: with SMTP id 19mr18791780pgp.26.1600265050210;
-        Wed, 16 Sep 2020 07:04:10 -0700 (PDT)
-Received: from localhost ([2402:800:63a8:edfa:1ca8:8e9c:e6de:6bb2])
-        by smtp.gmail.com with ESMTPSA id y24sm17603405pfn.161.2020.09.16.07.04.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 07:04:09 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 21:04:07 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>
-Subject: Re: [PATCH 07/15] remote-mediawiki tests: guard test_cmp with
- test_path_is_file
-Message-ID: <20200916140407.GB10150@danh.dev>
-References: <20200916102918.29805-1-avarab@gmail.com>
- <20200916102918.29805-8-avarab@gmail.com>
+        id S1728464AbgIPUri (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 16:47:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58410 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726700AbgIPRBU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 13:01:20 -0400
+Received: (qmail 24799 invoked by uid 109); 16 Sep 2020 16:34:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 16 Sep 2020 16:34:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29552 invoked by uid 111); 16 Sep 2020 16:34:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Sep 2020 12:34:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 16 Sep 2020 12:34:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Riesen <alexander.riesen@cetitec.com>, git@vger.kernel.org,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: sub-fetches discard --ipv4|6 option
+Message-ID: <20200916163427.GB17726@coredump.intra.peff.net>
+References: <20200914121906.GD4705@pflmari>
+ <20200914194951.GA2819729@coredump.intra.peff.net>
+ <20200915115025.GA18984@pflmari>
+ <20200915130506.GA2839276@coredump.intra.peff.net>
+ <20200915140613.GB18984@pflmari>
+ <20200915152730.GA2853972@coredump.intra.peff.net>
+ <xmqq4kny2461.fsf@gitster.c.googlers.com>
+ <20200915212338.GA2868700@coredump.intra.peff.net>
+ <xmqqa6xqzpx9.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200916102918.29805-8-avarab@gmail.com>
+In-Reply-To: <xmqqa6xqzpx9.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-09-16 12:29:10+0200, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Change a test that used a plain test_cmp to first check the file(s)
-> using test_path_is_file. If some of these file(s) don't exist (as
-> happened to me during debugging), test_cmp will emit a way less useful
-> message about the failure.
+On Tue, Sep 15, 2020 at 02:32:50PM -0700, Junio C Hamano wrote:
 
-IIRC, <20200809174209.15466-1-sunshine@sunshineco.com> was meant to
-solve this problem.
-
-The version you're using (v2.28.0-297-g1956fa8f8d) should have it
-integrated already. The test should barf with:
-
-	error: bug in the test script: test_cmp '<file-name>' missing
-
-Am I missed anything?
-
--- 
-Danh
-
+> Jeff King <peff@peff.net> writes:
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh | 7 +++++++
->  1 file changed, 7 insertions(+)
+> > So I think the best you could do is:
+> >
+> >   1. Keep two separate option lists, "parent" and "child". The parent
+> >      list has "--all" in it. The child list has stuff like "--ipv6".
+> >
+> >   2. Parse using the parent list with PARSE_OPT_KEEP_UNKNOWN. That lets
+> >      you decide whether we're in a mode that is spawning child fetch
+> >      processes.
 > 
-> diff --git a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-> index 43580af3cf..d3de6c204a 100755
-> --- a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-> +++ b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-> @@ -52,9 +52,13 @@ test_expect_success 'git clone works on previously created wiki with media files
->  	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
->  	git clone -c remote.origin.mediaimport=true \
->  		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
-> +	test_path_is_file mw_dir_clone/Foo.txt &&
-> +	test_path_is_file mw_dir/Foo.txt &&
->  	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt &&
->  	(cd mw_dir_clone && git checkout HEAD^) &&
->  	(cd mw_dir && git checkout HEAD^) &&
-> +	test_path_is_file mw_dir_clone/Foo.txt &&
-> +	test_path_is_file mw_dir/Foo.txt &&
->  	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt
->  '
->  
-> @@ -74,6 +78,8 @@ test_expect_success 'git clone works on previously created wiki with media files
->  	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
->  	git clone -c remote.origin.mediaimport=true \
->  		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
-> +	test_path_is_file mw_dir_clone/Bar.txt &&
-> +	test_path_is_file mw_dir/Bar.txt &&
->  	test_cmp mw_dir_clone/Bar.txt mw_dir/Bar.txt
->  '
->  
-> @@ -90,6 +96,7 @@ test_expect_success 'git push & pull work with locally renamed media files' '
->  		git commit -m "Rename a file" &&
->  		test_git_reimport &&
->  		echo "A File" >expect &&
-> +		test_path_is_file Bar.txt &&
->  		test_cmp expect Bar.txt &&
->  		test_path_is_missing Foo.txt
->  	)
-> -- 
-> 2.28.0.297.g1956fa8f8d
-> 
+> Hmph, I vaguely recall discussion about cascading options[] list but
+> do not find anything that may be involved in an implementation like
+> that in <parse-options.h>.  I agree that neither of the above is so
+> attractive.
 
--- 
-Danh
+I think we just use KEEP_UNKNOWN in those cases and ignore any downsides
+to it.
+
+> > I guess parse-options could provide a MAYBE_PASSTHRU flag. On the first
+> > parse_options() call, it would skip over any such options, leaving them
+> > in argv. On the second, the caller would tell it to actually parse them.
+> 
+> Or calling it USR1, which is a good way to make it crystal clear
+> that parse_options() API does not do anything to it.  The code like
+> "builtin/fetch.c" can locally give it a more meaningful name with
+> "#define PARSE_OPT_RECURSIVE PARSE_OPT_USR1". if recursive is the
+> appropriate name for the bit in the context of the options[] array.
+
+Ah, that's a good suggestion. My earlier "USER" suggestion was
+tongue-in-cheek, because I think it makes the resulting options list
+quite confusing.  But a local #define fixes that nicely.
+
+That said, it sounds from the other part of the thread like we'll need
+better parse-options support anyway, so this "noop flag bit" idea
+probably isn't a good direction anyway.
+
+-Peff
