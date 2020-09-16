@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7486C433E2
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C4E9C433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:29:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DBDB22241
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:24:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A751206E6
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:29:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fnk+Q2f7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PSexiwTh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727330AbgIPMWK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 08:22:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51574 "EHLO
+        id S1727277AbgIPMQh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 08:16:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726847AbgIPKcf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726848AbgIPKcf (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Sep 2020 06:32:35 -0400
 Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1638C061356
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id w2so2247994wmi.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1205BC061354
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:08 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id z9so2437446wmk.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=k7Y9sPiZ1Y8YmAdku6q80S+Hjg5mNS1POXOalY8tmXM=;
-        b=Fnk+Q2f7Iub+oGuha+WbOREJ+p463sQ3eRzkyOjZB7r6vvZJJWNaerF4Y/MVIn0ND3
-         cg3mkEfsvPukNHjzyWiEWqHYUgDL5AbUzPvmb/8SSWKZkQfiZgQHQt+S3rnuBoXuHwfK
-         BTmALF0rEmAoB5ubloUNke8+K0b6vmIrJwFKc/DndkXczP192hggfJvAgbBoTWkGoUY3
-         7XJUMvpS8u7pqC+I3VLnWoWZiExp2/DeDIo15BZbYTG99m0BH4lq9pbDmcoLaAlOie2C
-         qGvvDmq+czFRQ1O5JJWKl7ngxOTdIKqLFCtNinDk1tTzGfATlqxzdWy0iKbbityAQrwY
-         SFjQ==
+        bh=Cd6/zFkuzEN+RpX+5ogLFAjdj11/CmyNG1Rma0NhE6Q=;
+        b=PSexiwThBLA3KDNQ3xN0xQ1B68bAKS44RIi0Tc3uIkpViCtwUppwHjgIYPMKyRyFHs
+         5qVm6Jz0hXS5uEL15pgJTDKDnu2rraFapW6YuwKmUT0mf0DYIj3YxV7IqOsLNd6ULr/1
+         JDDZtn5gTwFsbEmzNUJrzlD0wrEikv+JLOr49BB0DfXwGAu0+bJ8189feD3AVRof/l97
+         iqZkZnLAx9D1DlvEsgng5RcDNLbCO290Nn0WSUkWK8HHGjyQ0h0wtbB6ijZH8Qdft+OU
+         +/0HhzYzKiNTsrVyCV5WJBU2WC2psSxIas7vgGAY8GDRhRZE2t1JFWTY7zh+hqJ+tUN8
+         PLWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=k7Y9sPiZ1Y8YmAdku6q80S+Hjg5mNS1POXOalY8tmXM=;
-        b=AR9bBtp3rH0lnSaDn/4K6kVthkqgEShpnBzJpmQJewclsBmba3FwMxy/jisP2cu+zl
-         JVSmW+zi+xqxfxrlVS7G6iq/JCoJCmv0KkuBFaEQ07cIGLySApHuUMnbu1feRMBtoocJ
-         Nn2dmEJmGobyKK0c5DGJdoAC8FmfSPGwq4uXEBcvAsB8ovqLpYJsPpvwbHUuVf3/A0c4
-         3D3rBCXhAbeLplnghS7lPjjmKqtReQl/2y83Hf1KtXU2CMOvCISiF1kB1ooS78Gu2jlh
-         xo5/AYH4Wmd8YSa3NsIA55r2Ta3ZOnqoliqfllwD3V7+YgHxUdM/6fPFZXvA2BpGkatW
-         3xvw==
-X-Gm-Message-State: AOAM531Pz/7EU5BjqxhpQlOJk8aJuf8aJYn7qnNDaQOsGFxVw1ZM8Q4G
-        EqAEOTA/Hb1KmbGVR+sdjKkxuQXowMw4EyBe
-X-Google-Smtp-Source: ABdhPJzq3UI0zTf0birCnM7gyo5Tm8N0wIcW/tN7qs/a7YGGcUeoB3KnaUo0GzSame9B9jLlvBN0Lg==
-X-Received: by 2002:a1c:bdd4:: with SMTP id n203mr3912650wmf.119.1600252208344;
-        Wed, 16 Sep 2020 03:30:08 -0700 (PDT)
+        bh=Cd6/zFkuzEN+RpX+5ogLFAjdj11/CmyNG1Rma0NhE6Q=;
+        b=VcmmsNopFALF95MQ3CnVd0sh7OyEpIMp3SV4fY6VxcCsMelHQ0JyrBr66u6IXeyPcb
+         J6JAdALN5khoj071AEyC0GKaMjvcQwBXavjXvSsM2CxQ5ffPhCyPIk8tCfdR54y7B9Ac
+         lMERSkSnA38gPd3dQsWzE0r9wunWgy3vaW+Y8A9rKUeIOxa5FNoZZHXwDkVZkIOhPde6
+         RL/WQaiawbPbkWDkvCYoasnrSpRxZI51pXVAWUWbK3CITj57Q7bDS1REmJeTY4rz31RH
+         BkPDVqfcZT8eeiKDO/wRHz/e+ikNsqs5DYvLLCpHIvU7w4Sa8hKbvMHVQxS1GbXEkqSp
+         hyjQ==
+X-Gm-Message-State: AOAM530GWo6RqItURPelVf21uiG3/1EurUuzCYUjd1AQ569Uio2FUsL9
+        8sqQqeW8ZO8i7tsjFGy/IM3O+DRH1Zj52fFM
+X-Google-Smtp-Source: ABdhPJxCRRUBRyTRMnCXQwYt5/WpkZBtUsaxNan2pQaWzK3c8MnZsLVlQNyTGqdpxzQaPDebCmJioA==
+X-Received: by 2002:a7b:cd06:: with SMTP id f6mr4167025wmj.66.1600252206422;
+        Wed, 16 Sep 2020 03:30:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.07
+        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 03:30:07 -0700 (PDT)
+        Wed, 16 Sep 2020 03:30:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Simon Legner <Simon.Legner@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 09/15] remote-mediawiki tests: use "$dir/" instead of "$dir."
-Date:   Wed, 16 Sep 2020 12:29:12 +0200
-Message-Id: <20200916102918.29805-10-avarab@gmail.com>
+Subject: [PATCH 07/15] remote-mediawiki tests: guard test_cmp with test_path_is_file
+Date:   Wed, 16 Sep 2020 12:29:10 +0200
+Message-Id: <20200916102918.29805-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
 In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
 References: <20200916102918.29805-1-avarab@gmail.com>
@@ -82,31 +82,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change UI messages to use "$dir/" instead of "$dir.". I think this is
-less confusing.
+Change a test that used a plain test_cmp to first check the file(s)
+using test_path_is_file. If some of these file(s) don't exist (as
+happened to me during debugging), test_cmp will emit a way less useful
+message about the failure.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/mw-to-git/t/test-gitmw-lib.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
-index a466be8f3f..aa04ebfd0f 100755
---- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-+++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-@@ -343,10 +343,10 @@ wiki_install () {
- 			"http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/"\
- 			"$MW_FILENAME. "\
- 			"Please fix your connection and launch the script again."
--		echo "$MW_FILENAME downloaded in $(pwd). "\
-+		echo "$MW_FILENAME downloaded in $(pwd)/ "\
- 			"You can delete it later if you want."
- 	else
--		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)."
-+		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)/"
- 	fi
- 	archive_abs_path=$(pwd)/$MW_FILENAME
- 	cd "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
+diff --git a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
+index 43580af3cf..d3de6c204a 100755
+--- a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
++++ b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
+@@ -52,9 +52,13 @@ test_expect_success 'git clone works on previously created wiki with media files
+ 	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
+ 	git clone -c remote.origin.mediaimport=true \
+ 		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
++	test_path_is_file mw_dir_clone/Foo.txt &&
++	test_path_is_file mw_dir/Foo.txt &&
+ 	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt &&
+ 	(cd mw_dir_clone && git checkout HEAD^) &&
+ 	(cd mw_dir && git checkout HEAD^) &&
++	test_path_is_file mw_dir_clone/Foo.txt &&
++	test_path_is_file mw_dir/Foo.txt &&
+ 	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt
+ '
+ 
+@@ -74,6 +78,8 @@ test_expect_success 'git clone works on previously created wiki with media files
+ 	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
+ 	git clone -c remote.origin.mediaimport=true \
+ 		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
++	test_path_is_file mw_dir_clone/Bar.txt &&
++	test_path_is_file mw_dir/Bar.txt &&
+ 	test_cmp mw_dir_clone/Bar.txt mw_dir/Bar.txt
+ '
+ 
+@@ -90,6 +96,7 @@ test_expect_success 'git push & pull work with locally renamed media files' '
+ 		git commit -m "Rename a file" &&
+ 		test_git_reimport &&
+ 		echo "A File" >expect &&
++		test_path_is_file Bar.txt &&
+ 		test_cmp expect Bar.txt &&
+ 		test_path_is_missing Foo.txt
+ 	)
 -- 
 2.28.0.297.g1956fa8f8d
 
