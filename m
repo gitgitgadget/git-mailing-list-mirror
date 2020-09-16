@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E1B1C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE5DDC433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:08:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C005520872
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:07:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B36220872
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:08:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="aYAHFVSK"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="lFOmhV+X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727727AbgIPSHz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 14:07:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38708 "EHLO
+        id S1727732AbgIPSH6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 14:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727750AbgIPSHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:07:05 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2A7C061756
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:07:04 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id v54so6844232qtj.7
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:07:04 -0700 (PDT)
+        with ESMTP id S1727711AbgIPSHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 14:07:00 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 654C7C06174A
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:06:58 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id b2so2150296qtp.8
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=KY5DLSiAztKca4b5UTZ+e54C1v4rWfLhOel86owC76U=;
-        b=aYAHFVSKs7GyaxIIptbYUQl5i9cwwW3LQwLyrVC5viZZYYwwLpagoaA9jJZtxRK3Wm
-         95BJcIFvS9QYEQsB+W9SMAZRXCIJhG8HRBE1wA2x3KzSxyj1mjemwuYhr+KZLhzauc9c
-         DVAe8ewicsYunzhLC4g2Uw/BXaEmsSc6d0LAEzH2NyXeUyJSi27i2hYVdnH+KKG3WU2X
-         IGLVTRKfOI11HVl6XNybig2nQjvaSi32Xp8c/g/puW41lt5lFhj0q86il78D4lrzkDKx
-         7DQgfZjUZG+JhV1S1QMmEA1frvRKSZqVZ53QOLw8OjdXYYcvItX0zy2IUues0Cm+t8/F
-         o3Rg==
+        bh=jAM80tVqXQyi4vtnlYH1l5eYEy92OHVb3Eyr7kkfQTQ=;
+        b=lFOmhV+XUpFGVwb+yY13p4KU98TlGU8Wz5MHG3/2VM/1mmhVPaqggdlBwbiYQKypAj
+         yweLWWvkrxAVwlJes8PSwPC5L+nIfhbTnfGcXW+mrWefBIrwJRjjUfAwWA+iDrxj0G+1
+         TB3+azHpCyyD9ZymmGc2B12PUQS3usffeoMWTPslS/a1StJy1TwpPwAKnfTJ+mXRCHZ3
+         zNA73GX7yQsGFkpXzjNrJxkBtdtFIbb9mFsDeqtDQabgatL8kYDDibYFZMzygmpP7N9Q
+         LAUmRmJckbNNUNOU8raliLACSsrlFNXVZpgic+tmC2CWx7avpjpx4av2xVesG1VRKhcB
+         /wkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KY5DLSiAztKca4b5UTZ+e54C1v4rWfLhOel86owC76U=;
-        b=qO8rPHa/edTdEKB7e1G8LPIziXeOWghnPAyZuA6HUToKvuuqutfULpTHr+UuDgWP0Q
-         pIIPObsf821lUjGPnUv2DXVRRMJa2I6VL+r588KVtwUu41LvqNVNIjbVQE05BEZkh+FV
-         dyBR/ZaCcddJKlDy2mPzgXYG2JbixeCX7F5VO69KX+UlkMvdOWxc7pmOQd4qoN6vz0pr
-         nirpRRuXWxPtvFYhs0lg5Z8G+e6yz/qIvYTS2S3Mbsw1he8hRGNswg5B+mYqYiU+wd7z
-         oUEokDAJaCDxagJUsGK8woPan1uNPftld1V3dz0VPAheu/mOf6EKhTChM/mnkqYGutZl
-         87Yw==
-X-Gm-Message-State: AOAM532iJhrr/x6IaSCC4SbKGYhx9b1ird/Nct5he1hOpSSpD2zl0G+Y
-        cn9HEItwh5m99OJTBCMcass2USUmpWvhnDXe
-X-Google-Smtp-Source: ABdhPJx0HCAghc4i1KGZh1nUZurkDteO8aFvPi4vHl+UnTXIfPg1ft0eJjUGbGYn44OtOBEc/Pe0YQ==
-X-Received: by 2002:ac8:568f:: with SMTP id h15mr12082071qta.232.1600279623141;
-        Wed, 16 Sep 2020 11:07:03 -0700 (PDT)
+        bh=jAM80tVqXQyi4vtnlYH1l5eYEy92OHVb3Eyr7kkfQTQ=;
+        b=FDpcP5E47EnMaax6JQ4wl/unOxfrj/126b4vdLrvJ+nwrVdU+Qz2ZyL5xoutJqSRxO
+         Tvg6mo1Uf9n6HXnVPvnJUv55BYnfoVnEf2mL0aRviADdF55iAT16dVuc+hCG8v29jaBQ
+         uqXD7KcGVOeRcw6J2NAxL+a4PEktyoXnNXtNyMM1dc3Ur1RuO1Itmxf2XJjyia7FuDSP
+         fZJ3Z7j+dVXlh6UUpZ48apJY7qMTjmOF5VzwP/j60LonGotQNpXuFPqWUxsAllDl5CBa
+         /3mTUueepqAg2KUEn+PZm5EiGGqCltuOLZXjjyJNMF3SrbdMsFAgoik1RtzF4+iRq739
+         vlSg==
+X-Gm-Message-State: AOAM531mzf8cO+2X2m6+mW7WnuWgRpWNFcvep49s9s+rKKHSPYD+PcFs
+        dTOIiokQQjPOXgMieLp+1qUdkTfPqCybX/7M
+X-Google-Smtp-Source: ABdhPJycGp6BN0rjFPvE/gTf3oM+TKYao5QY8HpnEMkonyDyJDNxIs1JxQ7MYGwhRzTEAcuqlpd5qQ==
+X-Received: by 2002:ac8:3175:: with SMTP id h50mr23748302qtb.185.1600279616472;
+        Wed, 16 Sep 2020 11:06:56 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:e86e:6adf:7537:ae24])
-        by smtp.gmail.com with ESMTPSA id s47sm20431310qtb.13.2020.09.16.11.07.02
+        by smtp.gmail.com with ESMTPSA id m24sm11209523qtn.59.2020.09.16.11.06.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 11:07:02 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 14:07:00 -0400
+        Wed, 16 Sep 2020 11:06:55 -0700 (PDT)
+Date:   Wed, 16 Sep 2020 14:06:53 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         szeder.dev@gmail.com
-Subject: [PATCH v2 02/13] t4216: use an '&&'-chain
-Message-ID: <677b2f1692b3b6dca8695e415fdb11b320b0a432.1600279373.git.me@ttaylorr.com>
+Subject: [PATCH v2 01/13] commit-graph: introduce
+ 'get_bloom_filter_settings()'
+Message-ID: <db305fe3d698f297f1d3359516f5e5d18627adbe.1600279373.git.me@ttaylorr.com>
 References: <cover.1599664389.git.me@ttaylorr.com>
  <cover.1600279373.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,40 +76,202 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a759bfa9ee (t4216: add end to end tests for git log with Bloom
-filters, 2020-04-06), a 'rm' invocation was added without a
-corresponding '&&' chain.
+Many places in the code often need a pointer to the commit-graph's
+'struct bloom_filter_settings', in which case they often take the value
+from the top-most commit-graph.
 
-When 'trace.perf' already exists, everything works fine. However, the
-function can be executed without 'trace.perf' on disk (eg., when the
-subset of tests run is altered with '--run'), and so the bare 'rm'
-complains about a missing file.
+In the non-split case, this works as expected. In the split case,
+however, things get a little tricky. Not all layers in a chain of
+incremental commit-graphs are required to themselves have Bloom data,
+and so whether or not some part of the code uses Bloom filters depends
+entirely on whether or not the top-most level of the commit-graph chain
+has Bloom filters.
 
-To remove some noise from the test log, invoke 'rm' with '-f', at which
-point it is sensible to place the 'rm -f' in an '&&'-chain, which is
-both (1) our usual style, and (2) avoids a broken chain in the future if
-more commands are added at the beginning of the function.
+This has been the behavior since Bloom filters were introduced, and has
+been codified into the tests since a759bfa9ee (t4216: add end to end
+tests for git log with Bloom filters, 2020-04-06). In fact, t4216.130
+requires that Bloom filters are not used in exactly the case described
+earlier.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Jeff King <peff@peff.net>
+There is no reason that this needs to be the case, since it is perfectly
+valid for commits in an earlier layer to have Bloom filters when commits
+in a newer layer do not.
+
+Since Bloom settings are guaranteed in practice to be the same for any
+layer in a chain that has Bloom data, it is sufficient to traverse the
+'->base_graph' pointer until either (1) a non-null 'struct
+bloom_filter_settings *' is found, or (2) until we are at the root of
+the commit-graph chain.
+
+Introduce a 'get_bloom_filter_settings()' function that does just this,
+and use it instead of purely dereferencing the top-most graph's
+'->bloom_filter_settings' pointer.
+
+While we're at it, add an additional test in t5324 to guard against code
+in the commit-graph writing machinery that doesn't correctly handle a
+NULL 'struct bloom_filter *'.
+
+Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t4216-log-bloom.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ blame.c                       |  6 ++++--
+ bloom.c                       |  6 +++---
+ commit-graph.c                | 11 +++++++++++
+ commit-graph.h                |  2 ++
+ revision.c                    |  5 +----
+ t/t4216-log-bloom.sh          |  9 ++++++---
+ t/t5324-split-commit-graph.sh | 13 +++++++++++++
+ 7 files changed, 40 insertions(+), 12 deletions(-)
 
+diff --git a/blame.c b/blame.c
+index 1be1cd82a2..903e23af23 100644
+--- a/blame.c
++++ b/blame.c
+@@ -2892,16 +2892,18 @@ void setup_blame_bloom_data(struct blame_scoreboard *sb,
+ 			    const char *path)
+ {
+ 	struct blame_bloom_data *bd;
++	struct bloom_filter_settings *bs;
+ 
+ 	if (!sb->repo->objects->commit_graph)
+ 		return;
+ 
+-	if (!sb->repo->objects->commit_graph->bloom_filter_settings)
++	bs = get_bloom_filter_settings(sb->repo);
++	if (!bs)
+ 		return;
+ 
+ 	bd = xmalloc(sizeof(struct blame_bloom_data));
+ 
+-	bd->settings = sb->repo->objects->commit_graph->bloom_filter_settings;
++	bd->settings = bs;
+ 
+ 	bd->alloc = 4;
+ 	bd->nr = 0;
+diff --git a/bloom.c b/bloom.c
+index 1a573226e7..cd9380ac62 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -38,7 +38,7 @@ static int load_bloom_filter_from_graph(struct commit_graph *g,
+ 	while (graph_pos < g->num_commits_in_base)
+ 		g = g->base_graph;
+ 
+-	/* The commit graph commit 'c' lives in doesn't carry bloom filters. */
++	/* The commit graph commit 'c' lives in doesn't carry Bloom filters. */
+ 	if (!g->chunk_bloom_indexes)
+ 		return 0;
+ 
+@@ -195,8 +195,8 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 	if (!filter->data) {
+ 		load_commit_graph_info(r, c);
+ 		if (commit_graph_position(c) != COMMIT_NOT_FROM_GRAPH &&
+-			r->objects->commit_graph->chunk_bloom_indexes)
+-			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c);
++			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c))
++				return filter;
+ 	}
+ 
+ 	if (filter->data)
+diff --git a/commit-graph.c b/commit-graph.c
+index 0ed003e218..6a36ed0b06 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -667,6 +667,17 @@ int generation_numbers_enabled(struct repository *r)
+ 	return !!first_generation;
+ }
+ 
++struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
++{
++	struct commit_graph *g = r->objects->commit_graph;
++	while (g) {
++		if (g->bloom_filter_settings)
++			return g->bloom_filter_settings;
++		g = g->base_graph;
++	}
++	return NULL;
++}
++
+ static void close_commit_graph_one(struct commit_graph *g)
+ {
+ 	if (!g)
+diff --git a/commit-graph.h b/commit-graph.h
+index 09a97030dc..0677dd1031 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -87,6 +87,8 @@ struct commit_graph *parse_commit_graph(void *graph_map, size_t graph_size);
+  */
+ int generation_numbers_enabled(struct repository *r);
+ 
++struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r);
++
+ enum commit_graph_write_flags {
+ 	COMMIT_GRAPH_WRITE_APPEND     = (1 << 0),
+ 	COMMIT_GRAPH_WRITE_PROGRESS   = (1 << 1),
+diff --git a/revision.c b/revision.c
+index 1239023f93..6aeb764821 100644
+--- a/revision.c
++++ b/revision.c
+@@ -681,10 +681,7 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 
+ 	repo_parse_commit(revs->repo, revs->commits->item);
+ 
+-	if (!revs->repo->objects->commit_graph)
+-		return;
+-
+-	revs->bloom_filter_settings = revs->repo->objects->commit_graph->bloom_filter_settings;
++	revs->bloom_filter_settings = get_bloom_filter_settings(revs->repo);
+ 	if (!revs->bloom_filter_settings)
+ 		return;
+ 
 diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 715912ad0f..cd89c75002 100755
+index 4bb9e9dbe2..715912ad0f 100755
 --- a/t/t4216-log-bloom.sh
 +++ b/t/t4216-log-bloom.sh
-@@ -58,7 +58,7 @@ sane_unset GIT_TRACE2_PERF_BRIEF
- sane_unset GIT_TRACE2_CONFIG_PARAMS
+@@ -65,7 +65,7 @@ setup () {
  
- setup () {
--	rm "$TRASH_DIRECTORY/trace.perf"
-+	rm -f "$TRASH_DIRECTORY/trace.perf" &&
- 	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
- 	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.perf" git -c core.commitGraph=true log --pretty="format:%s" $1 >log_w_bloom
- }
+ test_bloom_filters_used () {
+ 	log_args=$1
+-	bloom_trace_prefix="statistics:{\"filter_not_present\":0,\"maybe\""
++	bloom_trace_prefix="statistics:{\"filter_not_present\":${2:-0},\"maybe\""
+ 	setup "$log_args" &&
+ 	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" &&
+ 	test_cmp log_wo_bloom log_w_bloom &&
+@@ -139,8 +139,11 @@ test_expect_success 'setup - add commit-graph to the chain without Bloom filters
+ 	test_line_count = 2 .git/objects/info/commit-graphs/commit-graph-chain
+ '
+ 
+-test_expect_success 'Do not use Bloom filters if the latest graph does not have Bloom filters.' '
+-	test_bloom_filters_not_used "-- A/B"
++test_expect_success 'use Bloom filters even if the latest graph does not have Bloom filters' '
++	# Ensure that the number of empty filters is equal to the number of
++	# filters in the latest graph layer to prove that they are loaded (and
++	# ignored).
++	test_bloom_filters_used "-- A/B" 3
+ '
+ 
+ test_expect_success 'setup - add commit-graph to the chain with Bloom filters' '
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 18216463c7..c334ee9155 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -427,4 +427,17 @@ done <<\EOF
+ 0600 -r--------
+ EOF
+ 
++test_expect_success '--split=replace with partial Bloom data' '
++	rm -rf $graphdir $infodir/commit-graph &&
++	git reset --hard commits/3 &&
++	git rev-list -1 HEAD~2 >a &&
++	git rev-list -1 HEAD~1 >b &&
++	git commit-graph write --split=no-merge --stdin-commits --changed-paths <a &&
++	git commit-graph write --split=no-merge --stdin-commits <b &&
++	git commit-graph write --split=replace --stdin-commits --changed-paths <c &&
++	ls $graphdir/graph-*.graph >graph-files &&
++	test_line_count = 1 graph-files &&
++	verify_chain_files_exist $graphdir
++'
++
+ test_done
 -- 
 2.28.0.510.g86fdc5f89a
 
