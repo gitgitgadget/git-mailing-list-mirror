@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FCFC433E2
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 761CCC433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:33:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9B9F22241
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:32:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 395C02224A
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:33:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r6eE4jAi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XPOzQYgY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727445AbgIPMbK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 08:31:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51578 "EHLO
+        id S1727453AbgIPMcJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 08:32:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726850AbgIPKcf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726846AbgIPKcf (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Sep 2020 06:32:35 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08DCFC06121C
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:12 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id t10so6371295wrv.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:11 -0700 (PDT)
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 586CBC061355
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id a9so2429193wmm.2
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RDM2O7VWYFIaZ7PVhSFc/SgOo/6wqi6bL2en5kNgxxU=;
-        b=r6eE4jAi+WYnYfGyIQSZwHM+SbOG6jUhzphyFVWzIuqJhSJU1r96SET/37E8hYl/xt
-         CFUtdUfoeunjIv/ObkiZHbjGGMogII82eXkgMrZ+695kOtUb1MVSzRY73RI3LmOXKjdn
-         nqoa/XMBZfX9ltvJW4duXFD4UPAq05Ld17eJuVeTP+H7Uqohxm5Y9Gv9tXycr1yF9ISD
-         KXuX3C+1lWTIQ0hS7G3fW3ELPQKKRs2IrH/yUbiSEnNy/spn8TTvCPs8wvlkzsrZMr+C
-         S8LSCPnUAref6Kvn5AJ833D2SRKtnogsOdsRDO/zhMWdhRHSEnUj3rUv5b5pMd4UHsXk
-         EpAQ==
+        bh=arNlwz5nmHLOGpi2DcBtjy3OY83QSaEJhcFnYLqyAWA=;
+        b=XPOzQYgY4enK85j4PBsExMfGQAj1mK+0PHKyN2UGWuqSunFKpvR0lPBPdi56pDR1vq
+         oqwD5CYQ+3emZFOmjkF4RborVPbStBi89KEhs9tpFmn2ec81NecpGjUu9q3V3AJB6q/+
+         lv6Z3yYQDl1TVhCGyRbt0NpvWpr1AjMdOgCk9Mjjr2jJ87tfVnbGxxJAF6edgCRbQQZj
+         seyseEunHfT0DG64ToU3io+5K+6FgqkwAIhouQ0OnO463eNphMYTBsC7Fx2TcH6LSGoO
+         j7mp7VrZWolxaVpj3+akR4TpmBkkXY5AFB2yyf4SQhSviMeLtKFYKoOmvb53KHXNfVdG
+         5TIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RDM2O7VWYFIaZ7PVhSFc/SgOo/6wqi6bL2en5kNgxxU=;
-        b=OJYr7SnaHCh4LkKvOJpSfYliFMIbGmXKaHkx3YsKw0nGiBZxga0ITTF3bQ5yFahtP8
-         E16fSZ6jZ+putX+CqlAtKh5o9jKrDLVpBcqoZfthLpQuM7SFf33TKdOJzKGKLPSSzT7c
-         IEw2Zju6WDdzSA0XqltT3X7jCJUKCjAABid8MQwrZbIabeeU7vEH/hhWQ4B2iKg5xnBL
-         TcAF10WwsuT5foVCOXmdbg9S1lLVz7AiMXMP3z7Pjel2ii82e4/4HKX4Q7bDVsaYLqrq
-         mVrowcdYZC9Bh/oYVcnwZuB4Z7ymB3lv03sEFQ/1W6u0vO9ITWAQmr/97hBZ29sKwHLl
-         mcXA==
-X-Gm-Message-State: AOAM5318nACJGbiYvPl/jtMxM/afrczobxDaBQoz8CEnpCERbuCxjGWo
-        SkjAZLs6UIdlog1nesnuHz5ULh/xECLgS/kA
-X-Google-Smtp-Source: ABdhPJzqTZGWlC1sUtkkW4ZC4yV9viJClBwRgiQ75WwNtn4sPqfjm/zy3A/7iMKB1nnKN1UMhC++Bg==
-X-Received: by 2002:adf:912b:: with SMTP id j40mr26055086wrj.42.1600252210493;
-        Wed, 16 Sep 2020 03:30:10 -0700 (PDT)
+        bh=arNlwz5nmHLOGpi2DcBtjy3OY83QSaEJhcFnYLqyAWA=;
+        b=YFP2vDrD39/Hkk/6s7KBZNA8ItIo72sGOPfb247xOzO3Gdp9WnHgjbowEGL4oSUKHJ
+         7qHVt9aEcDGS/CogDsHpvWf4zmO5/DNXTXqBq7H72SdAS/n9Lmbg9aYuv7FQgAQEPfLF
+         344LFZWqGdSj9MMgTCcr2BbFySNyQt3iBCBgYaJ7ZF6fHWH/f8c/VUfo257xqusLRQlx
+         CtfPQ+oMIHXZTaCHHHc+X01LsbR3sbCZXahy6+rGrGCTFaMlvEeOFpdvhXQJqpzXDptB
+         dBQZ8EkzUkcnYdnWoXCEZVkNzORt185NnvsXmSXTW+X6HxsMdngU9xIMaMHcJ1jyoncW
+         KwFQ==
+X-Gm-Message-State: AOAM531jrP2Q6z62g73IbKlF+LCCpa84LTfWN+XnYkuo9Du3CwvQOynE
+        WFHzQbyPPbW55D8hxhQkb3NU5HVD4yI5uxbn
+X-Google-Smtp-Source: ABdhPJz+avcqN9Fa4Qf00/+q4tsOfVDxvgmsP/5JuLLmLfkIlBCxGJjxLsDrCFwmoYhF8057nKM0YQ==
+X-Received: by 2002:a1c:dd45:: with SMTP id u66mr4050800wmg.117.1600252207539;
+        Wed, 16 Sep 2020 03:30:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.09
+        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
+        Wed, 16 Sep 2020 03:30:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Simon Legner <Simon.Legner@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 11/15] remote-mediawiki tests: replace deprecated Perl construct
-Date:   Wed, 16 Sep 2020 12:29:14 +0200
-Message-Id: <20200916102918.29805-12-avarab@gmail.com>
+Subject: [PATCH 08/15] remote-mediawiki tests: change `[]` to `test`
+Date:   Wed, 16 Sep 2020 12:29:11 +0200
+Message-Id: <20200916102918.29805-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
 In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
 References: <20200916102918.29805-1-avarab@gmail.com>
@@ -82,34 +82,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The use of the encoding pragma has been a hard error since Perl 5.18,
-which was released in 2013. What this script really wanted to do was
-to decode @ARGV and write out some files with the UTF-8 PerlIO
-layer. Let's just do that explicitly instead.
+Convert `[]` to `test` and break if-then into separate lines, both of
+which bring the style in line with Git's coding guidelines.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/mw-to-git/t/test-gitmw.pl | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ contrib/mw-to-git/t/test-gitmw-lib.sh | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
-index afc4650b1a..71e5b06235 100755
---- a/contrib/mw-to-git/t/test-gitmw.pl
-+++ b/contrib/mw-to-git/t/test-gitmw.pl
-@@ -24,7 +24,6 @@
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+index 3948a00282..a466be8f3f 100755
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -65,7 +65,7 @@ test_check_precond () {
+ 	GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd "../.." && pwd)
+ 	PATH="$GIT_EXEC_PATH"'/bin-wrapper:'"$PATH"
  
- use MediaWiki::API;
- use Getopt::Long;
--use encoding 'utf8';
- use DateTime::Format::ISO8601;
- use open ':encoding(utf8)';
- use constant SLASH_REPLACEMENT => "%2F";
-@@ -222,4 +221,4 @@ sub wiki_upload_file {
- 	getallpagename => \&wiki_getallpagename,
- );
- die "$0 ERROR: wrong argument" unless exists $functions_to_call{$fct_to_call};
--$functions_to_call{$fct_to_call}->(@ARGV);
-+$functions_to_call{$fct_to_call}->(map { utf8::decode($_); $_ } @ARGV);
+-	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ];
++	if ! test -d "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+ 	then
+ 		skip_all='skipping gateway git-mw tests, no mediawiki found'
+ 		test_done
+@@ -304,7 +304,8 @@ create_db () {
+ 	php "$FILES_FOLDER/$DB_INSTALL_SCRIPT" $(basename "$DB_FILE" .sqlite) \
+ 		"$WIKI_ADMIN" "$WIKI_PASSW" "$TMP" "$PORT"
+ 
+-	if [ ! -f "$TMP/$DB_FILE" ] ; then
++	if ! test -f "$TMP/$DB_FILE"
++	then
+ 		error "Can't create database file $TMP/$DB_FILE. Try to run ./install-wiki.sh delete first."
+ 	fi
+ 
+@@ -325,7 +326,8 @@ wiki_install () {
+ 	# unpack and copy the files of MediaWiki
+ 	(
+ 	mkdir -p "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ] ; then
++	if ! test -d "$WIKI_DIR_INST/$WIKI_DIR_NAME"
++	then
+ 		error "Folder $WIKI_DIR_INST/$WIKI_DIR_NAME doesn't exist.
+ 		Please create it and launch the script again."
+ 	fi
+@@ -333,7 +335,8 @@ wiki_install () {
+ 	# Fetch MediaWiki's archive if not already present in the TMP directory
+ 	MW_FILENAME="mediawiki-$MW_VERSION_MAJOR.$MW_VERSION_MINOR.tar.gz"
+ 	cd "$TMP"
+-	if [ ! -f $MW_FILENAME ] ; then
++	if ! test -f $MW_FILENAME
++	then
+ 		echo "Downloading $MW_VERSION_MAJOR.$MW_VERSION_MINOR sources ..."
+ 		wget "http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/$MW_FILENAME" ||
+ 			error "Unable to download "\
+@@ -359,7 +362,8 @@ wiki_install () {
+ 	# And modify parameters according to the ones set at the top
+ 	# of this script.
+ 	# Note that LocalSettings.php is never modified.
+-	if [ ! -f "$FILES_FOLDER/LocalSettings.php" ] ; then
++	if ! test -f "$FILES_FOLDER/LocalSettings.php"
++	then
+ 		error "Can't find $FILES_FOLDER/LocalSettings.php " \
+ 			"in the current folder. "\
+ 		"Please run the script inside its folder."
+@@ -401,7 +405,8 @@ wiki_install () {
+ # Warning: This function must be called only in a subdirectory of t/ directory
+ wiki_reset () {
+ 	# Copy initial database of the wiki
+-	if [ ! -f "../$FILES_FOLDER/$DB_FILE" ] ; then
++	if ! test -f "../$FILES_FOLDER/$DB_FILE"
++	then
+ 		error "Can't find ../$FILES_FOLDER/$DB_FILE in the current folder."
+ 	fi
+ 	cp "../$FILES_FOLDER/$DB_FILE" "$TMP" ||
 -- 
 2.28.0.297.g1956fa8f8d
 
