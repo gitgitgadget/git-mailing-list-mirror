@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5EAEC43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A11B2C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:12:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA1822083B
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:12:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5830621582
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:12:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OSGqnEY7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="io68xU74"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbgIPSMC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 14:12:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39356 "EHLO
+        id S1727736AbgIPSMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 14:12:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727823AbgIPSK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727717AbgIPSK5 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Sep 2020 14:10:57 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A31C061788
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:57 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id l15so2768587wmh.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:57 -0700 (PDT)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB2CC061756
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:56 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id k15so7858923wrn.10
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0ybg95cjBoMd3k6bGS4hd0gm5wPr+J8ekwzSJZveA/s=;
-        b=OSGqnEY7W/vxuOBhkGnccZXkyo4i4rGcqGaiNZdrw4zWZ8XcvEZf7UQbor96HQEnV0
-         DlKf9CehwJEIsAI75G+de5syfEeJPMDxhpaHae0taQ4Lp0Hiyrn2UtsmZnj3n2L5Gr8n
-         uVHyZP3xstsw7B/Q/llAhzU3085YeF88oBfji9k2Pm9LuNy7XGROzk2PFlejtUnzFjmz
-         BLbsIloGYrEyE+feH3Ra+A3useAwvfrfFlFLeTjEJ0TbDQIgezfSQ8OUi6/gz+0K+5a+
-         vaXNVQdxv19x9nfv0xXm+o93cKXakVJOPi+vGZWUNTkKaartqv9l4srxFFnahxqP6vX5
-         YEuA==
+        bh=a99TZs8RDfEzZQgrvCmmxLFT3tTlt4p0jVhkvTLfJno=;
+        b=io68xU74T3OErxLfxWsqQMu9gjsEHCfPJ0l/G+HkoxDglbId1NgRNSkshdOewU+DDH
+         cRZi5MTVX6Wba8COMm/mRi6D8EgvlhSrEvN9+++XJDfC/H2YdMUt8lQYlDbo1KLcESZy
+         Al1SXM9gIPB+EH8Vc9Xkm3Zf9xrWcxsJxNZ0d+DEmj3Q8bmr8rgwL3E0vCrxMwcYXGUu
+         g2pXMn8eiG9a17aEHgPk4g4hf1FjJ6b3OBja6FugNRfkAYoZC4N3WnZy2P1cpR/kRYdO
+         4J6IqiDG5LkCh0D3r32MkRaJ7ACrzngPwLPGKDmpF54X3O5aKyeLXE/YpS+PWtBvVgJZ
+         N1EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0ybg95cjBoMd3k6bGS4hd0gm5wPr+J8ekwzSJZveA/s=;
-        b=h0XwgG5IGEdjS5BZ/9zl6PKNwuTxZ/9dSTOjS3NR5NWcoBiyYk2vJFVduSMewajtu5
-         4PGkNtwcsYOR9IhxiaTqDpDz4hLZ434wHJqk3rBaztrRvXxwofGeXlgnwmXW2YWJbB3F
-         6gSQauE9Y+qKVyIQ4QPD0DITW4DNZJN0SMgDc2hczw3S3xIE2iNhnyict3q/XdOkwUxl
-         N/EZSMdGfD1i8tkv98opL566Qp0n/K55aCImsqakow7y2siernEmFrEnxXKFDo6iVw5I
-         PnDD2V10Do5e/vDU7J3UEqeofxsSObtW1otZuNtAzQCQSX10+mXJz7C+bOCj/Dc8aaAU
-         e68A==
-X-Gm-Message-State: AOAM532ulYennrmkrkS/WePn2ZmkTozLUDhpfbnGXGkDW63/psd+Sneh
-        3KGF6VaHrqLM7Vvxt9YG/4do/J+YHsg=
-X-Google-Smtp-Source: ABdhPJyK3e/nirrlYHq41a4YCuY2ueiA2xGVO1VoEDNt4vuZem/SNPvmG5b9WAm0ghlEuyj7u9xeYw==
-X-Received: by 2002:a1c:4886:: with SMTP id v128mr6133366wma.139.1600279855894;
+        bh=a99TZs8RDfEzZQgrvCmmxLFT3tTlt4p0jVhkvTLfJno=;
+        b=LE9tWgjyQtoG2HtVLdbRmVH1teNfw78GX8NNwLobyicWxWjXy81m80uHbV7jiHUgaR
+         27dMIJYorilBW5xZWoaIrltJUZgytBv+Vl0xYpMWaHwPC/QOrmDYhGnG2mbwGoLyrZke
+         2pSJIp8VdSIFP3YcexauX0Fgk3XxOSOIbERUSNqzzj4ld8H/63yUFUfBvTQyqx89YDoZ
+         WCQL8Jphm7YzjaBuFwid9Lgt2QJ1uvkXWO8NPagQ2oS2rYT7rGJNbifY7ksZNLB13CWZ
+         +ZWfaYEio1Lz3kiV4tdnzqZASYjfAqrVdecBxIoKtleVydczr10bqfwQDMzpHOSEFRH1
+         cWwQ==
+X-Gm-Message-State: AOAM532CJwrizwZjPNduZ7wWv9dOl7273EUshVu6bM5/tANyp3h3zT2h
+        qw/f5zr7OTUtjXagbnDx94+RRM9E/iM=
+X-Google-Smtp-Source: ABdhPJw1OFRZQrRp/Mqf75enPCwyky3crh05nAPF7wiJHdIQjafy0Egr6JOKwvjpsG72bqilOjHWkg==
+X-Received: by 2002:adf:ec86:: with SMTP id z6mr28686349wrn.109.1600279855041;
         Wed, 16 Sep 2020 11:10:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f14sm34229600wrv.72.2020.09.16.11.10.55
+        by smtp.gmail.com with ESMTPSA id y5sm32931999wrh.6.2020.09.16.11.10.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 11:10:55 -0700 (PDT)
-Message-Id: <3b4ae48d4a3a7e2d6aae259ead19b6643d2533e8.1600279853.git.gitgitgadget@gmail.com>
+        Wed, 16 Sep 2020 11:10:54 -0700 (PDT)
+Message-Id: <587ddca42ae36be3d5b333cefe1f9af768bacc9a.1600279853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.734.git.1600279853.gitgitgadget@gmail.com>
 References: <pull.734.git.1600279853.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Sep 2020 18:10:50 +0000
-Subject: [PATCH 2/5] t/test-terminal: avoid non-inclusive language
+Date:   Wed, 16 Sep 2020 18:10:49 +0000
+Subject: [PATCH 1/5] fast-export: avoid using unnecessary language in a code
+ comment
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,64 +79,27 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the ongoing effort to make the Git project a more inclusive place,
-let's try to avoid names like "master" where possible.
-
-In this instance, the use of the term `slave` is unfortunately enshrined
-in IO::Pty's API. We simply cannot avoid using that word here. But at
-least we can get rid of the usage of the word `master` and hope that
-IO::Pty will be eventually adjusted, too.
+In an ongoing effort to avoid non-inclusive language, let's avoid using
+the branch name "master" in a code comment.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-terminal.perl | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ builtin/fast-export.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/test-terminal.perl b/t/test-terminal.perl
-index 46bf618479..680caf48dd 100755
---- a/t/test-terminal.perl
-+++ b/t/test-terminal.perl
-@@ -81,24 +81,24 @@ sub copy_stdio {
- 	die "usage: test-terminal program args";
- }
- $ENV{TERM} = 'vt100';
--my $master_in = new IO::Pty;
--my $master_out = new IO::Pty;
--my $master_err = new IO::Pty;
--$master_in->set_raw();
--$master_out->set_raw();
--$master_err->set_raw();
--$master_in->slave->set_raw();
--$master_out->slave->set_raw();
--$master_err->slave->set_raw();
--my $pid = start_child(\@ARGV, $master_in->slave, $master_out->slave, $master_err->slave);
--close $master_in->slave;
--close $master_out->slave;
--close $master_err->slave;
--my $in_pid = copy_stdin($master_in);
--copy_stdio($master_out, $master_err);
-+my $primary_in = new IO::Pty;
-+my $primary_out = new IO::Pty;
-+my $primary_err = new IO::Pty;
-+$primary_in->set_raw();
-+$primary_out->set_raw();
-+$primary_err->set_raw();
-+$primary_in->slave->set_raw();
-+$primary_out->slave->set_raw();
-+$primary_err->slave->set_raw();
-+my $pid = start_child(\@ARGV, $primary_in->slave, $primary_out->slave, $primary_err->slave);
-+close $primary_in->slave;
-+close $primary_out->slave;
-+close $primary_err->slave;
-+my $in_pid = copy_stdin($primary_in);
-+copy_stdio($primary_out, $primary_err);
- my $ret = finish_child($pid);
- # If the child process terminates before our copy_stdin() process is able to
--# write all of its data to $master_in, the copy_stdin() process could stall.
-+# write all of its data to $primary_in, the copy_stdin() process could stall.
- # Send SIGTERM to it to ensure it terminates.
- kill 'TERM', $in_pid;
- finish_child($in_pid);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 1b8fca3ee0..5527135ba8 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -1026,7 +1026,7 @@ static void handle_tags_and_duplicates(struct string_list *extras)
+ 				/*
+ 				 * Getting here means we have a commit which
+ 				 * was excluded by a negative refspec (e.g.
+-				 * fast-export ^master master).  If we are
++				 * fast-export ^HEAD HEAD).  If we are
+ 				 * referencing excluded commits, set the ref
+ 				 * to the exact commit.  Otherwise, the user
+ 				 * wants the branch exported but every commit
 -- 
 gitgitgadget
 
