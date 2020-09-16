@@ -2,126 +2,99 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2605AC2BB84
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFEE1C2BB84
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:17:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E28F021582
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:12:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1480221E5
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:17:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZACUfKPM"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="fT622r0z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727759AbgIPSMJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 14:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39352 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727814AbgIPSK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:10:57 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629B4C06174A
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:56 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id e11so2769228wme.0
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=tCkRWc/JN5apVJncc4cDoLLyNyQbhm9Sn6RH2cstiG8=;
-        b=ZACUfKPMfqaq0O+90X5AmXPL6OA9sYnuecCjLzJGWIx5uKNlz/JP9cqTpv3E4E2SYe
-         n8I2CulplTdTY7nClKOtZa+DOY0HcWXr17z2ZBzI2+pCFQky8G7tj/j6y5tf5JPkg+we
-         S9sVe/ur0hqfGjEX5Hpb8I0LEwQjAmzAiOvbB83DJ+2WF1vLNxoxZK+LGXe4CR5RT1qK
-         66IK1Pt7h5FRCtbEY0zegcDr2uBDWh/xwHTjSzJ6tKbWrKTHoDhbVjzBUVZg1G7a40m2
-         dk7qwxx6khPzyk5yyERmuxjLxWWWOV7/NZNxj4q5kF2YqlLLYxRtdCyLdygKWOQi/eHG
-         9yhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tCkRWc/JN5apVJncc4cDoLLyNyQbhm9Sn6RH2cstiG8=;
-        b=N+ev1w5lOHrsT80UqsQFxzWsn2gSHXw+Fti3jxZD556bpZInH7o14bY4WeLs3cgx7/
-         FkvftM6D1IRy1YK76FOf5LTJOzB7CZO/d79rLMFxCuS+FezfD3rcjavFhbGivZo4AfSf
-         LKjhH+/f+RjKpXLm69ScJnWhqXdH9qFwZDEsmed4NOmiu+i6dD6e/PRWkzE0UDRnaj1S
-         1RV8FHPSd/TdciEbaM+XKUrvGb4TQMCqRfE321gnKNJkgndkvJ6CT7EI+9CbFxedl6ae
-         OyWGivLcddUf+8W0WsoEtJho4URvfXL23gKGK03xZwq+9YuP6D7wLQ1otAXtmeMoNQF7
-         Noag==
-X-Gm-Message-State: AOAM531NrqZuWLIyfBXBj+rPDN+zW8GKgDAoJwy3RQScAcirh5uTYRY1
-        DTFuVyCRMMy7PPJP3DwQEO4S8SBsol0=
-X-Google-Smtp-Source: ABdhPJwY10aXuq4tKFVQJLDSNxGmGQCLnk3H2DhyRlazybjtIQwGQLDxzcJf7BhFlFMnD214fovF0A==
-X-Received: by 2002:a1c:f003:: with SMTP id a3mr6076114wmb.170.1600279854272;
-        Wed, 16 Sep 2020 11:10:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17sm36046553wrr.40.2020.09.16.11.10.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 11:10:53 -0700 (PDT)
-Message-Id: <pull.734.git.1600279853.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Sep 2020 18:10:48 +0000
-Subject: [PATCH 0/5] Inclusive naming, part II
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727705AbgIPSRa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 14:17:30 -0400
+Received: from mout.gmx.net ([212.227.17.22]:40409 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727695AbgIPSPi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 14:15:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1600280137;
+        bh=CP1EenMKhmUvEUPVQqWdTRxkCZyF8JsOcxYTwZgyrFs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fT622r0zhrNAlFllUt5VPpDqGcZdb0FGmVlLlAiY0E89w/3eAEHtuUuRhgtLQW84b
+         +cLCreSQd/kSfynZKCfwZ6vPXq34iT9ocZ18MaWI6EkRaDbVMgSv/pzm8yg7/1Vi6E
+         d/ZfTpMOKJM5GVXBnT7MUGjwFsC8MyioWnwVpTCI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.239.213] ([213.196.213.124]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHoRK-1kEinH1aNS-00EsB5; Wed, 16
+ Sep 2020 14:36:41 +0200
+Date:   Wed, 16 Sep 2020 14:36:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 5/7] builtin/push: add option
+ "--[no-]force-if-includes"
+In-Reply-To: <20200913145413.18351-6-shrinidhi.kaushik@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009161436120.56@tvgsbejvaqbjf.bet>
+References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com> <20200913145413.18351-1-shrinidhi.kaushik@gmail.com> <20200913145413.18351-6-shrinidhi.kaushik@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:FREMoWVawWkFhXGscnQhUPub4hudv1BpROqEJWAeuie1HW7QkZG
+ tgqrmSoJBwCXbjOwXllgzxTwrqmDGkI+spa9MDWQ72aKImsamFRlShltdPiXtaFaRfRT2mA
+ LzCI+GBfD6FoKk8T43gRnOUIY+/tQo+0U1P+ADeLoL+xjd1NUBV4Fkjbbt/+jF0W0IQWOLH
+ b7Y5kdTVINmSuz6SAhVEg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MFpYIJu8aks=:AtT7HzZzH7HOgXusmpgUTm
+ xM9Hsr6SVBQgjzWka1zpZEtAsLUW9rBWEcHFdiAZ4XBmek+XAenmEjuHd88uaSx07h/uyotOs
+ gxRJ7YOQyzSr3typmKtI8zP2alhTOe4AUtC0x9NqRTyvjCMXv3ioURhjOqMxmSZvpT25hExPO
+ 7aS6TOGYdsbVW4Si55+YKdmaf8YWJCIVBAEvCpWzUodKflg1cj2xkB7bvhf+aow0o/FK0khYV
+ NdYJBhngIjkKXY/nO9fI1qwopOraUcFoPsR3Ng4xEG7Jd5VPZICqlYfwfJNWwUw/if23Obz9y
+ OUWsCCMgF6mMO72D9JiWN6D/b7Y/Ira61Xlp2vD5vBUo1/9vC6Zg8U1OZEMk6JXML3pUNWAkl
+ nGGzidEKrceMjsovoG54INHBTeMYP9+C9scJA4e57SyhB6YvlmknCHJDB940V1dYut1VZUPBL
+ iMT3ABrhi/CfocQ4IPnqyzgMN42mdpmAldku8i7B9ZgAVoH0JgODAy7g5mv3GWo0tZT6jl+jd
+ I6Qxv6WvxrD70a1A0NqZdOdSxBYn03hSEu1aBStSku7/GO+UowGyfvVzYrnj9+NzHIzB5hrCj
+ gDHOtA1Zq9/a+A65ip09Y2acACF3vhmz2Lyih/ex6PgbLPGPVnIyjS23lGRLXCFmatJS5os2p
+ AqkSn4GuUJK0r4ZMcp2z5PoHjyswJtv0+ypBpDLE6BqInsZyS2brY4V3gadzCa+BS46kFLCma
+ wjzw2VFn2SwqXPK/QzfBkP79VpDTIqIFbFnXA9yqHahcVGxk8G3F1yAIkElkv4CKg2MkkAldw
+ YtIwP6GHXXgHCNWN1+6HVX8q+BZCfz2yxP6PPQq8BtLzyMV7WCg/R1E6bX50663SLEBr3RIKA
+ 3Kj+Nuzjq/PQcvlT+UaidB0ARDniWgu8qVirVb/iF6uh97BpoBvYmN3iFLEunB/Vu7KLZoqIK
+ jVXJ2YG9voFQFfSaDdx9+8OSTjGARpw0n/53dVMtA2mP2JIPzKXn+kGBv2Bvcpg/zCGcUxCCV
+ 9oegJ3Fc+ObpBRyVBCUplNScQSc4qipaYoGMSZTpeIa/tc2m/u4qM0ksteu2FKl9g3QrMXtjU
+ agJzNu2NfW5aqljkRrS1j9abtOiR77KKcN9kdhExeyLNKo4haJNo5671uFtwOO/lb4+NV7el5
+ XlNrY0/PnBny6HPnt0z4UtIqZIVRUbSgRrzQE6nJPvEBIIDKYxqm0T/oH4SSzAGLZ6Fg86HtY
+ rwT/Nhn3arwU6Ec+IjB41JVu117mcwEsAZygAJA==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series represents the logical next step on the journey begun with
-introducing init.defaultBranch: in these patches, we avoid a couple
-unnecessary mentions of the branch name "master".
+Hi Srinidhi,
 
-This patch series does not try to change the default branch name, although I
-have that patch series ready to go. You can see the overall idea here: 
-https://github.com/gitgitgadget/git/pull/655. Concretely, I plan on
-submitting three more patch series after this one:
+On Sun, 13 Sep 2020, Srinidhi Kaushik wrote:
 
- 1. a relatively small patch series to avoid using the branch name main in
-    the test suite. This is necessary because my plan is to change the
-    default branch name to that name, therefore it cannot be used as the
-    name of a topic branch any longer.
- 2. a relatively large patch series (currently consisting of 18 patches) to
-    change the default branch name to main. Most of the patches provide
-    non-trivial (read: non-scriptable) adjustments to the test suite in an
-    incremental fashion, with a big patch toward the end that reflects a
-    fully-automated search-and-replace of all the trivial cases.
- 3. a very small patch series with fall-out patches that are not necessary
-    to pass the test suite, but are still required to complete the rename
-    (adjusted code comment, file rename).
+> diff --git a/builtin/push.c b/builtin/push.c
+> index bc94078e72..d23b4678b4 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -300,6 +300,12 @@ static const char message_advice_ref_needs_force[] =
+=3D
+>  	   "or update a remote ref to make it point at a non-commit object,\n"
+>  	   "without using the '--force' option.\n");
+>
+> +static const char message_advice_ref_needs_update[] =3D
+> +	N_("Updates were rejected because the tip of the remote-tracking\n"
+> +	   "branch has been updated since the last checkout. You may want\n"
+> +	   "to integrate those changes locally (e.g., 'git rebase ...')\n"
 
-(Note: I am still debating whether I should move one or two patches from the
-second to the third patch series)
+Shouldn't this talk about `git pull` instead of `git rebase`?
 
-Johannes Schindelin (5):
-  fast-export: avoid using unnecessary language in a code comment
-  t/test-terminal: avoid non-inclusive language
-  t3200: avoid variations of the `master` branch name
-  tests: avoid variations of the `master` branch name
-  t9902: avoid using the branch name `master`
+Ciao,
+Dscho
 
- builtin/fast-export.c        |  2 +-
- t/t3200-branch.sh            | 34 ++++++++++++++---------------
- t/t3427-rebase-subtree.sh    | 42 ++++++++++++++++++------------------
- t/t4150-am.sh                |  8 +++----
- t/t5515-fetch-merge-logic.sh |  6 +++---
- t/t5523-push-upstream.sh     | 20 ++++++++---------
- t/t6018-rev-list-glob.sh     |  6 +++---
- t/t6040-tracking-info.sh     | 20 ++++++++---------
- t/t6409-merge-subtree.sh     | 14 ++++++------
- t/t9902-completion.sh        | 10 ++++-----
- t/test-terminal.perl         | 32 +++++++++++++--------------
- 11 files changed, 97 insertions(+), 97 deletions(-)
-
-
-base-commit: 54e85e7af1ac9e9a92888060d6811ae767fea1bc
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-734%2Fdscho%2Favoid-unnecessary-branch-name-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-734/dscho/avoid-unnecessary-branch-name-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/734
--- 
-gitgitgadget
