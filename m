@@ -2,99 +2,153 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDB92C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5352CC433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:47:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80D69206C9
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:45:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E49D7208E4
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:47:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rlLnQA0L"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jeYVBXaa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727899AbgIPTpe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 15:45:34 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51340 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727422AbgIPTpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 15:45:16 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 49D68E824B;
-        Wed, 16 Sep 2020 15:45:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4VFD9QCxWmwrBQi/WhD8nB55p24=; b=rlLnQA
-        0LW58rtIiolJPquw9SzzaF5/VOf+QT1H9SEPhXlo9dKm7HPVRZcWufQ78muBGD2O
-        A9Ghdk+Fk5dbkLeAXI7+bxntBmIALhg/59XDaoq4NoDtxY9zk1YYvFoH2RSHgiLD
-        Euncy2uxUIg3EIu4TrI7BIu4z67mZOfKLye3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gB1w9FDx9TwdzZ3Dt0V+etb6spAHEmOw
-        MZQlY/CE2oCNG9XEnkigj4Ok3ugstbhC2HbiGlWKE2iwCAu5VVs8r6zy2Pb8Nr44
-        mTwAlxQuTsOC543C5Kg1kMgRwSy+jENFVSUNlWG3IbcXRDJ6oKPAlSBrWa/jsiJp
-        k6dxVVT2QXg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 42562E8249;
-        Wed, 16 Sep 2020 15:45:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 111F5E8248;
-        Wed, 16 Sep 2020 15:45:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Aaron Lipman <alipman88@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] Doc: cover multiple contains/no-contains filters
-References: <20200913193140.66906-1-alipman88@gmail.com>
-        <20200916020840.84892-1-alipman88@gmail.com>
-        <20200916020840.84892-3-alipman88@gmail.com>
-Date:   Wed, 16 Sep 2020 12:45:03 -0700
-In-Reply-To: <20200916020840.84892-3-alipman88@gmail.com> (Aaron Lipman's
-        message of "Tue, 15 Sep 2020 22:08:39 -0400")
-Message-ID: <xmqq4knxy08w.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727303AbgIPTrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 15:47:32 -0400
+Received: from mout.gmx.net ([212.227.15.19]:34425 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728212AbgIPTrJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 15:47:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1600285606;
+        bh=AE9MeXZCHtYY8RsnDfq7zGETk2QtN2dCwQ9/EiYKnLI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=jeYVBXaa6PXf3HDG+quuVSlsuzkFHwJIrSU1NLzyFyCEnSoh6e/snUXwKb3qc83On
+         77C240G9kb8seNMo0cPv1klLzCt0zy66/gLTqs2d/KM8rxD9W3TH6PHrkSxe2VNyXa
+         yCmmdYM5Y1yypwQ3w8w+XxXqW75Hc6RhPm3lfdm8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.239.213] ([213.196.213.124]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQMuR-1k5eqd01Hl-00MKDI; Wed, 16
+ Sep 2020 21:46:46 +0200
+Date:   Wed, 16 Sep 2020 21:46:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>,
+        Simon Legner <Simon.Legner@gmail.com>
+Subject: Re: [PATCH 00/15] remote-mediawiki: various fixes to make tests
+ pass
+In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009162144390.56@tvgsbejvaqbjf.bet>
+References: <20200916102918.29805-1-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1ECCA4AE-F855-11EA-B0C7-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/mixed; boundary="8323328-1787123509-1600285608=:56"
+X-Provags-ID: V03:K1:m2bEi+llzJuq9NPeTPxdmUmeoUArGk/2lyEmkl6S9KCJiM/CqcC
+ JDWXGuvuCVCD2B06PxBDQzgWHq+ii1o323aQUVV+Cgm2toJ90/tiaj4JfAPacmYmVp5839I
+ oClRq0nlbX/qwI0sQqK8O9hSAYftS4JcshXDXR4gkdL5w3lMy5NX+DHvJrPDmAk1RPQ/62N
+ rNbXt2fpwowLA9FJNK9IA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OvvZebuOjyk=:pktu+67QcZ7ttFoVFgAjco
+ 26MihAbgYvVqEX8HWUfOloZjq6wIiw88ULMDHl+Dw99/Y4xBvCLMjULQmgnk8zYvrYydoJkzp
+ 4NtxfGhrroJRHqVS10y47DMuHKNCZCUoz58ergffQsl8EMqxRQBwVDr0RlMmd4S7Bht5rri8+
+ cHxkzZlIgzAKiafS8D0vvDsFr9axxrJLCfQTAMJ7AllA3WLEhUH8X6AN5JHpYadNs+kqBa3D8
+ 1tVDxNRKlMVjbsmyGr7Ywvpp6CsaKxmlChjXSMDi6a/GJaX8uLVwL8K15R/zgMH4w2Jh0hrTn
+ qcDUpujVr4ttd/150a22GLPbuZdCtBFDCUXQ7T9/NLODPhvsdQ+0cHji6Tk426Jky67bz4kDu
+ wTQ6hlPI8tdSyz1h4K0iuBNKXHikeLZLxb4IPLT+b7tzeteFeofG1llv+ciS80TajPucn7LkM
+ Sn2I3nbM+xA9gpwCSx6mOCDQP4a2mRdWqgsx/6mvPEOlHSyn4Jjn2ohmOfigwUEWsOSjdwoj2
+ Kh6BtkugbWOOURg5A4ItYFSZY+0MlgYUVXVsuzaZSXkYBrKW4ENi52Nk4sGbOEhjCyf3AbJo1
+ xUSLDR4wcWaTbvlYX7eg1Fd9aPyfqUZGqTRVHumPYi18k+44wgje2CwWFarmpAyLLnuDZe55e
+ 1eJWcl3RGw6DKOwSSLkYfveTGgAnmlD1UJwcwuGZD+Odjhizg32+B2xyvD1G+AUqlyJKSBau9
+ F9h0M3hT7b5bt7mfCR166WNDkkcfAfHVtBvyMwtb6KtPlrsUJpicAadINE7OaxSl7oIf+9+U3
+ 0P2pVEOArQk2I19ambUyqj0jRcnvJSHd6VNLmN/VTfLXPxG+7JxAEqymcsKKG6HX2Ee+WclGq
+ Qwwf4wfgWmuYa1rcYoM9QV6MsdPrAX9BRuzXO/6MGrianSaT10DHyzhB8Go9Xi7W+fu1+QTbM
+ mdrX0ha/uwXQPRz82QhDADP1M3zid9F8dYIrUJA4KIJH+SySTDiFKWVL5z5zbnzgbTVhufODb
+ DIwjzrI0uTCiF61MqHWM01YFObddUL/CJSM+pivJYHSESFAixKiBfkH0j0bTZvai0AxDLXVBn
+ EwOBjX+07fLTEeMHudLlhs0QZtJm3f9gRcVAU2ornPI3tRY6qJijV8S20IMMNTtMYxLDsR02Z
+ sYIoyVhjpcFLXZ40kairdRpp55vAsyih1DJpQX9nkd3DgsxulmwuVZtStIjgF45ymQL8uLLVT
+ V/mkR+l3GUieGQrnIIFE22CKcqcZxP6EFZEG7pg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aaron Lipman <alipman88@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Update documentation for "git branch", "git for-each-ref" and "git tag"
-> with notes explaining what happens when passed multiple --contains or
-> --no-contains filters.
+--8323328-1787123509-1600285608=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi =C3=86var,
+
+On Wed, 16 Sep 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> I had occasion to look at remote-mediawiki and I couldn't even get the
+> test suite to run. The patches below have more detail but there's
+> issues like a hard error on any Perl release newer than ones released
+> in 2013, and the MediaWiki release it tries to use spewing errors on
+> any modern PHP version.
 >
-> This behavior is useful to document prior to enabling multiple
-> merged/no-merged filters, in order to demonstrate consistent behavior
-> between merged/no-merged and contains/no-contains filters.
+> This series fixes these issues. With it applied it's possible to run
+> the tests, and they all pass.
+
+I glimpsed through the patches, and they all look in pretty good shape. I
+just wish that the TODO in Simon's patch had been resolved, and that the
+test failures had been root-caused, but then, I personally do not really
+care all that much about the `remote-mediawiki` backend any longer, so I
+am fine with the patches as-are (modulo Danh's/Eric's nit about the
+extra tests before `test_cmp`).
+
+Thanks,
+Dscho
+
 >
-> Signed-off-by: Aaron Lipman <alipman88@gmail.com>
-> ---
->  Documentation/filters.txt          | 3 +++
+> Simon Legner (1):
+>   remote-mediawiki: fix duplicate revisions being imported
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (14):
+>   remote-mediawiki doc: correct link to GitHub project
+>   remote-mediawiki doc: link to MediaWiki's current version
+>   remote-mediawiki doc: bump recommended PHP version to 7.3
+>   remote-mediawiki tests: use the login/password variables
+>   remote-mediawiki tests: use a 10 character password
+>   remote-mediawiki tests: use test_cmp in tests
+>   remote-mediawiki tests: guard test_cmp with test_path_is_file
+>   remote-mediawiki tests: change `[]` to `test`
+>   remote-mediawiki tests: use "$dir/" instead of "$dir."
+>   remote-mediawiki tests: use a more idiomatic dispatch table
+>   remote-mediawiki tests: replace deprecated Perl construct
+>   remote-mediawiki tests: use inline PerlIO for readability
+>   remote-mediawiki tests: use CLI installer
+>   remote-mediawiki tests: annotate failing tests
+>
+>  contrib/mw-to-git/git-mw.perl                 |   2 +-
+>  contrib/mw-to-git/git-remote-mediawiki.perl   |   5 +-
+>  contrib/mw-to-git/git-remote-mediawiki.txt    |   2 +-
+>  contrib/mw-to-git/t/.gitignore                |   2 +-
+>  contrib/mw-to-git/t/README                    |  10 +-
+>  contrib/mw-to-git/t/install-wiki/.gitignore   |   1 -
+>  .../t/install-wiki/LocalSettings.php          | 129 --------------
+>  .../mw-to-git/t/install-wiki/db_install.php   | 120 -------------
+>  contrib/mw-to-git/t/t9360-mw-to-git-clone.sh  |   8 +-
+>  .../t/t9363-mw-to-git-export-import.sh        |  15 +-
+>  contrib/mw-to-git/t/test-gitmw-lib.sh         | 159 +++++++++---------
+>  contrib/mw-to-git/t/test-gitmw.pl             |  22 ++-
+>  contrib/mw-to-git/t/test.config               |  23 +--
+>  13 files changed, 129 insertions(+), 369 deletions(-)
+>  delete mode 100644 contrib/mw-to-git/t/install-wiki/.gitignore
+>  delete mode 100644 contrib/mw-to-git/t/install-wiki/LocalSettings.php
+>  delete mode 100644 contrib/mw-to-git/t/install-wiki/db_install.php
+>
+> --
+> 2.28.0.297.g1956fa8f8d
+>
+>
 
-"git" has more than one concepts that relate to the word "filter",
-like the one that are used to create lazy clone, the "filter-branch"
-command, "smudge/clean" filter, "textconv" filter used by the diff
-and grep machinery to name some.
-
-Make sure you do not accidentally squat on a good-sounding but
-an overly generic name.  ref-reachability-filters.txt perhaps?
-
-> diff --git a/Documentation/filters.txt b/Documentation/filters.txt
-> new file mode 100644
-> index 0000000000..4ee17afc01
-> --- /dev/null
-> +++ b/Documentation/filters.txt
-> @@ -0,0 +1,3 @@
-> +When combining multiple `--contains` and `--no-contains` filters, only
-> +references that contain at least one of the `--contains` commits and
-> +contain none of the `--no-contains` commits are shown.
+--8323328-1787123509-1600285608=:56--
