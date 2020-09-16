@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C11C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7486C433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:24:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 491042223C
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:21:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DBDB22241
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:24:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="spujKA1/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fnk+Q2f7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726681AbgIPMUK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 08:20:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51580 "EHLO
+        id S1727330AbgIPMWK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 08:22:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726851AbgIPKcf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726847AbgIPKcf (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Sep 2020 06:32:35 -0400
 Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2274FC06121D
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:13 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id x23so2234128wmi.3
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1638C061356
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id w2so2247994wmi.1
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZD6bk0tMCA49bNP+rQRBgjc4vQfzxXu+zU8Yd0pxDqk=;
-        b=spujKA1/zBRb5J/h1AqQsGSYrzlgjPTLxfn9P1M29OPrjlxapQCIW45Tpbg2cKFSnL
-         i5GINHN9xH+CXql0KkmWJMDFGLw0Q94fpPxWkpOuaQgkncfq8TGZxStYdevZ1IaHC73O
-         A7jL/K/VQsdAjyfY5eQfYnL4xpvNWOqPSPjln8/032JtK9IQhBShlW2Tm+51I4+NppY5
-         AwWGgyS/Jdl/hGo5Yyycaug8GfVLG+COE+o/WKVKCJuF6BiNmJ53fOLHExe2S2Ym3QN4
-         bQ2C7x2iqnjKF0yFriwfsc2wKqSoDF8UFE1kRG1z1Y82TibsUaYZScfrFn46IBCqVFqg
-         kX+g==
+        bh=k7Y9sPiZ1Y8YmAdku6q80S+Hjg5mNS1POXOalY8tmXM=;
+        b=Fnk+Q2f7Iub+oGuha+WbOREJ+p463sQ3eRzkyOjZB7r6vvZJJWNaerF4Y/MVIn0ND3
+         cg3mkEfsvPukNHjzyWiEWqHYUgDL5AbUzPvmb/8SSWKZkQfiZgQHQt+S3rnuBoXuHwfK
+         BTmALF0rEmAoB5ubloUNke8+K0b6vmIrJwFKc/DndkXczP192hggfJvAgbBoTWkGoUY3
+         7XJUMvpS8u7pqC+I3VLnWoWZiExp2/DeDIo15BZbYTG99m0BH4lq9pbDmcoLaAlOie2C
+         qGvvDmq+czFRQ1O5JJWKl7ngxOTdIKqLFCtNinDk1tTzGfATlqxzdWy0iKbbityAQrwY
+         SFjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZD6bk0tMCA49bNP+rQRBgjc4vQfzxXu+zU8Yd0pxDqk=;
-        b=HtcmCyHQaSJBgsYRvJpLJc+CjRqSyWTvNNvexAxLi6uzxBCRf/Vc15f/KaZMHb3UMS
-         qKOJ5af/lzyv/ZnLkriGjqNdntt4nEzitg0Qppu1EMxGU1EP3mTkeOiOu4AuGZEfaJi7
-         8cGJngOC9yt0XhpBmWad/yOg0jJY81CTXo7AIl/RaQFUWGbUFq/thpF7KLNBca3MGAEK
-         wcxSK0AxlkqA2B+t+s6fK9Wqj1QW/UzoggP615Xckl+XLZnW4TMx2uqo3HYNmQZHjfo6
-         JZKM1j/0drrblgFTbpNeMOA1igMmIntzFzD2xDw2MnnJKtleKmW7bojjWUdmxkkvfj04
-         hMpQ==
-X-Gm-Message-State: AOAM531v++vueneHbmpn+EWw011gRTw36pQ5c6IVezy6FxnSagQkXvI8
-        GF/KN7KibORR/DA9gzElVs4O71IVHHNXkw0p
-X-Google-Smtp-Source: ABdhPJwRgRIWF3MxHAWPmce9UpUc4ATES/PmWWRX17+OBCpJE3xjkw1FLmmFlHR5mf2kvbVsK8xp0w==
-X-Received: by 2002:a1c:5641:: with SMTP id k62mr4192235wmb.13.1600252211528;
-        Wed, 16 Sep 2020 03:30:11 -0700 (PDT)
+        bh=k7Y9sPiZ1Y8YmAdku6q80S+Hjg5mNS1POXOalY8tmXM=;
+        b=AR9bBtp3rH0lnSaDn/4K6kVthkqgEShpnBzJpmQJewclsBmba3FwMxy/jisP2cu+zl
+         JVSmW+zi+xqxfxrlVS7G6iq/JCoJCmv0KkuBFaEQ07cIGLySApHuUMnbu1feRMBtoocJ
+         Nn2dmEJmGobyKK0c5DGJdoAC8FmfSPGwq4uXEBcvAsB8ovqLpYJsPpvwbHUuVf3/A0c4
+         3D3rBCXhAbeLplnghS7lPjjmKqtReQl/2y83Hf1KtXU2CMOvCISiF1kB1ooS78Gu2jlh
+         xo5/AYH4Wmd8YSa3NsIA55r2Ta3ZOnqoliqfllwD3V7+YgHxUdM/6fPFZXvA2BpGkatW
+         3xvw==
+X-Gm-Message-State: AOAM531Pz/7EU5BjqxhpQlOJk8aJuf8aJYn7qnNDaQOsGFxVw1ZM8Q4G
+        EqAEOTA/Hb1KmbGVR+sdjKkxuQXowMw4EyBe
+X-Google-Smtp-Source: ABdhPJzq3UI0zTf0birCnM7gyo5Tm8N0wIcW/tN7qs/a7YGGcUeoB3KnaUo0GzSame9B9jLlvBN0Lg==
+X-Received: by 2002:a1c:bdd4:: with SMTP id n203mr3912650wmf.119.1600252208344;
+        Wed, 16 Sep 2020 03:30:08 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.10
+        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 03:30:10 -0700 (PDT)
+        Wed, 16 Sep 2020 03:30:07 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Simon Legner <Simon.Legner@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 12/15] remote-mediawiki tests: use inline PerlIO for readability
-Date:   Wed, 16 Sep 2020 12:29:15 +0200
-Message-Id: <20200916102918.29805-13-avarab@gmail.com>
+Subject: [PATCH 09/15] remote-mediawiki tests: use "$dir/" instead of "$dir."
+Date:   Wed, 16 Sep 2020 12:29:12 +0200
+Message-Id: <20200916102918.29805-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
 In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
 References: <20200916102918.29805-1-avarab@gmail.com>
@@ -82,58 +82,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the use of the "open" pragma with a three-arg open in the
-places that actually care about UTF-8, while leaving those that
-don't (the config parsing).
-
-Unlike the previous "encoding" pragma change this isn't needed for
-compatibility with anything. I just think it's easier to read code
-that has localized effects than code that changes global settings.
+Change UI messages to use "$dir/" instead of "$dir.". I think this is
+less confusing.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/mw-to-git/t/test-gitmw.pl | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ contrib/mw-to-git/t/test-gitmw-lib.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
-index 71e5b06235..c5d687f078 100755
---- a/contrib/mw-to-git/t/test-gitmw.pl
-+++ b/contrib/mw-to-git/t/test-gitmw.pl
-@@ -25,7 +25,6 @@
- use MediaWiki::API;
- use Getopt::Long;
- use DateTime::Format::ISO8601;
--use open ':encoding(utf8)';
- use constant SLASH_REPLACEMENT => "%2F";
- 
- #Parsing of the config file
-@@ -86,7 +85,7 @@ sub wiki_getpage {
- 	# Replace spaces by underscore in the page name
- 	$pagename =~ s/ /_/g;
- 	$pagename =~ s/\//%2F/g;
--	open(my $file, ">$destdir/$pagename.mw");
-+	open(my $file, ">:encoding(UTF-8)", "$destdir/$pagename.mw");
- 	print $file "$content";
- 	close ($file);
- 
-@@ -171,7 +170,7 @@ sub wiki_getallpagename {
- 				cmlimit => 500 },
- 		)
- 		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
--		open(my $file, ">all.txt");
-+		open(my $file, ">:encoding(UTF-8)", "all.txt");
- 		foreach my $page (@{$mw_pages}) {
- 			print $file "$page->{title}\n";
- 		}
-@@ -184,7 +183,7 @@ sub wiki_getallpagename {
- 				aplimit => 500,
- 			})
- 		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
--		open(my $file, ">all.txt");
-+		open(my $file, ">:encoding(UTF-8)", "all.txt");
- 		foreach my $page (@{$mw_pages}) {
- 			print $file "$page->{title}\n";
- 		}
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+index a466be8f3f..aa04ebfd0f 100755
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -343,10 +343,10 @@ wiki_install () {
+ 			"http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/"\
+ 			"$MW_FILENAME. "\
+ 			"Please fix your connection and launch the script again."
+-		echo "$MW_FILENAME downloaded in $(pwd). "\
++		echo "$MW_FILENAME downloaded in $(pwd)/ "\
+ 			"You can delete it later if you want."
+ 	else
+-		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)."
++		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)/"
+ 	fi
+ 	archive_abs_path=$(pwd)/$MW_FILENAME
+ 	cd "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
 -- 
 2.28.0.297.g1956fa8f8d
 
