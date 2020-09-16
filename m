@@ -2,95 +2,91 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EFFC433E2
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 22:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B6FBC433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 22:11:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D2E121D90
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 22:04:26 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ioulUYE2"
+	by mail.kernel.org (Postfix) with ESMTP id 3C83021941
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 22:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726222AbgIPWEJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 18:04:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54299 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbgIPWEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 18:04:05 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C83AEE6E4B;
-        Wed, 16 Sep 2020 17:25:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZQt/vKL18kdokN87gsYUmIGPyEY=; b=ioulUY
-        E23rwWj3eArJF5ONYnhUGzuVZJFA5Ve4yZ4aw580Fa+zKUmsGuuibSx0zreZUAra
-        Fj1ua2Q9dPe1jJxXeARHLxlXUt/9iP8njf1565DEO7BTfw+EM4pGGrhmFStkwf/U
-        dIYmlW6qaIGjwMSvJwZthJNDwmtqv4U91aMfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MPukhR8Svpm5VzTJFwFA9YUl8ttzCmv7
-        OzHQk1hsgWEJeY1yf8Err1e874oe+CA2DQLG9bP4PmuX2X3sEIpW4btbsPHFuc1Y
-        9L7sjQ1pbbgAyfe+IrhcZgV80J41DBqPrASS67F2Y1Cyg4ddc9/0S4YPzK/jjM3G
-        cm3Ss0wJMEc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BEB7BE6E4A;
-        Wed, 16 Sep 2020 17:25:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B4A1FE6E49;
-        Wed, 16 Sep 2020 17:25:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+        id S1726279AbgIPWLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 18:11:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59218 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725858AbgIPWLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 18:11:52 -0400
+Received: (qmail 26866 invoked by uid 109); 16 Sep 2020 21:11:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 16 Sep 2020 21:11:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1054 invoked by uid 111); 16 Sep 2020 21:11:51 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Sep 2020 17:11:51 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 16 Sep 2020 17:11:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/5] t/test-terminal: avoid non-inclusive language
+Subject: Re: [PATCH 3/5] t3200: avoid variations of the `master` branch name
+Message-ID: <20200916211150.GA617237@coredump.intra.peff.net>
 References: <pull.734.git.1600279853.gitgitgadget@gmail.com>
-        <3b4ae48d4a3a7e2d6aae259ead19b6643d2533e8.1600279853.git.gitgitgadget@gmail.com>
-        <xmqqft7hwhyd.fsf@gitster.c.googlers.com>
-Date:   Wed, 16 Sep 2020 14:25:42 -0700
-In-Reply-To: <xmqqft7hwhyd.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 16 Sep 2020 14:05:30 -0700")
-Message-ID: <xmqqo8m5v2g9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+ <2f1d0a2df41f567bc1a8bc446c26e1cb8b6dc36c.1600279853.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D87ACE2-F863-11EA-A98C-843F439F7C89-77302942!pb-smtp21.pobox.com
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2f1d0a2df41f567bc1a8bc446c26e1cb8b6dc36c.1600279853.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 16, 2020 at 06:10:51PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> In the ongoing effort to make the Git project a more inclusive place,
->> let's try to avoid names like "master" where possible.
->
-> The two sides of a PTY are called 'master' and 'slave', and I
-> understand there is a push to move away from these words, but
-> calling one side with an invented name that is used by nobody else
-> in the context of talking about PTY, while keeping the word used to
-> call the other side, would lead to confusion.
->
-> A better change is to drop "master_" altogether without replacing
-> the word with anything, and call them just "input", "output" and
-> "error".
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> To avoid branch names with a loaded history, we already started to avoid
+> using the name "master" in a couple instances.
+> 
+> The `t3200-branch.sh` script uses variations of this name for branches
+> other than the default one. So let's change those names, as
+> "lowest-hanging fruits" in the effort to use more inclusive naming
+> throughout Git's source code.
 
-If we really want to use a replacement word for 'master' instead of
-just dropping, I may be inclined to suggest 'parent', in the hope
-that PTY implementors will start following what Python folks are
-doing, at which time they will give us a synonym for 'slave' method
-called 'child' we can use.
+A few of these are kind of odd after only this patch. E.g.:
 
+> -test_expect_success 'git branch -M master2 master2 should work when master is checked out' '
+> +test_expect_success 'git branch -M main2 main2 should work when master is checked out' '
+>  	git checkout master &&
+> -	git branch master2 &&
+> -	git branch -M master2 master2
+> +	git branch main2 &&
+> +	git branch -M main2 main2
+>  '
+
+The point of "master2" is that it wasn't "master". But now "main2" is
+kind of a weird name, because it has a "2" but isn't related to
+anything. If we eventually move the base branch name to "main", they'll
+line up again.
+
+I'm on the fence on whether this matters. It's a temporary
+inconsistency, assuming we eventually move to "main" as the default. We
+_could_ push this change off to that patch, too, but it does make it
+more noisy.
+
+But it may be that the connection to "master" here is not all that
+important in the first place. And so perhaps an even better patch (both
+at this stage and in the long run) is to give it a more descriptive
+name. If all of these could just be "branch2", "branch3", etc, then that
+alone would be better than "master2", IMHO. I'm not sure if the shared
+"ma" prefix matters, though (I know in some tests it does because we're
+testing glob matching).
+
+Again, I'm on the fence whether this is exploring too deeply. It's an
+opportunity to improve the tests while we're changing them. But at the
+same time, I doubt anybody cares too much overall, so it feels a bit
+like make-work.
+
+-Peff
