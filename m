@@ -2,139 +2,112 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08CBEC43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17C59C433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 21:01:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB92921941
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:56:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAFA82087D
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 21:01:16 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kA1X+RlI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726553AbgIPU4c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 16:56:32 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:53120 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726549AbgIPQwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 12:52:40 -0400
-Received: from host-89-241-187-35.as13285.net ([89.241.187.35] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1kIZAj-0005UC-7e; Wed, 16 Sep 2020 16:16:37 +0100
-Subject: Re: Git in Outreachy?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20200828065609.GA2105118@coredump.intra.peff.net>
- <CAP8UFD2rpNhDhyHdQNxS-KJZgcumsCpK_JQ5koCqXJd70s-+_w@mail.gmail.com>
- <20200903060041.GH4035286@google.com>
- <a3613b9d-730a-7a4b-c84b-c833490fcea6@iee.email>
- <nycvar.QRO.7.76.6.2009060933480.56@tvgsbejvaqbjf.bet>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <5be2fca8-2dbd-115e-b3bb-5783daeba4a3@iee.email>
-Date:   Wed, 16 Sep 2020 16:16:37 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726896AbgIPVBN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 17:01:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726390AbgIPQaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 12:30:24 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7DCC061352
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:05 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id x14so6286696wrl.12
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=p53YYIlZ9Ykouq3lNDEqa/eH2lNKrF5GXZRj4455gEw=;
+        b=kA1X+RlIcRzc1ms5LmOIgQyg57NsMLh21h3HsjOZSirVvjqQgE34t+1iGlbmlWnng3
+         irAxYWMoUX2Hu+jBryPf/qr2i9FzUQHPad4yHRtLDv+q7uGE0hlTKkHDx4hTrm1aPSDP
+         unI63ak1JysHo8CfHrrCN98ZTXInnmTM6xvv9OO/qF4jUWx6lEMwtXXzNzydE6RhvOkS
+         SLDqTUE6NKz6qJBLDm8yMwPoVjF3YwZZgggmgPYTqev4hTDPEtvtwpiUyF9/3CN3q0ET
+         xHtarhHb2w2PrcpCOlgQyiSiycEq+rTm8EB3axnH48etnTOQO0oyIFOYLEzBrsLr0BK+
+         HCVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=p53YYIlZ9Ykouq3lNDEqa/eH2lNKrF5GXZRj4455gEw=;
+        b=ez26A39gk4CcaJD2uOcY1hixHxHscGBz93VM7hdFPP37dep+Zfp1xEfhNY1MyrLqgE
+         ASUSSSoLjKKg4VVg22m15NcnTObO5dS/No4nEHGmdJKpBGNiZNHQ6cxT9PP99B09JQIU
+         ukkQZOSc9Ooh6pk6OCiq01IPrVc/+hOjrnIeJHNcchiiF1uMGXmtlcpEzB6ZqQeUI/1g
+         KUsf2PMHwWpDd2s6xym3aAm2/2k8n5LpyMwsEFb9yY6XfjvSIiGafPMdHERUIce9AeC9
+         fQao91MS0/1uu6xLkJZETkGMq6WHNh+C1+2gQltmx+/4XeAt0ul2m9LdYidg/szH81bu
+         3KJw==
+X-Gm-Message-State: AOAM533O0Pxb8Tc9A4bS1Wh87uyNP5UYSrcRX7U3cdS9kjylQQ57+3a+
+        8QuubpZTNX7qzc+5l0FAH74Oq4MnE1Ny0PhN
+X-Google-Smtp-Source: ABdhPJzPO/cyWJlX5egt3OrtMOR54gcGrMHiU6i+icnf4rX2aAoHLNFn5nmfGG6WCUUqlOVIhkmGLA==
+X-Received: by 2002:a5d:6404:: with SMTP id z4mr27268774wru.423.1600252204309;
+        Wed, 16 Sep 2020 03:30:04 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2020 03:30:03 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>,
+        Simon Legner <Simon.Legner@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 05/15] remote-mediawiki tests: use a 10 character password
+Date:   Wed, 16 Sep 2020 12:29:08 +0200
+Message-Id: <20200916102918.29805-6-avarab@gmail.com>
+X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
+In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
+References: <20200916102918.29805-1-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2009060933480.56@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Sorry I've not been able to attend to the list discussions recently.
+In more recent versions of MediaWiki this is a requirement, e.g. the current stable version of 1.32.2.
 
-On 07/09/2020 19:49, Johannes Schindelin wrote:
-> Hi Philip,
->
-> On Fri, 4 Sep 2020, Philip Oakley wrote:
->
->> On 03/09/2020 07:00, Jonathan Nieder wrote:
->>> Christian Couder wrote:
->>>
->>>> I would appreciate help to find project ideas though. Are there still
->>>> scripts that are worth converting to C (excluding git-bisect.sh and
->>>> git-submodule.sh that are still worked on)? Are there worthy
->>>> refactorings or improvements that we could propose as projects?
->>> I think setting up something like snowpatch[*] to run CI on patches
->>> that have hit the mailing list but not yet hit "seen" might be a good
->>> project for an interested applicant (and I'd be interested in
->>> co-mentoring if we find a taker).
->>>
->>> Some other topics that could be interesting:
->>> - better support for handling people's name changing
->>> - making signing features such as signed push easier to use (for
->>>   example by allowing signing with SSH keys to simplify PKI) and more
->>>   useful (for example by standardizing a way to publish signed push
->>>   logs in Git)
->>> - protocol: sharing notes and branch descriptions
->>> - formats: on-disk reverse idx
->>> - obliterate
->>> - cache server to take advantage of multiple promisors+packfile URIs
->>>
->>> Jonathan
->>>
->>> [*] https://github.com/ruscur/snowpatch
->> A suggestion with high value for the Windows community
->> - mechanism to map file names between the index and the local FS, should
->> a repos file/path name already be taken, or invalid. [1]
-> This suggestion keeps coming up, but I cannot help but highly doubt that
-> it will prove useful in practice: if your source code contains a file
-> called `aux.c`, chances are that your build system lists this file
-> specifically, and it won't do at all to "magically" rename it to, say,
-> `aux_.c` during checkout.
+The web installer now refuses our old 9 character password, the
+command-line one (will be used in a subsequent change) will accept it,
+but trying to use it in the web UI will emit an error asking the user
+to reset the password. Let's use a password that'll just work and
+allow us to log in as the admin user.
 
-I'd disagree with that line of reasoning in the sense that if someone is
-on Windows wanting to 'view' a repo that was developed on Linux, with
-colons in pathnames, and filenames like aux.c we shouldn't be
-deliberately de-include them just because of those file/pathname
-'accidents. I accept that the build system probably won't be working for
-their Windows environment (how could it be?), but, if possible, we
-should be able to support them, in some positive way. In our distributed
-collaborative environment we can trip over the user's  'your file / your
-build' tag.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ contrib/mw-to-git/t/test.config | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> In contrast, I think a much more useful project would be to relax the
-> `core.protectNTFS` protections to cover only the files that will be
-> written to disk, and not bother even checking the files excluded from a
-> sparse-checkout for invalid file names on NTFS.
-
-That's a valid base method for all the NTFS valid file and path names.
-
-The next level could be a mechanism for path and file name adjustment,
-at least for a _copy-out_ step (without ability to 'git add' / check
-back in).
->
-> This is trickier, of course, than meets the eye: we would still want to be
-> _very_ careful to ensure that the unchecked file names will _never_ make
-> it to the disk. And, slightly related, the question whether checking for
-> `.git` (or `GIT~1`) would be likewise weakened, or whether that is too
-> dangerous to allow even in `skip-worktree` entries.
-
-Agree that the security aspects of `.Git` etc must still be retained.
->
-> Not necessarily decisions you would want to burden a first-time
-> contributor with.
-
-True, but still worth recording as a useful Git project (and that there
-are a number of nuances within it!)
-
---
-Philip
-
-> Ciao,
-> Dscho
->
->> Philip
->>
->> [1]
->> https://github.com/git-for-windows/git/issues/2803#issuecomment-687161483
->>
+diff --git a/contrib/mw-to-git/t/test.config b/contrib/mw-to-git/t/test.config
+index b6fb0b3993..3ab56c7165 100644
+--- a/contrib/mw-to-git/t/test.config
++++ b/contrib/mw-to-git/t/test.config
+@@ -3,7 +3,7 @@ WIKI_DIR_NAME=wiki
+ 
+ # Login and password of the wiki's admin
+ WIKI_ADMIN=WikiAdmin
+-WIKI_PASSW=AdminPass
++WIKI_PASSW=AdminPass1
+ 
+ # Address of the web server
+ SERVER_ADDR=localhost
+-- 
+2.28.0.297.g1956fa8f8d
 
