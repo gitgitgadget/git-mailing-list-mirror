@@ -2,112 +2,119 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17C59C433E2
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 21:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90EDBC2BB84
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 21:05:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAFA82087D
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 21:01:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 282A8206BE
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 21:05:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kA1X+RlI"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="dN1GrvBU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726896AbgIPVBN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 17:01:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51222 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbgIPQaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 12:30:24 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7DCC061352
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:05 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x14so6286696wrl.12
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=p53YYIlZ9Ykouq3lNDEqa/eH2lNKrF5GXZRj4455gEw=;
-        b=kA1X+RlIcRzc1ms5LmOIgQyg57NsMLh21h3HsjOZSirVvjqQgE34t+1iGlbmlWnng3
-         irAxYWMoUX2Hu+jBryPf/qr2i9FzUQHPad4yHRtLDv+q7uGE0hlTKkHDx4hTrm1aPSDP
-         unI63ak1JysHo8CfHrrCN98ZTXInnmTM6xvv9OO/qF4jUWx6lEMwtXXzNzydE6RhvOkS
-         SLDqTUE6NKz6qJBLDm8yMwPoVjF3YwZZgggmgPYTqev4hTDPEtvtwpiUyF9/3CN3q0ET
-         xHtarhHb2w2PrcpCOlgQyiSiycEq+rTm8EB3axnH48etnTOQO0oyIFOYLEzBrsLr0BK+
-         HCVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p53YYIlZ9Ykouq3lNDEqa/eH2lNKrF5GXZRj4455gEw=;
-        b=ez26A39gk4CcaJD2uOcY1hixHxHscGBz93VM7hdFPP37dep+Zfp1xEfhNY1MyrLqgE
-         ASUSSSoLjKKg4VVg22m15NcnTObO5dS/No4nEHGmdJKpBGNiZNHQ6cxT9PP99B09JQIU
-         ukkQZOSc9Ooh6pk6OCiq01IPrVc/+hOjrnIeJHNcchiiF1uMGXmtlcpEzB6ZqQeUI/1g
-         KUsf2PMHwWpDd2s6xym3aAm2/2k8n5LpyMwsEFb9yY6XfjvSIiGafPMdHERUIce9AeC9
-         fQao91MS0/1uu6xLkJZETkGMq6WHNh+C1+2gQltmx+/4XeAt0ul2m9LdYidg/szH81bu
-         3KJw==
-X-Gm-Message-State: AOAM533O0Pxb8Tc9A4bS1Wh87uyNP5UYSrcRX7U3cdS9kjylQQ57+3a+
-        8QuubpZTNX7qzc+5l0FAH74Oq4MnE1Ny0PhN
-X-Google-Smtp-Source: ABdhPJzPO/cyWJlX5egt3OrtMOR54gcGrMHiU6i+icnf4rX2aAoHLNFn5nmfGG6WCUUqlOVIhkmGLA==
-X-Received: by 2002:a5d:6404:: with SMTP id z4mr27268774wru.423.1600252204309;
-        Wed, 16 Sep 2020 03:30:04 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.30.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 03:30:03 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 05/15] remote-mediawiki tests: use a 10 character password
-Date:   Wed, 16 Sep 2020 12:29:08 +0200
-Message-Id: <20200916102918.29805-6-avarab@gmail.com>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
-References: <20200916102918.29805-1-avarab@gmail.com>
+        id S1728474AbgIPVFl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 17:05:41 -0400
+Received: from mout.gmx.net ([212.227.17.22]:40189 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726285AbgIPQOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 12:14:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1600272865;
+        bh=U/cdYT2lkjnPSrV7Bdpjy1bGEs+Vn9t7sgzBH9oj0+A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=dN1GrvBUsaJbqV1Si08f+u8/tZoEZ85wacYdoASSulbLFFKI8k/R4NDRQUfjQ6x9h
+         IVf1vPazL0kt5s5wZVLnJRtpBiSF8hUvOWeOGo4Z5P2u1tli2m6bIQvbO5w6cdZwwO
+         hWjUsgzqy1Wgo5p8iKi24QvmFjPTY1xGodlwKLkw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.239.213] ([213.196.213.124]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOzSu-1k8i8718Hc-00PQxF; Wed, 16
+ Sep 2020 14:47:55 +0200
+Date:   Wed, 16 Sep 2020 14:47:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 0/7] push: add "--[no-]force-if-includes"
+In-Reply-To: <20200913145413.18351-1-shrinidhi.kaushik@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009161437170.56@tvgsbejvaqbjf.bet>
+References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com> <20200913145413.18351-1-shrinidhi.kaushik@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WkxIQGjxCWqzWELsHS7c/Bqftdcw8uwP3C3R1Ec0nb006++pQlo
+ rpml8S+3fRTaQQlNjP+tCppvTxWc3FWgv3KQoIXk4G999IZFQeV9uJGEM9GIFdW4EionjCO
+ Gd/Q1PfAaS1hux/DJeJzV1w7fzCpLVAA7kAmkCLA4U6XP3SPPDADyDvpqrXfXLQNZLSwACj
+ IrhrZmFhUVyFIQwa64tfw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4qspvnuTBl0=:aZQY3axNhG9S3Dc1JwsuXM
+ f+dmSrZeQTgecBzBMxCGZ3do695rk9hpyDytg0PGYfBzb9n02Gf0ubWerGgceYK+VYAo7UZD1
+ d+JzP0hrrvBj3CT1gj6ToM0kbgpSBhOXkx4FMW3sKWCK2YcQ/8qrQ3aXXNSJvdArA35vIkP/d
+ oyXc3ftAE1EytZAUA+uD3lIR6TIbjL++bdXrUi73GK2nvT6oz9rghX12vCzojccvTW4DBf5hl
+ pIOngbu+mLkhXxWRQHkhf/qAOcOJ917T6+R2Cej4vHw4H0Fx/hPdWLtXFnLl+uK20pK3D0Ad+
+ aPbZv8t1xOnFiSbawDUUI1dwp5c9SN4L3fetUm9PR/K3kbi2WpKrg+3o4MBfl63u3JqORp+v+
+ L8+Eq6kPbocBHBXseo/8sCFsTgiUOd1HObWPCz1Xq26mvsYomrrSotZPpO7uApsUV3qTjw4GZ
+ CYRt8/FuQA1fC6RGFE6FADXaQU7zbwxni6yQxO7nn2maZKTErpTjnqaCeHv4Fd8Gm1Z0ma8vl
+ bTy0rOjmKMxo/PgCpEOjVrRNReJkFvYhMgDYTii3zPNRfVYgMLQ/y89aBSIyCUWxUCR35SP3C
+ R9c1+k5wLDU4s11jKyUHCJd8H7ig+nfP6L3PLiSM3PJFd63+TsxSdqqc3CkEuESNfHcRgnYEE
+ W3N0EcTHrQ+PbvXo939d2nFlFWAPCwwLXkgXK0aXQV2UOG1PU4n0RpnjTvjhOtrsYR/q+/tXy
+ blG4FOyh/4vRlJVL2On0qpOrlY88foR0e3dFKfCeQpm2o8owQGinLvyS/bihpFwHA3f2p0AcJ
+ tDHWMUm5OFXPI8zoi8fZTLoIqV+8uSCzQG6EuRIQoBFcj+O/tNkwKgpGfd06gtGweI/0MCAe/
+ iWx00jn3ZQHhXCpMGULSMDnJEKBlc3FE6j6+hk5antz6GlYeuzmpr6+vya+qGKi5fg+cK+jrB
+ +f8XR0Vo8/d46AG6zccGrws3Rh8XD6k2Mf0k4PxDA+FTdqBhybRhbMFvs2r1OZgSQwu1xQ36z
+ OaCrZ2pxHgFBjT6ZEqcbyxMQ9/ixSneNFPrEqA53/mLLKlMeEodKF8t2X+R9vGkh30xWq7hxU
+ okttUDFqqmS71i4oJBus9WxrETTMRoTUcDYNYoaPIxbtz4QfWGT7CwB9Goh58WFx2HJ0UQ2Ke
+ W/B6aKCqpBYBJfyMpbt5/5YRCO9wwj37hPaLMv/pt3fCmVoUMBR1od1RIoWHSS7vW7Mib1AH+
+ +Cz1n9rzMVP++3FbH9HhiaxWTFqcy0pxpB2Cxjw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In more recent versions of MediaWiki this is a requirement, e.g. the current stable version of 1.32.2.
+Hi Srinidhi,
 
-The web installer now refuses our old 9 character password, the
-command-line one (will be used in a subsequent change) will accept it,
-but trying to use it in the web UI will emit an error asking the user
-to reset the password. Let's use a password that'll just work and
-allow us to log in as the admin user.
+On Sun, 13 Sep 2020, Srinidhi Kaushik wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- contrib/mw-to-git/t/test.config | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Add a new option: "--force-if-includes" to `git-push` where forced
+> updates are allowed only if the tip of the remote-tracking ref has
+> been integrated locally, by verifying if the tip of the remote-tracking
+> ref -- on which a local branch has based on -- is reachable from at
+> least one of the "reflog" entries of the branch about to be updated
+> by force on the remote.
+>
+> This option can also be used with `--force-with-lease` with setups
+> where the remote-tracking refs of the repository are implicitly
+> updated in the background to help prevent unintended remote
+> overwrites.
+>
+> If a local branch is based on a remote ref for a rewrite, and if that
+> remote-tracking ref is updated by a push from another repository after
+> it has been checked out locally, force updating that branch to remote
+> with `--force-with-lease[=3D<refname>[:expect]]` without specifying the
+> "<refname>" or "<expect>" values, can cause the update that happened
+> in-between the checkout and forced push to be lost.
 
-diff --git a/contrib/mw-to-git/t/test.config b/contrib/mw-to-git/t/test.config
-index b6fb0b3993..3ab56c7165 100644
---- a/contrib/mw-to-git/t/test.config
-+++ b/contrib/mw-to-git/t/test.config
-@@ -3,7 +3,7 @@ WIKI_DIR_NAME=wiki
- 
- # Login and password of the wiki's admin
- WIKI_ADMIN=WikiAdmin
--WIKI_PASSW=AdminPass
-+WIKI_PASSW=AdminPass1
- 
- # Address of the web server
- SERVER_ADDR=localhost
--- 
-2.28.0.297.g1956fa8f8d
+Thank you for working on this! I gave this an incomplete look-over, and
+offered some suggestions that you hopefully find useful.
 
+> Changes since v2:
+>   * Removed configuration option for setting "--force-if-includes"
+>     with "--force-with-lease".
+>   * Broke up the patch into smaller commits.
+
+While the commits all seem to be compiling individually, I am not really a
+fan of introducing a function without a caller that shows how it is
+supposed to work. I'd rather see some incremental story, and in this case,
+I think if _I_ were to submit this patch series, I would probably have
+only two commits: one that extends the already-existing code path to turn
+that `use_tracking` flag into that `enum`, and the second patch which
+wires up the option, adds the documentation and the tests.
+
+However, please do not let my tastes dictate how you want to present the
+work, although I hope that my suggestion inspires you ;-)
+
+Ciao,
+Dscho
