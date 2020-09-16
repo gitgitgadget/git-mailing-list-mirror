@@ -2,161 +2,141 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B03E2C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90822C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:35:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DF7521941
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:28:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gYXpct6s"
+	by mail.kernel.org (Postfix) with ESMTP id 4CDEE2087D
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:35:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727098AbgIPU2E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 16:28:04 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49917 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727195AbgIPU1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 16:27:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1600288059;
-        bh=WJgzeBCxJ1gzocNvMUc+qrC+iOcmBKWDCdzKK+ieKYM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gYXpct6s9thMSoBe9d7ytR0ruURc7jS4GuLyGDvrvfMayEX4a3L0h1JVACgsCRYna
-         PDg4a7QaR4yqdeL+7/A2zXuB6NpIp1qRi25vZIxikCnFDxeEQcYapL+jU+vpTY7uWy
-         tt+Zv1LMJ+FH/U1id4zU8N8RR56WkNMzI18AUhs4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.17.239.213] ([213.196.213.124]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEV3C-1kFqzZ0UFW-00FyeP; Wed, 16
- Sep 2020 22:27:39 +0200
-Date:   Wed, 16 Sep 2020 22:27:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Git in Outreachy?
-In-Reply-To: <CAP8UFD0_75zR3xoBzbVZjgTY2+KvORLFNMZ36s8+m6KZyNTXPg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2009162206580.56@tvgsbejvaqbjf.bet>
-References: <20200828065609.GA2105118@coredump.intra.peff.net> <441bd08b-ca7d-5977-a455-c4c2a4bd4bc9@gmail.com> <nycvar.QRO.7.76.6.2009072051470.56@tvgsbejvaqbjf.bet> <CAP8UFD0_75zR3xoBzbVZjgTY2+KvORLFNMZ36s8+m6KZyNTXPg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726934AbgIPUfQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 16:35:16 -0400
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:35818 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726720AbgIPRMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 13:12:53 -0400
+Received: by mail-pj1-f66.google.com with SMTP id jw11so1865735pjb.0
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 10:11:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=adkHsSnP8cNGwlZtkYk1h0Vqe+FP2ZwNof053FSK0fM=;
+        b=k231p4jFZxGxfhdTmegPbPrYBbKJr4J8m+DN1yhJO6UYdGJzDQpmy+a+Vti+KYW1Ct
+         hbYHQFMyvfTrJIsOyJI+d7gSVu9TK4kArxINJ1gNp3JRMk3dlC1qPztQcqtqUFwu3dCM
+         6maQ8ox5kU21/hQLteklPqCXKhdguAoZWEIgWfr5KfrCNxYZaD+gHbwsAC45edFRnn5g
+         VvtR5u9AgtvHZZGDNcVTKZzub5pBjZ9MO3/3H7aAd0A64C8v6O0XZ9WLY1hrwWrsnjnB
+         KA3nkyioWQ9XQqhBUfT1R1PuRPAftLsJ23kHGvcuEDtqQj8M5QPmUHQFlGnPnD0VLXC7
+         buRA==
+X-Gm-Message-State: AOAM533dyEYKWL8DvuRUqgRXEbZZkeRdIxfgW1xejPCmkr6GltHRlAXc
+        X7RdyPgYgs9EzUCrZ/Y1YQ7uVcrkreBs+Q==
+X-Google-Smtp-Source: ABdhPJwgWKO5KcbFeQvlKKdhGEWqPwyK7QqT8O39b8stgCVvGibcDw/xBF4j5rDBWtztyNsU16/oDg==
+X-Received: by 2002:a17:90a:a60e:: with SMTP id c14mr4995790pjq.31.1600276317817;
+        Wed, 16 Sep 2020 10:11:57 -0700 (PDT)
+Received: from localhost.localdomain (50-125-94-129.hllk.wa.frontiernet.net. [50.125.94.129])
+        by smtp.gmail.com with ESMTPSA id v8sm552043pgg.58.2020.09.16.10.11.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2020 10:11:57 -0700 (PDT)
+From:   Sean Barag <sean@barag.org>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, gitgitgadget@gmail.com,
+        johannes.schindelin@gmx.de, sean@barag.org
+Subject: Re: [PATCH 3/4] clone: validate --origin option before use
+Date:   Wed, 16 Sep 2020 10:11:51 -0700
+Message-Id: <20200916171151.1890682-1-sean@barag.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <xmqq1rj8nj47.fsf@gitster.c.googlers.com>
+References: <xmqq1rj8nj47.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:eCOg6GNYW5hEPnp7rRbJ5wRgKJPjyGL4rWYzch7IXeaWgL8A0i8
- Zt4zJQqjfcj7M08s9zlbGd4Z5LU2SNkDJD+VAJmGU7b4/0+xEf3AcuthfVdZ0DstmqQaD+e
- Z8Ey3a5znKApk6q2JNaBwQslbsWS4J3udNMpaI9UEadxfmcgF9py5VJN30H5h8I6xmrIo/7
- 1ZWv7bcxipLsGIsjUy/Xw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ka6Fih9yLfM=:nc9fQlXrGqYH0gZGIGvdwi
- 1hn47lQBhHxuJoQPzaRQwCLP8Q81pqMvaT/fbDRFlTnCDeFKx/LlG2ys3SxBFyI6/BAn8NZxp
- Sz385eDCTQql+rx+cncPkWs2qei/VqKviG9YtYI0NT1CkS5sa9jNfLKT8FV9TNeyLxvwnG+6I
- ea7rmVMdytNM+Q8ebB+XYBQnR8dE3pfFoCd+w4cyMhmzeLzJKtGdEN98Vac64+FSpoj00I+7C
- zMFD7L6LA7R79occcXUqzzixIY3ioE16VN7j+0eBWW0WPdH0FeNeKkttFy3SMCn2EFB/bP7vi
- 2uEuYMf91EWIXaH+nZuCPQJrtPswA7HvSCKtHhnV6YhNdtLnUdQ9vBntGjhzFHpa2CL9gYbUR
- Vi95UArHBZtLlG+5bkx2BA6zHfDuqcrqv8Pq6hErDB7tDcLfrYCmzEIuTR7plNK+DuS00ofOp
- RWwgFViB6KwJZ+uJ0uHefHx0/OkNq7m+QCYtuTx+wcKUdqerHe4qeuXK1JQLYCg35HwOYa/r6
- vGiGFVi+pK92yCwQkhe0AYh4TE+NxosArsvDJ9Y8WILm/TDGxMQGwhJMYYqKm/jelBZHGUGg9
- P3bJdfJR1qtVY4WjB6pA5J7FLxH8zHgI1QrZ+oeGyJVGh9n1RnetigasnohHlzFGVSL7fkuDG
- TsCcftkPb3kYDyJbPyKQQfEbu150yZfVUAa3dbJneEWYGLE0d0ElPF1yT3qbQJOuqmhe/OI2s
- I9E38t2yuLVXrTxfoxqn+agnYlh05UtD3O+HTY0kOfwfB3CN2FrZFMT3bKo0lmhc+3Zhkda7q
- CXEYcL8dUIVXBD/WFkpptXhJh/30dglKem/6HrPOH8FOJS0rvh9thH9guKCUPHz8cGXxW62vM
- j+ZbfSEzR3ViE/sseiYu/lqX8GEfU/8vZn3MxP6DO7J7oVyQICIYl4+maV5+mO94kr82SBgFT
- KEYkniGiDr8VtuafGvxc2G54yMgsSOHuOr/XvJf4so6Yo2JORDK/B7/fua27NjktmjMdybJVl
- 6wB7JixPbVeeL4kl8ZdPxIBHPO/M4lcn+KuufEuE6wrIRKC5aqkpIlUF1taeUhI+Fqh2IOok8
- a7TgdS6iW3dQjSP8FMkw4/tD8/LudYbLWnExSesnsQa2832oeS8yGpfaaNeO+cECe2QQzy3IZ
- 6WA/T+rGkN3Fx4G/Cs/Mmh3BtBX3C9qTP4ZNm+FuMZz5/Pynf1rmT1S8wYmPlFpS7GGPzB5Yz
- HZU8qisPpPp6J6RFSoYlHxQ89rxionubgazKKIQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
-
-On Wed, 16 Sep 2020, Christian Couder wrote:
-
-> On Mon, Sep 7, 2020 at 8:55 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > On Mon, 7 Sep 2020, Kaartic Sivaraam wrote:
+On Fri, 11 Sep 2020 at 13:39:20 -0700, Junio C Hamano writes:
+> > From: Sean Barag <sean@barag.org>
 > >
-> > > On 28-08-2020 12:26, Jeff King wrote:
-> > >
-> > > > I would appreciate help to find project ideas though. Are there
-> > > > still scripts that are worth converting to C (excluding
-> > > > git-bisect.sh and git-submodule.sh that are still worked on)?
-> > >
-> > > I think Dscho's e-mail linked below gives a nice overview of the
-> > > various scripts and their likely status as of Jan2020:
-> > >
-> > > https://lore.kernel.org/git/nycvar.QRO.7.76.6.2001301154170.46@tvgsb=
-ejvaqbjf.bet/
-> > >
-> > > I'm guessing only the status of submodule has changed as it's being
-> > > worked on now.
-> >
-> > No, not quite. The `git-merge-*.sh` ones I called "trivial" are alread=
-y
-> > being worked on by Alban Gruin:
-> > https://lore.kernel.org/git/20200901105705.6059-1-alban.gruin@gmail.co=
-m/
-> >
-> > And `git-legacy-stash.sh` is no more, as of v2.27.0~180^2.
-> >
-> > But yes, other than that, my summary still holds.
+> > Providing a bad origin name to `git clone` currently reports an
+> > 'invalid refspec' error instead of a more explicit message
+> > explaining that the `--origin` option was malformed.  Per Junio,
+> > it's been this way since 8434c2f1 (Build in clone, 2008-04-27).
 >
-> To summarize more, it seems to me that only the following scripts
-> could be worth converting:
+> If you know it as a fact that it has been this way since the first
+> version of rewritten "git clone", don't blame others.
+
+Oh gosh, I'm so sorry!  I didn't mean for that to read as blaming, was
+just trying to cite you as my source.  On a second read, it comes across
+more "blame-y" than I originally intended.  I'll fix this in v2 (and
+have learned a valuable lesson :) ).
+
+> A micronit.  We describe the current status in present tense when
+> presenting the problem to be solved, so "currently" can be dropped.
 >
-> git-difftool--helper.sh
-> git-mergetool--lib.sh
-> git-mergetool.sh
+> > This patch reintroduces
 >
-> I wonder if they are really worth converting though, as they should
-> probably all be converted together and we would likely also need to
-> convert the scripts in mergetools/ at the same time. And then there
-> should be a way to still easily configure things for users. So perhaps
-> a better way to approach this would be first to convert the scripts in
-> mergetools/ into config files.
+> When presenting the solution, we write as if we are giving an order
+> to a patch monkey to "make the code like so".
+>
+> "This patch reintroduces" -> "Reintroduce".
 
-The biggest problem is that they're all entangled.
-`git-difftool--helper.sh` sources `git-mergetool--lib.sh` and uses quite a
-bit of its machinery.
+Great to know!  Thanks again for helping a newbie fit in.  Will fix in
+v2.
 
-As to converting the scripts to config files, I'd rather have them
-hard-coded in the source code. Something along those lines:
+> > validation for the provided `--origin` option, but notably _doesn't_
+> > include a multi-level check (e.g. "foo/bar") that was present in the
+> > original `git-clone.sh`.  It seems `git remote` allows multi-level
+> > remote names, so applying that same validation in `git clone` seems
+> > reasonable.
+>
+> Even though I suspect "git remote" is being overly loose and
+> careless here, I am not sure if it is a good idea to tighten it
+> retroactively.  But if this is meant as a bugfix for misconversion
+> made in 8434c2f1, we should be as strict as the original.  I dunno.
 
-struct mergetool {
-	const char *can_merge;
-	const char *can_diff;
-	const char *diff_cmd
-	const char *merge_cmd;
-	const char *translate_merge_tool_path;
-	const char *list_tool_variants;
-	const char *exit_code_trustable;
-} araxis =3D {
-	.diff_cmd =3D "\"$merge_tool_path"\ -wait -2 \"$LOCAL\" \"$REMOTE\" >/dev=
-/null 2>&1",
-	.merge_cmd =3D "if $base_present\n"
-		"then\n"
-		" \"$merge_tool_path\" -wait -merge -3 -a1"
-		"  \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\" >/dev/null 2>&1\n"
-		"else\n"
-                " \"$merge_tool_path\" -wait -2"
-		"  \"$LOCAL\" \"$REMOTE\" \"$MERGED\" >/dev/null 2>&1\n"
-		"fi",
-	.translate_merge_tool_path =3D "echo compare"
-}, [...]
 
-I would then probably try to implement the bare minimum for the
-`difftool--helper` command to work (re-implementing in C only the parts of
-`mergetool--lib` that are necessary), and only in a next patch series work
-on `mergetool`.
+To be honest, I'm struggling to decide which route to go.  It seems
+like multilevel fetch and push refspecs are allowed as far back as
+46220ca100 (remote.c: Fix overtight refspec validation, 2008-03-20) or
+ef00d150e4 (Tighten refspec processing, 2008-03-17), so perhaps
+removing the multilevel check in 8434c2f1 (Build in clone, 2008-04-27)
+was intentional?  If removing that check in 8434c2f1 was a mistake and
+we reintroduce it, that's probably a breaking change for some users.
+What sort of accommodations would I need to include in this patchset to
+ease that pain for users?
 
-Ciao,
-Dscho
+> > +	strbuf_addf(&resolved_refspec, "refs/heads/test:refs/remotes/%s/test", option_origin);
+> > +	if (!valid_fetch_refspec(resolved_refspec.buf))
+>
+> If we reintroduce pre-8434c2f1 check, then we would want
+>
+> 	if (!valid_fetch_refspec(...) || strchr(option_origin, '/'))
+>
+> or something like that?
+
+Absolutely!  Happy to include the multilevel check if you think it's the
+right path forward (see above).
+
+> > +		/* TRANSLATORS: %s will be the user-provided --origin / -o option */
+> > +		die(_("'%s' is not a valid origin name"), option_origin);
+>
+> I am not sure if this translator comment is helping.
+>
+> The message makes it sound as if "%s" here is used to switch between
+> '-o' or '--origin'.  If it said "'%s' will be the value given to
+> --origin/-o option", it would become much less confusing.
+
+Agreed.  I plan to take Derrick's suggestion [1] and use the same
+" is not a valid remote name" message from `builtin/remote.c`, which
+should make that translator comment a non-issue.
+
+[1] https://lore.kernel.org/git/bf0107fb-2a6c-68d3-df24-72c6a9df6182@gmail.com/
+
+
+I can't stress enough how sorry I am for the improper blame, and how
+much I appreciate your help!
+--
+Sean
