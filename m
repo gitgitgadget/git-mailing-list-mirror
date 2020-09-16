@@ -2,119 +2,85 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B72C433E2
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11179C433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:50:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74E3421D24
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:48:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9DD4206BE
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:49:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="Kdu5LMhi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726730AbgIPUr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 16:47:56 -0400
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:38246 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbgIPRBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 13:01:17 -0400
-Received: by mail-pj1-f68.google.com with SMTP id u3so1844058pjr.3
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 10:01:04 -0700 (PDT)
+        id S1726653AbgIPUt4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 16:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55270 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726656AbgIPQ4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 12:56:34 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0F0C0A889F
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 06:00:11 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id z4so6844725wrr.4
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 06:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Sqzfs7/9ckqpeGxEnjLM1NpUwlRRxi0Q8OFmU9cpZlE=;
+        b=Kdu5LMhifc8PSFNfwx9PzJzhx9KCW60/wsAuXTH2W+a5lCneIcgadQ6XcKiQtIkiHl
+         uf9dT4g/N7IwRv53lIN294vyq5t97Yc+3hByWQg2io7JuQaevBVouxtc86N+8d8HmJm4
+         nbut405KLXTkWkmjskoExQAejvJ0uxsU8146w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EDNh7ZO5SD3CUZ1aRuKtByYal/zrQ4YCNT6LNwi+6wg=;
-        b=UmMqdFUlPokPJ7uK1wxNyt9iSd6I8m+sUCdYxJRPdjn+g7guLVylKo/TCrKtdV9hRD
-         Tw7fzz2ASMm8UbqWrrkJy2n4VWpebelFNWovqvoLZCgVYDDRc/HB2d/ihpFBeFLQXlVO
-         jUzgW6z+a/FvE3PBvbVJTIT9zQJbYsOAaKCstGX+iGqidWiSRf9DDKhklZbJFfHrDPR/
-         7w8v4KT9U8wGt8entd8Wp0uDjTkjigUpX+JdgIFxa0gA48t2rGsuU33cyr+MqCqUJW6E
-         dOIOMzbJ67IjVbFaqAr4f0KQeA/HlKf5KvepoIYlLCCLflxJxWmLY2epFOsX+2iOXCxh
-         ku9Q==
-X-Gm-Message-State: AOAM5330vc2F8qOkX3k+bVzjKNyMvU0yp88mO/mfmYE3BsaB02OK5Sfm
-        Wq1527xu2ZH1npfdtyzbiI8SxKTBiX4qzw==
-X-Google-Smtp-Source: ABdhPJy5k8Ojo1Ip48m3aUBR3lbrOqCmQaGxUaQi0z2qvLNYrpjLkl1wFLoQ34YGYv/wCGrQxfnuWw==
-X-Received: by 2002:a62:2581:0:b029:13f:ba38:b113 with SMTP id l123-20020a6225810000b029013fba38b113mr20871687pfl.15.1600273734549;
-        Wed, 16 Sep 2020 09:28:54 -0700 (PDT)
-Received: from localhost.localdomain (50-125-94-129.hllk.wa.frontiernet.net. [50.125.94.129])
-        by smtp.gmail.com with ESMTPSA id d20sm3072171pjv.39.2020.09.16.09.28.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 09:28:54 -0700 (PDT)
-From:   Sean Barag <sean@barag.org>
-To:     stolee@gmail.com
-Cc:     git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com,
-        johannes.schindelin@gmx.de, sean@barag.org
-Subject: Re: [PATCH 3/4] clone: validate --origin option before use
-Date:   Wed, 16 Sep 2020 09:28:39 -0700
-Message-Id: <20200916162839.1877248-1-sean@barag.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <bf0107fb-2a6c-68d3-df24-72c6a9df6182@gmail.com>
-References: <bf0107fb-2a6c-68d3-df24-72c6a9df6182@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Sqzfs7/9ckqpeGxEnjLM1NpUwlRRxi0Q8OFmU9cpZlE=;
+        b=eqAFKqw4E8ZtscyqI2BSDBazMtT0z/5RncE1iLnEwW7J4smPiT49uPl6nLDlo5Wq4M
+         CwBK1v/wP/F2yNW+9BFgdie72OdnhB4ZC5q5uuYeZB+9u5yppRXViaKzp8j3/c6LdmB+
+         nDIc7H1aJgM1VfGfz6cDicDEOvvtd7p2A9C+wHvDUdY3gK4I/R5sMqJxP012eY4W7lh3
+         gjxWMIaWZYSwxGHJLdNdBjAIKZRGrC5HGPY3ufAhQ+fmAIzioFjes5Xp13opQpA3Arnx
+         FbmMT2zHkU2EzPOZzAEGrqI7XekcUBzc+obixl2eJV1Bi8bgACQ3J0Fx+kcUk9hUMzH0
+         U/hg==
+X-Gm-Message-State: AOAM533QsiLIR6QEZpXuljRkyPTEa5kAwenFRmwJ8jsY2i609BO1wUre
+        pTRcfYAisSgBTccP9fh7vvHcEAEDJZNdS2Mp7a1erQ==
+X-Google-Smtp-Source: ABdhPJwnZc+ie1E2HSVu6SJMK8w9+u3iYLhDSvJxEEUQRV7Ld7uabMqa0X0MG6hQ1LhEMrJzaeTVemMbYAIRU2gyA+k=
+X-Received: by 2002:adf:dfc3:: with SMTP id q3mr25622844wrn.238.1600261210497;
+ Wed, 16 Sep 2020 06:00:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <DM6PR12MB3194C9B3A462968FA5A05B4CFA200@DM6PR12MB3194.namprd12.prod.outlook.com>
+In-Reply-To: <DM6PR12MB3194C9B3A462968FA5A05B4CFA200@DM6PR12MB3194.namprd12.prod.outlook.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 16 Sep 2020 13:59:59 +0100
+Message-ID: <CAE5ih79z8z+rmg-ncT6=RLaySr8GjxS5B33+yDh6bNC4TkUQDA@mail.gmail.com>
+Subject: Re: Bug Report: git-p4 unshelve failed
+To:     "Liu, Xuhui (Jackson)" <Xuhui.Liu@amd.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 11 Sep 2020 at 15:24:15 -0400, Derrick Stolee writes:
-> On 9/11/2020 2:25 PM, Sean Barag via GitGitGadget wrote:
-> > +	strbuf_addf(&resolved_refspec, "refs/heads/test:refs/remotes/%s/test", option_origin);
-> > +	if (!valid_fetch_refspec(resolved_refspec.buf))
-> > +		/* TRANSLATORS: %s will be the user-provided --origin / -o option */
-> > +		die(_("'%s' is not a valid origin name"), option_origin);
+On Tue, 15 Sep 2020 at 02:09, Liu, Xuhui (Jackson) <Xuhui.Liu@amd.com> wrote:
 >
-> Looking at this again, I'm not sure the translators note is
-> necessary. Also, I would say "is not a valid remote name".
-> That makes the string align with the already-translated string
-> in builtin/remote.c.
+> Hi Git,
+>             When I use "git p4 unshelve 4495953", it failed.
+>         I have fixed this issue locally. You can check the attached for details.
+>
+> What have I done to fix this:
+>             It's because the line#4240 in function "findLastP4Revision" of git-p4.py:
+>                         log = extractLogMessageFromGitCommit("{0}^{1}".format(starting_point, parent))
+> I think it should be:
+>             log = extractLogMessageFromGitCommit("{0}~{1}".format(starting_point, parent))
+>
+> Best Regards,
+> Jackson(Xuhui) Liu
 
-Makes perfect sense!  My original intention was to provide a separate
-use-case specific message, but you're right: "is not a valid remote
-name" (as in `builtin/remote.c`) is still very clear.
+This is indeed a bug. I will see if I can put together a patch.
 
-> This code is duplicated from builtin/remote.c, so I'd rather
-> see this be a helper method in refspec.c and have both
-> builtin/clone.c and builtin/remote.c call that helper.
->
-> Here is the helper:
->
-> void valid_remote_name(const char *name)
-> {
-> 	int result;
-> 	struct strbuf refspec = STRBUF_INIT;
-> 	strbuf_addf(&refspec, "refs/heads/test:refs/remotes/%s/test", name);
-> 	result = valid_fetch_refspec(refspec.buf);
-> 	strbuf_release(&refspec);
-> 	return result;
-> }
->
-> And here is the use in builtin/clone.c:
->
-> 	if (!valid_remote_name(option_origin))
-> 		die(_("'%s' is not a valid remote name"), option_origin);
->
-> and in builtin/remote.c:
->
-> 	if (!valid_remote_name(name))
-> 		die(_("'%s' is not a valid remote name"), name);
-
-That's a fantastic idea -- thanks for the suggestion!  I'll do that for
-v2.
-
-> > +test_expect_success 'rejects invalid -o/--origin' '
-> > +
-> > +	test_expect_code 128 git clone -o "bad...name" parent clone-bad-name 2>err &&
-> > +	test_debug "cat err" &&
-> > +	test_i18ngrep "'\''bad...name'\'' is not a valid origin name" err
-> > +
-> > +'
-> > +
->
-> Double newlines here! I personally appreciate newlines to
-> spread out content, but it doesn't fit our guidelines.
-
-Darn, I missed this one.  Thanks for the heads-up :)
-
---
-Sean
+Thanks
+Luke
