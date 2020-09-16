@@ -2,71 +2,139 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FC9BC43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08CBEC43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:56:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AF7421941
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:53:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB92921941
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 20:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726810AbgIPUxo convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 16 Sep 2020 16:53:44 -0400
-Received: from mail-ej1-f68.google.com ([209.85.218.68]:40463 "EHLO
-        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726604AbgIPQyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 12:54:08 -0400
-Received: by mail-ej1-f68.google.com with SMTP id z22so11328815ejl.7
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 09:53:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yYQrc0FzM4U5z6R+TFdX6W0QMjVSp01WMU+rviyAZVw=;
-        b=QsiB73gSQvaLknoYxlTRymkJsuBmeTLFdxxukjkaWYE5x2/6DssVt0BkZ6vn6dX+C4
-         8Z4mOixQV8w/rabNmI+oL+dgW4Z/UJ8iNa3uY2/qOEWSkrxbys4yAbCq2dNLltdKGQ/h
-         3MzYO6TkxlX3vCRKY0osnetJuID2jwwdIs/tEYJyONO1gYqeIOCK0jF4DH4yg6DWxPpr
-         tGDFtRCH6T6LFCnH3Bkk+styWgtKevXlDA2R6J/xoKecwGVwBhW4fvAQrDBm8Gk2R7pN
-         2BMo4fqUNQr7enGWL1Sk1qmsrxQSB2xlqXxu1wjc/ITesrysVSDh1t6p1WVXWezIzJer
-         1tyQ==
-X-Gm-Message-State: AOAM530L5zHP1NqJ+HuSA0g9fn3ttR/MkefSNKVYmVfXjB4sanJPua9M
-        rr1wHxBjLpoUSSSuHdJxIvPtIKb5GMHr4a0lZ7lvPDQao/c=
-X-Google-Smtp-Source: ABdhPJzFWe4tzmMxDEAG/Ew/nDRSYUI0SL6JN2GKzP5G5sBnf5lkhzLhqLuy3zsXb0X3MHTYr1sPoC9YRQeBcWmNOgc=
-X-Received: by 2002:a17:906:250a:: with SMTP id i10mr25915036ejb.202.1600275231725;
- Wed, 16 Sep 2020 09:53:51 -0700 (PDT)
+        id S1726553AbgIPU4c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 16:56:32 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:53120 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726549AbgIPQwk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 12:52:40 -0400
+Received: from host-89-241-187-35.as13285.net ([89.241.187.35] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kIZAj-0005UC-7e; Wed, 16 Sep 2020 16:16:37 +0100
+Subject: Re: Git in Outreachy?
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+References: <20200828065609.GA2105118@coredump.intra.peff.net>
+ <CAP8UFD2rpNhDhyHdQNxS-KJZgcumsCpK_JQ5koCqXJd70s-+_w@mail.gmail.com>
+ <20200903060041.GH4035286@google.com>
+ <a3613b9d-730a-7a4b-c84b-c833490fcea6@iee.email>
+ <nycvar.QRO.7.76.6.2009060933480.56@tvgsbejvaqbjf.bet>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <5be2fca8-2dbd-115e-b3bb-5783daeba4a3@iee.email>
+Date:   Wed, 16 Sep 2020 16:16:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20200916102918.29805-1-avarab@gmail.com> <20200916102918.29805-8-avarab@gmail.com>
-In-Reply-To: <20200916102918.29805-8-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 16 Sep 2020 12:53:40 -0400
-Message-ID: <CAPig+cRg2tuOiQH_CQoHMjkX2gbRPJoV8NPJZnu3=bfo4wk-cQ@mail.gmail.com>
-Subject: Re: [PATCH 07/15] remote-mediawiki tests: guard test_cmp with test_path_is_file
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <nycvar.QRO.7.76.6.2009060933480.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 16, 2020 at 8:17 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> Change a test that used a plain test_cmp to first check the file(s)
-> using test_path_is_file. If some of these file(s) don't exist (as
-> happened to me during debugging), test_cmp will emit a way less useful
-> message about the failure.
+Hi, Sorry I've not been able to attend to the list discussions recently.
 
-An alternative would be to update test_cmp() to present a more helpful
-error message so that all test scripts can benefit rather than just
-this script. By the way, were you testing with a reasonably recent
-version of Git? I ask because test_cmp() was updated not long ago to
-provide better diagnostics when one of the files is missing.
+On 07/09/2020 19:49, Johannes Schindelin wrote:
+> Hi Philip,
+>
+> On Fri, 4 Sep 2020, Philip Oakley wrote:
+>
+>> On 03/09/2020 07:00, Jonathan Nieder wrote:
+>>> Christian Couder wrote:
+>>>
+>>>> I would appreciate help to find project ideas though. Are there still
+>>>> scripts that are worth converting to C (excluding git-bisect.sh and
+>>>> git-submodule.sh that are still worked on)? Are there worthy
+>>>> refactorings or improvements that we could propose as projects?
+>>> I think setting up something like snowpatch[*] to run CI on patches
+>>> that have hit the mailing list but not yet hit "seen" might be a good
+>>> project for an interested applicant (and I'd be interested in
+>>> co-mentoring if we find a taker).
+>>>
+>>> Some other topics that could be interesting:
+>>> - better support for handling people's name changing
+>>> - making signing features such as signed push easier to use (for
+>>>   example by allowing signing with SSH keys to simplify PKI) and more
+>>>   useful (for example by standardizing a way to publish signed push
+>>>   logs in Git)
+>>> - protocol: sharing notes and branch descriptions
+>>> - formats: on-disk reverse idx
+>>> - obliterate
+>>> - cache server to take advantage of multiple promisors+packfile URIs
+>>>
+>>> Jonathan
+>>>
+>>> [*] https://github.com/ruscur/snowpatch
+>> A suggestion with high value for the Windows community
+>> - mechanism to map file names between the index and the local FS, should
+>> a repos file/path name already be taken, or invalid. [1]
+> This suggestion keeps coming up, but I cannot help but highly doubt that
+> it will prove useful in practice: if your source code contains a file
+> called `aux.c`, chances are that your build system lists this file
+> specifically, and it won't do at all to "magically" rename it to, say,
+> `aux_.c` during checkout.
 
-[1]: d572f52a64 (test_cmp: diagnose incorrect arguments, 2020-08-09)
+I'd disagree with that line of reasoning in the sense that if someone is
+on Windows wanting to 'view' a repo that was developed on Linux, with
+colons in pathnames, and filenames like aux.c we shouldn't be
+deliberately de-include them just because of those file/pathname
+'accidents. I accept that the build system probably won't be working for
+their Windows environment (how could it be?), but, if possible, we
+should be able to support them, in some positive way. In our distributed
+collaborative environment we can trip over the user's  'your file / your
+build' tag.
+
+> In contrast, I think a much more useful project would be to relax the
+> `core.protectNTFS` protections to cover only the files that will be
+> written to disk, and not bother even checking the files excluded from a
+> sparse-checkout for invalid file names on NTFS.
+
+That's a valid base method for all the NTFS valid file and path names.
+
+The next level could be a mechanism for path and file name adjustment,
+at least for a _copy-out_ step (without ability to 'git add' / check
+back in).
+>
+> This is trickier, of course, than meets the eye: we would still want to be
+> _very_ careful to ensure that the unchecked file names will _never_ make
+> it to the disk. And, slightly related, the question whether checking for
+> `.git` (or `GIT~1`) would be likewise weakened, or whether that is too
+> dangerous to allow even in `skip-worktree` entries.
+
+Agree that the security aspects of `.Git` etc must still be retained.
+>
+> Not necessarily decisions you would want to burden a first-time
+> contributor with.
+
+True, but still worth recording as a useful Git project (and that there
+are a number of nuances within it!)
+
+--
+Philip
+
+> Ciao,
+> Dscho
+>
+>> Philip
+>>
+>> [1]
+>> https://github.com/git-for-windows/git/issues/2803#issuecomment-687161483
+>>
+
