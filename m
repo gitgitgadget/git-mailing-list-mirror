@@ -2,361 +2,199 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70E4CC43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB04C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:11:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22F9821582
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:11:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1429D21655
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:11:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="TLotjE0Q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QlNceXHF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbgIPSLE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 14:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39090 "EHLO
+        id S1727834AbgIPSLU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 14:11:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727783AbgIPSJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 14:09:19 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6A3C061788
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:07:57 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id e7so6837855qtj.11
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:07:57 -0700 (PDT)
+        with ESMTP id S1727824AbgIPSK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 14:10:59 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFBE2C06178A
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:58 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a17so7871753wrn.6
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=wjiHXF1qjLf93piJYX/E8ScTlX22Y2OZBx0J5zlVtlM=;
-        b=TLotjE0Ql8vbzSCGxHRAXNCgTO1VjJJoK+Nm5mpM2jNk4SyYNHtv2ydcnhfcDm6Qad
-         1a0o65Ke/e32I9Z7I8giR+0JNkZlSdxTwQV27+ZoU4eBflqPbx4Us7f6DJPauXhMrEzg
-         1mNOG8zqTXZHIE6Fbad9KqdBKUTtSMED+jcOzu2ESgzAuLQBntoii9GZ6WABGfzkkoZB
-         GTZkJ2jKiywFFhdcY3XLtwiVPwnUlZMRgI0us9agYBFdSPYeuyzbcn08vnxQqKi7htsw
-         t7cw7BvhGnbscKWhVSDGv/qeylOClg0w0RTGI/1B2mp+skPVd6vDh4MWu/ON73MpIv0Z
-         lRCQ==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=taLM5yJC4q70gBaQS2BtCUXe5AzClQ56TFn++ZP02kk=;
+        b=QlNceXHF67znrNKRIDUDDfhxtSc2yDCxNLwaGZlr1zIu6iyC1AGUWdp2u0Xv/q3/0+
+         Pee6NFE8ClZoYJHrc2OH8yBCaTpkq1u7E+WGHpJrTJDLmO86NBmISJea2qqUw+/grhIZ
+         ctdlxk1DVbyIEZXfXXJJWj643cgmd4/XoBsslNYREq+GHq0l6EXEz9+iBNTSygifjLqp
+         AxkPLSOKcuWq7mXdNtm4LBVquiovv8SbdWfFQcKCTfcjqWcRMXHgT0dBJhW4poN1pypY
+         WKAKu7oFEtRuVuO7bg6IGTGktJDG4P/ig4s+tZEpddkW+ye6rHRj10O5nHaXCmnvM1ad
+         bmvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=wjiHXF1qjLf93piJYX/E8ScTlX22Y2OZBx0J5zlVtlM=;
-        b=jEz4qu+6ih5m5Y78YL5oBLZ/QvHbHXBLGSQOODGeaUnszKT9TlQtOApgviK3PpljMs
-         z7XqzPxyY3zgJJirX6MU14aG+n9W1WV94DOErryk+7r4Dg3IQNp+FpR7uYZoncYuXGSN
-         oT8gB0ftlpw5awWON7xuxT3QkRBWrJL4g0vGbt3kQWF15MI6B6BaB7a3PFzUzJLuJ2jl
-         894InxmBB09M3RHXPeK6Z14Wgu6MTRMB/rG9X1SHDAaxG8cRNAnGs/pW6U7aQPHK2K7v
-         g9R1fBE2DmciVWNfGC/DvXU44dgPTh+PMyktVXfnKpFaZIsee9psWQfblBsfz06otFPy
-         poOg==
-X-Gm-Message-State: AOAM530wfbmAAit5SWmgi3FAYaJRT5egcXqP68G09IPQdRw0O5jKpl/H
-        DzIzZ5LNA1wHc8/8+YP/0pQrWspa0575vYhI
-X-Google-Smtp-Source: ABdhPJzI2UeTz6UaixiJ+uo6puT3vHhiCA4iWGxvr5TmR+eB0bYaMTkCQ7SHyggvj1QtQezKnHYm9Q==
-X-Received: by 2002:ac8:4e49:: with SMTP id e9mr11098874qtw.334.1600279676362;
-        Wed, 16 Sep 2020 11:07:56 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:e86e:6adf:7537:ae24])
-        by smtp.gmail.com with ESMTPSA id u18sm20256252qtk.61.2020.09.16.11.07.55
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=taLM5yJC4q70gBaQS2BtCUXe5AzClQ56TFn++ZP02kk=;
+        b=TEHhH2IBAvs4EA0i3A3BVpJ9FefuIJugGvUsNpayrjxWEbgODzYitSnfgAXyqSS7h6
+         YXUczIpCtOORn4JG8rzVj+UZOzUdGJUptrBTNv+3iwR6rtqUrpSSfJCfBV+9p2cT2B4M
+         DjGHHI9NuxcAPRycaGcPtb/Fo86ZXdpuUMxu2JgD9qE/zsZDZWtSthQ/noFcFHK3gFrP
+         nN7/naypfu8dLq3LgYhZ+c8NbhoEWdj8Tf2FfaB5tW6xLPNS7WzzodZmyFKkl0DkIjM6
+         lsNrfTuPQtca10lMpOju/eDtC71xMMDRESHaTU4RDcSeTlXfoaQAwEsd7K8dblu2bQNQ
+         Qr5g==
+X-Gm-Message-State: AOAM530P3qkDqNtysdaPNi7uUUyt43oarmlVsaIBPiRQcDC7QVavVW5j
+        sJgwPazbm39zuXlCDgGpliqyvJLg9w0=
+X-Google-Smtp-Source: ABdhPJyoIw0nLlFy6+xIH1JlfHURIXWnbneW+ShNrCzBvAYCJc6k6eSFZ4TIOVrjSkYzSXBrV6GG6w==
+X-Received: by 2002:adf:fa0c:: with SMTP id m12mr27634454wrr.406.1600279856702;
+        Wed, 16 Sep 2020 11:10:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a83sm6664734wmh.48.2020.09.16.11.10.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 11:07:55 -0700 (PDT)
-Date:   Wed, 16 Sep 2020 14:07:52 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
-        szeder.dev@gmail.com
-Subject: [PATCH v2 09/13] bloom/diff: properly short-circuit on max_changes
-Message-ID: <b6bb1cafe7b8af175dd2c550f2b2d87b04403682.1600279373.git.me@ttaylorr.com>
-References: <cover.1599664389.git.me@ttaylorr.com>
- <cover.1600279373.git.me@ttaylorr.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Wed, 16 Sep 2020 11:10:56 -0700 (PDT)
+Message-Id: <2f1d0a2df41f567bc1a8bc446c26e1cb8b6dc36c.1600279853.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.734.git.1600279853.gitgitgadget@gmail.com>
+References: <pull.734.git.1600279853.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Sep 2020 18:10:51 +0000
+Subject: [PATCH 3/5] t3200: avoid variations of the `master` branch name
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1600279373.git.me@ttaylorr.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Commit e3696980 (diff: halt tree-diff early after max_changes,
-2020-03-30) intended to create a mechanism to short-circuit a diff
-calculation after a certain number of paths were modified. By
-incrementing a "num_changes" counter throughout the recursive
-ll_diff_tree_paths(), this was supposed to match the number of changes
-that would be written into the changed-path Bloom filters.
-Unfortunately, this was not implemented correctly and instead misses
-simple cases like file modifications. This then does not stop very
-large changed-path filters from being written (unless they add or remove
-many files).
+To avoid branch names with a loaded history, we already started to avoid
+using the name "master" in a couple instances.
 
-To start, change the implementation in ll_diff_tree_paths() to instead
-use the global diff_queue_diff struct's 'nr' member as the count. This
-is a way to simplify the logic instead of making more mistakes in the
-complicated diff code.
+The `t3200-branch.sh` script uses variations of this name for branches
+other than the default one. So let's change those names, as
+"lowest-hanging fruits" in the effort to use more inclusive naming
+throughout Git's source code.
 
-This has a drawback: the diff_queue_diff struct only lists the paths
-corresponding to blob changes, not their leading directories. Thus,
-get_or_compute_bloom_filter() needs an additional check to see if the
-hashmap with the leading directories becomes too large.
+In this particular instance, this requires a couple of non-trivial
+adjustments, as the aligned output depends on the maximum length of the
+displayed branches (which we now changed), and also on the alphabetical
+order (which we now changed, too).
 
-One reason why this was not caught by test cases was that the test in
-t4216-log-bloom.sh that was supposed to check this "too many changes"
-condition only checked this on the initial commit of a repository. The
-old logic counted these values correctly. Update this test in a few
-ways:
-
-1. Use GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS to reduce the limit,
-   allowing smaller commits to engage with this logic.
-
-2. Create several interesting cases of edits, adds, removes, and mode
-   changes (in the second commit). By testing both sides of the
-   inequality with the *_MAX_CHANGED_PATHS variable, we can see that
-   the count is exactly correct, so none of these changes are missed
-   or over-counted.
-
-3. Use the trace2 data value filter_found_large to verify that these
-   commits are on the correct side of the limit.
-
-Another way to verify the behavior is correct is through performance
-tests. By testing on my local copies of the Git repository and the Linux
-kernel repository, I could measure the effect of these short-circuits
-when computing a fresh commit-graph file with changed-path Bloom filters
-using the command
-
-  GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS=N time \
-    git commit-graph write --reachable --changed-paths
-
-and reporting the wall time and resulting commit-graph size.
-
-For Git, the results are
-
-|        |      N=1       |       N=10     |      N=512     |
-|--------|----------------|----------------|----------------|
-| HEAD~1 | 10.90s  9.18MB | 11.11s  9.34MB | 11.31s  9.35MB |
-| HEAD   |  9.21s  8.62MB | 11.11s  9.29MB | 11.29s  9.34MB |
-
-For Linux, the results are
-
-|        |       N=1      |     N=20      |     N=512     |
-|--------|----------------|---------------|---------------|
-| HEAD~1 | 61.28s  64.3MB | 76.9s  72.6MB | 77.6s  72.6MB |
-| HEAD   | 49.44s  56.3MB | 68.7s  65.9MB | 69.2s  65.9MB |
-
-Naturally, the improvement becomes much less as the limit grows, as
-fewer commits satisfy the short-circuit.
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- bloom.c              |   9 +++-
- diff.h               |   2 -
- t/t4216-log-bloom.sh | 100 +++++++++++++++++++++++++++++++++++++++----
- tree-diff.c          |   5 +--
- 4 files changed, 100 insertions(+), 16 deletions(-)
+ t/t3200-branch.sh | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index 2d6aef9098..db9fb82437 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -222,7 +222,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
- 	diffcore_std(&diffopt);
- 
--	if (diffopt.num_changes <= settings->max_changed_paths) {
-+	if (diff_queued_diff.nr <= settings->max_changed_paths) {
- 		struct hashmap pathmap;
- 		struct pathmap_hash_entry *e;
- 		struct hashmap_iter iter;
-@@ -259,6 +259,12 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 			diff_free_filepair(diff_queued_diff.queue[i]);
- 		}
- 
-+		if (hashmap_get_size(&pathmap) > settings->max_changed_paths) {
-+			if (computed)
-+				*computed |= BLOOM_TRUNC_LARGE;
-+			goto cleanup;
-+		}
-+
- 		filter->len = (hashmap_get_size(&pathmap) * settings->bits_per_entry + BITS_PER_WORD - 1) / BITS_PER_WORD;
- 		filter->data = xcalloc(filter->len, sizeof(unsigned char));
- 
-@@ -268,6 +274,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 			add_key_to_filter(&key, filter, settings);
- 		}
- 
-+	cleanup:
- 		hashmap_free_entries(&pathmap, struct pathmap_hash_entry, entry);
- 	} else {
- 		for (i = 0; i < diff_queued_diff.nr; i++)
-diff --git a/diff.h b/diff.h
-index e0c0af6286..1d32b71885 100644
---- a/diff.h
-+++ b/diff.h
-@@ -287,8 +287,6 @@ struct diff_options {
- 
- 	/* If non-zero, then stop computing after this many changes. */
- 	int max_changes;
--	/* For internal use only. */
--	int num_changes;
- 
- 	int ita_invisible_in_index;
- /* white-space error highlighting */
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 47ddf2641f..1ac8f4c4eb 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -181,21 +181,103 @@ test_expect_success 'persist filter settings' '
- 	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15" trace2-auto.txt
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 4c0734157b..c1b881c0b8 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -234,10 +234,10 @@ test_expect_success 'git branch -M master master should work when master is chec
+ 	git branch -M master master
  '
  
-+test_max_changed_paths () {
-+	grep "\"max_changed_paths\":$1" $2
-+}
-+
-+test_filter_computed () {
-+	grep "\"key\":\"filter-computed\",\"value\":\"$1\"" $2
-+}
-+
-+test_filter_trunc_large () {
-+	grep "\"key\":\"filter-trunc-large\",\"value\":\"$1\"" $2
-+}
-+
- test_expect_success 'correctly report changes over limit' '
--	git init 513changes &&
-+	git init limits &&
- 	(
--		cd 513changes &&
--		for i in $(test_seq 1 513)
-+		cd limits &&
-+		mkdir d &&
-+		mkdir d/e &&
-+
-+		for i in $(test_seq 1 2)
- 		do
--			echo $i >file$i.txt || return 1
-+			printf $i >d/file$i.txt &&
-+			printf $i >d/e/file$i.txt || return 1
- 		done &&
--		git add . &&
-+
-+		mkdir mode &&
-+		printf bash >mode/script.sh &&
-+
-+		mkdir foo &&
-+		touch foo/bar &&
-+		touch foo.txt &&
-+
-+		git add d foo foo.txt mode &&
- 		git commit -m "files" &&
--		git commit-graph write --reachable --changed-paths &&
--		for i in $(test_seq 1 513)
-+
-+		# Commit has 7 file and 4 directory adds
-+		GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS=10 \
-+			GIT_TRACE2_EVENT="$(pwd)/trace" \
-+			git commit-graph write --reachable --changed-paths &&
-+		test_max_changed_paths 10 trace &&
-+		test_filter_computed 1 trace &&
-+		test_filter_trunc_large 1 trace &&
-+
-+		for path in $(git ls-tree -r --name-only HEAD)
- 		do
--			git -c core.commitGraph=false log -- file$i.txt >expect &&
--			git log -- file$i.txt >actual &&
-+			git -c commitGraph.readChangedPaths=false log \
-+				-- $path >expect &&
-+			git log -- $path >actual &&
-+			test_cmp expect actual || return 1
-+		done &&
-+
-+		# Make a variety of path changes
-+		printf new1 >d/e/file1.txt &&
-+		printf new2 >d/file2.txt &&
-+		rm d/e/file2.txt &&
-+		rm -r foo &&
-+		printf text >foo &&
-+		mkdir f &&
-+		printf new1 >f/file1.txt &&
-+
-+		# including a mode-only change (counts as modified)
-+		git update-index --chmod=+x mode/script.sh &&
-+
-+		git add foo d f &&
-+		git commit -m "complicated" &&
-+
-+		# start from scratch and rebuild
-+		rm -f .git/objects/info/commit-graph &&
-+		GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS=10 \
-+			GIT_TRACE2_EVENT="$(pwd)/trace-edit" \
-+			git commit-graph write --reachable --changed-paths &&
-+		test_max_changed_paths 10 trace-edit &&
-+		test_filter_computed 2 trace-edit &&
-+		test_filter_trunc_large 2 trace-edit &&
-+
-+		for path in $(git ls-tree -r --name-only HEAD)
-+		do
-+			git -c commitGraph.readChangedPaths=false log \
-+				-- $path >expect &&
-+			git log -- $path >actual &&
-+			test_cmp expect actual || return 1
-+		done &&
-+
-+		# start from scratch and rebuild
-+		rm -f .git/objects/info/commit-graph &&
-+		GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS=11 \
-+			GIT_TRACE2_EVENT="$(pwd)/trace-update" \
-+			git commit-graph write --reachable --changed-paths &&
-+		test_max_changed_paths 11 trace-update &&
-+		test_filter_computed 2 trace-update &&
-+		test_filter_trunc_large 0 trace-update &&
-+
-+		for path in $(git ls-tree -r --name-only HEAD)
-+		do
-+			git -c commitGraph.readChangedPaths=false log \
-+				-- $path >expect &&
-+			git log -- $path >actual &&
- 			test_cmp expect actual || return 1
- 		done
- 	)
-diff --git a/tree-diff.c b/tree-diff.c
-index 6ebad1a46f..7cebbb327e 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -434,7 +434,7 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 		if (diff_can_quit_early(opt))
- 			break;
+-test_expect_success 'git branch -M master2 master2 should work when master is checked out' '
++test_expect_success 'git branch -M main2 main2 should work when master is checked out' '
+ 	git checkout master &&
+-	git branch master2 &&
+-	git branch -M master2 master2
++	git branch main2 &&
++	git branch -M main2 main2
+ '
  
--		if (opt->max_changes && opt->num_changes > opt->max_changes)
-+		if (opt->max_changes && diff_queued_diff.nr > opt->max_changes)
- 			break;
+ test_expect_success 'git branch -v -d t should work' '
+@@ -324,8 +324,8 @@ test_expect_success 'git branch --list -v with --abbrev' '
+ test_expect_success 'git branch --column' '
+ 	COLUMNS=81 git branch --column=column >actual &&
+ 	cat >expect <<\EOF &&
+-  a/b/c     bam       foo       l       * master    mb        o/o       q
+-  abc       bar       j/k       m/m       master2   n         o/p       r
++  a/b/c    bam      foo      l        main2    mb       o/o      q
++  abc      bar      j/k      m/m    * master   n        o/p      r
+ EOF
+ 	test_cmp expect actual
+ '
+@@ -345,8 +345,8 @@ test_expect_success 'git branch --column with an extremely long branch name' '
+   j/k
+   l
+   m/m
++  main2
+ * master
+-  master2
+   mb
+   n
+   o/o
+@@ -365,8 +365,8 @@ test_expect_success 'git branch with column.*' '
+ 	git config --unset column.branch &&
+ 	git config --unset column.ui &&
+ 	cat >expect <<\EOF &&
+-  a/b/c   bam   foo   l   * master    mb   o/o   q
+-  abc     bar   j/k   m/m   master2   n    o/p   r
++  a/b/c   bam   foo   l     main2    mb   o/o   q
++  abc     bar   j/k   m/m * master   n    o/p   r
+ EOF
+ 	test_cmp expect actual
+ '
+@@ -377,7 +377,7 @@ test_expect_success 'git branch --column -v should fail' '
  
- 		if (opt->pathspec.nr) {
-@@ -521,7 +521,6 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ test_expect_success 'git branch -v with column.ui ignored' '
+ 	git config column.ui column &&
+-	COLUMNS=80 git branch -v | cut -c -10 | sed "s/ *$//" >actual &&
++	COLUMNS=80 git branch -v | cut -c -9 | sed "s/ *$//" >actual &&
+ 	git config --unset column.ui &&
+ 	cat >expect <<\EOF &&
+   a/b/c
+@@ -388,8 +388,8 @@ test_expect_success 'git branch -v with column.ui ignored' '
+   j/k
+   l
+   m/m
++  main2
+ * master
+-  master2
+   mb
+   n
+   o/o
+@@ -597,10 +597,10 @@ test_expect_success 'git branch -C master master should work when master is chec
+ 	git branch -C master master
+ '
  
- 			/* t↓ */
- 			update_tree_entry(&t);
--			opt->num_changes++;
- 		}
+-test_expect_success 'git branch -C master5 master5 should work when master is checked out' '
++test_expect_success 'git branch -C main5 main5 should work when master is checked out' '
+ 	git checkout master &&
+-	git branch master5 &&
+-	git branch -C master5 master5
++	git branch main5 &&
++	git branch -C main5 main5
+ '
  
- 		/* t > p[imin] */
-@@ -539,7 +538,6 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 		skip_emit_tp:
- 			/* ∀ pi=p[imin]  pi↓ */
- 			update_tp_entries(tp, nparent);
--			opt->num_changes++;
- 		}
- 	}
+ test_expect_success 'git branch -C ab cd should overwrite existing config for cd' '
+@@ -711,11 +711,11 @@ test_expect_success 'deleting a self-referential symref' '
+ '
  
-@@ -557,7 +555,6 @@ struct combine_diff_path *diff_tree_paths(
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt)
- {
--	opt->num_changes = 0;
- 	p = ll_diff_tree_paths(p, oid, parents_oid, nparent, base, opt);
+ test_expect_success 'renaming a symref is not allowed' '
+-	git symbolic-ref refs/heads/master2 refs/heads/master &&
+-	test_must_fail git branch -m master2 master3 &&
+-	git symbolic-ref refs/heads/master2 &&
++	git symbolic-ref refs/heads/main2 refs/heads/master &&
++	test_must_fail git branch -m main2 main3 &&
++	git symbolic-ref refs/heads/main2 &&
+ 	test_path_is_file .git/refs/heads/master &&
+-	test_path_is_missing .git/refs/heads/master3
++	test_path_is_missing .git/refs/heads/main3
+ '
  
- 	/*
+ test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
 -- 
-2.28.0.510.g86fdc5f89a
+gitgitgadget
 
