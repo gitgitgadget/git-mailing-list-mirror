@@ -5,64 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0166CC2BB84
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0858BC43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:11:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D14520732
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:11:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A252720732
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 19:11:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeG63xvd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LeYBg97V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727971AbgIPTLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728177AbgIPTLg (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 16 Sep 2020 15:11:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48650 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728312AbgIPTK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728311AbgIPTK2 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Sep 2020 15:10:28 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58059C061352
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A80BC061351
         for <git@vger.kernel.org>; Wed, 16 Sep 2020 12:10:25 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id a9so4163138wmm.2
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 12:10:25 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id z1so8045477wrt.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 12:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=K9TBxxnClvyMzV16ZhiWZhbjDPodwn9kOmETXxQbBn0=;
-        b=jeG63xvd8lAQ1A2M5hJYcFn/eBpozHo/Xs6xsyQ4BWc9pIZBIAV30AhzzajSzBZnsT
-         EExQhUiz10H99ol5vbSJRiBiKkS2BFA3nB9g99wekl2sUPsX+1CEH+q+vozGj+ddz0Nw
-         M0wypC8aBvbYk5HAGx4X3dQ/BT+wfS+sIrq3+ASvYvdEuD0zpLj5qbjrwiBOr6YTpmVf
-         TfG8dZ7MEgXEEbfrRHEAbObsm8CSvfK6uX3853pEj9rVOiD4OqEq5uqBVeL2+5KczOaP
-         AgftJksGISMjS2R9lSmFuzvpeFrPIjapl46rZ0s/+pJ9kIi3Mu5U2Y605p1KtzM2mCIE
-         NEMA==
+        bh=7ZKs9OERVoNUPRtpfjUV01o2wYeQuhjlvoXb9Qdt7nk=;
+        b=LeYBg97VW/fjqX5B84YTraRchi+qMHAuz80ahuGpOICGyKObDfxUDDBaeVisWJSZtD
+         KNLwaClqZBcx9N7w2AKMTaAkqEMjLPBoijTEflb8kaP4iatrbWjSYTFP7dmPhXNgOa/0
+         UjAzv44Da8nXW38m1f/+wUWPAcO64mbU9zj7GNha4y0iIdwZlDjenGRc+jSo3fsI7Z//
+         PPwE0EY4n/aDQaAkLpOiZQfsLqo5UqYz9UYJpWDYlwkoH75AIZuQ2E+M/or/af0+vdRP
+         MG5tD3eBx9mwaUecUB1xCeGQQ+JA/8zchuZSgWrFTCu+/BFxuBhUY3PUutW2SvaxLEFO
+         cFfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K9TBxxnClvyMzV16ZhiWZhbjDPodwn9kOmETXxQbBn0=;
-        b=JymyMJ48gMC2iFzmJBLuRqTqfWE/HsWIm5FCUQnyMcvX5dusDR1oX9fES4L1QgrE9u
-         6jyaq0/vAx4zFgT2rcK1SeGSCbjHCAx9elcbFSoBYpI/SSablVFrtKI4A94nF0wBVJI3
-         A8j5EEFyHM1PcxmQl3LIMSLMIdirPQz3xtPWUeIDK/IH7+1ge/MuKREm74lvl7GdORJd
-         up62qTeUrlnfE9zXsRr0p/frcYj06dgiGLaFSFNjg/d1C0mQkNcuPrMAf0OxQAkqyDfq
-         Aop2QxSY9B8PaC8KzORArpG8SF2w5w4x3KVTAn3oKF2KcZ3RdPLZOr93Xg+yJJ+6IjUX
-         B25Q==
-X-Gm-Message-State: AOAM531htY+k79h7VeKVCBmvHAl6/nePBUvDfF87ZzSImLt31Pwbie+2
-        gZBwW/Iq5xMZomBcbZ6fz/EeWK4WIOE=
-X-Google-Smtp-Source: ABdhPJyvQzZ/IsfEykZ9xSmt2t1zn1ihiZRlnCMKDEOex6JvBbZaQVCUlqAt0SMMASoJh/bBSZFt1Q==
-X-Received: by 2002:a1c:f20b:: with SMTP id s11mr6468306wmc.144.1600283423715;
-        Wed, 16 Sep 2020 12:10:23 -0700 (PDT)
+        bh=7ZKs9OERVoNUPRtpfjUV01o2wYeQuhjlvoXb9Qdt7nk=;
+        b=KuDGSo5EfFix+//ps+MzlMYEDu0ADGujMSBjaejMgE3YsI1R/ZHNnq+1QiLOEpuDDB
+         OKvhi63MSyW8h8dK34VIVV72zBl0PhOW+s/S9+Lisxb6RqyT8NK7u0v14lgxoU9kvyOT
+         w7vEZylU+FNfgyw90C32GZRG0hdyBlDCmRuS7/0yfEQleP5JueJjoUT5OS/bvihCSHng
+         3SFLNmjXDCKXl8lEIMb2/wUnqi27M3d64tHYbV5f/pcHl+W6UpxXgy2OWourN4nDB+Ky
+         uZ195RZJ292poVl/4v7A+PNm9u9OMOMxTR3l5ig3c36QNO5axPdNv4zXqyEPUyValCXI
+         efEA==
+X-Gm-Message-State: AOAM533Kp5XUc1n/Ph2NQcLhM5eTMa0FJWIqtUhpgMLgjbatKkadzJFA
+        mvcxJp0GnfHpYHuvU9eUYjMm1xF8G80=
+X-Google-Smtp-Source: ABdhPJxdYSwjUkKB6Zu8I23Kt0YauHodeb8Zjht+hTrImtYFBZufaglYM3zeP0pWZDHTQaojsCfqHw==
+X-Received: by 2002:adf:f88b:: with SMTP id u11mr27366946wrp.376.1600283422993;
+        Wed, 16 Sep 2020 12:10:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q4sm35960727wru.65.2020.09.16.12.10.23
+        by smtp.gmail.com with ESMTPSA id l8sm33774634wrx.22.2020.09.16.12.10.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 12:10:23 -0700 (PDT)
-Message-Id: <17fb8d050dae2efd84f090268095da4d04b15c88.1600283416.git.gitgitgadget@gmail.com>
+        Wed, 16 Sep 2020 12:10:22 -0700 (PDT)
+Message-Id: <1ba8e3eb3045b3ab6462febeaa8b90dc14910098.1600283416.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
 References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Sep 2020 19:10:11 +0000
-Subject: [PATCH 08/13] reftable: a generic binary tree implementation
+Date:   Wed, 16 Sep 2020 19:10:10 +0000
+Subject: [PATCH 07/13] reftable: reading/writing blocks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,45 +78,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This is necessary for building a OID => ref map on write
+Includes a code snippet copied from zlib
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                 |  2 ++
- reftable/tree.c          | 63 ++++++++++++++++++++++++++++++++++++++++
- reftable/tree.h          | 34 ++++++++++++++++++++++
- reftable/tree_test.c     | 62 +++++++++++++++++++++++++++++++++++++++
- t/helper/test-reftable.c |  1 +
- 5 files changed, 162 insertions(+)
- create mode 100644 reftable/tree.c
- create mode 100644 reftable/tree.h
- create mode 100644 reftable/tree_test.c
+ Makefile                 |   3 +
+ reftable/.gitattributes  |   1 +
+ reftable/block.c         | 443 +++++++++++++++++++++++++++++++++++++++
+ reftable/block.h         | 129 ++++++++++++
+ reftable/block_test.c    | 158 ++++++++++++++
+ reftable/zlib-compat.c   |  92 ++++++++
+ t/helper/test-reftable.c |   1 +
+ 7 files changed, 827 insertions(+)
+ create mode 100644 reftable/.gitattributes
+ create mode 100644 reftable/block.c
+ create mode 100644 reftable/block.h
+ create mode 100644 reftable/block_test.c
+ create mode 100644 reftable/zlib-compat.c
 
 diff --git a/Makefile b/Makefile
-index a897818a7e..b96c235087 100644
+index 0fb0048c34..a897818a7e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2351,12 +2351,14 @@ REFTABLE_OBJS += reftable/publicbasics.o
+@@ -2345,12 +2345,15 @@ XDIFF_OBJS += xdiff/xprepare.o
+ XDIFF_OBJS += xdiff/xutils.o
+ 
+ REFTABLE_OBJS += reftable/basics.o
++REFTABLE_OBJS += reftable/block.o
+ REFTABLE_OBJS += reftable/blocksource.o
+ REFTABLE_OBJS += reftable/publicbasics.o
  REFTABLE_OBJS += reftable/compat.o
  REFTABLE_OBJS += reftable/record.o
  REFTABLE_OBJS += reftable/strbuf.o
-+REFTABLE_OBJS += reftable/tree.o
- REFTABLE_OBJS += reftable/zlib-compat.o
++REFTABLE_OBJS += reftable/zlib-compat.o
  
- REFTABLE_TEST_OBJS += reftable/block_test.o
++REFTABLE_TEST_OBJS += reftable/block_test.o
  REFTABLE_TEST_OBJS += reftable/record_test.o
  REFTABLE_TEST_OBJS += reftable/strbuf_test.o
  REFTABLE_TEST_OBJS += reftable/test_framework.o
-+REFTABLE_TEST_OBJS += reftable/tree_test.o
- 
- TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
- OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
-diff --git a/reftable/tree.c b/reftable/tree.c
+diff --git a/reftable/.gitattributes b/reftable/.gitattributes
 new file mode 100644
-index 0000000000..0061d14e30
+index 0000000000..f44451a379
 --- /dev/null
-+++ b/reftable/tree.c
-@@ -0,0 +1,63 @@
++++ b/reftable/.gitattributes
+@@ -0,0 +1 @@
++/zlib-compat.c	whitespace=-indent-with-non-tab,-trailing-space
+diff --git a/reftable/block.c b/reftable/block.c
+new file mode 100644
+index 0000000000..d61faa0fd4
+--- /dev/null
++++ b/reftable/block.c
+@@ -0,0 +1,443 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -124,107 +137,447 @@ index 0000000000..0061d14e30
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "tree.h"
++#include "block.h"
 +
-+#include "basics.h"
++#include "blocksource.h"
++#include "constants.h"
++#include "record.h"
++#include "reftable.h"
 +#include "system.h"
++#include "zlib.h"
 +
-+struct tree_node *tree_search(void *key, struct tree_node **rootp,
-+			      int (*compare)(const void *, const void *),
-+			      int insert)
++int header_size(int version)
 +{
-+	int res;
-+	if (*rootp == NULL) {
-+		if (!insert) {
-+			return NULL;
-+		} else {
-+			struct tree_node *n =
-+				reftable_calloc(sizeof(struct tree_node));
-+			n->key = key;
-+			*rootp = n;
-+			return *rootp;
++	switch (version) {
++	case 1:
++		return 24;
++	case 2:
++		return 28;
++	}
++	abort();
++}
++
++int footer_size(int version)
++{
++	switch (version) {
++	case 1:
++		return 68;
++	case 2:
++		return 72;
++	}
++	abort();
++}
++
++int block_writer_register_restart(struct block_writer *w, int n, int restart,
++				  struct strbuf *key);
++
++void block_writer_init(struct block_writer *bw, uint8_t typ, uint8_t *buf,
++		       uint32_t block_size, uint32_t header_off, int hash_size)
++{
++	bw->buf = buf;
++	bw->hash_size = hash_size;
++	bw->block_size = block_size;
++	bw->header_off = header_off;
++	bw->buf[header_off] = typ;
++	bw->next = header_off + 4;
++	bw->restart_interval = 16;
++	bw->entries = 0;
++	bw->restart_len = 0;
++	bw->last_key.len = 0;
++}
++
++uint8_t block_writer_type(struct block_writer *bw)
++{
++	return bw->buf[bw->header_off];
++}
++
++/* adds the reftable_record to the block. Returns -1 if it does not fit, 0 on
++   success */
++int block_writer_add(struct block_writer *w, struct reftable_record *rec)
++{
++	struct strbuf empty = STRBUF_INIT;
++	struct strbuf last =
++		w->entries % w->restart_interval == 0 ? empty : w->last_key;
++	struct string_view out = {
++		.buf = w->buf + w->next,
++		.len = w->block_size - w->next,
++	};
++
++	struct string_view start = out;
++
++	int is_restart = 0;
++	struct strbuf key = STRBUF_INIT;
++	int n = 0;
++
++	reftable_record_key(rec, &key);
++	n = reftable_encode_key(&is_restart, out, last, key,
++				reftable_record_val_type(rec));
++	if (n < 0)
++		goto done;
++	string_view_consume(&out, n);
++
++	n = reftable_record_encode(rec, out, w->hash_size);
++	if (n < 0)
++		goto done;
++	string_view_consume(&out, n);
++
++	if (block_writer_register_restart(w, start.len - out.len, is_restart,
++					  &key) < 0)
++		goto done;
++
++	strbuf_release(&key);
++	return 0;
++
++done:
++	strbuf_release(&key);
++	return -1;
++}
++
++int block_writer_register_restart(struct block_writer *w, int n, int is_restart,
++				  struct strbuf *key)
++{
++	int rlen = w->restart_len;
++	if (rlen >= MAX_RESTARTS) {
++		is_restart = 0;
++	}
++
++	if (is_restart) {
++		rlen++;
++	}
++	if (2 + 3 * rlen + n > w->block_size - w->next)
++		return -1;
++	if (is_restart) {
++		if (w->restart_len == w->restart_cap) {
++			w->restart_cap = w->restart_cap * 2 + 1;
++			w->restarts = reftable_realloc(
++				w->restarts, sizeof(uint32_t) * w->restart_cap);
++		}
++
++		w->restarts[w->restart_len++] = w->next;
++	}
++
++	w->next += n;
++
++	strbuf_reset(&w->last_key);
++	strbuf_addbuf(&w->last_key, key);
++	w->entries++;
++	return 0;
++}
++
++int block_writer_finish(struct block_writer *w)
++{
++	int i = 0;
++	for (i = 0; i < w->restart_len; i++) {
++		put_be24(w->buf + w->next, w->restarts[i]);
++		w->next += 3;
++	}
++
++	put_be16(w->buf + w->next, w->restart_len);
++	w->next += 2;
++	put_be24(w->buf + 1 + w->header_off, w->next);
++
++	if (block_writer_type(w) == BLOCK_TYPE_LOG) {
++		int block_header_skip = 4 + w->header_off;
++		uint8_t *compressed = NULL;
++		int zresult = 0;
++		uLongf src_len = w->next - block_header_skip;
++		size_t dest_cap = src_len;
++
++		compressed = reftable_malloc(dest_cap);
++		while (1) {
++			uLongf out_dest_len = dest_cap;
++
++			zresult = compress2(compressed, &out_dest_len,
++					    w->buf + block_header_skip, src_len,
++					    9);
++			if (zresult == Z_BUF_ERROR) {
++				dest_cap *= 2;
++				compressed =
++					reftable_realloc(compressed, dest_cap);
++				continue;
++			}
++
++			if (Z_OK != zresult) {
++				reftable_free(compressed);
++				return REFTABLE_ZLIB_ERROR;
++			}
++
++			memcpy(w->buf + block_header_skip, compressed,
++			       out_dest_len);
++			w->next = out_dest_len + block_header_skip;
++			reftable_free(compressed);
++			break;
 +		}
 +	}
-+
-+	res = compare(key, (*rootp)->key);
-+	if (res < 0)
-+		return tree_search(key, &(*rootp)->left, compare, insert);
-+	else if (res > 0)
-+		return tree_search(key, &(*rootp)->right, compare, insert);
-+	return *rootp;
++	return w->next;
 +}
 +
-+void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
-+		void *arg)
++uint8_t block_reader_type(struct block_reader *r)
 +{
-+	if (t->left != NULL) {
-+		infix_walk(t->left, action, arg);
-+	}
-+	action(arg, t->key);
-+	if (t->right != NULL) {
-+		infix_walk(t->right, action, arg);
-+	}
++	return r->block.data[r->header_off];
 +}
 +
-+void tree_free(struct tree_node *t)
++int block_reader_init(struct block_reader *br, struct reftable_block *block,
++		      uint32_t header_off, uint32_t table_block_size,
++		      int hash_size)
 +{
-+	if (t == NULL) {
-+		return;
++	uint32_t full_block_size = table_block_size;
++	uint8_t typ = block->data[header_off];
++	uint32_t sz = get_be24(block->data + header_off + 1);
++
++	uint16_t restart_count = 0;
++	uint32_t restart_start = 0;
++	uint8_t *restart_bytes = NULL;
++
++	if (!reftable_is_block_type(typ))
++		return REFTABLE_FORMAT_ERROR;
++
++	if (typ == BLOCK_TYPE_LOG) {
++		int block_header_skip = 4 + header_off;
++		uLongf dst_len = sz - block_header_skip; /* total size of dest
++							    buffer. */
++		uLongf src_len = block->len - block_header_skip;
++		/* Log blocks specify the *uncompressed* size in their header.
++		 */
++		uint8_t *uncompressed = reftable_malloc(sz);
++
++		/* Copy over the block header verbatim. It's not compressed. */
++		memcpy(uncompressed, block->data, block_header_skip);
++
++		/* Uncompress */
++		if (Z_OK != uncompress_return_consumed(
++				    uncompressed + block_header_skip, &dst_len,
++				    block->data + block_header_skip,
++				    &src_len)) {
++			reftable_free(uncompressed);
++			return REFTABLE_ZLIB_ERROR;
++		}
++
++		if (dst_len + block_header_skip != sz)
++			return REFTABLE_FORMAT_ERROR;
++
++		/* We're done with the input data. */
++		reftable_block_done(block);
++		block->data = uncompressed;
++		block->len = sz;
++		block->source = malloc_block_source();
++		full_block_size = src_len + block_header_skip;
++	} else if (full_block_size == 0) {
++		full_block_size = sz;
++	} else if (sz < full_block_size && sz < block->len &&
++		   block->data[sz] != 0) {
++		/* If the block is smaller than the full block size, it is
++		   padded (data followed by '\0') or the next block is
++		   unaligned. */
++		full_block_size = sz;
 +	}
-+	if (t->left != NULL) {
-+		tree_free(t->left);
-+	}
-+	if (t->right != NULL) {
-+		tree_free(t->right);
-+	}
-+	reftable_free(t);
++
++	restart_count = get_be16(block->data + sz - 2);
++	restart_start = sz - 2 - 3 * restart_count;
++	restart_bytes = block->data + restart_start;
++
++	/* transfer ownership. */
++	br->block = *block;
++	block->data = NULL;
++	block->len = 0;
++
++	br->hash_size = hash_size;
++	br->block_len = restart_start;
++	br->full_block_size = full_block_size;
++	br->header_off = header_off;
++	br->restart_count = restart_count;
++	br->restart_bytes = restart_bytes;
++
++	return 0;
 +}
-diff --git a/reftable/tree.h b/reftable/tree.h
-new file mode 100644
-index 0000000000..954512e9a3
---- /dev/null
-+++ b/reftable/tree.h
-@@ -0,0 +1,34 @@
-+/*
-+Copyright 2020 Google LLC
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
++static uint32_t block_reader_restart_offset(struct block_reader *br, int i)
++{
++	return get_be24(br->restart_bytes + 3 * i);
++}
 +
-+#ifndef TREE_H
-+#define TREE_H
++void block_reader_start(struct block_reader *br, struct block_iter *it)
++{
++	it->br = br;
++	strbuf_reset(&it->last_key);
++	it->next_off = br->header_off + 4;
++}
 +
-+/* tree_node is a generic binary search tree. */
-+struct tree_node {
-+	void *key;
-+	struct tree_node *left, *right;
++struct restart_find_args {
++	int error;
++	struct strbuf key;
++	struct block_reader *r;
 +};
 +
-+/* looks for `key` in `rootp` using `compare` as comparison function. If insert
-+   is set, insert the key if it's not found. Else, return NULL.
-+*/
-+struct tree_node *tree_search(void *key, struct tree_node **rootp,
-+			      int (*compare)(const void *, const void *),
-+			      int insert);
++static int restart_key_less(size_t idx, void *args)
++{
++	struct restart_find_args *a = (struct restart_find_args *)args;
++	uint32_t off = block_reader_restart_offset(a->r, idx);
++	struct string_view in = {
++		.buf = a->r->block.data + off,
++		.len = a->r->block_len - off,
++	};
 +
-+/* performs an infix walk of the tree. */
-+void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
-+		void *arg);
++	/* the restart key is verbatim in the block, so this could avoid the
++	   alloc for decoding the key */
++	struct strbuf rkey = STRBUF_INIT;
++	struct strbuf last_key = STRBUF_INIT;
++	uint8_t unused_extra;
++	int n = reftable_decode_key(&rkey, &unused_extra, last_key, in);
++	int result;
++	if (n < 0) {
++		a->error = 1;
++		return -1;
++	}
 +
-+/*
-+  deallocates the tree nodes recursively. Keys should be deallocated separately
-+  by walking over the tree. */
-+void tree_free(struct tree_node *t);
++	result = strbuf_cmp(&a->key, &rkey);
++	strbuf_release(&rkey);
++	return result;
++}
 +
-+#endif
-diff --git a/reftable/tree_test.c b/reftable/tree_test.c
++void block_iter_copy_from(struct block_iter *dest, struct block_iter *src)
++{
++	dest->br = src->br;
++	dest->next_off = src->next_off;
++	strbuf_reset(&dest->last_key);
++	strbuf_addbuf(&dest->last_key, &src->last_key);
++}
++
++int block_iter_next(struct block_iter *it, struct reftable_record *rec)
++{
++	struct string_view in = {
++		.buf = it->br->block.data + it->next_off,
++		.len = it->br->block_len - it->next_off,
++	};
++	struct string_view start = in;
++	struct strbuf key = STRBUF_INIT;
++	uint8_t extra = 0;
++	int n = 0;
++
++	if (it->next_off >= it->br->block_len)
++		return 1;
++
++	n = reftable_decode_key(&key, &extra, it->last_key, in);
++	if (n < 0)
++		return -1;
++
++	string_view_consume(&in, n);
++	n = reftable_record_decode(rec, key, extra, in, it->br->hash_size);
++	if (n < 0)
++		return -1;
++	string_view_consume(&in, n);
++
++	strbuf_reset(&it->last_key);
++	strbuf_addbuf(&it->last_key, &key);
++	it->next_off += start.len - in.len;
++	strbuf_release(&key);
++	return 0;
++}
++
++int block_reader_first_key(struct block_reader *br, struct strbuf *key)
++{
++	struct strbuf empty = STRBUF_INIT;
++	int off = br->header_off + 4;
++	struct string_view in = {
++		.buf = br->block.data + off,
++		.len = br->block_len - off,
++	};
++
++	uint8_t extra = 0;
++	int n = reftable_decode_key(key, &extra, empty, in);
++	if (n < 0)
++		return n;
++
++	return 0;
++}
++
++int block_iter_seek(struct block_iter *it, struct strbuf *want)
++{
++	return block_reader_seek(it->br, it, want);
++}
++
++void block_iter_close(struct block_iter *it)
++{
++	strbuf_release(&it->last_key);
++}
++
++int block_reader_seek(struct block_reader *br, struct block_iter *it,
++		      struct strbuf *want)
++{
++	struct restart_find_args args = {
++		.key = *want,
++		.r = br,
++	};
++	struct reftable_record rec = reftable_new_record(block_reader_type(br));
++	struct strbuf key = STRBUF_INIT;
++	int err = 0;
++	struct block_iter next = {
++		.last_key = STRBUF_INIT,
++	};
++
++	int i = binsearch(br->restart_count, &restart_key_less, &args);
++	if (args.error) {
++		err = REFTABLE_FORMAT_ERROR;
++		goto done;
++	}
++
++	it->br = br;
++	if (i > 0) {
++		i--;
++		it->next_off = block_reader_restart_offset(br, i);
++	} else {
++		it->next_off = br->header_off + 4;
++	}
++
++	/* We're looking for the last entry less/equal than the wanted key, so
++	   we have to go one entry too far and then back up.
++	*/
++	while (1) {
++		block_iter_copy_from(&next, it);
++		err = block_iter_next(&next, &rec);
++		if (err < 0)
++			goto done;
++
++		reftable_record_key(&rec, &key);
++		if (err > 0 || strbuf_cmp(&key, want) >= 0) {
++			err = 0;
++			goto done;
++		}
++
++		block_iter_copy_from(it, &next);
++	}
++
++done:
++	strbuf_release(&key);
++	strbuf_release(&next.last_key);
++	reftable_record_destroy(&rec);
++
++	return err;
++}
++
++void block_writer_clear(struct block_writer *bw)
++{
++	FREE_AND_NULL(bw->restarts);
++	strbuf_release(&bw->last_key);
++	/* the block is not owned. */
++}
++
++void reftable_block_done(struct reftable_block *blockp)
++{
++	struct reftable_block_source source = blockp->source;
++	if (blockp != NULL && source.ops != NULL)
++		source.ops->return_block(source.arg, blockp);
++	blockp->data = NULL;
++	blockp->len = 0;
++	blockp->source.ops = NULL;
++	blockp->source.arg = NULL;
++}
+diff --git a/reftable/block.h b/reftable/block.h
 new file mode 100644
-index 0000000000..c6d448cbe8
+index 0000000000..14a6f835f4
 --- /dev/null
-+++ b/reftable/tree_test.c
-@@ -0,0 +1,62 @@
++++ b/reftable/block.h
+@@ -0,0 +1,129 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -233,71 +586,401 @@ index 0000000000..c6d448cbe8
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "tree.h"
++#ifndef BLOCK_H
++#define BLOCK_H
 +
 +#include "basics.h"
++#include "record.h"
++#include "reftable.h"
++
++/*
++  Writes reftable blocks. The block_writer is reused across blocks to minimize
++  allocation overhead.
++*/
++struct block_writer {
++	uint8_t *buf;
++	uint32_t block_size;
++
++	/* Offset ofof the global header. Nonzero in the first block only. */
++	uint32_t header_off;
++
++	/* How often to restart keys. */
++	int restart_interval;
++	int hash_size;
++
++	/* Offset of next uint8_t to write. */
++	uint32_t next;
++	uint32_t *restarts;
++	uint32_t restart_len;
++	uint32_t restart_cap;
++
++	struct strbuf last_key;
++	int entries;
++};
++
++/*
++  initializes the blockwriter to write `typ` entries, using `buf` as temporary
++  storage. `buf` is not owned by the block_writer. */
++void block_writer_init(struct block_writer *bw, uint8_t typ, uint8_t *buf,
++		       uint32_t block_size, uint32_t header_off, int hash_size);
++
++/*
++  returns the block type (eg. 'r' for ref records.
++*/
++uint8_t block_writer_type(struct block_writer *bw);
++
++/* appends the record, or -1 if it doesn't fit. */
++int block_writer_add(struct block_writer *w, struct reftable_record *rec);
++
++/* appends the key restarts, and compress the block if necessary. */
++int block_writer_finish(struct block_writer *w);
++
++/* clears out internally allocated block_writer members. */
++void block_writer_clear(struct block_writer *bw);
++
++/* Read a block. */
++struct block_reader {
++	/* offset of the block header; nonzero for the first block in a
++	 * reftable. */
++	uint32_t header_off;
++
++	/* the memory block */
++	struct reftable_block block;
++	int hash_size;
++
++	/* size of the data, excluding restart data. */
++	uint32_t block_len;
++	uint8_t *restart_bytes;
++	uint16_t restart_count;
++
++	/* size of the data in the file. For log blocks, this is the compressed
++	 * size. */
++	uint32_t full_block_size;
++};
++
++/* Iterate over entries in a block */
++struct block_iter {
++	/* offset within the block of the next entry to read. */
++	uint32_t next_off;
++	struct block_reader *br;
++
++	/* key for last entry we read. */
++	struct strbuf last_key;
++};
++
++/* initializes a block reader. */
++int block_reader_init(struct block_reader *br, struct reftable_block *bl,
++		      uint32_t header_off, uint32_t table_block_size,
++		      int hash_size);
++
++/* Position `it` at start of the block */
++void block_reader_start(struct block_reader *br, struct block_iter *it);
++
++/* Position `it` to the `want` key in the block */
++int block_reader_seek(struct block_reader *br, struct block_iter *it,
++		      struct strbuf *want);
++
++/* Returns the block type (eg. 'r' for refs) */
++uint8_t block_reader_type(struct block_reader *r);
++
++/* Decodes the first key in the block */
++int block_reader_first_key(struct block_reader *br, struct strbuf *key);
++
++void block_iter_copy_from(struct block_iter *dest, struct block_iter *src);
++
++/* return < 0 for error, 0 for OK, > 0 for EOF. */
++int block_iter_next(struct block_iter *it, struct reftable_record *rec);
++
++/* Seek to `want` with in the block pointed to by `it` */
++int block_iter_seek(struct block_iter *it, struct strbuf *want);
++
++/* deallocate memory for `it`. The block reader and its block is left intact. */
++void block_iter_close(struct block_iter *it);
++
++/* size of file header, depending on format version */
++int header_size(int version);
++
++/* size of file footer, depending on format version */
++int footer_size(int version);
++
++/* returns a block to its source. */
++void reftable_block_done(struct reftable_block *ret);
++
++#endif
+diff --git a/reftable/block_test.c b/reftable/block_test.c
+new file mode 100644
+index 0000000000..1ca327b3c7
+--- /dev/null
++++ b/reftable/block_test.c
+@@ -0,0 +1,158 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "block.h"
++
++#include "system.h"
++
++#include "blocksource.h"
++#include "basics.h"
++#include "constants.h"
 +#include "record.h"
 +#include "reftable.h"
 +#include "test_framework.h"
 +#include "reftable-tests.h"
 +
-+static int test_compare(const void *a, const void *b)
-+{
-+	return (char *)a - (char *)b;
-+}
-+
-+struct curry {
-+	void *last;
++struct binsearch_args {
++	int key;
++	int *arr;
 +};
 +
-+static void check_increasing(void *arg, void *key)
++static int binsearch_func(size_t i, void *void_args)
 +{
-+	struct curry *c = (struct curry *)arg;
-+	if (c->last != NULL) {
-+		assert(test_compare(c->last, key) < 0);
-+	}
-+	c->last = key;
++	struct binsearch_args *args = (struct binsearch_args *)void_args;
++
++	return args->key < args->arr[i];
 +}
 +
-+static void test_tree(void)
++static void test_binsearch(void)
 +{
-+	struct tree_node *root = NULL;
++	int arr[] = { 2, 4, 6, 8, 10 };
++	size_t sz = ARRAY_SIZE(arr);
++	struct binsearch_args args = {
++		.arr = arr,
++	};
 +
-+	void *values[11] = { 0 };
-+	struct tree_node *nodes[11] = { 0 };
-+	int i = 1;
-+	struct curry c = { 0 };
-+	do {
-+		nodes[i] = tree_search(values + i, &root, &test_compare, 1);
-+		i = (i * 7) % 11;
-+	} while (i != 1);
++	int i = 0;
++	for (i = 1; i < 11; i++) {
++		int res;
++		args.key = i;
++		res = binsearch(sz, &binsearch_func, &args);
 +
-+	for (i = 1; i < ARRAY_SIZE(nodes); i++) {
-+		assert(values + i == nodes[i]->key);
-+		assert(nodes[i] ==
-+		       tree_search(values + i, &root, &test_compare, 0));
++		if (res < sz) {
++			assert(args.key < arr[res]);
++			if (res > 0) {
++				assert(args.key >= arr[res - 1]);
++			}
++		} else {
++			assert(args.key == 10 || args.key == 11);
++		}
 +	}
-+
-+	infix_walk(root, check_increasing, &c);
-+	tree_free(root);
 +}
 +
-+int tree_test_main(int argc, const char *argv[])
++static void test_block_read_write(void)
 +{
-+	add_test_case("test_tree", &test_tree);
++	const int header_off = 21; /* random */
++	char *names[30];
++	const int N = ARRAY_SIZE(names);
++	const int block_size = 1024;
++	struct reftable_block block = { 0 };
++	struct block_writer bw = {
++		.last_key = STRBUF_INIT,
++	};
++	struct reftable_ref_record ref = { 0 };
++	struct reftable_record rec = { 0 };
++	int i = 0;
++	int n;
++	struct block_reader br = { 0 };
++	struct block_iter it = { .last_key = STRBUF_INIT };
++	int j = 0;
++	struct strbuf want = STRBUF_INIT;
++
++	block.data = reftable_calloc(block_size);
++	block.len = block_size;
++	block.source = malloc_block_source();
++	block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
++			  header_off, hash_size(SHA1_ID));
++	reftable_record_from_ref(&rec, &ref);
++
++	for (i = 0; i < N; i++) {
++		char name[100];
++		uint8_t hash[SHA1_SIZE];
++		snprintf(name, sizeof(name), "branch%02d", i);
++		memset(hash, i, sizeof(hash));
++
++		ref.refname = name;
++		ref.value = hash;
++		names[i] = xstrdup(name);
++		n = block_writer_add(&bw, &rec);
++		ref.refname = NULL;
++		ref.value = NULL;
++		assert(n == 0);
++	}
++
++	n = block_writer_finish(&bw);
++	assert(n > 0);
++
++	block_writer_clear(&bw);
++
++	block_reader_init(&br, &block, header_off, block_size, SHA1_SIZE);
++
++	block_reader_start(&br, &it);
++
++	while (1) {
++		int r = block_iter_next(&it, &rec);
++		assert(r >= 0);
++		if (r > 0) {
++			break;
++		}
++		assert_streq(names[j], ref.refname);
++		j++;
++	}
++
++	reftable_record_clear(&rec);
++	block_iter_close(&it);
++
++	for (i = 0; i < N; i++) {
++		struct block_iter it = { .last_key = STRBUF_INIT };
++		strbuf_reset(&want);
++		strbuf_addstr(&want, names[i]);
++
++		n = block_reader_seek(&br, &it, &want);
++		assert(n == 0);
++
++		n = block_iter_next(&it, &rec);
++		assert(n == 0);
++
++		assert_streq(names[i], ref.refname);
++
++		want.len--;
++		n = block_reader_seek(&br, &it, &want);
++		assert(n == 0);
++
++		n = block_iter_next(&it, &rec);
++		assert(n == 0);
++		assert_streq(names[10 * (i / 10)], ref.refname);
++
++		block_iter_close(&it);
++	}
++
++	reftable_record_clear(&rec);
++	reftable_block_done(&br.block);
++	strbuf_release(&want);
++	for (i = 0; i < N; i++) {
++		reftable_free(names[i]);
++	}
++}
++
++int block_test_main(int argc, const char *argv[])
++{
++	add_test_case("binsearch", &test_binsearch);
++	add_test_case("block_read_write", &test_block_read_write);
 +	return test_main(argc, argv);
 +}
+diff --git a/reftable/zlib-compat.c b/reftable/zlib-compat.c
+new file mode 100644
+index 0000000000..3e0b0f24f1
+--- /dev/null
++++ b/reftable/zlib-compat.c
+@@ -0,0 +1,92 @@
++/* taken from zlib's uncompr.c
++
++   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
++   Author: Mark Adler <madler@alumni.caltech.edu>
++   Date:   Sun Jan 15 09:18:46 2017 -0800
++
++       zlib 1.2.11
++
++*/
++
++/*
++ * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
++ * For conditions of distribution and use, see copyright notice in zlib.h
++ */
++
++#include "system.h"
++
++/* clang-format off */
++
++/* ===========================================================================
++     Decompresses the source buffer into the destination buffer.  *sourceLen is
++   the byte length of the source buffer. Upon entry, *destLen is the total size
++   of the destination buffer, which must be large enough to hold the entire
++   uncompressed data. (The size of the uncompressed data must have been saved
++   previously by the compressor and transmitted to the decompressor by some
++   mechanism outside the scope of this compression library.) Upon exit,
++   *destLen is the size of the decompressed data and *sourceLen is the number
++   of source bytes consumed. Upon return, source + *sourceLen points to the
++   first unused input byte.
++
++     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
++   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
++   Z_DATA_ERROR if the input data was corrupted, including if the input data is
++   an incomplete zlib stream.
++*/
++int ZEXPORT uncompress_return_consumed (
++    Bytef *dest,
++    uLongf *destLen,
++    const Bytef *source,
++    uLong *sourceLen) {
++    z_stream stream;
++    int err;
++    const uInt max = (uInt)-1;
++    uLong len, left;
++    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
++
++    len = *sourceLen;
++    if (*destLen) {
++        left = *destLen;
++        *destLen = 0;
++    }
++    else {
++        left = 1;
++        dest = buf;
++    }
++
++    stream.next_in = (z_const Bytef *)source;
++    stream.avail_in = 0;
++    stream.zalloc = (alloc_func)0;
++    stream.zfree = (free_func)0;
++    stream.opaque = (voidpf)0;
++
++    err = inflateInit(&stream);
++    if (err != Z_OK) return err;
++
++    stream.next_out = dest;
++    stream.avail_out = 0;
++
++    do {
++        if (stream.avail_out == 0) {
++            stream.avail_out = left > (uLong)max ? max : (uInt)left;
++            left -= stream.avail_out;
++        }
++        if (stream.avail_in == 0) {
++            stream.avail_in = len > (uLong)max ? max : (uInt)len;
++            len -= stream.avail_in;
++        }
++        err = inflate(&stream, Z_NO_FLUSH);
++    } while (err == Z_OK);
++
++    *sourceLen -= len + stream.avail_in;
++    if (dest != buf)
++        *destLen = stream.total_out;
++    else if (stream.total_out && err == Z_BUF_ERROR)
++        left = 1;
++
++    inflateEnd(&stream);
++    return err == Z_STREAM_END ? Z_OK :
++           err == Z_NEED_DICT ? Z_DATA_ERROR  :
++           err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
++           err;
++}
 diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 81a9bd5667..9c4e0f42dc 100644
+index 9341272089..81a9bd5667 100644
 --- a/t/helper/test-reftable.c
 +++ b/t/helper/test-reftable.c
-@@ -6,5 +6,6 @@ int cmd__reftable(int argc, const char **argv)
- 	block_test_main(argc, argv);
+@@ -3,6 +3,7 @@
+ 
+ int cmd__reftable(int argc, const char **argv)
+ {
++	block_test_main(argc, argv);
  	record_test_main(argc, argv);
  	strbuf_test_main(argc, argv);
-+	tree_test_main(argc, argv);
  	return 0;
- }
 -- 
 gitgitgadget
 
