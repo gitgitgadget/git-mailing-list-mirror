@@ -2,137 +2,120 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0603C43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDB60C43461
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:35:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A30E2206DB
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:26:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 939902078E
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 00:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726318AbgIPA0J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Sep 2020 20:26:09 -0400
-Received: from mout.kundenserver.de ([217.72.192.74]:53505 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726785AbgIOOMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Sep 2020 10:12:36 -0400
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 1MVvGt-1jt7WV1k2v-00RmzD; Tue, 15 Sep 2020 15:54:30 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id 3FA7D1E01E8;
-        Tue, 15 Sep 2020 13:54:29 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id fzqIknABOA2I; Tue, 15 Sep 2020 15:54:29 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (unknown [10.10.5.94])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 030391E01E7;
-        Tue, 15 Sep 2020 15:54:28 +0200 (CEST)
-Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
-        id CBACB80518; Tue, 15 Sep 2020 15:54:28 +0200 (CEST)
-Date:   Tue, 15 Sep 2020 15:54:28 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] config: option transfer.ipversion to set transport protocol
- version for network fetches
-Message-ID: <20200915135428.GA28038@pflmari>
+        id S1726734AbgIPAfK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Sep 2020 20:35:10 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60440 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726905AbgIPAey (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Sep 2020 20:34:54 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ACA7D60489;
+        Wed, 16 Sep 2020 00:34:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1600216493;
+        bh=AF5mM1l3n/7zHeFJuQn73beAdGy6jU3w2mvE2M8979s=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=SAu1YM6jeCOVMmun+L5J0KrscjYHtcn9rAflY1KbETmTLRNlJNt4VWACgiTtTVaMF
+         g/TG8F1LYUKw6Yq85kxYQLgo7JO2pJxaiJMylNEjzBd/YvvdSHo2YrIl1Pvl1p/v14
+         lncLiF0GvqHIyhwOzCzCSKVyJ7dvjloDDL0vzcq8w0aj4P6YPFIzcQlm7Xc1LJvBdI
+         w0JcF7OyXutTA6l1Rhqdn5G/yX0r81uu/0Wk6NCQtBrCqUuTozhJR3RGtsIVLjygR1
+         mhIyRZ9PDJBtJYrcCHjVWXg0xmxS1oJxROinS38luAbQkLh0PtlpTMJ5uNQ7cGS/aR
+         uCMJBYAl8fxq+oARsOi15FWQ1h84DLQM68HtTLjbNBuMph0Oo4rrXnVgI5drundB+8
+         4/AveW8xgqBq8VHXSimRItg1DwFEDMHr91FLIcerXS8XyNOmDhKpMbQu8Ko2edORTS
+         Q6hk2XL8zOrQijAPzV9RmLVBwgoDFIO5b2hTH4AdDKpBx5P/wgX
+Date:   Wed, 16 Sep 2020 00:34:48 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han Xin <chiyutianyi@gmail.com>, Git List <git@vger.kernel.org>,
+        Han Xin <hanxin.hx@alibaba-inc.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 1/2] t5534: new test case for atomic signed push
+Message-ID: <20200916003448.GH2866143@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, Han Xin <chiyutianyi@gmail.com>,
+        Git List <git@vger.kernel.org>, Han Xin <hanxin.hx@alibaba-inc.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+References: <20200915095827.52047-1-hanxin.hx@alibaba-inc.com>
+ <xmqqv9gezsr9.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ewQ5hdP4CtoTt3oD"
 Content-Disposition: inline
-In-Reply-To: <20200915130506.GA2839276@coredump.intra.peff.net>
-X-Provags-ID: V03:K1:JnwQiqo2O7tWcMvwF18SSFVwNLv5LBsnm9L2kJ7QakqVbAeCv6/
- 1jsLP8i5WRFPS1MQxFJcDV6od503NvlrOFzFlVGuEVHWF725e7fpHNh/Gj03s65qYSWCtzD
- XjIUNZUHjPW6aFH8YLp4nzaL9ekQf9YSYDb9pC4i0/dGd1xy1TJytE2O7IY9/lAqwQ5KgUI
- tYAOeJ5qB1mfKTLx6oSdQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:y5NuIWFCDhY=:GYrq0Bp6DIMsnop/FK0Z0v
- jSOqLe5xubdhdChYMxfxXaAnf1PW0e4yEyqD7UfNPZskYoGmIfidXglj6tBdpG1loXpvjCm6M
- WF4Efgb9eabY1s/GAy/sipsfWMQdBormUsItPcOYkkYZlK8c1BMZZvijfeksJRRtRmNPIU9Rj
- kmhdnp++WCfuqF3Rny2AQJuCnp/7a2PiCCotNzURhOzHGuKBUdGlOjRsspO+fmrhreC+eeZxp
- KZ8NFcb4DDXWQI5YbLz1wpiUKA41Wa4VDP6jlAXd1AUnxWsYeCDXUKX+AsOougIqWTuQ1OZDR
- 7vQNE4QFY7yX+QfCRSVuQIKF9demJ1Uxut0/d1QR+yr+G8skuHoTQmlLZJXgUw7m0vNR5A4C0
- CJtT3jwoh0UlnFZnCk3o3WQiiZWWvwuxQmxNDgoLStPfAauZwCA3s7z69dBsVZCij04NSDjmx
- hBi1U4W6ozGK/cdUxi2RrELAsAQVxOu403qPN48IwmarQQ32K6xgJ3xKUmJcfW+PBQ/K9Y8ay
- xFagpE+GeWwQYaA7N/WPHKSmawfOYf3vC9AA1bx977oIk/JSQqMjaGzihHgK7FvndZnRLPfeQ
- 0FRI7M0FzRf8+jWmYXwOCxTU/WP9k7GKI4eBL5gmLNv2DL9ERTmr/56LZFVtZtDCJNZ+93mk8
- vqdjREGDCkM1g7WQGF9jxdXpQppdujo1IWrtDraI016eNJtOiXM3NbiBPQm2Fj6GJoQRmefSy
- O9FQWo3acsuVlYT1DSavYU6SfYcC716uyHDkWjMk/gDixZn0vEY8qmVbkmllZ1qxHVXcGDkge
- nTNuzxypwSFWGbUIVB7GR+6LEzn3zZAVyXI12eIrVBG5P/e5YzzA1a08hMEH1GrjcckJGzUCs
- XcESasbw8lqgIaD/VXaQ==
+In-Reply-To: <xmqqv9gezsr9.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Affecting the transfers caused by git-fetch, the
-option allows to control network operations similar
-to --ipv4 and --ipv6 options.
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Alex Riesen <alexander.riesen@cetitec.com>
----
+--ewQ5hdP4CtoTt3oD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King, Tue, Sep 15, 2020 15:05:06 +0200:
-> On Tue, Sep 15, 2020 at 01:50:25PM +0200, Alex Riesen wrote:
-> > Sure! Thinking about it, I actually would have preferred to have both: a
-> > config option and a command-line option. So that I can set --ipv4 in, say,
-> > ~/.config/git/config file, but still have the option to try --ipv6 from time
-> > to time to check if the network setup magically fixed itself.
-> > 
-> > What would the preferred name for that config option be? fetch.ipv?
-> 
-> It looks like we've got similar options for clone/pull (which are really
-> fetch under the hood of course) and push. We have the "transfer.*"
-> namespace which applies to both already. So maybe "transfer.ipversion"
-> or something?
+On 2020-09-15 at 20:31:38, Junio C Hamano wrote:
+> Han Xin <chiyutianyi@gmail.com> writes:
+>=20
+> > In order to test signed atomic push, add a new test case.
+> >
+> > Reviewed-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> > ---
+>=20
+> Thanks, but nowhere in the above it does not say what is being
+> tested.  By looking at 2/2 (by the way, these should be a single
+> atomic patch, not a "failure turns into success", as it is not even
+> a bug fix), readers may be able to guess that you want to enforce
+> that with even broken implementation of GPG, an immediate failure to
+> push one of the refs will be noticed by looking at their refs, but
+> it is unclear why that is even desirable---if you combine the two
+> patches, you may have a better place to argue why it is a good idea,
+> but a test-only patch makes it even less clear why the new behavior
+> expected by this test is desirable.
 
-Something like this?
+Yeah, I find myself a little confused by this, and I think maybe a more
+verbose commit message could be valuable in clearing that up.  I think
+what this series is trying to do is check that if we can tell on the
+client side that the push will be rejected, then not to invoke GnuPG to
+generate the push certificate.
 
- Documentation/config/transfer.txt |  7 +++++++
- builtin/fetch.c                   | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+If so, that would be a nice change; after all, the user's key may
+involve a smartcard or a passphrase and avoiding needless hassle for the
+user would be desirable.  But even after reading the series, it's not
+clear to me that that _is_ what the goal is here or that this is
+necessarily the best way of going about it.  Telling us more about the
+reason for the patch would help us understand the change and why it's
+valuable better.
+--=20
+brian m. carlson: Houston, Texas, US
 
-diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
-index f5b6245270..cc0e97fbb1 100644
---- a/Documentation/config/transfer.txt
-+++ b/Documentation/config/transfer.txt
-@@ -69,3 +69,10 @@ transfer.unpackLimit::
- 	When `fetch.unpackLimit` or `receive.unpackLimit` are
- 	not set, the value of this variable is used instead.
- 	The default value is 100.
-+
-+transfer.ipversion::
-+	Limit the network operations to the specified version of the transport
-+	protocol. Can be specified as `4` to allow IPv4 only, `6` for IPv6, or
-+	`all` to allow all protocols.
-+	See also linkgit:git-fetch[1] options `--ipv4` and `--ipv6`.
-+	The default value is `all` to allow all protocols.
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 447d28ac29..da01c8f7b3 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -118,6 +118,17 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "transfer.ipversion")) {
-+		if (!strcmp(v, "all"))
-+			;
-+		else if (!strcmp(v, "4"))
-+			family = TRANSPORT_FAMILY_IPV4;
-+		else if (!strcmp(v, "6"))
-+			family = TRANSPORT_FAMILY_IPV6;
-+		else
-+			die(_("transfer.ipversion can be only 4, 6, or any"));
-+		return 0;
-+	}
- 	return git_default_config(k, v, cb);
- }
- 
--- 
-2.28.0.21.g178b32a6fd.dirty
+--ewQ5hdP4CtoTt3oD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2FdqAAKCRB8DEliiIei
+gTumAP968QaneoIWUQxm3TNr4jJzL0DBXfyewoIzzkRQPgl2fwD/YrMJHwvkCk6j
+Z2Eu9BZEhYSHtDP/+PdVz1rNUT7qQQo=
+=XIPT
+-----END PGP SIGNATURE-----
+
+--ewQ5hdP4CtoTt3oD--
