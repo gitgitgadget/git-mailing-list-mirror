@@ -2,132 +2,140 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B901CC433E2
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32A82C433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:07:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66CFA22250
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 12:54:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9A1A2083B
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 18:07:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qhNp7DuB"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="IxK6uqQv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727632AbgIPMvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 08:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51316 "EHLO
+        id S1727748AbgIPSHF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 14:07:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726717AbgIPKae (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 06:30:34 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A3BC06178B
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:01 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id g4so6343903wrs.5
-        for <git@vger.kernel.org>; Wed, 16 Sep 2020 03:30:01 -0700 (PDT)
+        with ESMTP id S1727687AbgIPSGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 14:06:51 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02AAAC06174A
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:06:50 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id n10so6891992qtv.3
+        for <git@vger.kernel.org>; Wed, 16 Sep 2020 11:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yshak7faj+mgi2Ksx8OWsWf5zigXj2q6IE0U4MdfFbs=;
-        b=qhNp7DuBDyz+pN+0ZsLjAW5l3iHKCgw2qcUV2NAvXfhMFCKgVpc3a9Y2DCxWs2Kscy
-         pETsvMjn1yTM5MUCeJ7bZZj2VUUx9Tlg2HOGaHjNG7IsdAynpP+1kKvSTDFzQ9Cox0vx
-         A9caFG8C+V2xdzIoB5m047bK78cw1VEnSgBgVKbCvYyCqc5yekEo1+ScQfYevLV7aBYO
-         Cop0UQPuLpfXpdutlW6H2iq0gJgDfqCOYuXRjZqv9VCXF5ZDXmiNqXYYQqYhJS2n55Ir
-         j3RWVtY5zAXVsNCSig++KvDqa/a3rbUEqSxNgI9KAOJxctYOPGHIBeyGCIrFaeSYIsf2
-         GhBg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0LwL5yH6mKpPJQ43aPoke7P5zi3jtL5Qw2uhYgsXuyo=;
+        b=IxK6uqQvGDEv48lU42Zvdp4f0sKqfBUJV43BNF+ICYB0yY8w3Md3l+TdT6rqaaPHwP
+         fZ9WWQA67i4wduIXBoQGOApH04xIbnPMYLrJzcGZYlHH0GyObw2W8msuVrQjKMlfkqwE
+         dEGJSWE6taAseuGcDbTbnQ2911rpuU17Kv5RC5OuUkAjdd8ZEDFM9iV9Me3eJb54YP6P
+         2TL+tcT+mHSBuBguGTeFjLZQQtct8e8A7ave7mThnD/3A1UmGiehDuTV9OeyWP4XDH/b
+         Sm/W3y+gy6sEuN8itp3+aSZh7JGVXZoGM8cK1eQmoUIKPhazcu1C1hRH0nksiEUqT7rp
+         zt5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yshak7faj+mgi2Ksx8OWsWf5zigXj2q6IE0U4MdfFbs=;
-        b=VHxUGtp/o7vQTP+2N0XuMDDS5m8eoYVLZskQD1vgVNV/WMiGKs7RCEllAyPp+KfYlt
-         S8qJcDSE7uwW68ezB+tSVxVQT/MCIns7QSvid0XPWEHXg72E+f/rZYI7G8PHXp6BR2jx
-         xef1VwIVaDtZ9xPue95nbxYrJHcA1HcVsVfZpuTojmJXHe5pdDs+fSvpKnwfsMl4qKn2
-         PFgCWvPr7et9DDR6zfLGIKyI9XTkertPgSB9j7xxupsrg0eeqT+NRdcezTK41iQXKnYT
-         2jFY3gwNgSsPuQepCrM77NRmdulJPKNKIRxLs/SeqwsDzZSsMNhLFbY09reb3PlJcjE+
-         wN7g==
-X-Gm-Message-State: AOAM531U1LN9vXSU6OxlA6+6rakJADh4kbN7Kd6aiq6D7bJms99PR9NK
-        RKiSZRFdgpR2Rh9BNEauE/yXdpi8PcyzjjLT
-X-Google-Smtp-Source: ABdhPJxCT8a0Wntr1hh073C7O7QbttyVzBi7woYkM7tiS5xselcN/Q41o73k1sUw4A1+OXUpgyatMQ==
-X-Received: by 2002:adf:e6c7:: with SMTP id y7mr24531806wrm.147.1600252199957;
-        Wed, 16 Sep 2020 03:29:59 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n11sm32172916wrx.91.2020.09.16.03.29.59
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0LwL5yH6mKpPJQ43aPoke7P5zi3jtL5Qw2uhYgsXuyo=;
+        b=g18f/GjV3M2c02/5WtAaX0hupAApH1yFYhVKQgcVGE6vUQ+DPjgswKDGt7VPCBRykB
+         Q3kg314xxBc/piT6X12e5CiG6PYFkv6egocgPXzvdNsDf5mjEm7ou+xJX6Lx7mMhb6XW
+         9a3PULWTtj13p9M8NMLC2AlMtNgtm38AgW4iUGdpBg/y5pJK3zVdirajc6B3Gp4CX01a
+         dCJXfbG8ODoHI7HDKEV7EmzZ4JWvD3GQTxqo4xW/UKcjAS5nzx5KIQ7OPzcsWUgTAZ4p
+         jU2eitVwVwYy024xeu6cK9SpPnIU71UBTFwRxhqFKiNf5z1l6kq+LPcEqipNrSPcPQwh
+         /pWg==
+X-Gm-Message-State: AOAM530cZYGrrNLx96kI4ZAD+gChuFaj0SwcdCA+WBUsjQkfHpr7ro5q
+        BxKaPEBu/4qaVv6lu7D3yYgr7E3HWZqa9u/J
+X-Google-Smtp-Source: ABdhPJz8RWHyeLgPyPSOqknY55KFFg+/kjDkQ4lnz1UJfDGjzPVAkmcfcZOHRNft0f48t4bpjZExUA==
+X-Received: by 2002:aed:37c4:: with SMTP id j62mr11901941qtb.274.1600279609462;
+        Wed, 16 Sep 2020 11:06:49 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:e86e:6adf:7537:ae24])
+        by smtp.gmail.com with ESMTPSA id b199sm19675721qkg.116.2020.09.16.11.06.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2020 03:29:59 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Wed, 16 Sep 2020 11:06:48 -0700 (PDT)
+Date:   Wed, 16 Sep 2020 14:06:45 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 01/15] remote-mediawiki doc: correct link to GitHub project
-Date:   Wed, 16 Sep 2020 12:29:04 +0200
-Message-Id: <20200916102918.29805-2-avarab@gmail.com>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
-References: <20200916102918.29805-1-avarab@gmail.com>
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
+        szeder.dev@gmail.com
+Subject: [PATCH v2 00/13] more miscellaneous Bloom filter improvements, redux
+Message-ID: <cover.1600279373.git.me@ttaylorr.com>
+References: <cover.1599664389.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1599664389.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the link to the canonical one, the old link redirects to the
-new one.
+Here's another re-roll of mine and Stolee's series to add a series of
+improvements to the Bloom filter machinery, culminating in the
+command-line flag '--max-new-filters'.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- contrib/mw-to-git/git-mw.perl               | 2 +-
- contrib/mw-to-git/git-remote-mediawiki.perl | 2 +-
- contrib/mw-to-git/git-remote-mediawiki.txt  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+Much is left the same from [1], with two notable exceptions:
 
-diff --git a/contrib/mw-to-git/git-mw.perl b/contrib/mw-to-git/git-mw.perl
-index 28df3ee321..eb52a53d32 100755
---- a/contrib/mw-to-git/git-mw.perl
-+++ b/contrib/mw-to-git/git-mw.perl
-@@ -6,7 +6,7 @@
- # License: GPL v2 or later
- 
- # Set of tools for git repo with a mediawiki remote.
--# Documentation & bugtracker: https://github.com/moy/Git-Mediawiki/
-+# Documentation & bugtracker: https://github.com/Git-Mediawiki/Git-Mediawiki
- 
- use strict;
- use warnings;
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
-index d8ff2e69c4..08190e23e1 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -9,7 +9,7 @@
- # License: GPL v2 or later
- 
- # Gateway between Git and MediaWiki.
--# Documentation & bugtracker: https://github.com/moy/Git-Mediawiki/
-+# Documentation & bugtracker: https://github.com/Git-Mediawiki/Git-Mediawiki
- 
- use strict;
- use MediaWiki::API;
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.txt b/contrib/mw-to-git/git-remote-mediawiki.txt
-index 23b7ef9f62..5da825f61e 100644
---- a/contrib/mw-to-git/git-remote-mediawiki.txt
-+++ b/contrib/mw-to-git/git-remote-mediawiki.txt
-@@ -4,4 +4,4 @@ objects from mediawiki just as one would do with a classic git
- repository thanks to remote-helpers.
- 
- For more information, visit the wiki at
--https://github.com/moy/Git-Mediawiki/wiki
-+https://github.com/Git-Mediawiki/Git-Mediawiki
--- 
-2.28.0.297.g1956fa8f8d
+  - I took much of Stolee's feedback from [2], since the suggestions
+    were good and we are rerolling, anyway.
 
+  - I dropped the trace2 calls that write JSON from within the
+    commit-graph machinery in favor of pure "data" writes, which are
+    easier to grep for. This caused some test refactoring and allowed us
+    to ultimately drop the 'test_bloom_filters_computed' function.
+
+Hopefully this is it for this series ;). I think that it's in good shape
+now, and I couldn't find anything in my own inspection that I wanted to
+change. So, if others feel good, too, I think we should focus on
+incremental fixes on top of this.
+
+[1]: https://lore.kernel.org/git/cover.1599664389.git.me@ttaylorr.com/
+[2]: https://lore.kernel.org/git/134d64a0-abb6-bdc9-2c05-7aded01a906a@gmail.com/
+
+Derrick Stolee (1):
+  bloom/diff: properly short-circuit on max_changes
+
+Taylor Blau (12):
+  commit-graph: introduce 'get_bloom_filter_settings()'
+  t4216: use an '&&'-chain
+  commit-graph: pass a 'struct repository *' in more places
+  t/helper/test-read-graph.c: prepare repo settings
+  commit-graph: respect 'commitGraph.readChangedPaths'
+  commit-graph.c: store maximum changed paths
+  bloom: split 'get_bloom_filter()' in two
+  bloom: use provided 'struct bloom_filter_settings'
+  bloom: encode out-of-bounds filters as non-empty
+  commit-graph: rename 'split_commit_graph_opts'
+  builtin/commit-graph.c: introduce '--max-new-filters=<n>'
+  commit-graph: introduce 'commitGraph.maxNewFilters'
+
+ Documentation/config.txt                      |   2 +
+ Documentation/config/commitgraph.txt          |   8 +
+ Documentation/git-commit-graph.txt            |   6 +
+ .../technical/commit-graph-format.txt         |   2 +-
+ blame.c                                       |   8 +-
+ bloom.c                                       |  59 +++--
+ bloom.h                                       |  29 ++-
+ builtin/commit-graph.c                        |  63 ++++-
+ commit-graph.c                                | 140 +++++++---
+ commit-graph.h                                |  17 +-
+ diff.h                                        |   2 -
+ fuzz-commit-graph.c                           |   5 +-
+ line-log.c                                    |   2 +-
+ repo-settings.c                               |   3 +
+ repository.h                                  |   1 +
+ revision.c                                    |   7 +-
+ t/helper/test-bloom.c                         |   4 +-
+ t/helper/test-read-graph.c                    |   3 +-
+ t/t0095-bloom.sh                              |   8 +-
+ t/t4216-log-bloom.sh                          | 241 ++++++++++++++++--
+ t/t5324-split-commit-graph.sh                 |  13 +
+ tree-diff.c                                   |   5 +-
+ 22 files changed, 505 insertions(+), 123 deletions(-)
+ create mode 100644 Documentation/config/commitgraph.txt
+
+--
+2.28.0.510.g86fdc5f89a
