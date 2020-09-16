@@ -2,92 +2,86 @@ Return-Path: <SRS0=vH5l=CZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89C9FC43461
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 06:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF789C433E2
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 07:25:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 394F720738
-	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 06:42:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H8ho2AUu"
+	by mail.kernel.org (Postfix) with ESMTP id A506F2064E
+	for <git@archiver.kernel.org>; Wed, 16 Sep 2020 07:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726273AbgIPGm4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Sep 2020 02:42:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726100AbgIPGmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Sep 2020 02:42:54 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A646DC06174A
-        for <git@vger.kernel.org>; Tue, 15 Sep 2020 23:42:53 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id r7so8680000ejs.11
-        for <git@vger.kernel.org>; Tue, 15 Sep 2020 23:42:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=duBR6MkcSR2zIQxMrKI4puIZjpMuTxn8hwWtGB6yemI=;
-        b=H8ho2AUuVZIPrkv43ss4asZ9DyZbBOm3LoDNfmEWwBjBcPqDDUfFj9hoZ9ivc4oCkL
-         Tx+mz9m4TCa4UG5ROY2eLOl1RC+/NnmJPuN4o6CcOCrakTpIl5INkX9g2up0h6r0BxqW
-         fPIYTWoIAwVu1s2uRHpqASbzWouMZgJs3YCSvCShxrKitiiiTzoDX30n5zfKdw3XlN39
-         JTIuYdShPQ4cYDRcZjEpDWNC170MSdpYx5y89XmG+37HCT0NPIpj7CTFijPw13oaS9Ho
-         I9k6S+f/mJo43ayVZ5mENOXiwY1yaybcgHuRCVqHsiCYVWOPu1jGyyoT0xxOP5pVFJLW
-         roJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=duBR6MkcSR2zIQxMrKI4puIZjpMuTxn8hwWtGB6yemI=;
-        b=iaZuJvAOlxswaSQFF0aijzlMBGDyehLqQx5Wh6GtOnbOu5Vtu0DekFHKTukfJUJ/bc
-         QDEeMXqtvGoPiA/hzQl3wIatEwxafppZNYd80Y8T7ydiXwuNbWLMVdLLAOZpzOgSRwb3
-         mOt4QB8apM1wXXRDjiGWh5gEsb0mD56MsfqdhpPZ3WwakMWUMzhUaM0qP0mP+m+y0ey3
-         KBdR1tKP+tiMkePWKCnA5jPWGLFjUY0yYmH8oiriGYV8gB2GlHxDvbAE8BAgoCSfKXo9
-         GvJHY3yzSpWXoCUsGBw+rUn5plIq/0LDW17kE6i80YVHuvZxF743QBMHBJjEqWrEQkXy
-         b4/g==
-X-Gm-Message-State: AOAM531o2LQDCcjA1SfmblMgPa0t/bOzAZBVhs4GUbEuhcNVwmWS6XG0
-        IVT2AVe8TFTVTa6u7g3MVx1Ew5KxP0luRHuXYyw=
-X-Google-Smtp-Source: ABdhPJzSbkV6/i9eFrWrc+bm9OoGBStaV0l6B0TuxthBQm+u+FvLLb+hMw7iYNQq0Q9CFEzNhiVQfeHbpi4wJVTAgGM=
-X-Received: by 2002:a17:906:819:: with SMTP id e25mr24482622ejd.211.1600238572321;
- Tue, 15 Sep 2020 23:42:52 -0700 (PDT)
+        id S1726245AbgIPHZj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Sep 2020 03:25:39 -0400
+Received: from mout.kundenserver.de ([212.227.126.187]:47221 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726068AbgIPHZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Sep 2020 03:25:38 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 1MlNYj-1klgUL44Rp-00loLx; Wed, 16 Sep 2020 09:25:24 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id 1C3121E01E7;
+        Wed, 16 Sep 2020 07:25:24 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id ZfoYbq0PAuTJ; Wed, 16 Sep 2020 09:25:23 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (unknown [10.10.5.94])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id C236B1E01E6;
+        Wed, 16 Sep 2020 09:25:23 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
+        id 5CA5F8051F; Wed, 16 Sep 2020 09:25:23 +0200 (CEST)
+Date:   Wed, 16 Sep 2020 09:25:23 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Pass --ipv4 and --ipv6 options to sub-fetches when
+ fetching multiple remotes and submodules
+Message-ID: <20200916072523.GA15595@pflmari>
+References: <20200915115407.GA31786@pflmari>
+ <xmqqeen2zqk0.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <20200828065609.GA2105118@coredump.intra.peff.net> <CAP8UFD2rpNhDhyHdQNxS-KJZgcumsCpK_JQ5koCqXJd70s-+_w@mail.gmail.com>
-In-Reply-To: <CAP8UFD2rpNhDhyHdQNxS-KJZgcumsCpK_JQ5koCqXJd70s-+_w@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 16 Sep 2020 08:42:40 +0200
-Message-ID: <CAP8UFD3QD_DP7h_Pkv246O9_PehZKx9iW5PyFmT6HMYqJ=i2NQ@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqeen2zqk0.fsf@gitster.c.googlers.com>
+X-Provags-ID: V03:K1:1UmsFi9WhEL+hgjjNrb6AtdfGEi2UDjCJ0cEox9MRkMMJ2CTtyh
+ wWrQkIATNYDuTOJw+OH0cL5i1jODM/HPsb5zjkcWWxmrwkFb8xKN9H9hlTR8/fHmGNGmGEU
+ GxjFWEkAbxLyjbmR2ojhjhl3PDhbGin5uMO8UZiQUNnw6S64HHXRM5W7Z+ib6jmwT72g8oF
+ aNrRrFX8sNdi7YlG6kydA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:f/fIUFXclWU=:13cfceTSe86rV3JynMMKp+
+ zG3jOOGdccBL2SBGjJuKMhVUqQVyDzf1T3PExxXRbjU2v0z3lbghJHK0/ur6bUiwD3GoPArxo
+ BOXCIKc69I5UtKP4KWq1lUfaQyCERuVd1SgIir0GkWrBRHpgY/2xfZIP3VU7tsxgf47YLE0Of
+ Sn4KcTF38BVwe6m2JVoSBNbBmhYWyLE8tDpM1mLiTSaoMzZHeuVc8CCWertjnU0BhZhqdlKIE
+ Wdbdb/GNNkWtYLs1WAtetlBJI1/a42jDX5+R2KB/xn5GGt8YDh+s3ZY9IAmZm/6wFghTbBdTP
+ hAPsf3BN5QvBVdlF1XLu766YQEBHRTCmG6W7LmgO5b9nwQwqxfmIIMDrI6Vn35WhzITSNsiQ4
+ CBXWezVvhqr/OQ4wdDYZ0p9xVGqzqG6YS5RMKymjOfTFRzWZK9QGEra1o/MSXM7imabTv7Oq/
+ xcVl7ykqB1Ruu1xW82SDqSJyK9eNoSFWrjJfCKjxBSRzhz/XZh4u8Th+WVMWc2dulDqnPo8hB
+ KBNcfsWGbHAf+jAqAA5PT7v7caRfaCBq21Nnv5FcRozoUIVr11yVklO3Shm3OEjQ0xNkf5Pvd
+ qlz2Stt7Jf1fxSb9sMEOzZUMenfoDzLKidQ/VtRF+jJXXgc4AZQGTI82hJR3bbivMSQpLhFsD
+ cwZakxhq2dwY6jgjtBABWxijCk7mcQFG0bIbExw9JVjF0roR90OMhFM+Sjp8kVPmQ+koAzadW
+ UZ6QL9ylahK+DbLSfmZOkYej9jrTPA5CBngvVt5coow240L5Lm9JHfW5LZMkB92mLUHjjnfnJ
+ t7ryfJ1w6ZmG8gn512VDHbhkLE7dArUO1X/5XmUH8yqgqW9sdDFYt1Hl44Ol7tIr7XEZo4k/q
+ XNpO70m37v7/Ye+4y28A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 31, 2020 at 8:55 AM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Fri, Aug 28, 2020 at 8:56 AM Jeff King <peff@peff.net> wrote:
+Junio C Hamano, Tue, Sep 15, 2020 23:19:11 +0200:
+> Alex Riesen <alexander.riesen@cetitec.com> writes:
+> 
+> > The options indicate user intent for the whole fetch operation, and
+> > ignoring them in sub-fetches is quite unexpected when, for instance,
+> > it is intended to limit all of the communication to a specific transport
+> > protocol for some reason.
+> >
+> 
+> To avoid an overlong title and conform to project convention (aka
+> "easier to read 'git shortlog --no-merges' output), I shortened the
+> title and tweaked the text a bit to compensate for the change.
 
-> >   - updates to our applicant materials (proposed projects, but also
-> >     microproject / patch suggestions)
->
-> It looks like many micro-project ideas from GSoC 2020 are still valid,
-> and I have a few new ones, so I am ok to create a micro-project page.
+Thanks :)
 
-Here is a new page with micro-project ideas for Outreachy applicants:
-
-https://git.github.io/Outreachy-21-Microprojects/
-
-I added only one new idea about modernizing test scripts, though I
-know someone is already working on modernizing t7001. But I think it
-can be applied to other test scripts.
-
-While at it I also removed the GSoC 2020 material from the home page
-and made a few cosmetic changes related to historical materials.
