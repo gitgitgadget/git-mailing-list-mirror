@@ -2,117 +2,166 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86312C433E2
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F37C2BBD1
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:44:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AFFA22243
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:43:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C05752222D
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:44:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aq2YRON2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mQinyBIY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728247AbgIQPnI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 11:43:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42302 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728122AbgIQPm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 11:42:59 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2ABAC061756
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 08:35:10 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id y6so2943480oie.5
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 08:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Aq0gx2i3vKp9jGUinAulPAaxpeiWbuw9fgIHXQiwjI4=;
-        b=aq2YRON2C3iESmpMKoJFul0J/UNexC5wLy8LavFSwrJIkeSKLYwP5f7JgiNQ5YPD7m
-         dZzCPYvFvl1BzNNSQD9npQHCG6HKjJ4eN0768xDtAHLaAZcTJxVufliDl2GFmKoMMocS
-         vXR4JeNAPC9ZHXeUikB4Eh1bdhOYpL/Aq+ArXCV3+d/99UBK44MOgg6V2FbzAIurk1SQ
-         ea1rQkt3X4sLy5eTb4qCZ62hZQj9thN0iUwjwRbn1Ahh2CkdqMrasl7rxMXT/gdIQujA
-         LJvTPudN3RdF2wI23HvtbazCISYsEQSHGjM84BTgfLpwZ3ki9eBo+0UIoEsKauTN0Kwr
-         YLdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Aq0gx2i3vKp9jGUinAulPAaxpeiWbuw9fgIHXQiwjI4=;
-        b=LczHAnk2tWjST5Xq9b4/lde7QugTY1kWjHC3m4ZNN3vIAubbF7UCwzWNKZ4a1PSaKs
-         8VlUGQEjarm5uizj0dwrLaMUS1VCF+QBDOLOlKHGCFfNYk4ajjA4XnrVDfdKE2wY2eAP
-         UkjQE/pOW78LE4zcx+DkBFbiGgbRpjxTjgK/IBebCmVUU9p6YVrhO05fHxQyEWLlgqU2
-         AdVVucy8WtXqYDcUkRx94dqSRtIPGzrZ9nqSu8ShiOgPfG0cVDVg6uMqp/BpL1WSlF5m
-         634Cjep+x9HJYxJHy6foJB7I7Adei3pMf/MNdlrJzQJdWJrkU0EeffsR+dpd13AlBGYS
-         DJLA==
-X-Gm-Message-State: AOAM533cUYYf/0rCVcalHB7SkTOsYHKYqbXKF3aA9/fERVeGEEuu8Gr9
-        cKDceuOFdBaY4UQna+K88syZUrC4tAMR27+sHMk=
-X-Google-Smtp-Source: ABdhPJzBV6Pp1cNgd5ntp5s3vDcZeHVy+H8zO+W/hUGU1xYSSzF6XTawi0qAhiUHsO8GbM0gfMVApMxnsT7h/Nit/yg=
-X-Received: by 2002:aca:5b45:: with SMTP id p66mr6946027oib.39.1600356909960;
- Thu, 17 Sep 2020 08:35:09 -0700 (PDT)
+        id S1728072AbgIQPox (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 11:44:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52815 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728255AbgIQPoF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 11:44:05 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5662C8EAB0;
+        Thu, 17 Sep 2020 11:43:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ThOe4CcASo94
+        4ApxOjMRu2wzhfw=; b=mQinyBIYtS0Yu/YwtfsIoqs4VO6jWk/5gN0ml/K3Xf5v
+        L8j9soAfZqpYq5VGbpAvSu+PnhX8ODO+98GtTSbeZB7V8SLQt3rzuJ+TVde8TMDr
+        w9VTcWa0yluodu2ZmYKInJTASbHX/tKKwBOYknnNSqN3NsvOpal813TQSmOuUt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iuyskV
+        wcFJuDjdwAI0acni7ulYe5VW3453jRe4u9x/ySMANM3Co6VEy1MKXorYBp9/buFV
+        L4o72iFd7rlI13eQ6OaBeyS6ZXKgzZ8g0rwcu6WI1g5xTz6B+w2aRB3xTp2MSbi1
+        IAsjohhxKuhSDgfwN++HzxWrjiqXM0P7e26AQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CD948EAAF;
+        Thu, 17 Sep 2020 11:43:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B541C8EAAE;
+        Thu, 17 Sep 2020 11:43:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, tytso@mit.edu, Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>
+Subject: Re: [RFC PATCH 2/2] core.fsyncObjectFiles: make the docs less flippant
+References: <87sgbghdbp.fsf@evledraar.gmail.com>
+        <20200917112830.26606-3-avarab@gmail.com>
+Date:   Thu, 17 Sep 2020 08:43:51 -0700
+In-Reply-To: <20200917112830.26606-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 17 Sep 2020 13:28:30 +0200")
+Message-ID: <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20200828065609.GA2105118@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2009020558550.56@tvgsbejvaqbjf.bet> <CAP8UFD31B9YgninC2Fyb=0+OVY7E4SW7LGBbx9E7CrgSn+95BA@mail.gmail.com>
- <CAP8UFD1n_PYzygFCgNDt3T=EQhbcuaTYFCfNN5n45OHRh45KOg@mail.gmail.com>
-In-Reply-To: <CAP8UFD1n_PYzygFCgNDt3T=EQhbcuaTYFCfNN5n45OHRh45KOg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 17 Sep 2020 08:34:58 -0700
-Message-ID: <CABPp-BHV5-UUio69b1ZnwuRwyj66HUEy3A24wvxELorR_1FB=g@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 96709180-F8FC-11EA-A482-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 17, 2020 at 2:47 AM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Wed, Sep 16, 2020 at 11:01 AM Christian Couder
-> <christian.couder@gmail.com> wrote:
->
-> > On Wed, Sep 2, 2020 at 10:50 AM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > > As to projects, I would like to believe that
-> > > https://github.com/gitgitgadget/git/issues has grown into a useful
-> > > resource.
-> >
-> > Thanks for the useful resource!
-> >
-> > I would be interested in mentoring, or better co-mentoring, the
-> > following projects:
-> >
-> > - Accelerate rename detection and range-diff
-> > (https://github.com/gitgitgadget/git/issues/519): ideally I would
-> > co-mentor with someone a bit familiar with the suggested algorithms.
->
-> Proposed on Outreachy's website:
->
-> https://www.outreachy.org/outreachy-december-2020-internship-round/communities/git/accelerate-rename-detection-and-the-range-diff-com/cfp/
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-As a heads up, I'm going to be sending many patches modifying quite a
-wide range of diffcore-rename.c in the coming months for accelerating
-rename detection.  Maybe I'll get them all upstreamed before outreachy
-starts, but that's not so clear.  As I mentioned in the gitgitgadget
-issue, the ideas outlined there and the methods I implemented are
-different and complementary, but there is a pretty large risk of
-conflicts we need to resolve if I don't finish landing all my patches
-first.
+> As amusing as Linus's original prose[1] is here it doesn't really expla=
+in
+> in any detail to the uninitiated why you would or wouldn't enable
+> this, and the counter-intuitive reason for why git wouldn't fsync your
+> precious data.
+>
+> So elaborate (a lot) on why this may or may not be needed. This is my
+> best-effort attempt to summarize the various points raised in the last
+> ML[2] discussion about this.
+>
+> 1.  aafe9fbaf4 ("Add config option to enable 'fsync()' of object
+>     files", 2008-06-18)
+> 2. https://lore.kernel.org/git/20180117184828.31816-1-hch@lst.de/
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  Documentation/config/core.txt | 42 ++++++++++++++++++++++++++++++-----
+>  1 file changed, 36 insertions(+), 6 deletions(-)
+
+When I saw the subject in my mailbox, I expected to see that you
+would resurrect Christoph's updated text in [*1*], but you wrote a
+whole lot more ;-) And they are quite informative to help readers to
+understand what the option does.  I am not sure if the understanding
+directly help readers to decide if it is appropriate for their own
+repositories, though X-<.
+
+
+Thanks.
+
+[Reference]
+
+*1* https://public-inbox.org/git/20180117193510.GA30657@lst.de/
 
 >
-> > - Add support for drop!/reword! commits to `git rebase -i`
-> > (https://github.com/gitgitgadget/git/issues/259,
-> > https://public-inbox.org/git/alpine.DEB.2.21.1.1710151754070.40514@virtualbox/)
-> > - Invent a way to retain reflogs for a while after the ref was deleted
-> > (https://github.com/gitgitgadget/git/issues/236): I guess this might
-> > be implemented as part of the new `git maintenance` builtin.
->
-> I will also likely submit a proposal for one of the above projects.
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.=
+txt
+> index 74619a9c03..5b47670c16 100644
+> --- a/Documentation/config/core.txt
+> +++ b/Documentation/config/core.txt
+> @@ -548,12 +548,42 @@ core.whitespace::
+>    errors. The default tab width is 8. Allowed values are 1 to 63.
+> =20
+>  core.fsyncObjectFiles::
+> -	This boolean will enable 'fsync()' when writing object files.
+> -+
+> -This is a total waste of time and effort on a filesystem that orders
+> -data writes properly, but can be useful for filesystems that do not us=
+e
+> -journalling (traditional UNIX filesystems) or that only journal metada=
+ta
+> -and not file contents (OS X's HFS+, or Linux ext3 with "data=3Dwriteba=
+ck").
+> +	This boolean will enable 'fsync()' when writing loose object
+> +	files. Both the file itself and its containng directory will
+> +	be fsynced.
+> ++
+> +When git writes data any required object writes will precede the
+> +corresponding reference update(s). For example, a
+> +linkgit:git-receive-pack[1] accepting a push might write a pack or
+> +loose objects (depending on settings such as `transfer.unpackLimit`).
+> ++
+> +Therefore on a journaled file system which ensures that data is
+> +flushed to disk in chronological order an fsync shouldn't be
+> +needed. The loose objects might be lost with a crash, but so will the
+> +ref update that would have referenced them. Git's own state in such a
+> +crash will remain consistent.
+> ++
+> +This option exists because that assumption doesn't hold on filesystems
+> +where the data ordering is not preserved, such as on ext3 and ext4
+> +with "data=3Dwriteback". On such a filesystem the `rename()` that drop=
+s
+> +the new reference in place might be preserved, but the contents or
+> +directory entry for the loose object(s) might not have been synced to
+> +disk.
+> ++
+> +Enabling this option might slow git down by a lot in some
+> +cases. E.g. in the case of a na=C3=AFve bulk import tool which might c=
+reate
+> +a million loose objects before a final ref update and `gc`. In other
+> +more common cases such as on a server being pushed to with default
+> +`transfer.unpackLimit` settings the difference might not be noticable.
+> ++
+> +However, that's highly filesystem-dependent, on some filesystems
+> +simply calling fsync() might force an unrelated bulk background write
+> +to be serialized to disk. Such edge cases are the reason this option
+> +is off by default. That default setting might change in future
+> +versions.
+> ++
+> +In older versions of git only the descriptor for the file itself was
+> +fsynced, not its directory entry.
+> =20
+>  core.preloadIndex::
+>  	Enable parallel index preload for operations like 'git diff'
