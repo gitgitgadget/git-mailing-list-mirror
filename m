@@ -2,166 +2,88 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F37C2BBD1
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CD8CC43461
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 16:23:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C05752222D
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:44:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mQinyBIY"
+	by mail.kernel.org (Postfix) with ESMTP id 311B42072E
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 16:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728072AbgIQPox (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 11:44:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52815 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728255AbgIQPoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 11:44:05 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5662C8EAB0;
-        Thu, 17 Sep 2020 11:43:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ThOe4CcASo94
-        4ApxOjMRu2wzhfw=; b=mQinyBIYtS0Yu/YwtfsIoqs4VO6jWk/5gN0ml/K3Xf5v
-        L8j9soAfZqpYq5VGbpAvSu+PnhX8ODO+98GtTSbeZB7V8SLQt3rzuJ+TVde8TMDr
-        w9VTcWa0yluodu2ZmYKInJTASbHX/tKKwBOYknnNSqN3NsvOpal813TQSmOuUt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iuyskV
-        wcFJuDjdwAI0acni7ulYe5VW3453jRe4u9x/ySMANM3Co6VEy1MKXorYBp9/buFV
-        L4o72iFd7rlI13eQ6OaBeyS6ZXKgzZ8g0rwcu6WI1g5xTz6B+w2aRB3xTp2MSbi1
-        IAsjohhxKuhSDgfwN++HzxWrjiqXM0P7e26AQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CD948EAAF;
-        Thu, 17 Sep 2020 11:43:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B541C8EAAE;
-        Thu, 17 Sep 2020 11:43:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, tytso@mit.edu, Christoph Hellwig <hch@lst.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Subject: Re: [RFC PATCH 2/2] core.fsyncObjectFiles: make the docs less flippant
-References: <87sgbghdbp.fsf@evledraar.gmail.com>
-        <20200917112830.26606-3-avarab@gmail.com>
-Date:   Thu, 17 Sep 2020 08:43:51 -0700
-In-Reply-To: <20200917112830.26606-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 17 Sep 2020 13:28:30 +0200")
-Message-ID: <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728360AbgIQQW6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 12:22:58 -0400
+Received: from mout.kundenserver.de ([212.227.17.10]:57333 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728448AbgIQQWu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 12:22:50 -0400
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 1MHWvH-1kEJiJ1EbB-00DTpF; Thu, 17 Sep 2020 18:05:58 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id 5B36A1E01E7;
+        Thu, 17 Sep 2020 16:05:57 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id cjDg7N8jCKwY; Thu, 17 Sep 2020 18:05:57 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (unknown [10.10.5.94])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 24DA41E01E6;
+        Thu, 17 Sep 2020 18:05:57 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
+        id ED0F68051A; Thu, 17 Sep 2020 18:05:56 +0200 (CEST)
+Date:   Thu, 17 Sep 2020 18:05:56 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Config option to set the transport protocol version for
+ network fetches
+Message-ID: <20200917160556.GH8079@pflmari>
+References: <20200916200203.GA37225@coredump.intra.peff.net>
+ <20200917132047.GA14771@pflmari>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 96709180-F8FC-11EA-A482-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200917132047.GA14771@pflmari>
+X-Provags-ID: V03:K1:jT5AKMG/3cOGkFRKWu4UqcB9mv2REnXbZDoDC8J4tQcOXqPZGPR
+ nawMgM14UkSLB0wZSsgFWDxyplAncTPmAGzRCCXHSJCZfa0PxzjzCyjEmUEpcqKpfEpXMaH
+ IzTO1anKzv4F9lKc6pJ8G2QzZkf1TAXnh322lIvvXr6l+kiPJkihKZxQIiSAJXjaUw6prTA
+ 58I+CUkTQ3r49rz8jYcWg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kVRpFKDoQzE=:nhyLC023Ow1KJKBEYfjaK7
+ qEO+1yAvdIwzUii+SC1hICTGFrP/vWI48mCzP9qoBAPx9kdikhqIc+hMrj/iY4QYfx+5A+IM0
+ tNvZcQXvzJeZ/cQW9e8ywgXtbYJzT3+3WhEzWUM3ZHaROHS4wZHsk6l/EZeDHfCmQbz6cuK3C
+ 79yZJmI+B3pSj9b1r0N5ZpLHOpltzMUjpgLDt18KfEw2AQBRS9WKTiU124JSAM6CnWEp9ZWXV
+ Mx9m1HlJ0nAsxxsmALOEzs5OixWFo7kxnG1gQga3REtLA8WM8OSLRpeagUSvo2N5wDkxtS8uF
+ 5roqB2rTPdt0vITMT9jkLLKEaO3Biu5w6Q6hrWd95kNqyyg2xqTPGND6oCppaeEXogXptHBsH
+ OByuT2roDpEtjI/erI1V2K2bXmu4pTomhcyp3tq3Hz18eNRsUSPequ6r1HVE8nR6hn5tz3x7E
+ ggh0JZDovWhNMsW5ytkk5OWxlPurURCHmFg10I745EaUKGgSSNDji5TbLhcXwMH+JwVpN7c+/
+ WzQhczttbpMcZLaE0vAySf5eHFkoHOyNX4JsdlNpO3XCDU6E0oTqBVcPpFTTvK7lGdi2hI6zi
+ S5DoxrnjWwQYEZctCkfglj7CM3JscDwbQdFtITYII3DDBLwJdno7HjAYIW+S4+KyDjdq3+RSD
+ +dpfSm+XPikMqqQHKoOa7kEM4y6BOYthSWlxQIQj2AZyyzhELj+lXBdV7ODb1eZXVRuG3V6ZE
+ wL1/CwDckZzxgM80sfiRZBoEfrM4gfUlyDkBMxgHVyWCgK3VkW0+QXAMqq7GAcvZq9a+dxN2c
+ 43aKVeymwJRgT268a31/5OAGPT4bG2fPy7R6o5FbgZKtCiuo9hWnC8MaGpREByj+qYnDJECIe
+ swDh5GaQ/mZ0thvCovxA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Alex Riesen, Thu, Sep 17, 2020 15:20:47 +0200:
+> diff --git a/transport.c b/transport.c
+> index b41386eccb..e16c339f3e 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -922,6 +922,23 @@ static struct transport_vtable builtin_smart_vtable = {
+>  	disconnect_git
+>  };
+>  
+> +static enum transport_family default_transport_family(void)
+> +{
+> +	static const char key[] = "core.ipversion";
+> +	const char *v;
+> +
+> +	if (git_config_get_string_const(key, &v))
 
-> As amusing as Linus's original prose[1] is here it doesn't really expla=
-in
-> in any detail to the uninitiated why you would or wouldn't enable
-> this, and the counter-intuitive reason for why git wouldn't fsync your
-> precious data.
->
-> So elaborate (a lot) on why this may or may not be needed. This is my
-> best-effort attempt to summarize the various points raised in the last
-> ML[2] discussion about this.
->
-> 1.  aafe9fbaf4 ("Add config option to enable 'fsync()' of object
->     files", 2008-06-18)
-> 2. https://lore.kernel.org/git/20180117184828.31816-1-hch@lst.de/
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  Documentation/config/core.txt | 42 ++++++++++++++++++++++++++++++-----
->  1 file changed, 36 insertions(+), 6 deletions(-)
+Sorry about that. git_config_get_string_tmp, indeed.
 
-When I saw the subject in my mailbox, I expected to see that you
-would resurrect Christoph's updated text in [*1*], but you wrote a
-whole lot more ;-) And they are quite informative to help readers to
-understand what the option does.  I am not sure if the understanding
-directly help readers to decide if it is appropriate for their own
-repositories, though X-<.
-
-
-Thanks.
-
-[Reference]
-
-*1* https://public-inbox.org/git/20180117193510.GA30657@lst.de/
-
->
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.=
-txt
-> index 74619a9c03..5b47670c16 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -548,12 +548,42 @@ core.whitespace::
->    errors. The default tab width is 8. Allowed values are 1 to 63.
-> =20
->  core.fsyncObjectFiles::
-> -	This boolean will enable 'fsync()' when writing object files.
-> -+
-> -This is a total waste of time and effort on a filesystem that orders
-> -data writes properly, but can be useful for filesystems that do not us=
-e
-> -journalling (traditional UNIX filesystems) or that only journal metada=
-ta
-> -and not file contents (OS X's HFS+, or Linux ext3 with "data=3Dwriteba=
-ck").
-> +	This boolean will enable 'fsync()' when writing loose object
-> +	files. Both the file itself and its containng directory will
-> +	be fsynced.
-> ++
-> +When git writes data any required object writes will precede the
-> +corresponding reference update(s). For example, a
-> +linkgit:git-receive-pack[1] accepting a push might write a pack or
-> +loose objects (depending on settings such as `transfer.unpackLimit`).
-> ++
-> +Therefore on a journaled file system which ensures that data is
-> +flushed to disk in chronological order an fsync shouldn't be
-> +needed. The loose objects might be lost with a crash, but so will the
-> +ref update that would have referenced them. Git's own state in such a
-> +crash will remain consistent.
-> ++
-> +This option exists because that assumption doesn't hold on filesystems
-> +where the data ordering is not preserved, such as on ext3 and ext4
-> +with "data=3Dwriteback". On such a filesystem the `rename()` that drop=
-s
-> +the new reference in place might be preserved, but the contents or
-> +directory entry for the loose object(s) might not have been synced to
-> +disk.
-> ++
-> +Enabling this option might slow git down by a lot in some
-> +cases. E.g. in the case of a na=C3=AFve bulk import tool which might c=
-reate
-> +a million loose objects before a final ref update and `gc`. In other
-> +more common cases such as on a server being pushed to with default
-> +`transfer.unpackLimit` settings the difference might not be noticable.
-> ++
-> +However, that's highly filesystem-dependent, on some filesystems
-> +simply calling fsync() might force an unrelated bulk background write
-> +to be serialized to disk. Such edge cases are the reason this option
-> +is off by default. That default setting might change in future
-> +versions.
-> ++
-> +In older versions of git only the descriptor for the file itself was
-> +fsynced, not its directory entry.
-> =20
->  core.preloadIndex::
->  	Enable parallel index preload for operations like 'git diff'
