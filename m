@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D71E6C43461
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50EC5C43461
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B516206DC
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FCD5206DC
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YdoMxMVa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tg6P5APr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbgIQHp2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 03:45:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52386 "EHLO
+        id S1726142AbgIQHph (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 03:45:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbgIQHol (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726290AbgIQHol (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 17 Sep 2020 03:44:41 -0400
 Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA14C06178A
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:38 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id l71so879159pge.4
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF863C061788
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:37 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id y1so868556pgk.8
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lEIs0fiNoKXMQOFVICJuD8pB9r3fR2cLnKNpmAitwzc=;
-        b=YdoMxMVaK6LNOk+OChrgV9M8W6BpCkeHEfs9J2RhxmFDnXh/QzDJJwdZ7Wr1tJi/Az
-         ljBNQdf1lsq0Zqah0hCWzVjLGEs2useozFckA3KrTA5Bp1OubGiwVMeRK8kxZnQy37mF
-         EPTsbMWqAKdrZ9hGOdasHgiv+rETE4rM5gBNQS/HY9BaUN+1eKh3zcaVTmETrXUeUCo5
-         RxMXDfdgbxcdoTUN0tLIMwnmn6CmhBos2FIT8bM67lUC03xVMGgN+BwQq7aSSUo3FngR
-         B2CXW+eA4eo7qcFN4h+psD9Xi+vlcSkxj16HI/ppJyjlf3m8m9tn3hugbnMxm4NxsOnB
-         7lpA==
+        bh=ZYqdZNkC2obKcgZewbiD+Abk/bCuuK7TokBtxHeU/lo=;
+        b=Tg6P5APrUZ47Bi1VCtEg2nwoWlBAJJ7f6hEU01fxpY1ps1N6lhJ/VpNEAmRI32ko4w
+         H3FHRdf04i2t+6sXdEd5XbeEEUN82aM55fzXEfabdFzcXWQ5aX/NzhD+FR7gRnsi05fi
+         jvvoEdi8uUy1o/V2Dqt/Z3lNGf/9aLvjJcNeJjKwa2nJ0C37dHbHuZIFUtQB/UO1M4bY
+         BKxgLvwOoKuLNuEueR28UZ4hEfGh0IrbIV0CVBrX/6RSY2NZCT/IU573zCldH5V+mouO
+         H5eO0Nz9w1MONI3BjWOVnI1JBvdmEmAb8PfeJn9w4NcWgC2wFeG/M0nysT70eJ1i4zA8
+         Yh3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lEIs0fiNoKXMQOFVICJuD8pB9r3fR2cLnKNpmAitwzc=;
-        b=ZraaxuE8zrL9JvkvTDshvG+ieUvEJM8Fz4+1H00k/6dOqJ0nyEevrvB9ENNdtKJCc2
-         vOsM5R/Yi/l9mPUnIQzzuZeCgCfGtvTmVT9ytogD9kO8+k6/gM4GKy59NOZSIWvvRXyu
-         sXv7zu8tsRqWp92IP3o0zLVd2XH799CAwEqDrKvnxtcVz5cxTzgf1qr+8oOkBkoyz6L/
-         4sRv61ydJa91Tguy2TXJbGDItSN9Vx6CdYSZRgJa+/FXNHnYPygpF+JoNLXHohgBpikp
-         i52cRahXhNYFQG48a58h7FLGZssAAkETHM921uOUMKoHP40DPsChXqbyhnZw6p3rXpd0
-         z2cw==
-X-Gm-Message-State: AOAM532sYCQIoQfVzcA/nATN/3VGMSLEQy1m00j6igdweargCV97Qhzh
-        RbqrOySXVL2byUYdk0tXQTTP6J9+wqkKsQ==
-X-Google-Smtp-Source: ABdhPJw7K3KJR9jBIZh7CxJhSoAhIxrb+Ot4CStfHn3Sq+k+eRisGWGGqmgb66UOcNZG6NEAxmPRaA==
-X-Received: by 2002:a63:85c2:: with SMTP id u185mr20891790pgd.157.1600328678199;
-        Thu, 17 Sep 2020 00:44:38 -0700 (PDT)
-Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id j9sm4931711pfc.175.2020.09.17.00.44.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=ZYqdZNkC2obKcgZewbiD+Abk/bCuuK7TokBtxHeU/lo=;
+        b=MS/oxFY+W7PgvXvp+4uzEQbOP30aq20r8GpCuk6ikobHHhfoG4VzJvDY+P1CPKcrcd
+         waMrB5amQo2ejQH6o5vhdYS857B17rQrIytH0uBfkiUNoClhw9R9TCzq/17hAthhMdkc
+         Oohryh6CHJznOHGGJLKuKO9qth0xjNvn6PpY8SuWhZW60xuWub+RmzJDQYHsOoF2f+YM
+         WeRaCmu5sohCZSn42EVkFZdq9RubY2KQZ/i5dUOVFFFK2KP2HnBMZhA1SdIsnsnRHZTf
+         4kZxdmgqAeXmq/mGq5PSQLNA+Xwq8SN8XigoZZtldY+arUMTDtMFnBdkuJZrD2wriRlH
+         CrGw==
+X-Gm-Message-State: AOAM533EPxsy2Y6U3wHc/m/bvp7mxk29EniLvjgOEb8SW4WR+EXv3+Bn
+        7foyPLRBorCcGjIe8RvUxLgRV1s9CzEmpQ==
+X-Google-Smtp-Source: ABdhPJzyCVF78GtclGgxMC5Tn+MoueNa0khajxRTC+BxzJXorFJoAYGdHU6j3zncrGrev8f/KZ9iNQ==
+X-Received: by 2002:a63:f342:: with SMTP id t2mr21807745pgj.313.1600328677262;
         Thu, 17 Sep 2020 00:44:37 -0700 (PDT)
+Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id j9sm4931711pfc.175.2020.09.17.00.44.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 00:44:36 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 05/10] diff-lib: accept option flags in run_diff_index()
-Date:   Thu, 17 Sep 2020 00:44:09 -0700
-Message-Id: <496908ac10152edb9cbcfdb75c43b1d00e163e3c.1600328335.git.liu.denton@gmail.com>
+Subject: [PATCH v3 04/10] contrib/completion: extract common diff/difftool options
+Date:   Thu, 17 Sep 2020 00:44:08 -0700
+Message-Id: <1ac84595419d8d1ecd8129395c3261ebca643bc2.1600328335.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7
 In-Reply-To: <cover.1600328335.git.liu.denton@gmail.com>
 References: <cover.1599723087.git.liu.denton@gmail.com> <cover.1600328335.git.liu.denton@gmail.com>
@@ -73,134 +73,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a future commit, we will teach run_diff_index() to accept more
-options via flag bits. For now, change `cached` into a flag in the
-`option` bitfield. The behaviour should remain exactly the same.
+difftool parses its own options and then passes the remaining options
+onto diff. As a result, they share common command-line options. Instead
+of duplicating the list, use a shared $__git_diff_difftool_options list.
+
+The completion for diff is missing --relative and the completion for
+difftool is missing --no-index. Add both of these to the common list.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/diff-index.c | 8 ++++----
- builtin/diff.c       | 8 ++++----
- diff-lib.c           | 6 +++---
- diff.h               | 3 ++-
- 4 files changed, 13 insertions(+), 12 deletions(-)
+ contrib/completion/git-completion.bash | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 93ec642423..c3878f7ad6 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -15,7 +15,7 @@ COMMON_DIFF_OPTIONS_HELP;
- int cmd_diff_index(int argc, const char **argv, const char *prefix)
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 9147fba3d5..f68c8e0646 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1691,6 +1691,10 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--textconv --no-textconv
+ "
+ 
++__git_diff_difftool_options="--cached --staged --pickaxe-all --pickaxe-regex
++			--base --ours --theirs --no-index --relative
++			$__git_diff_common_options"
++
+ _git_diff ()
  {
- 	struct rev_info rev;
--	int cached = 0;
-+	unsigned int option = 0;
- 	int i;
- 	int result;
- 
-@@ -32,7 +32,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 		const char *arg = argv[i];
- 
- 		if (!strcmp(arg, "--cached"))
--			cached = 1;
-+			option |= DIFF_INDEX_CACHED;
- 		else
- 			usage(diff_cache_usage);
- 	}
-@@ -46,7 +46,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 	if (rev.pending.nr != 1 ||
- 	    rev.max_count != -1 || rev.min_age != -1 || rev.max_age != -1)
- 		usage(diff_cache_usage);
--	if (!cached) {
-+	if (!(option & DIFF_INDEX_CACHED)) {
- 		setup_work_tree();
- 		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
- 			perror("read_cache_preload");
-@@ -56,7 +56,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 		perror("read_cache");
- 		return -1;
- 	}
--	result = run_diff_index(&rev, cached);
-+	result = run_diff_index(&rev, option);
- 	UNLEAK(rev);
- 	return diff_result_code(&rev.diffopt, result);
- }
-diff --git a/builtin/diff.c b/builtin/diff.c
-index cb98811c21..e45e19e37e 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -134,11 +134,11 @@ static int builtin_diff_blobs(struct rev_info *revs,
- static int builtin_diff_index(struct rev_info *revs,
- 			      int argc, const char **argv)
- {
--	int cached = 0;
-+	unsigned int option = 0;
- 	while (1 < argc) {
- 		const char *arg = argv[1];
- 		if (!strcmp(arg, "--cached") || !strcmp(arg, "--staged"))
--			cached = 1;
-+			option |= DIFF_INDEX_CACHED;
- 		else
- 			usage(builtin_diff_usage);
- 		argv++; argc--;
-@@ -151,7 +151,7 @@ static int builtin_diff_index(struct rev_info *revs,
- 	    revs->max_count != -1 || revs->min_age != -1 ||
- 	    revs->max_age != -1)
- 		usage(builtin_diff_usage);
--	if (!cached) {
-+	if (!(option & DIFF_INDEX_CACHED)) {
- 		setup_work_tree();
- 		if (read_cache_preload(&revs->diffopt.pathspec) < 0) {
- 			perror("read_cache_preload");
-@@ -161,7 +161,7 @@ static int builtin_diff_index(struct rev_info *revs,
- 		perror("read_cache");
- 		return -1;
- 	}
--	return run_diff_index(revs, cached);
-+	return run_diff_index(revs, option);
- }
- 
- static int builtin_diff_tree(struct rev_info *revs,
-diff --git a/diff-lib.c b/diff-lib.c
-index 50521e2093..0a0e69113c 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -518,7 +518,7 @@ static int diff_cache(struct rev_info *revs,
- 	return unpack_trees(1, &t, &opts);
- }
- 
--int run_diff_index(struct rev_info *revs, int cached)
-+int run_diff_index(struct rev_info *revs, unsigned int option)
- {
- 	struct object_array_entry *ent;
- 
-@@ -527,10 +527,10 @@ int run_diff_index(struct rev_info *revs, int cached)
- 
- 	trace_performance_enter();
- 	ent = revs->pending.objects;
--	if (diff_cache(revs, &ent->item->oid, ent->name, cached))
-+	if (diff_cache(revs, &ent->item->oid, ent->name, !!(option & DIFF_INDEX_CACHED)))
- 		exit(128);
- 
--	diff_set_mnemonic_prefix(&revs->diffopt, "c/", cached ? "i/" : "w/");
-+	diff_set_mnemonic_prefix(&revs->diffopt, "c/", (option & DIFF_INDEX_CACHED) ? "i/" : "w/");
- 	diffcore_fix_diff_index();
- 	diffcore_std(&revs->diffopt);
- 	diff_flush(&revs->diffopt);
-diff --git a/diff.h b/diff.h
-index e0c0af6286..0cc874f2d5 100644
---- a/diff.h
-+++ b/diff.h
-@@ -585,7 +585,8 @@ const char *diff_aligned_abbrev(const struct object_id *sha1, int);
- /* report racily-clean paths as modified */
- #define DIFF_RACY_IS_MODIFIED 02
- int run_diff_files(struct rev_info *revs, unsigned int option);
--int run_diff_index(struct rev_info *revs, int cached);
-+#define DIFF_INDEX_CACHED 01
-+int run_diff_index(struct rev_info *revs, unsigned int option);
- 
- int do_diff_cache(const struct object_id *, struct diff_options *);
- int diff_flush_patch_id(struct diff_options *, struct object_id *, int, int);
+ 	__git_has_doubledash && return
+@@ -1713,10 +1717,7 @@ _git_diff ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--cached --staged --pickaxe-all --pickaxe-regex
+-			--base --ours --theirs --no-index
+-			$__git_diff_common_options
+-			"
++		__gitcomp "$__git_diff_difftool_options"
+ 		return
+ 		;;
+ 	esac
+@@ -1738,11 +1739,7 @@ _git_difftool ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp_builtin difftool "$__git_diff_common_options
+-					--base --cached --ours --theirs
+-					--pickaxe-all --pickaxe-regex
+-					--relative --staged
+-					"
++		__gitcomp_builtin difftool "$__git_diff_difftool_options"
+ 		return
+ 		;;
+ 	esac
 -- 
 2.28.0.618.gf4bc123cb7
 
