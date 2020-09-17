@@ -2,141 +2,94 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4B24C43463
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 21:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D661C43463
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 21:39:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4635F208E4
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 21:16:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A1002083B
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 21:39:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=g001.emailsrvr.com header.i=@g001.emailsrvr.com header.b="ZZJ3t5a4";
-	dkim=pass (1024-bit key) header.d=xiplink.com header.i=@xiplink.com header.b="wq9+ZphC"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RCddNISZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbgIQVQu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 17:16:50 -0400
-Received: from smtp114.ord1d.emailsrvr.com ([184.106.54.114]:39771 "EHLO
-        smtp114.ord1d.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725900AbgIQVQu (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 17 Sep 2020 17:16:50 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 17:16:49 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=g001.emailsrvr.com;
-        s=20190322-9u7zjiwi; t=1600370490;
-        bh=2HJPC8KV09dvecGouCVtdNyYEBdkXzf+tr7cdC92HLI=;
-        h=Subject:To:From:Date:From;
-        b=ZZJ3t5a4nltlPs1VjpQpsIJp4zQxaj0rW4JpNb8Nac4memExqvDT8IYxgmI7jcQRg
-         wPQJiHj9P3UsBHyUs+JnpxqgsXY8XPmBmjPuJol46qBfH/JCrIS2l5X+qGauW2LlEz
-         KTQcW6qYQBTDuyZfeS1rThb2ednfLfNOi3f7Yw7U=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xiplink.com;
-        s=20181102-2c3qeqyt; t=1600370490;
-        bh=2HJPC8KV09dvecGouCVtdNyYEBdkXzf+tr7cdC92HLI=;
-        h=Subject:To:From:Date:From;
-        b=wq9+ZphCQJ8SpfweAu49eRl2XrrUbUeprxLvOgoLdoDRb1/zvZinMgTyNiqL77CD4
-         FueDCZRBNiLG7fuLigMKgpUUmY1KfBDY0jqTovm1DOxSqfM5RKBW/vOIXqCjgt1gHE
-         qIuqyIK6xxYvOGcSfLVR/Psa3KWnl9Zqake3GOzA=
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp23.relay.ord1d.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id CF21F2039C;
-        Thu, 17 Sep 2020 15:21:29 -0400 (EDT)
-Subject: Re: [RFC PATCH 2/2] core.fsyncObjectFiles: make the docs less
- flippant
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Christoph Hellwig <hch@lst.de>
-References: <87sgbghdbp.fsf@evledraar.gmail.com>
- <20200917112830.26606-3-avarab@gmail.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <1edd9eb1-365b-b4f7-87f8-3ad35bd7d5be@xiplink.com>
-Date:   Thu, 17 Sep 2020 15:21:29 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1725886AbgIQVj5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 17:39:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55546 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbgIQVj5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 17:39:57 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04F9D88ABD;
+        Thu, 17 Sep 2020 17:39:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:cc:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=alI8X9okKpe3uC6eUcxNq9vOjU0=; b=RCddNI
+        SZECrobV8SN8t8f0kDsNtIMXLT7p1dC/lF5002kLRxuLj88q7t+mT52zwmry3Y6T
+        OcrzReBikAiNfHMvGS7EFyJDaeilRjiwUzmumNeJ5jEBG7omHlQ5WwP9h6nCF52B
+        HCldmpm8chwe5pSxYG30e6a8SeaPzs0gTIl40=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :references:cc:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Em34+S8fGJEQiEMSoefR4X0wqMXOpE/B
+        5jC3uYb0fkM2KcjsZ9mZkq/idBQf80LoDp/oXmYDP3b6Dy+vgR0GPBtzQUgH5r1s
+        XZTBTYjDilvCgoJJQCK7gVLhWFslpNpG8f7Eh8Y0bipigXwzD9a+TUz/Luzm5JzP
+        MlahhSz3EYs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFBD088ABC;
+        Thu, 17 Sep 2020 17:39:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76E3D88ABB;
+        Thu, 17 Sep 2020 17:39:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Sep 2020, #04; Wed, 16)
+References: <xmqq8sd9t679.fsf@gitster.c.googlers.com>
+cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 17 Sep 2020 14:39:53 -0700
+In-Reply-To: <xmqq8sd9t679.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 16 Sep 2020 20:47:38 -0700")
+Message-ID: <xmqq363gqdzq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200917112830.26606-3-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Classification-ID: 36143543-7a10-467d-8fa3-aec8e5b40934-1-1
+Content-Type: text/plain
+X-Pobox-Relay-ID: 53074240-F92E-11EA-A483-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-09-17 7:28 a.m., Ævar Arnfjörð Bjarmason wrote:
-> As amusing as Linus's original prose[1] is here it doesn't really explain
-> in any detail to the uninitiated why you would or wouldn't enable
-> this, and the counter-intuitive reason for why git wouldn't fsync your
-> precious data.
-> 
-> So elaborate (a lot) on why this may or may not be needed. This is my
-> best-effort attempt to summarize the various points raised in the last
-> ML[2] discussion about this.
-> 
-> 1.  aafe9fbaf4 ("Add config option to enable 'fsync()' of object
->      files", 2008-06-18)
-> 2. https://lore.kernel.org/git/20180117184828.31816-1-hch@lst.de/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   Documentation/config/core.txt | 42 ++++++++++++++++++++++++++++++-----
->   1 file changed, 36 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-> index 74619a9c03..5b47670c16 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -548,12 +548,42 @@ core.whitespace::
->     errors. The default tab width is 8. Allowed values are 1 to 63.
->   
->   core.fsyncObjectFiles::
-> -	This boolean will enable 'fsync()' when writing object files.
-> -+
-> -This is a total waste of time and effort on a filesystem that orders
-> -data writes properly, but can be useful for filesystems that do not use
-> -journalling (traditional UNIX filesystems) or that only journal metadata
-> -and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
-> +	This boolean will enable 'fsync()' when writing loose object
-> +	files. Both the file itself and its containng directory will
+Junio C Hamano <gitster@pobox.com> writes:
 
-Typo: containng
+> * js/no-builtins-on-disk-option (2020-08-24) 3 commits
+>  - ci: stop linking built-ins to the dashed versions
+>  - install: optionally skip linking/copying the built-ins
+>  - msvc: copy the correct `.pdb` files in the Makefile target `install`
+>
+>  The installation procedure learned to optionally omit "git-foo"
+>  executable files for each 'foo' built-in subcommand, which are only
+>  required by old timers that still rely on the age old promise that
+>  prepending "git --exec-path" output to PATH early in their script
+>  will keep the "git-foo" calls they wrote working.
+>
+>  The old attempt to remove these executables from the disk failed in
+>  the 1.6 era; it may be worth attempting again, but I think it is
+>  worth to keep this topic separate from such a policy change to help
+>  it graduate early.
+>
+>  Expecting a reroll to update log message for the last one.
+>  as it confused at least two reviewers.
+>  cf. <xmqqwo1baop3.fsf@gitster.c.googlers.com>
+>  cf. <20200903104537.GA27325@szeder.dev>
 
-		M.
+I think this is more or less good modulo the way the last bit is
+explained.  No rush, but just trying to make sure it will not stay
+stalled forever.
 
-> +	be fsynced.
-> ++
-> +When git writes data any required object writes will precede the
-> +corresponding reference update(s). For example, a
-> +linkgit:git-receive-pack[1] accepting a push might write a pack or
-> +loose objects (depending on settings such as `transfer.unpackLimit`).
-> ++
-> +Therefore on a journaled file system which ensures that data is
-> +flushed to disk in chronological order an fsync shouldn't be
-> +needed. The loose objects might be lost with a crash, but so will the
-> +ref update that would have referenced them. Git's own state in such a
-> +crash will remain consistent.
-> ++
-> +This option exists because that assumption doesn't hold on filesystems
-> +where the data ordering is not preserved, such as on ext3 and ext4
-> +with "data=writeback". On such a filesystem the `rename()` that drops
-> +the new reference in place might be preserved, but the contents or
-> +directory entry for the loose object(s) might not have been synced to
-> +disk.
-> ++
-> +Enabling this option might slow git down by a lot in some
-> +cases. E.g. in the case of a naïve bulk import tool which might create
-> +a million loose objects before a final ref update and `gc`. In other
-> +more common cases such as on a server being pushed to with default
-> +`transfer.unpackLimit` settings the difference might not be noticable.
-> ++
-> +However, that's highly filesystem-dependent, on some filesystems
-> +simply calling fsync() might force an unrelated bulk background write
-> +to be serialized to disk. Such edge cases are the reason this option
-> +is off by default. That default setting might change in future
-> +versions.
-> ++
-> +In older versions of git only the descriptor for the file itself was
-> +fsynced, not its directory entry.
->   
->   core.preloadIndex::
->   	Enable parallel index preload for operations like 'git diff'
-> 
+Thanks.
