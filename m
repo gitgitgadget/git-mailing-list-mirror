@@ -2,126 +2,81 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3A24C43461
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 900C0C43461
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:42:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D2CA206A4
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:35:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43E9C2222D
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:42:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727961AbgIQPZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 11:25:02 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:59729 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728158AbgIQPYo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 11:24:44 -0400
-X-Greylist: delayed 2510 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 11:24:40 EDT
-Received: from host-89-241-187-35.as13285.net ([89.241.187.35] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1kIv7X-0005td-99; Thu, 17 Sep 2020 15:42:48 +0100
-Subject: Re: Git in Outreachy?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20200828065609.GA2105118@coredump.intra.peff.net>
- <CAP8UFD2rpNhDhyHdQNxS-KJZgcumsCpK_JQ5koCqXJd70s-+_w@mail.gmail.com>
- <20200903060041.GH4035286@google.com>
- <a3613b9d-730a-7a4b-c84b-c833490fcea6@iee.email>
- <nycvar.QRO.7.76.6.2009060933480.56@tvgsbejvaqbjf.bet>
- <5be2fca8-2dbd-115e-b3bb-5783daeba4a3@iee.email>
- <nycvar.QRO.7.76.6.2009162040420.56@tvgsbejvaqbjf.bet>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <0ef7ad0b-4626-2cca-d29c-35d21412e595@iee.email>
-Date:   Thu, 17 Sep 2020 15:42:47 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1728201AbgIQPmG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 11:42:06 -0400
+Received: from mout.kundenserver.de ([212.227.17.10]:45665 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727944AbgIQPSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 11:18:17 -0400
+X-Greylist: delayed 3443 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2020 11:18:16 EDT
+Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
+ mrelayeu.kundenserver.de (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 1MAwTn-1kC0qg21kH-00BIrC; Thu, 17 Sep 2020 17:17:31 +0200
+Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
+        by mail.cetitecgmbh.com (Postfix) with ESMTP id CBED81E01E7;
+        Thu, 17 Sep 2020 15:17:30 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at cetitec.com
+Received: from mail.cetitecgmbh.com ([127.0.0.1])
+        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id BQNVAL1tWjxv; Thu, 17 Sep 2020 17:17:30 +0200 (CEST)
+Received: from pflmari.corp.cetitec.com (unknown [10.10.5.94])
+        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 9D3A11E01E6;
+        Thu, 17 Sep 2020 17:17:30 +0200 (CEST)
+Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
+        id 6EC298051A; Thu, 17 Sep 2020 17:17:30 +0200 (CEST)
+Date:   Thu, 17 Sep 2020 17:17:30 +0200
+From:   Alex Riesen <alexander.riesen@cetitec.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Config option to set the transport protocol version for
+ network fetches
+Message-ID: <20200917151730.GG8079@pflmari>
+References: <20200916200203.GA37225@coredump.intra.peff.net>
+ <20200917132047.GA14771@pflmari>
+ <20200917133153.GA3038002@coredump.intra.peff.net>
+ <20200917133525.GE8079@pflmari>
+ <20200917145142.GA3076467@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2009162040420.56@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200917145142.GA3076467@coredump.intra.peff.net>
+X-Provags-ID: V03:K1:DO4V57CqCubE5cfmp18dyYjBt7lZVi7sh03SXQ0+Y+Fpj2vx2yH
+ 1sjUApU3iPrphhQS4CDlR5tAzqv02EY6g7a/lAwRS+Ck3xdEK79swkByxHnNTqZj2FqA8IC
+ Jnlif5fCdIUDwEsj97jgf7mVqJAV8cq5JII/KEmQuH9LXqfoUrncezwn6AKlB5WpcBao/9o
+ MvNN++Pq+FT9a08CaScbg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AuVVpBDKJnY=:RKllhnkZ2pd1X9XcZhLXhr
+ 63haEmsOapDRPiEvYNxBXF4ENwGJMflYtGoqN2yoGfzF+tPl5KouqZ3BdiSPGnzpN/S+fnubf
+ MCcFbI6fp/NsxvQzSPCCFCVhLbYsOOMWtwfOhXZpGX6JUkeKHbs2rJV8bcb8ddTsbNfIAJeqa
+ JhRuCi6BlXT5lzzgDRovXVP7PECBSTx8mHXI2n95IC8tiutcrdLVHLg45Z37BEuH6Hn7jhkH8
+ D3Ki84HdEgZKmzqWfny6/2zbCrnYkGABvMCmUxrpo+YFOsvWVPgIADBT33LU7xM70RORAGvim
+ iqND0bXNJe0/dkWZgU5b9kn85K+NWUzl4BJsgscD4i7sLYg3v8N5Zfs6aKjVcP0/lkUNu1VzG
+ CsZjrt3V/G/hhSdWBEWzEIuFuWr6Q+Ke+cswu3KvyxEFq4eSxeImaEbbt3G6GCkJorcXFQ4mw
+ cxERnfKuxQ7/TQtNqbOyLliZuBxUNGFYZf6KCEVoYopKBQG3K97yYetkH06I+ZwWRwro091NT
+ ybVjLwxzr9sre+qbvcHP3I1YEs5vxQrib3x80OMAi35RZh3/r9ns57+StY5j5oE0JWtVSa4ik
+ wFV9Iegf9AfbrSgRlrrLxiNtG2oQDSnExYUnDFA9LTLoow7RKMGrGTrHp3XmqvadeOdmxxHsx
+ ylDBkRZ7TfxQaicqbC3swkBJHAR43+4hAiBOIi1egSdoiWcyV+pfUUH099or360PZSuTCmXGk
+ NUQooS2o9/uHD2+5REUNZLm0cEUEQ0AQdrdqlYm6sJ5zRtnKHLINQ1385Qcpdy4n0iED4ld1B
+ iLs1aj0cyuo2noPC3JOTE9J12otYanzhsXToMxIUX5AS5lLW3rFOznWwcoc5QWA1OxIcBQWBn
+ m/TiAYjma9Ru5EBIfziw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Jeff King, Thu, Sep 17, 2020 16:51:42 +0200:
+> No problem, and no rush. I just wanted to make sure those bits didn't
+> get overlooked.
 
-On 16/09/2020 19:43, Johannes Schindelin wrote:
-> Hi Philip,
->
-> On Wed, 16 Sep 2020, Philip Oakley wrote:
->
->> On 07/09/2020 19:49, Johannes Schindelin wrote:
->>> On Fri, 4 Sep 2020, Philip Oakley wrote:
->>>
->>>> On 03/09/2020 07:00, Jonathan Nieder wrote:
->>>>> Christian Couder wrote:
->>>>>
->>>>>> I would appreciate help to find project ideas though. Are there still
->>>>>> scripts that are worth converting to C (excluding git-bisect.sh and
->>>>>> git-submodule.sh that are still worked on)? Are there worthy
->>>>>> refactorings or improvements that we could propose as projects?
->>>>> I think setting up something like snowpatch[*] to run CI on patches
->>>>> that have hit the mailing list but not yet hit "seen" might be a good
->>>>> project for an interested applicant (and I'd be interested in
->>>>> co-mentoring if we find a taker).
->>>>>
->>>>> Some other topics that could be interesting:
->>>>> - better support for handling people's name changing
->>>>> - making signing features such as signed push easier to use (for
->>>>>   example by allowing signing with SSH keys to simplify PKI) and more
->>>>>   useful (for example by standardizing a way to publish signed push
->>>>>   logs in Git)
->>>>> - protocol: sharing notes and branch descriptions
->>>>> - formats: on-disk reverse idx
->>>>> - obliterate
->>>>> - cache server to take advantage of multiple promisors+packfile URIs
->>>>>
->>>>> Jonathan
->>>>>
->>>>> [*] https://github.com/ruscur/snowpatch
->>>> A suggestion with high value for the Windows community
->>>> - mechanism to map file names between the index and the local FS, should
->>>> a repos file/path name already be taken, or invalid. [1]
->>> This suggestion keeps coming up, but I cannot help but highly doubt that
->>> it will prove useful in practice: if your source code contains a file
->>> called `aux.c`, chances are that your build system lists this file
->>> specifically, and it won't do at all to "magically" rename it to, say,
->>> `aux_.c` during checkout.
->> I'd disagree with that line of reasoning in the sense that if someone is
->> on Windows wanting to 'view' a repo that was developed on Linux, with
->> colons in pathnames, and filenames like aux.c we shouldn't be
->> deliberately de-include them just because of those file/pathname
->> 'accidents.
-> If someone wanted to just have a look, they usually make use of the web
-> interface of a Git hosting service and look at the file there.
->
-> Even if somebody insists on cloning the entire history, they can easily
-> look at the file via `git show origin/HEAD:<path>`.
->
-> The most likely users who really need those files to be checked out are
-> the ones who need to build the project, and that's simply not possible
-> with "magically" renamed files.
->
-> Ciao,
-> Dscho
-Is that the user experience we want to have?
-
-Maybe we need extra documentation on the core.protectNTFS setting noting
-that Git itself may not be the right tool for such repositories, and
-these workarounds which may not be familiar to many users.
-
-It feels as if we are giving cart-blanche to bad actors who can add an
-aux.info or similar files to a repo just to thwart collaborators being
-on Windows.
-
-Philip
+I'll try and do my best :)
 
 
