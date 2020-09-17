@@ -2,106 +2,127 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A8F5C433E2
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F11DDC433E2
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:29:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 462BA20708
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:26:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FC32222D9
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 15:29:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCrfW6Vt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ecrLB9tx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728196AbgIQPZs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 11:25:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39556 "EHLO
+        id S1728219AbgIQP3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 11:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728188AbgIQPZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 11:25:12 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2270C06178B
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 08:25:10 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id m6so2553705wrn.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 08:25:10 -0700 (PDT)
+        with ESMTP id S1728144AbgIQP17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 11:27:59 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D8AC061756
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 08:27:41 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id y15so2481601wmi.0
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 08:27:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=jImqtrnvynD3R43fafjnTmHUL4dM+lNtpmkuWaLe2jQ=;
-        b=NCrfW6VtTIhjsRuJz6xyGhlsTxkywGma99X116+Pd75sTyAC51zGGW2FF5KdnuFDqb
-         PqPrCHkpjNGeyPD+wPLMH6ycEaJHnnVFXC6pSxnxxKPoXQ74Dd7ug2pXl3YECTAdY+JF
-         ye0O04V5X52QRzwR/UvY8w9QvCh6H07ube4FB97B1C2HO2k70Kot34AWV1Utl2OiTv7z
-         tiSR964Y4Wxa+euGCjFt6+lMDO7EII4txFd8BUVeGyulzXvrywbd40nGPff4TwWZQQEz
-         KowIselzOYOCaxO2jp/AXmIxOZ4BaZmE9Kz6IZnrI08m6BCax9bMRzfO68ZP8fJ2qpoG
-         d4tQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=dDJLjeKpb37ozIH87UIRjD7kVItDqN0uQy7ZQaCpwKs=;
+        b=ecrLB9txopdAoWKLhsZYpNj5x5AC8u5c3nE3hGcFvs/n2L6ic0wF/yjOBwNtC48Tsy
+         4NfSYS2sRzjq6vMI+NfqI7zbF59uh0XTkg1z4o8GatGjX49JbCBhhPux70rzoPEAjsoV
+         uPnOcrgtP3806xakDBRTTHynWt2G0n33Wkf/mcX7dnUyK9F8Lde4HnoaLhAwD7Pv4bom
+         fI7rRQd9VvVXwoHk/N2ihdLT//dnhGJd5KVBvKYpvYajR+kNZBdawtTWKOqLtxVM2dWh
+         vSJKSb9GTN/F8iLvQd43IKQB4p+vA9lx9iR6TByBqmJuaJBtoyrWD4mWCr4iMFg2ZJIS
+         PU6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=jImqtrnvynD3R43fafjnTmHUL4dM+lNtpmkuWaLe2jQ=;
-        b=Um34bF7KDwkZH1St8uK+Ul+A80hdSq1WeF21Xtf6YwksVz7UfxGKyjHmFyZB6FtWFw
-         BGHZe5UudVnDy2W4ZJCtmd+eVEYE0Yhm0rEgmzcLRPSg/gHsBZn5KEVJvxzq6LP68ik8
-         NpjI6bRCNrkkaPaBPQ20zICbhDNTn6Tz7gGuzFuJK/r0ewcxUpvkMb2zxlYqGHgggJ7Y
-         nZdxCSZz9DqZOwGQJpi2xi52ohr7vjkuwK3e4QWl5Gtt793RUY3JW5rAk5n6OzLVeE6e
-         FNZSw/QpKbgmSAwRnlsKoZ8oa52qW/WZojcFFpMw6TOg/s+0TvRPMMz2QV1xT3IPJ3Fi
-         DhSw==
-X-Gm-Message-State: AOAM531lfbiDw38phLkaKCFgc6IZobS9G4yVw4X9r2vWJj6EID8zf4/l
-        vz4v3mBN7z8VhaLKC8HeYkkHWlVj1N4m5A==
-X-Google-Smtp-Source: ABdhPJxfnIFIS7lblVxugtUJHeKB7qkkJRQnoVDjlR2w9xxaVHzcq6ih4oL8Ml8Pc2BQQxTuAPSpAA==
-X-Received: by 2002:a5d:46cf:: with SMTP id g15mr33194878wrs.107.1600356309475;
-        Thu, 17 Sep 2020 08:25:09 -0700 (PDT)
-Received: from [192.168.178.23] (aftr-62-216-206-159.dynamic.mnet-online.de. [62.216.206.159])
-        by smtp.gmail.com with ESMTPSA id y2sm10864899wmg.23.2020.09.17.08.25.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Sep 2020 08:25:08 -0700 (PDT)
-Subject: Re: [PATCH 4/4] clone: allow configurable default for `-o`/`--origin`
-To:     Sean Barag via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Sean Barag <sean@barag.org>
-References: <pull.727.git.1599848727.gitgitgadget@gmail.com>
- <5c519376c29a28bd89a712cf0b8125fc1c2c81be.1599848727.git.gitgitgadget@gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <83b5a9a0-6982-2bf7-139e-5cf2823f223c@gmail.com>
-Date:   Thu, 17 Sep 2020 17:25:07 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=dDJLjeKpb37ozIH87UIRjD7kVItDqN0uQy7ZQaCpwKs=;
+        b=ojTfxbAZG1sWxG2HFgR1BxAUrpoJBL14nMtHQHfawgzKl0BWl/Ux4SvhaX5vBTa67P
+         T1kXCtLxVyY5efzJtRJw9wWWKLHI9RqWpPpS8jyn8ilLBEPhZN4wNJhNg0u0qvkfbrPZ
+         HenzC+hRhrDLD9ui7HoKMP5ymwUYzYEHGG7VIpy4fgD8EnOyxKDfOvzhdIfrdiqHoSSF
+         yPmlRXyh0X9mH5nUrkDMlWtI/zryU1C05MX5KPPuGjA+oMj9yHVR2CIAzt7cNRwfewS+
+         86Y9wuFt6nGI6qwGNMrBG60haxWTo/yTpGtitpb8Zl49M4rBEGH9P56aAN2R6S0hIqrK
+         mvlg==
+X-Gm-Message-State: AOAM5305mygjTxpXo/hqZ7yTUhHnB/uY4CW0+ECEAlNv6uDCtMZJV6Rt
+        3i0iieYxbSrxd/2R1OE6NINSp/QjwwE=
+X-Google-Smtp-Source: ABdhPJwmqsvszxSIINoMpMa5LXzXjAv34iyd28D3qgraNeZY58dmL5bz1trCruhCDKlyRAPXzfurlA==
+X-Received: by 2002:a05:600c:2312:: with SMTP id 18mr4236975wmo.141.1600356460138;
+        Thu, 17 Sep 2020 08:27:40 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u12sm11641385wrt.81.2020.09.17.08.27.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 08:27:39 -0700 (PDT)
+Message-Id: <pull.848.git.git.1600356459092.gitgitgadget@gmail.com>
+From:   "Christian Schlack via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 17 Sep 2020 15:27:38 +0000
+Subject: [PATCH] remote: in case of error don't show success message.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <5c519376c29a28bd89a712cf0b8125fc1c2c81be.1599848727.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+To:     git@vger.kernel.org
+Cc:     Christian Schlack <christian@backhub.co>,
+        Christian Schlack <christian@backhub.co>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-09-11 20:25, Sean Barag via GitGitGadget wrote:
-> From: Sean Barag <sean@barag.org>
->
-> While the default remote name of "origin" can be changed at clone-time
-> with `git clone`'s `--origin` option, it was previously not possible
-> to specify a default value for the name of that remote.  This commit
-> adds support for a new `clone.defaultRemoteName` config.
->
-> It's resolved in the expected priority order:
->
-> 1. (Highest priority) A remote name passed directly to `git clone -o`
-> 2. A `clone.defaultRemoteName=new_name` in config `git clone -c`
-> 3. A `clone.defaultRemoteName` value set in `/path/to/template/config`,
->    where `--template=/path/to/template` is provided
-> 3. A `clone.defaultRemoteName` value set in a non-template config file
+From: Christian Schlack <christian@backhub.co>
 
-Number 3 is used twice in this list.
+Suppress the message 'origin/HEAD set to master' in case of an error.
 
-> 4. The default value of `origin`
->
-> Signed-off-by: Sean Barag <sean@barag.org>
-> Thanks-to: Junio C Hamano <gitster@pobox.com>
-> Thanks-to: Johannes Schindelin <johannes.schindelin@gmx.de>
+  $ git remote set-head origin -a
+  error: Not a valid ref: refs/remotes/origin/master
+  origin/HEAD set to master
 
+Signed-off-by: Christian Schlack <christian@backhub.co>
+---
+    remote: in case of error don't show success message.
+    
+    Expected behaviour
+    
+    $ git remote set-head origin -a
+    error: Not a valid ref: refs/remotes/origin/master
+    
+    Actual behaviour
+    
+    $ git remote set-head origin -a
+    error: Not a valid ref: refs/remotes/origin/master
+    origin/HEAD set to master
+    
+    I believe ... set to master should not be shown in case of an error.
+    That's why I added an else to the if-condition.
+    
+    Signed-off-by: Christian Schlack christian@backhub.co
+    [christian@backhub.co]
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-848%2Fcschlack%2Fremote-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-848/cschlack/remote-v1
+Pull-Request: https://github.com/git/git/pull/848
+
+ builtin/remote.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 542f56e387..64b4b551eb 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1356,7 +1356,7 @@ static int set_head(int argc, const char **argv)
+ 			result |= error(_("Not a valid ref: %s"), buf2.buf);
+ 		else if (create_symref(buf.buf, buf2.buf, "remote set-head"))
+ 			result |= error(_("Could not setup %s"), buf.buf);
+-		if (opt_a)
++		else if (opt_a)
+ 			printf("%s/HEAD set to %s\n", argv[0], head_name);
+ 		free(head_name);
+ 	}
+
+base-commit: 54e85e7af1ac9e9a92888060d6811ae767fea1bc
+-- 
+gitgitgadget
