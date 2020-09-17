@@ -7,86 +7,78 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FFB9C43464
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 22:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0729C43464
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 22:32:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC9FB20665
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 22:28:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47F522087D
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 22:32:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OtZTYuOO"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ebNGfKIi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726004AbgIQW2m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 18:28:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51473 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbgIQW2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 18:28:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CFAD69DFE;
-        Thu, 17 Sep 2020 18:28:40 -0400 (EDT)
+        id S1726097AbgIQWcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 18:32:03 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64623 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726002AbgIQWcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 18:32:03 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BA122F0E0A;
+        Thu, 17 Sep 2020 18:32:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=lSvfINm4FBhphaUGchkX58EgyyU=; b=OtZTYuOOjQpSXb8qjAM5
-        OEYNO/xC7md8Wpy4E5gT5gRwBe8lObR/Qk75KmK3B35YUFIZSQXYSrGxy8VaWkOm
-        xWYWHJuKjIXD2NuoldpwKgLmxr/bZxREv80KfTSHRj4+LrOkezSrKtLb8Vn2DJff
-        4q/g/aD5d4800kz+d/rjwHA=
+         s=sasl; bh=srbfhtUz6xr3ODdov5KbcKur2V4=; b=ebNGfKIi8hmmnTv+sItL
+        CBNsTWgh2egyMQ5x0YM4FfE/3Cp4A9PM/Lbkqq+Jy8nxfJBT5qKkccj3Hn+ZqsYZ
+        KwguRlgRXd64Wk0doXvLldH7IoFc2Wsi1ABBfD6xsvohsQ7dXKokrcAIIDYD3fOl
+        djK7spOb2gTmoPs7NLa5p+M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=P77uPDSruX7fwdRRh55bx91BiwacDLrFFyHJMltYHsVyhm
-        xsFpx1iLkMzZaaIDX0LDRwrsd4DWmObPwXkykpku0nZyiyhMyf03hhKC4TuREPi0
-        YkT5NZsHWodfvxXDsPqdJT1iplZXkUtjLKzV/i80IgSVtJwvy58StjTMS7dL8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 136A869DFD;
-        Thu, 17 Sep 2020 18:28:40 -0400 (EDT)
+         q=dns; s=sasl; b=mMGWpOjyk+CffhJahd0s7eqi0ty59pgTFHN2wZu2gy65iP
+        VtRWg++wtIWPnkjF1gT4uBnMEN78a9nhKavibXdLzGQk3z/6FYOmDOdPIa8YfZfs
+        lGWVGfdqxjdAf7m/7ypWBL6WOBPHOhhlrG4gZlLXGOFGiFfU9yASMdnk02pCs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B26DCF0E09;
+        Thu, 17 Sep 2020 18:32:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 90F9069DFB;
-        Thu, 17 Sep 2020 18:28:39 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F0AF8F0E07;
+        Thu, 17 Sep 2020 18:31:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>
-Subject: Re: [PATCH 00/15] remote-mediawiki: various fixes to make tests pass
-References: <20200916102918.29805-1-avarab@gmail.com>
-        <20200916185732.GE33925@coredump.intra.peff.net>
-Date:   Thu, 17 Sep 2020 15:28:38 -0700
-Message-ID: <xmqqimccox61.fsf@gitster.c.googlers.com>
+To:     Alex Riesen <alexander.riesen@cetitec.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] config: option transfer.ipversion to set transport
+ protocol version for network fetches
+References: <20200915135428.GA28038@pflmari>
+        <xmqqtuvxwkbz.fsf@gitster.c.googlers.com>
+        <xmqqk0wtv204.fsf@gitster.c.googlers.com>
+        <20200917140254.GA28281@pflmari>
+Date:   Thu, 17 Sep 2020 15:31:58 -0700
+Message-ID: <xmqqbli4ox0h.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 22874578-F935-11EA-81BB-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 99F88A7C-F935-11EA-B67F-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Alex Riesen <alexander.riesen@cetitec.com> writes:
 
-> I am a little puzzled about what we want the future of contrib/mw-to-git
-> to be. It sounds like there have been a few minor improvements in the
-> external GitHub project (though clearly lacking a bunch of fixes you
-> have here). Should we be pushing these fixes up to that version and then
-> either:
+> If the configuration variable is allowed to be set to that "lack of
+> preference" value, we kind of have a command line option for it:
 >
->   - considering that project the upstream, and reimporting from them
->     once the fixes are merged there
->
->   - ejecting it from contrib/; it can live on as a separate project
+>     git -c transfer.protocolFamily=any fetch ...
 
-In general the latter is preferrable.
+Yes.
 
-If it is not well maintained in upstream, we can keep it in our
-contrib/ hierarchy forever, but given that nobody among us seems to
-be motivated and qualified enough to be its true maintainer, and no
-user seems to be contacting us about its bugs, it is just between
-letting it wither over there or in our contrib/, which does not make
-much of a difference, I would think.
+But we typically do not count that as being able to override from
+the command line.  If "git fetch --ipv4" will defeat the configured
+"transfer.protoclFamily=ipv6", the users will expect there is some
+way to do the same and say they accept any protocol family to be
+used.
 
-
-
+Thanks.
