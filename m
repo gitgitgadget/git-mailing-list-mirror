@@ -2,109 +2,109 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09466C43463
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 20:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E17B6C43463
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 20:37:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B71BB2085B
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 20:37:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D76B20838
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 20:37:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dFysYw5a"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="YROCZWIA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbgIQUhs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 16:37:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59722 "EHLO
+        id S1726510AbgIQUhx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 16:37:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726244AbgIQUhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 16:37:48 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2967C06174A
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 13:37:47 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id e17so3223881wme.0
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 13:37:47 -0700 (PDT)
+        with ESMTP id S1726244AbgIQUhx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 16:37:53 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AECBC06174A
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 13:37:53 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id g3so3040109qtq.10
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 13:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=gG83uW8tMM5uDO6EWJW4CMic+CXf+N96oOroUaUa4fQ=;
-        b=dFysYw5aU41Ea3zlFvlIWVXbauYkDh+vsMwDhnBtbwG4Fq8jfH6JrUoNm4wjE1RrpO
-         k/qdjQ5CXMiZ6Z2pqHkDCIH3+5wMmBrk5vbok1gG2rWnpBoHdSuH8RtvEFqOIout71yD
-         ga2usJY7+k1MyWa6U2u4iH2w+VYSuzvWx/ye8ONrq9EZ14W7lX2lmLnNnAh3nF6ngYg6
-         mKY1M0ME2FZNglK1+n0Q3xxhNbX9YNz5XPaY367hjvG5OkOovsLH1A8pk7Yf9S2sKi3x
-         1FixMVj1gV9k55HMkNWZ3CEyrk5qwcxKf2G5jhrU97Vv4PFBwvAfSazNVcizJgE569Ef
-         eSUw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QiQ0kO+8lF/Z138k7zUyPtaMOwszzsTtEfF+Vg9q0h4=;
+        b=YROCZWIAQseUE6Pl4bXAkOl5BXyaq743DVnwo3GY/4Z7fRZLoQv1lKcEz/URHdJjB9
+         tnWU4F29xgaGWiuCuCLimFbC94YyficR49QoVZFc0Fcv1qXRGBy0ZTdy8NS31i+syOeu
+         sh91rMAIkqI+qppdXU+BgDsnBRIkK2LbBRXRRWRd1cfP3cS9Kqre9nmUiRf0lxElVBiU
+         EbuW0fcGzF9j03ZUU/54oFVJZQRb8b+iUeEKELtVDnbGUZhF5vYCG/rCesI9UIl7XIvr
+         WnVAdiHsO0xhzbZVlHga8BUFTyv35oj0DnsfqSh39IxW0hluzFdWF6ixMwavteUcg65a
+         Uxhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gG83uW8tMM5uDO6EWJW4CMic+CXf+N96oOroUaUa4fQ=;
-        b=ieFETFnZxR3cdfwQz24TLPwLoLn7Pq+21HF5bHTMGbxhz9tll2e7bwuKS0hhS1rhZi
-         d7sgRE5rP386Ej1S4/e6b4mnNCMB2flGziqis+Ef5fp+0YBT9i9kdvq5CavPteHkuLfn
-         e6T6cDDAdF5n0Gjrh2U3o+YwY6Xr6rQF1rNyTviXIjzMocl8dmS1y0gBxUXNR+IbuzM7
-         UZbt5d3HgmAp+h9v4hCS+zEm4hKPcPAQbcd/3J1vIHd4PFFQs0o3aXG77Ozd2FbGPomB
-         xHgRGV8nUveW9YYsRM0+UsTdgldGh+hVq+NifWJYvTESz2BnB6Ysy9u0dxYdWv5erf78
-         x+dA==
-X-Gm-Message-State: AOAM530NrrjMmqe2jud/70bu5wxUpQKprXv26ZDhhQ53NKGKbZSYXjeT
-        iaQTIAG5xAk8nlC0DiZ9nyIYOLLhcZQ=
-X-Google-Smtp-Source: ABdhPJw86/7ICQ4cROFiST/cXxab5cg07GbjdRiGsLdgwJJhai/CUAdU2+wzaYP7/vwKn5un6IAkgw==
-X-Received: by 2002:a1c:f719:: with SMTP id v25mr12679355wmh.159.1600375066470;
-        Thu, 17 Sep 2020 13:37:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t22sm1186313wmt.1.2020.09.17.13.37.45
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QiQ0kO+8lF/Z138k7zUyPtaMOwszzsTtEfF+Vg9q0h4=;
+        b=TZ6S7ap3dMjsTZWWlZWZ+tcb+2Qli9g8+/eqQk4NBmu4tndTTB9qnEzqjjzm1CsA9v
+         U3zehCtNaoWdArSgxCXbUKJU0FrQvc7CHcUytbqFrgcGj8+IaAUI7F4ceK/WoyAIsjow
+         ypQGvKMwb6O9VI9dJXRCT+T1Tf9k6KuOhzgWjFKk+Pz0Ew88LceZiwR5PEuB1TVWzyNr
+         O0TJIYiJ3u4BJ2HlI054G/wXFAF0GzFXhBcVwVPLhd04SoIKvuMAHQ16VxraZf8y13Zv
+         uts/P1x+dmlfyNYryTnchGiMrNQ6QgwBZNfnEeLvf1+J2dwtnXdYvwDr6al1ZyZxiZma
+         Vleg==
+X-Gm-Message-State: AOAM532ETcIg+FnVfIuZ5VBq8nMCUwh22n5oJCW0/fJ5uJ228WyUAJ+o
+        THVlPx/tGLnv1dKmwJ+CvWWJCQ==
+X-Google-Smtp-Source: ABdhPJwHbSwIxtvxBYMEmQf7fuQnPjJ7tGr56g7apVRDeWG8zJzSIvcuo3Xh7jFIOxeDT3zAnhE4dw==
+X-Received: by 2002:ac8:100c:: with SMTP id z12mr29015990qti.81.1600375072316;
+        Thu, 17 Sep 2020 13:37:52 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:2003:d617:ca70:4fd1])
+        by smtp.gmail.com with ESMTPSA id v131sm667025qkb.15.2020.09.17.13.37.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2020 13:37:46 -0700 (PDT)
-Message-Id: <pull.735.git.1600375065498.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 17 Sep 2020 20:37:45 +0000
-Subject: [PATCH] cmake: ignore generated files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 17 Sep 2020 13:37:51 -0700 (PDT)
+Date:   Thu, 17 Sep 2020 16:37:49 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Christoph Hellwig <hch@lst.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, tytso@mit.edu,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>
+Subject: Re: [RFC PATCH 1/2] sha1-file: fsync() loose dir entry when
+ core.fsyncObjectFiles
+Message-ID: <20200917203749.GA1589021@nand.local>
+References: <87sgbghdbp.fsf@evledraar.gmail.com>
+ <20200917112830.26606-2-avarab@gmail.com>
+ <20200917140912.GA27653@lst.de>
+ <20200917145523.GB3076467@coredump.intra.peff.net>
+ <20200917145653.GA30972@lst.de>
+ <xmqqzh5os9cg.fsf@gitster.c.googlers.com>
+ <20200917171212.GA3732163@coredump.intra.peff.net>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200917171212.GA3732163@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, Sep 17, 2020 at 01:12:12PM -0400, Jeff King wrote:
+> On Thu, Sep 17, 2020 at 08:37:19AM -0700, Junio C Hamano wrote:
+> > Am I reading the above correctly?
+>
+> That's my understanding. It gets trickier with refs (which I think we
+> also ought to consider fsyncing), as we may create arbitrarily deep
+> hierarchies (so we'd have to keep track of which parts got created, or
+> just conservatively fsync up the whole hierarchy).
 
-When using CMake to generate the files required to build Git in Visual
-Studio, a bunch of files are generated. We will want to prevent them
-from being tracked in Git.
+Yeah, it definitely gets trickier, but hopefully not by much. I
+appreciate Christoph's explanation, and certainly buy into it. I can't
+think of any reason why we wouldn't want to apply the same reasoning to
+storing refs, too.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Ignore files generated by CMake
+It shouldn't be a hold-up for this series, though.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-735%2Fdscho%2Fignore-generated-cmake-files-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-735/dscho/ignore-generated-cmake-files-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/735
+> It gets a lot easier if we move to reftables that have a more
+> predictable file/disk structure.
 
- .gitignore | 6 ++++++
- 1 file changed, 6 insertions(+)
+In the sense that we don't have to worry about arbitrary-depth loose
+references, yes, but I think we'll still have to deal with both cases.
 
-diff --git a/.gitignore b/.gitignore
-index 9673e792db..36f5ac4138 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -239,3 +239,9 @@ Release/
- /git.VC.VC.opendb
- /git.VC.db
- *.dSYM
-+*.vcxproj
-+*.vcxproj.filters
-+/CMakeCache.txt
-+/CMakeFiles/
-+/*.cmake
-+/DartConfiguration.tcl
+> -Peff
 
-base-commit: 54e85e7af1ac9e9a92888060d6811ae767fea1bc
--- 
-gitgitgadget
+Thanks,
+Taylor
