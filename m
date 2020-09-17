@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A334BC43461
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD4B5C43461
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5ACCE2072E
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 70F8B208DB
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m7rOVS5a"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cIJviHhK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726171AbgIQHoy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 03:44:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52374 "EHLO
+        id S1726187AbgIQHpF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 03:45:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726280AbgIQHoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 03:44:37 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C79F1C06174A
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:35 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id o20so671287pfp.11
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:35 -0700 (PDT)
+        with ESMTP id S1726303AbgIQHoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 03:44:44 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498DEC061797
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:44 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id gf14so797501pjb.5
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/mwx6ZHN/3I6oH1IScrvUQS1SzymAXYB1bi5yg/wxYw=;
-        b=m7rOVS5ajWn/6DfIZFVa3QFJ9MifA//RL5zwwUTtL0ao60FkXf93StpSj7eShbzLOk
-         udlVSglRSNjSmgGZ+SbOPf3wqJ0Pz5wjRDLgX+p6VBT0SS2Ipnn1wy9SBbTw5EShDbUm
-         64vS9YOAM0l4EbPibu9eGS5x0juPGuv8m/Ytr7aUDYyjMBMKBx+o8k/XvVEmlPTt3mLH
-         A0tYz5Kjc5MR8ew+c30vdvV1JJMatmy2OWA6o0ntl49Hs+ZvNFZohNvDkDTYlIkLX7zN
-         Bu3S7DtcWXoyksjDyenWNaNBtr6tKslSNOJhn7xmdhruZ+FO+WCnhvSXc1ao82B0CBWg
-         eUDg==
+        bh=SMDke5q4egupJlixzIzak9Wm2pEV4d5A/nAe6GhDB6g=;
+        b=cIJviHhKl0ix23nB92m4WzehNntDjnTacsSwMpQAKmpM6qrn43rr+a0KsX9VUpqhEO
+         2YS6sWd44dSjj5GFNVpjf5I7nuyjvwJO3Y1id3et6nRNsWHnHMNwnUn6e4LT8MjRmijy
+         xsniUkoD7VuV5uxHOPaBfnDu0YGXBsQjLPyhdGUKRLDrt+l/AcIrHP+JOUfeuJmroiBr
+         JZxV8WybCes8lcW79dIvtI24txd4iqk/3En6Fpln6I/fHaiBOlFOj9rVcGsU6Ycw7CMf
+         kbdaxHNNz5HWdsyHpvPzRbfILu1PT3R5uqq0MwD/WXLzH9pINlNKCz07JooLMH/+lXAF
+         jWcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/mwx6ZHN/3I6oH1IScrvUQS1SzymAXYB1bi5yg/wxYw=;
-        b=ir7nPfB/w3eZX5aCq2kHmN+auIhYJFfNjpQtuJQyIvPsKBPhGIjs9Vdti9lqcEpe3n
-         MM3v03Z9gjCsXf8dURYNTVKZoSg7t4k0AsbLlTeqJPS6hmz/M4oUAkVSb0OzimHEgUxs
-         tsa0ZekklsPdTCWjvQ91jQFLpjLx2FPG9g7PNQPuM6y2QFrPrk0PyB6Et4DSJHzW6ODX
-         Z6asI+FaMlw6LvVLvb+qxfynAi6qgFQnw+wSu0fVo6UEpO7UlstzypevsH92WThkp1Vq
-         PD17kQNGL4nUUXe88v77O8jQzm6nv7ZhYPKWMl4/PXWuk7T6KQZd9q64esUNi4E97oGv
-         ODvg==
-X-Gm-Message-State: AOAM532H8szXKiWkD+PODbXtUws8ELSSMN8kGqpsP3s0XNYlMI1U7nWy
-        WU5JJo4UGZkO3SOvaLGIyD6oZgqbljqXeA==
-X-Google-Smtp-Source: ABdhPJyMJUBOqykPov5xnAOdkhsWHwUfaBD1U2fQFfsN2QSHm87bGa33oP697k66noEzpR7c6khgAA==
-X-Received: by 2002:a05:6a00:1513:b029:142:2501:34de with SMTP id q19-20020a056a001513b0290142250134demr10118233pfu.55.1600328675148;
-        Thu, 17 Sep 2020 00:44:35 -0700 (PDT)
+        bh=SMDke5q4egupJlixzIzak9Wm2pEV4d5A/nAe6GhDB6g=;
+        b=Y/R/ZSKuFmaGyO+N9rTkURS3ecS9KNOZ96iTMiAwgjElk9tVa1vMDpVIIskOU9b7Uf
+         xyDtpWgOl1sUmDupa+jKeu+LPZuHhWkyZeShHSwwtPrnbYYL0UJEuCtKm68MP0scMU6n
+         Z6qwD0cNwj1LFzgnP8t7FQaiWk8TSh1P+WuBAe2UzZ6CKhiPmjDGfu4pPBHXZ4VGy30q
+         lofPYNq4aZ/dL8cP5q88ZrYDr4bt2on9QWMPQoYhgzgzm4PpQ6QvNuIpxcLxBgASzrf0
+         E7jHjRsZhJkFJtmA4x/iQZ7GQ0DzOwT9jx6axmqNozekHeXj7P7UgmLUgmiFppzm2gEV
+         rtcA==
+X-Gm-Message-State: AOAM531Ul8jj1EpxMGvZfU7/hH4mWPUndAeYZoviVzAsjTJYX9BGOZio
+        nPspvRntnlnoz3c0tlzMkpWFutH7I2fpTQ==
+X-Google-Smtp-Source: ABdhPJyqV4iha1cG0C91sEVinZdcUZitQ5OAskUBvsjWb4LAQ4iVbHYoYam6GgrpGVGIB8TZ0kj4sA==
+X-Received: by 2002:a17:90a:ed88:: with SMTP id k8mr7130475pjy.232.1600328683386;
+        Thu, 17 Sep 2020 00:44:43 -0700 (PDT)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id j9sm4931711pfc.175.2020.09.17.00.44.34
+        by smtp.gmail.com with ESMTPSA id j9sm4931711pfc.175.2020.09.17.00.44.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2020 00:44:34 -0700 (PDT)
+        Thu, 17 Sep 2020 00:44:42 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/10] git-diff-index.txt: make --cached description a proper sentence
-Date:   Thu, 17 Sep 2020 00:44:06 -0700
-Message-Id: <21b20281e6a1fa265d4853fa04cc71ba7e843267.1600328335.git.liu.denton@gmail.com>
+Subject: [PATCH v3 10/10] contrib/completion: complete `git diff --merge-base`
+Date:   Thu, 17 Sep 2020 00:44:14 -0700
+Message-Id: <42a8c9b665c63d5e8135546538db69a366cd70da.1600328336.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7
 In-Reply-To: <cover.1600328335.git.liu.denton@gmail.com>
 References: <cover.1599723087.git.liu.denton@gmail.com> <cover.1600328335.git.liu.denton@gmail.com>
@@ -75,22 +75,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-diff-index.txt | 2 +-
+ contrib/completion/git-completion.bash | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
-index f4bd8155c0..25fe165f00 100644
---- a/Documentation/git-diff-index.txt
-+++ b/Documentation/git-diff-index.txt
-@@ -27,7 +27,7 @@ include::diff-options.txt[]
- 	The id of a tree object to diff against.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index f68c8e0646..679d1ec8a8 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1692,7 +1692,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ "
  
- --cached::
--	do not consider the on-disk file at all
-+	Do not consider the on-disk file at all.
+ __git_diff_difftool_options="--cached --staged --pickaxe-all --pickaxe-regex
+-			--base --ours --theirs --no-index --relative
++			--base --ours --theirs --no-index --relative --merge-base
+ 			$__git_diff_common_options"
  
- -m::
- 	By default, files recorded in the index but not checked
+ _git_diff ()
 -- 
 2.28.0.618.gf4bc123cb7
 
