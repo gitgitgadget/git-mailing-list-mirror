@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C0C1C43461
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06A47C43461
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06BBF2072E
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B425921734
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 07:45:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ye02AtPz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5wFCdSF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726310AbgIQHpO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 03:45:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52404 "EHLO
+        id S1726309AbgIQHpV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 03:45:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726301AbgIQHon (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 03:44:43 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11EB0C061756
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:43 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id w7so689205pfi.4
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:43 -0700 (PDT)
+        with ESMTP id S1726299AbgIQHom (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 03:44:42 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBC6C06174A
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:41 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id o16so832766pjr.2
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 00:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=m6WDQb6DLaMu3ZAs0jPlojRIsxKhYKMU+2bn31DnqMw=;
-        b=Ye02AtPzOCLy8SkymuqMTU1DSB98TeclG0bKyKsQrGcRr9I/etisHFw8gCrC83gCiK
-         RbeoVarxQBKg4w+02KVNMRVbkdH3k01DhmX6gYbFExRMO1wwjMh5SKBakxF/1BGWJ5u6
-         7pubH/pbEhKyANv47cFD6kzn+Weem5Zzc4dYor0Oh8r+6lDlz9i1c+Jnm7CaY6AzayPf
-         V9V/y1T1IYmb7NvaX5k34Pvu3ts3f0OcAalPZHvzJYXIAnKprqs5RfwIelHmADpi6hMm
-         Co1tPRfqkfVzDze+Knt64+DN85RiB6xKrNv0lSgANr4NiagWtbaROG9Z1pQxFYd57TAL
-         FyhQ==
+        bh=krFpSjajdaRLjRa3Y+FZ/sgqQXxCVYzWwUUGXCx6WwU=;
+        b=k5wFCdSFy/i6iTrpK2pvSTw8GziYPuy9Rhl8kAVC9ueuBELYbTo5ndZhlLrICoM8U/
+         L2DS6F6rp5UHPqD+vI+kW+xfPH6T+C68f+sZXSIrQjKgtV+uBfZamJ8asEancexDX9zg
+         9YMORPx9p80XgAGcydrgqUt+wel+AdtBgOA8TubFsxz1wfKNXb9lAKVlNGbG2LmkHq8D
+         RXgcBL4grNxKVGbhlhyaLN36cmymRi7RJD/32yLB9AGGJmNaZ7CCPPPIw8kgVzcW0M7U
+         k0A0FoR/8rWge5gNYcZ4JNKUsbOjDCSbZLIBCLOP5T/YrFOPuRE8QcuWoFo0jq8J+918
+         8hGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m6WDQb6DLaMu3ZAs0jPlojRIsxKhYKMU+2bn31DnqMw=;
-        b=V58VK8prutELJErp3I4uCRZlTbD52Xaya153rXY8VhV8wnqqBHobx+4+Kpu0Jf5b55
-         UiNrPPvLYOGNs68mmuovZoT7j7qyNOdx1CS3t8yZ+YqRIqMWU7/RVHuhBmZtNf8Pcqhh
-         fO7WZE2sruvYWGsx+4JQGw2Uoz7OnnZGnpvB/HYrC181ZodSAf+hv1OjlZsskkgWh58D
-         oefZfyuxXzkV0y9GzLL1tAkNnViKe9Z+0iktaAKXF7ttbqhpaSUaXs+A6W1UmqeXogq7
-         c2S0nMYxFFI7/iQL63XP75XkYOShPbFLXTLeWiCCPL9nU4gQHot3F929xVJ3FBpgo1VG
-         GH/A==
-X-Gm-Message-State: AOAM533m0fx6FlHuQZ2EJcCJV/AHZ+OD3En3YqwbNYE5VuGQKNYMigqu
-        1lOx6h51tND/6iEGpDfryIJAZkGQGsuEDA==
-X-Google-Smtp-Source: ABdhPJxQzEXxTqAlBFQKmpwia8dLBguaD/yixYCMxhvzzHYMeSX4k8WZ1jqrzOWY0Tfc6fDttip4rQ==
-X-Received: by 2002:a63:8ac8:: with SMTP id y191mr21388637pgd.159.1600328682244;
-        Thu, 17 Sep 2020 00:44:42 -0700 (PDT)
-Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id j9sm4931711pfc.175.2020.09.17.00.44.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=krFpSjajdaRLjRa3Y+FZ/sgqQXxCVYzWwUUGXCx6WwU=;
+        b=s/n9y2kLzj0ihtjI7YFyUnhZbdSsBuT3DL8aI6WxgqB9ngnyALaannSetCH5INPCjG
+         8A01p3Wj85ajGxGTR8fcyT1Yk7W1N7y8bq+OXFTmz192buqTNXqxg3GJd826NrtB763/
+         zkzaF28xah70PsUFrfxK1BE6cmfbOOOxpi8m1LY2vfrXX8bjuxDJZ8BhpVJ58izyOm/p
+         0O+8YgrdvejDAL4wB17oEO/a4fGu4YIxg0Oz2UCR6m8OjEZ5RfguXzAfPbfnO8dRnsL9
+         YECWAx1gTWjAMfefITc2GCIarWyvafPR20RlbIgowYF8kORxe0UW8Li8lmYFhpZ+oiRK
+         eiIA==
+X-Gm-Message-State: AOAM530mI4kDR8rC30FkLQq5ry2rH45Oqq+9UuTJw3LvcTGCN9q013R8
+        VwGNer1CtiOOtmWAWcT/WFvOZe7oed2ePQ==
+X-Google-Smtp-Source: ABdhPJyLMHcyKpSFH8F8pWLuqdxw6IIXkk66741P8akMvXIXgMijUNTrkrSXxRr0dYzfj9PZYFzGCw==
+X-Received: by 2002:a17:90a:a005:: with SMTP id q5mr6851089pjp.152.1600328681019;
         Thu, 17 Sep 2020 00:44:41 -0700 (PDT)
+Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id j9sm4931711pfc.175.2020.09.17.00.44.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2020 00:44:40 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
-Date:   Thu, 17 Sep 2020 00:44:13 -0700
-Message-Id: <c0d27b125e969e13c52b0fa806a8e3caa8c20ac6.1600328336.git.liu.denton@gmail.com>
+Subject: [PATCH v3 08/10] builtin/diff-index: learn --merge-base
+Date:   Thu, 17 Sep 2020 00:44:12 -0700
+Message-Id: <1e4f805e570b8caad26c43b4c8293413e9128d5f.1600328335.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7
 In-Reply-To: <cover.1600328335.git.liu.denton@gmail.com>
 References: <cover.1599723087.git.liu.denton@gmail.com> <cover.1600328335.git.liu.denton@gmail.com>
@@ -73,222 +73,232 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to get the diff between a commit and its merge base, the
-currently preferred method is to use `git diff A...B`. However, the
-range-notation with diff has, time and time again, been noted as a point
-of confusion and thus, it should be avoided. Although we have a
-substitute for the double-dot notation, we don't have any replacement
-for the triple-dot notation.
+There is currently no easy way to take the diff between the working tree
+or index and the merge base between an arbitrary commit and HEAD. Even
+diff's `...` notation doesn't allow this because it only works between
+commits. However, the ability to do this would be desirable to a user
+who would like to see all the changes they've made on a branch plus
+uncommitted changes without taking into account changes made in the
+upstream branch.
 
-Introduce the --merge-base flag as a replacement for triple-dot
-notation. Thus, we would be able to write the above as
-`git diff --merge-base A B`, allowing us to gently deprecate
-range-notation completely.
+Teach diff-index and diff (with one commit) the --merge-base option
+which allows a user to use the merge base of a commit and HEAD as the
+"before" side.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-diff-tree.txt      |  7 ++++-
- Documentation/git-diff.txt           |  9 ++++---
- builtin/diff-tree.c                  | 18 +++++++++++++
- builtin/diff.c                       | 40 +++++++++++++++++++---------
- t/t4068-diff-symmetric-merge-base.sh | 34 +++++++++++++++++++++++
- 5 files changed, 91 insertions(+), 17 deletions(-)
+ Documentation/git-diff-index.txt     |  7 +++-
+ Documentation/git-diff.txt           | 12 ++++--
+ builtin/diff-index.c                 |  2 +
+ builtin/diff.c                       |  2 +
+ diff-lib.c                           | 13 +++++-
+ diff.h                               |  1 +
+ t/t4068-diff-symmetric-merge-base.sh | 59 ++++++++++++++++++++++++++++
+ 7 files changed, 90 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index 5c8a2a5e97..2fc24c542f 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
+diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
+index 25fe165f00..27acb31cbf 100644
+--- a/Documentation/git-diff-index.txt
++++ b/Documentation/git-diff-index.txt
+@@ -9,7 +9,7 @@ git-diff-index - Compare a tree to the working tree or index
+ SYNOPSIS
+ --------
+ [verse]
+-'git diff-index' [-m] [--cached] [<common diff options>] <tree-ish> [<path>...]
++'git diff-index' [-m] [--cached] [--merge-base] [<common diff options>] <tree-ish> [<path>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -29,6 +29,11 @@ include::diff-options.txt[]
+ --cached::
+ 	Do not consider the on-disk file at all.
+ 
++--merge-base::
++	Instead of comparing <tree-ish> directly, use the merge base
++	between <tree-ish> and HEAD instead.  <tree-ish> must be a
++	commit.
++
+ -m::
+ 	By default, files recorded in the index but not checked
+ 	out are reported as deleted.  This flag makes
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 8f7b4ed3ca..762ee6d074 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
 @@ -10,7 +10,7 @@ SYNOPSIS
  --------
  [verse]
- 'git diff-tree' [--stdin] [-m] [-s] [-v] [--no-commit-id] [--pretty]
--	      [-t] [-r] [-c | --cc] [--combined-all-paths] [--root]
-+	      [-t] [-r] [-c | --cc] [--combined-all-paths] [--root] [--merge-base]
- 	      [<common diff options>] <tree-ish> [<tree-ish>] [<path>...]
- 
- DESCRIPTION
-@@ -43,6 +43,11 @@ include::diff-options.txt[]
- 	When `--root` is specified the initial commit will be shown as a big
- 	creation event. This is equivalent to a diff against the NULL tree.
- 
-+--merge-base::
-+	Instead of comparing the <tree-ish>s directly, use the merge
-+	base between the two <tree-ish>s as the "before" side.  There
-+	must be two <tree-ish>s given and they must both be commits.
-+
- --stdin::
- 	When `--stdin` is specified, the command does not take
- 	<tree-ish> arguments from the command line.  Instead, it
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 762ee6d074..d3b526e00a 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -11,8 +11,7 @@ SYNOPSIS
- [verse]
  'git diff' [<options>] [<commit>] [--] [<path>...]
- 'git diff' [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
--'git diff' [<options>] <commit> [<commit>...] <commit> [--] [<path>...]
--'git diff' [<options>] <commit>...<commit> [--] [<path>...]
-+'git diff' [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+-'git diff' [<options>] --cached [<commit>] [--] [<path>...]
++'git diff' [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+ 'git diff' [<options>] <commit> [<commit>...] <commit> [--] [<path>...]
+ 'git diff' [<options>] <commit>...<commit> [--] [<path>...]
  'git diff' [<options>] <blob> <blob>
- 'git diff' [<options>] --no-index [--] <path> <path>
+@@ -40,7 +40,7 @@ files on disk.
+ 	or when running the command outside a working tree
+ 	controlled by Git. This form implies `--exit-code`.
  
-@@ -62,10 +61,14 @@ of <commit> and HEAD.  `git diff --merge-base A` is equivalent to
- 	branch name to compare with the tip of a different
- 	branch.
+-'git diff' [<options>] --cached [<commit>] [--] [<path>...]::
++'git diff' [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]::
  
--'git diff' [<options>] <commit> <commit> [--] [<path>...]::
-+'git diff' [<options>] [--merge-base] <commit> <commit> [--] [<path>...]::
- 
- 	This is to view the changes between two arbitrary
- 	<commit>.
+ 	This form is to view the changes you staged for the next
+ 	commit relative to the named <commit>.  Typically you
+@@ -49,6 +49,10 @@ files on disk.
+ 	If HEAD does not exist (e.g. unborn branches) and
+ 	<commit> is not given, it shows all staged changes.
+ 	--staged is a synonym of --cached.
 ++
-+If --merge-base is given, use the merge base of the two commits for the
-+"before" side.  `git diff --merge-base A B` is equivalent to
-+`git diff $(git merge-base A B) B`.
++If --merge-base is given, instead of using <commit>, use the merge base
++of <commit> and HEAD.  `git diff --merge-base A` is equivalent to
++`git diff $(git merge-base A HEAD)`.
  
- 'git diff' [<options>] <commit> <commit>... <commit> [--] [<path>...]::
+ 'git diff' [<options>] <commit> [--] [<path>...]::
  
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 802363d0a2..823d6678e5 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -111,6 +111,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 	struct setup_revision_opt s_r_opt;
- 	struct userformat_want w;
- 	int read_stdin = 0;
-+	int merge_base = 0;
+@@ -89,8 +93,8 @@ files on disk.
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(diff_tree_usage);
-@@ -143,9 +144,26 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 			read_stdin = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--merge-base")) {
-+			merge_base = 1;
-+			continue;
-+		}
- 		usage(diff_tree_usage);
+ Just in case you are doing something exotic, it should be
+ noted that all of the <commit> in the above description, except
+-in the last two forms that use `..` notations, can be any
+-<tree>.
++in the `--merge-base` case and in the last two forms that use `..`
++notations, can be any <tree>.
+ 
+ For a more complete list of ways to spell <commit>, see
+ "SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index c3878f7ad6..7f5281c461 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -33,6 +33,8 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 
+ 		if (!strcmp(arg, "--cached"))
+ 			option |= DIFF_INDEX_CACHED;
++		else if (!strcmp(arg, "--merge-base"))
++			option |= DIFF_INDEX_MERGE_BASE;
+ 		else
+ 			usage(diff_cache_usage);
  	}
- 
-+	if (read_stdin && merge_base)
-+		die(_("--stdin and --merge-base are mutually exclusive"));
-+
-+	if (merge_base) {
-+		struct object_id oid;
-+
-+		if (opt->pending.nr != 2)
-+			die(_("--merge-base only works with two commits"));
-+
-+		diff_get_merge_base(opt, &oid);
-+		opt->pending.objects[0].item = lookup_object(the_repository, &oid);
-+	}
-+
- 	/*
- 	 * NOTE!  We expect "a..b" to expand to "^a b" but it is
- 	 * perfectly valid for revision range parser to yield "b ^a",
 diff --git a/builtin/diff.c b/builtin/diff.c
-index 1baea18ae0..ad78bc89b3 100644
+index e45e19e37e..1baea18ae0 100644
 --- a/builtin/diff.c
 +++ b/builtin/diff.c
-@@ -26,8 +26,7 @@
- static const char builtin_diff_usage[] =
- "git diff [<options>] [<commit>] [--] [<path>...]\n"
- "   or: git diff [<options>] --cached [<commit>] [--] [<path>...]\n"
--"   or: git diff [<options>] <commit> [<commit>...] <commit> [--] [<path>...]\n"
--"   or: git diff [<options>] <commit>...<commit>] [--] [<path>...]\n"
-+"   or: git diff [<options>] <commit> [--merge-base] [<commit>...] <commit> [--] [<path>...]\n"
- "   or: git diff [<options>] <blob> <blob>]\n"
- "   or: git diff [<options>] --no-index [--] <path> <path>]\n"
- COMMON_DIFF_OPTIONS_HELP;
-@@ -172,19 +171,34 @@ static int builtin_diff_tree(struct rev_info *revs,
- 			     struct object_array_entry *ent1)
+@@ -139,6 +139,8 @@ static int builtin_diff_index(struct rev_info *revs,
+ 		const char *arg = argv[1];
+ 		if (!strcmp(arg, "--cached") || !strcmp(arg, "--staged"))
+ 			option |= DIFF_INDEX_CACHED;
++		else if (!strcmp(arg, "--merge-base"))
++			option |= DIFF_INDEX_MERGE_BASE;
+ 		else
+ 			usage(builtin_diff_usage);
+ 		argv++; argc--;
+diff --git a/diff-lib.c b/diff-lib.c
+index e01c3f0612..68bf86f289 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -569,13 +569,24 @@ void diff_get_merge_base(const struct rev_info *revs, struct object_id *mb)
+ int run_diff_index(struct rev_info *revs, unsigned int option)
  {
- 	const struct object_id *(oid[2]);
--	int swap = 0;
-+	struct object_id mb_oid;
-+	int merge_base = 0;
+ 	struct object_array_entry *ent;
++	struct object_id oid;
++	const char *name;
  
--	if (argc > 1)
--		usage(builtin_diff_usage);
-+	while (1 < argc) {
-+		const char *arg = argv[1];
-+		if (!strcmp(arg, "--merge-base"))
-+			merge_base = 1;
-+		else
-+			usage(builtin_diff_usage);
-+		argv++; argc--;
-+	}
+ 	if (revs->pending.nr != 1)
+ 		BUG("run_diff_index must be passed exactly one tree");
  
--	/*
--	 * We saw two trees, ent0 and ent1.  If ent1 is uninteresting,
--	 * swap them.
--	 */
--	if (ent1->item->flags & UNINTERESTING)
--		swap = 1;
--	oid[swap] = &ent0->item->oid;
--	oid[1 - swap] = &ent1->item->oid;
-+	if (merge_base) {
-+		diff_get_merge_base(revs, &mb_oid);
-+		oid[0] = &mb_oid;
-+		oid[1] = &revs->pending.objects[1].item->oid;
-+	} else {
-+		int swap = 0;
+ 	trace_performance_enter();
+ 	ent = revs->pending.objects;
+-	if (diff_cache(revs, &ent->item->oid, ent->name, !!(option & DIFF_INDEX_CACHED)))
 +
-+		/*
-+		 * We saw two trees, ent0 and ent1.  If ent1 is uninteresting,
-+		 * swap them.
-+		 */
-+		if (ent1->item->flags & UNINTERESTING)
-+			swap = 1;
-+		oid[swap] = &ent0->item->oid;
-+		oid[1 - swap] = &ent1->item->oid;
++	if (option & DIFF_INDEX_MERGE_BASE) {
++		diff_get_merge_base(revs, &oid);
++		name = xstrdup(oid_to_hex(&oid));
++	} else {
++		oidcpy(&oid, &ent->item->oid);
++		name = ent->name;
 +	}
- 	diff_tree_oid(oid[0], oid[1], "", &revs->diffopt);
- 	log_tree_diff_flush(revs);
- 	return 0;
++
++	if (diff_cache(revs, &oid, name, !!(option & DIFF_INDEX_CACHED)))
+ 		exit(128);
+ 
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "c/", (option & DIFF_INDEX_CACHED) ? "i/" : "w/");
+diff --git a/diff.h b/diff.h
+index ae2bb7001a..0485786b68 100644
+--- a/diff.h
++++ b/diff.h
+@@ -588,6 +588,7 @@ void diff_get_merge_base(const struct rev_info *revs, struct object_id *mb);
+ #define DIFF_RACY_IS_MODIFIED 02
+ int run_diff_files(struct rev_info *revs, unsigned int option);
+ #define DIFF_INDEX_CACHED 01
++#define DIFF_INDEX_MERGE_BASE 02
+ int run_diff_index(struct rev_info *revs, unsigned int option);
+ 
+ int do_diff_cache(const struct object_id *, struct diff_options *);
 diff --git a/t/t4068-diff-symmetric-merge-base.sh b/t/t4068-diff-symmetric-merge-base.sh
-index 49432379cb..03487cc945 100755
+index bd4cf254d9..49432379cb 100755
 --- a/t/t4068-diff-symmetric-merge-base.sh
 +++ b/t/t4068-diff-symmetric-merge-base.sh
-@@ -156,4 +156,38 @@ do
- 	'
- done
+@@ -97,4 +97,63 @@ test_expect_success 'diff --merge-base with three commits' '
+ 	test_i18ngrep "usage" err
+ '
  
-+for cmd in diff-tree diff
++for cmd in diff-index diff
 +do
-+	test_expect_success "$cmd --merge-base with two commits" '
-+		git $cmd commit-C master >expect &&
-+		git $cmd --merge-base br2 master >actual &&
++	test_expect_success "$cmd --merge-base with one commit" '
++		git checkout master &&
++		git $cmd commit-C >expect &&
++		git $cmd --merge-base br2 >actual &&
 +		test_cmp expect actual
 +	'
 +
-+	test_expect_success "$cmd --merge-base commit and non-commit" '
-+		test_must_fail git $cmd --merge-base br2 master^{tree} 2>err &&
++	test_expect_success "$cmd --merge-base with one commit and unstaged changes" '
++		git checkout master &&
++		test_when_finished git reset --hard &&
++		echo unstaged >>c &&
++		git $cmd commit-C >expect &&
++		git $cmd --merge-base br2 >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --merge-base with one commit and staged and unstaged changes" '
++		git checkout master &&
++		test_when_finished git reset --hard &&
++		echo staged >>c &&
++		git add c &&
++		echo unstaged >>c &&
++		git $cmd commit-C >expect &&
++		git $cmd --merge-base br2 >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --merge-base --cached with one commit and staged and unstaged changes" '
++		git checkout master &&
++		test_when_finished git reset --hard &&
++		echo staged >>c &&
++		git add c &&
++		echo unstaged >>c &&
++		git $cmd --cached commit-C >expect &&
++		git $cmd --cached --merge-base br2 >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "$cmd --merge-base with non-commit" '
++		git checkout master &&
++		test_must_fail git $cmd --merge-base master^{tree} 2>err &&
 +		test_i18ngrep "fatal: --merge-base only works with commits" err
 +	'
 +
-+	test_expect_success "$cmd --merge-base with no merge bases and two commits" '
-+		test_must_fail git $cmd --merge-base br2 br3 2>err &&
++	test_expect_success "$cmd --merge-base with no merge bases and one commit" '
++		git checkout master &&
++		test_must_fail git $cmd --merge-base br3 2>err &&
 +		test_i18ngrep "fatal: no merge base found" err
 +	'
 +
-+	test_expect_success "$cmd --merge-base with multiple merge bases and two commits" '
-+		test_must_fail git $cmd --merge-base master br1 2>err &&
++	test_expect_success "$cmd --merge-base with multiple merge bases and one commit" '
++		git checkout master &&
++		test_must_fail git $cmd --merge-base br1 2>err &&
 +		test_i18ngrep "fatal: multiple merge bases found" err
 +	'
 +done
-+
-+test_expect_success 'diff-tree --merge-base with one commit' '
-+	test_must_fail git diff-tree --merge-base master 2>err &&
-+	test_i18ngrep "fatal: --merge-base only works with two commits" err
-+'
-+
-+test_expect_success 'diff --merge-base with range' '
-+	test_must_fail git diff --merge-base br2..br3 2>err &&
-+	test_i18ngrep "fatal: --merge-base does not work with ranges" err
-+'
 +
  test_done
 -- 
