@@ -2,87 +2,80 @@ Return-Path: <SRS0=cV3L=C2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8452AC433E2
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 18:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E51C43461
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 19:54:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2019B22205
-	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 18:39:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Al9DtnGK"
+	by mail.kernel.org (Postfix) with ESMTP id 922B4235F8
+	for <git@archiver.kernel.org>; Thu, 17 Sep 2020 19:54:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726633AbgIQSjk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 14:39:40 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63474 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726388AbgIQSj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 14:39:26 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50237EF20C;
-        Thu, 17 Sep 2020 14:39:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v/kbXy7bwm5PdFK2YeuF6eO1Kg4=; b=Al9Dtn
-        GKMkoCzM+VSpEvhJemBRm6VKxnKgOpAB8ss1S7U0S/rkRlGe80QDlUYq/Q+dgUkt
-        Lj58IgnrNpLSFzYH+fDPWiDjtPOAEbie/ioim+WCXwGtugJQZ6jGLP5USEM9Dyg1
-        daz4Vg0xryQYeP0yQM7q4xmR677kioq+2wVVg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hHlF3Nt1ovSsqpy/jz6L+XpNrhdGsYow
-        LvBRHdqciVRu149bxrg3mVXvDncGnxpijsbRReHXrO1NeH1h273J990Jt5dRB2HI
-        gOkFnQLQSHyBgFeMauIsAB/YZW8cxko3q92b2BpNauJuEOW2Cq6M7k+JTnkQBNsA
-        OWQjaKGQ5OE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 49331EF20B;
-        Thu, 17 Sep 2020 14:39:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 93844EF20A;
-        Thu, 17 Sep 2020 14:39:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Christian Schlack via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Schlack <christian@backhub.co>
-Subject: Re: [PATCH] remote: in case of error don't show success message.
-References: <pull.848.git.git.1600356459092.gitgitgadget@gmail.com>
-Date:   Thu, 17 Sep 2020 11:39:19 -0700
-In-Reply-To: <pull.848.git.git.1600356459092.gitgitgadget@gmail.com>
-        (Christian Schlack via GitGitGadget's message of "Thu, 17 Sep 2020
-        15:27:38 +0000")
-Message-ID: <xmqqpn6kqmco.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727630AbgIQPMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 11:12:05 -0400
+Received: from verein.lst.de ([213.95.11.211]:56682 "EHLO verein.lst.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727896AbgIQPLO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 11:11:14 -0400
+Received: by verein.lst.de (Postfix, from userid 2407)
+        id 5FF896736F; Thu, 17 Sep 2020 17:09:58 +0200 (CEST)
+Date:   Thu, 17 Sep 2020 17:09:58 +0200
+From:   Christoph Hellwig <hch@lst.de>
+To:     Jeff King <peff@peff.net>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, tytso@mit.edu,
+        Junio C Hamano <gitster@pobox.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>
+Subject: Re: [RFC PATCH 1/2] sha1-file: fsync() loose dir entry when
+ core.fsyncObjectFiles
+Message-ID: <20200917150958.GA31693@lst.de>
+References: <87sgbghdbp.fsf@evledraar.gmail.com> <20200917112830.26606-2-avarab@gmail.com> <20200917131605.GC3024501@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A20A746-F915-11EA-94E9-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200917131605.GC3024501@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Christian Schlack via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, Sep 17, 2020 at 09:16:05AM -0400, Jeff King wrote:
+> I've also often wondered whether this is necessary. Given the symptom of
+> "oops, this object is there but with 0 bytes" after a hard crash (power
+> off, etc), my assumption is that the metadata is being journaled but the
+> actual data is not. Which would imply this isn't needed, but may just be
+> revealing my naive view of how filesystems work.
+> 
+> And of course all of my experience is on ext4 (which doubly confuses me,
+> because my systems typically have data=ordered, which I thought would
+> solve this). Non-journalling filesystems or other modes likely behave
+> differently, but if this extra fsync carries a cost, we may want to make
+> it optional.
 
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index 542f56e387..64b4b551eb 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -1356,7 +1356,7 @@ static int set_head(int argc, const char **argv)
->  			result |= error(_("Not a valid ref: %s"), buf2.buf);
->  		else if (create_symref(buf.buf, buf2.buf, "remote set-head"))
->  			result |= error(_("Could not setup %s"), buf.buf);
-> -		if (opt_a)
-> +		else if (opt_a)
->  			printf("%s/HEAD set to %s\n", argv[0], head_name);
->  		free(head_name);
->  	}
->
+I hope my other mail clarified how this works at a high level, if not
+feel free to ask more questions.
 
-Quite straight-forward and looks obviously good.
+> >  sha1-file.c | 19 ++++++++++++++-----
+> >  1 file changed, 14 insertions(+), 5 deletions(-)
+> 
+> We already fsync pack files, but we don't fsync their directories. If
+> this is important to do, we should be doing it there, too.
+> 
+> We also don't fsync ref files (nor packed-refs) at all. If fsyncing
+> files is important for reliability, we should be including those, too.
+> It may be tempting to say that the important stuff is in objects and the
+> refs can be salvaged from the commit graph, but my experience says
+> otherwise. Missing, broken, or mysteriously-rewound refs cause confusing
+> user-visible behavior, and when compounded with pruning operations like
+> "git gc" they _do_ result in losing objects.
 
-Thanks, will queue.
+True, this probably needs to do for the directories of other files
+as well.
+
+One interesting optimization under linux is the syncfs syscall, that
+syncs all files on a file system - if you need to do a large number
+of fsyncs that do not depend on each other for transaction semantics
+it can provide a huge speedup.
