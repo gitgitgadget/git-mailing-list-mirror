@@ -2,89 +2,181 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB5B7C43465
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3664EC43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:31:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E80222211
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:25:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B52F5206A4
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:31:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O6elQeXD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tbs14y0m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726368AbgIRSZT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 14:25:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35760 "EHLO
+        id S1726139AbgIRSbC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 14:31:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726156AbgIRSZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 14:25:04 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00A01C0613CE
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 11:25:03 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id q8so7129429lfb.6
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 11:25:03 -0700 (PDT)
+        with ESMTP id S1726115AbgIRSbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 14:31:02 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39171C0613CE
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 11:31:02 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id g4so6567077wrs.5
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 11:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OVpGTTAzHrCJuMaUguizB84VAop9e2Wi7SwT7oEAtng=;
-        b=O6elQeXDU6a724VlMCvTagVCpDzUTmdCdZhP9aq0rhCq2t4ukf03t0SwK1KIqCDc1L
-         YY4lchRUha75UbXlUfE1uo21+bm9RTL9LD4NSHlvTkbYuYSbA+CK6UYxNZyQzm+2S7KA
-         VXGEyE7FK3CHBqX2juK/ZQlWlyVNrJNHD6MQjKGOS4H3tcIjmGQ9oLs4MpIqAi1NUiXt
-         sPmuS2q8oL5Ss2bXVo/v7t/bNb3BPd3HvTPdc2CYdnP7kxTjq+Gzy4FdvE0DCNmvQH6I
-         nIUMIyN4NEwDJXqIJ5aHZBnvOUQ7EbDRMeZA3VZM9MWggzw0hoM0lm2jKdKAC2cB9vBA
-         C61A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tNAbxKnfvkMlRi+CrpwOL+1lYv/I5HGRdumfUOicczE=;
+        b=Tbs14y0meoeYzdLwfyFYVa87yBeJsfKlmeBBYvji0BHwUvQ+rdHbv4P3MZSODkwG4h
+         z3cSK3I44irmyni0GSr80Xxb4gTgZg0rMVsXdUeOtdKHSQnGcapFwU2854kUoF7Sj2oe
+         ecxUdVqUv1VfxFez1+PQkyW0kqZkt+2oDhdvt9pAinGumwu2OE7IdqjGs2HdXuTMJrat
+         EZtHy2Up6sgEXUuFjdYFAJyaQmUpKoeeQY3Wvc79ouWXTZ0QXk+v7wAKrdHalh8eAxYP
+         pR6JnIUXbN/IYGrN9OWcyt22EAHvxXmt0Xn+i4TXICyLZermm4bA3DpQGSFJeVpsjj5b
+         xRcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OVpGTTAzHrCJuMaUguizB84VAop9e2Wi7SwT7oEAtng=;
-        b=mH6n0v45lY3Tb5NWleUyHOgYEtqLr8UKhGUQQzF/8b55f5iqmYq9nE130sENqLKWQg
-         Cc4PUo2+Og+B+Fc+X0AvlqdJKP2c/uT0KgZxhaA4lWERkxvDCNUvz96FL8l8eCK+1i8O
-         grveBcoK9UTL4wJjUjkTtACtiD9FsCG33+b5ehI7D1eMU4Pcp8/aCmYXsAz6yIhD/Mg8
-         Yxph/Kd2LhICLbNilP/xvk1ovEICHxpefGzulqwObS+9AYlEcRkfv6w7L6VCRAq6clPn
-         cF+uEYgrzBpxE1Kcppv8+OhNKdu+JMLLqGf85y+DxpKk9ZNcgzb1JrtYboF362qtumz0
-         MwHg==
-X-Gm-Message-State: AOAM531X+TpyClL4MXrybKLwJ0ne1v4pefLjbhBO072uaXMn7YK8eu0O
-        V4tT9P2LWZiEQ5Xj96ac2SUhPypylWR7j2voohY=
-X-Google-Smtp-Source: ABdhPJwsQlOG9HoV0Y70WiM0NdmgTCGRx3mUULrwFcfACbxN9N1gTtCq9V3QKEP1zzhJlz4+hUFIzH1zaD5H/aMk11I=
-X-Received: by 2002:a05:6512:3b5:: with SMTP id v21mr12740091lfp.271.1600453501914;
- Fri, 18 Sep 2020 11:25:01 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tNAbxKnfvkMlRi+CrpwOL+1lYv/I5HGRdumfUOicczE=;
+        b=YNAJT39rGKSfjVn2Tj4x70OGAudqX1JYwra2i12BNT25lMCTyrn+bW5BmmBpHPAEw0
+         ChYaBogDp3u+kH6TUKPifC8yQDkun7CmrcPmOMtq4GAV8f/BKGIFn/4na/7g3Y/Yp4ta
+         6wgj46fp+6snfUIEIwEDy8on9BChcN2kZM4/TS69oV9UMMvzrZxqoNQWMdRJtHpEHyFP
+         4UNhnpse8gYhql57M2LkpOeDabnwPz+3vs47pZL8el/kwWJmt0Jwjr/OzQ36lY/SEYl7
+         HQ7STRnRunoIj3NKg9gC/8MRX4WjR28ZrwnZIJANbcwfswwHpWfwyRfMuMDmpNxHVRTa
+         nuuw==
+X-Gm-Message-State: AOAM530Ta6wm+E/6usXq1Fb0yJAnm7woYCiitwGYTFJGBzKbuKo4SD9r
+        nRs0piDmN9emZTgXZN3ZGIE=
+X-Google-Smtp-Source: ABdhPJy99+CKHjPYNhKNbX73vPudsg+y1Sqfgoy+A1rAGQIuSPHe+ngpTy8sSambbNDewyqVHnzSJw==
+X-Received: by 2002:a5d:4104:: with SMTP id l4mr39102806wrp.396.1600453860728;
+        Fri, 18 Sep 2020 11:31:00 -0700 (PDT)
+Received: from [192.168.1.201] (79.35.7.51.dyn.plus.net. [51.7.35.79])
+        by smtp.googlemail.com with ESMTPSA id b187sm6328422wmb.8.2020.09.18.11.30.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Sep 2020 11:31:00 -0700 (PDT)
+Subject: Re: [PATCH 1/2] config: improve error message for boolean config
+To:     Andrew Klotz via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Andrew Klotz <agc.klotz@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.841.git.git.1600395427.gitgitgadget@gmail.com>
+ <689d84672422dd96d1eb89ea6137e79ce4030248.1600395427.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <15b794ad-6eae-6de1-3328-9b814e8e2605@gmail.com>
+Date:   Fri, 18 Sep 2020 19:30:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20200918113256.8699-1-tguyot@gmail.com> <xmqq7dsrm0r8.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq7dsrm0r8.fsf@gitster.c.googlers.com>
-From:   Thomas Guyot-Sionnest <tguyot@gmail.com>
-Date:   Fri, 18 Sep 2020 14:24:50 -0400
-Message-ID: <CALqVohdQwPppBsdsJjUhpXGZsZ=XCY_he7oFj1He1T8PjRLULw@mail.gmail.com>
-Subject: Re: Allow passing pipes to diff --no-index + bugfix
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Thomas Guyot-Sionnest <dermoth@aei.ca>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <689d84672422dd96d1eb89ea6137e79ce4030248.1600395427.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 18 Sep 2020 at 13:51, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Next time, please send each of such unrelated patches independently,
-> not as a two-patch series that gives a (false) impression that the
-> second one needs the first one to work correctly.
+Hi Andrew
 
-Hi Junio,
+On 18/09/2020 03:17, Andrew Klotz via GitGitGadget wrote:
+> From: Andrew Klotz <agc.klotz@gmail.com>
+> 
+> Currently invalid boolean config values return messages about 'bad
+> numeric', which is slightly misleading when the error was due to a
+> boolean value. We can improve the developer experience by returning a
+> boolean error message when we know the value is neither a bool text or
+> int.
 
-My apologies for not making it clear enough - the fix in the first
-patch is for an edgy case of git diff-range, but the same fix applies
-to the 2nd patch. Any diff --stat comparison of two pipes would return
-0-line diffs although the files would be marked as changed.
+This patch improves things for boolean config keys  but 
+git_config_bool_or_int() is used by status.submoduleSummary, merge.log 
+and commit.verbose which can be either a number or a boolean (where a 
+boolean generally means use a default number). It would be a more 
+invasive change but I wonder if it would be better for git_config_bool() 
+to have it's own error message rather sharing it with 
+git_config_bool_or_int().
 
-It was originally just one commit; I splitted it up when I realized a
-test was actually triggered by this fix (false negative without the
-fix, false positive with it) as it's still independent enough to be
-reviewed/merged alone.
+Best Wishes
 
-Regards,
+Phillip
 
-Thomas
+> `GIT_TEST_GETTEXT_POISON` is a boolean so we no longer fail on
+> evaluating it as an int in `git_config_int`. Because of that we can
+> move the special translation case into the boolean config check where
+> we are now failing with an updated message
+> 
+> before with an invalid boolean value of `non-boolean`, its unclear what
+> numeric is referring to:
+> ```
+> fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
+> ```
+> 
+> now the error message mentions `non-boolean` is a bad boolean value:
+> ```
+> fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
+> ```
+> 
+> Signed-off-by: Andrew Klotz <agc.klotz@gmail.com>
+> ---
+>   config.c                  | 22 ++++++++++++----------
+>   t/t0205-gettext-poison.sh |  2 +-
+>   2 files changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/config.c b/config.c
+> index 2bdff4457b..198d0d3216 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -996,15 +996,6 @@ static void die_bad_number(const char *name, const char *value)
+>   	if (!value)
+>   		value = "";
+>   
+> -	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+> -		/*
+> -		 * We explicitly *don't* use _() here since it would
+> -		 * cause an infinite loop with _() needing to call
+> -		 * use_gettext_poison(). This is why marked up
+> -		 * translations with N_() above.
+> -		 */
+> -		die(bad_numeric, value, name, error_type);
+> -
+>   	if (!(cf && cf->name))
+>   		die(_(bad_numeric), value, name, _(error_type));
+>   
+> @@ -1097,7 +1088,18 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+>   		return v;
+>   	}
+>   	*is_bool = 0;
+> -	return git_config_int(name, value);
+> +	if (git_parse_int(value, &v))
+> +		return v;
+> +
+> +	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+> +		/*
+> +		 * We explicitly *don't* use _() here since it would
+> +		 * cause an infinite loop with _() needing to call
+> +		 * use_gettext_poison().
+> +		 */
+> +		die("bad boolean config value '%s' for '%s'", value, name);
+> +	else
+> +		die(_("bad boolean config value '%s' for '%s'"), value, name);
+>   }
+>   
+>   int git_config_bool(const char *name, const char *value)
+> diff --git a/t/t0205-gettext-poison.sh b/t/t0205-gettext-poison.sh
+> index f9fa16ad83..b66d34c6f2 100755
+> --- a/t/t0205-gettext-poison.sh
+> +++ b/t/t0205-gettext-poison.sh
+> @@ -33,7 +33,7 @@ test_expect_success 'eval_gettext: our eval_gettext() fallback has poison semant
+>   
+>   test_expect_success "gettext: invalid GIT_TEST_GETTEXT_POISON value doesn't infinitely loop" "
+>   	test_must_fail env GIT_TEST_GETTEXT_POISON=xyz git version 2>error &&
+> -	grep \"fatal: bad numeric config value 'xyz' for 'GIT_TEST_GETTEXT_POISON': invalid unit\" error
+> +	grep \"fatal: bad boolean config value 'xyz' for 'GIT_TEST_GETTEXT_POISON'\" error
+>   "
+>   
+>   test_done
+> 
+
