@@ -2,103 +2,86 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FE3FC43463
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ED05C43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:02:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2684321741
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:00:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="OyGGbciZ"
+	by mail.kernel.org (Postfix) with ESMTP id 19E5721734
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 18:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbgIRSAr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 14:00:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726156AbgIRSAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 14:00:47 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2CCAC0613CE
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 11:00:46 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id d20so7183921qka.5
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 11:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rIoZcmrbC5dMUH8+C9k/K/XIIxQuy/hqj624cS2s2D4=;
-        b=OyGGbciZ2weishMUsu2yeBIKZNOBWPvMlcAVHmWeYZUpywZRJz4cO7uGiojH09OK4p
-         R4N2D+FS4qE/D5Ac67OLCCznCInOmLIAGhKTwWWpwzFH34rKqeCbMjpIuR/scKyZB6o/
-         rmeQG/qf5CUwy+1NlfADkpuFWWGpY0PH15h2wAjaZx+G3NzfagQ9pCOPaDQaEhwdX2OY
-         ihkLZ38qjJ90bOu8uyKwziFszlTfgmMIocxv+T0yi1m2mDWSlukNWyVhq/MIpQH3jBLs
-         /7HSkrVOJnOwVoT0FkJ8f+7UVZ+8dq2uM7eJfsf1X0bZ4jifGM1696FybglHW/tT/igc
-         mYmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rIoZcmrbC5dMUH8+C9k/K/XIIxQuy/hqj624cS2s2D4=;
-        b=OzLZmI2V2PqrdxcHvvNhuKQrP7HHOMLPB9tbMMP/TPNyO3PwZJ5Qow/Lvs7yd6PrH3
-         /ee+OBcJ0ek4BvZ5iOmOPrwoE4J9cTWQEZ6KJesZJLTwl+cCIDEOccpMh1GDS9zQ/4/q
-         OfaWF1FDjKdwiLRIKj+OZ3DnnnmbESImsfh68RimVZkWXvC6HlXDZIEKUn69DZiQejTO
-         yUubmNhnIIwQ0mLe7PXKDH5Sxs4flq3Ov74knHWBZ+xRV96LG7oNnvpMeTazCwosYw6g
-         307Z2f/sdm8Z2Nq6j+yKiCkr9vvDhduV4jlH9+4MyqDH3AxFz9eX+SdpnkQe8GA1PgzC
-         aUfA==
-X-Gm-Message-State: AOAM532yAca2xj+SiiFHS77Ctqb+L5EFcmCtmt0qI0ndSqTKmKR2GazO
-        tXcNBAGV3Ul43MdE2XYiG4ochQ==
-X-Google-Smtp-Source: ABdhPJwWxvYHhTIlX3Jkw6PP16cHRL8XJAdodONtWe+jF97gfiAohCHT0SrC11EBw7OWaWPVROJ4eQ==
-X-Received: by 2002:ae9:e602:: with SMTP id z2mr35219678qkf.259.1600452046049;
-        Fri, 18 Sep 2020 11:00:46 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:bcd8:3baa:a5e5:d0e6])
-        by smtp.gmail.com with ESMTPSA id e90sm2637644qtd.4.2020.09.18.11.00.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 11:00:45 -0700 (PDT)
-Date:   Fri, 18 Sep 2020 14:00:43 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
-        dermoth@aei.ca
+        id S1726152AbgIRSCl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 14:02:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33576 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726115AbgIRSCl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 14:02:41 -0400
+Received: (qmail 11498 invoked by uid 109); 18 Sep 2020 18:02:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Sep 2020 18:02:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23586 invoked by uid 111); 18 Sep 2020 18:02:40 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Sep 2020 14:02:40 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 18 Sep 2020 14:02:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Thomas Guyot-Sionnest <tguyot@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Thomas Guyot-Sionnest <dermoth@aei.ca>
 Subject: Re: [PATCH 2/2] Allow passing pipes for input pipes to diff
  --no-index
-Message-ID: <20200918180043.GB149847@nand.local>
+Message-ID: <20200918180239.GA186717@coredump.intra.peff.net>
 References: <20200918113256.8699-1-tguyot@gmail.com>
  <20200918113256.8699-3-tguyot@gmail.com>
  <20200918143647.GB1606445@nand.local>
- <20200918172044.GB183026@coredump.intra.peff.net>
+ <CALqVohfFjsh-2jZLNNwON_V95Dfh-aEh1aMb53t4NQrM0qz1tQ@mail.gmail.com>
+ <20200918171950.GA183026@coredump.intra.peff.net>
+ <xmqqbli3m0w6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200918172044.GB183026@coredump.intra.peff.net>
+In-Reply-To: <xmqqbli3m0w6.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 01:20:44PM -0400, Jeff King wrote:
-> On Fri, Sep 18, 2020 at 10:36:47AM -0400, Taylor Blau wrote:
->
-> >   - The cat pipe is unnecessary, and is also violating a rule that we
-> >     don't place 'git' on the right-hand side of a pipe (can you redirect
-> >     the file at the end instead?).
->
-> What's wrong with git on the right-hand side of a pipe?
+On Fri, Sep 18, 2020 at 10:48:41AM -0700, Junio C Hamano wrote:
 
-Ack, ignore me. The problem would be on the left-hand side only, without
-set -o pipefail, which we don't do.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Getting back to the overall feature, this is definitely something that
+> > has come up before. The last I know of is:
+> >
+> >   https://lore.kernel.org/git/20181220002610.43832-1-sandals@crustytoothpaste.net/
+> >
+> > which everybody seemed to like the direction of; I suspect the original
+> > author (cc'd) just never got around to it again. Compared to this
+> > approach, it uses a command-line option to avoid dereferencing symlinks.
+> > That puts an extra burden on the caller to pass the option, but it's way
+> > less magical; you could drop all of the "does this look like a symlink
+> > to a pipe" heuristics. It would also be much easier to test. ;)
+> 
+> Yes, I do remember liking the approach very much and wanted to take
+> it once the "do not dereference symlinks everywhere---just limit it
+> to what was given from the command line" was done.
+> 
+> To be quite honest, I think "git diff --no-index A B" should
+> unconditionally dereference A and/or B if they are symlinks, whether
+> they are symlinks to pipes, regular files or directories, and
+> otherwise treat symlinks in A and B the same way as "git diff" if A
+> and B are directories.  But that is a design guideline that becomes
+> needed only after we start resurrecting Brian's effort, not with
+> these patches that started this thread.
 
-> On the left-hand side we lose its exit code, which is bad. But on the
-> right hand side, we are only losing the exit code of "cat", which we
-> don't care about.
->
-> (Though I agree that "cat" is pointless here; we could just be
-> redirecting from a file).
+Yeah, I think I'd be fine with that approach, too. It makes "git diff
+--no-index" more like other tools out of the box. And if we took brian's
+patch first, then we'd just be flipping its default, and the option it
+adds would give an easy escape hatch for somebody who really wants to
+diff two maybe-symlinks.
 
-Yep, but an easy mistake to make nonetheless.
-
-> -Peff
-
-Thanks,
-Taylor
+-Peff
