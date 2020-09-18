@@ -7,188 +7,151 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6937DC43464
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A5F3C43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:46:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E12A321973
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:36:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E18E21D42
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:46:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="A3ZC5055"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="vI+v79rz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726461AbgIROg4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 10:36:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57192 "EHLO
+        id S1726497AbgIROqz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 10:46:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbgIROg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 10:36:56 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33628C0613CE
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:36:56 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id 16so6269424qkf.4
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:36:56 -0700 (PDT)
+        with ESMTP id S1726154AbgIROqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 10:46:55 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D47C0613CE
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:46:54 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id e7so5123344qtj.11
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Pk6/dI/MUxuq5eH6MclWtOA4DcRJCd3Cz8s311buC1w=;
-        b=A3ZC5055LOFU4jtDlIQrxLg1pxtH4tSF9KiMBq7gUVSrS14lgzCO2G4NsNC8hiysSn
-         ant7//QiB9UADAmmdCvXX3UNKH3eOd9LnYdhlSkGLIn0QzuNZwv2uQJpiNf/r+i5Vnnu
-         c0ShScBd/3DXjz+ChA3zFYgWhjG+GrasWxMZPXFcvtCNC/0lJ/DiWXTDAkEwcK+VhuO6
-         1jB/zDFGO8ZPAgz+qZqzyVQdvtp2HIW4f12TIG/IM6VitHYkeDu7tIiR1HXQLwMu3FIN
-         SidXEgKTEp6LDfFFg9a3qSr9PMhYhBKM0Cj67mN/GjOwYHtMpA64qC0qmJ8PcBz9DHp8
-         eMGg==
+        bh=NqbFV6EJjdCl3iA0O1N8XeJXdQgP64RjZc+DwOaOPHs=;
+        b=vI+v79rzdb9gRltudMrIYEnM18lWJBFJguKUScDK2ebvMu1SWO0nlucPkoBZb7+heF
+         FmNMRNRdxDLReEryGY9Mi4AZ5fLuRhZBT3KyDdJD4xSneAdwgZilrtjNcb1xzFTW0RdF
+         PxhomerMMVrm+FgohdqJyjfPEIqt7we7BXtig9GDo4oR0I8sq0Nz18oItgrdQ0lnXnrx
+         ARjwCMnW70bypk/rt+ZZWS6r12f0zurCuSu47jqFC5tHTwNUWNbehM0ZvZwoptkBII5Q
+         RJWY3I6nPzlk6RE9ct/ImVkYBNtmCFcfFe0UUj7VWAx5nsg/bYZz8PLvfkJsLwNGPBjE
+         SL+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Pk6/dI/MUxuq5eH6MclWtOA4DcRJCd3Cz8s311buC1w=;
-        b=dgn9ODMvmjddJ6GhVtvksjFK41Tts/ebF++yEHZTxSVVWSm9oIKjX0KNJblIuuKVsK
-         v+S+44jTNZlHUA0BOn3Pc0M4FTyAK3IUzENEcm8EEwo+LztGgxOWUYs1aq4GME40lUs2
-         REOUgqQNDn1u44tAuwhZqjo4euGowiPFdD9FNEm1LQXVz0y6RwEzq32pbga38REdr1Wz
-         ZLRAPmvK8Fu2c3NU04XSgRaMKw4Dascvm119TdtpIOcNU/n8GrH2DCDXmT7lS0F1jcXJ
-         Df17lVe5DPJcnlWeIsYaHs5EziTWOiwkvwUIkLAo4L5ITJZRDJpVbVWgXW3uw4qI5tB3
-         0wCw==
-X-Gm-Message-State: AOAM531++AF4fVuBWYCSNTgYIQZre9rUEXy3Gmw264JQiEbRtz3vc119
-        INaejsFpu//plnHu5haMhYhGD9TNZmNTghoCkfs=
-X-Google-Smtp-Source: ABdhPJzQzSXRYnHKjGRDGnRmpNZyaToW3N51qeic9qRwIKbE9FD7eYP9s+YxpaP22X2zFevqK4rBIw==
-X-Received: by 2002:a37:e94:: with SMTP id 142mr33784017qko.351.1600439812364;
-        Fri, 18 Sep 2020 07:36:52 -0700 (PDT)
+        bh=NqbFV6EJjdCl3iA0O1N8XeJXdQgP64RjZc+DwOaOPHs=;
+        b=uZ2vQrKxPhuxHB4ppfTktXPn52sjdtN1TQtasijBEA43uXg3iQizOPZWhQEJGlT0XI
+         6nazy/x+xlSbotxB6sDOQX6dbl53KR+ultGIdIkXTI+u5iao/0Mno3ZkCfbieGAqGb7F
+         ZwZ9gNrmY0K/0CK1gSIcfQO4HvxQEgWffWx1gmsHSsT8Ks6sLf4yTJw2cGsuLn5NpYvO
+         7nbNcgwAM1nfJXoo2OWr8MZkyJ82uQuvfEigz/IQkB3CKd47a0uNXDb09jJmtHnOLL0h
+         n68X47UOIvkoxPojNyEJz49G0fZVb+7QAWrazY3pbB7MmOn43qkQ7QFkPz1JWRFYr0Ek
+         guJA==
+X-Gm-Message-State: AOAM532In/wpJFhPgi6kSrjeRyrKV9egz32poepUscjF2T2zkPxAfvbE
+        nvh8OFUVtism/lKDEuAYFBdTJw==
+X-Google-Smtp-Source: ABdhPJyWbmmqq1zbMyWBUdsclup7aDycHyqBgrN4qYo3Ih3xo75injalygzKwf5YB+3Y9tJzJD+siQ==
+X-Received: by 2002:ac8:120a:: with SMTP id x10mr32619402qti.88.1600440413978;
+        Fri, 18 Sep 2020 07:46:53 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:2003:d617:ca70:4fd1])
-        by smtp.gmail.com with ESMTPSA id m10sm2296816qti.46.2020.09.18.07.36.51
+        by smtp.gmail.com with ESMTPSA id 192sm2262061qkn.9.2020.09.18.07.46.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 07:36:51 -0700 (PDT)
-Date:   Fri, 18 Sep 2020 10:36:47 -0400
+        Fri, 18 Sep 2020 07:46:53 -0700 (PDT)
+Date:   Fri, 18 Sep 2020 10:46:51 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Thomas Guyot-Sionnest <tguyot@gmail.com>
 Cc:     git@vger.kernel.org, dermoth@aei.ca
-Subject: Re: [PATCH 2/2] Allow passing pipes for input pipes to diff
- --no-index
-Message-ID: <20200918143647.GB1606445@nand.local>
+Subject: Re: [PATCH 1/2] diff: Fix modified lines stats with --stat and
+ --numstat
+Message-ID: <20200918144651.GA1612043@nand.local>
 References: <20200918113256.8699-1-tguyot@gmail.com>
- <20200918113256.8699-3-tguyot@gmail.com>
+ <20200918113256.8699-2-tguyot@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200918113256.8699-3-tguyot@gmail.com>
+In-Reply-To: <20200918113256.8699-2-tguyot@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
-
-On Fri, Sep 18, 2020 at 07:32:56AM -0400, Thomas Guyot-Sionnest wrote:
-> A very handy way to pass data to applications is to use the <() process
-> substitution syntax in bash variants. It allow comparing files streamed
-> from a remote server or doing on-the-fly stream processing to alter the
-> diff. These are usually implemented as a symlink that points to a bogus
-> name (ex "pipe:[209326419]") but opens as a pipe.
-
-This is true in bash, but sh does not support process substitution with
-<().
-
-> Git normally tracks symlinks targets. This patch makes it detect such
-> pipes in --no-index mode and read the file normally like it would do for
-> stdin ("-"), so they can be compared directly.
+On Fri, Sep 18, 2020 at 07:32:55AM -0400, Thomas Guyot-Sionnest wrote:
+> In builtin_diffstat(), when both files are coming from "stdin" (which
+> could be better described as the file's content being written directly
+> into the file object), oideq() compares two null hashes and ignores the
+> actual differences for the statistics.
+>
+> This patch checks if is_stdin flag is set on both sides and compare
+> contents directly.
 >
 > Signed-off-by: Thomas Guyot-Sionnest <tguyot@gmail.com>
 > ---
->  diff-no-index.c          |  56 ++++++++++--
->  t/t4053-diff-no-index.sh | 189 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 238 insertions(+), 7 deletions(-)
+>  diff.c                | 5 ++++-
+>  t/t3206-range-diff.sh | 8 ++++----
+>  2 files changed, 8 insertions(+), 5 deletions(-)
 >
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index 7814eabfe0..779c686d23 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -41,6 +41,33 @@ static int read_directory_contents(const char *path, struct string_list *list)
->   */
->  static const char file_from_standard_input[] = "-";
+> diff --git a/diff.c b/diff.c
+> index a5114fa864..2995527896 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3681,7 +3681,10 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+>  		return;
+>  	}
 >
-> +/* Check that file is - (STDIN) or unnamed pipe - explicitly
-> + * avoid on-disk named pipes which could block
-> + */
-> +static int ispipe(const char *name)
-> +{
-> +	struct stat st;
-> +
-> +	if (name == file_from_standard_input)
-> +		return 1;  /* STDIN */
-> +
-> +	if (!lstat(name, &st)) {
-> +		if (S_ISLNK(st.st_mode)) {
+> -	same_contents = oideq(&one->oid, &two->oid);
+> +	if (one->is_stdin && two->is_stdin)
+> +		same_contents = !strcmp(one->data, two->data);
 
-I had to read this a few times to make sure that I got it; you want to
-stat the link itself, and then check that it links to a pipe.
+Hmm. A couple of thoughts here:
 
-I'm not sure why, though. Do you want to avoid handling named FIFOs in
-the code below? Your comment that they "could block" makes me think you
-do, but I don't know why that would be a problem.
+  - strcmp seems like a slow-down here, since we'll have to go through
+    at worst the smaller of one->data and two->data to compare each of
+    them.
 
-> +			/* symlink - read it and check it doesn't exists
-> +			 * as a file yet link to a pipe */
-> +			struct strbuf sb = STRBUF_INIT;
-> +			strbuf_realpath(&sb, name, 0);
-> +			/* We're abusing strbuf_realpath here, it may append
-> +			 * pipe:[NNNNNNNNN] to an abs path */
-> +			if (!stat(sb.buf, &st))
+  - strcmp is likely not the right way to do that, since we could be
+    diffing binary content, in which case we'd want to continue over
+    NULs and instead stop at a fixed length (the minimum of the length
+    of one->data and two->data, specifically). I'd have expected memcmp
+    here instead.
 
-Statting sb.buf is confusing to me (especially when followed up by
-another stat right below. Could you explain?
+  - Why do we have to do this at all all the way up in
+    'builtin_diffstat'? I would expect these to contain the right
+    OIDs by the time they are given back to us from the call to
+    'diff_fill_oid_info' in 'run_diffstat'.
 
-> +test_expect_success 'diff --no-index can diff piped subshells' '
-> +	echo 1 >non/git/c &&
-> +	test_expect_code 0 git diff --no-index non/git/b <(cat non/git/c) &&
-> +	test_expect_code 0 git diff --no-index <(cat non/git/b) non/git/c &&
-> +	test_expect_code 0 git diff --no-index <(cat non/git/b) <(cat non/git/c) &&
-> +	test_expect_code 0 cat non/git/b | git diff --no-index - non/git/c &&
-> +	test_expect_code 0 cat non/git/c | git diff --no-index non/git/b - &&
-> +	test_expect_code 0 cat non/git/b | git diff --no-index - <(cat non/git/c) &&
-> +	test_expect_code 0 cat non/git/c | git diff --no-index <(cat non/git/b) -
-> +'
+So, my last point is the most important of the three. I'd expect
+something more along the lines of:
 
-Indeed this test fails (Git thinks that the HERE-DOC is broken, but I
-suspect it's just getting confused by the '<()'). This test (like almost
-all other tests in Git) use /bin/sh as its shebang. Does your /bin/sh
-actually point to bash?
+  1. diff_fill_oid_info resolve the link to the pipe, and
+  2. index_path handles the resolved fd.
 
-If you did want to test something like this, you'd need to source
-t/lib-bash.sh instead of t/test-lib.sh.
+...but it looks like that is already what it's doing? I'm confused why
+this doesn't work as-is.
 
-Unrelated to the above comment, but there are a few small style nits
-that I notice:
+> +	else
+> +		same_contents = oideq(&one->oid, &two->oid);
+>
+>  	if (diff_filespec_is_binary(o->repo, one) ||
+>  	    diff_filespec_is_binary(o->repo, two)) {
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index e024cff65c..4715e75b68 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -258,11 +258,11 @@ test_expect_success 'changed commit with --stat diff option' '
+>  	     a => b | 0
+>  	     1 file changed, 0 insertions(+), 0 deletions(-)
+>  	3:  $(test_oid t3) ! 3:  $(test_oid c3) s/11/B/
+> -	     a => b | 0
+> -	     1 file changed, 0 insertions(+), 0 deletions(-)
+> +	     a => b | 2 +-
+> +	     1 file changed, 1 insertion(+), 1 deletion(-)
+>  	4:  $(test_oid t4) ! 4:  $(test_oid c4) s/12/B/
+> -	     a => b | 0
+> -	     1 file changed, 0 insertions(+), 0 deletions(-)
+> +	     a => b | 2 +-
+> +	     1 file changed, 1 insertion(+), 1 deletion(-)
 
-  - There is no need to run with 'test_expect_code 0' since the test is
-    marked as 'test_expect_success' and the commands are all in an '&&'
-    chain. (This does appear to be common style for others in t4053, so
-    you may just be matching it--which is fine--but an additional
-    clean-up on top to modernize would be appreciated, too).
-
-  - The cat pipe is unnecessary, and is also violating a rule that we
-    don't place 'git' on the right-hand side of a pipe (can you redirect
-    the file at the end instead?).
-
-Documentation/CodingGuidelines is a great place to look if you are ever
-curious about whether something is in good style.
-
-> +test_expect_success 'diff --no-index finds diff in piped subshells' '
-> +	(
-> +		set -- <(cat /dev/null) <(cat /dev/null)
-
-Why is this necessary?
-
-> +		cat <<-EOF >expect
-> +			diff --git a$1 b$2
-> +			--- a$1
-> +			+++ b$2
-> +			@@ -1 +1 @@
-> +			-1
-> +			+2
-> +		EOF
-> +	) &&
-> +	test_expect_code 1 \
-> +		git diff --no-index <(cat non/git/b) <(sed s/1/2/ non/git/c) >actual &&
-> +	test_cmp expect actual
-> +'
+The tests definitely demonstrate that the old behavior was wrong,
+though...
 
 Thanks,
 Taylor
