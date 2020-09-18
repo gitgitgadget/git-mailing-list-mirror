@@ -2,98 +2,80 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00D5DC43464
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EAECC43464
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:27:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA18422208
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:22:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CkR5o+oM"
+	by mail.kernel.org (Postfix) with ESMTP id E337621707
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbgIRRWg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 13:22:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65200 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbgIRRWf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 13:22:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D56371DE4;
-        Fri, 18 Sep 2020 13:22:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=q3E09tpmpIXi/o1CzX3NIgsP5CQ=; b=CkR5o+
-        oMQKy0UK1fNTEfJ0jC98IAH/lxxMJFqsA1MiZKqgFDMs5XWuMfTU9ZaJEhtcuJWi
-        UfLsYoqiwH13/w/bJErtWN9LfPP+8sQHUhkiSA799/166v8I0LA6XiaSmtteS8iJ
-        SB/6evBDF/8NY+9ZrfEeaqts28K99Y3BgiQnM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uttnNXbiKYuROoDNjvMft75KqkiYB+ed
-        tIJ6+QPmDF1aZmBaFES+VgLWoyGEOn/AC+tVgkCk7kq4RGdxYZEsdez9QbqkPkIn
-        NdB4zPRbHhoXyaagljWvceNzrsHE1eCts7K0Pw1cHFYjNhGh3EdyvwQ8CyFLgFHu
-        wLSKKn/m/6c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8416A71DE3;
-        Fri, 18 Sep 2020 13:22:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06AA771DE2;
-        Fri, 18 Sep 2020 13:22:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Andrew Klotz via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Andrew Klotz <agc.klotz@gmail.com>
-Subject: Re: [PATCH 0/2] config: improve error message for boolean config
-References: <pull.841.git.git.1600395427.gitgitgadget@gmail.com>
-Date:   Fri, 18 Sep 2020 10:22:32 -0700
-In-Reply-To: <pull.841.git.git.1600395427.gitgitgadget@gmail.com> (Andrew
-        Klotz via GitGitGadget's message of "Fri, 18 Sep 2020 02:17:05 +0000")
-Message-ID: <xmqqmu1nm23r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726236AbgIRR1t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 13:27:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33462 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726115AbgIRR1s (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 13:27:48 -0400
+Received: (qmail 11128 invoked by uid 109); 18 Sep 2020 17:27:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Sep 2020 17:27:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23112 invoked by uid 111); 18 Sep 2020 17:27:48 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Sep 2020 13:27:48 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 18 Sep 2020 13:27:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     Thomas Guyot-Sionnest <tguyot@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, dermoth@aei.ca
+Subject: Re: [PATCH 1/2] diff: Fix modified lines stats with --stat and
+ --numstat
+Message-ID: <20200918172747.GD183026@coredump.intra.peff.net>
+References: <20200918113256.8699-1-tguyot@gmail.com>
+ <20200918113256.8699-2-tguyot@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 899DACEA-F9D3-11EA-911B-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200918113256.8699-2-tguyot@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Andrew Klotz via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, Sep 18, 2020 at 07:32:55AM -0400, Thomas Guyot-Sionnest wrote:
 
-> Currently invalid boolean config values return messages about 'bad numeric',
-> which I found misleading when the error was due to a boolean string value.
-> This change makes the error message reflect the boolean value.
->
-> The current approach relies on GIT_TEST_GETTEXT_POISON being a boolean
-> value, moving its special case out fromdie_bad_number() and into 
-> git_config_bool_or_int().
+> In builtin_diffstat(), when both files are coming from "stdin" (which
+> could be better described as the file's content being written directly
+> into the file object), oideq() compares two null hashes and ignores the
+> actual differences for the statistics.
+> 
+> This patch checks if is_stdin flag is set on both sides and compare
+> contents directly.
 
-The approach does not make anything worse than what we currently
-have, which is good.
+I'm somewhat puzzled how we could have two filespecs that came from
+stdin, since we'd generally read to EOF. But looking at the test, it
+seems this is a weird range-diff hack to set is_stdin.
 
-I am undecided if we want to apply 2/2, or if we want to apply 1/2
-alone without 2/2.  If we applied 2/2, those who are reading the
-code in a year who forgot about this review thread would have to
-wonder if all values assigned to the variable bad_numeric are
-enclosed in _() and go up to find all assignments.
+Looking at your patch:
 
-Omitting 2/2 would keep _() around the message string fed to die(),
-so it may be easier to immediately see that the call to die is not
-missing basic i18n, but there is a risk to forget marking with N_().
+> diff --git a/diff.c b/diff.c
+> index a5114fa864..2995527896 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3681,7 +3681,10 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+>  		return;
+>  	}
+>  
+> -	same_contents = oideq(&one->oid, &two->oid);
+> +	if (one->is_stdin && two->is_stdin)
+> +		same_contents = !strcmp(one->data, two->data);
+> +	else
+> +		same_contents = oideq(&one->oid, &two->oid);
 
-If we were to use 2/2 in addition to 1/2, then squashing them into
-one commit will make the result easier to follow, because we no
-longer need an untranslated string in bad_numeric after 1/2 is
-applied.  We are losing "the reason why we use N_() is..." comment
-in 1/2 anyway so doing what 2/2 does in the same commit would be
-more sensible than splitting these into two patches.
+...should this actually be checking the oid_valid flag in each filespec?
+That would presumably cover the is_stdin case, too. I also wonder
+whether range-diff ought to be using that flag instead of is_stdin.
 
-I dunno.
-
-Thanks.
-
+-Peff
