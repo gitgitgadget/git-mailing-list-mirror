@@ -7,141 +7,146 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA42C43465
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 10:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA169C43464
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 10:48:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ECD6321D92
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 10:34:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9910620848
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 10:48:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fETH4VIW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t0vXz4PO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbgIRKeE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 06:34:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47690 "EHLO
+        id S1726397AbgIRKsi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 06:48:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725900AbgIRKeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 06:34:03 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B19C06174A
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 03:34:03 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id g29so3238886pgl.2
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 03:34:03 -0700 (PDT)
+        with ESMTP id S1726390AbgIRKsg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 06:48:36 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C05C4C06174A
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 03:48:36 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id bg9so2799445plb.2
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 03:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Qr5uqG+Tx0X3QH+p6usNAA0NNCj5wspKtM7mOXYMqhg=;
-        b=fETH4VIW9CICyhckiMnYXWvWStsiKTiX5b7Szopz8vqwtJKPTZdeG0/LdVY28kaZ7X
-         T2sBYZ8hQ4+PbpLsN6Psr5wUABkqXg5/a1JgvWVfyAeKE6h7bYi/CdMDfy3iMB22R/8j
-         5Ln4gs127hQP4hJG1XE9lcvF/pfz5Eq0Pe8nA6aaazg/uR/P6F1EwBJaHWMGWbcT6KsS
-         leE+MuDNtWEceP/7eWkHwwTgfOSeCVm3ceHrU8EyZAkhe3Uy9SAOgDbSkYCfhHcu+wB2
-         3aSjul1DRnqIGs6DnRZ05zjvKLqTm9S90IUuPDQ0heqqUalcAQZVrWk/CbVqFLJep5S1
-         LZ1g==
+        bh=DS5/xPSsEn6QjhSlvtuvKYO9L7BnttBSpmkNMMRUW38=;
+        b=t0vXz4POdZDdeJjCv88izDT9eT5wovE4KRGY4dpdm9wWQQDglu6Il1U0HhtVYD8PJb
+         /zutJdGdeHlSibHO21hlne+cy4JapMhK4XjA52WXkrLcSfWfLiMl4QZdRXrnfKS16vfw
+         TqGAKvaj/jZIT8EsdsC66b6D6qXEd9DX5FU4QV/d/gj75Jlof37AZa6BkUQJ8tOTLzUx
+         qvINcUxYs2YUuOcNr8AGW5FMMJVRmJ65co+2lAyTzytauYERex6wopT8mzkPxzKxGcvM
+         /rWsKeBX6VobxAIebLqFGQE/ZScBe1rS0zvUB9MaXyFGiHnjNoo6sHZFsFW7IMk7iMb/
+         jvrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Qr5uqG+Tx0X3QH+p6usNAA0NNCj5wspKtM7mOXYMqhg=;
-        b=VBqRCrDsJnBenQZO35f7D9e5Ei+0qp7KQifjad07Dlb4Y45PeAp1q8jsbeIGIzo1+7
-         DFlSnMPC22aHm5MI9E3VkzFDuJPniNn31PpXGC6y102vz917t/QGFPp3Z2LOHfaX2Kpv
-         rYeeT6sKjhzFSO7bqzuEPo4PT6xKGcsnzdRjMeiw+ojf2HnKItYFejQ5wt+OW+puyqlf
-         REYZUscRzdmEh7QH/o8I8EgLPFeqb0DeEqG5dUYuLar8ySjLoUSvm1rugwrrOOXJmOhs
-         qP8hAM2jaPuxo7dRY9wiP9yodXqPLh8QYeVnLT2OczYlYAPA1ZjJNhDFiL/2865FnFDm
-         AflA==
-X-Gm-Message-State: AOAM533Ghaa6mv+DVRA8iWs55tcYjCSNIpDr53qP03duySvINt5l0J1Q
-        iMjm7ltTZypzqWjWCejua9w=
-X-Google-Smtp-Source: ABdhPJymUdPxQbnZjDVHdf8r5QIMFFIohgsAM0FeizcFkCaGTsIkIsCF/e7DypHu/Ovkemvd4A1cyA==
-X-Received: by 2002:a65:438d:: with SMTP id m13mr16872823pgp.429.1600425243073;
-        Fri, 18 Sep 2020 03:34:03 -0700 (PDT)
+        bh=DS5/xPSsEn6QjhSlvtuvKYO9L7BnttBSpmkNMMRUW38=;
+        b=ggm5qz4iUqMf/kNhI0MpBZW4OzWGH1FFJ3A+FhuBs/U+0aaDZH8dP6OSGmYzn2+W0g
+         sJ+jUtB0Q8TFf3O8/AEvClUE6R6Syu90a5gH62OjsEZKtszQK00ed+XScQHKYtq3mn1v
+         AeikehRIIYRXWKjtH3IkAIZAhiNSqViHNIv77Jpa2JCysoeb2s38ha1q6BbvvO9e7kW3
+         uFT7RFFMLoDzJbX8SP6J+ISwlpiOObgkSmiWpvxM3++Yk930Jlc2wOjcS5tHw5FD6GWu
+         p5Ue3kfr5tWN/r/QCTi0RiwxHptNuTc5YrRhrkcFbwhc8aFCqsIrHFibwWhlk2fvi54r
+         jgUg==
+X-Gm-Message-State: AOAM532rxPK6H07S9fEC038OevWc2m3qpxxp09p1NLE5B9e5dF2fxQ/v
+        PmIo6bXLe4dxV9Y+56nNif/q5XXFVRA=
+X-Google-Smtp-Source: ABdhPJwqCJ9UAwtILlIZ0uERl+LFjxQSPztDL9I6kF4weG9uK3tZvgAat9YjxxkCr25PbCzsLv1o3g==
+X-Received: by 2002:a17:90a:cb0f:: with SMTP id z15mr12047488pjt.76.1600426116286;
+        Fri, 18 Sep 2020 03:48:36 -0700 (PDT)
 Received: from generichostname ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id j6sm2726939pfi.129.2020.09.18.03.34.01
+        by smtp.gmail.com with ESMTPSA id o5sm2492673pjs.13.2020.09.18.03.48.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2020 03:34:02 -0700 (PDT)
-Date:   Fri, 18 Sep 2020 03:34:00 -0700
+        Fri, 18 Sep 2020 03:48:35 -0700 (PDT)
+Date:   Fri, 18 Sep 2020 03:48:33 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 06/10] diff-lib: define diff_get_merge_base()
-Message-ID: <20200918103400.GA1874074@generichostname>
+Subject: Re: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
+Message-ID: <20200918104833.GB1874074@generichostname>
 References: <cover.1599723087.git.liu.denton@gmail.com>
  <cover.1600328335.git.liu.denton@gmail.com>
- <6aac57ca022963fb41d93905e41dff36dccd5969.1600328335.git.liu.denton@gmail.com>
- <xmqqd02ks4qk.fsf@gitster.c.googlers.com>
+ <c0d27b125e969e13c52b0fa806a8e3caa8c20ac6.1600328336.git.liu.denton@gmail.com>
+ <xmqq363gs1mt.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqd02ks4qk.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq363gs1mt.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Thu, Sep 17, 2020 at 10:16:51AM -0700, Junio C Hamano wrote:
+On Thu, Sep 17, 2020 at 11:23:54AM -0700, Junio C Hamano wrote:
 > Denton Liu <liu.denton@gmail.com> writes:
 > 
-> > +void diff_get_merge_base(const struct rev_info *revs, struct object_id *mb)
-> > +{
-> > +	int i;
-> > +	struct commit *mb_child[2] = {0};
-> > +	struct commit_list *merge_bases;
+> > +	if (read_stdin && merge_base)
+> > +		die(_("--stdin and --merge-base are mutually exclusive"));
 > > +
-> > +	for (i = 0; i < revs->pending.nr; i++) {
-> > +		struct object *obj = revs->pending.objects[i].item;
-> > +		if (obj->flags)
-> > +			die(_("--merge-base does not work with ranges"));
-> > +		if (obj->type != OBJ_COMMIT)
-> > +			die(_("--merge-base only works with commits"));
-> > +	}
-> 
-> This is the first use of die() in this file, that is designed to
-> keep a set of reusable library functions so that the caller(s) can
-> do their own die().  They may want to become
-
-Although this is the first instance of die(), run_diff_index() has an
-exit(128), which is basically a die() in disguise.
-
-> 	return error(_(...));
-> 
-> The same comment applies to all die()s the patch adds.
-
-I applied this change but then each callsite of diff_get_merge_base()
-became something like
-
-	if (diff_get_merge_base(revs, &oid))
-		exit(128);
-
-so I do agree with the spirit of the change but in reality, it just
-creates more busywork for the callers.
-
-> > +	/*
-> > +	 * This check must go after the for loop above because A...B
-> > +	 * ranges produce three pending commits, resulting in a
-> > +	 * misleading error message.
-> > +	 */
-> 
-> Should "git diff --merge-base A...B" be forbidden, or does it just
-> ask the same thing twice and is not a die-worthy offence?
-
-I think that it should be die-worthy because it's a logic error for a
-user to do this. I can't think of any situation where it wouldn't be
-more desirable error early to correct a user's thinking. Plus, we're
-trying to move away from the `...` notation anyway ;)
-
-> > +	for (i = 0; i < revs->pending.nr; i++)
-> > +		mb_child[i] = lookup_commit_reference(the_repository, &revs->pending.objects[i].item->oid);
-> > +	if (revs->pending.nr < ARRAY_SIZE(mb_child)) {
+> > +	if (merge_base) {
 > > +		struct object_id oid;
 > > +
-> > +		if (revs->pending.nr != 1)
-> > +			BUG("unexpected revs->pending.nr: %d", revs->pending.nr);
+> > +		if (opt->pending.nr != 2)
+> > +			die(_("--merge-base only works with two commits"));
+> > +
+> > +		diff_get_merge_base(opt, &oid);
+> > +		opt->pending.objects[0].item = lookup_object(the_repository, &oid);
+> > +	}
+> > +
 > 
-> This is an obviously impossible condition as we will not take more
-> than 2.
+> This looks quite straight-forward.
+> 
+> > -	/*
+> > -	 * We saw two trees, ent0 and ent1.  If ent1 is uninteresting,
+> > -	 * swap them.
+> > -	 */
+> > -	if (ent1->item->flags & UNINTERESTING)
+> > -		swap = 1;
+> > -	oid[swap] = &ent0->item->oid;
+> > -	oid[1 - swap] = &ent1->item->oid;
+> > +	if (merge_base) {
+> > +		diff_get_merge_base(revs, &mb_oid);
+> > +		oid[0] = &mb_oid;
+> > +		oid[1] = &revs->pending.objects[1].item->oid;
+> > +	} else {
+> > +		int swap = 0;
+> > +
+> > +		/*
+> > +		 * We saw two trees, ent0 and ent1.  If ent1 is uninteresting,
+> > +		 * swap them.
+> > +		 */
+> > +		if (ent1->item->flags & UNINTERESTING)
+> > +			swap = 1;
+> > +		oid[swap] = &ent0->item->oid;
+> > +		oid[1 - swap] = &ent1->item->oid;
+> > +	}
+> 
+> It is not entirely clear why the original has to become an [else]
+> clause here, unlike the change we saw earlier in cmd_diff_tree().
+> It feels quite inconsistent.
 
-We also want to ensure that revs->pending.nr isn't 0 here. That being
-said, I can explicitly check earlier in the function that the number of
-pending is 1 or 2 so that it's more clearly written.
+Since we're only interested in the oids, I thought that it would be
+possible to save a lookup_object() and just use the oids directly. If
+it's clearer, this can be written as something like this but the lookup
+feels unnecessary:
+
+	/*
+	 * We saw two trees, ent0 and ent1.  If ent1 is uninteresting,
+	 * swap them.
+	 */
+	if (ent1->item->flags & UNINTERESTING)
+		swap = 1;
+
+	if (merge_base) {
+		struct object_id mb_oid;
+		if (swap)
+			BUG("swap is unexpectedly set");
+		if (diff_get_merge_base(revs, &mb_oid))
+			exit(128);
+		ent0->item = lookup_object(the_repository, &mb_oid);
+	}
+
+
+	oid[swap] = &ent0->item->oid;
+	oid[1 - swap] = &ent1->item->oid;
 
 Thanks,
 Denton
