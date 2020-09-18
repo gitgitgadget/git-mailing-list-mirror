@@ -6,58 +6,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E7DEC43464
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC190C43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:21:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D68B206D9
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:20:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B222D21734
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 17:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbgIRRUq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 13:20:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33426 "EHLO cloud.peff.net"
+        id S1726185AbgIRRVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 13:21:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33432 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726126AbgIRRUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 13:20:46 -0400
-Received: (qmail 11057 invoked by uid 109); 18 Sep 2020 17:20:45 -0000
+        id S1726126AbgIRRVe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 13:21:34 -0400
+Received: (qmail 11072 invoked by uid 109); 18 Sep 2020 17:21:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Sep 2020 17:20:45 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Sep 2020 17:21:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23019 invoked by uid 111); 18 Sep 2020 17:20:45 -0000
+Received: (qmail 23045 invoked by uid 111); 18 Sep 2020 17:21:34 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Sep 2020 13:20:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Sep 2020 13:21:34 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Sep 2020 13:20:44 -0400
+Date:   Fri, 18 Sep 2020 13:21:33 -0400
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
-        dermoth@aei.ca
+To:     Thomas Guyot-Sionnest <tguyot@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Thomas Guyot-Sionnest <dermoth@aei.ca>
 Subject: Re: [PATCH 2/2] Allow passing pipes for input pipes to diff
  --no-index
-Message-ID: <20200918172044.GB183026@coredump.intra.peff.net>
+Message-ID: <20200918172133.GC183026@coredump.intra.peff.net>
 References: <20200918113256.8699-1-tguyot@gmail.com>
  <20200918113256.8699-3-tguyot@gmail.com>
  <20200918143647.GB1606445@nand.local>
+ <CALqVohfFjsh-2jZLNNwON_V95Dfh-aEh1aMb53t4NQrM0qz1tQ@mail.gmail.com>
+ <20200918171950.GA183026@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200918143647.GB1606445@nand.local>
+In-Reply-To: <20200918171950.GA183026@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 18, 2020 at 10:36:47AM -0400, Taylor Blau wrote:
+On Fri, Sep 18, 2020 at 01:19:50PM -0400, Jeff King wrote:
 
->   - The cat pipe is unnecessary, and is also violating a rule that we
->     don't place 'git' on the right-hand side of a pipe (can you redirect
->     the file at the end instead?).
+> Getting back to the overall feature, this is definitely something that
+> has come up before. The last I know of is:
+> 
+>   https://lore.kernel.org/git/20181220002610.43832-1-sandals@crustytoothpaste.net/
+> 
+> which everybody seemed to like the direction of; I suspect the original
+> author (cc'd) just never got around to it again. Compared to this
+> approach, it uses a command-line option to avoid dereferencing symlinks.
+> That puts an extra burden on the caller to pass the option, but it's way
+> less magical; you could drop all of the "does this look like a symlink
+> to a pipe" heuristics. It would also be much easier to test. ;)
 
-What's wrong with git on the right-hand side of a pipe?
-
-On the left-hand side we lose its exit code, which is bad. But on the
-right hand side, we are only losing the exit code of "cat", which we
-don't care about.
-
-(Though I agree that "cat" is pointless here; we could just be
-redirecting from a file).
-
--Peff
+Of course I forgot to add the cc. +cc brian.
