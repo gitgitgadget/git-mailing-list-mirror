@@ -2,106 +2,112 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E656C43463
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FDF7C43464
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:49:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14195207FF
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:04:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDF342085B
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:49:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LNZSNAKa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MB6JIY0g"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbgIRAEO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 20:04:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56975 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726064AbgIRAEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 20:04:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C11989927;
-        Thu, 17 Sep 2020 20:04:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=a7rPu/MCg7jYuPZeHIqqm2QGvNE=; b=LNZSNAKa+Wcsgix+9SCU
-        H0CJSQQ+en6dyd3+1bu8sziHD+yEsHsSR/EeXnwaoUesgeh3MKfzGjRQ10EVlOND
-        wLdMsGbl0VOr67//DjdoBoGpmCnhePV5cpcbsbOaiiRpa1fUwHud5NE1xN+P9sgV
-        Xj3WbcrnkKvzt5fWyYMeIwA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=R4NkIfvKI67QkCtrCFAJ3GwnOKlMZV00VYaVmsr7vwudqi
-        b1WynQrqn9FlhXfEDdQdFGZ8Dc3YegQViTpztT2aLvgwvYC7LkP9ZLLyKuqcqcuJ
-        IjOP6CEYcSb6kYH9A5WZlq1Vxyc2qbGN8VkittBlG9INKKOTOuUd91DqWHWNc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 94AA289926;
-        Thu, 17 Sep 2020 20:04:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15EA389923;
-        Thu, 17 Sep 2020 20:04:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] format-patch: cancel useAutoBase if base is invalid
-References: <20200916234916.422553-1-jacob.e.keller@intel.com>
-        <xmqqr1r1tfil.fsf@gitster.c.googlers.com>
-        <CA+P7+xrvbwVevFaCB=cm4mZB4=nFAL2rs4gFgYF85qSopq+dwg@mail.gmail.com>
-Date:   Thu, 17 Sep 2020 17:04:10 -0700
-Message-ID: <xmqqsgbgne6d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726104AbgIRAtY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 20:49:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41984 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbgIRAtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 20:49:23 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E5D6C06174A
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 17:49:23 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id f11so2025564qvw.3
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 17:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CKlZb9XbL/KWSOzNenWg/bCHtCa6VYkgjyoolO+V9hs=;
+        b=MB6JIY0gEFJITvkN7V1OlB4i7AdKNWV3g95/y2Bi7AOf3IOQ6xYT9svqjSKZeiXU/g
+         7u+ey6kkuTl4lak7xk4WqXs7aEqJTXNNLsy/db8FwsqpBWckvDTtsLczK64x9e67PHyz
+         0D4lSgGJhk+8TlfqCSCeYo1m9bLRyG2UNxxy/HqjUgnu1EVB21giL3qwB63bnp2P19q3
+         CKjiQ9XqHaYi+D+JSDUunjTlXIUM2i5zBXvrqhn1f/zqo4p42bS/pd6E4n5s/UllDKfQ
+         PkWyqY1rknvCNXx4UCz6qNRLNarzW27mSjYdTPLa4qs++4fjdvbeOTxSCN46QvCoJb0l
+         9Riw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=CKlZb9XbL/KWSOzNenWg/bCHtCa6VYkgjyoolO+V9hs=;
+        b=d1WYmBpN01+OaFzBI6vI4DpEbu3i7nw77M7KZ1VbJq9Lw9ZP1XikiBi4X8Fhg86JuH
+         MZ8BbnuK3Q5Et1CruKzzCWtsxtJo5lv0SYdWDo455cO4jmMi8Ze8le94ac8ezfj5Oz+V
+         k+pJ6vpULoYLXyeixnY4BYxBsBkvg8QHMLybJrAU06ZsoKrC60IQswoEYneimecU0Rp/
+         ANEDRvkvVfn7bUHWI0bvKd15dd7NuYVSiMTiO38NufcHYS0A/X2CosGTYAAgw4zGui+u
+         4fBZ/9id4/gToyUMbzQIkG2mGriCOo8L8PU3rPUNpqE2XgRGlajqyQ49H768lj7apmay
+         rtfQ==
+X-Gm-Message-State: AOAM530DiJT7k+AeB7z84o6xl+ddVSbVwVP7if/LZhncgaIn8v8YHBdE
+        mT/A0tTxWqdmQvAb91vU41l1l3tIfHSniGaW
+X-Google-Smtp-Source: ABdhPJxu5oS2/UOF6ImGrdAAXJ5yd9JWec+XM5wRj4zsTsVnXx5WUc0JfrgFBSbfq3zZ0IEkb/o7SQ==
+X-Received: by 2002:a0c:d443:: with SMTP id r3mr31729966qvh.17.1600390162264;
+        Thu, 17 Sep 2020 17:49:22 -0700 (PDT)
+Received: from localhost.localdomain (c-98-229-3-81.hsd1.vt.comcast.net. [98.229.3.81])
+        by smtp.gmail.com with ESMTPSA id o13sm1003686qtq.41.2020.09.17.17.49.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Sep 2020 17:49:21 -0700 (PDT)
+From:   Aaron Lipman <alipman88@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Aaron Lipman <alipman88@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] ref-filter: merged & no-merged touch-ups
+Date:   Thu, 17 Sep 2020 20:49:07 -0400
+Message-Id: <20200918004909.32474-1-alipman88@gmail.com>
+X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+In-Reply-To: <20200916020840.84892-1-alipman88@gmail.com>
+References: <20200916020840.84892-1-alipman88@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7AC49C7E-F942-11EA-86FB-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+> > Even if we are not renaming
+> > things that much, a locally defined preprocessor macro with shorter
+> > names, defined just before the callee, would be more appropriate for
+> > a case like this, with a single callee called by only one caller.
 
-> On Wed, Sep 16, 2020 at 5:26 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Jacob Keller <jacob.e.keller@intel.com> writes:
->>
->> > Make get_base_commit detect when useAutoBase is set, and avoid failing
->> > if the base commit is picked up automatically. We still attempt to fail
->> > if --base=auto is explicitly requested on the command line.
->>
->> Makes sense.  I also think we should fail in such a broken base is
->> chosen, when useAutoBase is set by configuration and is not
->> overriden from the command line with an explicit use of --no-base
->> option, because the end-user expects an appropriate base to be used
->> that is computed automatically, but we are failing to find such a
->> base---going ahead silently in such a case would be wrong.
->>
->
-> I am not sure if I follow here. The whole point of this patch is that
->
-> git config format.useAutoBase true
-> git format-patch -1 <old id>
->
-> causes failure that is very unexpected, especially if it's been a long
-> time since you set useAutoBase.
->
-> I do want git format-patch --base=auto <old id> to fail, certainly.
+> Thanks for stating what I was planning on saying, with particular
+> emphasis on keeping these #defines in the .c file rather than the .h
+> file since they are not part of the public API.
 
-I understand.  And further, I do not think it is a good idea to
-silently ignore the configured format.useAutoBase when there is no
-command line override.  IOW, we want both to fail, but with a better
-message (e.g. "appropriate base not found").
+Thanks for the insight into defining macros in source vs header files-
+I'm still in the process of learning C and figuring out how to convey
+purpose & encapsulation without relying on features of higher order
+languages I'm used to (e.g. keyword args).
 
-> I wonder if there's a way we can tell when the format patch revisions
-> in question make no sense with the automatic base.
+Since this got moved to next, I'm not entirely clear on whether folks
+want me to keep tweaking this, or if the last set of comments were
+general advice for future contributions.
 
-Sorry, I don't quite know what you mean---the fact that you are
-already getting a cryptic error message means the existing code
-already knows, no?
+But in the interest of diligence, I'd like to offer a couple touch-ups
+applying Junio's suggestions.
 
+Aaron Lipman (2):
+  ref-filter: refactor do_merge_filter()
+  Doc: prefer more specific file name
+
+ Documentation/git-branch.txt                  |  2 +-
+ Documentation/git-for-each-ref.txt            |  2 +-
+ Documentation/git-tag.txt                     |  2 +-
+ ...lters.txt => ref-reachability-filters.txt} |  0
+ ref-filter.c                                  | 29 +++++++++----------
+ ref-filter.h                                  |  3 --
+ 6 files changed, 17 insertions(+), 21 deletions(-)
+ rename Documentation/{filters.txt => ref-reachability-filters.txt} (100%)
+
+-- 
+2.24.3 (Apple Git-128)
 
