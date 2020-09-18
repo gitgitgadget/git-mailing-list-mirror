@@ -2,107 +2,104 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6380AC43465
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CD57C43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:16:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22AED20717
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:12:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 260F9206D4
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 14:16:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KKMkUlNP"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="gSJISSWu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726239AbgIROMV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 10:12:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53284 "EHLO
+        id S1726154AbgIROQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 10:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbgIROMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 10:12:21 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15EEC0613CE
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:12:20 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id g7so6890198iov.13
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:12:20 -0700 (PDT)
+        with ESMTP id S1725955AbgIROQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 10:16:19 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1E19C0613CE
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:16:18 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id p15so2920176qvk.5
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 07:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=T8WcJrwZzMT6eBrnurYBchYEK2XGE00z5PadFlqhq8M=;
-        b=KKMkUlNPOsXOPyVVC1nFX2zZqGlNoq37sJR3xF1M2MKW0y8vE8ZGm0kY97lhUe9hEV
-         Hi078oQQr6YafRPfr1fm+r1JSj2lra8csFrLWRXv4MGE0xgmPuCOySlQ27P+HgbZb6lo
-         9H0vA9+VujqAferv54R0S2SNWgdM2cSovmvHMsN34u6GECgkK7j8r0PLmWr/HgMoorY7
-         Ue+KSolGrmcwnTB3wHH0Xlo8b6cjTx2UhtrHP0vwnReU+1oyWyw8ujKOlfRM5kQTgHkj
-         AYLJS+Ik0/BX4JqSzcxwZaYwl29H0qrKAupNCt3YQ/DvUBz2ARvmMBuj6aTXbB3Svq/R
-         RxiA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OtjUg6yyah5wt1Vyd2UHe0001S3jNWNsZhT8KDd1SKs=;
+        b=gSJISSWuY1N7pO5p4qauGXtrwXzE8rFOQqG/WOiT8ncHCKspB9snASU1yYJ2tfGCTR
+         hS0W3fw/7aCs6WRjThEBtsOW3mOH8AFolTgkjfFkJSpdJpfXMClKATPENwI6/zEh1ZCE
+         Tw+7j760Ghnx7/K1sJQyEYqNXvMY1VGIHDLLXsuq86TAHbN5fj+7uovaPw6Y6IFKskWj
+         EwttcyxI+n8BxPF3YllspFTDcS62a/Jk7OCjK3g1l3g+lxCaSZjVRgi2BBT9abtbOnHp
+         ZGehmMKYX8H42mGfmV6BkBZ8dW2z7uEnh8Lpy/+PuQmFPopUrf1ej0m53kcou8OnkhK2
+         UbOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T8WcJrwZzMT6eBrnurYBchYEK2XGE00z5PadFlqhq8M=;
-        b=kEVFHhNRXFcCXgI8nLnn+RZ/ewtG3GywkA986Hco7nOZ81PLLeYnpz+HPHcYUBHAJm
-         5EjWN9dcm75SFKIbsZok89X/s3GM/Q1EC6gJtnQHPwx2iC9nDcCoRgmc4Vy8Kc3vyNbo
-         3lx16cEMpkOG+cQbtsuA47Nl0tdeRVdo78lkDfIjyzeeYAqDFk3DLjt/nCySAnOmtrJD
-         57fmucec2fbMrIRljpDcXxWGKP8f7tKmf/36K7YQz35/gSAyV879p33DH2SQ+e0rN3MR
-         ChftQ0zVM7Ur1ryimYwrfza6Vi2IZBxdayMlT3VLVOYYzfw/aEc8IvZLEPg3tEnkRJjG
-         CRXQ==
-X-Gm-Message-State: AOAM532CT3gYPTUCuJERDa8KtABKoMPVlTi6CZ0Oiu3YJq69L/PY5WH5
-        29zC6nulcC57m3DKDOHe2w2rVQaSaWx7zcZ6lHJsFQM5
-X-Google-Smtp-Source: ABdhPJzZAZCVxK/rftuU3zZufsIdmFHtdLnTKk/kGcZqVC/r64uvOMT4TrsA/WNG6MmGm0vaRoBjeyoWg5l5/H+UW+Y=
-X-Received: by 2002:a6b:8b8c:: with SMTP id n134mr27407951iod.204.1600438340132;
- Fri, 18 Sep 2020 07:12:20 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OtjUg6yyah5wt1Vyd2UHe0001S3jNWNsZhT8KDd1SKs=;
+        b=Fh4EnupEI8YzSM6F/bIkidXLXo6iZIoi6GrrawCe2y9DhFhYWNdRR+Wh4CgTXJi5jO
+         StPUTYmYTPHr6B+YqZMbFqLhhwRXjSsSwhjJ/XG54cDTCXsbbWk0fy/G2a6nZsi4J2uU
+         j8BouqEjQ5CMeNCQ5iS/MtL/a+17SZHR+IDXl564yveEsLO9nnlhZQmdjWPlIgd/P/2M
+         2B6mq3MO6K14cx30r9r95/WNjtkgV41vkdGFTK0jqKENMjPPozy2vQk4Cf39swHfAPmW
+         2LrKw0ADvl9VZaRbgaE/s2hEoLlh3zClhtKN8FbeHSg3CM22LnWuDUF+lGue8+h7GWNi
+         UGUw==
+X-Gm-Message-State: AOAM532YiQXyBjZ2HCPmwtomGcmNViWL6OA+UOzqAyoNEb3VQsViL+bn
+        q96AZzngq4ZUYwKeKl1KqyelZQ==
+X-Google-Smtp-Source: ABdhPJzZnkxm7SVUYoFqpavKA/T48C5lp7cuaSzzFwoAC1eXM8dGs2ys5MrhmDFfs4mrQQuo9EQ1AA==
+X-Received: by 2002:ad4:52e3:: with SMTP id p3mr16615337qvu.42.1600438577911;
+        Fri, 18 Sep 2020 07:16:17 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:2003:d617:ca70:4fd1])
+        by smtp.gmail.com with ESMTPSA id x49sm2229899qtc.94.2020.09.18.07.16.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Sep 2020 07:16:17 -0700 (PDT)
+Date:   Fri, 18 Sep 2020 10:16:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 2/4] builtin/rev-parse: learn --null-oid
+Message-ID: <20200918141614.GC1602321@nand.local>
+References: <cover.1600427894.git.liu.denton@gmail.com>
+ <004f2e4c92918a7a4e452d49e98ef15f1c5ac545.1600427894.git.liu.denton@gmail.com>
+ <20200918141125.GB1602321@nand.local>
 MIME-Version: 1.0
-References: <CAHpGcMJqmUmCR_u3fxSVppzwBo8_6RJG5-WLrXAWXm+OQ6_3bA@mail.gmail.com>
- <20200918140236.GA1602321@nand.local>
-In-Reply-To: <20200918140236.GA1602321@nand.local>
-From:   =?UTF-8?Q?Andreas_Gr=C3=BCnbacher?= <andreas.gruenbacher@gmail.com>
-Date:   Fri, 18 Sep 2020 16:12:09 +0200
-Message-ID: <CAHpGcML=EFRngwjgaXNE53OOPoEBz+4Qi1v354gAv_vHNYS_gQ@mail.gmail.com>
-Subject: Re: Apply git bundle to source tree?
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200918141125.GB1602321@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
+On Fri, Sep 18, 2020 at 10:11:25AM -0400, Taylor Blau wrote:
+> Hi Denton,
+>
+> On Fri, Sep 18, 2020 at 04:19:03AM -0700, Denton Liu wrote:
+> > When a user needed the null OID for scripting purposes, it used to be
+> > very easy: hardcode 40 zeros. However, since Git started supporting
+> > SHA-256, this assumption became false which may break some scripts.
+> > Allow users to fix their broken scripts by providing users with a
+> > hash-agnostic method of obtaining the null OID.
+>
+> I have not been very involved in the hash transition, so please take my
+> comments with a grain of salt (and if they are misplaced, feel free to
+> ignore them).
 
-Am Fr., 18. Sept. 2020 um 16:02 Uhr schrieb Taylor Blau <me@ttaylorr.com>:
->
-> Hi Andreas,
->
-> On Fri, Sep 18, 2020 at 01:13:52PM +0200, Andreas Gr=C3=BCnbacher wrote:
-> > Hi,
-> >
-> > I'm wondering if there's a way to apply a particular head in a bundle
-> > to a source tree, for example:
-> >
-> >   $ git bundle create v5.9-rc1.bundle v5.8..v5.9-rc1
-> >   $ cd linux-5.8
-> >   $ git bundle APPLY ../5.9-rc1.bundle v5.9-rc1
->
-> Sort of. You can specify a refspec when fetching from the bundle to
-> fetch only the objects you care about, like:
->
->   cd linux-5.8
->   git fetch /path/to/bundle 'refs/tags/v5.9-rc1:refs/tags/v5.9-rc1'
->
-> (or if you prefer, "git fetch /path/to/bundle 'tag v5.9-rc1'"). Then
-> once you have the objects locally, you can merge it into your HEAD. You
-> can do all of that in one step with:
->
->   git pull /path/to/bundle 'refs/tags/v5.9-rc1'
->
-> There's no such thing as 'git bundle apply' though, although I suspect
-> 'git pull' is what you wanted anyway.
+Same disclaimer above applies here, too ;-). There are a number of spots
+in the test suite that reference 'ZERO_OID', as well as OIDs for the
+empty tree and blob. Maybe the definition of those could be updated to
+use any new flags you do/don't introduce?
 
-I was actually looking for a way to apply a bundle to an actual source
-tree, not a git repository. Fetching stuff from a bundle into a
-repository seems to be reasonably well documented.
+I'd be just as happy if that were to occur in a different series than
+this, since I don't want to hold you up by adding a bunch of new things
+to your list.
+
+In either case, I think '--zero-oid' makes more sense than '--null-oid'
+(and it matches the tests that are already written). The pair
+'--zero-oid' and '--empty-oid=<type>' make sense to me.
 
 Thanks,
-Andreas
+Taylor
