@@ -2,133 +2,275 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 760E4C43464
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC83BC43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:52:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E0542085B
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:49:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D1812085B
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 00:52:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uky2IfV2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tiI6Qrfr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726151AbgIRAt3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 20:49:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbgIRAtZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 20:49:25 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38A02C06174A
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 17:49:25 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id k25so3612037qtu.4
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 17:49:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Da29aZww5fnBlbQKaGT8PulIMUy9KoUU8p3h+2QxMm0=;
-        b=Uky2IfV2Qrgen/LWUHvCEMybEsau2HYHDSVXklhvPytIixXF5d5m2K3wCTmHfU6IXA
-         Jg+E9rJZ0oM0aOJ51qHwskJU96NeW8ap5nA/rzfc2OtW45PX6S4M1uG6fo7zQJZx9FWM
-         5agkWE2juRvK/Rx3fAYgWK3MyJ9IOtidpf8Dqa/wRqYpFbBZVOC9ZZ6Xff6kQ3avBT7F
-         C9e8qalTH8rzJS5GL+pxuuxrAf/YptSQpoNi7kucKAGTkt16KszbVlycDDBZogdad4Lp
-         rM33mHkDLKY4cjwfp8Yn4EknamkmdjXC3Le1BaHfmXhMvX4Ok9YWwl3IgGJ/vdqlUMyX
-         GASg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Da29aZww5fnBlbQKaGT8PulIMUy9KoUU8p3h+2QxMm0=;
-        b=GxwoG0Bd352NSoANank+u5Y0CMjQw/II3DZSsaNJuEWLFtn96crJB+WxI0vKRwGWip
-         P4gO+QIGY6QCIc387leP7PQtf7XMTtLov4yoExnVtAUIEI6jec2IF1cyJB0ApEON6s9U
-         yhGIurMOgTmvO0C03pTexP0UrcDLaL/AH8yv3yzOiwj7LKIDWqeE38B7JXkrr/mt2BkX
-         Pg74I76uWhIWCDrsWZf1zibbGDEfBiF/YWNh0w7U0YYFrD9JOfCY1P7f2LZ14C42VuUj
-         Qav96E9dkBHjF3ctRKgLNFf6owuqQpRz4QYB+jpC14WRcMCiMLf9NyqNmqVRNKOJ/nMw
-         owZw==
-X-Gm-Message-State: AOAM532sXvOgG/ui+1fqu+G4K5b6h7m2XSNc5xqYxsYhydAp10bh0HqQ
-        ivg2EU1plNWxIpT6+lNUy/hJHvbnAA+uDWTB
-X-Google-Smtp-Source: ABdhPJxIwOxZnOVWRIg+OgO0kPUiF1eAmV/ODLNbQWLaayjjzI+udYrVRh/U4+7xPVV2GuNtimWAzg==
-X-Received: by 2002:ac8:6f21:: with SMTP id i1mr29440362qtv.89.1600390164198;
-        Thu, 17 Sep 2020 17:49:24 -0700 (PDT)
-Received: from localhost.localdomain (c-98-229-3-81.hsd1.vt.comcast.net. [98.229.3.81])
-        by smtp.gmail.com with ESMTPSA id o13sm1003686qtq.41.2020.09.17.17.49.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Sep 2020 17:49:23 -0700 (PDT)
-From:   Aaron Lipman <alipman88@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Aaron Lipman <alipman88@gmail.com>
-Subject: [PATCH 2/2] Doc: prefer more specific file name
-Date:   Thu, 17 Sep 2020 20:49:09 -0400
-Message-Id: <20200918004909.32474-3-alipman88@gmail.com>
-X-Mailer: git-send-email 2.24.3 (Apple Git-128)
-In-Reply-To: <20200918004909.32474-1-alipman88@gmail.com>
-References: <20200916020840.84892-1-alipman88@gmail.com>
- <20200918004909.32474-1-alipman88@gmail.com>
+        id S1726198AbgIRAwO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 20:52:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62333 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbgIRAwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 20:52:14 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59FAE6B052;
+        Thu, 17 Sep 2020 20:52:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=snZIv9IOQu+MQ6dj9B0TXFX4uzQ=; b=tiI6Qr
+        frqsCcpbTJmJ/+pzqoSN5vSRUZktn0ODaxpEa2HxmeeANcdvKQUA4DbH70BusGMt
+        a3pWbSR0fIkM2CO6CTmLWr6bTFyoDf58lDJkgb0Lc44doytA8lOdDSfGN6ucEVlv
+        pna9BtiAcpcL/jbL0X/nDJV+1CztP7SM/y4fw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YqkJvlHzGReSWJGU9sBG44B6GWX3Uqjw
+        TXwrQ1VCAzNWrg3oNjkgnPVJsnM1F4fzBsD4Q0kIlDaksUDBe0vtBxAyhSOQe1QT
+        sVvmZomXYgCBZQvMxAWdtCXkXxSoHEIlVgB8JDIDV6oDkFBgDEFI4FCOUxuqWXgm
+        K3hufiZ5N9w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 520ED6B051;
+        Thu, 17 Sep 2020 20:52:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4B2A6B050;
+        Thu, 17 Sep 2020 20:52:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
+Subject: Re: [PATCH v2 10/13] bloom: encode out-of-bounds filters as non-empty
+References: <cover.1599664389.git.me@ttaylorr.com>
+        <cover.1600279373.git.me@ttaylorr.com>
+        <4653b5b4bcd254a3791797214b46722b4062dc18.1600279373.git.me@ttaylorr.com>
+        <20200917221302.GC23146@szeder.dev>
+        <20200917231344.GA1591704@nand.local>
+Date:   Thu, 17 Sep 2020 17:52:11 -0700
+In-Reply-To: <20200917231344.GA1591704@nand.local> (Taylor Blau's message of
+        "Thu, 17 Sep 2020 19:13:44 -0400")
+Message-ID: <xmqqo8m3oqis.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 30672BE0-F949-11EA-B252-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change filters.txt to ref-reachability-filters.txt in order to avoid
-squatting on a file name that might be useful for another purpose.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Signed-off-by: Aaron Lipman <alipman88@gmail.com>
----
- Documentation/git-branch.txt                                | 2 +-
- Documentation/git-for-each-ref.txt                          | 2 +-
- Documentation/git-tag.txt                                   | 2 +-
- Documentation/{filters.txt => ref-reachability-filters.txt} | 0
- 4 files changed, 3 insertions(+), 3 deletions(-)
- rename Documentation/{filters.txt => ref-reachability-filters.txt} (100%)
+>> > In practice, these boundary commits likely occupy a small proportion of
+>> > the overall number of commits, and so the size penalty is likely smaller
+>> > than storing a bitmap for all commits.
+>>
+>>                  |      Percentage of
+>>                  |    commits modifying
+>>                  |   0 path   |  >= 512 paths
+>>   ---------------+------------+----------------
+>>   android-base   |   13.20%   |   0.13%
+>>   cmssw          |    0.15%   |   0.23%
+>>   cpython        |    3.07%   |   0.01%
+>>   elasticsearch  |    0.70%   |   1.00%
+>>   gcc            |    0.00%   |   0.08%
+>>   gecko-dev      |    0.14%   |   0.64%
+>>   git            |    0.11%   |   0.02%
+>>   glibc          |    0.02%   |   0.10%
+>>   go             |    0.00%   |   0.07%
+>>   homebrew-cask  |    0.40%   |   0.02%
+>>   homebrew-core  |    0.01%   |   0.01%
+>>   jdk            |    0.26%   |   5.64%
+>>   linux          |    0.01%   |   0.51%
+>>   llvm-project   |    0.12%   |   0.03%
+>>   rails          |    0.10%   |   0.10%
+>>   rust           |    0.07%   |   0.17%
+>>   tensorflow     |    0.09%   |   1.02%
+>>   webkit         |    0.05%   |   0.31%
+>
+> This is very useful information to have! Without the total number of
+> commits, it's impossible to know whether or not this is a win over the
+> BFXL chunk. But, since the number of commits is probably "large" versus
+> the percentage of boundary commits which is "small", it's almost
+> certainly an advantage.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 290b90639c..ace4ad3da8 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -368,7 +368,7 @@ serve four related but different purposes:
- - `--no-merged` is used to find branches which are candidates for merging
-   into HEAD, since those branches are not fully contained by HEAD.
- 
--include::filters.txt[]
-+include::ref-reachability-filters.txt[]
- 
- SEE ALSO
- --------
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 7b9cf0ef1f..2962f85a50 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -409,7 +409,7 @@ will be reported.
- NOTES
- -----
- 
--include::filters.txt[]
-+include::ref-reachability-filters.txt[]
- 
- SEE ALSO
- --------
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index cc667d7d01..56656d1be6 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -380,7 +380,7 @@ include::date-formats.txt[]
- NOTES
- -----
- 
--include::filters.txt[]
-+include::ref-reachability-filters.txt[]
- 
- SEE ALSO
- --------
-diff --git a/Documentation/filters.txt b/Documentation/ref-reachability-filters.txt
-similarity index 100%
-rename from Documentation/filters.txt
-rename to Documentation/ref-reachability-filters.txt
--- 
-2.24.3 (Apple Git-128)
+Do you want to include it in either the log message in one of the
+commits, in code comment, or a technical doc?
 
+> So, I think that if it's truly misleading, we could revisit this after
+> the topic is merged. But, I'm not planning on changing anything at this
+> point.
+
+If you do not want to help us go the last-mile to completion, that
+is sad, but I do not want to see a basically good patch stall like
+that, so let's find somebody else who can do the helping ;-)
+
+Here is what my trial rebase produced.  I'll queue it to 'seen' (if
+you prefer I can send a full v3 patch, but I expect that you know
+how to fetch from 'seen' and review locally) after checking if the
+result passes the tests locally; an extra set of eyeballs to verify
+the result is pretty much appreciated.
+
+Thanks.
+
+
+1:  ca6c060171 ! 1:  9b294a0c66 bloom: encode out-of-bounds filters as non-empty
+    @@ Commit message
+         efficient than storing a bitmap for which commits haven't computed their
+         Bloom filters. Storing a bitmap incurs a penalty of one bit per commit,
+         whereas storing explicit filters as above incurs a penalty of one byte
+    -    per too-large or too-small commit.
+    +    per too-large or empty commit.
+     
+         In practice, these boundary commits likely occupy a small proportion of
+         the overall number of commits, and so the size penalty is likely smaller
+    @@ bloom.c: struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+      		filter->len = (hashmap_get_size(&pathmap) * settings->bits_per_entry + BITS_PER_WORD - 1) / BITS_PER_WORD;
+     +		if (!filter->len) {
+     +			if (computed)
+    -+				*computed |= BLOOM_TRUNC_SMALL;
+    ++				*computed |= BLOOM_TRUNC_EMPTY;
+     +			filter->len = 1;
+     +		}
+      		filter->data = xcalloc(filter->len, sizeof(unsigned char));
+    @@ bloom.h: enum bloom_filter_computed {
+      	BLOOM_NOT_COMPUTED = (1 << 0),
+      	BLOOM_COMPUTED     = (1 << 1),
+      	BLOOM_TRUNC_LARGE  = (1 << 2),
+    -+	BLOOM_TRUNC_SMALL  = (1 << 3),
+    ++	BLOOM_TRUNC_EMPTY  = (1 << 3),
+      };
+      
+      struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+    @@ commit-graph.c: struct write_commit_graph_context {
+      
+      	int count_bloom_filter_computed;
+      	int count_bloom_filter_not_computed;
+    -+	int count_bloom_filter_trunc_small;
+    ++	int count_bloom_filter_trunc_empty;
+      	int count_bloom_filter_trunc_large;
+      };
+      
+    @@ commit-graph.c: static void trace2_bloom_filter_write_statistics(struct write_co
+      			   ctx->count_bloom_filter_computed);
+      	trace2_data_intmax("commit-graph", ctx->r, "filter-not-computed",
+      			   ctx->count_bloom_filter_not_computed);
+    -+	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-small",
+    -+			   ctx->count_bloom_filter_trunc_small);
+    ++	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-empty",
+    ++			   ctx->count_bloom_filter_trunc_empty);
+      	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-large",
+      			   ctx->count_bloom_filter_trunc_large);
+      }
+    @@ commit-graph.c: static void compute_bloom_filters(struct write_commit_graph_cont
+      			&computed);
+      		if (computed & BLOOM_COMPUTED) {
+      			ctx->count_bloom_filter_computed++;
+    -+			if (computed & BLOOM_TRUNC_SMALL)
+    -+				ctx->count_bloom_filter_trunc_small++;
+    ++			if (computed & BLOOM_TRUNC_EMPTY)
+    ++				ctx->count_bloom_filter_trunc_empty++;
+      			if (computed & BLOOM_TRUNC_LARGE)
+      				ctx->count_bloom_filter_trunc_large++;
+      		} else if (computed & BLOOM_NOT_COMPUTED)
+    @@ t/t4216-log-bloom.sh: test_max_changed_paths () {
+      	grep "\"key\":\"filter-computed\",\"value\":\"$1\"" $2
+      }
+      
+    -+test_filter_trunc_small () {
+    -+	grep "\"key\":\"filter-trunc-small\",\"value\":\"$1\"" $2
+    ++test_filter_trunc_empty () {
+    ++	grep "\"key\":\"filter-trunc-empty\",\"value\":\"$1\"" $2
+     +}
+     +
+      test_filter_trunc_large () {
+    @@ t/t4216-log-bloom.sh: test_expect_success 'correctly report changes over limit'
+      '
+      
+     +test_expect_success 'correctly report commits with no changed paths' '
+    -+	git init small &&
+    -+	test_when_finished "rm -fr small" &&
+    ++	git init empty &&
+    ++	test_when_finished "rm -fr empty" &&
+     +	(
+    -+		cd small &&
+    ++		cd empty &&
+     +
+     +		git commit --allow-empty -m "initial commit" &&
+     +
+    @@ t/t4216-log-bloom.sh: test_expect_success 'correctly report changes over limit'
+     +			git commit-graph write --reachable --changed-paths &&
+     +		test_filter_computed 1 trace.event &&
+     +		test_filter_not_computed 0 trace.event &&
+    -+		test_filter_trunc_small 1 trace.event &&
+    ++		test_filter_trunc_empty 1 trace.event &&
+     +		test_filter_trunc_large 0 trace.event
+     +	)
+     +'
+2:  11db600d51 = 2:  1b4c861e68 commit-graph: rename 'split_commit_graph_opts'
+3:  cf49598137 ! 3:  d6c1bd395e builtin/commit-graph.c: introduce '--max-new-filters=<n>'
+    @@ t/t4216-log-bloom.sh: test_expect_success 'correctly report commits with no chan
+     +
+     +		test_filter_computed 2 trace.event &&
+     +		test_filter_not_computed 3 trace.event &&
+    -+		test_filter_trunc_small 0 trace.event &&
+    ++		test_filter_trunc_empty 0 trace.event &&
+     +		test_filter_trunc_large 0 trace.event
+     +	)
+     +'
+    @@ t/t4216-log-bloom.sh: test_expect_success 'correctly report commits with no chan
+     +				--split=replace --max-new-filters=1 &&
+     +		test_filter_computed 1 trace.event &&
+     +		test_filter_not_computed 4 trace.event &&
+    -+		test_filter_trunc_small 0 trace.event &&
+    ++		test_filter_trunc_empty 0 trace.event &&
+     +		test_filter_trunc_large 0 trace.event
+     +	)
+     +'
+    @@ t/t4216-log-bloom.sh: test_expect_success 'correctly report commits with no chan
+     +					--changed-paths --max-new-filters=2 &&
+     +			test_filter_computed 2 trace.event &&
+     +			test_filter_not_computed 4 trace.event &&
+    -+			test_filter_trunc_small 2 trace.event &&
+    ++			test_filter_trunc_empty 2 trace.event &&
+     +			test_filter_trunc_large 0 trace.event
+     +		done &&
+     +
+    @@ t/t4216-log-bloom.sh: test_expect_success 'correctly report commits with no chan
+     +				--changed-paths --max-new-filters=2 &&
+     +		test_filter_computed 0 trace.event &&
+     +		test_filter_not_computed 6 trace.event &&
+    -+		test_filter_trunc_small 0 trace.event &&
+    ++		test_filter_trunc_empty 0 trace.event &&
+     +		test_filter_trunc_large 0 trace.event
+     +	)
+     +'
+4:  1bc82cd008 ! 4:  b0d51fb04a commit-graph: introduce 'commitGraph.maxNewFilters'
+    @@ t/t4216-log-bloom.sh: test_expect_success 'Bloom generation is limited by --max-
+     +				--split=replace &&
+      		test_filter_computed 1 trace.event &&
+      		test_filter_not_computed 4 trace.event &&
+    - 		test_filter_trunc_small 0 trace.event &&
+    + 		test_filter_trunc_empty 0 trace.event &&
+     @@ t/t4216-log-bloom.sh: test_expect_success 'Bloom generation backfills previously-skipped filters' '
+      	)
+      '
+    @@ t/t4216-log-bloom.sh: test_expect_success 'Bloom generation backfills previously
+     +				--max-new-filters=1 &&
+     +		test_filter_computed 1 trace.event &&
+     +		test_filter_not_computed 1 trace.event &&
+    -+		test_filter_trunc_small 0 trace.event &&
+    ++		test_filter_trunc_empty 0 trace.event &&
+     +		test_filter_trunc_large 0 trace.event
+     +	)
+     +'
