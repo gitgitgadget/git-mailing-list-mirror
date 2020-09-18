@@ -2,156 +2,100 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78233C43464
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 01:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB8E5C43465
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 02:17:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20FF62072E
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 01:15:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B510323600
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 02:17:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="EsRD+sPB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnYKEJnD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726252AbgIRBPX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Sep 2020 21:15:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46060 "EHLO
+        id S1728629AbgIRCRR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Sep 2020 22:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726126AbgIRBPW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Sep 2020 21:15:22 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48846C06174A
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 18:15:21 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id v123so4411531qkd.9
-        for <git@vger.kernel.org>; Thu, 17 Sep 2020 18:15:21 -0700 (PDT)
+        with ESMTP id S1729522AbgIRCRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Sep 2020 22:17:10 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60F3C06174A
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 19:17:09 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id b79so3944486wmb.4
+        for <git@vger.kernel.org>; Thu, 17 Sep 2020 19:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=dhipW7gR7MInA5nAUFG0SZOjDIV0H7eMUNm+S0ZZMw4=;
-        b=EsRD+sPBhA8Jnpb/fQBi06sSGPccXpxTeyRZcuvpjyXMVGfxHq/CqmZ7/x6l937ihH
-         6noDoZIxRflLrwPunrlZxWob/z27oAIsqkkpWo8QTpQfzS3A1OoEUWanLrtEFsQKWTcl
-         eYrQhLZyvT/1huNAXE/0Ys91D3g5VlLtcNrzFh9D66yRrWL4WC8U98xItmRsnJSaP9cp
-         ic8qoOfIVop5VrEro+2HCgdwQa/3C1XglTvyHPRxuFtG6cyYBLHPpqguYUg5k1Ll7GpJ
-         or9nCT4mvwKOO6Ga+8hRxxVYTmPbZLOlilKlF3CyLOh/t2olHujKCKUSfeo3UByhFFVK
-         sa6g==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=QXS0/4e7LdUNyM63vhWE3MBoJaqVI20h1RDvIFC9KGs=;
+        b=MnYKEJnDLjm6kTi6x1bw3O6wm8lLgwXnxvw450QsElnPKefxRtG1zZS2AhzUai5XQ+
+         wk/LCGyCy42SDYzhQypsPMogLs68UVuFuDnQRI4Mpt3wjznhEfrSTQDtGbXUxj2cd3/c
+         ea4Ozfc0sbA2PPFYTvhRwKiZd62LwpkmAYKiWCS2ovCPlKH2Mx2vhGN/WoChmXRQl7K5
+         /s4m0zkQOvUQGbKFH7ABipie/u9/45B1pK3u7BXPfAkQfdghl2Qm69cEXTlrDuClaxoB
+         m+wbEs//wNih0hUddAnucpjxmizxUul7pV3PUmJ+B3LC/OYAMSt1lVg+FaYFuYpCtlHV
+         MTtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=dhipW7gR7MInA5nAUFG0SZOjDIV0H7eMUNm+S0ZZMw4=;
-        b=ABJDeYm7ijsq9rFJgRt+mdW4ChaEzJZMs+QHOQ97dmaSjRKyF/cwxqaHjVhDJSqa7C
-         omxZkslmQCRMa4yq/irq/ffD5NyYDkgwPys6yYeqOLbMEq1FpIvljOaMwSBjoRku7xFf
-         GU4HkPk6HdkXfMr4h5i7Bcnv6A8L51m2Eys6O/Wix4aRLkLjd82j/B+RVnjUpVQuaKGJ
-         cKatd5r8KBSPEjq8Eq3TwGFoNyugLjvkiZ6Pewvnmzd9GmuMlTX8Qa0/aIoY6ixHg56z
-         r248pQ9dcDffsQ89I1ZVPtXSkeAX3Ivitiz8ZkQPurP20G1Lk2zw7cuLllQFl16HiJqu
-         cyJg==
-X-Gm-Message-State: AOAM532VvCuL5BqR8jjm4jqSJjMe3dl8u3PI1ADSBF89v3BPdNHK5E+E
-        QVfcYA9s3CEGh4pGg2iw7lhZgg==
-X-Google-Smtp-Source: ABdhPJxYAMwKFY4AAGhrPQ1Qs3azeFWRIdYhJFLC1udzTdRFfGj89iHqhDPi+KxwpRFyq77qa5F++A==
-X-Received: by 2002:a37:8405:: with SMTP id g5mr31257857qkd.248.1600391720301;
-        Thu, 17 Sep 2020 18:15:20 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:2003:d617:ca70:4fd1])
-        by smtp.gmail.com with ESMTPSA id e9sm1105399qkb.8.2020.09.17.18.15.19
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=QXS0/4e7LdUNyM63vhWE3MBoJaqVI20h1RDvIFC9KGs=;
+        b=mcwElzD3E9GWmbsfDGgBYVuEanKggehOgjhESqirb+N3mxjsymc182FTVCi4MbXha+
+         OYlaGh+VjwxUMg5N1/opZ1M8pmOKDn2O5gPWtUfrRKaie+qhuT/Wqo0FLX3LCUcrEjTH
+         5S0tnMPFExNRrJ8KxplY0RLcjZ6SKeUEHeYZBI+sos2ntWcwAR8GESzvFJ/ua8luZC/o
+         9rdcBMsEPWsMV+L9K3FhcOJ0HhO5j2SaDBLSeFSuytzXU2NUahdvWwgFdfuM+GYvv5Z8
+         QsqGtvGVrWzolkEprvJ8eQijJiQN9wJl9+9xMWlzdW3uMsI1HP9YXyvcIsZjsU/EIuV/
+         dfcw==
+X-Gm-Message-State: AOAM5327ceDC/vxtXcjVl3dEKALhl2yVjLRgqv1IlaR61RYF0lSQdRdP
+        WpDPO9ycQwWo8qpxG8WXa98HQdejL2o=
+X-Google-Smtp-Source: ABdhPJyGUT4QdQ68Zqzo7l/KfmM3+b0RipzEW1aQbcfHnxrcIUC087sjZwpB4PaDqbdySWaDv9Scug==
+X-Received: by 2002:a1c:39c4:: with SMTP id g187mr12491188wma.126.1600395428470;
+        Thu, 17 Sep 2020 19:17:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v17sm2511024wrc.23.2020.09.17.19.17.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2020 18:15:19 -0700 (PDT)
-Date:   Thu, 17 Sep 2020 21:15:17 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
-Subject: Re: [PATCH v2 10/13] bloom: encode out-of-bounds filters as non-empty
-Message-ID: <20200918011517.GA2013074@nand.local>
-References: <cover.1599664389.git.me@ttaylorr.com>
- <cover.1600279373.git.me@ttaylorr.com>
- <4653b5b4bcd254a3791797214b46722b4062dc18.1600279373.git.me@ttaylorr.com>
- <20200917221302.GC23146@szeder.dev>
- <20200917231344.GA1591704@nand.local>
- <xmqqo8m3oqis.fsf@gitster.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Thu, 17 Sep 2020 19:17:08 -0700 (PDT)
+Message-Id: <pull.841.git.git.1600395427.gitgitgadget@gmail.com>
+From:   "Andrew Klotz via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 18 Sep 2020 02:17:05 +0000
+Subject: [PATCH 0/2] config: improve error message for boolean config
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqo8m3oqis.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Andrew Klotz <agc.klotz@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 17, 2020 at 05:52:11PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >> > In practice, these boundary commits likely occupy a small proportion of
-> >> > the overall number of commits, and so the size penalty is likely smaller
-> >> > than storing a bitmap for all commits.
-> >>
-> >>                  |      Percentage of
-> >>                  |    commits modifying
-> >>                  |   0 path   |  >= 512 paths
-> >>   ---------------+------------+----------------
-> >>   android-base   |   13.20%   |   0.13%
-> >>   cmssw          |    0.15%   |   0.23%
-> >>   cpython        |    3.07%   |   0.01%
-> >>   elasticsearch  |    0.70%   |   1.00%
-> >>   gcc            |    0.00%   |   0.08%
-> >>   gecko-dev      |    0.14%   |   0.64%
-> >>   git            |    0.11%   |   0.02%
-> >>   glibc          |    0.02%   |   0.10%
-> >>   go             |    0.00%   |   0.07%
-> >>   homebrew-cask  |    0.40%   |   0.02%
-> >>   homebrew-core  |    0.01%   |   0.01%
-> >>   jdk            |    0.26%   |   5.64%
-> >>   linux          |    0.01%   |   0.51%
-> >>   llvm-project   |    0.12%   |   0.03%
-> >>   rails          |    0.10%   |   0.10%
-> >>   rust           |    0.07%   |   0.17%
-> >>   tensorflow     |    0.09%   |   1.02%
-> >>   webkit         |    0.05%   |   0.31%
-> >
-> > This is very useful information to have! Without the total number of
-> > commits, it's impossible to know whether or not this is a win over the
-> > BFXL chunk. But, since the number of commits is probably "large" versus
-> > the percentage of boundary commits which is "small", it's almost
-> > certainly an advantage.
->
-> Do you want to include it in either the log message in one of the
-> commits, in code comment, or a technical doc?
+Currently invalid boolean config values return messages about 'bad numeric',
+which I found misleading when the error was due to a boolean string value.
+This change makes the error message reflect the boolean value.
 
-Let's put it in the commit message. I think that it's useful enough that
-people interested enough to dig through the commits would want it, but
-too detailed to be as visible as in the technical documentation.
+The current approach relies on GIT_TEST_GETTEXT_POISON being a boolean
+value, moving its special case out fromdie_bad_number() and into 
+git_config_bool_or_int(). An alternative could be for die_bad_number() to
+handle boolean values when erroring, although the function name might need
+to change if it is handling non-numeric values.
 
-> > So, I think that if it's truly misleading, we could revisit this after
-> > the topic is merged. But, I'm not planning on changing anything at this
-> > point.
->
-> If you do not want to help us go the last-mile to completion, that
-> is sad, but I do not want to see a basically good patch stall like
-> that, so let's find somebody else who can do the helping ;-)
+Signed-off-by: Andrew Klotz agc.klotz@gmail.com [agc.klotz@gmail.com]
 
-I'm sorry to give off the impression that I do not want to help; that's
-not the case. After reading Gàbor's email, I thought that the changes he
-was suggesting were minor, and was trying to say "let's do this on top
-and apply the important bug fixes first," not, "I am never going to
-touch this again".
+Andrew Klotz (2):
+  config: improve error message for boolean config
+  formatting for error messages
 
-> Here is what my trial rebase produced.  I'll queue it to 'seen' (if
-> you prefer I can send a full v3 patch, but I expect that you know
-> how to fetch from 'seen' and review locally) after checking if the
-> result passes the tests locally; an extra set of eyeballs to verify
-> the result is pretty much appreciated.
+ config.c                  | 26 ++++++++++++++------------
+ t/t0205-gettext-poison.sh |  2 +-
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-It looks off to a great start; and thanks for taking the care to make up
-for my laziness. Everything you did looks good to me. I touched up
-"bloom: encode out-of-bounds filters as non-empty" locally to include
-the table above (and some commentary around it), so I'll send a v3 to
-the list once I have finished running the tests.
 
-> Thanks.
-
-Thank you, and sorry again.
-
-Thanks,
-Taylor
+base-commit: 3a238e539bcdfe3f9eb5010fd218640c1b499f7a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-841%2FKlotzAndrew%2Fbetter_bool_errors-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-841/KlotzAndrew/better_bool_errors-v1
+Pull-Request: https://github.com/git/git/pull/841
+-- 
+gitgitgadget
