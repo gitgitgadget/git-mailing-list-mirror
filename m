@@ -2,110 +2,175 @@ Return-Path: <SRS0=7xvA=C3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 486CCC43463
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 08:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC8CC43463
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 09:23:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEE8120C56
-	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 08:42:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8EA8B20DD4
+	for <git@archiver.kernel.org>; Fri, 18 Sep 2020 09:23:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mk6V6WFi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tfv+sj4t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726556AbgIRImu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Sep 2020 04:42:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58768 "EHLO
+        id S1726371AbgIRJXf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Sep 2020 05:23:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726201AbgIRImu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Sep 2020 04:42:50 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E018C06174A
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 01:42:50 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id gr14so7079386ejb.1
-        for <git@vger.kernel.org>; Fri, 18 Sep 2020 01:42:50 -0700 (PDT)
+        with ESMTP id S1726109AbgIRJXf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Sep 2020 05:23:35 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE2FDC06174A
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 02:23:34 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id u21so7205030eja.2
+        for <git@vger.kernel.org>; Fri, 18 Sep 2020 02:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6QGuVgZznOJwoJNIul3Xr+kFiVuOIZ5eEP1Ib1PRiuc=;
-        b=Mk6V6WFiuMKS5mXbWicKZd2naFv3J6W5qDpe6jMXn/mXsTguR0Nry/OjcMvEHCvC/I
-         9iPtM/F7Mm+etiHTlA/EQP+ZVERvEgap3G6n3ZEdT0PaCBAOnOWrxhxloEu3wiYprVfG
-         vIA3pzkibB1ZZpeo5oEaYPPCS7vkcO78+OnE5lLBZJMh6+QIgQ2HffvCzeK6IY6pigIg
-         GFhjzEFOdU9NivTy9KDWBU+mWKtCXXn5h1zqBYxwt2N6QGegZrXCa6TAOGn9SsEYqA2t
-         TYnQADnGuGdl8SYQWVT3tNhthN1jycNntKTKa7kHc373eiM3hG6o7KHheUn/IRnF8xVd
-         ptYQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YMPykfCWa995aayHi6H+fmR9gSnNJQHyLVa6bpflJZk=;
+        b=tfv+sj4taV3YZ2TN8lTBBdIg0pdmJ7jowcPXGDvM6FmGqKPZRuxSat0HRBPWJSsYDo
+         t7hWnphyFZZTe4DoVy5ONNo1U9xQ2mY6sUyY9Qawk5p37c7ClSuMKDinOIKeAdg5Mz1v
+         oKelFvTg/Up4bppt088+9HNiFvldzBQqQipC6FChY4UI8mYG4qgOytU35fWlW+wjOJXi
+         n/wzqMk1OcxhVrRd49r3fQnCgeNoESeopgXWQISVnKrNNfjwDhlujK0Aads5ByGhu83b
+         xyIMM9rPF+TlwjNfvCsiZUN9axTRdf+t7bfQuxQmL284qJ7U7dkZkUjs+FNACvsxFSM0
+         bg9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6QGuVgZznOJwoJNIul3Xr+kFiVuOIZ5eEP1Ib1PRiuc=;
-        b=fZ7YOxzAz0ybd0ZXDjf2WrJd3wp86d/emYAgBC5LQb/N+O/qhHj3BS3NBpfeZfTcb+
-         Yt36kknBDzyUZFFWTvidMLHd2cRC3q3vdcs600uGWsWkJcvM5KDhk5zkwA3dVSPr1NHQ
-         PmopVcZKwC6HFsD+UEbaf99yt2jXhwr2wQ5p18V6JWVXcvHQJ6UB0IvVByNEYQshGAOX
-         xnrUd13r7aQB8I1hrfbIWzirWZWft0qnmUH+0Ly2AwNIUHz/d94Y9MjO66JTDy73Icii
-         7UJkIbodvpSv66enoxTGnok//dAIMI/5o/YBjEWARxI5Za/YB8zes3OTM87R73mvSsVz
-         zT3Q==
-X-Gm-Message-State: AOAM533xIN7MfrOSC0zmHCEYIAbsUlYIERE/Slg3UoZyvx2FuP+sJza2
-        IZlceJFRTxiWJQPjEYL6M2ga5NUYzbX5/h9d/Aw=
-X-Google-Smtp-Source: ABdhPJzxbGs/UIxiMtYx1vblp0NR4CJU6BVC8oXa569cz4juDwPv5/+IvxTZQdlxt6wZQhsJOqgQqP1jelPFhow1rBI=
-X-Received: by 2002:a17:906:1c5b:: with SMTP id l27mr36657917ejg.283.1600418568849;
- Fri, 18 Sep 2020 01:42:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YMPykfCWa995aayHi6H+fmR9gSnNJQHyLVa6bpflJZk=;
+        b=FlIXHJCLBbjWPBCDlNhPIaLLK22GfhxTzcAmItj4CCqQD8YH0e+QD18YPQxMQH33c7
+         NUjRikTYW4BYobfMBIXNiIoPx/4d3XIgK1a0m9wHElAPbg7TtNgvSi+Zy/ta625fV15z
+         RnvQzkAGQo8jPz44WTh+gf5XXnODhM9CS2a6UEYSmbEJ0VdkxK9sgSsczVVu15oKgH2Q
+         SOXbLPR3ZOhE67qQp59Oa2nqrcS14b6hZwKEumjXHpMGln9iKg567mHo5+rljl6K1XdW
+         wy8/UZcL2hyPeCuJS/upNR14XFsFUzyFp5avmITj/g+5A4APJL4cQ6zyoSoK1ZdcIW6V
+         3WxQ==
+X-Gm-Message-State: AOAM532Jmn7pzMXEwmqGtrqQeWtrys643jVxvBGbsw+mNnxiEoCvo5+0
+        jxbpNKFr7PEj741MPILojoA=
+X-Google-Smtp-Source: ABdhPJytlGv8qmXgoysv2qRAl7LLbGa+0ocnWhe9BoLu3sKYBtIAvR5e2f91km19UZ7dqT3GCZm1dA==
+X-Received: by 2002:a17:906:a444:: with SMTP id cb4mr34095668ejb.432.1600421013567;
+        Fri, 18 Sep 2020 02:23:33 -0700 (PDT)
+Received: from szeder.dev (84-236-109-2.pool.digikabel.hu. [84.236.109.2])
+        by smtp.gmail.com with ESMTPSA id k16sm1827119ejg.64.2020.09.18.02.23.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Sep 2020 02:23:32 -0700 (PDT)
+Date:   Fri, 18 Sep 2020 11:23:24 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        peff@peff.net
+Subject: Re: [PATCH v2 12/13] builtin/commit-graph.c: introduce
+ '--max-new-filters=<n>'
+Message-ID: <20200918092036.GA24813@szeder.dev>
+References: <cover.1599664389.git.me@ttaylorr.com>
+ <cover.1600279373.git.me@ttaylorr.com>
+ <ccb6482feb8d8606d82b5ab97e33184f26d6c5b6.1600279373.git.me@ttaylorr.com>
 MIME-Version: 1.0
-References: <20200828065609.GA2105118@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2009020558550.56@tvgsbejvaqbjf.bet> <CAP8UFD31B9YgninC2Fyb=0+OVY7E4SW7LGBbx9E7CrgSn+95BA@mail.gmail.com>
- <CAP8UFD1n_PYzygFCgNDt3T=EQhbcuaTYFCfNN5n45OHRh45KOg@mail.gmail.com> <CABPp-BHV5-UUio69b1ZnwuRwyj66HUEy3A24wvxELorR_1FB=g@mail.gmail.com>
-In-Reply-To: <CABPp-BHV5-UUio69b1ZnwuRwyj66HUEy3A24wvxELorR_1FB=g@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 18 Sep 2020 10:42:37 +0200
-Message-ID: <CAP8UFD1BmhT29r5TtZJt5DMTsrPaJ11wNb-Hm-N7yTrppgn3Vg@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ccb6482feb8d8606d82b5ab97e33184f26d6c5b6.1600279373.git.me@ttaylorr.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 17, 2020 at 5:35 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Thu, Sep 17, 2020 at 2:47 AM Christian Couder
-> <christian.couder@gmail.com> wrote:
+On Wed, Sep 16, 2020 at 02:08:10PM -0400, Taylor Blau wrote:
+> Introduce a command-line flag to specify the maximum number of new Bloom
+> filters that a 'git commit-graph write' is willing to compute from
+> scratch.
+> 
+> Prior to this patch, a commit-graph write with '--changed-paths' would
+> compute Bloom filters for all selected commits which haven't already
+> been computed (i.e., by a previous commit-graph write with '--split'
+> such that a roll-up or replacement is performed).
+> 
+> This behavior can cause prohibitively-long commit-graph writes for a
+> variety of reasons:
+> 
+>   * There may be lots of filters whose diffs take a long time to
+>     generate (for example, they have close to the maximum number of
+>     changes, diffing itself takes a long time, etc).
+> 
+>   * Old-style commit-graphs (which encode filters with too many entries
+>     as not having been computed at all) cause us to waste time
+>     recomputing filters that appear to have not been computed only to
+>     discover that they are too-large.
+> 
+> This can make the upper-bound of the time it takes for 'git commit-graph
+> write --changed-paths' to be rather unpredictable.
+> 
+> To make this command behave more predictably, introduce
+> '--max-new-filters=<n>' to allow computing at most '<n>' Bloom filters
+> from scratch. This lets "computing" already-known filters proceed
+> quickly, while bounding the number of slow tasks that Git is willing to
+> do.
+> 
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  Documentation/git-commit-graph.txt |  5 +++
+>  bloom.c                            |  7 ++-
+>  builtin/commit-graph.c             | 27 +++++++++++-
+>  commit-graph.c                     |  9 +++-
+>  commit-graph.h                     |  1 +
+>  t/t4216-log-bloom.sh               | 70 ++++++++++++++++++++++++++++++
+>  6 files changed, 111 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+> index 17405c73a9..8357846d30 100644
+> --- a/Documentation/git-commit-graph.txt
+> +++ b/Documentation/git-commit-graph.txt
+> @@ -67,6 +67,11 @@ this option is given, future commit-graph writes will automatically assume
+>  that this option was intended. Use `--no-changed-paths` to stop storing this
+>  data.
+>  +
+> +With the `--max-new-filters=<n>` option, generate at most `n` new Bloom
+> +filters (if `--changed-paths` is specified).
 
-> > Proposed on Outreachy's website:
-> >
-> > https://www.outreachy.org/outreachy-december-2020-internship-round/communities/git/accelerate-rename-detection-and-the-range-diff-com/cfp/
->
-> As a heads up, I'm going to be sending many patches modifying quite a
-> wide range of diffcore-rename.c in the coming months for accelerating
-> rename detection.  Maybe I'll get them all upstreamed before outreachy
-> starts, but that's not so clear.
+If '--max-new-filters=42' is specified without '--changed-paths', then
+it is silently ignored instead of erroring out.  Is that intentional?
 
-It starts at the beginning of December, so I think there is still time
-for you to get them upstreamed.
+> If `n` is `-1`, no limit is
+> +enforced. Commits whose filters are not calculated are stored as a
+> +length zero Bloom filter.
 
-> As I mentioned in the gitgitgadget
-> issue, the ideas outlined there and the methods I implemented are
-> different and complementary, but there is a pretty large risk of
-> conflicts we need to resolve if I don't finish landing all my patches
-> first.
+This last sentence goes into implementation details of the file
+format, so I don't think it should be included here.
 
-It could be a learning experience anyway for the intern, and in my
-experience it has never been a big problem before, so I am not very
-worried about this.
+What should be documented here instead is what happens later with
+those commits for which no modified path Bloom filters were computed.
+Will they ever be computed?  If yes, which commands will compute them
+(even implicitly), and thus will run slower?  What command(s) should
+the users run if they want to compute the missing filters?
 
-Thanks for the heads up!
-> >
-> > > - Add support for drop!/reword! commits to `git rebase -i`
-> > > (https://github.com/gitgitgadget/git/issues/259,
-> > > https://public-inbox.org/git/alpine.DEB.2.21.1.1710151754070.40514@virtualbox/)
-> > > - Invent a way to retain reflogs for a while after the ref was deleted
-> > > (https://github.com/gitgitgadget/git/issues/236): I guess this might
-> > > be implemented as part of the new `git maintenance` builtin.
-> >
-> > I will also likely submit a proposal for one of the above projects.
+Let's suppose that running
+
+  git commit-graph write --reachable --changed-paths --max-new-filters=<L> --split
+
+writes a commit-graph layer containing N1 commits, and N1 > L, so N1-L
+commits won't have an associated modified path Bloom filter.  After
+creating and fetching new commits, this command is executed again to
+add information about N2 commits to the commit-graph, and N2 < L.
+
+  - If this second invocation writes a new commit-graph layer, then it
+    will only compute Bloom filters for commits in this new layer,
+    even though it still has some "Bloom-computing-capacity" left.
+    (This will happen even if this second write were invoked without
+    '--max-new-filters'.)
+
+  - If the merge strategy decides that, instead of writing a new
+    layer, the new N2 commits should be merged with the layer
+    containing the previous N1 commits, then it will compute Bloom
+    filters for some or all of those N1 commits without filters,
+    depending on whether N2-L is smaller or larger than N1-L.
+
+Is this how it is supposed to work?  We can't tell, because neither
+the commit messages nor the documentation updates talk about this.
+
+> ++
+>  With the `--split[=<strategy>]` option, write the commit-graph as a
+>  chain of multiple commit-graph files stored in
+>  `<dir>/info/commit-graphs`. Commit-graph layers are merged based on the
