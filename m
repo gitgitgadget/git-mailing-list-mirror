@@ -7,170 +7,175 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10ABBC43463
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 195E9C43463
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:27:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF41B21D42
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:04:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC0AD21D42
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:27:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LIoijCjg"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vLduy2Hc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbgISUD5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 16:03:57 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54059 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbgISUD4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Sep 2020 16:03:56 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BA11CE9FCB;
-        Sat, 19 Sep 2020 16:03:51 -0400 (EDT)
+        id S1726617AbgISU1A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Sep 2020 16:27:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50057 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726520AbgISU1A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Sep 2020 16:27:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75D69E2D83;
+        Sat, 19 Sep 2020 16:26:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1axamRcSbm6HBytjN6b/1etofhc=; b=LIoijC
-        jgQlbONQJ3UcbvFsG+s/Z4qajdJDfrmBZpji8tnGmW7ba4P5dvdd9Od8ajgl3mRZ
-        OPaDx6Z375Tay9zIlZ+5Lzb+nfep9DsVRIx7bzIvzoy8YcXSf1R5Fd1jX3lbLeWU
-        +llnBpixJJYKeQMBR4agQdbi1Islucge2uYew=
+        :content-type; s=sasl; bh=CMFgfXnBgqXi1cQQB/7/OuLb80A=; b=vLduy2
+        HcymOLrgBd0nm1DlOxz8uEznUHeWzp/EYMVRNU9HYyDKfKlqU25ZzmrLt39JiNX/
+        h/tg7YP5Vcatzz0nnmOr5tDFMeobSQSwtl+zFQmc5ak598VP+yG6xQ/edGD+t2Ee
+        e43yjAlBWk9Lh7n+/i8ZrT9KHTtEbOstyupxc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WmO/ltDQggq0l36dqAIMrKabCBqV5QqD
-        gELWC+Jx1z3+rl4n2m4yxHY2jina39H5gxFVJ3pxdk3/1C/O01p35ymFvT/489qp
-        te83Iwp9dXUezxxthw5JsaFzhA8Awog19fpjX4dlrP9LW6KbszaPxb0a8b9HMSqa
-        SyqqnljNQvg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B3027E9FCA;
-        Sat, 19 Sep 2020 16:03:51 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ORd+TI73JdMuRgcYZ0pI0aFTI7LBurRW
+        DGePwihgCE1OCc/U+EfAnIy7yBfbi5EcEhZktP54ZE9VGiHQFxVNJuzICO5iAqkv
+        cnq5DhxXG4RmdtKKzz+OhfEKeDDH4vwO65xqM1hWBhF0Dg3myJFe2uzubVv01VGT
+        yJiBoF6ALio=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F77AE2D82;
+        Sat, 19 Sep 2020 16:26:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 06A3CE9FC9;
-        Sat, 19 Sep 2020 16:03:48 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AE7DEE2D7F;
+        Sat, 19 Sep 2020 16:26:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] push: add reflog check for "--force-if-includes"
+Subject: Re: [PATCH v4 2/3] push: parse and set flag for "--force-if-includes"
 References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
         <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
-        <20200919170316.5310-2-shrinidhi.kaushik@gmail.com>
-Date:   Sat, 19 Sep 2020 13:03:47 -0700
-In-Reply-To: <20200919170316.5310-2-shrinidhi.kaushik@gmail.com> (Srinidhi
-        Kaushik's message of "Sat, 19 Sep 2020 22:33:14 +0530")
-Message-ID: <xmqqft7djzz0.fsf@gitster.c.googlers.com>
+        <20200919170316.5310-3-shrinidhi.kaushik@gmail.com>
+Date:   Sat, 19 Sep 2020 13:26:54 -0700
+In-Reply-To: <20200919170316.5310-3-shrinidhi.kaushik@gmail.com> (Srinidhi
+        Kaushik's message of "Sat, 19 Sep 2020 22:33:15 +0530")
+Message-ID: <xmqq7dspjywh.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3B5F5A2A-FAB3-11EA-9345-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 75E6E52A-FAB6-11EA-A130-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
 
-> Adds a check to verify if the remote-tracking ref of the local branch
-> is reachable from one of its "reflog" entries.
+> Adds a flag: "TRANSPORT_PUSH_FORCE_IF_INCLUDES" to indicate that the new
+> option was passed from the command line of via configuration settings;
+> update command line and configuration parsers to set the new flag
+> accordingly.
 
-s/Adds/Add/
+s/Adds/Add/;
 
-> When "--force-with-includes" is used along with "--force-with-lease",
+> Introduces a new configuration option "push.useForceIfIncludes", which
+> is equivalent to setting "--force-if-includes" in the command line.
 
-A misspelt name for the new option is found here.
+s/Introduces/Introduce/; (I won't repeat).
 
-> +/* Checks if the ref is reachable from the reflog entry. */
-> +static int reflog_entry_reachable(struct object_id *o_oid,
-> +			       struct object_id *n_oid,
-> +			       const char *ident, timestamp_t timestamp,
-> +			       int tz, const char *message, void *cb_data)
-> +{
-> +	struct commit *local_commit;
-> +	struct commit *remote_commit = cb_data;
-> +
-> +	local_commit = lookup_commit_reference(the_repository, n_oid);
-> +	if (local_commit)
-> +		return in_merge_bases(remote_commit, local_commit);
-> +
-> +	return 0;
-> +}
+>
+> Updates "remote-curl" to recognize and pass this option to "send-pack"
+> when enabled.
+>
+> Updates "advise" to catch the reject reason "REJECT_REF_NEEDS_UPDATE",
+> which is set when the ref status is "REF_STATUS_REJECT_REMOTE_UPDATED"
+> and (optionally) print a help message when the push fails.
 
-Makes me wonder, if in_merge_bases() is so expensive that it makes
-sense to split the "were we exactly at the tip?" and "is one of the
-commits we were at a descendant of the tip?" into separate phases,
-if this part should be calling in_merge_bases() one by one.
+All of the above say what were done.  A summarizing sentence before
+all of the above would make the proposed commit log message perfect,
+perhaps:
 
-Would it make more sense to iterate over reflog entries from newer
-to older, collect them in an array of pointers to "struct commit" in
-a batch of say 8 commits or less, and then ask in_merge_bases_many()
-if the remote_commit is an ancestor of one of these local commits?
+    The previous step added the necessary machinery to implement the
+    "--force-if-includes" protection, when "--force-with-lease" is
+    used without giving exact object the remote still ought to have.
+    Surface the feature by adding a command line option and a
+    configuration variable to enable it.
 
-The traversal cost to start from one "local commit" to see if
-remote_commit is an ancestor of it using in_merge_bases() and
-in_merge_bases_many() should be the same and an additional traversal
-cost to start from more local commits should be negligible compared
-to the traversal itself, so making a call to in_merge_bases() for
-each local_commit smells somewhat suboptimal.
+    - Add a flag ... to indicate that ...
 
-If we were talking about older parts of the history, optional
-generation numbers could change the equation somewhat, but the
-common case for the workflow this series is trying to help is that
-these local commits ane the remote tip are relatively new and it is
-not unlikely that the generation numbers have not been computed for
-them, which is why I suspect that in_merges_many may be a win.
+    - Introduce a configuration option ...
 
-> @@ -2301,6 +2380,15 @@ void apply_push_cas(struct push_cas_option *cas,
->  		    struct ref *remote_refs)
->  {
->  	struct ref *ref;
-> -	for (ref = remote_refs; ref; ref = ref->next)
-> +	for (ref = remote_refs; ref; ref = ref->next) {
->  		apply_cas(cas, remote, ref);
-> +
-> +		/*
-> +		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
-> +		 * mode, and if "--foce-if-includes" was specified, run
-> +		 * the check.
-> +		 */
-> +		if (ref->if_includes)
-> +			check_if_includes_upstream(ref);
+    - Update 'remote-curl' to ...
 
-s/foce/force/; 
+    ...
 
-I can see that the code is checking "and if force-if-includes was
-specified" part, but it is not immediately clear where the code
-checks if "--force-with-lease" is used with "tracking" and not with
-"the other side must be exactly this commit" mode here.
 
-    ... goes and looks ...
+Also, in the proposed log message for [1/3], especially near its
+end, how "--force-if-includes" interacts with "--force-with-lease"
+was described.  The description should be added to the log message
+of this change, as it is what introduces the end-user facing
+feature.  The description can also be in the log for [1/3] as well,
+but not having it here for [2/3] is unfriendly to the readers.
 
-Ah, ok, I found out. 
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index 4d76727edb..9289c0eecb 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -159,6 +159,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+>  	int progress = -1;
+>  	int from_stdin = 0;
+>  	struct push_cas_option cas = {0};
+> +	unsigned int force_if_includes = 0;
 
-The field name "if_includes", and the comment for the field in
-remote.h, are both misleading.  It gives an impression that the
-field being true means "--force-if-included is in use", but in
-reality the field means a lot more.  When it is true, it signals
-that "--force-if-included" is in use *and* for this ref we were told
-to use the "--force-with-lease" without an exact object name.  And
-that logic is not here, but has already happened in apply_cas().
+I think OPT_BOOL takes a pointer to int, not unsigned, as it is
+OPT_SET_INT in disguise, and you can see that a near-by 'progress'
+that also is fed to OPT_BOOL() is 'int' so you can mimic it.
 
-Which makes the above comment correct.  We however need a better
-name for this field and/or an explanation for the field in the
-header file, or both, to avoid misleading readers.
+> @@ -184,6 +185,8 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+>  		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
+>  		  N_("require old value of ref to be at this value"),
+>  		  PARSE_OPT_OPTARG, parseopt_push_cas_option),
+> +		OPT_BOOL(0, TRANS_OPT_FORCE_IF_INCLUDES, &force_if_includes,
+> +			 N_("require remote updates to be integrated locally")),
+>  		OPT_END()
+>  	};
 
 > diff --git a/remote.h b/remote.h
-> index 5e3ea5a26d..38ab8539e2 100644
+> index 38ab8539e2..72c374d539 100644
 > --- a/remote.h
 > +++ b/remote.h
-> @@ -104,7 +104,9 @@ struct ref {
->  		forced_update:1,
->  		expect_old_sha1:1,
->  		exact_oid:1,
-> -		deletion:1;
-> +		deletion:1,
-> +		if_includes:1, /* If "--force-with-includes" was specified. */
+> @@ -350,4 +350,10 @@ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
+>  int is_empty_cas(const struct push_cas_option *);
+>  void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
+>  
+> +/*
+> + * Sets "use_force_if_includes" for "compare-and-swap"
+> + * when "--force-if-includes" is specified.
+> + */
+> +void push_set_force_if_includes(struct push_cas_option *);
 
-The description needs to be tightened.
+Let's not add this helper function.  Instead just open-code a single
+liner at its two callers.  It makes it easier to read and understand
+the flow and the logic in cmd_push() and cmd_send_pack().
 
-> +		unreachable:1; /* For "if_includes"; unreachable in reflog. */
+> diff --git a/transport-helper.c b/transport-helper.c
+> index e547e21199..2a4436dd79 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -868,6 +868,12 @@ static void set_common_push_options(struct transport *transport,
+>  		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
+>  			die(_("helper %s does not support --atomic"), name);
+>  
+> +	/* If called with "--force-if-includes". */
 
+The comment does not add any value as you are already using a
+descriptive constant name.  Drop it to follow suit of existing if
+statements nearby.
+
+> +	if (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES)
+> +		if (set_helper_option(transport, TRANS_OPT_FORCE_IF_INCLUDES, "true") != 0)
+> +			die(_("helper %s does not support --%s"),
+> +			    name, TRANS_OPT_FORCE_IF_INCLUDES);
+> +
+>  	if (flags & TRANSPORT_PUSH_OPTIONS) {
+>  		struct string_list_item *item;
+>  		for_each_string_list_item(item, transport->push_options)
 
 Thanks.
