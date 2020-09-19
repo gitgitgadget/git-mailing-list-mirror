@@ -2,188 +2,141 @@ Return-Path: <SRS0=5dtp=C4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C589C43463
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 14:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38200C43464
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 15:10:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D237E21741
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 14:48:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF771208C7
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 15:10:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=alibaba-inc.com header.i=@alibaba-inc.com header.b="HfO+gFdd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fsxa1Ybo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbgISOsd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 10:48:33 -0400
-Received: from out0-130.mail.aliyun.com ([140.205.0.130]:38687 "EHLO
-        out0-130.mail.aliyun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726312AbgISOsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Sep 2020 10:48:32 -0400
+        id S1726537AbgISPKQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Sep 2020 11:10:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58956 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726511AbgISPKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Sep 2020 11:10:16 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DFC1C0613CE
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 08:10:16 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id z4so8440220wrr.4
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 08:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=alibaba-inc.com; s=default;
-        t=1600526909; h=From:To:Subject:Date:Message-Id:MIME-Version;
-        bh=HCIeUf8zrfyoaEU5HuQIL1YRY1dfDxLqNCB6MXx1sX8=;
-        b=HfO+gFddkOPU/rJd6QgsoPAmn0cJZKgecXsGjdig3clWVU1kLJm49ce8Ktj4uN0Y+WNfvQ6pAUc/FOyDB3QlWsg+3x5+QSmyI3t9fcI0vrzvr3EY8GU8IjfqrlEtjQnern81KambFydljpNs5x93stXfx3DJEh3eqk91x8muLJE=
-X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R291e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e02c03302;MF=hanxin.hx@alibaba-inc.com;NM=1;PH=DS;RN=4;SR=0;TI=SMTPD_---.IZH-rgV_1600526901;
-Received: from localhost.localdomain(mailfrom:hanxin.hx@alibaba-inc.com fp:SMTPD_---.IZH-rgV_1600526901)
-          by smtp.aliyun-inc.com(127.0.0.1);
-          Sat, 19 Sep 2020 22:48:27 +0800
-From:   "Han Xin" <hanxin.hx@alibaba-inc.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     "Han Xin" <hanxin.hx@alibaba-inc.com>,
-        "=?UTF-8?B?6JKL6ZGrKOefpeW/pyk=?=" <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3] send-pack: run GPG after atomic push checking
-Date:   Sat, 19 Sep 2020 22:47:50 +0800
-Message-Id: <20200919144750.95812-1-hanxin.hx@alibaba-inc.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <xmqqft7eljkz.fsf@gitster.c.googlers.com>
-References: <xmqqft7eljkz.fsf@gitster.c.googlers.com>
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=f1vM+uO1jAlO9pIswgC7gmzNhpZtnaE2i9MNQzjEbpI=;
+        b=Fsxa1YboXSsZTINmeH4Uv8l/PlRS9RnUnLBrtdNPJgcW47/1R4wKwRAOw8cKlOwt8p
+         UmRKokTxiyaq+ntKEGQLJpw5nX9NDgiiffESeCZfBKoBs0ijzVoLOOJuJkvD7BKSCDdk
+         shuwCbwNmUr/kWCPRnZoZqwosv1Yb1qz9e3aY+9WF5sEef8sIUCGMykqFfAm6esaZVAf
+         UXIAO87PgUMWHgNNgjOToZeB2WYyqJ4gkivRbJsSCD+8J/we0eREeOj/tlg/ecNGvExG
+         b8p1ZZqLR/TIc3rkuJcaX4eTmVKEnWWewP0oWT+BpEdyCnkeWuhsGV9G7EbWP00Lk4DD
+         MEqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=f1vM+uO1jAlO9pIswgC7gmzNhpZtnaE2i9MNQzjEbpI=;
+        b=mH4+GFrt0DRgEEOLVr1YyySRHlTwpD7X1ZloFsjFEngGxKn7uWcSiKxXXGwkZn71fQ
+         FHBiM3QiOi6kZHbUHstjg12mTLaolwZQaNYWy3793BdIjYgIUXl8IdZW6az4MXMKkWgl
+         TbBTtFyG9Or2cKbXky73qMJD8Qz84w3S9rL4U5rYvG1RDZ4J25XuyeZGp7FoCvMd35vb
+         njaSafS4UD+Pr5RsQTGEtVCxEj2+y2FcHEOJ2enhtirHuFsQr4UTpiyWZAtocvnrXclt
+         gtakMmhbRYrfGEaJJZPr5rTySjFYJT4InMp/e8k65EFBiTpXUe3qngcvXFObFC8cKxD7
+         L2LQ==
+X-Gm-Message-State: AOAM530603EcJy8xyHPommdkhqcCoD/f06aFKQN9ENcHlbgBsmGcz7JS
+        Ur7gUxBV0SArVj4kGigcQoY=
+X-Google-Smtp-Source: ABdhPJximdo0ZTC7V3NAAp+OV9G0XBSrMwFQQ5LcIfsmidAHZOxUcXwBWV0g7wQ17KMVb74xG5wKKQ==
+X-Received: by 2002:adf:d845:: with SMTP id k5mr40437151wrl.285.1600528214935;
+        Sat, 19 Sep 2020 08:10:14 -0700 (PDT)
+Received: from [192.168.1.240] (79.35.7.51.dyn.plus.net. [51.7.35.79])
+        by smtp.gmail.com with ESMTPSA id h17sm12226093wro.27.2020.09.19.08.10.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 19 Sep 2020 08:10:13 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Git in Outreachy?
+To:     Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20200828065609.GA2105118@coredump.intra.peff.net>
+ <20200831180537.GC331156@google.com>
+ <20200901125119.GA3250129@coredump.intra.peff.net>
+ <20200903054126.GA2053272@coredump.intra.peff.net>
+ <20200915173529.GA2859918@coredump.intra.peff.net>
+ <CAP8UFD3NxmBDDr4yqhOjmdUNVZYe6w4vW-TnqbkUO_zuFvKvpw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <c1fb4d61-2a7a-8c8e-f2e3-d0b4ca75ff82@gmail.com>
+Date:   Sat, 19 Sep 2020 16:10:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD3NxmBDDr4yqhOjmdUNVZYe6w4vW-TnqbkUO_zuFvKvpw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The refs update commands can be sent to the server side in two different
-ways: GPG-signed or unsigned.  We should run these two operations in the
-same "Finally, tell the other end!" code block, but they are seperated
-by the "Clear the status for each ref" code block.  This will result in
-a slight performance loss, because the failed atomic push will still
-perform unnecessary preparations for shallow advertise and GPG-signed
-commands buffers, and user may have to be bothered by the (possible) GPG
-passphrase input when there is nothing to sign.
+On 19/09/2020 09:12, Christian Couder wrote:
+> On Tue, Sep 15, 2020 at 7:35 PM Jeff King <peff@peff.net> wrote:
+>>
+>> On Thu, Sep 03, 2020 at 01:41:26AM -0400, Jeff King wrote:
+>>
+>>> I'm still working out funding details, but in the meantime we're signed
+>>> up. Potential mentors should propose projects here:
+>>>
+>>>    https://www.outreachy.org/communities/cfp/git/
+>>>
+>>> Sooner is better than later. We can technically submit projects up until
+>>> the 24th, but student applications are open now, and have to be in by
+>>> September 20th.
+>>
+>> [Adding everybody to the cc list who has been in the Outreachy
+>> thread this year...]
+>>
+>> AFAICT we still have no proposed projects nor signed-up mentors.
+> 
+> It seems that we now have only the 2 projects I proposed and only 1
+> signed-up mentor (me).
 
-Add a new test case to t5534 to ensure GPG will not be called when the
-GPG-signed atomic push fails.
+I've been accepted as a co-mentor on the rebase project now.
 
-Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
----
- send-pack.c            | 58 ++++++++++++++++++++++--------------------
- t/t5534-push-signed.sh | 23 +++++++++++++++++
- 2 files changed, 53 insertions(+), 28 deletions(-)
+Best Wishes
 
-diff --git a/send-pack.c b/send-pack.c
-index d671ab5d05..f227b7315e 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -244,7 +244,12 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
- 		return CHECK_REF_STATUS_REJECTED;
- 	case REF_STATUS_UPTODATE:
- 		return CHECK_REF_UPTODATE;
-+
- 	default:
-+	case REF_STATUS_EXPECTING_REPORT:
-+		/* already passed checks on the local side */
-+	case REF_STATUS_OK:
-+		/* of course this is OK */
- 		return 0;
- 	}
- }
-@@ -447,13 +452,6 @@ int send_pack(struct send_pack_args *args,
- 		if (ref->deletion && !allow_deleting_refs)
- 			ref->status = REF_STATUS_REJECT_NODELETE;
- 
--	if (!args->dry_run)
--		advertise_shallow_grafts_buf(&req_buf);
--
--	if (!args->dry_run && push_cert_nonce)
--		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
--					       cap_buf.buf, push_cert_nonce);
--
- 	/*
- 	 * Clear the status for each ref and see if we need to send
- 	 * the pack data.
-@@ -489,31 +487,35 @@ int send_pack(struct send_pack_args *args,
- 			ref->status = REF_STATUS_EXPECTING_REPORT;
- 	}
- 
-+	if (!args->dry_run)
-+		advertise_shallow_grafts_buf(&req_buf);
-+
- 	/*
- 	 * Finally, tell the other end!
- 	 */
--	for (ref = remote_refs; ref; ref = ref->next) {
--		char *old_hex, *new_hex;
--
--		if (args->dry_run || push_cert_nonce)
--			continue;
--
--		if (check_to_send_update(ref, args) < 0)
--			continue;
--
--		old_hex = oid_to_hex(&ref->old_oid);
--		new_hex = oid_to_hex(&ref->new_oid);
--		if (!cmds_sent) {
--			packet_buf_write(&req_buf,
--					 "%s %s %s%c%s",
--					 old_hex, new_hex, ref->name, 0,
--					 cap_buf.buf);
--			cmds_sent = 1;
--		} else {
--			packet_buf_write(&req_buf, "%s %s %s",
--					 old_hex, new_hex, ref->name);
-+	if (!args->dry_run && push_cert_nonce)
-+		cmds_sent = generate_push_cert(&req_buf, remote_refs, args,
-+					       cap_buf.buf, push_cert_nonce);
-+	else if (!args->dry_run)
-+		for (ref = remote_refs; ref; ref = ref->next) {
-+			char *old_hex, *new_hex;
-+
-+			if (check_to_send_update(ref, args) < 0)
-+				continue;
-+
-+			old_hex = oid_to_hex(&ref->old_oid);
-+			new_hex = oid_to_hex(&ref->new_oid);
-+			if (!cmds_sent) {
-+				packet_buf_write(&req_buf,
-+						 "%s %s %s%c%s",
-+						 old_hex, new_hex, ref->name, 0,
-+						 cap_buf.buf);
-+				cmds_sent = 1;
-+			} else {
-+				packet_buf_write(&req_buf, "%s %s %s",
-+						 old_hex, new_hex, ref->name);
-+			}
- 		}
--	}
- 
- 	if (use_push_options) {
- 		struct string_list_item *item;
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 030331f1c5..7e928aff66 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -273,4 +273,27 @@ test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- 	test_cmp expect dst/push-cert-status
- '
- 
-+test_expect_success GPG 'failed atomic push does not execute GPG' '
-+	prepare_dst &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	write_script gpg <<-EOF &&
-+	# should check atomic push locally before running GPG.
-+	exit 1
-+	EOF
-+	test_must_fail env PATH="$TRASH_DIRECTORY:$PATH" git push \
-+			--signed --atomic --porcelain \
-+			dst noop ff noff >out 2>&1 &&
-+
-+	test_i18ngrep ! "gpg failed to sign" out &&
-+	sed -n -e "/^To dst/,$ p" out >actual &&
-+	cat >expect <<-EOF &&
-+	To dst
-+	=	refs/heads/noop:refs/heads/noop	[up to date]
-+	!	refs/heads/ff:refs/heads/ff	[rejected] (atomic push failed)
-+	!	refs/heads/noff:refs/heads/noff	[rejected] (non-fast-forward)
-+	Done
-+	EOF
-+	test_i18ncmp expect actual
-+'
-+
- test_done
--- 
-2.28.0
+Phillip
 
+> It looks like Jonathan and Emily are reaching out to the Wireshark
+> community to find a co-mentor which is great! So we might have another
+> project and the associated mentors soon.
+> 
+> Outreachy organizers have extended the mentor project submission
+> deadline though. The new deadline is Sept. 29, 2020 at 4pm UTC. They
+> also say that this deadline is a hard deadline, as the contribution
+> period opens October 1, and they cannot add new projects after that
+> date.
+> 
+>> Interns are actively applying _now_, so we are likely missing out on (or
+>> have already missed out on) applicants.
+>>
+>> If you're interested in mentoring, the time to propose is definitely
+>> ASAP.
+> 
+> Sure. By the way if you are interested in mentoring or co-mentoring,
+> then signing-up is not definitive, you can always decide not to mentor
+> at all later for any reason as long as an intern has not been selected
+> yet. (Intern selection deadline is Nov. 9, 2020.)
+> 
