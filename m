@@ -2,180 +2,210 @@ Return-Path: <SRS0=5dtp=C4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 195E9C43463
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5390C43463
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC0AD21D42
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:27:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FEDC21D42
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:42:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vLduy2Hc"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lNBYN9R4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbgISU1A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 16:27:00 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50057 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbgISU1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Sep 2020 16:27:00 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75D69E2D83;
-        Sat, 19 Sep 2020 16:26:58 -0400 (EDT)
+        id S1726626AbgISUma (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Sep 2020 16:42:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60536 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726575AbgISUma (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Sep 2020 16:42:30 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2ABBA729FE;
+        Sat, 19 Sep 2020 16:42:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CMFgfXnBgqXi1cQQB/7/OuLb80A=; b=vLduy2
-        HcymOLrgBd0nm1DlOxz8uEznUHeWzp/EYMVRNU9HYyDKfKlqU25ZzmrLt39JiNX/
-        h/tg7YP5Vcatzz0nnmOr5tDFMeobSQSwtl+zFQmc5ak598VP+yG6xQ/edGD+t2Ee
-        e43yjAlBWk9Lh7n+/i8ZrT9KHTtEbOstyupxc=
+        :content-type; s=sasl; bh=FGLXA0mIG2SKTl5EoTip/0oeFEc=; b=lNBYN9
+        R4/y89tUDadnh0l7K1F4pGui7Kx1PxJ49y+1EhA+RJ7kFbg9gVmMhDvZ2VU7Ii9L
+        LTbet5qtvaPMC4gMRqw33IqVK3xLpFBxoWZWwtH9c5FkhELFAG1LjGQdqj32Z2Oi
+        GNuth1Vafn5lxwh9SIznhvFcxrjXZCcGiLmhU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ORd+TI73JdMuRgcYZ0pI0aFTI7LBurRW
-        DGePwihgCE1OCc/U+EfAnIy7yBfbi5EcEhZktP54ZE9VGiHQFxVNJuzICO5iAqkv
-        cnq5DhxXG4RmdtKKzz+OhfEKeDDH4vwO65xqM1hWBhF0Dg3myJFe2uzubVv01VGT
-        yJiBoF6ALio=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F77AE2D82;
-        Sat, 19 Sep 2020 16:26:58 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=FGbLM/tzQF/Hay5t/nNRqLXz13G8yv3l
+        K40uQNmj5/SiLZJwYtNOLWo3BeX6XddIthQoDGyQMlO+uM6JVIuLZIjKDnVJ7HbM
+        iB0o5ZHGj03+YLQrcRv09nQDkbZVw/CFsVDEI+uab8JZnJi9I4fhVqBYdny2gfhM
+        vHYyw5C/Llc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 229AD729FD;
+        Sat, 19 Sep 2020 16:42:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AE7DEE2D7F;
-        Sat, 19 Sep 2020 16:26:55 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A622B729FB;
+        Sat, 19 Sep 2020 16:42:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] push: parse and set flag for "--force-if-includes"
+Subject: Re: [PATCH v4 3/3] t, doc: update tests, reference for
+ "--force-if-includes"
 References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
         <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
-        <20200919170316.5310-3-shrinidhi.kaushik@gmail.com>
-Date:   Sat, 19 Sep 2020 13:26:54 -0700
-In-Reply-To: <20200919170316.5310-3-shrinidhi.kaushik@gmail.com> (Srinidhi
-        Kaushik's message of "Sat, 19 Sep 2020 22:33:15 +0530")
-Message-ID: <xmqq7dspjywh.fsf@gitster.c.googlers.com>
+        <20200919170316.5310-4-shrinidhi.kaushik@gmail.com>
+Date:   Sat, 19 Sep 2020 13:42:26 -0700
+In-Reply-To: <20200919170316.5310-4-shrinidhi.kaushik@gmail.com> (Srinidhi
+        Kaushik's message of "Sat, 19 Sep 2020 22:33:16 +0530")
+Message-ID: <xmqq363djy6l.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 75E6E52A-FAB6-11EA-A130-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A165AC2A-FAB8-11EA-ADC0-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
 
-> Adds a flag: "TRANSPORT_PUSH_FORCE_IF_INCLUDES" to indicate that the new
-> option was passed from the command line of via configuration settings;
-> update command line and configuration parsers to set the new flag
-> accordingly.
+> Subject: Re: [PATCH v4 3/3] t, doc: update tests, reference for "--force-if-includes"
 
-s/Adds/Add/;
+good.
 
-> Introduces a new configuration option "push.useForceIfIncludes", which
-> is equivalent to setting "--force-if-includes" in the command line.
-
-s/Introduces/Introduce/; (I won't repeat).
-
+> * t/t5533-push-cas.sh:
+>     Updates test cases for "compare-and-swap" when used along with
+>     "--force-if-includes" helps mitigate overwrites when remote
+>     ref are updated in the background.
 >
-> Updates "remote-curl" to recognize and pass this option to "send-pack"
-> when enabled.
->
-> Updates "advise" to catch the reject reason "REJECT_REF_NEEDS_UPDATE",
-> which is set when the ref status is "REF_STATUS_REJECT_REMOTE_UPDATED"
-> and (optionally) print a help message when the push fails.
+> * Documentation:
+>     Adds reference for the new option, configuration setting
+>     ("push.useForceIfIncludes") and advise messages.
 
-All of the above say what were done.  A summarizing sentence before
-all of the above would make the proposed commit log message perfect,
-perhaps:
+s/Updates/Update/; s/Adds/Add/;
 
-    The previous step added the necessary machinery to implement the
-    "--force-if-includes" protection, when "--force-with-lease" is
-    used without giving exact object the remote still ought to have.
-    Surface the feature by adding a command line option and a
-    configuration variable to enable it.
+> +push.useForceIfIncludes::
+> +	If set to "true", it is equivalent to specifying "--force-if-includes"
+> +	as an argument to linkgit:git-push[1]. Adding "--no-force-if-includes"
 
-    - Add a flag ... to indicate that ...
+s/as an argument to/on the command line of/ would be better.
 
-    - Introduce a configuration option ...
+Some readers differenciate arguments and options and we are
+discussing an option, not an argument.
 
-    - Update 'remote-curl' to ...
+> +Alternatively, specifying "--force-if-includes" an an ancillary option along
+> +with "--force-with-lease[=<refname>]" (i.e., without saying what exact commit
+> +the ref on the remote side must be pointing at, or which refs on the remote
+> +side are being protected) at the time of "push" will verify if updates from the
+> +remote-tracking refs that may have been implicitly updated in the background
+> +are integrated locally before allowing a forced update.
 
-    ...
+OK.  A user who wants to know more can refer to --force-if-includes
+from here pretty easily.
 
-
-Also, in the proposed log message for [1/3], especially near its
-end, how "--force-if-includes" interacts with "--force-with-lease"
-was described.  The description should be added to the log message
-of this change, as it is what introduces the end-user facing
-feature.  The description can also be in the log for [1/3] as well,
-but not having it here for [2/3] is unfriendly to the readers.
-
-> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> index 4d76727edb..9289c0eecb 100644
-> --- a/builtin/send-pack.c
-> +++ b/builtin/send-pack.c
-> @@ -159,6 +159,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
->  	int progress = -1;
->  	int from_stdin = 0;
->  	struct push_cas_option cas = {0};
-> +	unsigned int force_if_includes = 0;
-
-I think OPT_BOOL takes a pointer to int, not unsigned, as it is
-OPT_SET_INT in disguise, and you can see that a near-by 'progress'
-that also is fed to OPT_BOOL() is 'int' so you can mimic it.
-
-> @@ -184,6 +185,8 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
->  		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
->  		  N_("require old value of ref to be at this value"),
->  		  PARSE_OPT_OPTARG, parseopt_push_cas_option),
-> +		OPT_BOOL(0, TRANS_OPT_FORCE_IF_INCLUDES, &force_if_includes,
-> +			 N_("require remote updates to be integrated locally")),
->  		OPT_END()
->  	};
-
-> diff --git a/remote.h b/remote.h
-> index 38ab8539e2..72c374d539 100644
-> --- a/remote.h
-> +++ b/remote.h
-> @@ -350,4 +350,10 @@ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
->  int is_empty_cas(const struct push_cas_option *);
->  void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
+> @@ -341,6 +348,19 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
+>  origin +master` to force a push to the `master` branch). See the
+>  `<refspec>...` section above for details.
 >  
-> +/*
-> + * Sets "use_force_if_includes" for "compare-and-swap"
-> + * when "--force-if-includes" is specified.
-> + */
-> +void push_set_force_if_includes(struct push_cas_option *);
+> +--[no-]force-if-includes::
+> +	Force an update only if the tip of the remote-tracking ref
+> +	has been integrated locally.
+> ++
+> +This option verifies if the tip of the remote-tracking ref on which
+> +a local branch has based on (for a rewrite), is reachable from at
+> +least one of the "reflog" entries of the local branch about to be
+> +updated by force on the remote.
 
-Let's not add this helper function.  Instead just open-code a single
-liner at its two callers.  It makes it easier to read and understand
-the flow and the logic in cmd_push() and cmd_send_pack().
+The latter half of this sentence is quite a mouthful, and after
+reading it three times, it is not quite clear.
 
-> diff --git a/transport-helper.c b/transport-helper.c
-> index e547e21199..2a4436dd79 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -868,6 +868,12 @@ static void set_common_push_options(struct transport *transport,
->  		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
->  			die(_("helper %s does not support --atomic"), name);
->  
-> +	/* If called with "--force-if-includes". */
+> +The check ensures that any updates
+> +from the remote have been incorporated locally by rejecting a push
+> +if that is not the case.
 
-The comment does not add any value as you are already using a
-descriptive constant name.  Drop it to follow suit of existing if
-statements nearby.
+OK.
 
-> +	if (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES)
-> +		if (set_helper_option(transport, TRANS_OPT_FORCE_IF_INCLUDES, "true") != 0)
-> +			die(_("helper %s does not support --%s"),
-> +			    name, TRANS_OPT_FORCE_IF_INCLUDES);
+> ++
+> +Specifying "--no-force-if-includes" disables this behavior.
+
+Do we want to add:
+
+    It is a no-op unless "--force-with-lease[=<refname>]" without exact
+    object name is used at the same time.
+
+here or somewhere nearby?
+
+
+> +test_expect_success 'background updates of REMOTE can be mitigated with "--force-if-includes"' '
+> +	rm -rf src dst &&
+> +	git init --bare src.bare &&
+> +	test_when_finished "rm -rf src.bare" &&
+> +	git clone --no-local src.bare dst &&
+> +	test_when_finished "rm -rf dst" &&
+> +	(
+> +		cd dst &&
+> +		test_commit G &&
+> +		git push origin master:master
+> +	) &&
+> +	git clone --no-local src.bare dst2 &&
+> +	test_when_finished "rm -rf dst2" &&
+> +	(
+> +		cd dst2 &&
+> +		test_commit H &&
+> +		git push
+> +	) &&
+> +	(
+> +		cd dst &&
+> +		test_commit I &&
+> +		git fetch origin &&
+> +		test_must_fail git push --force-with-lease --force-if-includes origin
+
+I briefly wondered if it makes sense to also check if
+--force-with-lease alone (or with --no-force-if-includes)
+successfully pushes in this case, but I think we are OK without such
+a test.  After all, we won't test "--force" alone, either, as we
+expect that to work (and should be tested elsewhere).
+
+> +	)
+> +'
 > +
->  	if (flags & TRANSPORT_PUSH_OPTIONS) {
->  		struct string_list_item *item;
->  		for_each_string_list_item(item, transport->push_options)
+> +test_expect_success 'background updates of REMOTE can be mitigated with "push.useForceIfIncludes"' '
+> +	rm -rf src dst &&
+> +	git init --bare src.bare &&
+> +	test_when_finished "rm -rf src.bare" &&
+> +	git clone --no-local src.bare dst &&
+> +	test_when_finished "rm -rf dst" &&
+> +	(
+> +		cd dst &&
+> +		test_commit G &&
+> +		git push origin master:master
+> +	) &&
+> +	git clone --no-local src.bare dst2 &&
+> +	test_when_finished "rm -rf dst2" &&
+> +	(
+> +		cd dst2 &&
+> +		test_commit H &&
+> +		git push
+> +	) &&
+> +	(
+> +		cd dst &&
+> +		test_commit I &&
+> +		git fetch origin &&
+> +		git config --local push.useForceIfIncludes "true" &&
+> +		test_must_fail git push --force-if-includes origin
+
+I am not sure what is tested here.  I thought with or without the
+configuration variable, the feature is a no-op unless a lazy
+force-with-lease is in use?
+
+Perhaps you meant to test
+
+		test_must_fail git push --force-with-lease origin
+
+instead?
+
+> +	)
+> +'
+> +
+>  test_done
 
 Thanks.
