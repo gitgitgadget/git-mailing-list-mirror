@@ -2,116 +2,175 @@ Return-Path: <SRS0=5dtp=C4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24001C43463
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 19:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10ABBC43463
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:04:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0F5921D90
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 19:55:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF41B21D42
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 20:04:03 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LIoijCjg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbgISTzv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 15:55:51 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34566 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726518AbgISTzv (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 19 Sep 2020 15:55:51 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726528AbgISUD5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Sep 2020 16:03:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54059 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726511AbgISUD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Sep 2020 16:03:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BA11CE9FCB;
+        Sat, 19 Sep 2020 16:03:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1axamRcSbm6HBytjN6b/1etofhc=; b=LIoijC
+        jgQlbONQJ3UcbvFsG+s/Z4qajdJDfrmBZpji8tnGmW7ba4P5dvdd9Od8ajgl3mRZ
+        OPaDx6Z375Tay9zIlZ+5Lzb+nfep9DsVRIx7bzIvzoy8YcXSf1R5Fd1jX3lbLeWU
+        +llnBpixJJYKeQMBR4agQdbi1Islucge2uYew=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WmO/ltDQggq0l36dqAIMrKabCBqV5QqD
+        gELWC+Jx1z3+rl4n2m4yxHY2jina39H5gxFVJ3pxdk3/1C/O01p35ymFvT/489qp
+        te83Iwp9dXUezxxthw5JsaFzhA8Awog19fpjX4dlrP9LW6KbszaPxb0a8b9HMSqa
+        SyqqnljNQvg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B3027E9FCA;
+        Sat, 19 Sep 2020 16:03:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 49F4960457;
-        Sat, 19 Sep 2020 19:55:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1600545349;
-        bh=2jCxHCGS+tMvADEQ7o5mTT5r4ryXf75GuPXUTPBJHjA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Im46Y/rG4LeleMFfVx+LswmjW/kkvjLhOTRxoZz1B6iz9ufepSksqW0HAd5oxzvr0
-         vLgd9wgBvi7Iqc/2Lq0ocMoUi/wCvO6VnehKps037PVrIjrzDGMha6d5owTk7VZy67
-         haBJebLHConhBwN4vwoXtt/4g6Z31KhfUeVXjYw8I0CUOma1I2drbjjcNZoNsd4fW4
-         lsPz+aWBjep6IZ5rXtnxnHXixPYkgWXxYcpbgRtrAf9V2pMOZulgNR2dgG0URfORZ6
-         bouBrPvHCrqYFvly2ahwRmG0ovfseGQU4kFwRJvV77jo0Zi6tER+qUrijrS8V6yNwY
-         QdBRBxu1ERaWE/kfV5pvUJ9gcmjCaf9ht/O8ejY+wh2SVzMhUGQRCGyzeiNvBdcSyK
-         uIdbpkjAaMDpif8+qGn9opjJL8XnWTUyif/n7taS1JZErG9UZrIy63NabzVLn1DveV
-         /Gr9D69+DOSJD+HqGdFtwgEcp8IbfYzOXkAy1qE1WHboiYq4/To
-Date:   Sat, 19 Sep 2020 19:55:45 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     ronnie sahlberg <ronniesahlberg@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Developer support list for Wireshark 
-        <wireshark-dev@wireshark.org>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: Joint project with Git for outreachy
-Message-ID: <20200919195545.GH67496@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        ronnie sahlberg <ronniesahlberg@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Developer support list for Wireshark <wireshark-dev@wireshark.org>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-References: <20200918222103.GA3352870@google.com>
- <CAN05THSUN4YToYRqWUxZ0r2=wVxJU0V2iWumx1jjx=eTQ7rAYw@mail.gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 06A3CE9FC9;
+        Sat, 19 Sep 2020 16:03:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 1/3] push: add reflog check for "--force-if-includes"
+References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
+        <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
+        <20200919170316.5310-2-shrinidhi.kaushik@gmail.com>
+Date:   Sat, 19 Sep 2020 13:03:47 -0700
+In-Reply-To: <20200919170316.5310-2-shrinidhi.kaushik@gmail.com> (Srinidhi
+        Kaushik's message of "Sat, 19 Sep 2020 22:33:14 +0530")
+Message-ID: <xmqqft7djzz0.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Rn7IEEq3VEzCw+ji"
-Content-Disposition: inline
-In-Reply-To: <CAN05THSUN4YToYRqWUxZ0r2=wVxJU0V2iWumx1jjx=eTQ7rAYw@mail.gmail.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3B5F5A2A-FAB3-11EA-9345-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
 
---Rn7IEEq3VEzCw+ji
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Adds a check to verify if the remote-tracking ref of the local branch
+> is reachable from one of its "reflog" entries.
 
-On 2020-09-19 at 09:12:53, ronnie sahlberg wrote:
-> Hi Jonathan,
-> Hi Emily
->=20
-> Emily, you want to contribute to wireshark? That is awesome. I think I
-> speak for everyone to send a HUGE welcome
-> your way and hope your experience working on and with wireshark be excell=
-ent!
+s/Adds/Add/
 
-I think there's been a misunderstanding.  I think the proposal was to
-have Emily and Jonathan, who are both significant contributors to Git,
-doing the mentoring from the Git side, along with someone from the
-Wireshark side.  I don't think we know yet if anyone will be interested
-in working on it, but it seems from the response to be a proposal that
-has interest in both projects.
+> When "--force-with-includes" is used along with "--force-with-lease",
 
-Feel free to correct me if I've misunderstood.
+A misspelt name for the new option is found here.
 
-> I think a git dissector would be really awesome.
-> We do have a packet-git.c already in wireshark, but looking at it it
-> is very barebones (understatement of the year:-)
-> but getting a real full blown git protocol implementation would be
-> totally awesome.
+> +/* Checks if the ref is reachable from the reflog entry. */
+> +static int reflog_entry_reachable(struct object_id *o_oid,
+> +			       struct object_id *n_oid,
+> +			       const char *ident, timestamp_t timestamp,
+> +			       int tz, const char *message, void *cb_data)
+> +{
+> +	struct commit *local_commit;
+> +	struct commit *remote_commit = cb_data;
+> +
+> +	local_commit = lookup_commit_reference(the_repository, n_oid);
+> +	if (local_commit)
+> +		return in_merge_bases(remote_commit, local_commit);
+> +
+> +	return 0;
+> +}
 
-I agree that a Git dissector would be an awesome addition to Wireshark,
-for all the reasons mentioned, and I do hope someone is able to pick it
-up.  I'd personally find such a feature very useful, and I know some
-colleagues who probably would as well.
---=20
-brian m. carlson: Houston, Texas, US
+Makes me wonder, if in_merge_bases() is so expensive that it makes
+sense to split the "were we exactly at the tip?" and "is one of the
+commits we were at a descendant of the tip?" into separate phases,
+if this part should be calling in_merge_bases() one by one.
 
---Rn7IEEq3VEzCw+ji
-Content-Type: application/pgp-signature; name="signature.asc"
+Would it make more sense to iterate over reflog entries from newer
+to older, collect them in an array of pointers to "struct commit" in
+a batch of say 8 commits or less, and then ask in_merge_bases_many()
+if the remote_commit is an ancestor of one of these local commits?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+The traversal cost to start from one "local commit" to see if
+remote_commit is an ancestor of it using in_merge_bases() and
+in_merge_bases_many() should be the same and an additional traversal
+cost to start from more local commits should be negligible compared
+to the traversal itself, so making a call to in_merge_bases() for
+each local_commit smells somewhat suboptimal.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2ZiQAAKCRB8DEliiIei
-gfccAP9f7Pc74zHLEOjonaTfo8IedAyruzV/wFGrE3zGPqZmJAEAnPU1/j8gRpfe
-EReDvu3ZHFhPj2v2XTf4lnwOqlnNnw0=
-=yugp
------END PGP SIGNATURE-----
+If we were talking about older parts of the history, optional
+generation numbers could change the equation somewhat, but the
+common case for the workflow this series is trying to help is that
+these local commits ane the remote tip are relatively new and it is
+not unlikely that the generation numbers have not been computed for
+them, which is why I suspect that in_merges_many may be a win.
 
---Rn7IEEq3VEzCw+ji--
+> @@ -2301,6 +2380,15 @@ void apply_push_cas(struct push_cas_option *cas,
+>  		    struct ref *remote_refs)
+>  {
+>  	struct ref *ref;
+> -	for (ref = remote_refs; ref; ref = ref->next)
+> +	for (ref = remote_refs; ref; ref = ref->next) {
+>  		apply_cas(cas, remote, ref);
+> +
+> +		/*
+> +		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
+> +		 * mode, and if "--foce-if-includes" was specified, run
+> +		 * the check.
+> +		 */
+> +		if (ref->if_includes)
+> +			check_if_includes_upstream(ref);
+
+s/foce/force/; 
+
+I can see that the code is checking "and if force-if-includes was
+specified" part, but it is not immediately clear where the code
+checks if "--force-with-lease" is used with "tracking" and not with
+"the other side must be exactly this commit" mode here.
+
+    ... goes and looks ...
+
+Ah, ok, I found out. 
+
+The field name "if_includes", and the comment for the field in
+remote.h, are both misleading.  It gives an impression that the
+field being true means "--force-if-included is in use", but in
+reality the field means a lot more.  When it is true, it signals
+that "--force-if-included" is in use *and* for this ref we were told
+to use the "--force-with-lease" without an exact object name.  And
+that logic is not here, but has already happened in apply_cas().
+
+Which makes the above comment correct.  We however need a better
+name for this field and/or an explanation for the field in the
+header file, or both, to avoid misleading readers.
+
+> diff --git a/remote.h b/remote.h
+> index 5e3ea5a26d..38ab8539e2 100644
+> --- a/remote.h
+> +++ b/remote.h
+> @@ -104,7 +104,9 @@ struct ref {
+>  		forced_update:1,
+>  		expect_old_sha1:1,
+>  		exact_oid:1,
+> -		deletion:1;
+> +		deletion:1,
+> +		if_includes:1, /* If "--force-with-includes" was specified. */
+
+The description needs to be tightened.
+
+> +		unreachable:1; /* For "if_includes"; unreachable in reflog. */
+
+
+Thanks.
