@@ -7,115 +7,113 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 285A8C43464
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 07:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E3DEC43464
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 08:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8DF720795
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 07:41:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC30C2100A
+	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 08:12:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vo3JU7tJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mxWatDWM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726218AbgISHlJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 03:41:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45906 "EHLO
+        id S1726168AbgISIMw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Sep 2020 04:12:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726041AbgISHlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Sep 2020 03:41:09 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 567DFC0613CE
-        for <git@vger.kernel.org>; Sat, 19 Sep 2020 00:41:09 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id p9so11031550ejf.6
-        for <git@vger.kernel.org>; Sat, 19 Sep 2020 00:41:09 -0700 (PDT)
+        with ESMTP id S1726054AbgISIMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Sep 2020 04:12:51 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70873C0613CE
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 01:12:51 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id j2so8204598eds.9
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 01:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=nP9aEkTeM/4rRcbtd7kGylZzEgFWhf/7pQkFPlQNcDE=;
-        b=Vo3JU7tJ26rT+xQUmA13pMS+uTRA4prgZWNb3Ijn35y70DE00/YbT44Iq+3Ux9daWH
-         36h6KCO8sTx6A0WmzsiE4s6WTbslQdy3VelVjs+9nk4IoKIHGmnyLxBdrc3YS9yO9+h4
-         QnyJWIoqmkU6H7dv7fvqcCrNyNJIDK/8DOWSxAnSyUxTzhhZHB5MNyK3tgz0wjFohV1F
-         VCdHv93WDRaZkSb2LRS97M1D9LQutqZno+IGz49nTx0Oo9lfRKJ3hV4jDDCmTFBZ+egP
-         g1MxqS+gJVWPmGOxVzhQ4uULarkjpuH7ftpn8SpK2fX7LOviZdjqDo3fSXn6s9E1S1/e
-         YUYw==
+        bh=BxdbkUsMwa0KeIsGrGxZyG/r7olMzkXxS9Ql6mErBPs=;
+        b=mxWatDWM6qScuPXt5F1FbJbowNyoZf7Z6Hhq1SM1S+oviVVp/8KfOM65FzG5xDcyb6
+         GkjrmtVssFNWaj95AY6TBUxWUlApCiaY9yfyucaX0pirmPPlhoDDFINrInQqntahfjNO
+         f+4KNFUAMZ/rQ+GYnLwy2VUBhiVAByl6KljmtCDGIkbBTkBKUkLU5BSHbz+AaLkSFJg1
+         RjAGpLYwAGuhy6q4D4S9qdLUgPKdjoO3UXgtGV9Z8XLMhVKbQZxnO2sW0gRDRwYCZ/5O
+         75+AO/ruBqUEbpeJfN0zRtyqPwpVNKiCSWoBF+5Tg+XFy3v0dDDspPq3nicFxh3hF9QK
+         qBuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nP9aEkTeM/4rRcbtd7kGylZzEgFWhf/7pQkFPlQNcDE=;
-        b=SQ6oESyhP2JsTeXUmJgBwp7gbKbVGQZe5U1dV8ThhT5Vw3WD0wRwPzHGiEnSi79tDc
-         xdCcL/nhs2jQL668QKlscyCGMzfUlMf8rpq7kEt+RIAtcba2dNgSlnvOXO7mzONPQcuM
-         A7Qj6U25pyIGlcpPYhwQeCOR8R7LbiomlixyW3eNuMGMVX+PH3SeRmJ37kH2rISRvOVR
-         pnOdMSzfdB2QE57l1jPqRzku3hexY7oOzh1HjyYUB4X8/D2ZM8eXghd3Sf8fhnpv3xFi
-         axY3hjORh/yMP6NcQOPCv1ATXUkIU9QD3hfUtzr+/kgM/4WpAnh/jQ1ivBwByGLECAN8
-         M+Yw==
-X-Gm-Message-State: AOAM531FfyBCjcWjb5JeabLFQlRM9y1eiYchPw/nYRuKIiST1dgysjVY
-        rRUBK1sSBsk61MsxiWMwTIlCp1FHUjcqzGYx0RpuMZ8xIkc=
-X-Google-Smtp-Source: ABdhPJyg+AL+mC+Ry8cs+9ZTiwsrXi0O/vg4PGaRdKPb4/SJchV1KwFKt8uwm50DY6SGgaklCI948lHZ5VWtgX7oXwk=
-X-Received: by 2002:a17:906:1c5b:: with SMTP id l27mr41919464ejg.283.1600501267808;
- Sat, 19 Sep 2020 00:41:07 -0700 (PDT)
+        bh=BxdbkUsMwa0KeIsGrGxZyG/r7olMzkXxS9Ql6mErBPs=;
+        b=gwGOf5BaOWVeaSvIVnT62o00SM6XxatauFXfYZAx3YsByUdFKYaoDtqHZg6GzekX1X
+         FkLos1ZjC+R4Rm9TW17ee7FAKaATbfELR1bYSxMmXW5gBzersywlBvzZhKs4AciA0qNy
+         BvP6YJaHXT+ksJB43eVZshH4o+7EoeG9YNhrnJFcBsbawi1+/9fYddWQeQjvfiYLv0yB
+         m9EMQoicfuHjBBMq8wyJWPi95JJJ+dmUjKxyaoyGa8JPe+cSu4oRywzXIRkXmBPnyfBc
+         Hdc/XadD0fv8AXuPvvQZ9/z0t+Hwpj5zOWXBPbcvAy9QuSJ2WRRUfHStehlEXLQ4zRDO
+         14sw==
+X-Gm-Message-State: AOAM533ZSgS1c76akI+y5yLVcNzdcIqQ1p5B2Q32XwSROr6CMlV5M62A
+        NRp1hwwuq2S3hDOwYGwnTE6rNbSVhqqmKrQTH9k=
+X-Google-Smtp-Source: ABdhPJweN7LwZfoql8qPKTQUZuat11Ou2mvex6fVkuyGNWyj0A9ESiysXPn2AA85RCJXoZIGfv7eDvNqSzvhoQvCjNY=
+X-Received: by 2002:a50:c8cd:: with SMTP id k13mr43134020edh.387.1600503169882;
+ Sat, 19 Sep 2020 01:12:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200828065609.GA2105118@coredump.intra.peff.net>
- <441bd08b-ca7d-5977-a455-c4c2a4bd4bc9@gmail.com> <nycvar.QRO.7.76.6.2009072051470.56@tvgsbejvaqbjf.bet>
- <CAP8UFD0_75zR3xoBzbVZjgTY2+KvORLFNMZ36s8+m6KZyNTXPg@mail.gmail.com> <nycvar.QRO.7.76.6.2009162206580.56@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2009162206580.56@tvgsbejvaqbjf.bet>
+ <20200831180537.GC331156@google.com> <20200901125119.GA3250129@coredump.intra.peff.net>
+ <20200903054126.GA2053272@coredump.intra.peff.net> <20200915173529.GA2859918@coredump.intra.peff.net>
+In-Reply-To: <20200915173529.GA2859918@coredump.intra.peff.net>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 19 Sep 2020 09:40:56 +0200
-Message-ID: <CAP8UFD1BxnOk4-gaUQb9bY5zhAtD8Jy-x0RC=pNMSQvUaVxRmg@mail.gmail.com>
+Date:   Sat, 19 Sep 2020 10:12:38 +0200
+Message-ID: <CAP8UFD3NxmBDDr4yqhOjmdUNVZYe6w4vW-TnqbkUO_zuFvKvpw@mail.gmail.com>
 Subject: Re: Git in Outreachy?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
-
-On Wed, Sep 16, 2020 at 10:27 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-
-> On Wed, 16 Sep 2020, Christian Couder wrote:
-
-> > To summarize more, it seems to me that only the following scripts
-> > could be worth converting:
-> >
-> > git-difftool--helper.sh
-> > git-mergetool--lib.sh
-> > git-mergetool.sh
-> >
-> > I wonder if they are really worth converting though, as they should
-> > probably all be converted together and we would likely also need to
-> > convert the scripts in mergetools/ at the same time. And then there
-> > should be a way to still easily configure things for users. So perhaps
-> > a better way to approach this would be first to convert the scripts in
-> > mergetools/ into config files.
+On Tue, Sep 15, 2020 at 7:35 PM Jeff King <peff@peff.net> wrote:
 >
-> The biggest problem is that they're all entangled.
-> `git-difftool--helper.sh` sources `git-mergetool--lib.sh` and uses quite a
-> bit of its machinery.
+> On Thu, Sep 03, 2020 at 01:41:26AM -0400, Jeff King wrote:
+>
+> > I'm still working out funding details, but in the meantime we're signed
+> > up. Potential mentors should propose projects here:
+> >
+> >   https://www.outreachy.org/communities/cfp/git/
+> >
+> > Sooner is better than later. We can technically submit projects up until
+> > the 24th, but student applications are open now, and have to be in by
+> > September 20th.
+>
+> [Adding everybody to the cc list who has been in the Outreachy
+> thread this year...]
+>
+> AFAICT we still have no proposed projects nor signed-up mentors.
 
-Yeah, I agree this is an issue.
+It seems that we now have only the 2 projects I proposed and only 1
+signed-up mentor (me).
 
-> As to converting the scripts to config files, I'd rather have them
-> hard-coded in the source code.
+It looks like Jonathan and Emily are reaching out to the Wireshark
+community to find a co-mentor which is great! So we might have another
+project and the associated mentors soon.
 
-I am not sure what are the pros and cons of hardcoding vs config files
-in this case.
+Outreachy organizers have extended the mentor project submission
+deadline though. The new deadline is Sept. 29, 2020 at 4pm UTC. They
+also say that this deadline is a hard deadline, as the contribution
+period opens October 1, and they cannot add new projects after that
+date.
 
-My opinion is that config files would make it easier for people to
-contribute what's needed for new tools, while hardcoding might make it
-more easily extensible for us and might reduce backward compatibility
-issues.
+> Interns are actively applying _now_, so we are likely missing out on (or
+> have already missed out on) applicants.
+>
+> If you're interested in mentoring, the time to propose is definitely
+> ASAP.
 
-> I would then probably try to implement the bare minimum for the
-> `difftool--helper` command to work (re-implementing in C only the parts of
-> `mergetool--lib` that are necessary), and only in a next patch series work
-> on `mergetool`.
-
-Thanks for your opinion on this. For now I think it needs to be
-discussed more before we could suggest it as a project.
-
-Best,
-Christian.
+Sure. By the way if you are interested in mentoring or co-mentoring,
+then signing-up is not definitive, you can always decide not to mentor
+at all later for any reason as long as an intern has not been selected
+yet. (Intern selection deadline is Nov. 9, 2020.)
