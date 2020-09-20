@@ -2,134 +2,180 @@ Return-Path: <SRS0=oWbz=C5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 538FEC43463
-	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 18:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3737C43465
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 19:11:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08A022073A
-	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 18:58:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7433C20789
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 19:11:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iEZoSLpt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726148AbgITS6X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Sep 2020 14:58:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35154 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726109AbgITS6X (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 20 Sep 2020 14:58:23 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726244AbgITTL2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Sep 2020 15:11:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56315 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726109AbgITTL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Sep 2020 15:11:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF85C7BABA;
+        Sun, 20 Sep 2020 15:11:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GsgHWYBovUp56IAtVqnN5fjyCMw=; b=iEZoSL
+        ptY3LyaZjKq4BFO0hF9VGLt5udaGJ9K1xeVsJtdeexWiLPepitWTeOyowmaptufu
+        3reIDBoonurVB4wBZNa5K+EAECotlJRjgjYCbeSxmjYx/wDKXeNGqRcewg2maiE9
+        JcT1wpDOj7UMtSL3AfXniBykz7NqPGSoR+7P8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=q9xXMG3neNCLlb9K2k6f7aHfOQTaVIHV
+        L4NWw4Uk0Bgq7eYtSR+R034+RI4lIjBi8Iug1zrlIvqraQ7AtHVKhaUKzl5zs025
+        xBpmS4n2QHscjqpZRooZKnDb+cReV5Sk34OuGN4h9VFw6DwdUGLXtiIaP6dcgpjk
+        n7gYzxUZC/o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B7DE37BAB9;
+        Sun, 20 Sep 2020 15:11:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EF21960756;
-        Sun, 20 Sep 2020 18:58:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1600628302;
-        bh=7TeFTD50J1H/rEjzB7xdUYFHT5mF4Z5+l4ueLecWWok=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=aaYMPeTfBJJkWjswJzYWJf8RPz92g879HhaoimRN/q/NsQeh7u81XIGxnx7835NS8
-         f6Sfw7zGk68/YLhIqCaLDbOUFzSCBdfRJ64UX7fgpQi6mkpcrmuhC/XWh2FkAaSpxX
-         wWi5nloNtTil+/1pn46ta5OkPkHMtnB1sM8zBxoggpU96u2H2s//7mp/abfADU2Egs
-         y64Uii3Oe8bRqpPZKuLRN/84XvKZEqlnwbogSN1cuT7iJFgK/epYgmY6JnbqcGF4jQ
-         QyPUZVYPys80uMbw4bMmIScJ3QT11MRShsKP6Ct37jrV5mXbySR9qSDV9ngaNxBgND
-         BMkjJjK4HWJO6GvH9VWg5K6KrtDvQYkY6Mr3hvBlmvEgs2wSc68kBD27g+MtQ+MBxZ
-         1iiDFZPAqeoc2AIzLt5S+PIk/5hS/ZVea3Ec+EcN9FeDI7qB4Rg9So/RylzTZCovEv
-         NqNBYpaxRrbRe/sLUGjrCtmI826imYQAdWn7uRn8aj/1g1J94CY
-Date:   Sun, 20 Sep 2020 18:58:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/4] builtin/rev-parse: learn --null-oid
-Message-ID: <20200920185817.GJ67496@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Chris Torek <chris.torek@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <cover.1600427894.git.liu.denton@gmail.com>
- <004f2e4c92918a7a4e452d49e98ef15f1c5ac545.1600427894.git.liu.denton@gmail.com>
- <20200918141125.GB1602321@nand.local>
- <20200918212609.GC67496@camp.crustytoothpaste.net>
- <CAPx1Gvd6vcvM410wZUZygr4-2Ob6gaScF3DnBtWWsT95XDmKSQ@mail.gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4261E7BAB7;
+        Sun, 20 Sep 2020 15:11:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
+        dermoth@aei.ca, peff@peff.net
+Subject: Re: [PATCH v2] diff: Fix modified lines stats with --stat and
+ --numstat
+References: <20200918113256.8699-2-tguyot@gmail.com>
+        <20200920130945.26399-1-tguyot@gmail.com>
+        <20200920153915.GB2726066@nand.local>
+Date:   Sun, 20 Sep 2020 12:11:20 -0700
+In-Reply-To: <20200920153915.GB2726066@nand.local> (Taylor Blau's message of
+        "Sun, 20 Sep 2020 11:39:15 -0400")
+Message-ID: <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="W13SgbpmD6bhZUTM"
-Content-Disposition: inline
-In-Reply-To: <CAPx1Gvd6vcvM410wZUZygr4-2Ob6gaScF3DnBtWWsT95XDmKSQ@mail.gmail.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 11946916-FB75-11EA-947D-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
---W13SgbpmD6bhZUTM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sun, Sep 20, 2020 at 09:09:46AM -0400, Thomas Guyot-Sionnest wrote:
+>> In builtin_diffstat(), when both files are coming from "stdin" (which
+>> could be better described as the file's content being written directly
+>> into the file object), oideq() compares two null hashes and ignores the
+>> actual differences for the statistics.
+>>
+>> This patch checks if is_stdin flag is set on both sides and compare
+>> contents directly.
+>>
+>> Signed-off-by: Thomas Guyot-Sionnest <tguyot@gmail.com>
+>> ---
+>> Range-diff:
+>> 1:  479c2835fc ! 1:  1f25713d44 diff: Fix modified lines stats with --stat and --numstat
+>>     @@ -20,8 +20,12 @@
+>>       	}
+>>
+>>      -	same_contents = oideq(&one->oid, &two->oid);
+>>     ++	/* What is_stdin really means is that the file's content is only
+>>     ++	 * in the filespec's buffer and its oid is zero. We can't compare
+>>     ++	 * oid's if both are null and we can just diff the buffers */
+>>      +	if (one->is_stdin && two->is_stdin)
+>>     -+		same_contents = !strcmp(one->data, two->data);
+>>     ++		same_contents = (one->size == two->size ?
+>>     ++			!memcmp(one->data, two->data, one->size) : 0);
+>>      +	else
+>>      +		same_contents = oideq(&one->oid, &two->oid);
+>
+> After reading your explanation in [1], this version makes more sense to
+> me.
 
-On 2020-09-20 at 04:25:33, Chris Torek wrote:
-> On Fri, Sep 18, 2020 at 2:34 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > What I typically do when I write shell scripts, and which may obviate
-> > the need for this patch is turn this:
-> >
-> >   [ "$oid" =3D 0000000000000000000000000000000000000000 ]
-> >
-> > into this:
-> >
-> >   echo "$oid" | grep -qsE '^0+$'
-> >
-> > This is slightly less efficient, but it's also backwards compatible
-> > with older Git version assuming you have a POSIX grep.
->=20
-> Note that a lot of `grep`s do not have `-q` and/or `-s` so the
-> portable variant of this is `grep '^0+$' >/dev/null` (you only need
-> the `2>&1` part if you're concerned about bad input files or
-> an error on a pipe or something).
+These oid fields are prepared by calling diff_fill_oid_info(), and
+even for paths that are dirty (hence no "free" oid available from
+index or tree entry), an appropriate oid is computed.
 
-If we're looking for best compatibility here, then using egrep and
-/dev/null is best, I agree.  I personally use the POSIX version because
-it's been that way since at least 2001 and I don't have a problem with
-requiring compliance with a 19-year-old standard.  But for Git, we
-should definitely do whatever we do in the testsuite if we use this
-approach, since presumably that works everywhere.
+But there are paths for which oid cannot be computed without
+destroying their contents.  Such paths are marked by the function
+with null_oid.
 
-As Andreas pointed out, there are ways to avoid the external process
-that we could stuff in a shell function.  I'm not picky.
+It happens to be that stdin is the only class of paths that are
+treated that way _right_ _now_, but future code may support
+different kind of paths that share the same trait.
 
-> > I'm not sure we need an empty tree and empty blob object, because it's
-> > pretty easy to write these:
-> >
-> >   git hash-object -t tree /dev/null
-> >   git hash-object -t blob /dev/null
-> >
-> > That's what I've done in some of the transition code at least.
->=20
-> That's what's recommended in my 2012 stackoverflow Q&A, too.
-> The use of `/dev/null` directly here is perhaps unsatisfactory on
-> old Windows systems, though...?
+When we want to know "is comparing the oid sufficient?", we
+shouldn't inspect the is_stdin flag ourselves in a caller of
+diff_fill_oid_info(), because the helper _is_ responsible for
+knowing what kind of paths are special, and signals that "assume
+this would not be equal to anything else" by giving null_oid back.
 
-I believe all modern versions of Git for Windows provide /dev/null via
-the shell, since it's required for a lot of things to work, so I'm not
-worried about this case.  It is definitely good to think about Windows,
-though.
---=20
-brian m. carlson: Houston, Texas, US
+The caller should use the info left by diff_fill_oid_info(), namely,
+"even if the oid on both sides are the same, if it is null_oid, then
+we know diff_fill_oid_info() didn't actually compute the oid, and we
+need to compare the blob ourselves".
 
---W13SgbpmD6bhZUTM
-Content-Type: application/pgp-signature; name="signature.asc"
+And there is no point in doing memcmp() here, I think.  
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+The same_contents() check is done as an optimization to avoid xdl.
+Even if the two sides were thought to be different at the oid level,
+xdl comparison may find that there is no difference after all
+(e.g. think of whitespace ignoring comparison), so we should assume
+and rely on that the downstream code MUST BE prepared to handle
+false negatives (i.e. same_contents says they are different, but
+they actually produce no diffstat).  Running memcmp() over contents
+in potentially a large buffer to find that they are different, and
+then have xdl process that large buffer again, would be a waste.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2emSQAKCRB8DEliiIei
-gZxKAQC4lYu66eaOyEd2wFHslmp6fJRgri6tCQn6RXRKVwxsGAD9EvPGlR1+t4tu
-0W8oXCFS1p02xrhQZSABWDunyWbFFgA=
-=Op5b
------END PGP SIGNATURE-----
+Summarizing the above, I think the second best fix is this (which
+means that the posted patch is the third best):
 
---W13SgbpmD6bhZUTM--
+	/*
+	 * diff_fill_oid_info() marked one/two->oid with null_oid
+	 * for a path whose oid is not available.  Disable early
+	 * return optimization for them.
+	 */
+	if (oideq(&one->oid, &null_oid) || oideq(&two->oid, &null_oid))
+		same_contents = 0; /* could be different */
+	else if (oideq(&one->oid, &two->oid))
+		same_contents = 1; /* definitely the same */
+	else
+		same_contents = 0; /* definitely different */
+
+But I suspect that the best fix is to teach diff_fill_oid_info() to
+hash the in-memory data to compute the oid, instead of punting and
+filling the oid field with null_oid.  If function builtin_diffstat()
+is allowed to look at the contents and run memcmp() here, the 'data'
+field should have been filled and valid when diff_fill_oid_info()
+looked at it already.
+
+The "best" fix will have wider consequences, so we may not want to
+jump to it right away without careful consideration.
+
+For example, the "best" fix will fix another bug.  The 'index'
+header shows a NULL object name in normal "diff --patch" output for
+these paths in the current code, which means they cannot be used
+with "apply --3way".  That way, this codepath does not have to know
+anything about the "null means we don't know" convention.  
+
+Try:
+
+    $ (cat COPYING; echo) >RENAMING
+    $ git diff --no-index COPYING - <RENAMING | grep '^index '
+    index 536e55524d..0000000000 100644
+
+and notice that the stdin side has a null object name in the current
+code.  I think we will show the right object name if we fix the
+diff_fill_oid_info().
+
+Thanks.
+
+
