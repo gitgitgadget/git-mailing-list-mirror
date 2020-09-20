@@ -2,176 +2,134 @@ Return-Path: <SRS0=oWbz=C5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6206EC43465
-	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 18:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 538FEC43463
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 18:58:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BA642078D
-	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 18:02:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ePil9XKi"
+	by mail.kernel.org (Postfix) with ESMTP id 08A022073A
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 18:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726130AbgITSCz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Sep 2020 14:02:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726043AbgITSCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Sep 2020 14:02:54 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C24A1C061755
-        for <git@vger.kernel.org>; Sun, 20 Sep 2020 11:02:54 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id o20so6883241pfp.11
-        for <git@vger.kernel.org>; Sun, 20 Sep 2020 11:02:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=NsBHcLd1PCg/0bH1O+6DKhPpT8gdvqjy1SlBCcr2dJ4=;
-        b=ePil9XKiiKEte7S0e8pbWcfR38TTh2dSBGlLx1EBR59qlV2PXwxtn8DVdEh35hbsjv
-         VgCckFTOJ3F56Lt7JvYY7eIH/m9l4lbjO8Gvx2dRFfjUpHT2rPTUJiZLkzS2RF75rb7p
-         lOVQ6yLX2I1DrhA0TI+eXRjYdEqAUbFn8rbG8dWYKmpmttsbCFVy9637FqyVLC4jVo7Y
-         CceY1WCjdIlT3W+iFwAliZ1wblgpAyHdf4wndrR5igwDHxMFfMplN0L5RakL7xvjVx+L
-         biEb9HtCF07iCh0n/V0E75bIXxZWFcm0eBozs2759CzwO1YpFhbRe5TD/6hYssMktTAG
-         gzfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NsBHcLd1PCg/0bH1O+6DKhPpT8gdvqjy1SlBCcr2dJ4=;
-        b=WpvXfJsuEpkAl43bVf72YbrnRl8M+/zQPrtafwQiIVX3QiXftPQYWi3h2cBu4WAVJj
-         tP4NetAbG/m8QheOomGYxUJc+Gz0EF/VWD0CBOxBC9WsZ9YA1EwuUc2jDH09jvOxPYxx
-         QDV6kFw8IyLNhTVip6kbcpg2QGwk9SLDxwBz4XUcrOU881tnDwPYDFnTXQdUOv/8+Jl9
-         Tca0fMZF5HkD6lGKbE+rDtWcacLbdowMf17KrYiTIUpvtiXu1Nzp9sTx1OwJ4lPY4A/S
-         Hd25opV7FAUjJNT3TgGR61cJ/NynzHW36rUJ0VCfO5/ymnZZtVLF86b5OV3/xLg2xwoh
-         dJPw==
-X-Gm-Message-State: AOAM533YOXAdezP8fuow6iAg09rlNQ62LT+RKabRLuPU7oAveIr9pgv/
-        e1nGSLX7vtpfBP34D4t9kwUowYEeH0AubQ==
-X-Google-Smtp-Source: ABdhPJyDTksBlMMv9ZchgoFIW8j4EAalitiTjESwKIbfoURgpRM9+HlkGjVH5iLaOD/4zOKCOK+F8Q==
-X-Received: by 2002:a63:eb09:: with SMTP id t9mr12604875pgh.182.1600624974155;
-        Sun, 20 Sep 2020 11:02:54 -0700 (PDT)
-Received: from [192.168.208.42] ([49.205.85.152])
-        by smtp.gmail.com with ESMTPSA id z9sm9331025pfk.118.2020.09.20.11.02.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Sep 2020 11:02:53 -0700 (PDT)
-Subject: Re: How to checkout a revision that contains a deleted submodule?
-To:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
-Cc:     Jens Lehmann <Jens.Lehmann@web.de>
-References: <CAE5ih78zCR0ZdHAjoxguUb3Y6KFkZcoxJjhS7rkbtZpr+d1n=g@mail.gmail.com>
- <CAE5ih79puooMA1v8jOkqKaO9xPmYqtkT9kXHq2L6YODJJ8oGEQ@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <4eb688f2-0c17-9b85-e60e-f07485895622@gmail.com>
-Date:   Sun, 20 Sep 2020 23:32:51 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1726148AbgITS6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Sep 2020 14:58:23 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35154 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726109AbgITS6X (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 Sep 2020 14:58:23 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EF21960756;
+        Sun, 20 Sep 2020 18:58:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1600628302;
+        bh=7TeFTD50J1H/rEjzB7xdUYFHT5mF4Z5+l4ueLecWWok=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=aaYMPeTfBJJkWjswJzYWJf8RPz92g879HhaoimRN/q/NsQeh7u81XIGxnx7835NS8
+         f6Sfw7zGk68/YLhIqCaLDbOUFzSCBdfRJ64UX7fgpQi6mkpcrmuhC/XWh2FkAaSpxX
+         wWi5nloNtTil+/1pn46ta5OkPkHMtnB1sM8zBxoggpU96u2H2s//7mp/abfADU2Egs
+         y64Uii3Oe8bRqpPZKuLRN/84XvKZEqlnwbogSN1cuT7iJFgK/epYgmY6JnbqcGF4jQ
+         QyPUZVYPys80uMbw4bMmIScJ3QT11MRShsKP6Ct37jrV5mXbySR9qSDV9ngaNxBgND
+         BMkjJjK4HWJO6GvH9VWg5K6KrtDvQYkY6Mr3hvBlmvEgs2wSc68kBD27g+MtQ+MBxZ
+         1iiDFZPAqeoc2AIzLt5S+PIk/5hS/ZVea3Ec+EcN9FeDI7qB4Rg9So/RylzTZCovEv
+         NqNBYpaxRrbRe/sLUGjrCtmI826imYQAdWn7uRn8aj/1g1J94CY
+Date:   Sun, 20 Sep 2020 18:58:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/4] builtin/rev-parse: learn --null-oid
+Message-ID: <20200920185817.GJ67496@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Chris Torek <chris.torek@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <cover.1600427894.git.liu.denton@gmail.com>
+ <004f2e4c92918a7a4e452d49e98ef15f1c5ac545.1600427894.git.liu.denton@gmail.com>
+ <20200918141125.GB1602321@nand.local>
+ <20200918212609.GC67496@camp.crustytoothpaste.net>
+ <CAPx1Gvd6vcvM410wZUZygr4-2Ob6gaScF3DnBtWWsT95XDmKSQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAE5ih79puooMA1v8jOkqKaO9xPmYqtkT9kXHq2L6YODJJ8oGEQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="W13SgbpmD6bhZUTM"
+Content-Disposition: inline
+In-Reply-To: <CAPx1Gvd6vcvM410wZUZygr4-2Ob6gaScF3DnBtWWsT95XDmKSQ@mail.gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/09/20 3:14 pm, Luke Diamand wrote:
-> On Sat, 19 Sep 2020 at 10:03, Luke Diamand <luke@diamand.org> wrote:
->>
->> Maybe this is a FAQ, but I couldn't figure it out!
->>
->> I have a repo which has a couple of submodules.
->>
->> At some point in the past I deleted one of those submodules:
->>
->>      git rm sub2
->>      git add -u
->>      git commit -m 'Deleting sub2'
->>      git push origin
->>      ...
->>      ... more commits and pushes...
->>
->> Now I go and clone the head revision. This gives me a clone which has
->> nothing present in .git/modules/sub2.
->>      login on some other machine
->>      git clone git@my.repo:thing
->>      cd thing
->>      ls .git/modules
->>      <sub2 not present>
->>
->> So when I go and checkout an old revision where sub2 is still around I get:
->>      git checkout oldrevision
->>      fatal: not a git repository: sub2/../.git/modules/sub2
->>
->> What am I doing wrong?
->> What set of commands do I need to use to ensure that this will always
->> do the right thing?
->>
->> Thanks
->> Luke
-> 
-> Replying to myself, adding Jens who added the section below.
-> 
-> This is a known bug:
-> 
-> https://git-scm.com/docs/git-rm
-> 
->> BUGS
->> ----
->> Each time a superproject update removes a populated submodule
->> (e.g. when switching between commits before and after the removal) a
->> stale submodule checkout will remain in the old location. Removing the
->> old directory is only safe when it uses a gitfile, as otherwise the
->> history of the submodule will be deleted too. This step will be
->> obsolete when recursive submodule update has been implemented.
-> 
 
-I don't think that part of the documentation applies to your case. So,
-I also don't think this is a known bug. As a matter of fact, I couldn't
-reproduce this with the following:
+--W13SgbpmD6bhZUTM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2020-09-20 at 04:25:33, Chris Torek wrote:
+> On Fri, Sep 18, 2020 at 2:34 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > What I typically do when I write shell scripts, and which may obviate
+> > the need for this patch is turn this:
+> >
+> >   [ "$oid" =3D 0000000000000000000000000000000000000000 ]
+> >
+> > into this:
+> >
+> >   echo "$oid" | grep -qsE '^0+$'
+> >
+> > This is slightly less efficient, but it's also backwards compatible
+> > with older Git version assuming you have a POSIX grep.
+>=20
+> Note that a lot of `grep`s do not have `-q` and/or `-s` so the
+> portable variant of this is `grep '^0+$' >/dev/null` (you only need
+> the `2>&1` part if you're concerned about bad input files or
+> an error on a pipe or something).
 
- git init checkout-removed-submodule &&
- cd checkout-removed-submodule/ &&
- echo "Hello, world" >foo &&
- git add foo && git commit -m "Initial commit" &&
- git init ../submodule &&
- cd ../submodule/ &&
- echo "Foo bar" >foobar.txt &&
- git add foobar.txt && git commit -m "Foo bar baz" &&
- cd ../checkout-removed-submodule/ &&
- git submodule add ../submodule/ foobar &&
- git commit -m "Add foobar submodule" &&
- git rm foobar/ &&
- git commit -m "Remove foobar submodule" &&
- git checkout HEAD~ # Checking out the "Add foobar submodule" commit
+If we're looking for best compatibility here, then using egrep and
+/dev/null is best, I agree.  I personally use the POSIX version because
+it's been that way since at least 2001 and I don't have a problem with
+requiring compliance with a 19-year-old standard.  But for Git, we
+should definitely do whatever we do in the testsuite if we use this
+approach, since presumably that works everywhere.
 
-I get:
+As Andreas pointed out, there are ways to avoid the external process
+that we could stuff in a shell function.  I'm not picky.
 
- HEAD is now at 25270d8 Add foobar submodule
+> > I'm not sure we need an empty tree and empty blob object, because it's
+> > pretty easy to write these:
+> >
+> >   git hash-object -t tree /dev/null
+> >   git hash-object -t blob /dev/null
+> >
+> > That's what I've done in some of the transition code at least.
+>=20
+> That's what's recommended in my 2012 stackoverflow Q&A, too.
+> The use of `/dev/null` directly here is perhaps unsatisfactory on
+> old Windows systems, though...?
 
+I believe all modern versions of Git for Windows provide /dev/null via
+the shell, since it's required for a lot of things to work, so I'm not
+worried about this case.  It is definitely good to think about Windows,
+though.
+--=20
+brian m. carlson: Houston, Texas, US
 
-I also tried with a cloned version of that repository as follows:
- git clone /me/checkout-removed-submodule/ cloned-repo &&
- cd cloned-repo &&
- git co HEAD~
+--W13SgbpmD6bhZUTM
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I get:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
- HEAD is now at 25270d8 Add foobar submodule
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2emSQAKCRB8DEliiIei
+gZxKAQC4lYu66eaOyEd2wFHslmp6fJRgri6tCQn6RXRKVwxsGAD9EvPGlR1+t4tu
+0W8oXCFS1p02xrhQZSABWDunyWbFFgA=
+=Op5b
+-----END PGP SIGNATURE-----
 
-So, I don't get any errors when I checkout a revision where the deleted
-submodule is still around. There might other factors in play such as,
-
-- the version of Git being used
-- whether `--recurse-submodules` was passed to checkout
-- the configuration of the submodule in .gitmodules
-
-It would be great if you could share these and possibly other useful
-information to help us identify why you get an error when checking out
-the revision.
-
---
-Sivaraam
+--W13SgbpmD6bhZUTM--
