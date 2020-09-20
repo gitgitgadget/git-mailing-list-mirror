@@ -1,115 +1,91 @@
-Return-Path: <SRS0=5dtp=C4=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=oWbz=C5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56FD3C43463
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 23:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4962CC433DB
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 00:30:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CB52207C3
-	for <git@archiver.kernel.org>; Sat, 19 Sep 2020 23:02:14 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bD2/exs2"
+	by mail.kernel.org (Postfix) with ESMTP id B041F207C3
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 00:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbgISXCM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 19:02:12 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53645 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbgISXCM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Sep 2020 19:02:12 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 918FC7DE45;
-        Sat, 19 Sep 2020 19:02:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=B4hCXiAylwxPA6n7NDJtqDbyxfo=; b=bD2/ex
-        s22SLOnxFWU/phW7A4NMdxwodx8Bd6Wa+AvjvU2FLKeqNkyJ5JgFRu/qQTMDsmFc
-        tOjhPMgZ9mi2mLHb/wLCOFPuXAev80zuRo80PMacV6LmIT9gLZNO01w/d43XR7vV
-        ebt6nknfHaKBifhIk4128Ow1w22iw5XUq2fhA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vsUbt22uvHT+QcbjCwq9kJ2+mQD1A5Op
-        Z//bhcdZJvw7HzvdTs5HATdxHjLjT4wqny5QDlvf51LYPRBsAiTwdf7ctGmwJwVF
-        5LY8kQLwOOiMwF5OGljyrXXWXfne/XAkZTBLR1gBWhfhW9i0CxMDM0Ej7/o5HHCa
-        XzlZ8TcCw/o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7500D7DE44;
-        Sat, 19 Sep 2020 19:02:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E01F77DE43;
-        Sat, 19 Sep 2020 19:02:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han Xin" <hanxin.hx@alibaba-inc.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?B?6JKL6ZGrKOefpeW/pyk=?= <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v3] send-pack: run GPG after atomic push checking
-References: <xmqqft7eljkz.fsf@gitster.c.googlers.com>
-        <20200919144750.95812-1-hanxin.hx@alibaba-inc.com>
-Date:   Sat, 19 Sep 2020 16:02:07 -0700
-In-Reply-To: <20200919144750.95812-1-hanxin.hx@alibaba-inc.com> (Han Xin's
-        message of "Sat, 19 Sep 2020 22:47:50 +0800")
-Message-ID: <xmqqpn6hid5c.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726794AbgITAaS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Sep 2020 20:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60014 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726707AbgITAaS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Sep 2020 20:30:18 -0400
+X-Greylist: delayed 721 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 19 Sep 2020 17:30:17 PDT
+Received: from balrog.mythic-beasts.com (balrog.mythic-beasts.com [IPv6:2a00:1098:0:82:1000:0:2:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8EB9C061755
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 17:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sorrel.sh;
+         s=mythic-beasts-k1; h=To:Subject:Date:From;
+        bh=JTlEr9TIeoZH28AcmkuBuVLllkokwTa0S+YdltD/NWI=; b=uDI6hn1xLyPk86tbDhgYTYz1AQ
+        Ipy6+fG3AA2Zjcoen5ZLlGuWObRqbbpwp9zrhK36WVVNpEMewKGiyEszoPdXimngLzvRLLt0EG0xZ
+        St9DpK6E4FExvCXkEiL3JZxkvJvjmQH4m2sFwc0oGrBqVU7De5hEEUjHRY1406qTDoA9W8sgBG138
+        efuLUP9hg4or0rsV3mzxd0o7ajkQFl6yotS/h6o2dRqfRAWH3nhq/DGmerQrvoaX5wCYGKI0PkM7v
+        v1RLsaaHLYFiitypOysfDcnxZYv4axDXvyZH85UbaccLUXO5dwo5/E020svutlxqp5HV7W+wKwDhF
+        pN5FwbhQ==;
+Received: from [209.85.208.52] (port=38394 helo=mail-ed1-f52.google.com)
+        by balrog.mythic-beasts.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92.3)
+        (envelope-from <ash@sorrel.sh>)
+        id 1kJn3T-0004Rv-0d
+        for git@vger.kernel.org; Sun, 20 Sep 2020 01:18:15 +0100
+Received: by mail-ed1-f52.google.com with SMTP id c8so9519742edv.5
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 17:18:09 -0700 (PDT)
+X-Gm-Message-State: AOAM531rHHOJ+qJPJCyDP8fjmQxIEevSpK7bLDLH1CcMm6vgDe8ilP9K
+        ZZhK85gNadV2PFIeNSK5djx2MckBWTdNCoNuVY4=
+X-Google-Smtp-Source: ABdhPJxdUjZ+6Ay6M0kIy9ZasimrJdybnK1CQfyhiu+ruYNSxi2W8Nt2k9JLicc3+uJoylO2KW5/9kfEsGBfHBGBKoI=
+X-Received: by 2002:a50:da84:: with SMTP id q4mr44466127edj.238.1600561088850;
+ Sat, 19 Sep 2020 17:18:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 246948F8-FACC-11EA-B90E-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <CAHJUbDg2KA9Xo_CAO=cgrZewOH0zfEhOVydhMN8fLvVDmji4sQ@mail.gmail.com>
+ <xmqqh7s8z0qw.fsf@gitster.c.googlers.com> <20200908231652.GC1014@pug.qqx.org> <xmqqo8m1k542.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8m1k542.fsf@gitster.c.googlers.com>
+From:   Ash Holland <ash@sorrel.sh>
+Date:   Sun, 20 Sep 2020 01:17:32 +0100
+X-Gmail-Original-Message-ID: <CAHJUbDjSS-fWjeJkD49yEPmRKZQLYSW0R9-PhzFem1QsEuJUOQ@mail.gmail.com>
+Message-ID: <CAHJUbDjSS-fWjeJkD49yEPmRKZQLYSW0R9-PhzFem1QsEuJUOQ@mail.gmail.com>
+Subject: Re: `git describe --dirty` doesn't consider untracked files to be dirty
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Aaron Schrab <aaron@schrab.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-BlackCat-Spam-Score: 0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han Xin" <hanxin.hx@alibaba-inc.com> writes:
+On Sat, 19 Sep 2020 at 19:12, Junio C Hamano <gitster@pobox.com> wrote:
+> This is worth fixing.  I am leaning towards saying that `diff` is
+> wrong in this case, but I am OK to consider unifying the behaviour
+> the other way and making `describe --dirty` more strict.
 
-> The refs update commands can be sent to the server side in two different
-> ways: GPG-signed or unsigned.  We should run these two operations in the
-> same "Finally, tell the other end!" code block, but they are seperated
-> by the "Clear the status for each ref" code block.  This will result in
-> a slight performance loss, because the failed atomic push will still
-> perform unnecessary preparations for shallow advertise and GPG-signed
-> commands buffers, and user may have to be bothered by the (possible) GPG
-> passphrase input when there is nothing to sign.
+fwiw, my preference would be for the second behaviour; I have a release
+script which complains at me if I've forgotten to commit something, and
+to avoid making a release with new uncommitted files I currently have to
+use both `git describe --dirty` (to check for modifications to tracked
+files) and also `git ls-files --others --exclude-standard` (to check for
+untracked files).
 
-The above sounds as if we care about the performace loss and that is
-the main motivation behind this change.  Intended?  I have an
-impression that it is a hard-sell as a "performance improvement"
-patch, as the saved cycles are negligible compared to everything
-else that is done in the flow, and more importantly, it optimizes
-for the wrong case (i.e. it fails more efficiently).
+maybe there's a better plumbing command I should be using in a script,
+but your example of the wildcard build rule also would suggest that
+`describe` should be changed, not `diff`:
 
-> Add a new test case to t5534 to ensure GPG will not be called when the
-> GPG-signed atomic push fails.
->
-> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> ---
-...
-> +	test_must_fail env PATH="$TRASH_DIRECTORY:$PATH" git push \
-> +			--signed --atomic --porcelain \
-> +			dst noop ff noff >out 2>&1 &&
-> +
-> +	test_i18ngrep ! "gpg failed to sign" out &&
+> Having said all that, a source that was forgotten to be added, yet
+> affects the built product by a build rule with wildcard e.g.
+> "compile all *.c files and link them into a single binary", would
+> happen in real life, so from that point of view, appending "-dirty"
+> only when there is a local modification may not be all that useful,
+> and tweaking the "--dirty" option to also pay attention to untracked
+> (but not ignored) might have merit.
 
-OK, that is much less brittle than the "output must match these
-lines exactly" test we saw earlier.
+lastly, by appeal to `git clean`'s documentation: "Remove untracked
+files from the working tree"
 
-> +	sed -n -e "/^To dst/,$ p" out >actual &&
-> +	cat >expect <<-EOF &&
-> +	To dst
-> +	=	refs/heads/noop:refs/heads/noop	[up to date]
-> +	!	refs/heads/ff:refs/heads/ff	[rejected] (atomic push failed)
-> +	!	refs/heads/noff:refs/heads/noff	[rejected] (non-fast-forward)
-> +	Done
-> +	EOF
-> +	test_i18ncmp expect actual
-
-Didn't you mean to remove this part, which makes the whole test more
-brittle than necessary?
-
-Thanks.
+if you clean a repository by removing untracked files, then untracked
+files surely make the working tree dirty :)
