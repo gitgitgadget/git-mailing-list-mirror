@@ -2,116 +2,108 @@ Return-Path: <SRS0=oWbz=C5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CF4CC43464
-	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 02:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF010C43463
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 04:25:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C42F2208C3
-	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 02:12:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95D8B207D3
+	for <git@archiver.kernel.org>; Sun, 20 Sep 2020 04:25:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fRk8zpG6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AcY5fx4N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726788AbgITCMZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Sep 2020 22:12:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52034 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726760AbgITCMZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Sep 2020 22:12:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 881B874B72;
-        Sat, 19 Sep 2020 22:12:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6mHJHcE5Dsnuxi8/xouNQJKYfgw=; b=fRk8zp
-        G6DEd606NCvGM35/fGwtX5gdjGBbCHod9MHebiMUv4zhUjE9t+KslsFMdEENauSv
-        Tqgy3ZdH2fcY+HN4xyZmtnbQfb+6H+OwCpcRKAQrJBwOHiKRMLIujJ6wsu3AQ/j1
-        Ru4UuZ7nKIELQ5bCzVQdpu5mKGrZFXFDhYXMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RgpJyzPKtDhaARQHAlGPNAqYz4U0fxq8
-        /DAE9lP0OtJCWmgmhWOuVs0NIB/ig4EW/fLvw//RcPF31DTU5a+HZAwCpVVJtjjL
-        SAMOM2DYKEk0oL7dnt8wqf3kvRNrShz2m01h/bCHYoRGKrCjjyOuTU2NVe6W6l3v
-        sGFzgQ/doKA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8023874B70;
-        Sat, 19 Sep 2020 22:12:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14BE474B6E;
-        Sat, 19 Sep 2020 22:12:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Ash Holland <ash@sorrel.sh>, Aaron Schrab <aaron@schrab.com>
-Subject: Re: `git describe --dirty` doesn't consider untracked files to be
- dirty
-References: <CAHJUbDg2KA9Xo_CAO=cgrZewOH0zfEhOVydhMN8fLvVDmji4sQ@mail.gmail.com>
-        <xmqqh7s8z0qw.fsf@gitster.c.googlers.com>
-        <20200908231652.GC1014@pug.qqx.org>
-        <xmqqo8m1k542.fsf@gitster.c.googlers.com>
-        <xmqq5z89i5j3.fsf@gitster.c.googlers.com>
-Date:   Sat, 19 Sep 2020 19:12:20 -0700
-In-Reply-To: <xmqq5z89i5j3.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 19 Sep 2020 18:46:40 -0700")
-Message-ID: <xmqq1rixi4cb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726831AbgITEZq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Sep 2020 00:25:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726760AbgITEZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Sep 2020 00:25:46 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC655C061755
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 21:25:45 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id w2so8940706wmi.1
+        for <git@vger.kernel.org>; Sat, 19 Sep 2020 21:25:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=OImPAH2mbIe/NZ/JVwsfrV82E5qg+quS8wEgOpaIKmE=;
+        b=AcY5fx4N/2VKat8ANkUPSAfLFSi3siaUP4n8XrBMHzimG8TMFGNpdS4bO6E2u+3Vrs
+         W8NZ4sBktY7RH+LIr65uQ4PDK4nOhRetnAnA0CyLM8fYxhih2rrXGECZ2q6NYsiwarHv
+         ROboMRgt4L/dSfESTeEdcuad0mYUHxnepw9Y1WEpGAQyy+anlKmeWv5LFDMoJVlRpjFl
+         7ATIZf7YcrTSvlW4qNI/Jvrz3ln58C38K2S7xxZpuDsb80g84aEFZUufJaFUUPBCZbzy
+         peYhg269viaqkEFfDl0pliyHwRrGgM7vZhzGt8FrckBDOzQQda5e9f1DinlI4wFngMub
+         pYfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=OImPAH2mbIe/NZ/JVwsfrV82E5qg+quS8wEgOpaIKmE=;
+        b=QiPxrONqtZQKhC4Zfgr05EWSZIg4C5EarpnKSAWyfkhB8fMFr4jPiR2XLRQuCff8dq
+         EirjcaAx466omSqMKO0oZjvT+dJuO12+xRb4SnwFn838983hyRXNT08fqQMFGP1OBy9r
+         T4eH0qME+rQ8UDSMRlkJlr3LwbUG958gBOZA6sgZ1gc9pYKE9dSTLTy2poLZ7pUFEzff
+         FafoiFNnifrHMhmzl+Ej0Npg7aaTk1OKpYNAosbyOh8kaQWn0hipwOVH5R9vEI7r05Z4
+         PZKOhE5L6eQhOVdmw8Vh8yJHb9LAHopgxEpPEwPlpDsDXNVfaXGsI/iZnYb9N3jpcZkU
+         o0Eg==
+X-Gm-Message-State: AOAM533kwsqFyyqmTfuXOBVSfv3hMt9gCgzcwB0GETAuTxA32HEb/0In
+        B0dJ8Z4kLO25hv7us2Skc2GF23tTj3A4qsMyFo0=
+X-Google-Smtp-Source: ABdhPJx4DgArV3TXRsXr1cn8GX4vyIKf+JlsiaZ9Uypw8DKynMD4W6Jsjjkm4Zs3BJPhcdP3OKssdBNm79sBeG6eFxE=
+X-Received: by 2002:a05:600c:2283:: with SMTP id 3mr22447817wmf.37.1600575944414;
+ Sat, 19 Sep 2020 21:25:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B72FAF50-FAE6-11EA-B7BA-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <cover.1600427894.git.liu.denton@gmail.com> <004f2e4c92918a7a4e452d49e98ef15f1c5ac545.1600427894.git.liu.denton@gmail.com>
+ <20200918141125.GB1602321@nand.local> <20200918212609.GC67496@camp.crustytoothpaste.net>
+In-Reply-To: <20200918212609.GC67496@camp.crustytoothpaste.net>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Sat, 19 Sep 2020 21:25:33 -0700
+Message-ID: <CAPx1Gvd6vcvM410wZUZygr4-2Ob6gaScF3DnBtWWsT95XDmKSQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] builtin/rev-parse: learn --null-oid
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Sep 18, 2020 at 2:34 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> So I definitely want to distinguish between the null (all-zeros) OID and
+> the OID of an empty object, and I think using "null" and "empty" are
+> fine.
 
-> The first step would be to allow those who want their "git describe
-> --dirty --ignore=none" (untracked files are counted as dirtiness, to
-> be consistent with how "git diff" sees submodule directories by
-> default) to use presence of untracked files as dirty.  This is a
-> safe first step and can be done without breaking any existing users.
+(I like this myself)
 
-It is worse than I thought.  There is zero-th step we need to have,
-to fix "git describe --dirty" itself.
+> What I typically do when I write shell scripts, and which may obviate
+> the need for this patch is turn this:
+>
+>   [ "$oid" = 0000000000000000000000000000000000000000 ]
+>
+> into this:
+>
+>   echo "$oid" | grep -qsE '^0+$'
+>
+> This is slightly less efficient, but it's also backwards compatible
+> with older Git version assuming you have a POSIX grep.
 
-Because the command internally uses "diff-index", and by default it
-considers that a submodule with untracked path *is* dirty.  Because
-of that, you get an inexplicable inconsistent behaviour.
+Note that a lot of `grep`s do not have `-q` and/or `-s` so the
+portable variant of this is `grep '^0+$' >/dev/null` (you only need
+the `2>&1` part if you're concerned about bad input files or
+an error on a pipe or something).
 
- * If you start from a pristine checkout, and then add an untracked
-   path to the current project, "git describe --dirty" won't give
-   the -dirty suffix.
+> I'm not sure we need an empty tree and empty blob object, because it's
+> pretty easy to write these:
+>
+>   git hash-object -t tree /dev/null
+>   git hash-object -t blob /dev/null
+>
+> That's what I've done in some of the transition code at least.
 
- * But if you add an untracked path in its submodule, the command
-   does give you the -dirty suffix.
+That's what's recommended in my 2012 stackoverflow Q&A, too.
+The use of `/dev/null` directly here is perhaps unsatisfactory on
+old Windows systems, though...?
 
-A fix, without the first-step to give the command configurable
-definition of what makes a repository 'dirty', would probably look
-like the attached untested patch.  A fix to "diff" machinery to make
-"--ignore-submodules=untracked" the default would also make "describe"
-internally consistent, too.
-
- builtin/describe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 7668591d57..af08d7d8cf 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -45,7 +45,7 @@ static struct commit_names commit_names;
- 
- /* diff-index command arguments to check if working tree is dirty. */
- static const char *diff_index_args[] = {
--	"diff-index", "--quiet", "HEAD", "--", NULL
-+	"diff-index", "--quiet", "--ignore-submodules=untracked", "HEAD", "--", NULL
- };
- 
- struct commit_name {
-
-   
+Chris
