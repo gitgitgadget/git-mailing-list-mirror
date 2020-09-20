@@ -2,128 +2,115 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E40C4727E
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A55B4C4727D
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:30:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3397423A65
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:28:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49DC223A5B
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:30:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8G0vlk+"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Q2sdjoF9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728571AbgIUW2Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 18:28:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59034 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728560AbgIUW2X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 18:28:23 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FCB5C0613CF
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 15:28:23 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id a9so1170290wmm.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 15:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=N1aKWXY0SAWuJiMsJidrglqsDE4gYGStmnyHDHPLyVg=;
-        b=S8G0vlk+T4rQUlkxwRzBksBp6sCEMgMSnRd4vDfxOQsYL+DyEFzbChsEU2G9ubhG9T
-         bk3Ug2f5YM3x6Y+fZXqC5p46Yp1NRp9x0CqeycN6zoliUfgvM5Z5GpbxiblfLvyU7Zlk
-         nz1lNrl7m5tMNnw0uoJmQGROOqw2+RKfFxOzoU5/YAZSBbg7ztzUGsZt8DHOQs8t9YH2
-         a/1EDfzkWXzRuWAeZ7aiCP3Kdh9zfhyF3QhQtfOSOgVpAQuFZXC29a/aTlw8RVOx5KxA
-         L+xHKyCL/BKjXEt1Z5qQEHKTBZYrvKV1C4k36WPuSWOAzG6UKEIoURH3sWN5VZcu1d0N
-         a2hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=N1aKWXY0SAWuJiMsJidrglqsDE4gYGStmnyHDHPLyVg=;
-        b=I/fo1stGBsBAosjGOQrqzflLFFio4nyOlMJpiR4/q1+M47CJzc21Th+RmeitHJRn2g
-         TbP3RXBX+QTmyokEa1kIGoNfLRthx+mTLYsUhO/cbJfV+ZHshQU/zVYnOIhSKgES3wQy
-         sDZ5H74aOwiow7lv1GK2IOl/D249pDTrbYxzIeznNn+7Xg/M+S8HWdOAsyf/EGgsInQn
-         CgDubSz+Be5AZL55+emqn9ihNDXHfFnW8ja/DDdDl29vP3yNqzcOZjS5/Y7hHkNLKsSL
-         3EnKDjhTcVrekHgiuUm9ImTyesdAIp1YZEJqIe+ejgqxFzM1kONPMq47CFYMTZngJSzJ
-         QMeg==
-X-Gm-Message-State: AOAM531rRpg+6pq2BSX2/Q7d23mm97AohNUK+xVttsj2/4NqL5sjcH5d
-        P1GOKb0C3oIz2vnkREPAUdlrV9lQ4Ew=
-X-Google-Smtp-Source: ABdhPJxuLHg68Yi5h37jDBgzvXLiaRU+PEe5IqnHRJtcxoHp6uDJEVpk8wZWzM3gvBifL7zoDZy9og==
-X-Received: by 2002:a1c:544c:: with SMTP id p12mr1379951wmi.170.1600727301770;
-        Mon, 21 Sep 2020 15:28:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c4sm23948265wrp.85.2020.09.21.15.28.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 15:28:21 -0700 (PDT)
-Message-Id: <1fdf24af368ccb263ade2af2e482221280a3eb06.1600727298.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.411.v4.git.1600727297.gitgitgadget@gmail.com>
-References: <pull.411.v3.git.1598443012.gitgitgadget@gmail.com>
-        <pull.411.v4.git.1600727297.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Sep 2020 22:28:17 +0000
-Subject: [PATCH v4 3/3] ci: stop linking built-ins to the dashed versions
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727447AbgIUWaD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 18:30:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:46005 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726467AbgIUWaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 18:30:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1600727399;
+        bh=SaoHQbqByBMIapAsRqj/Buh/DmXwCUtKRKVoMD3zYCI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Q2sdjoF9nlEuCYbYwdp0aAy39AdGsfF02GkVt/7qd1PvQi7uk8NGWvHNjl53yX1YK
+         J6EuSR+gf9dbjmu5w4zViTYi85UlpVG08lh7jqaEJNWWvVv8uHA1Ml7wQTo4Pa+HxM
+         NvzvYGXA+H4QGaY7Kd+5bY3NyTPWXdNsYyCx67Fc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.89.169] ([89.1.212.93]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBlxW-1kAY9b0aZY-00CAoj; Tue, 22
+ Sep 2020 00:29:59 +0200
+Date:   Sun, 20 Sep 2020 19:15:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] cmake: ignore generated files
+In-Reply-To: <xmqqft7fnlxr.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2009201914330.5061@tvgsbejvaqbjf.bet>
+References: <pull.735.git.1600375065498.gitgitgadget@gmail.com> <xmqqtuvwoyz5.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009181510240.5061@tvgsbejvaqbjf.bet> <xmqqft7fnlxr.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7niQgDAZQIwu3ckeXcVb6Va8AyVfGz7ZwP3GnyJ/bbVMbTkV6gT
+ urd8z1whJhg+22akdx/8/XZzuJzihgbLIJgX1jqbl27TPxPa/KKQ699Cfriyon+qeh7tPiW
+ LvjkMkk+u2TLIPaJFkYSyk28LCkecNMNAwhHKpH2DCHu7fx9zO2NxWClxNrbw0h6QaNWAYZ
+ dXeKbb/mSNKplck9zToFA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jQrxBxKdWk4=:99a5m2dMJNaDyY/+IPjxW9
+ di905EJLL8r7/VSyfT3GhSnpXXDfpJ6IaJp6E5pv25ohlPBlBjuJWzlYwAUf6KgpCFeyqogqI
+ uhv8N/OTzPL0K0kuBaQcZARHNeNVNSFfPtJV+8JaaSdwH9staFhuk6pnpMudBsNtDziaeDdJc
+ YASkbeqzxgAppsvYFDYv+s+NlCGWQi3PKtBXi3mxH815Xq8I/bzFsUMXE7u3LMm+FBSkyduWv
+ N5eJpTUwLthsnUlLCmIyhWKaaG28ec8mtyaaq5JTv9MPqBYOcXIUf9gHf0Ongm0zA75yedfx7
+ a3CSd9o34cN4Ir6+Ru+5ByLbLBiTr+jMO9EdOO3tGxxfn8S7aJTABxpzEs2XRKuiBtA3uIkfk
+ aeL6JuR/t8+DVP8k4PbY/nFhmOn8AYmqR2EWAP9/5HTRjews9LqOWwDZU2RdlEQ+V5KGTjI3n
+ fcd+bKCTUahcD0V4yJ5JAoBHOdTa9uQxCCFBOUsxUsu/v9QGRj3tgNSiOSyVwI2hs5LpTnhCf
+ fSU79RqPDcXgyS/c8jabiU4O8/KMaZzGhj4YVby5nuRn9SpHTZD5pu1hT4RVvtvuX1t/EvBPx
+ /LQwMYuyOIpk2G56Xv61VUEehAV1J5IbnWAg/bc0PMlJqHjlmLNFQ7QSpm4AHdaCocUYqXNRM
+ 6KeAnnDq7oXN+GcDSO+XvYV15GJ6QTKTAGyKCxtztcff8pgFDNuPLHWsWuTGorCV86cWMtn17
+ EE+XljSEQgn8Rnk8EPTqzFjTER47UMZUrA2oDdr071GzcY0bySfv6tg6MxgFwnB4OBaLx5/TW
+ qu3w81RxPe4fcMsr3fjCpiIdi38SPYac+PCEyL10l5yY2gYsc/odDw16VaGqNan3uaWdDa5j4
+ 8naDMBPw9nGVAC6KmSXsRDhZFm6PINOwdEbqDODh1dBIkej6JUQihF3cHJWJqYcoxCOd7Ss/T
+ Aa8SGrB8SLZsnGLmE3VcOyy6CHI8tQJrGaynRViC5xCXIdj3C/tZpq8lyYMNDtv+AG/UDQCMa
+ Fv3L3Xla3Nm6gHoKsSmkgdgg9uTl8fgASxZB1gV1z/YLX4NiMskNKItdbowCUZsgfE6HUrksI
+ 6oHdG96OZEpxccFsX6LZrREQOJtT3tUKMfCIr4VCHhjGG384htKEggxYAdWt77CV3mQhwm2pt
+ dcTFEvOZ4Q8XNiW11tFiKNy/7i9X4rE7VZ0aczwvNujnmO+0cXfH1h95D43iZunMUMMJMCJxg
+ fyozeUd/M2h7nXaM0UAJJGIW4NuGhh7/41HgImw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-Since e4597aae6590 (run test suite without dashed git-commands in PATH,
-2009-12-02), we stopped running our tests with `git-foo` binaries found
-at the top-level directory of a freshly built source tree; instead we
-have placed only `git` and selected `git-foo` commands that must be on
-`$PATH` in `bin-wrappers/` and prepended that `bin-wrappers/` to the
-`PATH` used in the test suite. We did that to catch the tests and
-scripted Git commands that still try to use the dashed form.
+On Fri, 18 Sep 2020, Junio C Hamano wrote:
 
-Since CI jobs will not install the built Git to anywhere, and the
-hardlinks we make at the top-level of the source tree for `git-add` and
-friends are not even used during tests, they are pure waste of resources
-these days.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> Good to catch these cruft.
+> >>
+> >> Does the equivalent of "make distclean" need to be updated to clean
+> >> them as well, or is it sufficient to ignore the build procedure and
+> >> just rely on "git clean -f -x"?
+> >
+> > Since CMake in conjunction with Visual Studio completely side-steps
+> > `make`, I think it would make most sense to ignore `make distclean` in
+> > this context and go for `git clean -dfx` instead.
+>
+> I think you misunderstood the question, overlooking the "equivalent"
+> part.
+>
+> I expected that when CMake & VS discards build artifacts, it would
+> not make literal use of "make distclean".  After all, it does not
+> use "make all" to build, either.
+>
+> That led me to suspect that CMake & VS may have a build target that
+> is used to discard build artifacts, the moral equivalent to "make
+> distclean".  That is where my question "if we are making .gitignore
+> aware of more crufts, don't we need to tell the machinery, which is
+> equivalent to 'make disclean', came from.
+>
+> What I am hearing here is that people with CMake & VS use "git clean
+> -dfx" when they want to go back to the pristine state, unlike those
+> who use "make distclean", and there is nothing to adjust for newly
+> discovered crufts we are leaving on the filesystem.
 
-Thanks to the newly invented `SKIP_DASHED_BUILT_INS` knob, we can now
-skip creating these links in the source tree. So let's do that.
+Yes, that is my understanding.
 
-Note that this change introduces a subtle change of behavior: when Git's
-`cmd_main()` calls `setup_path()`, it inserts the value of
-`GIT_EXEC_PATH` (defaulting to `<prefix>/libexec/git-core`) at the
-beginning of the environment variable `PATH`. This is necessary to find
-e.g. scripted commands that are installed in that location. For the
-purposes of Git's test suite, the `bin-wrappers/` scripts override
-`GIT_EXEC_PATH` to point to the top-level directory of the source code.
+> If that is the case, it is 100% fine.  It was that I just didn't
+> expect not having a "remove cruft" rule in the build procedure.
 
-In other words, if a scripted command had used a dashed invocation of a
-built-in Git command, it would not have been caught previously, which is
-fixed by this change.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- ci/lib.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 3eefec500d..821e3660d6 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -178,6 +178,7 @@ fi
- export DEVELOPER=1
- export DEFAULT_TEST_TARGET=prove
- export GIT_TEST_CLONE_2GB=true
-+export SKIP_DASHED_BUILT_INS=YesPlease
- 
- case "$jobname" in
- linux-clang|linux-gcc)
--- 
-gitgitgadget
+Thanks,
+Dscho
