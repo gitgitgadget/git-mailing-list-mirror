@@ -2,102 +2,112 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1CCC4727D
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7008CC4741F
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:18:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8280023A60
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:15:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3494723A60
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:18:06 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="F6WXfdbd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728309AbgIUWPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 18:15:18 -0400
-Received: from mail601b.mxthunder.net ([209.41.68.211]:44767 "EHLO
-        mail601b.mxthunder.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbgIUWPS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 18:15:18 -0400
-X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 18:15:18 EDT
-Subject: Re: [Wireshark-dev] Joint project with Git for outreachy
-To:     Developer support list for Wireshark 
-        <wireshark-dev@wireshark.org>,
-        Graham Bloice <graham.bloice@trihedral.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <20200918222103.GA3352870@google.com>
- <CAN05THSUN4YToYRqWUxZ0r2=wVxJU0V2iWumx1jjx=eTQ7rAYw@mail.gmail.com>
- <20200919195545.GH67496@camp.crustytoothpaste.net>
- <xmqqtuvtiec8.fsf@gitster.c.googlers.com>
- <20200920161652.GF331156@google.com>
- <CACyXjPxAXgpEmK0buarb3ToHwnonLM6TG9-J-=GysXfGkmsSrg@mail.gmail.com>
- <CALcKHKoE2BCZEuW7rmsCdY4LSyvnCTBDLmgifND7TH+v5ma-6w@mail.gmail.com>
-From:   Gerald Combs <gerald@wireshark.org>
-Autocrypt: addr=gerald@wireshark.org; prefer-encrypt=mutual; keydata=
- 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
-Organization: Wireshark Foundation
-Message-ID: <21f2fdb9-33e0-064c-985e-6dc8692aca61@wireshark.org>
-Date:   Mon, 21 Sep 2020 15:07:49 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.0
+        id S1728496AbgIUWSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 18:18:04 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60741 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726457AbgIUWSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 18:18:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1600726672;
+        bh=y+48euRU/4tYWiKxEpwVCUdiIox43ssj7ml7e+yvsiU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=F6WXfdbdXi/jV9EFOn4fbLGI0jXQs5PShdpgbQZ2sfGqc7DTO4Unm4+byn4AZQTrD
+         gDWYfiOlUs97MajMz02f11FwLXklOk2M+ghFRWb+904HgDeUYqH32dirWwgPJFxY0y
+         SgiKWADo8TpkC5chDxXr14/aMm0zwVbuH2bwuokg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.89.169] ([89.1.212.93]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MpDJX-1koa5v2zaZ-00qiwd; Tue, 22
+ Sep 2020 00:17:52 +0200
+Date:   Sun, 20 Sep 2020 19:02:55 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2020, #04; Wed, 16)
+In-Reply-To: <xmqq363gqdzq.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2009201846040.5061@tvgsbejvaqbjf.bet>
+References: <xmqq8sd9t679.fsf@gitster.c.googlers.com> <xmqq363gqdzq.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CALcKHKoE2BCZEuW7rmsCdY4LSyvnCTBDLmgifND7TH+v5ma-6w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-FILTER-ID: 4B9bQ1
-X-MXT-FILTER-ID: a4B9bQ1_500b_101b
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:W5KRajqXyDENR7LMTHkamGXEVZtMA/5jX2jYYAu0MZ/+Vo9j8KF
+ gZNcyoCZuV5jkmGwSbakKj15yQCEzNMNISZGOWUw1/c9HPylCse7fkSPehZ/toVzDKBXhJb
+ faNNrfj7UMSlcPY2vE4vOyW4H1HSaWdxi9//eV198lh0j3jLbaPzfFTx7gLqKwpgGf2gwFr
+ bnJe5uyy3X/pMEQs+gFmQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:hfHi8/giuP4=:VqKIV52ASbMyxHPg/6fNY7
+ LZqosd8UGp1p6xfMt0eKAQZMDYe1InLzVlLuhAp3DmnTQGneb/GxX0RRDldb7un0Ti5w018Yc
+ /FVvqcn/LLewlmXxFJcPyA4VWRsGG0XJX++HJ1xgBmmqujCOwLLUiO7fj6+7FFqzl0t22nBb5
+ ykecFKybR1SYyF9SBXx+5qmWlq3wJqOnIMZf66lpKzkVQtkLYImj8kwxA0QGqsvpOi9PdKcbG
+ n9by/v7AAozqFe9HYahbgH8YFjQZUFlCp2gNNe8jvN0BsOwot/utjKXYkpidTO99G1gr1lNAm
+ uBMDRV+ow7ErCAPALCqyXRVB+QnKB64G04LHnVMYWoFQeneR+LxDsJsRXWW/+DcK0xntOn/NU
+ jv/tGswNe72Xiy910tOzdFxqkMut0XyYIsarK1QZnT9g4GKuGY7r0+UOk3IEayQwiGCjHfsN3
+ 9nl5E220F7EGxcI54bJFg2M4LfO9MB8R+s27J0JWuo2/Tej/W9fZR2MwB5U6oqPixpAzhU6bp
+ TFTG+s1tJB0sbntToh6t+kIDF+uBzBIgq2KkDC1AdAz0/XzLNFGFyPFVkMP98OC8P/BDdN1x0
+ bOae3aJu0PDPZn/ARCq4jHq2Hw14wTJDgwfA7LXrVpvUYZecJ60j3eMNIPsGbrcMV4wNFCu4L
+ +n3bJFAdnrF1oyLI5J2ny01n5yEqvKwR/WREq5rvBTx18bb03Rjy4dEnLRTyKNngt2Cld/cpR
+ 7ZF8k41g0dNzdL7vAw0RksV4MVZd7m29eXxkI3eIDQrer2scDoHm30MJh7DI6nfSzjqwjsOzu
+ g4ZcVMoeT/fsBGCkAhiAMeCSTmrnwIHZGPaXw4DdGHdIedOQ+02WdGscE4a3E9FW7agXkklFN
+ ruMvbGLmzc07V73kVlm2XNGBw2PSwA6xxKEVZW55tX+ESVbQSYR9ap7wJpq/HhaP72eHa+AhC
+ hbjItNUpHscKaHib79w0uxE7CbPg+ayyW+vFBQ3Z7d1z+QvxAFTXUUvQqM/Hsbj1hvPGNUdag
+ YPRe+pUwyukpUAA0WW3fJzAEIhSe/W74cueVGU6udzbzO1GcUC0zXvOwkUXszI7vrLCsFlYvg
+ nnnRu4rQXwJdHIzb3sB7Nvy69YVv3JifXQXuz4srfdf+yguJ8O6+OlFQPxAXbegg5jSIHtIBB
+ 3lg2Nzi+4fggahkxfxg2Dhs0t46uUYenTQx11lWb0HnQdH6Ups0kfs9KtTyCmkBg5ppMSSnyd
+ Fjt4n7X2tHvM1XrjEkD9ztQJY8ixa4nTClGHSaw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/21/20 9:06 AM, Graham Bloice wrote:
-> 
-> There's also the Wireshark Developers Guide (https://www.wireshark.org/docs/wsdg_html_chunked/) and for those that are sleep deprived there are a selection of talks on dissectors from previous SharkFest conferences, e.g. Writing a Wireshark dissector: https://www.youtube.com/watch?v=Fp_7g5as1VY
-> 
-> and the much more entertaining one with a different approach from Richard here: https://www.youtube.com/watch?v=XFFkC4PdCbI
+Hi Junio,
 
-Speaking of SharkFest, the next one is in a few weeks: https://sharkfestvirtual.wireshark.org/. Along with the sessions listed in the Agenda we'll have a Developer Den open throughout the conference.
+On Thu, 17 Sep 2020, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > * js/no-builtins-on-disk-option (2020-08-24) 3 commits
+> >  - ci: stop linking built-ins to the dashed versions
+> >  - install: optionally skip linking/copying the built-ins
+> >  - msvc: copy the correct `.pdb` files in the Makefile target `install=
+`
+> >
+> >  The installation procedure learned to optionally omit "git-foo"
+> >  executable files for each 'foo' built-in subcommand, which are only
+> >  required by old timers that still rely on the age old promise that
+> >  prepending "git --exec-path" output to PATH early in their script
+> >  will keep the "git-foo" calls they wrote working.
+> >
+> >  The old attempt to remove these executables from the disk failed in
+> >  the 1.6 era; it may be worth attempting again, but I think it is
+> >  worth to keep this topic separate from such a policy change to help
+> >  it graduate early.
+> >
+> >  Expecting a reroll to update log message for the last one.
+> >  as it confused at least two reviewers.
+> >  cf. <xmqqwo1baop3.fsf@gitster.c.googlers.com>
+> >  cf. <20200903104537.GA27325@szeder.dev>
+>
+> I think this is more or less good modulo the way the last bit is
+> explained.  No rush, but just trying to make sure it will not stay
+> stalled forever.
+
+Thank you for the gentle reminder. I fixed up the branch locally (and had
+to rebase it, to resolve merge conflicts with `jk/slimmed-down`) and will
+send out v4 soon..
+
+Ciao,
+Dscho
