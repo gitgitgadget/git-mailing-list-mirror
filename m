@@ -2,134 +2,191 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8174C4346E
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 18:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B80AC4346E
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 19:26:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 613A920888
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 18:48:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m3YeCwOH"
+	by mail.kernel.org (Postfix) with ESMTP id DE59020757
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 19:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727622AbgIUSse (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 14:48:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61084 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726395AbgIUSse (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 14:48:34 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84A18856C7;
-        Mon, 21 Sep 2020 14:48:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r2SDicmzUO6e82QnbKW5t05lXq0=; b=m3YeCw
-        OH0s2CD5fVzUWepdq3t3CWaWDMVndWZcyejRHxCzldZwfgOmFq6qKbNniea5iWuM
-        LARaaXbCf25zW52J9dWUMAm/ysc8NFYGouA367O9kqqPBLKEmq1fgu9CGK1BB4B9
-        u335GVqpgPcjn3tPdZ4JMbhATYqFJZ6rclAZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=J8e5IdFMo5p0Uqiu4dDrRYwamWHxkm7u
-        Fg2LLBAFbQ2NDup0PXIvlqa+UpXNKmxKwhcEncHzXvUBF0pPlro8RTGpWKIdcFT3
-        AzrNc2O5ZS5H0iV1AzTZ6Jjdt0QEI0Zn3iwGASlMe4ZD/xRLAumhjFKP+aqriW7n
-        JW9dF6TLfmA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C51C856C5;
-        Mon, 21 Sep 2020 14:48:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F3957856C3;
-        Mon, 21 Sep 2020 14:48:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] push: add reflog check for "--force-if-includes"
-References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
-        <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
-        <20200919170316.5310-2-shrinidhi.kaushik@gmail.com>
-        <xmqqft7djzz0.fsf@gitster.c.googlers.com>
-        <20200921084231.GA64896@mail.clickyotomy.dev>
-Date:   Mon, 21 Sep 2020 11:48:29 -0700
-In-Reply-To: <20200921084231.GA64896@mail.clickyotomy.dev> (Srinidhi Kaushik's
-        message of "Mon, 21 Sep 2020 14:12:31 +0530")
-Message-ID: <xmqqimc7ezk2.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727286AbgIUT0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 15:26:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35766 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726395AbgIUT0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 15:26:32 -0400
+Received: (qmail 9136 invoked by uid 109); 21 Sep 2020 19:26:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Sep 2020 19:26:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23856 invoked by uid 111); 21 Sep 2020 19:26:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Sep 2020 15:26:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 21 Sep 2020 15:26:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
+        dermoth@aei.ca
+Subject: Re: [PATCH v2] diff: Fix modified lines stats with --stat and
+ --numstat
+Message-ID: <20200921192630.GA2399334@coredump.intra.peff.net>
+References: <20200918113256.8699-2-tguyot@gmail.com>
+ <20200920130945.26399-1-tguyot@gmail.com>
+ <20200920153915.GB2726066@nand.local>
+ <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0AA5B8FA-FC3B-11EA-8A24-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
+On Sun, Sep 20, 2020 at 12:11:20PM -0700, Junio C Hamano wrote:
 
->> If we were talking about older parts of the history, optional
->> generation numbers could change the equation somewhat, but the
->> common case for the workflow this series is trying to help is that
->> these local commits ane the remote tip are relatively new and it is
->> not unlikely that the generation numbers have not been computed for
->> them, which is why I suspect that in_merges_many may be a win.
->
-> Nice! We can definitely try batching commits from the reflog and
-> pass it along to "in_merge_bases_many()". As for being faster than
-> calling "in_merge_bases()" for each commit entry in the reflog --
-> I am not familiar with how the former works. Do we still keep the
-> "reflog_entry_exists()" part? It might still be faster to go through
-> the entries once to check with "oideq()" in the first run.
+> > After reading your explanation in [1], this version makes more sense to
+> > me.
+> 
+> These oid fields are prepared by calling diff_fill_oid_info(), and
+> even for paths that are dirty (hence no "free" oid available from
+> index or tree entry), an appropriate oid is computed.
 
-That is what I meant.  You go through local reflog entries until you
-find one that is older than the timestamp of the reflog entry of the
-remote-tracking branch, check with oideq() to see if the tip was ever
-directly checked out.  Then, using these same local reflog entries,
-you can make in_merge_bases_many() tranversal to see if any of them
-reach the tip.  I suspect that the number of local reflog entries you
-need to examine would not be too many, so if you can put them all in
-a single array of "struct commit *" pointers in the first "oideq()"
-phase, you may be able to do just a single in_merge_bases_many() batch
-to check for the reachability.
+This is the part that confused me earlier. I expected these "stdin"
+entries, just like other some other entries (e.g., stat dirty ones for
+diff-files, or anything for "diff --no-index") to have bogus oids.
 
-> Also, I was wondering if it is worth considering this:
->   - check if the reflog of the HEAD has the remote ref
+But that diff_fill_oid_info() is what actually computes the sha1 from
+scratch for them. I get why that is needed for generating a git diff, as
+we have an "index from...to" line there that we'd want to fill.
 
-It would help the workflow I had in mind, but it would raise the
-risk of false positives according to Dscho and I tend to agree, so
-I do not know if it is overall a good idea.
+For diffstat, though, it seems like a waste of time; we don't care what
+the object hash is. I.e., if we were to do this:
 
->   - check if the reflog of the local branch has the remote ref
+diff --git a/diff.c b/diff.c
+index 16eeaf6645..1934af29a5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4564,9 +4564,6 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
+ 	if (o->prefix_length)
+ 		strip_prefix(o->prefix_length, &name, &other);
+ 
+-	diff_fill_oid_info(p->one, o->repo->index);
+-	diff_fill_oid_info(p->two, o->repo->index);
+-
+ 	builtin_diffstat(name, other, p->one, p->two,
+ 			 diffstat, o, p);
+ }
 
-Isn't that the oideq() test?
+then everything seems to work fine _except_ a "git diff --stat
+--no-index", exactly because it hits this "same_contents" check we've
+been discussing. And once that is fixed properly (to handle any case
+where we have no oid, not just when the stdin flag is set), then perhaps
+it is worth doing.
 
->   - check if the remote ref is reachable from any of the local ref's
->     "reflog" entries using "in_merge_bases_many()" in batches as
->     suggested here.
+Or perhaps not. Even if we have to memcmp sometimes in
+builtin_diffstat(), it would be faster than computing the individual
+hashes. But it may not be measurably so, and it would be no difference
+for the common case of filespecs for which we do know the oid for free.
+I also suspect we'd need to be a little smarter about combined formats
+(e.g., "--stat --patch" might as well compute the oid as early as
+possible, since we'll need it eventually for the patch; but we'd hit the
+call in builtin_diffstat() before the one in run_diff()).
 
-I think it amounts to the same as "does any reflog entry of HEAD
-reach it?" and shares the same issues with false positives as the
-first one.
+> But there are paths for which oid cannot be computed without
+> destroying their contents.  Such paths are marked by the function
+> with null_oid.
 
->> > +		deletion:1,
->> > +		if_includes:1, /* If "--force-with-includes" was specified. */
->> 
->> The description needs to be tightened.
->> 
->> > +		unreachable:1; /* For "if_includes"; unreachable in reflog. */
->
-> OK, you're right. Perhaps, we could rename it to something like
-> "if_includes_for_tracking" and update the comment description
-> with saying something along the lines of:
+I'm not clear how computing the oid destroys the contents. We have them
+in an in-memory buffer at this point, don't we? So we _could_ generate
+an oid even for stdin, like this:
 
-That is overlong.  Let me try:
+diff --git a/cache.h b/cache.h
+index 55d7f61087..1ace143eac 100644
+--- a/cache.h
++++ b/cache.h
+@@ -858,6 +858,7 @@ int ie_modified(struct index_state *, const struct cache_entry *, struct stat *,
+ #define HASH_RENORMALIZE  4
+ int index_fd(struct index_state *istate, struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
+ int index_path(struct index_state *istate, struct object_id *oid, const char *path, struct stat *st, unsigned flags);
++int index_mem(struct index_state *istate, struct object_id *oid, void *buf, size_t size, enum object_type type, const char *path, unsigned flags);
+ 
+ /*
+  * Record to sd the data from st that we use to check whether a file
+diff --git a/diff.c b/diff.c
+index 16eeaf6645..181b632114 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4463,7 +4463,10 @@ static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *is
+ 		if (!one->oid_valid) {
+ 			struct stat st;
+ 			if (one->is_stdin) {
+-				oidclr(&one->oid);
++				if (index_mem(istate, &one->oid,
++					      one->data, one->size,
++					      OBJ_BLOB, one->path, 0))
++					die("cannot hash diff file from stdin");
+ 				return;
+ 			}
+ 			if (lstat(one->path, &st) < 0)
+diff --git a/sha1-file.c b/sha1-file.c
+index 770501d6d1..c7d017b3e0 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -2046,10 +2046,10 @@ static void check_tag(const void *buf, size_t size)
+ 		die(_("corrupt tag"));
+ }
+ 
+-static int index_mem(struct index_state *istate,
+-		     struct object_id *oid, void *buf, size_t size,
+-		     enum object_type type,
+-		     const char *path, unsigned flags)
++int index_mem(struct index_state *istate,
++	      struct object_id *oid, void *buf, size_t size,
++	      enum object_type type,
++	      const char *path, unsigned flags)
+ {
+ 	int ret, re_allocated = 0;
+ 	int write_object = flags & HASH_WRITE_OBJECT;
 
-		/* need to check if local reflog reaches the remote tip */
-		check_reachable:1,
+which is basically your "best fix" from below. It fixes the bug here,
+and it gives you a non-null index line. I'd consider coupling it with
+calling fill_oid less often, though (something like range-diff computes
+a bunch of fake-stdin diffs, and doesn't need to waste time computing
+the oids at all).
 
-		/* local reflog does not reach the remote tip */
-		unreachable:1;
+> Summarizing the above, I think the second best fix is this (which
+> means that the posted patch is the third best):
+> 
+> 	/*
+> 	 * diff_fill_oid_info() marked one/two->oid with null_oid
+> 	 * for a path whose oid is not available.  Disable early
+> 	 * return optimization for them.
+> 	 */
+> 	if (oideq(&one->oid, &null_oid) || oideq(&two->oid, &null_oid))
+> 		same_contents = 0; /* could be different */
+> 	else if (oideq(&one->oid, &two->oid))
+> 		same_contents = 1; /* definitely the same */
+> 	else
+> 		same_contents = 0; /* definitely different */
 
-Thans.
+This is the direction I was getting at in my earlier emails, except that
+I imagined that first conditional could be checking:
+
+  if (!one->oid_valid || !two->oid_valid)
+
+but I was surprised to see that diff_fill_oid_info() does not set
+oid_valid. Is that a bug?
+
+I also imagined that we'd have to determine right then whether the
+contents are actually different or not with a memcmp(), to avoid
+emitting a "0 changes" line, but we do handle that case within the
+"!same_contents" conditional. See the comment starting with "Omit
+diffstats..." added recently by 1cf3d5db9b (diff: teach --stat to ignore
+uninteresting modifications, 2020-08-20).
+
+-Peff
