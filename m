@@ -7,87 +7,85 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F935C4363C
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D05DCC4363C
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:26:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C901723A61
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:19:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7345323A5D
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:26:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LXS/KeRN"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G+TB/42f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728201AbgIUVTr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 17:19:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58883 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726497AbgIUVTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 17:19:47 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0DF1FC1E3;
-        Mon, 21 Sep 2020 17:19:45 -0400 (EDT)
+        id S1727435AbgIUV0p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 17:26:45 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59344 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726497AbgIUV0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 17:26:45 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E89EF60A1;
+        Mon, 21 Sep 2020 17:26:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D2SM4AYwHWWiRKqEE3iedw+K7Bo=; b=LXS/Ke
-        RNZAxWTUji6qdZQBMum7QQZc2INEsOTDyv49MKXO5sKMxoUTvwaN/Wjirll4Vqe1
-        yXbYikhszCqTLM8DBpunOpY/Hlr5ZkOlxzTKFL6uzeFvsIXtbTCj0kJMQK41P0sv
-        N7BU7HpKI31bNXxDJ0nZk0kTKSnHCSonjsq/c=
+        :content-type; s=sasl; bh=D7cIl3JMBp90hmggjuWOZZN0dWo=; b=G+TB/4
+        2fiO9M/ZASmmZI6XPc8oATSuOexVaG51TGH2CF3iwQrqVMvI0qKupPGvXpZzWvWq
+        GNaLUGboUpDtJOYhn/3aERwdld9/K42+Ag3zYqS2IdDDdHlJezWdUSsewt7nAR8W
+        i+8YGB1+YziRHPxHZuIEkpAZAuFpcc6lt1KJw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nui2mni3mywPECTHmIyHGXgPVCxaxulh
-        WuSE7/HfmfnDMGYYWVsMMTZvpQNYBOBqn0sub24YnwqBQrO3aWSt1fzVBOyQWU2b
-        VRrfrR23/+xTgmtHd0HyuXvckRI7ButrdQE9tAiV+IaZWkKqhxhw6EaJz6ulYIzR
-        VrN1qaURdlE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 99EC4FC1E2;
-        Mon, 21 Sep 2020 17:19:45 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=np7NzyWGPd3hu9tjo943zaTZpuZ0nPCd
+        kzPZm/c/F4HcsEteU6rBEk8igQzKvqy2QB//jHVqVgyHmbf8XmPPDcaYeNwsqu+y
+        +W5hlnzLWjZa2JDxxd1BELlel2CVPp4TbvPeBXQ3IJoibOHegrqECtbuFPyRr220
+        WEIctZy+uD8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 79037F60A0;
+        Mon, 21 Sep 2020 17:26:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.190.152.57])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DCF69FC1DF;
-        Mon, 21 Sep 2020 17:19:42 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B52ECF609F;
+        Mon, 21 Sep 2020 17:26:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
-References: <cover.1599723087.git.liu.denton@gmail.com>
-        <cover.1600328335.git.liu.denton@gmail.com>
-        <c0d27b125e969e13c52b0fa806a8e3caa8c20ac6.1600328336.git.liu.denton@gmail.com>
-        <xmqq363gs1mt.fsf@gitster.c.googlers.com>
-        <20200918104833.GB1874074@generichostname>
-        <xmqqy2l7m3hk.fsf@gitster.c.googlers.com>
-        <20200920110148.GA227771@generichostname>
-        <xmqqzh5jf73t.fsf@gitster.c.googlers.com>
-        <20200921172740.GA946178@generichostname>
-        <xmqqwo0met17.fsf@gitster.c.googlers.com>
-Date:   Mon, 21 Sep 2020 14:19:41 -0700
-In-Reply-To: <xmqqwo0met17.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 21 Sep 2020 14:09:24 -0700")
-Message-ID: <xmqqo8lyesk2.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/5] t3200: avoid variations of the `master` branch name
+References: <pull.734.git.1600279853.gitgitgadget@gmail.com>
+        <2f1d0a2df41f567bc1a8bc446c26e1cb8b6dc36c.1600279853.git.gitgitgadget@gmail.com>
+        <20200916211150.GA617237@coredump.intra.peff.net>
+        <xmqqft7huzju.fsf@gitster.c.googlers.com>
+        <20200916223950.GA1207950@coredump.intra.peff.net>
+        <nycvar.QRO.7.76.6.2009201739250.5061@tvgsbejvaqbjf.bet>
+Date:   Mon, 21 Sep 2020 14:26:39 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2009201739250.5061@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Sun, 20 Sep 2020 17:43:53 +0200
+        (CEST)")
+Message-ID: <xmqqk0wmes8g.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2A8546E4-FC50-11EA-9FB6-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2392ABF0-FC51-11EA-9A8D-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Another possibility is to error out when "--merge-base A..B" is
-> given, which might be simpler.  Then the code would look more like
-> ...
->
-> While we are at it, what happens when "--merge-base A...B" is given?
->
-> ...  Is this something we want to diagnose as an error?  I am
-> inclined to say we should allow it (and if it hurts the user can
-> stop doing so) as there is no harm done.
+>> > Jeff King <peff@peff.net> writes:
+>> >
+>> > > I'm on the fence on whether this matters. It's a temporary
+>> > > inconsistency, assuming we eventually move to "main" as the default.
+>> > > We _could_ push this change off to that patch, too, but it does make
+>> > > it more noisy.
+>> > ...
+> However, in this instance, I think it makes more sense to use a separate
+> name altogether. I settled for using `topic` instead of `main2`, and
+> `new-topic` instead of `main3` locally.
 
-My recommendation is to allow both "git --merge-base A..B" and "git
---merge-base A...B".  The discussion about A..B and SWAP() would
-equally apply to builtin/diff part of the patch.  The posted patch
-ignores the swap logic when --merge-base is given, but we should
-apply the swap logic first and then make sure the merge_base logic
-will have the oid[0] and oid[1] in the correct order.
+I think that is sensible.  Configuration does not have to be used as
+an escape hatch to make 'main2' less awkward---if we can avoid
+'main2' (or 'master2'), that would be sufficient.
+
