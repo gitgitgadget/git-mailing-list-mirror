@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99334C43465
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5091C43464
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:40:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5992820EDD
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:40:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CDC62145D
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:40:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gh+Geq3f"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jToVsqSB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbgIUKkT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 06:40:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33998 "EHLO
+        id S1726799AbgIUKk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 06:40:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbgIUKkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 06:40:18 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2539FC0613CF
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:40:18 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id a17so12172722wrn.6
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:40:18 -0700 (PDT)
+        with ESMTP id S1726762AbgIUKkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 06:40:24 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9FBC0613D1
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:40:23 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id b79so12077456wmb.4
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SvZ1fVsxMLyCcJ8zgy4iF9eMczQzBZxvlPawMLZwE/k=;
-        b=Gh+Geq3fHZWjHlgUx1ALKArlqMFZZAbW3BqhSushloXs5q1HtFtXcXeR6dbCB7AleI
-         XgDQRUErNHX9EoxKkAIlDUa4hxw492T8qGZ1s5FrYM8XcE1t+l2FzRXs1v+uqgyCqzuP
-         yTyw9q+xIxhycXkXZ3GDeadVSFfrFOylV29P91H/OK7FJxCnRQPL1XzOThhGxZFeaR83
-         bj+0J/jMguBSH/vF16AZm/Ke5n84UVDo8qdpuCFe8IlM40mMPqbqxi+fs+BYmprjUvg7
-         JYYa7gP/MDJo/IMxb4cD9H+7FJEtsROp/QH2xC+6zn0eW9voVCrFAhK61QXxgH7aB6GP
-         ncEg==
+        bh=arNlwz5nmHLOGpi2DcBtjy3OY83QSaEJhcFnYLqyAWA=;
+        b=jToVsqSBZX+V+ZyPw1tjpYYiULqEpoP0YV9i3mBpOCAMXMUU9XCXzX9/HdIh5MWrg7
+         lGsTQcmTwrM8nrKafSSL52P0Dyjsuku5eXU3qAIseTMerfa8qNKQePLqRo9Fx/BNjxHy
+         SHi20ESG8c7tzebXPPZVSh0mq14vdOOju9WSTwVweIpxHE5CNLzN2UdNy59R8CK5JQiL
+         tqApRaAQa/0pyK8cgyoE6hZa10AvF5S1BQ7Pl5dL00JFqq3yWrVUpFBld43XEIIwFnvA
+         I5L5T9MtHiW93mPDryhTBWekI6cBuiVvd4l9bel1m4dFN3pzB82KJY1WfYFauU+lsf8J
+         nMlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SvZ1fVsxMLyCcJ8zgy4iF9eMczQzBZxvlPawMLZwE/k=;
-        b=S48aO8GfDoLInipwbDqZj22DmDaiAbLXPCE/tNxi+uvsxQ0s0SIpUKm3rQ9KH0EKIk
-         UGfajX6/Ok8DjUJFAglKQKLbUaW5NDdXHHzSMM636JERlcwUD+WsFkYFAbD2eWVQqqiu
-         62yzQVA7Lr3U7eQ0Cy78k8VzIH8A7ecGB64r0orcArN1c+dRDjnWQAVyIBr6/+et2fMQ
-         TbQWSdXCQO1GpN+gp77Sj1BWJ72zlqmsL2+81GUE0MhcXW6aSFJ/yYLOP3AN1TRkW6vp
-         4fOyNHLCdnW8Y1HKFyiVq9KC5iczMzN7RkrlL9bEq1haylkyKZUllezP3SAR49nWMjZk
-         7H0Q==
-X-Gm-Message-State: AOAM531Yr8Yuvxs+5Yr5zK9cX8QwfJnszSYUnYOftLIleJaE3DMm+OaE
-        jdpTKC8YkITbz1xDhfn+FMg7+gSdEcjHbg==
-X-Google-Smtp-Source: ABdhPJzcYWbBvcFZ7p0bbV8XRgwQFFNN252YbJx7Q2iDJtHiOdWgsOGuweSHGhHzjUfoi9Qho+1XiQ==
-X-Received: by 2002:a05:6000:1083:: with SMTP id y3mr51442590wrw.405.1600684816609;
-        Mon, 21 Sep 2020 03:40:16 -0700 (PDT)
+        bh=arNlwz5nmHLOGpi2DcBtjy3OY83QSaEJhcFnYLqyAWA=;
+        b=Pje7zEAt2ffz8Y9dvHA1KodlJFNW9PLrfM/m6xS6Dgw5RO4BX6otIWQAvso8TiKf9U
+         +gUv2HsO/uRtZ5YkhLjSH/5QHDpY9zt58nmASJTrbkCeh7A+XSe/crLq1nCROdIU3VDX
+         QMSduNG9Yldwsu1c44knxWD1CBBg0cjTqlaQdvNLJia6pLwKEQxb+804ieoOLfOWOHNW
+         iObd2GmUavoGwVI/Sw/PiTWrojlvumDa/r3xfZbfeX/uYHNXvdjU5yBGtF12w0DLEhCq
+         OeAiOIAbTTQRs55rzlgn+5kluTlxSE55oqbIc7tBD+sdJvMsAsI9tqSPg9RNmm/qyeNU
+         jYCg==
+X-Gm-Message-State: AOAM5339wtWOZ3sWuDm9p6GDEixu4bDwGFmIww9cPwR5Zy4y2zrcXgTF
+        IrNmyMP6RcF0ooY8WGPNszrYqRlu1QstoQ==
+X-Google-Smtp-Source: ABdhPJytuypQ0tGe6hxd/74kaPmVl+2pop1Q2RZ0wbBt4HJlHITW1vGqyt6x5jv4Il7mG+ARzmAOcQ==
+X-Received: by 2002:a7b:cd88:: with SMTP id y8mr3584507wmj.24.1600684822105;
+        Mon, 21 Sep 2020 03:40:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 9sm18647833wmf.7.2020.09.21.03.40.15
+        by smtp.gmail.com with ESMTPSA id 9sm18647833wmf.7.2020.09.21.03.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 03:40:15 -0700 (PDT)
+        Mon, 21 Sep 2020 03:40:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -71,9 +71,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 02/18] remote-mediawiki doc: link to MediaWiki's current version
-Date:   Mon, 21 Sep 2020 12:39:44 +0200
-Message-Id: <20200921104000.2304-3-avarab@gmail.com>
+Subject: [PATCH v2 07/18] remote-mediawiki tests: change `[]` to `test`
+Date:   Mon, 21 Sep 2020 12:39:49 +0200
+Message-Id: <20200921104000.2304-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
 In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
 References: <20200916102918.29805-1-avarab@gmail.com>
@@ -84,28 +84,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend a comment in the test.config file to point to the latest
-upstream version, which makes it easier for the user to tweak this.
+Convert `[]` to `test` and break if-then into separate lines, both of
+which bring the style in line with Git's coding guidelines.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/mw-to-git/t/test.config | 3 +++
- 1 file changed, 3 insertions(+)
+ contrib/mw-to-git/t/test-gitmw-lib.sh | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/mw-to-git/t/test.config b/contrib/mw-to-git/t/test.config
-index 5ba0684162..b6fb0b3993 100644
---- a/contrib/mw-to-git/t/test.config
-+++ b/contrib/mw-to-git/t/test.config
-@@ -31,6 +31,9 @@ WEB_WWW=$WEB/www
- # The variables below are used by the script to install a wiki.
- # You should not modify these unless you are modifying the script itself.
- # tested versions: 1.19.X -> 1.21.1
-+#
-+# See https://www.mediawiki.org/wiki/Download for what the latest
-+# version is.
- MW_VERSION_MAJOR=1.21
- MW_VERSION_MINOR=1
- FILES_FOLDER=install-wiki
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+index 3948a00282..a466be8f3f 100755
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -65,7 +65,7 @@ test_check_precond () {
+ 	GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd "../.." && pwd)
+ 	PATH="$GIT_EXEC_PATH"'/bin-wrapper:'"$PATH"
+ 
+-	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ];
++	if ! test -d "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+ 	then
+ 		skip_all='skipping gateway git-mw tests, no mediawiki found'
+ 		test_done
+@@ -304,7 +304,8 @@ create_db () {
+ 	php "$FILES_FOLDER/$DB_INSTALL_SCRIPT" $(basename "$DB_FILE" .sqlite) \
+ 		"$WIKI_ADMIN" "$WIKI_PASSW" "$TMP" "$PORT"
+ 
+-	if [ ! -f "$TMP/$DB_FILE" ] ; then
++	if ! test -f "$TMP/$DB_FILE"
++	then
+ 		error "Can't create database file $TMP/$DB_FILE. Try to run ./install-wiki.sh delete first."
+ 	fi
+ 
+@@ -325,7 +326,8 @@ wiki_install () {
+ 	# unpack and copy the files of MediaWiki
+ 	(
+ 	mkdir -p "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-	if [ ! -d "$WIKI_DIR_INST/$WIKI_DIR_NAME" ] ; then
++	if ! test -d "$WIKI_DIR_INST/$WIKI_DIR_NAME"
++	then
+ 		error "Folder $WIKI_DIR_INST/$WIKI_DIR_NAME doesn't exist.
+ 		Please create it and launch the script again."
+ 	fi
+@@ -333,7 +335,8 @@ wiki_install () {
+ 	# Fetch MediaWiki's archive if not already present in the TMP directory
+ 	MW_FILENAME="mediawiki-$MW_VERSION_MAJOR.$MW_VERSION_MINOR.tar.gz"
+ 	cd "$TMP"
+-	if [ ! -f $MW_FILENAME ] ; then
++	if ! test -f $MW_FILENAME
++	then
+ 		echo "Downloading $MW_VERSION_MAJOR.$MW_VERSION_MINOR sources ..."
+ 		wget "http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/$MW_FILENAME" ||
+ 			error "Unable to download "\
+@@ -359,7 +362,8 @@ wiki_install () {
+ 	# And modify parameters according to the ones set at the top
+ 	# of this script.
+ 	# Note that LocalSettings.php is never modified.
+-	if [ ! -f "$FILES_FOLDER/LocalSettings.php" ] ; then
++	if ! test -f "$FILES_FOLDER/LocalSettings.php"
++	then
+ 		error "Can't find $FILES_FOLDER/LocalSettings.php " \
+ 			"in the current folder. "\
+ 		"Please run the script inside its folder."
+@@ -401,7 +405,8 @@ wiki_install () {
+ # Warning: This function must be called only in a subdirectory of t/ directory
+ wiki_reset () {
+ 	# Copy initial database of the wiki
+-	if [ ! -f "../$FILES_FOLDER/$DB_FILE" ] ; then
++	if ! test -f "../$FILES_FOLDER/$DB_FILE"
++	then
+ 		error "Can't find ../$FILES_FOLDER/$DB_FILE in the current folder."
+ 	fi
+ 	cp "../$FILES_FOLDER/$DB_FILE" "$TMP" ||
 -- 
 2.28.0.297.g1956fa8f8d
 
