@@ -2,165 +2,169 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5497C4727C
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BC49C4727C
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:54:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BD7523A60
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:51:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 320C923A60
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:54:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R1zZamlt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h7YBZze6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbgIUVvZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 17:51:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52654 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbgIUVvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 17:51:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC8D08FE28;
-        Mon, 21 Sep 2020 17:51:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SmDGLpH2USb03SeWMmDKvNupbl0=; b=R1zZam
-        ltYfvEAz0lD2RFJKpsu580+l5PFsmkGaYTpvvz0g5ETAtITRkAolCGJeYhsY+BGZ
-        IP2bSGP5FeZe4T+qKCKxLivs5Gd5+Jlw879ElAE8zTQC51ZrV+iGVtINnRsi7ZBx
-        2s1CI9Ft5yYYwDQdwG28w6j1T48sa8IeSx8Mw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RCBn4kWVSiCJDf8qS/RjbGLhn5xqMXsE
-        HEAz0QviEpjhywplGR2IHIn61liUaqS7GZKdsW76EoXG1zdyDXbyfe2IHDzJzOO7
-        OOvnB1dhuGlax567Xi6QfV4nkApmj1cM/SePrWbXrDV4QhT0eQIyrpgzxsbn1FdD
-        107DfsS7+uA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D506B8FE27;
-        Mon, 21 Sep 2020 17:51:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6295A8FE25;
-        Mon, 21 Sep 2020 17:51:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
-        dermoth@aei.ca
-Subject: Re: [PATCH v2] diff: Fix modified lines stats with --stat and
- --numstat
-References: <20200918113256.8699-2-tguyot@gmail.com>
-        <20200920130945.26399-1-tguyot@gmail.com>
-        <20200920153915.GB2726066@nand.local>
-        <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
-        <20200921192630.GA2399334@coredump.intra.peff.net>
-Date:   Mon, 21 Sep 2020 14:51:21 -0700
-In-Reply-To: <20200921192630.GA2399334@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 21 Sep 2020 15:26:30 -0400")
-Message-ID: <xmqqft7aer3a.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727059AbgIUVyN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 17:54:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726452AbgIUVyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 17:54:12 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50BAC061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 14:54:12 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id x22so5667789pfo.12
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 14:54:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VPh/YvayaRXrO+PNnwNEXOO1kHCZ6NsENl3tBtKPRuQ=;
+        b=h7YBZze6DjZSSv/R3ltHnN36qFrkJGidde2d0nTzzAyW9wIbZjXjqxvAwwv5oEpg9p
+         JZnbjZzHGj2ZDAIaQ5wHsiWwbDEY7rGvK55XgdegBuF1gVMV5ophPVYhwfzdlc+PEaB5
+         IN4jOu9o+VStWLJ7kgn5hM0wEmL7RsHMKRwtMToUOT6oIUjy+hDdQ1Nonq19ddn7yf+J
+         y0Ppl6hsTauxjTM/prExyV+A6JsRdepYb9wfKixzfv309Uoe4nHr2n4yr2J2RGLgFEW8
+         Sx9XhRhs+yAOlhIAflrn/manmwJdP+L8tUK49Ef8qk+Xhe50BYivduD8MvJWHIcGVJJY
+         wr9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VPh/YvayaRXrO+PNnwNEXOO1kHCZ6NsENl3tBtKPRuQ=;
+        b=VmY7NNB2jVQ68eEvSfxdTIOLxXZX+VOCNlG/HVdzpfRlJ434axAjbEHl5O+zdpg9fr
+         lz5tIp9K8rh0XFoib4vTelTE+fqu2CoyhcyDZjjFg+U/xd2WPY+i/sGj7kxJjoJm8M3K
+         hagG4o2osr9Ij+FodAFahMca+mDG3B1YvdTJbU68I3wB/3yfph9EiFmAjaMffNJgvkqC
+         U9QJJpaJyC8t3Cey4ozJlkTKJLc+965eIuOg8WcxJdujpPvsb+uxleWkwEXabi1X4KWW
+         6TTQr5ts7ptkqKh/gkaQUqj0dTDn2la2GU0dBwANddqH/B2u1zxRAbhXXXXj03JaVdeP
+         FA/w==
+X-Gm-Message-State: AOAM5335HIkhgFqwO3nNXwhEUQdUst1or9TpFuRlQ9p4TQtg6GT7K1Sa
+        5CNFmqnmRTrw2TzKVhri49m2DqF2f04=
+X-Google-Smtp-Source: ABdhPJzpCvCqABYB1uhpak7dj/VpgeSw5zu35S7kCS1H7iBggDc3rvO1WaNYKtIMW0Iaogf2d5bW1g==
+X-Received: by 2002:a63:725d:: with SMTP id c29mr1215623pgn.234.1600725252048;
+        Mon, 21 Sep 2020 14:54:12 -0700 (PDT)
+Received: from generichostname ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id n28sm4658174pgd.18.2020.09.21.14.54.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Sep 2020 14:54:11 -0700 (PDT)
+Date:   Mon, 21 Sep 2020 14:54:09 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
+Message-ID: <20200921215409.GA1018675@generichostname>
+References: <cover.1599723087.git.liu.denton@gmail.com>
+ <cover.1600328335.git.liu.denton@gmail.com>
+ <c0d27b125e969e13c52b0fa806a8e3caa8c20ac6.1600328336.git.liu.denton@gmail.com>
+ <xmqq363gs1mt.fsf@gitster.c.googlers.com>
+ <20200918104833.GB1874074@generichostname>
+ <xmqqy2l7m3hk.fsf@gitster.c.googlers.com>
+ <20200920110148.GA227771@generichostname>
+ <xmqqzh5jf73t.fsf@gitster.c.googlers.com>
+ <20200921172740.GA946178@generichostname>
+ <xmqqwo0met17.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 96B6B826-FC54-11EA-B0C9-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwo0met17.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Junio,
 
-> For diffstat, though, it seems like a waste of time; we don't care what
-> the object hash is. I.e., if we were to do this:
->
-> diff --git a/diff.c b/diff.c
-> index 16eeaf6645..1934af29a5 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4564,9 +4564,6 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
->  	if (o->prefix_length)
->  		strip_prefix(o->prefix_length, &name, &other);
->  
-> -	diff_fill_oid_info(p->one, o->repo->index);
-> -	diff_fill_oid_info(p->two, o->repo->index);
-> -
->  	builtin_diffstat(name, other, p->one, p->two,
->  			 diffstat, o, p);
->  }
->
-> then everything seems to work fine _except_ a "git diff --stat
-> --no-index", exactly because it hits this "same_contents" check we've
-> been discussing. And once that is fixed properly (to handle any case
-> where we have no oid, not just when the stdin flag is set), then perhaps
-> it is worth doing.
+On Mon, Sep 21, 2020 at 02:09:24PM -0700, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > @@ -165,7 +175,12 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+> >  	case 2:
+> >  		tree1 = opt->pending.objects[0].item;
+> >  		tree2 = opt->pending.objects[1].item;
+> > -		if (tree2->flags & UNINTERESTING) {
+> > +		if (merge_base) {
+> > +			struct object_id oid;
+> > +
+> > +			diff_get_merge_base(opt, &oid);
+> > +			tree1 = lookup_object(the_repository, &oid);
+> > +		} else if (tree2->flags & UNINTERESTING) {
+> >  			SWAP(tree2, tree1);
+> >  		}
+> >  		diff_tree_oid(&tree1->oid, &tree2->oid, "", &opt->diffopt);
+> 
+> OK.  Handling this in that "case 2" does make sense.
+> 
+> However.
+> 
+> The above code as-is will allow something like
+> 
+>     git diff --merge-base A..B
+> 
+> and it will be taken the same as
+> 
+>     git diff --merge-base A B
 
-> Or perhaps not. Even if we have to memcmp sometimes in
-> builtin_diffstat(), it would be faster than computing the individual
-> hashes. But it may not be measurably so, and it would be no difference
-> for the common case of filespecs for which we do know the oid for free.
-> I also suspect we'd need to be a little smarter about combined formats
-> (e.g., "--stat --patch" might as well compute the oid as early as
-> possible, since we'll need it eventually for the patch; but we'd hit the
-> call in builtin_diffstat() before the one in run_diff()).
->
->> But there are paths for which oid cannot be computed without
->> destroying their contents.  Such paths are marked by the function
->> with null_oid.
->
-> I'm not clear how computing the oid destroys the contents. We have them
-> in an in-memory buffer at this point, don't we? So we _could_ generate
-> an oid even for stdin, like this:
+This does not happen because at the top of diff_get_merge_base(), we
+have
 
-Yes, yes yes.  That is the "best" (which later retracted) approach I
-suggested in the same message, but it would end up filling a
-real-looking object name for working tree side of diff-files, which
-has a far larger consequence we need to think about and consumes
-more brain cycles than warranted here, I would think.
+	for (i = 0; i < revs->pending.nr; i++) {
+		struct object *obj = revs->pending.objects[i].item;
+		if (obj->flags)
+			die(_("--merge-base does not work with ranges"));
+		if (obj->type != OBJ_COMMIT)
+			die(_("--merge-base only works with commits"));
+	}
 
->> Summarizing the above, I think the second best fix is this (which
->> means that the posted patch is the third best):
->> 
->> 	/*
->> 	 * diff_fill_oid_info() marked one/two->oid with null_oid
->> 	 * for a path whose oid is not available.  Disable early
->> 	 * return optimization for them.
->> 	 */
->> 	if (oideq(&one->oid, &null_oid) || oideq(&two->oid, &null_oid))
->> 		same_contents = 0; /* could be different */
->> 	else if (oideq(&one->oid, &two->oid))
->> 		same_contents = 1; /* definitely the same */
->> 	else
->> 		same_contents = 0; /* definitely different */
->
-> This is the direction I was getting at in my earlier emails, except that
-> I imagined that first conditional could be checking:
->
->   if (!one->oid_valid || !two->oid_valid)
->
-> but I was surprised to see that diff_fill_oid_info() does not set
-> oid_valid. Is that a bug?
+which ensures that we don't accept any ranges at all. This is why I
+considered the SWAP and merge_base cases to be mutually exclusive.
 
-I do not think so.  oid_valid refers to the state during the
-collection phase (those who called diff_addremove() etc.) and
-updating it in diff_fill_oid_info() would lose information.  Maybe
-nobody looks at the bit at this late in the processing chain these
-days, in which case we can start flipping the bit there, but I
-offhand do not know what consequences such a change would trigger.
+> Another possibility is to error out when "--merge-base A..B" is
+> given, which might be simpler.  Then the code would look more like
+> 
+> 
+> 	tree1 = ...
+> 	tree2 = ...
+> 
+> 	if (merge_base) {
+> 		if ((tree1->flags | tree2->flags) & UNINTERESTING)
+> 			die(_("use of --merge-base with A..B forbidden"));
+> 		... get merge base and assign it to tree1 ...
+> 	} else if (tree2->flags & UNINTERESTING) {
+> 		SWAP();
+> 	}
 
-> I also imagined that we'd have to determine right then whether the
-> contents are actually different or not with a memcmp(), to avoid
-> emitting a "0 changes" line, but we do handle that case within the
-> "!same_contents" conditional. See the comment starting with "Omit
-> diffstats..." added recently by 1cf3d5db9b (diff: teach --stat to ignore
-> uninteresting modifications, 2020-08-20).
+This is the route I picked, although the logic for this is in
+diff_get_merge_base().
 
-Yes, we are essentially on the same page---same_contents bit is
-merely an optimization to decide cheaply when we do not have to do
-xdl, but the codepath that does the xdl must be prepared to deal
-with the "we thought they are different, but after all they turn out
-to be equivalent" case.  Therefore false positive to declare two
-different things as same cannot be tolerated, but false negative to
-declare two things that are the same as !same_contents is fine.
+> While we are at it, what happens when "--merge-base A...B" is given?
+> 
+> In the original code without "--merge-base", "git diff-tree A...B"
+> places the merge base between A and B in pending.objects[0] and B in
+> pending.objects[1], I think.  "git diff-tree --merge-base A...B"
+> would further compute the merge base between these two objects, but
+> luckily $(git merge-base $(merge-base A B) B) is the same as $(git
+> merge-base A B), so you won't get an incorrect answer from such a
+> request.  Is this something we want to diagnose as an error?  I am
+> inclined to say we should allow it (and if it hurts the user can
+> stop doing so) as there is no harm done.
+
+I think that we should error out for all ranges because this option
+semantically only really makes sense on two endpoints, not a range of
+commits. Since the check is cheap to protect users from themselves, we
+might as well actually do it.
+
+Worst case, if someone has a legimitate use case for --merge-base and
+ranges, we can allow it in the future, which would be easier than
+removing this feature.
+
+Thanks,
+Denton
