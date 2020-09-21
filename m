@@ -2,141 +2,132 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24455C43465
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 11:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F420CC43463
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 13:13:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1ED420EDD
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 11:33:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD3F621789
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 13:13:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXst7fv+"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="d134pmNc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726430AbgIULdQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 07:33:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42212 "EHLO
+        id S1727315AbgIUNNY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 09:13:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726326AbgIULdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 07:33:16 -0400
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 602ABC061755
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 04:33:16 -0700 (PDT)
-Received: by mail-io1-xd44.google.com with SMTP id r25so15000821ioj.0
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 04:33:16 -0700 (PDT)
+        with ESMTP id S1727113AbgIUNNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 09:13:18 -0400
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com [IPv6:2607:f8b0:4864:20::a43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA54C061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 06:13:18 -0700 (PDT)
+Received: by mail-vk1-xa43.google.com with SMTP id r78so3325109vke.11
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 06:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Fq5zTg7mkWjX4/+pq1bT03tYVHkLRNcY1pjo9gbEtdA=;
-        b=dXst7fv+IJNysDFH7DlD1l4Puh/7ctQ2BLNQyrxnRwUXTHQelyhpkqxWxOvQ1t/hnC
-         rQftC0G/5MsMAUzvJZ/MXiQ2wYQRsh7IdzXh1uH71Tp+0xg5DSUTYKNzFj6AIlnuRZlY
-         EIdfmg2WEQ1MJyMNvB4RYyh39dO4cpW3x9iXSULOX4KFMZZIYE1tbowOW0AaYs8+VVmi
-         QZ3Zan3nvROsjV0qlDtBmum0S0c2zVl3Fhbr8mGHOPYQAkmBcXVKaQb3+bqFiuH/F/k7
-         fq8tW/eXGavk8L6REivt2edhoQVvz674zeMnozYhKqxr5Lj1YfCzUS9Yb3vfFwelmqGP
-         QRSQ==
+         :cc:content-transfer-encoding;
+        bh=8p3NgRfOPl4joetDFzo7bm1QgUjJmJzmd8iKEU1/YhY=;
+        b=d134pmNcQWiG6nm5bvaARXfD377SJu+SbhV+EvHW/ToA4J2sCVdkFjwbgskoZW4mpP
+         EujHnLSHhkrXaYF43BK8TJruZJx62a5OHTw7/Oar+909uOD/uy5NZg1qn4V2DFSGpWuw
+         1J161L6A0ghXeaSY5Hnaep3Xe9TMH5yxNpBgkujA5cvsaUIpaS2RdzLbefFIplF9otEX
+         nT3sKFeT6LCVgegHz2SUeSvpVGcy8uiEJoDw6mIRVmONttCnB+vC1Pj6PKTxh1iisP+F
+         QRNbUGeBwv5oWyOGJnD0CNurqJj0HGAJCu0CIuCs9x+CMElqBZvrv3OdDKCXylqe37Y1
+         sivA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Fq5zTg7mkWjX4/+pq1bT03tYVHkLRNcY1pjo9gbEtdA=;
-        b=SlXPyo9PR5+9nyp1VcV0SQ28jp2rMzKYdm136MtlVxpBQqHdU0F1wLK9Y0pk8o3ZVo
-         RLAE/1vOItayArGmAzVAZk4Ai1vIa3E7B7LGk1JDop3e5FNUJEhR4jmzmO3QYTekYJcL
-         ltFp136Osmw7jtg1y8h2LU0pv33gCFWuOlZwuCuSHUBaMlEAkFgp1gwT91HAwNUyDDkO
-         Kcb6AizFQmHQ/b98DuVXB04lQ8DYvwIMM3dUNxfF4LXYHOwgZF8Oglw+2qcWJc5QK7Uu
-         NdItZ3AiWzdSiQHdbdJPNpjWl4NgQOgJBHRUFJesrv0AabEQrPN+lK6YIrk3V/OO2yDy
-         qW8Q==
-X-Gm-Message-State: AOAM530CRzPU3ZEgjIR3+3ZOq9XKHiNp4WIBuswCDCTphPt9m2jIxoWR
-        b8gGLN4/ehNAu/pHzAmlpY18WQ/n39n+KOYqJWI=
-X-Google-Smtp-Source: ABdhPJx4vi3iVkWPdCm2LXmcMjyn4hSKt1TPubQSQXwtzwWGLXDCA/V1kkFIWRP9P0ajMMTrTZfFjDU0CfAK1Qd4ELE=
-X-Received: by 2002:a02:9a0e:: with SMTP id b14mr40401490jal.22.1600687995664;
- Mon, 21 Sep 2020 04:33:15 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8p3NgRfOPl4joetDFzo7bm1QgUjJmJzmd8iKEU1/YhY=;
+        b=RdTIrgJC/nM7PKZ6VFUThgJLpdBKqQcN4hoPprV5NyCzV2reWGH+gbo2Uiph4RrJlQ
+         8eLSb2dIVi4O5yh5mObJ0hGGkNxvJzrqhhUE4zaA+VdPinP0c7WX8XuWnQSVnhOvyPET
+         qeJMNiRQDb+7/5zTrdDCK30HPgU2qv+oTQ4+BqsTLcqDc8Pm3NHaMdx7Tvu+I2Lq8lZX
+         /bTVrS9ibz+EkqRyVRsUJRthricIUgmPCEQSTnS+LuqV5Ukl1k6WipgzZmTR1h4Wy82B
+         n3eW48J3f4rx5hVN1fSvaUUbm4ECj0bjTtgzBY6cllJz7AyiO5AWJDPtpywyJrmWM+s8
+         Lx5g==
+X-Gm-Message-State: AOAM532M9ewN9uAw71KxehAu3qeyfPJYK8fasKTrO0doA9VPNU1yBeMl
+        ZMHTY+ve+s8gbPbd5U4inqR/V24Ho9B+aRAFZclCwR5tbzjYJGT8
+X-Google-Smtp-Source: ABdhPJy33JdMWx/t+7pW+kDsm2EefyOsKP4SmZ3hLYZ8swyJkQ9QfBOMzFHpabTIN+9CGdPsYrHY1WIPfZj61Yy35ew=
+X-Received: by 2002:a1f:fe4f:: with SMTP id l76mr17759186vki.19.1600693996924;
+ Mon, 21 Sep 2020 06:13:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200918222103.GA3352870@google.com> <CAN05THSUN4YToYRqWUxZ0r2=wVxJU0V2iWumx1jjx=eTQ7rAYw@mail.gmail.com>
- <20200919195545.GH67496@camp.crustytoothpaste.net> <xmqqtuvtiec8.fsf@gitster.c.googlers.com>
- <20200920161652.GF331156@google.com>
-In-Reply-To: <20200920161652.GF331156@google.com>
-From:   ronnie sahlberg <ronniesahlberg@gmail.com>
-Date:   Mon, 21 Sep 2020 21:33:04 +1000
-Message-ID: <CAN05THSYBmy_1gPvzRB1qOffrg-YcL_YnHA-Th2scJ0nzB2U_g@mail.gmail.com>
-Subject: Re: Joint project with Git for outreachy
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Developer support list for Wireshark 
-        <wireshark-dev@wireshark.org>, git@vger.kernel.org
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
+ <791f69c000556e93bf5fcfc0ec9304833b12565b.1600283416.git.gitgitgadget@gmail.com>
+ <xmqqlfh5i7nk.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqlfh5i7nk.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 21 Sep 2020 15:13:05 +0200
+Message-ID: <CAFQ2z_M9uBc+VArOVXg-hwTY8bu-gQQSL9JC6TJ5MuTCtxx=EQ@mail.gmail.com>
+Subject: Re: [PATCH 06/13] reftable: (de)serialization for the polymorphic
+ record type.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily
+On Sun, Sep 20, 2020 at 3:00 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > +static void reftable_log_record_key(const void *r, struct strbuf *dest=
+)
+> > +{
+> > +     const struct reftable_log_record *rec =3D
+> > +             (const struct reftable_log_record *)r;
+> > +     int len =3D strlen(rec->refname);
+> > +     uint8_t i64[8];
+> > +     uint64_t ts =3D 0;
+> > +     strbuf_reset(dest);
+> > +     strbuf_add(dest, (uint8_t *)rec->refname, len + 1);
+> > +
+> > +     ts =3D (~ts) - rec->update_index;
+> > +     put_be64(&i64[0], ts);
+> > +     strbuf_add(dest, i64, sizeof(i64));
+> > +}
+>
+> We seem to be getting
+>
+> reftable/record.c: In function 'reftable_log_record_key':
+> reftable/record.c:578:2: error: dereferencing type-punned pointer will br=
+eak strict-aliasing rules [-Werror=3Dstrict-aliasing]
+>   put_be64(&i64[0], ts);
+>     ^
+>         CC reftable/refname.o
+>
+> when this series is merged to 'seen'.
 
-I got confused. I worked in Jonathans team about 5-6 years ago and
-since I am old fart I couldn't realize that maybe they had other
-people join since I left.
-Hence I assumed you were the intern.
+Thanks for bringing this up. I did see this before, but I've been
+unable to reproduce this locally, and I forgot about it.
 
-Just me being senile. No harm meant.
+The problem is actually triggered by the Git-provided put_be64()
+(which appears unused in the Git source code). The definition
 
-Regardless, a git dissectors will be totally awesome so whomever ends
-up being the intern or whatever doing it, I will be happy to help
-them get it going and have a successfull project that they can
-remember with joy and be proud of.
+  #define put_be64(p, v) do { *(uint64_t *)(p) =3D htonll(v); } while (0)
 
-regards
-ronnie sahlberg
+is trying to reinterpret a char* as a uint64_t* , which is illegal in
+strict aliasing rules? I originally had
 
-On Mon, Sep 21, 2020 at 2:17 AM Emily Shaffer <emilyshaffer@google.com> wrote:
->
-> On Sat, Sep 19, 2020 at 03:36:23PM -0700, Junio C Hamano wrote:
-> >
-> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> >
-> > > On 2020-09-19 at 09:12:53, ronnie sahlberg wrote:
-> > >> Hi Jonathan,
-> > >> Hi Emily
-> > >>
-> > >> Emily, you want to contribute to wireshark? That is awesome. I think I
-> > >> speak for everyone to send a HUGE welcome
-> > >> your way and hope your experience working on and with wireshark be excellent!
-> > >
-> > > I think there's been a misunderstanding.  I think the proposal was to
-> > > have Emily and Jonathan, who are both significant contributors to Git,
-> > > doing the mentoring from the Git side, along with someone from the
-> > > Wireshark side.  I don't think we know yet if anyone will be interested
-> > > in working on it, but it seems from the response to be a proposal that
-> > > has interest in both projects.
-> > >
-> > > Feel free to correct me if I've misunderstood.
-> >
-> > That matches my understanding.
->
-> Right - brian and Junio are correct, I'm hoping to co-mentor with
-> Jonathan. Ronnie, I'm really pleased to see this warm welcome, which
-> makes me optimistic about the kind of experience an intern would have on
-> this project. It would be really great if we could get a volunteer to
-> serve as point-of-contact if the mentee is not sure about something
-> they want to send to the Wireshark list, and possibly to come to an
-> introductory real-time chat (video/voice/IM) to provide a little
-> overview and nudge in the right direction.
->
-> It sounds to me like we have enough enthusiasm to put this project on
-> the list, though - if I understood my conversation with Jonathan last
-> week he's planning to add that. Feel free to correct me :)
->
-> Thanks, Ronnie and Richard!
->
-> > > > (
-> > > > Jonathan, remember that smb2 client I was working on, libamb2?  I got
-> > > > it to run on PlayStation2 now. It is totally awesome being able to use
-> > > > SMB3.1.1 and full encryption to copy file between the PS2 memory card
-> > > > and Azure cloud file server :-)
-> > > > )
->
-> (This actually sounds awesome. Got a repo or blog post up somewhere?)
->
->  - Emily
++void put_be64(uint8_t *out, uint64_t v)
++{
++       int i =3D sizeof(uint64_t);
++        while (i--) {
++               out[i] =3D (uint8_t)(v & 0xff);
++               v >>=3D 8;
++       }
++}
+
+in my reftable library, which is portable. Is there a reason for the
+magic with htonll and friends?
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
