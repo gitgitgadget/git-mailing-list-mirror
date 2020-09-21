@@ -2,137 +2,76 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A93BDC43466
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 17:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95476C43468
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 17:05:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A708206BE
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 17:01:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 383DA2073A
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 17:05:34 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PemtK9Y6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730027AbgIURAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 13:00:53 -0400
-Received: from mout.kundenserver.de ([217.72.192.74]:35497 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729243AbgIUQjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 12:39:22 -0400
-Received: from mail.cetitecgmbh.com ([87.190.42.90]) by
- mrelayeu.kundenserver.de (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 1Mzy6q-1khoqf3Mlq-00x32t; Mon, 21 Sep 2020 18:39:03 +0200
-Received: from pflvmailgateway.corp.cetitec.com (unknown [127.0.0.1])
-        by mail.cetitecgmbh.com (Postfix) with ESMTP id 8D1391E01E7;
-        Mon, 21 Sep 2020 16:39:02 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at cetitec.com
-Received: from mail.cetitecgmbh.com ([127.0.0.1])
-        by pflvmailgateway.corp.cetitec.com (pflvmailgateway.corp.cetitec.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id ap15BqCM6pWN; Mon, 21 Sep 2020 18:39:02 +0200 (CEST)
-Received: from pflmari.corp.cetitec.com (10-usr-pf-main.vpn.it.cetitec.com [10.8.5.10])
-        by mail.cetitecgmbh.com (Postfix) with ESMTPSA id 4B0E81E01E6;
-        Mon, 21 Sep 2020 18:39:02 +0200 (CEST)
-Received: by pflmari.corp.cetitec.com (Postfix, from userid 1000)
-        id DB71F8051A; Mon, 21 Sep 2020 18:39:01 +0200 (CEST)
-Date:   Mon, 21 Sep 2020 18:39:01 +0200
-From:   Alex Riesen <alexander.riesen@cetitec.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] config: option transfer.ipversion to set transport
- protocol version for network fetches
-Message-ID: <20200921163901.GB4541@pflmari>
-References: <20200915135428.GA28038@pflmari>
- <xmqqtuvxwkbz.fsf@gitster.c.googlers.com>
- <xmqqk0wtv204.fsf@gitster.c.googlers.com>
- <20200917140254.GA28281@pflmari>
- <xmqqbli4ox0h.fsf@gitster.c.googlers.com>
- <20200918071647.GA17896@pflmari>
- <xmqq363fnir9.fsf@gitster.c.googlers.com>
+        id S1728330AbgIURFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 13:05:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730382AbgIURFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 13:05:07 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FAD2C061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 10:05:07 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id n13so13489040edo.10
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 10:05:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5PxeqWjMhd26jfxLp3fmtvtraCOS5QFHMN5Oc5jKVmk=;
+        b=PemtK9Y6+C9BSrn72pLfLF+3vjfwnBpadPnE7VdVeC/qPn+VoQ1d1IgZoN6dRLlAkf
+         PDynLLC3KXS8cFMZSfBQzTRUp3/mLcAH3UgbLIBSf+UUoCyj536N1rolEXmbC0cFEY63
+         wANGEM8/21YV8FA77J7PezlqPPYukJMZ1dXMjm+TJYzHuBUizw5bDZvRelpLsSuKOJHV
+         YrgDC7F2mNliSWFMIY9ajYJ2LB/qtR8zWu059OptiMcYDWNWVchUzHmuaW/gYawUlW6I
+         9aUve8445uMGE8t9TVj4LyZDSy/26ckzNnzQUJw+Y9SAISlwWtMlhIac9bFv+fBiH7do
+         m7MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5PxeqWjMhd26jfxLp3fmtvtraCOS5QFHMN5Oc5jKVmk=;
+        b=FeJ28wr130O/TY4EpP2676nOvx8gB2cSJvXJIFK2i5srDHJXBQGYdWxNz9DAaj+W17
+         VTQRQIO6DcsvitIiRx+vuEGyapI6EbwZxsmAs2t1yKzgzAjrgh2o8RqYEhTePKxVjXWd
+         JJuEyNrJiu8TqSbWKz4OcTs8kZwnEW8Pf8BC/EIZVRXgfIfmYnuguma59STumZYDLl7K
+         5mBLJicmbAbyY2js2geZLWlJa74x+9hYmmLeM8pNOOZUuyGQSiRpser9qmM3Z0FPGqHk
+         jOgzUK9KLB9aiRT5pieztzHMzVr8uYFEaLLSkYTBw+9XX/SzJxIcv8N1w5nsWR8imR0v
+         UepA==
+X-Gm-Message-State: AOAM533YMjMzl5T8w/OUMqjQeXX1WKM2NvF72TjjRLdl6r2a4qtGRXpa
+        BK5K6IZatjppWGsOxWuCW72FSqy+s2UkKaME3Jx5yv2Qrsi2oQ==
+X-Google-Smtp-Source: ABdhPJwdU67XqfJ83KjqpiJwD57ZZ7yjC4WIR9RRDK4mBdc/tcm/lcKvxWoU5qVDdU9DO1QHIGJ+CUBAfm7zD1zo1Q8=
+X-Received: by 2002:a50:c8cd:: with SMTP id k13mr595575edh.387.1600707905859;
+ Mon, 21 Sep 2020 10:05:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq363fnir9.fsf@gitster.c.googlers.com>
-X-Provags-ID: V03:K1:OEwyA1suqygcjROnuSYJZ5/+NhnEfZ9ukbkUn+RIU/N30lGDpJK
- Y65XvGiF8cYQe7JfVMYc1EeSyh3X4QWkeuXYYcPQ+zEzYwE/69Y+SPauWX/MqUa8Yl2JaIZ
- JbMITL0beVxuKPss+HCID8VbgEua609aaxEwR9GutJEH924iVo8+uQRB9i6IemxMgCenK5s
- peS4AUe8Z6bVN4ZtgHz7g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NaVpjbF5JyU=:wlVurP8x8/ucoa/FU6W+qU
- OfxfL2Eomti2pnclHpvgIN7SfW+EKIL7gE2n4pPiCRUGQCySNLQRpWQ+90kvgYfMsPrX0Ed71
- YVBneRTCxipmyFaidrYohiaYlOwbMJLpYs7B2EQbC+9jstxmDIsgA8CPCx05AEsSiwM1o5KC6
- vYu1foXejYbhozyXuQmMnTd3tjmBy6jaiDsNSWgxKwJNPRJUMRejGqqhA4lru3tYNL/x8ccjP
- G2aI0WEAFhzp9Sl/AnDdJOItFGaTyTMprXzqbrV8XLlp5eZJFkMhOojika2syv00xjbbjHQFG
- hyOIlXYreSLDCBZaxr21eF+t3Xggv0YHA7vkl3ouuG1nimzRG9x+r6K8kK54oaLik2qlj2f52
- wAwxG/HOyJSYbU7xtAoLwbfJEnHCA4QHF+2bYiGQ5NIvt8Mx3kl6MyG1QMKu1Xw8l0TEBH0jp
- E5/0KF+inTef4MbYmIoDxV2mB1EGU4z7+jasj7ZvZ2Rzpq8a4kJvV2Vin6PydKyQYKyo6fZnn
- sYY0eUasT/EukXK9MvHI6Wqt4RRW1CDE9YckmHlg+G2mtM+m4/NzsY70z35rTjELJkVffyBZQ
- 3AlfdKWmhaZfrNRX4By+ajbVKl9sMx2jbR9I5G86Tje10ojpNFBUJnWVeHH09wX4FEp7fMrlk
- cHpMtBK+A7YZqPs9sfcu40+hq46pXoYdzFLFgoQyTqp/tXqLGoKpOv/pT0J4J5lWuK1/0QMMs
- hUQYmGi1vPN4acJN2lOdprGYn0IKM2BWHAfiTCfToXXd0uGCLTPGEbfV56AL1z2OOKjOtO9t3
- ZxPrEm6dJ2DB2M7QJOe6+LAEB2L+gujxw2kibXzCsFS0teyq9lYq0JB53YOjruR+H6u76RgLe
- LjbXcEtnc5ccsuJqGroA==
+References: <pull.736.git.1600695050.gitgitgadget@gmail.com> <7f851e7c20aafdae5d5ae46ee1083b32ecc82c84.1600695050.git.gitgitgadget@gmail.com>
+In-Reply-To: <7f851e7c20aafdae5d5ae46ee1083b32ecc82c84.1600695050.git.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 21 Sep 2020 19:04:54 +0200
+Message-ID: <CAP8UFD1i-zOPx6xrEFUVH1of8hzdHxO_jTOZ3fEjSXa_TONdvw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] commit: add an option the reword HEAD
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Fri, Sep 18, 2020 18:37:30 +0200:
-> Alex Riesen <alexander.riesen@cetitec.com> writes:
-> 
-> >     git fetch --ipversions=ipv6,ipv8
-> >
-> > Given multiple times, the last option wins, as usual:
-> 
-> Just a clarification on "the last option wins".
-> 
-> You do not mean "I said v6 earlier but no, I want v8", with the
-> above.  What you mean is that
-> 
-> >
-> >     $ cat my-fetch
-> >     #!/bin/sh
-> >     git fetch --ipversions=ipv4 "$@"
-> >
-> >     $ ./my-fetch --ipversions=all
-> 
-> the argument given to 'my-fetch' overrides what is hardcoded in
-> 'my-fetch', i.e. "I said v4, but I take it back; I want to accept
-> any".
+On Mon, Sep 21, 2020 at 3:33 PM Phillip Wood via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 
-Absolutely correct.
+> If one notices a typo in the last commit ...
 
-> I find the above sensible.
-
-... And is precisely my intention.
-
-> > BTW, transport.c already converts transport->family to bit-flags in
-> > connect_setup.
-> 
-> Yes, that is why I suggested the "list of acceptable choices"
-> approach as a direction to go in the future, primarily to limit the
-> scope of this current work.  I do not mind it if you want to bite
-> the whole piece right now, though.
-
-I shall try, I think.
-
-> By the way, I have a mild preference to call the option after the
-> phrase "protocol-family", without "IP", so that we won't be limited
-> to Internet protocols.  IOW, --ipversions is a bad name for the new
-> commnad line option in my mind.
-
-I have nothing against protocol-family, with or without "transport-".
-I just didn't want to ... over-generalize it prematurely: currently,
-the transport family is very fixed on IP on many levels.
-
-> As I said elsewhere, I also think TRANSPORT_FAMILY_ALL is a
-> misnomer.  When it is specified, we don't use all the available ones
-> at the same time.  What it says is that we accept use of any
-> protocol families that are supported.  It is OK to use ALL in the
-> CPP macro as it is merely an internal implementation detail, but if
-> we are going to expose it to end users as one of the choices, I'd
-> prefer to use 'any', and not 'all', as the value for the new command
-> line option.
-
-Noted.
-
-Regards,
-Alex
-
+In the title "commit: add an option the reword HEAD", I would suggest
+s/the/to/ :-)
