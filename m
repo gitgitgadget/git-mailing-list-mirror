@@ -2,191 +2,105 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B80AC4346E
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 19:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55504C4346E
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 19:27:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE59020757
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 19:26:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0876820757
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 19:27:38 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gBOi323H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727286AbgIUT0d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 15:26:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35766 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726395AbgIUT0c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 15:26:32 -0400
-Received: (qmail 9136 invoked by uid 109); 21 Sep 2020 19:26:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Sep 2020 19:26:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23856 invoked by uid 111); 21 Sep 2020 19:26:32 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Sep 2020 15:26:32 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Sep 2020 15:26:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
-        dermoth@aei.ca
-Subject: Re: [PATCH v2] diff: Fix modified lines stats with --stat and
- --numstat
-Message-ID: <20200921192630.GA2399334@coredump.intra.peff.net>
-References: <20200918113256.8699-2-tguyot@gmail.com>
- <20200920130945.26399-1-tguyot@gmail.com>
- <20200920153915.GB2726066@nand.local>
- <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
+        id S1728015AbgIUT1h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 15:27:37 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56946 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726395AbgIUT1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 15:27:37 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20FAFF5177;
+        Mon, 21 Sep 2020 15:27:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eh2S+hSpvkcflSwd51B9Gqkj090=; b=gBOi32
+        3HITNrXhzm/bT+1X9DN+1/Hz3U/J8mQors7weX3ePkxpTBjG+QT4emVTB1oR8ckd
+        rar93BrMzA83r3RnNE5jvEyLkPcslQBUcEkmJJdVxO9cEQzeg0UR+dYrNa2dRfrR
+        E8EQQ1VVpDIKDK57kr0BOTDzI4OO30f8MDLHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JaXL2MICh7yMurHy7+7z7+erYZaY4TLj
+        cBGV8ytUmNmjqa4HxB6c7qQfTQMgXFO1wDdiuTLro0stTmY62Jzse91pnTxCmsm/
+        Cf7ur3Zsz4XW51m2EqUJSa4mqsZvmsXhFvgaTB+6tvR+GNm7Sl0AtdtX96nNztxQ
+        nSEE7w1T9Y0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1939DF5175;
+        Mon, 21 Sep 2020 15:27:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.190.152.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E2EFF5173;
+        Mon, 21 Sep 2020 15:27:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 3/3] commit: add an option the reword HEAD
+References: <pull.736.git.1600695050.gitgitgadget@gmail.com>
+        <7f851e7c20aafdae5d5ae46ee1083b32ecc82c84.1600695050.git.gitgitgadget@gmail.com>
+        <CAPig+cQNiB8nw-JwwFweHzeFYcozGA06pPKr=0N9Metp8PBbSQ@mail.gmail.com>
+        <6da3752f-5e45-1381-b54c-64a81d642b72@gmail.com>
+Date:   Mon, 21 Sep 2020 12:27:30 -0700
+In-Reply-To: <6da3752f-5e45-1381-b54c-64a81d642b72@gmail.com> (Phillip Wood's
+        message of "Mon, 21 Sep 2020 19:05:08 +0100")
+Message-ID: <xmqqeemvexr1.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7ED22844-FC40-11EA-805D-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 20, 2020 at 12:11:20PM -0700, Junio C Hamano wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> > After reading your explanation in [1], this version makes more sense to
-> > me.
-> 
-> These oid fields are prepared by calling diff_fill_oid_info(), and
-> even for paths that are dirty (hence no "free" oid available from
-> index or tree entry), an appropriate oid is computed.
+>>> diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
+>>> @@ -713,4 +713,60 @@ test_expect_success '--dry-run --short' '
+>>> +test_reword_opt () {
+>>> +       test_expect_success C_LOCALE_OUTPUT "--reword incompatible with $1" "
+>>> +               echo 'fatal: cannot combine --reword with $1' >expect &&
+>>> +               test_must_fail git commit --reword $1 2>actual &&
+>>> +               test_cmp expect actual
+>>> +       "
+>>> +}
+>> These error messages are subject to localization, so you'd want to
+>> use
+>> test_i18ncmp() here, I think.
+>> Same comment for other new tests.
+>
+> I decided to use the C_LOCALE_OUTPUT prerequisite and test_cmp rather
+> than grep so I could check the exact output.
 
-This is the part that confused me earlier. I expected these "stdin"
-entries, just like other some other entries (e.g., stat dirty ones for
-diff-files, or anything for "diff --no-index") to have bogus oids.
+I do not think it is a good idea.  Dropping the C_LOCALE_OUTPUT
+prerequisite and using test_i18ncmpw would be more appropriate.
 
-But that diff_fill_oid_info() is what actually computes the sha1 from
-scratch for them. I get why that is needed for generating a git diff, as
-we have an "index from...to" line there that we'd want to fill.
+A test run without GIT_TEST_GETTEXT_POISON will do the byte-for-byte
+comparison like test_cmp.  It is only the poison test, whose purpose
+is to catch commands that by mistake translated their messages, that
+would want to mark a test that checks end-user facing messages like
+this one as special with test_i18ncmp.
 
-For diffstat, though, it seems like a waste of time; we don't care what
-the object hash is. I.e., if we were to do this:
+> ... I should probably check that nothing is printed to stdout in
+> these tests
 
-diff --git a/diff.c b/diff.c
-index 16eeaf6645..1934af29a5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4564,9 +4564,6 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
- 	if (o->prefix_length)
- 		strip_prefix(o->prefix_length, &name, &other);
- 
--	diff_fill_oid_info(p->one, o->repo->index);
--	diff_fill_oid_info(p->two, o->repo->index);
--
- 	builtin_diffstat(name, other, p->one, p->two,
- 			 diffstat, o, p);
- }
+Perhaps, but that is not the point of "do we diagnose options thare
+are incompatble with --reword?" test.
 
-then everything seems to work fine _except_ a "git diff --stat
---no-index", exactly because it hits this "same_contents" check we've
-been discussing. And once that is fixed properly (to handle any case
-where we have no oid, not just when the stdin flag is set), then perhaps
-it is worth doing.
-
-Or perhaps not. Even if we have to memcmp sometimes in
-builtin_diffstat(), it would be faster than computing the individual
-hashes. But it may not be measurably so, and it would be no difference
-for the common case of filespecs for which we do know the oid for free.
-I also suspect we'd need to be a little smarter about combined formats
-(e.g., "--stat --patch" might as well compute the oid as early as
-possible, since we'll need it eventually for the patch; but we'd hit the
-call in builtin_diffstat() before the one in run_diff()).
-
-> But there are paths for which oid cannot be computed without
-> destroying their contents.  Such paths are marked by the function
-> with null_oid.
-
-I'm not clear how computing the oid destroys the contents. We have them
-in an in-memory buffer at this point, don't we? So we _could_ generate
-an oid even for stdin, like this:
-
-diff --git a/cache.h b/cache.h
-index 55d7f61087..1ace143eac 100644
---- a/cache.h
-+++ b/cache.h
-@@ -858,6 +858,7 @@ int ie_modified(struct index_state *, const struct cache_entry *, struct stat *,
- #define HASH_RENORMALIZE  4
- int index_fd(struct index_state *istate, struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
- int index_path(struct index_state *istate, struct object_id *oid, const char *path, struct stat *st, unsigned flags);
-+int index_mem(struct index_state *istate, struct object_id *oid, void *buf, size_t size, enum object_type type, const char *path, unsigned flags);
- 
- /*
-  * Record to sd the data from st that we use to check whether a file
-diff --git a/diff.c b/diff.c
-index 16eeaf6645..181b632114 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4463,7 +4463,10 @@ static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *is
- 		if (!one->oid_valid) {
- 			struct stat st;
- 			if (one->is_stdin) {
--				oidclr(&one->oid);
-+				if (index_mem(istate, &one->oid,
-+					      one->data, one->size,
-+					      OBJ_BLOB, one->path, 0))
-+					die("cannot hash diff file from stdin");
- 				return;
- 			}
- 			if (lstat(one->path, &st) < 0)
-diff --git a/sha1-file.c b/sha1-file.c
-index 770501d6d1..c7d017b3e0 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -2046,10 +2046,10 @@ static void check_tag(const void *buf, size_t size)
- 		die(_("corrupt tag"));
- }
- 
--static int index_mem(struct index_state *istate,
--		     struct object_id *oid, void *buf, size_t size,
--		     enum object_type type,
--		     const char *path, unsigned flags)
-+int index_mem(struct index_state *istate,
-+	      struct object_id *oid, void *buf, size_t size,
-+	      enum object_type type,
-+	      const char *path, unsigned flags)
- {
- 	int ret, re_allocated = 0;
- 	int write_object = flags & HASH_WRITE_OBJECT;
-
-which is basically your "best fix" from below. It fixes the bug here,
-and it gives you a non-null index line. I'd consider coupling it with
-calling fill_oid less often, though (something like range-diff computes
-a bunch of fake-stdin diffs, and doesn't need to waste time computing
-the oids at all).
-
-> Summarizing the above, I think the second best fix is this (which
-> means that the posted patch is the third best):
-> 
-> 	/*
-> 	 * diff_fill_oid_info() marked one/two->oid with null_oid
-> 	 * for a path whose oid is not available.  Disable early
-> 	 * return optimization for them.
-> 	 */
-> 	if (oideq(&one->oid, &null_oid) || oideq(&two->oid, &null_oid))
-> 		same_contents = 0; /* could be different */
-> 	else if (oideq(&one->oid, &two->oid))
-> 		same_contents = 1; /* definitely the same */
-> 	else
-> 		same_contents = 0; /* definitely different */
-
-This is the direction I was getting at in my earlier emails, except that
-I imagined that first conditional could be checking:
-
-  if (!one->oid_valid || !two->oid_valid)
-
-but I was surprised to see that diff_fill_oid_info() does not set
-oid_valid. Is that a bug?
-
-I also imagined that we'd have to determine right then whether the
-contents are actually different or not with a memcmp(), to avoid
-emitting a "0 changes" line, but we do handle that case within the
-"!same_contents" conditional. See the comment starting with "Omit
-diffstats..." added recently by 1cf3d5db9b (diff: teach --stat to ignore
-uninteresting modifications, 2020-08-20).
-
--Peff
