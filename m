@@ -2,135 +2,117 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1651DC43464
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F831C43464
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:42:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D34CF2076E
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:40:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08B3620EDD
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:42:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rd2I/tNt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJB/ZL0i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbgIUKkw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 06:40:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34052 "EHLO
+        id S1726670AbgIUKmI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 06:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726834AbgIUKkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 06:40:31 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB119C0613D0
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:40:30 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id c18so12188029wrm.9
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:40:30 -0700 (PDT)
+        with ESMTP id S1726457AbgIUKmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 06:42:07 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C3FAC061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:42:07 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id n13so12212206edo.10
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wV+1Xsqg0zmRl8D6+LcjToBwHX05mgXozsqEbPI7rFw=;
-        b=rd2I/tNtaMyeyhLZRj/lyZn0CDjTbv6OCPtS1ZwIvzaXw/urAeLQ3Hzb8QSfzKZUSv
-         bi6AZMmBVe2oHGPdPht1hyaf9rkNdrvor4HaenaitjOMdCR4mHUdZhSNBI1pr+Xlr1iz
-         CdMCI2OwBKx04e3538ZhsnkDgv1iHC1E8Y2QMTwU5XZSWcR5R3rpc6HYsSBcQ9ZuCs9D
-         YjbNx2If3xouA0xZvXSE0Dq8/LJB1/J5rtLfb6ofZE6bps5nBPX2d9bWPRQPvrzQDqDK
-         R7CrdPB3TPf678ox8HjxQKntDKus9bB2yv4qZrsbJdE6OwJVmRIJUeDR3CI6qE2A27+4
-         X5JQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3pHMIKHNawWuI4HEfFc1rLBo8WWEbxU9bRZc2PPdltI=;
+        b=kJB/ZL0ivHaBXgMjm9yjUCYl5V0sxdo3bXjjrhuxW22/5/J/T/emM4O2f2MLbgR1Yh
+         0FCUYpV53RNm4rZRSDj0U4Ts05H33bvY5zmPNtu/uexK6caOFpZ40UHnwD8FCCGEIA97
+         nGJs8mjDB5jRMKNLfUnDZzMBP+ZlXyYImYDK0uVypiYuMmUeli18YDgLRgFG/OhlATvS
+         33akEjFIeUBFfm/xNvYCAvX0pD9H/blynBZTsBmFyUnr1xB0a6TtBgGGbTBeYhaMQPmW
+         HZ/SU5XS78jlEeAy4+9UVHun0YjT8Ww/yUz3JDSU9wMGRR23qFM2M1aoLTffRBSJMyTJ
+         3KJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wV+1Xsqg0zmRl8D6+LcjToBwHX05mgXozsqEbPI7rFw=;
-        b=GbSUIa1hGSifg1m9UCstwRrGk9x4i71XR4CmDJP164xV9izUdH1A7i86RhnyMq4vc7
-         ue01E7cRgbnDOe5bbzMi5FobhJUNvdAWnwMq45UXrF8CaBofGotgrgddW/YMA2NAslUK
-         K5iNKzhlVHdSU5euzRSAwj6NOqXZEHqxGJN/V+oEFS9QGqjDov1Br1n+XuxOsDCWo+Pa
-         3AIBFpaijGaPs0vbPIATC7Ye0zhyAO/6Et4XCoCy3KVVbdEDDlydTlaJUqP0fhVDebQS
-         awaVTTC9Uy7WbuUAIdrQapLvogBkScRkHsTtKxo9jaSbkr+oN22xxNTyJSdlP7NtIZyz
-         IYpQ==
-X-Gm-Message-State: AOAM531Q41pJPBSNTagPek2Um1BEaX6MYNF/WZ3GW2EQgzNYGkELzfxS
-        sIAqEcbeip+tCSqTHLAJe6uEpGMgjrBUJQ==
-X-Google-Smtp-Source: ABdhPJxJN6D7Z3RlIR9oI1KkXp4cqExnzlPNdTjCSFNbVfTqIBICk6313CEfRHd8uTKDL5cX3Q2mFw==
-X-Received: by 2002:a5d:6caf:: with SMTP id a15mr51998731wra.344.1600684829302;
-        Mon, 21 Sep 2020 03:40:29 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 9sm18647833wmf.7.2020.09.21.03.40.28
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=3pHMIKHNawWuI4HEfFc1rLBo8WWEbxU9bRZc2PPdltI=;
+        b=Jx+KzTXX1iXr9ErqYp5EnqW00OB429zBq+6KarXdgHBFgOg+oUOOcbfkCgJdhwrzQo
+         /7wiCEjh6ia+9EGDbH035mc4n7j9TJUx4x9ijpYFW5xMMtP7Pg0erqb3zoD4GQwdw4PN
+         dM9uT8/xLeICWJj1aRqwxiJW+VwtYmNuyJ74XqGQFp1MyUD+OfNEzu6IBQVIR+x3Ohd/
+         LWzfTlPnqE07OvQITNLyxCCH0iD18JCQZU2izuzzaysY09o5upUxAC19kZf01SLJSVd0
+         kaLDdBX5v78bcSMHtDIXQsX/R3oOgq6CSnDAJSlqBIvYkcOBmd1mvJT704S0JFrrHf0u
+         S1Pg==
+X-Gm-Message-State: AOAM531ibAZKswOUNostwZes51Ydw3kXiN0Pg6q/rsGt2s8mgBqd7NAn
+        M2L1WjnwtnNM98G2G8bgp3I=
+X-Google-Smtp-Source: ABdhPJyHnUKgUGniN8q8WFQq4UXHDYV8NEyH9W5gR41Sm5NU0aDSzV7Y0TbwJla1+6y/iDiQCyopkA==
+X-Received: by 2002:a05:6402:228c:: with SMTP id cw12mr53277325edb.174.1600684926039;
+        Mon, 21 Sep 2020 03:42:06 -0700 (PDT)
+Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
+        by smtp.gmail.com with ESMTPSA id m2sm8507547ejo.4.2020.09.21.03.42.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 03:40:28 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        Mon, 21 Sep 2020 03:42:05 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Matthieu Moy <git@matthieu-moy.fr>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, imon Legner <Simon.Legner@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 14/18] remote-mediawiki tests: annotate failing tests
-Date:   Mon, 21 Sep 2020 12:39:56 +0200
-Message-Id: <20200921104000.2304-15-avarab@gmail.com>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <20200916102918.29805-1-avarab@gmail.com>
-References: <20200916102918.29805-1-avarab@gmail.com>
+        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
+        Simon Legner <Simon.Legner@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH 07/15] remote-mediawiki tests: guard test_cmp with test_path_is_file
+References: <20200916102918.29805-1-avarab@gmail.com> <20200916102918.29805-8-avarab@gmail.com> <CAPig+cRg2tuOiQH_CQoHMjkX2gbRPJoV8NPJZnu3=bfo4wk-cQ@mail.gmail.com> <87mu1jh5mv.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <87mu1jh5mv.fsf@evledraar.gmail.com>
+Date:   Mon, 21 Sep 2020 12:42:04 +0200
+Message-ID: <87imc7if7n.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These tests consistently fail for me, and were failing before any of
-the changes in this series. As noted in [1] there are some known
-intermittent test failures. Let's mark these as failing so we can have
-an otherwise passing test suite.
 
-We need to add an extra test_path_is_file() here because since
-d572f52a64 ("test_cmp: diagnose incorrect arguments", 2020-08-09)
-test_cmp has errored out with a BUG if one of the test arguments
-doesn't exist, without that the test would still fail even without
-test_expect_failure().
+On Mon, Sep 21 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-1. https://github.com/Git-Mediawiki/Git-Mediawiki/issues/56
+> On Wed, Sep 16 2020, Eric Sunshine wrote:
+>
+>> On Wed, Sep 16, 2020 at 8:17 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> Change a test that used a plain test_cmp to first check the file(s)
+>>> using test_path_is_file. If some of these file(s) don't exist (as
+>>> happened to me during debugging), test_cmp will emit a way less useful
+>>> message about the failure.
+>>
+>> An alternative would be to update test_cmp() to present a more helpful
+>> error message so that all test scripts can benefit rather than just
+>> this script. By the way, were you testing with a reasonably recent
+>> version of Git? I ask because test_cmp() was updated not long ago to
+>> provide better diagnostics when one of the files is missing.
+>>
+>> [1]: d572f52a64 (test_cmp: diagnose incorrect arguments, 2020-08-09)
+>
+> Thanks (and also to =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh in a side-=
+thread). I've dropped
+> this patch. It's indeed better to leave this to a more general facility
+> as in your now-integrated test_cmp patch.
+>
+> The reason I came up with this now-useless patch is because I originally
+> started hacking this series on a slightly older version of git, which
+> didn't have that patch.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Correction: It was the other way around, but I ran into the case with
+your patch + converting a test to test_expect_failure, where before that
+would be an "ok" failure since a file was missing, but now hard errosr
+with a BUG.
 
-diff --git a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-index 43580af3cf..6187ec67fa 100755
---- a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-+++ b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-@@ -32,7 +32,7 @@ test_expect_success 'setup config' '
- 	test_might_fail git config --global --unset remote.origin.mediaImport
- '
- 
--test_expect_success 'git push can upload media (File:) files' '
-+test_expect_failure 'git push can upload media (File:) files' '
- 	wiki_reset &&
- 	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
- 	(
-@@ -48,13 +48,14 @@ test_expect_success 'git push can upload media (File:) files' '
- 	)
- '
- 
--test_expect_success 'git clone works on previously created wiki with media files' '
-+test_expect_failure 'git clone works on previously created wiki with media files' '
- 	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
- 	git clone -c remote.origin.mediaimport=true \
- 		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
- 	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt &&
- 	(cd mw_dir_clone && git checkout HEAD^) &&
- 	(cd mw_dir && git checkout HEAD^) &&
-+	test_path_is_file mw_dir_clone/Foo.txt &&
- 	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt
- '
- 
--- 
-2.28.0.297.g1956fa8f8d
-
+I think that behavior is OK, but in going back&forth and rebasing
+managed to miss it the first time around. The v2 of this series has a
+more narrow fix for that.
