@@ -2,169 +2,316 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BC49C4727C
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EA95C4727C
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:01:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 320C923A60
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 21:54:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3661A23A60
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:01:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h7YBZze6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHVO/olD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbgIUVyN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 17:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        id S1726644AbgIUWBb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 18:01:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbgIUVyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 17:54:12 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50BAC061755
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 14:54:12 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id x22so5667789pfo.12
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 14:54:12 -0700 (PDT)
+        with ESMTP id S1726452AbgIUWBa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 18:01:30 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 598A6C061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 15:01:30 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z1so14599649wrt.3
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 15:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VPh/YvayaRXrO+PNnwNEXOO1kHCZ6NsENl3tBtKPRuQ=;
-        b=h7YBZze6DjZSSv/R3ltHnN36qFrkJGidde2d0nTzzAyW9wIbZjXjqxvAwwv5oEpg9p
-         JZnbjZzHGj2ZDAIaQ5wHsiWwbDEY7rGvK55XgdegBuF1gVMV5ophPVYhwfzdlc+PEaB5
-         IN4jOu9o+VStWLJ7kgn5hM0wEmL7RsHMKRwtMToUOT6oIUjy+hDdQ1Nonq19ddn7yf+J
-         y0Ppl6hsTauxjTM/prExyV+A6JsRdepYb9wfKixzfv309Uoe4nHr2n4yr2J2RGLgFEW8
-         Sx9XhRhs+yAOlhIAflrn/manmwJdP+L8tUK49Ef8qk+Xhe50BYivduD8MvJWHIcGVJJY
-         wr9w==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=p+jX8CtO7hM2YBjI+HYzkcaV5mTz2Dp3wCfXtbCV+ac=;
+        b=jHVO/olDYnbu5QTe3ZXz2fVX9clOfHbzFTKlSsJD2QcrkKhrgnRMpunjCVfGsRixp4
+         M7/ftzvn80x85bxJvOF2aZDe/xsdbpjXclK86eF+iV9rVEjn6FMUjIW1V6p0jPCiUn3n
+         s7+x+XjGbWgeLPMuRh7miou6If2Uc2Svp40ktbYjBE7XFvP5zQmT7bhCFvF2fRafQjoc
+         eejku1XPoXcUn1ixFh/Xqd8XlUwfVMx2rQxLJtjZgegmk4yQLU4ARvh2YxlPrvX/zWHz
+         CwudanHEvoym12/voc5Olcu0KBRNunNDdDwSFW9nruTqDkYicgdWmATwjO48cIGZ94q8
+         jobw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VPh/YvayaRXrO+PNnwNEXOO1kHCZ6NsENl3tBtKPRuQ=;
-        b=VmY7NNB2jVQ68eEvSfxdTIOLxXZX+VOCNlG/HVdzpfRlJ434axAjbEHl5O+zdpg9fr
-         lz5tIp9K8rh0XFoib4vTelTE+fqu2CoyhcyDZjjFg+U/xd2WPY+i/sGj7kxJjoJm8M3K
-         hagG4o2osr9Ij+FodAFahMca+mDG3B1YvdTJbU68I3wB/3yfph9EiFmAjaMffNJgvkqC
-         U9QJJpaJyC8t3Cey4ozJlkTKJLc+965eIuOg8WcxJdujpPvsb+uxleWkwEXabi1X4KWW
-         6TTQr5ts7ptkqKh/gkaQUqj0dTDn2la2GU0dBwANddqH/B2u1zxRAbhXXXXj03JaVdeP
-         FA/w==
-X-Gm-Message-State: AOAM5335HIkhgFqwO3nNXwhEUQdUst1or9TpFuRlQ9p4TQtg6GT7K1Sa
-        5CNFmqnmRTrw2TzKVhri49m2DqF2f04=
-X-Google-Smtp-Source: ABdhPJzpCvCqABYB1uhpak7dj/VpgeSw5zu35S7kCS1H7iBggDc3rvO1WaNYKtIMW0Iaogf2d5bW1g==
-X-Received: by 2002:a63:725d:: with SMTP id c29mr1215623pgn.234.1600725252048;
-        Mon, 21 Sep 2020 14:54:12 -0700 (PDT)
-Received: from generichostname ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id n28sm4658174pgd.18.2020.09.21.14.54.10
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=p+jX8CtO7hM2YBjI+HYzkcaV5mTz2Dp3wCfXtbCV+ac=;
+        b=gFCxe2Pl8/qDMhBelWeTJJHmjkvsfCs85J7zxYia1EOKmnUybA8dwYDeKAvZOcKdY5
+         QADCrj79AhwNd6O2YWxdW8bbtfhzLu4bmLBWEoR2UurIMGD7m8eoSpXDYe3Vhhm8F9L6
+         YAoZymSCZm/gGDm74NRcystkfoJyEXtzch2JcEX/W7mUrPRATUJIZNaOrvui9U7PwT9L
+         Vj3wW5FORhRJzQBkVEFH4rbTsIqdy59JnmusFY9ZrJTljwqTM/uAUqYLcHCPmjgqx6TU
+         23IKcROm6udJIkDa5Yvu1GG5HYWQymuQCbQjxBjMtqWLe8yfUf8yGQFLicOkK0L7bNAY
+         5NRg==
+X-Gm-Message-State: AOAM5333Rb6Gj2eBAdhW3yFolgeIMzlt5JEd6iiicBb9YIXcTKmA6ooF
+        PSu4fHLM0Vy2tRJnq7TpsyVukivc+Cc=
+X-Google-Smtp-Source: ABdhPJyw5gRg16bI3iLEmXP6UrIjxGSPAaISsNx1A0dxFEc3ZiUQT+dHAlPY++WdJjUuBA4h/PEApA==
+X-Received: by 2002:adf:ffca:: with SMTP id x10mr1985619wrs.342.1600725688421;
+        Mon, 21 Sep 2020 15:01:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t15sm22316974wrp.20.2020.09.21.15.01.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 14:54:11 -0700 (PDT)
-Date:   Mon, 21 Sep 2020 14:54:09 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
-Message-ID: <20200921215409.GA1018675@generichostname>
-References: <cover.1599723087.git.liu.denton@gmail.com>
- <cover.1600328335.git.liu.denton@gmail.com>
- <c0d27b125e969e13c52b0fa806a8e3caa8c20ac6.1600328336.git.liu.denton@gmail.com>
- <xmqq363gs1mt.fsf@gitster.c.googlers.com>
- <20200918104833.GB1874074@generichostname>
- <xmqqy2l7m3hk.fsf@gitster.c.googlers.com>
- <20200920110148.GA227771@generichostname>
- <xmqqzh5jf73t.fsf@gitster.c.googlers.com>
- <20200921172740.GA946178@generichostname>
- <xmqqwo0met17.fsf@gitster.c.googlers.com>
+        Mon, 21 Sep 2020 15:01:27 -0700 (PDT)
+Message-Id: <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
+In-Reply-To: <pull.734.git.1600279853.gitgitgadget@gmail.com>
+References: <pull.734.git.1600279853.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Sep 2020 22:01:21 +0000
+Subject: [PATCH v2 0/5] Inclusive naming, part II
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwo0met17.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This patch series represents the logical next step on the journey begun with
+introducing init.defaultBranch: in these patches, we avoid a couple
+unnecessary mentions of the branch name "master".
 
-On Mon, Sep 21, 2020 at 02:09:24PM -0700, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > @@ -165,7 +175,12 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
-> >  	case 2:
-> >  		tree1 = opt->pending.objects[0].item;
-> >  		tree2 = opt->pending.objects[1].item;
-> > -		if (tree2->flags & UNINTERESTING) {
-> > +		if (merge_base) {
-> > +			struct object_id oid;
-> > +
-> > +			diff_get_merge_base(opt, &oid);
-> > +			tree1 = lookup_object(the_repository, &oid);
-> > +		} else if (tree2->flags & UNINTERESTING) {
-> >  			SWAP(tree2, tree1);
-> >  		}
-> >  		diff_tree_oid(&tree1->oid, &tree2->oid, "", &opt->diffopt);
-> 
-> OK.  Handling this in that "case 2" does make sense.
-> 
-> However.
-> 
-> The above code as-is will allow something like
-> 
->     git diff --merge-base A..B
-> 
-> and it will be taken the same as
-> 
->     git diff --merge-base A B
+This patch series does not try to change the default branch name, although I
+have that patch series ready to go. You can see the overall idea here: 
+https://github.com/gitgitgadget/git/pull/655. Concretely, I plan on
+submitting three more patch series after this one:
 
-This does not happen because at the top of diff_get_merge_base(), we
-have
+ 1. a relatively small patch series to avoid using the branch name main in
+    the test suite. This is necessary because my plan is to change the
+    default branch name to that name, therefore it cannot be used as the
+    name of a topic branch any longer.
+ 2. a relatively large patch series (currently consisting of 18 patches) to
+    change the default branch name to main. Most of the patches provide
+    non-trivial (read: non-scriptable) adjustments to the test suite in an
+    incremental fashion, with a big patch toward the end that reflects a
+    fully-automated search-and-replace of all the trivial cases.
+ 3. a very small patch series with fall-out patches that are not necessary
+    to pass the test suite, but are still required to complete the rename
+    (adjusted code comment, file rename).
 
-	for (i = 0; i < revs->pending.nr; i++) {
-		struct object *obj = revs->pending.objects[i].item;
-		if (obj->flags)
-			die(_("--merge-base does not work with ranges"));
-		if (obj->type != OBJ_COMMIT)
-			die(_("--merge-base only works with commits"));
-	}
+(Note: I am still debating whether I should move one or two patches from the
+second to the third patch series)
 
-which ensures that we don't accept any ranges at all. This is why I
-considered the SWAP and merge_base cases to be mutually exclusive.
+Changes since v1:
 
-> Another possibility is to error out when "--merge-base A..B" is
-> given, which might be simpler.  Then the code would look more like
-> 
-> 
-> 	tree1 = ...
-> 	tree2 = ...
-> 
-> 	if (merge_base) {
-> 		if ((tree1->flags | tree2->flags) & UNINTERESTING)
-> 			die(_("use of --merge-base with A..B forbidden"));
-> 		... get merge base and assign it to tree1 ...
-> 	} else if (tree2->flags & UNINTERESTING) {
-> 		SWAP();
-> 	}
+ * Instead of using the name primary for the adjustments to 
+   t/test-terminal.perl, we follow Python's lead (which uses the
+   parent/child nomenclature).
+ * The changes to t3200 no longer use variations of the name main as branch
+   names; Instead, the renamed branches are independent from any current or
+   future default branch name.
 
-This is the route I picked, although the logic for this is in
-diff_get_merge_base().
+Johannes Schindelin (5):
+  fast-export: avoid using unnecessary language in a code comment
+  t/test-terminal: avoid non-inclusive language
+  t3200: avoid variations of the `master` branch name
+  tests: avoid variations of the `master` branch name
+  t9902: avoid using the branch name `master`
 
-> While we are at it, what happens when "--merge-base A...B" is given?
-> 
-> In the original code without "--merge-base", "git diff-tree A...B"
-> places the merge base between A and B in pending.objects[0] and B in
-> pending.objects[1], I think.  "git diff-tree --merge-base A...B"
-> would further compute the merge base between these two objects, but
-> luckily $(git merge-base $(merge-base A B) B) is the same as $(git
-> merge-base A B), so you won't get an incorrect answer from such a
-> request.  Is this something we want to diagnose as an error?  I am
-> inclined to say we should allow it (and if it hurts the user can
-> stop doing so) as there is no harm done.
+ builtin/fast-export.c        |  2 +-
+ t/t3200-branch.sh            | 34 ++++++++++++++---------------
+ t/t3427-rebase-subtree.sh    | 42 ++++++++++++++++++------------------
+ t/t4150-am.sh                |  8 +++----
+ t/t5515-fetch-merge-logic.sh |  6 +++---
+ t/t5523-push-upstream.sh     | 20 ++++++++---------
+ t/t6018-rev-list-glob.sh     |  6 +++---
+ t/t6040-tracking-info.sh     | 20 ++++++++---------
+ t/t6409-merge-subtree.sh     | 14 ++++++------
+ t/t9902-completion.sh        | 10 ++++-----
+ t/test-terminal.perl         | 32 +++++++++++++--------------
+ 11 files changed, 97 insertions(+), 97 deletions(-)
 
-I think that we should error out for all ranges because this option
-semantically only really makes sense on two endpoints, not a range of
-commits. Since the check is cheap to protect users from themselves, we
-might as well actually do it.
 
-Worst case, if someone has a legimitate use case for --merge-base and
-ranges, we can allow it in the future, which would be easier than
-removing this feature.
+base-commit: 54e85e7af1ac9e9a92888060d6811ae767fea1bc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-734%2Fdscho%2Favoid-unnecessary-branch-name-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-734/dscho/avoid-unnecessary-branch-name-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/734
 
-Thanks,
-Denton
+Range-diff vs v1:
+
+ 1:  587ddca42a = 1:  587ddca42a fast-export: avoid using unnecessary language in a code comment
+ 2:  3b4ae48d4a ! 2:  80e1d46cce t/test-terminal: avoid non-inclusive language
+     @@ Commit message
+          least we can get rid of the usage of the word `master` and hope that
+          IO::Pty will be eventually adjusted, too.
+      
+     +    Guessing that IO::Pty might follow Python's lead, we replace the name
+     +    `master` by `parent` (hoping that IO::Pty will adopt the parent/child
+     +    nomenclature, too).
+     +
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## t/test-terminal.perl ##
+     @@ t/test-terminal.perl: sub copy_stdio {
+      -close $master_err->slave;
+      -my $in_pid = copy_stdin($master_in);
+      -copy_stdio($master_out, $master_err);
+     -+my $primary_in = new IO::Pty;
+     -+my $primary_out = new IO::Pty;
+     -+my $primary_err = new IO::Pty;
+     -+$primary_in->set_raw();
+     -+$primary_out->set_raw();
+     -+$primary_err->set_raw();
+     -+$primary_in->slave->set_raw();
+     -+$primary_out->slave->set_raw();
+     -+$primary_err->slave->set_raw();
+     -+my $pid = start_child(\@ARGV, $primary_in->slave, $primary_out->slave, $primary_err->slave);
+     -+close $primary_in->slave;
+     -+close $primary_out->slave;
+     -+close $primary_err->slave;
+     -+my $in_pid = copy_stdin($primary_in);
+     -+copy_stdio($primary_out, $primary_err);
+     ++my $parent_in = new IO::Pty;
+     ++my $parent_out = new IO::Pty;
+     ++my $parent_err = new IO::Pty;
+     ++$parent_in->set_raw();
+     ++$parent_out->set_raw();
+     ++$parent_err->set_raw();
+     ++$parent_in->slave->set_raw();
+     ++$parent_out->slave->set_raw();
+     ++$parent_err->slave->set_raw();
+     ++my $pid = start_child(\@ARGV, $parent_in->slave, $parent_out->slave, $parent_err->slave);
+     ++close $parent_in->slave;
+     ++close $parent_out->slave;
+     ++close $parent_err->slave;
+     ++my $in_pid = copy_stdin($parent_in);
+     ++copy_stdio($parent_out, $parent_err);
+       my $ret = finish_child($pid);
+       # If the child process terminates before our copy_stdin() process is able to
+      -# write all of its data to $master_in, the copy_stdin() process could stall.
+     -+# write all of its data to $primary_in, the copy_stdin() process could stall.
+     ++# write all of its data to $parent_in, the copy_stdin() process could stall.
+       # Send SIGTERM to it to ensure it terminates.
+       kill 'TERM', $in_pid;
+       finish_child($in_pid);
+ 3:  2f1d0a2df4 ! 3:  8d8e9abfe2 t3200: avoid variations of the `master` branch name
+     @@ Commit message
+          The `t3200-branch.sh` script uses variations of this name for branches
+          other than the default one. So let's change those names, as
+          "lowest-hanging fruits" in the effort to use more inclusive naming
+     -    throughout Git's source code.
+     +    throughout Git's source code. While at it, make those branch names
+     +    independent from the default branch name.
+      
+     -    In this particular instance, this requires a couple of non-trivial
+     -    adjustments, as the aligned output depends on the maximum length of the
+     -    displayed branches (which we now changed), and also on the alphabetical
+     -    order (which we now changed, too).
+     +    In this particular instance, this rename requires a couple of
+     +    non-trivial adjustments, as the aligned output depends on the maximum
+     +    length of the displayed branches (which we now changed), and also on the
+     +    alphabetical order (which we now changed, too).
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     @@ t/t3200-branch.sh: test_expect_success 'git branch -M master master should work
+       '
+       
+      -test_expect_success 'git branch -M master2 master2 should work when master is checked out' '
+     -+test_expect_success 'git branch -M main2 main2 should work when master is checked out' '
+     ++test_expect_success 'git branch -M topic topic should work when master is checked out' '
+       	git checkout master &&
+      -	git branch master2 &&
+      -	git branch -M master2 master2
+     -+	git branch main2 &&
+     -+	git branch -M main2 main2
+     ++	git branch topic &&
+     ++	git branch -M topic topic
+       '
+       
+       test_expect_success 'git branch -v -d t should work' '
+     @@ t/t3200-branch.sh: test_expect_success 'git branch --list -v with --abbrev' '
+       	cat >expect <<\EOF &&
+      -  a/b/c     bam       foo       l       * master    mb        o/o       q
+      -  abc       bar       j/k       m/m       master2   n         o/p       r
+     -+  a/b/c    bam      foo      l        main2    mb       o/o      q
+     -+  abc      bar      j/k      m/m    * master   n        o/p      r
+     ++  a/b/c    bam      foo      l      * master   n        o/p      r
+     ++  abc      bar      j/k      m/m      mb       o/o      q        topic
+       EOF
+       	test_cmp expect actual
+       '
+      @@ t/t3200-branch.sh: test_expect_success 'git branch --column with an extremely long branch name' '
+     -   j/k
+         l
+         m/m
+     -+  main2
+       * master
+      -  master2
+         mb
+         n
+         o/o
+     +   o/p
+     +   q
+     +   r
+     ++  topic
+     +   $long
+     + EOF
+     + 	test_cmp expect actual
+      @@ t/t3200-branch.sh: test_expect_success 'git branch with column.*' '
+       	git config --unset column.branch &&
+       	git config --unset column.ui &&
+       	cat >expect <<\EOF &&
+      -  a/b/c   bam   foo   l   * master    mb   o/o   q
+      -  abc     bar   j/k   m/m   master2   n    o/p   r
+     -+  a/b/c   bam   foo   l     main2    mb   o/o   q
+     -+  abc     bar   j/k   m/m * master   n    o/p   r
+     ++  a/b/c   bam   foo   l   * master   n     o/p   r
+     ++  abc     bar   j/k   m/m   mb       o/o   q     topic
+       EOF
+       	test_cmp expect actual
+       '
+     @@ t/t3200-branch.sh: test_expect_success 'git branch --column -v should fail' '
+       	cat >expect <<\EOF &&
+         a/b/c
+      @@ t/t3200-branch.sh: test_expect_success 'git branch -v with column.ui ignored' '
+     -   j/k
+         l
+         m/m
+     -+  main2
+       * master
+      -  master2
+         mb
+         n
+         o/o
+     +   o/p
+     +   q
+     +   r
+     ++  topic
+     + EOF
+     + 	test_cmp expect actual
+     + '
+      @@ t/t3200-branch.sh: test_expect_success 'git branch -C master master should work when master is chec
+       	git branch -C master master
+       '
+     @@ t/t3200-branch.sh: test_expect_success 'deleting a self-referential symref' '
+      -	git symbolic-ref refs/heads/master2 refs/heads/master &&
+      -	test_must_fail git branch -m master2 master3 &&
+      -	git symbolic-ref refs/heads/master2 &&
+     -+	git symbolic-ref refs/heads/main2 refs/heads/master &&
+     -+	test_must_fail git branch -m main2 main3 &&
+     -+	git symbolic-ref refs/heads/main2 &&
+     ++	git symbolic-ref refs/heads/topic refs/heads/master &&
+     ++	test_must_fail git branch -m topic new-topic &&
+     ++	git symbolic-ref refs/heads/topic &&
+       	test_path_is_file .git/refs/heads/master &&
+      -	test_path_is_missing .git/refs/heads/master3
+     -+	test_path_is_missing .git/refs/heads/main3
+     ++	test_path_is_missing .git/refs/heads/new-topic
+       '
+       
+       test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
+ 4:  a532053e60 = 4:  8f59e19b95 tests: avoid variations of the `master` branch name
+ 5:  d135a8423b = 5:  c2c1238b5d t9902: avoid using the branch name `master`
+
+-- 
+gitgitgadget
