@@ -2,105 +2,213 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A851C4727C
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B910C4727D
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 23:14:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E2A523A65
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:53:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B2322388B
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 23:14:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uvrO5aWy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clMIcOEF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728701AbgIUWxU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 18:53:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57978 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbgIUWxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 18:53:20 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C575587469;
-        Mon, 21 Sep 2020 18:53:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NBa1zMLJgSpSzl7A8jq6Wh0rwGs=; b=uvrO5a
-        Wy3JDtE4toeu5KoRxEWFGi3ZnMu4DFztfyKyLZIRCsiprw1MXfYfwppzlR4b83ZR
-        OFV5Pp8ajkMTAcYzcmkzmhIx6yWb809O/FSxLOtFtVK9Bx9Y22oJut/BXH2a0Fl6
-        NUVvOcOWw/2FhZ/0BRLmtYsqSPuMYF0TjNshM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tBsa9/RcdEqefI3OmUl/PdFOupyP/q1A
-        XBUMhvGuMCfXE8WMyha38izzAVmugv1uhvnBwttD5h5OBsSHKMmFEKE2JjJQX0ZT
-        qLu2+UXVnAdftIaz86tKaIF4ZOOkQ0jGUvuBGrE4wTmq0TGFYNnobvDF42RhPBof
-        UyC0Wx2h+/Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCC1B87468;
-        Mon, 21 Sep 2020 18:53:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.190.152.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 35DBE87465;
-        Mon, 21 Sep 2020 18:53:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 3/3] ci: stop linking built-ins to the dashed versions
-References: <pull.411.v3.git.1598443012.gitgitgadget@gmail.com>
-        <pull.411.v4.git.1600727297.gitgitgadget@gmail.com>
-        <1fdf24af368ccb263ade2af2e482221280a3eb06.1600727298.git.gitgitgadget@gmail.com>
-Date:   Mon, 21 Sep 2020 15:53:16 -0700
-In-Reply-To: <1fdf24af368ccb263ade2af2e482221280a3eb06.1600727298.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 21 Sep 2020
-        22:28:17 +0000")
-Message-ID: <xmqqmu1id9nn.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3CEAAED4-FC5D-11EA-B5BC-01D9BED8090B-77302942!pb-smtp1.pobox.com
+        id S1728741AbgIUXOq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 19:14:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728662AbgIUXOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 19:14:46 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5BF6C061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 16:14:45 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id cy2so8501746qvb.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 16:14:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gcDVBL8vH1F27uSlkYLdQSeriZ2Du5AkMTr627o8rus=;
+        b=clMIcOEF8t/XExutOpdc4ikbSLeIrok72eV1eHRkLpCX0xfAF2RFC2KY+jUeYUq449
+         2PldE3jpTDhG2UvJrQ9tZksClKI1LW9e0ykuPYC7s/goushrFtSrrQbhzJLKPnxcvge7
+         kxirUOqLe5JV9JPVE0ElLJ/PNWsRb/b5mSLD4gEMuQgjNu/MHkEasnwyiYaxk7cAxBwJ
+         5S6Q4s9Ji6NoeuT0SEjMLQPt5osm+1RGpqaa6usZwZgIp6QTNgemkyP7KvjifUPfMV3g
+         /KRPVuCNyWZ/OieHBXmrYaabDf+/EKwo5PNERk1zWzT3UvFFpr036Rul7CBCs6lFZ8Of
+         cCGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gcDVBL8vH1F27uSlkYLdQSeriZ2Du5AkMTr627o8rus=;
+        b=DUx6UIKaqS/RN847iGxK9irep8iqF3Bqemyky0YIT1K46a+JoFKHpUQDtdrZbeQzcP
+         Le67aYnvmTpgxI1rPDxlHpW84mJng4OrSiZDJLlcl64NIitl4fHwB0j0M9yaYbt0COpI
+         +/Nhwtzv/KMfI4XzlnKi8WkKR8BRI8bTPo7BEpWEsYMWtPRnAtQb7tDeug4XDX8+dRgl
+         p0Ru+603LRsz1teSID03mAoGEBuDU2wTr86miUc7T+kV57eXep1bCSLkdtgatyAqUamR
+         zNL/EeFLvQkGLbE74S3LuKdoCVLoLGnB1TvOUZAKcLuwKTM28KqWf2SHcbISN/c+cdBu
+         Iftg==
+X-Gm-Message-State: AOAM530XY21qWFUu5eaH0ft4R9C6uwwv3slkXoMXibTaglmMa/Yfuire
+        tNQPORk1xXnEbTy5R6e54X4Wxaby4l48mw==
+X-Google-Smtp-Source: ABdhPJy3x1BSzzlezOeTjGE/BgGqGJunLskHdJvJbXUIqhLCtuZg1iSUrijNF4J/i0IRrBY97fsp8w==
+X-Received: by 2002:a0c:8064:: with SMTP id 91mr2774401qva.32.1600730085003;
+        Mon, 21 Sep 2020 16:14:45 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id r5sm10996447qtd.87.2020.09.21.16.14.43
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 21 Sep 2020 16:14:44 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: How to checkout a revision that contains a deleted submodule?
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <4eb688f2-0c17-9b85-e60e-f07485895622@gmail.com>
+Date:   Mon, 21 Sep 2020 19:14:41 -0400
+Cc:     Luke Diamand <luke@diamand.org>,
+        Git mailing list <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FFBB71FD-8D1F-4E86-9E37-813018AFC690@gmail.com>
+References: <CAE5ih78zCR0ZdHAjoxguUb3Y6KFkZcoxJjhS7rkbtZpr+d1n=g@mail.gmail.com> <CAE5ih79puooMA1v8jOkqKaO9xPmYqtkT9kXHq2L6YODJJ8oGEQ@mail.gmail.com> <4eb688f2-0c17-9b85-e60e-f07485895622@gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Luke and Kaartic,
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Since e4597aae6590 (run test suite without dashed git-commands in PATH,
-> 2009-12-02), we stopped running our tests with `git-foo` binaries found
-> at the top-level directory of a freshly built source tree; instead we
-> have placed only `git` and selected `git-foo` commands that must be on
-> `$PATH` in `bin-wrappers/` and prepended that `bin-wrappers/` to the
-> `PATH` used in the test suite. We did that to catch the tests and
-> scripted Git commands that still try to use the dashed form.
->
-> Since CI jobs will not install the built Git to anywhere, and the
-> hardlinks we make at the top-level of the source tree for `git-add` and
-> friends are not even used during tests, they are pure waste of resources
-> these days.
+> Le 20 sept. 2020 =C3=A0 14:02, Kaartic Sivaraam =
+<kaartic.sivaraam@gmail.com> a =C3=A9crit :
+>=20
+> On 20/09/20 3:14 pm, Luke Diamand wrote:
+>> On Sat, 19 Sep 2020 at 10:03, Luke Diamand <luke@diamand.org> wrote:
+>>>=20
+>>> Maybe this is a FAQ, but I couldn't figure it out!
+>>>=20
+>>> I have a repo which has a couple of submodules.
+>>>=20
+>>> At some point in the past I deleted one of those submodules:
+>>>=20
+>>>     git rm sub2
+>>>     git add -u
+>>>     git commit -m 'Deleting sub2'
+>>>     git push origin
+>>>     ...
+>>>     ... more commits and pushes...
+>>>=20
+>>> Now I go and clone the head revision. This gives me a clone which =
+has
+>>> nothing present in .git/modules/sub2.
+>>>     login on some other machine
+>>>     git clone git@my.repo:thing
+>>>     cd thing
+>>>     ls .git/modules
+>>>     <sub2 not present>
+>>>=20
+>>> So when I go and checkout an old revision where sub2 is still around =
+I get:
+>>>     git checkout oldrevision
+>>>     fatal: not a git repository: sub2/../.git/modules/sub2
+>>>=20
+>>> What am I doing wrong?
+>>> What set of commands do I need to use to ensure that this will =
+always
+>>> do the right thing?
+>>>=20
+>>> Thanks
+>>> Luke
+>>=20
+>> Replying to myself, adding Jens who added the section below.
+>>=20
+>> This is a known bug:
+>>=20
+>> https://git-scm.com/docs/git-rm
+>>=20
+>>> BUGS
+>>> ----
+>>> Each time a superproject update removes a populated submodule
+>>> (e.g. when switching between commits before and after the removal) a
+>>> stale submodule checkout will remain in the old location. Removing =
+the
+>>> old directory is only safe when it uses a gitfile, as otherwise the
+>>> history of the submodule will be deleted too. This step will be
+>>> obsolete when recursive submodule update has been implemented.
+>>=20
+>=20
+> I don't think that part of the documentation applies to your case.
 
-Makes perfect sense, and I do not think readers will confused like
-they were by the previous round's corresponding step.
+I also don't think this part of the doc applies here.=20
 
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index 3eefec500d..821e3660d6 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -178,6 +178,7 @@ fi
->  export DEVELOPER=1
->  export DEFAULT_TEST_TARGET=prove
->  export GIT_TEST_CLONE_2GB=true
-> +export SKIP_DASHED_BUILT_INS=YesPlease
 
-OK.  This would hopefully cover all the CI targets; we know it
-covers everybody who uses DEVELOPER=1, which is a good sign ;-)
+> So,
+> I also don't think this is a known bug. As a matter of fact, I =
+couldn't
+> reproduce this with the following:
+>=20
+>=20
+> git init checkout-removed-submodule &&
+> cd checkout-removed-submodule/ &&
+> echo "Hello, world" >foo &&
+> git add foo && git commit -m "Initial commit" &&
+> git init ../submodule &&
+> cd ../submodule/ &&
+> echo "Foo bar" >foobar.txt &&
+> git add foobar.txt && git commit -m "Foo bar baz" &&
+> cd ../checkout-removed-submodule/ &&
+> git submodule add ../submodule/ foobar &&
+> git commit -m "Add foobar submodule" &&
+> git rm foobar/ &&
+> git commit -m "Remove foobar submodule" &&
+> git checkout HEAD~ # Checking out the "Add foobar submodule" commit
 
-Thanks.
+Yes. At this point "foobar" would be empty because =
+'--recurse-submodules' was not used
+on 'checkout'. Using `git checkout --recurse-submodules HEAD~` instead =
+would populate it,=20
+and it would work correctly because the Git repository
+of foobar does exist at .git/modules/foobar.
+
+> I also tried with a cloned version of that repository as follows:
+
+here let's make sure we re-checkout 'master' before cloning:
+git checkout -
+
+> git clone /me/checkout-removed-submodule/ cloned-repo &&
+> cd cloned-repo &&
+> git co HEAD~
+>=20
+> I get:
+>=20
+> HEAD is now at 25270d8 Add foobar submodule
+
+I get the same thing, with or without '--recurse-submodules'.
+
+However, if I you have the 'submodule.active'=20
+configuration set to '.', which is the case if you *cloned* with =
+'--recurse-submodules',
+and you then checkout with '--recurse-submodules',
+then it fails as Luke describes:
+
+git clone --recurse-submodules  checkout-removed-submodule cloned-repo=20=
+
+cd cloned-repo &&
+git co --recurse-submodules HEAD~
+  fatal: not a git repository: ../.git/modules/foobar
+  fatal: could not reset submodule index
+
+This bug was reported earlier in May [1], and I suggested a couple ways
+the experience could be improved.
+
+I might add here that maybe a good idea would be that 'checkout'
+be taught to try to clone the missing submodules if it does not find =
+their=20
+repository at .git/modules.
+
+Cheers,
+
+Philippe.
+
+[1] =
+https://lore.kernel.org/git/20200501005432.h62dnpkx7feb7rto@glandium.org/T=
+/#u
+
