@@ -2,146 +2,102 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4019CC4727D
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1CCC4727D
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:15:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03FA923A63
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:01:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BYkU5CbM"
+	by mail.kernel.org (Postfix) with ESMTP id 8280023A60
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbgIUWBe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 18:01:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728113AbgIUWBc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 18:01:32 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB76CC061755
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 15:01:31 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id l9so1072250wme.3
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 15:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=rhnqNcQm0x++W3hvpSYVdA8rvQO0+VPmQ0qhsoSVUNs=;
-        b=BYkU5CbMgkK/wQyY9YB7LIeq8X0glvcCaD/ujhZkiaqWOaBp7rpKKPMlmeryyI2vNG
-         zVkkZwMv2yfhfM9wlsSncfzRbER2arw+CKfZSPcD6cCGQM7HWhLQrd6uOqU0Iy3GmVuE
-         idHAWDkBaO/uYgtfCASMHGKfvFq4DfPHyd6oe1eTVOnGXNibBAIFHeG8q79LQfzhScxV
-         bPavaaTEwZ8lCKFRm2ivMIHOLWCByJteZ2zufw+Hwdv3TTPm8bW0UfTEydqxCg9Dy4Fy
-         MJU0Ubxvn3s3L3oWurAzViyML7fDzDuSULh1sxRLaslf7JI5JW2FgDB7f1BJcAsKR7e2
-         n4Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rhnqNcQm0x++W3hvpSYVdA8rvQO0+VPmQ0qhsoSVUNs=;
-        b=KRSmNIbp+0pMoQvNiixfX317vgXxmF/HqwSfKGLvLLzFtofY2EPT+oqMqxQBWsVKAj
-         J+MNq3R27KhMnjRWFxS2j51Ju2hGJdPWpwXV5LRv49ongAnK6aU2ndPdTELUhKshfe0Z
-         XoOfloxclpfKxfNaJQXiN9NkAlNVXAAxuSAdL5bqt27DyedZGZQqqmyYlqffUqahfudR
-         +Aa0muQhXKDaPok2OWEKH9Pd7gQwmN/yO2oAoduCDneSHbP4rzqKC/24o7L4EtVE7Wsb
-         hrRHRK7ypPaXqgth0X9H3El2cXDklvuIywl4Md7YVYDCBXdWXRARY2vuGicsritslyJd
-         B5zQ==
-X-Gm-Message-State: AOAM530LPCa6RaZPO1qyeQI1iIdNgIOjRfxVVN1/rHbL1BIJCIWhznQc
-        jxx0JIGhz+wFsPP56cnR9Kx01jW2d+k=
-X-Google-Smtp-Source: ABdhPJyTTeQ0Xa7ot326W9UjDwcnCYkFrq4eU9N3Byp3cSVw/TWbeQTR1l18rfx2z9jBIBxh2PhPrQ==
-X-Received: by 2002:a7b:c397:: with SMTP id s23mr1336658wmj.174.1600725690241;
-        Mon, 21 Sep 2020 15:01:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g8sm1231236wmd.12.2020.09.21.15.01.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 15:01:29 -0700 (PDT)
-Message-Id: <80e1d46ccefeb39bf3a10c5c973d62fa887210d1.1600725687.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
-References: <pull.734.git.1600279853.gitgitgadget@gmail.com>
-        <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Sep 2020 22:01:23 +0000
-Subject: [PATCH v2 2/5] t/test-terminal: avoid non-inclusive language
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728309AbgIUWPS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 18:15:18 -0400
+Received: from mail601b.mxthunder.net ([209.41.68.211]:44767 "EHLO
+        mail601b.mxthunder.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726457AbgIUWPS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 18:15:18 -0400
+X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 18:15:18 EDT
+Subject: Re: [Wireshark-dev] Joint project with Git for outreachy
+To:     Developer support list for Wireshark 
+        <wireshark-dev@wireshark.org>,
+        Graham Bloice <graham.bloice@trihedral.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20200918222103.GA3352870@google.com>
+ <CAN05THSUN4YToYRqWUxZ0r2=wVxJU0V2iWumx1jjx=eTQ7rAYw@mail.gmail.com>
+ <20200919195545.GH67496@camp.crustytoothpaste.net>
+ <xmqqtuvtiec8.fsf@gitster.c.googlers.com>
+ <20200920161652.GF331156@google.com>
+ <CACyXjPxAXgpEmK0buarb3ToHwnonLM6TG9-J-=GysXfGkmsSrg@mail.gmail.com>
+ <CALcKHKoE2BCZEuW7rmsCdY4LSyvnCTBDLmgifND7TH+v5ma-6w@mail.gmail.com>
+From:   Gerald Combs <gerald@wireshark.org>
+Autocrypt: addr=gerald@wireshark.org; prefer-encrypt=mutual; keydata=
+ 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
+Organization: Wireshark Foundation
+Message-ID: <21f2fdb9-33e0-064c-985e-6dc8692aca61@wireshark.org>
+Date:   Mon, 21 Sep 2020 15:07:49 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <CALcKHKoE2BCZEuW7rmsCdY4LSyvnCTBDLmgifND7TH+v5ma-6w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-FILTER-ID: 4B9bQ1
+X-MXT-FILTER-ID: a4B9bQ1_500b_101b
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 9/21/20 9:06 AM, Graham Bloice wrote:
+> 
+> There's also the Wireshark Developers Guide (https://www.wireshark.org/docs/wsdg_html_chunked/) and for those that are sleep deprived there are a selection of talks on dissectors from previous SharkFest conferences, e.g. Writing a Wireshark dissector: https://www.youtube.com/watch?v=Fp_7g5as1VY
+> 
+> and the much more entertaining one with a different approach from Richard here: https://www.youtube.com/watch?v=XFFkC4PdCbI
 
-In the ongoing effort to make the Git project a more inclusive place,
-let's try to avoid names like "master" where possible.
-
-In this instance, the use of the term `slave` is unfortunately enshrined
-in IO::Pty's API. We simply cannot avoid using that word here. But at
-least we can get rid of the usage of the word `master` and hope that
-IO::Pty will be eventually adjusted, too.
-
-Guessing that IO::Pty might follow Python's lead, we replace the name
-`master` by `parent` (hoping that IO::Pty will adopt the parent/child
-nomenclature, too).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/test-terminal.perl | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
-
-diff --git a/t/test-terminal.perl b/t/test-terminal.perl
-index 46bf618479..1bcf01a9a4 100755
---- a/t/test-terminal.perl
-+++ b/t/test-terminal.perl
-@@ -81,24 +81,24 @@ sub copy_stdio {
- 	die "usage: test-terminal program args";
- }
- $ENV{TERM} = 'vt100';
--my $master_in = new IO::Pty;
--my $master_out = new IO::Pty;
--my $master_err = new IO::Pty;
--$master_in->set_raw();
--$master_out->set_raw();
--$master_err->set_raw();
--$master_in->slave->set_raw();
--$master_out->slave->set_raw();
--$master_err->slave->set_raw();
--my $pid = start_child(\@ARGV, $master_in->slave, $master_out->slave, $master_err->slave);
--close $master_in->slave;
--close $master_out->slave;
--close $master_err->slave;
--my $in_pid = copy_stdin($master_in);
--copy_stdio($master_out, $master_err);
-+my $parent_in = new IO::Pty;
-+my $parent_out = new IO::Pty;
-+my $parent_err = new IO::Pty;
-+$parent_in->set_raw();
-+$parent_out->set_raw();
-+$parent_err->set_raw();
-+$parent_in->slave->set_raw();
-+$parent_out->slave->set_raw();
-+$parent_err->slave->set_raw();
-+my $pid = start_child(\@ARGV, $parent_in->slave, $parent_out->slave, $parent_err->slave);
-+close $parent_in->slave;
-+close $parent_out->slave;
-+close $parent_err->slave;
-+my $in_pid = copy_stdin($parent_in);
-+copy_stdio($parent_out, $parent_err);
- my $ret = finish_child($pid);
- # If the child process terminates before our copy_stdin() process is able to
--# write all of its data to $master_in, the copy_stdin() process could stall.
-+# write all of its data to $parent_in, the copy_stdin() process could stall.
- # Send SIGTERM to it to ensure it terminates.
- kill 'TERM', $in_pid;
- finish_child($in_pid);
--- 
-gitgitgadget
-
+Speaking of SharkFest, the next one is in a few weeks: https://sharkfestvirtual.wireshark.org/. Along with the sessions listed in the Agenda we'll have a Developer Den open throughout the conference.
