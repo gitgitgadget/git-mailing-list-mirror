@@ -4,115 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F831C43464
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24455C43465
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 11:33:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08B3620EDD
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 10:42:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1ED420EDD
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 11:33:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJB/ZL0i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXst7fv+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgIUKmI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 06:42:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34308 "EHLO
+        id S1726430AbgIULdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 07:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbgIUKmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 06:42:07 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C3FAC061755
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:42:07 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id n13so12212206edo.10
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 03:42:07 -0700 (PDT)
+        with ESMTP id S1726326AbgIULdQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 07:33:16 -0400
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 602ABC061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 04:33:16 -0700 (PDT)
+Received: by mail-io1-xd44.google.com with SMTP id r25so15000821ioj.0
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 04:33:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=3pHMIKHNawWuI4HEfFc1rLBo8WWEbxU9bRZc2PPdltI=;
-        b=kJB/ZL0ivHaBXgMjm9yjUCYl5V0sxdo3bXjjrhuxW22/5/J/T/emM4O2f2MLbgR1Yh
-         0FCUYpV53RNm4rZRSDj0U4Ts05H33bvY5zmPNtu/uexK6caOFpZ40UHnwD8FCCGEIA97
-         nGJs8mjDB5jRMKNLfUnDZzMBP+ZlXyYImYDK0uVypiYuMmUeli18YDgLRgFG/OhlATvS
-         33akEjFIeUBFfm/xNvYCAvX0pD9H/blynBZTsBmFyUnr1xB0a6TtBgGGbTBeYhaMQPmW
-         HZ/SU5XS78jlEeAy4+9UVHun0YjT8Ww/yUz3JDSU9wMGRR23qFM2M1aoLTffRBSJMyTJ
-         3KJg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fq5zTg7mkWjX4/+pq1bT03tYVHkLRNcY1pjo9gbEtdA=;
+        b=dXst7fv+IJNysDFH7DlD1l4Puh/7ctQ2BLNQyrxnRwUXTHQelyhpkqxWxOvQ1t/hnC
+         rQftC0G/5MsMAUzvJZ/MXiQ2wYQRsh7IdzXh1uH71Tp+0xg5DSUTYKNzFj6AIlnuRZlY
+         EIdfmg2WEQ1MJyMNvB4RYyh39dO4cpW3x9iXSULOX4KFMZZIYE1tbowOW0AaYs8+VVmi
+         QZ3Zan3nvROsjV0qlDtBmum0S0c2zVl3Fhbr8mGHOPYQAkmBcXVKaQb3+bqFiuH/F/k7
+         fq8tW/eXGavk8L6REivt2edhoQVvz674zeMnozYhKqxr5Lj1YfCzUS9Yb3vfFwelmqGP
+         QRSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=3pHMIKHNawWuI4HEfFc1rLBo8WWEbxU9bRZc2PPdltI=;
-        b=Jx+KzTXX1iXr9ErqYp5EnqW00OB429zBq+6KarXdgHBFgOg+oUOOcbfkCgJdhwrzQo
-         /7wiCEjh6ia+9EGDbH035mc4n7j9TJUx4x9ijpYFW5xMMtP7Pg0erqb3zoD4GQwdw4PN
-         dM9uT8/xLeICWJj1aRqwxiJW+VwtYmNuyJ74XqGQFp1MyUD+OfNEzu6IBQVIR+x3Ohd/
-         LWzfTlPnqE07OvQITNLyxCCH0iD18JCQZU2izuzzaysY09o5upUxAC19kZf01SLJSVd0
-         kaLDdBX5v78bcSMHtDIXQsX/R3oOgq6CSnDAJSlqBIvYkcOBmd1mvJT704S0JFrrHf0u
-         S1Pg==
-X-Gm-Message-State: AOAM531ibAZKswOUNostwZes51Ydw3kXiN0Pg6q/rsGt2s8mgBqd7NAn
-        M2L1WjnwtnNM98G2G8bgp3I=
-X-Google-Smtp-Source: ABdhPJyHnUKgUGniN8q8WFQq4UXHDYV8NEyH9W5gR41Sm5NU0aDSzV7Y0TbwJla1+6y/iDiQCyopkA==
-X-Received: by 2002:a05:6402:228c:: with SMTP id cw12mr53277325edb.174.1600684926039;
-        Mon, 21 Sep 2020 03:42:06 -0700 (PDT)
-Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
-        by smtp.gmail.com with ESMTPSA id m2sm8507547ejo.4.2020.09.21.03.42.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 03:42:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
-        Simon Legner <Simon.Legner@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Subject: Re: [PATCH 07/15] remote-mediawiki tests: guard test_cmp with test_path_is_file
-References: <20200916102918.29805-1-avarab@gmail.com> <20200916102918.29805-8-avarab@gmail.com> <CAPig+cRg2tuOiQH_CQoHMjkX2gbRPJoV8NPJZnu3=bfo4wk-cQ@mail.gmail.com> <87mu1jh5mv.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <87mu1jh5mv.fsf@evledraar.gmail.com>
-Date:   Mon, 21 Sep 2020 12:42:04 +0200
-Message-ID: <87imc7if7n.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fq5zTg7mkWjX4/+pq1bT03tYVHkLRNcY1pjo9gbEtdA=;
+        b=SlXPyo9PR5+9nyp1VcV0SQ28jp2rMzKYdm136MtlVxpBQqHdU0F1wLK9Y0pk8o3ZVo
+         RLAE/1vOItayArGmAzVAZk4Ai1vIa3E7B7LGk1JDop3e5FNUJEhR4jmzmO3QYTekYJcL
+         ltFp136Osmw7jtg1y8h2LU0pv33gCFWuOlZwuCuSHUBaMlEAkFgp1gwT91HAwNUyDDkO
+         Kcb6AizFQmHQ/b98DuVXB04lQ8DYvwIMM3dUNxfF4LXYHOwgZF8Oglw+2qcWJc5QK7Uu
+         NdItZ3AiWzdSiQHdbdJPNpjWl4NgQOgJBHRUFJesrv0AabEQrPN+lK6YIrk3V/OO2yDy
+         qW8Q==
+X-Gm-Message-State: AOAM530CRzPU3ZEgjIR3+3ZOq9XKHiNp4WIBuswCDCTphPt9m2jIxoWR
+        b8gGLN4/ehNAu/pHzAmlpY18WQ/n39n+KOYqJWI=
+X-Google-Smtp-Source: ABdhPJx4vi3iVkWPdCm2LXmcMjyn4hSKt1TPubQSQXwtzwWGLXDCA/V1kkFIWRP9P0ajMMTrTZfFjDU0CfAK1Qd4ELE=
+X-Received: by 2002:a02:9a0e:: with SMTP id b14mr40401490jal.22.1600687995664;
+ Mon, 21 Sep 2020 04:33:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20200918222103.GA3352870@google.com> <CAN05THSUN4YToYRqWUxZ0r2=wVxJU0V2iWumx1jjx=eTQ7rAYw@mail.gmail.com>
+ <20200919195545.GH67496@camp.crustytoothpaste.net> <xmqqtuvtiec8.fsf@gitster.c.googlers.com>
+ <20200920161652.GF331156@google.com>
+In-Reply-To: <20200920161652.GF331156@google.com>
+From:   ronnie sahlberg <ronniesahlberg@gmail.com>
+Date:   Mon, 21 Sep 2020 21:33:04 +1000
+Message-ID: <CAN05THSYBmy_1gPvzRB1qOffrg-YcL_YnHA-Th2scJ0nzB2U_g@mail.gmail.com>
+Subject: Re: Joint project with Git for outreachy
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Developer support list for Wireshark 
+        <wireshark-dev@wireshark.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Emily
 
-On Mon, Sep 21 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+I got confused. I worked in Jonathans team about 5-6 years ago and
+since I am old fart I couldn't realize that maybe they had other
+people join since I left.
+Hence I assumed you were the intern.
 
-> On Wed, Sep 16 2020, Eric Sunshine wrote:
+Just me being senile. No harm meant.
+
+Regardless, a git dissectors will be totally awesome so whomever ends
+up being the intern or whatever doing it, I will be happy to help
+them get it going and have a successfull project that they can
+remember with joy and be proud of.
+
+regards
+ronnie sahlberg
+
+On Mon, Sep 21, 2020 at 2:17 AM Emily Shaffer <emilyshaffer@google.com> wrote:
 >
->> On Wed, Sep 16, 2020 at 8:17 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> <avarab@gmail.com> wrote:
->>> Change a test that used a plain test_cmp to first check the file(s)
->>> using test_path_is_file. If some of these file(s) don't exist (as
->>> happened to me during debugging), test_cmp will emit a way less useful
->>> message about the failure.
->>
->> An alternative would be to update test_cmp() to present a more helpful
->> error message so that all test scripts can benefit rather than just
->> this script. By the way, were you testing with a reasonably recent
->> version of Git? I ask because test_cmp() was updated not long ago to
->> provide better diagnostics when one of the files is missing.
->>
->> [1]: d572f52a64 (test_cmp: diagnose incorrect arguments, 2020-08-09)
+> On Sat, Sep 19, 2020 at 03:36:23PM -0700, Junio C Hamano wrote:
+> >
+> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> >
+> > > On 2020-09-19 at 09:12:53, ronnie sahlberg wrote:
+> > >> Hi Jonathan,
+> > >> Hi Emily
+> > >>
+> > >> Emily, you want to contribute to wireshark? That is awesome. I think I
+> > >> speak for everyone to send a HUGE welcome
+> > >> your way and hope your experience working on and with wireshark be excellent!
+> > >
+> > > I think there's been a misunderstanding.  I think the proposal was to
+> > > have Emily and Jonathan, who are both significant contributors to Git,
+> > > doing the mentoring from the Git side, along with someone from the
+> > > Wireshark side.  I don't think we know yet if anyone will be interested
+> > > in working on it, but it seems from the response to be a proposal that
+> > > has interest in both projects.
+> > >
+> > > Feel free to correct me if I've misunderstood.
+> >
+> > That matches my understanding.
 >
-> Thanks (and also to =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh in a side-=
-thread). I've dropped
-> this patch. It's indeed better to leave this to a more general facility
-> as in your now-integrated test_cmp patch.
+> Right - brian and Junio are correct, I'm hoping to co-mentor with
+> Jonathan. Ronnie, I'm really pleased to see this warm welcome, which
+> makes me optimistic about the kind of experience an intern would have on
+> this project. It would be really great if we could get a volunteer to
+> serve as point-of-contact if the mentee is not sure about something
+> they want to send to the Wireshark list, and possibly to come to an
+> introductory real-time chat (video/voice/IM) to provide a little
+> overview and nudge in the right direction.
 >
-> The reason I came up with this now-useless patch is because I originally
-> started hacking this series on a slightly older version of git, which
-> didn't have that patch.
-
-Correction: It was the other way around, but I ran into the case with
-your patch + converting a test to test_expect_failure, where before that
-would be an "ok" failure since a file was missing, but now hard errosr
-with a BUG.
-
-I think that behavior is OK, but in going back&forth and rebasing
-managed to miss it the first time around. The v2 of this series has a
-more narrow fix for that.
+> It sounds to me like we have enough enthusiasm to put this project on
+> the list, though - if I understood my conversation with Jonathan last
+> week he's planning to add that. Feel free to correct me :)
+>
+> Thanks, Ronnie and Richard!
+>
+> > > > (
+> > > > Jonathan, remember that smb2 client I was working on, libamb2?  I got
+> > > > it to run on PlayStation2 now. It is totally awesome being able to use
+> > > > SMB3.1.1 and full encryption to copy file between the PS2 memory card
+> > > > and Azure cloud file server :-)
+> > > > )
+>
+> (This actually sounds awesome. Got a repo or blog post up somewhere?)
+>
+>  - Emily
