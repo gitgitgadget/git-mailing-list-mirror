@@ -7,77 +7,86 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF72EC4727C
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19BC0C4727C
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:46:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EAD223A1B
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:38:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8DB421789
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 22:46:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S297ATl2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CzlnuJ26"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728592AbgIUWiC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 18:38:02 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55487 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727062AbgIUWiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 18:38:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 064F7F6A6D;
-        Mon, 21 Sep 2020 18:38:02 -0400 (EDT)
+        id S1728000AbgIUWqK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 18:46:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51548 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727447AbgIUWqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 18:46:10 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DAC5070616;
+        Mon, 21 Sep 2020 18:46:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1gMCdUNzk7+4TjKaTpHfKuzjGF0=; b=S297AT
-        l2SHakX6n94fh+Xs471g5xathcO2yVrP3k7EwuLobBFkwbw//P/QeB/lBBV8GCGT
-        XZuqt7GxthU2K1O9GASlFdgmw+bKDJPriJKbHMJ9jtAzsm0C2YC0IxTdvFBSgCDD
-        ETuncYoGGjHcVHeUt0NC+HKlBfy7hfB7F26R4=
+        :content-type; s=sasl; bh=ntk1aq+bCi1x33jwMwEzLwcGXGA=; b=CzlnuJ
+        264lwjTXe26M/VPUmh/40LztHykn/1lv5vdU0M8frpCozw4tqOKDZy0qtkAPPB6y
+        teVOQMl23owXHibAuQLpkQytp1s58Y9OSRVU6t01kTAgFTN7gdz00yxgxvXfXnzH
+        8d119GAhzfK71b7YeeY0avLuCTAGSvRoMcZww=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bGQGLrWsE3zc2ZfDi18yH5NDkT3NkNOn
-        SqbNixIpU1oM6XeDaSIJpU657ceFk5pq0tleqykqvIUk+JfBNq1vvUC74gT33cX3
-        4+YCLAGKtKY77gkxBGVdPG6Eo45ZOvyZaIR6rFYHzRxUzwUy5cIIRIpsgAJql6mb
-        Vg7TJFaAaeo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3E9BF6A6C;
-        Mon, 21 Sep 2020 18:38:01 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=SyTVZGxXdcOaWfS9eZIHlXl4+MJ9nmwP
+        MrzD9fsh2C9ceICjWPZe9TvYdMYVNLehQH++BTfnTC2KPev+Ciax8OQ4/IcaZ2dZ
+        cKxdNkO5JStl3l8hq2HgFKxUZCLlyJCNhoCAAzUsv48bL4aMpvHUUwlspwcdj3Kd
+        gqzkSv/QNuk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE15D70613;
+        Mon, 21 Sep 2020 18:46:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3CE3CF6A6A;
-        Mon, 21 Sep 2020 18:37:59 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DD9F70612;
+        Mon, 21 Sep 2020 18:46:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>, git@vger.kernel.org,
-        dermoth@aei.ca
-Subject: Re: [PATCH v2] diff: Fix modified lines stats with --stat and
- --numstat
-References: <20200918113256.8699-2-tguyot@gmail.com>
-        <20200920130945.26399-1-tguyot@gmail.com>
-        <20200920153915.GB2726066@nand.local>
-        <xmqqlfh4gt5z.fsf@gitster.c.googlers.com>
-        <20200921192630.GA2399334@coredump.intra.peff.net>
-        <xmqqft7aer3a.fsf@gitster.c.googlers.com>
-        <20200921222021.GA3533110@coredump.intra.peff.net>
-Date:   Mon, 21 Sep 2020 15:37:57 -0700
-In-Reply-To: <20200921222021.GA3533110@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 21 Sep 2020 18:20:21 -0400")
-Message-ID: <xmqqv9g6dad6.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] cmake: ignore generated files
+References: <pull.735.git.1600375065498.gitgitgadget@gmail.com>
+        <xmqqtuvwoyz5.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2009181510240.5061@tvgsbejvaqbjf.bet>
+        <xmqqft7fnlxr.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2009201914330.5061@tvgsbejvaqbjf.bet>
+Date:   Mon, 21 Sep 2020 15:46:06 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2009201914330.5061@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Sun, 20 Sep 2020 19:15:01 +0200
+        (CEST)")
+Message-ID: <xmqqr1qud9zl.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 19C27C2C-FC5B-11EA-BE28-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 3C8FB50C-FC5C-11EA-A62C-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> .... I agree that other code could be depending on oid_valid in a weird
-> way, but IMHO that code is probably wrong to do so. But it may not be
-> worth digging into, if nobody has complained about the waste.
+>> What I am hearing here is that people with CMake & VS use "git clean
+>> -dfx" when they want to go back to the pristine state, unlike those
+>> who use "make distclean", and there is nothing to adjust for newly
+>> discovered crufts we are leaving on the filesystem.
+>
+> Yes, that is my understanding.
 
-Yup, that was my feeling when I wrote the message you are responding
-to.
+I do not know if you have read other messages in the thread, but my
+current understanding of what we learned in this thread [*1*] is
+that those who use CMake, especially in a tree like ours that has
+its own Makefiles, (sh|w)ould create a throw-away directory and run
+build there, so even "git clean -dxf" is not part of their "clean"
+procedure.
+
+
+[Footnote]
+
+*1* https://lore.kernel.org/git/20200919004030.GB1837@danh.dev/
