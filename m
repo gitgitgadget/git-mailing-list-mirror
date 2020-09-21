@@ -2,204 +2,209 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7949CC43465
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28B86C43463
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:42:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ABD820874
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:15:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D009420874
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:42:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="IgZsSrWE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hp6EWaTx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbgIUIP6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 04:15:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
+        id S1726444AbgIUImj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 04:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726413AbgIUIP5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 04:15:57 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B08FC061755
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:15:57 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id d4so11192914wmd.5
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:15:57 -0700 (PDT)
+        with ESMTP id S1726384AbgIUImj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 04:42:39 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5AAC061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:42:39 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id p65so11559139qtd.2
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:42:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6Uvr6qyYq9yoXnjdXRAPCTm0BqsB9PqakzghFuFix3E=;
-        b=IgZsSrWEGtxPNGUQd5HXC6qL05Y1WDODnGJe+dR7g2YTrzRKiGmZUipFOJsmM3WzLy
-         U7kGRAptTR8nlYCv9vVNeBJEkci/YPc6OXvv0QCxYXZRZv8rs3V7TfveV0WwbxCsdVoq
-         hOjJaK2mXCNStNyIcCnkhcqhrPn3V6azfQRHQ=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SVoKZn4r7vdg4+3g18ZfvXwOOEqvEVijhHwaZSfLjgU=;
+        b=Hp6EWaTxyf/MY2uaxhQ0m/9tX7QlEiq0fvO+O/1Lof3Vsz+kj4IKVru4GrnQm+7K+p
+         3ANYoFnaObw0tdIyxBYxoLfHWfgUx+Jizv6vEkdnz7U+UfXcINMJ4rWcZoZqvI2tnpZ8
+         hVj+XvdHmCouCC1kIJMQrdWscHKwTZyBUkJPiMrUkW4+2QsUjcXWFWs3KgVBOmBISwxQ
+         WDzrj2rdnW9aEx2DEpY8bCr4KrSFm/EJOB3YvacXg0ikpzG0N+ZwqZyt9+dIU4TS3u4z
+         oxLNiqbF8Km2zMHU/XCda0bEECwjZbjpW5be1D/g7CXns9myLO40eGvuAvSzuOUINyRw
+         9IzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6Uvr6qyYq9yoXnjdXRAPCTm0BqsB9PqakzghFuFix3E=;
-        b=A6SOZ6IJrXvRhKL0jeNoyDc1Nwjn5RkhfeDx1CzzrKbWjfctIiokjmW9AfbvuTu0qq
-         ljAj/k7cvDUwraZvJXtcGGVRFrSCe2LTFGj1WYlXzkQdTZr/pD9HcVlEMcVgyYGvBLWJ
-         tagoV7AV4cllLGACroYv7KZpIphd3alZbGLgfjWZbz81RauyL2vUXRQ2nD9srV2dyjx7
-         li4PD8FkBMd/ZZJusSlHW4Vz0Di47KRKoMSWRU04xnjdmyiUT5jhFjfcXBy+N1xOdM4Y
-         FPUNc6aHMOnub/6H8luOR7eeJDokDRq0JC2cwxHIxnjcxbp4dyA6mGaM27gzGQhKPj3L
-         +wiA==
-X-Gm-Message-State: AOAM530SWhFWNlVI4HZO2P2rXypQWmEViMBQIjHS0h/obYAcJjJyysl1
-        9AQ82aDrEiJfu2sCF7oN+7n+WC/6CBzT4A==
-X-Google-Smtp-Source: ABdhPJwwDsnN7RYa40rKsOKqujhDwnuDuylM0wqOxqV77hxdwrtUyQpiluTIcNCFjbWpuLYrjTymWQ==
-X-Received: by 2002:a05:600c:414e:: with SMTP id h14mr28216125wmm.2.1600676155656;
-        Mon, 21 Sep 2020 01:15:55 -0700 (PDT)
-Received: from ethel.local.diamand.org (cpc149478-cmbg20-2-0-cust747.5-4.cable.virginm.net. [86.16.90.236])
-        by smtp.gmail.com with ESMTPSA id u17sm21108187wri.45.2020.09.21.01.15.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SVoKZn4r7vdg4+3g18ZfvXwOOEqvEVijhHwaZSfLjgU=;
+        b=WME2NrGp8DBR8BGUcopP7fwLQNOBERybsPpSPqq/7f+rvATM5/Le7m4Yj6y0vcc+GS
+         eu47vLTjJ0s/wb35iFceHsJ5Vz43xC9nK3sea3I/LzUs1IqlgBwKfmAK3F/rFwisbcpi
+         NwkhlImBuB6Er6gDGxl9tOqFYYIFIRGil+H26qRFfZQHnwPeZsF81BO5/76A7PXlkstv
+         akD/6JlSVpkWDeyY6Am842n4tF6WQzPKeIKTyrNZKAjw0+vwkl1Mc6fui8xMWHA1V+Ky
+         hQQpgIrWXfVC3AEI+ayOxv1Nqgo1hEg6+Noh/tt+UOF0aOITO5vVmFs09fvVGSFf7+CL
+         7v2g==
+X-Gm-Message-State: AOAM530mqZ2iW+vIJmCcq5sX4r1R7glsnEP9CJ+A+DPSl/mabosu6RcL
+        h+1h8KhbtN9hM1Z9v7ldvwU29LVgbS1D3GUW
+X-Google-Smtp-Source: ABdhPJyEw/mDzQU2hZuSzKkj0EeN0bteGHFzckMvxdJgeA3+fC/XmpN5NXwdJJr7cMPrAxNJQA7UvQ==
+X-Received: by 2002:ac8:1387:: with SMTP id h7mr45969325qtj.386.1600677757891;
+        Mon, 21 Sep 2020 01:42:37 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([124.123.107.121])
+        by smtp.gmail.com with ESMTPSA id p3sm8498991qkj.113.2020.09.21.01.42.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 01:15:55 -0700 (PDT)
-From:   Luke Diamand <luke@diamand.org>
-To:     git@vger.kernel.org
-Cc:     kartic Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCH 1/1] Test case for checkout of added/deleted submodules in clones
-Date:   Mon, 21 Sep 2020 09:15:37 +0100
-Message-Id: <20200921081537.15300-2-luke@diamand.org>
-X-Mailer: git-send-email 2.28.0.762.g324f61785e
-In-Reply-To: <20200921081537.15300-1-luke@diamand.org>
-References: <20200921081537.15300-1-luke@diamand.org>
+        Mon, 21 Sep 2020 01:42:37 -0700 (PDT)
+Date:   Mon, 21 Sep 2020 14:12:31 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 1/3] push: add reflog check for "--force-if-includes"
+Message-ID: <20200921084231.GA64896@mail.clickyotomy.dev>
+References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
+ <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
+ <20200919170316.5310-2-shrinidhi.kaushik@gmail.com>
+ <xmqqft7djzz0.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqft7djzz0.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test case for various cases of deleted submodules:
+Hi Junio,
 
-1. Clone a repo where an `old` submodule has been removed in HEAD.
-Try to checkout a revision from before `old` was deleted.
+On 09/19/2020 13:03, Junio C Hamano wrote:
+> Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
+> 
+> > Adds a check to verify if the remote-tracking ref of the local branch
+> > is reachable from one of its "reflog" entries.
+> 
+> s/Adds/Add/
 
-This can fail in a rather ugly way depending on how the `git checkout`
-and `git submodule` commands are used.
+Gotcha, I will reword the commit messages for all three commits.
+in the patch series.
 
-2. Clone a repo where a `new` submodule has been added. Try to
-checkout a revision from before `new` was added.
+> > When "--force-with-includes" is used along with "--force-with-lease",
+> 
+> A misspelt name for the new option is found here.
 
-This can leave `new` lying around in some circumstances, and not in
-others, in a way which is confusing (at least to me).
+*Facepalm.* Thanks, will update.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- t/t5619-submodules-missing.sh | 104 ++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
- create mode 100755 t/t5619-submodules-missing.sh
+> > [...]
+> Makes me wonder, if in_merge_bases() is so expensive that it makes
+> sense to split the "were we exactly at the tip?" and "is one of the
+> commits we were at a descendant of the tip?" into separate phases,
+> if this part should be calling in_merge_bases() one by one.
+> 
+> Would it make more sense to iterate over reflog entries from newer
+> to older, collect them in an array of pointers to "struct commit" in
+> a batch of say 8 commits or less, and then ask in_merge_bases_many()
+> if the remote_commit is an ancestor of one of these local commits?
+>
+> The traversal cost to start from one "local commit" to see if
+> remote_commit is an ancestor of it using in_merge_bases() and
+> in_merge_bases_many() should be the same and an additional traversal
+> cost to start from more local commits should be negligible compared
+> to the traversal itself, so making a call to in_merge_bases() for
+> each local_commit smells somewhat suboptimal.
+> 
+> If we were talking about older parts of the history, optional
+> generation numbers could change the equation somewhat, but the
+> common case for the workflow this series is trying to help is that
+> these local commits ane the remote tip are relatively new and it is
+> not unlikely that the generation numbers have not been computed for
+> them, which is why I suspect that in_merges_many may be a win.
 
-diff --git a/t/t5619-submodules-missing.sh b/t/t5619-submodules-missing.sh
-new file mode 100755
-index 0000000000..d7878c52fc
---- /dev/null
-+++ b/t/t5619-submodules-missing.sh
-@@ -0,0 +1,104 @@
-+#!/bin/sh
-+
-+test_description='Clone a repo containing submodules. Sync to a revision where the submodule is missing or added'
-+
-+. ./test-lib.sh
-+
-+pwd=$(pwd)
-+
-+# Setup a super project with a submodule called `old`, which gets deleted, and
-+# a submodule `new` which is added later on.
-+
-+test_expect_success 'setup' '
-+	mkdir super old new &&
-+	git -C old init &&
-+	test_commit -C old commit_old &&
-+	(cd super &&
-+		git init . &&
-+		git submodule add ../old old &&
-+		git commit -m "adding submodule old" &&
-+		test_commit commit2 &&
-+		git tag OLD &&
-+		test_path_is_file old/commit_old.t &&
-+		git rm old &&
-+		git commit -m "Remove old submodule" &&
-+		test_commit commit3
-+	) &&
-+	git -C new init &&
-+	test_commit -C new commit_new &&
-+	(cd super &&
-+		git tag BEFORE_NEW &&
-+		git submodule add ../new new &&
-+		git commit -m "adding submodule new" &&
-+		test_commit commit4
-+	)
-+'
-+
-+# Checkout the OLD tag inside the original repo. This works fine since all of
-+# the submodules are present in .git/modules.
-+test_expect_success 'checkout old inside original repo' '
-+	(cd super &&
-+		git config advice.detachedHead false &&
-+		git tag LATEST &&
-+		git checkout --recurse-submodules OLD &&
-+		git submodule update --checkout --remote --force &&
-+		test_path_is_file old/commit_old.t &&
-+		test_path_is_missing new/commit_new.t &&
-+		git checkout --recurse-submodules LATEST &&
-+		test_path_is_file new/commit_new.t
-+	)
-+'
-+
-+# Clone the repo, and then checkout the OLD tag inside the clone.
-+# The `old` submodule does not get updated. Instead we get:
-+#
-+# fatal: not a git repository: ../.git/modules/old
-+# fatal: could not reset submodule index
-+#
-+# That's because `old` is missing from .git/modules since it
-+# was not cloned originally and `checkout` does not know how to
-+# fetch the remote submodules, whereas `submodule update --remote` does.
-+
-+test_expect_failure 'checkout old with --recurse-submodules' '
-+	test_when_finished "rm -fr super-clone" &&
-+	git clone --recurse-submodules super super-clone &&
-+	(cd super-clone &&
-+		git config advice.detachedHead false &&
-+		test_path_is_file commit3.t &&
-+		test_path_is_file commit2.t &&
-+		test_path_is_missing old &&
-+		test_path_is_file new/commit_new.t &&
-+		git checkout --recurse-submodules OLD &&
-+		git submodule update --checkout --remote --force &&
-+		test_path_is_file commit2.t &&
-+		test_path_is_missing commit3.t &&
-+		test_path_is_dir old &&
-+		test_path_is_file old/commit_old.t
-+	)
-+'
-+
-+# As above, but this time, instead of using "checkout --recurse-submodules" we just
-+# use "checkout" to avoid the missing submodule error.
-+#
-+# The checkout of `old` now works fine, but instead `new` is left lying
-+# around with seemingly no way to clean it up. Even a later invocation of
-+# `git checkout --recurse-submodules` does not get rid of it.
-+
-+test_expect_failure 'checkout old without --recurse-submodules' '
-+	test_when_finished "rm -fr super-clone" &&
-+	git clone --recurse-submodules super super-clone &&
-+	(cd super-clone &&
-+		git config advice.detachedHead false &&
-+		test_path_is_file new/commit_new.t &&
-+		git checkout OLD &&
-+		git submodule update --checkout --remote --force &&
-+		git checkout --recurse-submodules OLD &&
-+		test_path_is_file commit2.t &&
-+		test_path_is_missing commit3.t &&
-+		test_path_is_dir old &&
-+		test_path_is_file old/commit_old.t &&
-+		test_path_is_missing new/commit_new.t
-+	)
-+'
-+
-+test_done
+Nice! We can definitely try batching commits from the reflog and
+pass it along to "in_merge_bases_many()". As for being faster than
+calling "in_merge_bases()" for each commit entry in the reflog --
+I am not familiar with how the former works. Do we still keep the
+"reflog_entry_exists()" part? It might still be faster to go through
+the entries once to check with "oideq()" in the first run.
+
+Also, I was wondering if it is worth considering this:
+  - check if the reflog of the HEAD has the remote ref
+  - check if the reflog of the local branch has the remote ref
+  - check if the remote ref is reachable from any of the local ref's
+    "reflog" entries using "in_merge_bases_many()" in batches as
+    suggested here.
+
+The first two (we can even skip the second one) runs are relatively
+fast, and the third one might be faster than checking "in_merge_bases()"
+for each reflog entry. I suppose adding these three steps would make
+the process slower overall, though. For context, I was referring to
+your message [1] on the other thread regarding checking the HEAD's
+reflog.
+
+> > [...]
+> > +		/*
+> > +		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
+> > +		 * mode, and if "--foce-if-includes" was specified, run
+> > +		 * the check.
+> > +		 */
+> > +		if (ref->if_includes)
+> > +			check_if_includes_upstream(ref);
+> 
+> s/foce/force/; 
+
+Yes, sorry about that; will update.
+ 
+> I can see that the code is checking "and if force-if-includes was
+> specified" part, but it is not immediately clear where the code
+> checks if "--force-with-lease" is used with "tracking" and not with
+> "the other side must be exactly this commit" mode here.
+> 
+>     ... goes and looks ...
+> 
+> Ah, ok, I found out. 
+> 
+> The field name "if_includes", and the comment for the field in
+> remote.h, are both misleading.  It gives an impression that the
+> field being true means "--force-if-included is in use", but in
+> reality the field means a lot more.  When it is true, it signals
+> that "--force-if-included" is in use *and* for this ref we were told
+> to use the "--force-with-lease" without an exact object name.  And
+> that logic is not here, but has already happened in apply_cas().
+> 
+> Which makes the above comment correct.  We however need a better
+> name for this field and/or an explanation for the field in the
+> header file, or both, to avoid misleading readers.
+>
+> > diff --git a/remote.h b/remote.h
+> > index 5e3ea5a26d..38ab8539e2 100644
+> > --- a/remote.h
+> > +++ b/remote.h
+> > @@ -104,7 +104,9 @@ struct ref {
+> >  		forced_update:1,
+> >  		expect_old_sha1:1,
+> >  		exact_oid:1,
+> > -		deletion:1;
+> > +		deletion:1,
+> > +		if_includes:1, /* If "--force-with-includes" was specified. */
+> 
+> The description needs to be tightened.
+> 
+> > +		unreachable:1; /* For "if_includes"; unreachable in reflog. */
+
+OK, you're right. Perhaps, we could rename it to something like
+"if_includes_for_tracking" and update the comment description
+with saying something along the lines of:
+
++  /*
++   * Set when "--force-if-includes" is enabled, and
++   * if "compare-and-swap" is not provided with the
++   * exact commit to be expected on the remote (in
++   * "use_tracking" or use_tracking_for_rest" mode).
++   */
+
+
+[1]: https://public-inbox.org/git/xmqqsgbdk69b.fsf@gitster.c.googlers.com
+
+Thanks again, for taking the time to review this.
 -- 
-2.28.0.762.g324f61785e
+Srinidhi Kaushik
 
