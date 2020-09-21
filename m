@@ -2,209 +2,106 @@ Return-Path: <SRS0=LBHq=C6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28B86C43463
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B760C43464
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:54:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D009420874
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:42:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51B122151B
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 08:54:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hp6EWaTx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="toVZEcgQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726444AbgIUImj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 04:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43964 "EHLO
+        id S1726550AbgIUIyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 04:54:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726384AbgIUImj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 04:42:39 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5AAC061755
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:42:39 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id p65so11559139qtd.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:42:39 -0700 (PDT)
+        with ESMTP id S1726324AbgIUIyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 04:54:19 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC79EC061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:54:18 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id c8so11992364edv.5
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 01:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SVoKZn4r7vdg4+3g18ZfvXwOOEqvEVijhHwaZSfLjgU=;
-        b=Hp6EWaTxyf/MY2uaxhQ0m/9tX7QlEiq0fvO+O/1Lof3Vsz+kj4IKVru4GrnQm+7K+p
-         3ANYoFnaObw0tdIyxBYxoLfHWfgUx+Jizv6vEkdnz7U+UfXcINMJ4rWcZoZqvI2tnpZ8
-         hVj+XvdHmCouCC1kIJMQrdWscHKwTZyBUkJPiMrUkW4+2QsUjcXWFWs3KgVBOmBISwxQ
-         WDzrj2rdnW9aEx2DEpY8bCr4KrSFm/EJOB3YvacXg0ikpzG0N+ZwqZyt9+dIU4TS3u4z
-         oxLNiqbF8Km2zMHU/XCda0bEECwjZbjpW5be1D/g7CXns9myLO40eGvuAvSzuOUINyRw
-         9IzQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WToxBQtBZJloVrzBE9O2Tx3+fGLtOoUuC9P8IpeGZEQ=;
+        b=toVZEcgQmqmtRnEkHvMZv6Zx/lBB7Z6fkv8FvYZar55p8pUuomGU9zffdXvqok2oKO
+         h9c5KFpoldvDDCcb3KPfsQrkZOoDoSDUeRsgta/wYi/l9X1ty1Nn/lwvURfIq84mOakj
+         dFg+XpUN81lvO0G3us3KRVzEbOQu7el99uk+4xdrUkMlgibxmPLSeHVmMpieGXKAXuzh
+         Cl6v6cCETfb6trdUcJbcJHtrng5WQd9+4M+WHuwLAgXv33bWgWfIMmVi3YASID9DDL72
+         hyP2UeINFXn9Bw5eXR9gPZC+DjIrVNvE1hbZiJHWdzg7bpSCemmWTIE7+SPdsVcmFDy+
+         di7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SVoKZn4r7vdg4+3g18ZfvXwOOEqvEVijhHwaZSfLjgU=;
-        b=WME2NrGp8DBR8BGUcopP7fwLQNOBERybsPpSPqq/7f+rvATM5/Le7m4Yj6y0vcc+GS
-         eu47vLTjJ0s/wb35iFceHsJ5Vz43xC9nK3sea3I/LzUs1IqlgBwKfmAK3F/rFwisbcpi
-         NwkhlImBuB6Er6gDGxl9tOqFYYIFIRGil+H26qRFfZQHnwPeZsF81BO5/76A7PXlkstv
-         akD/6JlSVpkWDeyY6Am842n4tF6WQzPKeIKTyrNZKAjw0+vwkl1Mc6fui8xMWHA1V+Ky
-         hQQpgIrWXfVC3AEI+ayOxv1Nqgo1hEg6+Noh/tt+UOF0aOITO5vVmFs09fvVGSFf7+CL
-         7v2g==
-X-Gm-Message-State: AOAM530mqZ2iW+vIJmCcq5sX4r1R7glsnEP9CJ+A+DPSl/mabosu6RcL
-        h+1h8KhbtN9hM1Z9v7ldvwU29LVgbS1D3GUW
-X-Google-Smtp-Source: ABdhPJyEw/mDzQU2hZuSzKkj0EeN0bteGHFzckMvxdJgeA3+fC/XmpN5NXwdJJr7cMPrAxNJQA7UvQ==
-X-Received: by 2002:ac8:1387:: with SMTP id h7mr45969325qtj.386.1600677757891;
-        Mon, 21 Sep 2020 01:42:37 -0700 (PDT)
-Received: from mail.clickyotomy.dev ([124.123.107.121])
-        by smtp.gmail.com with ESMTPSA id p3sm8498991qkj.113.2020.09.21.01.42.35
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WToxBQtBZJloVrzBE9O2Tx3+fGLtOoUuC9P8IpeGZEQ=;
+        b=HPUs4AHfb+/78FqPgbIT4P3suoFHFkIUcH6aKSHqAdjX55RG4CmjrCUaEkW3O0wZOl
+         gqR24JTX53E7+mBA4cWOtkQPtsjtnqIra2ps1BpghKYPtTt8OSDuYq1+/Q07BF6ZRmcb
+         AvFVZmjKECqFywft4ig1MEYqNUEK41uTyucq9GEBCVXs0+DpHiYkJNze0CBUNDRtg8hK
+         hVVhobc8Q0L3Gz4a0Bcl6aAdO4BMOJtGhoLc1sG7Lklv5AzPeoKO+xi1SoBs6KDVsMtf
+         g0P5JzTCDJ7jG0iFNUF66LB30Cqb6fEuL8SsEsaDozm7Vf6sOpAtH3hgyV8+xJ5BdY+B
+         KKog==
+X-Gm-Message-State: AOAM532LeOd9mLIKkgdSOaN10rjIwOQzt5rTFAoGtJzWSiq9hifzGJ49
+        duSfu/xUjaFf0pi/d136lBs=
+X-Google-Smtp-Source: ABdhPJzZo90QCD2ACm+8LoOL8z+oWG0o2iXdNK54t56SIYRLgHrxoQvV0Db+nwpQ+/AGIVWAPq9tzw==
+X-Received: by 2002:a50:99d6:: with SMTP id n22mr52021939edb.265.1600678457332;
+        Mon, 21 Sep 2020 01:54:17 -0700 (PDT)
+Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
+        by smtp.gmail.com with ESMTPSA id s14sm7717826eju.84.2020.09.21.01.54.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 01:42:37 -0700 (PDT)
-Date:   Mon, 21 Sep 2020 14:12:31 +0530
-From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] push: add reflog check for "--force-if-includes"
-Message-ID: <20200921084231.GA64896@mail.clickyotomy.dev>
-References: <20200912150459.8282-1-shrinidhi.kaushik@gmail.com>
- <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
- <20200919170316.5310-2-shrinidhi.kaushik@gmail.com>
- <xmqqft7djzz0.fsf@gitster.c.googlers.com>
+        Mon, 21 Sep 2020 01:54:16 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
+        Simon Legner <Simon.Legner@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH 07/15] remote-mediawiki tests: guard test_cmp with test_path_is_file
+References: <20200916102918.29805-1-avarab@gmail.com> <20200916102918.29805-8-avarab@gmail.com> <CAPig+cRg2tuOiQH_CQoHMjkX2gbRPJoV8NPJZnu3=bfo4wk-cQ@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <CAPig+cRg2tuOiQH_CQoHMjkX2gbRPJoV8NPJZnu3=bfo4wk-cQ@mail.gmail.com>
+Date:   Mon, 21 Sep 2020 10:54:16 +0200
+Message-ID: <87mu1jh5mv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqft7djzz0.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On 09/19/2020 13:03, Junio C Hamano wrote:
-> Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
-> 
-> > Adds a check to verify if the remote-tracking ref of the local branch
-> > is reachable from one of its "reflog" entries.
-> 
-> s/Adds/Add/
+On Wed, Sep 16 2020, Eric Sunshine wrote:
 
-Gotcha, I will reword the commit messages for all three commits.
-in the patch series.
-
-> > When "--force-with-includes" is used along with "--force-with-lease",
-> 
-> A misspelt name for the new option is found here.
-
-*Facepalm.* Thanks, will update.
-
-> > [...]
-> Makes me wonder, if in_merge_bases() is so expensive that it makes
-> sense to split the "were we exactly at the tip?" and "is one of the
-> commits we were at a descendant of the tip?" into separate phases,
-> if this part should be calling in_merge_bases() one by one.
-> 
-> Would it make more sense to iterate over reflog entries from newer
-> to older, collect them in an array of pointers to "struct commit" in
-> a batch of say 8 commits or less, and then ask in_merge_bases_many()
-> if the remote_commit is an ancestor of one of these local commits?
+> On Wed, Sep 16, 2020 at 8:17 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> Change a test that used a plain test_cmp to first check the file(s)
+>> using test_path_is_file. If some of these file(s) don't exist (as
+>> happened to me during debugging), test_cmp will emit a way less useful
+>> message about the failure.
 >
-> The traversal cost to start from one "local commit" to see if
-> remote_commit is an ancestor of it using in_merge_bases() and
-> in_merge_bases_many() should be the same and an additional traversal
-> cost to start from more local commits should be negligible compared
-> to the traversal itself, so making a call to in_merge_bases() for
-> each local_commit smells somewhat suboptimal.
-> 
-> If we were talking about older parts of the history, optional
-> generation numbers could change the equation somewhat, but the
-> common case for the workflow this series is trying to help is that
-> these local commits ane the remote tip are relatively new and it is
-> not unlikely that the generation numbers have not been computed for
-> them, which is why I suspect that in_merges_many may be a win.
-
-Nice! We can definitely try batching commits from the reflog and
-pass it along to "in_merge_bases_many()". As for being faster than
-calling "in_merge_bases()" for each commit entry in the reflog --
-I am not familiar with how the former works. Do we still keep the
-"reflog_entry_exists()" part? It might still be faster to go through
-the entries once to check with "oideq()" in the first run.
-
-Also, I was wondering if it is worth considering this:
-  - check if the reflog of the HEAD has the remote ref
-  - check if the reflog of the local branch has the remote ref
-  - check if the remote ref is reachable from any of the local ref's
-    "reflog" entries using "in_merge_bases_many()" in batches as
-    suggested here.
-
-The first two (we can even skip the second one) runs are relatively
-fast, and the third one might be faster than checking "in_merge_bases()"
-for each reflog entry. I suppose adding these three steps would make
-the process slower overall, though. For context, I was referring to
-your message [1] on the other thread regarding checking the HEAD's
-reflog.
-
-> > [...]
-> > +		/*
-> > +		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
-> > +		 * mode, and if "--foce-if-includes" was specified, run
-> > +		 * the check.
-> > +		 */
-> > +		if (ref->if_includes)
-> > +			check_if_includes_upstream(ref);
-> 
-> s/foce/force/; 
-
-Yes, sorry about that; will update.
- 
-> I can see that the code is checking "and if force-if-includes was
-> specified" part, but it is not immediately clear where the code
-> checks if "--force-with-lease" is used with "tracking" and not with
-> "the other side must be exactly this commit" mode here.
-> 
->     ... goes and looks ...
-> 
-> Ah, ok, I found out. 
-> 
-> The field name "if_includes", and the comment for the field in
-> remote.h, are both misleading.  It gives an impression that the
-> field being true means "--force-if-included is in use", but in
-> reality the field means a lot more.  When it is true, it signals
-> that "--force-if-included" is in use *and* for this ref we were told
-> to use the "--force-with-lease" without an exact object name.  And
-> that logic is not here, but has already happened in apply_cas().
-> 
-> Which makes the above comment correct.  We however need a better
-> name for this field and/or an explanation for the field in the
-> header file, or both, to avoid misleading readers.
+> An alternative would be to update test_cmp() to present a more helpful
+> error message so that all test scripts can benefit rather than just
+> this script. By the way, were you testing with a reasonably recent
+> version of Git? I ask because test_cmp() was updated not long ago to
+> provide better diagnostics when one of the files is missing.
 >
-> > diff --git a/remote.h b/remote.h
-> > index 5e3ea5a26d..38ab8539e2 100644
-> > --- a/remote.h
-> > +++ b/remote.h
-> > @@ -104,7 +104,9 @@ struct ref {
-> >  		forced_update:1,
-> >  		expect_old_sha1:1,
-> >  		exact_oid:1,
-> > -		deletion:1;
-> > +		deletion:1,
-> > +		if_includes:1, /* If "--force-with-includes" was specified. */
-> 
-> The description needs to be tightened.
-> 
-> > +		unreachable:1; /* For "if_includes"; unreachable in reflog. */
+> [1]: d572f52a64 (test_cmp: diagnose incorrect arguments, 2020-08-09)
 
-OK, you're right. Perhaps, we could rename it to something like
-"if_includes_for_tracking" and update the comment description
-with saying something along the lines of:
+Thanks (and also to =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh in a side-th=
+read). I've dropped
+this patch. It's indeed better to leave this to a more general facility
+as in your now-integrated test_cmp patch.
 
-+  /*
-+   * Set when "--force-if-includes" is enabled, and
-+   * if "compare-and-swap" is not provided with the
-+   * exact commit to be expected on the remote (in
-+   * "use_tracking" or use_tracking_for_rest" mode).
-+   */
-
-
-[1]: https://public-inbox.org/git/xmqqsgbdk69b.fsf@gitster.c.googlers.com
-
-Thanks again, for taking the time to review this.
--- 
-Srinidhi Kaushik
-
+The reason I came up with this now-useless patch is because I originally
+started hacking this series on a slightly older version of git, which
+didn't have that patch.
