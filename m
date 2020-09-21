@@ -8,104 +8,140 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E87F4C43466
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 13:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89DBFC43465
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 13:36:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A327D218AC
-	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 13:31:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DDDB2084C
+	for <git@archiver.kernel.org>; Mon, 21 Sep 2020 13:36:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGNJLYhA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E7MEQ7Ee"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727049AbgIUNa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Sep 2020 09:30:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60408 "EHLO
+        id S1726913AbgIUNgG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Sep 2020 09:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727078AbgIUNaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Sep 2020 09:30:55 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 817B4C0613D0
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 06:30:54 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e16so12797537wrm.2
-        for <git@vger.kernel.org>; Mon, 21 Sep 2020 06:30:54 -0700 (PDT)
+        with ESMTP id S1726643AbgIUNgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Sep 2020 09:36:05 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83ECAC061755
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 06:36:05 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id z23so17690667ejr.13
+        for <git@vger.kernel.org>; Mon, 21 Sep 2020 06:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=nrzEGyk/IQsEX7tT1PW/cI2l5YyFqXkq2IZHqY66kVg=;
-        b=YGNJLYhAQYUcBJv5mAdTBnElgMbDi5QeZ+KPos7VLuety1zzgylXfiqR8DkvoRF6dJ
-         6t/4OhU4+o49s271vzHFMVDiXHin7btx8xRUM+NdTVs5lUlSzKKkzrmlro3IJrbMITtj
-         5JfOrm0lqPTs6jFzFvVe5bJGuf1DlHxOrc4zUP8F7C3k6hVuNY+da8j5CsmSpnavmjaO
-         xRCPtQPuXF6lvUKHp22w/lypeMXPgqOkU2hgIOQnLMAVxs4mu1qUz7DR2n9EOxOz7eKe
-         rBhlnVBdhr5zCdJUcuMC/CwqYuv2GhoYUboPdnUVZvpgVZykm09RdutChpW64uBTQURr
-         scbQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=TpeU02oEQnlDBT0J2ZmnbyRHAjbbYYtzH9QTZP+7kdI=;
+        b=E7MEQ7Eeq57dugtQIlVVAKp8mD/rnXgeQKTnRY39HZwDBfEp9N/XuIrgxuwIYQbl7T
+         Nza42GQqCgvZ3Wqjkn/QeNA+jXB5YZlMP1voHF2gFVjkjbKL1EVFsFZ9TgadgU14hPQp
+         pkNjHL0zTxqcOo7A/7XF+TeWZCexmwcfoud7qhtN+iP1rWcFs5JAnS5l8fG1KZWmO2QQ
+         e4bNPPCDyCsWTg0ym6jHLK91gLAHWAdVLYYCPg8bC4zEvz8Dn/lMIff31DlhNbkuGK5v
+         VDB+E9tAWHy9yTkAvut+n30pNXL5ax7KOCsBwnsMvaqIWEiw130T3M9dL87L/xbkckbn
+         QGWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nrzEGyk/IQsEX7tT1PW/cI2l5YyFqXkq2IZHqY66kVg=;
-        b=R/fEdL5aWkr7DKBjsGA4saSesV0nX2cIv50w04rqJbaVbv2PqZL1S5FCa3IUZyRvLw
-         C8zZNqITLMZlntfYTShs6fjDSc2tYessi2KxPVvv2b3OQlP/XLgncvFt02MGhPoq6wG8
-         Q0coC6+rvhd++rOTgvXf7rkWFUO6AoiZsMaE4rL68A0eO/KlPdQ/gK0/ZDjGch1/TJmM
-         GMCr9Nn5VE25PSSt99Ds+9WTq2d1jIPRZdVXRFuJtggwHxK8Wlqen4t3C8/ox8DsK0vb
-         A0sXtuj0R1laPYG+766oFmVNku+c9j7m05U8Ts4IS1yQf0agQwaEkaaSDPUPUlYSYmbY
-         yZEg==
-X-Gm-Message-State: AOAM5319/ln9jJlJ8zIZAiU0252VwVRr0NUU6lnXGKb8W0N6Dmc/Dxas
-        43enlsbhA+mfxUd10sseu3aBmH2Hq38=
-X-Google-Smtp-Source: ABdhPJxDk2kz6gokmxf3zorjW5nft2B8f8Kt7T0htHsis1YUyGhr9Jt+gy5C1mYQt/nZM81JIRsx2w==
-X-Received: by 2002:a5d:4a4b:: with SMTP id v11mr51669925wrs.36.1600695053174;
-        Mon, 21 Sep 2020 06:30:53 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y6sm20995304wrt.80.2020.09.21.06.30.52
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=TpeU02oEQnlDBT0J2ZmnbyRHAjbbYYtzH9QTZP+7kdI=;
+        b=eM4F19Hx7CAOLTv5nO+8tKrFpadhLwKQXEpKnqHA7G40l/83YSTRwAQ6dMgXT35xdv
+         CGpJG6NhHksEKdHgHJ2YT9B05q6UN7A3ZrRAj3nDG0pTwMNfnmVr3gTkhHZE/6djZDue
+         0iLYtHGGx4KrcgrXUsiSH3kz+6S+mbgHqGK+j5nEZGOBhRlJUsWuANLpWfDrZtJC/J4D
+         8NHju9rIQRNyY07TqsxxN01BRT4/CebfsPkqwCF612Xa+Vqv2US3FU2QcSyc9GBI+9RG
+         VSmp97U+b9mLQaHojTX/6U3h/xLCAVjqF+t0YqrvDDhFKEURoVxpyozo8VKRtAI5xn6d
+         Ve7A==
+X-Gm-Message-State: AOAM531Q3g7dlOIfSWawjmTg6TySIMkvhYQnJG8VeDH00fXiW9ZdJ/CT
+        wvD5IAfovDZ/nAzukeE0iJc=
+X-Google-Smtp-Source: ABdhPJwrl5pWPWx003ZQzG7SnzFthxj6Cp2CqBTF6ebW/igLe+HqAduVIC5cAxxeT/FjxTqSSSTRUg==
+X-Received: by 2002:a17:906:724b:: with SMTP id n11mr50488904ejk.328.1600695364045;
+        Mon, 21 Sep 2020 06:36:04 -0700 (PDT)
+Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
+        by smtp.gmail.com with ESMTPSA id t4sm8889984ejj.6.2020.09.21.06.36.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2020 06:30:52 -0700 (PDT)
-Message-Id: <80a69318b57348c59e45c0f8df1c342ef84388d4.1600695050.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.736.git.1600695050.gitgitgadget@gmail.com>
-References: <pull.736.git.1600695050.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Sep 2020 13:30:49 +0000
-Subject: [PATCH 2/3] commit: reorder synopsis
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 21 Sep 2020 06:36:03 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v5 07/11] maintenance: take a lock on the objects directory
+References: <pull.695.v4.git.1599224956.gitgitgadget@gmail.com> <pull.695.v5.git.1600366313.gitgitgadget@gmail.com> <1a0a3eebb825ac3eabfdd86f82ed7ef6abb454c5.1600366313.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <1a0a3eebb825ac3eabfdd86f82ed7ef6abb454c5.1600366313.git.gitgitgadget@gmail.com>
+Date:   Mon, 21 Sep 2020 15:36:02 +0200
+Message-ID: <87d02fi75p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Rearrange the synopsis for `git commit` to try and put options that
-are used more often nearer the beginning.
+On Thu, Sep 17 2020, Derrick Stolee via GitGitGadget wrote:
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- Documentation/git-commit.txt | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Performing maintenance on a Git repository involves writing data to the
+> .git directory, which is not safe to do with multiple writers attempting
+> the same operation. Ensure that only one 'git maintenance' process is
+> running at a time by holding a file-based lock. Simply the presence of
+> the .git/maintenance.lock file will prevent future maintenance. This
+> lock is never committed, since it does not represent meaningful data.
+> Instead, it is only a placeholder.
+>
+> If the lock file already exists, then no maintenance tasks are
+> attempted. This will become very important later when we implement the
+> 'prefetch' task, as this is our stop-gap from creating a recursive process
+> loop between 'git fetch' and 'git maintenance run --auto'.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/gc.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 00fff59bdb..7ba9c6f7c9 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -798,6 +798,25 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
+>  {
+>  	int i, found_selected = 0;
+>  	int result = 0;
+> +	struct lock_file lk;
+> +	struct repository *r = the_repository;
+> +	char *lock_path = xstrfmt("%s/maintenance", r->objects->odb->path);
+> +
+> +	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0) {
+> +		/*
+> +		 * Another maintenance command is running.
+> +		 *
+> +		 * If --auto was provided, then it is likely due to a
+> +		 * recursive process stack. Do not report an error in
+> +		 * that case.
+> +		 */
+> +		if (!opts->auto_flag && !opts->quiet)
+> +			warning(_("lock file '%s' exists, skipping maintenance"),
+> +				lock_path);
+> +		free(lock_path);
+> +		return 0;
+> +	}
+> +	free(lock_path);
+>  
+>  	for (i = 0; !found_selected && i < TASK__COUNT; i++)
+>  		found_selected = tasks[i].selected_order >= 0;
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index a1d1d1246f..9de4dc5d66 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,11 +8,11 @@ git-commit - Record changes to the repository
- SYNOPSIS
- --------
- [verse]
--'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
--	   [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
--	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
--	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
--	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-+'git commit' [-a | --interactive | --patch] [--amend]
-+	   [(-c | -C | --fixup | --squash) <commit>] [-F <file> | -m <msg>]
-+	   [--allow-empty] [--allow-empty-message] [--no-verify] [-e]
-+	   [--reset-author] [--author=<author>] [--date=<date>]
-+	   [--cleanup=<mode>] [-v] [-u<mode>] [--dry-run] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	   [-S[<keyid>]] [--] [<pathspec>...]
- 
--- 
-gitgitgadget
+There's now two different lock strategies in builtin/gc.c, the existing
+one introduced in 64a99eb476 ("gc: reject if another gc is running,
+unless --force is given", 2013-08-08) where we write the hostname to the
+gc.pid file, and then discard the lockfile depending on a heuristic of
+whether or not it's the same etc., and this one.
 
+With this as an entry point we'll entirely do away with the old one
+since we don't use the "gc --auto" entry point.
+
+All of that may or may not be desirable, but I think a description in
+the docs & tests for how these lock files should interact would be
+helpful. E.g. writing a different hostname in the gc lockfile and
+setting the time on it with with "test-tool chmtime" will cause it to
+plow ahead, but doing the same for "git maintenance" will stop it in its
+tracks no matter the time or content.
