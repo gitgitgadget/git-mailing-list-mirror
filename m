@@ -2,115 +2,114 @@ Return-Path: <SRS0=uwne=C7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F10BEC4727E
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 11:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8A4BC2D0E2
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 12:21:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A36E6214F1
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 11:35:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C4F3207C3
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 12:21:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=klerks-biz.20150623.gappssmtp.com header.i=@klerks-biz.20150623.gappssmtp.com header.b="QU02jRIS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHKwMQqk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726715AbgIVLf5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Sep 2020 07:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39240 "EHLO
+        id S1726541AbgIVMV2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Sep 2020 08:21:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726654AbgIVLfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Sep 2020 07:35:55 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4221C061755
-        for <git@vger.kernel.org>; Tue, 22 Sep 2020 04:35:55 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id q13so22309670ejo.9
-        for <git@vger.kernel.org>; Tue, 22 Sep 2020 04:35:55 -0700 (PDT)
+        with ESMTP id S1726505AbgIVMV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Sep 2020 08:21:28 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DDDC061755
+        for <git@vger.kernel.org>; Tue, 22 Sep 2020 05:21:27 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id gx22so13495289ejb.5
+        for <git@vger.kernel.org>; Tue, 22 Sep 2020 05:21:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=L4nSVAjuxCGWBQVm7eyR+D8Vj9L9uGdd7X9UBPmPDEM=;
-        b=QU02jRISjMdZ4Fm6Ac0Vo84sObtHyQuKJP6GlSnyXHmLIby8Bs6xYCpUftxnU0CaD0
-         PZVuDFexJU6UzsrpRb0z9WQmP/buGbPjTGoPAMailloi6RSMq24UBxUl1K1nHjZvJeDP
-         ifcxR+qmzSfQMUXkm4NPOaZLH46+8+w0bULjnW+eml5cDk4jjI380jlxsMrtIql+1IM7
-         TOztPYDO17T+Rs0g15ZsoBljrRB69je3luQeAcKpWxziu8wtb7e5kOyknX7pq6wqd1CM
-         Gf5sOhczfRaPVpDuyEXmATeUVgRDa2x/RhX2TK44VyJCXPb+dCMliEzUfLcfwcvhBT+l
-         /c0w==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=68U8YQjWcrtWc7RRiPOVWehQesL8LjaHPxGzDBH5Lgw=;
+        b=AHKwMQqkMB5etc95HVDS7Ft9Lu2gsbJbddrCEoDnA0YPDISkofywhR25h7K6v9kcO0
+         Yw74yBPBkY578BBCLHuCUz+8Hlg1Pm+UDopVb2IRAgazf4Gy/GRManUPXOesOUqjvKSR
+         nfM8+fbA8hQ+AL7FNPiofVeexN2gyjQWoyE+RE3Attm8PPVgKlvSgljbcCwvuG2P+tuA
+         ZnjxZaF000IwNsF7ZOoAnQuKKjmoYMhgloYaWajBq7+Bspk3bKhmzS+JzL1DNbH51tRd
+         DdTZ7B/LcDxKKe4+XXILOXUp5wC6p8XWi5oDFXl9dh2bhS1vK3HJ8pjSpHuRkL66wh1O
+         +amw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=L4nSVAjuxCGWBQVm7eyR+D8Vj9L9uGdd7X9UBPmPDEM=;
-        b=kPk3GxQWTRTG2zNkIVEw9s8/E0O5ntyZ9wLFUtULsqNgsYHzzMVErlqYeuqPs91Pub
-         MDvBwfoTN4NzzojuIVw4gkBLyGGPhpkAgyatfO+1nUB/xyLzJ26NyTfY6EM46cj6RI9u
-         cOZF4tL+xi9a/TOk7bn6pFUu8eQKZiHwP9YtwjUsa7lECYCFpMeFDwkSsdQXzM10RGmz
-         fi3/4KRqLtxQUtHgum1S8cvY7+qE+ocxH0eApdt0vd6MwkFjsk+eegYBM3Q0g4tueRyo
-         kogUBQYdTmJF0I6wqoBDBWOWjKptXeuKeqmb7iT0N5a41i+mV9dLfBqYoxtBDNu67WvV
-         kcYw==
-X-Gm-Message-State: AOAM530IG9PbnJHvdzjkmKSKFLkB+hYYr+7U4zJRvlDMWpQz+i+Mj4Mk
-        oiesc7FRH2OiQIY8ERHcarjA+H/dZbiGl2rT8Mxy9f//xRzTjG7w
-X-Google-Smtp-Source: ABdhPJzQiAeUq6fl2sZNmH2EougJBo7L9uX/yyZnlWebGzARc/qQTLt0HaGDr8EpDWK8iYazryc3dEJSe79sDFM9vlE=
-X-Received: by 2002:a17:906:49cd:: with SMTP id w13mr4295143ejv.151.1600774554002;
- Tue, 22 Sep 2020 04:35:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=68U8YQjWcrtWc7RRiPOVWehQesL8LjaHPxGzDBH5Lgw=;
+        b=i9zrofOHQsCco0KCpr7D5xBHrpd3Gj8r850NRdWAi6ac3z+qD9r6aGFF5NfwZAXULS
+         d7+ju91gE+jTrhPJ+DRheQmCzkbvraXRXIdGAmZh1hayAIo7xPmy4pcae9Nso8q/HIC1
+         wGuHFXxNwWdC9zMW9uIXv9Qcxws1TdnMfn6wx4kaC62M04GfPVgBP6Q7Zk4FmsdGtF+L
+         SgqOe9H4dd7pcRjANzLHAUbmJt/yQGpsKfRnOhwDa3A7z7jrQ1lhpSbceLS0NSJjs/fD
+         s58VT0YAMBERg0ttQsxUV9owTC5HY8rJKnOfxMcaxt11LwWrKzfQdkSXURg0gQRYZYrl
+         mw/w==
+X-Gm-Message-State: AOAM532zBRqbzHdNPkJc16m4edvi5QZcS3WIr6kdjw9GEXjoeUGFfw//
+        VKC+8wc2R66dx0byzgQxTk2+Q2Zp/ADJZw7yuxix/Z14JhFtOQ==
+X-Google-Smtp-Source: ABdhPJysAlwm6EiQy1nVlsTy5UyP+ZizrqQm/RTkcG+OqNPpEkWPuBdIeaVIHFWxpwpByLUYGcphe1TxXpmtgiA3RqE=
+X-Received: by 2002:a17:906:819:: with SMTP id e25mr4749134ejd.211.1600777285981;
+ Tue, 22 Sep 2020 05:21:25 -0700 (PDT)
 MIME-Version: 1.0
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 22 Sep 2020 13:35:42 +0200
-Message-ID: <CAPMMpoj+UhKCW_k34-cGkiWFghOOu13GhPgA0V-y4ZpLVppuiA@mail.gmail.com>
-Subject: Question about fsmonitor and --untracked-files=all
-To:     git@vger.kernel.org
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 22 Sep 2020 14:21:14 +0200
+Message-ID: <CAP8UFD32jLuyq4izahdMwaYmKp2mTmHHTxQD68PqjA46Pc32xw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 67
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ethan Rahn <erahn@arista.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        git-inclusion-summit@googlegroups.com,
+        Carmen Andoh <candoh@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+Hi everyone!
 
-I've got a couple questions about the "fsmonitor" functionality,
-untracked files, and multithreading.
+A draft of a new Git Rev News edition is available here:
 
-Background:
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-67.md
 
-In a repo with:
- * A couple hundred thousand tracked files, and a couple hundred
-thousand .gitignored files, across a few thousand directories
- * The --untracked-cache setting, tested and working
- * core.fsmonitor set up with watchman (with the sample integration
-script from january)
- * Git version 2.27.0.windows.1
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-"git status" takes about 2s
-"git status --untracked-files=all" takes about 20s
+  https://github.com/git/git.github.io/issues/455
 
-When I turn off "core.fsmonitor", the numbers change to something like:
-"git status": 8s
-"git status --untracked-files=all": 9s
+You can also reply to this email.
 
-Using windows' "procmon" to observe git.exe's behavior from outside, I
-think I've understood a couple things that surprise me:
-1. when you specify "--untracked-files=all", git scans the entire
-folder tree regardless of the "fsmonitor" hook
-2. when you specify the "fsmonitor" hook, git does any
-filesystem-scanning in a single-threaded fashion (as opposed to
-multi-threaded without "fsmonitor" / normally)
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
-These two things combine so that with "fsmonitor" set, normal
-command-line git status performance is great, but the performance in
-tools that eagerly look for untracked files (like "Git Extensions" on
-windows) actually suffers - it takes twice as long to run the 'git -c
-diff.ignoreSubModules=none status --porcelain=2 -z
---untracked-files=all' command that this UI wants (and blocks on, when
-you go to a commit dialog).
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-Questions:
+I would like to talk about Git Contributors' Inclusion Summit that
+happened earlier this month, but I am not sure if the notes have
+already been shared with everyone on the mailing list. Any information
+about this would be very appreciated.
 
-1. Is there a reason "--untracked-files=all" causes a full directory
-tree scan even with the "fsmonitor" hook active, or is this
-accidental?
-2. Assuming that the full directory tree scan is indeed necessary even
-with "fsmonitor" (when requesting all untracked files), could it be
-made multithreaded?
+Jakub, Markus, Kaartic and me plan to publish this edition on Thursday
+September 24th.
 
-(my apologies for the simplistic "outside-in" observations; I don't
-feel qualified to attempt to understand the git source code)
-
-Thanks for any help understanding the optimization opportunities here!
-
-Tao Klerks
+Thanks,
+Christian.
