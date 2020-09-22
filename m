@@ -2,184 +2,326 @@ Return-Path: <SRS0=uwne=C7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30FCFC2D0E2
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD322C2D0E2
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:55:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F071F20BED
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:51:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58AB720BED
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:55:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="OkWVhJjR"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="LGn0tmou"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbgIVWvd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Sep 2020 18:51:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58494 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726548AbgIVWvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Sep 2020 18:51:32 -0400
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF1BCC061755
-        for <git@vger.kernel.org>; Tue, 22 Sep 2020 15:51:32 -0700 (PDT)
-Received: by mail-qv1-xf43.google.com with SMTP id cr8so10413226qvb.10
-        for <git@vger.kernel.org>; Tue, 22 Sep 2020 15:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cOvQ52Ig5ZRc5vUR0VIpNJbijlT/WkZ8/uPa+mqYwwY=;
-        b=OkWVhJjRaiuCGETZU4+Ng6hfKn4/mtBT/OZNP9N9a6iZQm72U/Nx2oZons1SgEChAX
-         7jcRexLIbPDXXw+VGBF2vexMIrVT0c+/B9odYYSGiANVfY6k2gSv7hsD1uC11+/l3Ywx
-         mVChbhuhsE7QNEpwxLW7xcwGuojHBsS7wiDn8FMSWWUEU03E04naphDFfSGLNm7hDU92
-         bsYM8vr4iJ7wqBbSacdVJLZNJs2qi5IYG4hIJCX95D4DQX8Tcgd2YciPuolF4VaQrkHG
-         wcLBu9KasWdMhVtS6Ogx7QzPPjsy16677U96Lwg1opMdoQhKedpsyixSDaP/bBrazWk7
-         6k7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cOvQ52Ig5ZRc5vUR0VIpNJbijlT/WkZ8/uPa+mqYwwY=;
-        b=SpQSVdox72G5GNYw1ZZPg4naZI1cnX81z4Cm/NNw8NHRZlqiZLBGT1mpE79ZgfPlP5
-         UrZ5X+18MeMboaH3fc7ny8M1r/RIk0krmRR1cQTPYPMx661YVtSNaqvBGSoXLaQFMaj1
-         NXGTPmGqaBk0INnw47fED/Gy7J3rToo9PMoFRqHxDdvvHoXBiXA5h+sHh5HQX6mzTSAi
-         NaqMQF7+Ogm+v+6APUzGQsA4NMi0TiqVTROe/Xsl1DZRIf4giKeuCYqgRVGBBV+XGLlm
-         ps8y0ywnYvQYY0VWhcCercpw0SqFdt80PfQQkIxFmPGqEG6oVytqrHkNSPTdi9EWQfY6
-         +gfA==
-X-Gm-Message-State: AOAM5338FRkEWAm4TKKeYhrErIWScDNkPDc3Qyy5jH+skbwDdyKYKeL4
-        +tjs5oUrt6mHDmaomCoYiZC6X6VdOhU+8w==
-X-Google-Smtp-Source: ABdhPJxr29NkgJHdk9NRpzYB4z2QzxU5fxU/HuL8oHiKIsFC+8vORcyXuKmb1U6fVeWx5YEZMQBXTg==
-X-Received: by 2002:a05:6214:1181:: with SMTP id t1mr8631711qvv.11.1600815091558;
-        Tue, 22 Sep 2020 15:51:31 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.96.45])
-        by smtp.gmail.com with ESMTPSA id p187sm12342359qkd.129.2020.09.22.15.51.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2020 15:51:30 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, chriscool@tuxfamily.org, peff@peff.net,
-        t.gummerer@gmail.com, newren@gmail.com
-Subject: [PATCH v2 19/19] ci: run test round with parallel-checkout enabled
-Date:   Tue, 22 Sep 2020 19:49:33 -0300
-Message-Id: <b4cb5905d2240b5605ea6f9190ef02f49bf7042e.1600814153.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <cover.1600814153.git.matheus.bernardino@usp.br>
-References: <cover.1600814153.git.matheus.bernardino@usp.br>
+        id S1726855AbgIVWzF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Sep 2020 18:55:05 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:45137 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726802AbgIVWzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Sep 2020 18:55:05 -0400
+X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Sep 2020 18:55:04 EDT
+Received: from [10.0.2.15] ([147.147.167.35])
+        by smtp with ESMTPA
+        id Kr4OkIdpgrXCcKr4Pk6mi1; Tue, 22 Sep 2020 23:47:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1600814853; bh=Cq61n+mvz8pfnsVWQfx8dfkBzl9oDbvRSQpPAAr/QBY=;
+        h=To:Cc:From:Subject:Date;
+        b=LGn0tmouJ8S9hoXRPxF+RNxfRE1C1NnrLytwKxEtG6fAcCokIQ8JVmLfZbMU9u44z
+         S7FjgSkPvwV8AHsvwGs7uq4gSGIEPP3ZYuaIF2vC5rlE9LrA6vlm7r51tUQNTrkrIY
+         sJzx97XjEGcchKudBUjZ27CDpA6PKcmd7Ysw96sDaersmz/pnuZrSp8kL4m+de/vP0
+         sshaAygz58r3uMnEPPn5LeRXywyyImOG46UTyTlbp12ltlCjBeh6i6FF4qAhejufAm
+         REba598EePBSJ27dQ/UcJsuYl+qPM+u75CvRh/wjUNBDo1UTEgdyqe1It4mBpLMytP
+         iGSUNvk14TbWA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Q+xJH7+a c=1 sm=1 tr=0
+ a=XpjFJPif6dwr03fZd+AQaQ==:117 a=XpjFJPif6dwr03fZd+AQaQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=yWYgLYp-HxzJ46leDaQA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     hanwen@google.com
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] reftable: fix some sparse warnings
+Message-ID: <eaf4629b-d8c4-0ddc-8c85-6600399a8229@ramsayjones.plus.com>
+Date:   Tue, 22 Sep 2020 23:47:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfF3WchJ0hZ7lgc4WBitTQefT8AH1vixsNePza9hOqipwkDC5J2haQSBmVfPLLLetFv8+InpuzSPi/ze93ObmVN6xhBkRkU+wFM1lNS0jHaPL9asACK1o
+ uuSKxSeQQvTElxQvw84yi93fR8Vm8z+O1OCXp2owLRbiB1shFsX37TJ7919Hd3C3WcgS5P4YxRTg1g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already have tests for the basic parallel-checkout operations. But
-this code can also run in other commands, such as git-read-tree and
-git-sparse-checkout, which are currently not tested with multiple
-workers. To promote a wider test coverage without duplicating tests:
 
-1. Add the GIT_TEST_CHECKOUT_WORKERS environment variable, to optionally
-   force parallel-checkout execution during the whole test suite.
-
-2. Include this variable in the second test round of the linux-gcc job
-   of our ci scripts. This round runs `make test` again with some
-   optional GIT_TEST_* variables enabled, so there is no additional
-   overhead in exercising the parallel-checkout code here.
-
-Note: the specific parallel-checkout tests t208* cannot be used in
-combination with GIT_TEST_CHECKOUT_WORKERS as they need to set and check
-the number of workers by themselves. So skip those tests when this flag
-is set.
-
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- ci/run-build-and-tests.sh               |  1 +
- parallel-checkout.c                     | 14 ++++++++++++++
- t/README                                |  4 ++++
- t/lib-parallel-checkout.sh              |  6 ++++++
- t/t2081-parallel-checkout-collisions.sh |  1 +
- 5 files changed, 26 insertions(+)
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 6c27b886b8..aa32ddc361 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -22,6 +22,7 @@ linux-gcc)
- 	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
- 	export GIT_TEST_MULTI_PACK_INDEX=1
- 	export GIT_TEST_ADD_I_USE_BUILTIN=1
-+	export GIT_TEST_CHECKOUT_WORKERS=2
- 	make test
- 	;;
- linux-clang)
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 5156b14c53..94b44d2a48 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -32,6 +32,20 @@ enum pc_status parallel_checkout_status(void)
+Hi Han-Wen Nienhuys,
+
+If you need to re-roll your 'hn/reftable' branch, could you please squash this
+into the relevant patches.
+
+This patch is based on top of 'seen' and removes 20 sparse warnings (19 of the
+"symbol 'whatever' was not declared. Should it be static?" type and a single
+"Using plain integer as NULL pointer").
+
+However, this branch also adds many symbols to the output of my 'static-check.pl'
+script (this patch actually removes 19 of those symbols :) ).
+
+Looking at the first such symbol:
+
+  $ git grep -n block_writer_register_restart
+  reftable/block.c:40:int block_writer_register_restart(struct block_writer *w, int n, int restart,
+  reftable/block.c:93:    if (block_writer_register_restart(w, start.len - out.len, is_restart,
+  reftable/block.c:105:int block_writer_register_restart(struct block_writer *w, int n, int is_restart,
+  $ 
+
+... it looks like you forward declare the function on line 40, use it in line 93
+and define it in line 105, all in the single 'block.c' source file. This would
+suggest that this symbol is local to this file and should be marked as 'static'.
+(Also, unless you have mutually recursive functions, I would avoid the need to
+forward declare this function).
+
+Just for your information, you may want to look at the following 27 symbols:
+
+  $ diff nsc ssc1
+  ...
+  > reftable/block.o	- block_writer_register_restart
+  > reftable/merged.o	- merged_table_seek_record
+  > reftable/merged.o	- reftable_merged_table_hash_id
+  > reftable/merged.o	- reftable_merged_table_max_update_index
+  > reftable/merged.o	- reftable_merged_table_min_update_index
+  > reftable/merged.o	- reftable_merged_table_seek_log_at
+  > reftable/pq.o	- pq_less
+  > reftable/publicbasics.o	- reftable_error_to_errno
+  > reftable/publicbasics.o	- reftable_set_alloc
+  > reftable/reader.o	- reftable_reader_seek_log_at
+  > reftable/record.o	- reftable_record_yield
+  > reftable/record.o	- reftable_ref_record_vtable
+  > reftable/refname.o	- modification_has_ref
+  > reftable/refname.o	- modification_has_ref_with_prefix
+  > reftable/refname.o	- validate_refname
+  > reftable/stack.o	- reftable_addition_close
+  > reftable/stack.o	- reftable_stack_auto_compact
+  > reftable/stack.o	- reftable_stack_reload_maybe_reuse
+  > reftable/stack.o	- stack_check_addition
+  > reftable/stack.o	- stack_try_add
+  > reftable/stack.o	- stack_write_compact
+  > reftable/test_framework.o	- new_test_case
+  > reftable/writer.o	- reftable_writer_add_logs
+  > reftable/writer.o	- reftable_writer_add_refs
+  > reftable/writer.o	- writer_clear_index
+  > reftable/writer.o	- writer_finish_public_section
+  > reftable/writer.o	- writer_flush_block
+  ...
+  $ 
+
+To be clear, all of the above symbols are defined, as an external symbol, in
+the given object file, but not called/referenced outside of that file.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
+ reftable/blocksource.c    | 8 ++++----
+ reftable/iter.c           | 6 +++---
+ reftable/merged.c         | 2 +-
+ reftable/publicbasics.c   | 6 +++---
+ reftable/reader.c         | 2 +-
+ reftable/record.c         | 6 +++---
+ reftable/test_framework.c | 8 ++++----
+ reftable/writer.c         | 2 +-
+ 8 files changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/reftable/blocksource.c b/reftable/blocksource.c
+index f12cea2472..7f29b864f9 100644
+--- a/reftable/blocksource.c
++++ b/reftable/blocksource.c
+@@ -39,7 +39,7 @@ static uint64_t strbuf_size(void *b)
+ 	return ((struct strbuf *)b)->len;
+ }
  
- void get_parallel_checkout_configs(int *num_workers, int *threshold)
+-struct reftable_block_source_vtable strbuf_vtable = {
++static struct reftable_block_source_vtable strbuf_vtable = {
+ 	.size = &strbuf_size,
+ 	.read_block = &strbuf_read_block,
+ 	.return_block = &strbuf_return_block,
+@@ -60,11 +60,11 @@ static void malloc_return_block(void *b, struct reftable_block *dest)
+ 	reftable_free(dest->data);
+ }
+ 
+-struct reftable_block_source_vtable malloc_vtable = {
++static struct reftable_block_source_vtable malloc_vtable = {
+ 	.return_block = &malloc_return_block,
+ };
+ 
+-struct reftable_block_source malloc_block_source_instance = {
++static struct reftable_block_source malloc_block_source_instance = {
+ 	.ops = &malloc_vtable,
+ };
+ 
+@@ -112,7 +112,7 @@ static int file_read_block(void *v, struct reftable_block *dest, uint64_t off,
+ 	return size;
+ }
+ 
+-struct reftable_block_source_vtable file_vtable = {
++static struct reftable_block_source_vtable file_vtable = {
+ 	.size = &file_size,
+ 	.read_block = &file_read_block,
+ 	.return_block = &file_return_block,
+diff --git a/reftable/iter.c b/reftable/iter.c
+index 6631408ef8..2cff447323 100644
+--- a/reftable/iter.c
++++ b/reftable/iter.c
+@@ -29,7 +29,7 @@ static void empty_iterator_close(void *arg)
  {
-+	char *env_workers = getenv("GIT_TEST_CHECKOUT_WORKERS");
-+
-+	if (env_workers && *env_workers) {
-+		if (strtol_i(env_workers, 10, num_workers)) {
-+			die("invalid value for GIT_TEST_CHECKOUT_WORKERS: '%s'",
-+			    env_workers);
-+		}
-+		if (*num_workers < 1)
-+			*num_workers = online_cpus();
-+
-+		*threshold = 0;
-+		return;
-+	}
-+
- 	if (git_config_get_int("checkout.workers", num_workers))
- 		*num_workers = 1;
- 	else if (*num_workers < 1)
-diff --git a/t/README b/t/README
-index 2adaf7c2d2..cd1b15c55a 100644
---- a/t/README
-+++ b/t/README
-@@ -425,6 +425,10 @@ GIT_TEST_DEFAULT_HASH=<hash-algo> specifies which hash algorithm to
- use in the test scripts. Recognized values for <hash-algo> are "sha1"
- and "sha256".
+ }
  
-+GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
-+to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
-+execution of the parallel-checkout code.
-+
- Naming Tests
- ------------
+-struct reftable_iterator_vtable empty_vtable = {
++static struct reftable_iterator_vtable empty_vtable = {
+ 	.next = &empty_iterator_next,
+ 	.close = &empty_iterator_close,
+ };
+@@ -126,7 +126,7 @@ static int filtering_ref_iterator_next(void *iter_arg,
+ 	return err;
+ }
  
-diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
-index c95ca27711..80bb0a0900 100644
---- a/t/lib-parallel-checkout.sh
-+++ b/t/lib-parallel-checkout.sh
-@@ -1,5 +1,11 @@
- # Helpers for t208* tests
+-struct reftable_iterator_vtable filtering_ref_iterator_vtable = {
++static struct reftable_iterator_vtable filtering_ref_iterator_vtable = {
+ 	.next = &filtering_ref_iterator_next,
+ 	.close = &filtering_ref_iterator_close,
+ };
+@@ -228,7 +228,7 @@ int new_indexed_table_ref_iter(struct indexed_table_ref_iter **dest,
+ 	return err;
+ }
  
-+if ! test -z "$GIT_TEST_CHECKOUT_WORKERS"
-+then
-+	skip_all="skipping test, GIT_TEST_CHECKOUT_WORKERS is set"
-+	test_done
-+fi
-+
- # Runs `git -c checkout.workers=$1 -c checkout.thesholdForParallelism=$2 ${@:4}`
- # and checks that the number of workers spawned is equal to $3.
- git_pc()
-diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel-checkout-collisions.sh
-index 3ce195b892..5dbff54bfb 100755
---- a/t/t2081-parallel-checkout-collisions.sh
-+++ b/t/t2081-parallel-checkout-collisions.sh
-@@ -3,6 +3,7 @@
- test_description='parallel-checkout collisions'
+-struct reftable_iterator_vtable indexed_table_ref_iter_vtable = {
++static struct reftable_iterator_vtable indexed_table_ref_iter_vtable = {
+ 	.next = &indexed_table_ref_iter_next,
+ 	.close = &indexed_table_ref_iter_close,
+ };
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 22b071cb5d..63fa69bc27 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -155,7 +155,7 @@ static int merged_iter_next_void(void *p, struct reftable_record *rec)
+ 	return merged_iter_next(mi, rec);
+ }
  
- . ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
+-struct reftable_iterator_vtable merged_iter_vtable = {
++static struct reftable_iterator_vtable merged_iter_vtable = {
+ 	.next = &merged_iter_next_void,
+ 	.close = &merged_iter_close,
+ };
+diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
+index a31463ff9a..12d547d70d 100644
+--- a/reftable/publicbasics.c
++++ b/reftable/publicbasics.c
+@@ -59,9 +59,9 @@ int reftable_error_to_errno(int err)
+ 	}
+ }
  
- # When there are pathname collisions during a clone, Git should report a warning
- # listing all of the colliding entries. The sequential code detects a collision
+-void *(*reftable_malloc_ptr)(size_t sz) = &malloc;
+-void *(*reftable_realloc_ptr)(void *, size_t) = &realloc;
+-void (*reftable_free_ptr)(void *) = &free;
++static void *(*reftable_malloc_ptr)(size_t sz) = &malloc;
++static void *(*reftable_realloc_ptr)(void *, size_t) = &realloc;
++static void (*reftable_free_ptr)(void *) = &free;
+ 
+ void *reftable_malloc(size_t sz)
+ {
+diff --git a/reftable/reader.c b/reftable/reader.c
+index fae2dbb64e..c7f56b5fdc 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -376,7 +376,7 @@ static void table_iter_close(void *p)
+ 	block_iter_close(&ti->bi);
+ }
+ 
+-struct reftable_iterator_vtable table_iter_vtable = {
++static struct reftable_iterator_vtable table_iter_vtable = {
+ 	.next = &table_iter_next_void,
+ 	.close = &table_iter_close,
+ };
+diff --git a/reftable/record.c b/reftable/record.c
+index 21c9bba077..3b6884131b 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -539,7 +539,7 @@ static int not_a_deletion(const void *p)
+ 	return 0;
+ }
+ 
+-struct reftable_record_vtable reftable_obj_record_vtable = {
++static struct reftable_record_vtable reftable_obj_record_vtable = {
+ 	.key = &reftable_obj_record_key,
+ 	.type = BLOCK_TYPE_OBJ,
+ 	.copy_from = &reftable_obj_record_copy_from,
+@@ -821,7 +821,7 @@ static int reftable_log_record_is_deletion_void(const void *p)
+ 		(const struct reftable_log_record *)p);
+ }
+ 
+-struct reftable_record_vtable reftable_log_record_vtable = {
++static struct reftable_record_vtable reftable_log_record_vtable = {
+ 	.key = &reftable_log_record_key,
+ 	.type = BLOCK_TYPE_LOG,
+ 	.copy_from = &reftable_log_record_copy_from,
+@@ -947,7 +947,7 @@ static int reftable_index_record_decode(void *rec, struct strbuf key,
+ 	return start.len - in.len;
+ }
+ 
+-struct reftable_record_vtable reftable_index_record_vtable = {
++static struct reftable_record_vtable reftable_index_record_vtable = {
+ 	.key = &reftable_index_record_key,
+ 	.type = BLOCK_TYPE_INDEX,
+ 	.copy_from = &reftable_index_record_copy_from,
+diff --git a/reftable/test_framework.c b/reftable/test_framework.c
+index f304a2773a..b5870bea08 100644
+--- a/reftable/test_framework.c
++++ b/reftable/test_framework.c
+@@ -11,9 +11,9 @@ license that can be found in the LICENSE file or at
+ #include "system.h"
+ #include "basics.h"
+ 
+-struct test_case **test_cases;
+-int test_case_len;
+-int test_case_cap;
++static struct test_case **test_cases;
++static int test_case_len;
++static int test_case_cap;
+ 
+ struct test_case *new_test_case(const char *name, void (*testfunc)(void))
+ {
+@@ -56,7 +56,7 @@ int test_main(int argc, const char *argv[])
+ 		reftable_free(test_cases[i]);
+ 	}
+ 	reftable_free(test_cases);
+-	test_cases = 0;
++	test_cases = NULL;
+ 	test_case_len = 0;
+ 	test_case_cap = 0;
+ 	return 0;
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 44ddcc6757..f569d15ff0 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -589,7 +589,7 @@ void writer_clear_index(struct reftable_writer *w)
+ 	w->index_cap = 0;
+ }
+ 
+-const int debug = 0;
++static const int debug;
+ 
+ static int writer_flush_nonempty_block(struct reftable_writer *w)
+ {
 -- 
 2.28.0
-
