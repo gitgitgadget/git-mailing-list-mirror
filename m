@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3722C2D0E2
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B7AC2D0E2
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:50:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97D112071A
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:50:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF2C9206A5
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 22:50:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="MvLU/XSc"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="ONFmlFx5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbgIVWud (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Sep 2020 18:50:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58304 "EHLO
+        id S1726761AbgIVWul (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Sep 2020 18:50:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726637AbgIVWud (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Sep 2020 18:50:33 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70F46C061755
-        for <git@vger.kernel.org>; Tue, 22 Sep 2020 15:50:33 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id e7so17036427qtj.11
-        for <git@vger.kernel.org>; Tue, 22 Sep 2020 15:50:33 -0700 (PDT)
+        with ESMTP id S1726637AbgIVWul (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Sep 2020 18:50:41 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB305C061755
+        for <git@vger.kernel.org>; Tue, 22 Sep 2020 15:50:41 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id g72so20906296qke.8
+        for <git@vger.kernel.org>; Tue, 22 Sep 2020 15:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c+M8Jp93lWrJDq5UT7sko6pi28WFvhePCh9ZafQmKs0=;
-        b=MvLU/XSc4PYG2Ha21q3bWGdZLiS3UugcdaUPWQ2UdxxFMsHBzjZa9JcHxTov2zoKUb
-         3QWq13onYGw34XAPwbasFCOjT7jZYKLDOa8vgA0oi+udSdJSqf5OEBH462NbsydT8Ff8
-         2BPAz02Zy2redzrM54/plN7tmmJnExdeE6GyCxA4NXccYe6ER2A6qzqqZwIj2D8F9bM2
-         RXibULWTZE9IJCYInzyytYmCq9AzOQ/yqsDZ9pprsHumvpTtwMM0j3N+pDMbWV0FU4X5
-         BI8UY+wkdvwm42ifuIuzICVwrMDTEV7bNwN/rVSnPYgpAmapiE+aYB5ivRyyfZ6YNa3C
-         ntTg==
+        bh=UDZhLyY8O/bBF56bscc+8yXTxs+B4Uzf1MqZWEQZLp4=;
+        b=ONFmlFx5Y8s69azLKVNnMMrwoCrpXei6BUmNxWqIUQ7wHm4z6Qrfy9xfBW3yZTEXUh
+         9al76BiJiNjWgLftwTNm+OH/u+bczZIFEXRN4qQT2dScAzjzQ1MG+BIIRoK3+bI4wYC+
+         ZZ4QRbatuTNMOXXd0RoWebOo0kGFigS//gtvvxipMr+6C3hTCLP/Dy4OqoVnlhCewZog
+         A9ga1yKAu00wbndr1BvxmBsz9TgXIgigzk7I/VRDehKIkInUcxdnDDqdhlM2tK8vWABU
+         VprueQ9kHic5qMmHJoGEu3NHTFOlwsZgG3lg18+p0KWmELWIMqP1i9hQsob7yL9EFvI+
+         Mpew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c+M8Jp93lWrJDq5UT7sko6pi28WFvhePCh9ZafQmKs0=;
-        b=tofaF6rRsXDI/fxu30ilyza7WgBZJ5pKxTOfgR8KiCipbHYP8wxcdbooinjbl6xUTc
-         l0o0Gto/y3D6gqZfa5SP+H8cEROPY1M9I/zijNGVfnZDZ0ycbpWlYOhqyPQE1ogvfLlE
-         gsWSTRXhmfUxCs9IJUCMRSygPVPvRNwEVf1KMJhWa8P+5furwPGWzd5yCjhrsgpiYxgg
-         PwTSiT9LCnsQ+XlbxN5dVGM/m3Z2992qcbs0mZDkR/H6zNUkwofARkwzEQuOsANlmCCL
-         webLqhU7yzFQSYFVaecmT8XnWCDndViI+JXGsjP7D4QP6lv9uxpwCPXkjaBVB6x/Cbub
-         tmxw==
-X-Gm-Message-State: AOAM530pNQa9XwqLNJxFZ1Ig8XsDjY0dBU9PHxs82CexnDtNN7aGr5nX
-        wu2fgaxWGLmft9GXgI3vF+Udm/Hg86yb2Q==
-X-Google-Smtp-Source: ABdhPJzJOTq20igwcXNF8wCW3EFEN0ax5nEZZeLsVy8WZrwp6NhmLPaj9xdApk53xCMU7Ab9SdujrA==
-X-Received: by 2002:ac8:2934:: with SMTP id y49mr2396968qty.202.1600815030476;
-        Tue, 22 Sep 2020 15:50:30 -0700 (PDT)
+        bh=UDZhLyY8O/bBF56bscc+8yXTxs+B4Uzf1MqZWEQZLp4=;
+        b=Rgw2Wl7pVCrhGxoJR7JJ+x1/oIm7oqWsSze3ieHjilXtAtR6+h7ymJlsOgZ4P3Xb4E
+         +8MsRhj+8RHzUEKZaBpo+ddpsP5OjWsdV18H+PPgUSFWJcsANxBSzeOlBWp7nNwL9QuG
+         EJHmkLlPoDQrdhL0kHAn+QV89PZQbUgwic4Ey+CHPld04PpAXwnxgjn+KY4UghkAdp69
+         +umV8S6gFt7IzM7tsWRnD7INxaoDtyj0ZcTS3Ma4U+nuWNcY+YYLzXGiEOYFAH2XKXNh
+         VUDJN/imFohRlLVIJ+y47nzhJYN89rYsNng8AdLq7Q09wKWHx6L7yPfNqsY0kUFwvpwC
+         einw==
+X-Gm-Message-State: AOAM5307WIViVoHUuAdE9qgm2UpgZF71bI0WBLmwmUM5ShhrSOH8OlcM
+        I6G+FTO60TipaJxOh09o6W7j3eN8QYVILQ==
+X-Google-Smtp-Source: ABdhPJzAkFEfXEotXtPI28Z8hgGiaTFWmwleAR0XM/5CNONywZkCBDi1QXwxqaixQVhWBZkOVSNY7Q==
+X-Received: by 2002:a37:a207:: with SMTP id l7mr7432088qke.64.1600815040492;
+        Tue, 22 Sep 2020 15:50:40 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.96.45])
-        by smtp.gmail.com with ESMTPSA id p187sm12342359qkd.129.2020.09.22.15.50.27
+        by smtp.gmail.com with ESMTPSA id p187sm12342359qkd.129.2020.09.22.15.50.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2020 15:50:29 -0700 (PDT)
+        Tue, 22 Sep 2020 15:50:39 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     jeffhost@microsoft.com, chriscool@tuxfamily.org, peff@peff.net,
         t.gummerer@gmail.com, newren@gmail.com
-Subject: [PATCH v2 01/19] convert: make convert_attrs() and convert structs public
-Date:   Tue, 22 Sep 2020 19:49:15 -0300
-Message-Id: <b9d2a329d3e9c4ff631d1a43e2af46088dc994ab.1600814153.git.matheus.bernardino@usp.br>
+Subject: [PATCH v2 03/19] convert: add get_stream_filter_ca() variant
+Date:   Tue, 22 Sep 2020 19:49:17 -0300
+Message-Id: <29bbdb78e98667393f17e167f3d72d1bfbb302bd.1600814153.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1600814153.git.matheus.bernardino@usp.br>
 References: <cover.1600814153.git.matheus.bernardino@usp.br>
@@ -75,104 +75,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Move convert_attrs() declaration from convert.c to convert.h, together
-with the conv_attrs struct and the crlf_action enum. This function and
-the data structures will be used outside convert.c in the upcoming
-parallel checkout implementation.
+Like the previous patch, we will also need to call get_stream_filter()
+with a precomputed `struct conv_attrs`, when we add support for parallel
+checkout workers. So add the _ca() variant which takes the conversion
+attributes struct as a parameter.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-[matheus.bernardino: squash and reword msg]
+[matheus.bernardino: move header comment to ca() variant and reword msg]
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- convert.c | 23 ++---------------------
- convert.h | 24 ++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 21 deletions(-)
+ convert.c | 28 +++++++++++++++++-----------
+ convert.h |  2 ++
+ 2 files changed, 19 insertions(+), 11 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index 8e6c292421..941a845692 100644
+index 55bcce891c..c112ea23cb 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -24,17 +24,6 @@
- #define CONVERT_STAT_BITS_TXT_CRLF  0x2
- #define CONVERT_STAT_BITS_BIN       0x4
- 
--enum crlf_action {
--	CRLF_UNDEFINED,
--	CRLF_BINARY,
--	CRLF_TEXT,
--	CRLF_TEXT_INPUT,
--	CRLF_TEXT_CRLF,
--	CRLF_AUTO,
--	CRLF_AUTO_INPUT,
--	CRLF_AUTO_CRLF
--};
--
- struct text_stat {
- 	/* NUL, CR, LF and CRLF counts */
- 	unsigned nul, lonecr, lonelf, crlf;
-@@ -1297,18 +1286,10 @@ static int git_path_check_ident(struct attr_check_item *check)
- 	return !!ATTR_TRUE(value);
+@@ -1960,34 +1960,31 @@ static struct stream_filter *ident_filter(const struct object_id *oid)
  }
  
--struct conv_attrs {
--	struct convert_driver *drv;
--	enum crlf_action attr_action; /* What attr says */
--	enum crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
--	int ident;
--	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
--};
--
- static struct attr_check *check;
- 
--static void convert_attrs(const struct index_state *istate,
--			  struct conv_attrs *ca, const char *path)
-+void convert_attrs(const struct index_state *istate,
-+		   struct conv_attrs *ca, const char *path)
+ /*
+- * Return an appropriately constructed filter for the path, or NULL if
++ * Return an appropriately constructed filter for the given ca, or NULL if
+  * the contents cannot be filtered without reading the whole thing
+  * in-core.
+  *
+  * Note that you would be crazy to set CRLF, smudge/clean or ident to a
+  * large binary blob you would want us not to slurp into the memory!
+  */
+-struct stream_filter *get_stream_filter(const struct index_state *istate,
+-					const char *path,
+-					const struct object_id *oid)
++struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
++					   const struct object_id *oid)
  {
- 	struct attr_check_item *ccheck = NULL;
+-	struct conv_attrs ca;
+ 	struct stream_filter *filter = NULL;
  
+-	convert_attrs(istate, &ca, path);
+-	if (ca.drv && (ca.drv->process || ca.drv->smudge || ca.drv->clean))
++	if (ca->drv && (ca->drv->process || ca->drv->smudge || ca->drv->clean))
+ 		return NULL;
+ 
+-	if (ca.working_tree_encoding)
++	if (ca->working_tree_encoding)
+ 		return NULL;
+ 
+-	if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
++	if (ca->crlf_action == CRLF_AUTO || ca->crlf_action == CRLF_AUTO_CRLF)
+ 		return NULL;
+ 
+-	if (ca.ident)
++	if (ca->ident)
+ 		filter = ident_filter(oid);
+ 
+-	if (output_eol(ca.crlf_action) == EOL_CRLF)
++	if (output_eol(ca->crlf_action) == EOL_CRLF)
+ 		filter = cascade_filter(filter, lf_to_crlf_filter());
+ 	else
+ 		filter = cascade_filter(filter, &null_filter_singleton);
+@@ -1995,6 +1992,15 @@ struct stream_filter *get_stream_filter(const struct index_state *istate,
+ 	return filter;
+ }
+ 
++struct stream_filter *get_stream_filter(const struct index_state *istate,
++					const char *path,
++					const struct object_id *oid)
++{
++	struct conv_attrs ca;
++	convert_attrs(istate, &ca, path);
++	return get_stream_filter_ca(&ca, oid);
++}
++
+ void free_stream_filter(struct stream_filter *filter)
+ {
+ 	filter->vtbl->free(filter);
 diff --git a/convert.h b/convert.h
-index e29d1026a6..aeb4a1be9a 100644
+index 46d537d1ae..262c1a1d46 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -37,6 +37,27 @@ enum eol {
- #endif
- };
+@@ -169,6 +169,8 @@ struct stream_filter; /* opaque */
+ struct stream_filter *get_stream_filter(const struct index_state *istate,
+ 					const char *path,
+ 					const struct object_id *);
++struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
++					   const struct object_id *oid);
+ void free_stream_filter(struct stream_filter *);
+ int is_null_stream_filter(struct stream_filter *);
  
-+enum crlf_action {
-+	CRLF_UNDEFINED,
-+	CRLF_BINARY,
-+	CRLF_TEXT,
-+	CRLF_TEXT_INPUT,
-+	CRLF_TEXT_CRLF,
-+	CRLF_AUTO,
-+	CRLF_AUTO_INPUT,
-+	CRLF_AUTO_CRLF
-+};
-+
-+struct convert_driver;
-+
-+struct conv_attrs {
-+	struct convert_driver *drv;
-+	enum crlf_action attr_action; /* What attr says */
-+	enum crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
-+	int ident;
-+	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
-+};
-+
- enum ce_delay_state {
- 	CE_NO_DELAY = 0,
- 	CE_CAN_DELAY = 1,
-@@ -102,6 +123,9 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- int would_convert_to_git_filter_fd(const struct index_state *istate,
- 				   const char *path);
- 
-+void convert_attrs(const struct index_state *istate,
-+		   struct conv_attrs *ca, const char *path);
-+
- /*
-  * Initialize the checkout metadata with the given values.  Any argument may be
-  * NULL if it is not applicable.  The treeish should be a commit if that is
 -- 
 2.28.0
 
