@@ -2,132 +2,140 @@ Return-Path: <SRS0=uwne=C7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D82F7C2D0E2
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 08:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39F2FC2D0E2
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 09:17:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D80D23A1E
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 08:33:22 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HT81UnEC"
+	by mail.kernel.org (Postfix) with ESMTP id E0E012075E
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 09:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbgIVIdV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Sep 2020 04:33:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbgIVIdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Sep 2020 04:33:21 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3ECC061755;
-        Tue, 22 Sep 2020 01:24:54 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id z23so21520619ejr.13;
-        Tue, 22 Sep 2020 01:24:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=euHLybc7rW/4XsdAvIoyvU/CkIl8dD4tTWO/e4S01eI=;
-        b=HT81UnEC6Hoq1ZvZ7PQvretGUxhZmk/+dosnsd2UG7h+5bIsZ0bWoFT9TYN9jQenBe
-         9tD3X6YSHND2DbXWP5m0qDCbWKtl8G/aWcY6JBelwFr2VLTotEdrUMeFI9cF4MpH5Isu
-         IBFinDf1lc09B3jfbaJ1ziTJvGsve4uYjjw3OquLc/hhJGMrdHAseQH9ZffqHq5R4IFR
-         XYpViCRFfXYGAu7/hJ8f1Lf+XHFOE7c/jXfZP2aWsh9O6vSx4nc15UovmEIl6cIscYi6
-         PVOc0Ojo84C8ldNYOHJ2fWt5KTcxh5YpOsBxDBaoip2vG25Yw5BF1zFYnn2TMljlE52X
-         C77Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=euHLybc7rW/4XsdAvIoyvU/CkIl8dD4tTWO/e4S01eI=;
-        b=UulpX21Zs8kHG6NJT1NzgHEuUlhjYmNJhrV1lUScFR7J+7K5rJyywJ5feKPRt3ofAy
-         e8nxnn8yPispu04UavCGylkAAANOMjG62oU2NAhr/g/fuH5R/PvyCpJ2LUOPEcAi3aa5
-         gtfvchrWw7YtFxy0En0Fstb//l1b0D2xyFfhVpBS/dgfCHkEGH4aRgHkCrVpJN/0K1R8
-         m4WUbqEkcASj8jwNhgI/T8QZ/+qae5M8EcRtxlWPVA/0ycRxqwljoHjvsOl7yyvKu3kv
-         fxnQ8/ZW/7T4PKDBSAZi+20G3iy1go7PzxtKQEjqV/HWlAczmeeXFf1P0afS57zxIEVr
-         Om4w==
-X-Gm-Message-State: AOAM531HvAeDQN74g84UIaJEJllQRqLkqF2bvBi/LEBK8v+6Q7fLX2kd
-        uxbsaKeKPbDdD93iOc3AJg6i75Mkcqj2Ew==
-X-Google-Smtp-Source: ABdhPJxt0TEg4+8/K6Xstz1eCqn+Y2D3uk1VmkTkThmeIOekJhpwABIMvzmE325n7cv4qu01kL6N3w==
-X-Received: by 2002:a17:906:4d97:: with SMTP id s23mr3757441eju.157.1600763092675;
-        Tue, 22 Sep 2020 01:24:52 -0700 (PDT)
-Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
-        by smtp.gmail.com with ESMTPSA id j15sm10728520ejs.5.2020.09.22.01.24.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2020 01:24:51 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, tytso@mit.edu,
-        Junio C Hamano <gitster@pobox.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Subject: Re: [RFC PATCH 1/2] sha1-file: fsync() loose dir entry when core.fsyncObjectFiles
-References: <87sgbghdbp.fsf@evledraar.gmail.com> <20200917112830.26606-2-avarab@gmail.com> <64358b70-4fff-5dc8-6e63-2fc916bea6af@kdbg.org>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <64358b70-4fff-5dc8-6e63-2fc916bea6af@kdbg.org>
-Date:   Tue, 22 Sep 2020 10:24:51 +0200
-Message-ID: <87a6xii5gs.fsf@evledraar.gmail.com>
+        id S1726578AbgIVJRx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Sep 2020 05:17:53 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36176 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726424AbgIVJRw (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 22 Sep 2020 05:17:52 -0400
+Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0385260734;
+        Tue, 22 Sep 2020 09:17:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1600766241;
+        bh=p3KiinETyWjaeyZI2F/HVw/mNfvHNHHwahuwB1XSmYY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=dJfoVTDWLH2AdU8Ejld2ZzDul0PhZocMp1hULSZQiKwnIfAlupsCc1qxV+NgoKgub
+         YO7RvIeoX9PpmFxyweX4CG4upB5tDNmDll/SeZPgqaHxks02pbOnhirfxYwIVqgP5k
+         jF/We8z7hHFRw/5BVGkk26lXn4VgE+F8t0QJuonqe47A6Wqpw38rwL8WkYZSm3RDGo
+         C2+pgNsiXbclPG0yuKVnxc7wkq+6XRP0uw92Iutrjd2dKOwAes81IHXsRjnouPNc8X
+         7aOGijC9mBzUqlcm/LZ0a95hnl+a0e4lyPsZ+zGltHDYLs8MhGfshfSDaX9TDUXjzc
+         W5rjhf0tNZKNG8ZmXpRhb8E2ZICeUmzpz4C0gv78YronfBtapDEXTgpjGaT/tkuYi6
+         SviPUyFGUcmZQn5D7fQ/974IulIoM2YedAWJzncSNopJnrH/TecT2M70PjOZq8yfe0
+         5TiD1W/RRJ+C/Vnds2sudK98TDg8hPqR44HHb9hkL/y70xxtJBX
+Date:   Tue, 22 Sep 2020 09:17:17 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>
+Subject: Re: [PATCH v3] builtin/clone: avoid failure with GIT_DEFAULT_HASH
+Message-ID: <20200922091717.GP67496@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>
+References: <20200911233815.2808426-1-sandals@crustytoothpaste.net>
+ <20200920223541.1299038-1-sandals@crustytoothpaste.net>
+ <xmqq4knrhhzx.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="A6Z7MKnLVMfR85kG"
+Content-Disposition: inline
+In-Reply-To: <xmqq4knrhhzx.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Sep 17 2020, Johannes Sixt wrote:
+--A6Z7MKnLVMfR85kG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Am 17.09.20 um 13:28 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> Change the behavior of core.fsyncObjectFiles to also sync the
->> directory entry. I don't have a case where this broke, just going by
->> paranoia and the fsync(2) manual page's guarantees about its behavior.
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  sha1-file.c | 19 ++++++++++++++-----
->>  1 file changed, 14 insertions(+), 5 deletions(-)
->>=20
->> diff --git a/sha1-file.c b/sha1-file.c
->> index dd65bd5c68..d286346921 100644
->> --- a/sha1-file.c
->> +++ b/sha1-file.c
->> @@ -1784,10 +1784,14 @@ int hash_object_file(const struct git_hash_algo =
-*algo, const void *buf,
->>  }
->>=20=20
->>  /* Finalize a file on disk, and close it. */
->> -static void close_loose_object(int fd)
->> +static void close_loose_object(int fd, const struct strbuf *dirname)
->>  {
->> -	if (fsync_object_files)
->> +	int dirfd;
->> +	if (fsync_object_files) {
->>  		fsync_or_die(fd, "loose object file");
->> +		dirfd =3D xopen(dirname->buf, O_RDONLY);
->> +		fsync_or_die(dirfd, "loose object directory");
->
-> Did you have the opportunity to verify that this works on Windows?
-> Opening a directory with open(2), I mean: It's disallowed according to
-> the docs:
-> https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/open-wop=
-en?view=3Dvs-2019#return-value
+On 2020-09-21 at 04:27:14, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > +test_expect_success 'clone with GIT_DEFAULT_HASH' '
+> > +	(
+> > +		sane_unset GIT_DEFAULT_HASH &&
+> > +		git init --object-format=3Dsha1 test-sha1 &&
+> > +		git init --object-format=3Dsha256 test-sha256
+> > +	) &&
+> > +	test_commit -C test-sha1 foo &&
+> > +	test_commit -C test-sha256 foo &&
+>=20
+> Unfortunately, the 'foo' commit is created in test-sha1, but the
+> next step to create 'foo' in test-sha256 fails with
+>=20
+>         fatal: unknown repository extensions found:
+>                 objectformat
 
-I did not, just did a quick hack for an RFC discussion (didn't even
-close() that fd), but if I pursue this I'll do it properly.
+I'm not seeing that with this series based on master
+(385c171a018f2747b329bcfa6be8eda1709e5abd).  I'm doing this:
 
-Doing some research on it now reveals that we should probably have some
-Windows-specific code here, e.g. browsing GNUlib's source code reveals
-that it uses FlushFileBuffers(), and that code itself is taken from
-sqlite. SQLite also has special-case code for some Unix warts,
-e.g. OSX's and AIX's special fsync behaviors in its src/os_unix.c
+  make -j6 all && (cd t && GIT_TEST_DEFAULT_HASH=3Dsha256 ./t5601-*.sh --ve=
+rbose)
+  make -j6 all && (cd t && GIT_TEST_DEFAULT_HASH=3Dsha1 ./t5601-*.sh --verb=
+ose)
 
->> +	}
->>  	if (close(fd) !=3D 0)
->>  		die_errno(_("error when closing loose object file"));
->>  }
->
-> -- Hannes
+And getting this output:
 
+  Initialized empty Git repository in /home/bmc/checkouts/git/t/trash direc=
+tory.t5601-clone/test-sha1/.git/
+  Initialized empty Git repository in /home/bmc/checkouts/git/t/trash direc=
+tory.t5601-clone/test-sha256/.git/
+  [master (root-commit) 946e985] foo
+   Author: A U Thor <author@example.com>
+   1 file changed, 1 insertion(+)
+   create mode 100644 foo.t
+  [master (root-commit) ff872d8] foo
+   Author: A U Thor <author@example.com>
+   1 file changed, 1 insertion(+)
+   create mode 100644 foo.t
+  Cloning into 'test-clone-sha256'...
+  done.
+  Cloning into 'test-clone-sha1'...
+  done.
+  On branch master
+  Your branch is up to date with 'origin/master'.
+ =20
+  nothing to commit, working tree clean
+  On branch master
+  Your branch is up to date with 'origin/master'.
+ =20
+  nothing to commit, working tree clean
+
+Is there something I'm missing here?
+--=20
+brian m. carlson: Houston, Texas, US
+
+--A6Z7MKnLVMfR85kG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX2nBHAAKCRB8DEliiIei
+gfT7AP9/G8EwXKir9ST4iPHksL0ZlRD84VITOjjGaKE+ndi9EQEAtp5LnCvVLaoA
+YI5IRkRCqiiGiiI/NnCS9tvEIpEbOAk=
+=K4j1
+-----END PGP SIGNATURE-----
+
+--A6Z7MKnLVMfR85kG--
