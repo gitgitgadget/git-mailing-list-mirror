@@ -2,107 +2,249 @@ Return-Path: <SRS0=uwne=C7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5866C2D0E2
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 10:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B9CC2D0E2
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 11:04:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F2C42073A
-	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 10:42:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gc77FN/+"
+	by mail.kernel.org (Postfix) with ESMTP id CD7CC20739
+	for <git@archiver.kernel.org>; Tue, 22 Sep 2020 11:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726509AbgIVKml (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Sep 2020 06:42:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726419AbgIVKmk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Sep 2020 06:42:40 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB4CC061755;
-        Tue, 22 Sep 2020 03:42:40 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id j11so22206519ejk.0;
-        Tue, 22 Sep 2020 03:42:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+Y3ed1m6nxjnbHLRR7kUi5TDx9qWoo/PyUUq5YncPkQ=;
-        b=gc77FN/+PjhKvNJYSNmj/RHYPujDbUWk/cUVuQqtKFdmWarskSmquza3mijS6jIA5+
-         ak1YP1WizrX6/ZGF6c6QSsm/RmR2BvlU1XRoT1NRovbmIuma0Tkb/T+lh46Uy1c/7QTW
-         ZD+eCbdoNHR1QR2t55XNlYObp7toeOzhBkGBveTiOI33w2668qS+ifZzjVc/K7CawcwE
-         QlFA9lTB8sHCJ3qU6T/iOq+eVg1ZtTWbcL0P75aiflleJFDPeMcEBijaNxu1/QIrbnwy
-         RaJnRV8P/Vn3IDSfc9aL4S7puoXWHMQsWXgppat0HqMcQOUNGEnQM8yjdc0Po2q6xA/g
-         dPzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=+Y3ed1m6nxjnbHLRR7kUi5TDx9qWoo/PyUUq5YncPkQ=;
-        b=EUjZiqfRD+GDJcis5DPFeQqs5xyG45foQRRrOvvY2TYzf0HuFzTGhFFwTQswhf04g6
-         OMJEmOyH6wi41/sCUS6asY54sjvXSGFu+pG9VkBzO5azulNWWw/o6ir64mn6GcyyLaJQ
-         s2O8pYpn5VuTUdIBgJqRP8l04WADukOIrgNQdHOn51FH6AAUiS1KudsoRAhmLMJ6l72d
-         ICOdFk5dT1+3P8r0sFjW75jwgstF+iHuWD6ckDiIab9lgZO7Ik+O8V6ckzMINn3NM+L+
-         n3TiHcE045iPdNt/97vyGav2aMy3EvkQl6k/97Qc7hWVYGDWazN1cR0ojNa+78IGrbCE
-         TDTw==
-X-Gm-Message-State: AOAM532PbTOxK6Kb7VfMAJeU1QyahYWGmgwrbOHiUI0PHzx03A+lHDca
-        IrqNgPqp+VV/soBExPkiY54=
-X-Google-Smtp-Source: ABdhPJwV5H6ovaIEDPQAeeiyuR9yCRVTy0SBUft2EFQ4Txu48oZqqdFYWA0UGlHHm9oeauKW66dApA==
-X-Received: by 2002:a17:906:5046:: with SMTP id e6mr4333881ejk.449.1600771358998;
-        Tue, 22 Sep 2020 03:42:38 -0700 (PDT)
-Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
-        by smtp.gmail.com with ESMTPSA id r13sm10680949edo.48.2020.09.22.03.42.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2020 03:42:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     git@vger.kernel.org, tytso@mit.edu,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Subject: Re: [RFC PATCH 1/2] sha1-file: fsync() loose dir entry when core.fsyncObjectFiles
-References: <87sgbghdbp.fsf@evledraar.gmail.com> <20200917112830.26606-2-avarab@gmail.com> <20200917140912.GA27653@lst.de>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <20200917140912.GA27653@lst.de>
-Date:   Tue, 22 Sep 2020 12:42:37 +0200
-Message-ID: <877dsmhz36.fsf@evledraar.gmail.com>
+        id S1726531AbgIVLEf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Sep 2020 07:04:35 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:39095 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726340AbgIVLEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Sep 2020 07:04:35 -0400
+X-Greylist: delayed 4303 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Sep 2020 07:04:34 EDT
+X-Originating-IP: 157.36.92.42
+Received: from localhost (unknown [157.36.92.42])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 682DC40008;
+        Tue, 22 Sep 2020 11:04:26 +0000 (UTC)
+Date:   Tue, 22 Sep 2020 16:34:19 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Serg Tereshchenko <serg.partizan@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-gui: Basic dark mode support
+Message-ID: <20200922110419.ymqj4ol76kg6qshf@yadavpratyush.com>
+References: <20200824154835.160749-1-serg.partizan@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200824154835.160749-1-serg.partizan@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Serg,
 
-On Thu, Sep 17 2020, Christoph Hellwig wrote:
+Thanks for the patch and sorry for taking so long in getting to it.
 
-> On Thu, Sep 17, 2020 at 01:28:29PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> Change the behavior of core.fsyncObjectFiles to also sync the
->> directory entry. I don't have a case where this broke, just going by
->> paranoia and the fsync(2) manual page's guarantees about its behavior.
->
-> It is not just paranoia, but indeed what is required from the standards
-> POV.  At least for many Linux file systems your second fsync will be
-> very cheap (basically a NULL syscall) as the log has alredy been forced
-> all the way by the first one, but you can't rely on that.
->
-> Acked-by: Christoph Hellwig <hch@lst.de>
+On 24/08/20 06:48PM, Serg Tereshchenko wrote:
+> Hi all.
+> 
+> I want to use dark themes with git citool, and here is my first attempt
+> to do so.
 
-Thanks a lot for your advice in this thread.
+Like I said in the previous email this part doesn't really belong in the 
+commit message. In fact, while this entire text is a good description of 
+the patch and your efforts, it is not a good commit message.
+ 
+> I am new to tcl, so i happily accept any tips on how to improve code.
+> 
+> First things first: to properly support colors, would be nice to have
+> them separated from app code, so i created new file lib/colored.tcl. Name
+> is selected to be consistent with "lib/themed.tcl".
 
-Can you (or someone else) suggest a Linux fs setup that's as unforgiving
-as possible vis-a-vis fsync() for testing? I'd like to hack on making
-git better at this, but one of the problems of testing it is that modern
-filesystems generally do a pretty good job of not losing your data.
+Wouldn't having the contents of colored.tcl in themed.tcl be a good 
+idea? The way I see it, colors are part of the theming of the 
+application.
+ 
+> Then, i extract hardcoded colors from git-gui.sh into namespace Color.
+> Then, if option use_ttk is true, i update default colors for
+> background/foreground from current theme.
+> 
+> How it was looking before:
+>  - Dark theme (awdark): https://i.imgur.com/0lrfHyq.png
+>  - Light theme (clam): https://i.imgur.com/1fsfayJ.png
+> 
+> Now looks like this:
+>  - Dark theme (awdark): https://i.imgur.com/BISllEH.png
+>  - Light theme (clam): https://i.imgur.com/WclSTa4.png
 
-So something like ext4's commit=3DN is an obvious start, but for git's own
-test suite it would be ideal to have process A write file X, and then
-have process B try to read it and just not see it if X hadn't been
-fsynced (or not see its directory if that hadn't been synced).
+This is quite an improvement :-)
+ 
+> One problem that i can't yet fix: gray background for files in
+> changelists. Any advice on this?
 
-It would turn our test suite into pretty much a 100% failure, but one
-that could then be fixed by fixing the relevant file writing code.
+You can set that in the function `rmsel_tag` in git-gui.sh on the line
+
+  $text tag conf in_sel -background lightgray
+ 
+> I would be happy to move color definitions from git-gui.sh to
+> themed.tcl, so we can set it once, and not for each ttext call. Do you
+> think this is a good idea now or in the future?
+
+Do you mean to put the `-foreground` and `-background` options in the 
+function ttext in themed.tcl? If so how can a widget specify if it wants 
+a dark text or light for example?
+ 
+> I see some work is already done in that direction, like lib/themed.tcl:gold_frame.
+> 
+> 
+> Kind Regards.
+> 
+> Signed-off-by: Serg Tereshchenko <serg.partizan@gmail.com>
+> ---
+>  git-gui.sh      | 33 +++++++++++++++++++--------------
+>  lib/colored.tcl | 23 +++++++++++++++++++++++
+>  2 files changed, 42 insertions(+), 14 deletions(-)
+>  create mode 100644 lib/colored.tcl
+> 
+> diff --git a/git-gui.sh b/git-gui.sh
+> index ca66a8e..cffd106 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -861,6 +861,7 @@ proc apply_config {} {
+>  			set NS ttk
+>  			bind [winfo class .] <<ThemeChanged>> [list InitTheme]
+>  			pave_toplevel .
+> +			Color::syncColorsWithTheme
+>  		}
+>  	}
+>  }
+> @@ -3273,9 +3274,13 @@ pack .vpane -anchor n -side top -fill both -expand 1
+>  # -- Working Directory File List
+>  
+>  textframe .vpane.files.workdir -height 100 -width 200
+> -tlabel .vpane.files.workdir.title -text [mc "Unstaged Changes"] \
+> -	-background lightsalmon -foreground black
+> -ttext $ui_workdir -background white -foreground black \
+> +tlabel .vpane.files.workdir.title \
+> +	-text [mc "Unstaged Changes"] \
+> +	-background $Color::lightRed \
+> +	-foreground $Color::textOnLight
+> +ttext $ui_workdir \
+> +	-background $Color::textBg \
+> +	-foreground $Color::textColor \
+>  	-borderwidth 0 \
+>  	-width 20 -height 10 \
+>  	-wrap none \
+> @@ -3296,8 +3301,8 @@ pack $ui_workdir -side left -fill both -expand 1
+>  textframe .vpane.files.index -height 100 -width 200
+>  tlabel .vpane.files.index.title \
+>  	-text [mc "Staged Changes (Will Commit)"] \
+> -	-background lightgreen -foreground black
+> -ttext $ui_index -background white -foreground black \
+> +	-background $Color::lightGreen -foreground $Color::textOnLight
+> +ttext $ui_index -background $Color::textBg -foreground $Color::textColor \
+>  	-borderwidth 0 \
+>  	-width 20 -height 10 \
+>  	-wrap none \
+> @@ -3432,7 +3437,7 @@ if {![is_enabled nocommit]} {
+>  }
+>  
+>  textframe .vpane.lower.commarea.buffer.frame
+> -ttext $ui_comm -background white -foreground black \
+> +ttext $ui_comm -background $Color::textBg -foreground $Color::textColor \
+>  	-borderwidth 1 \
+>  	-undo true \
+>  	-maxundo 20 \
+> @@ -3519,19 +3524,19 @@ trace add variable current_diff_path write trace_current_diff_path
+>  
+>  gold_frame .vpane.lower.diff.header
+>  tlabel .vpane.lower.diff.header.status \
+> -	-background gold \
+> -	-foreground black \
+> +	-background $Color::lightGold \
+> +	-foreground $Color::textOnLight \
+>  	-width $max_status_desc \
+>  	-anchor w \
+>  	-justify left
+>  tlabel .vpane.lower.diff.header.file \
+> -	-background gold \
+> -	-foreground black \
+> +	-background $Color::lightGold \
+> +	-foreground $Color::textOnLight \
+>  	-anchor w \
+>  	-justify left
+>  tlabel .vpane.lower.diff.header.path \
+> -	-background gold \
+> -	-foreground blue \
+> +	-background $Color::lightGold \
+> +	-foreground $Color::lightBlue \
+>  	-anchor w \
+>  	-justify left \
+>  	-font [eval font create [font configure font_ui] -underline 1] \
+> @@ -3561,7 +3566,7 @@ bind .vpane.lower.diff.header.path <Button-1> {do_file_open $current_diff_path}
+>  #
+>  textframe .vpane.lower.diff.body
+>  set ui_diff .vpane.lower.diff.body.t
+> -ttext $ui_diff -background white -foreground black \
+> +ttext $ui_diff -background $Color::textBg -foreground $Color::textColor \
+>  	-borderwidth 0 \
+>  	-width 80 -height 5 -wrap none \
+>  	-font font_diff \
+> @@ -3589,7 +3594,7 @@ foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 gr
+>  $ui_diff tag configure clr1 -font font_diffbold
+>  $ui_diff tag configure clr4 -underline 1
+>  
+> -$ui_diff tag conf d_info -foreground blue -font font_diffbold
+> +$ui_diff tag conf d_info -foreground $Color::lightBlue -font font_diffbold
+>  
+>  $ui_diff tag conf d_cr -elide true
+>  $ui_diff tag conf d_@ -font font_diffbold
+> diff --git a/lib/colored.tcl b/lib/colored.tcl
+> new file mode 100644
+> index 0000000..fdb3f9c
+> --- /dev/null
+> +++ b/lib/colored.tcl
+> @@ -0,0 +1,23 @@
+> +# Color configuration support for git-gui.
+> +
+> +namespace eval Color {
+
+FWIW I don't mind if you just put all this in the global namespace, but 
+I'll leave it up to you.
+
+> +	# static colors
+> +	variable lightRed		lightsalmon
+> +	variable lightGreen		green
+> +	variable lightGold		gold
+> +	variable lightBlue		blue
+> +	variable textOnLight	black
+> +	variable textOnDark		white
+
+Why have `textOnLight`, `textOnDark` and `textColor` separately? My 
+guess is that it is for when you want to force light colors regardless 
+of the theme? Am I right?
+
+> +	# theme colors
+> +	variable interfaceBg	lightgray
+> +	variable textBg			white
+> +	variable textColor		black
+
+Nitpick: please use snake_case for variable names like the rest of the 
+code does. Same for the function name below and the namespace name 
+above.
+
+> +
+> +	proc syncColorsWithTheme {} {
+> +		set Color::interfaceBg	[ttk::style lookup Entry -background]
+> +		set Color::textBg		[ttk::style lookup Treeview -background]
+> +		set Color::textColor	[ttk::style lookup Treeview -foreground]
+> +
+> +		tk_setPalette $Color::interfaceBg
+> +	}
+> +}
+
+Most of the patch looks good to me apart from my small suggestions. 
+Thanks for working on this.
+
+-- 
+Regards,
+Pratyush Yadav
