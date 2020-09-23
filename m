@@ -2,190 +2,138 @@ Return-Path: <SRS0=8LOk=DA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D3FFC4727D
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D34B9C4363D
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:28:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1DB92076B
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:27:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9120C2076B
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:28:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F0InTls1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dNlxvlwZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgIWH1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 03:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53148 "EHLO
+        id S1726727AbgIWH2C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Sep 2020 03:28:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726557AbgIWH1K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 03:27:10 -0400
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C8FBC061755
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:27:10 -0700 (PDT)
-Received: by mail-il1-x141.google.com with SMTP id a19so19857211ilq.10
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:27:10 -0700 (PDT)
+        with ESMTP id S1726557AbgIWH2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 03:28:02 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9484C061755
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:28:01 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id q9so5996188wmj.2
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MSTvBX6OwuaM25X6z4/gDv1n3CbAWTVpJ+K1z8YwXZU=;
-        b=F0InTls1BnpTz6e4ccEd4ORJz5Z9RKNyiW6sTyXi1EQKwJasgkMZiOl65/CmAL8M65
-         2OXeXQlmj3Ir1am6PcteC4OcgHKli5fVRPkrzjybZvO6jFANbnAHzac9v0UxZowdTRg2
-         nu9x7/h77QcIkuBMjfT2oPDqRnOxnGRqQSAaY7TRZam3kKIPEj6t9xs49DbtyHA7OmMa
-         k9PrG5obDoR1fXtvXcaRTXdE/5wEEuymsKSE62udCZBPKJGWd+tYEJLFw97ydT3Quhjv
-         lhznEJPj+H+ZvrmS5/d7fEGs8r+Ly1/d2a/npOV9TS0pJ2eVH3a1c2DbILMcBzQL32tE
-         E3KQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yaGmCtB15IvX/qwGwzTH6cHvbxCgNXtDhQGTd05SyV0=;
+        b=dNlxvlwZLdPXL8qIB+edgP+JafV325nY/JU6NOMFhmKy7wzb2eDLGfCt+BPbJClN+g
+         yi21slXs8wnZBvM6XcofInTTsxlSj2wzxTwKwINkCixO7PN1sKuaW0HCB4PLOqPyI6cD
+         LhqHA2B0NQ/XSRGJSILfSPn35446k7cPFZus7ZjZwHL1Tjq6m3yAnM54BK/GV4qKtYgg
+         zxDIIysRclLsRVt/6QeaWYcXpF6W5O9Kkj5APg4lfPB+9/3/AWNOODo5c4d5mmDXjITL
+         Q/DS9nBzt28r9zKFe27+xL9t91i1CoCTu5Ruh6lVmSwrJ0hw4qzE6q9pjlyL6Js2ovf4
+         lNFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MSTvBX6OwuaM25X6z4/gDv1n3CbAWTVpJ+K1z8YwXZU=;
-        b=Wo+5gsbBAmZF0PXQw11IkI6QHIqkHRVxy4DjMTM+8G+EOEKRoxKtjqg3dlcn7loqxY
-         /UaQMzwCNyDkkXMeqLmUHdVsmghez4hd1hBNpEdt9h2sQDRHx5at1/ZPam8Se3VmoOEG
-         vAIc5pw1bjXH0HlKmuZIqNYY091mSmc5cwgQaCvnISrMjAXq1MGamNg+tGlyyk7WhQvi
-         acjfg39O0xgFuG7amb/CpsRwORsPKZ5yoZg/zGC2+IQUpLmWm9Tg/V9unHPxhBVmIFbH
-         LV9aMEgu033t6HMEQi0x/1mBbN4wUlvL6CeSILHovasF4iWx7CiqZ5j5gsHCpkKgbZUL
-         bU+Q==
-X-Gm-Message-State: AOAM5333oaI7WDXuYS8kqWQQexktrSDn8KWWnD9Q8MCq2EkUmMT5NqA+
-        aJZzQaiTw3OitMnRkG3H7y59AkHr4hk85kB1zSPDcAlj
-X-Google-Smtp-Source: ABdhPJzP0OAaWqmIbAvwMJbfj32JNMjnOngLGfoEaFjX9Qi0ZTzX+QblMkhn1Xrm3v9P++yZIH6mJbw4Y1/Jjbq5PaQ=
-X-Received: by 2002:a92:9944:: with SMTP id p65mr4284487ili.127.1600846029382;
- Wed, 23 Sep 2020 00:27:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yaGmCtB15IvX/qwGwzTH6cHvbxCgNXtDhQGTd05SyV0=;
+        b=goHnsc7O5DEA75R26hHuVygsKBy9g+mIkh4vTpqwcCQtQowBv/k2ftG4MFUQ8t98vt
+         NPUC+X/oFHkv9dgcQpjlbagQsyzcv466idS9hpncZg3LO2YReALOq7cXkHlX60vUBITK
+         LBZwhHQyrMLIQWg68w8KxR++t3/N1rFSKmN1HlZVwwKUOr/zR9WjnMKAdY135O92VxaC
+         ZAKhYaL+EaGjQ4aFodiXTzxrzjIHmPAW2g2NtiJt9u6MELLw8ddDqh7UOA1CgErRK+5I
+         k85axDIABo5kax3ATLRko1uONVvn3RZaW7LoVznE79lJQX7haldFnRDw/zIhL4aworVR
+         N3fg==
+X-Gm-Message-State: AOAM532u5Y5b1Ep5x0Cab5e6j7b2/UOuYj14orrxvgbFmLKSUWsYtnNL
+        qNeUtrajC84zLM+oAGF0P0whdoR23BY=
+X-Google-Smtp-Source: ABdhPJzdTKTQBoZQVdyvAYVfzFbNpXYen70f67yKdvzm2ogJ2vncEvP6TU5D5Ee/B48fLu7T3VEWBQ==
+X-Received: by 2002:a1c:f619:: with SMTP id w25mr4856916wmc.62.1600846080406;
+        Wed, 23 Sep 2020 00:28:00 -0700 (PDT)
+Received: from localhost.localdomain ([178.237.235.60])
+        by smtp.gmail.com with ESMTPSA id j14sm30046838wrr.66.2020.09.23.00.27.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Sep 2020 00:27:59 -0700 (PDT)
+From:   Miriam Rubio <mirucam@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Miriam Rubio <mirucam@gmail.com>
+Subject: [PATCH v8 0/6] Finish converting git bisect to C part 2 subset 1
+Date:   Wed, 23 Sep 2020 09:27:34 +0200
+Message-Id: <20200923072740.20772-1-mirucam@gmail.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-References: <20200831105043.97665-1-mirucam@gmail.com> <nycvar.QRO.7.76.6.2009031403510.56@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2009031403510.56@tvgsbejvaqbjf.bet>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Wed, 23 Sep 2020 09:26:58 +0200
-Message-ID: <CAN7CjDDVp_i7dhpbAq5zrGW69nE6+SfivJQ-dembmu+WyqKiQQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/13] Finish converting git bisect to C part 2
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+These patches correspond to a second part of patch series 
+of Outreachy project "Finish converting `git bisect` from shell to C" 
+started by Pranit Bauva and Tanushree Tumane
+(https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
+continued by me.
 
-El jue., 3 sept. 2020 a las 22:29, Johannes Schindelin
-(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
->
-> Hi Miriam,
->
->
-> On Mon, 31 Aug 2020, Miriam Rubio wrote:
->
-> > These patches correspond to a second part of patch series
-> > of Outreachy project "Finish converting `git bisect` from shell to C"
-> > started by Pranit Bauva and Tanushree Tumane
-> > (https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
-> > continued by me.
-> >
-> > These patch series emails were generated from:
-> > https://gitlab.com/mirucam/git/commits/git-bisect-work-part2-v7.
->
-> Excellent progress, and thank you for your patience and diligence working
-> on this patch series. I think we are _really_ close to being ready for
-> `next`.
->
-Thank you for your comments and encouragement.
-Applying some of your suggestions related to removing some 'eval' in
-git-bisect shell script, a bug has appeared. It seems it is related to
-a previous code merged before my internship.
-Christian Couder will take over this fix, but in the meantime I will
-send a subset of this part2, with the first six patches of this patch
-series (and that are not affected by the problem) in order to move
-them forward and be accepted, hopefully .
-Best,
-Miriam
+This patch series version is composed by the first six patches of the
+previous version due to a bug discovered during the test stage, that 
+affects the rest of the patches and that needs to be fixed before 
+sending them.
+
+These patch series emails were generated from:
+https://gitlab.com/mirucam/git/commits/git-bisect-work-part2-v8-subset1.
+
+I would like to thank Johannes Schindelin for reviewing this patch series
+and to Christian Couder for his advice and help.
+
+General changes
+---------------
+
+* Rebased on 385c171a01, (Fifteenth batch, 2020-09-18) to update command
+help messages.
 
 
+Specific changes
+----------------
 
 
-> Thanks!
-> Johannes
->
-> >
-> > I would like to thank Junio Hamano for reviewing this patch series.
-> >
-> > General changes
-> > ---------------
-> >
-> > * Rebased on e9b77c84a0 (Tenth batch, 2020-08-24), to build on the
-> >   strvec API (instead of argv_array) and adjust to the codebase
-> >   after the "--first-parent" feature was added.
-> >
-> >
-> > Specific changes
-> > ----------------
-> >
-> > [1/13] bisect--helper: BUG() in cmd_*() on invalid subcommand
-> >
-> > * Amend commit message.
-> > * Remove casting to int.
-> >
-> > ---
-> >
-> > [2/13] bisect--helper: use '-res' in 'cmd_bisect__helper' return
-> >
-> > * Amend commit message.
-> >
-> > ---
-> >
-> > [3/13] bisect--helper: introduce new `write_in_file()` function
-> >
-> > * Use saved_errno variable.
-> >
-> > ---
-> >
-> > [5/13] bisect--helper: reimplement `bisect_autostart` shell function in=
- C
-> >
-> > * Fix bug using empty_strvec instead of NULL in a `bisect_start()` call=
-.
-> >
-> > ---
-> >
-> >
-> > [6/13] bisect--helper: reimplement `bisect_next` and `bisect_auto_next`=
- shell
-> >  functions in C
-> >
-> > * Remove unused `no-checkout` variable.
-> > * Move a comment to more appropriate place.
-> >
-> > ---
-> >
-> > .iriam Rubio (4):
-> >   bisect--helper: BUG() in cmd_*() on invalid subcommand
-> >   bisect--helper: use '-res' in 'cmd_bisect__helper' return
-> >   bisect--helper: introduce new `write_in_file()` function
-> >   bisect: call 'clear_commit_marks_all()' in 'bisect_next_all()'
-> >
-> > Pranit Bauva (9):
-> >   bisect--helper: reimplement `bisect_autostart` shell function in C
-> >   bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shel=
-l
-> >     functions in C
-> >   bisect--helper: finish porting `bisect_start()` to C
-> >   bisect--helper: retire `--bisect-clean-state` subcommand
-> >   bisect--helper: retire `--next-all` subcommand
-> >   bisect--helper: reimplement `bisect_state` & `bisect_head` shell
-> >     functions in C
-> >   bisect--helper: retire `--check-expected-revs` subcommand
-> >   bisect--helper: retire `--write-terms` subcommand
-> >   bisect--helper: retire `--bisect-autostart` subcommand
-> >
-> >  bisect.c                 |  13 +-
-> >  builtin/bisect--helper.c | 442 ++++++++++++++++++++++++++++++++-------
-> >  git-bisect.sh            | 145 +------------
-> >  3 files changed, 380 insertions(+), 220 deletions(-)
-> >
-> > --
-> > 2.25.0
-> >
-> >
+[4/6] bisect--helper: reimplement `bisect_autostart` shell function in C
+
+* Amend commit message.
+* Change to `return -1` when we cannot autostart.
+* Add `|| exit` to bisect-autostart call in shell script.
+
+---
+
+
+[6/6] bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell
+ functions in C
+ 
+* Amend commit message.
+* Amend new modes order in cmdmode enum.
+* Add `|| exit` to bisect-auto-next call in shell script.
+
+ 
+---
+
+Miriam Rubio (4):
+  bisect--helper: BUG() in cmd_*() on invalid subcommand
+  bisect--helper: use '-res' in 'cmd_bisect__helper' return
+  bisect--helper: introduce new `write_in_file()` function
+  bisect: call 'clear_commit_marks_all()' in 'bisect_next_all()'
+
+Pranit Bauva (2):
+  bisect--helper: reimplement `bisect_autostart` shell function in C
+  bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell
+    functions in C
+
+ bisect.c                 |  13 +-
+ builtin/bisect--helper.c | 269 +++++++++++++++++++++++++++++++++++++--
+ git-bisect.sh            |  70 +---------
+ 3 files changed, 274 insertions(+), 78 deletions(-)
+
+-- 
+2.25.0
+
