@@ -7,130 +7,107 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD19C2D0A8
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 15:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A76C4727F
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 16:15:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BA9320897
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 15:59:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFA2121D92
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 16:15:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ffrJaAKz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kZRU2vuk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726572AbgIWP7k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 11:59:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57982 "EHLO
+        id S1726766AbgIWQPC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Sep 2020 12:15:02 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62026 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgIWP7k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 11:59:40 -0400
+        with ESMTP id S1726671AbgIWQPB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 12:15:01 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53938839DF;
-        Wed, 23 Sep 2020 11:59:34 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 146FA83CB2;
+        Wed, 23 Sep 2020 12:14:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qllc8tqT0cG01YpQlRLg2zBMi/Y=; b=ffrJaA
-        KzH31H2UDaUiU3VePMV58ouMce8GlhvFsfkrgJ7Q+KLfPkACapcH7+5g5dRGb0GN
-        hK4x757mLsF8t2ToGAjc3XOhtpvJIaLG7NE5Vdu1mNAQ4hOannuynilKSWa1RATV
-        oaBX4wTV+X/Fx7CcK1su2AGMGZ+DxIs3R2FVg=
+        :content-type; s=sasl; bh=Km114rWdOsRPKkT4uLuZ1T4Rwis=; b=kZRU2v
+        uk/cI0Ias60oAwMl8/9NyCVJ6djB7ZJ1WKaRsawu/k9BJDRLu1WWCYPVM5JfoGE3
+        0ldK1IGXV76jiESmjmDfu1VP9gBsspDqn6e3cp17hz4l64/BVPI/VP0VxWn5hAg7
+        NghfJbVJNaDX47eT8ofy7hLa7lbAGEr2/XLiM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ydCwZvfNvl20T1kXpOtHJUszMXAl3o/F
-        6ng5o1nY1VbNvjamU7wrUaKV1CBPkPWIP3VQhMCmzutZ5fXp5ec6lpI39EuNc21P
-        LsJl5fPZB8r6qiSFDT0dd8PqcKnLw3SrWlEIOSAUPNhCKCIXyS5w0ui1Fwk36o+z
-        qRp31ClDjkE=
+        :content-type; q=dns; s=sasl; b=RV5XkbNPiF6ZaK7n6Z2+IqNEaM8n6Wrv
+        XMM/6jISQWmTPXvyk1zX5mRaI4ztR6Vhud45K58Vun4G0lO2FdoXhzSjzetUno/P
+        wGD+bMKoljzNgAOMFUP6wNyi8p2wh3igee033cJA8Bmi5V/0roGjnzCRTwxSAfOs
+        7496cB7cVHs=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A47F839DE;
-        Wed, 23 Sep 2020 11:59:34 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0913B83CB1;
+        Wed, 23 Sep 2020 12:14:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B9F5D839DD;
-        Wed, 23 Sep 2020 11:59:33 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6B06D83CB0;
+        Wed, 23 Sep 2020 12:14:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] cmake: ignore generated files
-References: <pull.735.git.1600375065498.gitgitgadget@gmail.com>
-        <xmqqtuvwoyz5.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2009181510240.5061@tvgsbejvaqbjf.bet>
-        <xmqqft7fnlxr.fsf@gitster.c.googlers.com>
-        <20200918155015.GA1837@danh.dev>
-        <xmqq7dsrnjhi.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2009201916040.5061@tvgsbejvaqbjf.bet>
-Date:   Wed, 23 Sep 2020 08:59:32 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2009201916040.5061@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Sun, 20 Sep 2020 19:37:41 +0200
-        (CEST)")
-Message-ID: <xmqqr1qsjxgb.fsf@gitster.c.googlers.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v8 0/6] Finish converting git bisect to C part 2 subset 1
+References: <20200923072740.20772-1-mirucam@gmail.com>
+Date:   Wed, 23 Sep 2020 09:14:57 -0700
+In-Reply-To: <20200923072740.20772-1-mirucam@gmail.com> (Miriam Rubio's
+        message of "Wed, 23 Sep 2020 09:27:34 +0200")
+Message-ID: <xmqqmu1gjwqm.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C5CE5A3A-FDB5-11EA-88A1-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: ECF57FE2-FDB7-11EA-995D-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Miriam Rubio <mirucam@gmail.com> writes:
 
->> > The change that Dscho suggested was meant for those people that run
->> > CMake in same directory of source dir, which is mostly discouraged
->> > in CMake land.
+> These patches correspond to a second part of patch series 
+> of Outreachy project "Finish converting `git bisect` from shell to C" 
+> started by Pranit Bauva and Tanushree Tumane
+> (https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
+> continued by me.
 >
-> It is discouraged, but not disallowed.
-> ...
->> > I think the original CMake proposal didn't touch .gitignore because
->> > they run in a separated build-dir.
->>
->> If so, not only my "do we need a matching change to CMakeLists to
->> teach how to clean crufts?" becomes unnecessary, but the original
->> patch that started this thread to touch .gitignore at the top level,
->> does, too.
->>
->> I wonder what led Dscho not to follow the "create a 'build' dir and
->> do things there" practice.  Judging from the fact that the "because
->> they run in a separate build directory" assumption did not hold to
->> somebody as experienced as Dscho, it is likely others would do the
->> same.
+> This patch series version is composed by the first six patches of the
+> previous version due to a bug discovered during the test stage, that 
+> affects the rest of the patches and that needs to be fixed before 
+> sending them.
+
+Thanks for being careful.
+
+> * Rebased on 385c171a01, (Fifteenth batch, 2020-09-18) to update command
+> help messages.
+
+Personally I find this rebase unwarranted.  What ef4d9f8a (bisect:
+swap command-line options in documentation, 2020-08-28) on the
+'master' did does not overlap with this series in any meaningful
+way.  Since it is also trivial to adjust these patches back on
+e9b77c84 (Tenth batch, 2020-08-24) on which the previous round was
+based, I won't complain ;-)
+
+> [4/6] bisect--helper: reimplement `bisect_autostart` shell function in C
 >
-> That's because Dscho does not like the separate build directory, even if
-> they know that in the CMake world, it is kind of expected.
+> * Amend commit message.
+> * Change to `return -1` when we cannot autostart.
+> * Add `|| exit` to bisect-autostart call in shell script.
 
-Sorry, but that does not sound like a convincing excuse because ...
+Sounds good.
 
-> It's just that it would be super convenient for Visual Studio users to
-> just generate their project files in-place. That's why I started down that
-> road.
-> ...
-> Ideally, we would tell Visual Studio users to "just install CMake, start
-> its GUI, direct it to the Git source, configure and generate". Alas, it is
-> not that easy:
->
-> - The `SH_EXE` is not found by default (`C:\Program Files\Git\bin\sh.exe`
->   should be used in the vast majority of the cases),
-> - If the build directory is left unspecified, the non-writable `C:\Program
->   Files\CMake\bin` directory is used,
-> - The `compat\vcbuild\vcpkg` system is not initialized automatically, and
->   even if the user initialized it, the dependencies (such as expat, zlib)
->   are still not found.
+> [6/6] bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell
+>  functions in C
+>  
+> * Amend commit message.
+> * Amend new modes order in cmdmode enum.
 
-... if the build directory needs to be specified anyway, there don't
-seem to be a big difference between telling them to create an empty
-build place and use it and telling them to point at the source tree
-itself, so ...
+Meaning that the two new ones can just be at the end and there
+wasn't a reason for them to come before autostart?  OK.
 
-> I would like to make things easier, and forcing users to use a separate
-> build directory (that needs to be outside of the Git source tree because
-> our `.gitignore` does not handle it well) would go the other direction, I
-> fear.
+> * Add `|| exit` to bisect-auto-next call in shell script.
 
-... the above sounds like the argument concentrates too much on
-where the build directory is (i.e. between "in place" and "a
-throw-away directory next door"), which sounds like much smaller
-point compared to the other things that needs to be improved in the
-VS users.  And making a choice against what is recommended as best
-practice...?  I dunno.
+OK.
 
+Thanks.
