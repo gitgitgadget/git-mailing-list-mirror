@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51185C4363D
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DFEAC2D0A8
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:30:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0596D235FC
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:30:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8E2F235FC
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:30:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lwmYkGKn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pHwuE+Sh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726768AbgIWHaf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 03:30:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        id S1726785AbgIWHah (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Sep 2020 03:30:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbgIWHae (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 03:30:34 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E40C061755
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:30:34 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id j3so10876723qvi.7
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:30:34 -0700 (PDT)
+        with ESMTP id S1726550AbgIWHah (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 03:30:37 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E5AC061755
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:30:37 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id n10so17889507qtv.3
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5v5R9XdGKxktn6rJ3w1lMWyjIYcUiXHI3x7U5MWgeQQ=;
-        b=lwmYkGKn3UIV7GKm4F1fZZpTeIiZ9mJ750DNmvKaMsDXF/xS9JOp5O7zHcKbkgE1Vc
-         iii70XjR7uuHGBFFb+KzjUDYkadvrJqXFCbo37MHM9iYho+EZ4EXonjofqKkaAEAR+NT
-         FLOHbP8tejg5gSEFScnzyuT1Wlw8MN1FJVlQASBF3s3eEhvCs9+NqJkO2G9fZXdUv8Fb
-         TQmmz/nLQv4uvZJ0+1HHL1e2ZhpewaESUB7O15CkueeQeVA/bt1u5fWay1cegK9Lksxt
-         2CDDAV11jba7paHIJeHuVyHYDf+hYDIM+BYYrI19GTN0sGKhKo84flVQb5T36bk3c4TJ
-         VpBQ==
+        bh=1DRFP21p5i3V4P4lgSoA2DKAbIwWQjiVUnQfHTvNMvg=;
+        b=pHwuE+Sh9hYc0dsWEqJk75l0Z02MeV/PSp2vpd/sVYIKtTCd+6up7s2NQMhTmK66nk
+         Gi+pO/vMhwnZOAywMC7FlA7WWLSvPoAIS2h9P7thbTY2JjelUFcK8dytdCN4Am/11kde
+         2AaJcaLzR2u9wRy5/fmFRbYFfV9YyDAC1nuSCeeh2QaLps5WXFqfh4JQxT6RIsFwp0So
+         7S2LBDF4wMKUKLnJP/bnl3PkE5jyHIhRudI4Wcc5F0KSg+PLIwLMoI1+sm2H8mxzpNMp
+         7B/Uog0vkJtFtREOauakrvTgAnVCvpyFedGiDbZ7ToqHHq8DrgMFsXLnlI2mVauyIn/T
+         I+SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5v5R9XdGKxktn6rJ3w1lMWyjIYcUiXHI3x7U5MWgeQQ=;
-        b=hIbho4dKUDPvBhXzKPeM9PfYRsuUDBxn5JSPr1r+Sg5mIDIG31ykzosrrwwz2BibXC
-         tGyx4ONQ/sw7T6CKVm2TmPuzKrWPpDG3PkG2jc4xdU9fNvHYUWb2biqsrTtesFrzK3Yv
-         rIInIvD1JLm4yWyHWOT4uHlTex0QJRFeSqe3gExajdFBMG0KbQsCDg1lW6HNckPv+eK/
-         +DyFyFbblR/87+DcyEQow7w7lTz1sQMQ586XyJbF+BoFtsLJT4a3aS0s2BycyUO0MCWa
-         dzfbvoWB9XQvJBPuOFKkk820v9RWal6YrwPfDy+Rtda65TUfNX/+yF0mqbqUYeXdT65x
-         02TA==
-X-Gm-Message-State: AOAM532ltbpNpwHm+ogVUSzwKB17xz0J7KnLLqCHRYwFefCfpc/qGsa9
-        bP8prZqcgIvsw0eFg/IAvZ2ntXKQtaeJ+rUg
-X-Google-Smtp-Source: ABdhPJxHr5bfa1pnpsA8+MT1SH6HyTruhw5M5iDppWYm42idOnIlvlwQkG6ph63gxW2XtXWuSBrQHg==
-X-Received: by 2002:a0c:b308:: with SMTP id s8mr10391982qve.16.1600846233408;
-        Wed, 23 Sep 2020 00:30:33 -0700 (PDT)
+        bh=1DRFP21p5i3V4P4lgSoA2DKAbIwWQjiVUnQfHTvNMvg=;
+        b=i3tXaWlwFs69ZekcvpqUfBlagqW5i91HKLRd/eBSy4WJhaJFpftNu+jSVOTWYKRNBo
+         KhWL9jTaHmaG+CkF6SJoDy7b3XeJAglrDyJMsBKOSjL7PvZLL2yk1IaE91px0gYSPB7M
+         hBFlRDdJ/14HGTrflgrpCmiTiamDpyoi0LVrVl72eRIRs+nwb2sCSJVC47Rj+i7DhzOH
+         jy3Y3gh1znPAgwx1Sh/RXDKtELovSl04VblWPn/2iL6KN7MECNbRFE9Tb/xL4mTXx/9P
+         Yq2FuAmUp4crANaphfy3p6j24gcoupU7lNa+VyGHRlmG40s0znyyo+24Mslw+bQ4j2Kg
+         +40Q==
+X-Gm-Message-State: AOAM5334MhfhT3L0PiKELbsrw2qGGs3RFoowG2fpfXNyONLCqMzdT2Io
+        cvqEtKJT6Alr3/rmJVaZ4G+QPW4QsKiWn6Er
+X-Google-Smtp-Source: ABdhPJyz7GeBatlFXSvfmDbA+FMZMR7baOFNWFawMEsJxlFaQA94asaOeKI1urKw8a4WbjKV4SLyuw==
+X-Received: by 2002:ac8:1b22:: with SMTP id y31mr8583825qtj.61.1600846235936;
+        Wed, 23 Sep 2020 00:30:35 -0700 (PDT)
 Received: from localhost.localdomain ([124.123.107.121])
-        by smtp.gmail.com with ESMTPSA id i18sm6341138qka.50.2020.09.23.00.30.31
+        by smtp.gmail.com with ESMTPSA id i18sm6341138qka.50.2020.09.23.00.30.33
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Sep 2020 00:30:32 -0700 (PDT)
+        Wed, 23 Sep 2020 00:30:35 -0700 (PDT)
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v5 1/3] push: add reflog check for "--force-if-includes"
-Date:   Wed, 23 Sep 2020 13:00:20 +0530
-Message-Id: <20200923073022.61293-2-shrinidhi.kaushik@gmail.com>
+Subject: [PATCH v5 2/3] push: parse and set flag for "--force-if-includes"
+Date:   Wed, 23 Sep 2020 13:00:21 +0530
+Message-Id: <20200923073022.61293-3-shrinidhi.kaushik@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200923073022.61293-1-shrinidhi.kaushik@gmail.com>
 References: <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
@@ -74,343 +74,305 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a check to verify if the remote-tracking ref of the local branch
-is reachable from one of its "reflog" entries.
+The previous commit added the necessary machinery to implement the
+"--force-if-includes" protection, when "--force-with-lease" is used
+without giving exact object the remote still ought to have. Surface
+the feature by adding a command line option and a configuration
+variable to enable it.
 
-When a local branch that is based on a remote ref, has been rewound
-and is to be force pushed on the remote, "--force-if-includes" runs
-a check that ensures any updates to remote-tracking refs that may have
-happened (by push from another repository) in-between the time of the
-last checkout, and right before the time of push, have been integrated
-locally before allowing a forced updated.
+ - Add a flag: "TRANSPORT_PUSH_FORCE_IF_INCLUDES" to indicate that the
+   new option was passed from the command line of via configuration
+   settings; update command line and configuration parsers to set the
+   new flag accordingly.
 
-A new field "use_force_if_includes" has been added to "push_cas_option",
-which is set to "1" when "--force-if-includes" is specified as an
-option in the command line or as a configuration setting.
+ - Introduce a new configuration option "push.useForceIfIncludes", which
+   is equivalent to setting "--force-if-includes" in the command line.
 
-The struct "ref" has two new bit-fields:
-  - check_reachable:
-    Set when we have to run the new check on the ref, and the remote
-    ref was marked as "use_tracking" or "use_tracking_for_rest" by
-    compare-and-swap (if the "the remote tip must be at the expected
-    commit" condition is not specified); "apply_push_cas()" has been
-    updated to check if this field is set and run the check.
+ - Update "remote-curl" to recognize and pass this option to "send-pack"
+   when enabled.
 
-  - unreachable:
-    Set if the ref is unreachable from any of the "reflog" entries of
-    its local counterpart.
+ - Update "advise" to catch the reject reason "REJECT_REF_NEEDS_UPDATE",
+   set when the ref status is "REF_STATUS_REJECT_REMOTE_UPDATED" and
+   (optionally) print a help message when the push fails.
 
-"REF_STATUS_REJECT_REMOTE_UPDATED" has been added to the "status"
-enum to imply that the ref failed the check; "case" statements in
-"send-pack", "transport" and "transport-helper" have been updated
-accordingly to catch this status when set.
-
-When "--force-is-includes" is used along with "--force-with-lease",
-the check runs only for refs marked as "if_includes". If the option
-is passed without specifying "--force-with-lease", or specified along
-with "--force-with-lease=<refname>:<expect>" it is a "no-op".
+ - The new option is a "no-op" in the following scenarios:
+    * When used without "--force-with-lease".
+    * When used with "--force-with-lease", and if the expected commit
+      on the remote side is specified as an argument.
 
 Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 ---
- builtin/send-pack.c |   5 ++
- remote.c            | 140 +++++++++++++++++++++++++++++++++++++++++++-
- remote.h            |   8 ++-
- send-pack.c         |   1 +
- transport-helper.c  |   5 ++
- transport.c         |   6 ++
- 6 files changed, 162 insertions(+), 3 deletions(-)
+ advice.c            |  3 +++
+ advice.h            |  2 ++
+ builtin/push.c      | 27 +++++++++++++++++++++++++++
+ builtin/send-pack.c |  7 +++++++
+ remote-curl.c       | 14 +++++++++++++-
+ transport-helper.c  |  5 +++++
+ transport.c         |  2 ++
+ transport.h         | 15 ++++++++++-----
+ 8 files changed, 69 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 2b9610f121..4d76727edb 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -69,6 +69,11 @@ static void print_helper_status(struct ref *ref)
- 			msg = "stale info";
- 			break;
+diff --git a/advice.c b/advice.c
+index f0a3d32d20..164742305f 100644
+--- a/advice.c
++++ b/advice.c
+@@ -11,6 +11,7 @@ int advice_push_already_exists = 1;
+ int advice_push_fetch_first = 1;
+ int advice_push_needs_force = 1;
+ int advice_push_unqualified_ref_name = 1;
++int advice_push_ref_needs_update = 1;
+ int advice_status_hints = 1;
+ int advice_status_u_option = 1;
+ int advice_status_ahead_behind_warning = 1;
+@@ -72,6 +73,7 @@ static struct {
+ 	{ "pushFetchFirst", &advice_push_fetch_first },
+ 	{ "pushNeedsForce", &advice_push_needs_force },
+ 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
++	{ "pushRefNeedsUpdate", &advice_push_ref_needs_update },
+ 	{ "statusHints", &advice_status_hints },
+ 	{ "statusUoption", &advice_status_u_option },
+ 	{ "statusAheadBehindWarning", &advice_status_ahead_behind_warning },
+@@ -116,6 +118,7 @@ static struct {
+ 	[ADVICE_PUSH_ALREADY_EXISTS]			= { "pushAlreadyExists", 1 },
+ 	[ADVICE_PUSH_FETCH_FIRST]			= { "pushFetchFirst", 1 },
+ 	[ADVICE_PUSH_NEEDS_FORCE]			= { "pushNeedsForce", 1 },
++	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate", 1 },
  
-+		case REF_STATUS_REJECT_REMOTE_UPDATED:
-+			res = "error";
-+			msg = "remote ref updated since checkout";
-+			break;
+ 	/* make this an alias for backward compatibility */
+ 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward", 1 },
+diff --git a/advice.h b/advice.h
+index 16f2c11642..bc2432980a 100644
+--- a/advice.h
++++ b/advice.h
+@@ -11,6 +11,7 @@ extern int advice_push_already_exists;
+ extern int advice_push_fetch_first;
+ extern int advice_push_needs_force;
+ extern int advice_push_unqualified_ref_name;
++extern int advice_push_ref_needs_update;
+ extern int advice_status_hints;
+ extern int advice_status_u_option;
+ extern int advice_status_ahead_behind_warning;
+@@ -60,6 +61,7 @@ extern int advice_add_empty_pathspec;
+ 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
+ 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
+ 	ADVICE_PUSH_UPDATE_REJECTED,
++	ADVICE_PUSH_REF_NEEDS_UPDATE,
+ 	ADVICE_RESET_QUIET_WARNING,
+ 	ADVICE_RESOLVE_CONFLICT,
+ 	ADVICE_RM_HINTS,
+diff --git a/builtin/push.c b/builtin/push.c
+index 0eeb2c8dd5..908b557edb 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -290,6 +290,12 @@ static const char message_advice_ref_needs_force[] =
+ 	   "or update a remote ref to make it point at a non-commit object,\n"
+ 	   "without using the '--force' option.\n");
+ 
++static const char message_advice_ref_needs_update[] =
++	N_("Updates were rejected because the tip of the remote-tracking\n"
++	   "branch has been updated since the last checkout. You may want\n"
++	   "to integrate those changes locally (e.g., 'git pull ...')\n"
++	   "before forcing an update.\n");
 +
- 		case REF_STATUS_REJECT_ALREADY_EXISTS:
- 			res = "error";
- 			msg = "already exists";
-diff --git a/remote.c b/remote.c
-index eafc14cbe7..0dcac4ab8e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1471,12 +1471,23 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 * with the remote-tracking branch to find the value
- 		 * to expect, but we did not have such a tracking
- 		 * branch.
-+		 *
-+		 * If the tip of the remote-tracking ref is unreachable
-+		 * from any reflog entry of its local ref indicating a
-+		 * possible update since checkout; reject the push.
- 		 */
- 		if (ref->expect_old_sha1) {
- 			if (!oideq(&ref->old_oid, &ref->old_oid_expect))
- 				reject_reason = REF_STATUS_REJECT_STALE;
-+			else if (ref->check_reachable && ref->unreachable)
-+				reject_reason =
-+					REF_STATUS_REJECT_REMOTE_UPDATED;
- 			else
--				/* If the ref isn't stale then force the update. */
-+				/*
-+				 * If the ref isn't stale, and is reachable
-+				 * from from one of the reflog entries of
-+				 * the local branch, force the update.
-+				 */
- 				force_ref_update = 1;
- 		}
- 
-@@ -2268,6 +2279,118 @@ static int remote_tracking(struct remote *remote, const char *refname,
- 	return 0;
+ static void advise_pull_before_push(void)
+ {
+ 	if (!advice_push_non_ff_current || !advice_push_update_rejected)
+@@ -325,6 +331,13 @@ static void advise_ref_needs_force(void)
+ 	advise(_(message_advice_ref_needs_force));
  }
  
-+/*
-+ * The struct "reflog_commit_list" and related helper functions
-+ * for list manipulation are used for collecting commits into a
-+ * list during reflog traversals in "if_exists_or_grab_until()".
-+ */
-+struct reflog_commit_list {
-+	struct commit **items;
-+	size_t nr, alloc;
-+};
-+
-+/* Adds a commit to list. */
-+static void add_commit(struct reflog_commit_list *list, struct commit *commit)
++static void advise_ref_needs_update(void)
 +{
-+	ALLOC_GROW(list->items, list->nr + 1, list->alloc);
-+	list->items[list->nr++] = commit;
-+}
-+
-+/* Free and reset the list. */
-+static void free_reflog_commit_list(struct reflog_commit_list *list)
-+{
-+	FREE_AND_NULL(list->items);
-+	list->nr = list->alloc = 0;
-+}
-+
-+struct check_and_collect_until_cb_data {
-+	struct commit *remote_commit;
-+	struct reflog_commit_list *local_commits;
-+};
-+
-+
-+static int check_and_collect_until(struct object_id *o_oid,
-+				   struct object_id *n_oid,
-+				   const char *ident, timestamp_t timestamp,
-+				   int tz, const char *message, void *cb_data)
-+{
-+	struct commit *commit;
-+	struct check_and_collect_until_cb_data *cb = cb_data;
-+
-+	/*
-+	 * If the reflog entry timestamp is older than the
-+	 * remote commit date, there is no need to check or
-+	 * collect entries older than this one.
-+	 */
-+	if (timestamp < cb->remote_commit->date)
-+		return -1;
-+
-+	/* An entry was found. */
-+	if (oideq(n_oid, &cb->remote_commit->object.oid))
-+		return 1;
-+
-+	/* Lookup the commit and append it to the list. */
-+	if ((commit = lookup_commit_reference(the_repository, n_oid)))
-+		add_commit(cb->local_commits, commit);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Iterate through the reflog of a local ref to check if there is an entry for
-+ * the given remote-tracking ref (i.e., if it was checked out); runs until the
-+ * timestamp of an entry is older than the commit date of the remote-tracking
-+ * ref. Any commits that seen along the way are collected into a list to check
-+ * if the remote-tracking ref is reachable from any of them.
-+ */
-+static int is_reachable_in_reflog(const char *local_ref_name,
-+				  const struct object_id *remote_oid)
-+{
-+	struct commit *remote_commit;
-+	struct reflog_commit_list list = { NULL, 0, 0 };
-+	struct check_and_collect_until_cb_data cb;
-+	int ret = 0;
-+
-+	remote_commit = lookup_commit_reference(the_repository, remote_oid);
-+	if (!remote_commit)
-+		goto cleanup_return;
-+
-+	cb.remote_commit = remote_commit;
-+	cb.local_commits = &list;
-+	ret = for_each_reflog_ent_reverse(local_ref_name,
-+					  check_and_collect_until, &cb);
-+
-+	/* We found an entry in the reflog. */
-+	if (ret > 0)
-+		goto cleanup_return;
-+
-+	/*
-+	 * Check if "remote_commit" is reachable from
-+	 * any of the commits in the collected list.
-+	 */
-+	if (list.nr > 0)
-+		ret = in_merge_bases_many(remote_commit, list.nr, list.items);
-+
-+cleanup_return:
-+	free_reflog_commit_list(&list);
-+	return ret;
-+}
-+
-+/*
-+ * Check for reachability of a remote-tracking
-+ * ref in the reflog entries of its local ref.
-+ */
-+static void check_if_includes_upstream(struct ref *remote_ref)
-+{
-+	struct ref *local_ref = get_local_ref(remote_ref->name);
-+
-+	if (!local_ref)
++	if (!advice_push_ref_needs_update || !advice_push_update_rejected)
 +		return;
-+
-+	if (!is_reachable_in_reflog(local_ref->name, &remote_ref->old_oid))
-+		remote_ref->unreachable = 1;
++	advise(_(message_advice_ref_needs_update));
 +}
 +
- static void apply_cas(struct push_cas_option *cas,
- 		      struct remote *remote,
- 		      struct ref *ref)
-@@ -2284,6 +2407,8 @@ static void apply_cas(struct push_cas_option *cas,
- 			oidcpy(&ref->old_oid_expect, &entry->expect);
- 		else if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
- 			oidclr(&ref->old_oid_expect);
-+		else
-+			ref->check_reachable = cas->use_force_if_includes;
- 		return;
+ static int push_with_options(struct transport *transport, struct refspec *rs,
+ 			     int flags)
+ {
+@@ -374,6 +387,8 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
+ 		advise_ref_fetch_first();
+ 	} else if (reject_reasons & REJECT_NEEDS_FORCE) {
+ 		advise_ref_needs_force();
++	} else if (reject_reasons & REJECT_REF_NEEDS_UPDATE) {
++		advise_ref_needs_update();
  	}
  
-@@ -2294,6 +2419,8 @@ static void apply_cas(struct push_cas_option *cas,
- 	ref->expect_old_sha1 = 1;
- 	if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
- 		oidclr(&ref->old_oid_expect);
-+	else
-+		ref->check_reachable = cas->use_force_if_includes;
- }
+ 	return 1;
+@@ -510,6 +525,12 @@ static int git_push_config(const char *k, const char *v, void *cb)
+ 		if (!v)
+ 			return config_error_nonbool(k);
+ 		return color_parse(v, push_colors[slot]);
++	} else if (!strcmp(k, "push.useforceifincludes")) {
++		if (git_config_bool(k, v))
++			*flags |= TRANSPORT_PUSH_FORCE_IF_INCLUDES;
++		else
++			*flags &= ~TRANSPORT_PUSH_FORCE_IF_INCLUDES;
++		return 0;
+ 	}
  
- void apply_push_cas(struct push_cas_option *cas,
-@@ -2301,6 +2428,15 @@ void apply_push_cas(struct push_cas_option *cas,
- 		    struct ref *remote_refs)
- {
- 	struct ref *ref;
--	for (ref = remote_refs; ref; ref = ref->next)
-+	for (ref = remote_refs; ref; ref = ref->next) {
- 		apply_cas(cas, remote, ref);
+ 	return git_default_config(k, v, NULL);
+@@ -541,6 +562,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
+ 			       N_("require old value of ref to be at this value"),
+ 			       PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option),
++		OPT_BIT(0, TRANS_OPT_FORCE_IF_INCLUDES, &flags,
++			N_("require remote updates to be integrated locally"),
++			TRANSPORT_PUSH_FORCE_IF_INCLUDES),
+ 		OPT_CALLBACK(0, "recurse-submodules", &recurse_submodules, "(check|on-demand|no)",
+ 			     N_("control recursive pushing of submodules"), option_parse_recurse_submodules),
+ 		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
+@@ -625,6 +649,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	if ((flags & TRANSPORT_PUSH_ALL) && (flags & TRANSPORT_PUSH_MIRROR))
+ 		die(_("--all and --mirror are incompatible"));
+ 
++	if (!is_empty_cas(&cas) && (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES))
++		cas.use_force_if_includes = 1;
 +
-+		/*
-+		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
-+		 * mode, and if "--force-if-includes" was specified, run
-+		 * the check.
-+		 */
-+		if (ref->check_reachable)
-+			check_if_includes_upstream(ref);
-+	}
- }
-diff --git a/remote.h b/remote.h
-index 5e3ea5a26d..7c5e59770e 100644
---- a/remote.h
-+++ b/remote.h
-@@ -104,7 +104,11 @@ struct ref {
- 		forced_update:1,
- 		expect_old_sha1:1,
- 		exact_oid:1,
--		deletion:1;
-+		deletion:1,
-+		/* Need to check if local reflog reaches the remote tip. */
-+		check_reachable:1,
-+		/* The local reflog does not reach the remote tip. */
-+		unreachable:1;
+ 	for_each_string_list_item(item, push_options)
+ 		if (strchr(item->string, '\n'))
+ 			die(_("push options must not have new line characters"));
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 4d76727edb..c115a4a1ac 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -159,6 +159,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	int progress = -1;
+ 	int from_stdin = 0;
+ 	struct push_cas_option cas = {0};
++	int force_if_includes = 0;
+ 	struct packet_reader reader;
  
- 	enum {
- 		REF_NOT_MATCHED = 0, /* initial value */
-@@ -134,6 +138,7 @@ struct ref {
- 		REF_STATUS_REJECT_NEEDS_FORCE,
- 		REF_STATUS_REJECT_STALE,
- 		REF_STATUS_REJECT_SHALLOW,
-+		REF_STATUS_REJECT_REMOTE_UPDATED,
- 		REF_STATUS_UPTODATE,
- 		REF_STATUS_REMOTE_REJECT,
- 		REF_STATUS_EXPECTING_REPORT,
-@@ -332,6 +337,7 @@ struct ref *get_stale_heads(struct refspec *rs, struct ref *fetch_map);
+ 	struct option options[] = {
+@@ -184,6 +185,8 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
+ 		  N_("require old value of ref to be at this value"),
+ 		  PARSE_OPT_OPTARG, parseopt_push_cas_option),
++		OPT_BOOL(0, TRANS_OPT_FORCE_IF_INCLUDES, &force_if_includes,
++			 N_("require remote updates to be integrated locally")),
+ 		OPT_END()
+ 	};
  
- struct push_cas_option {
- 	unsigned use_tracking_for_rest:1;
-+	unsigned use_force_if_includes:1;
- 	struct push_cas {
- 		struct object_id expect;
- 		unsigned use_tracking:1;
-diff --git a/send-pack.c b/send-pack.c
-index 632f1580ca..956306e8e8 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -240,6 +240,7 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
- 	case REF_STATUS_REJECT_FETCH_FIRST:
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
- 	case REF_STATUS_REJECT_STALE:
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
- 	case REF_STATUS_REJECT_NODELETE:
- 		return CHECK_REF_STATUS_REJECTED;
- 	case REF_STATUS_UPTODATE:
+@@ -285,6 +288,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	if (!is_empty_cas(&cas))
+ 		apply_push_cas(&cas, remote, remote_refs);
+ 
++	if (!is_empty_cas(&cas) && force_if_includes)
++		cas.use_force_if_includes = 1;
++
++
+ 	set_ref_status_for_push(remote_refs, args.send_mirror,
+ 		args.force_update);
+ 
+diff --git a/remote-curl.c b/remote-curl.c
+index 32cc4a0c55..0290b04891 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -44,7 +44,8 @@ struct options {
+ 		from_promisor : 1,
+ 
+ 		atomic : 1,
+-		object_format : 1;
++		object_format : 1,
++		force_if_includes : 1;
+ 	const struct git_hash_algo *hash_algo;
+ };
+ static struct options options;
+@@ -131,6 +132,14 @@ static int set_option(const char *name, const char *value)
+ 		string_list_append(&cas_options, val.buf);
+ 		strbuf_release(&val);
+ 		return 0;
++	} else if (!strcmp(name, TRANS_OPT_FORCE_IF_INCLUDES)) {
++		if (!strcmp(value, "true"))
++			options.force_if_includes = 1;
++		else if (!strcmp(value, "false"))
++			options.force_if_includes = 0;
++		else
++			return -1;
++		return 0;
+ 	} else if (!strcmp(name, "cloning")) {
+ 		if (!strcmp(value, "true"))
+ 			options.cloning = 1;
+@@ -1318,6 +1327,9 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
+ 		strvec_push(&args, cas_option->string);
+ 	strvec_push(&args, url.buf);
+ 
++	if (options.force_if_includes)
++		strvec_push(&args, "--force-if-includes");
++
+ 	strvec_push(&args, "--stdin");
+ 	for (i = 0; i < nr_spec; i++)
+ 		packet_buf_write(&preamble, "%s\n", specs[i]);
 diff --git a/transport-helper.c b/transport-helper.c
-index c52c99d829..e547e21199 100644
+index e547e21199..298e814bf7 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -779,6 +779,10 @@ static int push_update_ref_status(struct strbuf *buf,
- 			status = REF_STATUS_REJECT_STALE;
- 			FREE_AND_NULL(msg);
- 		}
-+		else if (!strcmp(msg, "remote ref updated since checkout")) {
-+			status = REF_STATUS_REJECT_REMOTE_UPDATED;
-+			FREE_AND_NULL(msg);
-+		}
- 		else if (!strcmp(msg, "forced update")) {
- 			forced = 1;
- 			FREE_AND_NULL(msg);
-@@ -897,6 +901,7 @@ static int push_refs_with_push(struct transport *transport,
- 		case REF_STATUS_REJECT_NONFASTFORWARD:
- 		case REF_STATUS_REJECT_STALE:
- 		case REF_STATUS_REJECT_ALREADY_EXISTS:
-+		case REF_STATUS_REJECT_REMOTE_UPDATED:
- 			if (atomic) {
- 				reject_atomic_push(remote_refs, mirror);
- 				string_list_clear(&cas_options, 0);
+@@ -868,6 +868,11 @@ static void set_common_push_options(struct transport *transport,
+ 		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
+ 			die(_("helper %s does not support --atomic"), name);
+ 
++	if (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES)
++		if (set_helper_option(transport, TRANS_OPT_FORCE_IF_INCLUDES, "true") != 0)
++			die(_("helper %s does not support --%s"),
++			    name, TRANS_OPT_FORCE_IF_INCLUDES);
++
+ 	if (flags & TRANSPORT_PUSH_OPTIONS) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, transport->push_options)
 diff --git a/transport.c b/transport.c
-index 43e24bf1e5..99fe6233a3 100644
+index 99fe6233a3..da98ebf50e 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -567,6 +567,11 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count,
- 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
- 				 "stale info", porcelain, summary_width);
- 		break;
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+				 "remote ref updated since checkout",
-+				 porcelain, summary_width);
-+		break;
- 	case REF_STATUS_REJECT_SHALLOW:
- 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
- 				 "new shallow roots not allowed",
-@@ -1101,6 +1106,7 @@ static int run_pre_push_hook(struct transport *transport,
- 		if (!r->peer_ref) continue;
- 		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
- 		if (r->status == REF_STATUS_REJECT_STALE) continue;
-+		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
- 		if (r->status == REF_STATUS_UPTODATE) continue;
+@@ -664,6 +664,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+ 			*reject_reasons |= REJECT_FETCH_FIRST;
+ 		} else if (ref->status == REF_STATUS_REJECT_NEEDS_FORCE) {
+ 			*reject_reasons |= REJECT_NEEDS_FORCE;
++		} else if (ref->status == REF_STATUS_REJECT_REMOTE_UPDATED) {
++			*reject_reasons |= REJECT_REF_NEEDS_UPDATE;
+ 		}
+ 	}
+ 	free(head);
+diff --git a/transport.h b/transport.h
+index ca409ea1e4..24558c027d 100644
+--- a/transport.h
++++ b/transport.h
+@@ -136,6 +136,7 @@ struct transport {
+ #define TRANSPORT_PUSH_ATOMIC			(1<<13)
+ #define TRANSPORT_PUSH_OPTIONS			(1<<14)
+ #define TRANSPORT_RECURSE_SUBMODULES_ONLY	(1<<15)
++#define TRANSPORT_PUSH_FORCE_IF_INCLUDES	(1<<16)
  
- 		strbuf_reset(&buf);
+ int transport_summary_width(const struct ref *refs);
+ 
+@@ -208,6 +209,9 @@ void transport_check_allowed(const char *type);
+ /* Request atomic (all-or-nothing) updates when pushing */
+ #define TRANS_OPT_ATOMIC "atomic"
+ 
++/* Require remote changes to be integrated locally. */
++#define TRANS_OPT_FORCE_IF_INCLUDES "force-if-includes"
++
+ /**
+  * Returns 0 if the option was used, non-zero otherwise. Prints a
+  * message to stderr if the option is not used.
+@@ -217,11 +221,12 @@ int transport_set_option(struct transport *transport, const char *name,
+ void transport_set_verbosity(struct transport *transport, int verbosity,
+ 	int force_progress);
+ 
+-#define REJECT_NON_FF_HEAD     0x01
+-#define REJECT_NON_FF_OTHER    0x02
+-#define REJECT_ALREADY_EXISTS  0x04
+-#define REJECT_FETCH_FIRST     0x08
+-#define REJECT_NEEDS_FORCE     0x10
++#define REJECT_NON_FF_HEAD      0x01
++#define REJECT_NON_FF_OTHER     0x02
++#define REJECT_ALREADY_EXISTS   0x04
++#define REJECT_FETCH_FIRST      0x08
++#define REJECT_NEEDS_FORCE      0x10
++#define REJECT_REF_NEEDS_UPDATE 0x20
+ 
+ int transport_push(struct repository *repo,
+ 		   struct transport *connection,
 -- 
 2.28.0
 
