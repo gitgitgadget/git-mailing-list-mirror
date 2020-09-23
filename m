@@ -8,67 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52A1DC4363D
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A02FCC2D0A8
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:28:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 061612223E
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:28:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55BE22223E
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:28:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nU+dmDUE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s41U09dN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726779AbgIWH2J (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726770AbgIWH2J (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 23 Sep 2020 03:28:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53304 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726716AbgIWH2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 03:28:08 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3E27C0613D1
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:28:07 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id z4so19802887wrr.4
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:28:07 -0700 (PDT)
+        with ESMTP id S1726557AbgIWH2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 03:28:06 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C044C061755
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:28:06 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id x14so19770720wrl.12
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=V3XoLAkZ22MkSetPvCkGEfSe9qUnUEj3czdfFAaQXE4=;
-        b=nU+dmDUEYiENpTNSpcUmokuPDZi9Bz3ToDwwMYqdDbDL6QG6vYJ3j5U89x6sFaUJIp
-         s48uWxVRLuL26ZG/IofuzT0TcB2GgbeT5dWoZeS2AOHwNnscV0S7qWLyPvgDy8EfXjfH
-         q1l9L1nJDaYIf8LWe1zimv/BdLPizxrbbQi0lBZFZAid5WJinD6SvkYTdZTLDxdH9HbZ
-         1fAkG/wOqMfniEFdXB5nYfTXUxtiO4pKpuU0wyTFfXFRmVoCNdDExw+zok65aqyv5aym
-         ZoqqY8VkuDHFaA7s651Yp3BIxII1XFRTYbk79VCCpi27CiKywtlB7CkiaNhorP6xnIe6
-         w6Cg==
+        bh=6RIDM9yzJVsduW37sLu4RYCMYtjNJRoj3YnsK67/z0s=;
+        b=s41U09dNJwyprGTb4vOq7X5WlhP6Hm3siGpJRjvJTn/9goqGiESRMLpz+oDGb/L86V
+         a2NwPM5TZxs/z6Ek4J0VvawPORiK3TNSl2X1TsYrHNr2QRTEOr1TE68mtOPUJFpyN90x
+         99PqYoTXoPjBZ+5HqsNskvI+cuQO3lRWGIcl58lnxMpbb/LgAwZAbujGsIU7NiVplh7j
+         7Dy1Ba7NP15Fs34X2vgd5UhsVTXLo/0ChA53yEhnpaJIFg3SYn4SyuABUjVpTqtIfn7e
+         TYFF8ioF1Vg5m6CNZ15d4Ilsc6jYG4ZzBxlVJTvaHevAatdCV+oDJPqmt8WUv2PU2RPG
+         3yvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=V3XoLAkZ22MkSetPvCkGEfSe9qUnUEj3czdfFAaQXE4=;
-        b=NYS6HuNThCwB2zX2S9nqtQuKr+mXJG5UH2XRRKj4X8q9bQTQD7JHvGbV271rkq9AFh
-         J+rMgkD/vn/c0XfX+CGlsYUGU1SObpYde/LKnz3eDIYwBAGRnIl0ZvVX/QL4Leh5wxnJ
-         Z6d93xQ13i2dMDGzw4KykFLZyAKMk6ZUNHJRiiZkWyWFVimpJ9n65m3zC7X6jp1bAGVY
-         lYutdoSNibrYsV648G96ZBTgyQbPWr01BagcMyk1dIaax8q2Yn6x+cJsnOvbrcv8hOJx
-         9/t9Mqfr+FtgtZPFP5XWinwwGcZ5pvJAJIZVQwWb16DpxVooGLGM/ZyaAN/N4KhW0gsx
-         T3lw==
-X-Gm-Message-State: AOAM533/erKJ46AqGRqvjk5VjtUcY+CH06R9HXtL5kwCTbd7EonzmgGX
-        Vwz+wrzCVbrWUm20PRAaoiOVSlIoSRk=
-X-Google-Smtp-Source: ABdhPJyDZvCJlD2eAkzamrNpKC7Gf9dyWocODIwkP3SLJnapV7p7Id7lG/xTaTDqqgsj+tyAO1st6w==
-X-Received: by 2002:adf:a3db:: with SMTP id m27mr8133887wrb.277.1600846086144;
-        Wed, 23 Sep 2020 00:28:06 -0700 (PDT)
+        bh=6RIDM9yzJVsduW37sLu4RYCMYtjNJRoj3YnsK67/z0s=;
+        b=nnOOJ0cszvLTwKlGN+IxMYUQN8C5OOY1Dx8WzqkSMp1BUGbJ7/eIzQ8FAnPZYUX701
+         CbedT/EcrCUBBQK+uXi/JL1UPzrF3EAUEW/Lbl+fG354Ghiyl9vcoqVmk7PDSBolv1jZ
+         EZdRILGgy7tWEYwMEJ6deYfRQzvXrJTl4l1/1F0d/G0NjtWBkhnu/fXhsHrjQcYYjRHR
+         LndBNBmJhHcNJHu81nKQu7ULnUgegexVuPcc4LAEpWENWsIhqG2UjjZgceDzEzjZvRGJ
+         jqLLLC3LRMfgn3r8BzkzUf3g+tvyfp7eIVNj8BzqP+ZojE8+Qv1BB8v0UPut0Diy1EL3
+         5xKA==
+X-Gm-Message-State: AOAM532mpa3BME8vXUkniurc82DJidkbdrsS8BsrUn7HWdk4EDkBwhsC
+        V87DHhCYE40e+Z4ym/1HTsW27gStY98=
+X-Google-Smtp-Source: ABdhPJx/qOr6JBSti/BKowlojkWchu4KBPk1aIYFnCPRIB+5hCpxwNnxEJK2xcj4m5jP75Ihqa1lAw==
+X-Received: by 2002:a5d:4d51:: with SMTP id a17mr9474185wru.248.1600846084704;
+        Wed, 23 Sep 2020 00:28:04 -0700 (PDT)
 Received: from localhost.localdomain ([178.237.235.60])
-        by smtp.gmail.com with ESMTPSA id j14sm30046838wrr.66.2020.09.23.00.28.04
+        by smtp.gmail.com with ESMTPSA id j14sm30046838wrr.66.2020.09.23.00.28.03
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Sep 2020 00:28:05 -0700 (PDT)
+        Wed, 23 Sep 2020 00:28:03 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
+Cc:     Miriam Rubio <mirucam@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v8 4/6] bisect--helper: reimplement `bisect_autostart` shell function in C
-Date:   Wed, 23 Sep 2020 09:27:38 +0200
-Message-Id: <20200923072740.20772-5-mirucam@gmail.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v8 3/6] bisect--helper: introduce new `write_in_file()` function
+Date:   Wed, 23 Sep 2020 09:27:37 +0200
+Message-Id: <20200923072740.20772-4-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200923072740.20772-1-mirucam@gmail.com>
 References: <20200923072740.20772-1-mirucam@gmail.com>
@@ -78,165 +75,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+Let's refactor code adding a new `write_in_file()` function
+that opens a file for writing a message and closes it and a
+wrapper for writing mode.
 
-Reimplement the `bisect_autostart()` shell function in C and add the
-C implementation from `bisect_next()` which was previously left
-uncovered.
+This helper will be used in later steps and makes the code
+simpler and easier to understand.
 
-Add `--bisect-autostart` subcommand to be called from git-bisect.sh.
-Using `--bisect-autostart` subcommand is a temporary measure to port
-the shell function to C so as to use the existing test suite. As more
-functions are ported, this subcommand will be retired and
-bisect_autostart() will be called directly by `bisect_state()`.
-
-Change behavior of shell script that returned success when user aborted
-the bisection.
-
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 44 +++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 25 ++---------------------
- 2 files changed, 45 insertions(+), 24 deletions(-)
+ builtin/bisect--helper.c | 43 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 46d2abb36f..ab27a8dff6 100644
+index 8037888ae2..46d2abb36f 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -29,6 +29,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
- 					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
-+	N_("git bisect--helper --bisect-autostart"),
- 	NULL
- };
- 
-@@ -653,6 +654,38 @@ static int bisect_start(struct bisect_terms *terms, const char **argv, int argc)
+@@ -74,6 +74,40 @@ static int one_of(const char *term, ...)
  	return res;
  }
  
-+static inline int file_is_not_empty(const char *path)
++static int write_in_file(const char *path, const char *mode, const char *format, va_list args)
 +{
-+	return !is_empty_or_missing_file(path);
++	FILE *fp = NULL;
++	int res = 0;
++
++	if (strcmp(mode, "w"))
++		BUG("write-in-file does not support '%s' mode", mode);
++	fp = fopen(path, mode);
++	if (!fp)
++		return error_errno(_("cannot open file '%s' in mode '%s'"), path, mode);
++	res = vfprintf(fp, format, args);
++
++	if (res < 0) {
++		int saved_errno = errno;
++		fclose(fp);
++		errno = saved_errno;
++		return error_errno(_("could not write to file '%s'"), path);
++	}
++
++	return fclose(fp);
 +}
 +
-+static int bisect_autostart(struct bisect_terms *terms)
++static int write_to_file(const char *path, const char *format, ...)
 +{
 +	int res;
-+	const char *yesno;
++	va_list args;
 +
-+	if (file_is_not_empty(git_path_bisect_start()))
-+		return 0;
-+
-+	fprintf_ln(stderr, _("You need to start by \"git bisect "
-+			  "start\"\n"));
-+
-+	if (!isatty(STDIN_FILENO))
-+		return -1;
-+
-+	/*
-+	 * TRANSLATORS: Make sure to include [Y] and [n] in your
-+	 * translation. The program will only accept English input
-+	 * at this point.
-+	 */
-+	yesno = git_prompt(_("Do you want me to do it for you "
-+			     "[Y/n]? "), PROMPT_ECHO);
-+	res = tolower(*yesno) == 'n' ?
-+		-1 : bisect_start(terms, empty_strvec, 0);
++	va_start(args, format);
++	res = write_in_file(path, "w", format, args);
++	va_end(args);
 +
 +	return res;
 +}
 +
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ static int check_term_format(const char *term, const char *orig_term)
  {
- 	enum {
-@@ -665,7 +698,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		CHECK_AND_SET_TERMS,
- 		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
--		BISECT_START
-+		BISECT_START,
-+		BISECT_AUTOSTART,
- 	} cmdmode = 0;
- 	int res = 0, nolog = 0;
- 	struct option options[] = {
-@@ -689,6 +723,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("print out the bisect terms"), BISECT_TERMS),
- 		OPT_CMDMODE(0, "bisect-start", &cmdmode,
- 			 N_("start the bisect session"), BISECT_START),
-+		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
-+			 N_("start the bisection if it has not yet been started"), BISECT_AUTOSTART),
- 		OPT_BOOL(0, "no-log", &nolog,
- 			 N_("no log for BISECT_WRITE")),
- 		OPT_END()
-@@ -748,6 +784,12 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		set_terms(&terms, "bad", "good");
- 		res = bisect_start(&terms, argv, argc);
- 		break;
-+	case BISECT_AUTOSTART:
-+		if (argc)
-+			return error(_("--bisect-autostart does not accept arguments"));
-+		set_terms(&terms, "bad", "good");
-+		res = bisect_autostart(&terms);
-+		break;
- 	default:
- 		BUG("unknown subcommand %d", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 2f60fefcfa..4e9b2d36cb 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -49,27 +49,6 @@ bisect_head()
- 	fi
+ 	int res;
+@@ -104,7 +138,6 @@ static int check_term_format(const char *term, const char *orig_term)
+ 
+ static int write_terms(const char *bad, const char *good)
+ {
+-	FILE *fp = NULL;
+ 	int res;
+ 
+ 	if (!strcmp(bad, good))
+@@ -113,13 +146,9 @@ static int write_terms(const char *bad, const char *good)
+ 	if (check_term_format(bad, "bad") || check_term_format(good, "good"))
+ 		return -1;
+ 
+-	fp = fopen(git_path_bisect_terms(), "w");
+-	if (!fp)
+-		return error_errno(_("could not open the file BISECT_TERMS"));
++	res = write_to_file(git_path_bisect_terms(), "%s\n%s\n", bad, good);
+ 
+-	res = fprintf(fp, "%s\n%s\n", bad, good);
+-	res |= fclose(fp);
+-	return (res < 0) ? -1 : 0;
++	return res;
  }
  
--bisect_autostart() {
--	test -s "$GIT_DIR/BISECT_START" || {
--		gettextln "You need to start by \"git bisect start\"" >&2
--		if test -t 0
--		then
--			# TRANSLATORS: Make sure to include [Y] and [n] in your
--			# translation. The program will only accept English input
--			# at this point.
--			gettext "Do you want me to do it for you [Y/n]? " >&2
--			read yesno
--			case "$yesno" in
--			[Nn]*)
--				exit ;;
--			esac
--			bisect_start
--		else
--			exit 1
--		fi
--	}
--}
--
- bisect_start() {
- 	git bisect--helper --bisect-start $@ || exit
- 
-@@ -108,7 +87,7 @@ bisect_skip() {
- }
- 
- bisect_state() {
--	bisect_autostart
-+	git bisect--helper --bisect-autostart || exit
- 	state=$1
- 	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
- 	get_terms
-@@ -149,7 +128,7 @@ bisect_auto_next() {
- 
- bisect_next() {
- 	case "$#" in 0) ;; *) usage ;; esac
--	bisect_autostart
-+	git bisect--helper --bisect-autostart
- 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
- 
- 	# Perform all bisection computation, display and checkout
+ static int is_expected_rev(const char *expected_hex)
 -- 
 2.25.0
 
