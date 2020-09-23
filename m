@@ -2,167 +2,201 @@ Return-Path: <SRS0=8LOk=DA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3352EC2D0A8
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 20:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 320E2C2D0A8
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 20:38:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C51CF2376E
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 20:27:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A933920725
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 20:38:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="AoolVXMS"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="RLPqqS51"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbgIWU1d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 16:27:33 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55137 "EHLO mout.gmx.net"
+        id S1726466AbgIWUh7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Sep 2020 16:37:59 -0400
+Received: from mout.gmx.net ([212.227.15.15]:39355 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726265AbgIWU1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 16:27:33 -0400
+        id S1726419AbgIWUh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 16:37:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1600892840;
-        bh=HgzSEBgo5MVHJdLxpigOnvi/f45MxdBdxfy4lb8Crg4=;
+        s=badeba3b8450; t=1600893471;
+        bh=h/OmQIBlorAPGtlZNVUCQ0Pd7qSCGH+jZvst7eBThgI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AoolVXMSLiw4ESLclSguiD6b7yPtvl7jkRoqYke0KD8gxRvvmueUvPm/XVeJ8Jhj+
-         faR5cF+SM8IbFTjvPbh6O/Ksqzz2F6ysaUc5LFn1AbJ4xxEgQHuG+k+5UsuqoFSs5N
-         FtQJ3hpYSltzKHjZwSUncmgDzZV8SaF5TQezCD/g=
+        b=RLPqqS51eG8mfx9VkVV4VlABSz2CCKLMBMcSJeP6mF5L1GYHglBfv82GOC7h2ANIA
+         pkJ3Rm6fAwnpEPkO1KZH/PQZfTVcyW59yThhCNuY927zUb+vtTLyodDqHAcALbSr3I
+         7i5kEkHneQo8lsu7Pql4K+KydFM3sds7OSfZHrNk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.26.89.169] ([89.1.212.22]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mnps0-1kn43G1nGU-00pJku; Wed, 23
- Sep 2020 22:27:20 +0200
-Date:   Wed, 23 Sep 2020 22:27:17 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mnps0-1kn3Dw3uOY-00pJsk; Wed, 23
+ Sep 2020 22:37:51 +0200
+Date:   Wed, 23 Sep 2020 22:37:46 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] cmake: ignore generated files
-In-Reply-To: <xmqqr1qsjxgb.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2009232224410.5061@tvgsbejvaqbjf.bet>
-References: <pull.735.git.1600375065498.gitgitgadget@gmail.com> <xmqqtuvwoyz5.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009181510240.5061@tvgsbejvaqbjf.bet> <xmqqft7fnlxr.fsf@gitster.c.googlers.com> <20200918155015.GA1837@danh.dev>
- <xmqq7dsrnjhi.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009201916040.5061@tvgsbejvaqbjf.bet> <xmqqr1qsjxgb.fsf@gitster.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Miriam Rubio <mirucam@gmail.com>
+Subject: Re: [PATCH] bisect: don't use invalid oid as rev when starting
+In-Reply-To: <20200923170915.21748-1-chriscool@tuxfamily.org>
+Message-ID: <nycvar.QRO.7.76.6.2009232229000.5061@tvgsbejvaqbjf.bet>
+References: <20200923170915.21748-1-chriscool@tuxfamily.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:12TPPUzu5UzBLNOy9n0HmuYiNnmhRQ4jhjkRF/nWqu7laf6h7Jh
- 9FUwXtenlfm0fVppI6DPor0nRJFoNb4ZLXzHpSM2LzaHRjwy+wiiWgFBFPbN5jDl2epJ1xo
- AtOI5W+yv2SR6nv1FB4TG4CRyl+8G8Kgm8dqdl85OIwa1vIWlLK/U6if+cnaIbxe3JWf8KL
- lrzveSqY22pX0+GNOD6UA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GUG65+NBHVI=:fT4rieaK8n1p86sT8HfVW1
- 7+qbrarzIrUXglZ+mYo7KwFoN13DN7Rcmbb1Q50VSNVpYtS+u/14EMhZOcXNXc8Z5Rx2XJBjC
- vTBop95u68AG4A/zS24EsQOOaoD7GPlTH8zr5rrsNqxljBpEcB/YVanIx33A/SJS7vTWlOfnw
- BQgqN6Vmml1HB2eN2G2UAdOLo74qTJmG/5Y6ELk83MJ4SxdXJapfsJCxg4sitFyDLWXneYd3P
- 14WJJ8oKiUmraFqulBTc9286nIf9xW/quvgRDDv2dHMRa2FjLn8aWiJ4GGSK3txhiZWVnROQJ
- tWy0uJTfZlg42WCysKL5ofDTwfzoL8bCkx2naApborwWWEPDvgbBuaPIsowp+jnPIWE3bqZPN
- xCEf5bWVhJSUku579dDz+hblRBeUoF5MhizCVAs+dLSY1+z1BPiHGHm9WQykW1JeCQhTH602O
- d9Y25dX4TaUuud3M7qnjy7Z5nSCRictL17J5W3FYODWZyhINjeeOt2JrdLEMYlO4LGcXk14PP
- O5rcCQTy7ZKyboSR/EqCajlcH8KdSqhMO8v3iq+jImoJ7OsxTrlXEmqu5yNKB7JAwQrw0ct6K
- gkNz5gBpv+1tVewLYAEeCdzffEtYdpFdj1zj0UFuiyOElLE9bE5l21LXEViNPwo2AmgB3lWR0
- ipcUemMZim/SQnACDYCDoSHDtfOdQLwRysxyb+g16aqHg+e3m6q3/8QdSCSHMdqPIDYeY4Q1a
- fBUtbDTZ8i5NM6kc7b+SAtH1D933hy18fBuG41JLloggJC3LI6SYUr9Yo9iyVIhYJabTEkuKt
- 4cDrbc41ERzFw9B3A+8uGTdvBSyP7Crez2KsI3K1WYT5phj0sJ5oAXvWCqY/QGHyUv3heBwdG
- aZm2UhKNC1uAs2jK4izr/nMEuJIRLdaNcZUPorqoCtTiSib5BZSc/XCf6hTNjxnDNSDho89ge
- VeG+ntrUribNf4xnOdUzNIySbCAZ8u1mcQ4vLevXurX7FyiKgcMWx80I/3XGMCThFCn6NiAIH
- HZ4vrSWAmR6qm2NFgfv6MrsdduF4eRCSXhmeHSgAmrCqsxIcy7Sv1tYz+sLkpdKL1uOIOlXRr
- C8698xL0httEu8kpoF+yF7fdAVzvBYRhaSIDQPhOp70WF7FiwF/Tjma47mtc4KFUfTReYtd9M
- MST92Y8IvhaA0S8A+QCsW02EScZ3Uax+pS2hs09WnbXhN8pse0wVIrQvS6oHxjrL7BkpejtDh
- CMy6b8bRsMHXi7ilqV+bXh+kg9IPRI41wdUJI+g==
+X-Provags-ID: V03:K1:BbIi899Xlo/5UmYBpAj9Qq+byq58z0GgoPCWDOMPwXuYU6/Jxyb
+ 0c8GnURHwpSwWw/1gMxPFA7MSN58nlEdMGWqSyvcKO7PUma0AXMjwbmL6cxE+o7JxEN0Axv
+ /vwa0MJvzMjM/TE7gzRSuHRtJL7664w/xU0wknst3/Sv+zF5j3/De1rkQPjDkjEbo7jwqmg
+ FsKSC7CXkNDO3uD/ev7XA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jIIpl28FExo=:tm18X58m/8ZAB/oIaHLJGe
+ Rd2EvgipwDWd2b38Ng+obTGiwD2rzmyBtYyUns2BOwXqpWojab0CLTygGs261DPXxQSmszYhV
+ UqZCRwSkRvdsG0ERehliXiA8nNOuKLDqZ7am9F71hej1qVm1VYym8MJzuzNqPdmXDDd5pDE+A
+ j5irhoSNXDauM9/6hDysy9TM9dnsXHCNLPKBPoWPm3gK5oqoDf1XVVFEalp7F1sOKA+Eai15G
+ ydeuEr1fpoxyjU34UVGz6h/YoZID/FjsPy2PL4Q154NB22q/wXcDvPINQjHADWkyyFgyBPSRW
+ v8iFW+A/6Iph3PeVWUEhPd3ib9NK5CgQ/Y/RZM52whweZgj1WFAfeDjkhYXj/rUob1xs2raZ/
+ cCuLmDzDwG0DPngggqI05+6eiYGtEJx0fAkmtazBLlMxiJxfLaWUla4n99m3EvK6wEiDgTD2h
+ nsGb6wWXbt6OTucxeA6nlxDkNtZA9SiQGVgCCL6dJw1/C9cYb+lYHi9YbNUMibkqJA0tniCvk
+ a3wFjzscKrYqlCQklTiWJ0Q9MFt5EqTLFpJzHsAjwLYBjuYc2UCQJj+4ZUbyuEo2QQjMq4KDY
+ 4ZlJ208a7jp0WOU0KsXHdJYLni2siHQPxROXS75TgV1aM4440AgDoRI1T52wGAZWMU3QYOMRc
+ xleos2ypoDWou6+witDunfcc4rAvcpJ+Z9fpZFZ2v5gSxjdQWCUpqmXaKGqYNfrMF9oObqa4j
+ ycjtR+vwZ2cgY5HOxTSqBoVY6igyF3+8r2FwD4CDx9HyNCa3Q4xtewXxE24cGAs4DMWMyxb+l
+ 2u/Lt6Ny+1/h1W0qwCYO15GFPiHPwc+Nb/lnSCaY4LgYOOo3wvZWTw4KsajREviiRrTTCw7cn
+ MqSyuAqKz7QBITadt0IRRi9/dCT+rhrp5kUQ6iYK+Tjp5iUqL3nQJFjipK07qpyd2skipewHJ
+ oWybGB63ts/yaBMJXoLHfBcsTS6YCS2bPdN1kLsqSmMD3KeMQnPLXLzQuUwy8pRsgt0MGqtlJ
+ f5Ean8p1k5v/svwbVEthXofaKlnbdI9uvyoSouSn6wA68DK3kiYXTD7y9zX4HDHqaksi/gRTz
+ redYje1epJGFs0Nb3LZdjdUbG6rv80wBgyiAj/V+KGoJvQ55sofEYq9SOjicE8UHnzp5g+8UF
+ Ki1xGv5szbX2Oj9SUcnh0GRgGk8I1HK1AJaX5lX+6nQoMFgzRPqJCh70l6a6xWK8yDf2QZa9c
+ 2+g8nigwn8pBxEzl4A7PRIjOanYbKaFgVvNxoSw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Christian,
 
-On Wed, 23 Sep 2020, Junio C Hamano wrote:
+On Wed, 23 Sep 2020, Christian Couder wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> In 06f5608c14 (bisect--helper: `bisect_start` shell function
+> partially in C, 2019-01-02), we changed the following shell
+> code:
 >
-> >> > The change that Dscho suggested was meant for those people that run
-> >> > CMake in same directory of source dir, which is mostly discouraged
-> >> > in CMake land.
-> >
-> > It is discouraged, but not disallowed.
-> > ...
-> >> > I think the original CMake proposal didn't touch .gitignore because
-> >> > they run in a separated build-dir.
-> >>
-> >> If so, not only my "do we need a matching change to CMakeLists to
-> >> teach how to clean crufts?" becomes unnecessary, but the original
-> >> patch that started this thread to touch .gitignore at the top level,
-> >> does, too.
-> >>
-> >> I wonder what led Dscho not to follow the "create a 'build' dir and
-> >> do things there" practice.  Judging from the fact that the "because
-> >> they run in a separate build directory" assumption did not hold to
-> >> somebody as experienced as Dscho, it is likely others would do the
-> >> same.
-> >
-> > That's because Dscho does not like the separate build directory, even =
-if
-> > they know that in the CMake world, it is kind of expected.
+> -                       rev=3D$(git rev-parse -q --verify "$arg^{commit}=
+") || {
+> -                               test $has_double_dash -eq 1 &&
+> -                               die "$(eval_gettext "'\$arg' does not ap=
+pear to be a valid revision")"
+> -                               break
+> -                       }
+> -                       revs=3D"$revs $rev"
 >
-> Sorry, but that does not sound like a convincing excuse because ...
+> into:
 >
-> > It's just that it would be super convenient for Visual Studio users to
-> > just generate their project files in-place. That's why I started down =
-that
-> > road.
-> > ...
-> > Ideally, we would tell Visual Studio users to "just install CMake, sta=
-rt
-> > its GUI, direct it to the Git source, configure and generate". Alas, i=
-t is
-> > not that easy:
-> >
-> > - The `SH_EXE` is not found by default (`C:\Program Files\Git\bin\sh.e=
-xe`
-> >   should be used in the vast majority of the cases),
-> > - If the build directory is left unspecified, the non-writable `C:\Pro=
-gram
-> >   Files\CMake\bin` directory is used,
-> > - The `compat\vcbuild\vcpkg` system is not initialized automatically, =
-and
-> >   even if the user initialized it, the dependencies (such as expat, zl=
-ib)
-> >   are still not found.
+> +                       char *commit_id =3D xstrfmt("%s^{commit}", arg);
+> +                       if (get_oid(commit_id, &oid) && has_double_dash)
+> +                               die(_("'%s' does not appear to be a vali=
+d "
+> +                                     "revision"), arg);
+> +
+> +                       string_list_append(&revs, oid_to_hex(&oid));
+> +                       free(commit_id);
 >
-> ... if the build directory needs to be specified anyway, there don't
-
-It doesn't need to be specified.
-
-> seem to be a big difference between telling them to create an empty
-> build place and use it and telling them to point at the source tree
-> itself, so ...
+> In case of an invalid "arg" when "has_double_dash" is false, the old
+> code would "break" out of the argument loop.
 >
-> > I would like to make things easier, and forcing users to use a separat=
-e
-> > build directory (that needs to be outside of the Git source tree becau=
-se
-> > our `.gitignore` does not handle it well) would go the other direction=
-, I
-> > fear.
+> In the new C code though, `oid_to_hex(&oid)` is unconditonally
+> appended to "revs". This is wrong first because "oid" is junk as
+> `get_oid(commit_id, &oid)` failed and second because it doesn't break
+> out of the argument loop.
 >
-> ... the above sounds like the argument concentrates too much on
-> where the build directory is (i.e. between "in place" and "a
-> throw-away directory next door"), which sounds like much smaller
-> point compared to the other things that needs to be improved in the
-> VS users.  And making a choice against what is recommended as best
-> practice...?  I dunno.
+> Not breaking out of the argument loop means that "arg" is then not
+> treated as a path restriction (which is wrong).
 
-All I want is for the CMake support to be easier to use, yet we go in the
-opposite direction: instead of allowing to use CMake under more
-circumstances (which actually *works*, we just don't have the appropriate
-patterns in our `.gitignore` yet to avoid adding and committing the
-generated files), we now seem to intend to require a separate build
-directory.
+Good catch!
 
-That's the opposite direction of making things more convenient for Visual
-Studio users.
+> This is a bug fix for the bug Miriam talks about in:
+>
+> https://lore.kernel.org/git/20200923072740.20772-1-mirucam@gmail.com/
+>
+> and:
+>
+> https://lore.kernel.org/git/CAN7CjDDVp_i7dhpbAq5zrGW69nE6+SfivJQ-dembmu+=
+WyqKiQQ@mail.gmail.com/
 
-Ciao,
+Thank you for clarifying.
+
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 7dcc1b5188..538fa6f16b 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -486,12 +486,16 @@ static int bisect_start(struct bisect_terms *terms=
+, const char **argv, int argc)
+>  			return error(_("unrecognized option: '%s'"), arg);
+>  		} else {
+>  			char *commit_id =3D xstrfmt("%s^{commit}", arg);
+> -			if (get_oid(commit_id, &oid) && has_double_dash)
+> -				die(_("'%s' does not appear to be a valid "
+> -				      "revision"), arg);
+> -
+> -			string_list_append(&revs, oid_to_hex(&oid));
+> +			int res =3D get_oid(commit_id, &oid);
+>  			free(commit_id);
+> +			if (res) {
+> +				if (has_double_dash)
+> +					die(_("'%s' does not appear to be a valid "
+> +					      "revision"), arg);
+> +				break;
+> +			} else {
+> +				string_list_append(&revs, oid_to_hex(&oid));
+> +			}
+
+I would find that a lot easier to read if it was reordered thusly:
+
+			if (!get_oidf(&oid, "%s^{commit}", arg))
+				string_list_append(&revs, oid_to_hex(&oid));
+			else if (!has_double_dash)
+				break;
+			else
+				die(_("'%s' does not appear to be a valid "
+				      revision"), arg);
+
+And it would actually probably make sense to replace the `get_oid()` by
+`get_oid_committish()` in the first place.
+
+>  		}
+>  	}
+>  	pathspec_pos =3D i;
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+> index b886529e59..cb645cf8c8 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -82,6 +82,13 @@ test_expect_success 'bisect fails if given any junk i=
+nstead of revs' '
+>  	git bisect bad $HASH4
+>  '
+>
+> +test_expect_success 'bisect start without -- uses unknown stuff as path=
+ restriction' '
+
+s/stuff/arg/ maybe?
+
+The rest of the patch looks good to me.
+
+Thank you,
 Dscho
+
+> +	git bisect reset &&
+> +	git bisect start foo bar &&
+> +	grep foo ".git/BISECT_NAMES" &&
+> +	grep bar ".git/BISECT_NAMES"
+> +'
+> +
+>  test_expect_success 'bisect reset: back in the master branch' '
+>  	git bisect reset &&
+>  	echo "* master" > branch.expect &&
+> --
+> 2.28.0.587.g1c7fdf1d8b
+>
+>
