@@ -2,252 +2,145 @@ Return-Path: <SRS0=8LOk=DA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08C37C4727D
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9477EC2D0A8
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 09:38:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C845D235FC
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 07:30:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AB3F23600
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 09:38:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IZK/nwz6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k4BYFtEt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726789AbgIWHaj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 03:30:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53698 "EHLO
+        id S1726242AbgIWJiz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Sep 2020 05:38:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbgIWHaj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 03:30:39 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB26C061755
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:30:39 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id o5so21866394qke.12
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 00:30:39 -0700 (PDT)
+        with ESMTP id S1726102AbgIWJiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 05:38:55 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 776F5C0613CE
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 02:38:55 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id f18so14690803pfa.10
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 02:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XM178Kolr6F+51QSvZaKRKC/XvXe3mqYFzJQOqwJRRs=;
-        b=IZK/nwz6lgPVkiC7qUaGSbPqPNcoFltzxOxkH0AsopUon0PH6V5g0A9zRXqtToBUVe
-         w8D41do0UrBuun8t0WHu48hIaM1glVFTDLYt3JPPB13e4SYD0P1waL1QWd7NXglC6Yys
-         egfQfQuT/QeES0dnxClxfLd8dgrcaPu3cpBrfufRM93O8BOb9sSyM850LmgjB1azZEuN
-         nYmWPBiUQUMKK6CQzJHasw3KxfAAx+V7kcfe4Jd+yWF9Xc3/U5f9L4CsOwCdwNIPBysJ
-         YulVcFXNYENaJWxUzYMva6kA0HD7n0ietOGaIH08GRqoEMXlwoBA9BSSpotX1Qmx87gv
-         QaSA==
+        bh=7SBEmb3FTZy0xH77d7QVRnFSAZ5uIRSvmGDAZV5hBg0=;
+        b=k4BYFtEtKyj6DuShgT0pan6Q4SmBKr0npcXFGi1oM4RcGt1NWMpQlBAC/4fqVTyYOc
+         4daid6MlZAMveWBD3DJcA2+bKfIXiSaAXR08gBz9gpCAuVL1ukfFjX8rN/7Z2tlyUqPy
+         RCcJdUPRrSw3G2FpBVly8dqwFQqB0va1Os4FbINbSR9mN02KqqfLX+W+2+9te4OP/0Ou
+         4Dw4hr/lcSWlgloPOIcDtcoiNNcHSqYa2CQdav36XQ7wMmW8udyYCMM+va3LvK+hUYy2
+         YmrT7ekJrh+yKxS4fJgxqbCCTds2OB18dqj49oueQO4KAcOOdIZ1BH/1iPLxHW9rlA0s
+         5jmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XM178Kolr6F+51QSvZaKRKC/XvXe3mqYFzJQOqwJRRs=;
-        b=ncQIg3stBb87YCosl66fUrDe2NTZKVLhKNqbBcbX+SHiLZc9gkykOi90V2g7ZqVAbc
-         J6+R/h35Vym71X8JplfDpuDQzZbc7asa0hBcNSuRCHZ0wZl7T/J4Lv9C5ABe7aUdz+E0
-         0KfRmQNoayhTpBthr2X2PlS+ioHbzm/7LJKEM6uVF9hGt7L/4ubuon+0cWFBaSyiqeTp
-         7PbRVTqItIuq95TSxehqow/xa5Uy+xutXNc617Vo1r4Z/0Ytvd3GBtrulBJw8eISxuCe
-         2KewO69tbsBsBubJkDBNLz/FFZMPM5Jk6D67/H/z+GGgeBVD4YVX0BJcdVnle5U2RYYa
-         7eyw==
-X-Gm-Message-State: AOAM532aXjZUCNLEgStTX1EzIaENEnKtgLPd/1Cfg1rDI2yTHiDbuR/y
-        qZyP3/7gvk2nvgggevW2q/+5gCFHYs/sBxxG
-X-Google-Smtp-Source: ABdhPJy5/xObexXHiNDPr0hx3SlmIrTN41yuMbGWJyIwnL+uRkgKSXzd/tSFjkRvXnEFsmsVl69g5g==
-X-Received: by 2002:a37:9e81:: with SMTP id h123mr8062882qke.117.1600846238273;
-        Wed, 23 Sep 2020 00:30:38 -0700 (PDT)
-Received: from localhost.localdomain ([124.123.107.121])
-        by smtp.gmail.com with ESMTPSA id i18sm6341138qka.50.2020.09.23.00.30.36
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Sep 2020 00:30:37 -0700 (PDT)
-From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v5 3/3] t, doc: update tests, reference for "--force-if-includes"
-Date:   Wed, 23 Sep 2020 13:00:22 +0530
-Message-Id: <20200923073022.61293-4-shrinidhi.kaushik@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200923073022.61293-1-shrinidhi.kaushik@gmail.com>
-References: <20200919170316.5310-1-shrinidhi.kaushik@gmail.com>
- <20200923073022.61293-1-shrinidhi.kaushik@gmail.com>
+        bh=7SBEmb3FTZy0xH77d7QVRnFSAZ5uIRSvmGDAZV5hBg0=;
+        b=RzK0VhvpdiBuCJ3kMkDU38lrCoFjI4lvwCxWU+sqY9qK0kPkzeK5fCP/Wr3WldmJZT
+         a9CoFfeyjnGs7rpFlF5PNwxFFAIOF9UYj1JpD7rlxqJgobMnNlDtzSjUtc4E8jLByX13
+         d4Lr8ah9wMOsnl67JDSd1Jio445yX9THDUJL5NhQ4H+frdiixvKUMYeQ06tlXjXHVc9m
+         MlyrYOJnwKGwHStkiQ+25K68wiVnWXgXaVQWuMwnWZ8MdfKkz96q5N1GGik8dwNCR2g7
+         Ku2trqXvogQO+m2Y5rcPrFCDrPGFjMceoP3Ec4pNhlPR2G9n5I4brvIivqQhC0ZDIddl
+         hTRA==
+X-Gm-Message-State: AOAM530auT0LSmMDObq9xJ8csUEiMkbu3QPdTsNZh9YFxT0y4KiFx66a
+        xvJM5aE/qJDibQMYaQ6JKQw+pSBcFeU=
+X-Google-Smtp-Source: ABdhPJzqiGLrp6x2Did1uC0/6mMl7JaOveUo1Pxpk5X+UOwlKc1gLgkubhvLn8nQbbDGnzsXMXFYuQ==
+X-Received: by 2002:a63:1620:: with SMTP id w32mr6997676pgl.73.1600853934651;
+        Wed, 23 Sep 2020 02:38:54 -0700 (PDT)
+Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id gm17sm4564464pjb.46.2020.09.23.02.38.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2020 02:38:53 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Subject: [PATCH v2 0/3] sample hooks: become hash agnostic
+Date:   Wed, 23 Sep 2020 02:38:42 -0700
+Message-Id: <cover.1600853895.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.28.0.760.g8d73e04208
+In-Reply-To: <cover.1600427894.git.liu.denton@gmail.com>
+References: <cover.1600427894.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update test cases for the new option, and document its usage
-and update related references.
+There are currently two hooks that have hardcoded 40 zeros as the null
+OID and, thus, are not hash-agnostic. Rewrite these to get the zero OID using
 
- - t/t5533-push-cas.sh:
-   Update test cases for "compare-and-swap" when used along with
-   "--force-if-includes" helps mitigate overwrites when remote
-   ref are updated in the background.
+	git hash-object --stdin </dev/null | tr '[0-9a-f]' '0'
 
- - Documentation:
-   Add reference for the new option, configuration setting
-   ("push.useForceIfIncludes") and advise messages.
+so that the zero OID is hash-agnostic.
 
-Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
----
- Documentation/config/advice.txt |  9 ++++--
- Documentation/config/push.txt   |  6 ++++
- Documentation/git-push.txt      | 26 +++++++++++++++-
- t/t5533-push-cas.sh             | 53 +++++++++++++++++++++++++++++++++
- 4 files changed, 90 insertions(+), 4 deletions(-)
+This was initially done by introducing `git rev-parse --null-oid` to get the
+zero OID but that seems like overkill. From a cursory search of Github, the
+only instances of the zero OID being used come from clones of the git.git
+repository (tests and sample hooks). Since we don't want to introduce an option
+that no one will use, don't go this route and just do the easiest thing.
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index bdd37c3eaa..acbd0c09aa 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -10,9 +10,8 @@ advice.*::
- 		that the check is disabled.
- 	pushUpdateRejected::
- 		Set this variable to 'false' if you want to disable
--		'pushNonFFCurrent',
--		'pushNonFFMatching', 'pushAlreadyExists',
--		'pushFetchFirst', and 'pushNeedsForce'
-+		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
-+		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
- 		simultaneously.
- 	pushNonFFCurrent::
- 		Advice shown when linkgit:git-push[1] fails due to a
-@@ -41,6 +40,10 @@ advice.*::
- 		we can still suggest that the user push to either
- 		refs/heads/* or refs/tags/* based on the type of the
- 		source object.
-+	pushRefNeedsUpdate::
-+		Shown when linkgit:git-push[1] rejects a forced update of
-+		a branch when its remote-tracking ref has updates that we
-+		do not have locally.
- 	statusAheadBehind::
- 		Shown when linkgit:git-status[1] computes the ahead/behind
- 		counts for a local ref compared to its remote tracking ref,
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index f5e5b38c68..fd981f7808 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -114,3 +114,9 @@ push.recurseSubmodules::
- 	specifying '--recurse-submodules=check|on-demand|no'.
- 	If not set, 'no' is used by default, unless 'submodule.recurse' is
- 	set (in which case a 'true' value means 'on-demand').
-+
-+push.useForceIfIncludes::
-+	If set to "true", it is equivalent to specifying
-+	"--force-if-includes" as an option to linkgit:git-push[1]
-+	in the command line. Adding "--no-force-if-includes" at the
-+	time of push overrides this configuration setting.
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 3b8053447e..706380d263 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
- 	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
- 	   [--[no-]signed|--signed=(true|false|if-asked)]
--	   [--force-with-lease[=<refname>[:<expect>]]]
-+	   [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
- 	   [--no-verify] [<repository> [<refspec>...]]
- 
- DESCRIPTION
-@@ -320,6 +320,14 @@ seen and are willing to overwrite, then rewrite history, and finally
- force push changes to `master` if the remote version is still at
- `base`, regardless of what your local `remotes/origin/master` has been
- updated to in the background.
-++
-+Alternatively, specifying "--force-if-includes" an an ancillary option
-+along with "--force-with-lease[=<refname>]" (i.e., without saying what
-+exact commit the ref on the remote side must be pointing at, or which
-+refs on the remote side are being protected) at the time of "push" will
-+verify if updates from the remote-tracking refs that may have been
-+implicitly updated in the background are integrated locally before
-+allowing a forced update.
- 
- -f::
- --force::
-@@ -341,6 +349,22 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
- origin +master` to force a push to the `master` branch). See the
- `<refspec>...` section above for details.
- 
-+--[no-]force-if-includes::
-+	Force an update only if the tip of the remote-tracking ref
-+	has been integrated locally.
-++
-+This option enables a check that verifies if the tip of the
-+remote-tracking ref is reachable from one of the "reflog" entries of
-+the local branch based in it for a rewrite. The check ensures that any
-+updates from the remote have been incorporated locally by rejecting the
-+forced update if that is not the case.
-++
-+If the option is passed without specifying "--force-with-lease", or
-+specified along with "--force-with-lease=<refname>:<expect>", it is
-+a "no-op".
-++
-+Specifying "--no-force-if-includes" disables this behavior.
-+
- --repo=<repository>::
- 	This option is equivalent to the <repository> argument. If both
- 	are specified, the command-line argument takes precedence.
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 0b0eb1d025..620d101f50 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -256,4 +256,57 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
- 	)
- '
- 
-+test_expect_success 'background updates of REMOTE can be mitigated with "--force-if-includes"' '
-+	rm -rf src dst &&
-+	git init --bare src.bare &&
-+	test_when_finished "rm -rf src.bare" &&
-+	git clone --no-local src.bare dst &&
-+	test_when_finished "rm -rf dst" &&
-+	(
-+		cd dst &&
-+		test_commit G &&
-+		git push origin master:master
-+	) &&
-+	git clone --no-local src.bare dst2 &&
-+	test_when_finished "rm -rf dst2" &&
-+	(
-+		cd dst2 &&
-+		test_commit H &&
-+		git push
-+	) &&
-+	(
-+		cd dst &&
-+		test_commit I &&
-+		git fetch origin &&
-+		test_must_fail git push --force-with-lease --force-if-includes origin
-+	)
-+'
-+
-+test_expect_success 'background updates of REMOTE can be mitigated with "push.useForceIfIncludes"' '
-+	rm -rf src dst &&
-+	git init --bare src.bare &&
-+	test_when_finished "rm -rf src.bare" &&
-+	git clone --no-local src.bare dst &&
-+	test_when_finished "rm -rf dst" &&
-+	(
-+		cd dst &&
-+		test_commit G &&
-+		git push origin master:master
-+	) &&
-+	git clone --no-local src.bare dst2 &&
-+	test_when_finished "rm -rf dst2" &&
-+	(
-+		cd dst2 &&
-+		test_commit H &&
-+		git push
-+	) &&
-+	(
-+		cd dst &&
-+		test_commit I &&
-+		git fetch origin &&
-+		git config --local push.useForceIfIncludes "true" &&
-+		test_must_fail git push --force-with-lease origin
-+	)
-+'
-+
- test_done
+If in the future, someone decides that `git rev-parse --zero-oid` is useful,
+they can also adjust these hooks accordingly.
+
+Changes since v1:
+
+* Don't implement `git rev-parse --null-oid`
+
+Denton Liu (3):
+  hooks--pre-push.sample: modernize script
+  hooks--pre-push.sample: use hash-agnostic zero OID
+  hooks--update.sample: use hash-agnostic zero OID
+
+ templates/hooks--pre-push.sample | 18 +++++++++---------
+ templates/hooks--update.sample   |  2 +-
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+Range-diff against v1:
+1:  ed1ade7328 < -:  ---------- hooks--pre-push.sample: prefer $() for command substitution
+2:  004f2e4c92 < -:  ---------- builtin/rev-parse: learn --null-oid
+3:  9d6c2951ab < -:  ---------- hooks--pre-push.sample: use hash-agnostic null OID
+-:  ---------- > 1:  95dd0b19ba hooks--pre-push.sample: modernize script
+-:  ---------- > 2:  afb460d9fd hooks--pre-push.sample: use hash-agnostic zero OID
+4:  42d2829889 ! 3:  784135549f hooks--update.sample: use hash-agnostic null OID
+    @@ Metadata
+     Author: Denton Liu <liu.denton@gmail.com>
+     
+      ## Commit message ##
+    -    hooks--update.sample: use hash-agnostic null OID
+    +    hooks--update.sample: use hash-agnostic zero OID
+     
+    -    The update sample hook has the null OID hardcoded as 40 zeros. However,
+    +    The update sample hook has the zero OID hardcoded as 40 zeros. However,
+         with the introduction of SHA-256 support, this assumption no longer
+         holds true. Replace the hardcoded $z40 with a call to
+    -    `git rev-parse --null-oid` so the sample hook becomes hash-agnostic.
+    +
+    +            git hash-object --stdin </dev/null | tr '[0-9a-f]' '0'
+    +
+    +    so the sample hook becomes hash-agnostic.
+     
+      ## templates/hooks--update.sample ##
+     @@ templates/hooks--update.sample: esac
+    @@ templates/hooks--update.sample: esac
+      # --- Check types
+      # if $newrev is 0000...0000, it's a commit to delete a ref.
+     -zero="0000000000000000000000000000000000000000"
+    -+zero="$(git rev-list --null-oid)"
+    ++zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+      if [ "$newrev" = "$zero" ]; then
+      	newrev_type=delete
+      else
 -- 
-2.28.0
+2.28.0.760.g8d73e04208
 
