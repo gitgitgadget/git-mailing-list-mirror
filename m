@@ -5,139 +5,136 @@ X-Spam-Level:
 X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
 	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 090F3C4363D
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 14:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD2CC4363D
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 14:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1B2D214D8
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 14:25:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 117EA206FB
+	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 14:42:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cQimQXX0"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="F/7zM0Qj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbgIWOZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 10:25:20 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57505 "EHLO mout.gmx.net"
+        id S1726629AbgIWOma (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Sep 2020 10:42:30 -0400
+Received: from mout.gmx.net ([212.227.17.22]:33795 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726550AbgIWOZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 10:25:20 -0400
+        id S1726540AbgIWOm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Sep 2020 10:42:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1600871116;
-        bh=3/MsfZhcI/lfXPh0j1jysqxTNDtH0e1g2faq2vLoJMM=;
+        s=badeba3b8450; t=1600872148;
+        bh=8GeU16ayQ9g9b7f3YtULAw/bgttRoILbb5m4Gvka5ek=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cQimQXX0/MMmqbyR2eNht5Vlngn/triemLlgHYGo2j47LVjv5enoqChVLuAwnhzvb
-         M+/xqIqRAr6VgSInLSoBbfNWdeuwdDn3jV/51tpR/+hUggZ6fl6Bc+Asuor4rVXnFd
-         KwFRW757vLBgayqBuu7RlV86+rffWgFn2NW8t1VI=
+        b=F/7zM0QjNI5vWD3Cj+9NV+Cg5k9oqT8J5lBAO0jDQ3yVcYI+dNRWg2o+CroUj2dhP
+         XSSqo7L7n0F8dzGgnZJmZeVovoGa/r7vYGwyKvCc51wB1oRZr6kBtalFPswP+tSk8Q
+         b9gXhahFTW8NPpEbmzKn78Oea/fenCinO1jmR6qU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.89.169] ([89.1.212.22]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVN6j-1juw7X0IPH-00SSLU; Wed, 23
- Sep 2020 16:25:16 +0200
-Date:   Wed, 23 Sep 2020 12:22:57 +0200 (CEST)
+Received: from [172.26.89.169] ([89.1.212.22]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKKUp-1k1UMN0aeF-00Lo40; Wed, 23
+ Sep 2020 16:42:28 +0200
+Date:   Wed, 23 Sep 2020 12:40:09 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 3/3] commit: add an option the reword HEAD
-In-Reply-To: <7f851e7c20aafdae5d5ae46ee1083b32ecc82c84.1600695050.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2009231206290.5061@tvgsbejvaqbjf.bet>
-References: <pull.736.git.1600695050.gitgitgadget@gmail.com> <7f851e7c20aafdae5d5ae46ee1083b32ecc82c84.1600695050.git.gitgitgadget@gmail.com>
+To:     Tao Klerks <tao@klerks.biz>
+cc:     git@vger.kernel.org
+Subject: Re: Question about fsmonitor and --untracked-files=all
+In-Reply-To: <CAPMMpoj+UhKCW_k34-cGkiWFghOOu13GhPgA0V-y4ZpLVppuiA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009231238560.5061@tvgsbejvaqbjf.bet>
+References: <CAPMMpoj+UhKCW_k34-cGkiWFghOOu13GhPgA0V-y4ZpLVppuiA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yQx++7PERs+mSyafd9UY7yg/4370o4c2WwwZZ5YhU9dbfeAIGf/
- zvXkYMCvEU5DnRkmBFOpcR68lHasPaW8dS5nwQBvGCcTgXUntmYlTiB/y+yK+Yvp+dw8OCt
- XL4jvwpysJ3xIXOqXpxymA4FI636JVvyI1BQZSsAkuyWXh7Oh/xGev+JoinV6SUpPffAep7
- jPbjxIbS4/s+5c1HKntlw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Yk8wVDkqjAw=:2UJmwOEC1JM5gAuMXjoHgE
- lU2kRi5Swae+31cRy7Ggnjj6770Hv2l3Y84XINqzNTHqenSaDDf07M1uy1Ffw/T3ixoPDqXza
- G3vMrJll+wXJaKGaKvv1hGIvoIGmMCk+45ZMF5PAjIHjByBhvrF/UkWiMcFt+OqX1YtVPAIb5
- 0nV6vY6N1wKlmsqyiuGzlkXenXtESeOJPxOLaN78Tckr3NBkc1iiuauqmyYQ3nk4rmFK5+gNx
- lmyA92spz2wBRhVS7DpPI9OPqM9n/0sur4px7wZH8cveXpsFgcUOS6BoSaoZcWiyk75AswOst
- LrZiGIPqKrJ/uHV/AMVEnz6PL1gm8N4bg9Zo/eh+vaB7OrPhNHe7N1k+a0EFKfii9K5KQLjS0
- EksgRm3pBSuuICsLc3fw5oETK+t5qvHP23z+ZtT4B4Wyz3/eLq0LEefSDRE1KLoTmVTwZXrFC
- HyfAd5UZbOy3/KNTHGcagto5QzwLT6ExN+1i6QHWDswQYUk0ZiHSfv11pmiDxtp+t54byx2Zx
- nk2KRZCvam7B/BSqe0NIoMbwB/+ysJ1TG0nCg9ZJbvGiv0xe5f7v2KLFIbGVjTfs/A6S7i9Iz
- aX7n6nlLEAXXqqErH3rKlhhuGXon39ltALbRu5G7ukBN7aA6U8U+cZ493Gf9itskVVekB+B7B
- PS0F6uKZhjgLvZsZM6+7BNPrvlX9JVAxIy9XTdoDIzalZ6TBv0aJ1Wmyz5di0v1OQuYJ92GmT
- u7nks8Ei2ORgkQvPqgu4eCZdMOuH8rVN1RyypSCYA7ZHxepje1bAZkMQ3a1tUIWa6P+35Cz/v
- Bh7B+y15rn770iN0icsDK7jk5Prb7RePPlAsbjl19XLCd2FkVToT0KubtMXijmDIkaPJFIaYQ
- /a4F6odnRfLKYArMqAXzOTNc85YbkcjJlpl9dRiyjCe4zKn7vvxuRmtOJOI64OHxF0CKpqUKe
- CoXUJb1F7zlwJU1Wli/7kYoS9WY7C+A9Hm8S462v4eTJ+iVDhxfnwcaIpBXeeCNgDm+n/VPvC
- BBprUxw9XdZC9ec+TlyCE4jMcjB0orO4kHqJEiqZim2AXXRmJxRi9cvkLDaU3XG7oQHPuxdEv
- Ak9qky4vanaraHUcoWTGCq/TkL8vByfqw6LmSIzr5Vv7vMuvi6n3YeJdQOmXYGIP96hJMYZYs
- CqEJuLHhDzHIFIxEE10hQem1RfnhhD5z0G5e99987WqB5h+BXes1ieG4sCoSK15yIbNSb0/LN
- cnII/Kyr5VsJTaamNv9yffFfJKfJaL/+6Smu0Ew==
+X-Provags-ID: V03:K1:5+ZO83peEUxWTjVA0a1wwfHqUiVOnsXl+v8X3ISA7Ib2b5c/QCd
+ Fh7KAS7KDfZ1pk/iGqw06IzxynyIXOKWezce2N1T/0Er2N3wbXFxuC2wghPfEvY8n9vTQj8
+ lLGik/Lipqd+j5fX4b9tnloSgYhftKqhKBb4eMzPbE2lTCyisMv7po7DXjcU0UojgRsN2zI
+ DV0+6E/BUkNT1l2TtfHDA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:50x+l+VJAKs=:dnWyvhElVpJ4YU9fyfy9sa
+ 7w3clv8vOVcBgAeVITuzk2T5MsF9yMNBKDrO6OYHzaCPqIkVobid2pccVt1zLKbuXHi/OQVr3
+ wGIZQt9nKCKcsBvlKS70dhRfvDhg1OR1jowfSxnssCJKH1GAtQAh32VsroiZYn9rrSCaFd0bX
+ a+bpfXb/zph2tJL3WY4gFm1dKTjZ7fD+Ad7nR82c71ZFQA+AuvgW/nX6TPkipODIdJzXqg48x
+ 0EwwW6ltEL5/g4I0lcbK7Jocm9EsHfHRd6u1VDZl3QoApWm1EkYg9O/oRXYGtckmr239W4d+A
+ Vkz0vsOryoh0v+K/kJFWn59LJyJbAJAFWOigCpuk2/PbfxYkIkOfJtCPezlVG7sLzZH6kXq/S
+ CNDB8q27ZajQKhkPNu2mSe2KKSu5GJLlBILt+DKNU0tmEJskgtbyqRpDAJ7OHOUw+vX6zZA3h
+ kemcB9xTr/BZlfQmUWx6qKHE5M/XmmQh3z9NTg8pvWBKCioGL9cMH1CSQJ8HDYVukbDATcFya
+ quY7BiSbylyjeVC6trCF0wxnqXTqAfDMP+hF9f+w7+uJcJdUI02K0PylDWQmUvsDY9xpWQi+O
+ phimJ/ctA90CzwsAMsq0nNBLK6nV3zD0uEdT51lu0ZynbSwDO5Ht88bz33OMVM8dkfj2SuN+g
+ 8lOOGarsZGCym8SodefaUpkYqPcZ/JaH8qsLw9NOJqg8uiO6uk++fQbyRPDj3fLxgjL/FyAsG
+ KqAhXZ+C/DqQfF9eS/8KTRi0Rkp0xpLcIIE66+GG9We3Yi/SyHrxlEh3UhjOS9/Twkg5AN4j1
+ 5//E9pcZe4O8RMkkKZW888x/YGtIcSVmJrT9X/rjhKvNKgKS56zuMmcnkOT7Wwj6UiQIDRbSQ
+ YS2BR22OBnfS0kwmWDGGqjjRZhYohgCIuFsdNQTalozzyIq7mudrFIphOxu+gpmMz19PfEkY8
+ Lve7SHOjiuRWXmMJdrNWfLOeeu/mOWzuChCfQTao3pO/FzJrI1CmJ7FwWC5cOlfZNNgywHThl
+ GaEkrbgxIVjoQDxRJLEhkFvlBggIXNwbSUix0l/yZRmZTzBU4OK3OsmlrckQy5Cm9waOj9Sx0
+ v9fmuyPWGOuXVru2BdcE7pFnD0QTgzW7pCGB3Q6utw8aainJeCqLHhUdiwAA7MEXgbLC58SNt
+ 3+r7ob7pxSZbUYqU0YDHhqerYiK1Poeca2cs2tBTnW+XeGn589ZMyRNAvX98EAfBUtcHrHG9B
+ qiQXPUe2UJxUdo2PxXe7VdmCvp2JalaN7xNCa6Q==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Tao,
 
-On Mon, 21 Sep 2020, Phillip Wood via GitGitGadget wrote:
+On Tue, 22 Sep 2020, Tao Klerks wrote:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> I've got a couple questions about the "fsmonitor" functionality,
+> untracked files, and multithreading.
 >
-> If one notices a typo in the last commit after starting to stage
-> changes for the next commit it is useful to be able to reword the last
-> commit without changing its contents. Currently the way to do that is
-> by specifying --amend --only with no pathspec which is not that
-> obvious to new users (so much so that before beb635ca9c ("commit:
-> remove 'Clever' message for --only --amend", 2016-12-09) commit
-> printed a message to congratulate the user on figuring out how to do
-> it). If the last commit is empty one has to pass --allow-empty as well
-> even though the contents are not being changed. This commits adds a
-> --reword option for commit that rewords the last commit without
-> changing its contents.
+> Background:
+>
+> In a repo with:
+>  * A couple hundred thousand tracked files, and a couple hundred
+> thousand .gitignored files, across a few thousand directories
+>  * The --untracked-cache setting, tested and working
+>  * core.fsmonitor set up with watchman (with the sample integration
+> script from january)
+>  * Git version 2.27.0.windows.1
+>
+> "git status" takes about 2s
+> "git status --untracked-files=3Dall" takes about 20s
+>
+> When I turn off "core.fsmonitor", the numbers change to something like:
+> "git status": 8s
+> "git status --untracked-files=3Dall": 9s
+>
+> Using windows' "procmon" to observe git.exe's behavior from outside, I
+> think I've understood a couple things that surprise me:
+> 1. when you specify "--untracked-files=3Dall", git scans the entire
+> folder tree regardless of the "fsmonitor" hook
+> 2. when you specify the "fsmonitor" hook, git does any
+> filesystem-scanning in a single-threaded fashion (as opposed to
+> multi-threaded without "fsmonitor" / normally)
+>
+> These two things combine so that with "fsmonitor" set, normal
+> command-line git status performance is great, but the performance in
+> tools that eagerly look for untracked files (like "Git Extensions" on
+> windows) actually suffers - it takes twice as long to run the 'git -c
+> diff.ignoreSubModules=3Dnone status --porcelain=3D2 -z
+> --untracked-files=3Dall' command that this UI wants (and blocks on, when
+> you go to a commit dialog).
+>
+> Questions:
+>
+> 1. Is there a reason "--untracked-files=3Dall" causes a full directory
+> tree scan even with the "fsmonitor" hook active, or is this
+> accidental?
 
-I would like to explain the idea I tried to get across when I proposed to
-implement support for `reword!` (and `--reword`) because I feel that it
-will change the design of this patch in a rather big way.
+I have a hunch that this might be related to a performance hack we have in
+Git for Windows: did you enable FSCache perchance?
 
-First of all, let me explain the scenario in which I long for the
-`--reword` option: I maintain several patch thickets, the most obvious one
-being Git for Windows' patch thicket that is merge-rebased [*1*] onto
-every new Git version.
-
-At times, I need to adjust a commit message in that patch thicket. It
-would be quite wasteful to perform a full merge-rebase, therefore I
-typically call `git commit --squash <commit> -c <commit>`, copy the
-oneline, paste it after the `squash!` line (surrounded by empty lines), an=
-d
-then reword the commit message. When the next Git version comes out, I do
-a merging-rebase, and when the editor pops up because of that `squash!`
-oneline, I remove the now-obsolete version(s) of the commit message.
-
-Obviously, I have to be careful to either also pass `--only` (which I
-somehow managed to learn about only today) or I have to make sure that I
-have no staged changes. In practice, I actually specify a bogus path,
-which has the same effect as `--only`.
-
-What I would actually rather have is the `--reword` option: `git commit
-=2D-reword <commit>`. In my mind, this would _add_ a new, "empty" commit,
-letting me edit the commit message of the specified commit, and using that
-as commit message, prefixed with the line `reword! <oneline>`.
-
-This, in turn, would need to be accompanied by support in the interactive
-rebase, to perform the desired reword (which is admittedly quite a bit
-different from what the way the todo command `reword` works).
-
-With that in mind, I would like to caution against the design of your
-current patch, because it would slam the door shut on the way I would like
-`--reword` to work.
+If so, I _suspect_ that turning it off would accelerate `git status
+=2D-untracked-files=3Dall`.
 
 Ciao,
-Dscho
+Johannes
 
-Footnote *1*: In Git for Windows, I want to not only rebase the patches
-(so that they are as ready to be submitted to the Git mailing list as they
-can be) but I also want the commit history to fast-forward. The strategy I
-settled on is the "merging rebase": it is a rebase that starts with a fake
-merge of the previous commit history, i.e. merging it in using `-s ours`
-so that only the commit history comes in, but not the changes. This allows
-contributors to pull without problems, but also provides the benefits of
-having a rebased version of the patches. The price is a rather big commit
-history on top of Git's main branch, as Git for Windows' main branch
-contains not only the newest iteration of its patches, but _all_
-iterations (at least since the first merging-rebase).
+> 2. Assuming that the full directory tree scan is indeed necessary even
+> with "fsmonitor" (when requesting all untracked files), could it be
+> made multithreaded?
+>
+> (my apologies for the simplistic "outside-in" observations; I don't
+> feel qualified to attempt to understand the git source code)
+>
+> Thanks for any help understanding the optimization opportunities here!
+>
+> Tao Klerks
+>
