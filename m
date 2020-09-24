@@ -2,50 +2,50 @@ Return-Path: <SRS0=EnZj=DB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 891D8C4363D
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 19:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB923C4363D
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 19:56:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4049320878
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 19:25:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E7E52220C
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 19:56:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o6qnj9Hk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hCOSxSjs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728772AbgIXTZp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 15:25:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65136 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727254AbgIXTZp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 15:25:45 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E48592F49;
-        Thu, 24 Sep 2020 15:25:41 -0400 (EDT)
+        id S1726426AbgIXT4P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 15:56:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58598 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726379AbgIXT4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 15:56:15 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F0E988F016;
+        Thu, 24 Sep 2020 15:56:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rhdefLd6Jc3tHARDETbqTN1uXNs=; b=o6qnj9
-        Hk2eY9VLAkTRB96kbf13O8F4SeB556+kMU74lUw6h3yZdGiJkMY6yte6YRuXvZTv
-        zfB/F7m5CaNXGhElnJaixk5gRorBTyER20WMxTC9HHPJQIw8PHOZl+AOuEuwVg67
-        of05PiBb3YAkVYO6/IeDCqq5ibWX2Pe1FOQrY=
+        :content-type; s=sasl; bh=8C3uaYxBUWuFSw3sOXbF0U/kDkc=; b=hCOSxS
+        jsOmNZd1UNwPVCeTPgVvKI2W+ac+m4nVE0h5HfoSjs+q+kMFS5DiwhtqHineEolj
+        636A28QdjzfVGSilNu0t1oJEE+xD4RRG1Sy9MhrZxQ87FUPlW7thnAhSpPj2BTJp
+        hEGEPZczAIIW6BxqQ9LcqFatCR/O+Z5nETvl8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ii9Jszhwgdv1bMWEavkqBVD5Wgf9bchq
-        fXVJ1+VA2ZzjL0wPAjLDK/ydnPKBoenMLit9RR91ntIir0pDXG+M0gPG82F9L4/T
-        M8Evm1p4cPobN+ISDisdI3IpSfCGlBc1BEutTaomPErzsqME0zQHoBDUBWs66Hlm
-        G0Q7Ngae+zk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 504AB92F48;
-        Thu, 24 Sep 2020 15:25:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Qw5+Nu854qzFL2yAiMnV5WnmLBMA1b4r
+        bkeb9TSTgpsEtInGq+Il+hK/QPBCdwfk+DpwpJs7w92wn5J6J7cfR1D/Nm0264U+
+        f7UR7xGU3RFhrT1lLqN2EXH33e+FoDOTXdTYUp4CR3rDC6k+AeTGEP2LQwP2EWCx
+        S8QHYplqbrk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E70028F015;
+        Thu, 24 Sep 2020 15:56:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C646E92F47;
-        Thu, 24 Sep 2020 15:25:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 147458F012;
+        Thu, 24 Sep 2020 15:56:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
@@ -56,14 +56,14 @@ Subject: Re: [PATCH v2] bisect: don't use invalid oid as rev when starting
 References: <20200923170915.21748-1-chriscool@tuxfamily.org>
         <20200924060344.15541-1-chriscool@tuxfamily.org>
         <xmqqsgb7m2bq.fsf@gitster.c.googlers.com>
-Date:   Thu, 24 Sep 2020 12:25:40 -0700
+Date:   Thu, 24 Sep 2020 12:56:11 -0700
 In-Reply-To: <xmqqsgb7m2bq.fsf@gitster.c.googlers.com> (Junio C. Hamano's
         message of "Thu, 24 Sep 2020 11:55:53 -0700")
-Message-ID: <xmqqo8lvm0y3.fsf@gitster.c.googlers.com>
+Message-ID: <xmqqk0wjlzj8.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BB8EAB74-FE9B-11EA-8179-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FF14FDCC-FE9F-11EA-913D-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -73,53 +73,44 @@ Junio C Hamano <gitster@pobox.com> writes:
 > We may need to audit recent additions of get_oid_committish() calls
 > in our codebase.  I suspect there may be other instances of the same
 > mistake.
->
-> Other than that, the code structure does look more straight-forward
-> compared to the previous round.  A fix on this version would involve
-> peeling what is in oid down to commit, and you need to handle errors
-> during that process, so it may not stay pretty with a fix, though.
-> I dunno.
 
-I'll queue it with this band-aid on top for now.
+Interim progress report.  I've only looked at files that use
+get_oid_treeish() but audited all uses of get_oid_*ish() in them.
 
-Thanks.
+The results are as follows.
 
- builtin/bisect--helper.c    | 7 ++++---
- t/t6030-bisect-porcelain.sh | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ * builtin/reset.c::parse_args() makes get_oid_committish() and
+   get_oid_treeish() only to discard the object name, because it
+   wants to ensure the args can be peeled down to such.  OK.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index a1f97e3f6c..2fcc023a3b 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -474,13 +474,14 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
- 		} else if (starts_with(arg, "--") &&
- 			 !one_of(arg, "--term-good", "--term-bad", NULL)) {
- 			return error(_("unrecognized option: '%s'"), arg);
--		} else if (!get_oid_committish(arg, &oid))
-+		} else if (!get_oidf(&oid, "%s^{commit}", arg)) {
- 			string_list_append(&revs, oid_to_hex(&oid));
--		else if (has_double_dash)
-+		} else if (has_double_dash) {
- 			die(_("'%s' does not appear to be a valid "
- 			      "revision"), arg);
--		else
-+		} else {
- 			break;
-+		}
- 	}
- 	pathspec_pos = i;
- 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 94179b6acf..4dbfa63ca1 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -82,7 +82,7 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
- 	git bisect bad $HASH4
- '
- 
--test_expect_success 'bisect start without -- uses unknown arg as path restriction' '
-+test_expect_success 'bisect start without -- takes unknown arg as pathspec' '
- 	git bisect reset &&
- 	git bisect start foo bar &&
- 	grep foo ".git/BISECT_NAMES" &&
+ * builtin/reset.c::cmd_reset() applies get_oid_committish() and
+   get_oid_treeish() to the result taken from the above, but then
+   uses lookup_commit_reference() and parse_tree_indirect() to peel
+   the result to the desired type.  OK.
+
+ * notes.c::init_notes() uses get_oid_treeish() to validate that the
+   notes ref can be read as a tree, and then uses get_tree_entry()
+   on it, which in turn uses read_object_with_reference() for
+   tree_type so it tolerates a commit object.  OK.
+
+
+I didn't audit the following hits of get_oid_committish().  There
+might be a similar mistake as you made in v2, or there may not be.
+
+I am undecided if I should just move on, marking them as
+left-over-bits ;-)
+
+
+
+builtin/blame.c:		if (get_oid_committish(i->string, &oid))
+builtin/checkout.c:		repo_get_oid_committish(the_repository, branch->name, &branch->oid);
+builtin/rev-parse.c:	if (!get_oid_committish(start, &start_oid) && !get_oid_committish(end, &end_oid)) {
+builtin/rev-parse.c:	if (get_oid_committish(arg, &oid) ||
+commit.c:	if (get_oid_committish(name, &oid))
+revision.c:	if (get_oid_committish(arg, &oid))
+sequencer.c:		    !get_oid_committish(buf.buf, &oid))
+sha1-name.c:		st = repo_get_oid_committish(r, sb.buf, &oid_tmp);
+sha1-name.c:	if (repo_get_oid_committish(r, dots[3] ? (dots + 3) : "HEAD", &oid_tmp))
+sha1-name.c:int repo_get_oid_committish(struct repository *r,
+t/helper/test-reach.c:		if (get_oid_committish(buf.buf + 2, &oid))
+
