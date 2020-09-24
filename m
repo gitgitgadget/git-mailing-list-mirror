@@ -2,146 +2,170 @@ Return-Path: <SRS0=EnZj=DB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0172CC4346E
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 05:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F149CC2D0E2
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 06:04:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A464723741
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 05:34:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E1AD235FD
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 06:04:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TNGZwJL+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kLF829BL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbgIXFeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 01:34:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59774 "EHLO
+        id S1726853AbgIXGEF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 02:04:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726691AbgIXFeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 01:34:10 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F0EC0613CE
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 22:34:10 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id gx22so2728635ejb.5
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 22:34:10 -0700 (PDT)
+        with ESMTP id S1726828AbgIXGEF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 02:04:05 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B69CC0613CE
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 23:04:05 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id c18so2359209wrm.9
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 23:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nzLMi34RmSaGRtC62Pk1Vl9KbkqIgbHsTfDPowMWWQk=;
-        b=TNGZwJL+tQewlYhipUlX76HIfARyUkW2KiGHL1vV3A6nkRuBiE7mAMgPqUVzzVd3zO
-         zrbwbw/Q61OL/N1nFab0pxRMykLwyP+RShTjgjjaLDGxiBHiMxZq0K8l2/xyRDLcLmuU
-         3nC7Vwvit8Pml1lVxMD+vBVi5d3h/XQU0WoaV414NEqhFPMlSbZFrCKWpb4ykmKq0vJS
-         W7gcTb/AQNFMh7264n4iMJjAF0+QiUbXYTcVPAXYqxrbad462kIAtP3CK2BjsDG4JOj5
-         pQ7ezZseZHxcX1FFqHpAUj02pO52W5kC1L9jS+N677qwbeeAQH6Lu0UiCqlrkydNLppy
-         UTWQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LSfzgWNfdiMriB+k97V4Z+oXNIfC7g3j7dSIBu2/R0A=;
+        b=kLF829BLA/rggUhB3P/8fryKznBwmS9RN/9oT4yRrLDwjDYTMBiaQzgGcvwjb1zwMG
+         kyoQZL9aAEEIMCge2bHAEfJAHxlY+YR8SD9bIWP/S+6E1Lgb766wNE9R+2dzgeoul2I4
+         WuO8jAuflwte6CeeeTL1DikbB3csfkNo9BLBc2TnDmDjPRgNAKHl/UytKPSUI8tRJRoZ
+         J+RGZ5SqCn15FiMFMZVqhNVmcidj0BXfGt9qrUphcciNos/lFMK4+bFL1Bt1YDy2o3vV
+         /5befxiqaguAGRNZBT3YwZocv5pPeOwpNCmFcabWXcwXEVexBFIMUrHGZCCrfOqrHrtn
+         ciRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nzLMi34RmSaGRtC62Pk1Vl9KbkqIgbHsTfDPowMWWQk=;
-        b=lifp3jNvEgyT6AlwOz0rZQ8A30sjwN6JaBksfBcjGUEfM3z0A5igFWK9lvu0E+XORe
-         U9IQbDmRTq5V/gl3XEZ4YneSs/4Yio4y1AWYz1Xp3ISvfcaViCir47M4n5YjFNSc6yHK
-         uPtZpec3Qc4kK/7ZlNSDoN5DpcrpWwHhshDM6DE4iWEIx6gWlnP9Z9IqQDztaxbCP0cL
-         LAHTnJOIyN5FZ8DrCNG3KHH7DI6ij0NIHzpngCmH+m/5vnDcQEespis/0EuuNw3qekqb
-         clXXNZZ0TTXsctZmxhMgyGgyWMjcmE7U9Az4YRtiK+ZUXtyzsNPAmtHtSOxBQ9n3XA+B
-         2Jug==
-X-Gm-Message-State: AOAM533tM5QCN/pDKO3JG7q3G/qMqX/C6U8UyTr6hznUu7gGEpQbTMD/
-        tdPC/InFYxmiYyjZzh18eWB6RGtzsFEQfEOXMfY=
-X-Google-Smtp-Source: ABdhPJyByDUTWNv44huuoXYOsLocg25m0RqDlX3J5AUrnvEalbM8ojb+xcO5Qx+drQq9Mab0zWEI1deUwUdx1efCn1s=
-X-Received: by 2002:a17:906:68d2:: with SMTP id y18mr2931495ejr.197.1600925648850;
- Wed, 23 Sep 2020 22:34:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200831105043.97665-1-mirucam@gmail.com> <nycvar.QRO.7.76.6.2009031403510.56@tvgsbejvaqbjf.bet>
- <CAN7CjDDVp_i7dhpbAq5zrGW69nE6+SfivJQ-dembmu+WyqKiQQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2009231647370.5061@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2009232316570.5061@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2009232316570.5061@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LSfzgWNfdiMriB+k97V4Z+oXNIfC7g3j7dSIBu2/R0A=;
+        b=VuQVC6pfjgYTcXWXEqEcw0IvDeXP8wypggLJlR8KkPLkKn+GRzRbeUSLBxbqdMLYiy
+         IITdfyXAiXMuDg2xaTkXc/Gbmx/qz0sDjLXvBTRc+XjpACDoMZPzg7OqqJf1s2CpPHGv
+         6jv+JsbV9R4xJhIdFIAYyaDbHoYMxFNP54KWJMnKfS5QMxAzci/QUL7QdEgAJsxd8TZ/
+         adWI6quNpGJTUUe0zoFa0V0DdRgsSf22X23PuOjLN1vzqfOOBi+zDY/jgSg2f2dTXC/3
+         /1KFoXlEIfbaFmEo0QtZCMAhSm8zhxVCh7yoyagbcSN/uqVVO8Yp8ksgUBM6A8pxnylf
+         BTIw==
+X-Gm-Message-State: AOAM531VoaVI/zTgb7Iwi2084LoBgu8+fdUKnJlDERKFtlIvG0d17Ns/
+        DSz7aN1ivHZg71mz8nPIbrpDFsoKDWjMSA==
+X-Google-Smtp-Source: ABdhPJwwAVhZ6Q2Cz9vmUkHJqTv/LICYt0dBs0tJEovTg3bbMhmurw+YXvH+gOsTNuDw3CEEyXiFcg==
+X-Received: by 2002:a5d:69c2:: with SMTP id s2mr3092633wrw.389.1600927443287;
+        Wed, 23 Sep 2020 23:04:03 -0700 (PDT)
+Received: from localhost.localdomain ([193.57.124.13])
+        by smtp.gmail.com with ESMTPSA id h204sm2042058wmf.35.2020.09.23.23.04.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2020 23:04:02 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 24 Sep 2020 07:33:57 +0200
-Message-ID: <CAP8UFD1fXBChG3691HrKmbN-4vThCE7=0bL+Ty8-u4FFGTn2tQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/13] Finish converting git bisect to C part 2
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Miriam Rubio <mirucam@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v2] bisect: don't use invalid oid as rev when starting
+Date:   Thu, 24 Sep 2020 08:03:44 +0200
+Message-Id: <20200924060344.15541-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.28.0.586.gce332cc16b
+In-Reply-To: <20200923170915.21748-1-chriscool@tuxfamily.org>
+References: <20200923170915.21748-1-chriscool@tuxfamily.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-HI Dscho,
+In 06f5608c14 (bisect--helper: `bisect_start` shell function
+partially in C, 2019-01-02), we changed the following shell
+code:
 
-On Wed, Sep 23, 2020 at 11:26 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+-                       rev=$(git rev-parse -q --verify "$arg^{commit}") || {
+-                               test $has_double_dash -eq 1 &&
+-                               die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
+-                               break
+-                       }
+-                       revs="$revs $rev"
 
-> On Wed, 23 Sep 2020, Johannes Schindelin wrote:
->
-> > On Wed, 23 Sep 2020, Miriam R. wrote:
-> >
-> > > Applying some of your suggestions related to removing some 'eval' in
-> > > git-bisect shell script, a bug has appeared. It seems it is related to
-> > > a previous code merged before my internship.
-> >
-> > Now you got me curious: what bug did you see?
->
-> I found your fork and ran the test, and this is the first symptom:
->
-> -- snip --
-> [...]
-> ++ git bisect skip
-> Bisecting: 1 revision left to test after this (roughly 1 step)
-> [32a594a3fdac2d57cf6d02987e30eec68511498c] Add <4: Ciao for now> into <hello>.
-> ++ git bisect good
-> ++ grep '3082e11d3a0f2edca194c8ce1eb802256e38e75e is the first bad commit' my_bisect_log.txt
-> 3082e11d3a0f2edca194c8ce1eb802256e38e75e is the first bad commit
-> ++ git bisect log
-> ++ git bisect reset
-> Previous HEAD position was 32a594a Add <4: Ciao for now> into <hello>.
-> Switched to branch 'other'
-> ok 22 - bisect skip: add line and then a new test
->
-> expecting success of 6030.23 'bisect skip and bisect replay':
->         git bisect replay log_to_replay.txt > my_bisect_log.txt &&
->         grep "$HASH5 is the first bad commit" my_bisect_log.txt &&
->         git bisect reset
->
-> ++ git bisect replay log_to_replay.txt
-> error: update_ref failed for ref 'refs/bisect/bad': cannot update ref 'refs/bisect/bad': trying to write ref 'refs/bisect/bad' with nonexistent object 10006d020000000068986d020000000054f65f00
-> error: last command exited with $?=1
-> not ok 23 - bisect skip and bisect replay
-> #
-> #               git bisect replay log_to_replay.txt > my_bisect_log.txt &&
-> #               grep "$HASH5 is the first bad commit" my_bisect_log.txt &&
-> #               git bisect reset
-> -- snap --
->
-> So I dug a little bit further (and applied Christian's patch in the
-> meantime), and it turns out that the `eval` has nothing to do with what I
-> originally thought it would be required for: I thought that it wanted to
-> prevent `exit` calls from actually exiting the script.
->
-> Instead, those `eval` calls are required because the arguments are
-> provided in quoted form. For example, during the execution of t6030.68,
-> the `eval` would expand the call
->
->         eval "git bisect--helper --bisect-start $rev $tail"
->
-> to
->
->         git bisect--helper --bisect-start '--term-old' 'term2' '--term-new' 'term1'
+into:
 
-Yeah, that was also what I found (along with the bug I sent a patch for).
++                       char *commit_id = xstrfmt("%s^{commit}", arg);
++                       if (get_oid(commit_id, &oid) && has_double_dash)
++                               die(_("'%s' does not appear to be a valid "
++                                     "revision"), arg);
++
++                       string_list_append(&revs, oid_to_hex(&oid));
++                       free(commit_id);
 
-> Therefore, the `eval` really needs to stay in place (also the other `eval`
-> I had originally suggested to remove, for the same reason).
->
-> I would still recommend appending `|| exit`, even if it just so happens
-> that we will eventually abort when the `bisect--helper` command failed
-> anyway, because the next command will then fail, and abort. But it's
-> cleaner to abort already when this invocation failed rather than relying
-> on that side effect.
+In case of an invalid "arg" when "has_double_dash" is false, the old
+code would "break" out of the argument loop.
 
-Yeah, I think it's a good solution.
+In the new C code though, `oid_to_hex(&oid)` is unconditonally
+appended to "revs". This is wrong first because "oid" is junk as
+`get_oid(commit_id, &oid)` failed and second because it doesn't break
+out of the argument loop.
 
-Thanks for taking a look,
-Christian.
+Not breaking out of the argument loop means that "arg" is then not
+treated as a path restriction.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+This patch is made on top of e1cfff6765 (Sixteenth batch, 2020-09-22)
+and incorporates Dscho's suggestions.
+
+Thanks to Junio and Dscho for reviewing the first version.
+
+ builtin/bisect--helper.c    | 14 ++++++--------
+ t/t6030-bisect-porcelain.sh |  7 +++++++
+ 2 files changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 7dcc1b5188..f4762e1774 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -484,15 +484,13 @@ static int bisect_start(struct bisect_terms *terms, const char **argv, int argc)
+ 			terms->term_bad = xstrdup(arg);
+ 		} else if (starts_with(arg, "--")) {
+ 			return error(_("unrecognized option: '%s'"), arg);
+-		} else {
+-			char *commit_id = xstrfmt("%s^{commit}", arg);
+-			if (get_oid(commit_id, &oid) && has_double_dash)
+-				die(_("'%s' does not appear to be a valid "
+-				      "revision"), arg);
+-
++		} else if (!get_oid_committish(arg, &oid))
+ 			string_list_append(&revs, oid_to_hex(&oid));
+-			free(commit_id);
+-		}
++		else if (has_double_dash)
++			die(_("'%s' does not appear to be a valid "
++			      "revision"), arg);
++		else
++			break;
+ 	}
+ 	pathspec_pos = i;
+ 
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index b886529e59..70c39a9459 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -82,6 +82,13 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
+ 	git bisect bad $HASH4
+ '
+ 
++test_expect_success 'bisect start without -- uses unknown arg as path restriction' '
++	git bisect reset &&
++	git bisect start foo bar &&
++	grep foo ".git/BISECT_NAMES" &&
++	grep bar ".git/BISECT_NAMES"
++'
++
+ test_expect_success 'bisect reset: back in the master branch' '
+ 	git bisect reset &&
+ 	echo "* master" > branch.expect &&
+-- 
+2.28.0.585.ge1cfff6765
+
