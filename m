@@ -2,170 +2,99 @@ Return-Path: <SRS0=EnZj=DB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F149CC2D0E2
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 06:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98805C4346E
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 06:10:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E1AD235FD
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 06:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2737F206B8
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 06:10:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kLF829BL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tNwS+VjL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbgIXGEF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 02:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36130 "EHLO
+        id S1726855AbgIXGKo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 02:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbgIXGEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 02:04:05 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B69CC0613CE
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 23:04:05 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id c18so2359209wrm.9
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 23:04:04 -0700 (PDT)
+        with ESMTP id S1726683AbgIXGKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 02:10:44 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B09FC0613CE
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 23:10:43 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id a12so2103232eds.13
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 23:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LSfzgWNfdiMriB+k97V4Z+oXNIfC7g3j7dSIBu2/R0A=;
-        b=kLF829BLA/rggUhB3P/8fryKznBwmS9RN/9oT4yRrLDwjDYTMBiaQzgGcvwjb1zwMG
-         kyoQZL9aAEEIMCge2bHAEfJAHxlY+YR8SD9bIWP/S+6E1Lgb766wNE9R+2dzgeoul2I4
-         WuO8jAuflwte6CeeeTL1DikbB3csfkNo9BLBc2TnDmDjPRgNAKHl/UytKPSUI8tRJRoZ
-         J+RGZ5SqCn15FiMFMZVqhNVmcidj0BXfGt9qrUphcciNos/lFMK4+bFL1Bt1YDy2o3vV
-         /5befxiqaguAGRNZBT3YwZocv5pPeOwpNCmFcabWXcwXEVexBFIMUrHGZCCrfOqrHrtn
-         ciRA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hpl6YzywIzPfzaL2g5MGmngpIgHr7OXRKhMgCN+gOMM=;
+        b=tNwS+VjLSdOSyPc2Yyu0l6unEh1waZnLKFZYlxbdER/YIbD6NRLKwVgKPGurj/u3OW
+         434LlZxlIxPpQGhu2xhtzPF44IWppYfWt4aFPYMfzBnFsjq2A2vEB77EvtcKC4aJ6+BP
+         reeCq25i/3768uDPo9DXIuD6bXOVWPI/ptFFTGQVWV0m4va/1yshdBj1Hhz2TWnSASQa
+         zZuaVulhJ+cR3l7Q9sxMEbx4AjVeiwxaHa7g78TUV+Y6p/EXPM7VO0+/PTU+/lHjyCsa
+         4STMiCcJGQzgsjLcOoYYKXN7GFp7E4R279P0UkMxZe3NqKHtVDImYjwCOwigFBm5v1FF
+         cHuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LSfzgWNfdiMriB+k97V4Z+oXNIfC7g3j7dSIBu2/R0A=;
-        b=VuQVC6pfjgYTcXWXEqEcw0IvDeXP8wypggLJlR8KkPLkKn+GRzRbeUSLBxbqdMLYiy
-         IITdfyXAiXMuDg2xaTkXc/Gbmx/qz0sDjLXvBTRc+XjpACDoMZPzg7OqqJf1s2CpPHGv
-         6jv+JsbV9R4xJhIdFIAYyaDbHoYMxFNP54KWJMnKfS5QMxAzci/QUL7QdEgAJsxd8TZ/
-         adWI6quNpGJTUUe0zoFa0V0DdRgsSf22X23PuOjLN1vzqfOOBi+zDY/jgSg2f2dTXC/3
-         /1KFoXlEIfbaFmEo0QtZCMAhSm8zhxVCh7yoyagbcSN/uqVVO8Yp8ksgUBM6A8pxnylf
-         BTIw==
-X-Gm-Message-State: AOAM531VoaVI/zTgb7Iwi2084LoBgu8+fdUKnJlDERKFtlIvG0d17Ns/
-        DSz7aN1ivHZg71mz8nPIbrpDFsoKDWjMSA==
-X-Google-Smtp-Source: ABdhPJwwAVhZ6Q2Cz9vmUkHJqTv/LICYt0dBs0tJEovTg3bbMhmurw+YXvH+gOsTNuDw3CEEyXiFcg==
-X-Received: by 2002:a5d:69c2:: with SMTP id s2mr3092633wrw.389.1600927443287;
-        Wed, 23 Sep 2020 23:04:03 -0700 (PDT)
-Received: from localhost.localdomain ([193.57.124.13])
-        by smtp.gmail.com with ESMTPSA id h204sm2042058wmf.35.2020.09.23.23.04.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2020 23:04:02 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v2] bisect: don't use invalid oid as rev when starting
-Date:   Thu, 24 Sep 2020 08:03:44 +0200
-Message-Id: <20200924060344.15541-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.28.0.586.gce332cc16b
-In-Reply-To: <20200923170915.21748-1-chriscool@tuxfamily.org>
-References: <20200923170915.21748-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hpl6YzywIzPfzaL2g5MGmngpIgHr7OXRKhMgCN+gOMM=;
+        b=CsfJq17uJiI6dAcdkFd2ppepIM0naSD7nGind4Q0ybEThp2gSbk9hjlUfpAQNQ8Myr
+         Xe4EFjzeWjGirOxsnTnUFdnsBAWosjCgOJUJOaXKZFtahgPK+756nKIOwGEvbd0F2x0V
+         A0G6yrQsAwVyICLnEYzXFWNH8T7F36EPJg6+Q31OWKjAFT0AHDUcv0Tn+biMCGWbZAKW
+         ts/Nc+AhCzPkQqt79405yRxSx5ea4Zp3EiV9I6kQi7xgVN/GZKLAnYWQN3buv3uqIDuU
+         qPgBthWu1YAwbZ6hka1cjkvPCMWc49lqGoGbFLWQStc0OYmHtikYsDr++12JW3TmEmrL
+         hzAA==
+X-Gm-Message-State: AOAM530BpA+Xa062uyBZ/X177i3vPmzhPPm4EjZHQiUEYiXUdR9csDV5
+        fBln953ObCoLZBnI97f1AqI3HlSlFTeakwaxX4A=
+X-Google-Smtp-Source: ABdhPJySIMnj1P/vV8d4EbrE+qf0JrPqdJCf76VPj9QB0K7T+jrRpWM0EhrFLGVL9OPVzcLo5BhSC9rTGx/JiE0aAQo=
+X-Received: by 2002:aa7:d750:: with SMTP id a16mr3003332eds.362.1600927842199;
+ Wed, 23 Sep 2020 23:10:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200923170915.21748-1-chriscool@tuxfamily.org>
+ <nycvar.QRO.7.76.6.2009232229000.5061@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2009232302050.5061@tvgsbejvaqbjf.bet>
+ <xmqqa6xgi363.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa6xgi363.fsf@gitster.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 24 Sep 2020 08:10:31 +0200
+Message-ID: <CAP8UFD3mfPgedqGk0ZFp3K3r1gDA3-stbSxoEomRh4T0_qH+tg@mail.gmail.com>
+Subject: Re: [PATCH] bisect: don't use invalid oid as rev when starting
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Miriam Rubio <mirucam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 06f5608c14 (bisect--helper: `bisect_start` shell function
-partially in C, 2019-01-02), we changed the following shell
-code:
+On Wed, Sep 23, 2020 at 11:39 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > From f673cea53e046774847be918f4023430e56bf6cb Mon Sep 17 00:00:00 2001
+> > From: Christian Couder <christian.couder@gmail.com>
+> > Date: Wed, 23 Sep 2020 19:09:15 +0200
+> > Subject: [PATCH] bisect: don't use invalid oid as rev when starting
+> > ...
+> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> > index 93e855271b9..d11d4c9bbb5 100644
+> > --- a/builtin/bisect--helper.c
+> > +++ b/builtin/bisect--helper.c
+>
+> Unfortunately this does not apply to the broken commit or 'master'
+> or anywhere else, it seems (no such blob as 93e855271b9 found at the
+> path).
+>
+> It is better to make it applicable at least to 'master'.  Making it
+> also apply to 'maint' is optional, I would say, as the bug it fixes
+> is not so critical.
 
--                       rev=$(git rev-parse -q --verify "$arg^{commit}") || {
--                               test $has_double_dash -eq 1 &&
--                               die "$(eval_gettext "'\$arg' does not appear to be a valid revision")"
--                               break
--                       }
--                       revs="$revs $rev"
+Sorry, I don't know what happened. It seemed to me that my branch was
+based on master, but maybe I did something wrong.
 
-into:
-
-+                       char *commit_id = xstrfmt("%s^{commit}", arg);
-+                       if (get_oid(commit_id, &oid) && has_double_dash)
-+                               die(_("'%s' does not appear to be a valid "
-+                                     "revision"), arg);
-+
-+                       string_list_append(&revs, oid_to_hex(&oid));
-+                       free(commit_id);
-
-In case of an invalid "arg" when "has_double_dash" is false, the old
-code would "break" out of the argument loop.
-
-In the new C code though, `oid_to_hex(&oid)` is unconditonally
-appended to "revs". This is wrong first because "oid" is junk as
-`get_oid(commit_id, &oid)` failed and second because it doesn't break
-out of the argument loop.
-
-Not breaking out of the argument loop means that "arg" is then not
-treated as a path restriction.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-This patch is made on top of e1cfff6765 (Sixteenth batch, 2020-09-22)
-and incorporates Dscho's suggestions.
-
-Thanks to Junio and Dscho for reviewing the first version.
-
- builtin/bisect--helper.c    | 14 ++++++--------
- t/t6030-bisect-porcelain.sh |  7 +++++++
- 2 files changed, 13 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 7dcc1b5188..f4762e1774 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -484,15 +484,13 @@ static int bisect_start(struct bisect_terms *terms, const char **argv, int argc)
- 			terms->term_bad = xstrdup(arg);
- 		} else if (starts_with(arg, "--")) {
- 			return error(_("unrecognized option: '%s'"), arg);
--		} else {
--			char *commit_id = xstrfmt("%s^{commit}", arg);
--			if (get_oid(commit_id, &oid) && has_double_dash)
--				die(_("'%s' does not appear to be a valid "
--				      "revision"), arg);
--
-+		} else if (!get_oid_committish(arg, &oid))
- 			string_list_append(&revs, oid_to_hex(&oid));
--			free(commit_id);
--		}
-+		else if (has_double_dash)
-+			die(_("'%s' does not appear to be a valid "
-+			      "revision"), arg);
-+		else
-+			break;
- 	}
- 	pathspec_pos = i;
- 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index b886529e59..70c39a9459 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -82,6 +82,13 @@ test_expect_success 'bisect fails if given any junk instead of revs' '
- 	git bisect bad $HASH4
- '
- 
-+test_expect_success 'bisect start without -- uses unknown arg as path restriction' '
-+	git bisect reset &&
-+	git bisect start foo bar &&
-+	grep foo ".git/BISECT_NAMES" &&
-+	grep bar ".git/BISECT_NAMES"
-+'
-+
- test_expect_success 'bisect reset: back in the master branch' '
- 	git bisect reset &&
- 	echo "* master" > branch.expect &&
--- 
-2.28.0.585.ge1cfff6765
-
+Hopefully the V2 I just sent will be better anyway.
