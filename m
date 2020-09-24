@@ -1,105 +1,171 @@
-Return-Path: <SRS0=8LOk=DA=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=EnZj=DB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B34AC4363D
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 23:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5067BC4346E
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 04:49:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0A0820C56
-	for <git@archiver.kernel.org>; Wed, 23 Sep 2020 23:47:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5F3D23899
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 04:49:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y2pZvNPu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A5Pt7bh1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726515AbgIWXrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Sep 2020 19:47:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
+        id S1726779AbgIXEtK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 00:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbgIWXrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Sep 2020 19:47:37 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 816B1C0613CE
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 16:47:37 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id r4so931080pgl.20
-        for <git@vger.kernel.org>; Wed, 23 Sep 2020 16:47:37 -0700 (PDT)
+        with ESMTP id S1726466AbgIXEtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 00:49:09 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82220C0613CE
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 21:49:09 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id c62so2214383qke.1
+        for <git@vger.kernel.org>; Wed, 23 Sep 2020 21:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=6rwvNUwoysQGZOGi6M4zCgD9QfzPZ0E+o9PlxzKpqHg=;
-        b=Y2pZvNPugT3cinrfPe/YhQU44+7s2Y+ttDoWK+QVdIO3OMArRt5w2AuSWtnC4XcJYY
-         4vYEP71W1r0eL/XLk4en3//DsagTNca8g7gYOLpj52MrKVYf2ldGte6aLzeDlOg35FN6
-         FhweS1vkgAp/BSZWAMP3w9sKaNcV9H4DMCRWWeSnDQjFXbYayUipH987hImSnq8R74O9
-         ojuDRY3qsD+XeezWJWieOxLfOaIOY5sk2fQa5MYGz8KmDQmu//ME69wx86RyxIBlPhnM
-         qo5afcoWG9PlE9+ZNqERPv0AtajeDAPrKjR04mWuUYkmqMM9qwRnlnJd1Gd/NMPwQ+Rc
-         nf6A==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=qB0+SluFzTH0CouFsKDegpKI0lw9Ug1n5V8LWBpOu0Y=;
+        b=A5Pt7bh16V44DaXUVjySaY/mVzyUdD8Q7PjBrDPEVk8na+fMVggWd4aaOHIFSUhTyr
+         scrCIqZKl4kBKu5bw9E+GI1WuUgU9F2nQQVAhyd//rsCphpDOEXMZDLAJ8Ig7r5P3aFF
+         JY/Cx0L0BVWESl/lFshVW3zgkeWjy1lDl5Ex70ruREBqjca00WepgudGVfDbV1Q0Ip2w
+         ghE8ecw91Lztkqq2EjjEktXbd85JNHJ0YOBMK1CPuOp2NmuCPG9cjYWdAhTlWXlwaRI/
+         Kc2/91DXH6EPpYJhI4mp29HkldHvyLJNyrEhI1GLEYwXTRKzOtdx0V4XntnKpJ/xqhH2
+         Bg5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=6rwvNUwoysQGZOGi6M4zCgD9QfzPZ0E+o9PlxzKpqHg=;
-        b=fOdD/lMQQmTFkZx1Bmz1DQ/xyLcsYU0zcP/l7jB6K/bJw0h1R64YlO9bHPHgce0Hiv
-         H4xS9bjG7W7AJICrYR/AOqAi1sO3wgNZE0n9Bk3mZl+JfdVWXQ0W0WeMW0zlZWKfVyK5
-         nwcVAptWamndwU3sHXAwV/B3Qs+9PqP5Y4O1h+cvaDss//moJc0FhtBDcFSymbJlla2b
-         uYeqJ8PVTb1kkiWHCjTrLcfE6VJNREGZq0GSjAcaS+jAWzdXFyOjVS3Qn9vs3FGNJQ/s
-         zscMIqVlGHc1iFLR8dDdI/b1VhdbESA4C2JfoPkS5QowInoW49lGhde8QvJvYwZ9Je/c
-         fCZQ==
-X-Gm-Message-State: AOAM531ER+n0MR+vj4n2khKwz7e1F9uTRR5nW2FGP7owL+FuSVs0E0/y
-        3hjUxOUFCGfM6FFvQeCarc8as+zML7V2CLx8zTzj
-X-Google-Smtp-Source: ABdhPJz+Y2+rjUeG/1RXb5IK+9/SzY7i2p5Aqi0DeQwh94w8XozVfyE+nbmjf6fXhHt94RQ+8rkxg16rdtPngv8jLd+B
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:9491:0:b029:142:2501:396b with
- SMTP id z17-20020aa794910000b02901422501396bmr2014604pfk.48.1600904856866;
- Wed, 23 Sep 2020 16:47:36 -0700 (PDT)
-Date:   Wed, 23 Sep 2020 16:47:34 -0700
-In-Reply-To: <20200909004939.1942347-9-emilyshaffer@google.com>
-Message-Id: <20200923234734.1294057-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20200909004939.1942347-9-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.28.0.681.g6f77f65b4e-goog
-Subject: Re: [PATCH v4 8/9] commit: use config-based hooks
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=qB0+SluFzTH0CouFsKDegpKI0lw9Ug1n5V8LWBpOu0Y=;
+        b=POCTjG9Zi3YmHKN0yX3BCZ17hQ/Bx5TlPGD+vvi/QazVvVit5X+QBU3pNrAyOe1juU
+         4HNqe77nsz50DBK6+Co3z4uL8NbAUHROKEMPMUaTPKKbvfewdmwfl+y9yP/2vVRo/atS
+         Ab1Hew2CtSS7Hx+DFIjzcvUOATEPnvfjpMQq/mVqmgEQFQMBDvP8RRmmrBR7tKuWlTd2
+         ItqGkAMC4SVzcMpzbZ2T5PxJ+Z4ss9XRH2YhBo4xZQMNpZ5Y6v9/gB77Ad/I02/LB7A5
+         yor2HblcJ4SnAp91veqPOmXMNbYoohpQ1ajvhyaXgKn1ApwwlwCofJAHGnKPy2Eaqh+q
+         TczQ==
+X-Gm-Message-State: AOAM530d9EOnTUruD2IS6lEDqSEL0Pag2RbjAJyJXsb/Nly+wlc7yQDF
+        tdaLkkuJtywrCNl2Np/nRjg=
+X-Google-Smtp-Source: ABdhPJwYebfg6jr6QC8pcZXUYiTuRYbABYiDh5zlgwm9YN9u+7cMNaOhn6pdJy2cX4+x9ViCnCaBEQ==
+X-Received: by 2002:a37:a0cf:: with SMTP id j198mr3257558qke.408.1600922948509;
+        Wed, 23 Sep 2020 21:49:08 -0700 (PDT)
+Received: from [192.168.67.200] (dsl-66-36-136-92.mtl.aei.ca. [66.36.136.92])
+        by smtp.gmail.com with ESMTPSA id g203sm1464521qkb.51.2020.09.23.21.49.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Sep 2020 21:49:07 -0700 (PDT)
+Subject: Re: [PATCH 1/2] diff: Fix modified lines stats with --stat and
+ --numstat
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Thomas Guyot-Sionnest <dermoth@aei.ca>
+References: <20200918113256.8699-1-tguyot@gmail.com>
+ <20200918113256.8699-2-tguyot@gmail.com>
+ <20200918172747.GD183026@coredump.intra.peff.net>
+ <CALqVohcZrBcjmonw-peVxUNM1kgEheCr3nAk9ZvajGpbpXsNaQ@mail.gmail.com>
+ <xmqq363fm02a.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2009231709340.5061@tvgsbejvaqbjf.bet>
+ <xmqqk0wki9fh.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2009232244000.5061@tvgsbejvaqbjf.bet>
+From:   Thomas Guyot <tguyot@gmail.com>
+Autocrypt: addr=tguyot@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <1d0a60c3-d15e-bcbb-f042-2f8ae06f0de1@gmail.com>
+Date:   Thu, 24 Sep 2020 00:49:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.2009232244000.5061@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -	if (!no_verify && find_hook("pre-commit")) {
-> +	if (!no_verify && hook_exists("pre-commit")) {
+Hi,
 
-A reviewer would probably need to look at all instances of "pre-commit"
-(and likewise for the other hooks) but if the plan is to convert all
-hooks, then the reviewer wouldn't need to do this since we could just
-delete the "find_hook" function.
+On 2020-09-23 16:44, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Wed, 23 Sep 2020, Junio C Hamano wrote:
+> 
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>> I believe that that is exactly the reason why we want this:
+>>>
+>>> -	same_contents = oideq(&one->oid, &two->oid);
+>>> +	same_contents = one->oid_valid && two->oid_valid ?
+>>> 		oideq(&one->oid, &two->oid) : !strcmp(one->data, two->data);
+>>
+>> Not quite.  The other side should either be
+>>
+>> 	one->size == two->size && !memcmp(...)
 
-Overall comments about the design and scope of the patch set:
+Thanks for all the feedback, that was enlightening. Although I have been
+silent the past few days I watched this thread with interest.
 
- - I think that the abilities of the current patch set regarding
-   overriding order of globally-set hook commands is sufficient. We
-   should also have some way of disabling globally-set hooks, perhaps
-   by implementing the "skip" variable mentioned in patch 1 or by
-   allowing the redefinition of hookcmd sections (e.g. by redefining a
-   command to "/usr/bin/true"). To me, these provide substantial
-   user-facing value, and would be sufficient for a first version - and
-   other things like parallelization can come later.
 
- - As for the UI that should be exposed through the "git hook" command,
-   I think that "git hook list" and "git hook run" are sufficient.
-   Editing the config files are not too difficult, and "git hook add"
-   etc. can be added later.
+So as Junio pointed out this is merely an optimization - the range-diff
+test that I corrected also showed two 0-line diffs and I realized
+there's a block further down that should explicitly removes them, under
 
- - As for whether (1) it is OK for none of the hooks to be converted (and
-   instead rely on the user to edit their hook scripts to call "git hook
-   run ???"), or if (2) we should require some hooks to be
-   converted, or if (3) we should require all hooks to be converted: I'd
-   rather have (2) or (3) so that we don't have dead code. I prefer (3),
-   especially since a reviewer wouldn't have to worry about leftover
-   usages of old functions like find_hook() (as I mentioned at the start
-   of this email), but I'm not fully opposed to (2) either.
+    else if (!same_contents) {
+
+We can even remove same_contents entirely and everything work just fine
+after adjusting the range-diff test - the logic is correct and
+underlying functions already DTRT.
+
+
+My next patch simplifies the test down to:
+
+    same_contents = one->oid_valid && two->oid_valid &&
+        oideq(&one->oid, &two->oid);
+
+My understanding is that oid_valid will never be true for a modified
+(even mode change) or out of tree file so it's a valid assumption.
+
+I'll also rename that variable to "same_oid" - the current name is
+misleading both ways (true doesn't means there will be diffs, false
+doesn't mean contents differs).
+
+Regards,
+
+Thomas
