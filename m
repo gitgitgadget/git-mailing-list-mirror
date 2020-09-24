@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EACECC2D0E2
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 12:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6C40C4727E
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 12:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99249221EB
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 12:34:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76D33235FD
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 12:34:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKaa/2ZJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="siGigk+C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727794AbgIXMeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 08:34:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39954 "EHLO
+        id S1727801AbgIXMeB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 08:34:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727570AbgIXMeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 08:34:00 -0400
+        with ESMTP id S1727570AbgIXMeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 08:34:01 -0400
 Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA9A1C0613CE
-        for <git@vger.kernel.org>; Thu, 24 Sep 2020 05:33:59 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id m6so3669095wrn.0
-        for <git@vger.kernel.org>; Thu, 24 Sep 2020 05:33:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2AE8C0613CE
+        for <git@vger.kernel.org>; Thu, 24 Sep 2020 05:34:00 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id k15so3598246wrn.10
+        for <git@vger.kernel.org>; Thu, 24 Sep 2020 05:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M+JmQMk+e2m4npZedAl84xsb23PB90uGmu0PhUZk5L0=;
-        b=CKaa/2ZJfhRZygsBiKGSd3rPHOwtzaEiSUd1Hfsd2Vy8oatopa+Wc787DZ6vSZWNJp
-         zLK/A0y46cW37LuMeLtfOG6KeMgPL+YoMhSSWBt6Vo9+L3qVzVsm7dbn/2r9VX5E85Hn
-         mvWqWphXROtpYHw9qkLJL3plikM2XM3bGAAvUhAIA/9g74E9K7g07+LDv2kYFWP97kpX
-         ZiqEUT8x9TxYf1yZ31WtHWfLXvJSTBXqJWyJnT84DTxEqYP6xaimXxFW2QrJUvlnSZJF
-         YmKySzBm8HSYzMppJzEN603dxIKEZ7mw7X6gfMDpUvuMQTCp+Wnx+cvhvFvjyLEVPWL7
-         oKpg==
+        bh=c9Y7TvxvEafAn9PpUMsqnYYW+Mm5hIL2kR7H/olF6XM=;
+        b=siGigk+CpMbheTE2c2l8+THN0eZLTSpqnpJ5RcXMAf8Be7ZyGb6dNxW/n89VTHnpCU
+         yeiRZcJ3Y0mbaLYr59p+atfLHo9dkLlOg+uCd3/P+0dsU2wGVUQNXGOxXRyiK44yDxAy
+         QgYlo2FbNSYXmMjK5keLvBtNNvfk7TIPNhc6cjGDEkzCMscuj5o8bEmWf8m2+IcRExMq
+         DWSQot3np4EcQ9xLO1GAQ3UyWGNY8NgPMXrcuLWlq5BTO9+yMUIwX0S4ASH6lyQ9KwPB
+         CH0RZFDh6tgQwrvkReubMkSrX53AgwBORD59Si6Z+JISaBj98TIN3umS8QQ92h+Tse2U
+         S++A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M+JmQMk+e2m4npZedAl84xsb23PB90uGmu0PhUZk5L0=;
-        b=Ho5duHz4ZMmV/SZkm7M39+55by2wnciDi3ZJgPFQGETmKv8ixsaNh+vwAZNakom0fn
-         ktVUKvq/9cyvK8Mqr4fMUBlDcoRVnZhWObzSOAQR4g6r6Pr5aVOrhpzkmOlpbhrhY6m7
-         U6LQUCm8sBtdCFdmOk7fIWbmZCexa28b4UMAZktP1417i3TFDp05NsVoXBgcPql4IGE9
-         xxbN5j8OxGEzOsRM6Q0LLVU5xlURncx21u9d4pNz5S+wbSGVi9cMRpqn5WfyQkCSK2qI
-         FB1uW+UKCBpneI/Jm3GYONIiDPVRBNa2F7aZkY9TRCjq4RUI7m/hKSmkGgzKFlUeX7yf
-         q4gg==
-X-Gm-Message-State: AOAM532V4Rc7biWz86+AIrCrSnGau2OMlnmFa2H+rX4guEgh+mhKlbvk
-        hxMyDApQkYKlRR9CC5h6wYLdLFSOfoU=
-X-Google-Smtp-Source: ABdhPJzVZ2uSV1rbX1iDGIyW2zi8WMiKKGQn+fWGXJ3D3c83GgvBoIQLfZGrMFrFKfYY1+htlyNKJw==
-X-Received: by 2002:a5d:52ca:: with SMTP id r10mr4600657wrv.195.1600950838232;
-        Thu, 24 Sep 2020 05:33:58 -0700 (PDT)
+        bh=c9Y7TvxvEafAn9PpUMsqnYYW+Mm5hIL2kR7H/olF6XM=;
+        b=KRfp4BswanDtsQF6Q5LljYCcX632aIUumw/N4P3DSvwbLpmQv362EjT2IOzWOUJLW/
+         hOD+/ZBNK2ET/C3b5VJg+4jnBmM7h5iuH37v8V8cMRSVlbFTgY+aH5zlYlv2xg3DTIu6
+         3iSavhR2rNES4A7I227CMP/iVLO4Yi5C1heBpuUpnvHzSnJO8sX43wmTIYBjH4fVjSQ9
+         LKl7mKmPCQMFQS8+14GndCInVNUdVRdeYJ1PJWEWQz2XxK5Ini3bpba4KdlZVnxofP0Z
+         5+9DtV+Hre+eHL5P1jShQbigfpYArCGSIOC+D6Vfbcc0ZPgUeaYwP0ZXgWhPVPdKEFQD
+         x6dg==
+X-Gm-Message-State: AOAM533VKaIY4xWM6iYAeQSnMLNOmodWazk+IjRyr696G95eAY7wPjrY
+        vo8CqQOtTPTyjQj8Vrv9PcfLy4xO4Hc=
+X-Google-Smtp-Source: ABdhPJxe3HsoPlIcArSNuprx4uJvR8EBjKkHrWGKMZwhV6uITFR8P38X1zybBEoleBCIVodretR3ow==
+X-Received: by 2002:adf:cd05:: with SMTP id w5mr4914792wrm.62.1600950839241;
+        Thu, 24 Sep 2020 05:33:59 -0700 (PDT)
 Received: from localhost.localdomain ([178.237.235.60])
-        by smtp.gmail.com with ESMTPSA id i83sm3485457wma.22.2020.09.24.05.33.57
+        by smtp.gmail.com with ESMTPSA id i83sm3485457wma.22.2020.09.24.05.33.58
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Sep 2020 05:33:57 -0700 (PDT)
+        Thu, 24 Sep 2020 05:33:58 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Miriam Rubio <mirucam@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v9 1/6] bisect--helper: BUG() in cmd_*() on invalid subcommand
-Date:   Thu, 24 Sep 2020 14:33:35 +0200
-Message-Id: <20200924123340.52632-2-mirucam@gmail.com>
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v9 2/6] bisect--helper: use '-res' in 'cmd_bisect__helper' return
+Date:   Thu, 24 Sep 2020 14:33:36 +0200
+Message-Id: <20200924123340.52632-3-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200924123340.52632-1-mirucam@gmail.com>
 References: <20200924123340.52632-1-mirucam@gmail.com>
@@ -75,31 +75,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In cmd_bisect__helper() function, if an invalid or no
-subcommand is passed there is a BUG.
-
-BUG() out instead of returning an error.
+Following 'enum bisect_error' vocabulary, return variable 'res' is
+always non-positive.
+Let's use '-res' instead of 'abs(res)' to make the code clearer.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
  builtin/bisect--helper.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 7dcc1b5188..23a9f00035 100644
+index 23a9f00035..8037888ae2 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -720,7 +720,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		res = bisect_start(&terms, argv, argc);
- 		break;
- 	default:
--		return error("BUG: unknown subcommand '%d'", cmdmode);
-+		BUG("unknown subcommand %d", cmdmode);
- 	}
- 	free_terms(&terms);
+@@ -731,5 +731,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	if (res == BISECT_INTERNAL_SUCCESS_MERGE_BASE)
+ 		res = BISECT_OK;
  
+-	return abs(res);
++	return -res;
+ }
 -- 
 2.25.0
 
