@@ -2,96 +2,191 @@ Return-Path: <SRS0=EnZj=DB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B60C4346E
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 07:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9214C4346E
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 07:42:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D431623787
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 07:31:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C80D2376F
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 07:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbgIXHb0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 03:31:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39078 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726655AbgIXHb0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 03:31:26 -0400
-Received: (qmail 1784 invoked by uid 109); 24 Sep 2020 07:31:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Sep 2020 07:31:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24156 invoked by uid 111); 24 Sep 2020 07:31:28 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Sep 2020 03:31:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 24 Sep 2020 03:31:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 06/13] reftable: (de)serialization for the polymorphic
- record type.
-Message-ID: <20200924073125.GD1851751@coredump.intra.peff.net>
-References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
- <791f69c000556e93bf5fcfc0ec9304833b12565b.1600283416.git.gitgitgadget@gmail.com>
- <xmqqlfh5i7nk.fsf@gitster.c.googlers.com>
- <CAFQ2z_M9uBc+VArOVXg-hwTY8bu-gQQSL9JC6TJ5MuTCtxx=EQ@mail.gmail.com>
- <20200924072151.GC1851751@coredump.intra.peff.net>
+        id S1727178AbgIXHmC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 03:42:02 -0400
+Received: from mail001-2.aei.ca ([206.123.6.133]:55969 "EHLO mail001.aei.ca"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726896AbgIXHmC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 03:42:02 -0400
+Received: (qmail 5239 invoked by uid 89); 24 Sep 2020 07:42:01 -0000
+Received: by simscan 1.2.0 ppid: 5229, pid: 5235, t: 0.0707s
+         scanners: regex: 1.2.0 attach: 1.2.0
+Received: from mail002.aei.ca (HELO mta.aei.ca) (206.123.6.132)
+  by mail001.aei.ca with (DHE-RSA-AES256-SHA encrypted) SMTP; 24 Sep 2020 07:42:01 -0000
+Received: (qmail 9368 invoked by uid 89); 24 Sep 2020 07:42:01 -0000
+Received: by simscan 1.2.0 ppid: 9360, pid: 9362, t: 5.1105s
+         scanners: regex: 1.2.0 attach: 1.2.0 clamav: 0.97.8/m: spam: 3.3.1
+Received: from dsl-66-36-136-92.mtl.aei.ca (HELO dermoth.lan) (66.36.136.92)
+  by mail.aei.ca with (AES256-SHA encrypted) SMTP; 24 Sep 2020 07:41:56 -0000
+Received: from dermoth by dermoth.lan with local (Exim 4.92)
+        (envelope-from <tguyot@gmail.com>)
+        id 1kLLt5-000882-N5; Thu, 24 Sep 2020 03:41:55 -0400
+From:   Thomas Guyot-Sionnest <tguyot@gmail.com>
+To:     git@vger.kernel.org
+Cc:     dermoth@aei.ca, me@ttaylorr.com, gitster@pobox.com,
+        Johannes.Schindelin@gmx.de, peff@peff.net,
+        Thomas Guyot-Sionnest <tguyot@gmail.com>
+Subject: [PATCH v4] diff: Fix modified lines stats with --stat and --numstat
+Date:   Thu, 24 Sep 2020 03:41:41 -0400
+Message-Id: <20200924074140.31153-1-tguyot@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200924052406.11349-1-tguyot@gmail.com>
+References: <20200924052406.11349-1-tguyot@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200924072151.GC1851751@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 24, 2020 at 03:21:51AM -0400, Jeff King wrote:
+Only skip diffstats when both oids are valid and identical. This check
+was causing both false-positives (files included in diffstats with no
+actual changes (0 lines modified) and false-negatives (showing 0 lines
+modified in stats when files had actually changed).
 
-> > I originally had
-> > 
-> > +void put_be64(uint8_t *out, uint64_t v)
-> > +{
-> > +       int i = sizeof(uint64_t);
-> > +        while (i--) {
-> > +               out[i] = (uint8_t)(v & 0xff);
-> > +               v >>= 8;
-> > +       }
-> > +}
-> > 
-> > in my reftable library, which is portable. Is there a reason for the
-> > magic with htonll and friends?
-> 
-> Presumably it was thought to be faster. This comes originally from the
-> block-sha1 code in 660231aa97 (block-sha1: support for architectures
-> with memory alignment restrictions, 2009-08-12). I don't know how it
-> compares in practice, and especially these days.
-> 
-> Our fallback routines are similar to an unrolled version of what you
-> wrote above.
+Also replaced same_contents with may_differ to avoid confusion.
 
-We should be able to measure it pretty easily, since block-sha1 uses a
-lot of get_be32/put_be32. I generated a 4GB random file, built with
-BLK_SHA1=Yes and -O2, and timed:
+Signed-off-by: Thomas Guyot-Sionnest <tguyot@gmail.com>
+---
+Interdiff:
+  diff --git a/diff.c b/diff.c
+  index 77e0bd772e..2bb2f8f57e 100644
+  --- a/diff.c
+  +++ b/diff.c
+  @@ -3663,7 +3663,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+   {
+   	mmfile_t mf1, mf2;
+   	struct diffstat_file *data;
+  -	int same_file;
+  +	int may_differ;
+   	int complete_rewrite = 0;
+   
+   	if (!DIFF_PAIR_UNMERGED(p)) {
+  @@ -3682,13 +3682,13 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+   	}
+   
+   	/* saves some reads if true, not a guarantee of diff outcome */
+  -	same_file = one->oid_valid && two->oid_valid &&
+  -		oideq(&one->oid, &two->oid);
+  +	may_differ = !(one->oid_valid && two->oid_valid &&
+  +			oideq(&one->oid, &two->oid));
+   
+   	if (diff_filespec_is_binary(o->repo, one) ||
+   	    diff_filespec_is_binary(o->repo, two)) {
+   		data->is_binary = 1;
+  -		if (same_file) {
+  +		if (!may_differ) {
+   			data->added = 0;
+   			data->deleted = 0;
+   		} else {
+  @@ -3704,7 +3704,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+   		data->added = count_lines(two->data, two->size);
+   	}
+   
+  -	else if (!same_file) {
+  +	else if (may_differ) {
+   		/* Crazy xdl interfaces.. */
+   		xpparam_t xpp;
+   		xdemitconf_t xecfg;
+  @@ -3729,7 +3729,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+   				diffstat->files[diffstat->nr - 1];
+   			/*
+   			 * Omit diffstats of modified files where nothing changed.
+  -			 * Even if !same_file, this might be the case due to
+  +			 * Even if may_differ, this might be the case due to
+   			 * ignoring whitespace changes, etc.
+   			 *
+   			 * But note that we special-case additions, deletions,
 
-  t/helper/test-tool sha1 <foo.rand
+ diff.c                | 12 +++++++-----
+ t/t3206-range-diff.sh | 12 ++++--------
+ 2 files changed, 11 insertions(+), 13 deletions(-)
 
-Then I did the same, but building with -DNO_UNALIGNED_LOADS. The latter
-actually ran faster, by a small margin. Here are the hyperfine results:
+diff --git a/diff.c b/diff.c
+index ee8e8189e9..2bb2f8f57e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3663,7 +3663,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ {
+ 	mmfile_t mf1, mf2;
+ 	struct diffstat_file *data;
+-	int same_contents;
++	int may_differ;
+ 	int complete_rewrite = 0;
+ 
+ 	if (!DIFF_PAIR_UNMERGED(p)) {
+@@ -3681,12 +3681,14 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		return;
+ 	}
+ 
+-	same_contents = oideq(&one->oid, &two->oid);
++	/* saves some reads if true, not a guarantee of diff outcome */
++	may_differ = !(one->oid_valid && two->oid_valid &&
++			oideq(&one->oid, &two->oid));
+ 
+ 	if (diff_filespec_is_binary(o->repo, one) ||
+ 	    diff_filespec_is_binary(o->repo, two)) {
+ 		data->is_binary = 1;
+-		if (same_contents) {
++		if (!may_differ) {
+ 			data->added = 0;
+ 			data->deleted = 0;
+ 		} else {
+@@ -3702,7 +3704,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		data->added = count_lines(two->data, two->size);
+ 	}
+ 
+-	else if (!same_contents) {
++	else if (may_differ) {
+ 		/* Crazy xdl interfaces.. */
+ 		xpparam_t xpp;
+ 		xdemitconf_t xecfg;
+@@ -3727,7 +3729,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 				diffstat->files[diffstat->nr - 1];
+ 			/*
+ 			 * Omit diffstats of modified files where nothing changed.
+-			 * Even if !same_contents, this might be the case due to
++			 * Even if may_differ, this might be the case due to
+ 			 * ignoring whitespace changes, etc.
+ 			 *
+ 			 * But note that we special-case additions, deletions,
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index e024cff65c..6eb344be03 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -252,17 +252,13 @@ test_expect_success 'changed commit with --stat diff option' '
+ 	git range-diff --no-color --stat topic...changed >actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid c1) s/5/A/
+-	     a => b | 0
+-	     1 file changed, 0 insertions(+), 0 deletions(-)
+ 	2:  $(test_oid t2) = 2:  $(test_oid c2) s/4/A/
+-	     a => b | 0
+-	     1 file changed, 0 insertions(+), 0 deletions(-)
+ 	3:  $(test_oid t3) ! 3:  $(test_oid c3) s/11/B/
+-	     a => b | 0
+-	     1 file changed, 0 insertions(+), 0 deletions(-)
++	     a => b | 2 +-
++	     1 file changed, 1 insertion(+), 1 deletion(-)
+ 	4:  $(test_oid t4) ! 4:  $(test_oid c4) s/12/B/
+-	     a => b | 0
+-	     1 file changed, 0 insertions(+), 0 deletions(-)
++	     a => b | 2 +-
++	     1 file changed, 1 insertion(+), 1 deletion(-)
+ 	EOF
+ 	test_cmp expect actual
+ '
+-- 
+2.20.1
 
-  [stock]
-  Time (mean ± σ):      6.638 s ±  0.081 s    [User: 6.269 s, System: 0.368 s]
-  Range (min … max):    6.550 s …  6.841 s    10 runs
-
-  [-DNO_UNALIGNED_LOADS]
-  Time (mean ± σ):      6.418 s ±  0.015 s    [User: 6.058 s, System: 0.360 s]
-  Range (min … max):    6.394 s …  6.447 s    10 runs
-
-For casual use as in reftables I doubt the difference is even
-measurable. But this result implies that perhaps we ought to just be
-using the fallback version all the time.
-
--Peff
