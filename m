@@ -7,91 +7,83 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F930C4363D
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 17:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 480EFC2D0E2
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 17:39:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DC6A2395C
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 17:22:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 086EE23899
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 17:39:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iZ4uw3Fu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SNLVHc9z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728585AbgIXRWY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 13:22:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54881 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726915AbgIXRWX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 13:22:23 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2B3F8DE7D;
-        Thu, 24 Sep 2020 13:22:21 -0400 (EDT)
+        id S1728522AbgIXRjB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 13:39:01 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60922 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726477AbgIXRjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 13:39:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D2D30E8C31;
+        Thu, 24 Sep 2020 13:38:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=E+riIzjiq2GX
-        XCbpvW/olSEYAGA=; b=iZ4uw3Fud0r90D0hm7+MgecsKeYDUdVjYwn74g238CCi
-        THjF9UUl9rpwItghNpkTRADSBFKZo9pnN4lRQ50AzOP/QfZE/1EXR7BMwEA7HPve
-        e6QIQbPEMGnS+bqhKwbFYlIKVk2NxTqE6I8nbu8zk42Anf8uhYqEQXx3pePr1aU=
+        :content-type; s=sasl; bh=UL1yxuqIpm8MBvh9SDysfwMaEPg=; b=SNLVHc
+        9zfPKF84onwNS8UHz0UD6RQnLTIBXEbhRvajZr+REM+ImWzMkIdRTM6NL9roA4J9
+        6LoIOjegnrDXHzccXeqypYt+QcpfwdRQ+QsUz6ZMjVWScoojyBLkYtzdSldw5y06
+        z74Gq8444DVf1wwTforbOdccvOsclB+lG2LjM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ryR3n+
-        sx3KtWiivmf0Uv2tjxozmWMF99rEzqptAM52s9NXtrlPHbwCwjUNsFUl4MMCQApS
-        CqCZSPzrqV68hi6wyfxMo3H/IOWAG47pqOEhXogJJ/WFv7c9IrRMq9HiPJ26BO8l
-        RhpbnVjxzwbrLXZiJa9IGQLiEJH+3d1PxSZmc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB4608DE7C;
-        Thu, 24 Sep 2020 13:22:21 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=J/YUxzedemUMK6wIsVKtANSTQTNMn4jQ
+        jCnpF4tfwpz4W05AVqeaRfbyIJ20HLXV71Gjjyo2kyZbZLjpcxO41tsA+wAv+Hm0
+        p1SeLlgboIfHIwl/1grJhbYfV9ygE8YU6NSxzGG60YRvofVFyAruFEqNlkSpONxI
+        LJhIgZU56gE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB088E8C30;
+        Thu, 24 Sep 2020 13:38:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D1798DE7B;
-        Thu, 24 Sep 2020 13:22:21 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 15210E8C2E;
+        Thu, 24 Sep 2020 13:38:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 06/13] reftable: (de)serialization for the polymorphic
- record type.
-References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
-        <791f69c000556e93bf5fcfc0ec9304833b12565b.1600283416.git.gitgitgadget@gmail.com>
-        <xmqqlfh5i7nk.fsf@gitster.c.googlers.com>
-        <CAFQ2z_M9uBc+VArOVXg-hwTY8bu-gQQSL9JC6TJ5MuTCtxx=EQ@mail.gmail.com>
-        <20200924072151.GC1851751@coredump.intra.peff.net>
-        <20200924073125.GD1851751@coredump.intra.peff.net>
-Date:   Thu, 24 Sep 2020 10:22:20 -0700
-In-Reply-To: <20200924073125.GD1851751@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 24 Sep 2020 03:31:25 -0400")
-Message-ID: <xmqq3637gkdv.fsf@gitster.c.googlers.com>
+To:     Thomas Guyot <tguyot@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Thomas Guyot-Sionnest <dermoth@aei.ca>
+Subject: Re: [PATCH 1/2] diff: Fix modified lines stats with --stat and
+ --numstat
+References: <20200918113256.8699-1-tguyot@gmail.com>
+        <20200918113256.8699-2-tguyot@gmail.com>
+        <20200918172747.GD183026@coredump.intra.peff.net>
+        <CALqVohcZrBcjmonw-peVxUNM1kgEheCr3nAk9ZvajGpbpXsNaQ@mail.gmail.com>
+        <xmqq363fm02a.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2009231709340.5061@tvgsbejvaqbjf.bet>
+        <xmqqk0wki9fh.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2009232244000.5061@tvgsbejvaqbjf.bet>
+        <1d0a60c3-d15e-bcbb-f042-2f8ae06f0de1@gmail.com>
+        <xmqq4knnisn9.fsf@gitster.c.googlers.com>
+        <34484667-1085-c60b-9438-591faed41ddc@gmail.com>
+        <xmqq7dsjgki8.fsf@gitster.c.googlers.com>
+Date:   Thu, 24 Sep 2020 10:38:55 -0700
+In-Reply-To: <xmqq7dsjgki8.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 24 Sep 2020 10:19:43 -0700")
+Message-ID: <xmqqy2kzf51s.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 811D4A56-FE8A-11EA-A366-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D2A419FC-FE8C-11EA-9016-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Then I did the same, but building with -DNO_UNALIGNED_LOADS. The latter
-> actually ran faster, by a small margin. Here are the hyperfine results:
->
->   [stock]
->   Time (mean =C2=B1 =CF=83):      6.638 s =C2=B1  0.081 s    [User: 6.2=
-69 s, System: 0.368 s]
->   Range (min =E2=80=A6 max):    6.550 s =E2=80=A6  6.841 s    10 runs
->
->   [-DNO_UNALIGNED_LOADS]
->   Time (mean =C2=B1 =CF=83):      6.418 s =C2=B1  0.015 s    [User: 6.0=
-58 s, System: 0.360 s]
->   Range (min =E2=80=A6 max):    6.394 s =E2=80=A6  6.447 s    10 runs
->
-> For casual use as in reftables I doubt the difference is even
-> measurable. But this result implies that perhaps we ought to just be
-> using the fallback version all the time.
+> If you add new case where the oid of both sides can legitimately be
+> null_oid, that will of course break the code.
 
-I like that one.  One less configurable knob that makes us execute
-different codepaths is one less thing to be worried about.
+Ahh, I forgot that we already had such an iffy caller that broke the
+code.  I should have re-read the test part of the patch.
 
+Thanks.
