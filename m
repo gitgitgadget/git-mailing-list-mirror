@@ -2,163 +2,103 @@ Return-Path: <SRS0=EnZj=DB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDD84C4363D
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 20:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 335D7C4363D
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 21:17:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75D9122208
-	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 20:53:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kNx8Y8iw"
+	by mail.kernel.org (Postfix) with ESMTP id E9CCB235FD
+	for <git@archiver.kernel.org>; Thu, 24 Sep 2020 21:17:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726614AbgIXUx4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Sep 2020 16:53:56 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59361 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgIXUx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Sep 2020 16:53:56 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BBDE7E3589;
-        Thu, 24 Sep 2020 16:53:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IcH4lKuiK8Nl/GID5+xZdv2AczM=; b=kNx8Y8
-        iwyuTGlx1cJO4oaLG6Cmi9fD+EZ/O4b5vAzeENumdUJKZVvDdFmxg5ygGng8xl1a
-        1/vuzlEWPwtZD/si8OerOO2b8OsxRilImcv/4my1jGXanZBxCJzc2lqN3kW1kLGX
-        mjNtzX8u/pVblZzoJgkYNo/MF53J3E3eNmYrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wlz6n+Uag1v5tm2y4/60etsLsnocKfc1
-        YX1cpBB/lslPMuP6Vq77WD2D4OMM4u5sirVdbM0aiI/6p9LgV4q+j1soTSQZ02+8
-        3Gu78QOlcCd7LM7G6JlgcPwGBxN3YIfilMbarXIvN8t8XbQMrWOiHbCpgSXeiVpz
-        puIChNpIw2I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B482BE3588;
-        Thu, 24 Sep 2020 16:53:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 08252E3586;
-        Thu, 24 Sep 2020 16:53:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] bisect: don't use invalid oid as rev when starting
-References: <20200923170915.21748-1-chriscool@tuxfamily.org>
-        <20200924060344.15541-1-chriscool@tuxfamily.org>
-        <xmqqsgb7m2bq.fsf@gitster.c.googlers.com>
-        <xmqqk0wjlzj8.fsf@gitster.c.googlers.com>
-Date:   Thu, 24 Sep 2020 13:53:50 -0700
-In-Reply-To: <xmqqk0wjlzj8.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 24 Sep 2020 12:56:11 -0700")
-Message-ID: <xmqqd02anbfl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726242AbgIXVR0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Sep 2020 17:17:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40052 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725208AbgIXVR0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Sep 2020 17:17:26 -0400
+Received: (qmail 8223 invoked by uid 109); 24 Sep 2020 21:17:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Sep 2020 21:17:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12024 invoked by uid 111); 24 Sep 2020 21:17:26 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Sep 2020 17:17:26 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 24 Sep 2020 17:17:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ryan Zoeller <rtzoeller@rtzoeller.com>, git@vger.kernel.org
+Subject: Re: [RFC 0/1] Leading whitespace as a function identification
+ heuristic?
+Message-ID: <20200924211725.GA3103003@coredump.intra.peff.net>
+References: <20200923215859.102981-1-rtzoeller@rtzoeller.com>
+ <xmqqzh5fhduk.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D5EF6F0-FEA8-11EA-AC9C-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzh5fhduk.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 23, 2020 at 11:45:55PM -0700, Junio C Hamano wrote:
 
-> I didn't audit the following hits of get_oid_committish().  There
-> might be a similar mistake as you made in v2, or there may not be.
->
-> I am undecided if I should just move on, marking them as
-> left-over-bits ;-)
->
->
->
-> builtin/blame.c:		if (get_oid_committish(i->string, &oid))
+> Ryan Zoeller <rtzoeller@rtzoeller.com> writes:
+> 
+> > 1. Is this indentation-aware function identification useful, and
+> >     generally worth pursuing further?
+> 
+> I cannot shake the feeling off that this is being overly generous
+> and inviting for misidentification for languages whose usual
+> convention is not to nest and indent the definitions freely.
+> 
+> IOW, why can't the "we allow leading whitespaces" a per-language
+> thing?  IOW, why do we even need any new code---shouldn't it be just
+> the matter of defining xfuncname patterns for such a language with
+> nested and indented definitions?
 
-This one throws the object name of revs to be skipped to a list, and
-because revision traversal works on commit objects, if the user
-gives an annotated tag and expects the underlying commit is ignored,
-it may appear as a bug.  But in the same function a list of revs to
-be ignored is read from file using oidset_parse_file() that in turn
-uses parse_oid_hex() without even validating if the named object
-exists, I would say it is OK---after all, if it hurts, the user can
-refrain from doing so ;-)
+If I understand the problem correctly, I don't think a static regex can
+accomplish this, because you need context from the original line. E.g.,
+consider something like this:
 
-But it would be nice to fix all issues around this caller.  After
-collecting the object names to an oidset, somebody should go through
-the list, peel them down to commit and make sure they exist, or
-something like that.  A possible #leftoverbits.
+  void foo() {
+	void bar() {
+		...code 1...
+	}
+	...code 2...
+  }
 
-> builtin/checkout.c:		repo_get_oid_committish(the_repository, branch->name, &branch->oid);
+If we change one of the lines of code, then we find the function header
+by walking backwards up the lines, evaluating a regex for each line. But
+for "code 2", how do we know to keep walking past bar() and up to foo()?
+Or more specifically, what is different when evaluating a change from
+"code 2" that is different than when we would evaluate "code 1"?
 
-This one is probably OK as branch refs are supposed to point at
-commits and not annotated tags that point at commits.
+If the only input to the question of "is this line a function header" is
+the regex from the config, then changes to either line of code must
+produce the same answer (either bar() if we allow leading whitespace, or
+foo() if we do not).
 
-> builtin/rev-parse.c:	if (!get_oid_committish(start, &start_oid) && !get_oid_committish(end, &end_oid)) {
+So I think Ryan's proposal is to give that search an extra piece of
+information: the indentation of the original changed line. Which is
+enough to differentiate the two cases.
 
-This one handles "rev-parse v1.0..v2.0" which gives "^v1.0 v2.0" but
-using the (unpeeled) object name.  It is fine and should not be
-changed to auto-peel.
+If I understand the patch correctly, it is always picking the first line
+where indentation is lessened (and which matches the funcname pattern).
+That works out of the box with existing funcname patterns, which is
+nice. Though I wonder if there are cases where the funcname regex could
+use the information more flexibly (i.e., some marker in the regex that
+means "match less than this many spaces" or something).
 
-> builtin/rev-parse.c:	if (get_oid_committish(arg, &oid) ||
+I do agree that this should not be on automatically for all languages.
+Some file formats may want to show a header that's at the same
+indentation as the change. Adding a diff.foo.funcnameIndentation config
+option would be one solution. But requiring the funcname pattern to make
+explicit use of the information is another (and would allow a format to
+match some things at one indentation level and some at another; but
+again, I'm hand-waving a bit on whether this level of flexibility is
+even useful).
 
-This is immediately followed by lookup_commit_reference() to peel as
-needed.  OK.
-
-> commit.c:	if (get_oid_committish(name, &oid))
-
-This is part of lookup_commit_reference_by_name(), which peels and
-parses it down to an in-core commit object instance.  OK.
-
-
-> revision.c:	if (get_oid_committish(arg, &oid))
-
-This is followed by a loop to peel it as needed.  OK.
-
-> sequencer.c:		    !get_oid_committish(buf.buf, &oid))
-
-This feeds the contents of rebase-merge/stopped-sha file.  I presume
-that the contents of this file (which is not directly shown to the
-end users) is always a commit object name, so this is OK.  Use of
-_committish() may probably be overkill for this internal bookkeeping
-file.  If we stop make_patch() from shortening then probably we can
-change it to parse_oid_hex() to expect and read the full object
-name.
-
-> sha1-name.c:		st = repo_get_oid_committish(r, sb.buf, &oid_tmp);
-> sha1-name.c:	if (repo_get_oid_committish(r, dots[3] ? (dots + 3) : "HEAD", &oid_tmp))
-
-Since I know those who wrote this old part of the codebase knew what
-they were doing, I do not have to comment, but these are fine.  They
-are all peeled to commit as appropriate by calling
-lookup_commit_reference_gently() before feeding the result to
-get_merge_bases().
-
-> sha1-name.c:int repo_get_oid_committish(struct repository *r,
-
-This is the implementation ;-)
-
-> t/helper/test-reach.c:		if (get_oid_committish(buf.buf + 2, &oid))
-
-This peels afterwards, so it is OK.
-
-
-The true reason I went through all the callers was to see if _all_
-the callers want to either ignore the resulting object name (i.e.
-they want to make sure that the arg given can be peeled down to an
-appropriate type) or wants the object name to be peeled to the type.
-If that were the case (and from the above, it clearly isn't), we
-could change the semantics of get_oid_*ish() so that the resulting
-oid is already peeled down to the wanted type and that could simplify
-the current callers that are peeling the result themselves.
-
-But because some callers do not want to see the result peeled, we
-shouldn't touch what get_oid_*ish() functions do.
-
-
+-Peff
