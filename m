@@ -2,80 +2,183 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E967C4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72968C4363D
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:09:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26F6C2083B
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:09:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24A3A2084C
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:09:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="c7sln7jn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727617AbgIYJJI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 05:09:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40498 "EHLO cloud.peff.net"
+        id S1727686AbgIYJJn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 05:09:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:42219 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727132AbgIYJJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 05:09:08 -0400
-Received: (qmail 13886 invoked by uid 109); 25 Sep 2020 09:09:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2020 09:09:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16620 invoked by uid 111); 25 Sep 2020 09:09:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2020 05:09:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 25 Sep 2020 05:09:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 1/2] bswap.h: drop unaligned loads
-Message-ID: <20200925090906.GA66146@coredump.intra.peff.net>
-References: <20200924191638.GA2528003@coredump.intra.peff.net>
- <20200924192111.GA2528225@coredump.intra.peff.net>
- <20200925011348.GA1392312@camp.crustytoothpaste.net>
- <CAPUEspjpUeaqCCuBJpQLSTv=C_P4f5h22HoTPm9+9rB7k0NkaQ@mail.gmail.com>
+        id S1727132AbgIYJJm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 05:09:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1601024976;
+        bh=j8h63gLjdWXueORHKDSnbF/NoytPEFdLindlvk59mYs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=c7sln7jnhSfhl25Cr6ljvnOv9bPi6jE0saUtJqSgi6jP2+c8TGVBlKDPBKMCxDAtx
+         TYRjbekrQ7783GMtY7gDs6/M/O2Ag6xi9E4esjY/go0r4eg+j4bMQhfFo9EYbe4/JS
+         cTiAph8jsV41XoM0RrHeciNrc5ObAvEjsM+5VEbI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.89.169] ([89.1.212.158]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MV67o-1jupCI2nVm-00SBJR; Fri, 25
+ Sep 2020 11:09:36 +0200
+Date:   Fri, 25 Sep 2020 07:02:10 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] cmake: ignore generated files
+In-Reply-To: <20200924103437.GA18952@danh.dev>
+Message-ID: <nycvar.QRO.7.76.6.2009250650280.5061@tvgsbejvaqbjf.bet>
+References: <pull.735.git.1600375065498.gitgitgadget@gmail.com> <xmqqtuvwoyz5.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009181510240.5061@tvgsbejvaqbjf.bet> <xmqqft7fnlxr.fsf@gitster.c.googlers.com> <20200918155015.GA1837@danh.dev>
+ <xmqq7dsrnjhi.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009201916040.5061@tvgsbejvaqbjf.bet> <xmqqr1qsjxgb.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009232224410.5061@tvgsbejvaqbjf.bet> <20200924103437.GA18952@danh.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPUEspjpUeaqCCuBJpQLSTv=C_P4f5h22HoTPm9+9rB7k0NkaQ@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-1368141848-1601010132=:5061"
+X-Provags-ID: V03:K1:s8AjpzVCG87J8wxBeBlTYriAFpLPXTeMDUBkNNW+/pF3JA9ktXD
+ xBnIjA30ue7vHgOKg7fQ26FO2yDaEwOBDKHfRojJCWAK9FRziDLAy13xc49+4sFMIbYnIo4
+ BYnevsFmv1dAE3C6QX6SEoucNNcnA+SCF6TO7zca+ZgJPA6k5gNdZoDBe09GQ88IDitUobI
+ xCC23j2e6ZGF56WdD6HMg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1WUdYx31Xfk=:k5zFcoV1obbh1FpbyMviYx
+ 2RJh/nWf3od68/rCxym2c16hj7E3lOuqHKIhfG/yUtnZd6iaXmxH2Gzn8RIg3r1gbOlcOBjLK
+ oEIOs3Md4i4iwhAVGPz7MQvYrCLmaCU1tp/LKtEO7lmj0ijlKWEqsffSImETkfdTGpCR3wGEx
+ mkmPqt7XfxQKoCsEXbGcRqEcePtUyRQ/4P/WXf1880Bb3Gj5hY+6F98H3mjJrkoot+2nm6mBl
+ SVwA7hK8+ntX7puhQIPJjzoDntxKycikUxBESEjq6WKW3zJau9uRKotcNbKtvM8RkD0+jdu0A
+ QjWtVA5nbiHpWD5mRV6CjWIqxWuQPD4X/RlFs75OYRiIRDHxWDg9/PFWX3AVmpAysiyC+0CSJ
+ BJF9CzoshgxcYMBgi94kOQEdjzw61tjnXjCp7enLlTi5rVmZ8bfwykFIxjyQa0xG46VZkYUIB
+ EcmRGovL8+aJiVpbyxDwk1iQ7ztb70BucHGfl7Jn2E9wpkgQmYlkscdthFGmbmvapFDO5a+aM
+ aw0W5d40OcchMRh6Vfw6L4dbxXq/RnBVASVH/PC9wKl83WU11Ym7Wo3ieSrjADRVHZm2ip2/J
+ NBK6gawXiuVI4KsFfrUdkcT+ZjRrAM/f/94L+Yh0zOph3Ht1MaoU275Z+S1x97OlIZCvw67VZ
+ LPQBa/+plC/JYplC+9ZynFpsVqGK1J+DixUo/cmzlJb7hsoS39ygaqYOdo/vtcVlOfsjnbCdf
+ l3sh/27aFvMJ+sYRGKgsDZY52cye5Z928BDomrERd4aajALvBmR+hu8rKdiCiBxsGXpzDHaYL
+ ghy419sqdXcgnXGa4Q2Tq8F1VcxBsRf/TY4SP3WRuj/aqc649vdgzqg29Lk+AmxRDhfvUvNEn
+ BOZzi3F+hDipUIiDPZXsmY1AACvJxpYc3eiW186WcOwiEpgFgGiTeR1yUy3U6zZL+RJPStyQT
+ G3lK8xvAxPp9bRr5+ZND845yctWLd9eRLanB/K7wc5ehAUetqit/SEw4GSQ/o4qzUBGAOD+Sc
+ VJlG+EbBbvSMdqiFSoemoIEDoVoH7bmXxJTLB1BN8LGdxVQ3xp87rNi9M/IphTSUODst99tof
+ g8YkqofRj1f32Mo9zTaw6yAnMZCPfbGkbwSi4swzZ2wafJy4fytMcj7WNDJ1s6dQVlL4WC4P3
+ Sxihy7xKTDdYheYatXp5Qv+w+xbW71bxVfvc+BF8QojLJmjUM8phXzEZI5P4WIS2lRs88mmmj
+ AFkeMQvAgVW3/s4t815/u/qJpWntuGrsA3WQiWA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 25, 2020 at 02:05:09AM -0700, Carlo Arenas wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > >   [stock]
-> > >   Benchmark #1: t/helper/test-tool sha1 <foo.rand
-> > >     Time (mean ± σ):      6.638 s ±  0.081 s    [User: 6.269 s, System: 0.368 s]
-> > >     Range (min … max):    6.550 s …  6.841 s    10 runs
-> 
-> slightly offtopic but what generates this nicely formatted output?
+--8323328-1368141848-1601010132=:5061
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-It's this:
+Hi Danh,
 
-  https://github.com/sharkdp/hyperfine
+On Thu, 24 Sep 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
 
-It will actually run both versions and compare them, but it's a little
-more involved to set up (since you have to do a build step in between).
+> On 2020-09-23 22:27:17+0200, Johannes Schindelin <Johannes.Schindelin@gm=
+x.de> wrote:
+> > > ... the above sounds like the argument concentrates too much on
+> > > where the build directory is (i.e. between "in place" and "a
+> > > throw-away directory next door"), which sounds like much smaller
+> > > point compared to the other things that needs to be improved in the
+> > > VS users.  And making a choice against what is recommended as best
+> > > practice...?  I dunno.
+> >
+> > All I want is for the CMake support to be easier to use, yet we go in =
+the
+> > opposite direction: instead of allowing to use CMake under more
+> > circumstances (which actually *works*, we just don't have the appropri=
+ate
+> > patterns in our `.gitignore` yet to avoid adding and committing the
+> > generated files), we now seem to intend to require a separate build
+> > directory.
+>
+> I've left Windows development land for a long time.
+> So, please take below discussion with grain of salt.
+>
+> When I was there, CMake Users on Windows mostly used CMake-GUI to
+> generate build system for CMake since running CMake as CLI in Windows
+> takes too much hassle.
+>
+> When I was there, CMake-GUI shows the option to choose build directories
+> explicitly, and whenever the source directories changed, the build
+> directories also changed, with some [-/]build added into sourcedir [1]
 
-> > I cannot speak for s390, since I have never owned one
-> 
-> I happen to be lucky enough to have access to one (RHEL 8.2/z15, gcc
-> 8.3.1) and seems (third consecutive run):
-> 
-> stock: user: 7.555s, system: 1.191s
-> -DNO_UNALIGNED_LOADS: user: 7.561s, system: 1.189s
+In my tests, the build directory was left empty. When I clicked the button
+next to it, it defaulted to the same directory as `CMakeLists.txt`:
+`contrib/buildsystems/`.
 
-Thanks. That's not too surprising. gcc 8 seems to be able to optimize
-both versions to the same thing (though I have no idea if s390 has a
-bswap instruction).
+I might be holding this thing wrong, but if I don't, then we would
+actually have to add a _different_ set of patterns to `.gitignore`.
 
--Peff
+> I heard that nowaday, CMake is supported natively with MSVC, I don't
+> know what is the default option when using CMake with MSVC, but from
+> the history of MSVC always supports building out of tree, and
+> information for Microsoft Docs [2]:
+>
+> 	Click the Show All Files button at the top of Solution
+> 	Explorer to see all the CMake-generated output in the
+> 	out/build/<config> folders.
+
+Oh wow, I missed this. And it looks promising: when I open a fresh
+checkout of current git/git's `master` branch in a freshly updated Visual
+Studio 2019, it finds the CMakeLists.txt file automatically.
+
+But that's where the happy news end: it stops with the error message:
+
+CMake Error at [...]\contrib\buildsystems\CMakeLists.txt:46 (message):
+  sh: shell interpreter was not found in your path, please install one.On
+  Windows, you can get it as part of 'Git for Windows' install at
+  https://gitforwindows.org/	git
+[...]\contrib\buildsystems\CMakeLists.txt	46
+
+So there's a bit of work left to do for me.
+
+> I think the default UX with CMake on Windows is building project out
+> of tree.
+
+Indeed, it _does_ create `contrib/buildsystems/out/` and starts outputting
+files to `contrib/buildsystems/out/build/x64-Debug (default)/`.
+
+Seeing as using Visual Studio's built-in CMake support is much more
+convenient to use than a separate CMake installation, I reconsidered my
+original idea, and now think that y'all are right, my current patch isn't
+the best way forward. I'll rework the patch into a proper patch series
+that takes into account what I learned today.
+
+> > That's the opposite direction of making things more convenient for Vis=
+ual
+> > Studio users.
+>
+> So, I don't think we would provide them more convenient with this change=
+.
+
+Indeed. And more convenience is what I want, I don't want developers on
+Windows to struggle with the tooling when all they want to do is to
+contribute to Git.
+
+Thank you,
+Dscho
+
+>
+>
+> 1: https://cmake.org/runningcmake/
+> 2: https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-s=
+tudio?view=3Dvs-2019
+>
+> --
+> Danh
+>
+
+--8323328-1368141848-1601010132=:5061--
