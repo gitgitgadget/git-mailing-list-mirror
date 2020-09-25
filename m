@@ -2,185 +2,82 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBB09C4727E
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7291C4727E
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 21:02:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85FD92086A
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:54:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F80820BED
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 21:02:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RgsdRDXR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qTUcKq+D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726487AbgIYUye (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 16:54:34 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56053 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725272AbgIYUye (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 16:54:34 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 242CBED557;
-        Fri, 25 Sep 2020 16:54:31 -0400 (EDT)
+        id S1728923AbgIYVCP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 17:02:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62249 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726576AbgIYVCP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 17:02:15 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C043F9B88A;
+        Fri, 25 Sep 2020 17:02:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IbR+bRlwwnjHKSgzBoxrODAphSk=; b=RgsdRD
-        XReM2athV2OeRZBmijR/dsCgV5KUz/dBWDakEBCk1hN6kQWJtJiQIS6QMirVhdPo
-        JirQdI9QCUgfN3vbPrJ+te+ApehxB1+H3Y565cVczGNyYPmczqZ7VhGDgyu53pfp
-        SVVNkEgh4nO9yyQdnNgzR7VSOxfKoG7EZHN9E=
+        :content-type; s=sasl; bh=7x+BXQ3d3z8QcW2v7JEFVYd8jZA=; b=qTUcKq
+        +DHDoOMsoYixIFHOMvg1WiZcCxfFBXMSjIGrmZ7uHhL+sznwSbcHxoqfYierw1TO
+        VuERSeE+FWWQBy4b+N0/EOAYilsPs4jUzm5zxWCrk3RrfySEBpuD/pslurgSQFCl
+        7pOjgZYNULuXfCkUEKlQ771rhuQ2dt5uPr7aw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Td2xVwrEBfturfHazc3pKEoidaHNqQr3
-        ucbOly0/M161QRXh98QLNe2gr1ArnlQPkkNEPMUCTRhcxIfth28dwnSImROc3NO9
-        gfZIXTVkGV1Vbi2BfLdYbyUdK3hOaT5pxvTNv+kgikDk/MtOUTIuJdaIHY7H7KL1
-        qo90LLiayZU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1DE72ED556;
-        Fri, 25 Sep 2020 16:54:31 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=PtktIG/a4gUEeVMQIcrj4WpaTAKZiDip
+        r+lqN3rlmBcT+QPyAnaGXtAWmC9RUe87Uo+lNCfp+feQ+GNVfnzLSY8GsAoyuB7l
+        c/tc4tcg5pMutgeR7ydtQgOvHxoQjpRoo7USMqEh13ZlqsuwfEcbvqHEHXbzZTSs
+        qnODw3ZXquY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B69B19B889;
+        Fri, 25 Sep 2020 17:02:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 50842ED550;
-        Fri, 25 Sep 2020 16:54:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2CF0F9B888;
+        Fri, 25 Sep 2020 17:02:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     shubham verma <shubhunic@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 11/11] t7001: move cleanup code from outside the tests
- into them
-References: <20200925170256.11490-1-shubhunic@gmail.com>
-        <20200925170256.11490-12-shubhunic@gmail.com>
-Date:   Fri, 25 Sep 2020 13:54:25 -0700
-In-Reply-To: <20200925170256.11490-12-shubhunic@gmail.com> (shubham verma's
-        message of "Fri, 25 Sep 2020 22:32:56 +0530")
-Message-ID: <xmqqlfgxk266.fsf@gitster.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
+References: <c0d27b125e969e13c52b0fa806a8e3caa8c20ac6.1600328336.git.liu.denton@gmail.com>
+        <xmqq363gs1mt.fsf@gitster.c.googlers.com>
+        <20200918104833.GB1874074@generichostname>
+        <xmqqy2l7m3hk.fsf@gitster.c.googlers.com>
+        <20200920110148.GA227771@generichostname>
+        <xmqqzh5jf73t.fsf@gitster.c.googlers.com>
+        <20200921172740.GA946178@generichostname>
+        <xmqqwo0met17.fsf@gitster.c.googlers.com>
+        <20200921215409.GA1018675@generichostname>
+        <xmqqblhyepup.fsf@gitster.c.googlers.com>
+        <20200923094716.GA1309694@generichostname>
+Date:   Fri, 25 Sep 2020 14:02:11 -0700
+In-Reply-To: <20200923094716.GA1309694@generichostname> (Denton Liu's message
+        of "Wed, 23 Sep 2020 02:47:16 -0700")
+Message-ID: <xmqqh7rlk1t8.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4CD21690-FF71-11EA-AC2A-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 61E65676-FF72-11EA-9A2C-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-shubham verma <shubhunic@gmail.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> From: Shubham Verma <shubhunic@gmail.com>
->
-> Let's use test_when_finished() to include cleanup code inside the tests,
-> as it's cleaner and safer to not have any code outside the tests.
->
-> Signed-off-by: shubham verma <shubhunic@gmail.com>
-> ---
->  t/t7001-mv.sh | 25 +++++++++++--------------
->  1 file changed, 11 insertions(+), 14 deletions(-)
->
-> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-> index 7bb4a7b759..b4d04ceaf8 100755
-> --- a/t/t7001-mv.sh
-> +++ b/t/t7001-mv.sh
-> @@ -32,6 +32,7 @@ test_expect_success 'commiting the change' '
->  '
->  
->  test_expect_success 'checking the commit' '
-> +	test_when_finished "rmdir path1" &&
->  	git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
->  	grep "^R100..*path1/COPYING..*path0/COPYING" actual
->  '
+> And worst case scenario, if we receive user reports that they believe
+> the feature is inconsistent, it's 100x easier to change it to allow
+> ranges than attempting to remove support for ranges in the future.
 
-Sorry, but why in this test?  It only runs diff-tree and runs grep,
-neither of which changes any state in the repository.  Because the
-test does *not* create path1, and having or not having path1 on the
-filesystem would not affect the outcome of the test, I do not see
-how it makes sense to use test_when_finished in here.
-
-If you are saying that path1 will no longer be used after this test
-finishes, test_when_finished should be done in the test before this
-one that used path1 the last, because this test does not care.  It
-is probably the one that moves the file out of path1 back to path0
-and records the result as a commit with title "move-in" (although if
-I were writing this test today, I would merge the "move and commit"
-into one step).
-
-> @@ -43,6 +44,7 @@ test_expect_success 'mv --dry-run does not move file' '
->  '
->  
->  test_expect_success 'checking -k on non-existing file' '
-> +	test_when_finished "rm -f idontexist path0/idontexist" &&
->  	git mv -k idontexist path0
->  '
-
-I do not see the point of "rm -f idontexist" in the
-post-test-cleanup at all.  Some might see that path0/ideontexist is
-worth having there, in case the "mv" command gets so broken that it
-creates such a file by mistake, but Personally I'd prefer to use
-test_when_finished to clean up the side effects we _expect_ to
-cause.  We cannot anticipate each and every breakage.
-
-The other side of the coin is that this test DEPENDS ON the fact
-that idontexist does *NOT* exist before it runs "git mv -k
-idontexist path0", but nobody before us gives us any explicitly
-guarantee.  This test also depends on the presence of path0
-directory the same way.  Instead of relying on others that came
-before us to have cleaned after themselves for us, we can more
-explicitly protect ourselves by making sure the pre-condition we
-depend on holds.  I.e.
-
-    test_expect_success 'mv -k on non-exising file would not fail' '
-	mkdir -p path0 &&
-	rm -f idontexist path0/idontexist &&
-	git mv -k idontexist path0
-    '
-
-A broken "git mv" may or may not leave path0/idontexist behind, but
-as long as the tests that come after us protect themselves with the
-same principle of making sure the preconditions they care about do
-hold, we do not necessarily have to clean after ourselves.  Since we
-expect we do not leave any side effect, I'd rather not to use
-test_when_finished here.
-
-@@ -55,6 +57,7 @@ test_expect_success 'checking -k on untracked file' '
->  
->  test_expect_success 'checking -k on multiple untracked files' '
->  	: > untracked2 &&
-> +	test_when_finished "rm -f untracked2 path0/untracked2" &&
->  	git mv -k untracked1 untracked2 path0 &&
->  	test -f untracked1 &&
->  	test -f untracked2 &&
-
-An exercise to readers.  Explain why
-
- - we want to move test_when_finished _before_ ">untracked2" is created;
-
- - "rm -f untrackd2" in test_when_finished is a good idea;
-
- - "rm -f path0/untracked2" is not a good idea;
-
- - we may want to do
-
-	>untracked1 &&
-	mkdir -p path0 &&
-
-   before "git mv -k ..." is tested.
-
-> -# clean up the mess in case bad things happen
-> -rm -f idontexist untracked1 untracked2 \
-> -     path0/idontexist path0/untracked1 path0/untracked2 \
-> -     .git/index.lock
-> -rmdir path1
-> -
->  test_expect_success 'moving to absent target with trailing slash' '
->  	test_must_fail git mv path0/COPYING no-such-dir/ &&
->  	test_must_fail git mv path0/COPYING no-such-dir// &&
-
-It may be a better approach to move the above removals at the
-beginning of this test, just before the first test_must_fail line.
-
-> -rm -fr papers partA path?
-> -
->  test_expect_success "Sergey Vlasov's test case" '
-
-Likewise.
+If we allow ranges from day one, we do not even have to worry about
+it, no?
