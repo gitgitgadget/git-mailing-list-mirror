@@ -2,112 +2,107 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38D39C4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 14:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D74D3C4363D
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 14:27:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE606208A9
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 14:26:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E0C420BED
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 14:27:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eN0/yyA0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gwZejw3B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728908AbgIYO0C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 10:26:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53182 "EHLO
+        id S1728451AbgIYO1e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 10:27:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728423AbgIYO0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 10:26:02 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55EDFC0613CE
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 07:26:02 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id b79so3508045wmb.4
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 07:26:02 -0700 (PDT)
+        with ESMTP id S1727290AbgIYO1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 10:27:34 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA2EC0613CE
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 07:27:34 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id c13so2958781oiy.6
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 07:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3k5m9PQ7L/77aINddkA5Z2TxUOJhOOJ4Py1PQRnLh8o=;
-        b=eN0/yyA0EpMUoBziN2sSYiCe+Sk4LXr/BhZTJdAWsvZWnxReV5+MMBLY5yPrloqZmX
-         OlBurBQLkk4lwBMM79w+FbcE2lzSM5Xwtba1O3fDhNa/04Ub9QkrvWSQS6FCYDQx9ziP
-         cwYk90z/pL0idBxK/TCM6mWqpoCD0OxnT30+r6bGL6GBX7j3ctCtV/N6twFydu+frNjd
-         fJA5atD7WMbytcST3HmCCWLr+dskUs45X8PMX0BfJr68DtGhEfar9zYBzsBhB7yb4CNa
-         C8kRIUGGaZ4gCtBb2bVQ0Q191IY5UssSmvXNGKy+L2sejpGiF2NXpwdAIKzCv2BYYFFk
-         ZQNg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=koKq9uuUazP1W9y5k7G29Yj4vFpE2DUA1+7bPnIxglk=;
+        b=gwZejw3Bm72AL3HD21p6ZRiT81JhEejP/bE6v30ze5bDQXFZYHz97TdzzNzTCtmAKf
+         U+Jm/8HtfPsh22u3xfmU4WsWFFa+EK9LJq2LUSYeXYADYBt3fDMrKgod9sBIO0LvNWrD
+         77O1RhgLbNd/KowypqxQJgjK+OuQVAKqpDyS0pIzzBgzU5Z3RCgjBR4qS84mTZziWETK
+         ZmROKyOJ9oeKIGxokntwUHKkZkWmm74Je76V56H1FoonEB83nePkCwwSq09VFh9G7hA0
+         Sxl422sCEG4k9LP/8IuqaN0NaBsH1pJurjN6Wu8+TbWaNDfu/eJp7a55XZDgPaM380DX
+         Jahg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=3k5m9PQ7L/77aINddkA5Z2TxUOJhOOJ4Py1PQRnLh8o=;
-        b=hjbloT7mTuPRQ5Tyaw8gkl1Omxg9vvuWNuL+KpvazuOE7qzfsWEx7zKoHnRcbyFLJT
-         L2vV3nceaEfwV9o8oWP9v/B8RlqkyIi213kclkhoJgV0yyD6xHiQIqbWAckkMNqfbszY
-         IfhYB7aEm30eK6ZF6qB4qXI67Lg31/w5Y3S2VC9aKaLSO4S8mTz6zDiotuVgob902xF1
-         0cB0W8ZBY91rtaAb1Rb0K1fTDTj+zzryUka7+wHF4AOXUP//MVOADgl9RC5KTgTZ+TnR
-         bWIeQdvf0QIVTQCmnJJ/q2X2ZIcEjptNdQFQPLtsH8mxGRUM/37cbi8cw3wI+kKQz+YR
-         Z8Wg==
-X-Gm-Message-State: AOAM532SV0yIrLY/wzh5UEabSZ3SNiwlkQFLf91WzGhjdxgZl0FlJa6b
-        KA/JDgfmFHdKX1q/y566Wp/HwmUfImQXxQ==
-X-Google-Smtp-Source: ABdhPJz/3KBlZQUPUdDu6VpMtMJq/0j4RvcHGFbqyjxLBUpV9rNHeL6Zf/fus0FZdCciUQ8f1H9a5A==
-X-Received: by 2002:a05:600c:216:: with SMTP id 22mr3263814wmi.149.1601043960679;
-        Fri, 25 Sep 2020 07:26:00 -0700 (PDT)
-Received: from localhost.localdomain (91EC7F95.dsl.pool.telekom.hu. [145.236.127.149])
-        by smtp.gmail.com with ESMTPSA id t124sm3211312wmg.31.2020.09.25.07.25.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2020 07:26:00 -0700 (PDT)
-From:   =?UTF-8?q?=C3=81kos=20Uzonyi?= <uzonyi.akos@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Uzonyi=20=C3=81kos?= <uzonyi.akos@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] completion: complete refs after 'git restore -s'
-Date:   Fri, 25 Sep 2020 16:25:52 +0200
-Message-Id: <20200925142552.1656596-1-uzonyi.akos@gmail.com>
-X-Mailer: git-send-email 2.28.0
+        bh=koKq9uuUazP1W9y5k7G29Yj4vFpE2DUA1+7bPnIxglk=;
+        b=AQUW7rVEh2E6uUUn3SZ+HEO6+i7BF6QQmJzKW5BKjeGQ1R2QLhWK2RzuteO6jQsfOR
+         UC2GyFpfvdxZi89hql+/LlfdgGEfhKKu1IjyoUKbGqkahAB6zrP0XratUgw4YYbF/pVg
+         JvoTeohIldSU8aZzfIF7oOvNg93UgkuHFD5oNanNlC+pxodoZQVki8tQ7E3dQYLJC2VZ
+         8xuxEeMgITxQsMlTwcmrIkXu56a3I0jWBa05fpvF/AwaDs6aP3eW29OplKLHE4Jl6An0
+         9ZeCZYqAv/EONli7KSskUsa18lL6yH6YWvkZ3vPteY5y2d5WxTwCW7p0Q3G1NWgrLYds
+         uM8Q==
+X-Gm-Message-State: AOAM530+Rinu9ohEjrfNdwlRWu0pK+Q3FZkL7e0//mWZMVY9Ch7Qxlkc
+        fSOw0S1y0zFIuXYE8gPjnswr6zGJ8bbMRQ==
+X-Google-Smtp-Source: ABdhPJyTZboEcZRpNOKpJNPbs11Kl4Q6kuqn66MedHa343H0sLIXRphl9z8OFVRlO163BKAbQtSuOg==
+X-Received: by 2002:a05:6808:20c:: with SMTP id l12mr424730oie.70.1601044053087;
+        Fri, 25 Sep 2020 07:27:33 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:bdc6:8b77:8b68:f0f3? ([2600:1700:e72:80a0:bdc6:8b77:8b68:f0f3])
+        by smtp.gmail.com with ESMTPSA id q81sm601118oia.46.2020.09.25.07.27.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Sep 2020 07:27:32 -0700 (PDT)
+Subject: Re: [PATCH 0/8] parsing trailers with shortlog
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20200925070120.GA3669667@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7e40593e-b41f-1c01-4005-5aa80d88302d@gmail.com>
+Date:   Fri, 25 Sep 2020 10:27:30 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
+ Thunderbird/81.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200925070120.GA3669667@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Uzonyi Ákos <uzonyi.akos@gmail.com>
+On 9/25/2020 3:01 AM, Jeff King wrote:
+> Somebody mentioned at the inclusion summit that it would be nice for
+> mentoring/pairing relationships if we could more easily give credit to
+> multiple authors of a commit. When people ask about adding multiple
+> "author" headers, we usually recommend that they use a "co-authored-by"
+> trailer. But you can't convince shortlog to count it for anything. :)
 
-Currently only the long version (--source=) supports completion.
+This discussion was worthwhile, and could even have measurable effects
+on this community, depending on how Junio creates the list of
+contributors for the release notes.
 
-Add completion support to the short (-s) option too.
+> So this series adds support for counting trailers to shortlog. You can
+> do a number of fun things with it, like:
+> 
+>     # credit reviewers
+>     git shortlog -ns --group=trailer:reviewed-by
+> 
+>     # credit authors and co-authors equally
+>     git shortlog -ns --group=author \
+>                      --group=trailer:co-authored-by
+> 
+>     # see who helps whom
+>     git shortlog --format="...helped %an on %as" \
+>                  --group=trailer:helped-by
 
-Signed-off-by: Ákos Uzonyi <uzonyi.akos@gmail.com>
----
- contrib/completion/git-completion.bash | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+I built Git with these patches and played around with these and
+other options (such as `--group=author --group=committer`). I
+could not find any bugs or other ways to improve these patches.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8be4a0316e..50e6e82157 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2853,6 +2853,18 @@ _git_restore ()
- 	--*)
- 		__gitcomp_builtin restore
- 		;;
-+	*)
-+		local prevword prevword="${words[cword-1]}"
-+
-+		case "$prevword" in
-+			-s)
-+				__git_complete_refs
-+				return
-+				;;
-+			*)
-+				;;
-+		esac
-+		;;
- 	esac
- }
- 
--- 
-2.28.0
-
+Thanks,
+-Stolee
