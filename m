@@ -2,64 +2,96 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EA6EC4741F
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 427C9C4741F
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:36:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F21A6206D4
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:35:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE94F21D7A
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:36:13 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lzzcIK1u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726581AbgIYUdQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 16:33:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727351AbgIYU2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 16:28:41 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361EFC0613BB
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 12:53:22 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id n22so3723198edt.4
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 12:53:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nK8X9W5AgZuNax8j68S5d9lcKLGqjl1xbKrQIr876V4=;
-        b=ULlPIR6wgH/I4MublEY1sixvg5lOKn+G9DHLsip+EmUAy0P8leWzfCwgv1jXmBB8Hs
-         qHpRxAR4oUpAjPYiGBGeUWzVeJcPR1pirAL77VR+DzjTtjRhtF7xir8T4ozvfL6gW3I4
-         QHJra+JaoDn9aYcwLzz2E6VWh3Y87t/IXlOu1GOboD1Dpib7KBfps8vR2VDOfMKdS/NY
-         Sf/UUu4CbuxZVzF3E2RE2R1FPEBDFNukcn260PYQEPMCscQj4EQdw8CbzLeKSEztYVCn
-         ShsV1INB70WpkQu2+JaaazSV3vdC+9CLzDTLuMo1Gukk3R41JVvcjkkjJ2aR1ZzssMXb
-         B/Ow==
-X-Gm-Message-State: AOAM533hvi1/3+vamPRJYDCGA8MJGlCOVFv+XusqRHeh7syFePu9vpVU
-        84diUVlCzw/o9MAfi9tJ9szpSFRjs7rZbPrkVqU=
-X-Google-Smtp-Source: ABdhPJy5NCeC0psaGK0mL+hMrn6GLRQ7fBj751IlNhEedIAKib8kL6Eo0zKvgHf9z/Lk+F1KXjcCcsEMY/IrY1e6IbA=
-X-Received: by 2002:a05:6402:17da:: with SMTP id s26mr3072456edy.221.1601063299714;
- Fri, 25 Sep 2020 12:48:19 -0700 (PDT)
+        id S1728721AbgIYUdP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 16:33:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60338 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbgIYUX6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 16:23:58 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5648ED228;
+        Fri, 25 Sep 2020 16:23:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=H+4V0w7lCKWlUbl+qyT+1qhC5Tk=; b=lzzcIK
+        1ukBtcyAU4MIox+nlQC0rbKbT/+9S75qS1lRUABZDGaedWO1ntRFw3Cilwt1/O8/
+        U6/Jqm39wMbdDhubUybHN4OM4iZrfxWZHVaNHclk8Sr9Hk6L6n4POi6UrCZby1sg
+        SgQ6OZKG/uYHq3B2vjlLn9yY9WojtfP7oyaMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GUlje3ljp8Nhwyv43gU0Ys8fobNRFT95
+        81PTBSvqZlxDQ/2GVSSvUm0OQTEErigG2PIVg+ECtWd7+iaR2mE/dzE6PUUIB38i
+        8GH8zHO8fgNFMoltoadQEDc4xL89JT7P2cyiNaNZGGbDmnn3xn4zgozYbFTvj9ps
+        ZLZad/BAy1I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE71EED227;
+        Fri, 25 Sep 2020 16:23:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 33E90ED225;
+        Fri, 25 Sep 2020 16:23:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     shubham verma <shubhunic@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 09/11] t7001: use here-docs instead of echo
+References: <20200925170256.11490-1-shubhunic@gmail.com>
+        <20200925170256.11490-10-shubhunic@gmail.com>
+Date:   Fri, 25 Sep 2020 13:23:52 -0700
+In-Reply-To: <20200925170256.11490-10-shubhunic@gmail.com> (shubham verma's
+        message of "Fri, 25 Sep 2020 22:32:54 +0530")
+Message-ID: <xmqqr1qpk3l3.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.738.git.1601044118.gitgitgadget@gmail.com> <bb8f122cdec94e1ec77b37ed16a7151f5e35a93a.1601044118.git.gitgitgadget@gmail.com>
-In-Reply-To: <bb8f122cdec94e1ec77b37ed16a7151f5e35a93a.1601044118.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 25 Sep 2020 15:48:08 -0400
-Message-ID: <CAPig+cTPi1yi7WQf_eWa+bFRJEdtULFO3yYqJh3nm=_CtEe6CQ@mail.gmail.com>
-Subject: Re: [PATCH 06/10] cmake (Windows): let the `.dll` files are found
- when running the tests
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0832AA94-FF6D-11EA-8484-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 25, 2020 at 10:28 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> cmake (Windows): let the `.dll` files are found when running the tests
+shubham verma <shubhunic@gmail.com> writes:
 
-I'm having trouble parsing this. Maybe you want s/let/ensure/ ?
+> From: Shubham Verma <shubhunic@gmail.com>
+>
+> Change from old style to current style by taking advantage of
+> here-docs instead of echo commands.
+>
+> Signed-off-by: shubham verma <shubhunic@gmail.com>
+> ---
+>  t/t7001-mv.sh | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+> index 94c5b10f8a..30714a8200 100755
+> --- a/t/t7001-mv.sh
+> +++ b/t/t7001-mv.sh
+> @@ -222,7 +222,10 @@ test_expect_success 'git mv to move multiple sources into a directory' '
+>  	git add dir/?.txt &&
+>  	git mv dir/a.txt dir/b.txt other &&
+>  	git ls-files >actual &&
+> -	{ echo other/a.txt; echo other/b.txt; } >expect &&
+> +	cat >expect <<-\EOF &&
+> +	other/a.txt
+> +	other/b.txt
+> +	EOF
+
+This could be written with test_write_lines but a here-doc would be
+a better option in this case, as we will see the expected output from
+the tested command in the exact form.
+
