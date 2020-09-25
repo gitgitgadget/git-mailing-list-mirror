@@ -2,131 +2,91 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE33CC4741F
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A658C4727F
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:43:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90379208B6
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:43:15 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kd/49QdD"
+	by mail.kernel.org (Postfix) with ESMTP id 459F9221E5
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729797AbgIYSnO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 14:43:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36994 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbgIYSnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 14:43:13 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D76C0613CE
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 11:43:12 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id y5so3249902otg.5
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 11:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=634xwWWexrbyuLU8HQvwIkrvUOdCaIAqINzfUKUowhE=;
-        b=kd/49QdD5AYUgx5/r2cOOw/4vWGEaUaSSwngZVyvVX0E9L3APJwZrJhEvG+drOk9o9
-         5jlcxftmvk2RtS29uFo4AB8nHyNUdExsXOOux7Xm0ETU/NNkavxEAsvRwHz+MEOI5rtS
-         KYapC6bhtTvlIuRuSuibZ9aQ7QH/dS/ArpVaS+C267UugBqnWz7ynkP2s3Gl1MJgYlW4
-         3crSawNac/VVtACkZiNm6mGBMwX5zF+0tYwn+baEqPtgoaP7hYmIvcmodibFSjs4yFnM
-         P26U5vmSp7MKqvFznHqY1CO1aMwjKhaSO6mpK6UcZ3YQ4kBzOilKhK/rUZa3sHUFYjzV
-         MsLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=634xwWWexrbyuLU8HQvwIkrvUOdCaIAqINzfUKUowhE=;
-        b=kOx3hwGux2hzkqorqjRspRX57/TN3Ba/2de+2aWG5ir3yZNQVfTmyDefAKEKrcjy1b
-         npYwPHsy7VnFVUvs/2oYiKGEcilEsycOOETyx4/4VuOWS79MStW4PZCqs4AZcqMaOQdo
-         OkRn8C0JaCHdlZz0NRiiVuntJu1lz2PZkbFVlJb1uCexnsT0y1+bmRk9Bu2NjmtW0YaF
-         s8E9nbdxoRIrxE1yA5xRMRabygeE4nurQ6y8qqOgAxJ8kTkbLekx3QoVnPGUwOs1WjtB
-         9J3zD73SWuFRgu7c89x5dBiOtukZhXDEj5bzMRYhMqyQWzp6iMCWj2+CaI4Fu+04aVdo
-         10Og==
-X-Gm-Message-State: AOAM531W69g3TqoiM/xSaaPlMKw7Xpg9QePs35Sd7JUfkuCs/GNHgGNU
-        uPPto+8ITqC2hE9lTsysDAxYXwpS+Jw2CWY7
-X-Google-Smtp-Source: ABdhPJxhi5hVQKoQ8KzZ6IPQGenHOg0L2oBphFzmX5o5pO4pyV2knQx33NhtL/dhT7O7fQtj39RZFQ==
-X-Received: by 2002:a9d:7856:: with SMTP id c22mr1249398otm.153.1601059392144;
-        Fri, 25 Sep 2020 11:43:12 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:bdc6:8b77:8b68:f0f3? ([2600:1700:e72:80a0:bdc6:8b77:8b68:f0f3])
-        by smtp.gmail.com with ESMTPSA id k51sm828968otc.46.2020.09.25.11.43.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Sep 2020 11:43:11 -0700 (PDT)
-Subject: Re: [PATCH v4 3/8] maintenance: create auto condition for
- loose-objects
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
- <pull.696.v4.git.1601037218.gitgitgadget@gmail.com>
- <931fff4883a3da26a296af69a9c5ccc3a5037d71.1601037218.git.gitgitgadget@gmail.com>
- <xmqqh7rllos3.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d9b60edf-a06a-85ec-6676-a2e6b1a9a506@gmail.com>
-Date:   Fri, 25 Sep 2020 14:43:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101
- Thunderbird/81.0
+        id S1729809AbgIYSnV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 14:43:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41294 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729691AbgIYSnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 14:43:21 -0400
+Received: (qmail 15768 invoked by uid 109); 25 Sep 2020 18:43:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2020 18:43:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22355 invoked by uid 111); 25 Sep 2020 18:43:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2020 14:43:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 25 Sep 2020 14:43:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Ryan Zoeller <rtzoeller@rtzoeller.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [RFC 0/1] Leading whitespace as a function identification
+ heuristic?
+Message-ID: <20200925184319.GA660343@coredump.intra.peff.net>
+References: <20200923215859.102981-1-rtzoeller@rtzoeller.com>
+ <xmqqzh5fhduk.fsf@gitster.c.googlers.com>
+ <20200924211725.GA3103003@coredump.intra.peff.net>
+ <c759b472-c889-ef85-bcf2-6d9cbc588b51@rtzoeller.com>
+ <1c03faa0-011c-39c2-acb6-d09a5fcfc818@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqh7rllos3.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <1c03faa0-011c-39c2-acb6-d09a5fcfc818@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/25/2020 2:00 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> +	printf data-B | git hash-object -t blob --stdin -w &&
+On Fri, Sep 25, 2020 at 10:11:33AM +0100, Phillip Wood wrote:
+
+> If I've understood correctly when ...code 2... contains changes that are
+> themselves indented then we'll pick the wrong function header for example
 > 
-> Is it essential for the purpose of the test somehow that the data
-> used for the test are all incomplete files that lack the end-of-line
-> at the end of the file?  Use of 'printf' sends such a signal to
-> confuse readers.
+> 	void foo() {
+> 		void bar() {
+> 			...code 1...
+> 		}
+> 		for (...) {
+> 			// if this line is changed we pick bar rather
+> 			// than foo because it is the first function
+> 			// header with a smaller indentation than the
+> 			// first changed line.
+> 		}
+> 	}
 > 
-> Use of test_write_lines to write a single line may feel overkill,
-> but it may be less cryptic, as newer parts of testsuite are
-> encouraged to use it over 'echo' and raw 'printf'.
+> Unfortunately I suspect code like that is not uncommon and the diff would
+> regress with this simple heuristic. It might be possible to recalculate the
+> required indentation as we walk backwards up the file though, so when we hit
+> the "for" line we reduce the maximum indentation allowed for a match and so
+> skip "bar" as a function header.
 
-I suppose it could be more standard. It's not particularly
-important what the data is here, so lacking a newline seems
-innocuous enough to me. I'm happy to agree with standards
-elsewhere to avoid being a bad example.
+Thanks, that's a great counter-example I hadn't considered.
 
-A simple s/printf/test_write_lines/ appears to do the trick:
+Yes, I agree that adjusting the desired indentation as we walk backwards
+would work. That's assuming indentation is hierarchical, but I think
+that's implied by the existence of this feature at all.
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index f259485990..a1bd0029c6 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -147,12 +147,12 @@ test_expect_success 'maintenance.loose-objects.auto' '
-                git -c maintenance.loose-objects.auto=1 maintenance \
-                run --auto --task=loose-objects 2>/dev/null &&
-        test_subcommand ! git prune-packed --quiet <trace-lo1.txt &&
--       printf data-A | git hash-object -t blob --stdin -w &&
-+       test_write_lines data-A | git hash-object -t blob --stdin -w &&
-        GIT_TRACE2_EVENT="$(pwd)/trace-loA" \
-                git -c maintenance.loose-objects.auto=2 \
-                maintenance run --auto --task=loose-objects 2>/dev/null &&
-        test_subcommand ! git prune-packed --quiet <trace-loA &&
--       printf data-B | git hash-object -t blob --stdin -w &&
-+       test_write_lines data-B | git hash-object -t blob --stdin -w &&
-        GIT_TRACE2_EVENT="$(pwd)/trace-loB" \
-                git -c maintenance.loose-objects.auto=2 \
-                maintenance run --auto --task=loose-objects 2>/dev/null &&
+Another possible corner case: tabs vs spaces. If I have:
 
-Thanks,
--Stolee
+  <space><space><space><space><space><space><space><space>foo
+  <tab><tab>bar
+
+which is more indented? Counting isspace(), it is the first one. But
+visually, it would _usually_ be the second one. But of course it would
+depend on your tabstops.
+
+The above example is obviously stupid and contrived, but I wonder if
+there are legitimate confusing cases where people mix tabs and spaces
+(e.g., mixed tabs and spaces to align function parameters, etc).
+
+-Peff
