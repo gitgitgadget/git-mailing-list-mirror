@@ -2,107 +2,114 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E519CC4727E
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 22:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB1EAC4727E
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 22:19:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95A062076D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 22:01:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 620E120866
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 22:19:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8m4yb4i"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XkhzCmac"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbgIYWBE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 18:01:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39534 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726412AbgIYWBC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 18:01:02 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89437C0613CE
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 15:01:01 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id q9so712144wmj.2
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 15:01:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fp+v9hIYTJHP3R+g5gV21tgi7kohk6KcMEAo7BmnnGQ=;
-        b=K8m4yb4inIzEBeL5CFJdJcv0fDPjOduSh+3xw5t59lONwyFutPIO423l/2BZEUUtTP
-         tB4D/a0Gap7AVDH7BsttcjYj4yhriKDW/M1fzRu7ehA3JIfrCCX3IwTerUPZnGkh4RIq
-         uhaFdvzIl1OX/XGIs5B+bgXmbyKf26BG1QH0x/ATdAihajrp0JFlGtCQrw2ZuqQmMSbQ
-         TLcDrgkaqBrmmylgqfOyaGSoVrKkQoqctR29G8KYgbFw4zOTVFaH0AoIWBW/um+MCka1
-         +DCC9txxl37HXNrDXtXIrUgM9wquFPXyor5/l5YkQEJbvMqqsZvLFlAQOuM3Ez1HZ9xe
-         UR6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fp+v9hIYTJHP3R+g5gV21tgi7kohk6KcMEAo7BmnnGQ=;
-        b=Ri1Og6dOBfO1swh90vCbvaJ0Bn3JmbUjh3GfiTHrgvgEF/yTwUZDKDrgBTrWD4Uwud
-         JkRQpiJceLPzrbB58xtA002PcDBeoA2x+m2dzuEsjsV0VmINxrycTgfOiDzq3Go8Pr3d
-         3kKddzOlZ8rg1YlF/yeabsl9pnZGKWuExP1r/nTbIc+/pZjaj98Tfo0mLsMz31z1rZgp
-         iMNdMkFxEhyo4SUB1hSZWis8lw2ASW7VgnNJFXEgcLJmo4G7ny3bhD90ao5bCa0nlIqJ
-         OIoSaEadHaZ+pKQ/dqrBHPUnIZ63sD414Nm9yc5IqFdwlJ8CetF2ISuycK8HjN22w0Sb
-         DuZg==
-X-Gm-Message-State: AOAM532eNunitqSG6B9Fup58wE5zSD/uSB5YXyhKVzB8XpTJKtwMryIN
-        djGoUtTwnlLI0uodmhxHILp2fJhPmQqJQJEX
-X-Google-Smtp-Source: ABdhPJx2CYs+FxHfdrQgVW74ToA09n0szQRdadLQfaA6dDbXa9LVN/Ijauf3turU+UGtLRLI1nBcdA==
-X-Received: by 2002:a05:600c:28d:: with SMTP id 13mr582478wmk.69.1601071259972;
-        Fri, 25 Sep 2020 15:00:59 -0700 (PDT)
-Received: from localhost.localdomain (91EC7F95.dsl.pool.telekom.hu. [145.236.127.149])
-        by smtp.gmail.com with ESMTPSA id w7sm354659wmc.43.2020.09.25.15.00.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2020 15:00:59 -0700 (PDT)
-From:   =?UTF-8?q?=C3=81kos=20Uzonyi?= <uzonyi.akos@gmail.com>
+        id S1726731AbgIYWTv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 18:19:51 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51971 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbgIYWTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 18:19:50 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E24EEF4CF5;
+        Fri, 25 Sep 2020 18:19:48 -0400 (EDT)
+        (envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-transfer-encoding;
+         s=sasl; bh=6i1J8If8ptRI+DKzCyz68Z5zOS4=; b=XkhzCmacfb/OwF83Mv4/
+        pjBsXeIS6PaUqNPKrMWtzfoL9S1Qe9WN/O23lLXff/T4g/sw0u8c7A4K89sQIigs
+        +9pYp+H9LTceilIAxUOju96cV2YuXmdDTZyJLUOrT/l+9yFL9dNoKU/SuSQ6Y+7Z
+        t/GjhHZeZuNwwmvQveRqurg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-transfer-encoding;
+         q=dns; s=sasl; b=rBiKg99q/vV4/ppgEJqcb4yYqE3a68ttbHb8gqz61trbDL
+        loOViDfpLWrHloMSKi5rLlCyZ9O4FbfVTpfZmlsuVxc/i+ln6udNyjg/8VJlkdjK
+        jNXZ4ZN4rLgpKNhrPNCkBM8H2JRJJttwMpYs4CjA9/rJ4BDCpVMBSDmDmnwLI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA592F4CF4;
+        Fri, 25 Sep 2020 18:19:48 -0400 (EDT)
+        (envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1C004F4CF3;
+        Fri, 25 Sep 2020 18:19:46 -0400 (EDT)
+        (envelope-from gitster@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=81kos=20Uzonyi?= <uzonyi.akos@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] completion: complete refs after 'git restore -s'
-Date:   Fri, 25 Sep 2020 23:11:24 +0200
-Message-Id: <20200925211124.1673337-2-uzonyi.akos@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200925211124.1673337-1-uzonyi.akos@gmail.com>
-References: <20200925211124.1673337-1-uzonyi.akos@gmail.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 01/26] transport: not report a non-head push as a branch
+Date:   Fri, 25 Sep 2020 15:19:19 -0700
+Message-Id: <20200925221944.4020954-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.28.0-733-g3cecc26178
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: 37DAA39A-FF7D-11EA-A57D-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently only the long version (--source=) supports completion.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add completion support to the short (-s) option too.
+When pushing a new reference (not a head or tag), report it as a new
+reference instead of a new branch.
 
-Signed-off-by: Ákos Uzonyi <uzonyi.akos@gmail.com>
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- contrib/completion/git-completion.bash | 7 +++++++
- 1 file changed, 7 insertions(+)
+ t/t5516-fetch-push.sh | 2 +-
+ transport.c           | 9 ++++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3d02bd4de7..0a96ad87e7 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2841,6 +2841,13 @@ _git_reset ()
- 
- _git_restore ()
- {
-+	case "$prev" in
-+	-s)
-+		__git_complete_refs
-+		return
-+		;;
-+	esac
-+
- 	case "$cur" in
- 	--conflict=*)
- 		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
--- 
-2.28.0
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 9c6218f568..77938db77f 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag =
+message'"
+ test_expect_success 'push --porcelain' '
+ 	mk_empty testrepo &&
+ 	echo >.git/foo  "To testrepo" &&
+-	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new br=
+anch]"  &&
++	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new re=
+ference]"  &&
+ 	echo >>.git/foo "Done" &&
+ 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes=
+/origin/master &&
+ 	(
+diff --git a/transport.c b/transport.c
+index 15f5ba4e8f..26fefd13c1 100644
+--- a/transport.c
++++ b/transport.c
+@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int=
+ porcelain, int summary_widt
+ 				 porcelain, summary_width);
+ 	else if (is_null_oid(&ref->old_oid))
+ 		print_ref_status('*',
+-			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
+-			"[new branch]"),
+-			ref, ref->peer_ref, NULL, porcelain, summary_width);
++				 (starts_with(ref->name, "refs/tags/")
++				  ? "[new tag]"
++				  : (starts_with(ref->name, "refs/heads/")
++				     ? "[new branch]"
++				     : "[new reference]")),
++				 ref, ref->peer_ref, NULL, porcelain, summary_width);
+ 	else {
+ 		struct strbuf quickref =3D STRBUF_INIT;
+ 		char type;
+--=20
+2.28.0-733-g3cecc26178
 
