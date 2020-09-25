@@ -2,183 +2,173 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72968C4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19570C4363D
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:11:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24A3A2084C
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:09:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1B20206C1
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 09:11:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="c7sln7jn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UB0XOAiD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727686AbgIYJJn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 05:09:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:42219 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727132AbgIYJJm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 05:09:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601024976;
-        bh=j8h63gLjdWXueORHKDSnbF/NoytPEFdLindlvk59mYs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c7sln7jnhSfhl25Cr6ljvnOv9bPi6jE0saUtJqSgi6jP2+c8TGVBlKDPBKMCxDAtx
-         TYRjbekrQ7783GMtY7gDs6/M/O2Ag6xi9E4esjY/go0r4eg+j4bMQhfFo9EYbe4/JS
-         cTiAph8jsV41XoM0RrHeciNrc5ObAvEjsM+5VEbI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.89.169] ([89.1.212.158]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MV67o-1jupCI2nVm-00SBJR; Fri, 25
- Sep 2020 11:09:36 +0200
-Date:   Fri, 25 Sep 2020 07:02:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] cmake: ignore generated files
-In-Reply-To: <20200924103437.GA18952@danh.dev>
-Message-ID: <nycvar.QRO.7.76.6.2009250650280.5061@tvgsbejvaqbjf.bet>
-References: <pull.735.git.1600375065498.gitgitgadget@gmail.com> <xmqqtuvwoyz5.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009181510240.5061@tvgsbejvaqbjf.bet> <xmqqft7fnlxr.fsf@gitster.c.googlers.com> <20200918155015.GA1837@danh.dev>
- <xmqq7dsrnjhi.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009201916040.5061@tvgsbejvaqbjf.bet> <xmqqr1qsjxgb.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2009232224410.5061@tvgsbejvaqbjf.bet> <20200924103437.GA18952@danh.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727556AbgIYJLh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 05:11:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32912 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727044AbgIYJLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 05:11:37 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5168C0613CE
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 02:11:36 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id s12so2715724wrw.11
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 02:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RizRSfT4b3XnKVvGe8r9W/NPKyx22okMTfaZTI2151c=;
+        b=UB0XOAiDoXZkfGRxckzDx9u5fuRtv/T3V4OaLkIfdW8VebWCn5jbBwsc7pXuy3XNre
+         BumbbLzAKrHjsiNGOymhgb3R/QWWnIr4zPMq+zcQmzRcbcjV3nDnVHrI24YkrqelcvYv
+         +68oVjtLaJpNRlan0erGOeL+3LwhEclCIh6Cq+fBlyR7I/ZmYInbMrA0DJ8ovwKNUWKb
+         f9ARg95BD/enk2303S9IUr/cE28CpT3271BxX44HhL7QlbUf4SZQVH2hKFUOHYiZeiUq
+         QfPDjpv/MBoXmOrRNI64y5w5MwsWoXknefqeUtk/Ig9ymA1ZAwZJtAwLRpQtSgIEUDJG
+         v+Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=RizRSfT4b3XnKVvGe8r9W/NPKyx22okMTfaZTI2151c=;
+        b=p34+8goZ+zTSsE60c0ePR/6N0luv5rJ3ju+VftPfbkjMJCIIzjZxeR2w76zb4eDe47
+         IBYAQs/pKjGGUCzZtCazj8ehq7hUPSQ6fkBNwpy8lTZAZD4sErr1MDxb4jFp+FF2EPEt
+         e4gjeSktCbCEfhNnUHbUsbqGO/daToyoTwLsapZ9bRBCOFkdxpigUhNJO5Gf4oodY/st
+         ymfcNZYtq5VjNVp41n/J1jTaDU3HzVm8Ymtty5vyem38QiPsKB7xjaqo19JZfBuP2Mv8
+         hwO5f12r1UzPZEHBhVuCItKfC+KqR9tN6nmlTLODa3lHg200Ueds0lgb0vMQBQOjrF96
+         Skqg==
+X-Gm-Message-State: AOAM532zcTiEgY4FUrjmdTASqjupmJ62N2W6BDsnSQpEQNVCtGTdkVla
+        qMRcwwoQIwowq56y1Qfmi8Kb+fGfT7A=
+X-Google-Smtp-Source: ABdhPJyuWTntHOhCdIq1IhpQU5er3C5+0yyjRo8oM3oAGP0BtaBMhMufiNK+bAgkjGrV5Tk0OnZVmQ==
+X-Received: by 2002:adf:f548:: with SMTP id j8mr3551887wrp.114.1601025095297;
+        Fri, 25 Sep 2020 02:11:35 -0700 (PDT)
+Received: from [192.168.1.240] (79.35.7.51.dyn.plus.net. [51.7.35.79])
+        by smtp.gmail.com with ESMTPSA id r21sm2064169wrc.70.2020.09.25.02.11.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Sep 2020 02:11:34 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC 0/1] Leading whitespace as a function identification
+ heuristic?
+To:     Ryan Zoeller <rtzoeller@rtzoeller.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20200923215859.102981-1-rtzoeller@rtzoeller.com>
+ <xmqqzh5fhduk.fsf@gitster.c.googlers.com>
+ <20200924211725.GA3103003@coredump.intra.peff.net>
+ <c759b472-c889-ef85-bcf2-6d9cbc588b51@rtzoeller.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <1c03faa0-011c-39c2-acb6-d09a5fcfc818@gmail.com>
+Date:   Fri, 25 Sep 2020 10:11:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1368141848-1601010132=:5061"
-X-Provags-ID: V03:K1:s8AjpzVCG87J8wxBeBlTYriAFpLPXTeMDUBkNNW+/pF3JA9ktXD
- xBnIjA30ue7vHgOKg7fQ26FO2yDaEwOBDKHfRojJCWAK9FRziDLAy13xc49+4sFMIbYnIo4
- BYnevsFmv1dAE3C6QX6SEoucNNcnA+SCF6TO7zca+ZgJPA6k5gNdZoDBe09GQ88IDitUobI
- xCC23j2e6ZGF56WdD6HMg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1WUdYx31Xfk=:k5zFcoV1obbh1FpbyMviYx
- 2RJh/nWf3od68/rCxym2c16hj7E3lOuqHKIhfG/yUtnZd6iaXmxH2Gzn8RIg3r1gbOlcOBjLK
- oEIOs3Md4i4iwhAVGPz7MQvYrCLmaCU1tp/LKtEO7lmj0ijlKWEqsffSImETkfdTGpCR3wGEx
- mkmPqt7XfxQKoCsEXbGcRqEcePtUyRQ/4P/WXf1880Bb3Gj5hY+6F98H3mjJrkoot+2nm6mBl
- SVwA7hK8+ntX7puhQIPJjzoDntxKycikUxBESEjq6WKW3zJau9uRKotcNbKtvM8RkD0+jdu0A
- QjWtVA5nbiHpWD5mRV6CjWIqxWuQPD4X/RlFs75OYRiIRDHxWDg9/PFWX3AVmpAysiyC+0CSJ
- BJF9CzoshgxcYMBgi94kOQEdjzw61tjnXjCp7enLlTi5rVmZ8bfwykFIxjyQa0xG46VZkYUIB
- EcmRGovL8+aJiVpbyxDwk1iQ7ztb70BucHGfl7Jn2E9wpkgQmYlkscdthFGmbmvapFDO5a+aM
- aw0W5d40OcchMRh6Vfw6L4dbxXq/RnBVASVH/PC9wKl83WU11Ym7Wo3ieSrjADRVHZm2ip2/J
- NBK6gawXiuVI4KsFfrUdkcT+ZjRrAM/f/94L+Yh0zOph3Ht1MaoU275Z+S1x97OlIZCvw67VZ
- LPQBa/+plC/JYplC+9ZynFpsVqGK1J+DixUo/cmzlJb7hsoS39ygaqYOdo/vtcVlOfsjnbCdf
- l3sh/27aFvMJ+sYRGKgsDZY52cye5Z928BDomrERd4aajALvBmR+hu8rKdiCiBxsGXpzDHaYL
- ghy419sqdXcgnXGa4Q2Tq8F1VcxBsRf/TY4SP3WRuj/aqc649vdgzqg29Lk+AmxRDhfvUvNEn
- BOZzi3F+hDipUIiDPZXsmY1AACvJxpYc3eiW186WcOwiEpgFgGiTeR1yUy3U6zZL+RJPStyQT
- G3lK8xvAxPp9bRr5+ZND845yctWLd9eRLanB/K7wc5ehAUetqit/SEw4GSQ/o4qzUBGAOD+Sc
- VJlG+EbBbvSMdqiFSoemoIEDoVoH7bmXxJTLB1BN8LGdxVQ3xp87rNi9M/IphTSUODst99tof
- g8YkqofRj1f32Mo9zTaw6yAnMZCPfbGkbwSi4swzZ2wafJy4fytMcj7WNDJ1s6dQVlL4WC4P3
- Sxihy7xKTDdYheYatXp5Qv+w+xbW71bxVfvc+BF8QojLJmjUM8phXzEZI5P4WIS2lRs88mmmj
- AFkeMQvAgVW3/s4t815/u/qJpWntuGrsA3WQiWA==
+In-Reply-To: <c759b472-c889-ef85-bcf2-6d9cbc588b51@rtzoeller.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 24/09/2020 23:01, Ryan Zoeller wrote:
+> On 9/24/20 4:17 PM, Jeff King wrote:
+>>
+>>
+>> If I understand the problem correctly, I don't think a static regex can
+>> accomplish this, because you need context from the original line. E.g.,
+>> consider something like this:
+>>
+>>     void foo() {
+>> 	void bar() {
+>> 		...code 1...
+>> 	}
+>> 	...code 2...
+>>     }
+>>
 
---8323328-1368141848-1601010132=:5061
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+If I've understood correctly when ...code 2... contains changes that are 
+themselves indented then we'll pick the wrong function header for example
 
-Hi Danh,
+	void foo() {
+		void bar() {
+			...code 1...
+		}
+		for (...) {
+			// if this line is changed we pick bar rather
+			// than foo because it is the first function
+			// header with a smaller indentation than the
+			// first changed line.
+		}
+	}
 
-On Thu, 24 Sep 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+Unfortunately I suspect code like that is not uncommon and the diff 
+would regress with this simple heuristic. It might be possible to 
+recalculate the required indentation as we walk backwards up the file 
+though, so when we hit the "for" line we reduce the maximum indentation 
+allowed for a match and so skip "bar" as a function header.
 
-> On 2020-09-23 22:27:17+0200, Johannes Schindelin <Johannes.Schindelin@gm=
-x.de> wrote:
-> > > ... the above sounds like the argument concentrates too much on
-> > > where the build directory is (i.e. between "in place" and "a
-> > > throw-away directory next door"), which sounds like much smaller
-> > > point compared to the other things that needs to be improved in the
-> > > VS users.  And making a choice against what is recommended as best
-> > > practice...?  I dunno.
-> >
-> > All I want is for the CMake support to be easier to use, yet we go in =
-the
-> > opposite direction: instead of allowing to use CMake under more
-> > circumstances (which actually *works*, we just don't have the appropri=
-ate
-> > patterns in our `.gitignore` yet to avoid adding and committing the
-> > generated files), we now seem to intend to require a separate build
-> > directory.
->
-> I've left Windows development land for a long time.
-> So, please take below discussion with grain of salt.
->
-> When I was there, CMake Users on Windows mostly used CMake-GUI to
-> generate build system for CMake since running CMake as CLI in Windows
-> takes too much hassle.
->
-> When I was there, CMake-GUI shows the option to choose build directories
-> explicitly, and whenever the source directories changed, the build
-> directories also changed, with some [-/]build added into sourcedir [1]
+Best Wishes
 
-In my tests, the build directory was left empty. When I clicked the button
-next to it, it defaulted to the same directory as `CMakeLists.txt`:
-`contrib/buildsystems/`.
+Phillip
 
-I might be holding this thing wrong, but if I don't, then we would
-actually have to add a _different_ set of patterns to `.gitignore`.
-
-> I heard that nowaday, CMake is supported natively with MSVC, I don't
-> know what is the default option when using CMake with MSVC, but from
-> the history of MSVC always supports building out of tree, and
-> information for Microsoft Docs [2]:
->
-> 	Click the Show All Files button at the top of Solution
-> 	Explorer to see all the CMake-generated output in the
-> 	out/build/<config> folders.
-
-Oh wow, I missed this. And it looks promising: when I open a fresh
-checkout of current git/git's `master` branch in a freshly updated Visual
-Studio 2019, it finds the CMakeLists.txt file automatically.
-
-But that's where the happy news end: it stops with the error message:
-
-CMake Error at [...]\contrib\buildsystems\CMakeLists.txt:46 (message):
-  sh: shell interpreter was not found in your path, please install one.On
-  Windows, you can get it as part of 'Git for Windows' install at
-  https://gitforwindows.org/	git
-[...]\contrib\buildsystems\CMakeLists.txt	46
-
-So there's a bit of work left to do for me.
-
-> I think the default UX with CMake on Windows is building project out
-> of tree.
-
-Indeed, it _does_ create `contrib/buildsystems/out/` and starts outputting
-files to `contrib/buildsystems/out/build/x64-Debug (default)/`.
-
-Seeing as using Visual Studio's built-in CMake support is much more
-convenient to use than a separate CMake installation, I reconsidered my
-original idea, and now think that y'all are right, my current patch isn't
-the best way forward. I'll rework the patch into a proper patch series
-that takes into account what I learned today.
-
-> > That's the opposite direction of making things more convenient for Vis=
-ual
-> > Studio users.
->
-> So, I don't think we would provide them more convenient with this change=
-.
-
-Indeed. And more convenience is what I want, I don't want developers on
-Windows to struggle with the tooling when all they want to do is to
-contribute to Git.
-
-Thank you,
-Dscho
-
->
->
-> 1: https://cmake.org/runningcmake/
-> 2: https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-s=
-tudio?view=3Dvs-2019
->
-> --
-> Danh
->
-
---8323328-1368141848-1601010132=:5061--
+>> If we change one of the lines of code, then we find the function header
+>> by walking backwards up the lines, evaluating a regex for each line. But
+>> for "code 2", how do we know to keep walking past bar() and up to foo()?
+>> Or more specifically, what is different when evaluating a change from
+>> "code 2" that is different than when we would evaluate "code 1"?
+>>
+>> If the only input to the question of "is this line a function header" is
+>> the regex from the config, then changes to either line of code must
+>> produce the same answer (either bar() if we allow leading whitespace, or
+>> foo() if we do not).
+>>
+>> So I think Ryan's proposal is to give that search an extra piece of
+>> information: the indentation of the original changed line. Which is
+>> enough to differentiate the two cases.
+> 
+> You've explained this better than I could have. Thanks.
+> 
+>> If I understand the patch correctly, it is always picking the first line
+>> where indentation is lessened (and which matches the funcname pattern).
+>> That works out of the box with existing funcname patterns, which is
+>> nice. Though I wonder if there are cases where the funcname regex could
+>> use the information more flexibly (i.e., some marker in the regex that
+>> means "match less than this many spaces" or something).
+> 
+> My original intent was to work with existing funcname expressions
+> without modifications. Some of the funcname regexes are rather
+> impenetrable at first glance, and not requiring modifications seemed
+> like an easy win.
+> 
+> Especially for funcname patterns specified by a user, I assumed it
+> would be easier to set an additional configuration option than
+> rewrite an existing regex to handle this complexity.
+> 
+>> I do agree that this should not be on automatically for all languages.
+>> Some file formats may want to show a header that's at the same
+>> indentation as the change. Adding a diff.foo.funcnameIndentation config
+>> option would be one solution. But requiring the funcname pattern to make
+>> explicit use of the information is another (and would allow a format to
+>> match some things at one indentation level and some at another; but
+>> again, I'm hand-waving a bit on whether this level of flexibility is
+>> even useful)
+> If the configuration option is implemented correctly (i.e. as an enum
+> rather than a binary toggle), I think we could leave the door open for
+> a more flexible approach in the future, without needing to answer how
+> useful that flexibility is now. I couldn't think of any situations
+> requiring this flexibility, but that doesn't mean they don't exist.
+> 
+> Ryan
+> 
