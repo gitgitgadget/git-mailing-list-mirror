@@ -2,117 +2,84 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11E81C4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95DA8C4363D
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:12:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2F332075F
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:00:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SHzEJnmA"
+	by mail.kernel.org (Postfix) with ESMTP id 6A0122086A
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728038AbgIYSAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 14:00:53 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56290 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727495AbgIYSAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 14:00:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03F8DF2FD5;
-        Fri, 25 Sep 2020 14:00:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7igkJhA0NapALN6vcsAtJe0JZhw=; b=SHzEJn
-        mAee+vynfxN8tX41E5n2mTlsCn8QB8KWLmxaMvlY+R3yNTFab2QMi/mHm6HZep1Y
-        CDKwUuiPR0f582sI07QesBkU/HaCHqVy78j8lDGIpaQJ0byYNb0JMytB7Y4+mXmE
-        l1znuUByx/aq2icnvpXSofOUJaeJ2VLgAY0OI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=F07T5Tx3i5uO0KNFYySEi0kE8/nBK3gF
-        juOqK+kgDEng37qjSfeYGf3J2HUvtPNVKGtYf0NhI8ftDj0Z3g/IFQnsnDnkNnv3
-        BLtfgV15YqZwKha/MlTOBx9OZ8ezd+K1ESAOh3+yenEppz9KlGZMhSUxEAaAridN
-        olWg/D0oZho=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EF203F2FD4;
-        Fri, 25 Sep 2020 14:00:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 78C5EF2FD1;
-        Fri, 25 Sep 2020 14:00:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        steadmon@google.com, jrnieder@gmail.com, peff@peff.net,
-        congdanhqx@gmail.com, phillip.wood123@gmail.com,
-        emilyshaffer@google.com, sluongng@gmail.com,
-        jonathantanmy@google.com, Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 3/8] maintenance: create auto condition for
- loose-objects
-References: <pull.696.v3.git.1598380599.gitgitgadget@gmail.com>
-        <pull.696.v4.git.1601037218.gitgitgadget@gmail.com>
-        <931fff4883a3da26a296af69a9c5ccc3a5037d71.1601037218.git.gitgitgadget@gmail.com>
-Date:   Fri, 25 Sep 2020 11:00:44 -0700
-In-Reply-To: <931fff4883a3da26a296af69a9c5ccc3a5037d71.1601037218.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Fri, 25 Sep 2020
-        12:33:33 +0000")
-Message-ID: <xmqqh7rllos3.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1729715AbgIYSMN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 14:12:13 -0400
+Received: from mail-ej1-f68.google.com ([209.85.218.68]:32961 "EHLO
+        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726401AbgIYSMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 14:12:13 -0400
+Received: by mail-ej1-f68.google.com with SMTP id j11so4905429ejk.0
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 11:12:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IAY0JWya5/uIMwa2JSF1dX8IxoRv/fwjHTx1Q7GmKBs=;
+        b=i4CpXTVPMJqAGOZfN3305RxU7f/YgjEoxJJ5dpWxky/k9aQOX84oFRduAVm0FMRgpw
+         vAi4le00JQyklWjz7puqVHFJ+8VpJsVCxzTJ07r4fUwGqdE/c+6gPeueAuJKqX2aBVDx
+         AEqryzHpWcj3313iOtmeW2IdJ0gb5wTJ5LomaAaE9AHMVIafzVfGiz2Svmpcqq6y0cpC
+         jlXTG7c92EwMgHLPbstjCer6U4AS8gnLuAhIriUnyF/QnSaHgi+/ZHoogR7AZjo7laCO
+         kmh2gr7nm3mG/s57IBiURsHcAXb//7fviwD1T1Nnxx0ydklZxS8CmEaJtNC4MqK3QxLE
+         mjPQ==
+X-Gm-Message-State: AOAM532Q7laCo519RvTrzeO1Q9acX5GmZhBhyu+7s0dRp9vYV1CUWE0G
+        SkfyXDCGdz8F4DVQ2AYJbH6joD2pllyESY/KfmU=
+X-Google-Smtp-Source: ABdhPJyT29bxbZWm1MwmywdkHoLqExFHmTLAj8t1PxNVW2lYGeTVGSKAmy0pUw/Aft/3n2Gf6wpagN9RwP5n59vLzwY=
+X-Received: by 2002:a17:906:250a:: with SMTP id i10mr3914066ejb.202.1601057531396;
+ Fri, 25 Sep 2020 11:12:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09857C64-FF59-11EA-8DE4-843F439F7C89-77302942!pb-smtp21.pobox.com
+References: <20200925170256.11490-1-shubhunic@gmail.com> <20200925170256.11490-5-shubhunic@gmail.com>
+In-Reply-To: <20200925170256.11490-5-shubhunic@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 25 Sep 2020 14:12:00 -0400
+Message-ID: <CAPig+cSb2nB0cK-3Xh=5mhTa6Knh0in-wFE-DQ7MiKGWv=qR=g@mail.gmail.com>
+Subject: Re: [PATCH 04/11] t7001: change the style for cd according to subshell
+To:     shubham verma <shubhunic@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, Sep 25, 2020 at 1:03 PM shubham verma <shubhunic@gmail.com> wrote:
+> t7001: change the style for cd according to subshell
+>
+> In some tests there is not a proper spaces after opening paranthesis
+> and before cd. So, Lets change the style for cd according to subshell.
 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index b3fc7c8670..27565c55a2 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -127,4 +127,26 @@ test_expect_success 'loose-objects task' '
->  	test_cmp packs-between packs-after
->  '
->  
-> +test_expect_success 'maintenance.loose-objects.auto' '
-> +	git repack -adk &&
-> +	GIT_TRACE2_EVENT="$(pwd)/trace-lo1.txt" \
-> +		git -c maintenance.loose-objects.auto=1 maintenance \
-> +		run --auto --task=loose-objects 2>/dev/null &&
-> +	test_subcommand ! git prune-packed --quiet <trace-lo1.txt &&
-> +	printf data-A | git hash-object -t blob --stdin -w &&
-> +	GIT_TRACE2_EVENT="$(pwd)/trace-loA" \
-> +		git -c maintenance.loose-objects.auto=2 \
-> +		maintenance run --auto --task=loose-objects 2>/dev/null &&
-> +	test_subcommand ! git prune-packed --quiet <trace-loA &&
-> +	printf data-B | git hash-object -t blob --stdin -w &&
+Nits:
+s/space/newline/
+s/paranthesis/parenthesis/
+s/So, Lets change/Change/
 
-Is it essential for the purpose of the test somehow that the data
-used for the test are all incomplete files that lack the end-of-line
-at the end of the file?  Use of 'printf' sends such a signal to
-confuse readers.
+However, a more significant observation is that this change is
+actually specific to the formatting of subshells, and has nothing to
+do with placement of `cd`, so calling out `cd` in the commit message
+is misleading. I'd probably drop mention of `cd` altogether and write
+the commit message something like this:
 
-Use of test_write_lines to write a single line may feel overkill,
-but it may be less cryptic, as newer parts of testsuite are
-encouraged to use it over 'echo' and raw 'printf'.
+    t7001: modernize subshell formatting
 
-> +	GIT_TRACE2_EVENT="$(pwd)/trace-loB" \
-> +		git -c maintenance.loose-objects.auto=2 \
-> +		maintenance run --auto --task=loose-objects 2>/dev/null &&
-> +	test_subcommand git prune-packed --quiet <trace-loB &&
-> +	GIT_TRACE2_EVENT="$(pwd)/trace-loC" \
-> +		git -c maintenance.loose-objects.auto=2 \
-> +		maintenance run --auto --task=loose-objects 2>/dev/null &&
-> +	test_subcommand git prune-packed --quiet <trace-loC
-> +'
+    Some test use an old style for formatting subshells:
 
+        (command &&
+            ...
+
+    Update them to the modern style:
+
+        (
+            command &&
+            ...
+
+The actual patch is fine.
+
+> Signed-off-by: shubham verma <shubhunic@gmail.com>
