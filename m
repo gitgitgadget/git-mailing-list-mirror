@@ -6,68 +6,78 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11CBBC4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 06:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A44E5C4363D
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 07:01:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF9BF21D91
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 06:50:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6656B221EB
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 07:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbgIYGuY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 02:50:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40378 "EHLO cloud.peff.net"
+        id S1727226AbgIYHBV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 03:01:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40406 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727044AbgIYGuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 02:50:24 -0400
-Received: (qmail 13103 invoked by uid 109); 25 Sep 2020 06:50:24 -0000
+        id S1727044AbgIYHBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 03:01:21 -0400
+Received: (qmail 13138 invoked by uid 109); 25 Sep 2020 07:01:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2020 06:50:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2020 07:01:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15822 invoked by uid 111); 25 Sep 2020 06:50:26 -0000
+Received: (qmail 15891 invoked by uid 111); 25 Sep 2020 07:01:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2020 02:50:26 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2020 03:01:22 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 25 Sep 2020 02:50:23 -0400
+Date:   Fri, 25 Sep 2020 03:01:20 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Antoine =?utf-8?Q?Beaupr=C3=A9?= <anarcat@debian.org>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, imon Legner <Simon.Legner@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 00/18] remote-mediawiki: fix RCE issue, and the tests
-Message-ID: <20200925065023.GB3179383@coredump.intra.peff.net>
-References: <20200916102918.29805-1-avarab@gmail.com>
- <20200921104000.2304-1-avarab@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/8] parsing trailers with shortlog
+Message-ID: <20200925070120.GA3669667@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200921104000.2304-1-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 21, 2020 at 12:39:42PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Somebody mentioned at the inclusion summit that it would be nice for
+mentoring/pairing relationships if we could more easily give credit to
+multiple authors of a commit. When people ask about adding multiple
+"author" headers, we usually recommend that they use a "co-authored-by"
+trailer. But you can't convince shortlog to count it for anything. :)
 
-> This series now has a fix for a remote code execution which previously
-> was only being discussed on the closed git-security list. Per
-> discussion there the issue is being made public.
-> 
-> Basically, we expect that almost nobody is using this code in the
-> first place so there wasn't any interest in a point release, and there
-> wasn't any downstream interest in an embargo either.
-> 
-> This v2 addresses (hopefully) all the public & git-security commends
-> on the v1s of this series.
+So this series adds support for counting trailers to shortlog. You can
+do a number of fun things with it, like:
 
-It all looks good to me, including the cleanup in the final commit.
+    # credit reviewers
+    git shortlog -ns --group=trailer:reviewed-by
 
-At that point we have no "unquoted" run_git helpers left, so possibly we
-could rename the "quoted" forms back to just "run_git" and "run_git_stderr",
-which are a little less verbose. But I don't care that much either way.
+    # credit authors and co-authors equally
+    git shortlog -ns --group=author \
+                     --group=trailer:co-authored-by
 
-Thanks again for fixing this.
+    # see who helps whom
+    git shortlog --format="...helped %an on %as" \
+                 --group=trailer:helped-by
+
+If some of this looks familiar, it's because I sent the early patches
+years ago. But I won't even bother linking to it; I cleaned up quite a
+few rough edges since then, so it's not really worth looking at.
+
+  [1/8]: shortlog: change "author" variables to "ident"
+  [2/8]: shortlog: refactor committer/author grouping
+  [3/8]: trailer: add interface for iterating over commit trailers
+  [4/8]: shortlog: match commit trailers with --group
+  [5/8]: shortlog: de-duplicate trailer values
+  [6/8]: shortlog: rename parse_stdin_ident()
+  [7/8]: shortlog: parse trailer idents
+  [8/8]: shortlog: allow multiple groups to be specified
+
+ Documentation/git-shortlog.txt |  29 +++++
+ builtin/log.c                  |   1 +
+ builtin/shortlog.c             | 218 +++++++++++++++++++++++++++++----
+ shortlog.h                     |   8 +-
+ t/t4201-shortlog.sh            | 141 +++++++++++++++++++++
+ trailer.c                      |  36 ++++++
+ trailer.h                      |  44 ++++++-
+ 7 files changed, 447 insertions(+), 30 deletions(-)
 
 -Peff
