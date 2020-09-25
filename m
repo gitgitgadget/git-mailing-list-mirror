@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3343C4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 17:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1FAFC4363D
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 17:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2873208B6
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 17:03:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6158F21D42
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 17:03:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DBHKNf1v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HlUNImOk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729528AbgIYRDg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 13:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49606 "EHLO
+        id S1729553AbgIYRDj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 13:03:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbgIYRDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 13:03:36 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8025BC0613CE
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 10:03:36 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id m34so3101210pgl.9
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 10:03:36 -0700 (PDT)
+        with ESMTP id S1726401AbgIYRDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 13:03:39 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374A2C0613CE
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 10:03:39 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id d9so3778350pfd.3
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 10:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rZPRjnG2HhpL+Aoyj6iVFR0o0kEbQEV9uOPnjxjKf6I=;
-        b=DBHKNf1vcdD2RTtCNZVtL6nT9+HEMbaUvWCTEjv0OS1XhVbAKvv0Yk4gxwqbr84dfV
-         osQ0tZC5pkKeNpcH/KCeoJNER810Hrfc8diEnDPi8BXIMwJnSPbF6or8eoX3DanEDrsm
-         AQsnccYmP4AiD1Jf+lwbOU5i5DFSVYiskmIlzoWtobcrVSZBnFELSlHBjISht3ZAgEmi
-         kxw618EltzEZ2UaiznwGJux0zqMb35N7YSdIOAOe9blqSkxs2UJd78TrzMvp0b7+tWzI
-         lqp8l7CTuhSgfUWZIeBkIJdAEFLzvWnrwKKNmBye/OzWULayzBwtZ/UqZIRhKI94Or3I
-         4lJg==
+        bh=WYXuXMUjnhpaXIhYGz0f9JkrG27ddz5CLizov1s0QdY=;
+        b=HlUNImOkCxR+KzU2QW9qW6rNblqeavxXBAyft0vD6Z+hVD2tlb+qrCkgllTdenpeTa
+         Pi+558yCaub97Kf4Gjbj9PAGEpRNPdOLCdav2RaL4xh9S0iavXwc3nqOIWCgSZh/iRzc
+         oTjVCVc49GxIp6YHI6bHPnXgyRd4QPLELM+AqXNCZieF1iG1TlZfmKqtOyDPwNK+x1DR
+         +weD7lyqtYDm7WbZyYuVQxoWvI28sHuP0L8poSRxX8yU7lkz2jmWBOsCIv42mfFGHfC8
+         hGki0Myeqno8FUPe1TmljS92CJQARuQXwZxGH6kiX8pUCgM8r14KflA/w9hr7fw4N5FJ
+         KovQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rZPRjnG2HhpL+Aoyj6iVFR0o0kEbQEV9uOPnjxjKf6I=;
-        b=c37S1zijAMcTTwShQQs4looY3mCy2n9ODfxbDq5mGNtKJwmZ7CYvfZtFneymu7tDx4
-         f6UjKMPUgW7/h8OPdqBSOqXSGIebLZXdEClabZA2jMbGEQbvPhpQyb/yLXS5RNHruw1A
-         0W/FeW+4Tnlm87PtI1Xb8mTFYIh3tG9kb33xeLKlYu9uSSzKH00NtrjbLDiWdECBXMvc
-         BdSKzXWfO35j82Zquymr8JpaLWG3EfPySeG4pvKinaCHpnn/bbimfJqAaw7zB9rBFbaG
-         AyFU3B6KupuBwkN5rZwFaxv/EPZ+DtFXlcktbt/pak50FvF1r3NgJz++WajTsi5lDeFV
-         WrqQ==
-X-Gm-Message-State: AOAM532P+hUv1L6NktHjOvZlJMT+UCQmFnN/k+nRDmNARHn/BA/KKvq/
-        lkWj6xWhFc7iSrMvMFEFPz7lkICzoGkZUQ==
-X-Google-Smtp-Source: ABdhPJyT7/SLDClMaO/NkOu+sr1mz3iqF9EF+Fm3BvRm7D79AJ2hi4CT598jh1LdGhMmnxjehHYMdw==
-X-Received: by 2002:a17:902:8305:b029:d1:cbfc:79b7 with SMTP id bd5-20020a1709028305b02900d1cbfc79b7mr339318plb.33.1601053415744;
-        Fri, 25 Sep 2020 10:03:35 -0700 (PDT)
+        bh=WYXuXMUjnhpaXIhYGz0f9JkrG27ddz5CLizov1s0QdY=;
+        b=ALXAqFi8ADs2ac5ZyW+swpwGncD3kfuu+ZScwctPcPKDoOLufRuJn8RgyTZ/gY/Fyv
+         sNbx5tTMPxbrpvZ+2fG56NMUI9sI70XjThzmBMh9RJAPOf2dGJ5+Sq9lRB+nV8NdILF2
+         IBVb5Rx+ypGB3oeYfG7gqVpP68wyZSU6lx+hMThaFAp6twxbBEjLumn/ZbLThqlMdDQW
+         v7JpWOVWQJndeaGlmSnSXvb4kfVnoKDe1C+aPaxMnB+7sKwW1Yu9ij36ccnpRo9WY3Jp
+         YMXQXfpwJuM4NVR3RNkHSVkcwRSbpx2IoQ/9MPdxZQKlYxHQ0+9OyrnbtPQYebW56eHI
+         x7Vw==
+X-Gm-Message-State: AOAM533d2aDFHGwf2HkSZj3wWdekn9Uok2W+mYZ4hpba1/x21zTNqY8U
+        Z8pH6EBjR7fjguDx1LjD4P/hrpnThoMvpA==
+X-Google-Smtp-Source: ABdhPJwxs+L1ZoKc47vHQlqzampkUvrZ9XqrmCgQV20eco4PasMGAv8+jCRMuTlLvJAaI2p58ZQf/Q==
+X-Received: by 2002:a62:1dc1:0:b029:13e:d13d:a051 with SMTP id d184-20020a621dc10000b029013ed13da051mr193854pfd.23.1601053418321;
+        Fri, 25 Sep 2020 10:03:38 -0700 (PDT)
 Received: from localhost.localdomain ([47.9.163.48])
-        by smtp.gmail.com with ESMTPSA id k27sm2822467pgm.29.2020.09.25.10.03.33
+        by smtp.gmail.com with ESMTPSA id k27sm2822467pgm.29.2020.09.25.10.03.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2020 10:03:34 -0700 (PDT)
+        Fri, 25 Sep 2020 10:03:37 -0700 (PDT)
 From:   shubham verma <shubhunic@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Shubham Verma <shubhunic@gmail.com>
-Subject: [PATCH 09/11] t7001: use here-docs instead of echo
-Date:   Fri, 25 Sep 2020 22:32:54 +0530
-Message-Id: <20200925170256.11490-10-shubhunic@gmail.com>
+Subject: [PATCH 10/11] t7001: use `test` rather than `[`
+Date:   Fri, 25 Sep 2020 22:32:55 +0530
+Message-Id: <20200925170256.11490-11-shubhunic@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200925170256.11490-1-shubhunic@gmail.com>
 References: <20200925170256.11490-1-shubhunic@gmail.com>
@@ -75,30 +75,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Shubham Verma <shubhunic@gmail.com>
 
-Change from old style to current style by taking advantage of
-here-docs instead of echo commands.
+According to Documentation/CodingGuidelines, we should use "test"
+rather than "[ ... ]" in shell scripts, so let's replace the
+"[ ... ]" with "test" in the t7001 test script.
 
 Signed-off-by: shubham verma <shubhunic@gmail.com>
 ---
- t/t7001-mv.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ t/t7001-mv.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 94c5b10f8a..30714a8200 100755
+index 30714a8200..7bb4a7b759 100755
 --- a/t/t7001-mv.sh
 +++ b/t/t7001-mv.sh
-@@ -222,7 +222,10 @@ test_expect_success 'git mv to move multiple sources into a directory' '
- 	git add dir/?.txt &&
- 	git mv dir/a.txt dir/b.txt other &&
- 	git ls-files >actual &&
--	{ echo other/a.txt; echo other/b.txt; } >expect &&
-+	cat >expect <<-\EOF &&
-+	other/a.txt
-+	other/b.txt
-+	EOF
- 	test_cmp expect actual
+@@ -236,10 +236,10 @@ test_expect_success 'git mv should not change sha1 of moved cache entry' '
+ 	git add dirty &&
+ 	entry="$(git ls-files --stage dirty | cut -f 1)" &&
+ 	git mv dirty dirty2 &&
+-	[ "$entry" = "$(git ls-files --stage dirty2 | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage dirty2 | cut -f 1)" &&
+ 	echo 2 >dirty2 &&
+ 	git mv dirty2 dirty &&
+-	[ "$entry" = "$(git ls-files --stage dirty | cut -f 1)" ]
++	test "$entry" = "$(git ls-files --stage dirty | cut -f 1)"
  '
  
+ rm -f dirty dirty2
+@@ -326,7 +326,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and no .gitm
+ 	mkdir mod &&
+ 	git mv sub mod/sub &&
+ 	! test -e sub &&
+-	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" &&
+ 	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+@@ -346,7 +346,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and .gitmodu
+ 	mkdir mod &&
+ 	git mv sub mod/sub &&
+ 	! test -e sub &&
+-	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" &&
+ 	git -C mod/sub status &&
+ 	echo mod/sub >expected &&
+ 	git config -f .gitmodules submodule.sub.path >actual &&
+@@ -363,7 +363,7 @@ test_expect_success 'git mv moves a submodule with gitfile' '
+ 	mkdir mod &&
+ 	git -C mod mv ../sub/ . &&
+ 	! test -e sub &&
+-	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" &&
+ 	git -C mod/sub status &&
+ 	echo mod/sub >expected &&
+ 	git config -f .gitmodules submodule.sub.path >actual &&
+@@ -382,7 +382,7 @@ test_expect_success 'mv does not complain when no .gitmodules file is found' '
+ 	git mv sub mod/sub 2>actual.err &&
+ 	test_must_be_empty actual.err &&
+ 	! test -e sub &&
+-	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" &&
+ 	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+@@ -403,7 +403,7 @@ test_expect_success 'mv will error out on a modified .gitmodules file unless sta
+ 	git mv sub mod/sub 2>actual.err &&
+ 	test_must_be_empty actual.err &&
+ 	! test -e sub &&
+-	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" &&
+ 	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+@@ -421,7 +421,7 @@ test_expect_success 'mv issues a warning when section is not found in .gitmodule
+ 	git mv sub mod/sub 2>actual.err &&
+ 	test_i18ncmp expect.err actual.err &&
+ 	! test -e sub &&
+-	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
++	test "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" &&
+ 	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
 -- 
 2.25.1
 
