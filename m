@@ -2,153 +2,92 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C404C4727E
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47119C4727E
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:20:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C6F02086A
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:20:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MUXHNbxN"
+	by mail.kernel.org (Postfix) with ESMTP id E74752075F
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 20:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727860AbgIYUUf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 16:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51574 "EHLO
+        id S1728284AbgIYUUy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 16:20:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726850AbgIYUSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 16:18:35 -0400
-Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC53AC0613BF
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 13:00:26 -0700 (PDT)
-Received: by mail-io1-xd41.google.com with SMTP id u6so4205945iow.9
-        for <git@vger.kernel.org>; Fri, 25 Sep 2020 13:00:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LAffJthGzhpmSUORTY6Fi6ugLUqcD4s/OejqRyxp60M=;
-        b=MUXHNbxNmgppUUwjxB8FI+wqqbRMi7yELTTCZ+jKtol2v07mKKvPHhqV23yJ0u4f8G
-         tP3pVkxI6cVQ3vAo6qZVtHUv31DSSrO9ZxfxAYpHTxt3qdvZNTdwvE/1rMpSnpSvHjR0
-         RlQnY3zIzOfwx9jBO7ncc1GFyBnQ//k/K6+FDJI5aKfvbnQwtN/AC1Td69DBj9GD3MHc
-         Th2Sy4/s9YfBMQ4fNLsRbuHd301+m6QsggWIpptpi79WLkOgTLWHchA4WIXTTf3PFSWZ
-         j1uPgeNYrW6PioL8uDRAByz7Vo7dDv5RU5NWkO1zxyJILGkS/7Q5dZWEK0H+Irb/rwcz
-         qT5g==
+        with ESMTP id S1725272AbgIYUSx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 16:18:53 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26936C05BD41
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 13:10:18 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id q13so274061ejo.9
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 13:10:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LAffJthGzhpmSUORTY6Fi6ugLUqcD4s/OejqRyxp60M=;
-        b=P3HZz8r5ThpHizP472XsD7Vrq8QqzU7wJ0s3rphsGvH3S2aKLhE6TosXKIzoNreX4O
-         ZWDRF4UjX5qLg4hEFPhuKXr9ThSnz+Ltvcusf98bbgp5PcuLK95ll1jrlJCOLnm99Be+
-         JC/sKGzjC5nSPiJPr+ozaYX7u1nGuMpltyZ12SXoKYcm97sw1eb2Vy+yhIv2CgyqGbrP
-         XiXxkEJvBD4Bx9jW9eqQ6pTwaMkTYaNrYEKSbYEhdq1Pelhv4mnl0rsyGLCt/r/IRt+7
-         UG2EaG+fwGjwHCGxFkyU6wVtEP0r6GHnO7t+YzYOySIiyCsFXJAgpMd22UvUKOvze4iJ
-         edvg==
-X-Gm-Message-State: AOAM530BhgjQVbgyuDcj0ZGTdvvck8TNjudIsqEvTL2z7pTjv3iDLpKW
-        /ZMzSksqtgPwg8OucxHOjAep9e2tHd6TAtXPvwI=
-X-Google-Smtp-Source: ABdhPJxeulMoeXFvdcgmvRDp54nA1efHn655XilgIczNd5k3pOITahbZwsh76UB6gByko/zVYNK129l3l6yZy7FBatA=
-X-Received: by 2002:a05:6602:22ca:: with SMTP id e10mr169818ioe.88.1601064026189;
- Fri, 25 Sep 2020 13:00:26 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=QSNRW2mJ+38Y9IikZXLZZQnzgQGSXFBMXGBqA+7W3ng=;
+        b=EAZYnXCoY/CUN7zWA1POqBzFU1i1WtH4W2yEBDaZyMLIVyFXq0rGwIhJA15nKCVTCO
+         7k/9nNSnRA0XAVspWWYlmm/ZHTFxFliNu7QbugDYG9hvOOOnJ5ef9AZE3HISfoBNRFQi
+         k002pukbx9zDMVlR40zxxZzBxaPkDZeBOLKZOKw/4VNnPDxIF1/g5tijijPPtnXqywML
+         Ml9zXRmznft7yztfamg/V65++J4REyL/gSk3dvHOfyrZg7QIXSL91ggr3hfhiFXFO1Y9
+         pbeXRtqsLsgZcT2zP2HZWWC9DW6QBoCwcMRdQ/wXhOx0arVhwdwIxb+ZsUgAx5vRLQSI
+         vnng==
+X-Gm-Message-State: AOAM532OIJkqabnqglFW+yQcBA+RvUL/cZOa3uWBrpeGPU/MBLKd0FvU
+        cckE+1/AHXll1nkMLY2WovDdZyNLAYgegTQnv/IDc+fl
+X-Google-Smtp-Source: ABdhPJyWjPq4rkpXvwIy+vhApmSmFR08vhmfx3dNja8oOdGZbyFFztPhCjULL7hlxGC7ILve0hNgQgzdg9KQwHT45LU=
+X-Received: by 2002:a17:906:454a:: with SMTP id s10mr4408823ejq.138.1601064315616;
+ Fri, 25 Sep 2020 13:05:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200925142552.1656596-1-uzonyi.akos@gmail.com> <xmqqlfgxlq6o.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqlfgxlq6o.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?B?w4Frb3MgVXpvbnlp?= <uzonyi.akos@gmail.com>
-Date:   Fri, 25 Sep 2020 21:59:49 +0200
-Message-ID: <CAJrAtOWH8Upwov5dL4OfHPAb9v3NynmooC8mr3hAVA+Yo9Yi5w@mail.gmail.com>
-Subject: Re: [PATCH] completion: complete refs after 'git restore -s'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
+References: <20200925070120.GA3669667@coredump.intra.peff.net> <20200925070211.GB62741@coredump.intra.peff.net>
+In-Reply-To: <20200925070211.GB62741@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 25 Sep 2020 16:05:04 -0400
+Message-ID: <CAPig+cTfYmNAP_65RDa_fZOyuQEH65HuLs-UYSPT0yJ=s6BftA@mail.gmail.com>
+Subject: Re: [PATCH 2/8] shortlog: refactor committer/author grouping
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Thanks for your detailed review.
-
-On Fri, 25 Sep 2020 at 19:30, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=81kos Uzonyi <uzonyi.akos@gmail.com> writes:
+On Fri, Sep 25, 2020 at 3:02 AM Jeff King <peff@peff.net> wrote:
+> In preparation for adding more grouping types, let's
+> refactor the committer/author grouping code. In particular:
 >
-> > From: Uzonyi =C3=81kos <uzonyi.akos@gmail.com>
-> >
-> > Currently only the long version (--source=3D) supports completion.
-> >
-> > Add completion support to the short (-s) option too.
+>   - the master option is now "--group", to make it clear
+>     that the various group types are mutually exclusive. The
+>     "--committer" option is an alias for "--group=committer".
 >
-> I am not too familiar with the completion library, but what makes
-> the "-s" option of restore so special?  I've scanned the entire file
-> and did not find that many special cases for short options that have
-> their longer counterpart supported already.
-
-There are multiple commands already having this kind of short-long
-option completion. The "-c" options of commit, switch and checkout
-each have longer counterparts, and both the short and long versions
-have completion support for their arguments.
-
-> I do not know if the "feature" this wants to bring in is a good
-> idea---we may want to try to be more systematic (e.g. perhaps it
-> involves teaching the parse-options subsystem about equivalence of
-> short and long options, so that we can reuse existing support for
-> the the long option "--source=3D<TAB>" to complete "-s <TAB>"), if we
-> were to do something like this.  Singling out "-s" of "restore"
-> smells not quite right, as the approach would not scale well.
-
-I think these cases are not too frequent, so it doesn't seem to be a
-big scaling problem.
-
-> > Signed-off-by: =C3=81kos Uzonyi <uzonyi.akos@gmail.com>
-> > ---
-> >  contrib/completion/git-completion.bash | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> >
-> > diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-> > index 8be4a0316e..50e6e82157 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -2853,6 +2853,18 @@ _git_restore ()
-> >       --*)
-> >               __gitcomp_builtin restore
-> >               ;;
-> > +     *)
-> > +             local prevword prevword=3D"${words[cword-1]}"
+>   - we keep an enum rather than a binary flag, to prepare
+>     for more values
 >
-> Why duplicated prevword here?  Did you mean
+>   - we prefer switch statements to ternary assignment, since
+>     other group types will need more custom code
 >
->         local prevword=3D${words[cword-1]}
->
-> instead?
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+> @@ -47,9 +47,18 @@ OPTIONS
+> +--group=<type>::
+> +       By default, `shortlog` collects and collates author identities;
+> +       using `--group` will collect other fields.
+> +       `<type>` is one of:
+> ++
+> + - `author`, commits are grouped by author (this is the default)
+> + - `committer`, commits are grouped by committer (the same as `-c`)
 
-Thanks, I'll fix it.
+I had trouble interpreting "(this is the default)". It made me think
+that <type> is optional:
 
-> > +
-> > +             case "$prevword" in
-> > +                     -s)
-> > +                             __git_complete_refs
-> > +                             return
-> > +                             ;;
-> > +                     *)
-> > +                             ;;
-> > +             esac
-> > +             ;;
->
-> Wrong indentation.  In this file, as can be seen on the line "*)"
-> you added at the top of this hunk, the case arms like "-s)" and "*)"
-> must align with "case" and "esac" in this file.
+    --group[=<type>]
 
-Thanks, I'll fix it.
-
-By the way, I copied this piece of code from _git_switch (it's also
-there in _git_checkout), so these problems have to be fixed there as
-well.
-
-Also, reading _git_commit it looks that we already have a "$prev"
-variable, so I'll use that instead of "$prevword".
+but that isn't the case at all. Instead, it means that if --group
+isn't specified, then grouping is done by `author` by default. It also
+repeats what the general description of --group already says with
+regard to the default, thus it is redundant to say it again when
+describing the `author` type. Therefore, perhaps drop "(this is the
+default)" altogether?
