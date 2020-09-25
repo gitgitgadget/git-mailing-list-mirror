@@ -2,84 +2,106 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B984C4363D
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 04:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD46EC4727E
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 05:10:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 045382176B
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 04:56:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9375B208B6
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 05:10:11 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=webstech-net.20150623.gappssmtp.com header.i=@webstech-net.20150623.gappssmtp.com header.b="Bjdbt67p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727056AbgIYE4V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 00:56:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40314 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726908AbgIYE4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 00:56:21 -0400
-Received: (qmail 12511 invoked by uid 109); 25 Sep 2020 04:56:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2020 04:56:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15114 invoked by uid 111); 25 Sep 2020 04:56:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2020 00:56:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 25 Sep 2020 00:56:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 1/2] bswap.h: drop unaligned loads
-Message-ID: <20200925045620.GA3110076@coredump.intra.peff.net>
-References: <20200924191638.GA2528003@coredump.intra.peff.net>
- <20200924192111.GA2528225@coredump.intra.peff.net>
- <b4b9475f-9c84-1889-835d-9f6e81198e5b@web.de>
+        id S1727128AbgIYFKK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 01:10:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbgIYFKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 01:10:10 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D1EC0613CE
+        for <git@vger.kernel.org>; Thu, 24 Sep 2020 22:10:08 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id b2so962841qtp.8
+        for <git@vger.kernel.org>; Thu, 24 Sep 2020 22:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=webstech-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=g6+8kPxkopHZ4yqZwHsM0ayMeD1xJdES4vaBbVmijEM=;
+        b=Bjdbt67pz83T9j7OuMEwzzjRNz7iw6Gw+Ho0CCnl5smot1qWnwxGAHvn+rMytXIMV3
+         qg5TJWzN5sbZt7NtgGSNh0PGIZBKyivHy3VAHrCciZ58encc5L+bSiIXierXxsXWtlEA
+         aCG5efZs6U3C4ZZOfLuqX0G66gaTfQ/ln86LsxogDIdtLnItsed8hXayAtbOEFrxZLP/
+         FrwRAbXPgeTppveOvrz4lxlXKY1LMEbijF1vSRG7UgskXdkzPHfftMadFbkB3jWXElVs
+         roQHYFEjdPfaNPdzShrfMp7A+XAbmPse77Esm8irOywWSclBnWQv97vlh6fhNvprsRU3
+         zTfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=g6+8kPxkopHZ4yqZwHsM0ayMeD1xJdES4vaBbVmijEM=;
+        b=p9/KkaiV0NpOrgwcCAN6eYYRv4dTQIz4W7UYstBjSC/ojIA8YFt70L5dg0BIn51oJ6
+         J6mlWZA4j/sA3rjDHyDz5U1brm/NQyb09TZoi3ht+eATAmjmLMnnfp+XPr6qnJVETZfZ
+         yYQgl5Jm3ghACQ13rfRjMx7GiS+WwhSU6VVrwbzq93Q6fZxrl8fMJIBkh1RVd8V6E1HS
+         j27JMtxHjSq3nysnfqFh3sogbAYWlJJVclUDDzTo66nHLpcFdex/pbKjAKBxP7aPpvuq
+         4umJBD9Fslsxiajs666S/oFDQRte+Qg/CPZneymJ9r+2/PSYUV3XQSAWVXvPrryv8xpu
+         SlZA==
+X-Gm-Message-State: AOAM530WOHVh7kXMFIj+iDZFaypXhgQVzQ1ACsaELqXfUYo+JWr4/k8I
+        zp/AZpGv6mG7K9NibbVB2UCN+wDG15mkriRFzohTzg==
+X-Google-Smtp-Source: ABdhPJzmsLRVaafpbLDqMIU6jS9f0qL4xLisXpRwJcajiJ2/XtFYbdUxS7RYVqZwsv1Pw7sMyp+h8qQ/14EYsevvgrE=
+X-Received: by 2002:ac8:60d1:: with SMTP id i17mr2827810qtm.272.1601010607510;
+ Thu, 24 Sep 2020 22:10:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b4b9475f-9c84-1889-835d-9f6e81198e5b@web.de>
+References: <pull.709.git.1600759684548.gitgitgadget@gmail.com>
+ <20200922170745.GA541915@coredump.intra.peff.net> <CAGT1KpVmeT+nT1-Pfwa_M8BptFYwRTL4ofM0k6UOOzkYh0kucw@mail.gmail.com>
+ <20200924065129.GB1851751@coredump.intra.peff.net>
+In-Reply-To: <20200924065129.GB1851751@coredump.intra.peff.net>
+From:   Chris Webster <chris@webstech.net>
+Date:   Thu, 24 Sep 2020 22:10:16 -0700
+Message-ID: <CAGT1KpU6zkvr9QQQqez6x1cVsvhxmkU9gG5T0QYC8yCgnOPN1Q@mail.gmail.com>
+Subject: Re: [PATCH] ci: github action - add check for whitespace errors
+To:     Jeff King <peff@peff.net>
+Cc:     "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 25, 2020 at 12:02:38AM +0200, René Scharfe wrote:
+On Wed, Sep 23, 2020 at 11:51 PM Jeff King <peff@peff.net> wrote:
+>   git clone --shallow-exclude=HEAD --single-branch -b $branch
+>   git log --check
+>
+> _almost_ works. The problem is that the shallow graft means that the
+> bottom commit looks like it introduces every file. We really want to
+> graft at HEAD^, but the server side only accepts exact refnames. You
+> could work around it with a followup:
+>
+>   git fetch --deepen 1
 
-> Older versions of gcc and clang didn't see through the shifting
-> put_be32() implementation.  If you go back further there are also
-> versions that didn't optimize the shifting get_be32().  And the latest
-> icc still can't do that.
-> 
-> gcc 10.2 just optimizes all functions to a bswap and a mov.  Can't do
-> any better than that, can you?
-> 
-> But why do we then see a difference in our benchmark results?  Not sure,
-> but https://www.godbolt.org/z/7xh8ao shows that gcc is shuffling some
-> instructions around depending on the implementation.  Switch to clang if
-> you want to see more vigorous shuffling.
+Thanks for the other possibilities (I have much to learn).  The first
+step to increase the commit count is addressing this very problem.
 
-We do redefine ntohl(), etc in compat/bswap.h. Looking at them, I'd
-think the result would end up as a bswap instruction, though. And
-indeed, trying to feed that to godbolt results in the same output you
-got.
+> Definitely not worth
+> it compared to your solution for a PR, but maybe worth it if it lets us
+> do the same thing for arbitrary branches.
 
-It does sound like older compilers were benefiting from the unaligned
-versions. Building with gcc-4.8 (from debian jessie in a docker
-container on the same machine), I get ~6.25s with the unaligned load
-versus ~6.6s with the bit-shifting code. So that's the opposite of how
-the newer compiler behaves.
+The PR solution works because fixed values are available from GitHub
+(both repos are present and accounted for).  A push action for
+branches could have issues with the state of the GitHub repo versus
+the local repo.  What happens if the base branch is not current on
+GitHub?  Is HEAD reliable? What if the branch has been re-used with a
+back-merge? How do you limit the check in this case?  Based on my
+demonstrated lack of knowledge these concerns may be addressable.
 
-Benchmarking clang-8 (which your results showed doesn't handle the
-shifting version well). It likewise is just _slightly_ slower after my
-patch (11.47s versus 11.57s).
+The original push solution pulled an arbitrary depth knowing
+GitGitGadget had a limit of 30 commits and then limited the check to
+post merge commits, again knowing merges were flagged.  Not pretty but
+workable in the confines of the GitGitGadget workflow.
 
-Given that newer compilers behave the opposite way, and the overall
-small magnitude of the impact, I'm still comfortable with the change.
-It's nice to have a better understanding of how the compiler is
-impacting it (even if I am still confused how anything at all changes on
-the newer compilers). Thanks for digging.
+A generic push solution (with an opt out?) could be a separate file or
+replace this (yea).
 
--Peff
+I appreciate the feedback,
+...chris.
