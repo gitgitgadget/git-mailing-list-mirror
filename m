@@ -2,91 +2,138 @@ Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A658C4727F
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B7AC4727F
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:53:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 459F9221E5
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:43:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A185020878
+	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 18:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729809AbgIYSnV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 14:43:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41294 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729691AbgIYSnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 14:43:21 -0400
-Received: (qmail 15768 invoked by uid 109); 25 Sep 2020 18:43:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Sep 2020 18:43:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22355 invoked by uid 111); 25 Sep 2020 18:43:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Sep 2020 14:43:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 25 Sep 2020 14:43:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Ryan Zoeller <rtzoeller@rtzoeller.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC 0/1] Leading whitespace as a function identification
- heuristic?
-Message-ID: <20200925184319.GA660343@coredump.intra.peff.net>
-References: <20200923215859.102981-1-rtzoeller@rtzoeller.com>
- <xmqqzh5fhduk.fsf@gitster.c.googlers.com>
- <20200924211725.GA3103003@coredump.intra.peff.net>
- <c759b472-c889-ef85-bcf2-6d9cbc588b51@rtzoeller.com>
- <1c03faa0-011c-39c2-acb6-d09a5fcfc818@gmail.com>
+        id S1729741AbgIYSxx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 14:53:53 -0400
+Received: from mail-ej1-f65.google.com ([209.85.218.65]:36332 "EHLO
+        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729727AbgIYSxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 14:53:53 -0400
+Received: by mail-ej1-f65.google.com with SMTP id e23so11103eja.3
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 11:53:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Q6EB6IMoQgf+8YUEo10hbFFmlhe8Jgjarq3Ujt1Z6FY=;
+        b=NRwuaP7TKkRCL1yfyrxjBIrceYjcgbS7kKygJSjz2D9IYjoRs3IpUTjjuNLDKRpijd
+         D5SPbmI5l+qn2CIB4F9HqPjx8zhnW0JDDxYL+Y8kXDd6hSYP1kh2WggJrJEfwGY4OOg4
+         n8LbgaWb+914vRiD/2Q8ILw6nZzJXHwgwOKZfpAHDxS1WQqCPhy6AvWQw0yk+3pQdaal
+         9/ESHa59IZCEVVopCb1mioRidiJHEZ8yzXmkFWMed+Z52wS7Y/c2v6+DwRvoAsXGtd9W
+         z8q52tjQ4sTVmhYSwWc0e3xXCFfE/AOWnLriOW7Ugy8FCmNLJKqghwJnh1MfRRR98m4G
+         lK4A==
+X-Gm-Message-State: AOAM532pZR+fCZJ8PKPfb3YMQZTeJMrYfV7yO7ezCydxpzxD3kc30jP1
+        /FS5qyvWQakcZl6z5LXsy5M9mMP0gRtnDWDjrSM=
+X-Google-Smtp-Source: ABdhPJz7sVYwLCxfzvDXZvbkK+Z6GYtUPeYv5pgrul4hsKnMc0Gl3zixDs30kz5hFQMLs0virDhobeBqEUgMR+EEFTg=
+X-Received: by 2002:a17:906:c045:: with SMTP id bm5mr3942515ejb.311.1601060030998;
+ Fri, 25 Sep 2020 11:53:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1c03faa0-011c-39c2-acb6-d09a5fcfc818@gmail.com>
+References: <20200925170256.11490-1-shubhunic@gmail.com> <20200925170256.11490-7-shubhunic@gmail.com>
+In-Reply-To: <20200925170256.11490-7-shubhunic@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 25 Sep 2020 14:53:40 -0400
+Message-ID: <CAPig+cQipTK8ePVLKMeytmaePZ8yWSoFCjue=huKORjPGpTg+Q@mail.gmail.com>
+Subject: Re: [PATCH 06/11] t7001: change (cd <path> && git foo) to (git -C
+ <path> foo)
+To:     shubham verma <shubhunic@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 25, 2020 at 10:11:33AM +0100, Phillip Wood wrote:
+On Fri, Sep 25, 2020 at 1:03 PM shubham verma <shubhunic@gmail.com> wrote:
+> t7001: change (cd <path> && git foo) to (git -C <path> foo)
 
-> If I've understood correctly when ...code 2... contains changes that are
-> themselves indented then we'll pick the wrong function header for example
-> 
-> 	void foo() {
-> 		void bar() {
-> 			...code 1...
-> 		}
-> 		for (...) {
-> 			// if this line is changed we pick bar rather
-> 			// than foo because it is the first function
-> 			// header with a smaller indentation than the
-> 			// first changed line.
-> 		}
-> 	}
-> 
-> Unfortunately I suspect code like that is not uncommon and the diff would
-> regress with this simple heuristic. It might be possible to recalculate the
-> required indentation as we walk backwards up the file though, so when we hit
-> the "for" line we reduce the maximum indentation allowed for a match and so
-> skip "bar" as a function header.
+This is misleading. We don't want the `git -C` form in a subshell, so
+it shouldn't be enclosed in parentheses. Perhaps write it like this:
 
-Thanks, that's a great counter-example I hadn't considered.
+    t7001 use `git -C` to avoid `cd` outside of subshells
 
-Yes, I agree that adjusting the desired indentation as we walk backwards
-would work. That's assuming indentation is hierarchical, but I think
-that's implied by the existence of this feature at all.
+> Let's avoid the use of `cd` outside subshells by encapsulating them
+> inside subshells or by using `git -C <dir> ...`.
 
-Another possible corner case: tabs vs spaces. If I have:
+This is misleading in two ways. First, none of the changes made by
+this patch add subshell encapsulation. Second, many of the changes
+drop the subhsell in favor of `git -C`, so describing them as "`cd`
+outside of subshells" is wrong.
 
-  <space><space><space><space><space><space><space><space>foo
-  <tab><tab>bar
+It's also important for the commit message to explain _why_ this
+change is important when `cd` is used outside of a subshell. A
+possible rewrite might be:
 
-which is more indented? Counting isspace(), it is the first one. But
-visually, it would _usually_ be the second one. But of course it would
-depend on your tabstops.
+    t7001: avoid using `cd` outside of subshells
 
-The above example is obviously stupid and contrived, but I wonder if
-there are legitimate confusing cases where people mix tabs and spaces
-(e.g., mixed tabs and spaces to align function parameters, etc).
+    Avoid using `cd` outside of subshells since, if the test fails,
+    there is no guarantee that the current working directory is the
+    expected one, which may cause subsequent tests to run in the wrong
+    directory.
 
--Peff
+    While at it, make some other tests more concise by replacing
+    simple subshells with `git -C`.
+
+In fact, fixing the cases in which `cd` is used outside of a subshell
+is much more important than the mere mechanical conversion made to the
+other tests by replacing a subshell with `git -C`. As such, I'm
+tempted to suggest splitting this patch into two: one which fixes the
+cases of `cd` outside of subshell, and another which converts the
+simple subshell cases to use `git -C`.
+
+> Signed-off-by: shubham verma <shubhunic@gmail.com>
+> ---
+> diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+> @@ -11,12 +11,11 @@ test_expect_success 'prepare reference tree' '
+>  test_expect_success 'moving the file out of subdirectory' '
+> -       cd path0 && git mv COPYING ../path1/COPYING
+> +       git -C path0 mv COPYING ../path1/COPYING
+>  '
+>
+> -# in path0 currently
+>  test_expect_success 'commiting the change' '
+> -       cd .. && git commit -m move-out -a
+> +       git commit -m move-out -a
+>  '
+
+This transformation looks fine, as do the following two tests which
+get the same transformation.
+
+I do have a very slight hesitation, though, that these changes go
+against the grain of the tests. In particular, at the top of this
+script, we see:
+
+    test_description='git mv in subdirs'
+
+which suggests that the tests really want to test the bare `git mv`
+command while actually running in a subdirectory. This would imply
+that these test should be rewritten as:
+
+    test_expect_success 'title' '
+        (
+            cd path0 &&
+            ...
+        )
+    '
+
+However, it's such a minor misgiving that it's probably not worth considering.
+
+> @@ -364,16 +356,10 @@ test_expect_success 'git mv moves a submodule with gitfile' '
+> -       (
+> -               cd mod &&
+> -               git mv ../sub/ .
+> -       ) &&
+> +       git -C mod mv ../sub/ . &&
+
+Okay. At first glance one might expect you to strip the `../` from the
+argument, but indeed `../sub/` is correct since `-C mod` really does
+change to the new directory, so the argument is interpreted relative
+to `mod`.
