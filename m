@@ -2,93 +2,106 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83A77C2D0A8
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2E94C4741F
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE22207F7
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:00:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 739A521531
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="K6cHqJwD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IqdTe0i1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726559AbgIZVAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 17:00:42 -0400
-Received: from mout.gmx.net ([212.227.15.15]:37011 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726382AbgIZVAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 17:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601154039;
-        bh=4e+MDzJJSkmv5aRJvtyWfbaALxnth1MRBVKVmzohfLo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=K6cHqJwDbpludbvVdamgJ/4AGpqUoetQxz4AV6KTFXUb9VLyy4WNJSvj/uGAIjfUk
-         uxHY3KnBkfDjC/INxvezvvtiOAB2QtXG10RLAJU4d+sNIKCRIDV44C5HXCf/M5NCTn
-         pvvEn56qc0oh7K6qeEi9qgzDb/o/P7Yp1/3CV8E8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.113.174] ([89.1.213.116]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQe9s-1k7W6b31l8-00NjBP; Sat, 26
- Sep 2020 23:00:39 +0200
-Date:   Sat, 26 Sep 2020 23:00:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 06/10] cmake (Windows): let the `.dll` files are found
- when running the tests
-In-Reply-To: <CAPig+cTPi1yi7WQf_eWa+bFRJEdtULFO3yYqJh3nm=_CtEe6CQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2009262300060.50@tvgsbejvaqbjf.bet>
-References: <pull.738.git.1601044118.gitgitgadget@gmail.com> <bb8f122cdec94e1ec77b37ed16a7151f5e35a93a.1601044118.git.gitgitgadget@gmail.com> <CAPig+cTPi1yi7WQf_eWa+bFRJEdtULFO3yYqJh3nm=_CtEe6CQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726731AbgIZVE0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 17:04:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726478AbgIZVE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 17:04:26 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C04B8C0613D3
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:25 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id c18so7581853wrm.9
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=a99TZs8RDfEzZQgrvCmmxLFT3tTlt4p0jVhkvTLfJno=;
+        b=IqdTe0i1S7/M1ipYRQmMvp3Z9fUkCWa/tymI23OqhE7G9lVIszF1zce7cr9MCG12Qk
+         OBUSbQd1P6DXPcx7opKRA37kxjc3R4ER35YIB1FX/jHFnvKAnN8CuJq76DtNJ1JjnyRk
+         LGfUxy3Xyzj7rfhDP46i+XV3+vO6ZcAzthzSrfhYIIIKvt2UZjBGHQoDyRhtYXsQ8q6E
+         uCJxAmy1OSVbcgBNIf25j5bjIBJ4XpdYqsdMzFmO+jizl3uAv1Wq1NGdPaHR51LCN3uS
+         2evd2qKEzUZbUdNPDx6C1V8b03IrQ7A5IJTMU3Wng6o+cmTgVGJIl0TjKZ/49EXZesI9
+         fzOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=a99TZs8RDfEzZQgrvCmmxLFT3tTlt4p0jVhkvTLfJno=;
+        b=qQUxwM/wL9HH/bBIBg5c+gsklElbkQQgFRkn/+2x3Y/jgAYqmslTunwgDciVLan75l
+         8wLeNyRyF4TcssTQK6UeHh9472dsfJqSNV0ebfOzgoIwBd5jkygdygQfZfEHvaMwWKMs
+         ZRia7vc35Lqs2JipnajbgQd4JbTI5QWSaGVhGnnOuFr4eLwIAuqBvg5RmGEyOaF9fdj7
+         g2mjV1TQ5mZ/toFVS8wj2hrGKP298eQWRxWeLQcYW6pfoN/LG50FKdILyk2+oW0kDICE
+         85wGW/awg7CJbXYLkkSeR927EA0LuVX2FZQWAGppIp0koRK/btNeS6NZ6E95L4oacfk3
+         CagQ==
+X-Gm-Message-State: AOAM5308iFJVqJSWMJlGROReNB5bGVu8ZhtuzXkUh04QvW6p2UurRLSk
+        xeV+YcI4lDepp+KWMqSdBXl8UXVEuH0=
+X-Google-Smtp-Source: ABdhPJxf4pB9aZ4vBq1aPf8Ja3yO+8em5HuW+j5REDpaoYI6ciNPPtZPlUY+WXdeWcoSCpGuB5815A==
+X-Received: by 2002:adf:c3cc:: with SMTP id d12mr11143905wrg.399.1601154264298;
+        Sat, 26 Sep 2020 14:04:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m12sm3522486wml.38.2020.09.26.14.04.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Sep 2020 14:04:23 -0700 (PDT)
+Message-Id: <587ddca42ae36be3d5b333cefe1f9af768bacc9a.1601154262.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
+References: <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
+        <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 26 Sep 2020 21:04:18 +0000
+Subject: [PATCH v3 1/5] fast-export: avoid using unnecessary language in a
+ code comment
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VI/Raq8/Yu7fqF8lCPbaGzRtjLpMRj+V1Fp+uszQOwB4jRoGgR+
- Kvt+oEfl8MBwL0QNgB0b3ArOAgTuhxtFTgqagmYnjaPrO/itZToeaHivH1o2U/M7euB0lke
- amWGXgv9UnlXeHU2vjBeX12vJTplP4mYwTC2UVFIBJt7HN4k4vCXM0dZYcz+WGxzyV6QCen
- InFUEPD0LaRsS4b7X2eIg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yOLoLBNGcQQ=:rBoAuA4rjwMs7B7T3jXPBp
- rKmW0hoo2f9HzB2PYG3gpwftsRxLpl20FSZFSNZhX3Cd6dW4a2O8Bf7DLywy4ttn6CubsNxj+
- OnfGrsLueSQdtx2imTBrIVzVMQvus+2JjXc8/EBREDJbnTiouGYDL8yQDGoc1vXXHOIEKbki9
- tSsx+JB88tWtOutxryvw2MiJwPInhwuAXnTT1SPpYKcg4dEDUdXXMuX76QMCniI0FJCR33Vkc
- JlMdYGgGtFHYmsadUPb2xANCFRBKuzKM2n9Sy9Rp7uuiWJ7S427Q4bYPTYSZG9dhQF2D3H7oR
- /YCU277FMhOFjOQE+WM/uXdfS+jCm96JKUTxHMSvS6Fx0xtc2wFugeelUnVO3DIiOtkC9p2jD
- L7shhVYf7VYQPogIqKpB590q9OL94CyNhMXsKbTz03SLA6jhIvSCUaEDvuVFuV9CDVIfFgtUj
- 65s8ekx8cRhG6JVD09sX5ZBXbwiEobFkvM5yDHJ4EdIjKf2L56iXbTKE0ettFbJuRW5ThYAx+
- Nu+siskECdOGl270ucazd4o5wamz2FrfEGtlDASSt+6eelpD1imer9bgVuCuBKTLtKdORuEIn
- Ede8PBQDTTuUioDcmsu0O8L2CWswYTJEKCk2UQ/ONzZi21nUyq26TyTqLt7Wpec2gMofLcitf
- 9L9E9oQr49VNvPQ9/LX0DmMQIZ2l70mlINxB+WyA+qmeD+IQU6aUldeNK5Qo7z16W4Qh1OVlv
- wUvg1Ja6gsWs2cWLcbEMPDTkGD8V4pkrDnqJmo6QwMUEzlC5e2vyHLfSuQicNeBEURCjHHUj4
- NZXmZDb1avreJBmH+WZ+0vK3gW6nO8DrHmG5SUfgJ2lW9Jccn6UmW3HE/NHdqz7PkaAw8uUEd
- vgx31YK0uhnwVI7KE0kHNwowaT2EYyV1ebYiVraq5P5cBCIOPpORqnT/3csB5SaHNQMu8K9pz
- 71r/5WzRZsua6ZEspkLtZyBS9XsXAYbyKVxZDPxDI6IbHmzE7Nz9+c3bA1cpwjiVHcrLmy16D
- sBVVHtYx/GFUdUbkQi20v3Xonx7IvuD07kKqaKFQHXcfOJ/TQ6u1EEy6s9kQ6aV8n+VzQnGfV
- 2Wmr/oleFF253QWgmBXEZ/odrChJmMrjzoCTHvmLuSNp/vOBNQh2c110OIYC1NhDVHs4ZNm8a
- ecrZkcRc1eueRJzSHo9phZeEDiHQu1hTwYJojc8ZWFJUG1pN0y4PB/KVOqw5/kbjgiMjyOmPA
- 4rcnb0gJ2DYWqYL0Lcfa3x+dwLg1SRZ5Si64JUg==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, 25 Sep 2020, Eric Sunshine wrote:
+In an ongoing effort to avoid non-inclusive language, let's avoid using
+the branch name "master" in a code comment.
 
-> On Fri, Sep 25, 2020 at 10:28 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > cmake (Windows): let the `.dll` files are found when running the tests
->
-> I'm having trouble parsing this. Maybe you want s/let/ensure/ ?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/fast-export.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Right, that does not parse at all. I did `s/are/be/` instead.
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 1b8fca3ee0..5527135ba8 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -1026,7 +1026,7 @@ static void handle_tags_and_duplicates(struct string_list *extras)
+ 				/*
+ 				 * Getting here means we have a commit which
+ 				 * was excluded by a negative refspec (e.g.
+-				 * fast-export ^master master).  If we are
++				 * fast-export ^HEAD HEAD).  If we are
+ 				 * referencing excluded commits, set the ref
+ 				 * to the exact commit.  Otherwise, the user
+ 				 * wants the branch exported but every commit
+-- 
+gitgitgadget
 
-Thanks,
-Dscho
