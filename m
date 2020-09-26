@@ -2,339 +2,96 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89EFFC4741F
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 11:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D082C2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 12:31:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53AA6238E6
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 11:46:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E86C238E6
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 12:31:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dk6hpmn+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cXOY/1w6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbgIZLqn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 07:46:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
+        id S1727017AbgIZMbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 08:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbgIZLqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 07:46:42 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671DAC0613CE
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 04:46:42 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bd2so749559plb.7
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 04:46:42 -0700 (PDT)
+        with ESMTP id S1726183AbgIZMbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 08:31:45 -0400
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C649DC0613CE
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 05:31:45 -0700 (PDT)
+Received: by mail-ua1-x942.google.com with SMTP id f15so558009uaq.9
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 05:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Xw96AicROJJCtBPtJvaO2p5+fuXngFjv0eAA0TN2gFI=;
-        b=dk6hpmn+U12nahd1No/UzptUfcQGQM+6fxeMlgGUdmZhed+b3qxrGZX9uicW/Zz6SE
-         MxNTs4ytbHkrLqCb2g9qXaGY5dr8miK6M5PCKDOq1TWa97KFUAEj8nTv+WEKur5ER6Po
-         ANJbBOQ0EeiyX+3UHKwS4rU2Eumjphn6buLaquoOJ/6ueB1NQqy40oTDm/4tx+d7dsMh
-         C5evrenPvm9I2ieuGsE7u9T7dEBH+jClBB7GmwfzhCjHJWdUfXKQc55FpZ1HTvrplYDg
-         gwGn0f8REicLCF/iCvpSw+4bQfhCfCEl2579QM4Di9JH6pz3z99vwHVD0zOAGHOErDJk
-         3n+A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/qdzVahygGaiu7HH2fupQKNWStj0MhhO/jpOnR+98AI=;
+        b=cXOY/1w6pptnNIRRctuB5Y+zV2Yh8J7Ox80JOrPMeEiZ0QWu60BG/8MvKxxe3rimtZ
+         piXBKWiOiA8jbnzKRL8nJDuMopeF6EcLlP7XDUoa766mWwTLmoBtAbrh+SyXFrAmYtFY
+         Oeqah1USVqOd/WFParzGk7FB9oeuZtNtq5JpSRf8UB0jaXZomO22+N74/wciLIV14C9Z
+         Q1ql1Xz7owA+W1NdaOZrHnz8JHEWHH54yj8mY09+FalwTtMymYVJ32REzEGgHiwJsccK
+         SHxslOiTG/4XHtgIu89n1islPgDtWOwQAA5TKGp2TReVvR0CuYqJ+FplAaq9OtzlfVQ5
+         YSMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Xw96AicROJJCtBPtJvaO2p5+fuXngFjv0eAA0TN2gFI=;
-        b=iSO7qlQgkbNmjIK9wOMy+vJuSPjEkzXu9OhCYkqoytXq/MMNzjZfY7Mtc8dt4PnvIX
-         5oEAfj4ywjzKm1lfIg9OzRTsdIYzkhUGaPJQs0xaNVhBHXEp2+3nm19Ek37FyxTPVLp6
-         RGDhxO33q5I0/Eb/58xE+CY45c+tcMCHoemulB4JqJeRTT1GRzAiWduxIJD+6QbJrYvy
-         zjyjgVvdMQ3nlXjnncU8rd/VbEKEMDq/xNXRDFz3LckJCOslv5J/+/xD3uAqNUDeZPTx
-         qc0Wr0GhsebZ0uSewjdlL0Ewww5m+/Af7UXN2KjZHdL2ed0USpNqx5TAK30EZjPVkDSx
-         r2jw==
-X-Gm-Message-State: AOAM532QMliKo5cV/lQFs2hk3t5CN6m5UlarS78YAlWCTIWi9hKB0ofc
-        +qdFr1RLom5pcI/PqljL9nc716U71Ebm/Q==
-X-Google-Smtp-Source: ABdhPJzS+zmFgs6wRs3Zt2MoLL2kay0o5/OTNvHvQFhObFqHgW2fVNvJ9SbfcmpS9NRfAfZZ7Se81g==
-X-Received: by 2002:a17:90a:e093:: with SMTP id q19mr1738306pjy.98.1601120801500;
-        Sat, 26 Sep 2020 04:46:41 -0700 (PDT)
-Received: from localhost.localdomain ([124.123.106.26])
-        by smtp.gmail.com with ESMTPSA id 72sm5315942pfx.79.2020.09.26.04.46.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 Sep 2020 04:46:40 -0700 (PDT)
-From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v7 3/3] t, doc: update tests, reference for "--force-if-includes"
-Date:   Sat, 26 Sep 2020 17:16:26 +0530
-Message-Id: <20200926114626.28823-4-shrinidhi.kaushik@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
-References: <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
- <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/qdzVahygGaiu7HH2fupQKNWStj0MhhO/jpOnR+98AI=;
+        b=DPjn3qX1K0T/5roz+4eSd2QH2OjgU5Z/u4B+cx8n3UezYUloB1wM8MO8akC3Cd8sEp
+         clFNbYmiPxK8UkqWqk9Y2clRE8b1f6Ydn5FE2w4unbp4JTc6Af1NVVTCJVs4ICeL6E7R
+         QV73IYqnE0jzJwdFMYDsa0/+M/nx5g/zXqiVS7zu/RgHS7rH864Y8iKbXUlj7nHDUy4N
+         HTHFLGkSCDMuG1BX5DstycH9SQ3b3yYpjN+jqko3tKQG4iX7xJ0aev+bBkXa5if6RwRX
+         AZUuZuwasx7AtO4rot9kpYkZZrsAQkqE3EvXVtgMP9elhWvRTL83SZfw9ZLH7g+rJll7
+         hJmg==
+X-Gm-Message-State: AOAM532Z5HGGR8lQw4tDmGJ6V38eK0plCdx0Q60sqdCO3I787ulN2Jv6
+        LqMDYJeAl+q60RMECcnQTVyVo2Ie47REUSWHJ7CyLRbgP7A=
+X-Google-Smtp-Source: ABdhPJwu4o3IDTBiiedjFapgBOC4BfnsSKsetTkjKy4m1jBXVzbKD8koKq9J9jJcKQ9HYAVtfNdQ7CIt+yNSrhNeA1Y=
+X-Received: by 2002:ab0:2904:: with SMTP id v4mr1491868uap.15.1601123504981;
+ Sat, 26 Sep 2020 05:31:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200925070120.GA3669667@coredump.intra.peff.net> <20200925070211.GB62741@coredump.intra.peff.net>
+In-Reply-To: <20200925070211.GB62741@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 26 Sep 2020 14:31:32 +0200
+Message-ID: <CAN0heSoS837ZCLt8WLRBrthXgOErwz-vXW8Af9v2ZdCcCpWRiw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] shortlog: refactor committer/author grouping
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update test cases for the new option, and document its usage
-and update related references.
+Hi Peff,
 
-Update test cases for the new option, and document its usage
-and update related references.
+Some random thoughts follow on this patch and a few others.
 
- - t/t5533-push-cas.sh:
-   Update test cases for "compare-and-swap" when used along with
-   "--force-if-includes" helps mitigate overwrites when remote
-   refs are updated in the background; allows forced updates when
-   changes from remote are integrated locally.
+On Fri, 25 Sep 2020 at 09:04, Jeff King <peff@peff.net> wrote:
+>
+> In preparation for adding more grouping types, let's
+> refactor the committer/author grouping code. In particular:
+>
+>   - the master option is now "--group", to make it clear
+>     that the various group types are mutually exclusive. The
+>     "--committer" option is an alias for "--group=committer".
 
- - Documentation:
-   Add reference for the new option, configuration setting
-   ("push.useForceIfIncludes") and advise messages.
+I think this is more than a refactoring of the code. The user interface
+is also refactored (if that's even the right word). From the subject and
+the first sentence above, I did not expect this first "-" item, nor that
+the patch would touch Documentation/.
 
-Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
----
- Documentation/config/advice.txt |   9 ++-
- Documentation/config/push.txt   |   6 ++
- Documentation/git-push.txt      |  26 ++++++-
- t/t5533-push-cas.sh             | 129 ++++++++++++++++++++++++++++++++
- 4 files changed, 166 insertions(+), 4 deletions(-)
+> +       enum {
+> +               SHORTLOG_GROUP_AUTHOR = 0,
+> +               SHORTLOG_GROUP_COMMITTER
+> +       } group;
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index bdd37c3eaa..acbd0c09aa 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -10,9 +10,8 @@ advice.*::
- 		that the check is disabled.
- 	pushUpdateRejected::
- 		Set this variable to 'false' if you want to disable
--		'pushNonFFCurrent',
--		'pushNonFFMatching', 'pushAlreadyExists',
--		'pushFetchFirst', and 'pushNeedsForce'
-+		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
-+		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
- 		simultaneously.
- 	pushNonFFCurrent::
- 		Advice shown when linkgit:git-push[1] fails due to a
-@@ -41,6 +40,10 @@ advice.*::
- 		we can still suggest that the user push to either
- 		refs/heads/* or refs/tags/* based on the type of the
- 		source object.
-+	pushRefNeedsUpdate::
-+		Shown when linkgit:git-push[1] rejects a forced update of
-+		a branch when its remote-tracking ref has updates that we
-+		do not have locally.
- 	statusAheadBehind::
- 		Shown when linkgit:git-status[1] computes the ahead/behind
- 		counts for a local ref compared to its remote tracking ref,
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index f5e5b38c68..21b256e0a4 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -114,3 +114,9 @@ push.recurseSubmodules::
- 	specifying '--recurse-submodules=check|on-demand|no'.
- 	If not set, 'no' is used by default, unless 'submodule.recurse' is
- 	set (in which case a 'true' value means 'on-demand').
-+
-+push.useForceIfIncludes::
-+	If set to "true", it is equivalent to specifying
-+	`--force-if-includes` as an option to linkgit:git-push[1]
-+	in the command line. Adding `--no-force-if-includes` at the
-+	time of push overrides this configuration setting.
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 3b8053447e..fb3a220386 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
- 	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
- 	   [--[no-]signed|--signed=(true|false|if-asked)]
--	   [--force-with-lease[=<refname>[:<expect>]]]
-+	   [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
- 	   [--no-verify] [<repository> [<refspec>...]]
- 
- DESCRIPTION
-@@ -320,6 +320,14 @@ seen and are willing to overwrite, then rewrite history, and finally
- force push changes to `master` if the remote version is still at
- `base`, regardless of what your local `remotes/origin/master` has been
- updated to in the background.
-++
-+Alternatively, specifying `--force-if-includes` an an ancillary option
-+along with `--force-with-lease[=<refname>]` (i.e., without saying what
-+exact commit the ref on the remote side must be pointing at, or which
-+refs on the remote side are being protected) at the time of "push" will
-+verify if updates from the remote-tracking refs that may have been
-+implicitly updated in the background are integrated locally before
-+allowing a forced update.
- 
- -f::
- --force::
-@@ -341,6 +349,22 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
- origin +master` to force a push to the `master` branch). See the
- `<refspec>...` section above for details.
- 
-+--[no-]force-if-includes::
-+	Force an update only if the tip of the remote-tracking ref
-+	has been integrated locally.
-++
-+This option enables a check that verifies if the tip of the
-+remote-tracking ref is reachable from one of the "reflog" entries of
-+the local branch based in it for a rewrite. The check ensures that any
-+updates from the remote have been incorporated locally by rejecting the
-+forced update if that is not the case.
-++
-+If the option is passed without specifying `--force-with-lease`, or
-+specified along with `--force-with-lease=<refname>:<expect>`, it is
-+a "no-op".
-++
-+Specifying `--no-force-if-includes` disables this behavior.
-+
- --repo=<repository>::
- 	This option is equivalent to the <repository> argument. If both
- 	are specified, the command-line argument takes precedence.
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 0b0eb1d025..ed44ddc654 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -13,6 +13,46 @@ setup_srcdst_basic () {
- 	)
- }
- 
-+# For tests with "--force-if-includes".
-+setup_src_dup_dst () {
-+	rm -fr src dup dst &&
-+	git init --bare dst &&
-+	git clone --no-local dst src &&
-+	git clone --no-local dst dup
-+	(
-+		cd src &&
-+		test_commit A &&
-+		test_commit B &&
-+		test_commit C &&
-+		git push
-+	) &&
-+	(
-+		cd dup &&
-+		git fetch &&
-+		git merge origin/master &&
-+		git switch -c branch master~2 &&
-+		test_commit D &&
-+		test_commit E &&
-+		git push --all
-+	) &&
-+	(
-+		cd src &&
-+		git switch master &&
-+		git fetch --all &&
-+		git branch branch --track origin/branch &&
-+		git rebase origin/master
-+	) &&
-+	(
-+		cd dup &&
-+		git switch master &&
-+		test_commit F &&
-+		test_commit G &&
-+		git switch branch &&
-+		test_commit H &&
-+		git push origin --all
-+	)
-+}
-+
- test_expect_success setup '
- 	# create template repository
- 	test_commit A &&
-@@ -256,4 +296,93 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
- 	)
- '
- 
-+test_expect_success 'background updates to remote can be mitigated with "--force-if-includes"' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	git ls-remote dst refs/heads/master >expect.master &&
-+	git ls-remote dst refs/heads/master >expect.branch &&
-+	(
-+		cd src &&
-+		git switch branch &&
-+		test_commit I &&
-+		git switch master &&
-+		test_commit J &&
-+		git fetch --all &&
-+		test_must_fail git push --force-with-lease --force-if-includes --all
-+	) &&
-+	git ls-remote dst refs/heads/master >actual.master &&
-+	git ls-remote dst refs/heads/master >actual.branch &&
-+	test_cmp expect.master actual.master &&
-+	test_cmp expect.branch actual.branch
-+'
-+
-+test_expect_success 'background updates to remote can be mitigated with "push.useForceIfIncludes"' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	git ls-remote dst refs/heads/master >expect.master &&
-+	(
-+		cd src &&
-+		git switch branch &&
-+		test_commit I &&
-+		git switch master &&
-+		test_commit J &&
-+		git fetch --all &&
-+		git config --local push.useForceIfIncludes true &&
-+		test_must_fail git push --force-with-lease=master origin master
-+	) &&
-+	git ls-remote dst refs/heads/master >actual.master &&
-+	test_cmp expect.master actual.master
-+'
-+
-+test_expect_success '"--force-if-includes" should be disabled for --force-with-lease="<refname>:<expect>"' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	git ls-remote dst refs/heads/master >expect.master &&
-+	git ls-remote dst refs/heads/master >expect.branch &&
-+	(
-+		cd src &&
-+		git switch branch &&
-+		test_commit I &&
-+		git switch master &&
-+		test_commit J &&
-+		remote_head="$(git rev-parse refs/remotes/origin/master)" &&
-+		git fetch --all &&
-+		test_must_fail git push --force-if-includes --force-with-lease="master:$remote_head" 2>err &&
-+		grep "stale info" err
-+	) &&
-+	git ls-remote dst refs/heads/master >actual.master &&
-+	git ls-remote dst refs/heads/master >actual.branch &&
-+	test_cmp expect.master actual.master &&
-+	test_cmp expect.branch actual.branch
-+'
-+
-+test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase")' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	(
-+		cd src &&
-+		git switch branch &&
-+		test_commit I &&
-+		git switch master &&
-+		test_commit J &&
-+		git pull --rebase origin master &&
-+		git push --force-if-includes --force-with-lease="master"
-+	)
-+'
-+
-+test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase", local rebase)' '
-+	setup_src_dup_dst &&
-+	test_when_finished "rm -fr dst src dup" &&
-+	(
-+		cd src &&
-+		git switch branch &&
-+		test_commit I &&
-+		git switch master &&
-+		test_commit J &&
-+		git pull --rebase origin master &&
-+		git rebase --onto HEAD~4 HEAD~1 &&
-+		git push --force-if-includes --force-with-lease="master"
-+	)
-+'
-+
- test_done
--- 
-2.28.0
+You could reduce the patch noise by adding a trailing comma, see
+cc0c42975a ("CodingGuidelines: spell out post-C89 rules", 2019-07-16).
+(I do realize that you later redefine all values anyway.)
 
+Martin
