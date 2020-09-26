@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 450D4C2D0A8
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F35C4741F
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7A28207F7
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9AE8207F7
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N7Lpple2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W4rzYIjV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727124AbgIZVEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727018AbgIZVEd (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 26 Sep 2020 17:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54436 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726478AbgIZVE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726794AbgIZVE3 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 26 Sep 2020 17:04:29 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CE4C0613CE
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24CFC0613D3
         for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:28 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id z1so7622613wrt.3
+Received: by mail-wm1-x331.google.com with SMTP id s13so2619241wmh.4
         for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7QScSEmrmZqBi/GPIvQo4hqX5nIUWRtoHq5viY03PS4=;
-        b=N7Lpple2liNGns1riP2yhXyJbp65VDdpoZ12xfvtCYWU9N1abI4utvDxb3baZxPwBW
-         QrPCq+7+qLDjpcU194vwgakgk5NygI8c1nxH7v4cYg6VnSkev3BFbeUBe99fpblPfKYD
-         4Lemr7I+ukrrWEOTw/Uy1hfYQnhQA+eVqTssjLyfENKvbnO4KPZAHADpoGZ4bSJ2eV+O
-         sTktYWkqTELYi/DQFvoJNxIwmeXzo8NLyaX4NmyQQm3MJ3RXbnftIqnDNM5sSTkaPpr2
-         nW462QbuT45uK8pCSiFxte9a4M26WILfcy1RTem8q0pqNuzEqK5pB9BbAvpMGdmoD0Bp
-         r9cQ==
+        bh=E7AU6LzE5sRKYRdlP9kwd6566qad3+YMkXCuziurIBA=;
+        b=W4rzYIjVa402p9CAEsA3zY+x73Dc5FKD3r9C3xd4+Pub6xnhrjulNXM70puN2XQ7NT
+         HEqxEfLFatUlv8QLqeiBVko3/xm8fCqfJxx98H/37zipnfidA7K54MnHQuSCKWq/LG68
+         K2vNywkK385SUcRsOW6nsAU8/HZI3L1/XJbMSXzmfr9VubeAInl6WHAQ3iCq0D7i5qr8
+         JPBE15cJ179rCIt6C9vWH3knQ83KuquwPvYCeKgvOjF69V3R95Cz1zZffG0zaFeSxFSz
+         rjgwLbZBfQAivR7xynj2iKHlJ41BxTaUwPcsT5nw/wK6hzYNU72S2Tn8ejAs4vuMgOxY
+         SVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7QScSEmrmZqBi/GPIvQo4hqX5nIUWRtoHq5viY03PS4=;
-        b=OlgJPRGNSxdDlfJ1mDFEFidJWRUmXdVdQXMtHMeRKbgBZIGE2v5Xas0uq2RvmE5VHs
-         ILdqq8kH0RjRofjp9xe+6rlv/nB9wcvF6qiMvzC8lnx2v8yfefAkoJt3r7LrrGzxOXVp
-         s5qJHAMOz3SwggiVQ78TwPbPAxI4bWN1iVmbx0EK+H2wZIPJvV9+O6v7rNm57H65V/P7
-         33YbP0Nt8hmZc24qfPmg/j/91YPFcLH4B13U1P2wdmXAuymmNvT921Un1wB0LuSerTax
-         eTMkmKTEK9falx3Tm06UJNj3wrbBv8x7ukc9zvcFP5D0FQ34Ofw/8mC0H6gK/CRvnh0C
-         +ujg==
-X-Gm-Message-State: AOAM533WT4lW2tm6XgJN1g9NOHhFxzfBiV7vzlK6bx+hJzntgMtHuHVf
-        UJCH/gd9soRSKT0qH6zNsdkzAnsNKys=
-X-Google-Smtp-Source: ABdhPJy2BHwNbhBi1rSXkOfbuv2UuLmgvQfGaGiDwFs0crey4ak7mt59O17JqxY8XIHIIJpun4+K+g==
-X-Received: by 2002:a5d:5146:: with SMTP id u6mr11536182wrt.255.1601154266539;
-        Sat, 26 Sep 2020 14:04:26 -0700 (PDT)
+        bh=E7AU6LzE5sRKYRdlP9kwd6566qad3+YMkXCuziurIBA=;
+        b=XfbBcUZlpa77UPtKtJyamLsl9VyPig0fzACq8nz3B+YHTiSo632R94IsrU6heyIsT/
+         X+XG3MM+OyTfwyXO64bFe8KnIduMPCVFItSuAgdSlh4bzPHIx2KAHCbPB+AKeYpgHXOV
+         hlH7wZ1IEjAx3v1TXo3KKRbVAN6eaTpS0M4ilAjjLbRxzHzk/65slDQDk0OEagtuWPav
+         eYLZhwgzBKd7iLojy+wgqcjTd4O10d5wbgswTM3rJYgG9BkYXeckA0nITnmQI5Vc2DKI
+         GzH+LXKCtOTk7CH2L/jpa3tiOX4nvudhCNMFkE4DEZC6KK4rg2cRX79xNI/4cmrNAsTW
+         jK5Q==
+X-Gm-Message-State: AOAM533LqtI/mI3JiAP9CIEXl5ggszGTfl9a6LVarj4ErIhOamlN0zWw
+        Jshry5dTLw1z1lLucKc7hj1OwZOKMnc=
+X-Google-Smtp-Source: ABdhPJyBqArDh3gypPbSBgg9J/thZnUtNBiIqesXJFz75Ej/iMcfBKOiXxsVuaxdYCCs3VN6R5KmyA==
+X-Received: by 2002:a05:600c:258:: with SMTP id 24mr4169874wmj.66.1601154267107;
+        Sat, 26 Sep 2020 14:04:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x67sm3732791wmb.25.2020.09.26.14.04.25
+        by smtp.gmail.com with ESMTPSA id m13sm7825222wrr.74.2020.09.26.14.04.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 26 Sep 2020 14:04:26 -0700 (PDT)
-Message-Id: <ef8a9b74ed9b2985e6258bcc90295be12231f333.1601154262.git.gitgitgadget@gmail.com>
+Message-Id: <a80297f5df1b3ae55716fba6faa6fc30c33f5a11.1601154262.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
 References: <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
         <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 26 Sep 2020 21:04:21 +0000
-Subject: [PATCH v3 4/5] tests: avoid variations of the `master` branch name
+Date:   Sat, 26 Sep 2020 21:04:22 +0000
+Subject: [PATCH v3 5/5] t9902: avoid using the branch name `master`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,353 +80,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The term `master` has a loaded history that serves as a constant
-reminder of racial injustice. The Git project has no desire to
-perpetuate this and already started avoiding it.
+The completion tests used that name unnecessarily, and it is a
+non-inclusive term, so let's avoid using it here.
 
-The test suite uses variations of this name for branches other than the
-default one. Apart from t3200, where we just addressed this in the
-previous commit, those instances can be renamed in an automated manner
-because they do not require any changes outside of the test script, so
-let's do that.
-
-Seeing as the touched branches have very little (if anything) to do with
-the default branch, we choose to use a completely separate naming
-scheme: `topic_<number>` (it cannot be `topic-<number>` because t5515
-uses the `test_oid` machinery with the term, and that machinery uses
-shell variables internally, whose names cannot contain dashes).
-
-This trick was performed by this (GNU) sed invocation:
-
-	$ sed -i 's/master\([a-z0-9]\)/topic_\1/g' t/t*.sh
+Since three of the touched test cases make use of the fact that two of
+the branch names (`master` and `maint`) start with the same letter (or
+even with the same two letters), we choose to replace the use of
+`master` by a name that also has that property: `main`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3427-rebase-subtree.sh    | 42 ++++++++++++++++++------------------
- t/t4150-am.sh                |  8 +++----
- t/t5515-fetch-merge-logic.sh |  6 +++---
- t/t5523-push-upstream.sh     | 20 ++++++++---------
- t/t6018-rev-list-glob.sh     |  6 +++---
- t/t6040-tracking-info.sh     | 20 ++++++++---------
- t/t6409-merge-subtree.sh     | 14 ++++++------
- 7 files changed, 58 insertions(+), 58 deletions(-)
+ t/t9902-completion.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index 79e43a370b..2a7d958ea7 100755
---- a/t/t3427-rebase-subtree.sh
-+++ b/t/t3427-rebase-subtree.sh
-@@ -15,12 +15,12 @@ commit_message() {
- # this test script tries to document them.  First, the following commit history
- # is generated (the onelines are shown, time flows from left to right):
- #
--# master1 - master2 - master3
-+# topic_1 - topic_2 - topic_3
- #                             \
--# README ---------------------- Add subproject master - master4 - files_subtree/master5
-+# README ---------------------- Add subproject master - topic_4 - files_subtree/topic_5
- #
- # Where the merge moves the files master[123].t into the subdirectory
--# files_subtree/ and master4 as well as files_subtree/master5 add files to that
-+# files_subtree/ and topic_4 as well as files_subtree/topic_5 add files to that
- # directory directly.
- #
- # Then, in subsequent test cases, `git filter-branch` is used to distill just
-@@ -28,11 +28,11 @@ commit_message() {
- # an empty commit is added on top. The pre-rebase commit history looks like
- # this:
- #
--# Add subproject master - master4 - files_subtree/master5 - Empty commit
-+# Add subproject master - topic_4 - files_subtree/topic_5 - Empty commit
- #
--# where the root commit adds three files: master1.t, master2.t and master3.t.
-+# where the root commit adds three files: topic_1.t, topic_2.t and topic_3.t.
- #
--# This commit history is then rebased onto `master3` with the
-+# This commit history is then rebased onto `topic_3` with the
- # `-Xsubtree=files_subtree` option in three different ways:
- #
- # 1. using `--preserve-merges`
-@@ -43,9 +43,9 @@ test_expect_success 'setup' '
- 	test_commit README &&
- 
- 	git init files &&
--	test_commit -C files master1 &&
--	test_commit -C files master2 &&
--	test_commit -C files master3 &&
-+	test_commit -C files topic_1 &&
-+	test_commit -C files topic_2 &&
-+	test_commit -C files topic_3 &&
- 
- 	: perform subtree merge into files_subtree/ &&
- 	git fetch files refs/heads/master:refs/heads/files-master &&
-@@ -55,8 +55,8 @@ test_expect_success 'setup' '
- 	git commit -m "Add subproject master" &&
- 
- 	: add two extra commits to rebase &&
--	test_commit -C files_subtree master4 &&
--	test_commit files_subtree/master5 &&
-+	test_commit -C files_subtree topic_4 &&
-+	test_commit files_subtree/topic_5 &&
- 
- 	git checkout -b to-rebase &&
- 	git fast-export --no-data HEAD -- files_subtree/ |
-@@ -66,22 +66,22 @@ test_expect_success 'setup' '
- 	git commit -m "Empty commit" --allow-empty
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 8425b9a531..7b7bc6e4bd 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -542,37 +542,37 @@ test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
  '
  
--# FAILURE: Does not preserve master4.
-+# FAILURE: Does not preserve topic_4.
- test_expect_failure REBASE_P 'Rebase -Xsubtree --preserve-merges --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-preserve-merges to-rebase &&
- 	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
--	verbose test "$(commit_message HEAD~)" = "master4" &&
--	verbose test "$(commit_message HEAD)" = "files_subtree/master5"
-+	verbose test "$(commit_message HEAD~)" = "topic_4" &&
-+	verbose test "$(commit_message HEAD)" = "files_subtree/topic_5"
+ read -r -d "" refs <<-\EOF
++main
+ maint
+-master
+ next
+ seen
+ EOF
+ 
+ test_expect_success '__gitcomp_nl - trailing space' '
+ 	test_gitcomp_nl "m" "$refs" <<-EOF
++	main Z
+ 	maint Z
+-	master Z
+ 	EOF
  '
  
--# FAILURE: Does not preserve master4.
-+# FAILURE: Does not preserve topic_4.
- test_expect_failure REBASE_P 'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty to-rebase &&
- 	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
--	verbose test "$(commit_message HEAD~2)" = "master4" &&
--	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
-+	verbose test "$(commit_message HEAD~2)" = "topic_4" &&
-+	verbose test "$(commit_message HEAD~)" = "files_subtree/topic_5" &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ test_expect_success '__gitcomp_nl - prefix' '
+ 	test_gitcomp_nl "--fixup=m" "$refs" "--fixup=" "m" <<-EOF
++	--fixup=main Z
+ 	--fixup=maint Z
+-	--fixup=master Z
+ 	EOF
  '
  
-@@ -91,8 +91,8 @@ test_expect_success 'Rebase -Xsubtree --empty=ask --onto commit' '
- 	test_must_fail git rebase -Xsubtree=files_subtree --empty=ask --onto files-master master &&
- 	: first pick results in no changes &&
- 	git rebase --skip &&
--	verbose test "$(commit_message HEAD~2)" = "master4" &&
--	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
-+	verbose test "$(commit_message HEAD~2)" = "topic_4" &&
-+	verbose test "$(commit_message HEAD~)" = "files_subtree/topic_5" &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ test_expect_success '__gitcomp_nl - suffix' '
+ 	test_gitcomp_nl "branch.ma" "$refs" "branch." "ma" "." <<-\EOF
++	branch.main.Z
+ 	branch.maint.Z
+-	branch.master.Z
+ 	EOF
  '
  
-@@ -102,8 +102,8 @@ test_expect_success 'Rebase -Xsubtree --empty=ask --rebase-merges --onto commit'
- 	test_must_fail git rebase -Xsubtree=files_subtree --empty=ask --rebase-merges --onto files-master --root &&
- 	: first pick results in no changes &&
- 	git rebase --skip &&
--	verbose test "$(commit_message HEAD~2)" = "master4" &&
--	verbose test "$(commit_message HEAD~)" = "files_subtree/master5" &&
-+	verbose test "$(commit_message HEAD~2)" = "topic_4" &&
-+	verbose test "$(commit_message HEAD~)" = "files_subtree/topic_5" &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
+ test_expect_success '__gitcomp_nl - no suffix' '
+ 	test_gitcomp_nl "ma" "$refs" "" "ma" "" <<-\EOF
++	mainZ
+ 	maintZ
+-	masterZ
+ 	EOF
  '
  
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 1da8ab120b..3ecbef6f8e 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -465,7 +465,7 @@ test_expect_success 'am changes committer and keeps author' '
- test_expect_success 'am --signoff adds Signed-off-by: line' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
--	git checkout -b master2 first &&
-+	git checkout -b topic_2 first &&
- 	git am --signoff <patch2 &&
- 	{
- 		printf "third\n\nSigned-off-by: %s <%s>\n\n" \
-@@ -479,7 +479,7 @@ test_expect_success 'am --signoff adds Signed-off-by: line' '
- '
- 
- test_expect_success 'am stays in branch' '
--	echo refs/heads/master2 >expected &&
-+	echo refs/heads/topic_2 >expected &&
- 	git symbolic-ref HEAD >actual &&
- 	test_cmp expected actual
- '
-@@ -540,7 +540,7 @@ test_expect_success 'am without --keep removes Re: and [PATCH] stuff' '
- 	git reset --hard HEAD^ &&
- 	git am <patch4 &&
- 	git rev-parse HEAD >expected &&
--	git rev-parse master2 >actual &&
-+	git rev-parse topic_2 >actual &&
- 	test_cmp expected actual
- '
- 
-@@ -567,7 +567,7 @@ test_expect_success 'am --keep-non-patch really keeps the non-patch part' '
- test_expect_success 'setup am -3' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
--	git checkout -b base3way master2 &&
-+	git checkout -b base3way topic_2 &&
- 	sed -n -e "3,\$p" msg >file &&
- 	head -n 9 msg >>file &&
- 	git add file &&
-diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
-index 9d6a46ff56..70a9d2d8ab 100755
---- a/t/t5515-fetch-merge-logic.sh
-+++ b/t/t5515-fetch-merge-logic.sh
-@@ -15,7 +15,7 @@ export GIT_TEST_PROTOCOL_VERSION
- 
- build_script () {
- 	script="$1" &&
--	for i in one three_file master master2 one_tree three two two2 three2
-+	for i in one three_file master topic_2 one_tree three two two2 three2
- 	do
- 		echo "s/$(test_oid --hash=sha1 "$i")/$(test_oid "$i")/g" >>"$script"
- 	done
-@@ -52,8 +52,8 @@ test_expect_success setup '
- 	two sha1:525b7fb068d59950d185a8779dc957c77eed73ba
- 	two sha256:3b21de3440cd38c2a9e9b464adb923f7054949ed4c918e1a0ac4c95cd52774db
- 
--	master2 sha1:754b754407bf032e9a2f9d5a9ad05ca79a6b228f
--	master2 sha256:6c7abaea8a6d8ef4d89877e68462758dc6774690fbbbb0e6d7dd57415c9abde0
-+	topic_2 sha1:754b754407bf032e9a2f9d5a9ad05ca79a6b228f
-+	topic_2 sha256:6c7abaea8a6d8ef4d89877e68462758dc6774690fbbbb0e6d7dd57415c9abde0
- 
- 	two2 sha1:6134ee8f857693b96ff1cc98d3e2fd62b199e5a8
- 	two2 sha256:87a2d3ee29c83a3dc7afd41c0606b11f67603120b910a7be7840accdc18344d4
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index c0df81a014..e47b5db5d6 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -41,20 +41,20 @@ test_expect_success 'push -u --dry-run master:otherX' '
- 	check_config master upstream refs/heads/other
- '
- 
--test_expect_success 'push -u master2:master2' '
--	git branch master2 &&
--	git push -u upstream master2:master2 &&
--	check_config master2 upstream refs/heads/master2
-+test_expect_success 'push -u topic_2:topic_2' '
-+	git branch topic_2 &&
-+	git push -u upstream topic_2:topic_2 &&
-+	check_config topic_2 upstream refs/heads/topic_2
- '
- 
--test_expect_success 'push -u master2:other2' '
--	git push -u upstream master2:other2 &&
--	check_config master2 upstream refs/heads/other2
-+test_expect_success 'push -u topic_2:other2' '
-+	git push -u upstream topic_2:other2 &&
-+	check_config topic_2 upstream refs/heads/other2
- '
- 
--test_expect_success 'push -u :master2' '
--	git push -u upstream :master2 &&
--	check_config master2 upstream refs/heads/other2
-+test_expect_success 'push -u :topic_2' '
-+	git push -u upstream :topic_2 &&
-+	check_config topic_2 upstream refs/heads/other2
- '
- 
- test_expect_success 'push -u --all' '
-diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
-index b31ff7eeec..fe2f3cec3d 100755
---- a/t/t6018-rev-list-glob.sh
-+++ b/t/t6018-rev-list-glob.sh
-@@ -32,11 +32,11 @@ test_expect_success 'setup' '
- 	git checkout -b someref master &&
- 	commit some &&
- 	git checkout master &&
--	commit master2 &&
-+	commit topic_2 &&
- 	git tag foo/bar master &&
--	commit master3 &&
-+	commit topic_3 &&
- 	git update-ref refs/remotes/foo/baz master &&
--	commit master4 &&
-+	commit topic_4 &&
- 	git update-ref refs/remotes/upstream/one subspace/one &&
- 	git update-ref refs/remotes/upstream/two subspace/two &&
- 	git update-ref refs/remotes/upstream/x subspace-x &&
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index ad1922b999..50a934e1b2 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -264,25 +264,25 @@ test_expect_success 'fail to track annotated tags' '
- test_expect_success '--set-upstream-to does not change branch' '
- 	git branch from-master master &&
- 	git branch --set-upstream-to master from-master &&
--	git branch from-master2 master &&
--	test_must_fail git config branch.from-master2.merge > actual &&
--	git rev-list from-master2 &&
--	git update-ref refs/heads/from-master2 from-master2^ &&
--	git rev-parse from-master2 >expect2 &&
--	git branch --set-upstream-to master from-master2 &&
-+	git branch from-topic_2 master &&
-+	test_must_fail git config branch.from-topic_2.merge > actual &&
-+	git rev-list from-topic_2 &&
-+	git update-ref refs/heads/from-topic_2 from-topic_2^ &&
-+	git rev-parse from-topic_2 >expect2 &&
-+	git branch --set-upstream-to master from-topic_2 &&
- 	git config branch.from-master.merge > actual &&
--	git rev-parse from-master2 >actual2 &&
-+	git rev-parse from-topic_2 >actual2 &&
- 	grep -q "^refs/heads/master$" actual &&
- 	cmp expect2 actual2
- '
- 
- test_expect_success '--set-upstream-to @{-1}' '
- 	git checkout follower &&
--	git checkout from-master2 &&
--	git config branch.from-master2.merge > expect2 &&
-+	git checkout from-topic_2 &&
-+	git config branch.from-topic_2.merge > expect2 &&
- 	git branch --set-upstream-to @{-1} from-master &&
- 	git config branch.from-master.merge > actual &&
--	git config branch.from-master2.merge > actual2 &&
-+	git config branch.from-topic_2.merge > actual2 &&
- 	git branch --set-upstream-to follower from-master &&
- 	git config branch.from-master.merge > expect &&
- 	test_cmp expect2 actual2 &&
-diff --git a/t/t6409-merge-subtree.sh b/t/t6409-merge-subtree.sh
-index 793f0c8bf3..1a0d0e23d0 100755
---- a/t/t6409-merge-subtree.sh
-+++ b/t/t6409-merge-subtree.sh
-@@ -94,10 +94,10 @@ test_expect_success 'merge update' '
- 	echo git-gui2 > git-gui.sh &&
- 	o3=$(git hash-object git-gui.sh) &&
- 	git add git-gui.sh &&
--	git checkout -b master2 &&
-+	git checkout -b topic_2 &&
- 	git commit -m "update git-gui" &&
- 	cd ../git &&
--	git pull -s subtree gui master2 &&
-+	git pull -s subtree gui topic_2 &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o3 0	git-gui/git-gui.sh" &&
-@@ -109,7 +109,7 @@ test_expect_success 'merge update' '
- test_expect_success 'initial ambiguous subtree' '
- 	cd ../git &&
- 	git reset --hard master &&
--	git checkout -b master2 &&
-+	git checkout -b topic_2 &&
- 	git merge -s ours --no-commit gui/master &&
- 	git read-tree --prefix=git-gui2/ -u gui/master &&
- 	git commit -m "Merge git-gui2 as our subdirectory" &&
-@@ -125,8 +125,8 @@ test_expect_success 'initial ambiguous subtree' '
- 
- test_expect_success 'merge using explicit' '
- 	cd ../git &&
--	git reset --hard master2 &&
--	git pull -Xsubtree=git-gui gui master2 &&
-+	git reset --hard topic_2 &&
-+	git pull -Xsubtree=git-gui gui topic_2 &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o3 0	git-gui/git-gui.sh" &&
-@@ -138,8 +138,8 @@ test_expect_success 'merge using explicit' '
- 
- test_expect_success 'merge2 using explicit' '
- 	cd ../git &&
--	git reset --hard master2 &&
--	git pull -Xsubtree=git-gui2 gui master2 &&
-+	git reset --hard topic_2 &&
-+	git pull -Xsubtree=git-gui2 gui topic_2 &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o1 0	git-gui/git-gui.sh" &&
 -- 
 gitgitgadget
-
