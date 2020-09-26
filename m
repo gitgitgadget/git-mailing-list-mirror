@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3142C4727D
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11A6DC4727D
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E53C21531
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C23CD207F7
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWaggYTi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gbPqtycL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbgIZVE3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 17:04:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54428 "EHLO
+        id S1727143AbgIZVEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 17:04:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726559AbgIZVE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 17:04:26 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 770F7C0613CE
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:26 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id c18so7581860wrm.9
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:26 -0700 (PDT)
+        with ESMTP id S1726822AbgIZVE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 17:04:29 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9798C0613D4
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:28 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id e2so2821626wme.1
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rhnqNcQm0x++W3hvpSYVdA8rvQO0+VPmQ0qhsoSVUNs=;
-        b=OWaggYTi7mnUuMzK492OUJbyaBgkh7rn4bBY6qutj8hEV91dAFH+8PH/c6kUOnwBAI
-         JTubrvoKwyWudbQoiSU8THRsJywFtvZ17e7Y2Tv19gqqMeCbOmvhJyozFMiuNGkSkasZ
-         mBbZQBLmbeo+5x3o8DG0ujic3dpILHYIkNfHn7ZJ0MjFj7eJYqOIg3mMKuPfekEEOezW
-         sJj83JkFc20etYHbf95/fzcu1RRJsA7FfzGxdBUnCmgsKrVx9/rQ1I6Vnx5ssgk85mir
-         IQ5GHIZrsCpu7I9xy6QWqEL9SIJPmZa2V8xDCLj+2ABDbVEFcT9wIMkrmJuA3qLHkw1l
-         n4hg==
+        bh=OGsfOc3S0PE/4vkc7IqrM3gcS0GA+iGg6M6p3MVsdaw=;
+        b=gbPqtycLV8k/slggHduieKihk52jlphslsytcJAcb6QoZOTYzylVq8gqldZqiC04ft
+         IUMbO0/o2itFBUuiDbN7mhnKqjB7YybQ0RmRfdck9Y+8frPVEuBnwS5LweQfduTOOxMW
+         wRT53Pg3Tz7kfsvUJ2QhpatuAcFOgCWnhcIoNTr8lZNq8+lQJDO/9kgS20KmYAID2H7W
+         dOI/2fB78xvwVbZz+dXr399Jbf/tkc3zRFIEbJjgpi2l3aExqSpT4DH5AuLdZIfx4O+t
+         t6ZrjLa4U3TJxkcKc1LsrLByx8PLkoZrhYA9RwxUePZaT+VWk/wmxH4Y5MD+X7EfRLem
+         JeDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rhnqNcQm0x++W3hvpSYVdA8rvQO0+VPmQ0qhsoSVUNs=;
-        b=qkGB/2urWTWhXBtGcsPjd+Gk2Csq0eAhmzOTRNXNpkhHHrBFGI19oHD4bYVugseJVZ
-         ostuSd1I0CSp31sK6L6gsWBrVmUnRrSt2u38NgyK4lhff4LsN2eU/vxKdQfG3OFPf1R9
-         BJVU18WFc9Ao7kNrmYw8ghVQ0jiu9AcBfoMYW+vuHZVRpgdn1Vo2nn1hBY4EhLaptxqu
-         CetzaYB2AIFBPmYDgGrNO5+S8mwSy8H+PQTs9Yt7+k4KhQYJE+lVkTxPXULQ6y4mx2V4
-         BOWu/CczaEgumN0W1Wy5i+Y9RBr9TkN+GS73k4WIIRl/A1D6Fl9ZaJAm058PYqgOoJBM
-         qVyA==
-X-Gm-Message-State: AOAM530DAzwCYq65Y3Lq3I+krld5M/mW54YqIB7hzlKZSoxpx75vkCTd
-        bKcx4INbR480TY7OvXmu5f2dtZI6xO0=
-X-Google-Smtp-Source: ABdhPJz/FzN0fmyBSH073Xev5W63VIZn0TPgaTwNeQLYh6S7VJ2gEyhRuINK/YjVsUk8wYWCKhebCg==
-X-Received: by 2002:adf:f88b:: with SMTP id u11mr10584038wrp.376.1601154265047;
+        bh=OGsfOc3S0PE/4vkc7IqrM3gcS0GA+iGg6M6p3MVsdaw=;
+        b=pC0yqvIgiYEw0oO1qeeVUDTNMmGOErB1RS2h0mgi7tvbdvIMxEnl4XEsMliexIFRPj
+         +xfgiUbWEC1T39x8sliDXmYJ/KO5H5qedMGzNB3bY8o4eUcQZOldZkLffbek2OIlqN97
+         TAQSWZNHDWW5nd7JRD2DXmEA+NEbOw823OLLZEZxXwAqVjdSd4gH+x4L5hmFyVe8Qsuo
+         cDzcmISxaPU30PzwxNsrjOxeohPZNe1JyVs6zsV7iGZ9Q1NX+S7qdNl0tRZA+vnomYCA
+         WkK680GuVQ7gYVi45PIFwn8edc9QWBji6h3qYUhH3RGOKfcrtXWgfR3goGIeRRbEy7B9
+         j2vA==
+X-Gm-Message-State: AOAM532yAg+FltP9rWsBVD+ukLCE44VYVYfi68McCIMS3bO0OUpwEzos
+        ZoWYD+S7nnkIfWPkhzYrZWuQs8QDu5U=
+X-Google-Smtp-Source: ABdhPJyPiquTMjCciiFSIOPQDenJyL8H5nxKHrjlsQdDq9RKW/e/Yhnfm/Av6ZE/7utyjpF6ftZkGg==
+X-Received: by 2002:a7b:c345:: with SMTP id l5mr3973767wmj.123.1601154265776;
         Sat, 26 Sep 2020 14:04:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d18sm7455982wrm.10.2020.09.26.14.04.24
+        by smtp.gmail.com with ESMTPSA id v2sm7487689wrm.16.2020.09.26.14.04.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 14:04:24 -0700 (PDT)
-Message-Id: <80e1d46ccefeb39bf3a10c5c973d62fa887210d1.1601154262.git.gitgitgadget@gmail.com>
+        Sat, 26 Sep 2020 14:04:25 -0700 (PDT)
+Message-Id: <8d8e9abfe2ad141a75ee54446393f8b54b1fb990.1601154262.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
 References: <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
         <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 26 Sep 2020 21:04:19 +0000
-Subject: [PATCH v3 2/5] t/test-terminal: avoid non-inclusive language
+Date:   Sat, 26 Sep 2020 21:04:20 +0000
+Subject: [PATCH v3 3/5] t3200: avoid variations of the `master` branch name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,68 +80,134 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the ongoing effort to make the Git project a more inclusive place,
-let's try to avoid names like "master" where possible.
+To avoid branch names with a loaded history, we already started to avoid
+using the name "master" in a couple instances.
 
-In this instance, the use of the term `slave` is unfortunately enshrined
-in IO::Pty's API. We simply cannot avoid using that word here. But at
-least we can get rid of the usage of the word `master` and hope that
-IO::Pty will be eventually adjusted, too.
+The `t3200-branch.sh` script uses variations of this name for branches
+other than the default one. So let's change those names, as
+"lowest-hanging fruits" in the effort to use more inclusive naming
+throughout Git's source code. While at it, make those branch names
+independent from the default branch name.
 
-Guessing that IO::Pty might follow Python's lead, we replace the name
-`master` by `parent` (hoping that IO::Pty will adopt the parent/child
-nomenclature, too).
+In this particular instance, this rename requires a couple of
+non-trivial adjustments, as the aligned output depends on the maximum
+length of the displayed branches (which we now changed), and also on the
+alphabetical order (which we now changed, too).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-terminal.perl | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ t/t3200-branch.sh | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/t/test-terminal.perl b/t/test-terminal.perl
-index 46bf618479..1bcf01a9a4 100755
---- a/t/test-terminal.perl
-+++ b/t/test-terminal.perl
-@@ -81,24 +81,24 @@ sub copy_stdio {
- 	die "usage: test-terminal program args";
- }
- $ENV{TERM} = 'vt100';
--my $master_in = new IO::Pty;
--my $master_out = new IO::Pty;
--my $master_err = new IO::Pty;
--$master_in->set_raw();
--$master_out->set_raw();
--$master_err->set_raw();
--$master_in->slave->set_raw();
--$master_out->slave->set_raw();
--$master_err->slave->set_raw();
--my $pid = start_child(\@ARGV, $master_in->slave, $master_out->slave, $master_err->slave);
--close $master_in->slave;
--close $master_out->slave;
--close $master_err->slave;
--my $in_pid = copy_stdin($master_in);
--copy_stdio($master_out, $master_err);
-+my $parent_in = new IO::Pty;
-+my $parent_out = new IO::Pty;
-+my $parent_err = new IO::Pty;
-+$parent_in->set_raw();
-+$parent_out->set_raw();
-+$parent_err->set_raw();
-+$parent_in->slave->set_raw();
-+$parent_out->slave->set_raw();
-+$parent_err->slave->set_raw();
-+my $pid = start_child(\@ARGV, $parent_in->slave, $parent_out->slave, $parent_err->slave);
-+close $parent_in->slave;
-+close $parent_out->slave;
-+close $parent_err->slave;
-+my $in_pid = copy_stdin($parent_in);
-+copy_stdio($parent_out, $parent_err);
- my $ret = finish_child($pid);
- # If the child process terminates before our copy_stdin() process is able to
--# write all of its data to $master_in, the copy_stdin() process could stall.
-+# write all of its data to $parent_in, the copy_stdin() process could stall.
- # Send SIGTERM to it to ensure it terminates.
- kill 'TERM', $in_pid;
- finish_child($in_pid);
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 4c0734157b..cc27e3bfdb 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -234,10 +234,10 @@ test_expect_success 'git branch -M master master should work when master is chec
+ 	git branch -M master master
+ '
+ 
+-test_expect_success 'git branch -M master2 master2 should work when master is checked out' '
++test_expect_success 'git branch -M topic topic should work when master is checked out' '
+ 	git checkout master &&
+-	git branch master2 &&
+-	git branch -M master2 master2
++	git branch topic &&
++	git branch -M topic topic
+ '
+ 
+ test_expect_success 'git branch -v -d t should work' '
+@@ -324,8 +324,8 @@ test_expect_success 'git branch --list -v with --abbrev' '
+ test_expect_success 'git branch --column' '
+ 	COLUMNS=81 git branch --column=column >actual &&
+ 	cat >expect <<\EOF &&
+-  a/b/c     bam       foo       l       * master    mb        o/o       q
+-  abc       bar       j/k       m/m       master2   n         o/p       r
++  a/b/c    bam      foo      l      * master   n        o/p      r
++  abc      bar      j/k      m/m      mb       o/o      q        topic
+ EOF
+ 	test_cmp expect actual
+ '
+@@ -346,13 +346,13 @@ test_expect_success 'git branch --column with an extremely long branch name' '
+   l
+   m/m
+ * master
+-  master2
+   mb
+   n
+   o/o
+   o/p
+   q
+   r
++  topic
+   $long
+ EOF
+ 	test_cmp expect actual
+@@ -365,8 +365,8 @@ test_expect_success 'git branch with column.*' '
+ 	git config --unset column.branch &&
+ 	git config --unset column.ui &&
+ 	cat >expect <<\EOF &&
+-  a/b/c   bam   foo   l   * master    mb   o/o   q
+-  abc     bar   j/k   m/m   master2   n    o/p   r
++  a/b/c   bam   foo   l   * master   n     o/p   r
++  abc     bar   j/k   m/m   mb       o/o   q     topic
+ EOF
+ 	test_cmp expect actual
+ '
+@@ -377,7 +377,7 @@ test_expect_success 'git branch --column -v should fail' '
+ 
+ test_expect_success 'git branch -v with column.ui ignored' '
+ 	git config column.ui column &&
+-	COLUMNS=80 git branch -v | cut -c -10 | sed "s/ *$//" >actual &&
++	COLUMNS=80 git branch -v | cut -c -9 | sed "s/ *$//" >actual &&
+ 	git config --unset column.ui &&
+ 	cat >expect <<\EOF &&
+   a/b/c
+@@ -389,13 +389,13 @@ test_expect_success 'git branch -v with column.ui ignored' '
+   l
+   m/m
+ * master
+-  master2
+   mb
+   n
+   o/o
+   o/p
+   q
+   r
++  topic
+ EOF
+ 	test_cmp expect actual
+ '
+@@ -597,10 +597,10 @@ test_expect_success 'git branch -C master master should work when master is chec
+ 	git branch -C master master
+ '
+ 
+-test_expect_success 'git branch -C master5 master5 should work when master is checked out' '
++test_expect_success 'git branch -C main5 main5 should work when master is checked out' '
+ 	git checkout master &&
+-	git branch master5 &&
+-	git branch -C master5 master5
++	git branch main5 &&
++	git branch -C main5 main5
+ '
+ 
+ test_expect_success 'git branch -C ab cd should overwrite existing config for cd' '
+@@ -711,11 +711,11 @@ test_expect_success 'deleting a self-referential symref' '
+ '
+ 
+ test_expect_success 'renaming a symref is not allowed' '
+-	git symbolic-ref refs/heads/master2 refs/heads/master &&
+-	test_must_fail git branch -m master2 master3 &&
+-	git symbolic-ref refs/heads/master2 &&
++	git symbolic-ref refs/heads/topic refs/heads/master &&
++	test_must_fail git branch -m topic new-topic &&
++	git symbolic-ref refs/heads/topic &&
+ 	test_path_is_file .git/refs/heads/master &&
+-	test_path_is_missing .git/refs/heads/master3
++	test_path_is_missing .git/refs/heads/new-topic
+ '
+ 
+ test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
 -- 
 gitgitgadget
 
