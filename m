@@ -2,261 +2,213 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD48EC2D0A8
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 14:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 644D8C2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 16:23:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B7DF20882
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 14:55:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 268DD21527
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 16:23:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="syQS4nG3"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="LRpKXwz2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729294AbgIZOzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 10:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54286 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729217AbgIZOzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 10:55:13 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D04C0613CE
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 07:55:12 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id b12so5440709edz.11
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 07:55:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yNowKYVlp0sLsFqV32YCHqVEF87/gqfWBtksr74zavE=;
-        b=syQS4nG3ZOPqw86oxw8f9WggLE2PRsBnbejUHyILrebKr+0+fw6MKVXRQY3bDa6gn+
-         PpSlRPbv1K5H+/itMK1EY+U6LzF7j683V0RstfEpH3jEaU2UC9vamjWbTnbUYayjYd8t
-         EwXrBKpcQ4+AEp9NkTdTnWrIbe4CUD+hy/uiZWq4kqhxSYDgJzpDYUZIO5Z8PX24e8dB
-         uWR6hGej6hx/EyB0Tcoad69O6pkgUECB0FdwRvfASsnIaflzHoa7r/v3d8mHYy+kr2lW
-         VwshGKcAKZlgvIz7dVZYohTe8GjBLVpjWGjbZiDonY9LIDNVnfudsQyEGckLi+8J5NJg
-         qAWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yNowKYVlp0sLsFqV32YCHqVEF87/gqfWBtksr74zavE=;
-        b=FBiYqcVWc4gQX+172dldd3uOqA+F/6oLewTASQQ2fdGZO1B+162xus/VXd3zv0h8A3
-         1MK8bMpe+w7GwvNsHSTGYxOhV0pHJHUT84Kfd0BzVonCMxp/4nJzG+WbRo4+Tg6t4ldJ
-         mvaNHIUQh6qeiBD+yn1WVg27WwyzltDIjEvOmFKdOHo0tLQPHre2KlkBPxSbJfbECfuW
-         +P20KmetqToEYb12qDngyBb9XzV5Ctgd/5AAeEAGoc0nlHpyC9MYUZoRkIEMIEd/eF6z
-         VmDkLTpeP0b7JTwWDZWaKsfa6UqkVq0G55ia3bM8VmVv+MxvSf5GyCXoW/5D/84mDwkN
-         l62A==
-X-Gm-Message-State: AOAM533lDDQuNaRKX0PAy7QT2wdg0JYK11MAd5lGlnVPCfyYRZU+aJSm
-        rJzzYj5t7ymnMRoeVnQP5MGDo2WZ/iDGBw==
-X-Google-Smtp-Source: ABdhPJw9dijzeEPtdY5eX99STTXLId+cvpnONC85DyDi44Kyb8NAApagB6/Hov3ahMekfmC5HwSlJA==
-X-Received: by 2002:a50:c051:: with SMTP id u17mr7160690edd.39.1601132110965;
-        Sat, 26 Sep 2020 07:55:10 -0700 (PDT)
-Received: from partizan.lan ([46.98.122.48])
-        by smtp.gmail.com with ESMTPSA id g11sm4565702edj.85.2020.09.26.07.55.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 07:55:10 -0700 (PDT)
-From:   Serg Tereshchenko <serg.partizan@gmail.com>
-To:     me@yadavpratyush.com
-Cc:     git@vger.kernel.org, serg.partizan@gmail.com
-Subject: [PATCH v2] git-gui: Basic dark mode support
-Date:   Sat, 26 Sep 2020 17:54:43 +0300
-Message-Id: <20200926145443.15423-1-serg.partizan@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200922110419.ymqj4ol76kg6qshf@yadavpratyush.com>
-References: <20200922110419.ymqj4ol76kg6qshf@yadavpratyush.com>
+        id S1729858AbgIZQXs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 12:23:48 -0400
+Received: from mout.web.de ([212.227.17.11]:56701 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729747AbgIZQXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 12:23:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1601137422;
+        bh=wN8kLxtHNZYzSKgh/HRUZ21rHrNhjtT7cTZIWpUrn4I=;
+        h=X-UI-Sender-Class:From:Subject:To:References:Cc:Date:In-Reply-To;
+        b=LRpKXwz2e8fM32G0snx/qGP8bC4keUu0GKkqqUrckgLiqzw9d7yDJNNoLEtc/Zphr
+         W0OhWZP4tYm+gSKxS0lXEn2ZzA2posibBGIEn69/+CWYYQvNMUSPtgIz0xs4IHy2JQ
+         rujmsh3Py7+7H24dlQafvVS0RxbP0pZqb6wQsE68=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LuLt5-1kT7Sj2GVr-011fXF; Sat, 26
+ Sep 2020 18:23:42 +0200
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 2/4] blame: validate and peel the object names on the
+ ignore list
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20200925055954.1111389-1-gitster@pobox.com>
+ <20200925055954.1111389-3-gitster@pobox.com>
+Cc:     Barret Rhoden <brho@google.com>
+Message-ID: <40488753-c179-4ce2-42d0-e57b5b1ec6cd@web.de>
+Date:   Sat, 26 Sep 2020 18:23:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200925055954.1111389-3-gitster@pobox.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:F5GDTEdToEBWKZU++IayprODC76iqxBXxx86SFPssghJkttjXjz
+ UMQV4s4VMnHLSdF41/4B1BGbSHxY/PzNmf1oR01TIQQAAzL0/I8PmNOyRi/KRO5sOYWVKiu
+ tiyK9bhXowVohZR1DuJrdyoL2+18D1pybNvExX8xqjylYqmx6pwKsnXRiMLS/Gwe6fgQUS8
+ Izn9iw4FT7xIfu+TQDtEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TPtgSday8Wk=:83Y1MKkiLa2m/mLq12BOaD
+ 0h6TxkPPOihvjngp1NRy5Dl9i3hEScg4+EeNWV7uw7M7Fh9z8kZ6Owv4qle8sa80zK4Tfzcqm
+ CitVJKqQDJQ1Wh5CPXHIc4R1ecQpzh8kyNFaoZfe1q9a6cttuDDyQhZ02qJUBN3TF8TaouHby
+ k6XgRh3rzd+TFk+I/X0VPN8X5KjhZumeD32unkNg6dgHO/0YwFUgG2ugK64za9dOEH9IlNzZU
+ BoxYHJvHe8uh5zD4eIkYNUgxZ+5p1Paw0/2D6FNu0JVTbyBJfmVWdrrx14i2GBO8TR95/bD0y
+ HC8qQ+KBqwA2GbSxLriANRrjd10WX3nBhACSGhm+QP7zPT21hzL0RysNhsMIG2d7N/OHLpDmA
+ FXZyX1lds3DviLZRFj7hqs4ksrW2UYiMODQXQ25NpLP3oedlLrcq8RN258NuhxSZIujL/1dUt
+ iqLJ7/mAxcjoBZqHabwjSaiT90IR4zjwfnqzkbU/3dGQ3nuoDFG2xWFfeVL04Glmeffd+eqJH
+ NZMKpx0U1WF0L9YMw5hjmKEjHqCNki47nGpGs0Pf4LhZ7gESCwAvioNF64lAt6XkWNsNOSqpv
+ fZAh8byVq2rUkD0+q7DF4HRtK7WD8RBdn3Azdjyx48Q+QsF46LMJj2u9Y+YVSbMo00770vfac
+ sF2GACfk+XK2BIIxZFnFfj0GIQ6q03yBazPKYS7wDh2bI4glsuTtOiybKV+txjtj6uuuzIVUO
+ Q+2Hz4/bKaQIAcNthF9O0mES2KOvxxM2hjIaSiirNibem8ZKr6M0zoM9kx5HmyeHcBTFPzjw4
+ QrLoygw1T48cZOVfuGqecLceqgnthE9rOQQAkKSbNuwUUSAKfgCWLiaG3ykYfvLbKMNie3d51
+ /CDMKQD8L6F8/qZsBSHGVQdcyXc8KMU6B1B5DTsPJjmgcXuKfxWsggWcdOmNUyFPm9YRm/DmC
+ aM3hUbF4NGfVtjJpE7JJLyCMGXZSDIw+4SZIwuJgldP7a6dlR3fO3xtePu26T+g2hp/eIX1Pc
+ BufEgcw+8UAaDjUdHzyMeQpyDz6nv3d4ymnXzx4bmuDb9PL1UxowXycFXNrlUgJVLJJzl6rw8
+ mJTsBcz6wzT2frvgbSs0VKdh6rwviLjc/6peDmZxEAjIxlehFSm67nNMKgWzAlp/MirjrrvP6
+ lHYjgv9owPN4WNdGYKgs577B2W4kQRPo9CE8aTm3IDMyXrpCzHV95PzY+mqNBgpz2smMGr5b2
+ rbk7vzyaSC6pLP37W
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush.
-
-> Wouldn't having the contents of colored.tcl in themed.tcl be a good 
-> idea? The way I see it, colors are part of the theming of the 
-> application.
-
-You are right, fixed this.
-
-> You can set that in the function `rmsel_tag` in git-gui.sh on the line
-
-Thanks, it worked!
-
->> I would be happy to move color definitions from git-gui.sh to
->> themed.tcl, so we can set it once, and not for each ttext call. Do you
->> think this is a good idea now or in the future?
+Am 25.09.20 um 07:59 schrieb Junio C Hamano:
+> The command reads list of object names to place on the ignore list
+> either from the command line or from a file, but they are not
+> checked with their object type (those read from the file are not
+> even checked for object existence).
 >
->Do you mean to put the `-foreground` and `-background` options in the 
->function ttext in themed.tcl? If so how can a widget specify if it wants 
->a dark text or light for example?
+> Extend the oidset_parse_file() API and allow it to take a callback
+> that can be used to die (e.g. when an inappropriate input is read)
+> or modify the object name read (e.g. when a tag pointing at a commit
+> is read, and the caller wants a commit object name), and use it in
+> the code that handles ignore list.
 
-Turns out ttext was always using black/white colors, so i just removed
-it from ttext calls and used `option add` to set default colors.
+What's the benefit of such a check?  Ignoring a non-existing or
+type-mismatched object is really easy -- no actual effort is required to
+fulfill that request.
 
-And if some widget needs to different, it can be implemented like
-existing gold_frame.
+When I request "Don't eat any glue!", perfectly human responses could be
+"But I don't have any glue!" or "It doesn't even taste that good.", but
+I'd expect a computer program to act I bit more logical and just don't
+do it, without talking back.  Maybe that's just me.
 
-Or like theoretical `ttext_inverse`, which just calls ttext with
--background -foreground swapped. Or maybe we can come up with something
-better. Main idea is to keep all theme-related code in themed.tcl.
+(I had been bitten by a totally different software adding such a check,
+which made it complain about my long catch-all ignore list, and I had to
+craft and maintain a specific "clean" list for each deployment --
+perhaps I'm still bitter about that.)
 
-> Why have `textOnLight`, `textOnDark` and `textColor` separately? My 
-> guess is that it is for when you want to force light colors regardless 
-> of the theme? Am I right?
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/blame.c              | 27 ++++++++++++++++++++++++--
+>  oidset.c                     |  9 ++++++++-
+>  oidset.h                     |  9 +++++++++
+>  t/t8013-blame-ignore-revs.sh | 37 ++++++++++++++++++++++++++----------
+>  4 files changed, 69 insertions(+), 13 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 94ef57c1cc..baa5d979cc 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -27,6 +27,7 @@
+>  #include "object-store.h"
+>  #include "blame.h"
+>  #include "refs.h"
+> +#include "tag.h"
+>
+>  static char blame_usage[] =3D N_("git blame [<options>] [<rev-opts>] [<=
+rev>] [--] <file>");
+>
+> @@ -803,6 +804,26 @@ static int is_a_rev(const char *name)
+>  	return OBJ_NONE < oid_object_info(the_repository, &oid, NULL);
+>  }
+>
+> +static int peel_to_commit_oid(struct object_id *oid_ret, void *cbdata)
+> +{
+> +	struct repository *r =3D ((struct blame_scoreboard *)cbdata)->repo;
+> +	struct object_id oid;
+> +
+> +	oidcpy(&oid, oid_ret);
+> +	while (1) {
+> +		struct object *obj;
+> +		int kind =3D oid_object_info(r, &oid, NULL);
+> +		if (kind =3D=3D OBJ_COMMIT) {
+> +			oidcpy(oid_ret, &oid);
 
-Something like that, i was using it for tlabel like this:
-> tlabel ... -background $Color::lightGreen -foreground $Color::textOnLight
+At that point we know it's an object, but cast it up to the most generic
+class we have -- an object ID.  We could have set an object flag to mark
+it ignored instead, which would be trivial to check later.  On the other
+hand it probably wouldn't make much of a difference -- hashmaps are
+pretty fast, and blame has lots of things to do beyond ignoring commits.
 
-But, it was actually not related to current task, so i just reverted
-that changes and focused only on getting basic dark theme support.
+> +			return 0;
+> +		}
+> +		if (kind !=3D OBJ_TAG)
+> +			return -1;
+> +		obj =3D deref_tag(r, parse_object(r, &oid), NULL, 0);
+> +		oidcpy(&oid, &obj->oid);
+> +	}
+> +}
+> +
+>  static void build_ignorelist(struct blame_scoreboard *sb,
+>  			     struct string_list *ignore_revs_file_list,
+>  			     struct string_list *ignore_rev_list)
+> @@ -815,10 +836,12 @@ static void build_ignorelist(struct blame_scoreboa=
+rd *sb,
+>  		if (!strcmp(i->string, ""))
+>  			oidset_clear(&sb->ignore_list);
 
-> Nitpick: please use snake_case for variable names like the rest of the 
-> code does. Same for the function name below and the namespace name 
-> above.
+This preexisting feature is curious.  It's even documented ('An empty
+file name, "", will clear the list of revs from previously processed
+files.') and covered by t8013.6.  Why would we need such magic in
+addition to the standard negation (--no-ignore-revs-file) for clearing
+the list?  The latter counters blame.ignoreRevsFile as well. *puzzled*
 
-Fixed. I was confused by InitTheme and InitEntryFrame.
+>  		else
+> -			oidset_parse_file(&sb->ignore_list, i->string);
+> +			oidset_parse_file_carefully(&sb->ignore_list, i->string,
+> +						    peel_to_commit_oid, sb);
+>  	}
+>  	for_each_string_list_item(i, ignore_rev_list) {
+> -		if (get_oid_committish(i->string, &oid))
+> +		if (get_oid_committish(i->string, &oid) ||
+> +		    peel_to_commit_oid(&oid, sb))
+>  			die(_("cannot find revision %s to ignore"), i->string);
+>  		oidset_insert(&sb->ignore_list, &oid);
+>  	}
+> diff --git a/oidset.c b/oidset.c
+> index 15d4e18c37..2d0ab76fb5 100644
+> --- a/oidset.c
+> +++ b/oidset.c
+> @@ -42,6 +42,12 @@ int oidset_size(struct oidset *set)
+>  }
+>
+>  void oidset_parse_file(struct oidset *set, const char *path)
+> +{
+> +	oidset_parse_file_carefully(set, path, NULL, NULL);
+> +}
+> +
+> +void oidset_parse_file_carefully(struct oidset *set, const char *path,
+> +				 oidset_parse_tweak_fn fn, void *cbdata)
+>  {
+>  	FILE *fp;
+>  	struct strbuf sb =3D STRBUF_INIT;
+> @@ -66,7 +72,8 @@ void oidset_parse_file(struct oidset *set, const char =
+*path)
+>  		if (!sb.len)
+>  			continue;
+>
+> -		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0')
+> +		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0' ||
+> +		    (fn && fn(&oid, cbdata)))
 
---
-Regargs,
-Serg Tereshchenko
+OK, so this turns the basic all-I-know-is-hashes oidset loader into a
+flexible higher-order map function.  Fun, but wise?  Can't make up my
+mind.
 
---- 8< ---
-Removed forced colors in ttext widget calls,
-instead using Text.Background/Foreground options.
-This way colors can be configured dependent on current theme, and even
-overriden by user via .Xresources.
-
-Extracted colors for in_sel/in_diff tags into colors:: namespace,
-where they can be configured from current theme colors.
-
-Signed-off-by: Serg Tereshchenko <serg.partizan@gmail.com>
----
- git-gui.sh     | 17 +++++++++++------
- lib/themed.tcl | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 6 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index d18b902..867b8ce 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -720,7 +720,9 @@ proc rmsel_tag {text} {
- 		-background [$text cget -background] \
- 		-foreground [$text cget -foreground] \
- 		-borderwidth 0
--	$text tag conf in_sel -background lightgray
-+	$text tag conf in_sel\
-+		-background $color::select_bg \
-+		-foreground $color::select_fg
- 	bind $text <Motion> break
- 	return $text
- }
-@@ -863,6 +865,7 @@ proc apply_config {} {
- 			set NS ttk
- 			bind [winfo class .] <<ThemeChanged>> [list InitTheme]
- 			pave_toplevel .
-+			color::sync_with_theme
- 		}
- 	}
- }
-@@ -3272,7 +3275,7 @@ pack .vpane -anchor n -side top -fill both -expand 1
- textframe .vpane.files.workdir -height 100 -width 200
- tlabel .vpane.files.workdir.title -text [mc "Unstaged Changes"] \
- 	-background lightsalmon -foreground black
--ttext $ui_workdir -background white -foreground black \
-+ttext $ui_workdir \
- 	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
-@@ -3294,7 +3297,7 @@ textframe .vpane.files.index -height 100 -width 200
- tlabel .vpane.files.index.title \
- 	-text [mc "Staged Changes (Will Commit)"] \
- 	-background lightgreen -foreground black
--ttext $ui_index -background white -foreground black \
-+ttext $ui_index \
- 	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
-@@ -3321,7 +3324,9 @@ if {!$use_ttk} {
- 
- foreach i [list $ui_index $ui_workdir] {
- 	rmsel_tag $i
--	$i tag conf in_diff -background [$i tag cget in_sel -background]
-+	$i tag conf in_diff \
-+		-background $color::select_bg \
-+		-foreground $color::select_fg
- }
- unset i
- 
-@@ -3429,7 +3434,7 @@ if {![is_enabled nocommit]} {
- }
- 
- textframe .vpane.lower.commarea.buffer.frame
--ttext $ui_comm -background white -foreground black \
-+ttext $ui_comm \
- 	-borderwidth 1 \
- 	-undo true \
- 	-maxundo 20 \
-@@ -3558,7 +3563,7 @@ bind .vpane.lower.diff.header.path <Button-1> {do_file_open $current_diff_path}
- #
- textframe .vpane.lower.diff.body
- set ui_diff .vpane.lower.diff.body.t
--ttext $ui_diff -background white -foreground black \
-+ttext $ui_diff \
- 	-borderwidth 0 \
- 	-width 80 -height 5 -wrap none \
- 	-font font_diff \
-diff --git a/lib/themed.tcl b/lib/themed.tcl
-index 88b3119..83e3ac7 100644
---- a/lib/themed.tcl
-+++ b/lib/themed.tcl
-@@ -1,6 +1,44 @@
- # Functions for supporting the use of themed Tk widgets in git-gui.
- # Copyright (C) 2009 Pat Thoyts <patthoyts@users.sourceforge.net>
- 
-+
-+namespace eval color {
-+	# Variable colors
-+	# Preffered way to set widget colors is using add_option.
-+	# In some cases, like with tags in_diff/in_sel, we use these colors.
-+	variable select_bg		lightgray
-+	variable select_fg		black
-+
-+	proc sync_with_theme {} {
-+		set base_bg		[ttk::style lookup . -background]
-+		set base_fg		[ttk::style lookup . -foreground]
-+		set text_bg		[ttk::style lookup Treeview -background]
-+		set text_fg		[ttk::style lookup Treeview -foreground]
-+		set select_bg	[ttk::style lookup Default -selectbackground]
-+		set select_fg	[ttk::style lookup Default -selectforeground]
-+
-+		set color::select_bg $select_bg
-+		set color::select_fg $select_fg
-+
-+		proc add_option {key val} {
-+			option add $key $val widgetDefault
-+		}
-+		# Add options for plain Tk widgets
-+		# Using `option add` instead of tk_setPalette to avoid unintended
-+		# consequences.
-+		if {![is_MacOSX]} {
-+			add_option *Menu.Background $base_bg
-+			add_option *Menu.Foreground $base_fg
-+			add_option *Menu.activeBackground $select_bg
-+			add_option *Menu.activeForeground $select_fg
-+		}
-+		add_option *Text.Background $text_bg
-+		add_option *Text.Foreground $text_fg
-+		add_option *Text.HighlightBackground $base_bg
-+		add_option *Text.HighlightColor $select_bg
-+	}
-+}
-+
- proc ttk_get_current_theme {} {
- 	# Handle either current Tk or older versions of 8.5
- 	if {[catch {set theme [ttk::style theme use]}]} {
--- 
-2.28.0
-
+Ren=C3=A9
