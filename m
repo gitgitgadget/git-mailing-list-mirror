@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36C0AC4727D
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C1BCC2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3E4B2371F
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:33:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5345A2371F
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:33:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dOuLflHw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpJzDxGW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728090AbgIZVdC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 17:33:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58778 "EHLO
+        id S1728104AbgIZVdD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 17:33:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727807AbgIZVcz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 17:32:55 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56735C0613D4
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:32:55 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id d4so2648455wmd.5
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:32:55 -0700 (PDT)
+        with ESMTP id S1727794AbgIZVcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 17:32:54 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 123A5C0613D3
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:32:54 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z4so7672275wrr.4
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:32:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QPGEktvBa4u524d4A0i6OsR419ivIXg6j+KJkoHFQyE=;
-        b=dOuLflHwLsiu6DrcOr7k8OHbkwCTsCarIZCGy8vpKjziQBgF78pwiH1VP4tYbjCYiZ
-         YkEV+AFrZJveocbEcxWl037QOv+gv1ihV3tLRST49ATso3Xh21gUve4FmCtmR6znb/fs
-         ZsuTuBs3Y0N/BVa5dYE3KS3KWq22Etu22260wfJAPdBLUi3Kr1n1Yple3VDz2Y6J4qMq
-         FLatSPkQ680B9OlX6IvfjMI9HniCcsdDOUpWt12sVUt+rHNpRrJNUcJzDTMkh6L0Bcq/
-         kEc2u3y4jWNOx7cGLTvagnPMIcCmltKzkRUbc33RilpuI4nm20+jGTBHN3Ed2HrJdoTN
-         D7cw==
+        bh=xnkt83SLDEtUSWd+hVptfxemrNoGCKpXXnlEscdf5MA=;
+        b=ZpJzDxGWj0D2KBE32RpFDHf5pFpJsIsCuAQyHh7vgsntw0z43mEwb3lph5NbdEvs1o
+         HYyQIUOU0aEapjJKI2tI4TUFv+2tUlH7neBLmTbnUPf81J95vHj9S6qNcLLrnlZ9Erpp
+         1IlRGOfMvawQOVbJ31yd94AtwPQmsTOTNgeLqrQ1LcRuo+Wr0nXnfMoah57qhAO7xXx3
+         21st+L1es+/Kk+wGCVylmCge4p4feErRNG8QxnvCvneIgAhZF3cCam7Pv3VIXpwBeCxi
+         mvrVtG1FdVqybwObeNvRlY9A74opMSlt25UoGxfjlPg3cCcKPzQVnyBEJCpu4tf34Z0R
+         X/7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QPGEktvBa4u524d4A0i6OsR419ivIXg6j+KJkoHFQyE=;
-        b=Kyhmcfhpm64w7cXm0soMS/jKORpX1rCJMd0nGK/KRAXK3Gy+YN4BqYopGsxGiUTmwm
-         uietYhQSpn51S6gy/E+HSdzo0HLcXvRtVsKkdQGrprcB/+RxGc8mjJoNemncFnhlLUiD
-         6ZYKG4zytHYLJRCwnuUKuKhMYOPJD7t3zz9Hrkou7xqL3llAt5jIgc9GbR88x73/Th9z
-         wT3Dm8K6r1ZJRAKhARLqfKZTluFwIfRQ3uKA/tEkvsriVC1DIzHUPgw6Xtl18RTsjl7i
-         HRVCa9ovowyqqm+x4w9eUDLzp/QJBjS4OG3jhl5v/3SLd9C/y8jjpahNlqPmKtyPxbXT
-         imiw==
-X-Gm-Message-State: AOAM5325fBh6Pn5S0cq7jxOheK64I3xa+p00UOW+MSnwjO/pCOgCV7ZS
-        02tvB9Gjr1dlx3LkPY4aqgIajZm03G4=
-X-Google-Smtp-Source: ABdhPJyeHXFthb3+n1x4er3fZRDLN6zUQ2KhlDdiCWXsRh6PIqaw/x86PmENsTIywQw7PunYySKyDw==
-X-Received: by 2002:a1c:81c9:: with SMTP id c192mr3976467wmd.2.1601155973997;
-        Sat, 26 Sep 2020 14:32:53 -0700 (PDT)
+        bh=xnkt83SLDEtUSWd+hVptfxemrNoGCKpXXnlEscdf5MA=;
+        b=Gpkk25grxPyXxwHY6JHIg7lDAJifMUnCLjak+J+rC2sC9vRueQEE8K1wlWYPuDvRjQ
+         kLMPL9jifAMK/5BWmgpWRXJNqx2QZn1KLNFwApuDUKh8JdVzcRvo8HxwZeB3RVt4Jidr
+         o48ayhhnqN9LO74hSHohjSobQ94YttktBWpexFfZN5SDfA2abgaGkJ+3te9Xo9CMRGf8
+         uBbORL+cUafzqlmYac1/XRCXE2V/zsdREAku44PKwVrMRnf+i1CgZuZcHm73hBn6S6Ci
+         b3Ms96tRsSSP7ROhgPZUam7gDpkdgsQwiUiAHl81s3Pl2DvHZe/jPAmhxDmbBgzlODcU
+         usgA==
+X-Gm-Message-State: AOAM530fmalQjEhFFKKd5GxuRMX/BdLvt3/7ClWd2hyzKMFIUzVnbHTd
+        u/WhivGkR2wLoe9fKz6qschzqHEqdok=
+X-Google-Smtp-Source: ABdhPJxuW1rsS/SxwSkI20rDdST1Mqnpibf1+LgrAh2mwWdkJYzPsmau/eYFTYmzFuZsYSjcn4UvZA==
+X-Received: by 2002:adf:f78f:: with SMTP id q15mr11104421wrp.206.1601155972602;
+        Sat, 26 Sep 2020 14:32:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q12sm7629741wrs.48.2020.09.26.14.32.53
+        by smtp.gmail.com with ESMTPSA id h4sm9035747wrm.54.2020.09.26.14.32.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 14:32:53 -0700 (PDT)
-Message-Id: <efc93f1dd972614d197b919e17693a910e568736.1601155970.git.gitgitgadget@gmail.com>
+        Sat, 26 Sep 2020 14:32:52 -0700 (PDT)
+Message-Id: <05b4b69fee2b8c32769dd72dea182cfb72a14876.1601155970.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.738.v2.git.1601155970.gitgitgadget@gmail.com>
 References: <pull.738.git.1601044118.gitgitgadget@gmail.com>
         <pull.738.v2.git.1601155970.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 26 Sep 2020 21:32:43 +0000
-Subject: [PATCH v2 04/10] cmake: fall back to using `vcpkg`'s `msgfmt.exe` on
- Windows
+Date:   Sat, 26 Sep 2020 21:32:41 +0000
+Subject: [PATCH v2 02/10] cmake: do find Git for Windows' shell interpreter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,31 +84,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We are already relying on `vcpkg` to manage our dependencies, including
-`libiconv`. Let's also use the `msgfmt.exe` from there.
+By default, Git for Windows does not install its `sh.exe` into the
+`PATH`. However, our current `CMakeLists.txt` expects to find a shell
+interpreter in the `PATH`.
+
+So let's fall back to looking in the default location where Git for
+Windows _does_ install a relatively convenient `sh.exe`:
+`C:\Program Files\Git\bin\sh.exe`
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ contrib/buildsystems/CMakeLists.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 16014ac4f7..acb197fba5 100644
+index 5007f173f1..d14fa4f3dc 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -155,7 +155,11 @@ endif()
+@@ -43,8 +43,11 @@ set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
  
- find_program(MSGFMT_EXE msgfmt)
- if(NOT MSGFMT_EXE)
--	message(WARNING "Text Translations won't be build")
-+	set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
-+	if(NOT EXISTS ${MSGFMT_EXE})
-+		message(WARNING "Text Translations won't be build")
-+		unset(MSGFMT_EXE)
+ find_program(SH_EXE sh)
+ if(NOT SH_EXE)
+-	message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
+-			"On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
++	set(SH_EXE "C:/Program Files/Git/bin/sh.exe")
++	if(NOT EXISTS ${SH_EXE})
++		message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
++				"On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
 +	endif()
  endif()
  
- #Force all visual studio outputs to CMAKE_BINARY_DIR
+ #Create GIT-VERSION-FILE using GIT-VERSION-GEN
 -- 
 gitgitgadget
 
