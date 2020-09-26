@@ -2,143 +2,170 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F35C4741F
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 205B7C2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:28:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9AE8207F7
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:04:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A71782371F
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 21:28:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W4rzYIjV"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="CdWtsAdl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727018AbgIZVEd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 17:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54442 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726794AbgIZVE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 17:04:29 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24CFC0613D3
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:28 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id s13so2619241wmh.4
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 14:04:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=E7AU6LzE5sRKYRdlP9kwd6566qad3+YMkXCuziurIBA=;
-        b=W4rzYIjVa402p9CAEsA3zY+x73Dc5FKD3r9C3xd4+Pub6xnhrjulNXM70puN2XQ7NT
-         HEqxEfLFatUlv8QLqeiBVko3/xm8fCqfJxx98H/37zipnfidA7K54MnHQuSCKWq/LG68
-         K2vNywkK385SUcRsOW6nsAU8/HZI3L1/XJbMSXzmfr9VubeAInl6WHAQ3iCq0D7i5qr8
-         JPBE15cJ179rCIt6C9vWH3knQ83KuquwPvYCeKgvOjF69V3R95Cz1zZffG0zaFeSxFSz
-         rjgwLbZBfQAivR7xynj2iKHlJ41BxTaUwPcsT5nw/wK6hzYNU72S2Tn8ejAs4vuMgOxY
-         SVwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=E7AU6LzE5sRKYRdlP9kwd6566qad3+YMkXCuziurIBA=;
-        b=XfbBcUZlpa77UPtKtJyamLsl9VyPig0fzACq8nz3B+YHTiSo632R94IsrU6heyIsT/
-         X+XG3MM+OyTfwyXO64bFe8KnIduMPCVFItSuAgdSlh4bzPHIx2KAHCbPB+AKeYpgHXOV
-         hlH7wZ1IEjAx3v1TXo3KKRbVAN6eaTpS0M4ilAjjLbRxzHzk/65slDQDk0OEagtuWPav
-         eYLZhwgzBKd7iLojy+wgqcjTd4O10d5wbgswTM3rJYgG9BkYXeckA0nITnmQI5Vc2DKI
-         GzH+LXKCtOTk7CH2L/jpa3tiOX4nvudhCNMFkE4DEZC6KK4rg2cRX79xNI/4cmrNAsTW
-         jK5Q==
-X-Gm-Message-State: AOAM533LqtI/mI3JiAP9CIEXl5ggszGTfl9a6LVarj4ErIhOamlN0zWw
-        Jshry5dTLw1z1lLucKc7hj1OwZOKMnc=
-X-Google-Smtp-Source: ABdhPJyBqArDh3gypPbSBgg9J/thZnUtNBiIqesXJFz75Ej/iMcfBKOiXxsVuaxdYCCs3VN6R5KmyA==
-X-Received: by 2002:a05:600c:258:: with SMTP id 24mr4169874wmj.66.1601154267107;
-        Sat, 26 Sep 2020 14:04:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m13sm7825222wrr.74.2020.09.26.14.04.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 14:04:26 -0700 (PDT)
-Message-Id: <a80297f5df1b3ae55716fba6faa6fc30c33f5a11.1601154262.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
-References: <pull.734.v2.git.1600725687.gitgitgadget@gmail.com>
-        <pull.734.v3.git.1601154262.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 26 Sep 2020 21:04:22 +0000
-Subject: [PATCH v3 5/5] t9902: avoid using the branch name `master`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726822AbgIZV2W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 17:28:22 -0400
+Received: from mout.gmx.net ([212.227.15.18]:47115 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726426AbgIZV2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 17:28:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1601155697;
+        bh=AtrUOFrMtB6aNPq2UDhUST/m/IroJ1FxKtXt3KJGNNA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CdWtsAdleC3GkFvXPsvfc6AV/trx6FiGopCXDImQL7qk6hY6/UmtMK9vXP/dRuqUW
+         lUdaA/rW1or9+RJxfsL7IT5jYTyvoIzsmT4s1A9OebfCn14bKSuFWc7nymE6gnLaQX
+         /At9FFeSxbWNdxyUVCcLoteiB7XqGKAM8m8VRVrk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.113.174] ([89.1.213.116]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3bWr-1kU9hr3CBX-010ZVP; Sat, 26
+ Sep 2020 23:28:16 +0200
+Date:   Sat, 26 Sep 2020 23:28:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [RFH] sequencer: simplify logic around stopped-sha file
+In-Reply-To: <xmqq8scymmo1.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2009262320530.50@tvgsbejvaqbjf.bet>
+References: <xmqq8scymmo1.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:y/Eq4dIcONsyVnyQ7CPFRk5Hj07vl7XE0KIwMYPTk95xOwmpXWX
+ TPU18mD+Rxn8mD+DT4qx4yU5HwHEbT5jo7ZDxsD/9WKsaI1isVwMboOnfEQVXO8vtuzb/UU
+ 8jEdAXhcqg/YyhtdeRywuFPUZm0nRMMvG1Z2bHNt0T0Qk+iFq20OAv75ySwXzvDcby6b2TH
+ 7YdzaMJAUROgdRGa4g9Wg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nfCecrc2m+0=:DQvKek06ybk34vTlNz6o/y
+ /1maKSes/B5GCbedSuuBMxmRiXLs4xOhvDW678C/i3Ob9+ltdst/fBQ52mLegJikee5rywyg4
+ oXXqvNXv2kQRo0yhaevVgprkL9t5RUw9DrgOcFWzL7Y22RRqnwXuLzzxzW+uai13lt4SzYFkX
+ rlIkOnGNlajYvhrZh9x2K655NajTfR59cVa9h0qrMRMQ/JIRP/c0/gztNwiLL6BgooWm8L5td
+ p7JzVgicw8KdkKCuzeDwz7KoRmmTI36sWruhpWYVeRZPvNQ24GhUnITQ7fbmJotvdfYwUNnpz
+ 2JJiG7BzHRRM74STZM3F8mO1Xj62NZWfV4fagxi0vSa4wjyK1yo5/vuc0j+VJ1BY2tMY9taGU
+ TcmjO0xRugcScxNjQuE70fw343wZiUxIBoxHQ85jrw9W/PhmeGzzSIWv3JdZQ7EBbGOEfAFwt
+ P+K+p7Zm6GKo+FOPfYK2dATIQ2HgoDrJPOMf2SCAU1FohWEX+K1N+XYfHaLBGUZWnHxKQkgnQ
+ 1RbWcmPndaXDaheu4/kdjVm1AqdLa+HUyDyqI9zZmh+ayAi19LoZJbM7Rao0Arf0u/gMYqwUv
+ zOL51H+b3mh0aBVzWJofbdGfg6e8zEzk6cPVKDWC9ghLHHcJsXuinLCbKsyf2+fpd3jaefY/m
+ sXL/uHI3einmpl6PwXYGilO3B0S4Ku4OKXDEEwAMlwNQQXl4mxsjursqnbfq2GQC+wQnPgOy7
+ CJ709kwn5SbsSRvIpXZS41WnRuWfmtdbjQg83bYoKrGC2C6h5FT09nKappAwlcwesoJ+6VNDM
+ wkzrRa/qHU7uzjWjFyWIjRqAzTGBlhE7KWfPkoiouC5YAp/d95snqU6LJ1ABjvCtK16PThyn5
+ C1dHjXcRUh4xWKxxxDH/9+BstwDMU4SUOzoFgM9CsMuJ9V2ZnM52DKCFjqUwQK1A9/D3/rgxf
+ qHapjlncTJxS65f3h1JR5FCkzAueiLejKmUUAZiNrxOtCm4u/bRh4UX4U57YxL+IQZJfHbLVq
+ i47uh+ZX9XYpLIV95FZDgSYn5V5fZ4HCfkkK2cYGG9IJ7/qg4zxkKaFOZX+Mezb02d7eJf+gz
+ HegIhFMOQz+oMTBNBV1AqYabkpMKniJIBAdfWVvCIiZRihSEsnOYqbaq73FW0xxKwoy/AntaZ
+ SBUJSe7LrBgS6J72H0zsBvIXjU0ETpvBHDw7kzkO68qOb3XN4AcsBgOOqnJSFpWwWOkT3BliZ
+ fNfcbzdFX18oOnY+mQZJLwVTb6xLMi1xOD+HrWQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-The completion tests used that name unnecessarily, and it is a
-non-inclusive term, so let's avoid using it here.
+On Thu, 24 Sep 2020, Junio C Hamano wrote:
 
-Since three of the touched test cases make use of the fact that two of
-the branch names (`master` and `maint`) start with the same letter (or
-even with the same two letters), we choose to replace the use of
-`master` by a name that also has that property: `main`.
+> While I was auditing the use of get_oid_committish(), I noticed that
+> an abbreviated object name is written to rebase-merge/stopped-sha
+> only to be read later and expanded to a full object name to be
+> passed to record_in_rewritten().  Nobody seems to expose this to the
+> end-user and it is unclear if there is a point in keeping it short
+> by abbreviating and risking to make it ambiguous as the rebase
+> progresses and creates new objects.
+>
+> The attached patch tries to simplify the logic involved around this
+> file, to write and read full object names to/from the file, and the
+> result seems to pass testsuite---which in the ideal world would be
+> sufficient signal that this change is safe and sane, but it could be
+> that original authors thought that a change to stop abbreviating is
+> nonsense and not worth protecting the code against, hence RFH here.
+>
+> Is there something obvious I am not seeing that makes this change a
+> bad idea (other than "somebody may be in the middle of a rebase and
+> all of a sudden, version of Git gets updated to contain this one,
+> which is unable to read abbreviated object name the current version
+> left on disk", which I am deliberately ignoring)?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t9902-completion.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+At least in my understanding, you are not missing anything:
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 8425b9a531..7b7bc6e4bd 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -542,37 +542,37 @@ test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
- '
- 
- read -r -d "" refs <<-\EOF
-+main
- maint
--master
- next
- seen
- EOF
- 
- test_expect_success '__gitcomp_nl - trailing space' '
- 	test_gitcomp_nl "m" "$refs" <<-EOF
-+	main Z
- 	maint Z
--	master Z
- 	EOF
- '
- 
- test_expect_success '__gitcomp_nl - prefix' '
- 	test_gitcomp_nl "--fixup=m" "$refs" "--fixup=" "m" <<-EOF
-+	--fixup=main Z
- 	--fixup=maint Z
--	--fixup=master Z
- 	EOF
- '
- 
- test_expect_success '__gitcomp_nl - suffix' '
- 	test_gitcomp_nl "branch.ma" "$refs" "branch." "ma" "." <<-\EOF
-+	branch.main.Z
- 	branch.maint.Z
--	branch.master.Z
- 	EOF
- '
- 
- test_expect_success '__gitcomp_nl - no suffix' '
- 	test_gitcomp_nl "ma" "$refs" "" "ma" "" <<-\EOF
-+	mainZ
- 	maintZ
--	masterZ
- 	EOF
- '
- 
--- 
-gitgitgadget
+- this file is an implementation detail,
+
+- it is not exposed directly via any user-visible interface,
+
+- any reader will _have_ to be prepared for an unabbreviated object ID (in
+  the highly unlikely case that an object ID would be ambiguous if
+  abbreviated even by one hex character),
+
+- and most importantly: just like we expand the commit IDs in the todo
+  list, we actually want to expand them in `stopped-sha` because it _is_
+  possible that a new object is written that makes the previous
+  unambiguously abbreviated object ID now ambiguous (e.g. when the user
+  commits in a separate worktree while the rebase is interrupted, before
+  continuing the rebase).
+
+In short: ACK
+
+Thank you,
+Dscho
+
+>
+> Thanks.
+>
+>
+>  sequencer.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index fd7701c88a..7dc9088d09 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -120,7 +120,7 @@ static GIT_PATH_FUNC(rebase_path_author_script, "reb=
+ase-merge/author-script")
+>  static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
+>  /*
+>   * When we stop at a given patch via the "edit" command, this file cont=
+ains
+> - * the abbreviated commit name of the corresponding patch.
+> + * the commit object name of the corresponding patch.
+>   */
+>  static GIT_PATH_FUNC(rebase_path_stopped_sha, "rebase-merge/stopped-sha=
+")
+>  /*
+> @@ -3012,11 +3012,12 @@ static int make_patch(struct repository *r,
+>  {
+>  	struct strbuf buf =3D STRBUF_INIT;
+>  	struct rev_info log_tree_opt;
+> -	const char *subject, *p;
+> +	const char *subject;
+> +	char hex[GIT_MAX_HEXSZ + 1];
+>  	int res =3D 0;
+>
+> -	p =3D short_commit_name(commit);
+> -	if (write_message(p, strlen(p), rebase_path_stopped_sha(), 1) < 0)
+> +	oid_to_hex_r(hex, &commit->object.oid);
+> +	if (write_message(hex, strlen(hex), rebase_path_stopped_sha(), 1) < 0)
+>  		return -1;
+>  	res |=3D write_rebase_head(&commit->object.oid);
+>
+> @@ -4396,7 +4397,7 @@ int sequencer_continue(struct repository *r, struc=
+t replay_opts *opts)
+>
+>  		if (read_oneliner(&buf, rebase_path_stopped_sha(),
+>  				  READ_ONELINER_SKIP_IF_EMPTY) &&
+> -		    !get_oid_committish(buf.buf, &oid))
+> +		    !get_oid_hex(buf.buf, &oid))
+>  			record_in_rewritten(&oid, peek_command(&todo_list, 0));
+>  		strbuf_release(&buf);
+>  	}
+>
