@@ -2,213 +2,189 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 644D8C2D0A8
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 16:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F186AC2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 16:54:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 268DD21527
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 16:23:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CE5C21D7F
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 16:54:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="LRpKXwz2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xQO8pKIb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729858AbgIZQXs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 12:23:48 -0400
-Received: from mout.web.de ([212.227.17.11]:56701 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729747AbgIZQXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 12:23:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1601137422;
-        bh=wN8kLxtHNZYzSKgh/HRUZ21rHrNhjtT7cTZIWpUrn4I=;
-        h=X-UI-Sender-Class:From:Subject:To:References:Cc:Date:In-Reply-To;
-        b=LRpKXwz2e8fM32G0snx/qGP8bC4keUu0GKkqqUrckgLiqzw9d7yDJNNoLEtc/Zphr
-         W0OhWZP4tYm+gSKxS0lXEn2ZzA2posibBGIEn69/+CWYYQvNMUSPtgIz0xs4IHy2JQ
-         rujmsh3Py7+7H24dlQafvVS0RxbP0pZqb6wQsE68=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.149.245]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LuLt5-1kT7Sj2GVr-011fXF; Sat, 26
- Sep 2020 18:23:42 +0200
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH 2/4] blame: validate and peel the object names on the
- ignore list
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20200925055954.1111389-1-gitster@pobox.com>
- <20200925055954.1111389-3-gitster@pobox.com>
-Cc:     Barret Rhoden <brho@google.com>
-Message-ID: <40488753-c179-4ce2-42d0-e57b5b1ec6cd@web.de>
-Date:   Sat, 26 Sep 2020 18:23:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1729634AbgIZQyX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 12:54:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60459 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728504AbgIZQyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 12:54:23 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 67F39FAF4B;
+        Sat, 26 Sep 2020 12:54:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lgWe8kQtyqV5o4Nr8+KD2K59bz4=; b=xQO8pK
+        IbVaPE15vYm6UdXAR5nJFyJ4TYvDhKfk67MfOBoW0xbNkt/8uxrvHVTsh0c5GEY2
+        O5vwwifp9SZPh99kOBLbP+Ou825EPNeIqZ4ykSjyMeYEz+KH9lUtSQHRKrzQKwlt
+        6JY3EinraDcQr7BT4GIHoivK6vqlNOU3gyoeM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=D3RzXB26RTGNRs5DjY0IPnd828z9VnhR
+        EtGQqXeQCrWnzM2Wa9cYuZE0QY/aDRZi+mprLZN9JAV8b3hTRo+MjHngcpOwGadC
+        6Eq4BdRevycFansmX9dNbz0BO4FzYg+ziZRRtq28TX3YAxXhkzLKfiTMrDQC5X9d
+        PhnfH/jUNLc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61695FAF4A;
+        Sat, 26 Sep 2020 12:54:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ABE8BFAF48;
+        Sat, 26 Sep 2020 12:54:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
+        <congdanhqx@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 10/10] hashmap_for_each_entry(): work around MSVC's
+ run-time check failure #3
+References: <pull.738.git.1601044118.gitgitgadget@gmail.com>
+        <dc46d39611df4ebd90d9308364d887e638c1bc30.1601044119.git.gitgitgadget@gmail.com>
+        <xmqq8scxln10.fsf@gitster.c.googlers.com>
+Date:   Sat, 26 Sep 2020 09:54:13 -0700
+In-Reply-To: <xmqq8scxln10.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 25 Sep 2020 11:38:35 -0700")
+Message-ID: <xmqqy2kwiimi.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200925055954.1111389-3-gitster@pobox.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:F5GDTEdToEBWKZU++IayprODC76iqxBXxx86SFPssghJkttjXjz
- UMQV4s4VMnHLSdF41/4B1BGbSHxY/PzNmf1oR01TIQQAAzL0/I8PmNOyRi/KRO5sOYWVKiu
- tiyK9bhXowVohZR1DuJrdyoL2+18D1pybNvExX8xqjylYqmx6pwKsnXRiMLS/Gwe6fgQUS8
- Izn9iw4FT7xIfu+TQDtEw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TPtgSday8Wk=:83Y1MKkiLa2m/mLq12BOaD
- 0h6TxkPPOihvjngp1NRy5Dl9i3hEScg4+EeNWV7uw7M7Fh9z8kZ6Owv4qle8sa80zK4Tfzcqm
- CitVJKqQDJQ1Wh5CPXHIc4R1ecQpzh8kyNFaoZfe1q9a6cttuDDyQhZ02qJUBN3TF8TaouHby
- k6XgRh3rzd+TFk+I/X0VPN8X5KjhZumeD32unkNg6dgHO/0YwFUgG2ugK64za9dOEH9IlNzZU
- BoxYHJvHe8uh5zD4eIkYNUgxZ+5p1Paw0/2D6FNu0JVTbyBJfmVWdrrx14i2GBO8TR95/bD0y
- HC8qQ+KBqwA2GbSxLriANRrjd10WX3nBhACSGhm+QP7zPT21hzL0RysNhsMIG2d7N/OHLpDmA
- FXZyX1lds3DviLZRFj7hqs4ksrW2UYiMODQXQ25NpLP3oedlLrcq8RN258NuhxSZIujL/1dUt
- iqLJ7/mAxcjoBZqHabwjSaiT90IR4zjwfnqzkbU/3dGQ3nuoDFG2xWFfeVL04Glmeffd+eqJH
- NZMKpx0U1WF0L9YMw5hjmKEjHqCNki47nGpGs0Pf4LhZ7gESCwAvioNF64lAt6XkWNsNOSqpv
- fZAh8byVq2rUkD0+q7DF4HRtK7WD8RBdn3Azdjyx48Q+QsF46LMJj2u9Y+YVSbMo00770vfac
- sF2GACfk+XK2BIIxZFnFfj0GIQ6q03yBazPKYS7wDh2bI4glsuTtOiybKV+txjtj6uuuzIVUO
- Q+2Hz4/bKaQIAcNthF9O0mES2KOvxxM2hjIaSiirNibem8ZKr6M0zoM9kx5HmyeHcBTFPzjw4
- QrLoygw1T48cZOVfuGqecLceqgnthE9rOQQAkKSbNuwUUSAKfgCWLiaG3ykYfvLbKMNie3d51
- /CDMKQD8L6F8/qZsBSHGVQdcyXc8KMU6B1B5DTsPJjmgcXuKfxWsggWcdOmNUyFPm9YRm/DmC
- aM3hUbF4NGfVtjJpE7JJLyCMGXZSDIw+4SZIwuJgldP7a6dlR3fO3xtePu26T+g2hp/eIX1Pc
- BufEgcw+8UAaDjUdHzyMeQpyDz6nv3d4ymnXzx4bmuDb9PL1UxowXycFXNrlUgJVLJJzl6rw8
- mJTsBcz6wzT2frvgbSs0VKdh6rwviLjc/6peDmZxEAjIxlehFSm67nNMKgWzAlp/MirjrrvP6
- lHYjgv9owPN4WNdGYKgs577B2W4kQRPo9CE8aTm3IDMyXrpCzHV95PzY+mqNBgpz2smMGr5b2
- rbk7vzyaSC6pLP37W
+Content-Type: text/plain
+X-Pobox-Relay-ID: E93BFB8E-0018-11EB-88A7-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.09.20 um 07:59 schrieb Junio C Hamano:
-> The command reads list of object names to place on the ignore list
-> either from the command line or from a file, but they are not
-> checked with their object type (those read from the file are not
-> even checked for object existence).
->
-> Extend the oidset_parse_file() API and allow it to take a callback
-> that can be used to die (e.g. when an inappropriate input is read)
-> or modify the object name read (e.g. when a tag pointing at a commit
-> is read, and the caller wants a commit object name), and use it in
-> the code that handles ignore list.
+Junio C Hamano <gitster@pobox.com> writes:
 
-What's the benefit of such a check?  Ignoring a non-existing or
-type-mismatched object is really easy -- no actual effort is required to
-fulfill that request.
+> Whoa, wait.  If it is just that macro, can we perhaps do something
+> like the attached patch?
 
-When I request "Don't eat any glue!", perfectly human responses could be
-"But I don't have any glue!" or "It doesn't even taste that good.", but
-I'd expect a computer program to act I bit more logical and just don't
-do it, without talking back.  Maybe that's just me.
+I looked at all the uses of OFFSETOF_VAR() and I think the one used
+for hashmap_for_each_entry() is the only instance that 'var' given
+to it can legitimately be uninitialized, if typeof() were available.
 
-(I had been bitten by a totally different software adding such a check,
-which made it complain about my long catch-all ignore list, and I had to
-craft and maintain a specific "clean" list for each deployment --
-perhaps I'm still bitter about that.)
+Here are the findings.
 
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/blame.c              | 27 ++++++++++++++++++++++++--
->  oidset.c                     |  9 ++++++++-
->  oidset.h                     |  9 +++++++++
->  t/t8013-blame-ignore-revs.sh | 37 ++++++++++++++++++++++++++----------
->  4 files changed, 69 insertions(+), 13 deletions(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 94ef57c1cc..baa5d979cc 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -27,6 +27,7 @@
->  #include "object-store.h"
->  #include "blame.h"
->  #include "refs.h"
-> +#include "tag.h"
->
->  static char blame_usage[] =3D N_("git blame [<options>] [<rev-opts>] [<=
-rev>] [--] <file>");
->
-> @@ -803,6 +804,26 @@ static int is_a_rev(const char *name)
->  	return OBJ_NONE < oid_object_info(the_repository, &oid, NULL);
->  }
->
-> +static int peel_to_commit_oid(struct object_id *oid_ret, void *cbdata)
-> +{
-> +	struct repository *r =3D ((struct blame_scoreboard *)cbdata)->repo;
-> +	struct object_id oid;
-> +
-> +	oidcpy(&oid, oid_ret);
-> +	while (1) {
-> +		struct object *obj;
-> +		int kind =3D oid_object_info(r, &oid, NULL);
-> +		if (kind =3D=3D OBJ_COMMIT) {
-> +			oidcpy(oid_ret, &oid);
+#define hashmap_put_entry(map, keyvar, member) \
+	container_of_or_null_offset(hashmap_put(map, &(keyvar)->member), \
+				OFFSETOF_VAR(keyvar, member))
 
-At that point we know it's an object, but cast it up to the most generic
-class we have -- an object ID.  We could have set an object flag to mark
-it ignored instead, which would be trivial to check later.  On the other
-hand it probably wouldn't make much of a difference -- hashmaps are
-pretty fast, and blame has lots of things to do beyond ignoring commits.
+The keyvar is a pointer to the entry being placed in the map; it
+must hold a valid one so the pointer-diff implementation of
+OFFSETOF_VAR() should work fine, or we are putting garbage in to the
+map.
 
-> +			return 0;
-> +		}
-> +		if (kind !=3D OBJ_TAG)
-> +			return -1;
-> +		obj =3D deref_tag(r, parse_object(r, &oid), NULL, 0);
-> +		oidcpy(&oid, &obj->oid);
-> +	}
-> +}
-> +
->  static void build_ignorelist(struct blame_scoreboard *sb,
->  			     struct string_list *ignore_revs_file_list,
->  			     struct string_list *ignore_rev_list)
-> @@ -815,10 +836,12 @@ static void build_ignorelist(struct blame_scoreboa=
-rd *sb,
->  		if (!strcmp(i->string, ""))
->  			oidset_clear(&sb->ignore_list);
+#define hashmap_remove_entry(map, keyvar, member, keydata) \
+	container_of_or_null_offset( \
+			hashmap_remove(map, &(keyvar)->member, keydata), \
+			OFFSETOF_VAR(keyvar, member))
 
-This preexisting feature is curious.  It's even documented ('An empty
-file name, "", will clear the list of revs from previously processed
-files.') and covered by t8013.6.  Why would we need such magic in
-addition to the standard negation (--no-ignore-revs-file) for clearing
-the list?  The latter counters blame.ignoreRevsFile as well. *puzzled*
+The keyvar is used to match against an existing entry in the map to
+be removed---it must have a valid value.
 
->  		else
-> -			oidset_parse_file(&sb->ignore_list, i->string);
-> +			oidset_parse_file_carefully(&sb->ignore_list, i->string,
-> +						    peel_to_commit_oid, sb);
->  	}
->  	for_each_string_list_item(i, ignore_rev_list) {
-> -		if (get_oid_committish(i->string, &oid))
-> +		if (get_oid_committish(i->string, &oid) ||
-> +		    peel_to_commit_oid(&oid, sb))
->  			die(_("cannot find revision %s to ignore"), i->string);
->  		oidset_insert(&sb->ignore_list, &oid);
->  	}
-> diff --git a/oidset.c b/oidset.c
-> index 15d4e18c37..2d0ab76fb5 100644
-> --- a/oidset.c
-> +++ b/oidset.c
-> @@ -42,6 +42,12 @@ int oidset_size(struct oidset *set)
->  }
->
->  void oidset_parse_file(struct oidset *set, const char *path)
-> +{
-> +	oidset_parse_file_carefully(set, path, NULL, NULL);
-> +}
-> +
-> +void oidset_parse_file_carefully(struct oidset *set, const char *path,
-> +				 oidset_parse_tweak_fn fn, void *cbdata)
->  {
->  	FILE *fp;
->  	struct strbuf sb =3D STRBUF_INIT;
-> @@ -66,7 +72,8 @@ void oidset_parse_file(struct oidset *set, const char =
-*path)
->  		if (!sb.len)
->  			continue;
->
-> -		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0')
-> +		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0' ||
-> +		    (fn && fn(&oid, cbdata)))
+#define hashmap_for_each_entry(map, iter, var, member) \
+	for (var = hashmap_iter_first_entry_offset(map, iter, \
+						OFFSETOF_VAR(var, member)); \
+		var; \
+		var = hashmap_iter_next_entry_offset(iter, \
+						OFFSETOF_VAR(var, member)))
 
-OK, so this turns the basic all-I-know-is-hashes oidset loader into a
-flexible higher-order map function.  Fun, but wise?  Can't make up my
-mind.
+This, as you discovered, can be fed an uninitialized var and the
+first thing it does is to use OFFSETOF_VAR() on it in order to call
+hashmap_iter_first_entry_offset().  After that, i.e. when we called
+that function to start the loop, var is defined and we would be OK.
 
-Ren=C3=A9
+The trick I suggested is to initialize var to NULL before making the
+call to hashmap_iter_first_entry_offset(), i.e.
+
+	for (var = NULL, \
+	     var = hashmap_iter_first_entry_offset(map, iter, \
+						OFFSETOF_VAR(var, member)); \
+
+#define hashmap_get_entry(map, keyvar, member, keydata) \
+	container_of_or_null_offset( \
+				hashmap_get(map, &(keyvar)->member, keydata), \
+				OFFSETOF_VAR(keyvar, member))
+
+Must be OK for the same reason _put_entry() is OK.
+
+#define hashmap_get_next_entry(map, var, member) \
+	container_of_or_null_offset(hashmap_get_next(map, &(var)->member), \
+				OFFSETOF_VAR(var, member))
+
+This tries to go to the next-equal-pointer starting from var, so var
+must be valid already.
+
+So, perhaps the attached may be a viable replacement that would be
+more futureproof with less maintenance cost, I suspect.
+
+Thanks.
+
+--- >8 ----- cut here ----- >8 ---
+Subject: hashmap_for_each_entry(): workaround MSVC's runtime check failure #3
+
+The OFFSETOF_VAR(var, member) macro is implemented in terms of
+offsetof(typeof(*var), member) with compilers that know typeof(),
+but its fallback implemenation compares &(var->member) and (var) and
+count the distance in bytes, i.e.
+
+    ((uintptr_t)&(var)->member - (uintptr_t)(var))
+
+MSVC's runtime check, when fed an uninitialized 'var', flags this as
+a use of an uninitialized variable (and that is legit---uninitialized
+contents of 'var' is subtracted) in a debug build.
+
+After auditing all 6 uses of OFFSETOF_VAR(), 1 of them does feed a
+potentially uninitialized 'var' to the macro in the beginning of the
+for() loop:
+
+    #define hashmap_for_each_entry(map, iter, var, member) \
+            for (var = hashmap_iter_first_entry_offset(map, iter, \
+                                                    OFFSETOF_VAR(var, member)); \
+                    var; \
+                    var = hashmap_iter_next_entry_offset(iter, \
+                                                    OFFSETOF_VAR(var, member)))
+
+We can work around this by making sure that var has _some_ value
+when OFFSETOF_VAR() is called.  Strictly speaking, it invites
+undefined behaviour to use NULL here if we end up with pointer
+comparison, but MSVC runtime seems to be happy with it, and most
+other systems have typeof() and don't even need pointer comparison
+fallback code.
+
+---
+ hashmap.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git c/hashmap.h w/hashmap.h
+index ef220de4c6..b011b394fe 100644
+--- c/hashmap.h
++++ w/hashmap.h
+@@ -449,7 +449,8 @@ static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
+  * containing a @member which is a "struct hashmap_entry"
+  */
+ #define hashmap_for_each_entry(map, iter, var, member) \
+-	for (var = hashmap_iter_first_entry_offset(map, iter, \
++	for (var = NULL, /* for systems without typeof */ \
++	     var = hashmap_iter_first_entry_offset(map, iter, \
+ 						OFFSETOF_VAR(var, member)); \
+ 		var; \
+ 		var = hashmap_iter_next_entry_offset(iter, \
