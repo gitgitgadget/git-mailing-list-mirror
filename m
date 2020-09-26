@@ -2,377 +2,86 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54290C4727F
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 10:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F3CC2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 10:21:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F175238E6
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 10:13:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C0D9238E2
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 10:21:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NMGaMZcC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oZZ3yoJk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbgIZKNm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 06:13:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39138 "EHLO
+        id S1726559AbgIZKVX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 06:21:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbgIZKNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 06:13:39 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE05C0613CE
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 03:13:39 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id v14so776188pjd.4
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 03:13:39 -0700 (PDT)
+        with ESMTP id S1725208AbgIZKVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 06:21:23 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 369B2C0613CE
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 03:21:23 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id bb1so675921plb.2
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 03:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+wCh3ZGcWCunBn1ZqRSxpue9r90bNc7VV9DJ1LeH4SM=;
-        b=NMGaMZcCZGiiaAXOdtR3WcX5bjzH8jxN7fQr+vXDzA3zKLGRIZshlPki+1wQgzQB7z
-         CN8Nmy21UCT4XkNqbgoSaQ3WtlzTl/4blq3JY7nt07Yxj8r47m46sNWljHiD43EtKCyS
-         cl8mz1jwua7Pj22PSEiVv/1goyenwQ7e46mgnLBfkazxtE5TfcZW1LFdCI3UAcrjzhNk
-         HwJrX7IL6tgT7lS59X61kNf7U8pWJc/YyBJE7q4R7sVsel04FyuGsBFDNDT8bGVEUahA
-         16l2jVWdwKJbTRTR4hHW1DFpEf+pVaiapZpbquwU5sEU/hXEcBKHT64vy+EiDyGgcULh
-         jLzg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=diIrGpyi+NfaUaaTpHDyxKMNMokd3C37rnBjC36JARE=;
+        b=oZZ3yoJkgcb6sACREvMv8rv5IUAt5FanCOOBiL985UGuQebdUr9DTOFg+BsS1vujdX
+         aLID2GQ2YUR0wo4hWUExMio1i/9WlXv+xh08nd50ZQqBhAfliPYa8YUbVMO0+PuCnuIh
+         Z+1yMJxOdDK8Rqyct7/FXTTSDFtpqrQl3zQCWL9LGA8fc1nZIOocBhdq1S9PT5BxrlXh
+         vQtecOIDhF0ySuDoyAaQaPXe+SlboYqGFoWWa35VHAVPiC7mcORgWIrvNLSPZJwg4Gs+
+         7MWpbXc0W2xVVR3ne7rhgYNsE8zI34rwiTAa71PcHlnbv25E33+tjZsDsmfzt3pdu8uf
+         uJPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+wCh3ZGcWCunBn1ZqRSxpue9r90bNc7VV9DJ1LeH4SM=;
-        b=fttwezKBzvHVsdUN6uqkVkxNOnAqsq1RRRidee5PDV0rJRLf3zBzCnFyFjvC+TXQo5
-         W+G4VzJgK9EjnN0dWw87DYy8lfZrvjI8gkuNMWlInyOh04do4I0DJW1sR8rUBXag82DF
-         NkBlgyWRLOa03TP+jH8MCp/rXblicDhw8um8RvrLHfKqtxiatn+PQJKHy3SFw8WmRpPF
-         dBtvet2aqGtlNDCUhQOOQ6UyRTx7YaC7+y9XegOAAN80sDE+btU8nEQ/EplNYs+j97CG
-         /t8mKWgZIuGTfPQo70ZnWJRn7N4u+sMhfGomGXHV5f2y0uyrfaHW3gxkUjsfo04p794/
-         hGRQ==
-X-Gm-Message-State: AOAM53090BwUZNH7GYsAjAZUSoaIszc48QUKO5cwn49rczt2olkLI1X0
-        TM0Vy1OkgVG+9qK76VhCX6C9w2gxQ/otiA==
-X-Google-Smtp-Source: ABdhPJySouByC/Ks6VwQIwjzIISMZSY8br8R0TxhDTwvLDUDHIIPzOCa3Whq6XUYjdMzcNC1oUGeFw==
-X-Received: by 2002:a17:90a:ea08:: with SMTP id w8mr1488327pjy.41.1601115219020;
-        Sat, 26 Sep 2020 03:13:39 -0700 (PDT)
-Received: from localhost.localdomain ([124.123.106.26])
-        by smtp.gmail.com with ESMTPSA id 63sm5226947pfw.42.2020.09.26.03.13.37
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 Sep 2020 03:13:38 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=diIrGpyi+NfaUaaTpHDyxKMNMokd3C37rnBjC36JARE=;
+        b=BHRqOCWSm5IIu7uM7JzDZpJ8toDkaZTuQsQH4zLPbfVH/biBnxuJckudIfdTuR9jha
+         ++muiLWCKB/VeaxszzwLEpeX3jTN5/OaPScFiUHJi1fELdwdLTDUpa6C+eJkYB9wb1da
+         t05qVfD2PX3oKUbUvpPPN3ngLShIfJDuXpg8s6RIklKhtzZof281IXt9Vlng/lGS8InE
+         xrPgRCIf5todIzE4jlampN89jFqNyXVmCL4vyO0/XJKZBj4MfxWSugz+TGJ0HAAKZ3zT
+         RYnqIoyhei/OIBEFkpBbiwJL23A+Ql5ZvOh2TPn707jdJUIojjxYg6BEB/roQ6brv7h3
+         x68g==
+X-Gm-Message-State: AOAM530YHrDUkH30Dr5Hi/sLYCMtaHkvDS2aPA+UMN+/Drz55y7Ive7a
+        FZfuyCOHy1SbeOAlgP5RQD+wpfGvoKCistq7
+X-Google-Smtp-Source: ABdhPJwFGfcbuHxpqqOrDi2mcf6ocVbZMN8nMkg2ca8peaKKT8Pm3JVH8S5ds2Tl815tkplbfyrOmg==
+X-Received: by 2002:a17:90b:3884:: with SMTP id mu4mr1536402pjb.29.1601115682473;
+        Sat, 26 Sep 2020 03:21:22 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([124.123.106.26])
+        by smtp.gmail.com with ESMTPSA id y4sm4473022pgl.67.2020.09.26.03.21.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Sep 2020 03:21:21 -0700 (PDT)
+Date:   Sat, 26 Sep 2020 15:51:16 +0530
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v6 2/3] push: parse and set flag for "--force-if-includes"
-Date:   Sat, 26 Sep 2020 15:43:23 +0530
-Message-Id: <20200926101324.73457-3-shrinidhi.kaushik@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 0/3]  push: add "--[no-]force-if-includes"
+Message-ID: <20200926102116.GA76247@mail.clickyotomy.dev>
 References: <20200923073022.61293-1-shrinidhi.kaushik@gmail.com>
  <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit added the necessary machinery to implement the
-"--force-if-includes" protection, when "--force-with-lease" is used
-without giving exact object the remote still ought to have. Surface
-the feature by adding a command line option and a configuration
-variable to enable it.
+Hello,
+Please disregard this patch series. It does not compile with the
+latest commit on "master" (9bc233ae1cf19a49e51842c7959d80a675dbd1c0).
+I will fix those errors and retest in v7.
 
- - Add a flag: "TRANSPORT_PUSH_FORCE_IF_INCLUDES" to indicate that the
-   new option was passed from the command line of via configuration
-   settings; update command line and configuration parsers to set the
-   new flag accordingly.
+Apologies for the noise.
 
- - Introduce a new configuration option "push.useForceIfIncludes", which
-   is equivalent to setting "--force-if-includes" in the command line.
-
- - Update "remote-curl" to recognize and pass this option to "send-pack"
-   when enabled.
-
- - Update "advise" to catch the reject reason "REJECT_REF_NEEDS_UPDATE",
-   set when the ref status is "REF_STATUS_REJECT_REMOTE_UPDATED" and
-   (optionally) print a help message when the push fails.
-
- - The new option is a "no-op" in the following scenarios:
-    * When used without "--force-with-lease".
-    * When used with "--force-with-lease", and if the expected commit
-      on the remote side is specified as an argument.
-
-Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
----
- advice.c            |  3 +++
- advice.h            |  2 ++
- builtin/push.c      | 27 +++++++++++++++++++++++++++
- builtin/send-pack.c |  7 +++++++
- remote-curl.c       | 14 +++++++++++++-
- transport-helper.c  |  5 +++++
- transport.c         |  2 ++
- transport.h         | 15 ++++++++++-----
- 8 files changed, 69 insertions(+), 6 deletions(-)
-
-diff --git a/advice.c b/advice.c
-index f0a3d32d20..164742305f 100644
---- a/advice.c
-+++ b/advice.c
-@@ -11,6 +11,7 @@ int advice_push_already_exists = 1;
- int advice_push_fetch_first = 1;
- int advice_push_needs_force = 1;
- int advice_push_unqualified_ref_name = 1;
-+int advice_push_ref_needs_update = 1;
- int advice_status_hints = 1;
- int advice_status_u_option = 1;
- int advice_status_ahead_behind_warning = 1;
-@@ -72,6 +73,7 @@ static struct {
- 	{ "pushFetchFirst", &advice_push_fetch_first },
- 	{ "pushNeedsForce", &advice_push_needs_force },
- 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
-+	{ "pushRefNeedsUpdate", &advice_push_ref_needs_update },
- 	{ "statusHints", &advice_status_hints },
- 	{ "statusUoption", &advice_status_u_option },
- 	{ "statusAheadBehindWarning", &advice_status_ahead_behind_warning },
-@@ -116,6 +118,7 @@ static struct {
- 	[ADVICE_PUSH_ALREADY_EXISTS]			= { "pushAlreadyExists", 1 },
- 	[ADVICE_PUSH_FETCH_FIRST]			= { "pushFetchFirst", 1 },
- 	[ADVICE_PUSH_NEEDS_FORCE]			= { "pushNeedsForce", 1 },
-+	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate", 1 },
- 
- 	/* make this an alias for backward compatibility */
- 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward", 1 },
-diff --git a/advice.h b/advice.h
-index 16f2c11642..bc2432980a 100644
---- a/advice.h
-+++ b/advice.h
-@@ -11,6 +11,7 @@ extern int advice_push_already_exists;
- extern int advice_push_fetch_first;
- extern int advice_push_needs_force;
- extern int advice_push_unqualified_ref_name;
-+extern int advice_push_ref_needs_update;
- extern int advice_status_hints;
- extern int advice_status_u_option;
- extern int advice_status_ahead_behind_warning;
-@@ -60,6 +61,7 @@ extern int advice_add_empty_pathspec;
- 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
- 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
- 	ADVICE_PUSH_UPDATE_REJECTED,
-+	ADVICE_PUSH_REF_NEEDS_UPDATE,
- 	ADVICE_RESET_QUIET_WARNING,
- 	ADVICE_RESOLVE_CONFLICT,
- 	ADVICE_RM_HINTS,
-diff --git a/builtin/push.c b/builtin/push.c
-index 0eeb2c8dd5..908b557edb 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -290,6 +290,12 @@ static const char message_advice_ref_needs_force[] =
- 	   "or update a remote ref to make it point at a non-commit object,\n"
- 	   "without using the '--force' option.\n");
- 
-+static const char message_advice_ref_needs_update[] =
-+	N_("Updates were rejected because the tip of the remote-tracking\n"
-+	   "branch has been updated since the last checkout. You may want\n"
-+	   "to integrate those changes locally (e.g., 'git pull ...')\n"
-+	   "before forcing an update.\n");
-+
- static void advise_pull_before_push(void)
- {
- 	if (!advice_push_non_ff_current || !advice_push_update_rejected)
-@@ -325,6 +331,13 @@ static void advise_ref_needs_force(void)
- 	advise(_(message_advice_ref_needs_force));
- }
- 
-+static void advise_ref_needs_update(void)
-+{
-+	if (!advice_push_ref_needs_update || !advice_push_update_rejected)
-+		return;
-+	advise(_(message_advice_ref_needs_update));
-+}
-+
- static int push_with_options(struct transport *transport, struct refspec *rs,
- 			     int flags)
- {
-@@ -374,6 +387,8 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
- 		advise_ref_fetch_first();
- 	} else if (reject_reasons & REJECT_NEEDS_FORCE) {
- 		advise_ref_needs_force();
-+	} else if (reject_reasons & REJECT_REF_NEEDS_UPDATE) {
-+		advise_ref_needs_update();
- 	}
- 
- 	return 1;
-@@ -510,6 +525,12 @@ static int git_push_config(const char *k, const char *v, void *cb)
- 		if (!v)
- 			return config_error_nonbool(k);
- 		return color_parse(v, push_colors[slot]);
-+	} else if (!strcmp(k, "push.useforceifincludes")) {
-+		if (git_config_bool(k, v))
-+			*flags |= TRANSPORT_PUSH_FORCE_IF_INCLUDES;
-+		else
-+			*flags &= ~TRANSPORT_PUSH_FORCE_IF_INCLUDES;
-+		return 0;
- 	}
- 
- 	return git_default_config(k, v, NULL);
-@@ -541,6 +562,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 			       N_("require old value of ref to be at this value"),
- 			       PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option),
-+		OPT_BIT(0, TRANS_OPT_FORCE_IF_INCLUDES, &flags,
-+			N_("require remote updates to be integrated locally"),
-+			TRANSPORT_PUSH_FORCE_IF_INCLUDES),
- 		OPT_CALLBACK(0, "recurse-submodules", &recurse_submodules, "(check|on-demand|no)",
- 			     N_("control recursive pushing of submodules"), option_parse_recurse_submodules),
- 		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
-@@ -625,6 +649,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	if ((flags & TRANSPORT_PUSH_ALL) && (flags & TRANSPORT_PUSH_MIRROR))
- 		die(_("--all and --mirror are incompatible"));
- 
-+	if (!is_empty_cas(&cas) && (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES))
-+		cas.use_force_if_includes = 1;
-+
- 	for_each_string_list_item(item, push_options)
- 		if (strchr(item->string, '\n'))
- 			die(_("push options must not have new line characters"));
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 516cba7336..a284ada051 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -178,6 +178,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	int progress = -1;
- 	int from_stdin = 0;
- 	struct push_cas_option cas = {0};
-+	int force_if_includes = 0;
- 	struct packet_reader reader;
- 
- 	struct option options[] = {
-@@ -203,6 +204,8 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 		  N_("require old value of ref to be at this value"),
- 		  PARSE_OPT_OPTARG, parseopt_push_cas_option),
-+		OPT_BOOL(0, TRANS_OPT_FORCE_IF_INCLUDES, &force_if_includes,
-+			 N_("require remote updates to be integrated locally")),
- 		OPT_END()
- 	};
- 
-@@ -304,6 +307,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	if (!is_empty_cas(&cas))
- 		apply_push_cas(&cas, remote, remote_refs);
- 
-+	if (!is_empty_cas(&cas) && force_if_includes)
-+		cas.use_force_if_includes = 1;
-+
-+
- 	set_ref_status_for_push(remote_refs, args.send_mirror,
- 		args.force_update);
- 
-diff --git a/remote-curl.c b/remote-curl.c
-index 32cc4a0c55..0290b04891 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -44,7 +44,8 @@ struct options {
- 		from_promisor : 1,
- 
- 		atomic : 1,
--		object_format : 1;
-+		object_format : 1,
-+		force_if_includes : 1;
- 	const struct git_hash_algo *hash_algo;
- };
- static struct options options;
-@@ -131,6 +132,14 @@ static int set_option(const char *name, const char *value)
- 		string_list_append(&cas_options, val.buf);
- 		strbuf_release(&val);
- 		return 0;
-+	} else if (!strcmp(name, TRANS_OPT_FORCE_IF_INCLUDES)) {
-+		if (!strcmp(value, "true"))
-+			options.force_if_includes = 1;
-+		else if (!strcmp(value, "false"))
-+			options.force_if_includes = 0;
-+		else
-+			return -1;
-+		return 0;
- 	} else if (!strcmp(name, "cloning")) {
- 		if (!strcmp(value, "true"))
- 			options.cloning = 1;
-@@ -1318,6 +1327,9 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
- 		strvec_push(&args, cas_option->string);
- 	strvec_push(&args, url.buf);
- 
-+	if (options.force_if_includes)
-+		strvec_push(&args, "--force-if-includes");
-+
- 	strvec_push(&args, "--stdin");
- 	for (i = 0; i < nr_spec; i++)
- 		packet_buf_write(&preamble, "%s\n", specs[i]);
-diff --git a/transport-helper.c b/transport-helper.c
-index 6157de30c7..5f6e0b3bd8 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -938,6 +938,11 @@ static void set_common_push_options(struct transport *transport,
- 		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
- 			die(_("helper %s does not support --atomic"), name);
- 
-+	if (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES)
-+		if (set_helper_option(transport, TRANS_OPT_FORCE_IF_INCLUDES, "true") != 0)
-+			die(_("helper %s does not support --%s"),
-+			    name, TRANS_OPT_FORCE_IF_INCLUDES);
-+
- 	if (flags & TRANSPORT_PUSH_OPTIONS) {
- 		struct string_list_item *item;
- 		for_each_string_list_item(item, transport->push_options)
-diff --git a/transport.c b/transport.c
-index 75f1786aca..5cfb7360e9 100644
---- a/transport.c
-+++ b/transport.c
-@@ -748,6 +748,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 			*reject_reasons |= REJECT_FETCH_FIRST;
- 		} else if (ref->status == REF_STATUS_REJECT_NEEDS_FORCE) {
- 			*reject_reasons |= REJECT_NEEDS_FORCE;
-+		} else if (ref->status == REF_STATUS_REJECT_REMOTE_UPDATED) {
-+			*reject_reasons |= REJECT_REF_NEEDS_UPDATE;
- 		}
- 	}
- 	free(head);
-diff --git a/transport.h b/transport.h
-index ca409ea1e4..24558c027d 100644
---- a/transport.h
-+++ b/transport.h
-@@ -136,6 +136,7 @@ struct transport {
- #define TRANSPORT_PUSH_ATOMIC			(1<<13)
- #define TRANSPORT_PUSH_OPTIONS			(1<<14)
- #define TRANSPORT_RECURSE_SUBMODULES_ONLY	(1<<15)
-+#define TRANSPORT_PUSH_FORCE_IF_INCLUDES	(1<<16)
- 
- int transport_summary_width(const struct ref *refs);
- 
-@@ -208,6 +209,9 @@ void transport_check_allowed(const char *type);
- /* Request atomic (all-or-nothing) updates when pushing */
- #define TRANS_OPT_ATOMIC "atomic"
- 
-+/* Require remote changes to be integrated locally. */
-+#define TRANS_OPT_FORCE_IF_INCLUDES "force-if-includes"
-+
- /**
-  * Returns 0 if the option was used, non-zero otherwise. Prints a
-  * message to stderr if the option is not used.
-@@ -217,11 +221,12 @@ int transport_set_option(struct transport *transport, const char *name,
- void transport_set_verbosity(struct transport *transport, int verbosity,
- 	int force_progress);
- 
--#define REJECT_NON_FF_HEAD     0x01
--#define REJECT_NON_FF_OTHER    0x02
--#define REJECT_ALREADY_EXISTS  0x04
--#define REJECT_FETCH_FIRST     0x08
--#define REJECT_NEEDS_FORCE     0x10
-+#define REJECT_NON_FF_HEAD      0x01
-+#define REJECT_NON_FF_OTHER     0x02
-+#define REJECT_ALREADY_EXISTS   0x04
-+#define REJECT_FETCH_FIRST      0x08
-+#define REJECT_NEEDS_FORCE      0x10
-+#define REJECT_REF_NEEDS_UPDATE 0x20
- 
- int transport_push(struct repository *repo,
- 		   struct transport *connection,
+Thanks.
 -- 
-2.28.0
-
+Srinidhi Kaushik
