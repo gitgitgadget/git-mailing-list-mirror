@@ -2,104 +2,137 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E365C2D0A8
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 18:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADC48C2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 20:32:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B667D2151B
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 18:34:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66E47235FD
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 20:32:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QHKZrzcm"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="FGpIX7ue"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729047AbgIZSet (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 14:34:49 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40607 "EHLO mout.gmx.net"
+        id S1726900AbgIZUcb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 16:32:31 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51677 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726183AbgIZSet (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 14:34:49 -0400
+        id S1726242AbgIZUca (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 16:32:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601145281;
-        bh=agfwQvUhb02UmMhJTBzGx98ODt2eTeFSp7f72AxZoxY=;
+        s=badeba3b8450; t=1601152347;
+        bh=H5yFWVk3ji0lrv90NRFoipf5bwjxAz8lhNIMXfubtU4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QHKZrzcmdSy4a31L9d7cressINvg8P4mYCrUulXILRVULwEsrYPJ3eQrqH1SUvL4n
-         YKYUm9zvu1kbcAYkJN5I6CitZ/jxm6qtuh+LSMrXJGBimFz7vUEn0aVyqwKW+71in7
-         4X+nJ6V83iIfixDBI/08aWC+6KK18IWlAIY9kN/s=
+        b=FGpIX7ueSIkPUy/f6xDn0ouHTFwtFlYIoybM9aE4Ao5KTKIwFeBol85x2vctQZYfa
+         A45Vj9mN318mtAcu+8Ngm7v5z5ZDD/FX8nMJ+aVclPJL0nZMklDlGsHOSBmjpZeaeZ
+         5rRLn1NKcwNJP0EJY1ElSA3qHaxuUvXTRNl3jsGM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.113.174] ([89.1.213.116]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1wll-1kSWNs2185-012ENG; Sat, 26
- Sep 2020 20:34:41 +0200
-Date:   Sat, 26 Sep 2020 06:29:50 +0200 (CEST)
+Received: from [172.19.113.174] ([89.1.213.116]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmULr-1kmDpi0fWz-00iURA; Sat, 26
+ Sep 2020 22:32:27 +0200
+Date:   Sat, 26 Sep 2020 22:32:25 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
+To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 0/5] Inclusive naming, part II
-In-Reply-To: <20200921222458.GB3533110@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2009260629120.50@tvgsbejvaqbjf.bet>
-References: <pull.734.git.1600279853.gitgitgadget@gmail.com> <pull.734.v2.git.1600725687.gitgitgadget@gmail.com> <20200921222458.GB3533110@coredump.intra.peff.net>
+        git@vger.kernel.org,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 02/10] cmake: do find Git for Windows' shell
+ interpreter
+In-Reply-To: <CAKiG+9V=BGX4k_dM-5JzYmko0cZfYXuSxEk5-UuHZpAqaWoU_A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009260821260.50@tvgsbejvaqbjf.bet>
+References: <pull.738.git.1601044118.gitgitgadget@gmail.com> <05b4b69fee2b8c32769dd72dea182cfb72a14876.1601044118.git.gitgitgadget@gmail.com> <CAKiG+9V=BGX4k_dM-5JzYmko0cZfYXuSxEk5-UuHZpAqaWoU_A@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PWtFuPJKfrb9TiBDJNlGuoNiW6BxgIYtHBwnJu8w9gDW1m8x0Ey
- OQ2FjdsVJBY4g4jO0XCbrCM10qmkr/5TpQO1PfDsa7EFoUH+Q15daZ8sexNZRv5VQkO8CBk
- nVLjA1AR0gUkrASn0/eyXvMVl2Q13JMwSXltI0TqSrqnB7UvHMi/oux16OiY/pM5yjnk/Qc
- WgI4Roax1FCYtKKs9j6MA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ghljdYU2jIg=:7X4dYOyUsmeA+g4KaJitOY
- az8B1U80JCh1oaQ75+j6TVbXtcEIemi3VlXbjo4m27JYEXqBSb+YDq+ULvYJhWUe3wiiu8N2P
- BKElxLBTQpAilmpnMh6o0z065jMYPf/VTYhTUXdp2XeHhCcCxy8SL1KKyjGuW5eOLjIMtAfPm
- oPC3PJ5TM6J920ikpJ8DkFtPQhPJ/OWMPqueC6imK5o8QVQ8wYlqefcttpZ/oRkIEMuDYNQy1
- 7lgKdGTeGRmaMr9JjCAx1UCnfYj6BxnJt18CY9zqdEn1VDzG9f4oxv68n8RYSB32r3xSgYBA+
- hr9rvBNWW9c9adV1YTEHgGtUSLcYVct56k+Of10lAiDA1GeJ29VS4FAk8mCVsHGrD90a2tEIn
- fqnVSSklLaH7/1b6SrgTphnY2XrApGBcBbmaabz9QiQTU2jdw8ThobAA52QnM+0U5bkIymV5S
- q1et81+PToXhiQB0yCKFxb49YqWryKCupfXBm7WII7UBsV6GjpQanCb5QM4lfCmFBqnv0rKb3
- JnKBO1YlHKwemc6x1zPX5InNELP6XpaD7jrGspjVNj4TNzdjkEjdcWEq+dLG61C8nRYmgjOtD
- gzQaghzpf3FeStLJBM2+EUBOzfuC7AO0LBG9RJr3LEmXzBbIWvUcLZJ3EUV804N39M8tZ5Lej
- w7SYU/SgoAUzOycuhYA2L3v3lyUEiCLJ+dYs/BBAgQEEv/oUk8PW/Ot0q3VhKc00gQ8gN7lE6
- 5hEm7fsZnP7rj+XNFNjlccuDtUvje0rUmKMpOsHdgYRUaCa5JSn75pMh088t2aWZnyG7VST61
- fy8oS8KQ31yj81Zu4e6y+izirn77EoZZWea6qn93EE1QHCNWDEI0ZvEPt5GULikivEH7eDr4n
- cLJbcM37/Jfw29vnrVy00cu6P4wUij9IQfqOYETdDVxNvNBIu5KPHZtKDiJ/ml2KozZZXUKU+
- xfQM3lWuLwMCCzRFcxKPYJubuaDdR3qY1X2sJ5FVzWYVNeT8iusEpaxVt6hvUqJdiSsbDtCCB
- 0svhflQbk3N/90Wy4xvXBiAwrtb3xuB74qZ/7BluGo2crlwFhtzN6D+65pOjJZBdyvYyQgX2F
- fnvR9t+YmFx55wKz23Ftclq/6Y3qe0ddimclfcepunpk9lIQLsYNwnWgewkqFCHK+Fa/Z2Bu0
- YpZDGBGDyno2+8Mzww5Hn23uxG9adriW1iEnW7imrlxYOO7oB2B48JYiVFl8y/r2QTHK1LgV8
- xdkTVJNtF1NfwTihNLOImFgOA96h3TX2XRBzQJg==
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:uKYei7XrC8UmAhysfb/Lw3TEFaWKIpDwUARIPYHa1JGm02iYagl
+ q/YQB9uQ3ya7rmh+9v4jB9+t92IidlubyQdeVenLlzExkO3VVf68JQQRjUiBDJHKpUMVL/f
+ oiC3uGsnX6oqU6EhTJwN4lBr2RxSCDD0zVlhVXcHsBZpg+W4/k6SyCfhEU9zon5LpRa+wR9
+ EoWcuj/qr/xKn3CEzF4og==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rdiGTPHmbSA=:DV5oCHOLgqw+YoEtB1FInf
+ 5R6WPLYpYILQ6tPXBS1C0jHSuvsIbwNPK8NDti4mP9xjpIHvIcbIREWo2V1SQIBe9TCZJFrtI
+ ic2L1+mADtlwsOSoqKfjYP1JGVUIo9iwujxByxK20u0NMujvIreJ0U1ZT7qIWCWki9Fya6pX+
+ 8l16SFSmmkMRKeq3oMglDHLeYDGBC0OqaUSkDpXhSS2Frt5VO2m154mSBpj5Mql2CWRhIvelH
+ ZUUYPYxgbEQJ6zeM3xO29QO4gubSEzl5oJ2qrF2AWVT9rliTJmj6HSh05Ck+xgTx1FlLbtr+/
+ FWnVDv53xjl5nF9ts3+YfZVZfRQRk2fOl1ul0mhaFoK3N1moW/5U9Hjt7DbwXG2QiHoHN/Tct
+ 3lY3rPnNIWXzJ1fAhFDFOlE3YUNdKL66/qvmFY6Gvdjd67vAIAshN3RX6ePCZcb40oJt34Yey
+ 3/eQiWEOV0CtuNFr+3AhXWlWgxXUAh5Ciu1UsN0acgW/2xfV70YqjX82VewjtgNIE6tTCQpyJ
+ tiFxcfBg/pqTu8lclmTEfa/FRiUZ6BIEKwusecZ/Qk1lh38bRzdBu21BFtMST1LcsMKNmHLpt
+ +gT9uuH8SdqqKv/YUWUdu4RJIYck6N62vDPASm+AZnChB1raDajaixj4ds/NaEgMldHYdeRk3
+ vUckES50fzp5eeN7+WnO5CfCmMwOlAVCH7alPugZ3esGnttgQGtila6l3N3td9DEE2UYS7Hep
+ mRQUFz7NGPw+gpmyzzZaEtIxInxlPEI6iyi2g+WwSWnf3nJbpa9XOR5Z5LJ7iFGZ+ZYfD688M
+ OwPTY9vItdFTlmV8ArpccNoQHMDCz49nGh75PK6cFqDZSb3uFsGsL4HRNM08O9hcWhmTDHDjz
+ UTXYM8kJQuSttvGhCpiUHzfVrX3DP8dlYClwEfbkJ26NelfvcRYh5A5qiZoaOTavkW9l85Lsr
+ oKjmEST1v4aMqIYSaGq1nZdkP45IMfsC4sDMTJ2Xkpa1LnlTSeKPr6L2jd5/ZlRiDM3bM7kcj
+ oUZswKbl5CDi77ZhMnrFxs/8Hiq2rqf3aTe0HroptFX90RyxWYQAui1LHjcSpLNY9j0BIlPmT
+ KB+0NsazbghxUNegc2N8op95yvE1XRiIjBs+c+OgWoPiuEQjh0eWZSTRIW9Fc0Oh1gX7Ouoc9
+ FCEI0Tw0i8Q2fCYxiKIor0Ve+UJCIj1ymbh97bBZNYwJtuFN01LPSKFikJvSyQdTnZy3dJ2qJ
+ ynLbRYROkk2pTVgT8IplB0v4N7MiSzqTIautK8w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Sibi,
 
-On Mon, 21 Sep 2020, Jeff King wrote:
+On Fri, 25 Sep 2020, Sibi Siddharthan wrote:
 
-> On Mon, Sep 21, 2020 at 10:01:21PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
->
-> > Changes since v1:
+> > diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> > index 5007f173f1..d14fa4f3dc 100644
+> > --- a/contrib/buildsystems/CMakeLists.txt
+> > +++ b/contrib/buildsystems/CMakeLists.txt
+> > @@ -43,8 +43,11 @@ set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 > >
-> >  * Instead of using the name primary for the adjustments to
-> >    t/test-terminal.perl, we follow Python's lead (which uses the
-> >    parent/child nomenclature).
-> >  * The changes to t3200 no longer use variations of the name main as b=
-ranch
-> >    names; Instead, the renamed branches are independent from any curre=
-nt or
-> >    future default branch name.
->
-> Thanks, I think that does look nicer. Shouldn't the latter bullet apply
-> to most of the ones in patch 4, though?
->
-> I wonder if they should simply be "s/master/topic/" instead of
-> "s/master/main".
+> >  find_program(SH_EXE sh)
+> >  if(NOT SH_EXE)
+> > -       message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
+> > -                       "On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
+> > +       set(SH_EXE "C:/Program Files/Git/bin/sh.exe")
+> > +       if(NOT EXISTS ${SH_EXE})
+> > +               message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
+> > +                               "On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
+> > +       endif()
+> >  endif()
+> >
+> Let's not point SH_EXE to the 'program files' directory.
 
-Yes! I did that in 4/5. In 5/5, we need a branch name that starts with the
-same two letters as `maint`, though. I amended the commit message
-accordingly.
+It is not doing that, except as a fall-back in case the `sh` program
+was not found in the `PATH`.
 
-Thanks,
+> find_program() searches 'PATH' for sh.
+
+Right.
+
+> Since the Git-for-windows installer does append
+> 'your_installation_directory'/Git/bin to the PATH variable, it should
+> be fine.
+
+No, it does not. Quite purposefully so.
+
+The `/bin/` directory is kind of a hack to reinstate _some_ level of
+support for use cases that relied on Git for Windows v1.x installing its
+binaries into that directory (v2.x distributes them between `/usr/bin/`
+and `/mingw64/bin/`).
+
+What _does_ get appended, at least by default, is the `/cmd/` directory
+(which does _not_ contain `sh.exe`).
+
+Now, there _is_ an option in the Git for Windows installer to append all
+of its Unix tools to the `PATH`, but it is highly discouraged to do so.
+
+> I personally don't install my dev tools(except Visual Studio) to
+> Program Files(because of the _space_), it messes up the Makefiles.
+
+Sure, and that's your prerogative. There's unfortunately no good way to
+support your use case.
+
+Luckily, the vast majority of Git for Windows' users do not change the
+default location, and this patch is for them. (And "them" in this case
+includes me, personally ;-))
+
+Ciao,
 Dscho
