@@ -2,86 +2,138 @@ Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F3CC2D0A8
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 10:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18046C2D0A8
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 11:46:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C0D9238E2
-	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 10:21:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2149238E2
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 11:46:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oZZ3yoJk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oq1fjI6n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726559AbgIZKVX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 06:21:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40320 "EHLO
+        id S1726311AbgIZLqh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 07:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725208AbgIZKVX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 06:21:23 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 369B2C0613CE
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 03:21:23 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id bb1so675921plb.2
-        for <git@vger.kernel.org>; Sat, 26 Sep 2020 03:21:23 -0700 (PDT)
+        with ESMTP id S1726210AbgIZLqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 07:46:37 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E607EC0613CE
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 04:46:36 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id mm21so873087pjb.4
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 04:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=diIrGpyi+NfaUaaTpHDyxKMNMokd3C37rnBjC36JARE=;
-        b=oZZ3yoJkgcb6sACREvMv8rv5IUAt5FanCOOBiL985UGuQebdUr9DTOFg+BsS1vujdX
-         aLID2GQ2YUR0wo4hWUExMio1i/9WlXv+xh08nd50ZQqBhAfliPYa8YUbVMO0+PuCnuIh
-         Z+1yMJxOdDK8Rqyct7/FXTTSDFtpqrQl3zQCWL9LGA8fc1nZIOocBhdq1S9PT5BxrlXh
-         vQtecOIDhF0ySuDoyAaQaPXe+SlboYqGFoWWa35VHAVPiC7mcORgWIrvNLSPZJwg4Gs+
-         7MWpbXc0W2xVVR3ne7rhgYNsE8zI34rwiTAa71PcHlnbv25E33+tjZsDsmfzt3pdu8uf
-         uJPw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=q9D5GCw1EAChWummcSWcrt3fFvjuL88VfiKPHLkhhZA=;
+        b=oq1fjI6ngTOO1yogplQQKby8Ytda7HM7i8QxRMBW4SCW58XRBPKYntZt9kT5vc3VcS
+         LqkN+daGyQRYSA7idoRZLR2p8eJD6gr7dCIavARKGj69h0/HLZ537qZ5FVz4A/hX6cLL
+         WGv6dTurPRee9x3Lei1TbwBsCIFU4RCMEaY4Xk+8XkWyhG6YJbuOKului+xXGnjR0G8w
+         RDKN9rJP4JTOlaDdm2Pei9iODTKcJU+9E5tbm0J06Tdi7B3EY+p5TktHQ07lJeHmgKMD
+         vH/RwruQt8Yd24ofak1nVW1EGKY35M86viAqyxSkorkR3VAgQW6TqicGHinSpXbzTA/z
+         jW7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=diIrGpyi+NfaUaaTpHDyxKMNMokd3C37rnBjC36JARE=;
-        b=BHRqOCWSm5IIu7uM7JzDZpJ8toDkaZTuQsQH4zLPbfVH/biBnxuJckudIfdTuR9jha
-         ++muiLWCKB/VeaxszzwLEpeX3jTN5/OaPScFiUHJi1fELdwdLTDUpa6C+eJkYB9wb1da
-         t05qVfD2PX3oKUbUvpPPN3ngLShIfJDuXpg8s6RIklKhtzZof281IXt9Vlng/lGS8InE
-         xrPgRCIf5todIzE4jlampN89jFqNyXVmCL4vyO0/XJKZBj4MfxWSugz+TGJ0HAAKZ3zT
-         RYnqIoyhei/OIBEFkpBbiwJL23A+Ql5ZvOh2TPn707jdJUIojjxYg6BEB/roQ6brv7h3
-         x68g==
-X-Gm-Message-State: AOAM530YHrDUkH30Dr5Hi/sLYCMtaHkvDS2aPA+UMN+/Drz55y7Ive7a
-        FZfuyCOHy1SbeOAlgP5RQD+wpfGvoKCistq7
-X-Google-Smtp-Source: ABdhPJwFGfcbuHxpqqOrDi2mcf6ocVbZMN8nMkg2ca8peaKKT8Pm3JVH8S5ds2Tl815tkplbfyrOmg==
-X-Received: by 2002:a17:90b:3884:: with SMTP id mu4mr1536402pjb.29.1601115682473;
-        Sat, 26 Sep 2020 03:21:22 -0700 (PDT)
-Received: from mail.clickyotomy.dev ([124.123.106.26])
-        by smtp.gmail.com with ESMTPSA id y4sm4473022pgl.67.2020.09.26.03.21.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Sep 2020 03:21:21 -0700 (PDT)
-Date:   Sat, 26 Sep 2020 15:51:16 +0530
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=q9D5GCw1EAChWummcSWcrt3fFvjuL88VfiKPHLkhhZA=;
+        b=izSKHOPWPG8w1OE2GHJFb5/y0ZQ0C4t5bd9TzuzNmQPkAA5hdnstfoaXbWSScSd8E2
+         AAWXDugr5h4oiRVWDWJivRZqal8BJfETICCCnUBzWtmPL+IzM5xNhjTVr43Zz30yZBBo
+         S3pYYrOZOr+2BuMKEDWhU0Mx0IVcllhtmuYPovpL+cIVSUYLdVDW60x0X7bVI3/Y/eKl
+         VAe0x/XRvJ2AVOkpMbzi9poRtGDom/jpUvHvACv3rBxlnVFXPn+jBblCO9+rqV7vGTTQ
+         MZcm7zK43H2WXE5GokncerYwDXo0ZP2sD8H6Lz0IoPGWADZBaPkrWlLx8UiJgsU3NAF/
+         Dsmw==
+X-Gm-Message-State: AOAM533P8MRnzScNcqWDUg5WqfXdmX6ahvgIE0+AGqk5LZosXCiNRrS6
+        Zz5MReRgyk+X3GyNxKxDLUrf71NYsQz0zNQ5
+X-Google-Smtp-Source: ABdhPJyA8s3FA0iWDczbp1xfrmWu+bwP/oOHmbDRD7eXNIFWR5BCqMnQzFCky3uE/gd2QlciGs/bFg==
+X-Received: by 2002:a17:90b:d90:: with SMTP id bg16mr1734194pjb.199.1601120795999;
+        Sat, 26 Sep 2020 04:46:35 -0700 (PDT)
+Received: from localhost.localdomain ([124.123.106.26])
+        by smtp.gmail.com with ESMTPSA id 72sm5315942pfx.79.2020.09.26.04.46.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 Sep 2020 04:46:35 -0700 (PDT)
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 0/3]  push: add "--[no-]force-if-includes"
-Message-ID: <20200926102116.GA76247@mail.clickyotomy.dev>
-References: <20200923073022.61293-1-shrinidhi.kaushik@gmail.com>
- <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Subject: [PATCH v7 0/3]  push: add "--[no-]force-if-includes"
+Date:   Sat, 26 Sep 2020 17:16:23 +0530
+Message-Id: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
+X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
+References: <20200926101324.73457-1-shrinidhi.kaushik@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-Please disregard this patch series. It does not compile with the
-latest commit on "master" (9bc233ae1cf19a49e51842c7959d80a675dbd1c0).
-I will fix those errors and retest in v7.
+Add a new option: "--force-if-includes" to "git-push" where forced
+updates are allowed only if the tip of the remote-tracking ref has
+been integrated locally, by verifying if the tip of the remote-tracking
+ref -- on which a local branch has based on -- is reachable from at
+least one of the "reflog" entries of the branch about to be updated
+by force on the remote.
 
-Apologies for the noise.
+This option can be used with "--force-with-lease" with setups where
+the remote-tracking refs of the repository are implicitly updated in
+the background to help prevent unintended remote overwrites.
 
-Thanks.
--- 
-Srinidhi Kaushik
+If a local branch is based on a remote ref for a rewrite, and if that
+remote-tracking ref is updated by a push from another repository after
+it has been checked out locally, force updating that branch to remote
+with "--force-with-lease[=<refname>[:<expect>]]" without specifying
+the "<expect>" value, can cause the update that happened in-between
+the checkout and forced push to be lost.
+
+Changes since v5:
+  - In the previous patch, the stopping condition for "reflog"
+    iteration used the commit date of the remote ref. That has
+    been changed to use the the timestamp of the latest entry
+    of the remote ref's "reflog"; calls "in_merge_bases_many()"
+    are batched when the number of commits collected in the list
+    is more than 8.
+
+  - Add more tests for t5533 to include scenarios where forced
+    updates should be allowed for "pull --rebase" and local
+    rebase operations.
+
+  - Reword commit messages, fix typos, and update documentation
+    to use "`" where necessary.
+
+Changes since v6:
+  - Compilation failed because there was an argument missing when
+    calling "print_ref_status()"; it has been updated.
+
+Srinidhi Kaushik (3):
+  push: add reflog check for "--force-if-includes"
+  push: parse and set flag for "--force-if-includes"
+  t, doc: update tests, reference for "--force-if-includes"
+
+ Documentation/config/advice.txt |   9 +-
+ Documentation/config/push.txt   |   6 ++
+ Documentation/git-push.txt      |  26 ++++-
+ advice.c                        |   3 +
+ advice.h                        |   2 +
+ builtin/push.c                  |  27 +++++
+ builtin/send-pack.c             |  12 +++
+ remote-curl.c                   |  14 ++-
+ remote.c                        | 185 ++++++++++++++++++++++++++++++--
+ remote.h                        |  12 ++-
+ send-pack.c                     |   1 +
+ t/t5533-push-cas.sh             | 129 ++++++++++++++++++++++
+ transport-helper.c              |  10 ++
+ transport.c                     |   8 ++
+ transport.h                     |  15 ++-
+ 15 files changed, 442 insertions(+), 17 deletions(-)
+
+base-commit: 9bc233ae1cf19a49e51842c7959d80a675dbd1c0
+--
+2.28.0
