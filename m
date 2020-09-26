@@ -1,345 +1,107 @@
-Return-Path: <SRS0=RFRG=DC=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=tECa=DD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47C10C4727C
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 23:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EC30C4727C
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 01:53:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AEC021D91
-	for <git@archiver.kernel.org>; Fri, 25 Sep 2020 23:08:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08813207EA
+	for <git@archiver.kernel.org>; Sat, 26 Sep 2020 01:53:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y32yIYky"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729245AbgIYXIA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Sep 2020 19:08:00 -0400
-Received: from mga03.intel.com ([134.134.136.65]:56299 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726576AbgIYXH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Sep 2020 19:07:59 -0400
-IronPort-SDR: 26DFGFafUdqt7w6Jr7U4b8EP+5rWfFdDb5eG6pwwd9GrLkCtWYe75LliSF+FBuDN58c6UHvoOb
- rnbWLvUfpghw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9755"; a="161737242"
-X-IronPort-AV: E=Sophos;i="5.77,303,1596524400"; 
-   d="scan'208";a="161737242"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2020 16:07:58 -0700
-IronPort-SDR: 8Pk2EjvbbFuucDe0UxyDMdg04JwNJhcbiXXAK041FgPi8uIVThZrKfvkCi91bD/v2uI4nYsflO
- bf9LxZSAJwWA==
-X-IronPort-AV: E=Sophos;i="5.77,303,1596524400"; 
-   d="scan'208";a="513177861"
-Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.4])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2020 16:07:57 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] format-patch: teach format.useAutoBase "whenAble" option
-Date:   Fri, 25 Sep 2020 16:07:01 -0700
-Message-Id: <20200925230701.2814287-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.28.0.497.g54e85e7af1ac
+        id S1729623AbgIZBxA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Sep 2020 21:53:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47066 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726687AbgIZBw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Sep 2020 21:52:59 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD361C0613CE
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 18:52:59 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id s19so242281plp.3
+        for <git@vger.kernel.org>; Fri, 25 Sep 2020 18:52:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=AJV42CZRsxtpxg1/gk3qBuZKbU4mIlfxZTPhfga2SL4=;
+        b=Y32yIYkyTadNcXgNpTga0TOOc87Jll6WKZpKAeXjfPN9+T6Vw4HLcg1wO36rl5/jVQ
+         qZkjegY0E2e63k1SBnJcV5lHXzhD/oq7wvs6MCdEQtZbKOMtGWZPv3qLMZp1XAxzKYSa
+         amLv1mkzeg87FIj5mcWw8CDeHvZY55NlM1bLW72UHkGmOJZm6G9e9f851jJbRVrM2VFj
+         xSdvcVjlcfmbeBn8ZlXq0r0jZr8hNJVSHDYp8YmN6OGWkwv2bu3nWjsbQ+e2hkVk4D3o
+         TrtaSDVaDIyb/JbYzwjz2jcHCl7ALLsJpfQFSLFwGJ3brbrK1wIJoCOcrqNopFKpp8fz
+         HWhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AJV42CZRsxtpxg1/gk3qBuZKbU4mIlfxZTPhfga2SL4=;
+        b=q1P1xvOumKNNtnA2gSp7jbRA+2KdM7YNhSTAY/De4QQLELjAbZ+GAaylGtq7JylJuS
+         ZypMZGc2Qp5gyqsH6UmAYEtoexnAcWS/JiSvwbDfarBM86ScFuxEWZ8481ya4t+9a/n8
+         l0ToTSR8W0xAN69lYTDBz6P+cTxfBFG4peLZBnVqz03PCX9hi1viqdGsxfiIahjcP7Uh
+         RiarQotxMCXjt97ruDE7AZbjeQ8BzaubOYb3vPI/d265AyPLoRzgwMEVB8o8mwtoSxn/
+         j6Pk6A+/BPjNFYalvwyoGeDYMY8AybNzUubxPxyb1Y9sE5neUp7ZCbNGkdcErQHdEmOJ
+         Gfbw==
+X-Gm-Message-State: AOAM532i1YXOkVieaFk4ZJfT7vNkWwdbNW99UhPI2SCL3ffKxl857GJ3
+        fgC8esqB04TTQZtT/U1uFFAyQFKO03M=
+X-Google-Smtp-Source: ABdhPJzqlgbZD4MT06z9YNbN8F4MOS7C5mFmQCWXNv1AGi/dftzeReVkBBP6Ha/IW9J5OeNrJqjqFg==
+X-Received: by 2002:a17:90a:db0f:: with SMTP id g15mr312041pjv.145.1601085178893;
+        Fri, 25 Sep 2020 18:52:58 -0700 (PDT)
+Received: from generichostname ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id j20sm3613815pfh.146.2020.09.25.18.52.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2020 18:52:57 -0700 (PDT)
+Date:   Fri, 25 Sep 2020 18:52:56 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 09/10] builtin/diff-tree: learn --merge-base
+Message-ID: <20200926015256.GA136085@generichostname>
+References: <20200918104833.GB1874074@generichostname>
+ <xmqqy2l7m3hk.fsf@gitster.c.googlers.com>
+ <20200920110148.GA227771@generichostname>
+ <xmqqzh5jf73t.fsf@gitster.c.googlers.com>
+ <20200921172740.GA946178@generichostname>
+ <xmqqwo0met17.fsf@gitster.c.googlers.com>
+ <20200921215409.GA1018675@generichostname>
+ <xmqqblhyepup.fsf@gitster.c.googlers.com>
+ <20200923094716.GA1309694@generichostname>
+ <xmqqh7rlk1t8.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh7rlk1t8.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Hi Junio,
 
-The format.useAutoBase configuration option exists to allow users to
-enable '--base=auto' for format-patch by default.
+On Fri, Sep 25, 2020 at 02:02:11PM -0700, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > And worst case scenario, if we receive user reports that they believe
+> > the feature is inconsistent, it's 100x easier to change it to allow
+> > ranges than attempting to remove support for ranges in the future.
+> 
+> If we allow ranges from day one, we do not even have to worry about
+> it, no?
 
-This can sometimes lead to poor workflow, due to unexpected failures
-when attempting to format an ancient patch:
+Yes, but I'm worried that being able to mix --merge-base with ranges
+might cause more confusion for users since, in my opinion, it only
+really makes sense for endpoints. That's why I restricted it in the
+first place.
 
-    $ git format-patch -1 <an old commit>
-    fatal: base commit shouldn't be in revision list
+I think that since we're in disagreement, it makes more sense to take
+the safer option where we can implement functionality later whereas if
+we implement it and we want to remove it later, it'll be a much harder
+time.
 
-This can be very confusing, as it is not necessarily immediately obvious
-that the user requested a --base (since this was in the configuration,
-not on the command line).
-
-We do want --base=auto to fail when it cannot provide a suitable base,
-as it would be equally confusing if a formatted patch did not include
-the base information when it was requested.
-
-Teach format.useAutoBase a new mode, "whenAble". This mode will cause
-format-patch to attempt to include a base commit when it can. However,
-if no valid base commit can be found, then format-patch will continue
-formatting the patch without a base commit. --base also learns the same
-mode using the term "if-able".
-
-Add tests to cover the new mode of operation for --base.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- Documentation/config/format.txt    |   5 +-
- Documentation/git-format-patch.txt |   4 +-
- builtin/log.c                      | 100 ++++++++++++++++++++++-------
- t/t4014-format-patch.sh            |  27 ++++++++
- 4 files changed, 112 insertions(+), 24 deletions(-)
-
-diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-index 564e8091ba5c..e0760f16d6ad 100644
---- a/Documentation/config/format.txt
-+++ b/Documentation/config/format.txt
-@@ -96,7 +96,10 @@ format.outputDirectory::
- 
- format.useAutoBase::
- 	A boolean value which lets you enable the `--base=auto` option of
--	format-patch by default.
-+	format-patch by default. Can also be set to "whenAble" to set
-+	`--base=if-able`. This causes format-patch to include the base
-+	commit information if it can be determined, but skip it otherwise
-+	without dying.
- 
- format.notes::
- 	Provides the default value for the `--notes` option to
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 0f81d0437bb6..b58f7cd13382 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -345,7 +345,9 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
- 	Record the base tree information to identify the state the
- 	patch series applies to.  See the BASE TREE INFORMATION section
- 	below for details. If <commit> is "auto", a base commit is
--	automatically chosen. The `--no-base` option overrides a
-+	automatically chosen. If <commit> is "if-able", a base commit is
-+	included if available, however format-patch won't die if it cannot
-+	find a valid base commit. The `--no-base` option overrides a
- 	`format.useAutoBase` configuration.
- 
- --root::
-diff --git a/builtin/log.c b/builtin/log.c
-index b8824d898f49..3b15d3cb87ea 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -805,9 +805,15 @@ enum cover_from_description {
- 	COVER_FROM_AUTO
- };
- 
-+enum auto_base_setting {
-+	AUTO_BASE_NEVER,
-+	AUTO_BASE_ALWAYS,
-+	AUTO_BASE_WHEN_ABLE
-+};
-+
- static enum thread_level thread;
- static int do_signoff;
--static int base_auto;
-+static enum auto_base_setting auto_base;
- static char *from;
- static const char *signature = git_version_string;
- static const char *signature_file;
-@@ -906,7 +912,11 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "format.outputdirectory"))
- 		return git_config_string(&config_output_directory, var, value);
- 	if (!strcmp(var, "format.useautobase")) {
--		base_auto = git_config_bool(var, value);
-+		if (value && !strcasecmp(value, "whenAble")) {
-+			auto_base = AUTO_BASE_WHEN_ABLE;
-+			return 0;
-+		}
-+		auto_base = git_config_bool(var, value) ? AUTO_BASE_ALWAYS : AUTO_BASE_NEVER;
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.from")) {
-@@ -1436,13 +1446,24 @@ static struct commit *get_base_commit(const char *base_commit,
- {
- 	struct commit *base = NULL;
- 	struct commit **rev;
--	int i = 0, rev_nr = 0;
-+	int i = 0, rev_nr = 0, auto_select, die_on_failure;
- 
--	if (base_commit && strcmp(base_commit, "auto")) {
-+	if (!strcmp(base_commit, "auto")) {
-+		auto_select = 1;
-+		die_on_failure = 1;
-+	} else if (!strcmp(base_commit, "if-able")) {
-+		auto_select = 1;
-+		die_on_failure = 0;
-+	} else {
-+		auto_select = 0;
-+		die_on_failure = 1;
-+	}
-+
-+	if (!auto_select) {
- 		base = lookup_commit_reference_by_name(base_commit);
- 		if (!base)
- 			die(_("unknown commit %s"), base_commit);
--	} else if ((base_commit && !strcmp(base_commit, "auto"))) {
-+	} else {
- 		struct branch *curr_branch = branch_get(NULL);
- 		const char *upstream = branch_get_upstream(curr_branch, NULL);
- 		if (upstream) {
-@@ -1450,19 +1471,32 @@ static struct commit *get_base_commit(const char *base_commit,
- 			struct commit *commit;
- 			struct object_id oid;
- 
--			if (get_oid(upstream, &oid))
--				die(_("failed to resolve '%s' as a valid ref"), upstream);
-+			if (get_oid(upstream, &oid)) {
-+				if (die_on_failure)
-+					die(_("failed to resolve '%s' as a valid ref"), upstream);
-+				else
-+					return NULL;
-+			}
- 			commit = lookup_commit_or_die(&oid, "upstream base");
- 			base_list = get_merge_bases_many(commit, total, list);
- 			/* There should be one and only one merge base. */
--			if (!base_list || base_list->next)
--				die(_("could not find exact merge base"));
-+			if (!base_list || base_list->next) {
-+				if (die_on_failure) {
-+					die(_("could not find exact merge base"));
-+				} else {
-+					free_commit_list(base_list);
-+					return NULL;
-+				}
-+			}
- 			base = base_list->item;
- 			free_commit_list(base_list);
- 		} else {
--			die(_("failed to get upstream, if you want to record base commit automatically,\n"
--			      "please use git branch --set-upstream-to to track a remote branch.\n"
--			      "Or you could specify base commit by --base=<base-commit-id> manually"));
-+			if (die_on_failure)
-+				die(_("failed to get upstream, if you want to record base commit automatically,\n"
-+				      "please use git branch --set-upstream-to to track a remote branch.\n"
-+				      "Or you could specify base commit by --base=<base-commit-id> manually"));
-+			else
-+				return NULL;
- 		}
- 	}
- 
-@@ -1479,8 +1513,14 @@ static struct commit *get_base_commit(const char *base_commit,
- 		for (i = 0; i < rev_nr / 2; i++) {
- 			struct commit_list *merge_base;
- 			merge_base = get_merge_bases(rev[2 * i], rev[2 * i + 1]);
--			if (!merge_base || merge_base->next)
--				die(_("failed to find exact merge base"));
-+			if (!merge_base || merge_base->next) {
-+				if (die_on_failure) {
-+					die(_("failed to find exact merge base"));
-+				} else {
-+					free(rev);
-+					return NULL;
-+				}
-+			}
- 
- 			rev[i] = merge_base->item;
- 		}
-@@ -1490,12 +1530,24 @@ static struct commit *get_base_commit(const char *base_commit,
- 		rev_nr = DIV_ROUND_UP(rev_nr, 2);
- 	}
- 
--	if (!in_merge_bases(base, rev[0]))
--		die(_("base commit should be the ancestor of revision list"));
-+	if (!in_merge_bases(base, rev[0])) {
-+		if (die_on_failure) {
-+			die(_("base commit should be the ancestor of revision list"));
-+		} else {
-+			free(rev);
-+			return NULL;
-+		}
-+	}
- 
- 	for (i = 0; i < total; i++) {
--		if (base == list[i])
--			die(_("base commit shouldn't be in revision list"));
-+		if (base == list[i]) {
-+			if (die_on_failure) {
-+				die(_("base commit shouldn't be in revision list"));
-+			} else {
-+				free(rev);
-+				return NULL;
-+			}
-+		}
- 	}
- 
- 	free(rev);
-@@ -1752,8 +1804,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	s_r_opt.def = "HEAD";
- 	s_r_opt.revarg_opt = REVARG_COMMITTISH;
- 
--	if (base_auto)
-+	if (auto_base == AUTO_BASE_ALWAYS)
- 		base_commit = "auto";
-+	else if (auto_base == AUTO_BASE_WHEN_ABLE)
-+		base_commit = "if-able";
- 
- 	if (default_attach) {
- 		rev.mime_boundary = default_attach;
-@@ -2020,9 +2074,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	memset(&bases, 0, sizeof(bases));
- 	if (base_commit) {
- 		struct commit *base = get_base_commit(base_commit, list, nr);
--		reset_revision_walk();
--		clear_object_flags(UNINTERESTING);
--		prepare_bases(&bases, base, list, nr);
-+		if (base) {
-+			reset_revision_walk();
-+			clear_object_flags(UNINTERESTING);
-+			prepare_bases(&bases, base, list, nr);
-+		}
- 	}
- 
- 	if (in_reply_to || thread || cover_letter)
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 958c2da56ec6..0c14619293bb 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -2037,6 +2037,17 @@ test_expect_success 'format-patch errors out when history involves criss-cross'
- 	test_must_fail 	git format-patch --base=auto -1
- '
- 
-+test_expect_success 'format-patch disable base=if-able when history involves criss-cross' '
-+	git format-patch --base=if-able -1 >patch &&
-+	! grep "^base-commit:" patch
-+'
-+
-+test_expect_success 'format-patch format.useAutoBase whenAble history involves criss-cross' '
-+	test_config format.useAutoBase whenAble &&
-+	git format-patch -1 >patch &&
-+	! grep "^base-commit:" patch
-+'
-+
- test_expect_success 'format-patch format.useAutoBase option' '
- 	git checkout local &&
- 	test_config format.useAutoBase true &&
-@@ -2047,6 +2058,16 @@ test_expect_success 'format-patch format.useAutoBase option' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'format-patch format.useAutoBase option with whenAble' '
-+	git checkout local &&
-+	test_config format.useAutoBase whenAble &&
-+	git format-patch --stdout -1 >patch &&
-+	grep "^base-commit:" patch >actual &&
-+	git rev-parse upstream >commit-id-base &&
-+	echo "base-commit: $(cat commit-id-base)" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'format-patch --base overrides format.useAutoBase' '
- 	test_config format.useAutoBase true &&
- 	git format-patch --stdout --base=HEAD~1 -1 >patch &&
-@@ -2062,6 +2083,12 @@ test_expect_success 'format-patch --no-base overrides format.useAutoBase' '
- 	! grep "^base-commit:" patch
- '
- 
-+test_expect_success 'format-patch --no-base overrides format.useAutoBase whenAble' '
-+	test_config format.useAutoBase whenAble &&
-+	git format-patch --stdout --no-base -1 >patch &&
-+	! grep "^base-commit:" patch
-+'
-+
- test_expect_success 'format-patch --base with --attach' '
- 	git format-patch --attach=mimemime --stdout --base=HEAD~ -1 >patch &&
- 	sed -n -e "/^base-commit:/s/.*/1/p" -e "/^---*mimemime--$/s/.*/2/p" \
--- 
-2.28.0.497.g54e85e7af1ac
-
+Thanks,
+Denton
