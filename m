@@ -3,63 +3,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B48F7C4346E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CC72C4346E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:25:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7812323976
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:23:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 114C323976
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:25:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730474AbgI0IXg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 04:23:36 -0400
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:36911 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730438AbgI0IXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 04:23:36 -0400
-Received: by mail-ej1-f65.google.com with SMTP id nw23so4173604ejb.4
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 01:23:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KlU8XF5LfEBEcLahM4OJirKqYa1huhjwSLe2c47t1kI=;
-        b=FjjYOtJBXJlzzDc/rUj0G/G+Ff7uLn0Bbs03hctinlAoxlcnXSSF4MnMugbF/aoZTa
-         3YsJZqhgqHfo9QUMAM3t/a97bJxuJpR6Ydhv21elSXlOQOchrml7oldzTU0uD+rc2eG3
-         iZM6aVty/u5NBoslr804dgIjRZ037ucCWMnkDyyjIUaL/iHi6T/1sbhWlLLNvzI+dvuv
-         wC0oo7DYVQy4/aR1sQDvLahba2fiILGT1m3PIwFD0/NDzdgGp/ZKdRAk3kO+uy2ukF3W
-         +BUQ2pf21jPvTWOwRDOt84IfA31MXHoFVdp1eo98Xwcx7eQPlhkRmsE9EzF97V8PT4cw
-         0sUg==
-X-Gm-Message-State: AOAM531oVce0RHT0nuOQgOw8pExFmNJXmXxHSZIWrvjFmkrO/18YTEZp
-        kHKY6n+DuwOlIlWY9Gz0uyEn5Stvjgnz972VUivluI9K
-X-Google-Smtp-Source: ABdhPJyPlv1lCfRIZv+lzWZrOFyUK/T5w1fA1TAxk9Ay2wiXN26LibrTiG/KNrbluNRKTNPfDeOgG46EZnEub1sSCHY=
-X-Received: by 2002:a17:906:552:: with SMTP id k18mr10300780eja.482.1601195014470;
- Sun, 27 Sep 2020 01:23:34 -0700 (PDT)
-MIME-Version: 1.0
+        id S1730476AbgI0IZE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 04:25:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42356 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730397AbgI0IZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 04:25:04 -0400
+Received: (qmail 29065 invoked by uid 109); 27 Sep 2020 08:25:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 27 Sep 2020 08:25:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3958 invoked by uid 111); 27 Sep 2020 08:25:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 27 Sep 2020 04:25:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 27 Sep 2020 04:25:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 8/8] shortlog: allow multiple groups to be specified
+Message-ID: <20200927082503.GE1286220@coredump.intra.peff.net>
 References: <20200925070120.GA3669667@coredump.intra.peff.net>
- <20200925070211.GB62741@coredump.intra.peff.net> <CAPig+cTfYmNAP_65RDa_fZOyuQEH65HuLs-UYSPT0yJ=s6BftA@mail.gmail.com>
- <20200927080345.GB1286220@coredump.intra.peff.net> <20200927080846.GD1286220@coredump.intra.peff.net>
-In-Reply-To: <20200927080846.GD1286220@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 27 Sep 2020 04:23:23 -0400
-Message-ID: <CAPig+cT8LRdp6drcEN6bBFprTUxvDjigXtUXqS-VQmN0Nmg+Nw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] shortlog: refactor committer/author grouping
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+ <20200925070550.GH62741@coredump.intra.peff.net>
+ <CAN0heSp5ssE1_-0B4VMGcuOaW63EpWXRVp4E4gy_7zVZ1rWkew@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSp5ssE1_-0B4VMGcuOaW63EpWXRVp4E4gy_7zVZ1rWkew@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 27, 2020 at 4:08 AM Jeff King <peff@peff.net> wrote:
-> OK, I lied. After reading your other email, I ended up with:
->
->   --group=<type>::
->           Group commits based on `<type>`. If no `--group` option is
->           specified, the default is `author`. `<type>` is one of:
->   +
->    - `author`, commits are grouped by author
->    - `committer`, commits are grouped by committer (the same as `-c`)
+On Sat, Sep 26, 2020 at 02:48:44PM +0200, Martin Ågren wrote:
 
-Sounds good. Makes it much more clear to me.
+> On Fri, 25 Sep 2020 at 09:09, Jeff King <peff@peff.net> wrote:
+> > +static inline int has_multi_bits(unsigned n)
+> > +{
+> > +       return (n & (n - 1)) != 0;
+> > +}
+> 
+> There's a HAS_MULTI_BITS macro in git-compat-util.h. I like how you came
+> up with the exact same name. It even makes me wonder if you are actively
+> avoiding it in favor of a re-implementation, but I can't see why.
+
+Heh. I _thought_ we had such a helper, and I even thought I remembered
+the name. But when I grepped for it, I couldn't come up with it. Silly
+"-i". (So I guess it's no surprise that I came up with the same
+implementation, which is the only good one, and the same name, which I
+did pull from the back of my mind).
+
+I'll drop this in favor of the macro.
+
+> >         enum {
+> > -               SHORTLOG_GROUP_AUTHOR = 0,
+> > -               SHORTLOG_GROUP_COMMITTER,
+> > -               SHORTLOG_GROUP_TRAILER
+> > -       } group;
+> > +               SHORTLOG_GROUP_AUTHOR = (1 << 0),
+> > +               SHORTLOG_GROUP_COMMITTER = (1 << 1),
+> > +               SHORTLOG_GROUP_TRAILER = (1 << 2)
+> > +       } groups;
+> 
+> Coming back to the comment on 2/8, adding a comma at the end wouldn't
+> reduce patch noise here and now, but whenever someone touches this place
+> the next time.
+
+Agreed, will do.
+
+> Of my comments in the last few mails, probably the only actionable one
+> is the truncated sentence in the trailer iterator header file.
+
+I agree none are big, but worth addressing since I was making a re-roll
+anyway. Thanks.
+
+-Peff
