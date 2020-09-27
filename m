@@ -6,99 +6,108 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA42C4346E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 19:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECF1EC4346E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 20:04:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D0DE21D95
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 19:51:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F49622207
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 20:04:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JFscHLnn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LbVYd+5n";
+	dkim=pass (1024-bit key) header.d=kyleam.com header.i=@kyleam.com header.b="INN4NTZ2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726316AbgI0Tvt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 15:51:49 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65365 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbgI0Tvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 15:51:49 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5B820E6212;
-        Sun, 27 Sep 2020 15:51:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1726574AbgI0UEO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 16:04:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60415 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726485AbgI0UEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 16:04:14 -0400
+X-Greylist: delayed 492 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Sep 2020 16:04:12 EDT
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 626FB83CA1;
+        Sun, 27 Sep 2020 15:56:00 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yfwoj24k33WjT8QAj1LFVJDfRnA=; b=JFscHL
-        nnCKX5ZdZsj9Hx/OFSuTlCIcxUaomgSuc5hMQsuQvFz16aZ5a6w2YVkAdUcCu9ki
-        PUjfaI3KYrmuruq4Bz+P8b7gOsGpt3jGz5iUOv50NtEkenXA1uqgGETFzdSgfNu1
-        tcwASM/2we06qGA/VJNet0AyzoIolOHxCzsJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IBjSJ/IbQxXkuYw9mmIrmQMphySxrhE5
-        sTSpQ/3YOJIZ7ChxodB0By6FNSpzitqb+FSvTwB3khxPiMZIzPtn+FY1v5PStM7I
-        uMtTj7PWiQK7eR8Z7OW7k3NaWR72bD6IM0LvoVKi0nmzhxKctd0uARRIu6Xu3pm4
-        z1x8xmXCnAc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 53EA6E6211;
-        Sun, 27 Sep 2020 15:51:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=BQxA+UYtCYp2VBY5yce8cavTxoY=; b=LbVYd+
+        5nIZqKNv616XaXIxFQ15JIJJzFs5ozmFjc9HkCYt54HldmMBaGIxVEjQJophd7+S
+        mShmhrvkDRznQAyIMUO4ElxUStCrPm1RXe5XoJmulSAPv6ExqDneRfETqsGSzQKj
+        /zJJJD+Cb93B7lD/RwOHTwZXPYjYUVH0Eb8eA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56B4383CA0;
+        Sun, 27 Sep 2020 15:56:00 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=XU31LI31YPI0iqXxRsmeLd/MlLP5Pl5ICmJlSNfDGTc=; b=INN4NTZ26CY7Cp/jlFo0eRA06zBATbG8z60WuxsZlp3rMHkURmOSAqbolgxvXiRxJkd0X/EwU3HNAPqin8F63H1PyYyH5PDZ62t0zQy1ntPlMXrMLjEsozDvDuAoTNKPyR1x2bbxdMwOjgdHBvdIQcyEdRtLCy3MyoDXqmHKtuw=
+Received: from localhost (unknown [45.33.91.115])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A461AE620E;
-        Sun, 27 Sep 2020 15:51:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 4/8] shortlog: match commit trailers with --group
-References: <20200927083933.GA2222823@coredump.intra.peff.net>
-        <20200927084004.GD2465761@coredump.intra.peff.net>
-Date:   Sun, 27 Sep 2020 12:51:43 -0700
-In-Reply-To: <20200927084004.GD2465761@coredump.intra.peff.net> (Jeff King's
-        message of "Sun, 27 Sep 2020 04:40:04 -0400")
-Message-ID: <xmqqlfgvngkw.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C140383C9F;
+        Sun, 27 Sep 2020 15:55:59 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Matthew Timothy Kennerly <mtkennerly@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: Differences in compound tag sorting between 2.27.0 and 2.21.0
+In-Reply-To: <CAKqNo6QCa2bGF3Uj-0ewh-_O+_qTOeOFYOM2k_daXw-vGg+xVg@mail.gmail.com>
+References: <CAKqNo6RJqp94uLMf8Biuo=ZvMZB9Mq6RRMrUgsLW4u1ks+mnOA@mail.gmail.com>
+ <877dsffaq0.fsf@kyleam.com>
+ <CAKqNo6QCa2bGF3Uj-0ewh-_O+_qTOeOFYOM2k_daXw-vGg+xVg@mail.gmail.com>
+Date:   Sun, 27 Sep 2020 15:55:58 -0400
+Message-ID: <871rinf0z5.fsf@kyleam.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DEED654A-00FA-11EB-8690-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 76FDE9D6-00FB-11EB-BE88-2F5D23BA3BAF-24757444!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Matthew Timothy Kennerly writes:
 
-> If a project uses commit trailers, this patch lets you use
-> shortlog to see who is performing each action. For example,
-> running:
+>> $ git tag --sort -taggerdate --sort '-*committerdate'
 >
->   git shortlog -ns --group=trailer:reviewed-by
+> That gives me the desired result with the annotated tag example I
+> gave, but if I do the same repository setup steps with lightweight
+> tags, then it inverts the order:
 >
-> in git.git shows who has reviewed. You can even use a custom
-> format to see things like who has helped whom:
+>     # Lightweight tag repo
+>     $ git tag --merged HEAD --sort -taggerdate --sort '-*committerdate'
+>     v0.1.0
+>     v0.1.1
+>     v0.2.0
+
+Yes, that depends on annotated tags.  For lightweight tags, there's no
+tag object to dereference to a commit.
+
+> It looks like I can support both setups at once by using
+> -committerdate plus -*committerdate, though:
 >
->   git shortlog --format="...helped %an (%ad)" \
->                --group=trailer:helped-by
+>     # Annotated tag repo
+>     $ git tag --merged HEAD --sort -taggerdate --sort -committerdate
+> --sort '-*committerdate'
+>     v0.2.0
+>     v0.1.1
+>     v0.1.0
+>
+>     # Lightweight tag repo
+>     $ git tag --merged HEAD --sort -taggerdate --sort -committerdate
+> --sort '-*committerdate'
+>     v0.2.0
+>     v0.1.0
+>     v0.1.1
+>
+> It's fine for me that the order isn't exactly the same, as long as
+> v0.2.0 is listed first.
 
-That's a cute example.
+For the lightweight case, v0.1.1 and v0.1.0 point to the same commit and
+taggerdate has no effect because there are no tag objects, so it falls
+back to sorting v0.1.0 and v0.1.1 by refname.
 
-> +Note that commits that do not include the trailer will not be counted.
+Given your stated goal of "[sorting] tags first by the date of the
+pointed commit, then by the date of the tag creation when available", I
+don't see a better solution than what you landed on.  creatordate is
+nice for handling a mix of annotated and lightweight tags, but it
+doesn't help in your case because you want to give precedence to the
+committerdate of the commit that a tags points to.  (Also, I'm not sure
+what the wider context for this sorting is, but perhaps just
+--sort=-version:refname would do what you want?)
 
-Understandable.
-
-> +Likewise, commits with multiple trailers (e.g., multiple signoffs) may
-> +be counted more than once.
-
-Solicits a "is it desirable, or is it just too hard to dedupe?" response.
-
-> +The contents of each trailer value are taken literally and completely.
-> +No mailmap is applied, and the `-e` option has no effect (if the trailer
-> +contains a username and email, they are both always shown).
-
-OK.  Some users may find that not quite satisfying, though.
-
-But I have a suspicion that the above will be refined in later
-steps?  It would have been nicer to see that mentioned in the
-proposed log message (e.g. "this step gives the minimum basics and
-rough edges like X and Y will be refined with later patches").
-
-Thanks.
