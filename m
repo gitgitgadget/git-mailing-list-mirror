@@ -2,91 +2,73 @@ Return-Path: <SRS0=TjTC=DE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D59AC4346E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 21:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C656C4346E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 22:27:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 207982311C
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 21:18:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3767239D4
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 22:27:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KdGvcNIf"
+	dkim=pass (2048-bit key) header.d=usc-edu.20150623.gappssmtp.com header.i=@usc-edu.20150623.gappssmtp.com header.b="UjHDBLQd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726335AbgI0VSO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 17:18:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50216 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgI0VSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 17:18:14 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DCC836A441;
-        Sun, 27 Sep 2020 17:18:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZvDcwnC3Tu7qeKYcaxfZK84MW6M=; b=KdGvcN
-        IfWuVFkvBBJnKrHi+FEj+j9N4Wt0ZfmB0nkhH6oVhHMq+gRBVNZHTCxSJvS4zIkK
-        R8mwmbYlBRqG7btOu14CaKLJB2cNnOs6OyF31dFXCQBDXfZ0kSGVLH60gt1Jjup/
-        9zgeJ9oLgE3oHKhvV6ZD6bw1cDun6DYKUrsvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pDjdSnMPPhZvGOKwQvXNGKjaKkqHaQZS
-        bsWrKsupNM3k766ebkenKsDFSP94EuiYLzx8am6c1OqT2U2lfoLtZk5GcKzaKXLR
-        tic8R8bHcgB4viDnVUlG0zIAKoSbRgQIDy7OVa3nEq18/s/tzQOX6xuml2KtE8TL
-        Ly3RcSP2yKU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2C596A440;
-        Sun, 27 Sep 2020 17:18:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5EE576A43F;
-        Sun, 27 Sep 2020 17:18:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 8/8] shortlog: allow multiple groups to be specified
-References: <20200927083933.GA2222823@coredump.intra.peff.net>
-        <20200927084015.GH2465761@coredump.intra.peff.net>
-Date:   Sun, 27 Sep 2020 14:18:10 -0700
-In-Reply-To: <20200927084015.GH2465761@coredump.intra.peff.net> (Jeff King's
-        message of "Sun, 27 Sep 2020 04:40:15 -0400")
-Message-ID: <xmqq8scuor59.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726369AbgI0W1I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 18:27:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33220 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726316AbgI0W1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 18:27:08 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5657AC0613CE
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 15:27:08 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id mm21so2498346pjb.4
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 15:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usc-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=u4LwENqI4m+ciUNFCTPK++Cjb+ACySct3XW4QWkqvtI=;
+        b=UjHDBLQd+j4AkaBNPNTw776VxLQNYGTIikXvILBYPMKPfp4mJ3zQdvNZUwriofCAg+
+         vF+bquG57h8MFOuwyITsns45S45mvAACgzKI8KH3CLJV90qEoGLqBgjH4lY5OOmcINs/
+         F4dCj9eZ7h2/HfWELbIG14veMRLp3dFSX8275mknnKxnjeruz8mZw1AtfIWeAnXNXI3h
+         1yZ9t0sUK4Kpmwtzxn7wiTu0zNM9hK75nKx888S1uh+EvHduyLvC4cqLFGGMGHKlP8zA
+         GIHaWVagsFfkvmkgnnPJ6alAOgr+YNLJvc66NCyDynLESkQ9NKGXfClDn8dWSIuMuWyM
+         uU9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=u4LwENqI4m+ciUNFCTPK++Cjb+ACySct3XW4QWkqvtI=;
+        b=SYrZ/L/yT9QXMgDiq5Lrq5BNT6iZIRlS8HRfcASuMHKtqT6lQkWgWqcOIsxZyYA3OT
+         G3VRc1BdQrdUN2r4Viqken6hitsmNKgTXEiv/vW0y4rE9NlS5iLNI/iC2np43QJOUG0v
+         xox3yvcORxwrKu0F9ftcoXb6MXpF6BoIhaZNxAsLXeukrpLjr0A26j/0AfCZ0wuKXu8z
+         3wcAGMZICm1abwgKOaGgyiVb29saoaMrRzU7SU4BxG/wA49FgUDutmsdsBwJO7hcPgxu
+         El95rwAkMKOw2kLoDmJoh2tiuwfpqQgSZk0ISckvHWREGsjjhEhG4Yu2G7JceCkanYLH
+         mOTA==
+X-Gm-Message-State: AOAM532/yTyIaupPbHYYwxmyg4Il7XwCQBJM4aD+0cL8MLzwadTw/tib
+        HURDNLqV9GYroVBzcBpk9NiJ3McD11vXo2XfjI8cEw82/4jGvA==
+X-Google-Smtp-Source: ABdhPJwRuk36PM2mdWMBRY+8yXYfnoWz2pabYlAnEoD/oq0rE+8fPiEqcTWaOjAqOBlJ8z96wVwuzA/nipp7xaX0OSs=
+X-Received: by 2002:a17:90a:ec06:: with SMTP id l6mr6909720pjy.66.1601245627558;
+ Sun, 27 Sep 2020 15:27:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F27403BA-0106-11EB-8C51-01D9BED8090B-77302942!pb-smtp1.pobox.com
+From:   Hampton Moore <hamptonm@usc.edu>
+Date:   Sun, 27 Sep 2020 18:26:56 -0400
+Message-ID: <CAOefx6Ro6ixiccDq_xH-UsjNWTcjKy=YQfCs7b0ZQkLjSb-0zQ@mail.gmail.com>
+Subject: Git remote return custom error messages
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hello,
+I have a custom ssh server that is handling validating users
+permissions, is there a way for me to return custom text back to the
+git client that's running push and pull? When I just send an error
+like "NOT A DOMAIN" through STOUT the git client displays "fatal:
+protocol error: bad line length character: NOT". I looked and could
+not find any obvious documentation on how I could do this, or if it
+would even be possible. Does anyone have any ideas?
 
-> -		if (strcasecmp(iter.key.buf, log->trailer))
-> +		if (!string_list_has_string(&log->trailers, iter.key.buf))
->  			continue;
-...
-> +	if (!log.groups)
-> +		log.groups = SHORTLOG_GROUP_AUTHOR;
-> +	string_list_sort(&log.trailers);
-
-I initially reacted with "oh, why sort?" to this line, before
-realizing that the list is used as a look-up table, which, if I
-recall correctly, you said you want to see us move off of in the
-longer term.  
-
-As we already have the string-set in this series, I am wondering
-why we are not using it.  It's not like the code at some point
-needs to iterate over log.trailers in some stable order, right?
-
-I do realize that going to hashmap might be overkill, but once we
-have an easy-to-use wrapper around it, between one "table of
-strings" API and another "table of strings" API, I do not see a
-reason why we want to choose the string_list.
-
-Thanks.
+Thank you,
+Hampton Moore
