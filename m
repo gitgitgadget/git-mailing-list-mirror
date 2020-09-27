@@ -2,104 +2,127 @@ Return-Path: <SRS0=TjTC=DE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25334C4727E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 00:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1311DC2D0A8
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 02:26:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C227E2388E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 00:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89C4322207
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 02:26:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SpDBdgZK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kxxkYoYl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727614AbgI0AIt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Sep 2020 20:08:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56699 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726382AbgI0AIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Sep 2020 20:08:49 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 598EEA3A8F;
-        Sat, 26 Sep 2020 20:08:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=O40AlvAo8ls/66VejgH9DZ2jrHc=; b=SpDBdg
-        ZKZAclDglTEsNWwCMWjR+cXEkj+8iHIw8IAb/GxZ3cqVnFhLcMr0KDbbQK4lpU8l
-        PuJzeWtZd/TcA/JqK5EWOVemlF21pw0doz0MgLMiFUwefAk4T+u14qvShrXfLIKT
-        juRFE+SPwhQuIEoL5mGW9qMwV88FNz1xrpXvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WafPeAS7fOY6SgUprma8UDkBNdRkEZ2p
-        LXdf6KGDsiEB8+Y73W/ljfdOsaIFJz8eh4hwRV+NA3ANWUts/EYPUo/QcA27g8rb
-        tboVg8+OSJIXtYyx5jc4igU74DzrSOCxUXzeDmvHLNnS7fZtm9U4iew9IPSvAu63
-        217bi20041s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 51EBDA3A8E;
-        Sat, 26 Sep 2020 20:08:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB3ABA3A8D;
-        Sat, 26 Sep 2020 20:08:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1727263AbgI0CZs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Sep 2020 22:25:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726478AbgI0CZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Sep 2020 22:25:47 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26FEC0613CE
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 19:25:47 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id bw23so1579434pjb.2
+        for <git@vger.kernel.org>; Sat, 26 Sep 2020 19:25:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=05QFXwtpTp3y6/bKNziiLokRVCmtg4rx+GnYtoCKfPo=;
+        b=kxxkYoYlGRRV9ZkGHBKyijIiEGJWmUtwN4YUP67oekufmY11LwuzixzK3HRLpWdKm8
+         /riimJPMvqJE8Qmj3T6ZjOFByiqpmMN9EJhiwpEBK4PQ4/k6w2wmVTnMIrbbXl9OpjHS
+         omelOgfLTVywxzE8cnW44ZCgw0WC1t9GYzudWGQ6dWk0gZVbZgDB+Fq5RxtTPquI9yss
+         6slegVSNGeKA3pZG/SZltfMDpry3X5BjBeCvnfa59OqJ+RxZjHGbGKyD4i4+xZa1i3Vr
+         JVhJRQ1ARwE0x+msWejL2PLi9Maq7RJFMTEiWpdHouRMlmPFxuVewwM7cIVagWB3PQkO
+         UX8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=05QFXwtpTp3y6/bKNziiLokRVCmtg4rx+GnYtoCKfPo=;
+        b=mSTA3QX3yExHBWR5JZYh55Og6DvQdr1tzrzHglfZ++Lw4CSdMUfzuZEkGoIBHOqxKg
+         3iUPvYhWmNe4KaCfV7x1Tqh8mVkHSik3a7XOhRAawbzDa3snLprGQ8gzOycBlzsh3OEp
+         3L5KsA2AI4IoElfo0sHfUIZqfREDTsyF3Q6BcvFwz1fJaITaK9N3GDS+7Bg3ks7cyek5
+         3qLgf0Q963qpsk5d2HdZhRDwusSSGTwWUQsWTZ7U0bzBv/S1mlYYRz2nLyF6JutIqNun
+         fp8x/MbA7D1zHMbrPEWwwwn12YWRvjGbogVHFc0LJ5qIqh2fmM7CfldSDv0/5jsrpWMK
+         aNnw==
+X-Gm-Message-State: AOAM530HrvASa0frGdUSe+TZ/MnJpiqIzTVKdkJOGPuBF02kU2OX2g/k
+        G7Cq0/i2xTK2kjKNLt5NiIg=
+X-Google-Smtp-Source: ABdhPJylh7ZG1N0wBz0NSsUSYGlYASLP2qUB9ob2S2hOpvojgcXytTC5SHtL03Gwia2tCxJlwr4JBQ==
+X-Received: by 2002:a17:90b:a44:: with SMTP id gw4mr3790081pjb.26.1601173547034;
+        Sat, 26 Sep 2020 19:25:47 -0700 (PDT)
+Received: from localhost ([2001:ee0:164:8119:190b:4a41:c771:566d])
+        by smtp.gmail.com with ESMTPSA id d12sm2395377pgd.93.2020.09.26.19.25.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Sep 2020 19:25:46 -0700 (PDT)
+Date:   Sun, 27 Sep 2020 09:25:43 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFH] sequencer: simplify logic around stopped-sha file
-References: <xmqq8scymmo1.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2009262320530.50@tvgsbejvaqbjf.bet>
-Date:   Sat, 26 Sep 2020 17:08:46 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2009262320530.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sat, 26 Sep 2020 23:28:14 +0200 (CEST)")
-Message-ID: <xmqqo8lsgjxt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 02/10] cmake: do find Git for Windows' shell interpreter
+Message-ID: <20200927022543.GD20935@danh.dev>
+References: <pull.738.git.1601044118.gitgitgadget@gmail.com>
+ <05b4b69fee2b8c32769dd72dea182cfb72a14876.1601044118.git.gitgitgadget@gmail.com>
+ <CAKiG+9V=BGX4k_dM-5JzYmko0cZfYXuSxEk5-UuHZpAqaWoU_A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2009260821260.50@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9CE09C76-0055-11EB-B904-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2009260821260.50@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 2020-09-26 22:32:25+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Since the Git-for-windows installer does append
+> > 'your_installation_directory'/Git/bin to the PATH variable, it should
+> > be fine.
+> 
+> No, it does not. Quite purposefully so.
+> 
+> The `/bin/` directory is kind of a hack to reinstate _some_ level of
+> support for use cases that relied on Git for Windows v1.x installing its
+> binaries into that directory (v2.x distributes them between `/usr/bin/`
+> and `/mingw64/bin/`).
+> 
+> What _does_ get appended, at least by default, is the `/cmd/` directory
+> (which does _not_ contain `sh.exe`).
+> 
+> Now, there _is_ an option in the Git for Windows installer to append all
+> of its Unix tools to the `PATH`, but it is highly discouraged to do so.
 
->> Is there something obvious I am not seeing that makes this change a
->> bad idea (other than "somebody may be in the middle of a rebase and
->> all of a sudden, version of Git gets updated to contain this one,
->> which is unable to read abbreviated object name the current version
->> left on disk", which I am deliberately ignoring)?
->
-> At least in my understanding, you are not missing anything:
->
-> - this file is an implementation detail,
->
-> - it is not exposed directly via any user-visible interface,
->
-> - any reader will _have_ to be prepared for an unabbreviated object ID (in
->   the highly unlikely case that an object ID would be ambiguous if
->   abbreviated even by one hex character),
+I agree with this decision.
 
-Ah, no that was not what I was worried about.  If an existing code,
-after restarting and reading the abbreviated object name back from
-the file, compares that shortened string against list of shortened
-strings it has in-core (perhaps it reads todo back from the user in
-abbreviated form, does comparison with stopped-sha as-is, before it
-expands the object names from todo to full length), this change
-would break it.
+> 
+> > I personally don't install my dev tools(except Visual Studio) to
+> > Program Files(because of the _space_), it messes up the Makefiles.
+> 
+> Sure, and that's your prerogative. There's unfortunately no good way to
+> support your use case.
+> 
+> Luckily, the vast majority of Git for Windows' users do not change the
+> default location, and this patch is for them. (And "them" in this case
+> includes me, personally ;-))
 
-> - and most importantly: just like we expand the commit IDs in the todo
->   list, we actually want to expand them in `stopped-sha` because it _is_
->   possible that a new object is written that makes the previous
->   unambiguously abbreviated object ID now ambiguous (e.g. when the user
->   commits in a separate worktree while the rebase is interrupted, before
->   continuing the rebase).
+This doesn't fit into my view of Git for Windows' users
+For some users that have the Administrator right, it's the default
+location if they grant the Administrator right for the installer.
 
-Exactly.  I just wasn't sure if stopped-sha is handled with the same
-carefulness as the object names in todo, which are expanded after
-read and shortened before given back to the users.
+For those poor souls that works for enterprise companies, and thoses
+that not feel comfortable give Administrator right to _another_
+installer, the installer will install into (hopeful, I type it right):
 
-Thanks.
+	%USERPROFILE%/AppData/Local/Programs/Git
+
+I think it's better to offer SH_EXE as an OPTION, let user specify it
+as will. And we'll search in PATH if it's not specified, fallback to
+2 default value if not found.
+
+-- 
+Danh
