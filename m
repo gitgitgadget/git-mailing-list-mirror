@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90126C4346E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF8FAC4727E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:40:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EF1A207BC
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:40:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A71B23998
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 08:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730583AbgI0IkG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 04:40:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42402 "EHLO cloud.peff.net"
+        id S1730590AbgI0IkI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 04:40:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42410 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730513AbgI0IkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 04:40:06 -0400
-Received: (qmail 29170 invoked by uid 109); 27 Sep 2020 08:40:05 -0000
+        id S1730513AbgI0IkI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 04:40:08 -0400
+Received: (qmail 29181 invoked by uid 109); 27 Sep 2020 08:40:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 27 Sep 2020 08:40:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 27 Sep 2020 08:40:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4075 invoked by uid 111); 27 Sep 2020 08:40:07 -0000
+Received: (qmail 4106 invoked by uid 111); 27 Sep 2020 08:40:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 27 Sep 2020 04:40:07 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 27 Sep 2020 04:40:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 27 Sep 2020 04:40:04 -0400
+Date:   Sun, 27 Sep 2020 04:40:07 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Subject: [PATCH v2 4/8] shortlog: match commit trailers with --group
-Message-ID: <20200927084004.GD2465761@coredump.intra.peff.net>
+Subject: [PATCH v2 5/8] shortlog: de-duplicate trailer values
+Message-ID: <20200927084007.GE2465761@coredump.intra.peff.net>
 References: <20200927083933.GA2222823@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,171 +42,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a project uses commit trailers, this patch lets you use
-shortlog to see who is performing each action. For example,
-running:
+The current documentation is vague about what happens with
+--group=trailer:signed-off-by when we see a commit with:
 
-  git shortlog -ns --group=trailer:reviewed-by
+  Signed-off-by: One
+  Signed-off-by: Two
+  Signed-off-by: One
 
-in git.git shows who has reviewed. You can even use a custom
-format to see things like who has helped whom:
-
-  git shortlog --format="...helped %an (%ad)" \
-               --group=trailer:helped-by
+We clearly should credit both "One" and "Two", but should "One" get
+credited twice? The current code does so, but mostly because that was
+the easiest thing to do. It's probably more useful to count each commit
+at most once. This will become especially important when we allow
+values from multiple sources in a future patch.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-shortlog.txt | 13 ++++++++++
- builtin/shortlog.c             | 44 +++++++++++++++++++++++++++++++++-
- shortlog.h                     |  2 ++
- t/t4201-shortlog.sh            | 14 +++++++++++
- 4 files changed, 72 insertions(+), 1 deletion(-)
+ Documentation/git-shortlog.txt |  3 +-
+ builtin/shortlog.c             | 58 ++++++++++++++++++++++++++++++++++
+ t/t4201-shortlog.sh            | 28 ++++++++++++++++
+ 3 files changed, 88 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-index 6496d313c1..edd6cda58a 100644
+index edd6cda58a..9e94613e13 100644
 --- a/Documentation/git-shortlog.txt
 +++ b/Documentation/git-shortlog.txt
-@@ -53,6 +53,19 @@ OPTIONS
+@@ -61,7 +61,8 @@ OPTIONS
  +
-  - `author`, commits are grouped by author
-  - `committer`, commits are grouped by committer (the same as `-c`)
-+ - `trailer:<field>`, the `<field>` is interpreted as a case-insensitive
-+   commit message trailer (see linkgit:git-interpret-trailers[1]). For
-+   example, if your project uses `Reviewed-by` trailers, you might want
-+   to see who has been reviewing with
-+   `git shortlog -ns --group=trailer:reviewed-by`.
-++
-+Note that commits that do not include the trailer will not be counted.
-+Likewise, commits with multiple trailers (e.g., multiple signoffs) may
-+be counted more than once.
-++
-+The contents of each trailer value are taken literally and completely.
-+No mailmap is applied, and the `-e` option has no effect (if the trailer
-+contains a username and email, they are both always shown).
- 
- -c::
- --committer::
+ Note that commits that do not include the trailer will not be counted.
+ Likewise, commits with multiple trailers (e.g., multiple signoffs) may
+-be counted more than once.
++be counted more than once (but only once per unique trailer value in
++that commit).
+ +
+ The contents of each trailer value are taken literally and completely.
+ No mailmap is applied, and the `-e` option has no effect (if the trailer
 diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 880ce19304..e1d9ee909f 100644
+index e1d9ee909f..d2d8103dd3 100644
 --- a/builtin/shortlog.c
 +++ b/builtin/shortlog.c
-@@ -9,6 +9,7 @@
- #include "mailmap.h"
- #include "shortlog.h"
- #include "parse-options.h"
-+#include "trailer.h"
- 
- static char const * const shortlog_usage[] = {
- 	N_("git shortlog [<options>] [<revision-range>] [[--] <path>...]"),
-@@ -136,6 +137,8 @@ static void read_from_stdin(struct shortlog *log)
- 	case SHORTLOG_GROUP_COMMITTER:
- 		match = committer_match;
- 		break;
-+	case SHORTLOG_GROUP_TRAILER:
-+		die(_("using --group=trailer with stdin is not supported"));
- 	default:
- 		BUG("unhandled shortlog group");
- 	}
-@@ -163,6 +166,37 @@ static void read_from_stdin(struct shortlog *log)
+@@ -166,13 +166,68 @@ static void read_from_stdin(struct shortlog *log)
  	strbuf_release(&oneline);
  }
  
-+static void insert_records_from_trailers(struct shortlog *log,
-+					 struct commit *commit,
-+					 struct pretty_print_context *ctx,
-+					 const char *oneline)
++struct strset_item {
++	struct hashmap_entry ent;
++	char value[FLEX_ARRAY];
++};
++
++struct strset {
++	struct hashmap map;
++};
++
++#define STRSET_INIT { { NULL } }
++
++static int strset_item_hashcmp(const void *hash_data,
++			       const struct hashmap_entry *entry,
++			       const struct hashmap_entry *entry_or_key,
++			       const void *keydata)
 +{
-+	struct trailer_iterator iter;
-+	const char *commit_buffer, *body;
++	const struct strset_item *a, *b;
 +
-+	/*
-+	 * Using format_commit_message("%B") would be simpler here, but
-+	 * this saves us copying the message.
-+	 */
-+	commit_buffer = logmsg_reencode(commit, NULL, ctx->output_encoding);
-+	body = strstr(commit_buffer, "\n\n");
-+	if (!body)
-+		return;
++	a = container_of(entry, const struct strset_item, ent);
++	if (keydata)
++		return strcmp(a->value, keydata);
 +
-+	trailer_iterator_init(&iter, body);
-+	while (trailer_iterator_advance(&iter)) {
-+		const char *value = iter.val.buf;
-+
-+		if (strcasecmp(iter.key.buf, log->trailer))
-+			continue;
-+
-+		insert_one_record(log, value, oneline);
-+	}
-+	trailer_iterator_release(&iter);
-+
-+	unuse_commit_buffer(commit, commit_buffer);
++	b = container_of(entry_or_key, const struct strset_item, ent);
++	return strcmp(a->value, b->value);
 +}
 +
- void shortlog_add_commit(struct shortlog *log, struct commit *commit)
++/*
++ * Adds "str" to the set if it was not already present; returns true if it was
++ * already there.
++ */
++static int strset_check_and_add(struct strset *ss, const char *str)
++{
++	unsigned int hash = strhash(str);
++	struct strset_item *item;
++
++	if (!ss->map.table)
++		hashmap_init(&ss->map, strset_item_hashcmp, NULL, 0);
++
++	if (hashmap_get_from_hash(&ss->map, hash, str))
++		return 1;
++
++	FLEX_ALLOC_STR(item, value, str);
++	hashmap_entry_init(&item->ent, hash);
++	hashmap_add(&ss->map, &item->ent);
++	return 0;
++}
++
++static void strset_clear(struct strset *ss)
++{
++	if (!ss->map.table)
++		return;
++	hashmap_free_entries(&ss->map, struct strset_item, ent);
++}
++
+ static void insert_records_from_trailers(struct shortlog *log,
+ 					 struct commit *commit,
+ 					 struct pretty_print_context *ctx,
+ 					 const char *oneline)
  {
- 	struct strbuf ident = STRBUF_INIT;
-@@ -197,6 +231,9 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- 				      &ident, &ctx);
- 		insert_one_record(log, ident.buf, oneline_str);
- 		break;
-+	case SHORTLOG_GROUP_TRAILER:
-+		insert_records_from_trailers(log, commit, &ctx, oneline_str);
-+		break;
+ 	struct trailer_iterator iter;
+ 	const char *commit_buffer, *body;
++	struct strset dups = STRSET_INIT;
+ 
+ 	/*
+ 	 * Using format_commit_message("%B") would be simpler here, but
+@@ -190,10 +245,13 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 		if (strcasecmp(iter.key.buf, log->trailer))
+ 			continue;
+ 
++		if (strset_check_and_add(&dups, value))
++			continue;
+ 		insert_one_record(log, value, oneline);
  	}
+ 	trailer_iterator_release(&iter);
  
- 	strbuf_release(&ident);
-@@ -263,12 +300,17 @@ static int parse_wrap_args(const struct option *opt, const char *arg, int unset)
- static int parse_group_option(const struct option *opt, const char *arg, int unset)
- {
- 	struct shortlog *log = opt->value;
-+	const char *field;
++	strset_clear(&dups);
+ 	unuse_commit_buffer(commit, commit_buffer);
+ }
  
- 	if (unset || !strcasecmp(arg, "author"))
- 		log->group = SHORTLOG_GROUP_AUTHOR;
- 	else if (!strcasecmp(arg, "committer"))
- 		log->group = SHORTLOG_GROUP_COMMITTER;
--	else
-+	else if (skip_prefix(arg, "trailer:", &field)) {
-+		log->group = SHORTLOG_GROUP_TRAILER;
-+		free(log->trailer);
-+		log->trailer = xstrdup(field);
-+	} else
- 		return error(_("unknown group type: %s"), arg);
- 
- 	return 0;
-diff --git a/shortlog.h b/shortlog.h
-index 876a52158d..89c2dbc5e6 100644
---- a/shortlog.h
-+++ b/shortlog.h
-@@ -19,7 +19,9 @@ struct shortlog {
- 	enum {
- 		SHORTLOG_GROUP_AUTHOR = 0,
- 		SHORTLOG_GROUP_COMMITTER,
-+		SHORTLOG_GROUP_TRAILER,
- 	} group;
-+	char *trailer;
- 
- 	char *common_repo_prefix;
- 	int email;
 diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 65e4468746..e97d891a71 100755
+index e97d891a71..83dbbc44e8 100755
 --- a/t/t4201-shortlog.sh
 +++ b/t/t4201-shortlog.sh
-@@ -220,4 +220,18 @@ test_expect_success '--group=committer is the same as --committer' '
+@@ -234,4 +234,32 @@ test_expect_success 'shortlog --group=trailer:signed-off-by' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'shortlog --group=trailer:signed-off-by' '
-+	git commit --allow-empty -m foo -s &&
-+	GIT_COMMITTER_NAME="SOB One" \
-+	GIT_COMMITTER_EMAIL=sob@example.com \
-+		git commit --allow-empty -m foo -s &&
-+	git commit --allow-empty --amend --no-edit -s &&
-+	cat >expect <<-\EOF &&
-+	     2	C O Mitter <committer@example.com>
-+	     1	SOB One <sob@example.com>
++test_expect_success 'shortlog de-duplicates trailers in a single commit' '
++	git commit --allow-empty -F - <<-\EOF &&
++	subject one
++
++	this message has two distinct values, plus a repeat
++
++	Repeated-trailer: Foo
++	Repeated-trailer: Bar
++	Repeated-trailer: Foo
 +	EOF
-+	git shortlog -ns --group=trailer:signed-off-by HEAD >actual &&
++
++	git commit --allow-empty -F - <<-\EOF &&
++	subject two
++
++	similar to the previous, but without the second distinct value
++
++	Repeated-trailer: Foo
++	Repeated-trailer: Foo
++	EOF
++
++	cat >expect <<-\EOF &&
++	     2	Foo
++	     1	Bar
++	EOF
++	git shortlog -ns --group=trailer:repeated-trailer -2 HEAD >actual &&
 +	test_cmp expect actual
 +'
 +
