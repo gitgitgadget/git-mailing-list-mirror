@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB21C4741F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64CA0C4727E
 	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 13:16:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E18C023976
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 13:16:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 176C72389F
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 13:16:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MA53YT8c"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LqAcSY0W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726281AbgI0NQL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 09:16:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33178 "EHLO
+        id S1726309AbgI0NQO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 09:16:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgI0NQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 09:16:10 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354A5C0613CE
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 06:16:10 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id u4so6103824ljd.10
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 06:16:10 -0700 (PDT)
+        with ESMTP id S1726185AbgI0NQO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 09:16:14 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C97AC0613D3
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 06:16:13 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id 77so8027698lfj.0
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 06:16:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WiR7Hb4i3YmxO4bXLMHG8A8PTI3jQ/wOd4ke80+KSQo=;
-        b=MA53YT8c/9QAOKCdWKJR9icDqRbpvBj6Fsl+kpcFxWJYl9UT+7HOvOzeewm3UIc1RR
-         Io2xm0lHundsOIZLRrqb+GlzijcTsq9Yd/5U/zV2YHY7OMhTzKA2ezbAjupv82xZH0bY
-         /r5wgGtb8YN1igKuy45rjHQ836VyH/gGR2ECu9wpuKG989RVGgR/NLYV5bXdO9pzGmVt
-         yvAflw9KVeieN7PZFRl4KbwssxwIFexLW1g9xC+6hpB1YYSC0dvVWWxuyxWvakwT5Irl
-         VYZ005NSnCx8kgnVBCsNSegQgde3RT1k/9+mcUf+AYnnK76ELDvlD8jS75msqVHfbhN3
-         hPXA==
+        bh=aevlg/FGJxSsLzjA9QWJE1dKGUO92VUSoULqA/qtorI=;
+        b=LqAcSY0WaPqQctM21ChYI9C0lso9hkg1WT4CSHOgt2wKwTfq4Tx70NAcGrZI2OFoPq
+         whFxQPYUN6dtMu6YjbaHY9o1engetCnMkJbBzd2uyxUxpwp5hv08iRan6OlsuIhD1k3f
+         2mWklMOX7Kav6LEGdWnmFaQwc0dn/kXJxJys5fmRGM4JaUlaxSXZbeg8h8FgMKB1Yv1t
+         /uk5Er4rcimdmuxvWcsub21y7rM6hAytZT1yo7+60FHNAWMI4EaZDKCQ97cjphP4OfFC
+         ZfVq7QNBv7DNaReLViPyQEpfOla2x04wvSfT8xLGHAMbOqGSmDQHum4ckowWS98ZItSg
+         ubdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WiR7Hb4i3YmxO4bXLMHG8A8PTI3jQ/wOd4ke80+KSQo=;
-        b=T5ZeqaGi2R5Js65j6oVSOZmgnUhQsmAUBf0StRKtrg4GhyCTX7n7TLcSNmVxygwNXH
-         cU/cViGaq02p1LFbCpZ9gr+wBA6WQeBRjoRvZYlmohuG5j6/DFMkhEkrs+tQeQ+6J0bd
-         tWV4Lz5QAnHGdnnIMyUaeDJ8ycIoz3Ug7v9DmwcilsNUGz1BvBTSewM2P84obx6mukDy
-         C6gNC208N+E/q3a4CkoafS/irstBcI3KzNt1GijEI7fASmmxPCvQdHxx8DtPFdbZWJkA
-         4B+SrGMTM8O9YFBOIvO1tBZfB0AvKQ0whRLCMmMYlN0k69+uifWSgYgZ4q1EhADyT6Dz
-         /rrg==
-X-Gm-Message-State: AOAM530l/VdZVb6D1U8r1oZcj/ZZ1I/Vo9ioaNAdey+JHJMK6wEWE+SO
-        43g1rJcxtx6NlIMlqMqrIn5PyXDXliM=
-X-Google-Smtp-Source: ABdhPJyIDOZijgdsEdBU3XbePqRlRf9voUsLDmQnACzjflQpSq4Wg/hGgb0dO4WALD8ANfCoPHoVzQ==
-X-Received: by 2002:a2e:575d:: with SMTP id r29mr1453483ljd.183.1601212568172;
-        Sun, 27 Sep 2020 06:16:08 -0700 (PDT)
+        bh=aevlg/FGJxSsLzjA9QWJE1dKGUO92VUSoULqA/qtorI=;
+        b=QT8XSfWdT/B+iPfIvDKc48sX5E1ckLOL8roj2eXbVp9CTKrwUdO+OvS2tyc9H89skm
+         vtcvJDF0xzRW8Oclp77riJodfm+w/XfA0gQL2j3uX/JLoLYuJBbgigC8uhYa1cjmv6K9
+         xOdp7GssCmilhtpr6bZnNm5cUmCZkVNORSLRez5SM00cLuGUJCEE/RTzRyp7b/HOi9Z3
+         jNhtbOd2kMclbrjSXq9tz4ZMHrzh8WTWXdoBiN/BEYLZoos+k8ozX08yui2xjcgW3MKZ
+         floftJvgkX9ysmgVHxl9Ww3BsFyZ64TArdwm7cm78j6z59l9f3tjIRdc9ryDbXHNcgCg
+         yHpw==
+X-Gm-Message-State: AOAM532v1D5BcEBmYJfK/1o3v0tpgmMSD/G5wTO4Uofx+qIMHQHHvWy/
+        JbYSlFzAqgM7L7E+mC/H9uAAOvLCyFo=
+X-Google-Smtp-Source: ABdhPJzhIOYbEuG2qbY/ZqTwm7WK2ApEqcAjcPOCOkuwqXitTKwsWrcpOplc+E6mW7XywoUEeOCEkQ==
+X-Received: by 2002:ac2:43d5:: with SMTP id u21mr2743858lfl.135.1601212571807;
+        Sun, 27 Sep 2020 06:16:11 -0700 (PDT)
 Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id o8sm2487616lfa.44.2020.09.27.06.16.07
+        by smtp.gmail.com with ESMTPSA id o8sm2487616lfa.44.2020.09.27.06.16.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Sep 2020 06:16:07 -0700 (PDT)
+        Sun, 27 Sep 2020 06:16:11 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 2/7] wt-status: print to s->fp, not stdout
-Date:   Sun, 27 Sep 2020 15:15:42 +0200
-Message-Id: <7ada884d7c61b4ae6fd002d93a5ac982a63071b7.1600281351.git.martin.agren@gmail.com>
+Subject: [PATCH v2 4/7] worktree: inline `worktree_ref()` into its only caller
+Date:   Sun, 27 Sep 2020 15:15:44 +0200
+Message-Id: <c4825f461e0408970f2adb272098bd6f2a80ef78.1600281351.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.28.0.277.g9b3c35fffd
 In-Reply-To: <cover.1600281350.git.martin.agren@gmail.com>
 References: <cover.1599762679.git.martin.agren@gmail.com> <cover.1600281350.git.martin.agren@gmail.com>
@@ -76,155 +76,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We pass around a `FILE *` in the `struct wt_status` and almost always
-print to it. But in a few places, we write to `stdout` instead, either
-explicitly through `fprintf(stdout, ...)` or implicitly with
-`printf(...)` (and a few `putchar(...)`).
+We have `strbuf_worktree_ref()`, which works on a strbuf, and a wrapper
+for it, `worktree_ref()` which returns a string. We even make this
+wrapper available through worktree.h. But it only has a single caller,
+sitting right next to it in worktree.c.
 
-Always be explicit about writing to `s->fp`. To the best of my
-understanding, this never mattered in practice because these spots are
-involved in various forms of `git status` which always end up at
-standard output anyway. When we do write to another file, it's because
-we're creating a commit message template, and these code paths aren't
-involved.
-
-But let's be consistent to help future readers and avoid future bugs.
+Just inline the wrapper into its only caller. This means the caller can
+quite naturally reuse a single strbuf. We currently achieve something
+similar by having a static strbuf in the wrapper.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- wt-status.c | 57 ++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 32 insertions(+), 25 deletions(-)
+ worktree.h |  7 -------
+ worktree.c | 17 ++++++-----------
+ 2 files changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 59be457015..3e0b5d8017 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1806,29 +1806,36 @@ static void wt_longstatus_print(struct wt_status *s)
- 			; /* nothing */
- 		else if (s->workdir_dirty) {
- 			if (s->hints)
--				printf(_("no changes added to commit "
--					 "(use \"git add\" and/or \"git commit -a\")\n"));
-+				fprintf(s->fp, _("no changes added to commit "
-+						 "(use \"git add\" and/or "
-+						 "\"git commit -a\")\n"));
- 			else
--				printf(_("no changes added to commit\n"));
-+				fprintf(s->fp, _("no changes added to "
-+						 "commit\n"));
- 		} else if (s->untracked.nr) {
- 			if (s->hints)
--				printf(_("nothing added to commit but untracked files "
--					 "present (use \"git add\" to track)\n"));
-+				fprintf(s->fp, _("nothing added to commit but "
-+						 "untracked files present (use "
-+						 "\"git add\" to track)\n"));
- 			else
--				printf(_("nothing added to commit but untracked files present\n"));
-+				fprintf(s->fp, _("nothing added to commit but "
-+						 "untracked files present\n"));
- 		} else if (s->is_initial) {
- 			if (s->hints)
--				printf(_("nothing to commit (create/copy files "
--					 "and use \"git add\" to track)\n"));
-+				fprintf(s->fp, _("nothing to commit (create/"
-+						 "copy files and use \"git "
-+						 "add\" to track)\n"));
- 			else
--				printf(_("nothing to commit\n"));
-+				fprintf(s->fp, _("nothing to commit\n"));
- 		} else if (!s->show_untracked_files) {
- 			if (s->hints)
--				printf(_("nothing to commit (use -u to show untracked files)\n"));
-+				fprintf(s->fp, _("nothing to commit (use -u to "
-+						 "show untracked files)\n"));
- 			else
--				printf(_("nothing to commit\n"));
-+				fprintf(s->fp, _("nothing to commit\n"));
- 		} else
--			printf(_("nothing to commit, working tree clean\n"));
-+			fprintf(s->fp, _("nothing to commit, working tree "
-+					 "clean\n"));
- 	}
- 	if(s->show_stash)
- 		wt_longstatus_print_stash_summary(s);
-@@ -1851,12 +1858,12 @@ static void wt_shortstatus_unmerged(struct string_list_item *it,
- 	}
- 	color_fprintf(s->fp, color(WT_STATUS_UNMERGED, s), "%s", how);
- 	if (s->null_termination) {
--		fprintf(stdout, " %s%c", it->string, 0);
-+		fprintf(s->fp, " %s%c", it->string, 0);
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		one = quote_path(it->string, s->prefix, &onebuf);
--		printf(" %s\n", one);
-+		fprintf(s->fp, " %s\n", one);
- 		strbuf_release(&onebuf);
- 	}
+diff --git a/worktree.h b/worktree.h
+index 516744c433..1449b6bf5d 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -136,11 +136,4 @@ void strbuf_worktree_ref(const struct worktree *wt,
+ 			 struct strbuf *sb,
+ 			 const char *refname);
+ 
+-/*
+- * Return a refname suitable for access from the current ref
+- * store. The result will be destroyed at the next call.
+- */
+-const char *worktree_ref(const struct worktree *wt,
+-			 const char *refname);
+-
+ #endif
+diff --git a/worktree.c b/worktree.c
+index 23dd547e44..a37d543394 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -548,18 +548,10 @@ void strbuf_worktree_ref(const struct worktree *wt,
+ 	strbuf_addstr(sb, refname);
  }
-@@ -1869,16 +1876,16 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 	if (d->index_status)
- 		color_fprintf(s->fp, color(WT_STATUS_UPDATED, s), "%c", d->index_status);
- 	else
--		putchar(' ');
-+		fputc(' ', s->fp);
- 	if (d->worktree_status)
- 		color_fprintf(s->fp, color(WT_STATUS_CHANGED, s), "%c", d->worktree_status);
- 	else
--		putchar(' ');
--	putchar(' ');
-+		fputc(' ', s->fp);
-+	fputc(' ', s->fp);
- 	if (s->null_termination) {
--		fprintf(stdout, "%s%c", it->string, 0);
-+		fprintf(s->fp, "%s%c", it->string, 0);
- 		if (d->rename_source)
--			fprintf(stdout, "%s%c", d->rename_source, 0);
-+			fprintf(s->fp, "%s%c", d->rename_source, 0);
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
-@@ -1886,20 +1893,20 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 		if (d->rename_source) {
- 			one = quote_path(d->rename_source, s->prefix, &onebuf);
- 			if (*one != '"' && strchr(one, ' ') != NULL) {
--				putchar('"');
-+				fputc('"', s->fp);
- 				strbuf_addch(&onebuf, '"');
- 				one = onebuf.buf;
- 			}
--			printf("%s -> ", one);
-+			fprintf(s->fp, "%s -> ", one);
- 			strbuf_release(&onebuf);
- 		}
- 		one = quote_path(it->string, s->prefix, &onebuf);
- 		if (*one != '"' && strchr(one, ' ') != NULL) {
--			putchar('"');
-+			fputc('"', s->fp);
- 			strbuf_addch(&onebuf, '"');
- 			one = onebuf.buf;
- 		}
--		printf("%s\n", one);
-+		fprintf(s->fp, "%s\n", one);
- 		strbuf_release(&onebuf);
- 	}
- }
-@@ -1908,13 +1915,13 @@ static void wt_shortstatus_other(struct string_list_item *it,
- 				 struct wt_status *s, const char *sign)
+ 
+-const char *worktree_ref(const struct worktree *wt, const char *refname)
+-{
+-	static struct strbuf sb = STRBUF_INIT;
+-
+-	strbuf_reset(&sb);
+-	strbuf_worktree_ref(wt, &sb, refname);
+-	return sb.buf;
+-}
+-
+ int other_head_refs(each_ref_fn fn, void *cb_data)
  {
- 	if (s->null_termination) {
--		fprintf(stdout, "%s %s%c", sign, it->string, 0);
-+		fprintf(s->fp, "%s %s%c", sign, it->string, 0);
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
- 		one = quote_path(it->string, s->prefix, &onebuf);
- 		color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", sign);
--		printf(" %s\n", one);
-+		fprintf(s->fp, " %s\n", one);
- 		strbuf_release(&onebuf);
+ 	struct worktree **worktrees, **p;
++	struct strbuf refname = STRBUF_INIT;
+ 	int ret = 0;
+ 
+ 	worktrees = get_worktrees();
+@@ -571,14 +563,17 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
+ 		if (wt->is_current)
+ 			continue;
+ 
++		strbuf_reset(&refname);
++		strbuf_worktree_ref(wt, &refname, "HEAD");
+ 		if (!refs_read_ref_full(get_main_ref_store(the_repository),
+-					worktree_ref(wt, "HEAD"),
++					refname.buf,
+ 					RESOLVE_REF_READING,
+ 					&oid, &flag))
+-			ret = fn(worktree_ref(wt, "HEAD"), &oid, flag, cb_data);
++			ret = fn(refname.buf, &oid, flag, cb_data);
+ 		if (ret)
+ 			break;
  	}
+ 	free_worktrees(worktrees);
++	strbuf_release(&refname);
+ 	return ret;
  }
 -- 
 2.28.0.277.g9b3c35fffd
