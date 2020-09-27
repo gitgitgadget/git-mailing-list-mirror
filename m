@@ -2,150 +2,103 @@ Return-Path: <SRS0=TjTC=DE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E346C4346E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 19:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA42C4346E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 19:51:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 225FD23A33
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 19:24:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D0DE21D95
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 19:51:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8PZzNJD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JFscHLnn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726328AbgI0TXt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 15:23:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbgI0TXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 15:23:48 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C645AC0613CE
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 12:23:48 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id a16so4558785vsp.12
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 12:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uQ9meEx7lkrXgaMezOqSJR/5L5hZWjLJ1IBaimxe2XY=;
-        b=X8PZzNJDvmqiR85eoScEVgfti9jydWf6R9gGJXHlcfclXjPB6aVu1Ykr3HuaHCuFNN
-         RnKjM3h05b10kLyehYnxEngJdWvWXlyYAFGUY0Zu4DV5P/UBo8afiOEyQip1G0gLuNVf
-         Yr3FZdo++DftkwkAKqjtqjZF4wWdfrCnOjeMkcQS4BvzcYy9QygUcF2CkLfCAd2Xr7nI
-         xNv1wh7WNC3UKS9xbq2wKVZRQMsaEyolbPd0ciumlhj2ZCcRwJDHwinvDmW62++TRMmr
-         IDhZ4BrAJbjUvq+uNMXBX1QGL47v/0szRFtyHvOHiYkTfHuvgCbber3sJMRyxFzimKUd
-         cVqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uQ9meEx7lkrXgaMezOqSJR/5L5hZWjLJ1IBaimxe2XY=;
-        b=OA9+w25ZqRD4rQYgXQ0V4It60+sDhhHlY3E5bDnRDB9GIEhIBM92RkHe/1O/74QJN8
-         1O4J1M2CCAnckwOaPTSS1h4sN6uY0Ew8l9sO2pXLtXcjszyx5Sqw8MOaxUFpWqotVENk
-         KkQTwLdU+rKs4NZMtL+VDTUcUgk+8/8/vd+/pWsG4CSHY3uWDhVYeUSckPXdt8zcaSg8
-         7rPIEIfS6leZDTelwP4WDJWqLc3eskX0mRga/cbgMbLVRDa3fNXRa/S6rK2knjXYGBbK
-         ibL0s/ikpmDTgFu+Tdqydb2QzXHupBHuhvJD29OtqNnubOzvy1321v3Bxg1fEy19p7hP
-         Fffg==
-X-Gm-Message-State: AOAM532RVQdicum3PY7CimcQt0cj1GUWF5HU3D3BCNTm6/N84fgX6WCJ
-        uMhw+N/crytUs5LuJsMCwze4C0WyMnMqs/ZwmAo=
-X-Google-Smtp-Source: ABdhPJwAvUJfcKTr0BPFqJnzBBGqkMmn2oHi0TcUIseOL1jwDfjwaPBv3NHvkvca8fmI626j5lItEuEJ7zDOuCTqcxs=
-X-Received: by 2002:a67:d601:: with SMTP id n1mr4754472vsj.2.1601234627878;
- Sun, 27 Sep 2020 12:23:47 -0700 (PDT)
+        id S1726316AbgI0Tvt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 15:51:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65365 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726239AbgI0Tvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 15:51:49 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5B820E6212;
+        Sun, 27 Sep 2020 15:51:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Yfwoj24k33WjT8QAj1LFVJDfRnA=; b=JFscHL
+        nnCKX5ZdZsj9Hx/OFSuTlCIcxUaomgSuc5hMQsuQvFz16aZ5a6w2YVkAdUcCu9ki
+        PUjfaI3KYrmuruq4Bz+P8b7gOsGpt3jGz5iUOv50NtEkenXA1uqgGETFzdSgfNu1
+        tcwASM/2we06qGA/VJNet0AyzoIolOHxCzsJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IBjSJ/IbQxXkuYw9mmIrmQMphySxrhE5
+        sTSpQ/3YOJIZ7ChxodB0By6FNSpzitqb+FSvTwB3khxPiMZIzPtn+FY1v5PStM7I
+        uMtTj7PWiQK7eR8Z7OW7k3NaWR72bD6IM0LvoVKi0nmzhxKctd0uARRIu6Xu3pm4
+        z1x8xmXCnAc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 53EA6E6211;
+        Sun, 27 Sep 2020 15:51:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A461AE620E;
+        Sun, 27 Sep 2020 15:51:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v2 4/8] shortlog: match commit trailers with --group
+References: <20200927083933.GA2222823@coredump.intra.peff.net>
+        <20200927084004.GD2465761@coredump.intra.peff.net>
+Date:   Sun, 27 Sep 2020 12:51:43 -0700
+In-Reply-To: <20200927084004.GD2465761@coredump.intra.peff.net> (Jeff King's
+        message of "Sun, 27 Sep 2020 04:40:04 -0400")
+Message-ID: <xmqqlfgvngkw.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20200909004939.1942347-1-emilyshaffer@google.com> <20200909004939.1942347-4-emilyshaffer@google.com>
-In-Reply-To: <20200909004939.1942347-4-emilyshaffer@google.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 27 Sep 2020 21:23:35 +0200
-Message-ID: <CAN0heSq1iVtJycjgh-iv2O6vNr6CLn69N3286hzkfu5sXLjf5w@mail.gmail.com>
-Subject: Re: [PATCH v4 3/9] hook: add list command
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: DEED654A-00FA-11EB-8690-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+Jeff King <peff@peff.net> writes:
 
-On Wed, 9 Sep 2020 at 02:54, Emily Shaffer <emilyshaffer@google.com> wrote:
+> If a project uses commit trailers, this patch lets you use
+> shortlog to see who is performing each action. For example,
+> running:
+>
+>   git shortlog -ns --group=trailer:reviewed-by
+>
+> in git.git shows who has reviewed. You can even use a custom
+> format to see things like who has helped whom:
+>
+>   git shortlog --format="...helped %an (%ad)" \
+>                --group=trailer:helped-by
 
->  DESCRIPTION
->  -----------
->  You can list, add, and modify hooks with this command.
+That's a cute example.
 
-(BTW, I think this patch could teach this to say "You can list hooks
-with this command." If/when we add the other commands, we can expand
-on this.)
+> +Note that commits that do not include the trailer will not be counted.
 
-> +This command parses the default configuration files for sections "hook" and
-> +"hookcmd". "hook" is used to describe the commands which will be run during a
+Understandable.
 
-I propose s/"hook"/`hook`/ and similar to set this as monospace since we
-are discussing configuration sections. If we want to avoid starting
-sentences with "hook" (or `hookcmd`; do we?), maybe something like "The
-section `hook` ..." would work fine.
+> +Likewise, commits with multiple trailers (e.g., multiple signoffs) may
+> +be counted more than once.
 
-> +particular hook event; commands are run in config order. "hookcmd" is used to
+Solicits a "is it desirable, or is it just too hard to dedupe?" response.
 
-"config order" feels a bit too colloquial/vague. You use the same phrase
-in the commit message and I think it works well there for the indented
-audience. But for this document, I'm not so sure. How about
+> +The contents of each trailer value are taken literally and completely.
+> +No mailmap is applied, and the `-e` option has no effect (if the trailer
+> +contains a username and email, they are both always shown).
 
-  Commands are run in the order they are encountered as the Git
-  configuration files are processed (see linkgit:git-config[1]).
+OK.  Some users may find that not quite satisfying, though.
 
-? It's also quite possible that "config order" hits the exact right tone
--- please trust your judgment.
+But I have a suspicion that the above will be refined in later
+steps?  It would have been nicer to see that mentioned in the
+proposed log message (e.g. "this step gives the minimum basics and
+rough edges like X and Y will be refined with later patches").
 
-> +describe attributes of a specific command. If additional attributes don't need
-> +to be specified, a command to run can be specified directly in the "hook"
-> +section; if a "hookcmd" by that name isn't found, Git will attempt to run the
-> +provided value directly. For example:
-
-> +  [hook "post-commit"]
-> +    command = "linter"
-> +    command = "~/typocheck.sh"
-> +
-> +  [hookcmd "linter"]
-> +    command = "/bin/linter --c"
-
-Hmm. "hook", "command" and "hookcmd". Should that be "cmd", or
-"hookcommand"? I'd favour the latter, but the current proposal somehow
-feels asymmetric. (If code uses, and is consistent about using,
-"hookcmd" that's another thing entirely, I think. It's just that for the
-configuration, it looks a bit odd.)
-
-> +List the hooks which have been configured for <hook-name>. Hooks appear
-
-`<hook-name>` with backticks.
-
-> +in the order they should be run, and note the config scope where the relevant
-> +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
-
-I had to read and re-read this a few times. The "and note the" does not
-mean "and please observe that", but rather "and they make note of". Not
-sure how that can be done clearer. The second thing that tripped me up
-was that last part. Maybe end the sentence after "specified", then add
-something like "The scope is not affected by if and where
-`hookcmd.<hook-name>.command` appears.".
-
-I think you could add
-
-  CONFIGURATION
-  -------------
-  include::config/hook.txt[]
-
-here and add such a file
-
-  hook.<hook-name>.command::
-         ...
-
-  hookcmd.<hook-name>.command::
-         ...
-
-where you define/describe those items. And you can include it from
-config.txt as well.
-
-Martin
+Thanks.
