@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26343C4727D
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 14:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 352EBC4346E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 14:18:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C45B523119
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 14:18:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCC9A2389F
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 14:18:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOyyz8DW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L/PnVMTL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726315AbgI0OSk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 10:18:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
+        id S1726327AbgI0OSo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 10:18:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbgI0OSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 10:18:39 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85596C0613CE
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 07:18:39 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id t14so6035260pgl.10
-        for <git@vger.kernel.org>; Sun, 27 Sep 2020 07:18:39 -0700 (PDT)
+        with ESMTP id S1726281AbgI0OSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 10:18:41 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 692FAC0613CE
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 07:18:41 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id s19so1981715plp.3
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 07:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Q3L0iYibBDG7fRSOL1Nadth2Bi/7rf4TTPJvDvDlY38=;
-        b=kOyyz8DWe/DpSjtsctml/gE3t+eS69LtV4oqxH1/ntzYhyIw6XZcZ9oS0IB4dl+CvF
-         eRg02XS3Xj1aA7pQn38LOdfEBwPIVcxAwZbyCGnEcwpekGRytgCCae6SScvmyktVAE3h
-         p6OWxyjYH/BKbAK6zab55zf2+AMPPbk01s4Bvu8M22YCGO+K+jtbWF2wjzW5okaNnjUm
-         o3SfRJU7rAsik92AyWx3ETE6YdoMEMilDl85c3dvZdt871owPFxgrrtpsE9oMOddJlfz
-         41PGRmctAzmHkr3pQMz2LDr3Lc3r3f5GSIUVvSc3cJz/rfs0A+Vi8+8/IcudEOvdtYLf
-         Z8PQ==
+        bh=3ujRkylrd07cjhXcs9E/tGBf1Teyc0ldkDSytKrWgXE=;
+        b=L/PnVMTLxXHkR5dFvuwg7WbSjdbK/8AIAgxH9Y15Bz4atiEYmHt1Z3vgCARRDvix1f
+         IpJ8gBMONTZ+ncja9eZ2WHmykVneYbNKau9uh8a2J4h8JglyhnkJaZoraOMJTnao4Fei
+         +pLpCwl4DH5FV+VoCFzxKGvOrAFiK2+o1dF0L8qt4QjeEWRZ+VUyCC73w6e9nRNLYAej
+         xuEMcMdYcc560rN7WVlSGu8CNDAPh+hPd6iCPsGYFPfLFIRbPBwta5j8jpeH0rtUr+OG
+         Moihtti9wom+GgpiUNHlfuQgSzv45r8bfhtsuhcvCqDXAhs7YbwAPIDpLoCtx9tT69rD
+         RnMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Q3L0iYibBDG7fRSOL1Nadth2Bi/7rf4TTPJvDvDlY38=;
-        b=AD2TxJJ7iiclEEHY9TMC2EjqN0Qg/YE/pcJTpZV4CMtxyEzvg6ZIJQwSsy54mfi3EQ
-         E1JAC8BxBtHauiJ4BsHZA7PPIIiGtDugFBs45O9hr6Fo1EcYE1Oywvz89z4JOxAHFti2
-         3i4XGbey3JV8z8Ai1Zl1E4lL02TCFvMFWbVhnSEG21xBsNuoufn43WEVCjmt/xJrdkqB
-         Dlvlj1DV5iEowUfS0dL1zTE4pj6RgcCkCscCglVbnGxUX/8oZYWc/PyYmr4t/e8plLOH
-         frBaCCXwNXGXjmrSjE1zTOOwjfkvVq4oiE2mBh3wJcuHPc9LeVPn0AIMNcl1izXp1iSj
-         2vYQ==
-X-Gm-Message-State: AOAM532fOxBGPJjBhVEQhbi4YJSSmR8MLvo+KiQQN0gBWET2XBYYbS6g
-        Uysgjzj+lOhRGOSPAk75t2fSCm6/F2E4y0lY
-X-Google-Smtp-Source: ABdhPJzTLKTszT/L+AHzIMd0lUc56ue2xAGxU0Q/0QPXTGAQHvULPNE5j+P5Aj6c7d9OcAxqOYKKQg==
-X-Received: by 2002:aa7:941a:0:b029:142:2501:35d1 with SMTP id x26-20020aa7941a0000b0290142250135d1mr7234400pfo.49.1601216318546;
-        Sun, 27 Sep 2020 07:18:38 -0700 (PDT)
+        bh=3ujRkylrd07cjhXcs9E/tGBf1Teyc0ldkDSytKrWgXE=;
+        b=nv7ojRhfRxsvTrRC7xXwYdyKsj2Fgjt5j55bXxNnrb0cVxhHZyjpYCbV5qk6YA4AFt
+         R0oeR5nEcnb5XTfz65gMrhZ8YDiYM+Wftia+lnFpkO1FSEoaUxk60+jNL8FtVnS/66qA
+         ewNDa8P2q3ZaLIOewcRSBjTxYBOvYNJYSZkrT8e1l8t60/Xse1IlBMTz1EoQp99k3//E
+         TmorZfkbb2Bmb+8uF3SgyZAUZ0Cfmgjq+1R4R7Hz5jf51/nDPA/3cCyMIj1QYCkRyjmD
+         oSotmiv+abp2Ycsd69tLC6fl0wObeA7ZjNKFGO4RJ11ByzbtcukUlvXhAiTTmEzwi6fh
+         kpGA==
+X-Gm-Message-State: AOAM532TPZsNm3IGOSY2AVCpXRPmSec7zaUm1uwTOaUy8KDvU1lqjrxc
+        sy1QDrHC4x/E+TfTxq3DP2uU557tZPntleGU
+X-Google-Smtp-Source: ABdhPJxdgomm2y0pFlZ/g+6mTI3ktUSrZewUoffWciG1P9frixDCm/b7qeRHrb3hEX0mKlylnX64gg==
+X-Received: by 2002:a17:90a:77c1:: with SMTP id e1mr5472531pjs.39.1601216320424;
+        Sun, 27 Sep 2020 07:18:40 -0700 (PDT)
 Received: from localhost.localdomain ([124.123.106.216])
-        by smtp.gmail.com with ESMTPSA id d17sm8377799pfq.157.2020.09.27.07.18.37
+        by smtp.gmail.com with ESMTPSA id d17sm8377799pfq.157.2020.09.27.07.18.38
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Sep 2020 07:18:38 -0700 (PDT)
+        Sun, 27 Sep 2020 07:18:39 -0700 (PDT)
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v8 2/3] push: parse and set flag for "--force-if-includes"
-Date:   Sun, 27 Sep 2020 19:47:46 +0530
-Message-Id: <20200927141747.78047-3-shrinidhi.kaushik@gmail.com>
+Subject: [PATCH v8 3/3] t, doc: update tests, reference for "--force-if-includes"
+Date:   Sun, 27 Sep 2020 19:47:47 +0530
+Message-Id: <20200927141747.78047-4-shrinidhi.kaushik@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
 References: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
@@ -74,305 +74,278 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit added the necessary machinery to implement the
-"--force-if-includes" protection, when "--force-with-lease" is used
-without giving exact object the remote still ought to have. Surface
-the feature by adding a command line option and a configuration
-variable to enable it.
+Update test cases for the new option, and document its usage
+and update related references.
 
- - Add a flag: "TRANSPORT_PUSH_FORCE_IF_INCLUDES" to indicate that the
-   new option was passed from the command line of via configuration
-   settings; update command line and configuration parsers to set the
-   new flag accordingly.
+Update test cases for the new option, and document its usage
+and update related references.
 
- - Introduce a new configuration option "push.useForceIfIncludes", which
-   is equivalent to setting "--force-if-includes" in the command line.
+ - t/t5533-push-cas.sh:
+   Update test cases for "compare-and-swap" when used along with
+   "--force-if-includes" helps mitigate overwrites when remote
+   refs are updated in the background; allows forced updates when
+   changes from remote are integrated locally.
 
- - Update "remote-curl" to recognize and pass this option to "send-pack"
-   when enabled.
-
- - Update "advise" to catch the reject reason "REJECT_REF_NEEDS_UPDATE",
-   set when the ref status is "REF_STATUS_REJECT_REMOTE_UPDATED" and
-   (optionally) print a help message when the push fails.
-
- - The new option is a "no-op" in the following scenarios:
-    * When used without "--force-with-lease".
-    * When used with "--force-with-lease", and if the expected commit
-      on the remote side is specified as an argument.
+ - Documentation:
+   Add reference for the new option, configuration setting
+   ("push.useForceIfIncludes") and advise messages.
 
 Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 ---
- advice.c            |  3 +++
- advice.h            |  2 ++
- builtin/push.c      | 27 +++++++++++++++++++++++++++
- builtin/send-pack.c |  7 +++++++
- remote-curl.c       | 14 +++++++++++++-
- transport-helper.c  |  5 +++++
- transport.c         |  2 ++
- transport.h         | 15 ++++++++++-----
- 8 files changed, 69 insertions(+), 6 deletions(-)
+ Documentation/config/advice.txt |   9 +-
+ Documentation/config/push.txt   |   6 ++
+ Documentation/git-push.txt      |  26 +++++-
+ t/t5533-push-cas.sh             | 140 ++++++++++++++++++++++++++++++++
+ 4 files changed, 177 insertions(+), 4 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index f0a3d32d20..164742305f 100644
---- a/advice.c
-+++ b/advice.c
-@@ -11,6 +11,7 @@ int advice_push_already_exists = 1;
- int advice_push_fetch_first = 1;
- int advice_push_needs_force = 1;
- int advice_push_unqualified_ref_name = 1;
-+int advice_push_ref_needs_update = 1;
- int advice_status_hints = 1;
- int advice_status_u_option = 1;
- int advice_status_ahead_behind_warning = 1;
-@@ -72,6 +73,7 @@ static struct {
- 	{ "pushFetchFirst", &advice_push_fetch_first },
- 	{ "pushNeedsForce", &advice_push_needs_force },
- 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
-+	{ "pushRefNeedsUpdate", &advice_push_ref_needs_update },
- 	{ "statusHints", &advice_status_hints },
- 	{ "statusUoption", &advice_status_u_option },
- 	{ "statusAheadBehindWarning", &advice_status_ahead_behind_warning },
-@@ -116,6 +118,7 @@ static struct {
- 	[ADVICE_PUSH_ALREADY_EXISTS]			= { "pushAlreadyExists", 1 },
- 	[ADVICE_PUSH_FETCH_FIRST]			= { "pushFetchFirst", 1 },
- 	[ADVICE_PUSH_NEEDS_FORCE]			= { "pushNeedsForce", 1 },
-+	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate", 1 },
- 
- 	/* make this an alias for backward compatibility */
- 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward", 1 },
-diff --git a/advice.h b/advice.h
-index 16f2c11642..bc2432980a 100644
---- a/advice.h
-+++ b/advice.h
-@@ -11,6 +11,7 @@ extern int advice_push_already_exists;
- extern int advice_push_fetch_first;
- extern int advice_push_needs_force;
- extern int advice_push_unqualified_ref_name;
-+extern int advice_push_ref_needs_update;
- extern int advice_status_hints;
- extern int advice_status_u_option;
- extern int advice_status_ahead_behind_warning;
-@@ -60,6 +61,7 @@ extern int advice_add_empty_pathspec;
- 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
- 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
- 	ADVICE_PUSH_UPDATE_REJECTED,
-+	ADVICE_PUSH_REF_NEEDS_UPDATE,
- 	ADVICE_RESET_QUIET_WARNING,
- 	ADVICE_RESOLVE_CONFLICT,
- 	ADVICE_RM_HINTS,
-diff --git a/builtin/push.c b/builtin/push.c
-index 0eeb2c8dd5..908b557edb 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -290,6 +290,12 @@ static const char message_advice_ref_needs_force[] =
- 	   "or update a remote ref to make it point at a non-commit object,\n"
- 	   "without using the '--force' option.\n");
- 
-+static const char message_advice_ref_needs_update[] =
-+	N_("Updates were rejected because the tip of the remote-tracking\n"
-+	   "branch has been updated since the last checkout. You may want\n"
-+	   "to integrate those changes locally (e.g., 'git pull ...')\n"
-+	   "before forcing an update.\n");
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index bdd37c3eaa..acbd0c09aa 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -10,9 +10,8 @@ advice.*::
+ 		that the check is disabled.
+ 	pushUpdateRejected::
+ 		Set this variable to 'false' if you want to disable
+-		'pushNonFFCurrent',
+-		'pushNonFFMatching', 'pushAlreadyExists',
+-		'pushFetchFirst', and 'pushNeedsForce'
++		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
++		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
+ 		simultaneously.
+ 	pushNonFFCurrent::
+ 		Advice shown when linkgit:git-push[1] fails due to a
+@@ -41,6 +40,10 @@ advice.*::
+ 		we can still suggest that the user push to either
+ 		refs/heads/* or refs/tags/* based on the type of the
+ 		source object.
++	pushRefNeedsUpdate::
++		Shown when linkgit:git-push[1] rejects a forced update of
++		a branch when its remote-tracking ref has updates that we
++		do not have locally.
+ 	statusAheadBehind::
+ 		Shown when linkgit:git-status[1] computes the ahead/behind
+ 		counts for a local ref compared to its remote tracking ref,
+diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+index f5e5b38c68..21b256e0a4 100644
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -114,3 +114,9 @@ push.recurseSubmodules::
+ 	specifying '--recurse-submodules=check|on-demand|no'.
+ 	If not set, 'no' is used by default, unless 'submodule.recurse' is
+ 	set (in which case a 'true' value means 'on-demand').
 +
- static void advise_pull_before_push(void)
- {
- 	if (!advice_push_non_ff_current || !advice_push_update_rejected)
-@@ -325,6 +331,13 @@ static void advise_ref_needs_force(void)
- 	advise(_(message_advice_ref_needs_force));
++push.useForceIfIncludes::
++	If set to "true", it is equivalent to specifying
++	`--force-if-includes` as an option to linkgit:git-push[1]
++	in the command line. Adding `--no-force-if-includes` at the
++	time of push overrides this configuration setting.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 3b8053447e..fb3a220386 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+ 	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
+ 	   [--[no-]signed|--signed=(true|false|if-asked)]
+-	   [--force-with-lease[=<refname>[:<expect>]]]
++	   [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
+ 	   [--no-verify] [<repository> [<refspec>...]]
+ 
+ DESCRIPTION
+@@ -320,6 +320,14 @@ seen and are willing to overwrite, then rewrite history, and finally
+ force push changes to `master` if the remote version is still at
+ `base`, regardless of what your local `remotes/origin/master` has been
+ updated to in the background.
+++
++Alternatively, specifying `--force-if-includes` an an ancillary option
++along with `--force-with-lease[=<refname>]` (i.e., without saying what
++exact commit the ref on the remote side must be pointing at, or which
++refs on the remote side are being protected) at the time of "push" will
++verify if updates from the remote-tracking refs that may have been
++implicitly updated in the background are integrated locally before
++allowing a forced update.
+ 
+ -f::
+ --force::
+@@ -341,6 +349,22 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
+ origin +master` to force a push to the `master` branch). See the
+ `<refspec>...` section above for details.
+ 
++--[no-]force-if-includes::
++	Force an update only if the tip of the remote-tracking ref
++	has been integrated locally.
+++
++This option enables a check that verifies if the tip of the
++remote-tracking ref is reachable from one of the "reflog" entries of
++the local branch based in it for a rewrite. The check ensures that any
++updates from the remote have been incorporated locally by rejecting the
++forced update if that is not the case.
+++
++If the option is passed without specifying `--force-with-lease`, or
++specified along with `--force-with-lease=<refname>:<expect>`, it is
++a "no-op".
+++
++Specifying `--no-force-if-includes` disables this behavior.
++
+ --repo=<repository>::
+ 	This option is equivalent to the <repository> argument. If both
+ 	are specified, the command-line argument takes precedence.
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index 0b0eb1d025..a36b371aeb 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -13,6 +13,46 @@ setup_srcdst_basic () {
+ 	)
  }
  
-+static void advise_ref_needs_update(void)
-+{
-+	if (!advice_push_ref_needs_update || !advice_push_update_rejected)
-+		return;
-+	advise(_(message_advice_ref_needs_update));
++# For tests with "--force-if-includes".
++setup_src_dup_dst () {
++	rm -fr src dup dst &&
++	git init --bare dst &&
++	git clone --no-local dst src &&
++	git clone --no-local dst dup
++	(
++		cd src &&
++		test_commit A &&
++		test_commit B &&
++		test_commit C &&
++		git push
++	) &&
++	(
++		cd dup &&
++		git fetch &&
++		git merge origin/master &&
++		git switch -c branch master~2 &&
++		test_commit D &&
++		test_commit E &&
++		git push --all
++	) &&
++	(
++		cd src &&
++		git switch master &&
++		git fetch --all &&
++		git branch branch --track origin/branch &&
++		git rebase origin/master
++	) &&
++	(
++		cd dup &&
++		git switch master &&
++		test_commit F &&
++		test_commit G &&
++		git switch branch &&
++		test_commit H &&
++		git push origin --all
++	)
 +}
 +
- static int push_with_options(struct transport *transport, struct refspec *rs,
- 			     int flags)
- {
-@@ -374,6 +387,8 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
- 		advise_ref_fetch_first();
- 	} else if (reject_reasons & REJECT_NEEDS_FORCE) {
- 		advise_ref_needs_force();
-+	} else if (reject_reasons & REJECT_REF_NEEDS_UPDATE) {
-+		advise_ref_needs_update();
- 	}
+ test_expect_success setup '
+ 	# create template repository
+ 	test_commit A &&
+@@ -256,4 +296,104 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
+ 	)
+ '
  
- 	return 1;
-@@ -510,6 +525,12 @@ static int git_push_config(const char *k, const char *v, void *cb)
- 		if (!v)
- 			return config_error_nonbool(k);
- 		return color_parse(v, push_colors[slot]);
-+	} else if (!strcmp(k, "push.useforceifincludes")) {
-+		if (git_config_bool(k, v))
-+			*flags |= TRANSPORT_PUSH_FORCE_IF_INCLUDES;
-+		else
-+			*flags &= ~TRANSPORT_PUSH_FORCE_IF_INCLUDES;
-+		return 0;
- 	}
- 
- 	return git_default_config(k, v, NULL);
-@@ -541,6 +562,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 			       N_("require old value of ref to be at this value"),
- 			       PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option),
-+		OPT_BIT(0, TRANS_OPT_FORCE_IF_INCLUDES, &flags,
-+			N_("require remote updates to be integrated locally"),
-+			TRANSPORT_PUSH_FORCE_IF_INCLUDES),
- 		OPT_CALLBACK(0, "recurse-submodules", &recurse_submodules, "(check|on-demand|no)",
- 			     N_("control recursive pushing of submodules"), option_parse_recurse_submodules),
- 		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
-@@ -625,6 +649,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	if ((flags & TRANSPORT_PUSH_ALL) && (flags & TRANSPORT_PUSH_MIRROR))
- 		die(_("--all and --mirror are incompatible"));
- 
-+	if (!is_empty_cas(&cas) && (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES))
-+		cas.use_force_if_includes = 1;
++test_expect_success 'background updates to remote can be mitigated with "--force-if-includes"' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	git ls-remote dst refs/heads/master >expect.branch &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git fetch --all &&
++		test_must_fail git push --force-with-lease --force-if-includes --all
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	git ls-remote dst refs/heads/master >actual.branch &&
++	test_cmp expect.master actual.master &&
++	test_cmp expect.branch actual.branch
++'
 +
- 	for_each_string_list_item(item, push_options)
- 		if (strchr(item->string, '\n'))
- 			die(_("push options must not have new line characters"));
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 516cba7336..a284ada051 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -178,6 +178,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	int progress = -1;
- 	int from_stdin = 0;
- 	struct push_cas_option cas = {0};
-+	int force_if_includes = 0;
- 	struct packet_reader reader;
- 
- 	struct option options[] = {
-@@ -203,6 +204,8 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 		  N_("require old value of ref to be at this value"),
- 		  PARSE_OPT_OPTARG, parseopt_push_cas_option),
-+		OPT_BOOL(0, TRANS_OPT_FORCE_IF_INCLUDES, &force_if_includes,
-+			 N_("require remote updates to be integrated locally")),
- 		OPT_END()
- 	};
- 
-@@ -304,6 +307,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	if (!is_empty_cas(&cas))
- 		apply_push_cas(&cas, remote, remote_refs);
- 
-+	if (!is_empty_cas(&cas) && force_if_includes)
-+		cas.use_force_if_includes = 1;
++test_expect_success 'background updates to remote can be mitigated with "push.useForceIfIncludes"' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git fetch --all &&
++		git config --local push.useForceIfIncludes true &&
++		test_must_fail git push --force-with-lease=master origin master
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	test_cmp expect.master actual.master
++'
 +
++test_expect_success '"--force-if-includes" should be disabled for --force-with-lease="<refname>:<expect>"' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	git ls-remote dst refs/heads/master >expect.branch &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		remote_head="$(git rev-parse refs/remotes/origin/master)" &&
++		git fetch --all &&
++		test_must_fail git push --force-if-includes --force-with-lease="master:$remote_head" 2>err &&
++		grep "stale info" err
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	git ls-remote dst refs/heads/master >actual.branch &&
++	test_cmp expect.master actual.master &&
++	test_cmp expect.branch actual.branch
++'
 +
- 	set_ref_status_for_push(remote_refs, args.send_mirror,
- 		args.force_update);
- 
-diff --git a/remote-curl.c b/remote-curl.c
-index 32cc4a0c55..0290b04891 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -44,7 +44,8 @@ struct options {
- 		from_promisor : 1,
- 
- 		atomic : 1,
--		object_format : 1;
-+		object_format : 1,
-+		force_if_includes : 1;
- 	const struct git_hash_algo *hash_algo;
- };
- static struct options options;
-@@ -131,6 +132,14 @@ static int set_option(const char *name, const char *value)
- 		string_list_append(&cas_options, val.buf);
- 		strbuf_release(&val);
- 		return 0;
-+	} else if (!strcmp(name, TRANS_OPT_FORCE_IF_INCLUDES)) {
-+		if (!strcmp(value, "true"))
-+			options.force_if_includes = 1;
-+		else if (!strcmp(value, "false"))
-+			options.force_if_includes = 0;
-+		else
-+			return -1;
-+		return 0;
- 	} else if (!strcmp(name, "cloning")) {
- 		if (!strcmp(value, "true"))
- 			options.cloning = 1;
-@@ -1318,6 +1327,9 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
- 		strvec_push(&args, cas_option->string);
- 	strvec_push(&args, url.buf);
- 
-+	if (options.force_if_includes)
-+		strvec_push(&args, "--force-if-includes");
++test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase")' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git pull --rebase origin master &&
++		git push --force-if-includes --force-with-lease="master"
++	)
++'
 +
- 	strvec_push(&args, "--stdin");
- 	for (i = 0; i < nr_spec; i++)
- 		packet_buf_write(&preamble, "%s\n", specs[i]);
-diff --git a/transport-helper.c b/transport-helper.c
-index 6157de30c7..5f6e0b3bd8 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -938,6 +938,11 @@ static void set_common_push_options(struct transport *transport,
- 		if (set_helper_option(transport, TRANS_OPT_ATOMIC, "true") != 0)
- 			die(_("helper %s does not support --atomic"), name);
- 
-+	if (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES)
-+		if (set_helper_option(transport, TRANS_OPT_FORCE_IF_INCLUDES, "true") != 0)
-+			die(_("helper %s does not support --%s"),
-+			    name, TRANS_OPT_FORCE_IF_INCLUDES);
++test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase", local rebase)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git pull --rebase origin master &&
++		git rebase --onto HEAD~4 HEAD~1 &&
++		git push --force-if-includes --force-with-lease="master"
++	)
++'
 +
- 	if (flags & TRANSPORT_PUSH_OPTIONS) {
- 		struct string_list_item *item;
- 		for_each_string_list_item(item, transport->push_options)
-diff --git a/transport.c b/transport.c
-index 65fcd22b20..47da955e4f 100644
---- a/transport.c
-+++ b/transport.c
-@@ -748,6 +748,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- 			*reject_reasons |= REJECT_FETCH_FIRST;
- 		} else if (ref->status == REF_STATUS_REJECT_NEEDS_FORCE) {
- 			*reject_reasons |= REJECT_NEEDS_FORCE;
-+		} else if (ref->status == REF_STATUS_REJECT_REMOTE_UPDATED) {
-+			*reject_reasons |= REJECT_REF_NEEDS_UPDATE;
- 		}
- 	}
- 	free(head);
-diff --git a/transport.h b/transport.h
-index ca409ea1e4..24558c027d 100644
---- a/transport.h
-+++ b/transport.h
-@@ -136,6 +136,7 @@ struct transport {
- #define TRANSPORT_PUSH_ATOMIC			(1<<13)
- #define TRANSPORT_PUSH_OPTIONS			(1<<14)
- #define TRANSPORT_RECURSE_SUBMODULES_ONLY	(1<<15)
-+#define TRANSPORT_PUSH_FORCE_IF_INCLUDES	(1<<16)
- 
- int transport_summary_width(const struct ref *refs);
- 
-@@ -208,6 +209,9 @@ void transport_check_allowed(const char *type);
- /* Request atomic (all-or-nothing) updates when pushing */
- #define TRANS_OPT_ATOMIC "atomic"
- 
-+/* Require remote changes to be integrated locally. */
-+#define TRANS_OPT_FORCE_IF_INCLUDES "force-if-includes"
++test_expect_success '"--force-if-includes" should allow deletes ' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		git pull --rebase origin branch &&
++		git push --force-if-includes --force-with-lease=branch origin :branch
++	)
++'
 +
- /**
-  * Returns 0 if the option was used, non-zero otherwise. Prints a
-  * message to stderr if the option is not used.
-@@ -217,11 +221,12 @@ int transport_set_option(struct transport *transport, const char *name,
- void transport_set_verbosity(struct transport *transport, int verbosity,
- 	int force_progress);
- 
--#define REJECT_NON_FF_HEAD     0x01
--#define REJECT_NON_FF_OTHER    0x02
--#define REJECT_ALREADY_EXISTS  0x04
--#define REJECT_FETCH_FIRST     0x08
--#define REJECT_NEEDS_FORCE     0x10
-+#define REJECT_NON_FF_HEAD      0x01
-+#define REJECT_NON_FF_OTHER     0x02
-+#define REJECT_ALREADY_EXISTS   0x04
-+#define REJECT_FETCH_FIRST      0x08
-+#define REJECT_NEEDS_FORCE      0x10
-+#define REJECT_REF_NEEDS_UPDATE 0x20
- 
- int transport_push(struct repository *repo,
- 		   struct transport *connection,
+ test_done
 -- 
 2.28.0
 
