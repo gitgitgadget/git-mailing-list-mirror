@@ -2,128 +2,96 @@ Return-Path: <SRS0=TjTC=DE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D112C4346E
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 16:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81D65C4346E
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 17:00:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F01820663
-	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 16:35:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C28E23899
+	for <git@archiver.kernel.org>; Sun, 27 Sep 2020 17:00:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IuhyKUO+";
-	dkim=pass (1024-bit key) header.d=kyleam.com header.i=@kyleam.com header.b="RSOkRkt2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ix3vU7SU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbgI0Qdv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Sep 2020 12:33:51 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61083 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726149AbgI0Qdv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Sep 2020 12:33:51 -0400
-X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Sep 2020 12:33:49 EDT
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7261FE4AAC;
-        Sun, 27 Sep 2020 12:25:32 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=x3EG4EtLxHhX5W8ZP2AEfeNYZ4E=; b=IuhyKU
-        O+A+XGSVdH8CAhAYxqVsA0rVVex28r/tNCuoj7L4PtrjtefWCkhATf0kbEwwFqxT
-        wOCEMAMdfWoQvkcGrMCb3fWUhR+NlMWirnA0jqXvTIFFtW8hYgaoC8apJzNlWf3Q
-        u3TtG70eMO6IpDknjgO/M7WxmJ5QVhYhWFplk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6AF92E4AAB;
-        Sun, 27 Sep 2020 12:25:32 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=E/p4jqams8YgsjhGPDyV+9wWsC6Ze2rm3r3Erzk7uG4=; b=RSOkRkt2kjQ/HBSxgs9hMaVEF9wQIQGCj7e+LUkDI0wVNYAa6OJ/SWcJd19mR05GO3+x2M9eZYsGRyyC1fKdtGweJrwUs6QuHEU9kspEAsaheSLKhMnuqGMLCl1dNQVWKU4gH9cKIeUxNSlxLciB6tI+bNbIy8hOFKXQkRseEcU=
-Received: from localhost (unknown [45.33.91.115])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D77E7E4AAA;
-        Sun, 27 Sep 2020 12:25:29 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     Matthew Timothy Kennerly <mtkennerly@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: Differences in compound tag sorting between 2.27.0 and 2.21.0
-In-Reply-To: <CAKqNo6RJqp94uLMf8Biuo=ZvMZB9Mq6RRMrUgsLW4u1ks+mnOA@mail.gmail.com>
-References: <CAKqNo6RJqp94uLMf8Biuo=ZvMZB9Mq6RRMrUgsLW4u1ks+mnOA@mail.gmail.com>
-Date:   Sun, 27 Sep 2020 12:25:27 -0400
-Message-ID: <877dsffaq0.fsf@kyleam.com>
+        id S1726405AbgI0RAD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Sep 2020 13:00:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39418 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726321AbgI0RAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Sep 2020 13:00:00 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A98A8C0613CE
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 10:00:00 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id jw11so2244171pjb.0
+        for <git@vger.kernel.org>; Sun, 27 Sep 2020 10:00:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Z7ZEt2zThahq7Uj9fg1AJOMG6Dhhp3GXkOJ/BI27ALg=;
+        b=ix3vU7SUdP4YE5MMlRR+gPC+ybHkYgm20MFWmtrTa1msq6Ndl2bxT5MULcQizJzN85
+         g5tgtvSjy0sM5mpSsPpbFGyjbkQbsXTBJsvqjdskguDseNWKBoMnuFMixeEQit2DXQBV
+         vJT3WLk/avYpkI3FxpX53rTIWXN6C+KEiG0JYQVsSvJAQU0aF/xCGhfwKhMBTFAXlS2J
+         wx1i6bx490bP0A2NNK/2s3MuM38u2pq/hugcYAQuJ5UxiEMi3n557743J6ynplFYOAyU
+         aCR9rweDhKWNdQu7oUWbXZcL6GQpgOV2FT1RBIXUJa+nMOWt+onXkMPJwrokDU95FcTw
+         C7XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Z7ZEt2zThahq7Uj9fg1AJOMG6Dhhp3GXkOJ/BI27ALg=;
+        b=pwtRub16JawAZ32jJLIvyblHNFhR3dSs7Yo2OpmnlIG5lCgw2A4OiQ8i10fq5cVNPV
+         RXr4zQRFEecS9LV5yizaKblkcHv0toOuq2mwUhXYYZRhUUgciTFKp/oYBqQFWexSusv6
+         H94sxSEWKi/f58oYarmjbDi7qsQ183rsSx71q9chbdqfwCE9y83xPeyWTpQYyh0F5khE
+         eeq78knm2sOTWyW2z3bNjbZjH0bvoti77mfhxjVXd8xadfgMN7ZRXgIjkSPhpJoFteKY
+         q9EM/G5V148kadoexUI1f9WuNc6KhsE5g4ZaqwzsebCxv2XvxZHxC2XqZsWPQkMi49UL
+         0W8A==
+X-Gm-Message-State: AOAM533R6BtS5O3Q53shxr+Ar3FVCz57eh3RkJnrHhiuvPhqq1VhenUJ
+        82DtFOB5+O2P+EkQAb2+aBxsN9Ozjr4=
+X-Google-Smtp-Source: ABdhPJzuztTnHHIhKwbcOa0u7VmqKa8aq/uCiGKS/ehL09sEVyQR9pz5zG/VMYDmXi2OqVcq+lxZ4w==
+X-Received: by 2002:a17:90a:ee16:: with SMTP id e22mr5620762pjy.81.1601225999278;
+        Sun, 27 Sep 2020 09:59:59 -0700 (PDT)
+Received: from [192.168.208.37] ([49.205.87.4])
+        by smtp.gmail.com with ESMTPSA id j9sm8445641pfc.175.2020.09.27.09.59.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 27 Sep 2020 09:59:58 -0700 (PDT)
+Subject: Re: Git in Outreachy?
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+References: <20200828065609.GA2105118@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2009020558550.56@tvgsbejvaqbjf.bet>
+ <CAP8UFD31B9YgninC2Fyb=0+OVY7E4SW7LGBbx9E7CrgSn+95BA@mail.gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <c6367303-dc40-e896-4ed7-19f9d75b73df@gmail.com>
+Date:   Sun, 27 Sep 2020 22:29:55 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0EFA5D46-00DE-11EB-BB37-F0EA2EB3C613-24757444!pb-smtp20.pobox.com
+In-Reply-To: <CAP8UFD31B9YgninC2Fyb=0+OVY7E4SW7LGBbx9E7CrgSn+95BA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew Timothy Kennerly writes:
+On 16-09-2020 14:31, Christian Couder wrote:
+> 
+> - Accelerate rename detection and range-diff
+> (https://github.com/gitgitgadget/git/issues/519): ideally I would
+> co-mentor with someone a bit familiar with the suggested algorithms.
 
-> Hello,
->
-> I've run into a difference in the results for a compound tag sort
-> between 2.21.0 and 2.27.0 (I believe also applies to 2.28.0), and I'm
-> not sure if it's an intentional difference or if there's still some
-> way to achieve the old behavior with newer Git versions. For
-> reference, I'm using Windows.
+I just applied to be a co-mentor for this project. I'm not familiar with
+the suggested algorithms right now but I hope I'll be able to get
+familiar with them over time. If someone else more suitable for the
+project could volunteer, I wouldn't mind stepping aside :)
 
-This sounds like it's probably related to the fix in 7c5045fc18
-(ref-filter: apply fallback refname sort only after all user sorts,
-2020-05-03).  That was part of the 2.27.0 release.  Let's see if that
-explains what you're seeing.
-
-> I need to sort tags first by the date of the pointed commit, then by
-> the date of the tag creation when available (I understand that
-> lightweight tags don't store their creation date, so multiple
-> lightweight tags on a single commit may not sort consistently). Let me
-> give a concrete example.
->
-> Given a repository with this setup, using annotated tags:
->
-> git init
-> echo hi > foo.txt
-> git add .
-> git commit -m "first"
-> git tag v0.1.0 -m "A"
-> echo bye > foo.txt
-> git add .
-> git commit -m "second"
-> git tag v0.2.0 -m "B"
-> git tag v0.1.1 HEAD~1 -m "C"
->
-> I get the desired sort results in 2.21.0:
->
-> $ git tag --merged HEAD --sort -taggerdate --sort -committerdate
-> v0.2.0
-> v0.1.1
-> v0.1.0
-
-As far as I understand, committerdate should have no effect on annotated
-tags (i.e. it's always a tie).  So I'd guess that you're just happening
-to see the sorting you expect due the inappropriate refname fallback
-described in 7c5045fc18:
-
-  This worked correctly for a single "--sort" option, but not for multiple
-  ones. We'd break any ties in the first key with the refname and never
-  evaluate the second key at all.
-
-> However, in 2.27.0, the first listed tag is the tag that was most
-> recently created, rather than the one pointing to the newest commit:
->
->
-> $ git tag --merged HEAD --sort -taggerdate --sort -committerdate
-> v0.1.1
-> v0.2.0
-> v0.1.0
-
-Based on the description above, I think the second key (-taggerdate) is
-now coming into play.
-
-> If this is intentional, how can I achieve the desired sort order in
-> newer versions of Git?
-
-Try using * to refer to the commit that the tag points to:
-
-    $ git tag --sort -taggerdate --sort '-*committerdate'
+Thanks,
+Sivaraam
