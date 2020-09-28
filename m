@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 079D0C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C056EC4727C
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C475208FE
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68AAB208FE
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="csU+b3sh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BwY7J5YD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbgI1VJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 17:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45428 "EHLO
+        id S1726935AbgI1VJg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 17:09:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726897AbgI1VJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 17:09:32 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC9AC0613D3
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:31 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id s13so2470195wmh.4
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:31 -0700 (PDT)
+        with ESMTP id S1726865AbgI1VJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 17:09:28 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6137C061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:27 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id d4so2476097wmd.5
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fLx/oqN4eboVCzSUB4omppsZm0evzi7MY+4v/FyZl7s=;
-        b=csU+b3shPAck+pZl3KnHTdI76KDuZnl4fpulOZPm2jS38hMi4qjYDqUo5nQ8HKfA+u
-         /4tYmETG/PrakUiKZTRc53SRc6A+NW0F0u3PsiDA2Li+p3ALueA+RIZj6/RWm6/99NFT
-         UiXhRVaK8f7096LgiTpvfgsorQYptMQezt0n5KXK3Jzgv+F9E9xAdyzvfAY/pqRiV4hF
-         Hkrd6jvRGyWKHzwUow7hIbmcAi4DGyZ0MZp/e+nHxODI8V5ydpZAuxXGL1nP8PIYs56I
-         OW/bE4yKa9UbJCiNPk3VNQYmM//Qur2MvKmqRcSDBz6mHO2JxE4h9irHjq9deDM7v7V6
-         PNFw==
+        bh=Xfo38AuyHcLNa8/91Ulhsub9WGaHfYjdgMuwmOZ1tG0=;
+        b=BwY7J5YDU+DIjrHHFNlw985x5/CNcfDtxqi2yF94SYVgFVIYxtGuqNGjv3jdn9n9Dv
+         q72HiJhPeFs8QrtRZqfZm07XbJ8KhgyCYY54coZ2sxvsgmBj9xafvIblb4zZjLypkQ7X
+         a0PMB2Cnad2TBuQ0gdAus24I3jXIYJvQhS93Ww869pwIzIEJNXMkpsCT0ZEqRCrmCimG
+         dQekcW9AsNplI/uZ2B7a7ZoBUW6aX6fzXusHFLC+G9q9kQrC2LukMlDpvkw7XiODt7UV
+         vrlpbiuijbV2Gop3CR8N7RM17uLXMkuiv14AQMIV+lrDUcblRmsqCkgJZFo6hx4PUzBd
+         lHog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fLx/oqN4eboVCzSUB4omppsZm0evzi7MY+4v/FyZl7s=;
-        b=MIkYOf/NffKeBXU+n9/Hp2N9TV33eKKTZYcmj7VVJkCWQ0EcuPkSeeZkQha9yRUbSb
-         SzXaGAbePxaYi7p11LUOiozY7Lda//+MdniIwDl4d4wpFAR7uWNG53G2eqB+DlNykTgU
-         w7Sd8VOaxfUkogEc8/Ayu9K9FiHDlA1vKSX9FhZZZhx4a0zPz4Xdq4O0KtOxD4GeuEgF
-         KywmB+PW5V38AflmgyGPNh8RJHvhLyy+BhdqAk3NsxXHsmCgBhFAfTPSStRf8tlaL7Z7
-         MmzPMVWrmIbesKECpSNC5cmC24k2cv3cyWMcIqe4+6y+/qpma4GISPfrtHpyqjfuwZ2v
-         xMhw==
-X-Gm-Message-State: AOAM5323oF+11PlaSRrAyVd46lKrqpJDHgkJdHNfUzMxBdjgxQUJ7IpE
-        bWqWm6jocAnAMgJozfBbZ2Mk8n/UPyE=
-X-Google-Smtp-Source: ABdhPJzntRj1RURHNBG+w5bh5QNuz+K2lAxjTmaqNkqpzdDbiLk0pJ1kpT/TgL5x8BEQ+LSlE6XByQ==
-X-Received: by 2002:a1c:63c1:: with SMTP id x184mr1039555wmb.138.1601327370370;
-        Mon, 28 Sep 2020 14:09:30 -0700 (PDT)
+        bh=Xfo38AuyHcLNa8/91Ulhsub9WGaHfYjdgMuwmOZ1tG0=;
+        b=Kbh7CjZuCrgxHwvVWTMVsKS0GLt1sNqfSO7p9MeNRgDt4imXt00OnjkPhuLYwAGuyo
+         0D3H+DqWn3FLukwf4Nv16gNPH8hYFDyTi7IV+DaLzyBzVr7wXUETfp5jeRjtR0icdSHO
+         1q9WrKKJYJNRhMb4NHH+jkqjJaIHOJKBisiTTQwRBuNjBy4/SKBPArl2vsBE0h4lwdQy
+         UIuNx+f1pa/7ZpZ+cfuQkOnRn7umoHIs4zIJ8OMzY3nLKqKu3FJjKnHlZ84iqqJI/QYe
+         7lPsUJkfpkhkkv1mXBlpiLVgafsmfI0NUyGLMvs11nXTgs9NrX7/B2fyf22P0d1gQf4H
+         YVow==
+X-Gm-Message-State: AOAM532zN07qksrBDZBhwBI9grC6/thvq7yc4GBJhQ11EPybuWBwvzL1
+        fh4CuCKkX8cbcXMOUmbqTPbQE83iURw=
+X-Google-Smtp-Source: ABdhPJyLvTWkSeBqQXu1wGYs8wqdGdHc6MBR8OY8+AIhusNwuYWhF6T/S8Cl/xG1bnRosjwpnwmFQg==
+X-Received: by 2002:a1c:bcd4:: with SMTP id m203mr1037337wmf.70.1601327366030;
+        Mon, 28 Sep 2020 14:09:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15sm2999732wrv.94.2020.09.28.14.09.29
+        by smtp.gmail.com with ESMTPSA id 63sm3510441wrc.63.2020.09.28.14.09.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 14:09:29 -0700 (PDT)
-Message-Id: <38cef4deb509e5b0c218abcc385232f98ef27863.1601327357.git.gitgitgadget@gmail.com>
+        Mon, 28 Sep 2020 14:09:25 -0700 (PDT)
+Message-Id: <f61c3ef44228cd4a8dd85c4b9fda803f6a099ae5.1601327357.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
 References: <pull.738.v2.git.1601155970.gitgitgadget@gmail.com>
         <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
-From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Sep 2020 21:09:15 +0000
-Subject: [PATCH v3 10/11] hashmap_for_each_entry(): workaround MSVC's runtime
- check failure #3
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Sep 2020 21:09:11 +0000
+Subject: [PATCH v3 06/11] cmake (Windows): let the `.dll` files be found when
+ running the tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,62 +79,38 @@ Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The OFFSETOF_VAR(var, member) macro is implemented in terms of
-offsetof(typeof(*var), member) with compilers that know typeof(),
-but its fallback implemenation compares &(var->member) and (var) and
-count the distance in bytes, i.e.
+Contrary to Unix-ish platforms, the dependencies' shared libraries are
+not usually found in one central place. In our case, since we use
+`vcpkg`, they are to be found inside the `compat/vcbuild/vcpkg/` tree.
 
-    ((uintptr_t)&(var)->member - (uintptr_t)(var))
+Let's make sure that they are in the search path when running the tests.
 
-MSVC's runtime check, when fed an uninitialized 'var', flags this as
-a use of an uninitialized variable (and that is legit---uninitialized
-contents of 'var' is subtracted) in a debug build.
-
-After auditing all 6 uses of OFFSETOF_VAR(), 1 of them does feed a
-potentially uninitialized 'var' to the macro in the beginning of the
-for() loop:
-
-    #define hashmap_for_each_entry(map, iter, var, member) \
-            for (var = hashmap_iter_first_entry_offset(map, iter, \
-                                                    OFFSETOF_VAR(var, member)); \
-                    var; \
-                    var = hashmap_iter_next_entry_offset(iter, \
-                                                    OFFSETOF_VAR(var, member)))
-
-We can work around this by making sure that var has _some_ value
-when OFFSETOF_VAR() is called.  Strictly speaking, it invites
-undefined behaviour to use NULL here if we end up with pointer
-comparison, but MSVC runtime seems to be happy with it, and most
-other systems have typeof() and don't even need pointer comparison
-fallback code.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- hashmap.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ contrib/buildsystems/CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hashmap.h b/hashmap.h
-index ef220de4c6..b011b394fe 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -449,7 +449,8 @@ static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
-  * containing a @member which is a "struct hashmap_entry"
-  */
- #define hashmap_for_each_entry(map, iter, var, member) \
--	for (var = hashmap_iter_first_entry_offset(map, iter, \
-+	for (var = NULL, /* for systems without typeof */ \
-+	     var = hashmap_iter_first_entry_offset(map, iter, \
- 						OFFSETOF_VAR(var, member)); \
- 		var; \
- 		var = hashmap_iter_next_entry_offset(iter, \
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 1999db0c6b..361fe3de6d 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -939,6 +939,9 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X='${EXE_EXTENSION}'\n")
+ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
+ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
+ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
++if(WIN32)
++	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
++endif()
+ 
+ #Make the tests work when building out of the source tree
+ get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
 -- 
 gitgitgadget
 
