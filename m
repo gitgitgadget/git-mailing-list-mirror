@@ -2,90 +2,116 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1BE1C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 14:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8547CC2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 15:50:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FDD52076A
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 14:44:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3EA6F21548
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 15:50:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="yk+OHbbz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gdx8EUIj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbgI1Ooq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 10:44:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42406 "EHLO
+        id S1726608AbgI1PuT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 11:50:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726380AbgI1Oop (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 10:44:45 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8080DC061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 07:44:45 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id k25so912737qtu.4
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 07:44:45 -0700 (PDT)
+        with ESMTP id S1726325AbgI1PuS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 11:50:18 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDA6C061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 08:50:17 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id q9so1649244wmj.2
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 08:50:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=0DQiRGl8EewXxlXHTYmTuQzOLzTyA8dH/ffXkI+jlDI=;
-        b=yk+OHbbzUU6leGWHDPA6T3Kt6VD36wO1//+1iuwUJmrzPBzcu4K8qB4ZoZ7TJQgAhW
-         VmPo2H8EELjMZF9fuO22PknfzdKEarBuUon/0wCzFDLrkuDEpX6fGxv/QA7wQ9MGDJ2+
-         20hH3cccSlcO4g+2nJ8OkzjOtq24EWPwcoArbZDCLmO0Nu4WPxhJ7au8BTiLMe6npkHB
-         0jjtPUe6lwVldQ0YFHjrsheA9iz+Sk42ozKfcfY03gEohTTsZa95gUVp8IwcTGvTBjep
-         S/XJbDa/9jeZJYwLKMjlT0L6JEjIT8AFuZ5LofqsKPa1odz2iTMGmRir0iyj96NwmR0w
-         RkVw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=i9tYBipGi7NZJlBincZLfSKnIazHxvqRr44O05T9S50=;
+        b=gdx8EUIj8oyu+vCTp+pweTNwBBE7Ot3hiiXHVdnC5mfNVqa48AwAIdXPeU46aX0JU7
+         NfqREvoFxpa6glCe8A3DkArt4bsPG2UQGxF7lAZyPZO43NPHfqoGQj/noUgYsTH2Ipqe
+         YNt28V+O4dmheyJ9nXv74kWkXk/gojuVgWjtriQPABe7x15osjVxublDPqZmaNGZ+Kbl
+         cJG5BqjALR+1DViKmQnO/5U2yqyT3U9DuSWdjWo/NvJeeBmwTtN/Td4Zl0rdTenyLMvo
+         woSx0xBoy9v8XcEhM+iPnnC7Qse0adi4F7bt0ydW4F5iX04fADTv6IpbYdW2QI2jfWOY
+         b+Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=0DQiRGl8EewXxlXHTYmTuQzOLzTyA8dH/ffXkI+jlDI=;
-        b=eFESoOTJVSLR0r/xiBlWq5dwZZ9XUjcgWB2be1WT7WeerDagY+s/mFau7QTqUzpiSR
-         gQCEWVwp2J4MSFtHZSWV4pLX81ti6EHVIyaf94g1IGxt7/eP1h6FEPpZlf69A1jDSANz
-         d5YuechpxztsvgATV/eRg7SGqGhFtYMws6ipW//yy3VUofQR4xQ6bHKfvI7XjVqlZA5H
-         DAEMFOx600/CJ5mWZFn5h2JCwhktFJwHgwkKc1ZGwiAprDfoI5EoO5CkfdTFKDR58h9+
-         73K5ydkqDJZPZSRZrQ6P+U4GXZVDnW/4pNGIUv8UW4donQm3f1utTS6UVl5DdHTzdWIi
-         VEwg==
-X-Gm-Message-State: AOAM530ue9fPhIr9O1ud1/YzOKtdijki46TBPVSX6EIcxQPMA/mHyAU8
-        DqlWAdC2RnMIgfOGjCtBLaWH0FDAcPpdHKgh
-X-Google-Smtp-Source: ABdhPJwN3nLNrls3XZUHwjTRvLk0YNvALdu6pHC8BSt0WdglQkwcbGn7gpBFGZD81mDpqobATZLaQQ==
-X-Received: by 2002:ac8:74c8:: with SMTP id j8mr1855955qtr.77.1601304284697;
-        Mon, 28 Sep 2020 07:44:44 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:7c0e:340:55b4:224c])
-        by smtp.gmail.com with ESMTPSA id l26sm1160492qki.62.2020.09.28.07.44.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=i9tYBipGi7NZJlBincZLfSKnIazHxvqRr44O05T9S50=;
+        b=HNxGhhH/fnFlQ7N/4aICIo1Pal904N6m9IVmsrJSwYA/lJ1BrR/hvxVQM5xgZSOBfk
+         QtKySD97DDcYLip68i9YoMygOrIwhekW8He7ktswymRw1r0KmrvAiEhsD/YlRbxWqFC/
+         iK6+BMTCO+PO2zmh/zZ1uQIQTGQ+8ad+qCGJWY4MOzfqM0Rt+ygHjvkzoDg93EsVzkiw
+         6PmF5dHZfblQJuWkMzyO512PiFKAoQaDg/fthCQshyJm+mEqXoi6HBYNQXLeqNshikmd
+         9tttv8E0fpJUs9nhBHmtHNMoyOaZrE5FhYO2uPdCv0tcr7mLEzKsmAIBmMT9DakuJA+b
+         7xEw==
+X-Gm-Message-State: AOAM531jaFsTWqxXw6wjJeOmUsSJtzMquSZDaQ63uNvJQ08+DjJ+EzMF
+        K3ZQHPjhDKLoodbthqpur7b6zwpJCwE=
+X-Google-Smtp-Source: ABdhPJzuE6FRxh72kuw2t0vxEdhMJkpA3nusL2LzCdo4sVG/RdSgOGy9A6pgsTukciGeMcRohWA1gQ==
+X-Received: by 2002:a1c:3b09:: with SMTP id i9mr2225090wma.43.1601308215358;
+        Mon, 28 Sep 2020 08:50:15 -0700 (PDT)
+Received: from contrib-buster.auto1.local ([79.140.115.160])
+        by smtp.gmail.com with ESMTPSA id o15sm1717067wmh.29.2020.09.28.08.50.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 07:44:43 -0700 (PDT)
-Date:   Mon, 28 Sep 2020 10:44:40 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] config/uploadpack.txt: fix typo in `--filter=tree:<n>`
-Message-ID: <20200928144440.GA3846176@nand.local>
-References: <20200927141156.9878-1-martin.agren@gmail.com>
+        Mon, 28 Sep 2020 08:50:13 -0700 (PDT)
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Subject: [RFC PATCH 0/2] teach `worktree list` to mark locked worktrees
+Date:   Mon, 28 Sep 2020 15:49:51 +0000
+Message-Id: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
+X-Mailer: git-send-email 2.28.0.856.g4762557030
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200927141156.9878-1-martin.agren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+This patch series introduces a new information on the git `worktree list`
+command output, to mark when a worktree is locked with a (locked) text mark.
 
-On Sun, Sep 27, 2020 at 04:11:55PM +0200, Martin Ågren wrote:
-> That should be a ":", not a second "=". While at it, refer to the
-> placeholder "<n>" as "<n>", not "n" (see, e.g., the entry just before
-> this one).
+The intent is to improve the user experience to earlier sinalize that a linked
+worktree is locked, instead of realising later when attempting to remove it
+with `remove` command as it happened to me twice :)
 
-Thanks for catching this. The patch below looks great to me.
+The patches are divided into two parts. First part introduces
+the new marker to the worktree list command and small documentation
+change. And the second adds one test case into t2402 to test
+if the (locked) text will be properly set for a locked worktree, and
+not mistankely set to a unlocked or master worktree.
 
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+This is the output of the worktree list with locked marker:
 
-  Acked-by: Taylor Blau <me@ttaylorr.com>
+  $ git worktree list
+  /repo/to/main                abc123 [master]
+  /path/to/unlocked-worktree1  456def [brancha]
+  /path/to/locked-worktree     123abc (detached HEAD) (locked)
 
-Thanks,
-Taylor
+This patches are marked with RFC mainly due to:
+
+  - This will change the default behaviour of the worktree list, I am
+    not sure whether will be better to make this tuned via a config
+    and/or a git parameter. (assuming this change is a good idea ;) )
+
+  - Perhaps the `(locked)` marker is not the best suitable way to output
+    this information and we might need to come with a better way.
+
+  - I am a new contributor to the code base, still learning a lot of git
+    internals data structure and commands. Likely this patch will require
+    updates.
+
+Rafael Silva (2):
+  teach `list` to mark locked worktree
+  t2402: add test to locked linked worktree marker
+
+ Documentation/git-worktree.txt |  5 +++--
+ builtin/worktree.c             |  6 +++++-
+ t/t2402-worktree-list.sh       | 13 +++++++++++++
+ 3 files changed, 21 insertions(+), 3 deletions(-)
+
+-- 
+2.28.0.763.ge7086f1eef
+
