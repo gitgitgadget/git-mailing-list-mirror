@@ -2,135 +2,157 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-20.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EBD7C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46823C2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:20:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE7422100A
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:20:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5460207D8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:20:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="soJcD/e/"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KOrxU6pN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbgI1VUB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 17:20:01 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65400 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726565AbgI1VUB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 17:20:01 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 47338F0705;
-        Mon, 28 Sep 2020 17:19:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=V/Tdah6DdaLujWk6noZyca6s0ws=; b=soJcD/
-        e/Nd6ydzOSY5YjDWj2Uz3lpnyvEXhNVLWhmW5yC6h9oKWgbFDa7SxeSjNWKtlDKn
-        nPNWJiHmov7YfIcnaHMzlP+egV9xwbF8vazQMsG8+Ccg9bXeLBpde55S+U71OfeV
-        Sc7o5xbWlJThiOuk9/Z+G4BVn/WwVLOZMb96U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ShyGvDM/3ny0dgylsjAFtqlItgJRkwZn
-        bHERYmeKQ4RObo9iaUuEJG6xam0RiZiwD604oVrhC5NkdtGfwWB6LToPsGzEddBT
-        q2ewmSQ3emGz1Fho0DvyCzUlPFnyMO90BKEmusSyxvT7TuseTxA1c6q24mdxYbA8
-        wu/mS3ghCzs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 40754F0704;
-        Mon, 28 Sep 2020 17:19:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 72AE1F0703;
-        Mon, 28 Sep 2020 17:19:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC PATCH 0/2] teach `worktree list` to mark locked worktrees
-References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
-Date:   Mon, 28 Sep 2020 14:19:53 -0700
-In-Reply-To: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com> (Rafael
-        Silva's message of "Mon, 28 Sep 2020 15:49:51 +0000")
-Message-ID: <xmqqft71lhty.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5AE7465E-01D0-11EB-8D46-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+        id S1726761AbgI1VUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 17:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726632AbgI1VUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 17:20:44 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDC9C061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:20:43 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id 8so1878648pfx.6
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:20:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=ArRG74YVlAnE8+mGrVb+N7gv1oQbiw/tz2JYzB4bPJg=;
+        b=KOrxU6pND4CDHjqYqffuXTAZHA2ioJiigMiF+lxGws2y2x76eR28ixRrMwho0RXcgC
+         Peg5fGVhce2YOFlyBX7AkC02rGjwl6gyrkZITfl6O+g+loHMq0OQUguCLXJ18nYDWrWl
+         QQU8qnR+tmZz5hdDVeEa5RAQmia99HJzQGUKgz5+JOOUv6+bsN+DF18hEpwpGmDtKAUU
+         hsA7VJU+aBzq+XBZs1BAJIatv4j+9DxVnXMeYZz6J4Z6K6OzVDrPAigp6OxJ83vTQiWj
+         Q5zDn1cJ06KbQE9R7mTq3lMnT36E/CY1RBJwhKPM4/dXnxYB8UPVg21KjQjIdpp0hm15
+         Qjcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=ArRG74YVlAnE8+mGrVb+N7gv1oQbiw/tz2JYzB4bPJg=;
+        b=TXovAw869x9GlIn6CWkP9sUs++09LEa7/xPXtO1cgA5NziecQ8ufkDlogOSG673eqP
+         XVtQORGN2OXAOq8SF3zK8xdYito5VI7F3I/+11ufaV6Yo13j5jUb5viVc0gEHw2ODh0k
+         7zVoWcf0dOzbBmNKMhImVAAY6vWhrZyZyvmMQZAgYl4iJD4OHReGllvjhlKOKWUGJyEe
+         xE8jB1jTr447thYOMq8vBzAIUNwhPx4180rRYXboiIAtGjB/ayS69uqxd6S5Ik/hyhAd
+         ND680uRmuxhetUVMkzwUHUqa2/qj3q1U1XARXKvAhZORJ+4Eo3Y0r6rRRPBnFXcG1Ct1
+         DAcg==
+X-Gm-Message-State: AOAM530ytwHK6lkXA5TEw075oSi27ke7hHKABQ018CLhaeIkDLwYtJjm
+        5/Uob6W/TqkGl6/APOboGBBDwUz1MJvAq26GjI3LFw6EnPtaMD1R9J+x3aYMc7mHKVjrE76SgYn
+        gPgmoU01ntxFHfPGyE1zW/ic/oSKsFvmAGtAyU5JM2rsOumJLp8B3xdlqAaJEfWU8nplAq1JBG9
+        G7
+X-Google-Smtp-Source: ABdhPJwUIhS1nqBNIK99fh1Q1EwcOjWJ+jh6JIy3DXRFDwApolOjFGYW5OWnDcuAIKpiZ5xUJndnyMZ44c1wTFAt0MFH
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
+ (user=jonathantanmy job=sendgmr) by 2002:a62:bd0e:0:b029:142:2501:35e7 with
+ SMTP id a14-20020a62bd0e0000b0290142250135e7mr1053507pff.71.1601328042646;
+ Mon, 28 Sep 2020 14:20:42 -0700 (PDT)
+Date:   Mon, 28 Sep 2020 14:20:38 -0700
+Message-Id: <20200928212038.1625698-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.709.gb0816b6eb0-goog
+Subject: [PATCH] apply: when -R, also reverse list of sections
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rafael Silva <rafaeloliveira.cs@gmail.com> writes:
+A patch changing a symlink into a file is written with 2 sections (in
+the code, represented as "struct patch"): firstly, the deletion of the
+symlink, and secondly, the creation of the file. When applying that
+patch with -R, the sections are reversed, so we get:
 
-> This patch series introduces a new information on the git `worktree list`
-> command output, to mark when a worktree is locked with a (locked) text mark.
->
-> The intent is to improve the user experience to earlier sinalize that a linked
-> worktree is locked, instead of realising later when attempting to remove it
-> with `remove` command as it happened to me twice :)
+ (1) creation of a symlink, then
+ (2) deletion of a file.
 
-Change with a good intention, it seems.
+This causes an issue when the "deletion of a file" section is checked,
+because Git observes that the so-called file is not a file but a
+symlink, resulting in a "wrong type" error message.
 
-> The patches are divided into two parts. First part introduces
-> the new marker to the worktree list command and small documentation
-> change. And the second adds one test case into t2402 to test
-> if the (locked) text will be properly set for a locked worktree, and
-> not mistankely set to a unlocked or master worktree.
+What we want is:
 
-Probably they belong together in a single patch (I am saying this
-after only seeing the above five lines, without reading either of
-these two patches, so there may be some things in them that makes it
-make sense to have them separate).
+ (1) deletion of a file, then
+ (2) creation of a symlink.
 
-> This is the output of the worktree list with locked marker:
->
->   $ git worktree list
->   /repo/to/main                abc123 [master]
->   /path/to/unlocked-worktree1  456def [brancha]
->   /path/to/locked-worktree     123abc (detached HEAD) (locked)
+In the code, this is reflected in the behavior of previous_patch() when
+invoked from check_preimage() when the deletion is checked. Creation
+then deletion means that when the deletion is checked, previous_patch()
+returns the creation section, triggering a mode conflict resulting in
+the "wrong type" error message. But deletion then creation means that
+when the deletion is checked, previous_patch() returns NULL, so the
+deletion mode is checked against lstat, which is what we want.
 
-Looks OK to me
+Therefore, when building the list of sections, build them in reverse
+order (by adding to the front of the list instead of the back) when -R
+is passed.
 
-> This patches are marked with RFC mainly due to:
->
->   - This will change the default behaviour of the worktree list, I am
->     not sure whether will be better to make this tuned via a config
->     and/or a git parameter. (assuming this change is a good idea ;) )
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+I traced the different behavior in previous_patch() to what the
+invocation of to_be_deleted() returns, but I couldn't figure out why it
+returns false in the current-but-wrong-order case but true in the
+future-and-correct-order case. I see that prepare_fn_table() sets
+PATH_TO_BE_DELETED for deletions, but couldn't figure out where and when
+it is set to something else. Further compounding my confusion,
+conceptually, at the point of checking the deletion, both patches are
+(in theory) "to be deleted". Any help in this is appreciated.
+---
+ apply.c                     | 9 +++++++--
+ t/t4114-apply-typechange.sh | 7 +++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-The default output is meant for human consumption (scripts that want
-to read from the command and expect stable output would be using the
-"--porcelain" option).
+diff --git a/apply.c b/apply.c
+index 76dba93c97..359ceb632c 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4699,8 +4699,13 @@ static int apply_patch(struct apply_state *state,
+ 			reverse_patches(patch);
+ 		if (use_patch(state, patch)) {
+ 			patch_stats(state, patch);
+-			*listp = patch;
+-			listp = &patch->next;
++			if (!list || !state->apply_in_reverse) {
++				*listp = patch;
++				listp = &patch->next;
++			} else {
++				patch->next = list;
++				list = patch;
++			}
+ 
+ 			if ((patch->new_name &&
+ 			     ends_with_path_components(patch->new_name,
+diff --git a/t/t4114-apply-typechange.sh b/t/t4114-apply-typechange.sh
+index ebadbc347f..da3e64f811 100755
+--- a/t/t4114-apply-typechange.sh
++++ b/t/t4114-apply-typechange.sh
+@@ -88,6 +88,13 @@ test_expect_success 'symlink becomes file' '
+ 	'
+ test_debug 'cat patch'
+ 
++test_expect_success 'symlink becomes file, in reverse' '
++	git checkout -f foo-symlinked-to-bar &&
++	git diff-tree -p HEAD foo-back-to-file > patch &&
++	git checkout foo-back-to-file &&
++	git apply -R --index < patch
++	'
++
+ test_expect_success 'binary file becomes symlink' '
+ 	git checkout -f foo-becomes-binary &&
+ 	git diff-tree -p --binary HEAD foo-symlinked-to-bar > patch &&
+-- 
+2.28.0.709.gb0816b6eb0-goog
 
-The ideal case is a new output is universally useful for everybody,
-in which case we can just change it without any new configuration or
-command line option.
-
->   - Perhaps the `(locked)` marker is not the best suitable way to output
->     this information and we might need to come with a better way.
-
-It looks good enough to me.  I am not qualified to have a strong
-opinion on this part, as I do not use the command all that often.
-
-    $ git shortlog --no-merges --since=18.months builtin/worktree.c
-
-tells me that Eric Sunshine (CC'ed) may be a good source of wisdom
-on this command.
-
->   - I am a new contributor to the code base, still learning a lot of git
->     internals data structure and commands. Likely this patch will require
->     updates.
-
-Welcome.
-
-> Rafael Silva (2):
->   teach `list` to mark locked worktree
->   t2402: add test to locked linked worktree marker
->
->  Documentation/git-worktree.txt |  5 +++--
->  builtin/worktree.c             |  6 +++++-
->  t/t2402-worktree-list.sh       | 13 +++++++++++++
->  3 files changed, 21 insertions(+), 3 deletions(-)
