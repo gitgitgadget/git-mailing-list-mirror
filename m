@@ -2,176 +2,96 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B426CC4727F
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B7C3C2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:47:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B85F206FC
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:40:34 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJEks6bp"
+	by mail.kernel.org (Postfix) with ESMTP id A262A2100A
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:47:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1601293662;
+	bh=NicJgrslxYcSwCaalHtYiuRJWP612nVmrdk+uxu1cWs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=FHncxJB3WseKj6jvp5xhMufOTdsTs2jgXWnbAomC9ZbkTbgMot3mGWpDd/dx3iIih
+	 bkFXN0QhH4JMANJ99oKMuOyWtgJ/ADYxuuxzVidwIRz49ZQM/zxIUk4PNfRMPzyvp0
+	 2Fg9aP3izhbUNX8XM1NZisgv9pySwcdExFced7f4=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgI1Lkc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 07:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42136 "EHLO
+        id S1726674AbgI1Lrl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 07:47:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726657AbgI1Lk3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 07:40:29 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1982C061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:40:28 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id g4so947744wrs.5
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:40:28 -0700 (PDT)
+        with ESMTP id S1726420AbgI1Lrl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 07:47:41 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DED0FC061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:47:40 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id w12so597601qki.6
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+iT0k2kjhwz1BPcggVrGNP9SOGI46vABgBecsBleWs4=;
-        b=MJEks6bpJdLb2SmIAsF2Td3KB239h6yrUhDEWRMpAWRJmehj/l3iIdSn8GGLCyPjcM
-         vMmzVdtBp7Sfl8ahnyWGSvXSyWksqnCFfpqDXred/ZYLUMjj0EB0Q2ou83Xr0tkCfUyf
-         O2SI8UTNLYFBI+JGY3J8/uDUSrNqgXw50yS97C7ZMNQchw4slHtMoKORmaTbMh+OWzcM
-         r5gnvMwHfwAxYw2mtFO9fIfwUq5xJRqkPP0FhKoSi7CtTzyhkDn3tADFkIBiYcupQbxe
-         Y5Ix0uyxbSbIyGrxXQ/RYRF5SzOOgO/GH6F+x+QGdL6kbsDp21ClYwx2c7UZm3XOvFMe
-         cFEg==
+        d=linuxfoundation.org; s=google;
+        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=qQSLjvFsoHD9Ct3IOnNaRjI6m7IUvl4f5dEGOp7mpgk=;
+        b=WfM3m9qGGL+MtWddVHuwcYv2mYeCUE9TgQkqMISTNoeOlEbZIIlC2C3DYFtJq4Pbze
+         dU+wv/6AImXkdWecnekFxI/E6feZj9YIW+3UFfLZPLVnjVnUi5leiYs+YEL6Fm2Ep5p7
+         1CcEBZ4c/mZF4gtqptFtJtOalp6XFSXx79od0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+iT0k2kjhwz1BPcggVrGNP9SOGI46vABgBecsBleWs4=;
-        b=G6HQpvHLNCSNikgWt4d3vkjTllDLY/+fo4t3661AXhHh7nkuz1nOyKY/hVau+YIIq2
-         UR0wFqmZjeAzDf+h8J5fpUIAPxIbN5FQ648DZT2EYMaaM7YHCGY6hIAZLlcRmiFeVey4
-         fTx9NcNyoGXlWmJAJnN2lpnFiED5JOrw3vhYGDHVJce60ZaZWE5cd0P/2sbyCmhXiCDR
-         jLOppym/KoggofF1SlvCKJ0m8dSzVzsFQkobd8ItZ/VoR6/Fgxtw7ipt85cQiEV7/zuY
-         aDvflSAPnhMG3ejvE4GM9xWSJM8CG7piAKcvRevSemlR+tVbrv+OuX3tyKea7RSwoj1p
-         4Apw==
-X-Gm-Message-State: AOAM530VNH/GrT54Pc8OrpBedBqm68FdObtxZxij/rxck3YK/XCLbgUE
-        2qbdOxCv8atiVagX56Tx81e12EmZku4=
-X-Google-Smtp-Source: ABdhPJzAeFiJbynOo/UoCWqqaYaHQpGGNLp9lWsjvjJhvuIRljLYVXGk27GeJDoxCMOxKyMP4nYljg==
-X-Received: by 2002:adf:efc9:: with SMTP id i9mr1272558wrp.187.1601293227202;
-        Mon, 28 Sep 2020 04:40:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f16sm1218712wrp.47.2020.09.28.04.40.26
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=qQSLjvFsoHD9Ct3IOnNaRjI6m7IUvl4f5dEGOp7mpgk=;
+        b=mlJj+whYvJt4RNSA9hfAf/y2rezf/KDxHDT8UW/v8VNrDU+0kh1DV+kgc0jfrbQPf3
+         uXvb3nKT/FUUZydSXTk8rld/8yb9FGA7ym26ceMjdsoB6y291ZFX8hNQBOtXdaOLmWAS
+         cPaoG2bAV27TXwEj/cIFMpycbd7zCbYGJKfCyrt0oTyp3bhKY0PCTp6ZY2nDPCgWnndE
+         BLayTLe9ub5Rn4gJDSHAsEjkF30aoUTl/MxhVIf4XIKQwEClYv30m9/xj53phykKn9JZ
+         cv+1KhqFWplp3/AkgUIRDgJDOP9QAJuxoclRORxbmU+biyh1N05uS2R73gjoV2vkBDHV
+         2XjA==
+X-Gm-Message-State: AOAM53144DTuQNUv1fDw6pMHOmJBLk2/H7lr/2bwrpxHVfIYtfvuH4jC
+        0XNMKKkriU8eTkwvVJkLcPnevQ==
+X-Google-Smtp-Source: ABdhPJzD5Rk8d3t2M/xsuS3fFPWVC9XH+JRwDjdOWXSp9QJMzwi9fcRyoJBWcoeaE8YlySZfdFktPw==
+X-Received: by 2002:a05:620a:7fb:: with SMTP id k27mr933026qkk.124.1601293659348;
+        Mon, 28 Sep 2020 04:47:39 -0700 (PDT)
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id l26sm696536qki.62.2020.09.28.04.47.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 04:40:26 -0700 (PDT)
-Message-Id: <f69076036fe4dfe8b57fc1d4329c7be3f7346850.1601293224.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
-References: <pull.710.git.git.1581688196706.gitgitgadget@gmail.com>
-        <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
-From:   "Nikita Leonov via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Sep 2020 11:40:23 +0000
-Subject: [PATCH v2 2/3] credentials: make line reading Windows compatible
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 28 Sep 2020 04:47:38 -0700 (PDT)
+Sender: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Date:   Mon, 28 Sep 2020 07:47:36 -0400
+From:   Konstantin Ryabitsev <mricon@kernel.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Patchwork housekeeping for: git
+Message-ID: <20200928114736.aqlvj7yupqvon45m@chatter.i7.local>
+Mail-Followup-To: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+References: <160105219546.14506.13918434797892986172.git-patchwork-housekeeping@kernel.org>
+ <CAMwyc-SZ_babReRWkSAgegJAQ1mUwzJ27PQVw2RYBzA-r60-dQ@mail.gmail.com>
+ <20200925212626.GB1270882@google.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Nikita Leonov <nykyta.leonov@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200925212626.GB1270882@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nikita Leonov <nykyta.leonov@gmail.com>
+On Fri, Sep 25, 2020 at 02:26:26PM -0700, Jonathan Nieder wrote:
+> > I enabled the patchwork-bot on the git patchwork project, in order 
+> > to
+> > help keep the number of patches shown by default to a saner limit. You
+> > don't need to do anything in response to these, but I thought you
+> > should be notified of these changes. Please let me know if you'd
+> > rather not.
+> 
+> Yay!  Thanks for this.
+> 
+> I don't mind the noise.  If I change my mind later and want to disable
+> these notifications, where do I flip the knob?
 
-This commit makes reading process regarding credentials compatible with
-'CR/LF' line ending. It makes using git more convenient on systems like
-Windows.
+The knob is at the end of this email, so just ask. :)
 
-Signed-off-by: Nikita Leonov <nykyta.leonov@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/credential-cache--daemon.c |  4 ++--
- builtin/credential-store.c         |  2 +-
- t/t0302-credential-store.sh        | 16 ++++++----------
- 3 files changed, 9 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index c61f123a3b..17664bb0d5 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -99,12 +99,12 @@ static int read_request(FILE *fh, struct credential *c,
- 	static struct strbuf item = STRBUF_INIT;
- 	const char *p;
- 
--	strbuf_getline_lf(&item, fh);
-+	strbuf_getline(&item, fh);
- 	if (!skip_prefix(item.buf, "action=", &p))
- 		return error("client sent bogus action line: %s", item.buf);
- 	strbuf_addstr(action, p);
- 
--	strbuf_getline_lf(&item, fh);
-+	strbuf_getline(&item, fh);
- 	if (!skip_prefix(item.buf, "timeout=", &p))
- 		return error("client sent bogus timeout line: %s", item.buf);
- 	*timeout = atoi(p);
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index 5331ab151a..d4e90b68df 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -23,7 +23,7 @@ static int parse_credential_file(const char *fn,
- 		return found_credential;
- 	}
- 
--	while (strbuf_getline_lf(&line, fh) != EOF) {
-+	while (strbuf_getline(&line, fh) != EOF) {
- 		if (!credential_from_url_gently(&entry, line.buf, 1) &&
- 		    entry.username && entry.password &&
- 		    credential_match(c, &entry)) {
-diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
-index 716bf1af9f..f2c672e4b6 100755
---- a/t/t0302-credential-store.sh
-+++ b/t/t0302-credential-store.sh
-@@ -142,7 +142,7 @@ invalid_credential_test "scheme" ://user:pass@example.com
- invalid_credential_test "valid host/path" https://user:pass@
- invalid_credential_test "username/password" https://pass@example.com
- 
--test_expect_success 'get: credentials with DOS line endings are invalid' '
-+test_expect_success 'get: credentials with DOS line endings are valid' '
- 	printf "https://user:pass@example.com\r\n" >"$HOME/.git-credentials" &&
- 	check fill store <<-\EOF
- 	protocol=https
-@@ -150,11 +150,9 @@ test_expect_success 'get: credentials with DOS line endings are invalid' '
- 	--
- 	protocol=https
- 	host=example.com
--	username=askpass-username
--	password=askpass-password
-+	username=user
-+	password=pass
- 	--
--	askpass: Username for '\''https://example.com'\'':
--	askpass: Password for '\''https://askpass-username@example.com'\'':
- 	--
- 	EOF
- '
-@@ -172,7 +170,7 @@ test_expect_success 'get: credentials with path and DOS line endings are valid'
- 	EOF
- '
- 
--test_expect_success 'get: credentials with DOS line endings are invalid if path is relevant' '
-+test_expect_success 'get: credentials with DOS line endings are valid if path is relevant' '
- 	printf "https://user:pass@example.com/repo.git\r\n" >"$HOME/.git-credentials" &&
- 	test_config credential.useHttpPath true &&
- 	check fill store <<-\EOF
-@@ -181,11 +179,9 @@ test_expect_success 'get: credentials with DOS line endings are invalid if path
- 	protocol=https
- 	host=example.com
- 	path=repo.git
--	username=askpass-username
--	password=askpass-password
-+	username=user
-+	password=pass
- 	--
--	askpass: Username for '\''https://example.com/repo.git'\'':
--	askpass: Password for '\''https://askpass-username@example.com/repo.git'\'':
- 	--
- 	EOF
- '
--- 
-gitgitgadget
-
+Best,
+-K
