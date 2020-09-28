@@ -2,154 +2,179 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB6DC2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 19:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD989C2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 19:39:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E952D2074A
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 19:34:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FCF620773
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 19:39:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ugq9GLuG"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="I2LnIXT2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbgI1TeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 15:34:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58916 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726424AbgI1TeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 15:34:07 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 730E7C061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 12:34:06 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id t14so1742359pgl.10
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 12:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Ob8MCVFItLBYoZQW4NLrYPTraB3/A83Gt62FeTg9nBQ=;
-        b=ugq9GLuGzrJyr8aKSXB6QWFNPDH+BwWVA9yW1pova7nx8kmzKhl5tM1OmnajujhX+f
-         BVeTZNnfOW+u0yGTaIeM2et2EyTSkX0kSb1jLSjjykfa99TH8EsajqIDfJF8/Ek18pbp
-         3tGjIRAZdDmTwMMio0UtOwp398a6DDXT5Ow0Jw4qb7HAZoqq5XMR17jBn7N35LHYATYQ
-         fO4fBPneUU0al2FTwK+Bj44tVCf27hXx5pS+FvpOgw0hHaKiy9dlkf0PeSvnJGNJgt1t
-         hWqIyK/0bwI6qD9I6jSxE2wJZvUHLib1nBVtRv2sZmt+SM7uaqRC3DPiC/8BXnDoCQg3
-         CnUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Ob8MCVFItLBYoZQW4NLrYPTraB3/A83Gt62FeTg9nBQ=;
-        b=OxLftVVz1XdulzUAcdP9FYTt0PMvX8H4BUmqX7w5F8f2kbgVqsM5tI5g/ejONdy3LN
-         jygqNCA+ZDQ8N+CAj9Xf3ptVyLaQ9+ogvHDrEquITW1SjpoeOdtvzgTYE2K/emfTf1xn
-         004V0uwVXOiQcoq8iS9n/zHzk7cno4H9evWeCJjirEaRKaiAGx1SK7EYuyF9a1jsjl+W
-         NPDb5AKpsx8Pnx+txwliymNwRKUq+jv34/iPdokdhVORdj3lsrRz2VHZ+dRtXCNq0sip
-         MfAA//Rbvd+VmPg4vumeY7+XQUXOX9Rj0E/hmouGhBZtHBsfKqkJCo4erdwIUzongbne
-         n6fA==
-X-Gm-Message-State: AOAM532utZbPv24PnzeP1eGLd5RsUHV9cze1eNRFHvTVXv8e98PnJT7r
-        SyVGByYjS04aSI8OPxB1QKw=
-X-Google-Smtp-Source: ABdhPJxlXB9L8SVMdU7i3I8A18sNGdzVmx53J8BcuvRB8UbZ9wzhRxoPmgE4jleq5A4sRKIwHacVaQ==
-X-Received: by 2002:a63:165c:: with SMTP id 28mr442981pgw.302.1601321645852;
-        Mon, 28 Sep 2020 12:34:05 -0700 (PDT)
-Received: from mail.clickyotomy.dev ([124.123.106.216])
-        by smtp.gmail.com with ESMTPSA id j25sm371175pfn.212.2020.09.28.12.34.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 12:34:05 -0700 (PDT)
-Date:   Tue, 29 Sep 2020 01:04:00 +0530
-From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v8 0/3] push: add "--[no-]force-if-includes"
-Message-ID: <20200928193400.GA88208@mail.clickyotomy.dev>
-References: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
- <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
- <xmqqtuvhn6yx.fsf@gitster.c.googlers.com>
- <20200928174619.GB24813@szeder.dev>
+        id S1726694AbgI1Tjf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 15:39:35 -0400
+Received: from mout.gmx.net ([212.227.17.21]:46383 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726565AbgI1Tjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 15:39:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1601321972;
+        bh=Tfp5N1rBBFTywh8vAMGiqjyXOFjwz8eX1PZJicSimcM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=I2LnIXT2yWoE398z2oLgTbeq0RyObfpUvbrTd45LLhNL0nqyZxGrWvLIAblwwIguD
+         zEyJGRrHHDpR8ikULVLS4WL1wNc6TGOgWgLL+TCeo3heqrm6LLf8QptaT1dP6sLGJ1
+         p38kAGQDz/3eEvDJ4Rv5Os3pnpdgwG8LI3xDN/Yc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.113.174] ([89.1.212.27]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbox-1k2ws31muJ-00P7K6; Mon, 28
+ Sep 2020 21:39:32 +0200
+Date:   Mon, 28 Sep 2020 21:39:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
+cc:     gitgitgadget@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        sibisiddharthan.github@gmail.com, sunshine@sunshineco.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v2 02/10] cmake: do find Git for Windows' shell
+ interpreter
+In-Reply-To: <20200928111748.4122-1-oystwa@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009281557390.50@tvgsbejvaqbjf.bet>
+References: <05b4b69fee2b8c32769dd72dea182cfb72a14876.1601155970.git.gitgitgadget@gmail.com> <20200928111748.4122-1-oystwa@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200928174619.GB24813@szeder.dev>
+Content-Type: multipart/mixed; boundary="8323328-435613526-1601321972=:50"
+X-Provags-ID: V03:K1:bq9JzuQEWqcWDNxnQBaq5KuChFIqZZLmO2v6rm0ws51UFuAJD9L
+ uMOjtH9ec+rWg24LUMF3egny57hve5sIa/K1cKd5+aN8aBLJfw8/Su67z+dd4857ebP4Ars
+ s4+taZfaObaU4vjjuyyc6H4/FYZQ41gVT270g9irQ4MM8sHtpsnHep2DL3m7MyVUJBSK4z/
+ WcW5tPBRcZ7mAUhEX5tLg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZF7HJvamPlE=:+Y/t/Vy6Qh2rEL8MDQraVu
+ cpQLBlDXfP99fqCPx+wfcAfEJAM6etRi5Ra3t7zB9mjpDFTK/TgMANJHNnN5E6A2SlZa44hSn
+ MwmH7cow44hKlYto41x7b+MehC4sLWZGjKdqg3PQxs4ezOcxMkMKNsyc81i1d31whnUsxcpv+
+ +G7MdPE+80w7S5eNN8BEZyJj1MHtCxBvWjWQQsboyxlM+7JQpBJvDD/eN86fN4csRh5HIcuVG
+ W8aS1UsgPcMVqHimPr1hqL9hfatAdZjEk52pne7rP+kCGU9yE8YVvmcjgEcpGfMEfVDTaVkNe
+ 5O6CX3Y/zIDnvZjfpYwQ3UIauDGIUHI6h99T+Ro7jSGlmpWIRvbfgQiEoPJT6QQGkpBuq2l9v
+ XlyUC3DaVKui6EPO1DDEmRijdkbUERGqZnpE8F6D0rdHC+DFiCLID+jZ9vy4yX/qxHryiszT7
+ wP7gX2M4PQSbFIJEOIiaigJ+xYmGucAGucECdkNjJlVr9dah7InUEeDvIczYMBmC56FIb+fpB
+ Xg9rZSddsOaq8ty0Z2+DTS5ei+aJLuQcvC4yk5YE+3HEI/lkzXsoLs0AB9RZ6crffig5HUi6/
+ bp/lUKwKmwKDGjms6m/as7X9LQ40r+Rj0dRxNIZzyWVG1y3B+wjpNQNgFgPOzBSuIfXWZKcNl
+ 77qXGxZY5DsexLKmIrYJTxH1lTfjOjBIAbxYvBSnjxmMPBZiinPvLonxCKx8pKVba7MAdsRb4
+ KI9OI6d73pJdr+kWfe2kR44cQlbmSz4v2mhsHcFeNlQ3tlgk2++W6YlvLLs7QH6p8NiaZ5BXc
+ Zl+QJcI4fGlpGrsW5LXoULg+mN0eHlV4Vdoxaq2CjiWbcIuDAnk7Uj0exPcOA419smV1zcYqr
+ i9Jpvny4BVWmevPC96OPGziwwgNW019SWLnheJeI264xL/8HCao2AlWqO+TkXhFeOMzq9DPKO
+ c9O+RFSkZesYpqgq0Qnc8Vvi/WVOqrvM9QKf85kmgJwpMdLG2uYFaTfytThiMZ9EMRLV6y2ae
+ f+uFCJQ9Pl4QZwnoTpYhcRun+giVogTuxLTHZ2LWdTzwzWtB7fuPSuWr+6iCz8mLqxlSDMHPw
+ rGa/7XyqI9lYfdwlf3gWrL1pS0fPFchKwKbB1jufwausvPM5Xxs3ZCfJJmk8lDVZmCCr8KeKh
+ Ho+JjnGFWTNuU3EFmw8ATY7YBFjhG4lqHjwJuiRXdQGbHd3z1/AojwBd06KdDiWhQm72bnwCq
+ p5skdkBkNF3petEeOg/0/SjI6fIbiNs8eO6AvDg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 09/28/2020 19:46, SZEDER Gábor wrote:
-> On Mon, Sep 28, 2020 at 10:31:34AM -0700, Junio C Hamano wrote:
-> > Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
-> > 
-> > > Add a new option: "--force-if-includes" to "git-push" where forced
-> > > updates are allowed only if the tip of the remote-tracking ref has
-> > > been integrated locally, by verifying if the tip of the remote-tracking
-> > > ref -- on which a local branch has based on -- is reachable from at
-> > > least one of the "reflog" entries of the branch about to be updated
-> > > by force on the remote.
-> > 
-> > https://travis-ci.org/github/git/git/jobs/730962458 is a build of
-> > 'seen' with this topic, and the same 'seen' without this topic is
-> > https://travis-ci.org/github/git/git/builds/730857608 that passes
-> > all the jobs.  It is curious why one particular job fails while
-> > others in the same build is OK.
-> 
-> That build runs the test suite with a bunch of GIT_TEST_* knobs
-> enabled, and the last two tests added in this series fail when run as:
-> 
->   GIT_TEST_COMMIT_GRAPH=1 ./t5533-push-cas.sh
- 
-Thanks for the heads-up. It turns out that "in_merge_bases_many()"
-returns different results depending on "GIT_TEST_COMMIT_GRAPH".
-Initially I thought that it might be related to batching the entries,
-but that is not the case.
+--8323328-435613526-1601321972=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-One of the tests that is failing is:
-  cd src &&
-  git switch branch &&
-  test_commit I &&
-  git switch master &&
-  test_commit J &&
-  git pull --rebase origin master &&
-  git push --force-if-includes --force-with-lease="master"
+Hi =C3=98ystein,
 
-Here, we are testing to check if forced updates are allowed after
-the remote changes have been incorporated locally, which is true
-in this case and should pass.
+On Mon, 28 Sep 2020, =C3=98ystein Walle wrote:
 
-"in_merge_bases_many()" used in the check as follows:
+> >  find_program(SH_EXE sh)
+> >  if(NOT SH_EXE)
+> > -	message(FATAL_ERROR "sh: shell interpreter was not found in your pat=
+h, please install one."
+> > -			"On Windows, you can get it as part of 'Git for Windows' install a=
+t https://gitforwindows.org/")
+> > +	set(SH_EXE "C:/Program Files/Git/bin/sh.exe")
+> > +	if(NOT EXISTS ${SH_EXE})
+> > +		message(FATAL_ERROR "sh: shell interpreter was not found in your pa=
+th, please install one."
+> > +				"On Windows, you can get it as part of 'Git for Windows' install =
+at https://gitforwindows.org/")
+> > +	endif()
+> >  endif()
+>
+> You can write the find_program() command more succinctly as:
+>
+> 	find_program(SH_EXE sh PATHS "C:/Program Files/Git/bin")
+>
+> PATHS is is a list of extra directories to search, which are usually har=
+d-coded
+> guesses[1]. This way we avoid an extra check and indentation level.
 
-  for (chunk = list.items; chunk < list.items + list.nr; chunk += size) {
-	  size = list.items + list.nr - chunk;
-	  if (MERGE_BASES_BATCH_SIZE < size)
-	        size = MERGE_BASES_BATCH_SIZE;
+Thank you, I was not aware of this neat feature.
 
-	  if ((ret = in_merge_bases_many(commit, size, chunk)))
-	        break;
-  }
+> I found my Visual Studio installation already contains a sh.exe.  I thin=
+k it
+> ships with VS by default; I can't even find a way to remove it. It's loc=
+ated
+> at:
+>
+> C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\ID=
+E\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Git\usr\bin\sh.e=
+xe
+>
+> When I started writing this up I figured that could serve as an addition=
+al
+> fallback. However, if I use that shell I have to add (...)/usr/bin to PA=
+TH as
+> the various scripts need expr and sed among other things. I get the same=
+ result
+> if I search "C:/Program Files/Git/usr/bin", but there is no equivalent
+> (...)/bin in the Git included with VS for some reason.
 
-In "repo_in_merge_bases_many()" [1], the following condition evaluates
-to true when "GIT_TEST_COMMIT_GRAPH" is 1.
+Indeed. This is what I get in that case:
 
-	generation = commit_graph_generation(commit);
-	if (generation > min_generation)
-		return ret;
+=2D- snip --
+1> [CMake] Generating  GIT-VERSION-FILE
+1> [CMake] C:/git-sdk-64/usr/src/vs2017-test/contrib/buildsystems/../../GI=
+T-VERSION-GEN: line 24: sed: command not found
+1> [CMake] C:/git-sdk-64/usr/src/vs2017-test/contrib/buildsystems/../../GI=
+T-VERSION-GEN: line 29: expr: command not found
+1> [CMake] GIT_VERSION =3D
+1> [CMake] CMake Error at C:\git-sdk-64\usr\src\vs2017-test\contrib\builds=
+ystems\CMakeLists.txt:79 (string):
+1> [CMake]   string sub-command FIND requires 3 or 4 parameters.
+1> [CMake]
+1> [CMake]
+1> [CMake] CMake Error at C:\git-sdk-64\usr\src\vs2017-test\contrib\builds=
+ystems\CMakeLists.txt:83 (string):
+1> [CMake]   string sub-command REGEX, mode MATCH needs at least 5 argumen=
+ts total to
+1> [CMake]   command.
+1> [CMake]
+1> [CMake]
+1> [CMake] CMake Error at C:\git-sdk-64\usr\src\vs2017-test\contrib\builds=
+ystems\CMakeLists.txt:87 (project):
+1> [CMake]   VERSION ".0" format invalid.
+=2D- snap --
 
-Unfortunately, I am unfamiliar with the code, and not sure why this
-happens; I remember Junio mention [2] something about generation
-numbers could it be related to that?
+The explanation is pretty simple: you cannot just call into `sh.exe` via
+an absolute path and expect it to add its containing directory to the
+`PATH`. It does not, and the symptom is that neither `sed` nor `expr` are
+found.
 
-A possible "workaround" is to use "in_merge_bases()" for each of the
-commits we collect in the list, and the tests seem to pass with
-"GIT_TEST_COMMIT_GRAPH" being set; but I wonder if that's the right
-way to fix this.
+One solution is to add it to the `PATH` manually, which is the original
+expectation in our `CMakeLists.txt` version.
 
-[1] https://git.kernel.org/pub/scm/git/git.git/tree/commit-reach.c#n319
-[2] https://public-inbox.org/git/xmqqft7djzz0.fsf@gitster.c.googlers.com/
+Another solution is to point it to `C:\Program Files\Git\bin\sh.exe` which
+is not, in fact, a shell, but a small wrapper executable whose job it is
+to set up a couple environment variables (`PATH` being one of them) and
+then spawning the _actual_ `sh.exe`. The source code for that wrapper:
+https://github.com/git-for-windows/MINGW-packages/blob/main/mingw-w64-git/=
+git-wrapper.c
 
-Thanks.
--- 
-Srinidhi Kaushik
+As you figured out, it is _not_ enough to use `...\usr\bin\sh.exe`
+directly without adjusting the `PATH`.
+
+Ciao,
+Dscho
+
+--8323328-435613526-1601321972=:50--
