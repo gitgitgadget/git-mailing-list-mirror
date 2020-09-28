@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0371C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B9DC2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:51:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 532482074B
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:51:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C21922074A
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:51:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="QkmtACq7"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="YwuH7odh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726727AbgI1QvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 12:51:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33778 "EHLO
+        id S1726763AbgI1QvL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 12:51:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726625AbgI1QvI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 12:51:08 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35AADC061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:51:08 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id w12so1575419qki.6
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:51:08 -0700 (PDT)
+        with ESMTP id S1726608AbgI1QvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 12:51:11 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A1BC061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:51:11 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id di5so769892qvb.13
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:51:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7ymTQ4F6iuFrFEgP+wQeRG9ELSnEUHRnYVcBSZJxedM=;
-        b=QkmtACq7DYq2A1w6X9r+sGtL9J1oc+mmBhfG3f1rCe4C55bcSRiGniDv1/8a6sQj4s
-         2lFq7xw6rCx4NYRCAqAjBC/8gZOCtIy6xgpmrUjzlOgimAPOmdYa9evO4MwQxiLPcCzN
-         ZQUQm6LZPVOnqeWzmJb7Gj1SNlpTbMv9cXo/VdEsJW0L22q9yduoFERjLscXZK0F/LI0
-         RbiYmrZINWAjVLGMDuqfogtP4f5u4JR7b5ZDlCcznnBcptkvgreBNuLAV17o4+0iixZb
-         1KbWcdYa4vRBePCI9C9JSZGSfgZZcDVoseMlFCvfti/rOXdkhzvciL5HMJhn3sxT99RE
-         rfgQ==
+        bh=I9CKy8MeuENzQBrWoei2KikT+xhgjkuwc0rkDO+pb9g=;
+        b=YwuH7odhdOG+CZwarqXLxvCQDgIUL9d+aLAGp5tSGzI5pc24wpg9I4S1jMkjynG+ps
+         a07RF3LN6RvdHPQZ5/VJUQVwCclEofAEC/8Fh4f1Lu9QQevZkgou43PNcvwr6+aMnUOs
+         EM3VfxeQ6/FFNPIyxW3mg/Ybzmqcsb09EScy4E7mXTm46guYk7imPYlfudIW72E6bSoQ
+         u7DYLxYEtMwFogACcx7PkPnYj5/AUCmJYKthUVZ4cpfOsfyhUU9aR2YgefzPE/0Y2DbT
+         8GCEaIZsaeEZmfpW4spDAek2SRuvbMQO0VT8liErpNN5unMBkjEmGyIp1n4wg2SQvLVB
+         m9uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7ymTQ4F6iuFrFEgP+wQeRG9ELSnEUHRnYVcBSZJxedM=;
-        b=dtZ+qPB3WyZH/UkGXFtaSZqtMLI+H0Sh/csMBs6bvOnhzkOBDc7QnO5GCxqSJMU+gV
-         Mu9V5sE8ye/WyLobIXlaE3cAiZnJOT7qYABqkcA6M2hKSDV33rF8SgZRpZAryK20WhoU
-         vRmN7eLBIwOa/VT4nLJ3v/wE/JacBy/6vL4NtkCQ/nk2AzDK5MbvlSFy9ibqiGraSL42
-         ViM+TAfAH9MuqmBcT0SCaoSEctmtoMZZSJ2FTnRekCFGGkqfdFuk/xdglYnzgwbb5Ffd
-         jhdVImkp10RleFTH41VC7S1H4l9fqaUCjwrNFCr/GchdI9xEBS3XedcSPjUh1+tQM88i
-         hK7g==
-X-Gm-Message-State: AOAM532l7Gjvwxh0EEPukd2UuDusIx026E+TtBGAGLDKoE6I6DXLfumS
-        eG55j0d0RGCjAMbIxqZOhpCKwdoopWAT9A==
-X-Google-Smtp-Source: ABdhPJzPLJANOfbZFuApWkvfSwQK/1tyVD3LyWuuRVk31rxdAN+1MP+0Ilmo7CxuY7tZbkBDlilTKg==
-X-Received: by 2002:a05:620a:9c1:: with SMTP id y1mr309500qky.241.1601311866842;
-        Mon, 28 Sep 2020 09:51:06 -0700 (PDT)
+        bh=I9CKy8MeuENzQBrWoei2KikT+xhgjkuwc0rkDO+pb9g=;
+        b=nky5mlkEQcfNesemitoKIDHFfybe7IEQeHzkYKpaq6NowN1jTJCtq8TuSFK54evesW
+         0zA1lhj2UC0oLfFt8klHyE6kJ81lhTtk2Yy7bUyJ4CWPfATPX0R+DWja1ImdNKcsOYk8
+         zeVDNNJZzAmTDxoFhLlcKDglhYOqs83zsv1taoqIuylI/MiLdhw6hVBDDXFQJrjohvdS
+         DhksEfLjlDK4v+cACbEt3bsVtIL9zmRrealUtsPlQGdP/LWX5GiJaJJFlJzpUFNo28KY
+         7d3K1YQfXJN+mN0lbqKt8TtCU/VZG6T/f9J6NHxdY5V9Vr8AZfNAbXJYxtIq78wQg2k2
+         i6lw==
+X-Gm-Message-State: AOAM532RBc+FsWeo/w2NlGZFRTavajBZ6+2uc+zG6Zc0zVliknObu2Cf
+        hijgN3TCCfrby/r2Kq88E653bzpo1N47qw==
+X-Google-Smtp-Source: ABdhPJxOD0nbRSMcVs39f2nqX5VN3h9Gkx1EvSsQfYsG0tINvbvpFFMN4iWVZhh5FTgxuDp+PRFCAQ==
+X-Received: by 2002:a05:6214:903:: with SMTP id dj3mr496107qvb.14.1601311870042;
+        Mon, 28 Sep 2020 09:51:10 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.96.45])
-        by smtp.gmail.com with ESMTPSA id u18sm1908358qtk.61.2020.09.28.09.51.04
+        by smtp.gmail.com with ESMTPSA id u18sm1908358qtk.61.2020.09.28.09.51.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 09:51:06 -0700 (PDT)
+        Mon, 28 Sep 2020 09:51:08 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     phil.hord@gmail.com, dstolee@microsoft.com,
         jonathantanmy@google.com, stefanbeller@gmail.com
-Subject: [PATCH 1/2] packfile: fix race condition on unpack_entry()
-Date:   Mon, 28 Sep 2020 13:50:34 -0300
-Message-Id: <42a7948f94cb57ebd9c37c3850b46b1ac9813ec6.1601311803.git.matheus.bernardino@usp.br>
+Subject: [PATCH 2/2] packfile: fix memory leak in add_delta_base_cache()
+Date:   Mon, 28 Sep 2020 13:50:35 -0300
+Message-Id: <5b6e3019e08c6bccdee29018e99b0c6933fe05e0.1601311803.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1601311803.git.matheus.bernardino@usp.br>
 References: <cover.1601311803.git.matheus.bernardino@usp.br>
@@ -73,102 +73,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The third phase of unpack_entry() performs the following sequence in a
-loop, until all the deltas enumerated in phase one are applied and the
-entry is fully reconstructed:
+When add_delta_base_cache() is called with a base that is already in the
+cache, no operation is performed. But the check is done after allocating
+space for a new entry, so we end up leaking memory on the early return.
+Also, the caller always expect that the base will be inserted, so it
+never free()'s it. To fix both of these memory leaks, let's move the
+allocation of a new entry further down in add_delta_base_cache(), and
+make the function return an integer to indicate whether the insertion
+was performed or not. Then, make the caller free() the base when needed.
 
-1. Add the current base entry to the delta base cache
-2. Unpack the next delta
-3. Patch the unpacked delta on top of the base
-
-When the optional object reading lock is enabled, the above steps will
-be performed while holding the lock. However, step 2. momentarily
-releases it so that inflation can be performed in parallel for increased
-performance. Because the `base` buffer inserted in the cache at 1. is
-not duplicated, another thread can potentially free() it while the lock
-is released at 2. (e.g. when there is no space left in the cache to
-insert another entry). In this case, the later attempt to dereference
-`base` at 3. will cause a segmentation fault. This problem was observed
-during a multithreaded git-grep execution on a repository with large
-objects.
-
-To fix the race condition (and later segmentation fault), let's reorder
-the aforementioned steps so that the lock is not released between 1.
-and 3. An alternative solution which would not require the reordering
-would be to duplicate `base` before inserting it in the cache.
-However, as Phil Hord mentioned, memcpy()'ing large bases can negatively
-affect performance: in his experiments, this alternative approach slowed
-git-grep down by 10% to 20%.
-
-Reported-by: Phil Hord <phil.hord@gmail.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- packfile.c | 41 ++++++++++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 17 deletions(-)
+ packfile.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index 9ef27508f2..0319418d88 100644
+index 0319418d88..177793e01a 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1775,12 +1775,10 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 		void *external_base = NULL;
- 		unsigned long delta_size, base_size = size;
- 		int i;
-+		off_t base_obj_offset = obj_offset;
+@@ -1471,10 +1471,10 @@ void clear_delta_base_cache(void)
+ 	}
+ }
  
- 		data = NULL;
+-static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
++static int add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	void *base, unsigned long base_size, enum object_type type)
+ {
+-	struct delta_base_cache_entry *ent = xmalloc(sizeof(*ent));
++	struct delta_base_cache_entry *ent;
+ 	struct list_head *lru, *tmp;
  
--		if (base)
--			add_delta_base_cache(p, obj_offset, base, base_size, type);
--
- 		if (!base) {
- 			/*
- 			 * We're probably in deep shit, but let's try to fetch
-@@ -1818,24 +1816,33 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 			      "at offset %"PRIuMAX" from %s",
- 			      (uintmax_t)curpos, p->pack_name);
- 			data = NULL;
--			free(external_base);
--			continue;
--		}
-+		} else {
-+			data = patch_delta(base, base_size, delta_data,
-+					   delta_size, &size);
+ 	/*
+@@ -1483,7 +1483,7 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 	 * and III might run concurrently across multiple threads).
+ 	 */
+ 	if (in_delta_base_cache(p, base_offset))
+-		return;
++		return 0;
  
--		data = patch_delta(base, base_size,
--				   delta_data, delta_size,
--				   &size);
-+			/*
-+			 * We could not apply the delta; warn the user, but
-+			 * keep going. Our failure will be noticed either in
-+			 * the next iteration of the loop, or if this is the
-+			 * final delta, in the caller when we return NULL.
-+			 * Those code paths will take care of making a more
-+			 * explicit warning and retrying with another copy of
-+			 * the object.
-+			 */
-+			if (!data)
-+				error("failed to apply delta");
-+		}
+ 	delta_base_cached += base_size;
  
- 		/*
--		 * We could not apply the delta; warn the user, but keep going.
--		 * Our failure will be noticed either in the next iteration of
--		 * the loop, or if this is the final delta, in the caller when
--		 * we return NULL. Those code paths will take care of making
--		 * a more explicit warning and retrying with another copy of
--		 * the object.
-+		 * We delay adding `base` to the cache until the end of the loop
-+		 * because unpack_compressed_entry() momentarily releases the
-+		 * obj_read_mutex, giving another thread the chance to access
-+		 * the cache. Therefore, if `base` was already there, this other
-+		 * thread could free() it (e.g. to make space for another entry)
-+		 * before we are done using it.
+@@ -1495,6 +1495,7 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 		release_delta_base_cache(f);
+ 	}
+ 
++	ent = xmalloc(sizeof(*ent));
+ 	ent->key.p = p;
+ 	ent->key.base_offset = base_offset;
+ 	ent->type = type;
+@@ -1506,6 +1507,7 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+ 		hashmap_init(&delta_base_cache, delta_base_cache_hash_cmp, NULL, 0);
+ 	hashmap_entry_init(&ent->ent, pack_entry_hash(p, base_offset));
+ 	hashmap_add(&delta_base_cache, &ent->ent);
++	return 1;
+ }
+ 
+ int packed_object_info(struct repository *r, struct packed_git *p,
+@@ -1841,8 +1843,10 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
+ 		 * thread could free() it (e.g. to make space for another entry)
+ 		 * before we are done using it.
  		 */
--		if (!data)
--			error("failed to apply delta");
-+		if (!external_base)
-+			add_delta_base_cache(p, base_obj_offset, base, base_size, type);
+-		if (!external_base)
+-			add_delta_base_cache(p, base_obj_offset, base, base_size, type);
++		if (!external_base && !add_delta_base_cache(p, base_obj_offset,
++						base, base_size, type)) {
++			free(base);
++		}
  
  		free(delta_data);
  		free(external_base);
