@@ -2,106 +2,87 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBD5C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 17:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDFEBC2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 18:06:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05C3A2083B
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 17:46:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79DB820719
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 18:06:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RSm0U0Nm"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NVTtrgkH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726465AbgI1RqY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 13:46:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42352 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726328AbgI1RqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 13:46:24 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CF6C061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 10:46:24 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id b79so2016080wmb.4
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 10:46:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=iJJHLJjcko2jC8/b6A6B9qw8Y8ekxE46EJ2HzJRVfF8=;
-        b=RSm0U0NmAqRMfqdgwUISVym8JvSzmTml0rNKTCZDSPs9WBc8f/PRXyzMJJFHVhp4ol
-         M7yOcfXDF1ej7mkVuViQ25ap1viVDUl0x8+uK3hiU6OcSne5YuEVHzzrLRBMwpwhKEXH
-         Om3nj/IknrLlox4t+CGjPAReHd7FHjpPrg0gPbTeM1ZoL9FIuxLpHRjXeM3mNOCiFwV1
-         JH9wN8fVGrHtXX7QEk2LfwRyL9iuW5m3H/KRUnrme8Q9csFM8ms/OTbA9cKT7+P3IvMl
-         xjQYazXn3vKiPONXI4Ttfq14+9k40EwO4VLNBL2pr254h4qdxcUfJPeVw8qV2+sdKTCl
-         YHqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=iJJHLJjcko2jC8/b6A6B9qw8Y8ekxE46EJ2HzJRVfF8=;
-        b=eWDPwq+wSww9rIZaRXEbx/UQFbTlTMtqi7gVXZHVuKFsbiKM+xad/uh1542mTl5rsr
-         1DYmOqcD6n8L9IztaJTPI6GkKeNvXyMBnbKy6BRDi8qjQIBx7tOqMVHDNyc4LuzwtooH
-         rofo0W7LPeqBmtWsJSLuQHDZ5XSpU8KO+xnkoHtQAf4/pmZljbx8FH3LTaBFmJCHLchg
-         ffs8ASXL0ulHbH1YAsgj924ISlO8UCQmJcixynVW/j8aWgRfaEZrEhqzwyaO4HC/lDGd
-         BGQxDMsjw1fnecB2cgXf4lIYsY0OkHH4hZjOV4DAQYBm3QRyBYRvpcvgOOKv+caTt5ph
-         U4sw==
-X-Gm-Message-State: AOAM5320QFEM3Uu6h7HNlzkMtB/toVDYa13dk4B2MruSiVKzjNgBo1B/
-        t2EG/IIZX32ewFDHc+3ZC8w=
-X-Google-Smtp-Source: ABdhPJzos44ThfH/CNy5Vk3AYul/3GFHbxFjHz+Sr42wrq6WOzwbC88tWUfTFZPcw1F4sLnMeM1Lcw==
-X-Received: by 2002:a7b:c84a:: with SMTP id c10mr290591wml.139.1601315182914;
-        Mon, 28 Sep 2020 10:46:22 -0700 (PDT)
-Received: from szeder.dev (94-21-58-130.pool.digikabel.hu. [94.21.58.130])
-        by smtp.gmail.com with ESMTPSA id d2sm2233922wro.34.2020.09.28.10.46.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Sep 2020 10:46:22 -0700 (PDT)
-Date:   Mon, 28 Sep 2020 19:46:19 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v8 0/3] push: add "--[no-]force-if-includes"
-Message-ID: <20200928174619.GB24813@szeder.dev>
-References: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
- <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
- <xmqqtuvhn6yx.fsf@gitster.c.googlers.com>
+        id S1726691AbgI1SF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 14:05:59 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50096 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726645AbgI1SF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 14:05:58 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B0E0DED529;
+        Mon, 28 Sep 2020 14:05:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dEEvzIbD2rdt1f+W1+gUDMqxPBc=; b=NVTtrg
+        kHzKQQYBWS2bD7ZY3V+rWMSYnB+kXo0e1LuHs61ZN6stc3wO/so5a5IuuMmMmNCM
+        HC9TJxR9sYYQMS+e3dqSrhEprDVXG62wZRO3nI14/ZMhbaK609rS6pmeJYXcP9na
+        xCLYAxF4I6vxaTJvr8gUtqxw/HMfa4Jtz6XLY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Mg6GTlK6hEtNXhO7Xh+xrTgPQbIacH9B
+        UMTrszo9mvoBfyg0h1lQptTDC2tDZWH8zJs8m/+VD12kXUhMND3/IB4pt5lWdCj9
+        stKEgtK1Oo6KuN4YaMntGZ3kj8nPjj9zqbddDy0pgqrswhZXGqLIveSR8zbgmelA
+        NUFzsjU7IEg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A90DDED528;
+        Mon, 28 Sep 2020 14:05:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2EA3ED526;
+        Mon, 28 Sep 2020 14:05:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, phil.hord@gmail.com, dstolee@microsoft.com,
+        jonathantanmy@google.com, stefanbeller@gmail.com
+Subject: Re: [PATCH 1/2] packfile: fix race condition on unpack_entry()
+References: <cover.1601311803.git.matheus.bernardino@usp.br>
+        <42a7948f94cb57ebd9c37c3850b46b1ac9813ec6.1601311803.git.matheus.bernardino@usp.br>
+Date:   Mon, 28 Sep 2020 11:05:52 -0700
+In-Reply-To: <42a7948f94cb57ebd9c37c3850b46b1ac9813ec6.1601311803.git.matheus.bernardino@usp.br>
+        (Matheus Tavares's message of "Mon, 28 Sep 2020 13:50:34 -0300")
+Message-ID: <xmqqpn65n5dr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtuvhn6yx.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3FF6DF64-01B5-11EB-832D-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 28, 2020 at 10:31:34AM -0700, Junio C Hamano wrote:
-> Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
-> 
-> > Add a new option: "--force-if-includes" to "git-push" where forced
-> > updates are allowed only if the tip of the remote-tracking ref has
-> > been integrated locally, by verifying if the tip of the remote-tracking
-> > ref -- on which a local branch has based on -- is reachable from at
-> > least one of the "reflog" entries of the branch about to be updated
-> > by force on the remote.
-> 
-> https://travis-ci.org/github/git/git/jobs/730962458 is a build of
-> 'seen' with this topic, and the same 'seen' without this topic is
-> https://travis-ci.org/github/git/git/builds/730857608 that passes
-> all the jobs.  It is curious why one particular job fails while
-> others in the same build is OK.
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-That build runs the test suite with a bunch of GIT_TEST_* knobs
-enabled, and the last two tests added in this series fail when run as:
+> To fix the race condition (and later segmentation fault), let's reorder
+> the aforementioned steps so that the lock is not released between 1.
+> and 3.
 
-  GIT_TEST_COMMIT_GRAPH=1 ./t5533-push-cas.sh
+In other words, we hold the base in core only for ourselves without
+adding it to the base cache, apply the delta to produce the result
+and then place the base in the cache, and the reason why this change
+fixes the breakage is because the base we have locally and not in
+cache will not be seen by other people and will not be freed without
+our consent?  Which does make sense.
 
-> The failure in t5533-push-cas.sh is sort-of understandable as the
-> topic directly touches the area of the code the failing test
-> exercises, but the failure in t3701 is totally unexpected.
+But I was confused by the explanation "lock is not released".  We do
+release the same lock when we call unpack_compressed_entry(), and
+reaquire it before the unpack_compressed_entry() returns.  What the
+reordering achieves is to protect the base from getting evicted when
+the unlocking and relocing happens, no?
 
-That's not a failure, but the fix of a known breakage: we expect
-failure from the scripted 'git add -i' in two tests, but the builtin
-'git add -i' fixes those issues, and those two tests succeed with
-GIT_TEST_ADD_I_USE_BUILTIN=1.
-
+Thanks.
