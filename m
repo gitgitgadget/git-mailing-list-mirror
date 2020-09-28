@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C056EC4727C
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B947C4727F
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68AAB208FE
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 326FA208FE
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BwY7J5YD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BlgpsnPg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726935AbgI1VJg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 17:09:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45410 "EHLO
+        id S1726942AbgI1VJh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 17:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726865AbgI1VJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 17:09:28 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6137C061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:27 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id d4so2476097wmd.5
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:27 -0700 (PDT)
+        with ESMTP id S1726632AbgI1VJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 17:09:29 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DEFC0613CE
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:28 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id k18so2534684wmj.5
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Xfo38AuyHcLNa8/91Ulhsub9WGaHfYjdgMuwmOZ1tG0=;
-        b=BwY7J5YDU+DIjrHHFNlw985x5/CNcfDtxqi2yF94SYVgFVIYxtGuqNGjv3jdn9n9Dv
-         q72HiJhPeFs8QrtRZqfZm07XbJ8KhgyCYY54coZ2sxvsgmBj9xafvIblb4zZjLypkQ7X
-         a0PMB2Cnad2TBuQ0gdAus24I3jXIYJvQhS93Ww869pwIzIEJNXMkpsCT0ZEqRCrmCimG
-         dQekcW9AsNplI/uZ2B7a7ZoBUW6aX6fzXusHFLC+G9q9kQrC2LukMlDpvkw7XiODt7UV
-         vrlpbiuijbV2Gop3CR8N7RM17uLXMkuiv14AQMIV+lrDUcblRmsqCkgJZFo6hx4PUzBd
-         lHog==
+        bh=P+1UcXSjxVBg36V9LODbOciDWEAxpf7ke05kH2Rw6l4=;
+        b=BlgpsnPgwUFUOVCacQTSuB2bLyb/o7weDCtc+M1m3dQnGKWJacVufxOcAJl8X3iNgy
+         QH8voLm/lxMOXR5d3VsxJmd+HGDzYR/5zCQUMrBLd5nKAfr30I6dW4XXjzRk1/SL4ny5
+         EKrTaOu+rCYGupumUKYd/mwIokW2avZs7Md/qSIT4FTDNrznyVU+lekkxTGwfx+KLoPQ
+         GMgemhJGibS+Fv/b0nSI7Pnqjflc+QjZKRFBE90IJY8UYC35eJGXi9+6U5m3C+CE6zKi
+         S5IUwG4vIRnnidJicZKyFHONvXkFBYXcjwzEp6rPNC2ndQxyuxdLlMDyJx09qooXBWl4
+         0j/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Xfo38AuyHcLNa8/91Ulhsub9WGaHfYjdgMuwmOZ1tG0=;
-        b=Kbh7CjZuCrgxHwvVWTMVsKS0GLt1sNqfSO7p9MeNRgDt4imXt00OnjkPhuLYwAGuyo
-         0D3H+DqWn3FLukwf4Nv16gNPH8hYFDyTi7IV+DaLzyBzVr7wXUETfp5jeRjtR0icdSHO
-         1q9WrKKJYJNRhMb4NHH+jkqjJaIHOJKBisiTTQwRBuNjBy4/SKBPArl2vsBE0h4lwdQy
-         UIuNx+f1pa/7ZpZ+cfuQkOnRn7umoHIs4zIJ8OMzY3nLKqKu3FJjKnHlZ84iqqJI/QYe
-         7lPsUJkfpkhkkv1mXBlpiLVgafsmfI0NUyGLMvs11nXTgs9NrX7/B2fyf22P0d1gQf4H
-         YVow==
-X-Gm-Message-State: AOAM532zN07qksrBDZBhwBI9grC6/thvq7yc4GBJhQ11EPybuWBwvzL1
-        fh4CuCKkX8cbcXMOUmbqTPbQE83iURw=
-X-Google-Smtp-Source: ABdhPJyLvTWkSeBqQXu1wGYs8wqdGdHc6MBR8OY8+AIhusNwuYWhF6T/S8Cl/xG1bnRosjwpnwmFQg==
-X-Received: by 2002:a1c:bcd4:: with SMTP id m203mr1037337wmf.70.1601327366030;
-        Mon, 28 Sep 2020 14:09:26 -0700 (PDT)
+        bh=P+1UcXSjxVBg36V9LODbOciDWEAxpf7ke05kH2Rw6l4=;
+        b=LwjHzMFWd6011PWJUF8p9HTmYj1+qtFPGmfwzzKpBpfkZwejhRDJDfx/I+G6GFTE/O
+         XFST5Ae1FXb+sxYbiA7m/fr3jb8BDSkIngTgXfO1VtHip5PZ1LTIDpgWg3GuoFol585J
+         fUPvC0pjqY1t0fY4HrKYm1J75rcUfjQ1MmWDHXUbteq1M1Py1W9MbxWtuPSYifmhruAo
+         2HV2Fu+Aj++oIkaxqsPZub8zvEToDlMPva11JhmrSMoVq23bZZ7b/fE3dbBdnzDCPGUK
+         50J6Bbtgv51AgIRkYv2qGDrblxmcJtfT5AH7jqa+qdczxZuBLi597PuAfqjgBPuQ2dBt
+         eRvg==
+X-Gm-Message-State: AOAM531v8IhKTmc46ep3hceciQZskc5fUgigPFjkC1BjyRRrUtb9ro8D
+        rTO0Z1TZuHnIH3R+/fQeSvt9k0ZEFOo=
+X-Google-Smtp-Source: ABdhPJxka1bKlYStnU2i6CsEjtyicL4EL9/0CzrjzwENPpgXZDTkp0YIcX4Jn4+GR40bY76ZwIVdjQ==
+X-Received: by 2002:a1c:4b17:: with SMTP id y23mr1010548wma.162.1601327367339;
+        Mon, 28 Sep 2020 14:09:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 63sm3510441wrc.63.2020.09.28.14.09.24
+        by smtp.gmail.com with ESMTPSA id h204sm2704970wmf.35.2020.09.28.14.09.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 14:09:25 -0700 (PDT)
-Message-Id: <f61c3ef44228cd4a8dd85c4b9fda803f6a099ae5.1601327357.git.gitgitgadget@gmail.com>
+        Mon, 28 Sep 2020 14:09:26 -0700 (PDT)
+Message-Id: <7a4346a437b9bf1ebddafa5f3d92c118793c0078.1601327357.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
 References: <pull.738.v2.git.1601155970.gitgitgadget@gmail.com>
         <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Sep 2020 21:09:11 +0000
-Subject: [PATCH v3 06/11] cmake (Windows): let the `.dll` files be found when
- running the tests
+Date:   Mon, 28 Sep 2020 21:09:12 +0000
+Subject: [PATCH v3 07/11] cmake (Windows): complain when encountering an
+ unknown compiler
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,31 +86,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Contrary to Unix-ish platforms, the dependencies' shared libraries are
-not usually found in one central place. In our case, since we use
-`vcpkg`, they are to be found inside the `compat/vcbuild/vcpkg/` tree.
+We have some custom handling regarding the link options, which are
+specific to each compiler.
 
-Let's make sure that they are in the search path when running the tests.
+Therefore: let's not just continue without setting the link options if
+configuring for a currently unhandled compiler, but error out.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ contrib/buildsystems/CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1999db0c6b..361fe3de6d 100644
+index 361fe3de6d..13d958f5a6 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -939,6 +939,9 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X='${EXE_EXTENSION}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
-+if(WIN32)
-+	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
-+endif()
- 
- #Make the tests work when building out of the source tree
- get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
+@@ -617,6 +617,8 @@ if(WIN32)
+ 		target_link_options(common-main PUBLIC -municode -Wl,-nxcompat -Wl,-dynamicbase -Wl,-entry:wmainCRTStartup -Wl,invalidcontinue.obj)
+ 	elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+ 		target_link_options(common-main PUBLIC /IGNORE:4217 /IGNORE:4049 /NOLOGO /ENTRY:wmainCRTStartup /SUBSYSTEM:CONSOLE invalidcontinue.obj)
++	else()
++		message(FATAL_ERROR "Unhandled compiler: ${CMAKE_C_COMPILER_ID}")
+ 	endif()
+ elseif(UNIX)
+ 	target_link_libraries(common-main pthread rt)
 -- 
 gitgitgadget
 
