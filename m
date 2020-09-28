@@ -2,68 +2,88 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6503C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F0E1C2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:51:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CC05206DB
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:21:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FFA62074B
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 16:51:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AiPm0fdI"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="ImUxao9h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbgI1QVy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 12:21:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57452 "EHLO
+        id S1726578AbgI1QvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 12:51:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726393AbgI1QVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 12:21:54 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6FEC061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:21:53 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id z26so1914685oih.12
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:21:53 -0700 (PDT)
+        with ESMTP id S1726393AbgI1QvD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 12:51:03 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 751BEC061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:51:03 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id x201so1191280qkb.11
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 09:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=vq4IMjF+VP94si1N+Z7upCKrl/UBhns5MF8CjdDM58Y=;
-        b=AiPm0fdI2iZxX2pHII3MpBV/B0nMKje+HPpOjVeEybyxZxyrfS0VueyUmCRlga/1OA
-         HWKkxH2Bl3EeTW67JEK64sahd/K+rAcNyGW5JHMnK+AYlzpst0RbVjJPBAtMXlEo5SvR
-         SH1vVf/fUzfn9kMw6ZbgQpgC1WoHNDa2l09Q6NOCR5i938JFBSTPC02GcBRNWXyTHYqA
-         1GHGhHbzfyySjN9SzJI7MrOnFnN9W7GO26yczI2O4YBdeYIuevNfeqBASIbh4fnZli+z
-         yWFij5UVUU56DUTb2wo5Socp2m0yAaSElkfn+fUXtW19er6zP/g+PNpaYsARw5hIESGP
-         ZFgw==
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qpXU9hdUsaZWDEj97yEpUTi3MyllrkxnrCXCc8PGkyI=;
+        b=ImUxao9hTob323u6xWAGS8nEeErbDTFzMTzIyIx3w7QTvwXu/OVz6JcLhdRAizeeU/
+         9wH7aVny0Ok+sibnQaKdFdMOHOCLDFbXszv/3wkc60kg1t8VT6x+n6fIK0I3bmrdYHFQ
+         JVwwqI1rvqFS0lpv3qUwVo4tUxwxZLtsD3mcPb+SRhr25yexyd63EVSGKufWlqGJ2yv2
+         EWCFPx4JQpxyX4A6VNeTU6TZukAzG4NS6nSkIrlDDuYxs/MBDhNJby7T5FFCPu4LHyQh
+         E4qx6iCqyC80cZL2swRWUOv8C3iC70xiciHY25CAt+YsWJfypzIbnMCtH8n2MQOLoVhy
+         mxHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=vq4IMjF+VP94si1N+Z7upCKrl/UBhns5MF8CjdDM58Y=;
-        b=eDBCXH7krkqLYDjn/ysC0VjXskR31kHx+ywobYlxvZ0pNUFIsM98OgprTm+oA2q5/V
-         FVXc8uEFz0qoo9n6T3Wd/fwMQ/QDxLq5YbHP4lf6O8q5+9tEz9VUgZY/SpoP91UJP5w5
-         fkmtXlE7mUPqnAXvaRr1y2KgDndJrxZCtgIffzjdJbZAKjoN57c8y3OPfu6+3q6RqqGk
-         0bnTeUn1tIWMka4+A7R3MNkSH0+oPY6xSl4tk8pw8DNQ2p0If+jHQLpYPiuNNnYJnLwx
-         BqzbCn6Ai+IT/4lB7x8zfIUWdaUHNSwG6CwalvquUuEewqeDd8y8NQCXehSHMqLODkVC
-         ddXQ==
-X-Gm-Message-State: AOAM5330MD6isSKtodOgZBXfBsjb/8TWZh2GmZriuByFxDx7DISkeLUl
-        WhJjQq9aBNNZQimbJw1gk2w9gQYJe54eGV78Fs6hWRlclJRz9g==
-X-Google-Smtp-Source: ABdhPJyUI22fNYkkmyK4WWUeV1apDWTl+JBYrYGEgBrW8uPN3B9g4QUSeu657zuBfcSyLTHEJc12LWRCtejfak1aDHY=
-X-Received: by 2002:a05:6808:3d0:: with SMTP id o16mr1355991oie.156.1601310112970;
- Mon, 28 Sep 2020 09:21:52 -0700 (PDT)
-MIME-Version: 1.0
-From:   Evan Grim <evangrim@gmail.com>
-Date:   Mon, 28 Sep 2020 10:21:42 -0600
-Message-ID: <CABX4Un0NQV1wkx-AKTFs12agLiBLEe+Y_FDHgQwgxUT=wnFDmA@mail.gmail.com>
-Subject: git commit-tree does not honor commit.gpgSign config
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qpXU9hdUsaZWDEj97yEpUTi3MyllrkxnrCXCc8PGkyI=;
+        b=UcDAMDUEyLWE3E2qSypXU9aQJivKGfKcl6NFUBzjsFhQ8UvngyZvSyJvEgMv9Yqai7
+         T0SW2U4ED9kEpuMTEdYO8LWcCa/f+TXVUMEJLa9IemgYHY4rKHvAeQbvOXyc8R5Zt1Bj
+         csf3+av3fvBqhqVYS45pS2ImjzmY1gAfDvmVYtn11H3MG49IxzcpGyMXXzMhZpb3ef5J
+         Uqy7ffC6Foe04MV+sPcAh2iUv4pNujOkZ2vI8zsZ02Fi6SrqTTmEPPS2kEH6TdeSS8p6
+         O8sKCGvCOCi+60NOwQQGFa/ixLGZq6Sb/BVK3KD0Jt944MrqawCK8vfG7OR0Vx8K1uOC
+         juUw==
+X-Gm-Message-State: AOAM530TCfAjJL7nmbDHA43nevpcY16VPk7BScSJIyUCtpuQ2Lca5Vtw
+        YN2nKpMJ4m7hsF15ZCx+dwh/o19ote7aDw==
+X-Google-Smtp-Source: ABdhPJzzjpz3vyY2bZLaSxhCsDMmNp6GHCeD7B8bmNIfg1DX7lAkNpuEOZx7RhOK6xcv8pT54TYS8A==
+X-Received: by 2002:a05:620a:15c7:: with SMTP id o7mr338518qkm.486.1601311862224;
+        Mon, 28 Sep 2020 09:51:02 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.96.45])
+        by smtp.gmail.com with ESMTPSA id u18sm1908358qtk.61.2020.09.28.09.50.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2020 09:51:01 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     phil.hord@gmail.com, dstolee@microsoft.com,
+        jonathantanmy@google.com, stefanbeller@gmail.com
+Subject: [PATCH 0/2] Fix race condition and memory leak in delta base cache
+Date:   Mon, 28 Sep 2020 13:50:33 -0300
+Message-Id: <cover.1601311803.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <CABURp0puC324750dZUpeXBricWizy9Ldaz_=JzdvdOkUp8V4pA@mail.gmail.com>
+References: <CABURp0puC324750dZUpeXBricWizy9Ldaz_=JzdvdOkUp8V4pA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Is it a bug that `git-commit-tree` doesn't honor the `commit.gpgSign`
-configuration option?
+The first patch fixes the race condition problem reported by Phil, which
+ocasionally caused a segmentation fault during git-grep executions. The
+second patch fixes a memory leak in the same code.
 
-I'm considering working up a patch to fix this, but want a quick check
-from more knowledgeable sources first on what the desired behavior is.
+Matheus Tavares (2):
+  packfile: fix race condition on unpack_entry()
+  packfile: fix memory leak in add_delta_base_cache()
+
+ packfile.c | 51 +++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 31 insertions(+), 20 deletions(-)
+
+-- 
+2.28.0
+
