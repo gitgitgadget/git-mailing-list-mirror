@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF229C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA7CAC2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:24:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8348B23A5B
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:14:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C436206C9
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:24:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P3HqHgQd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qRAw9Mqw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727193AbgI1XO0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 19:14:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61876 "EHLO
+        id S1727031AbgI1XYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 19:24:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58514 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727203AbgI1XOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 19:14:15 -0400
+        with ESMTP id S1727012AbgI1XYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 19:24:14 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13E118E72D;
-        Mon, 28 Sep 2020 18:37:02 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7FB68E3E3;
+        Mon, 28 Sep 2020 18:07:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=04F/lRhz9BF1tUSs8bgYcq33VB0=; b=P3HqHg
-        QdEgzj+fB9TMBIcMnGTWsIPPAbHwGsaOkfFbdtq3LsmN4qboQIbYdd+L9Mbmbx6/
-        JGN3myE9JN9RHhykqyAD6e4tYaMnY+PFIakJC6apu5BbLzJw4lFBweT+dAfiluaG
-        Z5L1ghcbWr9pMvMFZdfXPez85EGPvS22o46oo=
+        :content-type; s=sasl; bh=IQ6QyQRGRvhgUcZQ1snVDChdKnM=; b=qRAw9M
+        qwxCNI6+livDwkJBHc22YDIHoPrQtDt2kyky4xxUrX4iuQglpJroeXLvMD2InE3G
+        ivR1WV0vWxDrEpyqzTzW8KxTAYBlegx6awDhbCyMs0l4g7Q6WwK/tvLkbh2Tafc9
+        tm99q+/HBlNTfcAQEAPYt437ARltZ9pUauqe4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IA0rgpVJCiWEyNwckC9ydggimrCYUtQC
-        nD0OVi4SBNduGQANucMQVU6hV4Uhfr92GVoX+ZvmsJmWj7Vt0BmhPxgvyEiVt4ii
-        0Dmlh2KdlD3EB3iW+XFSNcoUyIOxmIENMlSv0sKyXo2PAU8UM/iSloa3Ll1G1hy/
-        jVdqzM/xwH0=
+        :content-type; q=dns; s=sasl; b=aZxTbcTpRy8EvHQEcDqnN/oq7bZc+giS
+        /24u/8GzvIkw3kmLk7ULWrwXR68tavpiwywy5sO8L5AZEdk5aIqVT46U4BIYjK1C
+        4eJjNBo7lbJnh8oToiGzxRUAJZD1vvwsBVp0m/ahvnRdUERNCh0VdRXKlDIxxFDj
+        MpH+ZBHzPtA=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B43818E72C;
-        Mon, 28 Sep 2020 18:37:01 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA5408E3E1;
+        Mon, 28 Sep 2020 18:07:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 000298E72A;
-        Mon, 28 Sep 2020 18:37:00 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 287638E3E0;
+        Mon, 28 Sep 2020 18:07:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Evan Grim <evangrim@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: git commit-tree does not honor commit.gpgSign config
-References: <CABX4Un0NQV1wkx-AKTFs12agLiBLEe+Y_FDHgQwgxUT=wnFDmA@mail.gmail.com>
-        <xmqqd025n3ik.fsf@gitster.c.googlers.com>
-        <CABX4Un3euDWeGr_2DegS3xyoD8VJ23rb9+bj3hBkWS6KZH9FhA@mail.gmail.com>
-Date:   Mon, 28 Sep 2020 15:37:00 -0700
-In-Reply-To: <CABX4Un3euDWeGr_2DegS3xyoD8VJ23rb9+bj3hBkWS6KZH9FhA@mail.gmail.com>
-        (Evan Grim's message of "Mon, 28 Sep 2020 13:42:43 -0600")
-Message-ID: <xmqqlfgtjzoz.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH] apply: when -R, also reverse list of sections
+References: <20200928212038.1625698-1-jonathantanmy@google.com>
+Date:   Mon, 28 Sep 2020 15:07:42 -0700
+In-Reply-To: <20200928212038.1625698-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Mon, 28 Sep 2020 14:20:38 -0700")
+Message-ID: <xmqqy2ktk11t.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1FEF53E2-01DB-11EB-8784-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 082F344C-01D7-11EB-9F4A-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Evan Grim <evangrim@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> On Mon, Sep 28, 2020 at 12:46 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Evan Grim <evangrim@gmail.com> writes:
->>
->> > Is it a bug that `git-commit-tree` doesn't honor the `commit.gpgSign`
->> > configuration option?
->>
->> It would be a bug if it did, as a low level plumbing tool to build
->> scripts around, it would not want its behaviour to be affected by
->> end-user configuration (rather, scripts that are written using these
->> plumbing command do want to handle end-user customization their own
->> ways).
+> A patch changing a symlink into a file is written with 2 sections (in
+> the code, represented as "struct patch"): firstly, the deletion of the
+> symlink, and secondly, the creation of the file. When applying that
+> patch with -R, the sections are reversed, so we get:
 >
-> Thank you for that context.  I came across this when I used
-> `git-subtree` and was surprised the commits it created weren't signed.
-> Would it be appropriate to look into patching `git-subtree` to honor
-> the configuration option?
+>  (1) creation of a symlink, then
+>  (2) deletion of a file.
 
-Yes, the script that invokes "commit-tree" is at the right layer to
-notice commit.gpgsign and possibly $name_of_the_script.gpgsign
-configuration variable(s) and add the -S option, I would think.
+Good observation.
 
-I do not know if there are people who are still using, or who is
-maintaining, the "subtree" script, though.
-
-Thanks.
-
-
+But I have to wonder if it breaks the support for (arguably outside
+the Git usecase) input that has more than one patch that touches the
+same path to blindly reverse the order of all patches (instead of
+the obvious implementation of the fix for the above stated problem
+--- i.e. make sure the first patch is a deletion of a symlink and
+what immediately follows is a creation of a regular file, and swap
+them only in such a case).
