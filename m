@@ -2,157 +2,169 @@ Return-Path: <SRS0=i2G4=DF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46823C2D0A8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 473C3C2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:38:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5460207D8
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:20:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F29DB2083B
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:38:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KOrxU6pN"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VIfXn5CI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbgI1VUo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 17:20:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47148 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbgI1VUo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 17:20:44 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDC9C061755
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:20:43 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id 8so1878648pfx.6
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=ArRG74YVlAnE8+mGrVb+N7gv1oQbiw/tz2JYzB4bPJg=;
-        b=KOrxU6pND4CDHjqYqffuXTAZHA2ioJiigMiF+lxGws2y2x76eR28ixRrMwho0RXcgC
-         Peg5fGVhce2YOFlyBX7AkC02rGjwl6gyrkZITfl6O+g+loHMq0OQUguCLXJ18nYDWrWl
-         QQU8qnR+tmZz5hdDVeEa5RAQmia99HJzQGUKgz5+JOOUv6+bsN+DF18hEpwpGmDtKAUU
-         hsA7VJU+aBzq+XBZs1BAJIatv4j+9DxVnXMeYZz6J4Z6K6OzVDrPAigp6OxJ83vTQiWj
-         Q5zDn1cJ06KbQE9R7mTq3lMnT36E/CY1RBJwhKPM4/dXnxYB8UPVg21KjQjIdpp0hm15
-         Qjcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=ArRG74YVlAnE8+mGrVb+N7gv1oQbiw/tz2JYzB4bPJg=;
-        b=TXovAw869x9GlIn6CWkP9sUs++09LEa7/xPXtO1cgA5NziecQ8ufkDlogOSG673eqP
-         XVtQORGN2OXAOq8SF3zK8xdYito5VI7F3I/+11ufaV6Yo13j5jUb5viVc0gEHw2ODh0k
-         7zVoWcf0dOzbBmNKMhImVAAY6vWhrZyZyvmMQZAgYl4iJD4OHReGllvjhlKOKWUGJyEe
-         xE8jB1jTr447thYOMq8vBzAIUNwhPx4180rRYXboiIAtGjB/ayS69uqxd6S5Ik/hyhAd
-         ND680uRmuxhetUVMkzwUHUqa2/qj3q1U1XARXKvAhZORJ+4Eo3Y0r6rRRPBnFXcG1Ct1
-         DAcg==
-X-Gm-Message-State: AOAM530ytwHK6lkXA5TEw075oSi27ke7hHKABQ018CLhaeIkDLwYtJjm
-        5/Uob6W/TqkGl6/APOboGBBDwUz1MJvAq26GjI3LFw6EnPtaMD1R9J+x3aYMc7mHKVjrE76SgYn
-        gPgmoU01ntxFHfPGyE1zW/ic/oSKsFvmAGtAyU5JM2rsOumJLp8B3xdlqAaJEfWU8nplAq1JBG9
-        G7
-X-Google-Smtp-Source: ABdhPJwUIhS1nqBNIK99fh1Q1EwcOjWJ+jh6JIy3DXRFDwApolOjFGYW5OWnDcuAIKpiZ5xUJndnyMZ44c1wTFAt0MFH
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:a62:bd0e:0:b029:142:2501:35e7 with
- SMTP id a14-20020a62bd0e0000b0290142250135e7mr1053507pff.71.1601328042646;
- Mon, 28 Sep 2020 14:20:42 -0700 (PDT)
-Date:   Mon, 28 Sep 2020 14:20:38 -0700
-Message-Id: <20200928212038.1625698-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.28.0.709.gb0816b6eb0-goog
-Subject: [PATCH] apply: when -R, also reverse list of sections
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726960AbgI1ViF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 17:38:05 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58462 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726897AbgI1ViE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 17:38:04 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F2FFF08DA;
+        Mon, 28 Sep 2020 17:38:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bhopyQt2HAk20RKAQ1gEU+2B3/g=; b=VIfXn5
+        CIAYmhVEIdDQBQ6WM0nVVs0XJWQWnNTt0O6df5rEm4tdwKCtlDtjAg0SQOSciLgS
+        qYtxKTC0Vdb689S2eJhg/OOmF6laF5u0LC4lFTV1XRedBv36IdsGUNpru/tUEKZZ
+        rb0ddtiMB4fbeEVdJDRpPz+PVcbuUhpZ3ObEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WNvXEu1rwd9dSmy7+7czdpg0nHpaP1YB
+        WLjkirCirTNMB90aP1yUa9hozQRnGBKP5ok7IT7KKqCNgfW1qWjCb+jcaS6kYQHr
+        cTLvYjXtm7KKrmbnXki2Q9P5zBYfQLFBE0II8yseSuzuFsX4jIQ/ZZhu/xNAteaz
+        In7sERywFyM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 08318F08D9;
+        Mon, 28 Sep 2020 17:38:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1D538F08D8;
+        Mon, 28 Sep 2020 17:37:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] worktree: teach `list` to mark locked worktree
+References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
+        <20200928154953.30396-2-rafaeloliveira.cs@gmail.com>
+Date:   Mon, 28 Sep 2020 14:37:54 -0700
+In-Reply-To: <20200928154953.30396-2-rafaeloliveira.cs@gmail.com> (Rafael
+        Silva's message of "Mon, 28 Sep 2020 15:49:52 +0000")
+Message-ID: <xmqq8sctlgzx.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DF055CBC-01D2-11EB-9B2D-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A patch changing a symlink into a file is written with 2 sections (in
-the code, represented as "struct patch"): firstly, the deletion of the
-symlink, and secondly, the creation of the file. When applying that
-patch with -R, the sections are reversed, so we get:
+Rafael Silva <rafaeloliveira.cs@gmail.com> writes:
 
- (1) creation of a symlink, then
- (2) deletion of a file.
+> The output of `worktree list` command is extended to mark a locked
+> worktree with `(locked)` text. This is used to communicate to the
+> user that a linked worktree is locked instead of learning only when
+> attempting to remove it.
+>
+> This is the output of the worktree list with locked marker:
+>
+>   $ git worktree list
+>   /repo/to/main                abc123 [master]
+>   /path/to/unlocked-worktree1  456def [brancha]
+>   /path/to/locked-worktree     123abc (detached HEAD) (locked)
 
-This causes an issue when the "deletion of a file" section is checked,
-because Git observes that the so-called file is not a file but a
-symlink, resulting in a "wrong type" error message.
 
-What we want is:
+In our log message, we tend NOT to say "This commit does X" or "X is
+done", because such a statement is often insufficient to illustrate
+if the commit indeed does X, and explain why it is a good thing to
+do X in the first place.
 
- (1) deletion of a file, then
- (2) creation of a symlink.
+Instead, we 
 
-In the code, this is reflected in the behavior of previous_patch() when
-invoked from check_preimage() when the deletion is checked. Creation
-then deletion means that when the deletion is checked, previous_patch()
-returns the creation section, triggering a mode conflict resulting in
-the "wrong type" error message. But deletion then creation means that
-when the deletion is checked, previous_patch() returns NULL, so the
-deletion mode is checked against lstat, which is what we want.
+ - first explain that the current system does not do X (in present
+   tense, so we do NOT say "previously we did not do X"), then
 
-Therefore, when building the list of sections, build them in reverse
-order (by adding to the front of the list instead of the back) when -R
-is passed.
+ - explain why doing X would be a good thing, and finally
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-I traced the different behavior in previous_patch() to what the
-invocation of to_be_deleted() returns, but I couldn't figure out why it
-returns false in the current-but-wrong-order case but true in the
-future-and-correct-order case. I see that prepare_fn_table() sets
-PATH_TO_BE_DELETED for deletions, but couldn't figure out where and when
-it is set to something else. Further compounding my confusion,
-conceptually, at the point of checking the deletion, both patches are
-(in theory) "to be deleted". Any help in this is appreciated.
----
- apply.c                     | 9 +++++++--
- t/t4114-apply-typechange.sh | 7 +++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ - give an order to the codebase to start doing X.
 
-diff --git a/apply.c b/apply.c
-index 76dba93c97..359ceb632c 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4699,8 +4699,13 @@ static int apply_patch(struct apply_state *state,
- 			reverse_patches(patch);
- 		if (use_patch(state, patch)) {
- 			patch_stats(state, patch);
--			*listp = patch;
--			listp = &patch->next;
-+			if (!list || !state->apply_in_reverse) {
-+				*listp = patch;
-+				listp = &patch->next;
-+			} else {
-+				patch->next = list;
-+				list = patch;
-+			}
- 
- 			if ((patch->new_name &&
- 			     ends_with_path_components(patch->new_name,
-diff --git a/t/t4114-apply-typechange.sh b/t/t4114-apply-typechange.sh
-index ebadbc347f..da3e64f811 100755
---- a/t/t4114-apply-typechange.sh
-+++ b/t/t4114-apply-typechange.sh
-@@ -88,6 +88,13 @@ test_expect_success 'symlink becomes file' '
- 	'
- test_debug 'cat patch'
- 
-+test_expect_success 'symlink becomes file, in reverse' '
-+	git checkout -f foo-symlinked-to-bar &&
-+	git diff-tree -p HEAD foo-back-to-file > patch &&
-+	git checkout foo-back-to-file &&
-+	git apply -R --index < patch
-+	'
-+
- test_expect_success 'binary file becomes symlink' '
- 	git checkout -f foo-becomes-binary &&
- 	git diff-tree -p --binary HEAD foo-symlinked-to-bar > patch &&
--- 
-2.28.0.709.gb0816b6eb0-goog
 
+For this change, it might look like this:
+
+    The "git worktree list" shows the absolute path to the working
+    tree, the commit that is checked out and the name of the branch.
+    It is not immediately obvious which of the worktrees, if any,
+    are locked.
+
+    "git worktree remove" refuses to remove a locked worktree with
+    an error message.  If "git worktree list" told which worktrees
+    are locked in its output, the user would not even attempt to
+    remove such a worktree.
+
+    Teach "git worktree list" to append "(locked)" to its output.
+    The output from the command becomes like so:
+
+          $ git worktree list
+          /repo/to/main                abc123 [master]
+          /path/to/unlocked-worktree1  456def [brancha]
+          /path/to/locked-worktree     123abc (detached HEAD) (locked)
+
+
+
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index 32e8440cde..a3781dd664 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -96,8 +96,9 @@ list::
+>  
+>  List details of each working tree.  The main working tree is listed first,
+>  followed by each of the linked working trees.  The output details include
+> -whether the working tree is bare, the revision currently checked out, and the
+> -branch currently checked out (or "detached HEAD" if none).
+> +whether the working tree is bare, the revision currently checked out, the
+> +branch currently checked out (or "detached HEAD" if none), and whether
+> +the worktree is locked.
+
+At the first glance, the above gave me an impression that you'd be
+adding "(unlocked)" or "(locked)" for each working tree, but that is
+not the case.  How about keeping the original sentence intact, and
+adding something like "For a locked worktree, the marker (locked) is
+also shown at the end"?
+
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 99abaeec6c..8ad2cdd2f9 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -676,8 +676,12 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+>  		} else
+>  			strbuf_addstr(&sb, "(error)");
+>  	}
+> -	printf("%s\n", sb.buf);
+>  
+> +	if (!is_main_worktree(wt) &&
+> +	    worktree_lock_reason(wt))
+> +		strbuf_addstr(&sb, " (locked)");
+
+Is this because for the primary worktree, worktree_lock_reason()
+will always yield true?
+
+    ... goes and looks ...
+
+Ah, OK, the callers are not even allowed to ask the question on the
+primary one.  That's a bit strange API but OK.
+
+Writing that on a single line would perfectly be readable, by the
+way.
+
+	if (!is_main_worktree(wt) && worktree_lock_reason(wt))
+		strbuf_addstr(&sb, " (locked)");
+
+> +	printf("%s\n", sb.buf);
+>  	strbuf_release(&sb);
+>  }
