@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-20.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2EFCC4727F
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB85BC2D0A8
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:43:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 657C62078B
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:43:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5053F207C4
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 23:43:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JYsLf0MX"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TvKakglR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727042AbgI1Xno (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 19:43:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41212 "EHLO
+        id S1727100AbgI1Xnt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 19:43:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726064AbgI1Xno (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727026AbgI1Xno (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Sep 2020 19:43:44 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A966C0613A5
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 15:26:45 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id f199so2638538yba.12
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 15:26:45 -0700 (PDT)
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2881C061787
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 15:26:43 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id e13so1577935pgk.6
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 15:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=QYvQjJAQ+jmD5ZnYreaXsAl9E+wqZ9K/76sBkYe+1DE=;
-        b=JYsLf0MXn8/Vm3EAGlGMm9Ah+FqTlY4WJz/z2d4Z2NHjMNc0L067JM6f+zU9xEs5Ti
-         4z/B6W16Bu9/Onbmbz8oCv2pS8fVH01DNXzTT266v2YYzu2FO1EPkneetfFwq0Y/UKK0
-         GfNHkWDFfuEciSQj7t1M4R5y8O9s37o334FllvnXJOdiaKTzmcQ4gBKno5kBSFJPK/Xw
-         Kr3oNMN3+PiT7CRbzHzPzK32pZElmeKPEvLfr/YsEP81MB9E/h0Csz6kWaqAtPSN1em1
-         Vwni+HLZJIfgnBcCiMFBJ+B+7s3/VsZsmQAe9tI4SIfVLIek1NtWobONkoiYsORHaKqJ
-         h7Zg==
+        bh=T5J0dVRK7NQ5m+JnT8Lg3lrrJwBZODdkmxJa147M3xw=;
+        b=TvKakglRzmEgI10PIpaE795MtBeHK3Mtz7+QKB8VWteO/AmERM4o7YD/ri08i4aS/+
+         jUg9/wlYFOUei6IKSi13k/LZK8dJh09tDl40YyPwQlQxqa2RKN+1BpAb6MYo3s6rRHiu
+         Yj79FlWuVli1T3txLVeCjmGmBnUjiqta75oPWSMVvdJsiwZACiY+ooxYnjon3YPAbBcR
+         7PDPxs2dQc6y9f/Y8uJ1KRp6xvxK1uScSITAfBhOKq/xMNif3Y9/wbe8iYrZZTaIkVVw
+         1eGOs6o0gUwtJSTzj8EKUauEmiI2+MuNFaAcodB7lcgeajO1U9F2LKzQAMOwQC45GlrA
+         CE0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=QYvQjJAQ+jmD5ZnYreaXsAl9E+wqZ9K/76sBkYe+1DE=;
-        b=aistTdKd7xcp5LktHczrxtXbZiCmnUFH9bwJR8Oc/HSb2TyElmT5GQfg5rrBKWtWVw
-         reSjYiDQd7acIBJ/7sOz2lwkY0z6Iq+O33cFCzOf2A2mMheHB/7DnuormbhUj+YJ84zx
-         fR1nKUJAiCSbQoPWgYoJ6NTLPDxJyj8TZPl2NyA+5DfwPRM/LFYDpFq2iMjZNNaRcuEh
-         LoZKr01KwmLfTpwu+Gzbf1YZBxkO7EYx7wxT6UovAnAKaJJy5X1wplpRqqUbvTqdtycE
-         2e9TVqwV/VqGqTqG09azY0kewpuck/SEq895Opxz8qWWLuymSp/q7M59dX0hMFnGaMSN
-         ZDsw==
-X-Gm-Message-State: AOAM532cTlpaiSBxuHjKxvTNXDtk9wVvCxDXO8B53s9PJWf/P8ba2FXL
-        McchkNu+wNXUfD7kSHuL6Uf47CT8QrmKEijd+kNnF+oHX2qz12WaKr4St5W54viuFrxqerEd+km
-        2ccP9s2BnDg7TGdOlhq9dmH//JEXgPUzroDxxPo9JeC3AVnP20ZCtVVuzmuuDpHt1Ox3LlqDfoh
-        F7
-X-Google-Smtp-Source: ABdhPJwyMKD7mmK1b87K/j8+Ht4scoeO5uGPoVFVkhHkN+JN28eBdYCP3B4UTU05zJ8lesOa+9VaAi0SGWEzdeoO8f+1
+        bh=T5J0dVRK7NQ5m+JnT8Lg3lrrJwBZODdkmxJa147M3xw=;
+        b=ZtyrTFtgYlgK/IGXhpp7HBjkmDuLfvDyVtaa7muNF2naT5m7Qs5XPFGO8e6jn8gPH8
+         w+vDoAG9gYgh0eKQrB3N3ZpYYePDASzwrf5v3O6v8F2kVuVzpBiH3JYPirUn1TomnI+s
+         gJtEazPpbZZCQtltjA53LhXzRKaBjbLLtQEm9fYPSjKq+TgEX16V1H+dooEHMtRjKBVq
+         irg+5V5nMClcIruz6i4WWhVZbcljdgCZ3wmkQh5E6DFhNnW1rHsU1jKDbP3vwZhhrL8H
+         n/Oyse3ZxFNei5JFSN3b7K8JJFLZ4Ldv4IRrQM1aiSeKXPVqT/3ms0b20P43e88Uofrp
+         rpqw==
+X-Gm-Message-State: AOAM530YK2++NMAjSRnGIC8zzNLmg5gPCYSxnozLtyugQ63bOA56+4+c
+        n4orjvVhF168/6EN+yiTYyMQqcrjzo3XgN2U9wzdocOLha6MuH6tF/rd0E4GQNKYEYRT5YYSVk5
+        xxxlgJVaOT1Mmrr5OItQklKnkYAdDqechvoqDcwDWlDOM8pChdoTU6umzIx/5HaieyE2ehu3vNu
+        50
+X-Google-Smtp-Source: ABdhPJxSGF4t7LvPIImz8oLPUky7uZaOxAdV+0M0Ziv6IORJP8z+FfyzZB7+3LW7u+JPn2KZPOvBSQqBsqMu324QdbWa
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:18d])
- (user=jonathantanmy job=sendgmr) by 2002:a25:df08:: with SMTP id
- w8mr2328771ybg.436.1601332004689; Mon, 28 Sep 2020 15:26:44 -0700 (PDT)
-Date:   Mon, 28 Sep 2020 15:26:38 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:940c:: with SMTP id
+ r12mr46361pjo.1.1601332002769; Mon, 28 Sep 2020 15:26:42 -0700 (PDT)
+Date:   Mon, 28 Sep 2020 15:26:37 -0700
 In-Reply-To: <cover.1601331788.git.jonathantanmy@google.com>
-Message-Id: <c3ced598751ae8fe7b7b6e787474331cf8219802.1601331788.git.jonathantanmy@google.com>
+Message-Id: <625e7f148e46c7e09f817ce6ab25f14d4e753f1e.1601331788.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1600743698.git.jonathantanmy@google.com> <cover.1601331788.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.28.0.709.gb0816b6eb0-goog
-Subject: [PATCH v2 2/2] fetch: do not override partial clone filter
+Subject: [PATCH v2 1/2] promisor-remote: remove unused variable
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
@@ -74,92 +74,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a fetch with the --filter argument is made, the configured default
-filter is set even if one already exists. This change was made in
-5e46139376 ("builtin/fetch: remove unique promisor remote limitation",
-2019-06-25) - in particular, changing from:
+The variable core_partial_clone_filter_default has been unused since
+fa3d1b63e8 ("promisor-remote: parse remote.*.partialclonefilter",
+2019-06-25), when Git was changed to refer to
+remote.*.partialclonefilter as the default filter when fetching in a
+partial clone, but (perhaps inadvertently) there was no fallback to
+core.partialclonefilter.
 
- * If this is the FIRST partial-fetch request, we enable partial
- * on this repo and remember the given filter-spec as the default
- * for subsequent fetches to this remote.
-
-to:
-
- * If this is a partial-fetch request, we enable partial on
- * this repo if not already enabled and remember the given
- * filter-spec as the default for subsequent fetches to this
- * remote.
-
-(The given filter-spec is "remembered" even if there is already an
-existing one.)
-
-This is problematic whenever a lazy fetch is made, because lazy fetches
-are made using "git fetch --filter=blob:none", but this will also happen
-if the user invokes "git fetch --filter=<filter>" manually. Therefore,
-restore the behavior prior to 5e46139376, which writes a filter-spec
-only if the current fetch request is the first partial-fetch one (for
-that remote).
+One alternative is to add the fallback, but the aforementioned change
+was made more than a year ago and I have not heard of any complaints
+regarding this matter. In addition, there is currently no mention of
+core.partialclonefilter in the user documentation. So it seems best to
+reaffirm that Git will only support remote.*.partialclonefilter.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fetch.c               |  2 +-
- list-objects-filter-options.c | 10 +++++++++-
- t/t5601-clone.sh              |  3 ++-
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ promisor-remote.c | 5 -----
+ promisor-remote.h | 2 +-
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c555836937..97930f8201 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1677,7 +1677,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * If this is a partial-fetch request, we enable partial on
- 	 * this repo if not already enabled and remember the given
- 	 * filter-spec as the default for subsequent fetches to this
--	 * remote.
-+	 * remote if there is currently no default filter-spec.
- 	 */
- 	if (filter_options.choice) {
- 		partial_clone_register(remote->name, &filter_options);
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index b66314560a..defd3dfd10 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -344,11 +344,19 @@ void partial_clone_register(
- 	const char *remote,
- 	struct list_objects_filter_options *filter_options)
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 6530e26f98..3c572b1c81 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -6,7 +6,6 @@
+ #include "strvec.h"
+ 
+ static char *repository_format_partial_clone;
+-static const char *core_partial_clone_filter_default;
+ 
+ void set_repository_format_partial_clone(char *partial_clone)
  {
-+	struct promisor_remote *promisor_remote;
- 	char *cfg_name;
- 	char *filter_name;
+@@ -100,10 +99,6 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+ 	size_t namelen;
+ 	const char *subkey;
  
- 	/* Check if it is already registered */
--	if (!promisor_remote_find(remote)) {
-+	if ((promisor_remote = promisor_remote_find(remote))) {
-+		if (promisor_remote->partial_clone_filter)
-+			/*
-+			 * Remote is already registered and a filter is already
-+			 * set, so we don't need to do anything here.
-+			 */
-+			return;
-+	} else {
- 		if (upgrade_repository_format(1) < 0)
- 			die(_("unable to upgrade repository format to support partial clone"));
+-	if (!strcmp(var, "core.partialclonefilter"))
+-		return git_config_string(&core_partial_clone_filter_default,
+-					 var, value);
+-
+ 	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
+ 		return 0;
  
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 15fb64c18d..4631f019fe 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -669,7 +669,8 @@ test_expect_success 'partial clone' '
- 
- test_expect_success 'partial clone with -o' '
- 	partial_clone_server server &&
--	git clone -o blah --filter=blob:limit=0 "file://$(pwd)/server" client
-+	git clone -o blah --filter=blob:limit=0 "file://$(pwd)/server" client &&
-+	test_cmp_config -C client "blob:limit=0" --get-all remote.blah.partialclonefilter
- '
- 
- test_expect_success 'partial clone: warn if server does not support object filtering' '
+diff --git a/promisor-remote.h b/promisor-remote.h
+index 6343c47d18..c7a14063c5 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -9,7 +9,7 @@ struct object_id;
+  * Promisor remote linked list
+  *
+  * Information in its fields come from remote.XXX config entries or
+- * from extensions.partialclone or core.partialclonefilter.
++ * from extensions.partialclone.
+  */
+ struct promisor_remote {
+ 	struct promisor_remote *next;
 -- 
 2.28.0.709.gb0816b6eb0-goog
 
