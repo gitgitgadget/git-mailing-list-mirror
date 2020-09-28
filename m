@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25AECC2D0A8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B426CC4727F
 	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:40:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEC03206FC
-	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:40:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B85F206FC
+	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 11:40:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VTYcZYo+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJEks6bp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726688AbgI1Lkc (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726682AbgI1Lkc (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 28 Sep 2020 07:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42140 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726564AbgI1Lk3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726657AbgI1Lk3 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Sep 2020 07:40:29 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE68C0613CE
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:40:29 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id g4so947773wrs.5
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:40:29 -0700 (PDT)
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1982C061755
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:40:28 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id g4so947744wrs.5
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 04:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+8Ej/DqoKo+E9vWFylRy7no+EM2nNrFwKMCKgczsKMo=;
-        b=VTYcZYo+m8kg4Ig0wJUPO5TDO5YabuKKfYgYadZBO/+mzHTv2Fox3ATW/YW0hzTWhG
-         6+xtiZG/QR9Meb7uJuy8orwcU/Cc6cGJHTPcIMq67+vZxWCeebPDCpTrXK5U6efIcDAw
-         5O+IN9wt895YQUkDNjS9inkJsR9AiplBqN1PGEabRAk6WZSnSjuBqwuVLHsGgAmLIG48
-         aI6zjltSCPTnZYKerphBE50Zs1Fx4g8WJs+ZCLsjU6uhbiNYTv5kj4Uioek06EY1d/4V
-         QuKPZtDFntHbDD2ypYOIxELLRwW0wIEq+IVQRxpivbUwRUeBvFnTc187LJLJv31v5ila
-         sr+Q==
+        bh=+iT0k2kjhwz1BPcggVrGNP9SOGI46vABgBecsBleWs4=;
+        b=MJEks6bpJdLb2SmIAsF2Td3KB239h6yrUhDEWRMpAWRJmehj/l3iIdSn8GGLCyPjcM
+         vMmzVdtBp7Sfl8ahnyWGSvXSyWksqnCFfpqDXred/ZYLUMjj0EB0Q2ou83Xr0tkCfUyf
+         O2SI8UTNLYFBI+JGY3J8/uDUSrNqgXw50yS97C7ZMNQchw4slHtMoKORmaTbMh+OWzcM
+         r5gnvMwHfwAxYw2mtFO9fIfwUq5xJRqkPP0FhKoSi7CtTzyhkDn3tADFkIBiYcupQbxe
+         Y5Ix0uyxbSbIyGrxXQ/RYRF5SzOOgO/GH6F+x+QGdL6kbsDp21ClYwx2c7UZm3XOvFMe
+         cFEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+8Ej/DqoKo+E9vWFylRy7no+EM2nNrFwKMCKgczsKMo=;
-        b=NTv1KbOzqDFKXjQmmNXfO2N8o55DY9IeBl7YdI7nASN4FN+vkLfJRSUCx87tROyGbh
-         KaK5Xe7aNFBC9dSt2Dg+MABgVWlWFPFBsiKo0NsDam0FyyPUpqwYWwdtsEb1njhofEGe
-         iZLxAjVBgst4i09tibLvWYQyVOn1aaIpw3V8SC89Ag21yVSImDLLvoQgNocKyGeLnfiS
-         BZweE9NzfZ7ZLB+WzWKM5PTIWa0Lu2F+yeyLmt5Ku0YtuxXbCnZFuEPfjjGOTt70E9ff
-         uNDZK3ROus3FJ+LddUCiCjdwjpKYIcRkLx+X+7Jl2WwkQb544RDDz4Rw5K9cNRh5Ttfe
-         9/rw==
-X-Gm-Message-State: AOAM533ViYU5ksRgScs8kR6iAlHyphpMQLTWuDNLlfyYN/HZMPAuT03W
-        h/hVX1Peo8S6oS7sIA5Ls9aXFp25qmg=
-X-Google-Smtp-Source: ABdhPJxDWpyWsREOXL9dThzkzmJ0SuapzvS20sPmHvgTlA3ip4v4+vz1METe0WvuQtXKDc2YrY9dBA==
-X-Received: by 2002:a05:6000:7:: with SMTP id h7mr1355472wrx.16.1601293227960;
+        bh=+iT0k2kjhwz1BPcggVrGNP9SOGI46vABgBecsBleWs4=;
+        b=G6HQpvHLNCSNikgWt4d3vkjTllDLY/+fo4t3661AXhHh7nkuz1nOyKY/hVau+YIIq2
+         UR0wFqmZjeAzDf+h8J5fpUIAPxIbN5FQ648DZT2EYMaaM7YHCGY6hIAZLlcRmiFeVey4
+         fTx9NcNyoGXlWmJAJnN2lpnFiED5JOrw3vhYGDHVJce60ZaZWE5cd0P/2sbyCmhXiCDR
+         jLOppym/KoggofF1SlvCKJ0m8dSzVzsFQkobd8ItZ/VoR6/Fgxtw7ipt85cQiEV7/zuY
+         aDvflSAPnhMG3ejvE4GM9xWSJM8CG7piAKcvRevSemlR+tVbrv+OuX3tyKea7RSwoj1p
+         4Apw==
+X-Gm-Message-State: AOAM530VNH/GrT54Pc8OrpBedBqm68FdObtxZxij/rxck3YK/XCLbgUE
+        2qbdOxCv8atiVagX56Tx81e12EmZku4=
+X-Google-Smtp-Source: ABdhPJzAeFiJbynOo/UoCWqqaYaHQpGGNLp9lWsjvjJhvuIRljLYVXGk27GeJDoxCMOxKyMP4nYljg==
+X-Received: by 2002:adf:efc9:: with SMTP id i9mr1272558wrp.187.1601293227202;
         Mon, 28 Sep 2020 04:40:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n66sm908129wmb.35.2020.09.28.04.40.27
+        by smtp.gmail.com with ESMTPSA id f16sm1218712wrp.47.2020.09.28.04.40.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 04:40:27 -0700 (PDT)
-Message-Id: <61baea106115277fb0c39d3b2a79770306f5a465.1601293224.git.gitgitgadget@gmail.com>
+        Mon, 28 Sep 2020 04:40:26 -0700 (PDT)
+Message-Id: <f69076036fe4dfe8b57fc1d4329c7be3f7346850.1601293224.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
 References: <pull.710.git.git.1581688196706.gitgitgadget@gmail.com>
         <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
 From:   "Nikita Leonov via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Sep 2020 11:40:24 +0000
-Subject: [PATCH v2 3/3] docs: make notes regarding credential line reading
+Date:   Mon, 28 Sep 2020 11:40:23 +0000
+Subject: [PATCH v2 2/3] credentials: make line reading Windows compatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,43 +78,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nikita Leonov <nykyta.leonov@gmail.com>
 
-This commit adds notes to git-credential.txt and to gitcredentials.txt
-specifying that 'LF' and 'CR/LF' endings are treated the same.
+This commit makes reading process regarding credentials compatible with
+'CR/LF' line ending. It makes using git more convenient on systems like
+Windows.
 
 Signed-off-by: Nikita Leonov <nykyta.leonov@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-credential.txt | 4 +++-
- Documentation/gitcredentials.txt | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ builtin/credential-cache--daemon.c |  4 ++--
+ builtin/credential-store.c         |  2 +-
+ t/t0302-credential-store.sh        | 16 ++++++----------
+ 3 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index 31c81c4c02..9cf25126f2 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -114,7 +114,9 @@ The key may contain any bytes except `=`, newline, or NUL. The value may
- contain any bytes except newline or NUL.
+diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+index c61f123a3b..17664bb0d5 100644
+--- a/builtin/credential-cache--daemon.c
++++ b/builtin/credential-cache--daemon.c
+@@ -99,12 +99,12 @@ static int read_request(FILE *fh, struct credential *c,
+ 	static struct strbuf item = STRBUF_INIT;
+ 	const char *p;
  
- In both cases, all bytes are treated as-is (i.e., there is no quoting,
--and one cannot transmit a value with newline or NUL in it). The list of
-+and one cannot transmit a value with newline or NUL in it). Note that
-+Git will treat a carriage return before the final newline as part of
-+line ending, and not part of the data. The list of
- attributes is terminated by a blank line or end-of-file.
+-	strbuf_getline_lf(&item, fh);
++	strbuf_getline(&item, fh);
+ 	if (!skip_prefix(item.buf, "action=", &p))
+ 		return error("client sent bogus action line: %s", item.buf);
+ 	strbuf_addstr(action, p);
  
- Git understands the following attributes:
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 758bf39ba3..184079eaa4 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -141,6 +141,8 @@ entry for `https://example.com/bar/baz.git` (in addition to matching the config
- entry for `https://example.com`) but will not match a config entry for
- `https://example.com/bar`.
+-	strbuf_getline_lf(&item, fh);
++	strbuf_getline(&item, fh);
+ 	if (!skip_prefix(item.buf, "timeout=", &p))
+ 		return error("client sent bogus timeout line: %s", item.buf);
+ 	*timeout = atoi(p);
+diff --git a/builtin/credential-store.c b/builtin/credential-store.c
+index 5331ab151a..d4e90b68df 100644
+--- a/builtin/credential-store.c
++++ b/builtin/credential-store.c
+@@ -23,7 +23,7 @@ static int parse_credential_file(const char *fn,
+ 		return found_credential;
+ 	}
  
-+Note that Git will treat a carriage return before the final newline as part
-+of line ending, and not part of the data.
+-	while (strbuf_getline_lf(&line, fh) != EOF) {
++	while (strbuf_getline(&line, fh) != EOF) {
+ 		if (!credential_from_url_gently(&entry, line.buf, 1) &&
+ 		    entry.username && entry.password &&
+ 		    credential_match(c, &entry)) {
+diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
+index 716bf1af9f..f2c672e4b6 100755
+--- a/t/t0302-credential-store.sh
++++ b/t/t0302-credential-store.sh
+@@ -142,7 +142,7 @@ invalid_credential_test "scheme" ://user:pass@example.com
+ invalid_credential_test "valid host/path" https://user:pass@
+ invalid_credential_test "username/password" https://pass@example.com
  
- CONFIGURATION OPTIONS
- ---------------------
+-test_expect_success 'get: credentials with DOS line endings are invalid' '
++test_expect_success 'get: credentials with DOS line endings are valid' '
+ 	printf "https://user:pass@example.com\r\n" >"$HOME/.git-credentials" &&
+ 	check fill store <<-\EOF
+ 	protocol=https
+@@ -150,11 +150,9 @@ test_expect_success 'get: credentials with DOS line endings are invalid' '
+ 	--
+ 	protocol=https
+ 	host=example.com
+-	username=askpass-username
+-	password=askpass-password
++	username=user
++	password=pass
+ 	--
+-	askpass: Username for '\''https://example.com'\'':
+-	askpass: Password for '\''https://askpass-username@example.com'\'':
+ 	--
+ 	EOF
+ '
+@@ -172,7 +170,7 @@ test_expect_success 'get: credentials with path and DOS line endings are valid'
+ 	EOF
+ '
+ 
+-test_expect_success 'get: credentials with DOS line endings are invalid if path is relevant' '
++test_expect_success 'get: credentials with DOS line endings are valid if path is relevant' '
+ 	printf "https://user:pass@example.com/repo.git\r\n" >"$HOME/.git-credentials" &&
+ 	test_config credential.useHttpPath true &&
+ 	check fill store <<-\EOF
+@@ -181,11 +179,9 @@ test_expect_success 'get: credentials with DOS line endings are invalid if path
+ 	protocol=https
+ 	host=example.com
+ 	path=repo.git
+-	username=askpass-username
+-	password=askpass-password
++	username=user
++	password=pass
+ 	--
+-	askpass: Username for '\''https://example.com/repo.git'\'':
+-	askpass: Password for '\''https://askpass-username@example.com/repo.git'\'':
+ 	--
+ 	EOF
+ '
 -- 
 gitgitgadget
+
