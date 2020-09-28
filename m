@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 448AEC4727F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 079D0C2D0A8
 	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ECE452100A
+	by mail.kernel.org (Postfix) with ESMTP id 9C475208FE
 	for <git@archiver.kernel.org>; Mon, 28 Sep 2020 21:09:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OpftEE7i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="csU+b3sh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726929AbgI1VJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726923AbgI1VJf (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 28 Sep 2020 17:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45422 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbgI1VJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 17:09:31 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E435DC0613D0
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:30 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id t10so2877137wrv.1
-        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:30 -0700 (PDT)
+        with ESMTP id S1726897AbgI1VJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 17:09:32 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC9AC0613D3
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:31 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id s13so2470195wmh.4
+        for <git@vger.kernel.org>; Mon, 28 Sep 2020 14:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=59x1AmiheC+liIcCpQBp+o2x9UMjcoDT6jZnO4S/gkM=;
-        b=OpftEE7id4G7NinoheatBxRXOPw5YB6tHpEf80IQuZPFxh5pRJUADiE2f8oS1zi4vr
-         7QnG1RmOR7udDhNPDmnWVDH2h0xguQZKT1lfP+uEqneKX9krtcITcSvMf3SVQ3P9cmWr
-         YHr4DXi+BPw+brYFCBQeyDylQCiPG0Bup47n4FzNA/NOiogV2PAYooi/NsTtyVCCNEUM
-         jzxG8oW79vH2hlCOShGxTP6+slYudmqoSUxXpGYr6Lo3qZbPJpOcCWYK8BzyBn4v0mZW
-         SJYRNnHANR9dUfm8zYA1PjaGihONvXmWUhrPcNOQLWHnwS/T0LUqgnSjfeY2IpVu+KTX
-         FTaw==
+        bh=fLx/oqN4eboVCzSUB4omppsZm0evzi7MY+4v/FyZl7s=;
+        b=csU+b3shPAck+pZl3KnHTdI76KDuZnl4fpulOZPm2jS38hMi4qjYDqUo5nQ8HKfA+u
+         /4tYmETG/PrakUiKZTRc53SRc6A+NW0F0u3PsiDA2Li+p3ALueA+RIZj6/RWm6/99NFT
+         UiXhRVaK8f7096LgiTpvfgsorQYptMQezt0n5KXK3Jzgv+F9E9xAdyzvfAY/pqRiV4hF
+         Hkrd6jvRGyWKHzwUow7hIbmcAi4DGyZ0MZp/e+nHxODI8V5ydpZAuxXGL1nP8PIYs56I
+         OW/bE4yKa9UbJCiNPk3VNQYmM//Qur2MvKmqRcSDBz6mHO2JxE4h9irHjq9deDM7v7V6
+         PNFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=59x1AmiheC+liIcCpQBp+o2x9UMjcoDT6jZnO4S/gkM=;
-        b=VyfZZTcVp/VwmrX8F1rqhCIAbVKz9E88PfOvThxs7PkYgf58qMe2uguxWXak6ATCMA
-         MbGO8yn1EYrl9SzQDXWDxj/tedVlQ/rvHGwGEBK/WhgfajWRrTFXzs3S6G3tcg/a7qVM
-         Rx5iQ+1dEpAOra0K9YLlGTq5m8yjBsPANsarJtVXG4y942a49qW8MqA6xcTosvum2tF6
-         ixGmvvBLgoNEuNAAGNTWjWF3RJEWh7F8dHerRx8o9JhOYWDjIoSy5epNoSjLChIUcMWB
-         fgGUhe8ppy+K+CQRe5mQhHUNbbBM2vonySJAF8QMs6q9MFGAfpK31OCjrM5atdNVpDry
-         p9Iw==
-X-Gm-Message-State: AOAM5336YapIbT+nlNUOItA/8h4+RF4/vHAtabjWoYApXvkQPvQTBYet
-        1XzRaMIIDKLapdvl+YYV3T0LMdllw2s=
-X-Google-Smtp-Source: ABdhPJznrDiXq1yZgnKYQqxa9OSqroz1PI0IkbsqH7yBtMHDEd1p5EiSzncN5CxNVEMIwCRAgPIchg==
-X-Received: by 2002:adf:ba4f:: with SMTP id t15mr333684wrg.335.1601327369481;
-        Mon, 28 Sep 2020 14:09:29 -0700 (PDT)
+        bh=fLx/oqN4eboVCzSUB4omppsZm0evzi7MY+4v/FyZl7s=;
+        b=MIkYOf/NffKeBXU+n9/Hp2N9TV33eKKTZYcmj7VVJkCWQ0EcuPkSeeZkQha9yRUbSb
+         SzXaGAbePxaYi7p11LUOiozY7Lda//+MdniIwDl4d4wpFAR7uWNG53G2eqB+DlNykTgU
+         w7Sd8VOaxfUkogEc8/Ayu9K9FiHDlA1vKSX9FhZZZhx4a0zPz4Xdq4O0KtOxD4GeuEgF
+         KywmB+PW5V38AflmgyGPNh8RJHvhLyy+BhdqAk3NsxXHsmCgBhFAfTPSStRf8tlaL7Z7
+         MmzPMVWrmIbesKECpSNC5cmC24k2cv3cyWMcIqe4+6y+/qpma4GISPfrtHpyqjfuwZ2v
+         xMhw==
+X-Gm-Message-State: AOAM5323oF+11PlaSRrAyVd46lKrqpJDHgkJdHNfUzMxBdjgxQUJ7IpE
+        bWqWm6jocAnAMgJozfBbZ2Mk8n/UPyE=
+X-Google-Smtp-Source: ABdhPJzntRj1RURHNBG+w5bh5QNuz+K2lAxjTmaqNkqpzdDbiLk0pJ1kpT/TgL5x8BEQ+LSlE6XByQ==
+X-Received: by 2002:a1c:63c1:: with SMTP id x184mr1039555wmb.138.1601327370370;
+        Mon, 28 Sep 2020 14:09:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x16sm2917506wrq.62.2020.09.28.14.09.28
+        by smtp.gmail.com with ESMTPSA id z15sm2999732wrv.94.2020.09.28.14.09.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2020 14:09:28 -0700 (PDT)
-Message-Id: <ec182738f0f8344f6fbea869990200aeb8e94e58.1601327357.git.gitgitgadget@gmail.com>
+        Mon, 28 Sep 2020 14:09:29 -0700 (PDT)
+Message-Id: <38cef4deb509e5b0c218abcc385232f98ef27863.1601327357.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
 References: <pull.738.v2.git.1601155970.gitgitgadget@gmail.com>
         <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Sep 2020 21:09:14 +0000
-Subject: [PATCH v3 09/11] cmake (Windows): recommend using Visual Studio's
- built-in CMake support
+From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Sep 2020 21:09:15 +0000
+Subject: [PATCH v3 10/11] hashmap_for_each_entry(): workaround MSVC's runtime
+ check failure #3
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,65 +79,62 @@ Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Junio C Hamano <gitster@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 
-It is a lot more convenient to use than having to specify the
-configuration in CMake manually (does not matter whether using the
-command-line or CMake's GUI).
+The OFFSETOF_VAR(var, member) macro is implemented in terms of
+offsetof(typeof(*var), member) with compilers that know typeof(),
+but its fallback implemenation compares &(var->member) and (var) and
+count the distance in bytes, i.e.
 
-While at it, recommend using `contrib/buildsystems/out/` as build
-directory also in the part that talks about running CMake manually.
+    ((uintptr_t)&(var)->member - (uintptr_t)(var))
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+MSVC's runtime check, when fed an uninitialized 'var', flags this as
+a use of an uninitialized variable (and that is legit---uninitialized
+contents of 'var' is subtracted) in a debug build.
+
+After auditing all 6 uses of OFFSETOF_VAR(), 1 of them does feed a
+potentially uninitialized 'var' to the macro in the beginning of the
+for() loop:
+
+    #define hashmap_for_each_entry(map, iter, var, member) \
+            for (var = hashmap_iter_first_entry_offset(map, iter, \
+                                                    OFFSETOF_VAR(var, member)); \
+                    var; \
+                    var = hashmap_iter_next_entry_offset(iter, \
+                                                    OFFSETOF_VAR(var, member)))
+
+We can work around this by making sure that var has _some_ value
+when OFFSETOF_VAR() is called.  Strictly speaking, it invites
+undefined behaviour to use NULL here if we end up with pointer
+comparison, but MSVC runtime seems to be happy with it, and most
+other systems have typeof() and don't even need pointer comparison
+fallback code.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ hashmap.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 6a92ec9763..4b16744847 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -4,17 +4,25 @@
- 
- #[[
- 
--Instructions to run CMake:
-+Instructions how to use this in Visual Studio:
- 
--cmake `relative-path-to-CMakeLists.txt` -DCMAKE_BUILD_TYPE=Release
--Eg.
--From the root of git source tree
--	`cmake contrib/buildsystems/ `
--This will build the git binaries at the root
-+Open the worktree as a folder. Visual Studio 2019 and later will detect
-+the CMake configuration automatically and set everything up for you,
-+ready to build. You can then run the tests in `t/` via a regular Git Bash.
- 
--For out of source builds, say build in 'git/git-build/'
--	`mkdir git-build;cd git-build; cmake ../contrib/buildsystems/`
--This will build the git binaries in git-build directory
-+Note: Visual Studio also has the option of opening `CMakeLists.txt`
-+directly; Using this option, Visual Studio will not find the source code,
-+though, therefore the `File>Open>Folder...` option is preferred.
-+
-+Instructions to run CMake manually:
-+
-+    mkdir -p contrib/buildsystems/out
-+    cd contrib/buildsystems/out
-+    cmake ../ -DCMAKE_BUILD_TYPE=Release
-+
-+This will build the git binaries in contrib/buildsystems/out
-+directory (our top-level .gitignore file knows to ignore contents of
-+this directory).
- 
- Possible build configurations(-DCMAKE_BUILD_TYPE) with corresponding
- compiler flags
+diff --git a/hashmap.h b/hashmap.h
+index ef220de4c6..b011b394fe 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -449,7 +449,8 @@ static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
+  * containing a @member which is a "struct hashmap_entry"
+  */
+ #define hashmap_for_each_entry(map, iter, var, member) \
+-	for (var = hashmap_iter_first_entry_offset(map, iter, \
++	for (var = NULL, /* for systems without typeof */ \
++	     var = hashmap_iter_first_entry_offset(map, iter, \
+ 						OFFSETOF_VAR(var, member)); \
+ 		var; \
+ 		var = hashmap_iter_next_entry_offset(iter, \
 -- 
 gitgitgadget
 
