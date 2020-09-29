@@ -7,45 +7,44 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9BD0C47423
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 16:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7047EC47420
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 16:13:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54AF9207F7
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 16:13:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFC2820936
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 16:13:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=adoakley.name header.i=@adoakley.name header.b="NJdWtB7h"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=adoakley.name header.i=@adoakley.name header.b="H9rExSqu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729684AbgI2QNY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Sep 2020 12:13:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53064 "EHLO
+        id S1730490AbgI2QNm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Sep 2020 12:13:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728602AbgI2QNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Sep 2020 12:13:21 -0400
-X-Greylist: delayed 1154 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 29 Sep 2020 09:13:21 PDT
+        with ESMTP id S1730405AbgI2QNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Sep 2020 12:13:30 -0400
 Received: from adoakley.name (adoakley.name [IPv6:2a01:4f8:c17:1310::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 461EDC061755
-        for <git@vger.kernel.org>; Tue, 29 Sep 2020 09:13:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B0CC0613D1
+        for <git@vger.kernel.org>; Tue, 29 Sep 2020 09:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=adoakley.name; s=2018; h=Content-Transfer-Encoding:MIME-Version:References:
         In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
         Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
         Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
         List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=6SIbWqMd6ALJL15kcw4uSbQrAzA0tn0HFJx01+hXuaA=; b=NJdWtB7hUCJ69L1a5htaUNHH9r
-        5rPK6gROy/FegIRFjr7O34XTu1qvArGNLfWioPuQCOI+I5sfwYaErRpVcNrzZAIdlHK0NA9HI0mSB
-        ufX/6Os16hmoFiLrv5+DCUq48rSLz24x35XVh39WqeOjHdKCc9wLlwnypOH6/FWQ7cEk=;
+        bh=IOuufPBiiGRPbThdGEaT/5mWRYmqBzXAcHmDm7As7vs=; b=H9rExSquY+eEuojEiTY0FghEZO
+        qguzpAABYghSlLvtvy/FV5XLqmdTY3ZFbddD8wnrdvMEj3slpcU/8//R7z9ffSwygQZ2Fv7VLVbET
+        jHQRWt0sxmapdbYyYvHtltJ2dxXoOHnNey4udBEkYjIclmW8JX2fupAvMbWxexAyD3DI=;
 Received: from [2001:8b0:14bb:e93b::df1] (helo=ado-tr.ado-tr.lan)
         by adoakley.name with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
         (Exim 4.92.2)
         (envelope-from <andrew@adoakley.name>)
-        id 1kNHx8-0004AY-DU; Tue, 29 Sep 2020 15:54:06 +0000
+        id 1kNHx7-0004AY-CQ; Tue, 29 Sep 2020 15:54:05 +0000
 From:   Andrew Oakley <andrew@adoakley.name>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Jonathan Tan <jonathantanmy@google.com>
 Cc:     Andrew Oakley <andrew@adoakley.name>
-Subject: [PATCH 4/7] refs: use correct repo in refs_peel_ref
-Date:   Tue, 29 Sep 2020 16:53:47 +0100
-Message-Id: <20200929155350.49066-5-andrew@adoakley.name>
+Subject: [PATCH 1/7] refs: store owning repository for object lookup
+Date:   Tue, 29 Sep 2020 16:53:44 +0100
+Message-Id: <20200929155350.49066-2-andrew@adoakley.name>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200929155350.49066-1-andrew@adoakley.name>
 References: <20200929155350.49066-1-andrew@adoakley.name>
@@ -55,290 +54,373 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This required a few other functions to be updated to pass the corret
-repo through.  If there is no repository, fail.
+When calling ref_resolves_to_object we want to be able to pass the
+correct repository.  This is intended to allow correct handling of
+promisors and alternates inside submodules.
 
-This change doesn't fix any known issue.
+This change continues to pass the_repository around, even in the case
+where a submodule is being used.  It shouldn't change any behaviour by
+itself.
 
 Signed-off-by: Andrew Oakley <andrew@adoakley.name>
 ---
- builtin/fsck.c                   |  2 +-
- builtin/pack-objects.c           |  2 +-
- http-push.c                      |  2 +-
- object.c                         |  7 +++----
- object.h                         |  2 +-
- refs.c                           | 15 ++++++++++-----
- refs/packed-backend.c            |  5 +++--
- refs/ref-cache.c                 |  2 +-
- refs/refs-internal.h             |  4 +++-
- t/helper/test-example-decorate.c |  6 +++---
- t/helper/test-reach.c            |  2 +-
- tag.c                            |  4 ++--
- tag.h                            |  2 +-
- upload-pack.c                    |  2 +-
- walker.c                         |  3 ++-
- 15 files changed, 34 insertions(+), 26 deletions(-)
+ refs.c                | 21 +++++++++++++--------
+ refs/debug.c          |  3 ++-
+ refs/files-backend.c  | 22 +++++++++++++---------
+ refs/iterator.c       | 11 ++++++++---
+ refs/packed-backend.c | 10 +++++++---
+ refs/packed-backend.h |  3 ++-
+ refs/ref-cache.c      |  3 ++-
+ refs/refs-internal.h  | 14 +++++++++++---
+ 8 files changed, 58 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index fbf26cafcf..9ce450d372 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -745,7 +745,7 @@ static int fsck_cache_tree(struct cache_tree *it)
- 
- static void mark_object_for_connectivity(const struct object_id *oid)
- {
--	struct object *obj = lookup_unknown_object(oid);
-+	struct object *obj = lookup_unknown_object(the_repository, oid);
- 	obj->flags |= HAS_OBJ;
- }
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5617c01b5a..7ee63cb192 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3161,7 +3161,7 @@ static void add_objects_in_unpacked_packs(void)
- 
- 		for (i = 0; i < p->num_objects; i++) {
- 			nth_packed_object_id(&oid, p, i);
--			o = lookup_unknown_object(&oid);
-+			o = lookup_unknown_object(the_repository, &oid);
- 			if (!(o->flags & OBJECT_ADDED))
- 				mark_in_pack_object(o, p, &in_pack);
- 			o->flags |= OBJECT_ADDED;
-diff --git a/http-push.c b/http-push.c
-index 6a4a43e07f..a9d1383165 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1436,7 +1436,7 @@ static void one_remote_ref(const char *refname)
- 	 * may be required for updating server info later.
- 	 */
- 	if (repo->can_update_info_refs && !has_object_file(&ref->old_oid)) {
--		obj = lookup_unknown_object(&ref->old_oid);
-+		obj = lookup_unknown_object(the_repository, &ref->old_oid);
- 		fprintf(stderr,	"  fetch %s for %s\n",
- 			oid_to_hex(&ref->old_oid), refname);
- 		add_fetch_request(obj);
-diff --git a/object.c b/object.c
-index 3257518656..a538d2dd77 100644
---- a/object.c
-+++ b/object.c
-@@ -177,12 +177,11 @@ void *object_as_type(struct object *obj, enum object_type type, int quiet)
- 	}
- }
- 
--struct object *lookup_unknown_object(const struct object_id *oid)
-+struct object *lookup_unknown_object(struct repository *r, const struct object_id *oid)
- {
--	struct object *obj = lookup_object(the_repository, oid);
-+	struct object *obj = lookup_object(r, oid);
- 	if (!obj)
--		obj = create_object(the_repository, oid,
--				    alloc_object_node(the_repository));
-+		obj = create_object(r, oid, alloc_object_node(r));
- 	return obj;
- }
- 
-diff --git a/object.h b/object.h
-index 20b18805f0..8d6daf6df7 100644
---- a/object.h
-+++ b/object.h
-@@ -145,7 +145,7 @@ struct object *parse_object_or_die(const struct object_id *oid, const char *name
- struct object *parse_object_buffer(struct repository *r, const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p);
- 
- /** Returns the object, with potentially excess memory allocated. **/
--struct object *lookup_unknown_object(const struct object_id *oid);
-+struct object *lookup_unknown_object(struct repository *r, const struct object_id *oid);
- 
- struct object_list *object_list_insert(struct object *item,
- 				       struct object_list **list_p);
 diff --git a/refs.c b/refs.c
-index e62da6f2de..ceff6d2af5 100644
+index fa01153151..e62da6f2de 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -336,12 +336,14 @@ static int filter_refs(const char *refname, const struct object_id *oid,
- 	return filter->fn(refname, oid, flags, filter->cb_data);
- }
- 
--enum peel_status peel_object(const struct object_id *name, struct object_id *oid)
-+enum peel_status peel_object(struct repository *repo,
-+			     const struct object_id *name,
-+			     struct object_id *oid)
+@@ -254,13 +254,14 @@ int refname_is_safe(const char *refname)
+  * be resolved to an object in the database. If the referred-to object
+  * does not exist, emit a warning and return false.
+  */
+-int ref_resolves_to_object(const char *refname,
++int ref_resolves_to_object(struct repository *repo,
++			   const char *refname,
+ 			   const struct object_id *oid,
+ 			   unsigned int flags)
  {
--	struct object *o = lookup_unknown_object(name);
-+	struct object *o = lookup_unknown_object(repo, name);
- 
- 	if (o->type == OBJ_NONE) {
--		int type = oid_object_info(the_repository, name, NULL);
-+		int type = oid_object_info(repo, name, NULL);
- 		if (type < 0 || !object_as_type(o, type, 0))
- 			return PEEL_INVALID;
+ 	if (flags & REF_ISBROKEN)
+ 		return 0;
+-	if (!has_object_file(oid)) {
++	if (!repo_has_object_file(repo, oid)) {
+ 		error(_("%s does not point to a valid object!"), refname);
+ 		return 0;
  	}
-@@ -349,7 +351,7 @@ enum peel_status peel_object(const struct object_id *name, struct object_id *oid
- 	if (o->type != OBJ_TAG)
- 		return PEEL_NON_TAG;
+@@ -1751,7 +1752,8 @@ static struct ref_store *lookup_ref_store_map(struct hashmap *map,
+  * Create, record, and return a ref_store instance for the specified
+  * gitdir.
+  */
+-static struct ref_store *ref_store_init(const char *gitdir,
++static struct ref_store *ref_store_init(struct repository *repo,
++					const char *gitdir,
+ 					unsigned int flags)
+ {
+ 	const char *be_name = "files";
+@@ -1761,7 +1763,7 @@ static struct ref_store *ref_store_init(const char *gitdir,
+ 	if (!be)
+ 		BUG("reference backend %s is unknown", be_name);
  
--	o = deref_tag_noverify(o);
-+	o = deref_tag_noverify(repo, o);
- 	if (!o)
- 		return PEEL_INVALID;
- 
-@@ -1903,7 +1905,10 @@ int refs_peel_ref(struct ref_store *refs, const char *refname,
- 			       RESOLVE_REF_READING, &base, &flag))
- 		return -1;
- 
--	return peel_object(&base, oid);
-+	if (!refs->repo)
-+		return -1;
-+
-+	return peel_object(refs->repo, &base, oid);
+-	refs = be->init(gitdir, flags);
++	refs = be->init(repo, gitdir, flags);
+ 	return refs;
  }
  
- int peel_ref(const char *refname, struct object_id *oid)
+@@ -1773,7 +1775,7 @@ struct ref_store *get_main_ref_store(struct repository *r)
+ 	if (!r->gitdir)
+ 		BUG("attempting to get main_ref_store outside of repository");
+ 
+-	r->refs_private = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
++	r->refs_private = ref_store_init(r, r->gitdir, REF_STORE_ALL_CAPS);
+ 	r->refs_private = maybe_debug_wrap_ref_store(r->gitdir, r->refs_private);
+ 	return r->refs_private;
+ }
+@@ -1829,7 +1831,8 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 		goto done;
+ 
+ 	/* assume that add_submodule_odb() has been called */
+-	refs = ref_store_init(submodule_sb.buf,
++	refs = ref_store_init(the_repository,
++			      submodule_sb.buf,
+ 			      REF_STORE_READ | REF_STORE_ODB);
+ 	register_ref_store_map(&submodule_ref_stores, "submodule",
+ 			       refs, submodule);
+@@ -1855,10 +1858,12 @@ struct ref_store *get_worktree_ref_store(const struct worktree *wt)
+ 		return refs;
+ 
+ 	if (wt->id)
+-		refs = ref_store_init(git_common_path("worktrees/%s", wt->id),
++		refs = ref_store_init(the_repository,
++				      git_common_path("worktrees/%s", wt->id),
+ 				      REF_STORE_ALL_CAPS);
+ 	else
+-		refs = ref_store_init(get_git_common_dir(),
++		refs = ref_store_init(the_repository,
++				      get_git_common_dir(),
+ 				      REF_STORE_ALL_CAPS);
+ 
+ 	if (refs)
+diff --git a/refs/debug.c b/refs/debug.c
+index 922e64fa6a..6525142cc4 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -230,7 +230,8 @@ debug_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
+ 	struct ref_iterator *res =
+ 		drefs->refs->be->iterator_begin(drefs->refs, prefix, flags);
+ 	struct debug_ref_iterator *diter = xcalloc(1, sizeof(*diter));
+-	base_ref_iterator_init(&diter->base, &debug_ref_iterator_vtable, 1);
++	base_ref_iterator_init(&diter->base, &debug_ref_iterator_vtable,
++			       ref_store->repo, 1);
+ 	diter->iter = res;
+ 	trace_printf_key(&trace_refs, "ref_iterator_begin: %s (0x%x)\n", prefix, flags);
+ 	return &diter->base;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 04e85e7002..2ddb680c5c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -79,13 +79,15 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
+  * Create a new submodule ref cache and add it to the internal
+  * set of caches.
+  */
+-static struct ref_store *files_ref_store_create(const char *gitdir,
++static struct ref_store *files_ref_store_create(struct repository *repo,
++						const char *gitdir,
+ 						unsigned int flags)
+ {
+ 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
+ 	struct ref_store *ref_store = (struct ref_store *)refs;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
++	ref_store->repo = repo;
+ 	ref_store->gitdir = xstrdup(gitdir);
+ 	base_ref_store_init(ref_store, &refs_be_files);
+ 	refs->store_flags = flags;
+@@ -93,7 +95,7 @@ static struct ref_store *files_ref_store_create(const char *gitdir,
+ 	get_common_dir_noenv(&sb, gitdir);
+ 	refs->gitcommondir = strbuf_detach(&sb, NULL);
+ 	strbuf_addf(&sb, "%s/packed-refs", refs->gitcommondir);
+-	refs->packed_ref_store = packed_ref_store_create(sb.buf, flags);
++	refs->packed_ref_store = packed_ref_store_create(repo, sb.buf, flags);
+ 	strbuf_release(&sb);
+ 
+ 	chdir_notify_reparent("files-backend $GIT_DIR", &refs->base.gitdir);
+@@ -745,7 +747,8 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			continue;
+ 
+ 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+-		    !ref_resolves_to_object(iter->iter0->refname,
++		    !ref_resolves_to_object(ref_iterator->repo,
++					    iter->iter0->refname,
+ 					    iter->iter0->oid,
+ 					    iter->iter0->flags))
+ 			continue;
+@@ -846,7 +849,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	ref_iterator = &iter->base;
+ 	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable,
+-			       overlay_iter->ordered);
++			       ref_store->repo, overlay_iter->ordered);
+ 	iter->iter0 = overlay_iter;
+ 	iter->flags = flags;
+ 
+@@ -1115,7 +1118,7 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_
+ /*
+  * Return true if the specified reference should be packed.
+  */
+-static int should_pack_ref(const char *refname,
++static int should_pack_ref(struct repository* repo, const char *refname,
+ 			   const struct object_id *oid, unsigned int ref_flags,
+ 			   unsigned int pack_flags)
+ {
+@@ -1132,7 +1135,7 @@ static int should_pack_ref(const char *refname,
+ 		return 0;
+ 
+ 	/* Do not pack broken refs: */
+-	if (!ref_resolves_to_object(refname, oid, ref_flags))
++	if (!ref_resolves_to_object(repo, refname, oid, ref_flags))
+ 		return 0;
+ 
+ 	return 1;
+@@ -1162,8 +1165,8 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 		 * in the packed ref cache. If the reference should be
+ 		 * pruned, also add it to refs_to_prune.
+ 		 */
+-		if (!should_pack_ref(iter->refname, iter->oid, iter->flags,
+-				     flags))
++		if (!should_pack_ref(ref_store->repo, iter->refname, iter->oid,
++				     iter->flags, flags))
+ 			continue;
+ 
+ 		/*
+@@ -2155,7 +2158,8 @@ static struct ref_iterator *reflog_iterator_begin(struct ref_store *ref_store,
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	ref_iterator = &iter->base;
+ 
+-	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 0);
++	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable,
++			       ref_store->repo, 0);
+ 	iter->dir_iterator = diter;
+ 	iter->ref_store = ref_store;
+ 	strbuf_release(&sb);
+diff --git a/refs/iterator.c b/refs/iterator.c
+index 629e00a122..a68dd452b6 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -26,9 +26,11 @@ int ref_iterator_abort(struct ref_iterator *ref_iterator)
+ 
+ void base_ref_iterator_init(struct ref_iterator *iter,
+ 			    struct ref_iterator_vtable *vtable,
++			    struct repository *repo,
+ 			    int ordered)
+ {
+ 	iter->vtable = vtable;
++	iter->repo = repo;
+ 	iter->ordered = !!ordered;
+ 	iter->refname = NULL;
+ 	iter->oid = NULL;
+@@ -74,7 +76,8 @@ struct ref_iterator *empty_ref_iterator_begin(void)
+ 	struct empty_ref_iterator *iter = xcalloc(1, sizeof(*iter));
+ 	struct ref_iterator *ref_iterator = &iter->base;
+ 
+-	base_ref_iterator_init(ref_iterator, &empty_ref_iterator_vtable, 1);
++	base_ref_iterator_init(ref_iterator, &empty_ref_iterator_vtable,
++			       NULL, 1);
+ 	return ref_iterator;
+ }
+ 
+@@ -222,7 +225,8 @@ struct ref_iterator *merge_ref_iterator_begin(
+ 	 * references through only if they exist in both iterators.
+ 	 */
+ 
+-	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable, ordered);
++	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable,
++			       iter0->repo, ordered);
+ 	iter->iter0 = iter0;
+ 	iter->iter1 = iter1;
+ 	iter->select = select;
+@@ -396,7 +400,8 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	ref_iterator = &iter->base;
+ 
+-	base_ref_iterator_init(ref_iterator, &prefix_ref_iterator_vtable, iter0->ordered);
++	base_ref_iterator_init(ref_iterator, &prefix_ref_iterator_vtable,
++			       iter0->repo, iter0->ordered);
+ 
+ 	iter->iter0 = iter0;
+ 	iter->prefix = xstrdup(prefix);
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 9743ee0155..0d598ee76c 100644
+index b912f2505f..9743ee0155 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -892,7 +892,7 @@ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
- 		return -1;
- 	} else {
--		return !!peel_object(&iter->oid, peeled);
-+		return !!peel_object(ref_iterator->repo, &iter->oid, peeled);
+@@ -193,13 +193,15 @@ static int release_snapshot(struct snapshot *snapshot)
  	}
  }
  
-@@ -1242,7 +1242,8 @@ static int write_with_updates(struct packed_ref_store *refs,
- 			i++;
- 		} else {
- 			struct object_id peeled;
--			int peel_error = peel_object(&update->new_oid,
-+			int peel_error = peel_object(refs->base.repo,
-+						     &update->new_oid,
- 						     &peeled);
+-struct ref_store *packed_ref_store_create(const char *path,
++struct ref_store *packed_ref_store_create(struct repository *repo,
++					  const char *path,
+ 					  unsigned int store_flags)
+ {
+ 	struct packed_ref_store *refs = xcalloc(1, sizeof(*refs));
+ 	struct ref_store *ref_store = (struct ref_store *)refs;
  
- 			if (write_packed_entry(out, update->refname,
+ 	base_ref_store_init(ref_store, &refs_be_packed);
++	ref_store->repo = repo;
+ 	ref_store->gitdir = xstrdup(path);
+ 	refs->store_flags = store_flags;
+ 
+@@ -864,7 +866,8 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			continue;
+ 
+ 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+-		    !ref_resolves_to_object(iter->base.refname, &iter->oid,
++		    !ref_resolves_to_object(ref_iterator->repo,
++					    iter->base.refname, &iter->oid,
+ 					    iter->flags))
+ 			continue;
+ 
+@@ -943,7 +946,8 @@ static struct ref_iterator *packed_ref_iterator_begin(
+ 
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	ref_iterator = &iter->base;
+-	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable, 1);
++	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable,
++			       ref_store->repo, 1);
+ 
+ 	iter->snapshot = snapshot;
+ 	acquire_snapshot(snapshot);
+diff --git a/refs/packed-backend.h b/refs/packed-backend.h
+index a01a0aff9c..942c908771 100644
+--- a/refs/packed-backend.h
++++ b/refs/packed-backend.h
+@@ -12,7 +12,8 @@ struct ref_transaction;
+  * even among packed refs.
+  */
+ 
+-struct ref_store *packed_ref_store_create(const char *path,
++struct ref_store *packed_ref_store_create(struct repository *repo,
++					  const char *path,
+ 					  unsigned int store_flags);
+ 
+ /*
 diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 974d37ee79..fc54c4eae3 100644
+index b7052f72e2..974d37ee79 100644
 --- a/refs/ref-cache.c
 +++ b/refs/ref-cache.c
-@@ -491,7 +491,7 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
- static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				   struct object_id *peeled)
- {
--	return peel_object(ref_iterator->oid, peeled);
-+	return peel_object(ref_iterator->repo, ref_iterator->oid, peeled);
- }
+@@ -532,7 +532,8 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
  
- static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	ref_iterator = &iter->base;
+-	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable, 1);
++	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable,
++			       cache->ref_store->repo, 1);
+ 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
+ 
+ 	iter->levels_nr = 1;
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 9e9b2e8c76..b08fd7a247 100644
+index 467f4b3c93..9e9b2e8c76 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -102,7 +102,9 @@ enum peel_status {
-  * or is not valid, return PEEL_NON_TAG or PEEL_INVALID, respectively,
-  * and leave oid unchanged.
+@@ -65,7 +65,8 @@ int refname_is_safe(const char *refname);
+  * oid and flags, can be resolved to an object in the database. If the
+  * referred-to object does not exist, emit a warning and return false.
   */
--enum peel_status peel_object(const struct object_id *name, struct object_id *oid);
-+enum peel_status peel_object(struct repository *repo,
-+			     const struct object_id *name,
-+			     struct object_id *oid);
+-int ref_resolves_to_object(const char *refname,
++int ref_resolves_to_object(struct repository *repo,
++			   const char *refname,
+ 			   const struct object_id *oid,
+ 			   unsigned int flags);
  
- /**
-  * Information needed for a single ref update. Set new_oid to the new
-diff --git a/t/helper/test-example-decorate.c b/t/helper/test-example-decorate.c
-index c8a1cde7d2..b9d1200eb9 100644
---- a/t/helper/test-example-decorate.c
-+++ b/t/helper/test-example-decorate.c
-@@ -26,8 +26,8 @@ int cmd__example_decorate(int argc, const char **argv)
- 	 * Add 2 objects, one with a non-NULL decoration and one with a NULL
- 	 * decoration.
- 	 */
--	one = lookup_unknown_object(&one_oid);
--	two = lookup_unknown_object(&two_oid);
-+	one = lookup_unknown_object(the_repository, &one_oid);
-+	two = lookup_unknown_object(the_repository, &two_oid);
- 	ret = add_decoration(&n, one, &decoration_a);
- 	if (ret)
- 		BUG("when adding a brand-new object, NULL should be returned");
-@@ -56,7 +56,7 @@ int cmd__example_decorate(int argc, const char **argv)
- 	ret = lookup_decoration(&n, two);
- 	if (ret != &decoration_b)
- 		BUG("lookup should return added declaration");
--	three = lookup_unknown_object(&three_oid);
-+	three = lookup_unknown_object(the_repository, &three_oid);
- 	ret = lookup_decoration(&n, three);
- 	if (ret)
- 		BUG("lookup for unknown object should return NULL");
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 14a3655442..9bae4b0682 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -61,7 +61,7 @@ int cmd__reach(int ac, const char **av)
- 			die("failed to resolve %s", buf.buf + 2);
+@@ -299,6 +300,8 @@ int refs_rename_ref_available(struct ref_store *refs,
+ struct ref_iterator {
+ 	struct ref_iterator_vtable *vtable;
  
- 		orig = parse_object(r, &oid);
--		peeled = deref_tag_noverify(orig);
-+		peeled = deref_tag_noverify(r, orig);
++	struct repository *repo;
++
+ 	/*
+ 	 * Does this `ref_iterator` iterate over references in order
+ 	 * by refname?
+@@ -432,6 +435,7 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
+  */
+ void base_ref_iterator_init(struct ref_iterator *iter,
+ 			    struct ref_iterator_vtable *vtable,
++			    struct repository* repo,
+ 			    int ordered);
  
- 		if (!peeled)
- 			die("failed to load commit for input %s resulting in oid %s\n",
-diff --git a/tag.c b/tag.c
-index 1ed2684e45..1ba7fda738 100644
---- a/tag.c
-+++ b/tag.c
-@@ -86,10 +86,10 @@ struct object *deref_tag(struct repository *r, struct object *o, const char *war
- 	return o;
- }
+ /*
+@@ -518,11 +522,12 @@ struct ref_store;
+ 				 REF_STORE_MAIN)
  
--struct object *deref_tag_noverify(struct object *o)
-+struct object *deref_tag_noverify(struct repository *r, struct object *o)
- {
- 	while (o && o->type == OBJ_TAG) {
--		o = parse_object(the_repository, &o->oid);
-+		o = parse_object(r, &o->oid);
- 		if (o && o->type == OBJ_TAG && ((struct tag *)o)->tagged)
- 			o = ((struct tag *)o)->tagged;
- 		else
-diff --git a/tag.h b/tag.h
-index 3ce8e72192..c49d7c19ad 100644
---- a/tag.h
-+++ b/tag.h
-@@ -16,7 +16,7 @@ int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, u
- int parse_tag(struct tag *item);
- void release_tag_memory(struct tag *t);
- struct object *deref_tag(struct repository *r, struct object *, const char *, int);
--struct object *deref_tag_noverify(struct object *);
-+struct object *deref_tag_noverify(struct repository *r, struct object *);
- int gpg_verify_tag(const struct object_id *oid,
- 		   const char *name_to_report, unsigned flags);
- struct object_id *get_tagged_oid(struct tag *tag);
-diff --git a/upload-pack.c b/upload-pack.c
-index 3b858eb457..ccbb8887b0 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1149,7 +1149,7 @@ static void receive_needs(struct upload_pack_data *data,
- static int mark_our_ref(const char *refname, const char *refname_full,
- 			const struct object_id *oid)
- {
--	struct object *o = lookup_unknown_object(oid);
-+	struct object *o = lookup_unknown_object(the_repository, oid);
+ /*
+- * Initialize the ref_store for the specified gitdir. These functions
++ * Initialize the ref_store for the specified repository. These functions
+  * should call base_ref_store_init() to initialize the shared part of
+  * the ref_store and to record the ref_store for later lookup.
+  */
+-typedef struct ref_store *ref_store_init_fn(const char *gitdir,
++typedef struct ref_store *ref_store_init_fn(struct repository* repo,
++					    char const *gitdir,
+ 					    unsigned int flags);
  
- 	if (ref_is_hidden(refname, refname_full)) {
- 		o->flags |= HIDDEN_REF;
-diff --git a/walker.c b/walker.c
-index 4984bf8b3d..2a5cc90418 100644
---- a/walker.c
-+++ b/walker.c
-@@ -298,7 +298,8 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 			error("Could not interpret response from server '%s' as something to pull", target[i]);
- 			goto done;
- 		}
--		if (process(walker, lookup_unknown_object(&oids[i])))
-+		if (process(walker,
-+			    lookup_unknown_object(the_repository, &oids[i])))
- 			goto done;
- 	}
+ typedef int ref_init_db_fn(struct ref_store *refs, struct strbuf *err);
+@@ -680,6 +685,9 @@ struct ref_store {
+ 	/* The backend describing this ref_store's storage scheme: */
+ 	const struct ref_storage_be *be;
  
++	/* The repository that this ref_store is for: */
++	struct repository* repo;
++
+ 	/* The gitdir that this ref_store applies to: */
+ 	char *gitdir;
+ };
 -- 
 2.26.2
 
