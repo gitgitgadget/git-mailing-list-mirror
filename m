@@ -2,83 +2,75 @@ Return-Path: <SRS0=tv2H=DG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EE7FC2D0A8
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 01:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC197C2D0A8
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 03:00:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 150B52083B
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 01:18:03 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="Ty7GfE0x"
+	by mail.kernel.org (Postfix) with ESMTP id 8C2112083B
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 03:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727026AbgI2BSC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Sep 2020 21:18:02 -0400
-Received: from smtp-fw-4101.amazon.com ([72.21.198.25]:32901 "EHLO
-        smtp-fw-4101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725272AbgI2BSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Sep 2020 21:18:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1601342282; x=1632878282;
-  h=from:to:subject:date:message-id:content-id:
-   content-transfer-encoding:mime-version;
-  bh=aVaf2fAlaIFWrGyDiJFZzAaDJMGfUTFY09vGXpyJ8Eo=;
-  b=Ty7GfE0xvtWryO83udIJQnV2UwPNZon7KMIRoqiZsmm94Ghm/wNnCFQR
-   JqflqOj3Hquu4DyyZTxzqrP3MKZ3zB9LDmi1ISw9zulNQi/3uCYj7Gtaq
-   kdvXvTuLZfLD5rMbrNOFjOKT575xve9QwUtaExJCwdwp5wyDButMlodUB
-   w=;
-X-IronPort-AV: E=Sophos;i="5.77,316,1596499200"; 
-   d="scan'208";a="56841978"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-1e-c7c08562.us-east-1.amazon.com) ([10.43.8.6])
-  by smtp-border-fw-out-4101.iad4.amazon.com with ESMTP; 29 Sep 2020 01:18:01 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan3.iad.amazon.com [10.40.163.38])
-        by email-inbound-relay-1e-c7c08562.us-east-1.amazon.com (Postfix) with ESMTPS id 54698240FEC
-        for <git@vger.kernel.org>; Tue, 29 Sep 2020 01:18:00 +0000 (UTC)
-Received: from EX13D20UWA003.ant.amazon.com (10.43.160.97) by
- EX13MTAUWA001.ant.amazon.com (10.43.160.58) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Tue, 29 Sep 2020 01:18:00 +0000
-Received: from EX13D20UWA003.ant.amazon.com (10.43.160.97) by
- EX13D20UWA003.ant.amazon.com (10.43.160.97) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Tue, 29 Sep 2020 01:17:59 +0000
-Received: from EX13D20UWA003.ant.amazon.com ([10.43.160.97]) by
- EX13D20UWA003.ant.amazon.com ([10.43.160.97]) with mapi id 15.00.1497.006;
- Tue, 29 Sep 2020 01:17:59 +0000
-From:   "Wu, Zhichen" <zhwu@amazon.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Question About Git V2 Protocol & SHA256
-Thread-Topic: Question About Git V2 Protocol & SHA256
-Thread-Index: AQHWlf5ecO6oUvIkOE6Oo7T8lc6CpA==
-Date:   Tue, 29 Sep 2020 01:17:59 +0000
-Message-ID: <9FC3DDB4-DE6F-45B3-95F9-1048991713A4@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.43.162.35]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <95A2B6A7BD9F0A46ABB4B2344C395A94@amazon.com>
-Content-Transfer-Encoding: base64
+        id S1727226AbgI2DAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Sep 2020 23:00:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43960 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727035AbgI2DAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Sep 2020 23:00:44 -0400
+Received: (qmail 7338 invoked by uid 109); 29 Sep 2020 03:00:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Sep 2020 03:00:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14576 invoked by uid 111); 29 Sep 2020 03:00:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Sep 2020 23:00:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 28 Sep 2020 23:00:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Arenas <carenas@gmail.com>,
+        Nikita Leonov via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Nikita Leonov <nykyta.leonov@gmail.com>
+Subject: Re: [PATCH v2 2/3] credentials: make line reading Windows compatible
+Message-ID: <20200929030043.GA905754@coredump.intra.peff.net>
+References: <pull.710.git.git.1581688196706.gitgitgadget@gmail.com>
+ <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
+ <f69076036fe4dfe8b57fc1d4329c7be3f7346850.1601293224.git.gitgitgadget@gmail.com>
+ <CAPUEspgW9CFO3WtbiuTUsmXp05fPqr2Cs81piDJFJ0g3KcTy3A@mail.gmail.com>
+ <20200929003000.GA898702@coredump.intra.peff.net>
+ <xmqqwo0difdh.fsf@gitster.c.googlers.com>
+ <20200929004448.GD898702@coredump.intra.peff.net>
+ <xmqqsgb1ier6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsgb1ier6.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgR2l0IENvbW11bml0eSwNCsKgDQpIb3BlIHRoaXMgZW1haWwgZmluZHMgeW91IHdlbGwuDQrC
-oA0KSeKAmW0gWmhpY2hlbiBmcm9tIEFXUyBDb2RlQ29tbWl0LiBJ4oCZbSByZWFjaGluZyBvdXQg
-cmVnYXJkaW5nIDIgZ2l0IGZlYXR1cmVzIHRoYXQgd2UgYXJlIHBsYW5uaW5nIGZvciBDb2RlQ29t
-bWl0IGFuZCB5b3VyIGlucHV0IHdvdWxkIGJlIGNyaXRpY2FsIGZvciBvdXIgbmV4dCBzdGVwLg0K
-DQoxLiBTaW5jZSB2MiBwcm90b2NvbCBoYXMgYmVlbiBsYXVuY2hlZCBmb3IgMiB5ZWFycywgaXMg
-dGhlcmUgYW55IHBsYW4gaW4gdGhlIG5lYXIgZnV0dXJlIGFib3V0IHYxIGRlcHJlY2F0aW9uPw0K
-Mi4gSSBzZWUgdjIgaGFzIGEgY2FwYWJpbGl0eSBjYWxsZWQg4oCcb2JqZWN0LWZvcm1hdOKAnSB0
-aGF0IHByb3ZpZGVzIFNIQTEgb3B0aW9uLiBJ4oCZbSB3b25kZXJpbmcgaWYgdGhhdCBjYXBhYmls
-aXR5IHdpbGwgYmUgdGhlIG9ubHkgd2F5IGZvciBjbGllbnQgYW5kIHNlcnZlciB0byBzdGFydCB1
-c2luZyBTSEEyNTY/IE9yIHB1dCBpdCBhcyBhbm90aGVyIHdvcmQsIHdpbGwgdjIgcHJvdG9jb2wg
-YmUgdGhlIHByZXJlcXVpc2l0ZSBvZiBTSEEyNTY/DQrCoA0KTG9va2luZyBmb3J3YXJkIHRvIGhl
-YXJpbmcgYmFjayBmcm9tIHlvdS4NCsKgDQpUaGFua3MgaW4gYWR2YW5jZSENClpoaWNoZW4gV3UN
-Cg0KDQo=
+On Mon, Sep 28, 2020 at 05:54:37PM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > Yeah, that is probably what would happen. I have to admit that it's such
+> > an obscure case that I'm not sure I really care. It's unlikely in
+> > practice, and if somebody did report such a case, I think my first
+> > response would be "well, why did you have a broken entry stuck in your
+> > file?".
+> 
+> I think we know the likely answer.  "I once used Windows to edit the
+> file manually".
+> 
+> After which the file looks broken, so the user may have re-added via
+> the credential API (with LF line ending) a new entry for the host
+> and have been happily using the result.
+
+I wrote something less charitable towards the user at first, and then
+toned it down. But I think I toned it down too much. Maybe my response
+would be "garbage in, garbage out; it was lucky that it worked before".
+
+-Peff
