@@ -2,103 +2,134 @@ Return-Path: <SRS0=tv2H=DG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF2F0C4727C
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 13:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A460C4727D
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 14:04:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AB2E208FE
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 13:05:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD3FC20848
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 14:04:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="FOtpsXnW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBR5NI9C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728881AbgI2NFt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Sep 2020 09:05:49 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54965 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728675AbgI2NFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Sep 2020 09:05:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601384742;
-        bh=+NqPLfB1aBK05IpnZnp5ZcMkwAzYkeGbP1KDPHQg/XI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FOtpsXnWE4z+pNT1fzbc/HQHsxFFwiUBxIjVal1cfRdCk78Xcnj8bW4okj980riT3
-         LfqnS+3f6tzs/MAkViIQtGJIp8XAFK9hgR7fd1doczsdYHmPDc1AKZaliuLodO6x1o
-         0FYzuwLa6WMn9QiNlG0JhePm7M+bJPMkzD+E3FDQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.113.174] ([89.1.214.86]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw3N-1kmvMD11F5-00j1GF; Tue, 29
- Sep 2020 15:05:42 +0200
-Date:   Tue, 29 Sep 2020 14:07:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1730952AbgI2OET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Sep 2020 10:04:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33128 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730082AbgI2OET (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Sep 2020 10:04:19 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B97C061755
+        for <git@vger.kernel.org>; Tue, 29 Sep 2020 07:04:18 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id k8so4659053pfk.2
+        for <git@vger.kernel.org>; Tue, 29 Sep 2020 07:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=F+Iod/JUbEzoeUXh7rnt6/F+LNHXN/4kiiLHpwjyzHE=;
+        b=rBR5NI9CDi9U0ZIdKwnd7Fj7/+S8DyTpBy7f0HuyaVra5jDtVUh0PVKLozBM7yFVW7
+         5QeSH+NEkVz6B6c+nC3nVLRjj3cItMlfTqueulTJ2hrwiCsZOs0qEX1/bOIRb9X4nhTS
+         bMilk61J2dImNU56pJcCIkK4H9BXDvmMNRYeF5zvvR55Pm60en6B5zgJXtZi1s8tCB/W
+         pd+dTJgeOREWJGKg4sWGmck8QrrrpkTLHHE8kHZR70ztGAxOoTCJ7wbpTv3wm8Fp0L5F
+         x7wn1Bq7o5ctdq9yBOT3Mqk2z7yknQx/zf6HVo1GljtrxoOGL7PTw7CvX/Q9F3VwXK1c
+         5aXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=F+Iod/JUbEzoeUXh7rnt6/F+LNHXN/4kiiLHpwjyzHE=;
+        b=ujFXRCxTaqm2lPHm3MwcGqmS1PF0doRcS155NMLpX7iwTwmvodIamKVn0DxjWNkQh2
+         YP51+eL7CQ/KNZXR4nImfY0yhEL5b3YYqcT3WUY13rN2IWZMDNTFtjqbPm8ME4M+bgW0
+         IbIlqs1jEioA2OkHNd79pIiwnSbD0dpzfvHnCK/9R9iNdZs9INHTFkq7OSLDKLfOHtDz
+         qWEoKhj77onAEYutACzsf49VRJMhEzUZEGsF32ILqRf5L6eRwMXSJNumtDIpSPiTgUkY
+         IkK9U506iir2E+Y3TatwRYim5S2zydrwsiNYNwW2BitYm+EFVl7Yf//9aYlejNCWV/dB
+         jPBg==
+X-Gm-Message-State: AOAM530I55s4JVzMQpv+gfMpSRjWwthu+QN1/2vylrkdV+ZG1qdUPDCr
+        GW1vr+GZXvw21wsGb9lVvafYx67e+KA=
+X-Google-Smtp-Source: ABdhPJxzJZ6/5qYv6VVW8jGPRnA6lgiwj9wNX+hW7pqyz6e9Id4uhDvQ7ygUVAY5VwFgQutZMZTPQw==
+X-Received: by 2002:a63:ce47:: with SMTP id r7mr3330766pgi.360.1601388257790;
+        Tue, 29 Sep 2020 07:04:17 -0700 (PDT)
+Received: from localhost ([2402:800:63a8:845a:d928:cf31:b27:22d1])
+        by smtp.gmail.com with ESMTPSA id g206sm5577358pfb.178.2020.09.29.07.04.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2020 07:04:16 -0700 (PDT)
+Date:   Tue, 29 Sep 2020 21:04:13 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-Subject: Re: [PATCH v3 11/11] cmake: fix typo in message when `msgfmt` was
- not found
-In-Reply-To: <xmqqtuvhk0vy.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2009291407130.50@tvgsbejvaqbjf.bet>
-References: <pull.738.v2.git.1601155970.gitgitgadget@gmail.com> <pull.738.v3.git.1601327357.gitgitgadget@gmail.com> <c3e235fe39b41b90a8a00d81220cb28e83580f13.1601327357.git.gitgitgadget@gmail.com> <xmqqtuvhk0vy.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 02/10] cmake: do find Git for Windows' shell interpreter
+Message-ID: <20200929140400.GE20935@danh.dev>
+References: <pull.738.git.1601044118.gitgitgadget@gmail.com>
+ <05b4b69fee2b8c32769dd72dea182cfb72a14876.1601044118.git.gitgitgadget@gmail.com>
+ <CAKiG+9V=BGX4k_dM-5JzYmko0cZfYXuSxEk5-UuHZpAqaWoU_A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2009260821260.50@tvgsbejvaqbjf.bet>
+ <20200927022543.GD20935@danh.dev>
+ <nycvar.QRO.7.76.6.2009281553520.50@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nae0jzLysTU2dlOXA7Iep+XMsoY8GP3Mn3U+7yNCqw1PRdgPoBU
- WQD6+T5aYSOAqM6MV4t+nvOz052QFhq0Qap9U+ErGy/c5B7zWDuCPZQmB+s8pX2ZIFZMbuv
- z57Ye8VaIGu2dS5D/sDvymKgUSEXUhLk3PHxk8392D8VkzbwNboLyimo06r5ffcVJjqtdxK
- YhMlvBfjO3bKYsIIgo4bw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uW/njR8b1Ko=:WjrRiysv87AXU4o/AIppeU
- xN6NgAiDUQfr547Rs+ZSPRjYvAtE9Lrr3zRt0y1b1TEHUxl69jWCPc1nGo0R/l24v7pepjJYJ
- 8tIqYv4zZdifeTijBhG3uktTu1CjUNGmNsg8OiE8E3oNu/FgxFMuwSn7+BW12zSZMPukeN2ve
- 9hxGKbELS342PWXiJCPHjk8BPpqbV2/jGjiAK+ATEw3sihQb7oitUt3cGnvOEN/0oab3VmNEp
- p8CpOzM7WsVkjD8obwTU3yn84d4Et81s6PJ/J/N72HBFGlrodOUi0oggLJ591tdxZqYLvUC0V
- RVIUGZWPBHHxaPiH3pTzsxHIc12MKeHQQbGL3rAlqPq8R1hNIUZDLhXOtqCloptx4bUSMPP4j
- 9SVjsrgxfQiWQTZGlmjXCnnaqxiVEQQ4S7Cf8CvGmxFoUVNZWy2YWEcquXZdS4Q7DPE23fxrM
- q8IEO93e/PEaPErvvVzAQbZ2vQZ4scDd5/U3+qGXh2uw/gNB/GnBHkR1Eb8VVYNvrli+rf/rp
- YWeyREB785ey6hN/93Tuxt1l17+FrRtcQiBMQZLAp/8HVsCO73LUeUXIGqwRy6+ocLGuFDOsO
- Kq/Qsb2+nKd2d0l3olCsmTDzLbgn0x9aWPq1qRSwH+yDgXtYbumFYxmEvHaJse8hAZj6KIUQM
- npX4BuenV2168Pr/S2YgDQVh7/Ai4jueliZGm0TSRK4domYjHKABwCLot7n3lJByejdgAEyXn
- gWnXt2KG9uAEJ6jqLK16bp6RGYmlH7YLqkQtZNVRKRCR0ZywomBI3+pqVGPWVj1of34xALswl
- HBXsYys1meMrpqqPWio7YzCtXJzkn2REZRBQI5AOvGq4XF+UvAFiVOlfQC8RLgF751OzrA+vp
- L45R7UgAfgM+NDpNDD3tQTCfds/ZEAtQOaIwJ6aaa8tyfcVH+0GI7O216ob87g1Ahfcmi0JhB
- PUY39d1BdzHu1hsI6BbNb9Xa0+SL4fic5qcIupeA23uCrFgiUs/mG7zfA0qhAMTDrgpsZTajo
- /g2bA588SALnAzBimfIO4jEqg8Dy1H8j325lCbsy41TucwIdYSBn1Llr8MLppH97CoFgrV37w
- nX1tcvcJcvrv11pRzymXJPj3xntAOjkMuNSApEArq5mQPdVm1X6/ZSlTec4kK+BtSqOy3l95T
- 3hplC33U88bo141aR631KrLi9v//Jdskvy98JoDt342oj7sia+E1pO+UsYtZOqcC1M1Br2e0j
- DlfrMhOfUUwZjG5f3xLBeKAXkPCStcoJd9eAwhw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2009281553520.50@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Mon, 28 Sep 2020, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 2020-09-28 15:56:13+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi Danh,
+> 
+> On Sun, 27 Sep 2020, Đoàn Trần Công Danh wrote:
+> 
+> > On 2020-09-26 22:32:25+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
->
-> Shouldn't this be squashed into the step being fixed, which is part
-> of this series?  Would it be the "fall back to using..." step (4/11)?
+> > > > I personally don't install my dev tools(except Visual Studio) to
+> > > > Program Files(because of the _space_), it messes up the Makefiles.
+> > >
+> > > Sure, and that's your prerogative. There's unfortunately no good way to
+> > > support your use case.
+> > >
+> > > Luckily, the vast majority of Git for Windows' users do not change the
+> > > default location, and this patch is for them. (And "them" in this case
+> > > includes me, personally ;-))
+> >
+> > This doesn't fit into my view of Git for Windows' users
+> > For some users that have the Administrator right, it's the default
+> > location if they grant the Administrator right for the installer.
+> >
+> > For those poor souls that works for enterprise companies, and thoses
+> > that not feel comfortable give Administrator right to _another_
+> > installer, the installer will install into (hopeful, I type it right):
+> >
+> > 	%USERPROFILE%/AppData/Local/Programs/Git
+> 
+> Those poor souls that work for enterprise companies often have Git for
+> Windows installed by default. And of course, that default would be in
+> `C:\Program Files\Git`.
 
-Oy. I did not even realize that it was _my_ typo. Fixed in my branch. I'll
-wait a little, just in case that anything else needs to be fixed, before
-sending the next iteration.
+Yes, that's correct, but that Git is usually very old, and I'm not
+sure about its layout. Obviously, you know better in this regard :-p
 
-Ciao,
-Dscho
+> 
+> > I think it's better to offer SH_EXE as an OPTION, let user specify it
+> > as will. And we'll search in PATH if it's not specified, fallback to
+> > 2 default value if not found.
+> 
+> That's exactly as it is right now. You can specify `SH_EXE` (but only if
+> running CMake manually, not via Visual Studio). If you don't, it searches
+> `PATH`, and with my patch it then falls back to trying to find `sh.exe` in
+> Git for Windows' default location.
+> 
+> So I think we're in agreement here?
+
+Yes, seems good.
+
+-- 
+Danh
