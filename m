@@ -2,158 +2,178 @@ Return-Path: <SRS0=tv2H=DG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EA57C4727C
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56E85C4727C
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:49:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12E38207F7
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:40:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2401207F7
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:49:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DgaN+Ujy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tOkYxZro"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728566AbgI2Tj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Sep 2020 15:39:59 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59451 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727740AbgI2Tj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Sep 2020 15:39:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601408396;
-        bh=iXNroi6jKia6aUkvhGdAXxL5l2oQI7tcx++b4VBjx6k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DgaN+Ujyo6I2j3CJGIHCthNFB6d0AMrlxJWMgu1V/kCzzLkyk/H1+4G3jJVx34UCa
-         h6vl7aq5OMXwmrC5BgseLVwWQ7aKasf3Nu7/tTa027q3iaeqdK4SqJydupt+Y/lZHF
-         wzVgLmCmxBtI4jGNR3iYlTBQlxZ7SCZR4Oktntp4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.113.174] ([89.1.214.86]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwwZd-1kbrOK2rs3-00yRLp; Tue, 29
- Sep 2020 21:39:56 +0200
-Date:   Tue, 29 Sep 2020 20:42:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
-cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 02/10] cmake: do find Git for Windows' shell
- interpreter
-In-Reply-To: <20200929140400.GE20935@danh.dev>
-Message-ID: <nycvar.QRO.7.76.6.2009292039200.50@tvgsbejvaqbjf.bet>
-References: <pull.738.git.1601044118.gitgitgadget@gmail.com> <05b4b69fee2b8c32769dd72dea182cfb72a14876.1601044118.git.gitgitgadget@gmail.com> <CAKiG+9V=BGX4k_dM-5JzYmko0cZfYXuSxEk5-UuHZpAqaWoU_A@mail.gmail.com> <nycvar.QRO.7.76.6.2009260821260.50@tvgsbejvaqbjf.bet>
- <20200927022543.GD20935@danh.dev> <nycvar.QRO.7.76.6.2009281553520.50@tvgsbejvaqbjf.bet> <20200929140400.GE20935@danh.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728917AbgI2TtI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Sep 2020 15:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58186 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727700AbgI2TtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Sep 2020 15:49:07 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A426DC061755
+        for <git@vger.kernel.org>; Tue, 29 Sep 2020 12:49:07 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id y194so3689209vsc.4
+        for <git@vger.kernel.org>; Tue, 29 Sep 2020 12:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9hgZldS07uhEhU+sKzC4P0UKNHMUgBZvgtSEAwCGmpM=;
+        b=tOkYxZroMrZuy2OrLSqgy513xlqWfH9/sDWMBHf+YYi44t4OlaT2Sbl0wO847z0fJV
+         YmF933Y3aewlsENrnheJpnAORdKnEpOE+8kvcTy55psVjWYsT05Hwy4TZXPgc7LL3GEr
+         h7yX1b5je8IL08iNmf8c8oKHdCUqrO3IeWEkh8bspc7LACK8fynu+OyprpiyMaRnveCJ
+         9Y93iS6ssIO46HlkdRwWmsVXt4tRIlZZ/ECDFrS//DH7JKxcJMoRN5PCGpUghBlMvHMA
+         j2ONFZHM3dXCGwkLOmoLv40UWTnJvfVItBj+MpI1jNcQ6myH3EYd5G0Eo+Ri73FyNoQo
+         FG5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9hgZldS07uhEhU+sKzC4P0UKNHMUgBZvgtSEAwCGmpM=;
+        b=Ync3kBFB8Yn5tqGsoVs5FYd8eoGFH15blGE3twioocqyNSojcelfd52ytDtLrGXTSo
+         dokkFCn9fEop5INDPe0niGw0vhkMim6nzu7IFVxdk7G07EJ/qpEH0navV/tU6egYTSNa
+         QZ/gSZg3tbCCXOM1/EgJSKetcY8hHQKiDuzi+dsxXlzoTFQTJHhtahnIv+AecDYHOFUf
+         W2itzwY708iZU+XgGCHSmp7ZqLHIQik1C2Bm5Elj0O3s0u80GCtRcKUI117zsZCjETl2
+         Q7yL2fnQodk7c5LAm5vhSurfbcE6IJ1Qpjroar1seWhPg3LDnApDINEWyRBUYPGnpk3B
+         oxHw==
+X-Gm-Message-State: AOAM533685PlOLzrvzM7gDR/iTr66JD6DzKiFnsrCWlkJACkGt0tj/vB
+        BsguSkKsNk1XStVdUxno1/JXgO72P+C6Ly+CllA=
+X-Google-Smtp-Source: ABdhPJw4LEEpLbVlcB9hIeniAHw5R+eXuwOEr6+FJvJNwi3YCXmxhRdwSUjJqUo08b/3+LiWSY7jN/QDqTd60Byw3Jc=
+X-Received: by 2002:a67:fd44:: with SMTP id g4mr2996734vsr.49.1601408946278;
+ Tue, 29 Sep 2020 12:49:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1352567099-1601404933=:50"
-X-Provags-ID: V03:K1:Jj5OKgXuhFgYAtYZLVWpQhrSoaG4+hleVG8Ab9JvNpjcQssbaKk
- BmDivIDgEN88zMsivBNQ3LmyAM4A/aCgyT6mX4A2VmsIjFtAqaUykUExNXhyCrmx3cWTven
- hz71iNRbbeKt1Que31frngKksh9tcUDw0wZWgdSg+vPoOw6b8C1I5sOvdp4V/LndCIl707T
- ExObu23KAJyeqKMKFCpHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mNoPJQtFUJc=:FzehbfDaLgvglnZi03yPQ6
- oszgX8JAkfJ0AYN6qzDamP0d5pLg3qKYu0HPgnocT1dH57zCHVzJPmfZXL0Ap4hvPuHQvz9Qm
- 66UbYr0ky3a+d616DmO+Ov0ca88EucyzISoD6iu7+eK6NL2Ow8EJQg2GnPV0S56ogAzlzHd4C
- n3EdtzF/WTVbMeGfObj7bFt1X8AIZwBGazRNJSaATL/657WQIoB4xXHMJ3K1HqLWsg8z9Wzuq
- +lwxvC/+i/YheeRqtBPfsLhcFZB+ZIFG1kRDnd9BI4QaJmEyy9+mMc20d1GfAn5W1GOVfAngU
- MV6pHxKd4BOC1p+8Daj+64UP04srRKsLFh7E72fqY3EsiVaQxnU7qTec5Rxe3Bmky2rvS8+GZ
- sjdyhvGxldT3veLp0LvYrqs8OZDxlPgDFKnLJWO/qt1M+i3DZ1efnumMIRioMzNZ71p/BSzMB
- qSEHsOMlnhp5r26mXiIuaR4/OrjgP7niRDeLrRASJoccMrBrzUCRisV2sG4Dv8o7mMM0zj61u
- pqlcs7bujYQbsEeptaYPQQ5n6Ht2mjk93xOS3DBRJmr4fIeA69an2IvOcWeT4Ymi+93nvB87t
- 6vfyfTmbATCK3DjGyzBuWwb63oRk+E8by6lz4nu5PtnD+2JnK7HDC980UuuvWsNVvtGUDbqJ2
- S5kMaK7RJNBLYEm/2UbzUdrEMqzoa651OYsaoGgwAd9cWSacB3ReFwDFZN2VzbTxTiZHIdEno
- R4C0qy2BsiebO+i+N9Gr6gDqze5Wc48tvlFPmHWtKBsc0vYxTzz+Z8Q+BMV9TybTjzg1gEPzm
- +4qVs1J/mEqJo1hLIRm6Szr8RyIwX3+LP5Ui43Bae6eazAXiJeeKhP+UcztzVwMLVAsYdLcw5
- 8DeY1C9fPJ8Rx9CnWkn2n3zea56cESFvZov2jVrq0N+Lwq/n1EDFFc8rNlsxaOL4OPy49fOBy
- sW5KYktICHuWLbZqRNKpmHgkDTeEhKPxL8aezRL2gm5ZgDTbpPtVpCepoTHr4VfNfmXwu/aG3
- oVOtWizjL7SLrJ6G1MlSs27ajX1avgFMqXSNTyjC9F+uSJksbWs2tp8VLMxccJRRzFSR9RmeV
- 3lRshxx2cFodGAoThAG0EdYptVMYjGiO1Mgz+BWWNh2yU1nGPB4TGYs6d0RCX/ypq012fjAoL
- 2r0lNX6BNMiykhDc/CL4FHfrqXeHKFlTCbDiRtBluL1lNd9qXwC817vNUB5IxYYZf9pGr3Bcf
- eDBse8sIrtjhV3u6mZirUNJT0IKXQsQa+svnCYQ==
+References: <pull.724.git.1599234126.gitgitgadget@gmail.com>
+ <pull.724.v2.git.1599846560.gitgitgadget@gmail.com> <f609c1bde27558db2a9601ac34f8a51ce86f0e2c.1599846561.git.gitgitgadget@gmail.com>
+In-Reply-To: <f609c1bde27558db2a9601ac34f8a51ce86f0e2c.1599846561.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 29 Sep 2020 21:48:54 +0200
+Message-ID: <CAN0heSqkJoqXKP5ccaGMA1_ppd0bcQ7G0ozUH+H7tBMonhcrjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] maintenance: recommended schedule in register/start
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, sluongng@gmail.com,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Stolee,
 
---8323328-1352567099-1601404933=:50
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Danh,
-
-On Tue, 29 Sep 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-
-> On 2020-09-28 15:56:13+0200, Johannes Schindelin <Johannes.Schindelin@gm=
-x.de> wrote:
+On Fri, 11 Sep 2020 at 19:53, Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> If a user sets any 'maintenance.<task>.schedule' config value, then
+> they have chosen a specific schedule for themselves and Git should
+> respect that.
 >
-> > On Sun, 27 Sep 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-> >
-> > > On 2020-09-26 22:32:25+0200, Johannes Schindelin <Johannes.Schindeli=
-n@gmx.de> wrote:
-> > >
-> > > > > I personally don't install my dev tools(except Visual Studio) to
-> > > > > Program Files(because of the _space_), it messes up the Makefile=
-s.
-> > > >
-> > > > Sure, and that's your prerogative. There's unfortunately no good w=
-ay to
-> > > > support your use case.
-> > > >
-> > > > Luckily, the vast majority of Git for Windows' users do not change=
- the
-> > > > default location, and this patch is for them. (And "them" in this =
-case
-> > > > includes me, personally ;-))
-> > >
-> > > This doesn't fit into my view of Git for Windows' users
-> > > For some users that have the Administrator right, it's the default
-> > > location if they grant the Administrator right for the installer.
-> > >
-> > > For those poor souls that works for enterprise companies, and thoses
-> > > that not feel comfortable give Administrator right to _another_
-> > > installer, the installer will install into (hopeful, I type it right=
-):
-> > >
-> > > 	%USERPROFILE%/AppData/Local/Programs/Git
-> >
-> > Those poor souls that work for enterprise companies often have Git for
-> > Windows installed by default. And of course, that default would be in
-> > `C:\Program Files\Git`.
->
-> Yes, that's correct, but that Git is usually very old, and I'm not
-> sure about its layout. Obviously, you know better in this regard :-p
+> However, in an effort to recommend a good schedule for repositories of
+> all sizes, set new config values for recommended tasks that are safe to
+> run in the background while users run foreground Git commands. These
+> commands are generally everything but the 'gc' task.
 
-In Git for Windows v1.x, it would have contained the real Bash (at least
-in 32-bit Windows; in 64-bit Windows, it would have been `C:\Program Files
-(x86)\Git\bin`). But v1.x is long deprecated, it's over 5 years old.
+If there aren't any "schedule" configurations, we'll go ahead and
+sprinkle in quite a few of them. I suppose that another approach would
+be that later, much later, when we go look for these configuration
+items, we could go "there is not a single one set, let's act as if
+*these* were configured".
 
-The `C:\Program Files\Git\bin\sh.exe` stand-in is actually not _all_ that
-old, I only reintroduced it relatively recently. Nevertheless, it is the
-best bet for a default fall-back that I can think of.
+The advantage there would be that we can tweak those defaults over time.
+Whereas with the approach of this patch, v2.29.0 will give the user a
+snapshot of 2020's best practices. If they want to catch up, they will
+need to drop all their "schedule" config and re-"register", or use a
+future `git maintenance reregister`. ;-)
 
-> > > I think it's better to offer SH_EXE as an OPTION, let user specify i=
-t
-> > > as will. And we'll search in PATH if it's not specified, fallback to
-> > > 2 default value if not found.
-> >
-> > That's exactly as it is right now. You can specify `SH_EXE` (but only =
-if
-> > running CMake manually, not via Visual Studio). If you don't, it searc=
-hes
-> > `PATH`, and with my patch it then falls back to trying to find `sh.exe=
-` in
-> > Git for Windows' default location.
-> >
-> > So I think we're in agreement here?
->
-> Yes, seems good.
+Anyway, this is a convenience thing. There's a chance that "convenience"
+interferes with "perfect" and "optimal". I guess that's to be expected.
 
-Excellent!
-Dscho
+> +If your repository has no 'maintenance.<task>.schedule' configuration
 
---8323328-1352567099-1601404933=:50--
+Thank you for going above and beyond with marking config items et cetera
+for rendering in `monospace`. I just noticed that this is slightly
+mis-marked-upped. If you end up rerolling this patch series for some
+reason, you might want to switch from 'single quotes' to `backticks` in
+this particular instance.
+
+While I'm commenting anyway...
+
+> +static int has_schedule_config(void)
+> +{
+> +       int i, found = 0;
+> +       struct strbuf config_name = STRBUF_INIT;
+> +       size_t prefix;
+> +
+> +       strbuf_addstr(&config_name, "maintenance.");
+> +       prefix = config_name.len;
+> +
+> +       for (i = 0; !found && i < TASK__COUNT; i++) {
+> +               char *value;
+> +
+> +               strbuf_setlen(&config_name, prefix);
+> +               strbuf_addf(&config_name, "%s.schedule", tasks[i].name);
+> +
+> +               if (!git_config_get_string(config_name.buf, &value)) {
+> +                       found = 1;
+> +                       FREE_AND_NULL(value);
+> +               }
+> +       }
+> +
+> +       strbuf_release(&config_name);
+> +       return found;
+> +}
+
+That `FREE_AND_NULL()` caught me off-guard. The pointer is on the stack.
+I suppose it doesn't *hurt*, but being careful to set it to NULL made me
+go "huh".
+
+I suppose you could drop the `!found` check in favour of `break`-ing
+precisely when you get a hit.
+
+And I do wonder how much the reuse of the "maintenance." part of the
+buffer helps performance.
+
+In the end, you could use something like the following (not compiled):
+
+  static int has_schedule_config(void)
+  {
+         int i, found = 0;
+         struct strbuf config_name = STRBUF_INIT;
+
+         for (i = 0; i < TASK__COUNT; i++) {
+                 const char *value;
+
+                 strbuf_reset(&config_name);
+                 strbuf_addf(&config_name, "maintenance.%s.schedule",
+tasks[i].name);
+
+                 if (!git_config_get_value(config_name.buf, &value)) {
+                         found = 1;
+                         break;
+                 }
+         }
+
+         strbuf_release(&config_name);
+         return found;
+  }
+
+Anyway, that's just microniting, obviously, but maybe in the sum it has
+some value.
+
+
+Martin
