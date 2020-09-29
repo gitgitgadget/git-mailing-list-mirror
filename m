@@ -2,113 +2,116 @@ Return-Path: <SRS0=tv2H=DG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A7FC4727C
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 22:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBFC6C4727D
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 23:07:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B822020756
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 22:44:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D0392158C
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 23:07:17 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="Id5wrCP9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728591AbgI2WoC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Sep 2020 18:44:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40822 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728206AbgI2WoC (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 29 Sep 2020 18:44:02 -0400
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 341FC60489;
-        Tue, 29 Sep 2020 22:44:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1601419441;
-        bh=CmWPzHOUS9KdL3YjBFO37GXVmnBvOCbIT5pORsUGtPI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QdA0usqybsofY6Lx9ZsW/4Z5gptRLNh160Ms5Olfb9/DFKEBX8rqEa+4bdbxDYYcj
-         ZdkQ1HgXgvsLiqDAfNpqf3XQhBzzjkqysJ+EH+/MxmtEZ+QkQ2mGUEbhpBp5Fu4TGq
-         9Vyyf/v4VCg7wHRyR4uzRxeAd0y+hzpcuqCHiAMwB5zr4idpRMNtXWFpUvP3sszN3p
-         TvR2pbkAigAFVetSA+Fk/+j+reBKga4DRTU/R77Da3QoR687XnRm5yUc6YfzvjIjmS
-         xYc4nEeYnorw1hJmVDKhmpnP5Vke2Fbagxr0oc2JQikhrBbg6A2RRj1KUzkJD2GunE
-         ovxlsBc8P8laMrWPHHQ0iKpHnKKhK6hQlcA3TGxMHsB+uAT3FtAEOvbFjb4uOB0oMS
-         +adZb+Xh7DEhYp+TmKW7lfW/JqOjzzzptXmQ5klgFbWjrN08RmoUx64TFjhqcaRcaf
-         1o9u8X4rs8cPPXCTyT5eL0n6R9btkWsftDVLC9uxQtUUYtjGtGo
-Date:   Tue, 29 Sep 2020 22:43:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     "Wu, Zhichen" <zhwu@amazon.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        id S1728981AbgI2XHN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Sep 2020 19:07:13 -0400
+Received: from smtp-fw-33001.amazon.com ([207.171.190.10]:56668 "EHLO
+        smtp-fw-33001.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728291AbgI2XHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Sep 2020 19:07:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1601420832; x=1632956832;
+  h=from:to:cc:date:message-id:references:in-reply-to:
+   content-id:content-transfer-encoding:mime-version:subject;
+  bh=DMrLU58AXF+W/Yx/0m04Qr8Wk56Y6CQ6EOYf2GOL6A8=;
+  b=Id5wrCP9CfcutRE5Pb3tern2lNDKPg29oe6Z/4j+HcMEq4D+S32cjCux
+   lGyKOgjCcuDtB4Gvyhm02GRUmv8n5rAehZnVlS1f5ATZ3kG/m+BSTQizE
+   rGv54BoDPRlGgBDCvNytK/XL9u7785aJvHp5kZZUDV+p52Im2t6fS1vj9
+   Y=;
+X-IronPort-AV: E=Sophos;i="5.77,320,1596499200"; 
+   d="scan'208";a="79068702"
 Subject: Re: Question About Git V2 Protocol & SHA256
-Message-ID: <20200929224356.GH1392312@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, "Wu, Zhichen" <zhwu@amazon.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Thread-Topic: Question About Git V2 Protocol & SHA256
+Received: from sea32-co-svc-lb4-vlan3.sea.corp.amazon.com (HELO email-inbound-relay-1a-af6a10df.us-east-1.amazon.com) ([10.47.23.38])
+  by smtp-border-fw-out-33001.sea14.amazon.com with ESMTP; 29 Sep 2020 23:07:09 +0000
+Received: from EX13MTAUWA001.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan2.iad.amazon.com [10.40.163.34])
+        by email-inbound-relay-1a-af6a10df.us-east-1.amazon.com (Postfix) with ESMTPS id 3FE95A1F00;
+        Tue, 29 Sep 2020 23:07:07 +0000 (UTC)
+Received: from EX13D20UWA001.ant.amazon.com (10.43.160.34) by
+ EX13MTAUWA001.ant.amazon.com (10.43.160.118) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Tue, 29 Sep 2020 23:07:06 +0000
+Received: from EX13D20UWA003.ant.amazon.com (10.43.160.97) by
+ EX13D20UWA001.ant.amazon.com (10.43.160.34) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Tue, 29 Sep 2020 23:07:06 +0000
+Received: from EX13D20UWA003.ant.amazon.com ([10.43.160.97]) by
+ EX13D20UWA003.ant.amazon.com ([10.43.160.97]) with mapi id 15.00.1497.006;
+ Tue, 29 Sep 2020 23:07:06 +0000
+From:   "Wu, Zhichen" <zhwu@amazon.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Thread-Index: AQHWlf5ecO6oUvIkOE6Oo7T8lc6CpKmAL3KAgAAImAD//5EfgA==
+Date:   Tue, 29 Sep 2020 23:07:06 +0000
+Message-ID: <D510F2C4-1BCB-4DF7-9F36-17EA93FB7F99@amazon.com>
 References: <9FC3DDB4-DE6F-45B3-95F9-1048991713A4@amazon.com>
  <20200929221311.GA15129@coredump.intra.peff.net>
+ <20200929224356.GH1392312@camp.crustytoothpaste.net>
+In-Reply-To: <20200929224356.GH1392312@camp.crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.162.85]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <48890B3492D77B48AC362EA57C34CE32@amazon.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FUaywKC54iCcLzqT"
-Content-Disposition: inline
-In-Reply-To: <20200929221311.GA15129@coredump.intra.peff.net>
-User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---FUaywKC54iCcLzqT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2020-09-29 at 22:13:11, Jeff King wrote:
-> On Tue, Sep 29, 2020 at 01:17:59AM +0000, Wu, Zhichen wrote:
-> > 2. I see v2 has a capability called =E2=80=9Cobject-format=E2=80=9D tha=
-t provides SHA1
-> >    option. I=E2=80=99m wondering if that capability will be the only wa=
-y for
-> >    client and server to start using SHA256? Or put it as another word,
-> >    will v2 protocol be the prerequisite of SHA256?
->=20
-> I think it would be impossible to handle object-format via v1, because
-> the v1 protocol writes the ref advertisement before any capabilities are
-> negotiated. So I think v1 must implicitly remain sha1-only (and a sha256
-> repository on the server side would need to either reject a v1 client,
-> or back-translate as it would for a v2 client which asks for sha1).
-
-I don't think that's the case.  You can indeed use v1 with SHA-256, but
-if you have a SHA-1-only Git, it will choke because the object ID is
-longer than it expects.  If you want to negotiate the algorithm when we
-support both and the client can't deal with translating the initial ref
-advertisement, then yes, you'll need v2.
-
-We even support SHA-256 via bundles and the DAV-based HTTP protocol, but
-the latter will never support negotiation of hash algorithms because
-it's based on static files.
-
-It is required that you understand the object-format capability on the
-client side to support SHA-256, since if you fail to announce it, the
-default is SHA-1, and right now, the server side will produce an error
-if the client doesn't announce it (or sends SHA-1 data).
---=20
-brian m. carlson: Houston, Texas, US
-
---FUaywKC54iCcLzqT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX3O4rAAKCRB8DEliiIei
-gSHJAP4kvjkl0PE2HYFJCD2Cm6x1zRx9D6jEPz4LioJoeEH4xAD9HDwG/l29WBGG
-8t/zQuzC8oF1WuMFSuSJpKBu6+DORQw=
-=vMDB
------END PGP SIGNATURE-----
-
---FUaywKC54iCcLzqT--
+SGkgQnJpYW4sDQoNClRoYW5rcyBmb3IgdGhlIGRldGFpbHMhDQoNCk5vdyBpdCBzb3VuZHMgbGlr
+ZSBhbHRob3VnaCBTSEExL1NIQTI1NiBhbmQgdjEvdjIgYXJlIHNlcGFyYXRlIGZlYXR1cmVzLCB2
+MiBjYXBhYmlsaXR5IGlzIHRoZSBvbmx5IHdheSBmb3IgdGhlIGNsaWVudCBhbmQgc2VydmVyIHRv
+IG5lZ290aWF0ZSB0aGUgb2JqZWN0IGZvcm1hdCBzbyB0aGF0IHRoZXkgd29uJ3Qgc2VuZCBvdXQg
+c29tZXRoaW5nIHRoYXQgaXMgbm90IHVuZGVyc3RhbmRhYmxlIGJ5IHRoZSBvdGhlciBwYXJ0eS4N
+Cg0KSW4gdGhhdCBjYXNlLCBJIHRoaW5rIGl0J3Mgc3RpbGwgdmFsaWQgdGhhdCB2MiBuZWVkcyB0
+byBiZSBzdXBwb3J0ZWQgZmlyc3Qgc28gdGhhdCBTSEEyNTYgY2FuIGxhdGVyIGJlIHN1cHBvcnRl
+ZCB3aXRoIGVub3VnaCBmbGV4aWJpbGl0eS4NCg0KQmVzdHMsDQpaaGljaGVuDQoNCg0K77u/T24g
+OS8yOS8yMCwgMzo0NSBQTSwgImJyaWFuIG0uIGNhcmxzb24iIDxzYW5kYWxzQGNydXN0eXRvb3Ro
+cGFzdGUubmV0PiB3cm90ZToNCg0KICAgIE9uIDIwMjAtMDktMjkgYXQgMjI6MTM6MTEsIEplZmYg
+S2luZyB3cm90ZToNCiAgICA+IE9uIFR1ZSwgU2VwIDI5LCAyMDIwIGF0IDAxOjE3OjU5QU0gKzAw
+MDAsIFd1LCBaaGljaGVuIHdyb3RlOg0KICAgID4gPiAyLiBJIHNlZSB2MiBoYXMgYSBjYXBhYmls
+aXR5IGNhbGxlZCDigJxvYmplY3QtZm9ybWF04oCdIHRoYXQgcHJvdmlkZXMgU0hBMQ0KICAgID4g
+PiAgICBvcHRpb24uIEnigJltIHdvbmRlcmluZyBpZiB0aGF0IGNhcGFiaWxpdHkgd2lsbCBiZSB0
+aGUgb25seSB3YXkgZm9yDQogICAgPiA+ICAgIGNsaWVudCBhbmQgc2VydmVyIHRvIHN0YXJ0IHVz
+aW5nIFNIQTI1Nj8gT3IgcHV0IGl0IGFzIGFub3RoZXIgd29yZCwNCiAgICA+ID4gICAgd2lsbCB2
+MiBwcm90b2NvbCBiZSB0aGUgcHJlcmVxdWlzaXRlIG9mIFNIQTI1Nj8NCiAgICA+IA0KICAgID4g
+SSB0aGluayBpdCB3b3VsZCBiZSBpbXBvc3NpYmxlIHRvIGhhbmRsZSBvYmplY3QtZm9ybWF0IHZp
+YSB2MSwgYmVjYXVzZQ0KICAgID4gdGhlIHYxIHByb3RvY29sIHdyaXRlcyB0aGUgcmVmIGFkdmVy
+dGlzZW1lbnQgYmVmb3JlIGFueSBjYXBhYmlsaXRpZXMgYXJlDQogICAgPiBuZWdvdGlhdGVkLiBT
+byBJIHRoaW5rIHYxIG11c3QgaW1wbGljaXRseSByZW1haW4gc2hhMS1vbmx5IChhbmQgYSBzaGEy
+NTYNCiAgICA+IHJlcG9zaXRvcnkgb24gdGhlIHNlcnZlciBzaWRlIHdvdWxkIG5lZWQgdG8gZWl0
+aGVyIHJlamVjdCBhIHYxIGNsaWVudCwNCiAgICA+IG9yIGJhY2stdHJhbnNsYXRlIGFzIGl0IHdv
+dWxkIGZvciBhIHYyIGNsaWVudCB3aGljaCBhc2tzIGZvciBzaGExKS4NCg0KICAgIEkgZG9uJ3Qg
+dGhpbmsgdGhhdCdzIHRoZSBjYXNlLiAgWW91IGNhbiBpbmRlZWQgdXNlIHYxIHdpdGggU0hBLTI1
+NiwgYnV0DQogICAgaWYgeW91IGhhdmUgYSBTSEEtMS1vbmx5IEdpdCwgaXQgd2lsbCBjaG9rZSBi
+ZWNhdXNlIHRoZSBvYmplY3QgSUQgaXMNCiAgICBsb25nZXIgdGhhbiBpdCBleHBlY3RzLiAgSWYg
+eW91IHdhbnQgdG8gbmVnb3RpYXRlIHRoZSBhbGdvcml0aG0gd2hlbiB3ZQ0KICAgIHN1cHBvcnQg
+Ym90aCBhbmQgdGhlIGNsaWVudCBjYW4ndCBkZWFsIHdpdGggdHJhbnNsYXRpbmcgdGhlIGluaXRp
+YWwgcmVmDQogICAgYWR2ZXJ0aXNlbWVudCwgdGhlbiB5ZXMsIHlvdSdsbCBuZWVkIHYyLg0KDQog
+ICAgV2UgZXZlbiBzdXBwb3J0IFNIQS0yNTYgdmlhIGJ1bmRsZXMgYW5kIHRoZSBEQVYtYmFzZWQg
+SFRUUCBwcm90b2NvbCwgYnV0DQogICAgdGhlIGxhdHRlciB3aWxsIG5ldmVyIHN1cHBvcnQgbmVn
+b3RpYXRpb24gb2YgaGFzaCBhbGdvcml0aG1zIGJlY2F1c2UNCiAgICBpdCdzIGJhc2VkIG9uIHN0
+YXRpYyBmaWxlcy4NCg0KICAgIEl0IGlzIHJlcXVpcmVkIHRoYXQgeW91IHVuZGVyc3RhbmQgdGhl
+IG9iamVjdC1mb3JtYXQgY2FwYWJpbGl0eSBvbiB0aGUNCiAgICBjbGllbnQgc2lkZSB0byBzdXBw
+b3J0IFNIQS0yNTYsIHNpbmNlIGlmIHlvdSBmYWlsIHRvIGFubm91bmNlIGl0LCB0aGUNCiAgICBk
+ZWZhdWx0IGlzIFNIQS0xLCBhbmQgcmlnaHQgbm93LCB0aGUgc2VydmVyIHNpZGUgd2lsbCBwcm9k
+dWNlIGFuIGVycm9yDQogICAgaWYgdGhlIGNsaWVudCBkb2Vzbid0IGFubm91bmNlIGl0IChvciBz
+ZW5kcyBTSEEtMSBkYXRhKS4NCiAgICAtLSANCiAgICBicmlhbiBtLiBjYXJsc29uOiBIb3VzdG9u
+LCBUZXhhcywgVVMNCg0K
