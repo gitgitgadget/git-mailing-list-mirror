@@ -2,100 +2,152 @@ Return-Path: <SRS0=tv2H=DG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CD53C4727C
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E171C4727C
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:59:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAE7E207F7
-	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:53:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE2F3207F7
+	for <git@archiver.kernel.org>; Tue, 29 Sep 2020 19:59:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qyPrAR1s"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m8Uo2vjO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728802AbgI2Tx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Sep 2020 15:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58848 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727700AbgI2Tx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Sep 2020 15:53:27 -0400
-Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38681C061755
-        for <git@vger.kernel.org>; Tue, 29 Sep 2020 12:53:26 -0700 (PDT)
-Received: by mail-vs1-xe41.google.com with SMTP id 7so3689717vsp.6
-        for <git@vger.kernel.org>; Tue, 29 Sep 2020 12:53:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GCPi4MfHrKGHgfkYSUkhPgZgiaX8tA/7eDrSNvlk5dQ=;
-        b=qyPrAR1sgkEaU7HPqNqPACFxdFcKxxk305q9fkjPF5TSQ5LeBEt3Cq4jHq/g8izVS3
-         Y2c8lkWXa2AO6Iy9Tdn0n36v48RXAmQQjI5MaklCekOZLIsInmRWt2O17i9D+/D+Q7B4
-         4RybTumyn7c4jZJJN1qcwwWTR4ccETS7by3mTs2+oBk2F2ifT/2uPrGSH2dCpmSKM/SR
-         C/daX5dHp2JbjZapJQmYMlmA+dc3yvfGdVKPambElNzoIAHuZRXKTqmqC5PIF4d9LJDE
-         jIWdnG+kSM8WB+OBadeTqDI2jN1UeJ4+nPJZtBetQveXF+6uwZ4BuuH8rCRpWY2D+DuC
-         5BsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GCPi4MfHrKGHgfkYSUkhPgZgiaX8tA/7eDrSNvlk5dQ=;
-        b=BY0ybvpLcaD4odX3hi3nA+kK0tM+oF8Higblyu2aQakEOOe7ZIJvK7PwW2N7eo2CgN
-         Zc2SpNMxThERjKNFgmloZL0bYaZxIOzCd7beWO9jo8ONFeFC7ia77PajzqwTYmvbja8j
-         Xcj78lDazNYH1+2uM7ijhTxxWStMvdqPjRlp4QboX10HHK1+AaHPb2SAWYIvYMzUiRMq
-         3muCB1OcJHRuaOW+1OzR7b21st3cP2Bce18auaF39W6EX4wE+E4QLkmEEo6oFmbzsMfj
-         F0looGg5Mf5lPALAei3mgklG3x9+PaAo+sGmliMBDjaeUlIo7FS6Ur5rVK1H275HvRMl
-         /ILA==
-X-Gm-Message-State: AOAM530O1jppl9fYX8ei6aqgRcsdG9aTwSHl5Sj1u0eYVwIemHslXQb4
-        aLmCVdEPHT7bLkZhMEPb35vqwR7/4ZTQRpjG5gs=
-X-Google-Smtp-Source: ABdhPJwc/vCnm24jjqfSc4LEkDghDihr632XG/FODWeCmg01+ZjvduN55MKLRjLjGpgP2vP3B/3/xUiKJgb8L05OYD0=
-X-Received: by 2002:a67:fd93:: with SMTP id k19mr4111188vsq.35.1601409205497;
- Tue, 29 Sep 2020 12:53:25 -0700 (PDT)
+        id S1728919AbgI2T70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Sep 2020 15:59:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61974 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727740AbgI2T70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Sep 2020 15:59:26 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2240C7E210;
+        Tue, 29 Sep 2020 15:59:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2BnhkodHH0xQZgOEQcxK/sdZn70=; b=m8Uo2v
+        jOcIbDsb2GvhPsHXz2k/EjnrGEKHh7T/Mb7B9TmzBle3i5bEEzcez4dHRqap6ZNY
+        QwxP9I+GrSJHYvafUQQNp4VvIy9mYsAzpiIHhDI60t9xBxWWza1b04hynSklYFIx
+        HcK89aap05NU5pcAeT+HiLn3CXyWct7ws2QR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=V+SLM0WCGKPJdyIm3NB9GpNPHZ/G+veG
+        08HdZYEHVEoOeDOtAE11vvajrbp7algze5sK3XeCuRESZATFIhpZ1NXzagNiKM25
+        z/+yxCHnWhiU1lHtYCZY/+ftJIWb4BBf4MgEBi7q2jhONZSs9zyIdcyQ8hEXNS+9
+        n7ZmSktaiW4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 180397E20F;
+        Tue, 29 Sep 2020 15:59:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BACD7E20D;
+        Tue, 29 Sep 2020 15:59:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Sean Barag via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>, Sean Barag <sean@barag.org>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v2 7/7] clone: allow configurable default for
+ `-o`/`--origin`
+References: <pull.727.git.1599848727.gitgitgadget@gmail.com>
+        <pull.727.v2.git.1601350615.gitgitgadget@gmail.com>
+        <737f91c6244220eec196c327fcea9a6548c45310.1601350615.git.gitgitgadget@gmail.com>
+Date:   Tue, 29 Sep 2020 12:59:22 -0700
+In-Reply-To: <737f91c6244220eec196c327fcea9a6548c45310.1601350615.git.gitgitgadget@gmail.com>
+        (Sean Barag via GitGitGadget's message of "Tue, 29 Sep 2020 03:36:55
+        +0000")
+Message-ID: <xmqqa6x8icbp.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1600328335.git.liu.denton@gmail.com> <cover.1600600823.git.liu.denton@gmail.com>
- <f54baa4ecd495026c2fce1772b560b7bbbeecc04.1600600823.git.liu.denton@gmail.com>
-In-Reply-To: <f54baa4ecd495026c2fce1772b560b7bbbeecc04.1600600823.git.liu.denton@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 29 Sep 2020 21:53:14 +0200
-Message-ID: <CAN0heSqr4_orRR5BD53hoaykd26ZBrfZgQ8PR2WdyZTOwNh6GA@mail.gmail.com>
-Subject: Re: [PATCH v4 08/10] builtin/diff-index: learn --merge-base
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 453F3ADC-028E-11EB-B9D2-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+"Sean Barag via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Sun, 20 Sep 2020 at 13:24, Denton Liu <liu.denton@gmail.com> wrote:
-> --- a/Documentation/git-diff-index.txt
-> +++ b/Documentation/git-diff-index.txt
+>  static int git_clone_config(const char *k, const char *v, void *cb)
+>  {
+> +	if (!strcmp(k, "clone.defaultremotename")) {
+> +		if (remote_name != default_remote_name)
+> +			free(remote_name);
+> +		remote_name = xstrdup(v);
 
-> +--merge-base::
-> +       Instead of comparing <tree-ish> directly, use the merge base
-> +       between <tree-ish> and HEAD instead.  <tree-ish> must be a
-> +       commit.
+This feels strange.  The usual arrangement is
 
-If you end up rerolling this patch series for other reasons, you might
-want to consider using `backticks` around `<tree-ish>` and `HEAD` so
-they get typeset as monospace.
+    - initialize the variable to NULL (or any value that the code
+      can tell that nobody touched it);
 
->         If HEAD does not exist (e.g. unborn branches) and
->         <commit> is not given, it shows all staged changes.
->         --staged is a synonym of --cached.
-> ++
-> +If --merge-base is given, instead of using <commit>, use the merge base
-> +of <commit> and HEAD.  `git diff --merge-base A` is equivalent to
-> +`git diff $(git merge-base A HEAD)`.
+    - let git_config() callback to update the variable, taking care
+      of freeing and strduping as needed.  Note that free(NULL) is
+      kosher.
 
-Similarly here. (I realize there are existing offenders. I think it's
-fine or even preferable to leave them as they are so that you don't get
-lost in a huge while-at-it.) This also applies to the next patch which
-touches git-diff-tree.txt.
+    - let parse_options() to further update the variable, taking
+      care of freeing and strduping as needed.
 
+    - finally, if the variable is still NULL, give it its default
+      value.
 
-Martin
+so there is no room for the "if the variable has the value of the
+fallback default, do things differently" logic to be in the
+git_config() callback function.
+
+> @@ -976,6 +982,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	int submodule_progress;
+>  
+>  	struct strvec ref_prefixes = STRVEC_INIT;
+
+Missing blank line here.
+
+> +	remote_name = default_remote_name;
+
+Isn't the reason why the git_config() callback we saw above has an
+unusual special case for default_remote_name because we have this
+assignment way too early?  Would it make the control flow in a more
+natural way if we removed this, and then after parse_options() did
+the "-o" handling, add something like
+
+	if (!remote_name)
+		remote_name = xstrdup("origin");
+
+instead?
+
+> @@ -1153,10 +1154,20 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  
+>  	/*
+>  	 * re-read config after init_db and write_config to pick up any config
+> -	 * injected by --template and --config, respectively
+> +	 * injected by --template and --config, respectively.
+>  	 */
+
+Squash this "oops, I forgot to finish the sentence" to the step the
+mistake was introduced, i.e. "use more conventional..."
+
+>  	git_config(git_clone_config, NULL);
+>  
+> +	/*
+> +	 * apply the remote name provided by --origin only after this second
+> +	 * call to git_config, to ensure it overrides all config-based values.
+> +	 */
+> +	if (option_origin)
+> +		remote_name = option_origin;
+
+And here would be where you'd fall back
+
+	if (!remote_name)
+		remote_name = xstrdup("origin");
+
+Note that you'd need to dup the option_origin for consistency if you
+want to free() it at the end.
+
+> +	if (!valid_remote_name(remote_name))
+> +		die(_("'%s' is not a valid remote name"), remote_name);
+> +
