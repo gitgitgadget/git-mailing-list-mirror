@@ -7,31 +7,32 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED26C4727F
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4BD4C4727E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:30:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A5C82071E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:30:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CA2B2071E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729798AbgI3MaL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 08:30:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45322 "EHLO cloud.peff.net"
+        id S1729871AbgI3Ma2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 08:30:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45328 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729762AbgI3MaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 08:30:11 -0400
-Received: (qmail 23966 invoked by uid 109); 30 Sep 2020 12:30:11 -0000
+        id S1729762AbgI3Ma2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 08:30:28 -0400
+Received: (qmail 23980 invoked by uid 109); 30 Sep 2020 12:30:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2020 12:30:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2020 12:30:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28014 invoked by uid 111); 30 Sep 2020 12:30:10 -0000
+Received: (qmail 28030 invoked by uid 111); 30 Sep 2020 12:30:27 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2020 08:30:10 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2020 08:30:27 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 30 Sep 2020 08:30:10 -0400
+Date:   Wed, 30 Sep 2020 08:30:27 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 07/10] sparse-checkout: fill in some options boilerplate
-Message-ID: <20200930123010.GG1901279@coredump.intra.peff.net>
+Subject: [PATCH 08/10] test-advise: check argument count with argc instead of
+ argv
+Message-ID: <20200930123027.GH1901279@coredump.intra.peff.net>
 References: <20200930122732.GA1901036@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,97 +42,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sparse-checkout passes along argv and argc to its sub-command helper
-functions. Many of these sub-commands do not yet take any command-line
-options, and ignore those parameters.
+We complain if "test-tool advise" is not given an argument, but we
+quietly ignore any additional arguments it receives. Let's instead check
+that we got the expected number. As a bonus, this silences
+-Wunused-parameter, which notes that we don't ever look at argc.
 
-Let's instead add empty option lists and make sure we call
-parse_options(). That will give a useful error message for something
-like:
-
-  git sparse-checkout list --nonsense
-
-which currently just silently ignores the unknown option.
-
-As a bonus, it also silences some -Wunused-parameter warnings.
+While we're here, we can also fix the indentation in the conditional.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/sparse-checkout.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ t/helper/test-advise.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 4003f4d13a..e3140db2a0 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -46,12 +46,24 @@ static void write_patterns_to_file(FILE *fp, struct pattern_list *pl)
- 	}
- }
+diff --git a/t/helper/test-advise.c b/t/helper/test-advise.c
+index 38cdc2884e..a7043df1d3 100644
+--- a/t/helper/test-advise.c
++++ b/t/helper/test-advise.c
+@@ -5,8 +5,8 @@
  
-+static char const * const builtin_sparse_checkout_list_usage[] = {
-+	N_("git sparse-checkout list"),
-+	NULL
-+};
-+
- static int sparse_checkout_list(int argc, const char **argv)
+ int cmd__advise_if_enabled(int argc, const char **argv)
  {
-+	static struct option builtin_sparse_checkout_list_options[] = {
-+		OPT_END(),
-+	};
- 	struct pattern_list pl;
- 	char *sparse_filename;
- 	int res;
+-	if (!argv[1])
+-	die("usage: %s <advice>", argv[0]);
++	if (argc != 2)
++		die("usage: %s <advice>", argv[0]);
  
-+	argc = parse_options(argc, argv, NULL,
-+			     builtin_sparse_checkout_list_options,
-+			     builtin_sparse_checkout_list_usage, 0);
-+
- 	memset(&pl, 0, sizeof(pl));
- 
- 	pl.use_cone_patterns = core_sparse_checkout_cone;
-@@ -560,17 +572,42 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
- 	return modify_pattern_list(argc, argv, m);
- }
- 
-+static char const * const builtin_sparse_checkout_reapply_usage[] = {
-+	N_("git sparse-checkout reapply"),
-+	NULL
-+};
-+
- static int sparse_checkout_reapply(int argc, const char **argv)
- {
-+	static struct option builtin_sparse_checkout_reapply_options[] = {
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, NULL,
-+			     builtin_sparse_checkout_reapply_options,
-+			     builtin_sparse_checkout_reapply_usage, 0);
-+
- 	repo_read_index(the_repository);
- 	return update_working_directory(NULL);
- }
- 
-+static char const * const builtin_sparse_checkout_disable_usage[] = {
-+	N_("git sparse-checkout disable"),
-+	NULL
-+};
-+
- static int sparse_checkout_disable(int argc, const char **argv)
- {
-+	static struct option builtin_sparse_checkout_disable_options[] = {
-+		OPT_END(),
-+	};
- 	struct pattern_list pl;
- 	struct strbuf match_all = STRBUF_INIT;
- 
-+	argc = parse_options(argc, argv, NULL,
-+			     builtin_sparse_checkout_disable_options,
-+			     builtin_sparse_checkout_disable_usage, 0);
-+
- 	repo_read_index(the_repository);
- 
- 	memset(&pl, 0, sizeof(pl));
+ 	setup_git_directory();
+ 	git_config(git_default_config, NULL);
 -- 
 2.28.0.1173.gad90222cf0
 
