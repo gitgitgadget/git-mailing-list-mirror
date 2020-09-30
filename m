@@ -2,68 +2,100 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB49FC4363D
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 21:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A049C4363D
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 21:57:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 338C420888
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 21:56:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CAD7720888
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 21:57:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="OjovOELJ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="b9i1x9rD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731212AbgI3V4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 17:56:55 -0400
-Received: from mout02.posteo.de ([185.67.36.66]:59343 "EHLO mout02.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730544AbgI3V4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 17:56:54 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id A6F1C2400FC
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 23:56:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1601503012; bh=jLh0q30PTOw5fLOQOtEgh1J8VklatLoftiFD0df2bNY=;
-        h=Date:From:To:Cc:Subject:From;
-        b=OjovOELJYxh15pBTfiKdzjCr43S+myw6BEJW7/7Po3IMi3zave70+GoVUM6kHr9Vu
-         nn2/Pwhjs6tI2Cwx5xYoPtvevIIMJtaKi8qIAksgsqxdo5uNNfSgp/yMY1XKyfD+fJ
-         djUFxU/w0pUCOSYbQ4Em4Ufz6xo0iQv80GHt2R4OEr1UnGr5miuOCY5SIBHpI9Z1ZP
-         VWDu0y/EDolhAZMahC8EvklaQcaBAZvhC8jK9S0ciaSn8dhEuKOquvsBUqHbNMcTBP
-         grmAmluSeZxWcpMvkJlde91oCVIQCGBdcUcuhnWLlN7lH34dmnwdwdH+oI8E11Tg6s
-         FWx+DQ5imtJFA==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4C1qpq1sKFz6tmb;
-        Wed, 30 Sep 2020 23:56:50 +0200 (CEST)
-Date:   Wed, 30 Sep 2020 23:56:47 +0200
-From:   Robert Karszniewicz <avoidr@posteo.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-completion.bash: stash-show: add --patch-with-stat
-Message-ID: <20200930215647.GA19843@HP>
-References: <20200928110517.24915-1-avoidr@posteo.de>
- <xmqqh7rhn3nk.fsf@gitster.c.googlers.com>
- <20200929213154.GA18321@HP>
- <xmqqo8lngjze.fsf@gitster.c.googlers.com>
+        id S1731274AbgI3V5d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 17:57:33 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52443 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730470AbgI3V5d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 17:57:33 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7F070101B2D;
+        Wed, 30 Sep 2020 17:57:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=icfIK8/jBWrxEB37O/JFPWnHUIo=; b=b9i1x9
+        rDln/CTL1UsxTAnsIyyfXu84cG+sXF7ipLOBw5W6fnG80C2WQ5Uyo9KhWiVnQ95y
+        8TPdn+folU12Eey9oiwy+DSYZDLJ+tY+bEnCda6Nm2ptEke1JdqpZjvHSgVmHrq/
+        6vNWdahhgUiiKZibZDIYIYwwPO55afwtAiMJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ASw7HlqRn7qN0zLvekUBo8fiyuiBYhZS
+        6+OH8Tjn5mMywnx970AEaQpO5UXBcgcgALYgyE3gZOUWaEmu10H4XurNFPsahjf9
+        0i+BQv+iBRboKlFxrP0nZ/ZDb6iKVIZDiT1zwlxnqs3dF4IyqHMxeAFVD1OxuNRW
+        zas5VVV/N2k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 77120101B2C;
+        Wed, 30 Sep 2020 17:57:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C2385101B2B;
+        Wed, 30 Sep 2020 17:57:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git List <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [v4] refspec: add support for negative refspecs
+References: <20200930212529.100458-1-jacob.e.keller@intel.com>
+        <CAPig+cQUeQV0=LDQ_tY43k6z7km4X6Fm9JJVPUBoG=wY3gxDfw@mail.gmail.com>
+Date:   Wed, 30 Sep 2020 14:57:27 -0700
+In-Reply-To: <CAPig+cQUeQV0=LDQ_tY43k6z7km4X6Fm9JJVPUBoG=wY3gxDfw@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 30 Sep 2020 17:34:02 -0400")
+Message-ID: <xmqqr1qjexmg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo8lngjze.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EED0A2D2-0367-11EB-B8B1-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 30, 2020 at 12:09:09PM -0700, Junio C Hamano wrote:
-> Robert Karszniewicz <avoidr@posteo.de> writes:
-> > So shall I do a v2 as per your suggestion and replace
-> > "--patch-with-stat" with "--patch --stat"?
-> 
-> I think Denton Liu offered a different suggestion; I didn't look at
-> and compare which direction is the better one myself, but an
-> approach that keeps the number of manually-maintained list of
-> options low is almost always a good approach.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Ok, I understand, then. Will take a look at it.
+> On Wed, Sep 30, 2020 at 5:26 PM Jacob Keller <jacob.e.keller@intel.com> wrote:
+>> Changes since v3
+>> * removed the ?: usage (for real this time)
+>>
+>> +               /* Note the reversal of src and dst */
+>> +               if (refspec->pattern) {
+>> +                       const char *key = refspec->dst ?: refspec->src;
+>
+> Blorp.
 
-Thank you.
+Woof.
+
+Have squashed this in.
+
+ remote.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/remote.c b/remote.c
+index 9f8b25674e..dad3b79332 100644
+--- a/remote.c
++++ b/remote.c
+@@ -750,7 +750,7 @@ static int query_matches_negative_refspec(struct refspec *rs, struct refspec_ite
+ 
+ 		/* Note the reversal of src and dst */
+ 		if (refspec->pattern) {
+-			const char *key = refspec->dst ?: refspec->src;
++			const char *key = refspec->dst ? refspec->dst : refspec->src;
+ 			const char *value = refspec->src;
+ 
+ 			if (match_name_with_pattern(key, needle, value, &expn_name))
