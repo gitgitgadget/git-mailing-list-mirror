@@ -7,32 +7,31 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9052C4727E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED26C4727F
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:30:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B3DA20789
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:29:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A5C82071E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729596AbgI3M3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 08:29:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45316 "EHLO cloud.peff.net"
+        id S1729798AbgI3MaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 08:30:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45322 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725776AbgI3M3c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 08:29:32 -0400
-Received: (qmail 23951 invoked by uid 109); 30 Sep 2020 12:29:32 -0000
+        id S1729762AbgI3MaL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 08:30:11 -0400
+Received: (qmail 23966 invoked by uid 109); 30 Sep 2020 12:30:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2020 12:29:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2020 12:30:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27998 invoked by uid 111); 30 Sep 2020 12:29:31 -0000
+Received: (qmail 28014 invoked by uid 111); 30 Sep 2020 12:30:10 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2020 08:29:31 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2020 08:30:10 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 30 Sep 2020 08:29:31 -0400
+Date:   Wed, 30 Sep 2020 08:30:10 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 06/10] sequencer: drop repository argument from
- run_git_commit()
-Message-ID: <20200930122931.GF1901279@coredump.intra.peff.net>
+Subject: [PATCH 07/10] sparse-checkout: fill in some options boilerplate
+Message-ID: <20200930123010.GG1901279@coredump.intra.peff.net>
 References: <20200930122732.GA1901036@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,73 +41,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we switched to using an external git-commit call in b0a3186140
-(sequencer: simplify root commit creation, 2019-08-19), this function
-didn't need to care about the repository object any more.
+The sparse-checkout passes along argv and argc to its sub-command helper
+functions. Many of these sub-commands do not yet take any command-line
+options, and ignore those parameters.
 
-Arguably we could be passing along the repository path to the external
-git-commit by using "--git-dir=r->path" here. But for the most part the
-sequencer code relies on sub-process finding the same repository we're
-already in (using the same environment variables or discovery process we
-did). But we don't have a convenient interface for doing so, and there's
-no indication that we need to. Let's just drop the unused parameter for
-now.
+Let's instead add empty option lists and make sure we call
+parse_options(). That will give a useful error message for something
+like:
+
+  git sparse-checkout list --nonsense
+
+which currently just silently ignores the unknown option.
+
+As a bonus, it also silences some -Wunused-parameter warnings.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sequencer.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ builtin/sparse-checkout.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/sequencer.c b/sequencer.c
-index e8676e965f..6e9aabaac1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -934,8 +934,7 @@ static int run_command_silent_on_success(struct child_process *cmd)
-  * interactive rebase: in that case, we will want to retain the
-  * author metadata.
-  */
--static int run_git_commit(struct repository *r,
--			  const char *defmsg,
-+static int run_git_commit(const char *defmsg,
- 			  struct replay_opts *opts,
- 			  unsigned int flags)
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 4003f4d13a..e3140db2a0 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -46,12 +46,24 @@ static void write_patterns_to_file(FILE *fp, struct pattern_list *pl)
+ 	}
+ }
+ 
++static char const * const builtin_sparse_checkout_list_usage[] = {
++	N_("git sparse-checkout list"),
++	NULL
++};
++
+ static int sparse_checkout_list(int argc, const char **argv)
  {
-@@ -1545,7 +1544,7 @@ static int do_commit(struct repository *r,
- 		if (is_rebase_i(opts) && oid)
- 			if (write_rebase_head(oid))
- 			    return -1;
--		return run_git_commit(r, msg_file, opts, flags);
-+		return run_git_commit(msg_file, opts, flags);
- 	}
++	static struct option builtin_sparse_checkout_list_options[] = {
++		OPT_END(),
++	};
+ 	struct pattern_list pl;
+ 	char *sparse_filename;
+ 	int res;
  
- 	return res;
-@@ -2060,7 +2059,7 @@ static int do_pick_commit(struct repository *r,
- 		*check_todo = !!(flags & EDIT_MSG);
- 		if (!res && reword) {
- fast_forward_edit:
--			res = run_git_commit(r, NULL, opts, EDIT_MSG |
-+			res = run_git_commit(NULL, opts, EDIT_MSG |
- 					     VERIFY_MSG | AMEND_MSG |
- 					     (flags & ALLOW_EMPTY));
- 			*check_todo = 1;
-@@ -3748,7 +3747,7 @@ static int do_merge(struct repository *r,
- 		 * command needs to be rescheduled).
- 		 */
- 	fast_forward_edit:
--		ret = !!run_git_commit(r, git_path_merge_msg(r), opts,
-+		ret = !!run_git_commit(git_path_merge_msg(r), opts,
- 				       run_commit_flags);
++	argc = parse_options(argc, argv, NULL,
++			     builtin_sparse_checkout_list_options,
++			     builtin_sparse_checkout_list_usage, 0);
++
+ 	memset(&pl, 0, sizeof(pl));
  
- leave_merge:
-@@ -4437,7 +4436,7 @@ static int commit_staged_changes(struct repository *r,
- 			return 0;
- 	}
+ 	pl.use_cone_patterns = core_sparse_checkout_cone;
+@@ -560,17 +572,42 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
+ 	return modify_pattern_list(argc, argv, m);
+ }
  
--	if (run_git_commit(r, final_fixup ? NULL : rebase_path_message(),
-+	if (run_git_commit(final_fixup ? NULL : rebase_path_message(),
- 			   opts, flags))
- 		return error(_("could not commit staged changes."));
- 	unlink(rebase_path_amend());
++static char const * const builtin_sparse_checkout_reapply_usage[] = {
++	N_("git sparse-checkout reapply"),
++	NULL
++};
++
+ static int sparse_checkout_reapply(int argc, const char **argv)
+ {
++	static struct option builtin_sparse_checkout_reapply_options[] = {
++		OPT_END(),
++	};
++
++	argc = parse_options(argc, argv, NULL,
++			     builtin_sparse_checkout_reapply_options,
++			     builtin_sparse_checkout_reapply_usage, 0);
++
+ 	repo_read_index(the_repository);
+ 	return update_working_directory(NULL);
+ }
+ 
++static char const * const builtin_sparse_checkout_disable_usage[] = {
++	N_("git sparse-checkout disable"),
++	NULL
++};
++
+ static int sparse_checkout_disable(int argc, const char **argv)
+ {
++	static struct option builtin_sparse_checkout_disable_options[] = {
++		OPT_END(),
++	};
+ 	struct pattern_list pl;
+ 	struct strbuf match_all = STRBUF_INIT;
+ 
++	argc = parse_options(argc, argv, NULL,
++			     builtin_sparse_checkout_disable_options,
++			     builtin_sparse_checkout_disable_usage, 0);
++
+ 	repo_read_index(the_repository);
+ 
+ 	memset(&pl, 0, sizeof(pl));
 -- 
 2.28.0.1173.gad90222cf0
 
