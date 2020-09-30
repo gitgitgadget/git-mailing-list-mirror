@@ -2,91 +2,165 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CEFDC4727E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 14:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19C21C4727C
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:25:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12BEE20789
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 14:27:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD76820759
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:25:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R15M5IfT"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Wm4fOF42"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730226AbgI3O1a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 10:27:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60902 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbgI3O13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 10:27:29 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D29F0C061755
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 07:27:29 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id v14so1049587pjd.4
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 07:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ljs+ZF+g16jZe3c6eZ2j2+p8ioYd1/q5aRMO14hOXYM=;
-        b=R15M5IfTpkxh9j6QJTEYvVkKMPgtYhdGTSEsSyhZ2hz+ZcWH8sZS97AzS7EvdEssCm
-         ArcsCTDhq9T9aa5KybPEqOwYBITPJpiZc6wlo3Jqca0SO1BC8ByNUmU1EwpGkOE6cECT
-         zTRhS+ZRpqDSm5IQSbCL+cZoRreGbFN+SAPtttLl53LqcorD2Y3vNfslxyrLpa6jraHu
-         U1cQmq/TXKAPtmlxapKTwNpNgRWQ42qVUPZDVaQrcsDfkqo2Ch8IUUrNuToI7eGMHKQ6
-         Ypg6jBecrPy+RfrCIn0tk4z4nSPG9U4ClNyjs0OauGd9+5aFFtkLw1WhPbCX+B9Ff8Vo
-         94+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ljs+ZF+g16jZe3c6eZ2j2+p8ioYd1/q5aRMO14hOXYM=;
-        b=gzPanzNaEFHb8tZIfQc5+EppL6mK46LYGzcNVFrlZwgiOUUneVGEk7NL7+T1fC7fN4
-         jDQdkQomvceGxpjJGhO6Kruby9Gdmw1SfJ4JtuOfnhOuCX2iXS3ZBDGlwRjm2QGiVzdT
-         5ZoZsqLH4lTRtMAaprwjQAfRbvEViGLP0z0XCWKkcwp6b29ohx0RwuEsotHlI+nFQ8V9
-         Vktptrx45T/JeAEM/CKb1bNvwAzxvkB3grEQ6C+W45wm73J1+cRkDfAMG4y00GXsScBk
-         v4HAHVdU+jiMhErySyWt2yK1TbyzzN7Plg2vv2uE+Cas+z6cYl7CUfUCug1OheAVCqJJ
-         +ybQ==
-X-Gm-Message-State: AOAM531udtsbtb3NtnYtT7bsU1sl4eDdjqwzRGs/CruyTXH8/+qsHuB/
-        4NaJVKje1qyU+qStBD1ohrgdVhrx75wL4g==
-X-Google-Smtp-Source: ABdhPJxae3M16wn4iYAkDw3e2RCoXZo0C9eQITtHchEo8OjzVybufawYud1f7v4LiQUJf2gGl3lgAg==
-X-Received: by 2002:a17:90a:a88:: with SMTP id 8mr2800113pjw.105.1601476049312;
-        Wed, 30 Sep 2020 07:27:29 -0700 (PDT)
-Received: from mail.clickyotomy.dev ([124.123.104.31])
-        by smtp.gmail.com with ESMTPSA id s16sm2444272pgl.78.2020.09.30.07.27.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2020 07:27:28 -0700 (PDT)
-Date:   Wed, 30 Sep 2020 19:57:24 +0530
-From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 3/3] t, doc: update tests, reference for
- "--force-if-includes"
-Message-ID: <20200930142724.GA24694@mail.clickyotomy.dev>
-References: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
- <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
- <20200927141747.78047-4-shrinidhi.kaushik@gmail.com>
- <1377ee27-3f71-a12f-41f6-613e5a00695a@iee.email>
+        id S1729350AbgI3PZX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 11:25:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:44197 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725385AbgI3PZU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 11:25:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1601479517;
+        bh=3/3Sx7gGFXqmPSvf0eHo9esHXgn/crPGR2ag5TcuAQ8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Wm4fOF42O7BXT/HJpUExYqNVD0vnyICI88gGxzhU7qSyggqqOGNmDuqEhYT0lb3DP
+         T+x0OZCU4YbTjwxvBeq2xYap4D1//rmjqzVs37NUIa36YIfO/3DElNNxOe8RFMMm8B
+         CT/mi/l7XWnC5Y9BVJu7kXVU8dWBayKKWqz3amZQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.113.174] ([213.196.213.65]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7b2T-1kKeES2XZl-0084om; Wed, 30
+ Sep 2020 17:25:17 +0200
+Date:   Wed, 30 Sep 2020 17:25:16 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 08/10] cmake (Windows): initialize vcpkg/build dependencies
+ automatically
+In-Reply-To: <CAKiG+9W71vEd3bUOEq=vtgcaHuWsjmzGqAdg-rszMANrskQDzg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2009301722500.50@tvgsbejvaqbjf.bet>
+References: <pull.738.git.1601044118.gitgitgadget@gmail.com> <3a07bd4916c3949eadaa10fde142fba0acaa974b.1601044118.git.gitgitgadget@gmail.com> <CAKiG+9W71vEd3bUOEq=vtgcaHuWsjmzGqAdg-rszMANrskQDzg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1377ee27-3f71-a12f-41f6-613e5a00695a@iee.email>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0KPXxxgOFx2xNnRp3hXZ8uaycjkmcDFuVRAaqWcfhuAoFunbtjv
+ Zj9Jz9CzzCn+ZHAeCS+7ILJgkM6BgggjHvw6CKofRLfxElbDsvTxloaaIgBaiz3zch+W3Qx
+ XOOrUoSyHt51dgitY5AEzMe05FpJ+5NY4uKfabp8SjkjA9L+wsiysRonwuUmJILnijD0CdA
+ nq1Tq357Y5mQw56yrBbNQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mb4RHiMMvKI=:6jkG9CKH/RKIMuofoD1pn8
+ O1il+FgEFNz1/rfzXl2Rw/9yFp8CcliQcyc8FBA3xYn6px+wPZaSN5b3hSwGGFRBTteVc9Ycm
+ UxwQGRuY/3nUp3qOY7sJyv2tAA884cpbExyhWfp+q5t9IZV0Xw7dn/y5xMpfFcYAS6FmfpINJ
+ +4QKTq4DDr+TJSLLAXwYT3rd/hS+T79XUMmLBsV08wgMz/OimLOsYnIC46+Vc31QPZfuD89QY
+ zmxvPmsuQvCByPC9aVMa/kXytX+KctLWyjLaTWV8Bigumg53RT+060TnKXk9QaO4QWvTfkh1b
+ jGSrHTZ7YdKpccWXHBd4sRe4oYMaWlgiyNxHIruhHWFdH9LKzVoS1WykL8qcALLBffn7WMOs5
+ 2jBRwU9ZzRLO8Bhg0WqmO6bsOZDb83rW2HnZJS9FLFJyJdzYE0LJ7NfcGqdUcUTfshQlKSyOQ
+ rW1nIA2/yT++EFJt+ZWg2KaKyuFONYaiBQ9NTLGfVrAezVIJcpgkCI4JgLs9PhRsqIe1+7fh9
+ saEdn0640j0fRECInZFEs3sQRfhTuqwQVGNuGkAtg5XhIdOibST3y9a0UhutJRnu5n7AipKo6
+ 0yyfkdhyYyWK5ayOuOwD+TfGe8J4G7Bru29rwstFXHr+YJRdLHd9iG/yCSaGsR5UoqJpFyN3F
+ JVtQ9BblkhiWuBuDn9KfSNVWsuaWVCoiP6LjXq376wjS6lFbl/P1K0zC5uBYU0z8Okt8whStw
+ frz1S03fIKhTQRBKi88OijGqy+NVbo1pz7gCRI49B0gXkYSpBSUYWFhBrxyriUnxSEgg83sz3
+ v17ADEhnX/xOdKQH3Yp8/Xl2OokCEtfE8JsmgFh7PDb0KEY8NTyjXxD+m87/U6AD+Uz+3xk2A
+ iSAhF02eelYSevg9Ed7EarW1ETtJoLxGAOm/DhxYaQlFSN3TkG+oXfqTCxiw7xI+33VLc/2HA
+ bR81TYkyiHlSh1+58KGJjCe4RAPYUXqN3E+XWUnL3Emn2+cUgWrmqJ33iQkH2y5aYvNwPKkIc
+ OZwGCsqFeTvShbkwshLN3c94kmb113c4R3qnLzWP2QlG5iL/cYOiLc95ls+BWL/sAg8QhjoWf
+ V1tC0MUC0ibgzDUlC67s9pa730GWp7S014SZaS9uexm/FE3QofjoN5ZYr3QCOJ5V+mw+di3BG
+ 7EpHiFSnXt6JgjXG8hX0Qe8YU0Svog2rY0heFMBhR6fWK/cfkC/1EGaSf1A+d6ks/fn5ZLSoE
+ NGZdj5eHhw8UBi0L1L+4mTZxbFiuCDqpM1dWx2A==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+Hi Sibi,
 
-On 09/30/2020 13:54, Philip Oakley wrote:
-> Hi, spelling nit.
-> 
-> > On 27/09/2020 15:17, Srinidhi Kaushik wrote:
-> > [...]
-> > +Alternatively, specifying `--force-if-includes` an an ancillary option
-> 
-> s/ an an / as an /
+On Wed, 30 Sep 2020, Sibi Siddharthan wrote:
 
-Thanks! I will fix this in the next set.
--- 
-Srinidhi Kaushik
+> On Fri, Sep 25, 2020 at 7:58 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The idea of having CMake support in Git's source tree is to enable
+> > contributors on Windows to start contributing with little effort. To
+> > that end, we just added some sensible defaults that will let users ope=
+n
+> > the worktree in Visual Studio and start building.
+> >
+> > This expects the dependencies (such as zlib) to be available already,
+> > though. If they are not available, we expect the user to run
+> > `compat/vcbuild/vcpkg_install.bat`.
+> >
+> > Rather than requiring this step to be manual, detect the situation and
+> > run it as part of the CMake configuration step.
+> >
+> > This concludes our journey to make it as effortless as possible to sta=
+rt
+> > developing Git in Visual Studio: all the developer needs to do is to
+> > clone Git's repository, open the worktree via `File>Open>Folder...` an=
+d
+> > wait for CMake to finish configuring.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  contrib/buildsystems/CMakeLists.txt | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystem=
+s/CMakeLists.txt
+> > index d21849b730..1eaeb8b8e0 100644
+> > --- a/contrib/buildsystems/CMakeLists.txt
+> > +++ b/contrib/buildsystems/CMakeLists.txt
+> > @@ -42,6 +42,10 @@ cmake_minimum_required(VERSION 3.14)
+> >  set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
+> >  if(WIN32)
+> >         set(VCPKG_DIR "${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg")
+> > +       if(NOT EXISTS ${VCPKG_DIR})
+> > +               message("Initializinge vcpkg and building the Git's de=
+pendencies (this will take a while...)")
+> > +               execute_process(COMMAND ${CMAKE_SOURCE_DIR}/compat/vcb=
+uild/vcpkg_install.bat)
+> > +       endif()
+> >         list(APPEND CMAKE_PREFIX_PATH "${VCPKG_DIR}/installed/x64-wind=
+ows")
+> >
+> >         # In the vcpkg edition, we need this to be able to link to lib=
+curl
+> > --
+> > gitgitgadget
+> >
+>
+> After reading the patch series I seem to get to feeling that people on
+> Windows are being nudged to use Visual Studio and vcpkg.
+> Although they are great tools, when I want to specify my own libraries
+> I don't see an option here.
+> I think we need to define a variable, which this conditional block
+> uses, which is set to true if we are using a Visual Studio Generator.
+> We also need a way to override this option if needed.
+> If this variable(explained above) is not set or false or OFF, we defer
+> building vcpkg libraries. This can also save time in the case
+> when we already have the dependencies(libraries) and just want to
+> point to them instead of building with vcpkg.
+> I also see that people who use gcc(MinGW) are left out. I think we
+> also need to set the supported compiler(s) here before executing
+> vcpkg_install.bat. People who use gcc would need to point to their own
+> libraries with CMAKE_PREFIX_PATH.
+
+Good points, even if our current CMake push really tries to cater only to
+Visual Studio (or at least, MS Visual C) users.
+
+I added a further guard to the conditional: `MSVC` needs to be true. This
+makes sense, as our current support for MSVC/Visual Studio hinges on
+having vcpkg build the dependencies, we simply do not support anything
+else. (And it would be easy enough for a proficient Visual Studio user to
+_still_ override the vcpkg system with their own libraries, if they
+really want to make that work.)
+
+Thanks,
+Dscho
