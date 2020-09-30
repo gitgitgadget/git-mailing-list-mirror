@@ -2,74 +2,72 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C585C47428
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B41C9C4727E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:27:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 184A020789
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:26:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50B132071E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:27:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="abu6wBr4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sZFEQwVg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730892AbgI3P0h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 11:26:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41810 "EHLO
+        id S1730945AbgI3P0s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 11:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730835AbgI3P0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 11:26:35 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9351BC061755
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 08:26:35 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id x23so2148452wmi.3
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 08:26:35 -0700 (PDT)
+        with ESMTP id S1725799AbgI3P02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 11:26:28 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26ADC061755
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 08:26:27 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id z4so2285590wrr.4
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 08:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fLx/oqN4eboVCzSUB4omppsZm0evzi7MY+4v/FyZl7s=;
-        b=abu6wBr4vCrp09W5xsENwfpvv8MiK6jIE3W/pkj90L/g+i5kNFKo0X7uz7ufMaeH/b
-         euaAbV0eYr9e36sqCQ062Kza3jpfD/5TGlrofjVhR8uZSQIvRp4adxEsiDV0cCXGMI5l
-         XtiCCJWxCKX0cUnn0d61igv+XRaWzfChxsQdoio3tdi3b0CSA/KNlzpqj4+neXzdOy05
-         0FWWRUDjzc8rJxz3eMmtFukV5CC1T8sMmY+HVGTsidfVCnEbyKUrdGcdLrUJCq+dYqOI
-         zvYIzT0jGj71MGy/RWJBTj1jQ6x6yUZI4LvstJ+OmXw5vriJSAZdHsIZ2triz+FRrsfU
-         nFCw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=NuoFNogahFW/Vlhfn9g9vpZhr/JcqZk4VPF7J/IRV/w=;
+        b=sZFEQwVgWx4uz+pVY82FgEVFb6J0Wd32AphXNOBe3Uy9tHfB66ALX4Q1LJGdjLMx6U
+         Bpy+lGkX+4sRGdo/JhmR3zFyuF7BpSzdcH7Ris9IXtjyH/HFww1qQ+sCW9Wl2kxV4YYV
+         JQzUdyBLjUGOcySsXXG7spGLD4wPlnSCPEbMny8jKtm/RbkjKN8qmwDwergXIHVNV0lA
+         vKYRJEaarR64TkFkSMRgQK/Mea2fb2jXtmRxLBWDOwxGcfLSuHsnYN7FDAOa8Peu6Wsm
+         BaBwzm/u+j6mwPS31EpWou2pt0psW6TDV7yke90MTl3AEB5p0Lvi/hJApeAbSWoTl065
+         irdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fLx/oqN4eboVCzSUB4omppsZm0evzi7MY+4v/FyZl7s=;
-        b=RQesZodPrFIGOTM1Q4xDI6kF2hl/m/AT5R2SJI1kSMtI+N2GY/tZuQUjmXj0EaCncL
-         qr5YTXhQYQmYkh0cHWELI/sXSV5aDZNQs8xr0xAVmIPxu0G03yxvZuGSFXrr6C+wrUyp
-         rS4OpKim1QPNNlV5tnjHMykK+OMOHpFi0UeJ4OtoiaFu3btp7u+bK0vHouXnwSw9WhBQ
-         8m/pY8aMizrhv7YqrDMclDJvpUWGfOmEbkQxxzlwqynJ9N0MUtoP7oN285MUg9MXlydl
-         Z95St32XUOqkS7xWEMI8QDWSp9UX62rTmluPBymXfpGSgue7vDwwQVRj2sX5lJi0HVJk
-         OrFg==
-X-Gm-Message-State: AOAM532vO189USJTl94PPUj0WyPk5xH6j9/puQRqRjL7YBG04HEfScKe
-        mgsAUMCRiz1b/a7TQWW65IFER/b2/NI=
-X-Google-Smtp-Source: ABdhPJyaXBRMWRDqhxqocDB/yDgtvtpQTUZixx1iwYzYgQ5ULGg37SN2Qoj66HtjEw2ntZ8M2/cCPA==
-X-Received: by 2002:a1c:4e02:: with SMTP id g2mr3475751wmh.3.1601479594070;
-        Wed, 30 Sep 2020 08:26:34 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=NuoFNogahFW/Vlhfn9g9vpZhr/JcqZk4VPF7J/IRV/w=;
+        b=NO5MROTUrB3cfcp4o1CUAWEV5d3tLNusCD5GV7rPwtiafwpFyDnYQXYaSvimaxBsiL
+         /UQNc2Gva2DrA1OzHAur561Y/dbAWGgHJh0LtJHJJjWD1w97FeCZ2XfXzjpJW/5njEpN
+         G4XJEhb9I3l5Q6V14PCPi2jsilsJ00N1BUVUKtOysqGERLg0XphMMLFzdWFIHO4TXb4u
+         FxyCHMUuso4tea/v5IQ3Upb3Ohn7/uvQ1J0Q+xPDFi67QmnlEvjTM4+F3nZCIuuam3I4
+         j6bE4Nee71hrp1chO9+jyUUe3OlJc6GR/qf2sSr9/dCSffS1pLpHt8r0eGQhc7EIPl+/
+         DrqA==
+X-Gm-Message-State: AOAM530AcD6n1DKpFX3PWudCmynuJbFjuy7WU8+ljZ51AozLp74I6uwl
+        agQdOeX7qcgevMOjSdbjqnUxIQc3+H8=
+X-Google-Smtp-Source: ABdhPJyYKxU7tLFQeYzGohMfIwFkOJC1Xize8mQ0M7sSUoqUE0YqdC19BJ33fs7nQAgDRE9axwb2TQ==
+X-Received: by 2002:adf:e54f:: with SMTP id z15mr3634961wrm.136.1601479586174;
+        Wed, 30 Sep 2020 08:26:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i9sm3316416wma.47.2020.09.30.08.26.33
+        by smtp.gmail.com with ESMTPSA id 18sm3323851wmj.28.2020.09.30.08.26.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2020 08:26:33 -0700 (PDT)
-Message-Id: <7643a766b7dedb32bbe46689b01a9009e16277f9.1601479585.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.738.v4.git.1601479585.gitgitgadget@gmail.com>
+        Wed, 30 Sep 2020 08:26:25 -0700 (PDT)
+Message-Id: <pull.738.v4.git.1601479585.gitgitgadget@gmail.com>
+In-Reply-To: <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
 References: <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
-        <pull.738.v4.git.1601479585.gitgitgadget@gmail.com>
-From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Sep 2020 15:26:24 +0000
-Subject: [PATCH v4 10/10] hashmap_for_each_entry(): workaround MSVC's runtime
- check failure #3
-Fcc:    Sent
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 30 Sep 2020 15:26:14 +0000
+Subject: [PATCH v4 00/10] CMake and Visual Studio
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
         =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng?= Danh 
@@ -78,62 +76,128 @@ Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+The intention of this patch series is to make it as easy as possible for a
+Visual Studio user to start building Git from scratch. The idea is to
 
-The OFFSETOF_VAR(var, member) macro is implemented in terms of
-offsetof(typeof(*var), member) with compilers that know typeof(),
-but its fallback implemenation compares &(var->member) and (var) and
-count the distance in bytes, i.e.
+ * clone Git's source code,
+ * open it in Visual Studio via File>Open>Folder...
+ * let CMake configure things (and vcpkg build the dependencies, which will
+   take a while), and
+ * start the build.
 
-    ((uintptr_t)&(var)->member - (uintptr_t)(var))
+It does require a Git for Windows to be installed so that the source can be
+cloned, but also to run the shell script parts of the CMake configuration,
+and also to run the tests.
 
-MSVC's runtime check, when fed an uninitialized 'var', flags this as
-a use of an uninitialized variable (and that is legit---uninitialized
-contents of 'var' is subtracted) in a debug build.
+This patch series replaces the patch "Ignore files generated by CMake" I
+sent via https://github.com/gitgitgadget/git/pull/735.
 
-After auditing all 6 uses of OFFSETOF_VAR(), 1 of them does feed a
-potentially uninitialized 'var' to the macro in the beginning of the
-for() loop:
+Changes since v3:
 
-    #define hashmap_for_each_entry(map, iter, var, member) \
-            for (var = hashmap_iter_first_entry_offset(map, iter, \
-                                                    OFFSETOF_VAR(var, member)); \
-                    var; \
-                    var = hashmap_iter_next_entry_offset(iter, \
-                                                    OFFSETOF_VAR(var, member)))
+ * Squashed the typo fix into the correct commit (d'oh!)
+ * Fixed another typo (thanks, Sibi!)
+ * Guarded the code block that initializes vcpkg and builds the dependencies
+   behind the MSVC conditional (thanks, Sibi!)
 
-We can work around this by making sure that var has _some_ value
-when OFFSETOF_VAR() is called.  Strictly speaking, it invites
-undefined behaviour to use NULL here if we end up with pointer
-comparison, but MSVC runtime seems to be happy with it, and most
-other systems have typeof() and don't even need pointer comparison
-fallback code.
+Changes since v2:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- hashmap.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ * Fixed a typo in the message when msgfmt.exe is not found.
+ * Simplified the logic to find sh.exe (thanks Øystein).
 
-diff --git a/hashmap.h b/hashmap.h
-index ef220de4c6..b011b394fe 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -449,7 +449,8 @@ static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
-  * containing a @member which is a "struct hashmap_entry"
-  */
- #define hashmap_for_each_entry(map, iter, var, member) \
--	for (var = hashmap_iter_first_entry_offset(map, iter, \
-+	for (var = NULL, /* for systems without typeof */ \
-+	     var = hashmap_iter_first_entry_offset(map, iter, \
- 						OFFSETOF_VAR(var, member)); \
- 		var; \
- 		var = hashmap_iter_next_entry_offset(iter, \
+Changes since v1:
+
+ * Touched up a couple commit messages in response to reviewer comments
+ * Adjusted the instructions at the top of CMakeLists.txt so that the part
+   talking about running CMake manually also talks about using 
+   contrib/buildsystems/out/ as build directory (in line with the part
+   talking about Visual Studio's out-of-the-box experience)
+ * Replaced patch 10/10 with Junio's much more elegant solution of editing
+   the hashmap_for_each_entry() macro instead of all of its callers.
+
+Johannes Schindelin (9):
+  cmake: ignore files generated by CMake as run in Visual Studio
+  cmake: do find Git for Windows' shell interpreter
+  cmake: ensure that the `vcpkg` packages are found on Windows
+  cmake: fall back to using `vcpkg`'s `msgfmt.exe` on Windows
+  cmake: quote the path accurately when editing `test-lib.sh`
+  cmake (Windows): let the `.dll` files be found when running the tests
+  cmake (Windows): complain when encountering an unknown compiler
+  cmake (Windows): initialize vcpkg/build dependencies automatically
+  cmake (Windows): recommend using Visual Studio's built-in CMake
+    support
+
+Junio C Hamano (1):
+  hashmap_for_each_entry(): workaround MSVC's runtime check failure #3
+
+ .gitignore                          |  1 +
+ contrib/buildsystems/CMakeLists.txt | 52 ++++++++++++++++++++++-------
+ hashmap.h                           |  3 +-
+ 3 files changed, 43 insertions(+), 13 deletions(-)
+
+
+base-commit: 9bc233ae1cf19a49e51842c7959d80a675dbd1c0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-738%2Fdscho%2Fcmake-and-visual-studio-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-738/dscho/cmake-and-visual-studio-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/738
+
+Range-diff vs v3:
+
+  1:  9c7a964519 =  1:  9c7a964519 cmake: ignore files generated by CMake as run in Visual Studio
+  2:  3b467360bb =  2:  3b467360bb cmake: do find Git for Windows' shell interpreter
+  3:  a49b28e001 =  3:  a49b28e001 cmake: ensure that the `vcpkg` packages are found on Windows
+  4:  f1baf0f974 !  4:  56cfdb2ee9 cmake: fall back to using `vcpkg`'s `msgfmt.exe` on Windows
+     @@ contrib/buildsystems/CMakeLists.txt: endif()
+      -	message(WARNING "Text Translations won't be build")
+      +	set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
+      +	if(NOT EXISTS ${MSGFMT_EXE})
+     -+		message(WARNING "Text Translations won't be build")
+     ++		message(WARNING "Text Translations won't be built")
+      +		unset(MSGFMT_EXE)
+      +	endif()
+       endif()
+  5:  8380aa55ab =  5:  cfedb1673a cmake: quote the path accurately when editing `test-lib.sh`
+  6:  f61c3ef442 =  6:  d402f721c2 cmake (Windows): let the `.dll` files be found when running the tests
+  7:  7a4346a437 =  7:  0e7fdfddb4 cmake (Windows): complain when encountering an unknown compiler
+  8:  7c1601c7e3 !  8:  14ddfc1781 cmake (Windows): initialize vcpkg/build dependencies automatically
+     @@ Commit message
+          Rather than requiring this step to be manual, detect the situation and
+          run it as part of the CMake configuration step.
+      
+     +    Note that this obviously only applies to the scenario when we want to
+     +    compile in Visual Studio (i.e. with MS Visual C), not with GCC.
+     +    Therefore, we guard this new code block behind the `MSVC` conditional.
+     +
+          This concludes our journey to make it as effortless as possible to start
+          developing Git in Visual Studio: all the developer needs to do is to
+          clone Git's repository, open the worktree via `File>Open>Folder...` and
+     @@ Commit message
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     +    squash! cmake (Windows): initialize vcpkg/build dependencies automatically
+     +
+     +    MSVC
+     +
+       ## contrib/buildsystems/CMakeLists.txt ##
+      @@ contrib/buildsystems/CMakeLists.txt: cmake_minimum_required(VERSION 3.14)
+       set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
+       if(WIN32)
+       	set(VCPKG_DIR "${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg")
+     -+	if(NOT EXISTS ${VCPKG_DIR})
+     -+		message("Initializinge vcpkg and building the Git's dependencies (this will take a while...)")
+     ++	if(MSVC AND NOT EXISTS ${VCPKG_DIR})
+     ++		message("Initializing vcpkg and building the Git's dependencies (this will take a while...)")
+      +		execute_process(COMMAND ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg_install.bat)
+      +	endif()
+       	list(APPEND CMAKE_PREFIX_PATH "${VCPKG_DIR}/installed/x64-windows")
+  9:  ec182738f0 =  9:  b239162eb2 cmake (Windows): recommend using Visual Studio's built-in CMake support
+ 10:  38cef4deb5 = 10:  7643a766b7 hashmap_for_each_entry(): workaround MSVC's runtime check failure #3
+ 11:  c3e235fe39 <  -:  ---------- cmake: fix typo in message when `msgfmt` was not found
+
 -- 
 gitgitgadget
