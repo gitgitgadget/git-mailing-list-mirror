@@ -2,114 +2,119 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8C43C4727E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 964C0C4727C
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 16:51:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 678FA20789
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 15:27:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31569206C9
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 16:51:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BaYfolE1"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oFPQVSlc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730824AbgI3P0r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 11:26:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
+        id S1728663AbgI3Qvi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 12:51:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727426AbgI3P03 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 11:26:29 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88452C0613D0
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 08:26:29 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id k18so2228107wmj.5
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 08:26:29 -0700 (PDT)
+        with ESMTP id S1725355AbgI3Qvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 12:51:37 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE6AEC061755
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 09:51:37 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id w11so1270700vsw.13
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 09:51:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=NRU+SyTyOR4yAioixTSvvEKcxKmJ15EAGq7udR67d4Y=;
-        b=BaYfolE1k4gtzbrmB3kd5A0Q+Er3Eof09LV6v9UZR+9pGAoR6jt4sc07SeDEtD8mbG
-         oyykklRfFeLtgPBnYm9IHrSPWCW+NIIbB7Jhgdr936MnDkSTeWAqxgwMY9T3ZT4Ndkr8
-         FY5Auzuy/vziCB2wyb5r+OFq/iC6wMzD3LjUC7DXEYZVFikUJzK8zRw92E9PlOSGoVD6
-         6kw3GtUbc4hhcqZZIx9uep6r57nVkCzIcuorHbbG3cnS9fNXQWcQ4qJuRyxpS4qSNkVQ
-         Z4MmVQ6DFqw5fa42oE69dSmxB0kkoNMC0eG6dakR9St514YQgdnBb+5HegNZB6U/U4/O
-         81eA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=XjnpsWM5svKmgZp61dgLCzXBfbAjt8ljFGWRPAgrldg=;
+        b=oFPQVSlc4OazrmOUREn9JtgaaIT9axJA+sHqRvBCLTztxMfMf+AKj7RuiIRK7giVZi
+         amEV8ByoLkbY0i4YcyoSqob33dZVcBR1xOGHrDtPtg1BNdKQOBZAYIDArvpuX7+JYFcu
+         A3QZOpV5mz09lx/WkzgrdJi0zlosPkzf9WpUPvYZPTIjbJEaIIvC74E/o5/eeVpKz/at
+         WhSaBuCaHJkzmFLbU5ytu1HE+Bc0wExJdiCnEhS+zkjjko0m8k5AgUBbp9Tu1XB0rVVN
+         bmbUsfxHeKa6O/AifWu8eqw4DFupwM22uC7mO1EttBXyhLY/jyU1c9bI0jgDNICboyTA
+         2bZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=NRU+SyTyOR4yAioixTSvvEKcxKmJ15EAGq7udR67d4Y=;
-        b=RA1vJ8CTevucKoyrP1UYOHKGeHIQI04XNXctVk/DzX/EzUPxFs9M4fN4z6ExFxKKt0
-         h8ZG2uhdnbS6wL8hJIyAeBKRDb8A4dGScKXzB6A7b2NOVmk5fJtdZD2TUQhTt+WIw/AA
-         3KklxUET6hj/brJFiLU5zgu9hNPiD1jZpkx/BJoBq1v5NGFww6K0gMfXDHA80xS7pnhd
-         lXiGQiW3fV+mAajS5eE6OQEFJYZsEzA3D0rLq8J0rDE5tWMSjMOYFXgrcUX/MC/y9NL6
-         26F9kpXdNXV4c6lbhLP7wpTQ0Z74nWqV2M8qJ/tS3CDrTNnTzZzmYsrLnKilABHqlKHx
-         6WtQ==
-X-Gm-Message-State: AOAM5309c58bHjZGxyzsMNzF6fPTVbnOX3drqVkgwHkAVb5CSFaba8vc
-        HOWu8BDqTpmb3N2FuB7Sd4G7bD4JMpQ=
-X-Google-Smtp-Source: ABdhPJwbq016pamqGSvc6vnVv/0YxEUqPnyzsCrja8whMvHiUcvCeaEHJ8z4hcEJuyo/qQR0+g7Nyw==
-X-Received: by 2002:a1c:b409:: with SMTP id d9mr152985wmf.106.1601479587041;
-        Wed, 30 Sep 2020 08:26:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i15sm3678789wrb.91.2020.09.30.08.26.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2020 08:26:26 -0700 (PDT)
-Message-Id: <9c7a96451937c752899eb0e2aeaa0e6fc49cc62e.1601479585.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.738.v4.git.1601479585.gitgitgadget@gmail.com>
-References: <pull.738.v3.git.1601327357.gitgitgadget@gmail.com>
-        <pull.738.v4.git.1601479585.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Sep 2020 15:26:15 +0000
-Subject: [PATCH v4 01/10] cmake: ignore files generated by CMake as run in
- Visual Studio
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XjnpsWM5svKmgZp61dgLCzXBfbAjt8ljFGWRPAgrldg=;
+        b=aVXqYOa7BrxHL7QeOYxipsE+uT+l+sXqiiMPLBuqN4GnSRFoPcNTg7tyQXyPDpzTpO
+         +XkuPnlR7agP2y0tMV1vDK5IBGc3/Tdm74yiazbVn+k/QOPMkb/IVqgIYmP68XRxQKf6
+         WlCRHw4q47AIASBDljkNZed7Sz91weS2FJN3WCNep3nG3ud/JO3yTMnBgKJPmjeXEi3p
+         inuM+NQXx0mcOojrUkgxlFlduzErTqYuwKk8XtWpWPFqq2ItnMNJOSGVsA7BUdighIWI
+         dTxtdaO/UlF9IpcDmAvCT/uktqNU2RYJt5prB5T7K/8rdceomRqMsvxV5EoUQnV9PXmG
+         bd+A==
+X-Gm-Message-State: AOAM531WeCKTb8koyjSna3WGkcDiYN7ExFoBcdfp/5aDkFhpDMKSGH4u
+        m+T/vhgHXvQK1sTBWDDlgSZ/QVtsGes70G78T7xCOA==
+X-Google-Smtp-Source: ABdhPJz5HQcGFNdfSz+qSf4vYNfn83IFOtOVYHfvk98ESvk6kXO30dekLTXMirW02MXrqU3YkPBFEh5QoouPHCI71Ic=
+X-Received: by 2002:a67:fe81:: with SMTP id b1mr2433735vsr.5.1601484696724;
+ Wed, 30 Sep 2020 09:51:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng?= Danh 
-        <congdanhqx@gmail.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <eaf4629b-d8c4-0ddc-8c85-6600399a8229@ramsayjones.plus.com>
+In-Reply-To: <eaf4629b-d8c4-0ddc-8c85-6600399a8229@ramsayjones.plus.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 30 Sep 2020 18:51:24 +0200
+Message-ID: <CAFQ2z_PNT0g2yAbMkWEQW3UjbMbzALfkAfLDzpiUZjOE0b29vw@mail.gmail.com>
+Subject: Re: [PATCH] reftable: fix some sparse warnings
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Sep 23, 2020 at 12:47 AM Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Han-Wen Nienhuys,
+>
+> If you need to re-roll your 'hn/reftable' branch, could you please squash=
+ this
+> into the relevant patches.
+>
 
-As of recent Visual Studio versions, CMake support is built-in:
-https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=vs-2019
+Thanks for the heads-up. I fixed some of these issues in the source at
+google/reftable. I've seen a Helped-By footer used to acknowledge
+these types of contributions, but I'm not sure on which of the 13
+commits I should put that; suggestions?
 
-All that needs to be done is to open the worktree as a folder, and
-Visual Studio will find the `CMakeLists.txt` file and automatically
-generate the project files.
+> This patch is based on top of 'seen' and removes 20 sparse warnings (19 o=
+f the
 
-Let's ignore the entirety of those generated files.
+Could you tell me how I can run these checks myself?
 
-Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .gitignore | 1 +
- 1 file changed, 1 insertion(+)
+> Just for your information, you may want to look at the following 27 symbo=
+ls:
 
-diff --git a/.gitignore b/.gitignore
-index 800b812c6a..6232d33924 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -242,3 +242,4 @@ Release/
- /git.VC.VC.opendb
- /git.VC.db
- *.dSYM
-+/contrib/buildsystems/out
--- 
-gitgitgadget
+>   > reftable/merged.o   - reftable_merged_table_hash_id
+>   > reftable/merged.o   - reftable_merged_table_max_update_index
+>   > reftable/merged.o   - reftable_merged_table_min_update_index
+>   > reftable/merged.o   - reftable_merged_table_seek_log_at
+>   > reftable/publicbasics.o     - reftable_error_to_errno
+>   > reftable/publicbasics.o     - reftable_set_alloc
+>   > reftable/reader.o   - reftable_reader_seek_log_at
+>  > reftable/stack.o    - reftable_addition_close
+>   > reftable/stack.o    - reftable_stack_auto_compact
 
+These functions are part of the public API. We'll need to get the
+reftable glue code into seen. Perhaps some need unittest coverage too.
+
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
