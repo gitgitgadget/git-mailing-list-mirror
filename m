@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A311EC4727E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 147E1C4727E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:29:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52F802071E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:29:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CACAD2071E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:29:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729677AbgI3M3D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 08:29:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45300 "EHLO cloud.peff.net"
+        id S1728296AbgI3M3L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 08:29:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45306 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725776AbgI3M3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 08:29:03 -0400
-Received: (qmail 23929 invoked by uid 109); 30 Sep 2020 12:29:03 -0000
+        id S1725776AbgI3M3K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 08:29:10 -0400
+Received: (qmail 23937 invoked by uid 109); 30 Sep 2020 12:29:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2020 12:29:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Sep 2020 12:29:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27948 invoked by uid 111); 30 Sep 2020 12:29:02 -0000
+Received: (qmail 27964 invoked by uid 111); 30 Sep 2020 12:29:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2020 08:29:02 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Sep 2020 08:29:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 30 Sep 2020 08:29:02 -0400
+Date:   Wed, 30 Sep 2020 08:29:09 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 04/10] assert PARSE_OPT_NONEG in parse-options callbacks
-Message-ID: <20200930122902.GD1901279@coredump.intra.peff.net>
+Subject: [PATCH 05/10] push: drop unused repo argument to do_push()
+Message-ID: <20200930122909.GE1901279@coredump.intra.peff.net>
 References: <20200930122732.GA1901036@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,78 +41,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the spirit of 517fe807d6 (assert NOARG/NONEG behavior of
-parse-options callbacks, 2018-11-05), let's cover some parse-options
-callbacks which expect to be used with PARSE_OPT_NONEG but don't
-explicitly assert that this is the case. These callbacks are all used
-correctly in the current code, but this will help document their
-expectations and future-proof the code.
-
-As a bonus, it also silences -Wunused-parameters (these were added since
-the initial sweep of 517fe807d6, and we can't yet turn on
--Wunused-parameters to remind people because it has too many existing
-false positives).
+We stopped using the "repo" argument in 8e4c8af058 (push: disallow --all
+and refspecs when remote.<name>.mirror is set, 2019-09-02), which moved
+the pushremote handling to its caller.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/am.c           | 2 ++
- builtin/commit-graph.c | 2 ++
- builtin/env--helper.c  | 2 ++
- parse-options-cb.c     | 2 ++
- 4 files changed, 8 insertions(+)
+ builtin/push.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 7259186408..2c7673f74e 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2180,6 +2180,8 @@ static int parse_opt_show_current_patch(const struct option *opt, const char *ar
- 	};
- 	int new_value = SHOW_PATCH_RAW;
+diff --git a/builtin/push.c b/builtin/push.c
+index 0eeb2c8dd5..6da3a8e5d3 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -379,7 +379,7 @@ static int push_with_options(struct transport *transport, struct refspec *rs,
+ 	return 1;
+ }
  
-+	BUG_ON_OPT_NEG(unset);
-+
- 	if (arg) {
- 		for (new_value = 0; new_value < ARRAY_SIZE(valid_modes); new_value++) {
- 			if (!strcmp(arg, valid_modes[new_value]))
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 988445abdf..78fa08f43a 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -128,6 +128,8 @@ static int write_option_parse_split(const struct option *opt, const char *arg,
+-static int do_push(const char *repo, int flags,
++static int do_push(int flags,
+ 		   const struct string_list *push_options,
+ 		   struct remote *remote)
  {
- 	enum commit_graph_split_flags *flags = opt->value;
+@@ -629,7 +629,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		if (strchr(item->string, '\n'))
+ 			die(_("push options must not have new line characters"));
  
-+	BUG_ON_OPT_NEG(unset);
-+
- 	opts.split = 1;
- 	if (!arg)
- 		return 0;
-diff --git a/builtin/env--helper.c b/builtin/env--helper.c
-index 3aa4282114..27349098b0 100644
---- a/builtin/env--helper.c
-+++ b/builtin/env--helper.c
-@@ -17,6 +17,8 @@ static int option_parse_type(const struct option *opt, const char *arg,
- {
- 	enum cmdmode *cmdmode = opt->value;
- 
-+	BUG_ON_OPT_NEG(unset);
-+
- 	if (!strcmp(arg, "bool"))
- 		*cmdmode = ENV_HELPER_TYPE_BOOL;
- 	else if (!strcmp(arg, "ulong"))
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index d9d3b0819f..4542d4d3f9 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -105,6 +105,8 @@ int parse_opt_commit(const struct option *opt, const char *arg, int unset)
- 	struct commit *commit;
- 	struct commit **target = opt->value;
- 
-+	BUG_ON_OPT_NEG(unset);
-+
- 	if (!arg)
- 		return -1;
- 	if (get_oid(arg, &oid))
+-	rc = do_push(repo, flags, push_options, remote);
++	rc = do_push(flags, push_options, remote);
+ 	string_list_clear(&push_options_cmdline, 0);
+ 	string_list_clear(&push_options_config, 0);
+ 	if (rc == -1)
 -- 
 2.28.0.1173.gad90222cf0
 
