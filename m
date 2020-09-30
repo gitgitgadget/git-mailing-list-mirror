@@ -2,158 +2,85 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+X-Spam-Status: No, score=-12.1 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71705C4727C
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 19:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC87AC4727C
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 19:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10F5C20719
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 19:24:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 782D420709
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 19:44:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FqYMAnIg"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aO0/TW5A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728679AbgI3TYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 15:24:12 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54467 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725872AbgI3TYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 15:24:12 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4CA2F10172E;
-        Wed, 30 Sep 2020 15:24:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gioNZNZjmaAHdQNSF8tNBFvKfm8=; b=FqYMAn
-        Ig5DMXg0oOSNJT+rhD+eXHC9HFmFVepU7eW6IJjuRc2KoY5DWV3jSaek8LvIT/e4
-        6WObJei6A4lsD6sc9e5Fzhi/JZbesaR/fMvQWSgCEZLGUhrLUE1WgHAde8wSEJbh
-        0bMRkBOq7JO/Ks5ZML409G4xxoRZlJQiBgNJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Uo7FXLDYPvF/SOz+cZwdhKJ6d2UFId/4
-        eCMhWDXbRLAnJv6Db5nj1hyt4haQmvzPVhik4KMZPWxh7MP+fLgWC4LBJNpU+1bI
-        VhXUhAlePYa/lFptIYprNL+3UgH0z2gfH8fj4MB47kYDrKDuNl29Rj43Lu53fxL5
-        a1wMItGkAtU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4535010172D;
-        Wed, 30 Sep 2020 15:24:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7E2C710172C;
-        Wed, 30 Sep 2020 15:24:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Theodore Dubois <tbodt@google.com>
-Cc:     git@vger.kernel.org
+        id S1729840AbgI3Toi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 15:44:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53606 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725799AbgI3Toi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 15:44:38 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD8AAC061755
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 12:44:36 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id c13so3016124oiy.6
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 12:44:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=1/xwR+EpuJU/3VyVfU9LkS5V49aaqEnrNTY5oDmmxHE=;
+        b=aO0/TW5Agy7BjTKtHkYnQfVDQR73i+yDGXOv5kpdPQdV1obNHWA/T1eMwY6FvdnXp7
+         Ax1aNIg8KGAWh9RJt3P3daeREZBooggFmav30/6t7nWqDHCDIUEzBd//0AJQzYEdc4H8
+         NudDWSrVv2HNFlpW6B2YJPyEnfX9lTdvfSJ53TcmtZ61LkCbAAJPOoN4tIMd+thDXURt
+         EshEbH4styHHo+rJxyxgvk9fYScPKg00+lry7IUfVpqhf1OgR8huCf8fAxYD/TkQeIFl
+         KYbQQRmCseqpBHer0gxRDtxw+f6DtJ14M38RdUpXS/IUCfOi53KVCOXWi2kYgHCJbtpe
+         2k7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=1/xwR+EpuJU/3VyVfU9LkS5V49aaqEnrNTY5oDmmxHE=;
+        b=IOUs22r0VS22ZZUBcyr87pqnCKHhhhg3pfCmvGzNB4M/mYfqwdGvrHgJ/51LhRhxnm
+         Eba/Bg+ztwufSAwoCqQxvEhC09q8udmLpuc8lzTIw+y9mLLkP58abH9pOAq+VfQZuIAQ
+         ql8s4bojTPzw3o6+YUZuCD/U+gKrEwuF5MZPlR5W6Liu8bVZfM/74R+puLVZfom+2nqe
+         2c10X6GT+xlj8M7tBSdw03hUkfF5Ckyp6dPUF7Ej0Z+AeVsCPGKPNQgehDWB7duuu1tl
+         GvqPlwZeLHagdg9VYVLH30J+m1DQszS4oJVXL2tK15FyeDY1w0tNVaROw2Lpu7NyqmEo
+         eFpQ==
+X-Gm-Message-State: AOAM530QJEMu7uo7TQF41Aq5hikW9eDPqE79rcOQeJJ/A0UVP+mN5yCm
+        vREJzoCSBWYIjp7vGrAKSSvGuA==
+X-Google-Smtp-Source: ABdhPJxGeTB/N9MeT0SgaNbjzU9nCJ5WMnZQyyil0OZdVoRtTRSmAXujiAh3riagqcb62ALOngnmvA==
+X-Received: by 2002:a54:4806:: with SMTP id j6mr2214552oij.10.1601495075878;
+        Wed, 30 Sep 2020 12:44:35 -0700 (PDT)
+Received: from tbodt.attlocal.net ([2600:1700:7265:260:81ca:f55b:69b7:6648])
+        by smtp.gmail.com with ESMTPSA id c14sm698892ooi.9.2020.09.30.12.44.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Sep 2020 12:44:35 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
 Subject: Re: [PATCH] Propagate --quiet on submodule update to merge/rebase
+From:   Theodore Dubois <tbodt@google.com>
+In-Reply-To: <xmqqft6zgjaj.fsf@gitster.c.googlers.com>
+Date:   Wed, 30 Sep 2020 12:44:34 -0700
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F2F35572-E88F-4D6F-844B-6E17FCFD2175@google.com>
 References: <20200930074729.99629-1-tbodt@google.com>
-Date:   Wed, 30 Sep 2020 12:24:04 -0700
-In-Reply-To: <20200930074729.99629-1-tbodt@google.com> (Theodore Dubois's
-        message of "Wed, 30 Sep 2020 00:47:30 -0700")
-Message-ID: <xmqqft6zgjaj.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 81D43F78-0352-11EB-9611-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+ <xmqqft6zgjaj.fsf@gitster.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Theodore Dubois <tbodt@google.com> writes:
+> This is not the problem this patch introduces, but the way GIT_QUIET
+> variable is set up does not allow us to do the above so nicely, I
+> suspect.  Wouldn't the above change make "git submodule update -v"
+> invoke the underlying commands with "--quiet" option?
 
-> Without this, commands such as
-> git pull --rebase --recurse-submodules --quiet
-> might produce non-quiet output from the merge or rebase.
->
-> Signed-off-by: Theodore Dubois <tbodt@google.com>
-> ---
->  git-submodule.sh            | 4 ++--
->  t/t7406-submodule-update.sh | 9 +++++++++
->  2 files changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git git-submodule.sh git-submodule.sh
-> index 6fb12585cb..5c22b17221 100755
-> --- git-submodule.sh
-> +++ git-submodule.sh
-> @@ -614,13 +614,13 @@ cmd_update()
->  				say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
->  				;;
->  			rebase)
-> -				command="git rebase"
-> +				command="git rebase ${GIT_QUIET:+--quiet}"
->  				die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path '\$displaypath'")"
->  				say_msg="$(eval_gettext "Submodule path '\$displaypath': rebased into '\$sha1'")"
->  				must_die_on_failure=yes
->  				;;
->  			merge)
-> -				command="git merge"
-> +				command="git merge ${GIT_QUIET:+--quiet}"
->  				die_msg="$(eval_gettext "Unable to merge '\$sha1' in submodule path '\$displaypath'")"
->  				say_msg="$(eval_gettext "Submodule path '\$displaypath': merged in '\$sha1'")"
->  				must_die_on_failure=yes
-
-This is not the problem this patch introduces, but the way GIT_QUIET
-variable is set up does not allow us to do the above so nicely, I
-suspect.  Wouldn't the above change make "git submodule update -v"
-invoke the underlying commands with "--quiet" option?
-
-
-The problematic piece of code is this part:
-
-        cmd_update()
-        {
-                # parse $args after "submodule ... update".
-                while test $# -ne 0
-                do
-                        case "$1" in
-                        -q|--quiet)
-                                GIT_QUIET=1
-                                ;;
-                        -v)
-                                GIT_QUIET=0
-                                ;;
-                        --progress)
-                                progress=1
-                                ;;
-
-
-I think this is the only place in the script that GIT_QUIET is set
-to 0, but all the places that refer to the variable do not even
-check the value held in it.  Makes me wonder if it was used
-differently back when e84c3cf3dc3 was written.
-
-    ... goes and looks at the offending commit ...
-
-I think the right fix could have been "unset GIT_QUIET" instead of
-assigning 0 that means the same thing as GIT_QUIET=1
-
-In any case, the posted patch is a good first step but it makes the
-existing problem worse.  Let's fix GIT_QUIET=0 at the same time.
-
-Thanks.
-
-> diff --git t/t7406-submodule-update.sh t/t7406-submodule-update.sh
-> index aa19ff3a2e..5213e47af8 100755
-> --- t/t7406-submodule-update.sh
-> +++ t/t7406-submodule-update.sh
-> @@ -1022,4 +1022,13 @@ test_expect_success 'git clone passes the parallel jobs config on to submodules'
->  	rm -rf super4
->  '
->  
-> +test_expect_success 'submodule update --quiet passes quietness to merge/rebase' '
-> +	(cd super &&
-> +	 test_commit -C rebasing message &&
-> +	 git submodule update --rebase --quiet >out 2>err &&
-
-IOW, I suspect that this test will still pass with s/--quiet/-v/ .
-
-> +	 test_must_be_empty out &&
-> +	 test_must_be_empty err
-> +	)
-> +'
-
+Interesting. I didn't check every setting of GIT_QUIET, just looked at =
+the first few and assumed the rest would be the same. The "git =
+submodule--helper update-clone" invocation also has this problem. I'll =
+resend with "unset GIT_QUIET".=
