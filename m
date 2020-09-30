@@ -2,188 +2,323 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F36F1C4727E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAD0EC4727F
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:54:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B19562076E
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:36:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="J/u6Bdfn"
+	by mail.kernel.org (Postfix) with ESMTP id 74DFC20674
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 12:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729820AbgI3MgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 08:36:12 -0400
-Received: from mout.gmx.net ([212.227.17.20]:49413 "EHLO mout.gmx.net"
+        id S1729867AbgI3Myl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 08:54:41 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:24485 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728235AbgI3MgM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 08:36:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601469363;
-        bh=Ha91gP3aZi+bdIFWPloiXEtMBXk8JYFWd0u8jFR2mC4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=J/u6Bdfnyd3zcHVJHIlfQV5HwIMKoztz0b5vr60X3TH0MKj8ic5y+qOfuJLd736mn
-         H79moqEOpZbzQh9EEOYyf5YZvIZKa2nfrBM7xaflLsD52OPiw22R4tm7cN8Mg54U17
-         IS0sHe/OdTps4EQbvVYPloSXupX/HBpagjgACkuI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.113.174] ([213.196.213.65]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M9o21-1kIMXW1wDF-005nUg; Wed, 30
- Sep 2020 14:36:03 +0200
-Date:   Wed, 30 Sep 2020 14:36:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jacob Keller <jacob.e.keller@intel.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 1/1] refspec: add support for negative refspecs
-In-Reply-To: <20200925210740.1939450-2-jacob.e.keller@intel.com>
-Message-ID: <nycvar.QRO.7.76.6.2009301428580.50@tvgsbejvaqbjf.bet>
-References: <20200925210740.1939450-1-jacob.e.keller@intel.com> <20200925210740.1939450-2-jacob.e.keller@intel.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729737AbgI3Myl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 08:54:41 -0400
+Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kNbcz-000Afd-Cl; Wed, 30 Sep 2020 13:54:38 +0100
+Subject: Re: [PATCH v8 3/3] t, doc: update tests, reference for
+ "--force-if-includes"
+To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>, git@vger.kernel.org
+References: <20200926114626.28823-1-shrinidhi.kaushik@gmail.com>
+ <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
+ <20200927141747.78047-4-shrinidhi.kaushik@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <1377ee27-3f71-a12f-41f6-613e5a00695a@iee.email>
+Date:   Wed, 30 Sep 2020 13:54:39 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:F4dVoVNshL2F4a9HdgOmo+KdDV0086x4KNx0kuOBQ8Z4c2Yw2Dw
- rfxaNI+g1yZro1aJ8XtPUljuplgChywJwiLHVgoSs4+D1PjoAzsvaDYO0dcMqU0EurkMqMn
- ObvFLpvuGckizfJN0A5Cm0H24hUqu2MbqfmjzRnu8oJdA/MM/LkNvlCznNs2H7qmkxH8u58
- BynBH7JEnVgjQYqdELpog==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SgVDpu8dhqA=:XXYLZntbOa3s3Z3qMG95BG
- HoqRlfz40uxT+qhs72jn4RvsdnfeEwT2I6QIhw78LQbGzPwXL/gtNHqipiYUZHXeXkevRW4GS
- LOcVpRXCxXS/hc2e3l6mfBIyrrYsmHCxhXhf9i/kpdjZpVCzLpAWem/5UZvXqgjwSN9ZwP1YL
- wVxbHkqTLxRCwYZ2MA2NYjPhlDbq/raeD7TkQ6WGJcMVWWWJjHDizKmkBeClPq/svcwfNKNDD
- ZibTkSK8X35dHFO6nAxoKnFxovJBN4HH55pd91X2hnNKv4Hs6jpqGLX7x7rHmNvSdrOnzEbhY
- SR4Fz8DzYK4JqqgnV0Y8qHDSiVA5lwTk6DIUmmWMoK0+gJVgG8iJpRrmAbczm5t9pqTCgdqjo
- l5tmDANoBqScD2xAvWLDFVUKMdCipdSj2FubFbUX9VENEuqCQ7gKGud6dSyKfDrhlJ1Tj01kq
- HfE/zRBhR/wkbqI2SD672mSQl1bLj+fMVaWcHQPgJNuLWFOrXCB6KvfqHIMWafeWMuQ2Kgtdy
- NiugZMgtwbvqxwtwHM8Jt1fAOpoZkTPQpgmHp/MQH0f3AW97EAuQkoMIRnY27QUlzbBP0fzcj
- 82xh8arDLPJa+VJf3A10w2tZUNtgcNYQeQCV8DbfXumWwQSkFT7LpU6xGbM+a2xQVS/hkwM+U
- SPR8tzXR6o7Q9L47ZvqWs3W2O8ou7k5kwjdJzRb8iI59SBMoUrgo9JZ8/ppSMQi+WCwY60dxD
- zieV/SAT+9rKjuAhN3KwYIBwhIEduOFHlWZP95VTmE7dYISibepPcYt8Hqm4a6TgzSY41b1l1
- tP+L+B8dev/J13L78F72qs7FzQ5Z3H5nSlrtVJEDIm4vcQ5+jC7S/Kpx6C/Jea38fbpC4OH1U
- g7N9VwvulP1iVkaU8MV+yiS/Kja3RlHRyudLZtrho2mIoGCD8cQ7wVPYFlWLR8oHGuUaLW77i
- QCg2Zez1F9VmJxao8/XoeXI1gg320Wv6Zamk0umtlTFY50UlqHjFpzHuDbZHhor7sqh3iU20M
- +7h6PrCs9kcQtOb23c2dZSF9HQU7bcgDyBe1NG4HMGDhgfz4MdXdvaunwjm06D0OlFR/0XqnM
- ZYAuGHBqBltCaNoRpdvjTrdprHPRbJU8XZzrV3GMJuI/xbUz0M5Rd7P3vdd/7SFooUt7Wlj+p
- BJFwvtSetzqHN9CSfHlXr3CV4C7tB52rb5n+R8zWAXjbPxSZzTpQjUSkOUHeeF1pdZHq+d+MX
- e4Rubx75MsOw5wreGmzskIHT2D5f+ZXhY753FAw==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200927141747.78047-4-shrinidhi.kaushik@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+Hi, spelling nit.
 
-On Fri, 25 Sep 2020, Jacob Keller wrote:
-
-> diff --git a/remote.c b/remote.c
-> index eafc14cbe759..26a127142344 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -682,6 +682,91 @@ static int match_name_with_pattern(const char *key,=
- const char *name,
->  	return ret;
->  }
+On 27/09/2020 15:17, Srinidhi Kaushik wrote:
+> Update test cases for the new option, and document its usage
+> and update related references.
 >
-> +static int refspec_match(const struct refspec_item *refspec,
-> +			 const char *name)
-> +{
-> +	if (refspec->pattern)
-> +		return match_name_with_pattern(refspec->src, name, NULL, NULL);
+> Update test cases for the new option, and document its usage
+> and update related references.
+>
+>  - t/t5533-push-cas.sh:
+>    Update test cases for "compare-and-swap" when used along with
+>    "--force-if-includes" helps mitigate overwrites when remote
+>    refs are updated in the background; allows forced updates when
+>    changes from remote are integrated locally.
+>
+>  - Documentation:
+>    Add reference for the new option, configuration setting
+>    ("push.useForceIfIncludes") and advise messages.
+>
+> Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+> ---
+>  Documentation/config/advice.txt |   9 +-
+>  Documentation/config/push.txt   |   6 ++
+>  Documentation/git-push.txt      |  26 +++++-
+>  t/t5533-push-cas.sh             | 140 ++++++++++++++++++++++++++++++++
+>  4 files changed, 177 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+> index bdd37c3eaa..acbd0c09aa 100644
+> --- a/Documentation/config/advice.txt
+> +++ b/Documentation/config/advice.txt
+> @@ -10,9 +10,8 @@ advice.*::
+>  		that the check is disabled.
+>  	pushUpdateRejected::
+>  		Set this variable to 'false' if you want to disable
+> -		'pushNonFFCurrent',
+> -		'pushNonFFMatching', 'pushAlreadyExists',
+> -		'pushFetchFirst', and 'pushNeedsForce'
+> +		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
+> +		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
+>  		simultaneously.
+>  	pushNonFFCurrent::
+>  		Advice shown when linkgit:git-push[1] fails due to a
+> @@ -41,6 +40,10 @@ advice.*::
+>  		we can still suggest that the user push to either
+>  		refs/heads/* or refs/tags/* based on the type of the
+>  		source object.
+> +	pushRefNeedsUpdate::
+> +		Shown when linkgit:git-push[1] rejects a forced update of
+> +		a branch when its remote-tracking ref has updates that we
+> +		do not have locally.
+>  	statusAheadBehind::
+>  		Shown when linkgit:git-status[1] computes the ahead/behind
+>  		counts for a local ref compared to its remote tracking ref,
+> diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+> index f5e5b38c68..21b256e0a4 100644
+> --- a/Documentation/config/push.txt
+> +++ b/Documentation/config/push.txt
+> @@ -114,3 +114,9 @@ push.recurseSubmodules::
+>  	specifying '--recurse-submodules=check|on-demand|no'.
+>  	If not set, 'no' is used by default, unless 'submodule.recurse' is
+>  	set (in which case a 'true' value means 'on-demand').
 > +
-> +	return !strcmp(refspec->src, name);
+> +push.useForceIfIncludes::
+> +	If set to "true", it is equivalent to specifying
+> +	`--force-if-includes` as an option to linkgit:git-push[1]
+> +	in the command line. Adding `--no-force-if-includes` at the
+> +	time of push overrides this configuration setting.
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 3b8053447e..fb3a220386 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -13,7 +13,7 @@ SYNOPSIS
+>  	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+>  	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
+>  	   [--[no-]signed|--signed=(true|false|if-asked)]
+> -	   [--force-with-lease[=<refname>[:<expect>]]]
+> +	   [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
+>  	   [--no-verify] [<repository> [<refspec>...]]
+>  
+>  DESCRIPTION
+> @@ -320,6 +320,14 @@ seen and are willing to overwrite, then rewrite history, and finally
+>  force push changes to `master` if the remote version is still at
+>  `base`, regardless of what your local `remotes/origin/master` has been
+>  updated to in the background.
+> ++
+> +Alternatively, specifying `--force-if-includes` an an ancillary option
+
+s/ an an / as an /
+
+> +along with `--force-with-lease[=<refname>]` (i.e., without saying what
+> +exact commit the ref on the remote side must be pointing at, or which
+> +refs on the remote side are being protected) at the time of "push" will
+> +verify if updates from the remote-tracking refs that may have been
+> +implicitly updated in the background are integrated locally before
+> +allowing a forced update.
+>  
+>  -f::
+>  --force::
+> @@ -341,6 +349,22 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
+>  origin +master` to force a push to the `master` branch). See the
+>  `<refspec>...` section above for details.
+>  
+> +--[no-]force-if-includes::
+> +	Force an update only if the tip of the remote-tracking ref
+> +	has been integrated locally.
+> ++
+> +This option enables a check that verifies if the tip of the
+> +remote-tracking ref is reachable from one of the "reflog" entries of
+> +the local branch based in it for a rewrite. The check ensures that any
+> +updates from the remote have been incorporated locally by rejecting the
+> +forced update if that is not the case.
+> ++
+> +If the option is passed without specifying `--force-with-lease`, or
+> +specified along with `--force-with-lease=<refname>:<expect>`, it is
+> +a "no-op".
+> ++
+> +Specifying `--no-force-if-includes` disables this behavior.
+> +
+>  --repo=<repository>::
+>  	This option is equivalent to the <repository> argument. If both
+>  	are specified, the command-line argument takes precedence.
+> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+> index 0b0eb1d025..a36b371aeb 100755
+> --- a/t/t5533-push-cas.sh
+> +++ b/t/t5533-push-cas.sh
+> @@ -13,6 +13,46 @@ setup_srcdst_basic () {
+>  	)
+>  }
+>  
+> +# For tests with "--force-if-includes".
+> +setup_src_dup_dst () {
+> +	rm -fr src dup dst &&
+> +	git init --bare dst &&
+> +	git clone --no-local dst src &&
+> +	git clone --no-local dst dup
+> +	(
+> +		cd src &&
+> +		test_commit A &&
+> +		test_commit B &&
+> +		test_commit C &&
+> +		git push
+> +	) &&
+> +	(
+> +		cd dup &&
+> +		git fetch &&
+> +		git merge origin/master &&
+> +		git switch -c branch master~2 &&
+> +		test_commit D &&
+> +		test_commit E &&
+> +		git push --all
+> +	) &&
+> +	(
+> +		cd src &&
+> +		git switch master &&
+> +		git fetch --all &&
+> +		git branch branch --track origin/branch &&
+> +		git rebase origin/master
+> +	) &&
+> +	(
+> +		cd dup &&
+> +		git switch master &&
+> +		test_commit F &&
+> +		test_commit G &&
+> +		git switch branch &&
+> +		test_commit H &&
+> +		git push origin --all
+> +	)
 > +}
 > +
-> +static int omit_name_by_refspec(const char *name, struct refspec *rs)
-> +{
-> +	int i;
+>  test_expect_success setup '
+>  	# create template repository
+>  	test_commit A &&
+> @@ -256,4 +296,104 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
+>  	)
+>  '
+>  
+> +test_expect_success 'background updates to remote can be mitigated with "--force-if-includes"' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	git ls-remote dst refs/heads/master >expect.master &&
+> +	git ls-remote dst refs/heads/master >expect.branch &&
+> +	(
+> +		cd src &&
+> +		git switch branch &&
+> +		test_commit I &&
+> +		git switch master &&
+> +		test_commit J &&
+> +		git fetch --all &&
+> +		test_must_fail git push --force-with-lease --force-if-includes --all
+> +	) &&
+> +	git ls-remote dst refs/heads/master >actual.master &&
+> +	git ls-remote dst refs/heads/master >actual.branch &&
+> +	test_cmp expect.master actual.master &&
+> +	test_cmp expect.branch actual.branch
+> +'
 > +
-> +	for (i =3D 0; i < rs->nr; i++) {
-> +		if (rs->items[i].negative && refspec_match(&rs->items[i], name))
-> +			return 1;
-> +	}
-> +	return 0;
-> +}
+> +test_expect_success 'background updates to remote can be mitigated with "push.useForceIfIncludes"' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	git ls-remote dst refs/heads/master >expect.master &&
+> +	(
+> +		cd src &&
+> +		git switch branch &&
+> +		test_commit I &&
+> +		git switch master &&
+> +		test_commit J &&
+> +		git fetch --all &&
+> +		git config --local push.useForceIfIncludes true &&
+> +		test_must_fail git push --force-with-lease=master origin master
+> +	) &&
+> +	git ls-remote dst refs/heads/master >actual.master &&
+> +	test_cmp expect.master actual.master
+> +'
 > +
-> +struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec=
- *rs)
-> +{
-> +	struct ref **tail;
+> +test_expect_success '"--force-if-includes" should be disabled for --force-with-lease="<refname>:<expect>"' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	git ls-remote dst refs/heads/master >expect.master &&
+> +	git ls-remote dst refs/heads/master >expect.branch &&
+> +	(
+> +		cd src &&
+> +		git switch branch &&
+> +		test_commit I &&
+> +		git switch master &&
+> +		test_commit J &&
+> +		remote_head="$(git rev-parse refs/remotes/origin/master)" &&
+> +		git fetch --all &&
+> +		test_must_fail git push --force-if-includes --force-with-lease="master:$remote_head" 2>err &&
+> +		grep "stale info" err
+> +	) &&
+> +	git ls-remote dst refs/heads/master >actual.master &&
+> +	git ls-remote dst refs/heads/master >actual.branch &&
+> +	test_cmp expect.master actual.master &&
+> +	test_cmp expect.branch actual.branch
+> +'
 > +
-> +	for (tail =3D &ref_map; *tail; ) {
-> +		struct ref *ref =3D *tail;
+> +test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase")' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	(
+> +		cd src &&
+> +		git switch branch &&
+> +		test_commit I &&
+> +		git switch master &&
+> +		test_commit J &&
+> +		git pull --rebase origin master &&
+> +		git push --force-if-includes --force-with-lease="master"
+> +	)
+> +'
 > +
-> +		if (omit_name_by_refspec(ref->name, rs)) {
-> +			*tail =3D ref->next;
-> +			free(ref->peer_ref);
-> +			free(ref);
-> +		} else
-> +			tail =3D &ref->next;
-> +	}
+> +test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase", local rebase)' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	(
+> +		cd src &&
+> +		git switch branch &&
+> +		test_commit I &&
+> +		git switch master &&
+> +		test_commit J &&
+> +		git pull --rebase origin master &&
+> +		git rebase --onto HEAD~4 HEAD~1 &&
+> +		git push --force-if-includes --force-with-lease="master"
+> +	)
+> +'
 > +
-> +	return ref_map;
-> +}
+> +test_expect_success '"--force-if-includes" should allow deletes ' '
+> +	setup_src_dup_dst &&
+> +	test_when_finished "rm -fr dst src dup" &&
+> +	(
+> +		cd src &&
+> +		git switch branch &&
+> +		git pull --rebase origin branch &&
+> +		git push --force-if-includes --force-with-lease=branch origin :branch
+> +	)
+> +'
 > +
-> +static int query_matches_negative_refspec(struct refspec *rs, struct re=
-fspec_item *query)
-> +{
-> +	int i, matched_negative =3D 0;
-> +	int find_src =3D !query->src;
-> +	struct string_list reversed =3D STRING_LIST_INIT_NODUP;
-> +	const char *needle =3D find_src ? query->dst : query->src;
-> +
-> +	/*
-> +	 * Check whether the queried ref matches any negative refpsec. If so,
-> +	 * then we should ultimately treat this as not matching the query at
-> +	 * all.
-> +	 *
-> +	 * Note that negative refspecs always match the source, but the query
-> +	 * item uses the destination. To handle this, we apply pattern
-> +	 * refspecs in reverse to figure out if the query source matches any
-> +	 * of the negative refspecs.
-> +	 */
-> +	for (i =3D 0; i < rs->nr; i++) {
-> +		struct refspec_item *refspec =3D &rs->items[i];
-> +		char *expn_name;
-> +
-> +		if (refspec->negative)
-> +			continue;
-> +
-> +		/* Note the reversal of src and dst */
-> +		if (refspec->pattern) {
-> +			const char *key =3D refspec->dst ?: refspec->src;
-
-Would you mind fixing this? This keeps getting reverted...
-
-=2D- snipsnap --
-=46rom 4aea2a58a9f6bb1cbbc7a03db63a1465f9a801da Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Sun, 23 Aug 2020 22:27:17 +0200
-Subject: [PATCH] fixup??? refspec: add support for negative refspecs
-
-The `?:` operator is not supported e.g. by Visual C. Let's not use it.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/remote.c b/remote.c
-index f7d20c059b3e..1659535c1a8d 100644
-=2D-- a/remote.c
-+++ b/remote.c
-@@ -724,7 +724,7 @@ static int query_matches_negative_refspec(struct refsp=
-ec *rs, struct refspec_ite
-
- 		/* Note the reversal of src and dst */
- 		if (refspec->pattern) {
--			const char *key =3D refspec->dst ?: refspec->src;
-+			const char *key =3D refspec->dst ? refspec->dst : refspec->src;
- 			const char *value =3D refspec->src;
-
- 			if (match_name_with_pattern(key, needle, value, &expn_name))
-=2D-
-2.28.0.windows.1.52.gbcabfe850c5e
+>  test_done
 
