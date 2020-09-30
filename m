@@ -2,137 +2,83 @@ Return-Path: <SRS0=XLsf=DH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.1 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49DCCC4727C
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 19:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21191C4727C
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 20:06:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E737E20709
-	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 19:51:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4CBF2072E
+	for <git@archiver.kernel.org>; Wed, 30 Sep 2020 20:06:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IcxOuDZv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F03nn6rL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729660AbgI3TvY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 15:51:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
+        id S1729204AbgI3UGO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 16:06:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725355AbgI3TvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 15:51:23 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36297C061755
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 12:51:23 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id n13so2817126ybk.9
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 12:51:23 -0700 (PDT)
+        with ESMTP id S1725355AbgI3UGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 16:06:14 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D42DC061755
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 13:06:14 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id y15so778882wmi.0
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 13:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=oQlL3i6uRYYhtkNhA4sSJWFuTl11EwrBolEHSSfIi70=;
-        b=IcxOuDZvYC5nbgeES98xY4blMPhbxRiqa2fEkmESW9ewdgYx/HSCGD1icOOvpPVppN
-         5YK5L+mU0/7h5wAU0jYNKQctnwq/Ymjwi2ypYMGVWBtBE7jLPb5boAxXpkC4JZh9bHIW
-         +L9vYvWA4DFQFuElsC53w1ubMVLNV5NV2flHIEn/LKQULoGDzhH2barMRdcvoorBA/t5
-         YyLJmkmySltqbj+ITIBPOA1btKbOi8tjgOoroG8o42QgPRRuS3fnCmsWj9G2Wu2WmLk2
-         jk87rOPaAYeToY4Gi+syxmcfMX5IrmUe6AUTGBskgSb769VhMCPRydJQcK/w9w/ILCwP
-         RENg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CqeMjU9TL2saTpowkDTC0QGmnNfAMzInIXiRsm+qYxI=;
+        b=F03nn6rLrEjNxUbMRNcsESql6rYdtfi93428lylGi4RdfL1czJkV/AnpmA4bSnB8Uj
+         /vygZFv2U7SOVWEHmfVzm2m9Cv03uxvFWHDQ7IzJsVMu4UM0a2WY6QDkdfOdn1mLKd9j
+         1yBd7y/FBoMjMB8YZ13pRlZSLiv+E44URDIL+69FiPJlilDJhi3+O6Usg67e7YW/s3BF
+         x+JWAMrKBsVxY1pwCRqd7yDpVqsa+28OduGqU16vVTv7nPAh1PZK4ptHdErsYMhDXBK+
+         pDWnO/kNaoTPti8vCAUKevf2l3T6dQfua9ZGYD+f/F/cQIVrC+d/DMlAgdopOfXuaI1T
+         8ZrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=oQlL3i6uRYYhtkNhA4sSJWFuTl11EwrBolEHSSfIi70=;
-        b=n+iGhQ3MXs1/NY1bk2U6yoy498GGvWzn+tXvrx5YHf5R8gdEZErNG3vabOrlrZX2iW
-         o3wAfMrFs4hQot4tojckxBLdBR7nJH8Ln+NQIsNJozwhQ2tGGp6F4jB7qyOhsfz2QmMa
-         PBf2mb0o3Wro0zdZklxjFwRPnwttug16jZ06BVosWvhm+jYoSqKXcGAiLaUtWvYOtfIg
-         eMEqt+bQvAU5phNwBqVhntdmJsSGdrP68vhBcmgFdztW4Kht40HoBGgWnCSlcHMftKeU
-         WM/RisFWWGU/HGe7XnIJNpxEnQLjo42eAlLWpzTilc+NJ+1anoLGp5RqpaQhAz8dWtAZ
-         s62Q==
-X-Gm-Message-State: AOAM531bPt0bFvuLRcwfOp7ASDmZsqurXVBk4/jN9+NMdutlv5DnBimc
-        Se5kgrqQ1rmQeEOtaT4cU4tWCY+ly2VKqMhkeymfvEHXVBKHiy2cPo08DOPxbi6psbeAaftBF2d
-        POBJY0/pEado1ggjyOkEmU8g0Q7x6GY8ZU8szkpYQ8phu7ebzsG0Icko=
-X-Google-Smtp-Source: ABdhPJxdMuQJ3ExnDFc4UsuGettwTHKw+XXStWI52eqitx8SYmqU2M1HsbMONOSl29kqxPB7E4I9ulXLkA==
-Sender: "tbodt via sendgmr" <tbodt@tbodt.mtv.corp.google.com>
-X-Received: from tbodt.mtv.corp.google.com ([2620:0:1000:5000:7220:84ff:fe09:feee])
- (user=tbodt job=sendgmr) by 2002:a25:c747:: with SMTP id w68mr5791657ybe.349.1601495482273;
- Wed, 30 Sep 2020 12:51:22 -0700 (PDT)
-Date:   Wed, 30 Sep 2020 12:50:53 -0700
-Message-Id: <20200930195052.118199-1-tbodt@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.28.0.709.gb0816b6eb0-goog
-Subject: [PATCH v2] Propagate --quiet on submodule update to merge/rebase
-From:   Theodore Dubois <tbodt@google.com>
-To:     git@vger.kernel.org
-Cc:     Theodore Dubois <tbodt@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CqeMjU9TL2saTpowkDTC0QGmnNfAMzInIXiRsm+qYxI=;
+        b=hRvuTDfIJstZcJ36K4eNazgUAk0IT1oNTt7XVVXUy+bI5j9CMMf049WwN2zDnlIwxJ
+         DmA1wBFxc0riBjeyWroNsIfbp4Y3y9h7ypOOdEYfbxv9L2kMP1ZbSqZnTtvinyP+3XGy
+         j4jyqXSZx90JoNzPhEhoOb0SpU3eezlvLc7ohKXoC0rqn5JRYZR18I3Za8hSq139I4ct
+         3aPlse8jtFh0JV/xBZSdQGBkbCK6SHyvLWFq7q/ode0mpQGQmW9kGqWxxopbzff8Nz8I
+         d+OhsGBpxtC6grymZXCBnjy+QS218S5mAZFBgbTtDUOdhVuMUKWnXyldevShb9E0E5Jp
+         Z9zQ==
+X-Gm-Message-State: AOAM532MwBXVYaN3DLVmvBvJOyEXAuUXvPBhI1oDFQJX6F0zEbGvDVOk
+        tSd+/U1Mwu1xDmN+6wKMxWylZCRVriJRkiQfRo4pSHNN
+X-Google-Smtp-Source: ABdhPJwq99p+mivE6LF6krEy2Z0eVEnP87nBdJxnTmXh47vKH567ysbgxuMgHFp0BmGFllXeP257IK3D8kPt/PGwDNA=
+X-Received: by 2002:a05:600c:2283:: with SMTP id 3mr4561961wmf.37.1601496372986;
+ Wed, 30 Sep 2020 13:06:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200930115240.GA1899467@coredump.intra.peff.net>
+In-Reply-To: <20200930115240.GA1899467@coredump.intra.peff.net>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Wed, 30 Sep 2020 13:06:02 -0700
+Message-ID: <CAPx1Gvd7WpAgUGgZkZARY7JcFj8nbDJ6zEDTSaBt2=xR535E-g@mail.gmail.com>
+Subject: Re: [PATCH] combine-diff: handle --find-object in multitree code path
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Without this, commands such as
-git pull --rebase --recurse-submodules --quiet
-might produce non-quiet output from the merge or rebase.
+On Wed, Sep 30, 2020 at 4:54 AM Jeff King <peff@peff.net> wrote:
+> I'm a little nervous that the second "wart" may actually be making
+> things worse, because now we sometimes produce a wrong answer and
+> sometime a right one, and it can be difficult to know which options
+> cause which (e.g., rename detection puts us onto the slow path). Is it
+> worse to sometimes be right and sometimes wrong, or to always be
+> consistently and predictably wrong? I suppose one could even argue that
+> the current semantics aren't "wrong", but just what we happen to
+> produce. But IMHO they are so un-useful as to be considered wrong.
 
-Also fix the parsing of git submodule update -v. Setting GIT_QUIET to 0
-has the same effect as setting GIT_QUIET to 1, because
-${GIT_QUIET:+--quiet} only checks whether GIT_QUIET is set or unset.
+"Predictably wrong" *is* actually useful while "unpredictably wrong"
+is, um, "less useful".  Perhaps just documenting exactly which options
+use which path?  Basically turn some of this into documentation.
 
-Signed-off-by: Theodore Dubois <tbodt@google.com>
----
- git-submodule.sh            |  6 +++---
- t/t7406-submodule-update.sh | 12 ++++++++++++
- 2 files changed, 15 insertions(+), 3 deletions(-)
-
-diff --git git-submodule.sh git-submodule.sh
-index 6fb12585cb..7ce52872b7 100755
---- git-submodule.sh
-+++ git-submodule.sh
-@@ -440,7 +440,7 @@ cmd_update()
- 			GIT_QUIET=1
- 			;;
- 		-v)
--			GIT_QUIET=0
-+			unset GIT_QUIET
- 			;;
- 		--progress)
- 			progress=1
-@@ -614,13 +614,13 @@ cmd_update()
- 				say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
- 				;;
- 			rebase)
--				command="git rebase"
-+				command="git rebase ${GIT_QUIET:+--quiet}"
- 				die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path '\$displaypath'")"
- 				say_msg="$(eval_gettext "Submodule path '\$displaypath': rebased into '\$sha1'")"
- 				must_die_on_failure=yes
- 				;;
- 			merge)
--				command="git merge"
-+				command="git merge ${GIT_QUIET:+--quiet}"
- 				die_msg="$(eval_gettext "Unable to merge '\$sha1' in submodule path '\$displaypath'")"
- 				say_msg="$(eval_gettext "Submodule path '\$displaypath': merged in '\$sha1'")"
- 				must_die_on_failure=yes
-diff --git t/t7406-submodule-update.sh t/t7406-submodule-update.sh
-index aa19ff3a2e..acb8766ac2 100755
---- t/t7406-submodule-update.sh
-+++ t/t7406-submodule-update.sh
-@@ -1022,4 +1022,16 @@ test_expect_success 'git clone passes the parallel jobs config on to submodules'
- 	rm -rf super4
- '
- 
-+test_expect_success 'submodule update --quiet passes quietness to merge/rebase' '
-+	(cd super &&
-+	 test_commit -C rebasing message &&
-+	 git submodule update --rebase --quiet >out 2>err &&
-+	 test_must_be_empty out &&
-+	 test_must_be_empty err &&
-+	 git submodule update --rebase -v >out 2>err &&
-+	 test_file_not_empty out &&
-+	 test_must_be_empty err
-+	)
-+'
-+
- test_done
--- 
-2.28.0.709.gb0816b6eb0-goog
-
+Chris
