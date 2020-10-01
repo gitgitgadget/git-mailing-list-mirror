@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B544DC47425
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 007D8C47420
 	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 03:46:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7772F21D43
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 03:46:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCDC821D43
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 03:46:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BKVXuYxa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CkSIpulA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730642AbgJADqa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 23:46:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730378AbgJADqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730481AbgJADqZ (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 30 Sep 2020 23:46:25 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8EFC0613D3
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 20:46:24 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id v12so1470751wmh.3
-        for <git@vger.kernel.org>; Wed, 30 Sep 2020 20:46:24 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730378AbgJADqX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 23:46:23 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB05C0613D1
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 20:46:23 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id x14so3949796wrl.12
+        for <git@vger.kernel.org>; Wed, 30 Sep 2020 20:46:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XNltrLCGQ+ZX0AivDc2S4gRxxcleGtS86Y1VRlaQhdA=;
-        b=BKVXuYxaBuWSz2XmEbapuhp5TxGm3MjU71hUFkyw2++ve5fVRuMgB4tpPKHTmIQy0D
-         c4v9A6Y/Oz388TlLdWhKiUtrq0jV1PBofcUzGyx2ziqJYEgu69bq3r+tht393lIvZE+q
-         euuIvHsHWlEx3nAtO5c6Hj7AIoJviQugogWN+sUVkKjkf9H8AJc8Td/ErHj1DKcdOa5g
-         C6zQ1+CSYiZd48MNaXCD64bwOoqeerlxa2p/M1oy/fv2u6z0Gknifa7wGoLthxxxptLL
-         N+bVPvku58JQrLsFNbteW1XVXCEqnCVOHv8r4UM+fK6S8yGtBqPoNNziBZso4+oZhfSV
-         Jhjg==
+        bh=if/tLdO5VC7d820oFC6cy+yeCQhnDLeKBPiaXw+xkE4=;
+        b=CkSIpulAxYpNvODpCtBFRy+JKFPJetRN6h8+2i0ZBQoyP2FLysoRl4Ji9H//NNPRlS
+         kl01fxZ96A54B8hKiFEO5LTlsfQUmV9ddv1V5NmKvLGcdcqk6V/nwkLMaAEKTPt2VFcU
+         GfLr4ZeRFm3aKKKdYYx/ncKURCdgkD4dvlAPIFjem4e87N4jQJZBxUGm4XAGG7GUiak3
+         3C3cYNtL9Bg63ll8d99J2HafRwDkc+Q5czylva85mtVgzHa59tXpu+E30zJzOL/fGoCT
+         gzLJ3l/C7BZwhSeTcmPNe9VhjHOa7sc8Qd0QwZaH/i2opjniTU53IO4JegqkBjD/QZvx
+         k0Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XNltrLCGQ+ZX0AivDc2S4gRxxcleGtS86Y1VRlaQhdA=;
-        b=N/EBzPLtHRpwFLSYwLsneNPYcIxZZA9L7fhngfmd7rPseCWEojuD1HZ2z4Sma0Zhrt
-         E3sXYWEORCiRT6JYSuPpJHw3MS7G3ZFNQYFS+1wdcgmS8zOh7cQOXjZ9LWkR7f2L3ech
-         1tXOXel7nD7BBSj4xYs2vp1gJKRdiCFYs/qCS1QPRY59xjaD658ejBiNDya4iivTQTMb
-         xSt1ZnhEmZtwcSiXNXY683NyyOO1Fwyecs2eRZOjPeCpK+2TfLOqzU0iFs/Z89L+CeFQ
-         UbPdrAFdbTpL00IkfTPkCmKZ+llI7BecR/lXWmJjRFmaLzSTkj5zMRFG03Em9iHa8sY5
-         9PHw==
-X-Gm-Message-State: AOAM5339QapTHwHIygicHfczbQbxJZ/mIGBDo1mN5PVqTy8G+qhoyQHh
-        XsUuwsnhVZ38BCEkPxQs6efqLpEI8TM=
-X-Google-Smtp-Source: ABdhPJzTA+Xi9b8dOldgoEgRI0OdeWlruKPncbVxd1QMBQk4qO7qbA5R0Po/zyg5XLPDUBVnLdeLig==
-X-Received: by 2002:a7b:c08c:: with SMTP id r12mr495990wmh.184.1601523983453;
-        Wed, 30 Sep 2020 20:46:23 -0700 (PDT)
+        bh=if/tLdO5VC7d820oFC6cy+yeCQhnDLeKBPiaXw+xkE4=;
+        b=K6Ms92gK2xbDY/h6VlLanzGDOWqkv7rGkuGcFKMkJxh8K6lwAWg8NS9uGDA3svaFSY
+         mmHIoEPqejz0x+ZsoynHqj3EGrqRTj5s/Mr32RQvo66syOVqBGC24GaTNgApRD0beDzV
+         X0cdBg1Mrod+70fa58gn5viJptrZE2dmYGNan/UBSQQPXHv1EQgo73ZE2EHgIolQ5k89
+         j3kn9lWYsSGGbNtcXDxUg1VzM5zmMCwQR7Qguh8SLNxpguYDkK8YllESeEHplsP59YjM
+         f1OX38yppvbSBWIPtgA4T2EgbR/UnIBIEywzfyeyrdOm2Cqc8Tq/Jkkk0cZ8543lYUmv
+         Z5VA==
+X-Gm-Message-State: AOAM533HW+W3NAObSR5uPPnU/TuvJY6RfaNsWLSiWpO4i9BTgRIGaIHN
+        zU/ieUTYngsBDDgjsXxioi0W2WjaEoE=
+X-Google-Smtp-Source: ABdhPJyjU3JD7OtC0OUTi5WbztOKHGMfyMWHNpKzu36hCrQ/cblVQ1ISBPMZ1JGNPmKtu5bcE9J0mQ==
+X-Received: by 2002:a5d:6691:: with SMTP id l17mr6506044wru.10.1601523981758;
+        Wed, 30 Sep 2020 20:46:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u66sm6086065wme.12.2020.09.30.20.46.22
+        by smtp.gmail.com with ESMTPSA id q20sm6076473wmj.5.2020.09.30.20.46.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2020 20:46:23 -0700 (PDT)
-Message-Id: <c3fba50092f1619b6e9f66614bcdba8d5730f4b2.1601523977.git.gitgitgadget@gmail.com>
+        Wed, 30 Sep 2020 20:46:21 -0700 (PDT)
+Message-Id: <cb686b4129902335ef98c83c8cfbcac1c88da856.1601523977.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.727.v3.git.1601523977.gitgitgadget@gmail.com>
 References: <pull.727.v2.git.1601350615.gitgitgadget@gmail.com>
         <pull.727.v3.git.1601523977.gitgitgadget@gmail.com>
 From:   "Sean Barag via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Oct 2020 03:46:15 +0000
-Subject: [PATCH v3 6/7] clone: read new remote name from remote_name instead
- of option_origin
+Date:   Thu, 01 Oct 2020 03:46:13 +0000
+Subject: [PATCH v3 4/7] refs: consolidate remote name validation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,133 +83,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sean Barag <sean@barag.org>
 
-In a future patch, the name of the remote created by `git clone` may
-come from multiple sources.  To avoid confusion, convert most uses of
-option_origin to remote_name, leaving option_origin to exclusively
-represent the -o/--origin option.
+In preparation for a future patch, extract from remote.c a function that
+validates possible remote names so that its rules can be used
+consistently in other places.
 
 Helped-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Sean Barag <sean@barag.org>
 ---
- builtin/clone.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ builtin/remote.c |  7 ++-----
+ refspec.c        | 10 ++++++++++
+ refspec.h        |  1 +
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index bd67ff7b01..6bcdfa4cd6 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -53,6 +53,7 @@ static int option_shallow_submodules;
- static int deepen;
- static char *option_template, *option_depth, *option_since;
- static char *option_origin = NULL;
-+static char *remote_name = "origin";
- static char *option_branch = NULL;
- static struct string_list option_not = STRING_LIST_INIT_NODUP;
- static const char *real_git_dir;
-@@ -721,7 +722,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
- 		if (!option_bare) {
- 			update_ref(msg, "HEAD", &our->old_oid, NULL, 0,
- 				   UPDATE_REFS_DIE_ON_ERR);
--			install_branch_config(0, head, option_origin, our->name);
-+			install_branch_config(0, head, remote_name, our->name);
- 		}
- 	} else if (our) {
- 		struct commit *c = lookup_commit_reference(the_repository,
-@@ -919,12 +920,12 @@ static void write_refspec_config(const char *src_ref_prefix,
- 		}
- 		/* Configure the remote */
- 		if (value.len) {
--			strbuf_addf(&key, "remote.%s.fetch", option_origin);
-+			strbuf_addf(&key, "remote.%s.fetch", remote_name);
- 			git_config_set_multivar(key.buf, value.buf, "^$", 0);
- 			strbuf_reset(&key);
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 64b4b551eb..63f2b46c3d 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -194,8 +194,7 @@ static int add(int argc, const char **argv)
+ 	if (remote_is_configured(remote, 1))
+ 		die(_("remote %s already exists."), name);
  
- 			if (option_mirror) {
--				strbuf_addf(&key, "remote.%s.mirror", option_origin);
-+				strbuf_addf(&key, "remote.%s.mirror", remote_name);
- 				git_config_set(key.buf, "true");
- 				strbuf_reset(&key);
- 			}
-@@ -1008,11 +1009,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_no_checkout = 1;
- 	}
+-	strbuf_addf(&buf2, "refs/heads/test:refs/remotes/%s/test", name);
+-	if (!valid_fetch_refspec(buf2.buf))
++	if (!valid_remote_name(name))
+ 		die(_("'%s' is not a valid remote name"), name);
  
--	if (!option_origin)
--		option_origin = "origin";
-+	if (option_origin)
-+		remote_name = option_origin;
+ 	strbuf_addf(&buf, "remote.%s.url", name);
+@@ -696,11 +695,9 @@ static int mv(int argc, const char **argv)
+ 	if (remote_is_configured(newremote, 1))
+ 		die(_("remote %s already exists."), rename.new_name);
  
--	if (!valid_remote_name(option_origin))
--		die(_("'%s' is not a valid remote name"), option_origin);
-+	if (!valid_remote_name(remote_name))
-+		die(_("'%s' is not a valid remote name"), remote_name);
+-	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new_name);
+-	if (!valid_fetch_refspec(buf.buf))
++	if (!valid_remote_name(rename.new_name))
+ 		die(_("'%s' is not a valid remote name"), rename.new_name);
  
- 	repo_name = argv[0];
+-	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s", rename.old_name);
+ 	strbuf_addf(&buf2, "remote.%s", rename.new_name);
+ 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
+diff --git a/refspec.c b/refspec.c
+index 8d0affc34a..3056ffdfb8 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -215,6 +215,16 @@ int valid_fetch_refspec(const char *fetch_refspec_str)
+ 	return ret;
+ }
  
-@@ -1163,15 +1164,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
++int valid_remote_name(const char *name)
++{
++	int result;
++	struct strbuf refspec = STRBUF_INIT;
++	strbuf_addf(&refspec, "refs/heads/test:refs/remotes/%s/test", name);
++	result = valid_fetch_refspec(refspec.buf);
++	strbuf_release(&refspec);
++	return result;
++}
++
+ void refspec_ref_prefixes(const struct refspec *rs,
+ 			  struct strvec *ref_prefixes)
+ {
+diff --git a/refspec.h b/refspec.h
+index 7569248d11..bbb25968a8 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -62,6 +62,7 @@ void refspec_appendn(struct refspec *rs, const char **refspecs, int nr);
+ void refspec_clear(struct refspec *rs);
  
- 		git_config_set("core.bare", "true");
- 	} else {
--		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
-+		strbuf_addf(&branch_top, "refs/remotes/%s/", remote_name);
- 	}
+ int valid_fetch_refspec(const char *refspec);
++int valid_remote_name(const char *name);
  
--	strbuf_addf(&key, "remote.%s.url", option_origin);
-+	strbuf_addf(&key, "remote.%s.url", remote_name);
- 	git_config_set(key.buf, repo);
- 	strbuf_reset(&key);
- 
- 	if (option_no_tags) {
--		strbuf_addf(&key, "remote.%s.tagOpt", option_origin);
-+		strbuf_addf(&key, "remote.%s.tagOpt", remote_name);
- 		git_config_set(key.buf, "--no-tags");
- 		strbuf_reset(&key);
- 	}
-@@ -1182,7 +1183,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_sparse_checkout && git_sparse_checkout_init(dir))
- 		return 1;
- 
--	remote = remote_get(option_origin);
-+	remote = remote_get(remote_name);
- 
- 	refspec_appendf(&remote->fetch, "+%s*:%s*", src_ref_prefix,
- 			branch_top.buf);
-@@ -1294,7 +1295,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 			if (!our_head_points_at)
- 				die(_("Remote branch %s not found in upstream %s"),
--				    option_branch, option_origin);
-+				    option_branch, remote_name);
- 		}
- 		else
- 			our_head_points_at = remote_head_points_at;
-@@ -1302,7 +1303,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	else {
- 		if (option_branch)
- 			die(_("Remote branch %s not found in upstream %s"),
--					option_branch, option_origin);
-+					option_branch, remote_name);
- 
- 		warning(_("You appear to have cloned an empty repository."));
- 		mapped_refs = NULL;
-@@ -1314,7 +1315,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			const char *branch = git_default_branch_name();
- 			char *ref = xstrfmt("refs/heads/%s", branch);
- 
--			install_branch_config(0, branch, option_origin, ref);
-+			install_branch_config(0, branch, remote_name, ref);
- 			free(ref);
- 		}
- 	}
-@@ -1323,7 +1324,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			remote_head_points_at, &branch_top);
- 
- 	if (filter_options.choice)
--		partial_clone_register(option_origin, &filter_options);
-+		partial_clone_register(remote_name, &filter_options);
- 
- 	if (is_local)
- 		clone_local(path, git_dir);
+ struct strvec;
+ /*
 -- 
 gitgitgadget
 
