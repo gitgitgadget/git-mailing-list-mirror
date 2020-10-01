@@ -2,164 +2,127 @@ Return-Path: <SRS0=yenB=DI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9215BC4727E
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CBDC4727E
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:11:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F8CD20872
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:00:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6E6E20759
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:11:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L9mk58LF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732686AbgJAQAM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Oct 2020 12:00:12 -0400
-Received: from siwi.pair.com ([209.68.5.199]:23949 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732287AbgJAQAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Oct 2020 12:00:10 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C93AA3F412C;
-        Thu,  1 Oct 2020 11:53:29 -0400 (EDT)
-Received: from Web02.contoso.com.tw (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 746353F4129;
-        Thu,  1 Oct 2020 11:53:29 -0400 (EDT)
-Subject: Re: [PATCH v2 08/19] entry: move conv_attrs lookup up to
- checkout_entry()
-To:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, chriscool@tuxfamily.org, peff@peff.net,
-        t.gummerer@gmail.com, newren@gmail.com
-References: <cover.1600814153.git.matheus.bernardino@usp.br>
- <667ad0dea70cb7f0bbf8f52467f15129b3ae1325.1600814153.git.matheus.bernardino@usp.br>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <0b7d7704-159f-c186-9551-1989af8f572d@jeffhostetler.com>
-Date:   Thu, 1 Oct 2020 11:53:28 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S1732527AbgJAQLJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Oct 2020 12:11:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732048AbgJAQLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Oct 2020 12:11:08 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A073C0613D0
+        for <git@vger.kernel.org>; Thu,  1 Oct 2020 09:11:08 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id q9so3513169wmj.2
+        for <git@vger.kernel.org>; Thu, 01 Oct 2020 09:11:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=HcHNjBh+LHS08DtT9nU5o2hzC6PC18QgYDDpPua43xc=;
+        b=L9mk58LFdYam4Xj3a6toG35sYmfV4PdBdFb1JSjmyYOiK19re0b9B8Ov9/rvQhmDMd
+         xo7sQOWSRezL6TlkcTfBKcs6VpnzMUPUNwC+VEjN1FtRs9o9GaC0IyT0y6V0igXDaftD
+         hyyrEsZGjwM3iLhSPRCiuMdT17++HAmi9rrFOZqygSRLS5eDvB4i9p/z103tZpY5UBOt
+         u+WxQNJIPwacm5WoBPodtf1h+cewQxtgt/Vp9zT3Ia9qQ4sktZCIGZ19oYI9+dglDs6U
+         pl+YQOnpa4BEutcqnB8VP3vGaMNcqKOxNxn8/Vc72ubSdUwLbcpFvO7d1c5C5BIv4d2W
+         llUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=HcHNjBh+LHS08DtT9nU5o2hzC6PC18QgYDDpPua43xc=;
+        b=UndmF1Wf1Lpk+IRVDRNJ78N144gx2wrML1ldhqZzDObNzGNkVlqq2RQBO2Uxg4fMQp
+         rNs+2LT6QjP00+cNyH03CN72Emb28tOph14Yjp+Lxu/OjAh4dPEV8C5CWWfQOQtUH/zG
+         Yaqky4h6zEADD55jz4czln67kY+RgK6laynfxL16qIClal+GB66+m/IBZPxduSFuDn4Z
+         THK6FRdKeBBGoYrYjYS4PcJmUVehHA93RP90d9e/ewI/TZvrkVlIFg6ABCHQyIvFhwfp
+         5aTGrzFMGNMfOhOsVBtpxfGvslhmxVdUpnsybyKtwxV/yST9ytOTq7Va5bJn/ZXtV/Mb
+         2vog==
+X-Gm-Message-State: AOAM532pGH0m3CwCqtwI+/EB/k6Sugh+/8mmn/JOWb2tQid9nOhKa8On
+        nrBOGGkvqa8CDtMiqnjEafeFumHTomQ=
+X-Google-Smtp-Source: ABdhPJwVo6p3prf8tUjW2VxClb5v0K+sNfGzJoz49/w1eXWIqbjfj7AftZrYby4pQt/4JE48vVOi/Q==
+X-Received: by 2002:a1c:4683:: with SMTP id t125mr805816wma.110.1601568666976;
+        Thu, 01 Oct 2020 09:11:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w2sm9497152wrs.15.2020.10.01.09.11.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2020 09:11:06 -0700 (PDT)
+Message-Id: <6228103b4a6dab23ce3a4498eada8ff649909ff0.1601568663.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
+        <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 01 Oct 2020 16:10:51 +0000
+Subject: [PATCH v2 01/13] reftable: add LICENSE
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <667ad0dea70cb7f0bbf8f52467f15129b3ae1325.1600814153.git.matheus.bernardino@usp.br>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Han-Wen Nienhuys <hanwen@google.com>
 
+TODO: relicense?
 
-On 9/22/20 6:49 PM, Matheus Tavares wrote:
-> In a following patch, checkout_entry() will use conv_attrs to decide
-> whether an entry should be enqueued for parallel checkout or not. But
-> the attributes lookup only happens lower in this call stack. To avoid
-> the unnecessary work of loading the attributes twice, let's move it up
-> to checkout_entry(), and pass the loaded struct down to write_entry().
-> 
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
->   entry.c | 38 +++++++++++++++++++++++++++-----------
->   1 file changed, 27 insertions(+), 11 deletions(-)
-> 
-> diff --git a/entry.c b/entry.c
-> index 1d2df188e5..8237859b12 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -263,8 +263,9 @@ void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
->   	}
->   }
->   
-> -static int write_entry(struct cache_entry *ce,
-> -		       char *path, const struct checkout *state, int to_tempfile)
-> +/* Note: ca is used (and required) iff the entry refers to a regular file. */
-> +static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca,
-> +		       const struct checkout *state, int to_tempfile)
->   {
->   	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
->   	struct delayed_checkout *dco = state->delayed_checkout;
-> @@ -281,8 +282,7 @@ static int write_entry(struct cache_entry *ce,
->   	clone_checkout_metadata(&meta, &state->meta, &ce->oid);
->   
->   	if (ce_mode_s_ifmt == S_IFREG) {
-> -		struct stream_filter *filter = get_stream_filter(state->istate, ce->name,
-> -								 &ce->oid);
-> +		struct stream_filter *filter = get_stream_filter_ca(ca, &ce->oid);
->   		if (filter &&
->   		    !streaming_write_entry(ce, path, filter,
->   					   state, to_tempfile,
-> @@ -329,14 +329,17 @@ static int write_entry(struct cache_entry *ce,
->   		 * Convert from git internal format to working tree format
->   		 */
->   		if (dco && dco->state != CE_NO_DELAY) {
-> -			ret = async_convert_to_working_tree(state->istate, ce->name, new_blob,
-> -							    size, &buf, &meta, dco);
-> +			ret = async_convert_to_working_tree_ca(ca, ce->name,
-> +							       new_blob, size,
-> +							       &buf, &meta, dco);
->   			if (ret && string_list_has_string(&dco->paths, ce->name)) {
->   				free(new_blob);
->   				goto delayed;
->   			}
-> -		} else
-> -			ret = convert_to_working_tree(state->istate, ce->name, new_blob, size, &buf, &meta);
-> +		} else {
-> +			ret = convert_to_working_tree_ca(ca, ce->name, new_blob,
-> +							 size, &buf, &meta);
-> +		}
->   
->   		if (ret) {
->   			free(new_blob);
-> @@ -442,6 +445,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
->   {
->   	static struct strbuf path = STRBUF_INIT;
->   	struct stat st;
-> +	struct conv_attrs ca;
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ reftable/LICENSE | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+ create mode 100644 reftable/LICENSE
 
-I have to wonder if it would be clearer to move this declaration of `ca`
-into the two `if { ... }` blocks where it is used -- to indicate that it
-is only defined in two cases where we call `convert_attrs()`.
+diff --git a/reftable/LICENSE b/reftable/LICENSE
+new file mode 100644
+index 0000000000..402e0f9356
+--- /dev/null
++++ b/reftable/LICENSE
+@@ -0,0 +1,31 @@
++BSD License
++
++Copyright (c) 2020, Google LLC
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are
++met:
++
++* Redistributions of source code must retain the above copyright notice,
++this list of conditions and the following disclaimer.
++
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++
++* Neither the name of Google LLC nor the names of its contributors may
++be used to endorse or promote products derived from this software
++without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-- 
+gitgitgadget
 
-There are several other calls to `write_entry()` that pass NULL and it
-could cause confusion.
-
-
->   
->   	if (ce->ce_flags & CE_WT_REMOVE) {
->   		if (topath)
-> @@ -454,8 +458,13 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
->   		return 0;
->   	}
->   
-> -	if (topath)
-> -		return write_entry(ce, topath, state, 1);
-> +	if (topath) {
-> +		if (S_ISREG(ce->ce_mode)) {
-> +			convert_attrs(state->istate, &ca, ce->name);
-> +			return write_entry(ce, topath, &ca, state, 1);
-> +		}
-> +		return write_entry(ce, topath, NULL, state, 1);
-> +	}
->   
->   	strbuf_reset(&path);
->   	strbuf_add(&path, state->base_dir, state->base_dir_len);
-> @@ -517,9 +526,16 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
->   		return 0;
->   
->   	create_directories(path.buf, path.len, state);
-> +
->   	if (nr_checkouts)
->   		(*nr_checkouts)++;
-> -	return write_entry(ce, path.buf, state, 0);
-> +
-> +	if (S_ISREG(ce->ce_mode)) {
-> +		convert_attrs(state->istate, &ca, ce->name);
-> +		return write_entry(ce, path.buf, &ca, state, 0);
-> +	}
-> +
-> +	return write_entry(ce, path.buf, NULL, state, 0);
->   }
->   
->   void unlink_entry(const struct cache_entry *ce)
-> 
