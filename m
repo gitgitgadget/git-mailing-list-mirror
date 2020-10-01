@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CBDC4727E
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54BB1C4727E
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:11:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6E6E20759
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:11:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C65C20759
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 16:11:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L9mk58LF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rlxOgl5H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732527AbgJAQLJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Oct 2020 12:11:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45388 "EHLO
+        id S1732605AbgJAQLL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Oct 2020 12:11:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732048AbgJAQLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Oct 2020 12:11:08 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A073C0613D0
-        for <git@vger.kernel.org>; Thu,  1 Oct 2020 09:11:08 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id q9so3513169wmj.2
-        for <git@vger.kernel.org>; Thu, 01 Oct 2020 09:11:08 -0700 (PDT)
+        with ESMTP id S1732529AbgJAQLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Oct 2020 12:11:11 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B52C0613D0
+        for <git@vger.kernel.org>; Thu,  1 Oct 2020 09:11:10 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c18so6445808wrm.9
+        for <git@vger.kernel.org>; Thu, 01 Oct 2020 09:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HcHNjBh+LHS08DtT9nU5o2hzC6PC18QgYDDpPua43xc=;
-        b=L9mk58LFdYam4Xj3a6toG35sYmfV4PdBdFb1JSjmyYOiK19re0b9B8Ov9/rvQhmDMd
-         xo7sQOWSRezL6TlkcTfBKcs6VpnzMUPUNwC+VEjN1FtRs9o9GaC0IyT0y6V0igXDaftD
-         hyyrEsZGjwM3iLhSPRCiuMdT17++HAmi9rrFOZqygSRLS5eDvB4i9p/z103tZpY5UBOt
-         u+WxQNJIPwacm5WoBPodtf1h+cewQxtgt/Vp9zT3Ia9qQ4sktZCIGZ19oYI9+dglDs6U
-         pl+YQOnpa4BEutcqnB8VP3vGaMNcqKOxNxn8/Vc72ubSdUwLbcpFvO7d1c5C5BIv4d2W
-         llUg==
+        bh=CZKbrvBgWDCSoenGrLAlKPHr/JGe6o47+34daXnM9S8=;
+        b=rlxOgl5HHw2MDe1VVBF7l73cuUB8AVZX46kYVv+GtX/F8rCIynhx+RIR7L3d6iz3O0
+         AnfGi+kIExuUIhKYhqVlJJDmqLryvJvzcqeEb82qw3podlSv1UFg2R8GU7ttJgokAYYU
+         7UCeSWiFxB8smjPrpoqfs0Yabl8LJTHQRbQDlH5z8scIg44eF+YqzUkyYuUlr4+as4/V
+         wovr8Hr3wPGiI2I8+UqiDUMfx4YbPgTL5gAyq5fCericWPKw4yHfsrTdO8KU0hMsZcqJ
+         SlaFsehEj3cTAxP+HktWYbr1dGW2HNsvmGTDCkWh4PzZar5viyTaoc5CyyIJwo/Tiutm
+         TOMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HcHNjBh+LHS08DtT9nU5o2hzC6PC18QgYDDpPua43xc=;
-        b=UndmF1Wf1Lpk+IRVDRNJ78N144gx2wrML1ldhqZzDObNzGNkVlqq2RQBO2Uxg4fMQp
-         rNs+2LT6QjP00+cNyH03CN72Emb28tOph14Yjp+Lxu/OjAh4dPEV8C5CWWfQOQtUH/zG
-         Yaqky4h6zEADD55jz4czln67kY+RgK6laynfxL16qIClal+GB66+m/IBZPxduSFuDn4Z
-         THK6FRdKeBBGoYrYjYS4PcJmUVehHA93RP90d9e/ewI/TZvrkVlIFg6ABCHQyIvFhwfp
-         5aTGrzFMGNMfOhOsVBtpxfGvslhmxVdUpnsybyKtwxV/yST9ytOTq7Va5bJn/ZXtV/Mb
-         2vog==
-X-Gm-Message-State: AOAM532pGH0m3CwCqtwI+/EB/k6Sugh+/8mmn/JOWb2tQid9nOhKa8On
-        nrBOGGkvqa8CDtMiqnjEafeFumHTomQ=
-X-Google-Smtp-Source: ABdhPJwVo6p3prf8tUjW2VxClb5v0K+sNfGzJoz49/w1eXWIqbjfj7AftZrYby4pQt/4JE48vVOi/Q==
-X-Received: by 2002:a1c:4683:: with SMTP id t125mr805816wma.110.1601568666976;
-        Thu, 01 Oct 2020 09:11:06 -0700 (PDT)
+        bh=CZKbrvBgWDCSoenGrLAlKPHr/JGe6o47+34daXnM9S8=;
+        b=kKAOLFcm4k50Nr8F0axOlePahJJWXY3GiztndZdoqf99qJ2tSxzkNGs/DP6QPWUIu+
+         mPMJxKUL7TVVgIf9r31KdOQzXjTrFlVazDfbNNVK5T96wYfdemhbmnxlRk2rTo/HzV0i
+         pO6wFKz7TPl6SWAYKYUTj/f2DrWAoTb8rhHps58n9jHFSKrSUcorscwJWw4Fw3h4nQ+x
+         N2Zdpw9QHxyyj6q1FZNO2maHQyzH3m/sA+KkCgmmQ4aBiD8gWmUaE1b0mXE9RdNJAVxT
+         LtnBAN/m3T6JnFq4jZ1kqvGxTMl7nVCkIqJsOCrZXZ8xBs1ycUQ+YSiQraG58gxk44V5
+         u0QQ==
+X-Gm-Message-State: AOAM533TIbH7pE9ePB85UpG+L2vqXiU5FLXMu2qbsIJZI6k+YWPb2nyN
+        65YstTcWo5Y0PRsyfdxiPXdiJwkPzSE=
+X-Google-Smtp-Source: ABdhPJzSjgJp0O80jxxMJ2coqcgwmuzdGUvXNQTfA+OTLKuvR3efIn07RKOHzjGfCqmDxQj1SvEbTw==
+X-Received: by 2002:a5d:45cc:: with SMTP id b12mr9882608wrs.395.1601568668057;
+        Thu, 01 Oct 2020 09:11:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w2sm9497152wrs.15.2020.10.01.09.11.06
+        by smtp.gmail.com with ESMTPSA id f14sm654262wme.22.2020.10.01.09.11.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2020 09:11:06 -0700 (PDT)
-Message-Id: <6228103b4a6dab23ce3a4498eada8ff649909ff0.1601568663.git.gitgitgadget@gmail.com>
+        Thu, 01 Oct 2020 09:11:07 -0700 (PDT)
+Message-Id: <5d1b946ab5473504e9599d90c0feda407a179a05.1601568663.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
 References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
         <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Oct 2020 16:10:51 +0000
-Subject: [PATCH v2 01/13] reftable: add LICENSE
+Date:   Thu, 01 Oct 2020 16:10:52 +0000
+Subject: [PATCH v2 02/13] reftable: define the public API
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,51 +78,603 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-TODO: relicense?
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/LICENSE | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
- create mode 100644 reftable/LICENSE
+ reftable/reftable.h | 585 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 585 insertions(+)
+ create mode 100644 reftable/reftable.h
 
-diff --git a/reftable/LICENSE b/reftable/LICENSE
+diff --git a/reftable/reftable.h b/reftable/reftable.h
 new file mode 100644
-index 0000000000..402e0f9356
+index 0000000000..5f8ebf5540
 --- /dev/null
-+++ b/reftable/LICENSE
-@@ -0,0 +1,31 @@
-+BSD License
++++ b/reftable/reftable.h
+@@ -0,0 +1,585 @@
++/*
++Copyright 2020 Google LLC
 +
-+Copyright (c) 2020, Google LLC
-+All rights reserved.
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
 +
-+Redistribution and use in source and binary forms, with or without
-+modification, are permitted provided that the following conditions are
-+met:
++#ifndef REFTABLE_H
++#define REFTABLE_H
 +
-+* Redistributions of source code must retain the above copyright notice,
-+this list of conditions and the following disclaimer.
++#include <stdint.h>
++#include <stddef.h>
 +
-+* Redistributions in binary form must reproduce the above copyright
-+notice, this list of conditions and the following disclaimer in the
-+documentation and/or other materials provided with the distribution.
++void reftable_set_alloc(void *(*malloc)(size_t),
++			void *(*realloc)(void *, size_t), void (*free)(void *));
 +
-+* Neither the name of Google LLC nor the names of its contributors may
-+be used to endorse or promote products derived from this software
-+without specific prior written permission.
++/****************************************************************
++ Basic data types
 +
-+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ Reftables store the state of each ref in struct reftable_ref_record, and they
++ store a sequence of reflog updates in struct reftable_log_record.
++ ****************************************************************/
++
++/* reftable_ref_record holds a ref database entry target_value */
++struct reftable_ref_record {
++	char *refname; /* Name of the ref, malloced. */
++	uint64_t update_index; /* Logical timestamp at which this value is
++				  written */
++	uint8_t *value; /* SHA1, or NULL. malloced. */
++	uint8_t *target_value; /* peeled annotated tag, or NULL. malloced. */
++	char *target; /* symref, or NULL. malloced. */
++};
++
++/* returns whether 'ref' represents a deletion */
++int reftable_ref_record_is_deletion(const struct reftable_ref_record *ref);
++
++/* prints a reftable_ref_record onto stdout */
++void reftable_ref_record_print(struct reftable_ref_record *ref,
++			       uint32_t hash_id);
++
++/* frees and nulls all pointer values. */
++void reftable_ref_record_clear(struct reftable_ref_record *ref);
++
++/* returns whether two reftable_ref_records are the same */
++int reftable_ref_record_equal(struct reftable_ref_record *a,
++			      struct reftable_ref_record *b, int hash_size);
++
++/* reftable_log_record holds a reflog entry */
++struct reftable_log_record {
++	char *refname;
++	uint64_t update_index; /* logical timestamp of a transactional update.
++				*/
++	uint8_t *new_hash;
++	uint8_t *old_hash;
++	char *name;
++	char *email;
++	uint64_t time;
++	int16_t tz_offset;
++	char *message;
++};
++
++/* returns whether 'ref' represents the deletion of a log record. */
++int reftable_log_record_is_deletion(const struct reftable_log_record *log);
++
++/* frees and nulls all pointer values. */
++void reftable_log_record_clear(struct reftable_log_record *log);
++
++/* returns whether two records are equal. */
++int reftable_log_record_equal(struct reftable_log_record *a,
++			      struct reftable_log_record *b, int hash_size);
++
++/* dumps a reftable_log_record on stdout, for debugging/testing. */
++void reftable_log_record_print(struct reftable_log_record *log,
++			       uint32_t hash_id);
++
++/****************************************************************
++ Error handling
++
++ Error are signaled with negative integer return values. 0 means success.
++ ****************************************************************/
++
++/* different types of errors */
++enum reftable_error {
++	/* Unexpected file system behavior */
++	REFTABLE_IO_ERROR = -2,
++
++	/* Format inconsistency on reading data
++	 */
++	REFTABLE_FORMAT_ERROR = -3,
++
++	/* File does not exist. Returned from block_source_from_file(),  because
++	   it needs special handling in stack.
++	*/
++	REFTABLE_NOT_EXIST_ERROR = -4,
++
++	/* Trying to write out-of-date data. */
++	REFTABLE_LOCK_ERROR = -5,
++
++	/* Misuse of the API:
++	   - on writing a record with NULL refname.
++	   - on writing a reftable_ref_record outside the table limits
++	   - on writing a ref or log record before the stack's next_update_index
++	   - on writing a log record with multiline message with
++	   exact_log_message unset
++	   - on reading a reftable_ref_record from log iterator, or vice versa.
++	*/
++	REFTABLE_API_ERROR = -6,
++
++	/* Decompression error */
++	REFTABLE_ZLIB_ERROR = -7,
++
++	/* Wrote a table without blocks. */
++	REFTABLE_EMPTY_TABLE_ERROR = -8,
++
++	/* Dir/file conflict. */
++	REFTABLE_NAME_CONFLICT = -9,
++
++	/* Illegal ref name. */
++	REFTABLE_REFNAME_ERROR = -10,
++};
++
++/* convert the numeric error code to a string. The string should not be
++ * deallocated. */
++const char *reftable_error_str(int err);
++
++/*
++ * Convert the numeric error code to an equivalent errno code.
++ */
++int reftable_error_to_errno(int err);
++
++/****************************************************************
++ Writing
++
++ Writing single reftables
++ ****************************************************************/
++
++/* reftable_write_options sets options for writing a single reftable. */
++struct reftable_write_options {
++	/* boolean: do not pad out blocks to block size. */
++	int unpadded;
++
++	/* the blocksize. Should be less than 2^24. */
++	uint32_t block_size;
++
++	/* boolean: do not generate a SHA1 => ref index. */
++	int skip_index_objects;
++
++	/* how often to write complete keys in each block. */
++	int restart_interval;
++
++	/* 4-byte identifier ("sha1", "s256") of the hash.
++	 * Defaults to SHA1 if unset
++	 */
++	uint32_t hash_id;
++
++	/* boolean: do not check ref names for validity or dir/file conflicts.
++	 */
++	int skip_name_check;
++
++	/* boolean: copy log messages exactly. If unset, check that the message
++	 *   is a single line, and add '\n' if missing.
++	 */
++	int exact_log_message;
++};
++
++/* reftable_block_stats holds statistics for a single block type */
++struct reftable_block_stats {
++	/* total number of entries written */
++	int entries;
++	/* total number of key restarts */
++	int restarts;
++	/* total number of blocks */
++	int blocks;
++	/* total number of index blocks */
++	int index_blocks;
++	/* depth of the index */
++	int max_index_level;
++
++	/* offset of the first block for this type */
++	uint64_t offset;
++	/* offset of the top level index block for this type, or 0 if not
++	 * present */
++	uint64_t index_offset;
++};
++
++/* stats holds overall statistics for a single reftable */
++struct reftable_stats {
++	/* total number of blocks written. */
++	int blocks;
++	/* stats for ref data */
++	struct reftable_block_stats ref_stats;
++	/* stats for the SHA1 to ref map. */
++	struct reftable_block_stats obj_stats;
++	/* stats for index blocks */
++	struct reftable_block_stats idx_stats;
++	/* stats for log blocks */
++	struct reftable_block_stats log_stats;
++
++	/* disambiguation length of shortened object IDs. */
++	int object_id_len;
++};
++
++/* reftable_new_writer creates a new writer */
++struct reftable_writer *
++reftable_new_writer(int (*writer_func)(void *, const void *, size_t),
++		    void *writer_arg, struct reftable_write_options *opts);
++
++/* write to a file descriptor. fdp should be an int* pointing to the fd. */
++int reftable_fd_write(void *fdp, const void *data, size_t size);
++
++/* Set the range of update indices for the records we will add.  When
++   writing a table into a stack, the min should be at least
++   reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
++
++   For transactional updates, typically min==max. When converting an existing
++   ref database into a single reftable, this would be a range of update-index
++   timestamps.
++ */
++void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
++				uint64_t max);
++
++/* adds a reftable_ref_record. Must be called in ascending
++   order. The update_index must be within the limits set by
++   reftable_writer_set_limits(), or REFTABLE_API_ERROR is returned.
++
++   It is an error to write a ref record after a log record.
++ */
++int reftable_writer_add_ref(struct reftable_writer *w,
++			    struct reftable_ref_record *ref);
++
++/* Convenience function to add multiple refs. Will sort the refs by
++   name before adding. */
++int reftable_writer_add_refs(struct reftable_writer *w,
++			     struct reftable_ref_record *refs, int n);
++
++/* adds a reftable_log_record. Must be called in ascending order (with more
++   recent log entries first.)
++ */
++int reftable_writer_add_log(struct reftable_writer *w,
++			    struct reftable_log_record *log);
++
++/* Convenience function to add multiple logs. Will sort the records by
++   key before adding. */
++int reftable_writer_add_logs(struct reftable_writer *w,
++			     struct reftable_log_record *logs, int n);
++
++/* reftable_writer_close finalizes the reftable. The writer is retained so
++ * statistics can be inspected. */
++int reftable_writer_close(struct reftable_writer *w);
++
++/* writer_stats returns the statistics on the reftable being written.
++
++   This struct becomes invalid when the writer is freed.
++ */
++const struct reftable_stats *writer_stats(struct reftable_writer *w);
++
++/* reftable_writer_free deallocates memory for the writer */
++void reftable_writer_free(struct reftable_writer *w);
++
++/****************************************************************
++ * ITERATING
++ ****************************************************************/
++
++/* iterator is the generic interface for walking over data stored in a
++   reftable. It is generally passed around by value.
++*/
++struct reftable_iterator {
++	struct reftable_iterator_vtable *ops;
++	void *iter_arg;
++};
++
++/* reads the next reftable_ref_record. Returns < 0 for error, 0 for OK and > 0:
++   end of iteration.
++*/
++int reftable_iterator_next_ref(struct reftable_iterator *it,
++			       struct reftable_ref_record *ref);
++
++/* reads the next reftable_log_record. Returns < 0 for error, 0 for OK and > 0:
++   end of iteration.
++*/
++int reftable_iterator_next_log(struct reftable_iterator *it,
++			       struct reftable_log_record *log);
++
++/* releases resources associated with an iterator. */
++void reftable_iterator_destroy(struct reftable_iterator *it);
++
++/****************************************************************
++ Reading single tables
++
++ The follow routines are for reading single files. For an application-level
++ interface, skip ahead to struct reftable_merged_table and struct
++ reftable_stack.
++ ****************************************************************/
++
++/* block_source is a generic wrapper for a seekable readable file.
++   It is generally passed around by value.
++ */
++struct reftable_block_source {
++	struct reftable_block_source_vtable *ops;
++	void *arg;
++};
++
++/* a contiguous segment of bytes. It keeps track of its generating block_source
++   so it can return itself into the pool.
++*/
++struct reftable_block {
++	uint8_t *data;
++	int len;
++	struct reftable_block_source source;
++};
++
++/* block_source_vtable are the operations that make up block_source */
++struct reftable_block_source_vtable {
++	/* returns the size of a block source */
++	uint64_t (*size)(void *source);
++
++	/* reads a segment from the block source. It is an error to read
++	   beyond the end of the block */
++	int (*read_block)(void *source, struct reftable_block *dest,
++			  uint64_t off, uint32_t size);
++	/* mark the block as read; may return the data back to malloc */
++	void (*return_block)(void *source, struct reftable_block *blockp);
++
++	/* release all resources associated with the block source */
++	void (*close)(void *source);
++};
++
++/* opens a file on the file system as a block_source */
++int reftable_block_source_from_file(struct reftable_block_source *block_src,
++				    const char *name);
++
++/* The reader struct is a handle to an open reftable file. */
++struct reftable_reader;
++
++/* reftable_new_reader opens a reftable for reading. If successful, returns 0
++ * code and sets pp. The name is used for creating a stack. Typically, it is the
++ * basename of the file. The block source `src` is owned by the reader, and is
++ * closed on calling reftable_reader_destroy().
++ */
++int reftable_new_reader(struct reftable_reader **pp,
++			struct reftable_block_source *src, const char *name);
++
++/* reftable_reader_seek_ref returns an iterator where 'name' would be inserted
++   in the table.  To seek to the start of the table, use name = "".
++
++   example:
++
++   struct reftable_reader *r = NULL;
++   int err = reftable_new_reader(&r, &src, "filename");
++   if (err < 0) { ... }
++   struct reftable_iterator it  = {0};
++   err = reftable_reader_seek_ref(r, &it, "refs/heads/master");
++   if (err < 0) { ... }
++   struct reftable_ref_record ref  = {0};
++   while (1) {
++     err = reftable_iterator_next_ref(&it, &ref);
++     if (err > 0) {
++       break;
++     }
++     if (err < 0) {
++       ..error handling..
++     }
++     ..found..
++   }
++   reftable_iterator_destroy(&it);
++   reftable_ref_record_clear(&ref);
++ */
++int reftable_reader_seek_ref(struct reftable_reader *r,
++			     struct reftable_iterator *it, const char *name);
++
++/* returns the hash ID used in this table. */
++uint32_t reftable_reader_hash_id(struct reftable_reader *r);
++
++/* seek to logs for the given name, older than update_index. To seek to the
++   start of the table, use name = "".
++ */
++int reftable_reader_seek_log_at(struct reftable_reader *r,
++				struct reftable_iterator *it, const char *name,
++				uint64_t update_index);
++
++/* seek to newest log entry for given name. */
++int reftable_reader_seek_log(struct reftable_reader *r,
++			     struct reftable_iterator *it, const char *name);
++
++/* closes and deallocates a reader. */
++void reftable_reader_free(struct reftable_reader *);
++
++/* return an iterator for the refs pointing to `oid`. */
++int reftable_reader_refs_for(struct reftable_reader *r,
++			     struct reftable_iterator *it, uint8_t *oid);
++
++/* return the max_update_index for a table */
++uint64_t reftable_reader_max_update_index(struct reftable_reader *r);
++
++/* return the min_update_index for a table */
++uint64_t reftable_reader_min_update_index(struct reftable_reader *r);
++
++/****************************************************************
++ Merged tables
++
++ A ref database kept in a sequence of table files. The merged_table presents a
++ unified view to reading (seeking, iterating) a sequence of immutable tables.
++ ****************************************************************/
++
++/* A merged table is implements seeking/iterating over a stack of tables. */
++struct reftable_merged_table;
++
++/* A generic reftable; see below. */
++struct reftable_table;
++
++/* reftable_new_merged_table creates a new merged table. It takes ownership of
++   the stack array.
++*/
++int reftable_new_merged_table(struct reftable_merged_table **dest,
++			      struct reftable_table *stack, int n,
++			      uint32_t hash_id);
++
++/* returns an iterator positioned just before 'name' */
++int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
++				   struct reftable_iterator *it,
++				   const char *name);
++
++/* returns an iterator for log entry, at given update_index */
++int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
++				      struct reftable_iterator *it,
++				      const char *name, uint64_t update_index);
++
++/* like reftable_merged_table_seek_log_at but look for the newest entry. */
++int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
++				   struct reftable_iterator *it,
++				   const char *name);
++
++/* returns the max update_index covered by this merged table. */
++uint64_t
++reftable_merged_table_max_update_index(struct reftable_merged_table *mt);
++
++/* returns the min update_index covered by this merged table. */
++uint64_t
++reftable_merged_table_min_update_index(struct reftable_merged_table *mt);
++
++/* releases memory for the merged_table */
++void reftable_merged_table_free(struct reftable_merged_table *m);
++
++/* return the hash ID of the merged table. */
++uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *m);
++
++/****************************************************************
++ Generic tables
++
++ A unified API for reading tables, either merged tables, or single readers.
++ ****************************************************************/
++
++struct reftable_table {
++	struct reftable_table_vtable *ops;
++	void *table_arg;
++};
++
++int reftable_table_seek_ref(struct reftable_table *tab,
++			    struct reftable_iterator *it, const char *name);
++
++void reftable_table_from_reader(struct reftable_table *tab,
++				struct reftable_reader *reader);
++
++/* returns the hash ID from a generic reftable_table */
++uint32_t reftable_table_hash_id(struct reftable_table *tab);
++
++/* create a generic table from reftable_merged_table */
++void reftable_table_from_merged_table(struct reftable_table *tab,
++				      struct reftable_merged_table *table);
++
++/* returns the max update_index covered by this table. */
++uint64_t reftable_table_max_update_index(struct reftable_table *tab);
++
++/* returns the min update_index covered by this table. */
++uint64_t reftable_table_min_update_index(struct reftable_table *tab);
++
++/* convenience function to read a single ref. Returns < 0 for error, 0
++   for success, and 1 if ref not found. */
++int reftable_table_read_ref(struct reftable_table *tab, const char *name,
++			    struct reftable_ref_record *ref);
++
++/****************************************************************
++ Mutable ref database
++
++ The stack presents an interface to a mutable sequence of reftables.
++ ****************************************************************/
++
++/* a stack is a stack of reftables, which can be mutated by pushing a table to
++ * the top of the stack */
++struct reftable_stack;
++
++/* open a new reftable stack. The tables along with the table list will be
++   stored in 'dir'. Typically, this should be .git/reftables.
++*/
++int reftable_new_stack(struct reftable_stack **dest, const char *dir,
++		       struct reftable_write_options config);
++
++/* returns the update_index at which a next table should be written. */
++uint64_t reftable_stack_next_update_index(struct reftable_stack *st);
++
++/* holds a transaction to add tables at the top of a stack. */
++struct reftable_addition;
++
++/*
++  returns a new transaction to add reftables to the given stack. As a side
++  effect, the ref database is locked.
++*/
++int reftable_stack_new_addition(struct reftable_addition **dest,
++				struct reftable_stack *st);
++
++/* Adds a reftable to transaction. */
++int reftable_addition_add(struct reftable_addition *add,
++			  int (*write_table)(struct reftable_writer *wr,
++					     void *arg),
++			  void *arg);
++
++/* Commits the transaction, releasing the lock. */
++int reftable_addition_commit(struct reftable_addition *add);
++
++/* Release all non-committed data from the transaction, and deallocate the
++   transaction. Releases the lock if held. */
++void reftable_addition_destroy(struct reftable_addition *add);
++
++/* add a new table to the stack. The write_table function must call
++   reftable_writer_set_limits, add refs and return an error value. */
++int reftable_stack_add(struct reftable_stack *st,
++		       int (*write_table)(struct reftable_writer *wr,
++					  void *write_arg),
++		       void *write_arg);
++
++/* returns the merged_table for seeking. This table is valid until the
++   next write or reload, and should not be closed or deleted.
++*/
++struct reftable_merged_table *
++reftable_stack_merged_table(struct reftable_stack *st);
++
++/* frees all resources associated with the stack. */
++void reftable_stack_destroy(struct reftable_stack *st);
++
++/* Reloads the stack if necessary. This is very cheap to run if the stack was up
++ * to date */
++int reftable_stack_reload(struct reftable_stack *st);
++
++/* Policy for expiring reflog entries. */
++struct reftable_log_expiry_config {
++	/* Drop entries older than this timestamp */
++	uint64_t time;
++
++	/* Drop older entries */
++	uint64_t min_update_index;
++};
++
++/* compacts all reftables into a giant table. Expire reflog entries if config is
++ * non-NULL */
++int reftable_stack_compact_all(struct reftable_stack *st,
++			       struct reftable_log_expiry_config *config);
++
++/* heuristically compact unbalanced table stack. */
++int reftable_stack_auto_compact(struct reftable_stack *st);
++
++/* convenience function to read a single ref. Returns < 0 for error, 0
++   for success, and 1 if ref not found. */
++int reftable_stack_read_ref(struct reftable_stack *st, const char *refname,
++			    struct reftable_ref_record *ref);
++
++/* convenience function to read a single log. Returns < 0 for error, 0
++   for success, and 1 if ref not found. */
++int reftable_stack_read_log(struct reftable_stack *st, const char *refname,
++			    struct reftable_log_record *log);
++
++/* statistics on past compactions. */
++struct reftable_compaction_stats {
++	uint64_t bytes; /* total number of bytes written */
++	uint64_t entries_written; /* total number of entries written, including
++				     failures. */
++	int attempts; /* how often we tried to compact */
++	int failures; /* failures happen on concurrent updates */
++};
++
++/* return statistics for compaction up till now. */
++struct reftable_compaction_stats *
++reftable_stack_compaction_stats(struct reftable_stack *st);
++
++#endif
 -- 
 gitgitgadget
 
