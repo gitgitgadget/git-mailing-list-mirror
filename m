@@ -7,81 +7,105 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03ED2C4363D
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 00:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB8FC4363D
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 02:19:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B082D2184D
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 00:35:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6064A2087D
+	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 02:19:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jaZk/r7z"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rYoftBhh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730873AbgJAAfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Sep 2020 20:35:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51906 "EHLO
+        id S1730043AbgJACRV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Sep 2020 22:17:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59151 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730403AbgJAAfJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Sep 2020 20:35:09 -0400
+        with ESMTP id S1725800AbgJACRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Sep 2020 22:17:20 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61B8B89DD7;
-        Wed, 30 Sep 2020 20:35:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D6018A781;
+        Wed, 30 Sep 2020 22:17:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=n27vfSZLgm3yCuIWrJsrDuDU6ck=; b=jaZk/r
-        7zZZm0CU0uVdIseHPCUkr/1QuFqGxqko5c8wbuRMJzDxc1kRLd561lpQGwQn23k3
-        UbJAMnjjha1vNsW5erXVC9KomnYBmSskhyofgvQ5VRUIV8QU/WsP1Gs3roo0/Qsa
-        +WjU2Pkj03shXSS+ZWtYf4C8U8NHGKMEgBQtU=
+        :content-type; s=sasl; bh=Wl5INgJ1ryyK1F/jwS4ZEVsgTFQ=; b=rYoftB
+        hhn0jC13Hs8d17rm+6ye5QMd/Shn3v4kAR6I+1c8HsSxFYWbRKoFVHUopIL1Ufwj
+        vsmdWgYEPJwI6jX2vgQMdRGrujYs1cusr5pBL+XFUb+e0l3jOPSti9mLfXLTygqe
+        vXIx4MdXva0g4foqvjgf+tpwGKkfjEDm/+9Us=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X+N3D9+xfExZgRJMmQ9G02+AVLbM1zFD
-        k4oBE3j5J9TQKM6YnIoH1Q9io2YqlmKGZtM1ngKrW/ex34nk9hf+9UOsjh8Qak2l
-        GTgEJC2m2Qs4jtskSMu4qrHuciIlu7mH8u/xHDFkQmId55TrncGvGLQ7ckS8fwTN
-        F41VFNibo9Q=
+        :content-type; q=dns; s=sasl; b=xczfE9TB6vK23S/iuGQdM8x+bG0LNdCT
+        kKfXHjTqRJqXkiJuIf8Z6Kfqje50lrXd5MNqAW5OWjYre9u9UN/1dpWjOIFs6uGi
+        OcwWnyiVYRfIC8Toqy7EO5lH4DTA91kqamaF2P7QRPPe5Zy4sEmqQF4wqnUtOsE8
+        7SmN07mpz7Y=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4806089DD6;
-        Wed, 30 Sep 2020 20:35:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 941A68A780;
+        Wed, 30 Sep 2020 22:17:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA66989DD5;
-        Wed, 30 Sep 2020 20:35:07 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A7AE8A77E;
+        Wed, 30 Sep 2020 22:17:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Shengfa Lin <shengfa@google.com>
 Cc:     git@vger.kernel.org, nathaniel@google.com, rsbecker@nexbridge.com,
         santiago@nyu.edu
-Subject: Re: [RFC PATCH 1/1] hideTimezone: add a user.hideTimezone config
+Subject: Re: [RFC PATCH 0/1] adding user.hideTimezone for setting UTC timezone
 References: <CAEOYnAQYMrNAe9s1V-0DVLdL-B_KpHMDP5e=yRnbCkMWdrvFHQ@mail.gmail.com>
         <20200930232138.3656304-1-shengfa@google.com>
-        <20200930232138.3656304-2-shengfa@google.com>
-        <xmqqpn62essa.fsf@gitster.c.googlers.com>
-        <xmqq7dsaeqij.fsf@gitster.c.googlers.com>
-Date:   Wed, 30 Sep 2020 17:35:07 -0700
-In-Reply-To: <xmqq7dsaeqij.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 30 Sep 2020 17:31:00 -0700")
-Message-ID: <xmqq362yeqbo.fsf@gitster.c.googlers.com>
+        <xmqqlfgqes95.fsf@gitster.c.googlers.com>
+Date:   Wed, 30 Sep 2020 19:17:17 -0700
+In-Reply-To: <xmqqlfgqes95.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 30 Sep 2020 16:53:26 -0700")
+Message-ID: <xmqqtuved70y.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F4C36E3E-037D-11EB-80CE-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3AC53486-038C-11EB-AB5F-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> 	test_config user.hideTimeZone true &&
-> 	(
-> 		export GIT_AUTHOR_DATE=@1600000000 TZ=UTC-09 &&
-> 		git commit ... &&
-> 		git show -s --format='%aI' >output &&
-> 		echo 2020-09-13T15:26:40+03:00 >expect &&
+> What I said is that git () { TZ=UTC command git "$@" } is simple
+> enough that I doubt it is worth the engineering effort to either
+> read configuration file early (which is tricky) so that setenv() can
+> be done early in cmd_main() and/or audit the codebase widely enough
+> (which is time consuming) to make sure that we pay attention to the
+> configuration variable in all codepaths that matter to do the
+> setenv().
 
-Oops.  The sample date and zone must be adjusted for the values
-exported above.  I expect that we'd need to do
+Regarding the implementation, the posted patch to "git commit" uses
+the "futz with TZ early inside the git process" approach, but I
+think we should not do so for another reason.  Our setenv() may not
+be early enough---before the code that decides to call a setenv()
+is run, there are many things that are outside your control (like
+the tracing subsystem, repository discovery, etc.) will run, and if
+any of them does something that triggers tzset() to be called, it
+will be done with the value of TZ the process started with, and our
+setenv() that happens much later won't have any effect to it.
 
-		...
-		echo 2020-09-13T12:26:40+00:00 >expect &&
-		test_cmp expect output
+Another thing is that setting TZ ourselves would affect hooks and
+other programs we spawn as subprocess, which may or may not be
+desired, depending on the reason why the user is forcing UTC.
 
+All code that create object headers like committer, author and
+tagger lines use the same git_author_info() and git_committer_info()
+API, I think, which eventually goes to fmt_ident(), and they produce
+a pair <number of seconds since epoch, offset>.  This gives us an
+entirely different opening to tackle this issue from, because the
+"number of seconds since epoch" part won't change the value no
+matter what timezone you are in.
+
+You can let the existing code produce its natural result and then
+when the "force UTC" flag is set, override the offset part to +0000
+if and only if the timezone was obtained from the current
+environment (this if-and-only-if is necessary, because you do not
+want to rewrite and force UTC when you run "git commit --amend"
+without the "--reset-author" option to update a commit that was
+created somewhere else to UTC).  That way, we do not have to futz
+with TZ environment or tzset.
+
+Just something to think about.
