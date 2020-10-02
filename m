@@ -2,99 +2,147 @@ Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43C93C35257
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 22:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B890AC35257
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 22:32:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C65C720738
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 22:06:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6532720719
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 22:32:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mIHsI4I5"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vTtQNeyM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725786AbgJBWGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 18:06:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58172 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgJBWGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 18:06:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85E0FE4528;
-        Fri,  2 Oct 2020 18:06:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1H5rKJzsijxQfwAUiD7r2x5WM3g=; b=mIHsI4
-        I5BTfPIS/+PXkc70vpO/LBXyAtbYjPAAk+vx2ORg5I/tw6bj8aM0Vy4aGZCj3EP7
-        0lq0yNH2iOb5KBUHSO/aHb2nbzhVcmYy4p9+pa5K0/tdxnKuU/izKHE0keYjHyzL
-        7AOtvMWI95CM7f5yeglGhyUGRZ3jEJYllxqLw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NAaSNgQYKJIS1fESVBocitiDa7lDuLbg
-        czXlBM6T2TVfDhEeMwqBL/QLdhToUvXPYvPbWEpTdPtq1tkBd3B9v5CwXxZiPtgu
-        zTzAYKvBGWneNOR7ocm311kPiwqLMbg4PnpfuXwziR+IhNTRUd2z62m8brB3wI1/
-        XOKJPgTSAQo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D170E4527;
-        Fri,  2 Oct 2020 18:06:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AF55CE4526;
-        Fri,  2 Oct 2020 18:06:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shengfa Lin <shengfa@google.com>
-Cc:     jrnieder@gmail.com, git@vger.kernel.org, nathaniel@google.com,
-        rsbecker@nexbridge.com, santiago@nyu.edu
-Subject: Re: [RFC PATCH 0/1] adding user.hideTimezone for setting UTC timezone
-References: <20201001034350.GB2930867@google.com>
-        <20201002215656.80643-1-shengfa@google.com>
-Date:   Fri, 02 Oct 2020 15:06:01 -0700
-In-Reply-To: <20201002215656.80643-1-shengfa@google.com> (Shengfa Lin's
-        message of "Fri, 2 Oct 2020 21:56:56 +0000")
-Message-ID: <xmqq8sco8era.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 77280D20-04FB-11EB-884B-843F439F7C89-77302942!pb-smtp21.pobox.com
+        id S1725550AbgJBWcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 18:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725283AbgJBWcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 18:32:14 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25DC9C0613D0
+        for <git@vger.kernel.org>; Fri,  2 Oct 2020 15:32:14 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id h31so2160755qtd.14
+        for <git@vger.kernel.org>; Fri, 02 Oct 2020 15:32:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=SJaYKi5sc4J3dW3tT0ZrSCWPl2Fw2Zce29p+V87l0aA=;
+        b=vTtQNeyMssw8vsAog2wX1TOUjECN70Us2JTgHNmcDXHFaY3Jjak+IB/HFbLlMT0Uzn
+         iW72cTeBkfqPTINa9STz6jGMiZrOMwb3mp82TUQZ2EJ9QhsaZak2S0k/HbLHt2CZP9r+
+         HsCn2eaRqVbfVlbnHcMpo2HEQTR/IEScNakNU3dZH9ADjMB8+2o7DdlQhEL7Y9qaxUu9
+         6+r0UlXOysSMrzEatytGv79OSXv6rrjFIo8E2QNiL9nhogp3vbzN9vFj9d7cVNad6PNE
+         j++4TLcK2JMfMKlCYEi+FCaznIip1XtuHEVkJjwhGC/xwvu38W4iST9/QuGzZEW9U9V9
+         37Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=SJaYKi5sc4J3dW3tT0ZrSCWPl2Fw2Zce29p+V87l0aA=;
+        b=J3KzabLbeNeLjacsZHUfdYK98G+0bT0rlEj8JwCOJknFC9e868S2VEZr+L2HKOWx/A
+         TkKp0DJiNlT3xujBysn4O1wSNZu0kGXKu0CevzeWDl7zIfwEWfKdp+UNmD3kqLoYHF0p
+         3IPSKeFAPBHPZ18wkUqVbvjwod0qpwTiibRVRtDTqDblZF2rdibVnwVOQOCuBdlnlnvH
+         kWvPQkSkm258uliqjOG8fH4BOtTf6D6KIMDhrMRLBhfPqi35xrwzhfK2Ak9zF0FnWKEq
+         lG2D1gAqy486Q9kuNKO7OArrmqE2CWVUctixJCXpyQd9nZDrQmnIB/p5DdOwNm/Y9Nft
+         Cohg==
+X-Gm-Message-State: AOAM531zoIKO2y6orZ2y4oB0MJy4ztBiGE85pE8wMVSkoEEaNJfL+ePD
+        NIKj419S//2HIsPwAuqKLG4toIx7G0oR
+X-Google-Smtp-Source: ABdhPJzje90unQpztybwN1XzZlBjqniyMeQFWmr11+yD6ndlTW2QNFOaaxoz8QOBVbfNxlJujAMefx4vWO+3
+Sender: "shengfa via sendgmr" <shengfa@lins.c.googlers.com>
+X-Received: from lins.c.googlers.com ([fda3:e722:ac3:10:2b:ff92:c0a8:cb])
+ (user=shengfa job=sendgmr) by 2002:a0c:e348:: with SMTP id
+ a8mr692136qvm.49.1601677933281; Fri, 02 Oct 2020 15:32:13 -0700 (PDT)
+Date:   Fri,  2 Oct 2020 22:32:12 +0000
+In-Reply-To: <20201002061550.GF3252492@google.com>
+Message-Id: <20201002223212.93266-1-shengfa@google.com>
+Mime-Version: 1.0
+References: <20201002061550.GF3252492@google.com>
+X-Mailer: git-send-email 2.28.0.806.g8561365e88-goog
+Subject: Re: [RFC PATCH 1/1] hideTimezone: add a user.hideTimezone config
+From:   Shengfa Lin <shengfa@google.com>
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, nathaniel@google.com,
+        rsbecker@nexbridge.com, santiago@nyu.edu, shengfa@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shengfa Lin <shengfa@google.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> In addition to not having to futz with TZ, I think I like the
->> semantics better.  The motivation that started this thread was not so
->> much "I want to set a custom timezone to blend in" but rather "why are
->> we recording the timezone at all here?"  In that context, it makes
->> sense to me to have a setting such as
->> 
->> 	core.recordTimeZone
->> 
->> that I can turn *off* to say that I don't think datestamp() callers
->> should consider the timezone to be information worth recording (and
->> instead they should write +0000).  To me that seems a little simpler
->> to understand than user.hideTimezone since this focuses on turning
->> some functionality off (recording of the time zone) instead of turning
->> on a new stealth mode.
->> 
->> Thanks,
->> Jonathan
+>>> [...]
+>>
+>> What does HT stands for? I will change the indentation to 8 spaces.
 >
-> +1, simpler to understand.
+> HT means "horizontal tab", like might be shown with "man ascii".
+> 
+> Git uses tabs for indentation.  This file is documentation instead of
+> source so clang-format doesn't know about it, but I might as well
+> mention anyway: if you run "make style", then clang-format will give
+> some suggestions around formatting.  The configuration for that is not
+> yet perfect so you can take its suggestions with a grain of salt, but
+> they should get you in the right direction.
+>
 
-Yup.
+Got it, thanks!
 
-> If we have a setting of "core.recordTimeZone", do we need to make it
-> as a command option as Junio suggested earlier?
+>[...]
+>>>> --- a/builtin/commit.c
+>>>> +++ b/builtin/commit.c
+>>>> @@ -1569,6 +1569,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>>>>  	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
+>>>>  	s.colopts = 0;
+>>>>  
+>>>> +  git_config(git_default_config, NULL);
+>>>
+>>> Declaration after statement is not tolerated in this codebase.
+>>
+>> If I use the DEVELOPER=1 flag in config.mak and call make again, would the compiler
+>> catches this as an error?
+>
+> Yes, DEVELOPER_CFLAGS includes -Wdeclaration-after-statement.
+>
 
-Usually we add command line option --[no-]record-time-zone first
-without configuration option when introducing a new features like
-this one.  Once the feature proves useful, we'd add a matching
-configuration variable for convenience, but leave the command line
-option (negative form in this case) so that a configured per-user
-default can be overridden as needed.
+Got the error from int hide_timezone = 0; but not
+git_config(git_default_config, NULL);.
+
+>>>> +  int hide_timezone = 0;
+>>>
+>>> Unnecessary initialization.
+>>>
+>>>> +  if (!git_config_get_bool("user.hideTimezone", &hide_timezone)  && hide_timezone)
+>>
+>> Is it unnecessary because I am checking the return value from git_config_get_bool so
+>> that the uninitialized value won't be used?
+>
+> By leaving it uninitialized, you can help avoid the reader wondering
+> whether there is some code path where the default value is used.
+>
+
+I see.
+
+>[...]
+>>>             Instead, make sure it is set to some timestamp in some
+>>> timezone that is not UTC, and the timezone of the resulting commit
+>>> author date is in that timezone.  But that must have already been
+>>> done in basic tests on "git commit" that we honor the environment
+>>> variable, no?  Which means there is no need to add yet another extra
+>>> baseline test here.
+>>
+>> I am not sure if this test has already been done in commit basic tests.
+>> Will remove this test.
+>
+> Let's see: *checks with "git grep -e TZ -- t"*.
+> 
+> Looks like t0006 tests various aspects of TZ handling pretty well and
+> t1100 includes of test using TZ with commit-tree (good).
+> 
+> Thanks and hope that helps,
+> Jonathan
+
+Thanks! That helps a lot.
+
+
