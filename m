@@ -2,203 +2,106 @@ Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A97E0C4363D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 11:37:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34218C4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 11:43:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61B64206E3
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 11:37:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6622206E3
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 11:43:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="M+trmeLe"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ibd5uqxg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387762AbgJBLhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 07:37:34 -0400
-Received: from mout.gmx.net ([212.227.15.19]:39101 "EHLO mout.gmx.net"
+        id S1726223AbgJBLnP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 07:43:15 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53963 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725964AbgJBLhd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 07:37:33 -0400
+        id S1725964AbgJBLnO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 07:43:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601638645;
-        bh=sd4UgSr+pxPQLaRVyNZUbBLcMcM4lnO60XrMZUJ6a3M=;
+        s=badeba3b8450; t=1601638986;
+        bh=NTaclkF3KuxwJ7CYyq3zZC6X+W2NyqBieiP4NTTUIDo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=M+trmeLefeMOBYJJzE+Vaw7N70IOPc9RIbZE8fMMAKQGBE7ID8gAsx+fRseFM0J2D
-         04jtUXq9xZ95obgiBrTnA8W34d6qQYcshuF2HY1oiiq4xKgAGgfRXpqTJu1xk4qz8P
-         obq7BnW9B9NLCM/3RdkV8RnHYsCsA1gFVOVA5oic=
+        b=Ibd5uqxggjRft6Mvbmiyg2+dPEDWZLVcOt9fYfS3zNYpF/L2yOYQi9TQAKqXqEkPD
+         1CAiy9LaEw+1haMKFnGjjh9MZXgagaXVNieXiH4Rt4TJKNl+UPcmYPCCiaVYR+KE8f
+         KWYwFkdifGA8FaObCvZuGNKnPyGwiNn/xNwh7ci0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.20.73.169] ([89.1.212.8]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MybGh-1kcXP60GAn-00yyxg; Fri, 02
- Oct 2020 13:37:25 +0200
-Date:   Fri, 2 Oct 2020 13:37:23 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MG9kM-1kCFBm2l2K-00GXqQ; Fri, 02
+ Oct 2020 13:43:06 +0200
+Date:   Fri, 2 Oct 2020 13:43:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Nikita Leonov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nikita Leonov <nykyta.leonov@gmail.com>
-Subject: Re: [PATCH v2 1/3] credential.c: fix credential reading with regards
- to CR/LF
-In-Reply-To: <20200929004220.GC898702@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2010021011540.50@tvgsbejvaqbjf.bet>
-References: <pull.710.git.git.1581688196706.gitgitgadget@gmail.com> <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com> <27f6400a21412d762b290a34a78ebe7296d36bf3.1601293224.git.gitgitgadget@gmail.com> <20200929004220.GC898702@coredump.intra.peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 03/13] vcxproj: adjust for the reftable changes
+In-Reply-To: <20201002040200.GC3252492@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2010021342200.50@tvgsbejvaqbjf.bet>
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com> <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <01a669a731dfce02c714a40af999b100c75815e4.1601568663.git.gitgitgadget@gmail.com> <20201002040200.GC3252492@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:poHg3wo/st2C7MqWtnhI8uOSaoSG++mM8Q4nPgHbRP5yttBdd2D
- YKfDSs6BCU+9+cm5NWAUjT+07DCbtvUt1x0/K5VaAK6QPRuVDFY2/uW8cAkx64zpilywxS+
- CvQBo4jldmbiZxcPIaTSlsRa/2jAcHzXPK2ORJjsRmm7NfUOFOWt6LoR4HY44zD/fL7KwOI
- rjF38No2XeAZMtc8UArRw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/GQMECIObPo=:eHUHuSB8Rq1PbczooDRVxC
- Ia1hCU8+h0ATGSfdbPopXkrcdJ6BtyMy16XUgGR6B4qA6p7dmDyeeRG/SRrCNYKYwtm6hpfr/
- DXUntvoRJLOf8JN4vqxdKLgWzvTAJbxSFGVyIlTGsJKhLZzYMor5alpmW0PEFjWskCzZf3gkK
- +d+IUu++VdfM3fJ5+QEH1kGx+GsgkZpyLCtjpr17HO/RM4mEYJbbBt//+t+VT6dD+XzZwxVd1
- B3QGSLIJqU+qEOJlOaKc/rkqXxhPIE/pnGWucMsPcM6wDvs/GHzJE1AQXcbzp9KWEFydTWx+v
- XyFha89g8L3LKmjmM/G//7yy1ZwsMupxekLkNuQUo5JIbLy0++4JkW4Du+6ByBIkY0scBLeQ2
- f1hQDMD/ZtNJvyzMd6EPX7PibLNGv7+pG6SLR2RaUH3LhSFAvVUCrelr9LsR4H9/jhJk0oNX3
- Oh8qKqrecXYsAaPxVrZMSEj37Gvht0LVAbJHovX3S2QYdNopoI4E4TeGjdKMhCpAorUPl9NKP
- 1svbnJejkYvPl5Y7tVWIRYlzSaUgVQ0G14+0vIebZDVhD0dWxDQmQiYTbEJZDkfvMd+3SWx/D
- KE5bDGYThWTZ2j2+QQhyIzL5ltDArRxdlBjcBg8RNfu+173bienIJLwxPS2mny+B/C67xZcEd
- eiWmqFvsIImyaZYTMaIfLKBLRQZdcynNGXeE5QMvdLU6NGld5x23CIbw6ChcTj2gxTM3TCkfe
- g9dvzNXbGqpcxTFv4mlGzT1HfGd4lhOJtIKYo1jxpw4JBNozQrH7+Kz9+mwbW/r4zQaqViff6
- O3U2r9P1vCmoSfTL22vffWFIQefp4faL8sasFNOz7HBy5JtY39PdXTuplDC0MUy3Dsp5eyVwD
- smXsrqx78vnTGe0b9upimgLy4C/eJRxrfkR9OQkRAQ3smqGIj3RIZy+H8CfHaGU8/FglNmzAB
- 8dZ238uIk7509Fjbom/amvkg6+fdxuBkxKv36ZH2trSmZJ3lzFHlRxZyFMCUXzdyAyr9LVsY3
- BF+55+wiUVSC85Tfezw5s9V+r/wBeo4MyVKL6Qb1w/XcyDbLwlXeHknzG2a/DJWqZ7qZgN+W+
- bQq9wGii2RNDHeeoGLd/EZGGYWBUShkJfNPKHaZoto+dj6ZAoj2fGiEtabctfU37rS/eGYArL
- RzTVh44lCiitIAUPrMN40R6iUFL8YL9jHye5yKdxcNldJ736h7KkP26/2ZLZHgdzhEsNjqvcH
- 19iscZYDg+aVxMZcVJZ554tXE6vAPry/XMSfeHg==
+X-Provags-ID: V03:K1:tF7Njjt4nkRLLZnm87APYeyllMtj++mvlrLBmChon6WeP+6j3vn
+ HON60JsAkdh6+bVZVlvk8zmaa2dw2i1hfa2Tihg7R2xT+6ElpgB7ZhFVZomuWhNYiwN6aj5
+ 6nUDE320KlXPxzqbzlsmXpgM/CEIyE5LahMhs/w6MAHrzvK81tZqsfghS9RTeO2ZOyX2Zgv
+ n++kYxmnGibM/5LxC4GTA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fYfOdVko820=:BLS2HJIla9ooDod2MFTzVr
+ +divqN9EHFuAdWJHUhLtorRD4i/JCw+mNT4mDU4NMZ31deH0pSl6Y2YlKhUuJet8JwMPiJfVw
+ ddbmR/aCi/PoAEKWATI5AL7ZbnXr4Y1jeR7xotj5U3PY5wNNfawUXQJrExA5QcgbXCH4Rw0Ec
+ /2Z2ePgpHz0dzZmZnhyp4+ybb5HGlEFIH5tlMFpOUDX/5L+GeOp0S0QoPlcQXHiq1nRItnmht
+ v/qApiYcSNx1lfEhy6gbXEbaTohIX5U6JKjUiJMPVmv6Rl89rgGH7qkLYSoDEiUG56A8lg195
+ ZipKGzUI6pssO8EvGpxYTVDexmv+KNYtbVS7BI1moMczcJTXJTWiEi4AkMEetl+nJrsc4s7EP
+ eu/QvwatMgTFgrMDnSmEEMKxsK1z5iT7gPCJ0SwtAT2NGyJ4TSnDBsheyHZaje7u/vAteZTBa
+ qAnezsG7e6oO92Kvj2+sILMf7bx8aV6+EytwTtAoL3hUYTSDOhf8zUFmOkxc0dZwNTSzJJJZR
+ E20mze2jqp3nfBFa6SbsL3QoYpPcZTgZmCThiCD6hATwgRgPLWKwTv250rIkmMci5Uec7LcjO
+ hDPAuGrIvKSjQAS9jU5Jcfi46i/AkzfG2SdjZ8PR4HOPE6PXU3lCphKIBb8AmGH/NG4l0Ga8K
+ b36cnJ+KQ9YdaPBa6OJnnVhKyKJDdkeD2bYArVXIKF/y23Z+hat2jYMX36LutIehhKJ8iL9lR
+ M1+4G9ihv18C8ED7Vy/5OuHqK36TP8NHloj/RqnRBZ3xtEXhjEEEzphcic+flkgXG8gVwUBK7
+ ACBl/9kS9khk3TAiXkdxjpIDm0iNW+VDmjQVtx+ax+gVgcVc7JP2SMoO8ZVAL/IF7pF49lYJw
+ 6m+Z7OV4QWKw5UnTRgoUEnRJTnjquYYiBGmtaXnHNXuxL6nSuGyPr0onRVvNRXbLxZykJ6i6Q
+ Q1i5WiPbxdIGE7GDAUimivovVF+U+AbNLEqQl+5iaD0xMkZbdAPI/auMLYn9Od4bJQYPCCvvO
+ RKJOr1O2Vy5fg9I2nizmy9z/LFZE2Sgnx/wh0/ZAW7VWkrRvqjOmNEMAo8DcGEiUZM00Aomtm
+ mPT73zPuOuV6ldixaFyenOBAS2Hi5NJfQv7KYPExcdmY7dBYgjuuGqVdAIUCMh7KwCJaQccHY
+ bKCCwyNE7Z9NI66cHlvwrsrkimsSLLcokMrJvaGZHparv5euiM/LFC8fJkshQTFNZH/r1c+cD
+ LUPO7wz9UlSxUre314s/VkPgIJpNrDLYkngIptg==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Jonathan,
 
-On Mon, 28 Sep 2020, Jeff King wrote:
+On Thu, 1 Oct 2020, Jonathan Nieder wrote:
 
-> On Mon, Sep 28, 2020 at 11:40:22AM +0000, Nikita Leonov via GitGitGadget=
- wrote:
+> Han-Wen Nienhuys wrote:
 >
-> > From: Nikita Leonov <nykyta.leonov@gmail.com>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > This fix makes using Git credentials more friendly to Windows users. I=
-n
-> > previous version it was unable to finish input correctly without
-> > configuration changes (tested in PowerShell, CMD, Cygwin).
-> >
-> > We know credential filling should be finished by empty input, but the
-> > current implementation does not take into account CR/LF ending, and
-> > hence instead of the empty string we get '\r', which is interpreted as
-> > an incorrect string.
-> >
-> > So this commit changes default reading function to a more Windows
-> > compatible reading function.
+> > This allows Git to be compiled via Visual Studio again after integrati=
+ng
+> > the `hn/reftable` branch.
 >
-> Unlike the credential-store file case, where we expect the data to be
-> URL-encoded anyway (and so any true "\r" in the data would not be found
-> in raw form), this means that the credential protocol can no longer
-> represent "\r" at the end of a value.
-
-Indeed.
-
-> And we'd match "example.com\r" and "example.com" as the same (unlikely,
-> since carriage returns aren't allowed in hostnames, and curl will
-> complain about this). We'd also match "cert://some/path\r" and
-> "cert://some/path". Or "https://example.com/path\r" and its match, if
-> you have credential.useHTTPPath set.
-
-True. It's a problem with all of those URLs that end in Carriage Returns
-;-)
-
-> That may be acceptable if it makes things more convenient. Those are all
-> pretty obscure cases, and I find it hard to believe an attacker could
-> hijack credentials using this (it implies that the only difference
-> between their malicious url and a known-good one is a trailing CR).
-
-Indeed.
-
-> This part of the commit message confused me a little:
+> nit: This branch name is no longer meaningful to the primary audience
+> for the commit message (people discovering this commit in git history
+> later).
 >
-> > We know credential filling should be finished by empty input, but the
-> > current implementation does not take into account CR/LF ending, and
-> > hence instead of the empty string we get '\r', which is interpreted as
-> > an incorrect string.
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  config.mak.uname                           |  2 +-
+> >  contrib/buildsystems/Generators/Vcxproj.pm | 11 ++++++++++-
+> >  2 files changed, 11 insertions(+), 2 deletions(-)
 >
-> If all we care about is the empty line, and not data lines, then we
-> could do this:
->
-> diff --git a/credential.c b/credential.c
-> index efc29dc5e1..73143c5ed0 100644
-> --- a/credential.c
-> +++ b/credential.c
-> @@ -206,7 +206,7 @@ int credential_read(struct credential *c, FILE *fp)
->  		char *key =3D line.buf;
->  		char *value =3D strchr(key, '=3D');
->
-> -		if (!line.len)
-> +		if (!line.len || (line.len =3D=3D 1 && line.buf[0] =3D=3D '\r'))
->  			break;
->
->  		if (!value) {
->
-> without impacting the ability to send raw CR in the lines with actual
-> data. But I imagine that a trailing CR in all of the data would also
-> cause problems.
+> Can this be squashed into or put immediately after patch 5 which
+> introduces the Makefile?
 
-I checked again with github.com/git-for-windows/git/pull/2516, where the
-patch originally entered the public eye, but could not find any background
-information.
-
-But I would highly doubt that the empty lines were the biggest problem:
-Sure, we would fail to recognize an empty line with CR/LF line endings
-when reading with `strbuf_getline_lf()`, but we would totally
-misunderstand the entire rest of the lines, too. For example, we would
-mistake `quit\r` for an unknown command, and hence simply ignore it.
-
-I do agree, however, that your confusion validly points out a flaw in the
-commit message: the "empty line" comment is a red herring.
-
-Therefore, I spent some time pouring over the commit message. This is my
-current version:
-
-    credential: treat CR/LF as line endings in the credential protocol
-
-    This fix makes using Git credentials more friendly to Windows users: i=
-t
-    allows a credential helper to communicate using CR/LF line endings ("D=
-OS
-    line endings" commonly found on Windows) instead of LF-only line endin=
-gs
-    ("Unix line endings").
-
-    Note that this changes the behavior a bit: if a credential helper
-    produces, say, a password with a trailing Carriage Return character,
-    that will now be culled even when the rest of the lines end only in Li=
-ne
-    Feed characters, indicating that the Carriage Return was not meant to =
-be
-    part of the line ending.
-
-    In practice, it seems _very_ unlikely that something like this happens=
-.
-    Passwords usually need to consist of non-control characters, URLs need
-    to have special characters URL-encoded, and user names, well, are name=
-s.
-
-    So let's change the credential machinery to accept both CR/LF and LF
-    line endings.
-
-    While we do this for the credential helper protocol, we do _not_ do
-    adjust `git credential-cache--daemon` (which won't work on Windows,
-    anyway, because it requires Unix sockets) nor `git credential-store`
-    (which writes the file `~/.git-credentials` which we consider an
-    implementation detail that should be opaque to the user, read: we do
-    expect users _not_ to edit this file manually).
-
-What do you think?
+I never intended this to be a stand-alone patch. So yes, I would be very
+much in favor of squashing these changes into the appropriate commit.
 
 Ciao,
 Dscho
