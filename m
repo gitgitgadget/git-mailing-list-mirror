@@ -2,224 +2,279 @@ Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 828EEC4727D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 14:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7342CC4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 15:07:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C2FD20708
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 14:59:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18A94206CA
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 15:07:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p3V9DrP+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZkzTsgB2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388128AbgJBO7B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 10:59:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59036 "EHLO
+        id S2388215AbgJBPHU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 11:07:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387893AbgJBO7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 10:59:00 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38292C0613D0
-        for <git@vger.kernel.org>; Fri,  2 Oct 2020 07:58:59 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id y15so2088861wmi.0
-        for <git@vger.kernel.org>; Fri, 02 Oct 2020 07:58:59 -0700 (PDT)
+        with ESMTP id S2388169AbgJBPHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 11:07:20 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854F5C0613D0
+        for <git@vger.kernel.org>; Fri,  2 Oct 2020 08:07:18 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id j10so925138qvk.11
+        for <git@vger.kernel.org>; Fri, 02 Oct 2020 08:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=jijhfujA550E3vp2b301RA4JLDImQPm9ar/GrXH7SDQ=;
-        b=p3V9DrP+Bp/ce1BnUq5lhKI3NHbSMbhB8t97YEL33586mJ84g5J566ShNxfm1cYyyH
-         igxxpf9PSz4CU/NG3LWrWF/RIfUejsjiGMcHIHrl4oifkvdBCianNiAruXBZ8950t1ZI
-         F/FFrnaYqtj5daCIlfiWveE8VoGeaRONyIvwPnooiuKRjUAlL9iQZuxw4g8CiOJXp/oH
-         JJKXvxB+oQB+dqgLvxA8M1GLt5jshaj7PNG10szeV02LQ/X5fxTw/c/RVv4HcO9hnApB
-         MxHYrXBqReLeJG6Y9ilu74QZGKCbxHW0mX1e2KcFLDAm8aaRX0n78IPGKvORtTOe/lzU
-         ki6A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FOHosnP219/LzSMhtF3afAGk26fCTHZ7Hkj0bzO5GJo=;
+        b=ZkzTsgB2U0gzjLy/aqw2hxUQm0ZNKn3uz4Hbj9Vkgo/O22e4cHfgl8oAptdCJMQIZI
+         yO7b0uFPtMLaf0EaG/++hX1p01d5rWfiynCd+5w5S7nZspChFLjz3fhcYKMJHerNqnwg
+         CjLfIpNkC/IkbW0QAYdI+VdT31aG+WBe+PLxTua5MELjm/Hho6ewbKkLAKu0zPESRJ/H
+         J3/JSiO1g7F5Ql2V+GvqW8EPSaX2Pa0Iqj9XBUSkdkidtcXOGugaUaYfdd5B9VYrS8UJ
+         UNuneTeeaEOZWh5+vmA5pyCAZ/LIh8XgO03WLpf5lktO1ZKQ+6hS8DOzibaVV+w0ICPG
+         wiWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jijhfujA550E3vp2b301RA4JLDImQPm9ar/GrXH7SDQ=;
-        b=Cs78CBZwE0BmsiqEzD9d1uLijufD2J6bUsXXHsqXyTEbZk8Hq7g/UyiRJ5/ROTiup5
-         XVGgnV2pKrMiVjVCuSBAFxz2tS0ce7ez6Yhs6s+Klcl/zGKQ5pG8ayEo9B+VIfg00LoW
-         c1OULdm7R1WNtns2ZJcN3N+GFRC6hy233rrPOEEWlZOMkLRquGnZBbVu41ryhie/9l0a
-         bTJAknVKLv9X98FIoBgD/Z5YHzaimN1xQl+c3VI31S+/RpwPBYxliAGOwr8dolzu7XFq
-         fHYzUAT+O04wOb61UVSlsmq3ic5cIJvZgU5Irg40NQc8/lRiUHiyIFNQ/zHy544HRQlH
-         chBQ==
-X-Gm-Message-State: AOAM533KzkjfnXG+W8IN46lMO8K7Afe/L+FErIoQicK3SBsBDLr9LuDv
-        IC3nlbnVuiDIw6jvKBSwMZN07DV/cmw=
-X-Google-Smtp-Source: ABdhPJyzxNP8sUy0Nhn7glaaCgufEYEqeU0M6BMZaazTJQ0xrvagGYIpQmuvkOxaYAsQie1YObQInA==
-X-Received: by 2002:a1c:9d82:: with SMTP id g124mr3389797wme.4.1601650737630;
-        Fri, 02 Oct 2020 07:58:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o4sm2191284wru.55.2020.10.02.07.58.56
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FOHosnP219/LzSMhtF3afAGk26fCTHZ7Hkj0bzO5GJo=;
+        b=GT+q5mSDnFUkcEEb6ah82x1gntLUxif3JXwYkkdUNQPly3YzsYTnD9NjKxk5jsoJBm
+         aHloq31kXcXimSUy+GKKeRNjVz6UjWmwl6luwj+crVhn78xeeG/YmBC/xVfO/u+7l0KL
+         H5aSVYSwIvEJ4s7xQ+TUHmAJUjEtYkA07SlexniW1f04N+uSGo2qcJ1x0JR6gEFdRsZ+
+         M4WhEOBio18GmoyHwYYdwaRG+KlZ5DRFCk9uTbalCMbjh2F/bxIR3O/ow0xPCtxLkjQd
+         MWoR6uvNGfK3JzmT6vUu5CtdIEVVL+kx9Fs3eSdcQo+z7U1/yJubttlBButzD6swR1Kn
+         bYMA==
+X-Gm-Message-State: AOAM531O2U01XxlYBBFRh/UThlGbubDcJz1OknQ9xuMZxHMLLjfz1yWh
+        +Rw7UDQKKqEmc5vR18SBB5E=
+X-Google-Smtp-Source: ABdhPJyfaAfICbkQ4tJbUTIV2zDjmTW9EpQ9qKeLm0wRtZCw4cNSbo8D1IDOaARKN0H3hJVncEE5Yg==
+X-Received: by 2002:a0c:f3c2:: with SMTP id f2mr2657919qvm.37.1601651237574;
+        Fri, 02 Oct 2020 08:07:17 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([124.123.104.31])
+        by smtp.gmail.com with ESMTPSA id z37sm1261366qtz.67.2020.10.02.08.07.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2020 07:58:57 -0700 (PDT)
-Message-Id: <pull.739.git.1601650736489.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 02 Oct 2020 14:58:56 +0000
-Subject: [PATCH] commit-reach: fix in_merge_bases_many bug
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 02 Oct 2020 08:07:16 -0700 (PDT)
+Date:   Fri, 2 Oct 2020 20:37:10 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v9 1/3] push: add reflog check for "--force-if-includes"
+Message-ID: <20201002150710.GA54370@mail.clickyotomy.dev>
+References: <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
+ <20201001082118.19441-1-shrinidhi.kaushik@gmail.com>
+ <20201001082118.19441-2-shrinidhi.kaushik@gmail.com>
+ <nycvar.QRO.7.76.6.2010021550170.50@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2010021550170.50@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Johannes,
 
-Way back in f9b8908b (commit.c: use generation numbers for
-in_merge_bases(), 2018-05-01), a heuristic was used to short-circuit
-the in_merge_bases() walk. This works just fine as long as the
-caller is checking only two commits, but when there are multiple,
-there is a possibility that this heuristic is _very wrong_.
+On 10/02/2020 15:52, Johannes Schindelin wrote:
+> Hi Srinidhi,
+> 
+> 
+> On Thu, 1 Oct 2020, Srinidhi Kaushik wrote:
+> 
+> > Add a check to verify if the remote-tracking ref of the local branch
+> > is reachable from one of its "reflog" entries.
+> >
+> > The check iterates through the local ref's reflog to see if there
+> > is an entry for the remote-tracking ref and collecting any commits
+> > that are seen, into a list; the iteration stops if an entry in the
+> > reflog matches the remote ref or if the entry timestamp is older
+> > the latest entry of the remote ref's "reflog". If there wasn't an
+> > entry found for the remote ref, "in_merge_bases_many()" is called
+> > to check if it is reachable from the list of collected commits.
+> >
+> > When a local branch that is based on a remote ref, has been rewound
+> > and is to be force pushed on the remote, "--force-if-includes" runs
+> > a check that ensures any updates to the remote-tracking ref that may
+> > have happened (by push from another repository) in-between the time
+> > of the last update to the local branch (via "git-pull", for instance)
+> > and right before the time of push, have been integrated locally
+> > before allowing a forced update.
+> >
+> > If the new option is passed without specifying "--force-with-lease",
+> > or specified along with "--force-with-lease=<refname>:<expect>" it
+> > is a "no-op".
+> >
+> > Calls to "in_merge_bases_many()" return different results depending
+> > on whether the "commit-graph" feature is enabled or not -- it is
+> > temporarily disabled when the check runs [1].
+> >
+> > [1] https://lore.kernel.org/git/xmqqtuvhn6yx.fsf@gitster.c.googlers.com
+> 
+> I can verify that the multiple calls to `in_merge_bases_many()` lead to a
+> problem, and I intend to debug this further, but it is the wrong function
+> to call to begin with.
+> 
+> With these two patches, the tests pass for me, and they also reduce the
+> complexity quite a bit (Junio, could I ask you to put them on top of
+> sk/force-if-includes?):
 
-Some code moves since then has changed this method to
-repo_in_merge_bases_many() inside commit-reach.c. The heuristic
-computes the minimum generation number of the "reference" list, then
-compares this number to the generation number of the "commit".
-
-In a recent topic, a test was added that used in_merge_bases_many()
-to test if a commit was reachable from a number of commits pulled
-from a reflog. However, this highlighted the problem: if any of the
-reference commits have a smaller generation number than the given
-commit, then the walk is skipped _even if there exist some with
-higher generation number_.
-
-This heuristic is wrong! It must check the MAXIMUM generation number
-of the reference commits, not the MINIMUM.
-
-This highlights a testing gap. t6600-test-reach.sh covers many
-methods in commit-reach.c, including in_merge_bases() and
-get_merge_bases_many(), but since these methods either restrict to
-two input commits or actually look for the full list of merge bases,
-they don't check this heuristic!
-
-Add a possible input to "test-tool reach" that tests
-in_merge_bases_many() and add tests to t6600-test-reach.sh that
-cover this heuristic. This includes cases for the reference commits
-having generation above and below the generation of the input commit,
-but also having maximum generation below the generation of the input
-commit.
-
-The fix itself is to swap min_generation with a max_generation in
-repo_in_merge_bases_many().
-
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Reported-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    Fix in_merge_bases_many() with commit-graphs
-    
-    Johannes alerted me to the difficulties Srinidhi was having with 
-    in_merge_bases_many() and commit-graphs. Sorry that I hadn't seen that
-    thread and the issues therein.
-    
-    After working with Johannes to investigate what was happening, we found
-    a 2-year-old bug in the generation number checks!
-    
-    Thanks, -Stolee
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-739%2Fderrickstolee%2Fin-merge-bases-many-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-739/derrickstolee/in-merge-bases-many-fix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/739
-
- commit-reach.c        |  8 ++++----
- t/helper/test-reach.c |  2 ++
- t/t6600-test-reach.sh | 30 ++++++++++++++++++++++++++++++
- 3 files changed, 36 insertions(+), 4 deletions(-)
-
-diff --git a/commit-reach.c b/commit-reach.c
-index efd5925cbb..50175b159e 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -321,7 +321,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- {
- 	struct commit_list *bases;
- 	int ret = 0, i;
--	uint32_t generation, min_generation = GENERATION_NUMBER_INFINITY;
-+	uint32_t generation, max_generation = GENERATION_NUMBER_ZERO;
+Thanks for looking into this. :)
  
- 	if (repo_parse_commit(r, commit))
- 		return ret;
-@@ -330,12 +330,12 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- 			return ret;
- 
- 		generation = commit_graph_generation(reference[i]);
--		if (generation < min_generation)
--			min_generation = generation;
-+		if (generation > max_generation)
-+			max_generation = generation;
- 	}
- 
- 	generation = commit_graph_generation(commit);
--	if (generation > min_generation)
-+	if (generation > max_generation)
- 		return ret;
- 
- 	bases = paint_down_to_common(r, commit,
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 14a3655442..cda804ed79 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -107,6 +107,8 @@ int cmd__reach(int ac, const char **av)
- 		printf("%s(A,B):%d\n", av[1], ref_newer(&oid_A, &oid_B));
- 	else if (!strcmp(av[1], "in_merge_bases"))
- 		printf("%s(A,B):%d\n", av[1], in_merge_bases(A, B));
-+	else if (!strcmp(av[1], "in_merge_bases_many"))
-+		printf("%s(A,X):%d\n", av[1], in_merge_bases_many(A, X_nr, X_array));
- 	else if (!strcmp(av[1], "is_descendant_of"))
- 		printf("%s(A,X):%d\n", av[1], repo_is_descendant_of(r, A, X));
- 	else if (!strcmp(av[1], "get_merge_bases_many")) {
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index 475564bee7..f807276337 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -110,6 +110,36 @@ test_expect_success 'in_merge_bases:miss' '
- 	test_three_modes in_merge_bases
- '
- 
-+test_expect_success 'in_merge_bases_many:hit' '
-+	cat >input <<-\EOF &&
-+	A:commit-6-8
-+	X:commit-6-9
-+	X:commit-5-7
-+	EOF
-+	echo "in_merge_bases_many(A,X):1" >expect &&
-+	test_three_modes in_merge_bases_many
-+'
-+
-+test_expect_success 'in_merge_bases_many:miss' '
-+	cat >input <<-\EOF &&
-+	A:commit-6-8
-+	X:commit-7-7
-+	X:commit-8-6
-+	EOF
-+	echo "in_merge_bases_many(A,X):0" >expect &&
-+	test_three_modes in_merge_bases_many
-+'
-+
-+test_expect_success 'in_merge_bases_many:miss-heuristic' '
-+	cat >input <<-\EOF &&
-+	A:commit-6-8
-+	X:commit-7-5
-+	X:commit-6-6
-+	EOF
-+	echo "in_merge_bases_many(A,X):0" >expect &&
-+	test_three_modes in_merge_bases_many
-+'
-+
- test_expect_success 'is_descendant_of:hit' '
- 	cat >input <<-\EOF &&
- 	A:commit-5-7
+> -- snipsnap --
+> From 0e7bd31c4cb0ae08ad772ac230eea2dd7a884886 Mon Sep 17 00:00:00 2001
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Fri, 2 Oct 2020 15:33:05 +0200
+> Subject: [PATCH 1/2] fixup??? push: add reflog check for "--force-if-includes"
+> 
+> This follows the pattern used elsewhere.
+> 
+> Maybe we should also rename this to `commit_array`? It is not a linked
+> list, after all.
 
-base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+Makes sense. I'll change it.
+ 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  remote.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/remote.c b/remote.c
+> index 37533cafc44..2c6c63aa906 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2441,6 +2441,7 @@ struct reflog_commit_list {
+>  	struct commit **item;
+>  	size_t nr, alloc;
+>  };
+> +#define REFLOG_COMMIT_LIST_INIT { NULL, 0, 0 }
+> 
+>  /* Append a commit to the list. */
+>  static void append_commit(struct reflog_commit_list *list,
+> @@ -2514,7 +2515,7 @@ static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+>  	struct commit *commit;
+>  	struct commit **chunk;
+>  	struct check_and_collect_until_cb_data cb;
+> -	struct reflog_commit_list list = { NULL, 0, 0 };
+> +	struct reflog_commit_list list = REFLOG_COMMIT_LIST_INIT;
+>  	size_t size = 0;
+>  	int ret = 0;
+> 
+> --
+> 2.28.0.windows.1.18.g5300e52e185
+> 
+> 
+> From 10ea5640015f4bc7144e8e5b025e31294329c600 Mon Sep 17 00:00:00 2001
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Fri, 2 Oct 2020 15:35:58 +0200
+> Subject: [PATCH 2/2] fixup??? push: add reflog check for "--force-if-includes"
+> 
+> We should not call `in_merge_bases_many()` repeatedly: there is a much
+> better API for that: `get_reachable_subset()`.
+
+Perfect. I wasn't aware of this.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  remote.c | 43 ++++---------------------------------------
+>  1 file changed, 4 insertions(+), 39 deletions(-)
+> 
+> diff --git a/remote.c b/remote.c
+> index 2c6c63aa906..881415921e2 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2513,10 +2513,9 @@ static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+>  {
+>  	timestamp_t date;
+>  	struct commit *commit;
+> -	struct commit **chunk;
+>  	struct check_and_collect_until_cb_data cb;
+>  	struct reflog_commit_list list = REFLOG_COMMIT_LIST_INIT;
+> -	size_t size = 0;
+> +	struct commit_list *reachable;
+>  	int ret = 0;
+> 
+>  	commit = lookup_commit_reference(the_repository, &remote->old_oid);
+> @@ -2542,61 +2541,27 @@ static int is_reachable_in_reflog(const char *local, const struct ref *remote)
+>  	 * Check if the remote commit is reachable from any
+>  	 * of the commits in the collected list, in batches.
+>  	 */
+> -	for (chunk = list.item; chunk < list.item + list.nr; chunk += size) {
+> -		size = list.item + list.nr - chunk;
+> -		if (MERGE_BASES_BATCH_SIZE < size)
+> -			size = MERGE_BASES_BATCH_SIZE;
+> -
+> -		if ((ret = in_merge_bases_many(commit, size, chunk)))
+> -			break;
+> -	}
+> +	reachable = get_reachable_subset(list.item, list.nr, &commit, 1, 0);
+> +	ret = !!reachable;
+> +	free_commit_list(reachable);
+> 
+>  cleanup_return:
+>  	free_reflog_commit_list(&list);
+>  	return ret;
+>  }
+> 
+> -/* Toggle the "commit-graph" feature; return the previously set state. */
+> -static int toggle_commit_graph(struct repository *repo, int disable) {
+> -	int prev = repo->commit_graph_disabled;
+> -	static int should_toggle = -1;
+> -
+> -	if (should_toggle < 0) {
+> -		/*
+> -		 * The in_merge_bases_many() seems to misbehave when
+> -		 * the commit-graph feature is in use.  Disable it for
+> -		 * normal users, but keep it enabled when specifically
+> -		 * testing the feature.
+> -		 */
+> -		should_toggle = !git_env_bool("GIT_TEST_COMMIT_GRAPH", 0);
+> -	}
+> -
+> -	if (should_toggle)
+> -		repo->commit_graph_disabled = disable;
+> -	return prev;
+> -}
+> -
+
+OK. The tests are passing with or without "GIT_TEST_COMMIT_GRAPH"
+by switching to "get_reachable_subset()" we don't have to toggle
+te feature during the check.
+
+>  /*
+>   * Check for reachability of a remote-tracking
+>   * ref in the reflog entries of its local ref.
+>   */
+>  static void check_if_includes_upstream(struct ref *remote)
+>  {
+> -	int prev;
+>  	struct ref *local = get_local_ref(remote->name);
+>  	if (!local)
+>  		return;
+> 
+> -	/*
+> -	 * TODO: Remove "toggle_commit_graph()" calls around the check.
+> -	 * Depending on whether "commit-graph" enabled or not,
+> -	 * "in_merge_bases_many()" returns different results;
+> -	 * disable it temporarily when the check runs.
+> -	 */
+> -	prev = toggle_commit_graph(the_repository, 1);
+>  	if (is_reachable_in_reflog(local->name, remote) <= 0)
+>  		remote->unreachable = 1;
+> -	toggle_commit_graph(the_repository, prev);
+>  }
+> 
+>  static void apply_cas(struct push_cas_option *cas,
+> --
+> 2.28.0.windows.1.18.g5300e52e185
+> 
+
+Again, thank you so much working on this! If you'd like, I can go ahead
+and apply these patches and rename "reflog_commit_list" to "commit_array"
+in the next series (v10).
+
+Thanks.
 -- 
-gitgitgadget
+Srinidhi Kaushik
