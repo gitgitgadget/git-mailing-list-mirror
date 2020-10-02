@@ -2,145 +2,99 @@ Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C13FC4363D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 06:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFEDC4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 06:37:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13F7B206E3
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 06:15:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FA42206DD
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 06:37:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CsVko+oA"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jJwKH3/q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387498AbgJBGPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 02:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35146 "EHLO
+        id S1726124AbgJBGhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 02:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726045AbgJBGPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 02:15:54 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DB3C0613D0
-        for <git@vger.kernel.org>; Thu,  1 Oct 2020 23:15:54 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id kk9so222615pjb.2
-        for <git@vger.kernel.org>; Thu, 01 Oct 2020 23:15:53 -0700 (PDT)
+        with ESMTP id S1725948AbgJBGhS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 02:37:18 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EC9C0613D0
+        for <git@vger.kernel.org>; Thu,  1 Oct 2020 23:37:18 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id w126so404181qka.5
+        for <git@vger.kernel.org>; Thu, 01 Oct 2020 23:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tvH446wV2pixLb0eJfcb6Y+12XL1PBBZ7ef3Ie8PdVk=;
-        b=CsVko+oAZiWbSMWs+QBYCvLCSMUiOUGB9SGxVPbxPyQC6LbpnDphSEfUbIpCJgoeDe
-         K0cDL2q8MFKU4EBmv4wigkotD46cem4589I8rTbkWshtFdRoAThQisc/QlcYBnQA+hUx
-         yFGfidBcX9xhgj6y988+100dIAdm67ITHaq8WB/iqIugXoz7r5sazOC1z9fnmtLOI1K0
-         mFR5/5nSawrM0rNwZSzWbP3GP3wNl6f0fTgV1wf3LBUA7EjyzM2i+5a+VBWBiQwQb+2y
-         5ex7jnclkfCcbfp68AKfd3F1eCovX/alDCvE9KAwpI/thfX9J8vca/2k12wmR/KKWLES
-         HLAg==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=8yDgCeW4dMLbXSRj+eFnURAAz1BJ0RguYCCf5R9gw2o=;
+        b=jJwKH3/qo3RlNOJdTTLS6QkCY20HBwyvWwZlUtxGumNW663adYEX6qeqFDlwrdCwBT
+         jz1Dp1/Uq/hD9gIjEl58DHbNl9rVM2UXa+6V82SDPPNpYeXp7fWM9CAg/XEYBTiRIT3G
+         CzcvqocMX1Y15bFphbGP7Oza6EKHBVqHBXDEgWSUUpVxgz6VppYbciPL5LTf3UoIcW3z
+         OUuc0IZq0zMsor66+16x1XyoD2a4VVWbIy93bju+dXHq5HITOEVJ8//kIz9E3VSw+/yz
+         PHRaCASmhOFi7YtmOTVYwKJW/EMzGeuyvaDxeKPxXsuJzIaCX0gP35p3+ac5ZW2MMSIY
+         82qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tvH446wV2pixLb0eJfcb6Y+12XL1PBBZ7ef3Ie8PdVk=;
-        b=f+FyX5DPtl/bnvXiyNFErAbHaQG6NQbtpJogN5XMhcbJ+GDZ32JXmytTU0x7V7MfmY
-         0YaaNP9UmIxxmJ9AWZ5lSX0AiS+dWM4oACKmeVpAUD8Im0m1vW2J0W80oGfJpFreIGUB
-         MZLY0/e7JGcl7XISxjjVRTpPe9fm34O/Ytp9oO3Y5okepBGXj/7omapLs6VxarK4193/
-         4LS29Vd5S7BbdEKFdHUAwyuIeamTvpsNZMsn3TciU2Sxp/3sfzYmDdfMG2NrhqYqssFU
-         mNbX0gQlKORaxMyxaKaqV1No8DAHqXGNMZmB4+m5ArC6cYb8Yp2SLTPpmfkeZU/g05/H
-         MC1Q==
-X-Gm-Message-State: AOAM532W4ERryxKmrIA5rOfamorTr2XXC6ElIl4VRxH1DOWaSRcjoiWi
-        PIbOY9rXEOqhZPNxv6andz8=
-X-Google-Smtp-Source: ABdhPJxDJAl+SFJZiy+E3Zf6uXuZQkGS9U4lbjdtzpYXLx8jpvqFYU8qiaqzul8A/jTfQz255NLwoQ==
-X-Received: by 2002:a17:90a:fe07:: with SMTP id ck7mr1118696pjb.20.1601619353470;
-        Thu, 01 Oct 2020 23:15:53 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id j24sm471946pjy.35.2020.10.01.23.15.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2020 23:15:52 -0700 (PDT)
-Date:   Thu, 1 Oct 2020 23:15:50 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Shengfa Lin <shengfa@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, nathaniel@google.com,
-        rsbecker@nexbridge.com, santiago@nyu.edu
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8yDgCeW4dMLbXSRj+eFnURAAz1BJ0RguYCCf5R9gw2o=;
+        b=TAuuk8ilJ7pI81+M52e/WpxVUXB6BnHJkqks5mYg8VztV8pmXLhK0Zm4eWnwBDfBBI
+         aDY1VaZ4TibxPJC2dMXnUd+0F/Z0bjmX5E61BJPr14Ff0gRA4R4JYBqSPW7s03av4IVS
+         OYwg8E6stmmL22jyry5aia5DdaC9dp8yqsFU8fibX7Xbo1qvuNF5RGpmNvHEMiCapRhy
+         vyxftuTI3z6wh1a9AnUqBzoR5WihAqZNuXUrNm1WAlE+W8P5k/qMiDidCCZHCE2ed7BA
+         sBYS0o2a0+TsGg8m5rRqt8V2SEz98rpEcl8Bi6redf+myHZsk52U0NwbcdCWjZ/BPYUn
+         v6Ew==
+X-Gm-Message-State: AOAM533kztqxrb0nfo5S4NDLxdnAJMGddzfq3R8Ss9mh3EXwIU5E2CS8
+        VUIzoS75JvLuqRZEhbpI7Pssp8b399ao
+X-Google-Smtp-Source: ABdhPJwrs2YgdI495QKOjNexANFxodKqqLY2VyAtEuctY8uYlSx+DBZGDPz1ad2RCUKBEkvINMkFekECnlsc
+Sender: "shengfa via sendgmr" <shengfa@lins.c.googlers.com>
+X-Received: from lins.c.googlers.com ([fda3:e722:ac3:10:2b:ff92:c0a8:cb])
+ (user=shengfa job=sendgmr) by 2002:a05:6214:9a9:: with SMTP id
+ du9mr787916qvb.25.1601620637185; Thu, 01 Oct 2020 23:37:17 -0700 (PDT)
+Date:   Fri,  2 Oct 2020 06:37:16 +0000
+In-Reply-To: <xmqq7dsaeqij.fsf@gitster.c.googlers.com>
+Message-Id: <20201002063716.4087336-1-shengfa@google.com>
+Mime-Version: 1.0
+References: <xmqq7dsaeqij.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.28.0.806.g8561365e88-goog
 Subject: Re: [RFC PATCH 1/1] hideTimezone: add a user.hideTimezone config
-Message-ID: <20201002061550.GF3252492@google.com>
-References: <xmqqpn62essa.fsf@gitster.c.googlers.com>
- <20201002060200.4073817-1-shengfa@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201002060200.4073817-1-shengfa@google.com>
+From:   Shengfa Lin <shengfa@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, nathaniel@google.com, rsbecker@nexbridge.com,
+        santiago@nyu.edu, shengfa@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Shengfa Lin wrote:
-> Thanks for the comments.
+> 
+> I think (haven't actually tested) "git commit --date=<datestring>" option
+> is handled the same way, i.e. comparing these two would be a way not
+> to touch the environment variable.
+> 
+>     TZ=UTC-09 git commit --date=@1600000000 ... &&
+>     TZ=UTC-09 git -c user.hideTimeZone=true commit --date=@1600000000 ... &&
+>     git show -s --format='%aI' HEAD~1 >output0 &&
+>     git show -s --format='%aI' HEAD~0 >output1
 
->>> +user.hideTimezone::
->>> +  Override TZ to UTC for Git commits to hide user's timezone in commit
->>> +  date
->>
->> One level of indentation in this codebase is a single HT.
->>
->> Unterminated sentence.
->
-> What does HT stands for? I will change the indentation to 8 spaces.
+Like this?
 
-HT means "horizontal tab", like might be shown with "man ascii".
+test_expect_fail '...' '
+         echo t1 >file &&
+         git add file &&
+         TZ=UTC-09 git commit --date=@1600000000 -m "t1" &&
+         echo t2 >>file &&
+         git add file &&
+         TZ=UTC-09 git -c user.hideTimeZone=true commit --date=@1600000000 -m "t2" &&
+         git show -s --format='%aI' HEAD~1 >output0 &&
+         git show -s --format='%aI' HEAD~0 >output1 &&
+         test_cmp output0 output1
+'
 
-Git uses tabs for indentation.  This file is documentation instead of
-source so clang-format doesn't know about it, but I might as well
-mention anyway: if you run "make style", then clang-format will give
-some suggestions around formatting.  The configuration for that is not
-yet perfect so you can take its suggestions with a grain of salt, but
-they should get you in the right direction.
-
-[...]
->>> --- a/builtin/commit.c
->>> +++ b/builtin/commit.c
->>> @@ -1569,6 +1569,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>>  	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
->>>  	s.colopts = 0;
->>>  
->>> +  git_config(git_default_config, NULL);
->>
->> Declaration after statement is not tolerated in this codebase.
->
-> If I use the DEVELOPER=1 flag in config.mak and call make again, would the compiler
-> catches this as an error?
-
-Yes, DEVELOPER_CFLAGS includes -Wdeclaration-after-statement.
-
->>> +  int hide_timezone = 0;
->>
->> Unnecessary initialization.
->>
->>> +  if (!git_config_get_bool("user.hideTimezone", &hide_timezone)  && hide_timezone)
->
-> Is it unnecessary because I am checking the return value from git_config_get_bool so
-> that the uninitialized value won't be used?
-
-By leaving it uninitialized, you can help avoid the reader wondering
-whether there is some code path where the default value is used.
-
-[...]
->>             Instead, make sure it is set to some timestamp in some
->> timezone that is not UTC, and the timezone of the resulting commit
->> author date is in that timezone.  But that must have already been
->> done in basic tests on "git commit" that we honor the environment
->> variable, no?  Which means there is no need to add yet another extra
->> baseline test here.
->
-> I am not sure if this test has already been done in commit basic tests.
-> Will remove this test.
-
-Let's see: *checks with "git grep -e TZ -- t"*.
-
-Looks like t0006 tests various aspects of TZ handling pretty well and
-t1100 includes of test using TZ with commit-tree (good).
-
-Thanks and hope that helps,
-Jonathan
+I tested it.
