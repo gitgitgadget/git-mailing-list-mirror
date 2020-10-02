@@ -1,193 +1,144 @@
-Return-Path: <SRS0=yenB=DI=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDC4EC4727E
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 23:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E0BC4727E
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 00:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 84726206DD
-	for <git@archiver.kernel.org>; Thu,  1 Oct 2020 23:53:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7667C2168B
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 00:38:49 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fotquRQ1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733240AbgJAXxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Oct 2020 19:53:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42088 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727017AbgJAXxX (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 1 Oct 2020 19:53:23 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 499986046C;
-        Thu,  1 Oct 2020 23:52:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1601596372;
-        bh=UOlJuWzOCP2VAWlmrJt9hDU41iOId1LBFZ5gyimLDjs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QFAgm9/gTj+O9jRWgxKMYBKK9XcmL+xIRJRewQuqzjLXMHyFJ3lSsdbU4A3nOskeq
-         C5IA5g6MpMIJWL2UAx3eUbevj2F1rBC2lhdPHpKOvBV3XxyxU+R4BMgsfv8S3KZP96
-         h29B30NB3CDbJz8EgdJnxeCDKZQKOAqnFcXzRjZSk9VnVn3KN8RxUP7z/Nzxdb1GIE
-         Ogm0btPFaTZ/n03QtDDqEjGYc2EwrrtKuEPzZEAApOopb5a+dutvJ4iTWc9bi3DdJq
-         abqJ06ShWAdYui9/w9QAUBC0sERpof20nCfE9p3KDdPbl3NzLLOa5wOOqeIoAqsvMi
-         60Tj/Jhsvb0JtcDFnI5t05MXK+iAsIgul+1/TtyIqTvtbv05zSdFrinekKFD4BQL0Q
-         RnxWgJs+atcMapvvqwAb05LJnf3DhC+HTLKeDjIJYhQw3T+IZv7In2qn9HnsPElAAE
-         EgxLBEl+9dZlUda+Bc0q8mSYnS79Zz47QARNqrNdPpu8VxCZc/Z
-Date:   Thu, 1 Oct 2020 23:52:47 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     "Wu, Zhichen" <zhwu@amazon.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Question About Git V2 Protocol & SHA256
-Message-ID: <20201001235247.GK1392312@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, "Wu, Zhichen" <zhwu@amazon.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <9FC3DDB4-DE6F-45B3-95F9-1048991713A4@amazon.com>
- <20200929221311.GA15129@coredump.intra.peff.net>
- <20200929224356.GH1392312@camp.crustytoothpaste.net>
- <20200930004630.GA623061@coredump.intra.peff.net>
- <20200930021925.GI1392312@camp.crustytoothpaste.net>
- <20200930122006.GA1900495@coredump.intra.peff.net>
+        id S1733281AbgJBAis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Oct 2020 20:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39264 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733249AbgJBAis (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Oct 2020 20:38:48 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30BDFC0613D0
+        for <git@vger.kernel.org>; Thu,  1 Oct 2020 17:38:48 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id z19so221528pfn.8
+        for <git@vger.kernel.org>; Thu, 01 Oct 2020 17:38:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=K9ThW1rr+zsJ86TT9oMRW+uUaFnmmHi8WQa4Z/Ah8vo=;
+        b=fotquRQ1r/pKgqJ9z7+/sNXCAkfRB+wPPxv7FJypUAL0nnu+IzcLSSU+XciPaEeo+l
+         vwWgT99g7w2M0j2pBHEOTCYva9euga0oGpYHiNLkj4VU+WPswrxdyGbOXNEd+CC7m/Eg
+         9q/2LqUFEdI3qT957S5BQB25ss2yCnTwtebkdLAV99E4OdbkYatwz4fLREJFWU2e1zVv
+         QLhNN+ixRfwOQpjwOygQ/MGkRFGIhJQj54e4kQki3CJZA6jzYyBkGHxv25P1Op30pgUk
+         GTYOjPeAIwJK94YoYmlimlbp3rwLQfqQdKFLSGi5S+oSARJvrQ+m95cYfekDyxjYW0+7
+         S+eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=K9ThW1rr+zsJ86TT9oMRW+uUaFnmmHi8WQa4Z/Ah8vo=;
+        b=LnHFF/IhVcyZhRxXoZRhv1SbNLDBCskwcwjMvFS0eBLDPM0smGBID9asSsCKOV3pDp
+         pSBvGvIUXCQlDrWm9beTwKfWw60EEEE19yJZLefkE34Nh2sGOJskHBqrZmiIzlqm2Mzu
+         BjobbGHOkOX5HDhjSxWhLQcR6LvaVuO7mCztHalHFvMt63SMB9o3rbDWU9l+2h4Hhhke
+         dBVQSinSOq5SN6U8aa/z4aXCEt4GV8K1UnpwuE8uyFDRyPFspqh7R/1LyCbz4XVKw8iC
+         V4CNmRLGKrg5GYddNc3Wt3MIxgptw4AuBv+k87M4jDPQrog37/9O2hk9/vvQxpnPepr0
+         SV/Q==
+X-Gm-Message-State: AOAM5338WrNR6CX0nzp3gVwju9UAmkDkRRYcfLOqnypEA4Ixcof/CCfn
+        IcDzXC6u2ep4/sECH2+Z5Vjmk3fuTOc=
+X-Google-Smtp-Source: ABdhPJzVso0PKkcCIzF7U3Oq0lFumohTYI/ozhi4rUv2o1sJNIkXVY3x8VwFx1gstWaM1ws1hyaodA==
+X-Received: by 2002:a62:3605:0:b029:151:ee7f:d910 with SMTP id d5-20020a6236050000b0290151ee7fd910mr5213745pfa.49.1601599127551;
+        Thu, 01 Oct 2020 17:38:47 -0700 (PDT)
+Received: from localhost ([2402:800:63a8:8180:8ec1:c51e:c16e:7fd])
+        by smtp.gmail.com with ESMTPSA id u4sm7144305pfk.166.2020.10.01.17.38.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2020 17:38:45 -0700 (PDT)
+Date:   Fri, 2 Oct 2020 07:38:44 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, sluongng@gmail.com,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 6/7] maintenance: recommended schedule in
+ register/start
+Message-ID: <20201002003844.GA28643@danh.dev>
+References: <pull.724.git.1599234126.gitgitgadget@gmail.com>
+ <pull.724.v2.git.1599846560.gitgitgadget@gmail.com>
+ <f609c1bde27558db2a9601ac34f8a51ce86f0e2c.1599846561.git.gitgitgadget@gmail.com>
+ <CAN0heSqkJoqXKP5ccaGMA1_ppd0bcQ7G0ozUH+H7tBMonhcrjQ@mail.gmail.com>
+ <bb9cd08f-1e59-ae19-b184-545688451203@gmail.com>
+ <3e18199a-1dcb-057d-4753-03d5acfcc036@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Z9t8O/5YJLB6LEUl"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200930122006.GA1900495@coredump.intra.peff.net>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+In-Reply-To: <3e18199a-1dcb-057d-4753-03d5acfcc036@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2020-10-01 16:38:48-0400, Derrick Stolee <stolee@gmail.com> wrote:
+> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+> index 7628a6d157..52fff86844 100644
+> --- a/Documentation/git-maintenance.txt
+> +++ b/Documentation/git-maintenance.txt
+> @@ -37,6 +37,21 @@ register::
+>  	`maintenance.<task>.schedule`. The tasks that are enabled are safe
+>  	for running in the background without disrupting foreground
+>  	processes.
+> ++
+> +If your repository has no `maintenance.<task>.schedule` configuration
+> +values set, then Git will use a recommended default schedule that performs
+> +background maintenance that will not interrupt foreground commands. The
+> +default schedule is as follows:
 
---Z9t8O/5YJLB6LEUl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't mind about using a default schedule (but someone else might).
+I think some distributions will be paranoia with this change and shiped
+with disable by default in system config.
 
-On 2020-09-30 at 12:20:06, Jeff King wrote:
-> On Wed, Sep 30, 2020 at 02:19:25AM +0000, brian m. carlson wrote:
->=20
-> > If you have a suitably new Git, it will fail with an appropriate
-> > message on both sides.  The client will complain that you are trying to
-> > use a remote that uses the wrong hash algorithm and the server will
-> > complain that you have failed to pass a suitable object-format
-> > extension.  That will look like this:
-> >=20
-> >   fatal: mismatched object format: server sha256; client sha1
-> >   fatal: expected flush after ref listing
->=20
-> That makes sense, and the message isn't too bad.
+> ++
+> +* `gc`: disabled.
+> +* `commit-graph`: hourly.
+> +* `prefetch`: hourly.
 
-Yeah, it seems reasonable.  If people like something else better, it can
-be adjusted.
+However, no `prefetch` in default schedule, please.
+IIUC, this is a network operation, if someone is on the go and paying
+their internet based on their traffic, this will be a disaster.
 
-> > That's true if you're using protocol v2 at all, or a suitably new Git
-> > with protocol v1, although the messages may differ slightly.  However,
-> > if you're using an older Git with v1, then you'll get this:
-> >=20
-> >   fatal: protocol error: unexpected '304c98b4860fa40b3e04f3e2e24db1a13a=
-b959922a63209685813908c4fabc83 HEAD'
-> >   fatal: the remote end hung up unexpectedly
-> >=20
-> > That's because, as you pointed out, we don't get to the point where the
-> > client fails to send the value.
->=20
-> That makes switching to sha256 on the server a bit of a flag day, then,
-> doesn't it? Everybody with older Git will not be able to clone such a
-> repo. That may be OK for some cases, but I suspect it is going to cause
-> a delay in servers moving to sha256 themselves. Even if a project is
-> ready to migrate, it may be hesitant to do so because of third parties
-> outside of its control (whether external tools like CI, or just wanting
-> to be open to cloning by random users).
 
-Right, but as the code stands now, those people couldn't make use of a
-SHA-256 repository anyway because there's no interoperability.
+> +* `loose-objects`: daily.
+> +* `incremental-repack`: daily.
 
-> On the other hand, any kind of hash negotiation would require on-the-fly
-> conversion for that case (i.e., a sha256 server serving an older sha1
-> client needs to produce the alternate-universe sha1 objects). That's
-> expensive either in CPU or in disk space, and it may well be that
-> third-party hosting sites would refuse to enable such an option anyway.
+And I would say no incremental-repack, too.
+Users don't want to a large operation of IO on some random time of the day,
+be it when they open their PC in the morning, or when they want to close
+their laptop to go home.
 
-We will eventually have some sort of compatibility, and it's
-theoretically possible that hosting could offer SHA-1 compatibility for
-those repositories, even if that's only for protocol v1.  So the
-repository could use SHA-1 for v1 and negotiate for v2.
+----------(Windows rant ahead)
+I still remember those days that Windows 8 was introduced,
+Back in that days, my computer still uses the old 7200rpm HDD.
+I was super-angry that whenever Windows is started, it starts some IO
+disk-caching, indexing that hung my computer for a good 10 minutes.
+While that same computer can run Windows 7 and other OS fine.
+I don't particularly care how much my computer is faster after that.
+I want my computer usable at that time, instead of wasting a good 10
+minutes on nothing.
+---------(Windows rant end)
 
-The desired behavior for a large hoster like GitHub or GitLab may be to
-force v2 only for SHA-256; that's a justifiable decision there, because
-we know all clients will support it and we don't have to deal with
-remote systems that are poorly configured.  So I wouldn't be opposed to
-seeing an option that did that.  As mentioned elsewhere, though, it
-isn't a 100% viable option everywhere.
+Either the users know what are they doing, or we don't do anything at
+all. Let's them do it on their free time.
 
-> > Because v2 isn't implemented for pushes yet.  The testsuite does not
-> > even come close to passing unless you have a fully functional remote
-> > system.  That's why I implemented protocol support, even though it
-> > wasn't originally planned.
-> >=20
-> > That was mentioned in the cover letter of the series that introduced
-> > protocol support.
->=20
-> Yeah, I think I misunderstood the direction there. I took the
-> object-format capability to mean that the client and server would
-> negotiate. But it really is the server saying "I'm going to speak this;
-> you'd better understand it and be able to translate objects on your
-> side".
+IOW, Please let users opt in instead of opt out of this features.
 
-Yes, at this point it is, and it will remain that way for v1.
+-- 
 
-> I did realize that getting the test suite to pass meant that we'd be
-> passing sha256 hashes over the wire. But I had assumed that was part of
-> the strategy to make everything work in a sha256 world, and that more
-> interoperability stuff was coming on top. I.e., I thought our current
-> state was less mature than you ended up implementing.
-
-More interoperability is coming, but the stage 4 (SHA-256 only)
-implementation was easier to implement, so we got that first.
-
-The good news is that the compat code is less involved than I expected
-because we providently made the decision to write every new loose object
-in the repository using a single function.  The biggest problem is now
-the testsuite because we try to stuff all manner of invalid and broken
-object IDs in places and that doesn't work anymore because they can't be
-mapped.  I'm chipping away at this problem while watching movies on the
-weekend, so it's coming.
-
-> > In retrospect, we probably should have sent "GIT_PROTOCOL=3Dversion=3D2=
-" as
-> > part of the shell command and let implementers deal with the fact that
-> > their SSH servers would need to adequately parse and interpret shell
-> > commands to function properly.  But it's probably too late to do that
-> > now without bumping the protocol to v3.
->=20
-> That was definitely discussed, but rejected because of the
-> interoperability problems. Not just for servers who actually want v2,
-> but it would mean that the v2 probe would cause existing v1 servers to
-> stop working. I.e., it would stop being safe to send v2 probes, which
-> was the whole point of the scheme.
-
-Yeah.  I guess we can't have everything we want in this case.
---=20
-brian m. carlson: Houston, Texas, US
-
---Z9t8O/5YJLB6LEUl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX3ZrzgAKCRB8DEliiIei
-gSiZAP95RogQpwEUAwyp3rRzF3HRrffOToqMfT/AY0J+opIrbAD/cCG3YDfu2y77
-IFfZVPHZzC1WcmhjX/yQCKlfr0rRsQ8=
-=ysIT
------END PGP SIGNATURE-----
-
---Z9t8O/5YJLB6LEUl--
+Danh
