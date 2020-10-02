@@ -2,113 +2,107 @@ Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F143C4363D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 12:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7F81C4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 12:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA698207EA
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 12:27:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94DE5206DC
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 12:57:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="BuyQkebE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JKM1fzbA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387776AbgJBM1e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 08:27:34 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54965 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726029AbgJBM1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 08:27:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601641645;
-        bh=Feg5R/htpI0U+u1gYrbqeTZcI9aBJpdSQvfnrRjog4U=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BuyQkebESP81KO2nRDNsD+kUTNMlxphbSdJ5HzCPm+vldrbiEGNLvvrr91HCm/tiS
-         xZhyuI+1TyMjjZxPg9PJG+c7QMYafY6pKh7IEIRWhque2P0cb+wlRcwbOLHu1PS5h7
-         CPSrZoq1GqVFyT52nJfGek7nYWXzuCJsJs3WhND0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.114]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7zBb-1kS7p93SuB-014yS5; Fri, 02
- Oct 2020 14:27:24 +0200
-Date:   Fri, 2 Oct 2020 14:27:23 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Nikita Leonov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nikita Leonov <nykyta.leonov@gmail.com>
-Subject: Re: [PATCH v2 1/3] credential.c: fix credential reading with regards
- to CR/LF
-In-Reply-To: <20201002120126.GA2255314@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2010021427080.50@tvgsbejvaqbjf.bet>
-References: <pull.710.git.git.1581688196706.gitgitgadget@gmail.com> <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com> <27f6400a21412d762b290a34a78ebe7296d36bf3.1601293224.git.gitgitgadget@gmail.com> <20200929004220.GC898702@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2010021011540.50@tvgsbejvaqbjf.bet> <20201002120126.GA2255314@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387792AbgJBM5N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 08:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40260 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726017AbgJBM5N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 08:57:13 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E69C0613D0
+        for <git@vger.kernel.org>; Fri,  2 Oct 2020 05:57:13 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id u25so1234675otq.6
+        for <git@vger.kernel.org>; Fri, 02 Oct 2020 05:57:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+oW7FhNvwIsrb4J8mIsro+t49HptSAWI0DWefeitxGw=;
+        b=JKM1fzbA7VhsWZAIOiWrSpYaEfcjMzwntTAmxp2O/ZAvEpiqIIVFbGej35zyudGhI7
+         TgrPhy48Bsapv1sMBldHrJwcCMkiAlaWv9nLoswf/zHagnLgvOCmXV15V4RsDZpiKMDS
+         Z+Mn0V7L+EgN6Bp9VKq5P2Vc/XsuOFOGwFCZKmtc35g/XoxHLOKsba1hToCqG26m3Mq3
+         LaaOOkOgVcsnH9jpgK5o7kO2zFOqZEdTRFtcvWq53IOeMzwfVChuB68gpVn/HYL/T6K3
+         dE1w/JQ9GGOfp28U+7DejVKpy4kktb51G64ysfR6lPF4CwpjmfGNj0hO7x3qnvM7OTlr
+         8e2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+oW7FhNvwIsrb4J8mIsro+t49HptSAWI0DWefeitxGw=;
+        b=bNP5vuNdza84I2xUw8MkTKAKYfQcyPGrm3sE4fhHhC6+VTthjkRUXEr0xieNukyWs2
+         pL8d9P2Vl3YqKgF0Pot9o89C4Ic/L9WB4VX4POz0z1KwSlgliYu+dAErTEqVx4epSdVs
+         u8l4Z4NIvgIbNH8NjI2LYXc0FQdR2ARa40P5pVe3YA4MZTxaZKa8VJzZteM2S3BvPrsC
+         YBZ6H4LJYA1aZLqSGCpd08NcmwBvezzYmknu9t1XwygXzT2i4kU5WHTjg2ZCvyr6+35N
+         1hn2SrxmLYYNT1grAXrjHPI3hqQ7PtF8LECVO1Wkq/5dPhp40FpAJk9eVYv7pChUq8Uc
+         1IgA==
+X-Gm-Message-State: AOAM533WntQAGgTGZFe/i13uA/WJXs2h1qnQp2mpsq1x1om51ssRQ/QO
+        c2e90hXYX8yd3VAHtozWHF0=
+X-Google-Smtp-Source: ABdhPJxKzcTFEEE+Npl5yvOANrdUJpNu4TIUYV89hxUyvsR41jb1vJn5lnnYLB5njnqoSTo7K8aDOA==
+X-Received: by 2002:a05:6830:1509:: with SMTP id k9mr1491911otp.226.1601643432327;
+        Fri, 02 Oct 2020 05:57:12 -0700 (PDT)
+Received: from [10.0.0.16] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id d28sm403434ooa.7.2020.10.02.05.57.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Oct 2020 05:57:11 -0700 (PDT)
+Subject: Re: [PATCH v3 0/7] clone: allow configurable default for -o/--origin
+To:     Sean Barag via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>, Sean Barag <sean@barag.org>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+References: <pull.727.v2.git.1601350615.gitgitgadget@gmail.com>
+ <pull.727.v3.git.1601523977.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3225fd9a-6b44-8c9c-52a9-614ee8470a8c@gmail.com>
+Date:   Fri, 2 Oct 2020 08:56:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101
+ Thunderbird/80.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ogMfkOZDUnlTeWi3vcsN7756Mb2vl13oTMELOfxmA1GsMwCJ49f
- 8QAkU8O8cdWy38LNF/h64zC8bqoisl72Ybpsvgfb/meBsiE8PIlK6TNf5MFUQu6jFG1CVoC
- /QQyI8dWMSXYocaRAG/vyiEkeUObyna71D/q9ugmAoOI2GhZVr6JMtSPEyCQ6USMMQYxkKc
- dZzMsi5AOVusfl4ut18PA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LeQBSywqtYQ=:R1kXcUghFycL+jDXR/7nkQ
- aIztHCZC2cI1AbbKF2KmyvYduIBEm+y64bYFv5MjXYJAXVZQV/vgc5bFPMum87qrcjuxY+jYr
- Rpda8kaTzy6Jhf6OBCgmjb2K5BBmozH13P29NFouS+3jVwCUvQwjrTpiIgjnyyBb0226lhIxr
- feF7/2Bh53lXvNvPrLOPeLeNF/A1cyYV6aVvrZo0vtlV/wANmDNGhyA5gpGSUf3xDa8rIoDZ3
- Y50pqh8jgdEikEr8cCsFstabf1uMb2RjdCqh7LmsgGeWAFzSa+V4z9zzPsiLqSPcg7cgUmfpQ
- OnYSkB3gGeeR4b+ZL6q0UBX2GTvupEFRIafFrVFeoRxzgdqUCCrCFsWkb08ERIuvEw5oO2vps
- /SdjSxjwVwtTaqdSyEFfKzwA3tU1K+lMUIvHGokF56Ef1Ml79m8HjB4THkHGfD9b/QD5eVGsj
- e6UTUS5zreodlz2ZVPjGgdUr7vtAYnK860tD7yQgp1DDgiMxQvKNFP4O4lE7JY/p1Idf/00ek
- j2poqwFRyzR2a9jjuSCr71IMkVHbBJxPZ5Hyh27f4mQlw67/QYQEi4VPIaKf/VlUU6om7F9MN
- CH9o3Im8/3PYZrlJvQ1I/WT+wxPUPkKkAvWdR/qHpqTLtlR9ZJ6qFg9RoT+ITj3LYbpvC13vk
- TgXTy8zCYYI0a/UN8Jao/BkzgCBPSAVcrgxwAcHzFxm8ATzEARzIyE+j9u6XvoA7bo9aSPzey
- LgyE11cGP6T7vP/D2BG4q4tJZCy7cmi1uDg8LQd6mrx3F7ncrYKNvQVikK8/MTefMfreGMhL1
- sDkxwIqN7H+9CkY6Bj1JPSCpXAL4Aj9SRmT8HpjZ1n5m4tR2EAL/aw/+rAhiEB44K+QeeohVE
- a6GL/6GQGf+dx49uF7DftnO0MmQ7yZgmp1wS9mv56SC1xh67+iWV/fnazGczvCt0IGj43PvC7
- GMpVEl3bOmr/ybrEreb8BdKbrhaZ5AnR5ZG0uRqzEQeQPdq2vMLt8vNDv9ZskcCICQCheTqlv
- Fd4h+vrZRDWu8uvrk0DyK07M3Hirf4Zpjd7KDRt70m/i99VLAR05SVZdkiY+C0CofGBZYyRc4
- oijxiV7ZdsTEhsXXt8Y5K7QCCcYgOGTj71pZ84V1j26c/3GiFr64YCqmLrpL8mdqtQtHd79k/
- lff24s/LQVxTv6MZIEEZShqeOai6eqDR/65389ppWD+hfqk6cMwIHFpWTOZC3L0fi+tOfTqGQ
- 659iShPvpRchswuRvcaY+x6SJDfbnuyMNfupQVw==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <pull.727.v3.git.1601523977.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On 9/30/2020 11:46 PM, Sean Barag via GitGitGadget wrote:
+> v3 (changes since v2):
+> 
+>  * [5/7] fix compilation error: validate option_origin since remote_name
+>    doesn't exist yet
+>  * [7/7] remove default_remote_name; apply default value inline if no other
+>    value applied
+> 
+> v2 (changes since v1):
+> 
+>  * Convert Thanks-to trailer to Helped-by
+>  * Rewrite several commit titles and messages
+>  * Unify error reporting between clone.c and remote.c
+>  * Add tests for git remote add and git remote rename with invalid remote
+>    names
+>  * Prevent leak of old remote_name
 
-On Fri, 2 Oct 2020, Jeff King wrote:
+Sorry for being late to these versions, but I think
+the changes across these two versions are excellent
+improvements. I'm happy with this patch series!
 
-> On Fri, Oct 02, 2020 at 01:37:23PM +0200, Johannes Schindelin wrote:
->
-> > But I would highly doubt that the empty lines were the biggest problem=
-:
-> > Sure, we would fail to recognize an empty line with CR/LF line endings
-> > when reading with `strbuf_getline_lf()`, but we would totally
-> > misunderstand the entire rest of the lines, too. For example, we would
-> > mistake `quit\r` for an unknown command, and hence simply ignore it.
-> >
-> > I do agree, however, that your confusion validly points out a flaw in =
-the
-> > commit message: the "empty line" comment is a red herring.
-> >
-> > Therefore, I spent some time pouring over the commit message. This is =
-my
-> > current version:
-> > [...]
-> > What do you think?
->
-> I think we are on the same page, and this revision does a good job of
-> fixing my complaint about the commit message. Thanks. One minor typo:
->
-> >     While we do this for the credential helper protocol, we do _not_ d=
-o
-> >     adjust `git credential-cache--daemon` (which won't work on Windows=
-,
->
-> s/do$//
-
-Thanks, fixed!
-
-Ciao,
-Dscho
+Thanks,
+-Stolee
