@@ -3,105 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22F8AC4363D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 20:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9DA3C4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 20:58:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB6692065D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 20:48:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A08420754
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 20:58:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UpDsOpZi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyCCDVBO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725710AbgJBUsB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 16:48:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55411 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbgJBUsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 16:48:01 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6932EA092C;
-        Fri,  2 Oct 2020 16:47:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EdwwJXDZNIBierM8RXZqI3csgo8=; b=UpDsOp
-        ZiobBYEATmJa3WIOBX2xGtsLt+xDK9zpZpefh1K83YPwET6SrDANjvJyMdCafB9N
-        z0rD3fPz5bW34Fm9tIZ+QGOzn0JIOJ4VXQzhQ/oWsRB/MpIxdXz2s5qJM1Kq4i83
-        q6l2Rct4AXs1USmGsyUbiYka02sVHjdHLKfJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=COnRoxbB+nbNdzI0Wuaeo1Xah/nSIuhH
-        C4IMWU6vnnJrJe2sI3aX3ETU+W1V3SFgjhmZQwzbX5ImBBpFRZPShXELdQKYnyAr
-        U5M6r+tru8cdQDWDkNYM2uqNXzR+Wc3u1vBqGS0DtQ1qZuEbRJ6HX7KfLEijAMun
-        fQW8G5IU5YQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6155EA092B;
-        Fri,  2 Oct 2020 16:47:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DED3BA092A;
-        Fri,  2 Oct 2020 16:47:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v2 05/13] reftable: utility functions
-References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
-        <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
-        <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2010021557570.50@tvgsbejvaqbjf.bet>
-Date:   Fri, 02 Oct 2020 13:47:58 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2010021557570.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 2 Oct 2020 16:01:50 +0200 (CEST)")
-Message-ID: <xmqqh7rc8idd.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725747AbgJBU6h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 16:58:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58610 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725550AbgJBU6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 16:58:37 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38B3C0613D0
+        for <git@vger.kernel.org>; Fri,  2 Oct 2020 13:58:36 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id g9so1090501pgh.8
+        for <git@vger.kernel.org>; Fri, 02 Oct 2020 13:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jHTZ/NlKlfAVCOW/gsxFkeKWGARDtGUnN4ug+JGXPT8=;
+        b=eyCCDVBOwwgTlblWITwCS6RoeUV7iMLfOuiER29GUfrkSmW4QeREHk1kxB+PySdWm/
+         M+rNBnOOJSogEAEeU7Heen+A8P9sMeNk6qLiLOGBCr6u6k9YID36k1Z6m2omWLRveC+H
+         SieC+O4YqiM9/CD85y85VsB7Nh5vSvSqQvjuZ7l2wAjKAWv0d+lfgDCBZGaEitAI0FIA
+         1E0/M4vbhuORLqXCYR7unK2a5Vj1+zsJ11bCFXRESIMCtYj07SflEP17UHf8+6C6rAgN
+         P3/CRtYI+5nm1JFB3HzOlQLfiS4oPylZl5y5E7AVaAm5rStGIKcVzzAyVA2MM5DzotS5
+         2YyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jHTZ/NlKlfAVCOW/gsxFkeKWGARDtGUnN4ug+JGXPT8=;
+        b=embZcKldtSgYylVFrHdn7xYI5rKGOPWSSVHzYCOmFPaJWGp+goTIM2DuinxWEcJBOP
+         WWn0zM3trgekAdRtJduQ9eux8CpZFFg+LSPZPslBSC6PQY2kFzdNoQ9xVg7qLhLxvth8
+         StCbCeH5CNOBcttwlCaLIWdzd2gKz2PNJ2DaZb7nntSqbdxv/pAA2RYT7gYvFLg+4FZA
+         zWkyettGXXNZx6bIjQhtWT34sAPc4S11ts3i7xQPaqFfO2B3QS/vpThNfD+D5JoGvyCm
+         cGQurqLcW1bxwoPGPWRg7nvy5SYICXQP8WEM2mlOn9eIiWUltKDiHAjJXTAfugFKlFC3
+         SyDw==
+X-Gm-Message-State: AOAM530hVP+ATdQmNMiGlgMzRaBbR90yqNXHSh5MJEWWzfzR8LO3o1dD
+        ixNGezoybPg4OgBU4HaFxJs=
+X-Google-Smtp-Source: ABdhPJyIZd+Xc+bCjUYUm2nlbVkGo1bKlJNfK16Y6ypqR9BNE+4zf9LSC7dVYdaQzZN6+b2wvJMYUA==
+X-Received: by 2002:a63:3193:: with SMTP id x141mr3736483pgx.254.1601672316462;
+        Fri, 02 Oct 2020 13:58:36 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([124.123.104.31])
+        by smtp.gmail.com with ESMTPSA id j26sm2922163pfa.160.2020.10.02.13.58.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Oct 2020 13:58:35 -0700 (PDT)
+Date:   Sat, 3 Oct 2020 02:28:30 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v9 1/3] push: add reflog check for "--force-if-includes"
+Message-ID: <20201002205830.GD78209@mail.clickyotomy.dev>
+References: <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
+ <20201001082118.19441-1-shrinidhi.kaushik@gmail.com>
+ <20201001082118.19441-2-shrinidhi.kaushik@gmail.com>
+ <nycvar.QRO.7.76.6.2010021550170.50@tvgsbejvaqbjf.bet>
+ <20201002150710.GA54370@mail.clickyotomy.dev>
+ <xmqqft6wa8dc.fsf@gitster.c.googlers.com>
+ <20201002193906.GA78209@mail.clickyotomy.dev>
+ <xmqqmu148jxu.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8E32DE56-04F0-11EB-A5AC-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmu148jxu.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hello,
 
->> This commit provides basic utility classes for the reftable library.
->>
->> Since the reftable library must compile standalone, there may be some overlap
->> with git-core utility functions.
->
-> My position on this idea to duplicate functionality in order to somehow
-> pretend that the reftable code is independent of Git's source code has not
-> changed.
+On 10/02/2020 13:14, Junio C Hamano wrote:
+> Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
+> > Noted; even though "get_reachable_subset()" and "in_merge_bases_many()"
+> > (after the commit-graph fix) return the same result, I suppose the
+> > latter was designed for this specific use-case.
+> 
+> Yes, in_merge_bases_many() was invented first in 4c4b27e8 (commit.c:
+> add in_merge_bases_many(), 2013-03-04) for this exact use case.  For
+> use cases where callers have multiple "these may be ancestors"
+> candidates, instead of having to iterate over them and calling
+> in_merge_bases_many() multiple times, get_reachable_subset() was
+> added much later at fcb2c076 (commit-reach: implement
+> get_reachable_subset, 2018-11-02).
 
-The above may be sufficient between you and Han-Wen, and a few
-selected others who still remember, but please do not forget that we
-are collaborating in the open.  It would help those who are learning
-open source interactions by watching from sidelines, if you spelled
-out what your position is or at least left a pointer to a previous
-discussion.
+Got it. Thanks for the detailed explanation and reference.
+ 
+> > OK. Shall I update the next set by reverting the "disable commit-graph"
+> > change, s/list/array/ and leaving the rest as is -- if we decide to go
+> > forward with "in_merge_bases_many()", that is?
+> 
+> Yes, that would be the ideal endgame.  What I pushed out to 'seen'
+> has the removal of "disable" bit as a SQUASH??? commit at the tip,
+> but not s/list/array renaming.
+> 
+> Thanks.
 
-FWIW, I think it is a mistake to try to make this directory so that
-it can be lifted out of our code base and used independently, as it
-has to create unnecessary friction to the code when used here.  It
-is not like other code that we are not their primary intended
-audience and we simply "borrow" from them (e.g. xdiff/ & sha1dc/).
-
-The previous paragraph agrees with my guess of your position, but
-perhaps you have something else in mind.  I dunno.
-
-> Be that as it may, the CI build failures impacted my notifications'
-> signal/noise ratio too much, so here goes (Junio, I would be delighted if
-> you could apply this on top of your branch):
-
-Quite honestly, this close to the first preview release for 2.29,
-I'd rather drop this round from 'seen' and expect an updated topic,
-than piling fixup on top of fixups.
-
-Thanks.
+Alright, I will add those changes in the next set. Also, I saw in the
+other thread that you tested commit-graph fix on this series and the
+tests are passing -- thanks for checking.
+-- 
+Srinidhi Kaushik
