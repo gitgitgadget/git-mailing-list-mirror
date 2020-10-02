@@ -7,120 +7,122 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54A50C4363D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 19:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF067C4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 19:42:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08793206DD
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 19:39:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85FCC20719
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 19:42:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n6GtR7ln"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qrtuVkRO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388321AbgJBTjP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 15:39:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46270 "EHLO
+        id S2388377AbgJBTmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 15:42:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726224AbgJBTjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 15:39:15 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85700C0613D0
-        for <git@vger.kernel.org>; Fri,  2 Oct 2020 12:39:13 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id n14so1983588pff.6
-        for <git@vger.kernel.org>; Fri, 02 Oct 2020 12:39:13 -0700 (PDT)
+        with ESMTP id S1725991AbgJBTmv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 15:42:51 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B787C0613D0
+        for <git@vger.kernel.org>; Fri,  2 Oct 2020 12:42:51 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id gm14so1541736pjb.2
+        for <git@vger.kernel.org>; Fri, 02 Oct 2020 12:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BwD2aoX98PkBOLb18DpF+vGsuu/y2wn0Cud8ltwB814=;
-        b=n6GtR7lnsL7ejtxK+YK1YaA71gupOAgfmSrpdAuy/p8err1mEUzFl9sgkctYsAiwoO
-         WDXthVvJtIA5U8Wn18dX8O0ROuAGxBqXTpiNz4J+7LL7BHjuWUmagN4QAdFBmnicYhWa
-         gPgyua3Hu1vvTttkhU4FjOThUzhnJ99uktBMDkFBqdEP2KciEPg8GgaIOU4ZKAVyZoVF
-         4H464xcybsDOPSzZHMdG4RDiVCLnknrsMXgeCN1xYHESC5iJ7VLo+JVtNPJfSsAci5jw
-         FarUYdwUbYa/mj6wQrYUvCqSvK40EYKAla2WwU77vQX5SZtpogV4GTr55WlWu0TG/9PN
-         LCLw==
+        bh=3azY7XqW6ux5WqutMPcQQQGDSgJVCb+gjTXnEGrmizc=;
+        b=qrtuVkROYiR8Bzgzg08AbDaCQS47elBjnV4cDtSwVhgwh+Z278fSDX2sRxAtpfGzXn
+         lGxuo9m7Tefa7f5mKlh3ozMI3ZcGKHJsYHJKEEMnyI51cW+CyyD1G/SLai6WEOhDCd69
+         IjjW1Js7pI215YwcUZONzt0CY3vWES8KsRuusxvdhEXL74OxLKCYln6ez8Gxfmso6BQE
+         oZNhd8qNNsPLHehqx51bF0h6ZOtOzQQfC1+TMezcVAWtTwRfwSitVXk8uAaa5ehKG6sR
+         TjEGZqG91nXXhd/frzx1/DiXc8ry27VWQhKLjOSyXKPHsN7bZKwb0MZLhTw0JNUKeWgh
+         F4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BwD2aoX98PkBOLb18DpF+vGsuu/y2wn0Cud8ltwB814=;
-        b=ZbwXvsRoEt0QT7asixYVPQs/hmlqmWTVI+7QTaRiMaAbZiehxAQUJ2n3FybUnrE3tB
-         wxKF/KT7+MQEwFn+tn+q/74Rb/aw8RjpKVLdnpaMYAt0ZaoXRAzgRE31WY1rayTex2kq
-         aTgq3wweIpjhx5pqKdFTtZVWszQfSmXKifD/49mn4HZPs7sgPs3GsobpZ+D++zgSd7bg
-         fPNkOO8mvWbctw2OPmxP+uTWxKWg0jWzlVGFJXjcWjWc6zPDuYeZxQ25J4ZG3PTP6Qn3
-         nhNNv0Ib42r3JPZKzaiIWURQunbBoxaOb5bgafElAuC0T8WNqQztUmMVZetJYG+HZ3DP
-         JX9g==
-X-Gm-Message-State: AOAM532xiwgqezAcNdgRug1C2XdHapgRcR80YUmJkzrkSuFlUrYgJJ+V
-        XcpBDTcF9GwxqncVYF6GZXE=
-X-Google-Smtp-Source: ABdhPJy+I/TN+nhOAelJZASuDMgBRx6Q+T92J2VbzAOAWag9KOGuSp1KdIHauCUJ3emKMvhCvkLIQg==
-X-Received: by 2002:a62:184f:0:b029:142:2501:39fd with SMTP id 76-20020a62184f0000b0290142250139fdmr4411335pfy.76.1601667552819;
-        Fri, 02 Oct 2020 12:39:12 -0700 (PDT)
+        bh=3azY7XqW6ux5WqutMPcQQQGDSgJVCb+gjTXnEGrmizc=;
+        b=S8A412Tmw4VVZvs41cilemja2bMJI022S81iiYLcaj4x6ROmJ/8ZQgZjAxnRac9ZVP
+         LuWdgYXxSYZO+fnu2hUkNtLnaOT0JgPtrOuwmFSW7v9t/YmQyQ8NBHG9/ho8GkFZL+33
+         xugfEt3236uFW+DF6l3BxkKYODIEmwZgC21rC72HWFVC3Yl7BQEmW3ObNjhPHM72dghX
+         CNz9gaUFhiqjrV+ZHI4X9a32pHwT/iLZDiDDjJ86A6WjjK1sqUOe6LlI9SwigIN2YiLT
+         MA7Q4vtaSfX+Ldu7o0oihUTIVw1t5kkZtPmJrJ+Fw2eY6YPqNLOyAWTrFC16Qd5RUHYg
+         SrBQ==
+X-Gm-Message-State: AOAM532uFmCni38LliDxwULe6Hoqho4l+qeElTKTns7CrHb7C9V83ewr
+        0dI+D6EMQMJBH6ig1QXGDVg=
+X-Google-Smtp-Source: ABdhPJyoThbMJUf2Pb29zqND/xYIwf8ft9HwdqfBZ0yViSGBivk0CwoYJbm1zpWYtVWeXF2pCkVo/w==
+X-Received: by 2002:a17:90a:6984:: with SMTP id s4mr3043063pjj.206.1601667770747;
+        Fri, 02 Oct 2020 12:42:50 -0700 (PDT)
 Received: from mail.clickyotomy.dev ([124.123.104.31])
-        by smtp.gmail.com with ESMTPSA id w203sm2847569pfc.97.2020.10.02.12.39.10
+        by smtp.gmail.com with ESMTPSA id h9sm2277681pfh.213.2020.10.02.12.42.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2020 12:39:11 -0700 (PDT)
-Date:   Sat, 3 Oct 2020 01:09:06 +0530
+        Fri, 02 Oct 2020 12:42:49 -0700 (PDT)
+Date:   Sat, 3 Oct 2020 01:12:44 +0530
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v9 1/3] push: add reflog check for "--force-if-includes"
-Message-ID: <20201002193906.GA78209@mail.clickyotomy.dev>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Garima Singh <garima.singh@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v9 0/3] push: add "--[no-]force-if-includes"
+Message-ID: <20201002194244.GB78209@mail.clickyotomy.dev>
 References: <20200927141747.78047-1-shrinidhi.kaushik@gmail.com>
  <20201001082118.19441-1-shrinidhi.kaushik@gmail.com>
- <20201001082118.19441-2-shrinidhi.kaushik@gmail.com>
- <nycvar.QRO.7.76.6.2010021550170.50@tvgsbejvaqbjf.bet>
- <20201002150710.GA54370@mail.clickyotomy.dev>
- <xmqqft6wa8dc.fsf@gitster.c.googlers.com>
+ <xmqqlfgqc5kq.fsf@gitster.c.googlers.com>
+ <xmqq4knddg5v.fsf@gitster.c.googlers.com>
+ <20201001175443.GA28444@mail.clickyotomy.dev>
+ <xmqqblhka7wx.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqft6wa8dc.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqblhka7wx.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On 10/02/2020 09:41, Junio C Hamano wrote:
+On 10/02/2020 09:50, Junio C Hamano wrote:
 > Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
 > 
-> >> We should not call `in_merge_bases_many()` repeatedly: there is a much
-> >> better API for that: `get_reachable_subset()`.
-> >
-> > Perfect. I wasn't aware of this.
+> > I didn't want want to cause a delay with this patch. Since the new
+> > option was seemingly working without it,...
 > 
-> This is possibly a piece of misinformation.  in_merge_bases_many()
-> is designed to be callable more than once.  get_reachable_subset()
-> may be an overkill as we only are interested in a single "is this
-> one an ancestor of any of these?", not "which ones among these are
-> ancestors of the other set?".
-
-Noted; even though "get_reachable_subset()" and "in_merge_bases_many()"
-(after the commit-graph fix) return the same result, I suppose the
-latter was designed for this specific use-case.
-
-> > OK. The tests are passing with or without "GIT_TEST_COMMIT_GRAPH"
-> > by switching to "get_reachable_subset()" we don't have to toggle
-> > te feature during the check.
+> It is a good example to help other new contributors to understand an
+> important point in how the development in common works, so let me
+> say this.
 > 
-> Correct.  Once the "see if this one is reachable from any of these"
-> is fixed (either by correcting the broken in_merge_bases_many() or
-> using get_reachable_subset()), we can get rid of this hack.
-
-OK. Shall I update the next set by reverting the "disable commit-graph"
-change, s/list/array/ and leaving the rest as is -- if we decide to go
-forward with "in_merge_bases_many()", that is?
-
-> > Again, thank you so much working on this! If you'd like, I can go ahead
-> > and apply these patches and rename "reflog_commit_list" to "commit_array"
-> > in the next series (v10).
+> I did very much wanted to keep the bug exposed at least to the test
+> suite.  Since the broken helper were designed to be used in many
+> other places in the code, and we had a simple reproduction recipe in
+> this topic, using it as an opening to help debug and fix bugs in the
+> broken helper had higher priority than adding the "--force-if-includes"
+> feature.
 > 
-> I like the s/list/array/ change, but I do not think switching to
-> get_reachable_subset() and having to receive a commit list only to
-> free the list is warranted.
+> We help the contributors who have been involved in the broken helper
+> by delaying this topic a bit and leaving the reproduction readily
+> available to them, so that they help us who are working on a piece
+> of code that wants to see the broken helper fixed.  
 > 
-> Derrick sent a fix to in_merge_bases_many() in the near-by thread.
+> That way everybody benefits.
+> 
+> It's not like a corporate development where your interest lies in
+> shipping your piece regardless of the work done by other teams,
+> where it might serve you better by using the second best tool for
+> the task, to avoid the tool that ought to be best but does not work
+> well *and* you do not want to help the team that manages that best
+> tool, even if helping them may benefit the whole organization.
+> 
+> So, let's play well together.  Yield a bit to help others and let
+> others also help you.
+> 
+> Thanks.
 
-Nice! Will take a look.
+Thank you for pointing this out. You're right; I should not have
+rushed to disabling the feature because it wasn't working with my
+patch instead of waiting for the issue to be investigated. This is
+valuable advice, and I will keep this in mind when making future
+contributions.
 
 Thanks.
 -- 
