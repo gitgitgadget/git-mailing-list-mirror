@@ -2,261 +2,247 @@ Return-Path: <SRS0=3i0n=DJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F35C4363D
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 13:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F586C4363D
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 13:57:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 964B4206C3
-	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 13:52:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D02D206CD
+	for <git@archiver.kernel.org>; Fri,  2 Oct 2020 13:57:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="CIbyHPNT"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ebiE0MEO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387491AbgJBNwx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Oct 2020 09:52:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:41491 "EHLO mout.gmx.net"
+        id S2387968AbgJBN5w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Oct 2020 09:57:52 -0400
+Received: from mout.gmx.net ([212.227.17.22]:41093 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726090AbgJBNwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Oct 2020 09:52:53 -0400
+        id S1726017AbgJBN5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Oct 2020 09:57:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601646765;
-        bh=U2N+wsmXFFtfuM8aH1znCziKxguiTgv6MNx9H6EXSy0=;
+        s=badeba3b8450; t=1601647067;
+        bh=6XDpGxUfv63VrkLGIWilxxnXB6V82OiLYgOeOp3tAuA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CIbyHPNTwdG1DHbDxG/eKS8jbhaW9cx7+n0tA/tpcBPrz+tEAUR3FyxsdpC+wOEDw
-         0vrnWUcRSK5txE3/Vi561/wXc3iFx2We6Okb6OMcFKrNwZrGBQ0wQAY7O25uG/PpvA
-         s8IQ7TVZHOtW5V3UR4Wix5M1sPHByc/PC9T0RVdk=
+        b=ebiE0MEObNvUjXaYObA/6NEXaVYzxZvyrl2JaQEooiFvML5ZlW6zBpdzqP3b4pT3Z
+         ocDFETCrjFNOFzfhPOgGyWF9NqwLLJ40CtHhuzWwc2ugCjfmX+RBAVN8dmY2jiNwlc
+         Nfz6ROyZ1TboHcXbjAwqhpcKU0Pn7cYsnGujl/js=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.20.73.169] ([213.196.213.114]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MK3Rm-1k7NfH2zUc-00LX5e; Fri, 02
- Oct 2020 15:52:45 +0200
-Date:   Fri, 2 Oct 2020 15:52:43 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MI5UN-1k9B1B3XaJ-00FCf8; Fri, 02
+ Oct 2020 15:57:46 +0200
+Date:   Fri, 2 Oct 2020 15:57:45 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v9 1/3] push: add reflog check for
- "--force-if-includes"
-In-Reply-To: <20201001082118.19441-2-shrinidhi.kaushik@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010021550170.50@tvgsbejvaqbjf.bet>
-References: <20200927141747.78047-1-shrinidhi.kaushik@gmail.com> <20201001082118.19441-1-shrinidhi.kaushik@gmail.com> <20201001082118.19441-2-shrinidhi.kaushik@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2 12/13] reftable: rest of library
+In-Reply-To: <4e38db7f48295c4e6d729880f5f1a63b0f90274e.1601568664.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2010021555290.50@tvgsbejvaqbjf.bet>
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>        <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <4e38db7f48295c4e6d729880f5f1a63b0f90274e.1601568664.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:L7YG83sEtLJFFTmmW1ZlpRXQpjmXcA2kWhhtNgqhu2o77Dq5GqT
- 87wbc3805cAQ4e/27bxLjdWSDTRMvKy4nVYml4g/9DW29WuN18oYonFJszf04apLC0hQ3aC
- Q5fyaLKssJk9eD6TVnw0+hGhJXRzoRP2RGBqVzTLfv+1SFEUKcMdjurZw2DCcJTXRPcukq4
- 9AwT+EAG3Wh+sp8IiB6Lg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:i7xjJ1KvKQY=:YxCM65Ple3mezXx69A4Lar
- l8DST1wi+pdooBJb+l/yb05Lce9Ma7s24omt7oc/9rhgfowRjdaaaCH9b3fqvavr+/VjhJBmZ
- 1cWlj09fGUIQo3aE1HufNVAi0xTEj1UkkLuO9hI62UXOwWOn0c2VsmJdiDUM7Us8NodhNlfZQ
- 72vBygtoT8/NWI3uTGyIETX3ekIw4/jyRcjl11Ot4BjpwvbVUDMKEWFD7mW4Rvf8C5o78x+86
- ACs6asUlpVH8UNwWKvlCRLLmebsf/49jlsL1Jcb5F56Oycsg9lE+HgDy1yxmW6PR5uCme95Po
- WJu7vjKEX1mIgI2ogQZOMOo8BDYepcDW8WV24xE3GJ10UQowZ/zBWeWcB9Ae/arcseKhxx0kV
- 04NmO/xM8RZTEHqFUT2PvpX2IWwoyZmpmzaI5nm0U5ixYyjmOgk1g+43QqQUJ9RQPl/omE54B
- RYL6jaozTorCy45t74yy7uFSqm/RHqcDdoaoTtz9tQJXfBdDczhDOt2/BV/M3/8nheV3pKBRX
- UNsWESLUA6p9+J8HRUQTTQEvEjWs03DCrsDb3GBOe1jyx2Tjkwv09jUjTIC0IEbX54udIfSGM
- oSp15obhcvp3wFnVu1cjcqJ+GaGYPLJfk8XlBLV+jgXpaesC+kRRuy1MzaWrNEloTS+BYTgz6
- D0aRWNd38dGK7gKlKDHli9ybI7d5Or/WiPpbWN+Ah6SqvllkPqZyg1R5fOecG0rDoBkvJuCQp
- XStNRCyGqcvV55tR6dD1+zGHp8xj4aP+Fu+7F8qoS3iQt5dqQCkObikCTqPFr3UcVnVtpBpq5
- xHFnvNHuNY9OZ7yZUCeW8qED/mDDqI3grnmOkhXFklHr/8Lisdd5a+DLN5+eRtQy4jwPTWaSL
- KqgpQ+19HzdVKJrtBVI1/s3BmM06F2Y05zmXYPIQaiV8/5lLOIjXE7R1P0k1vyCj1mwLSbq+Z
- mW5Qg55GYk7tIjeNerToDRIK/EXpmfZGfdpi5UQSQsAzLiigy2Uq+F9tLPDeRq0KoavTigNc3
- 6YmRsdN5+Ihtnd8KV8Ml7IIByyoyHNtzK18uabNbsRsifV2JLoGegb2SgLuaN0mVnRvI1224n
- bpjObvFou0+Yo8aXAqOXRULjC2/Rk1cDlurteLDEAN/xFrt9F/Zi/tsyxovzVstFC73CK0puN
- jF/DVeH8R0DFaCqdVJtb3au78Q3v+S4A6TQLJSAGG45t8knvEH7uOvoW7KmnJ7DLjgwBT9xYu
- 7DvE6b2zwj3CufPY6pkrHLVxnItjR8fBpRoLs5Q==
+X-Provags-ID: V03:K1:/FFPGQtGmzrCFrFaioNhie+gEOjNMLK3GlYjOdL7sK4BUh7Q4l1
+ BA0xgZ5vjLYEONCz5Z/CwWBDxx6nShGGnosZOu+7kjb3ALMg2fHKgNz9be6LiF5lzKt3mnK
+ tb5YDSpDmQGRmTeCS0fcPWz/NXnC+v9xLMV/rozmS3kKtLbv7sTRj1EIAA7c/6IR+gMywhe
+ tASMoFofUU5p19hgWviGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zj8ibV5GhRM=:8YNiY6pImNYIr0N0NdEJFG
+ QhQEv7UfKhcLUGajQAtVXvg3+tz1hd+iiqlr3bbPAslQnHKRAKxbIyI9bCK4UyAlbRcS78E4J
+ c4q5V6eFHNBME+8vrwkNOcXw8qEEhLDib8eKzhGXdqXCAc78fw52Zaj0c5Om0F7d9uDaSXQUf
+ YpdfHJiYr/WRravynSvy4SL+jdPoAyjtiFlnMm45KVbIpvV3+uKdQ1u220przWBq4/pNEnmLJ
+ muLiza3ENatE3S2lyttx8DGGG57fcNHOucSN6YSgBlK4FEOYB+d7f/cfaG1O50J6XmGTeB8TX
+ prtfRvcJbRwMVjNHUdfYDPieW+L4ndjEw5O+2bK2yNewG2vElWObBjddKM5A0cL3hEkyLUzcV
+ XLXgn5OgTx25VNd9XZq6Zgd4+HVijuRfO5/qhkWashVGZJ6YyuNEvDwH5vbmps8S9NpIoRwt3
+ pHA8bzjV++Z0h/8vnzalK0cLNpPE0ZyuYUU0YUKGjuanBxR6bMcZb27WMradJ+5+HbdFvBjxD
+ B7M5Zw5eb+Sf/PTclnlqTVqsOM7L+hkDeQ+Mydix8U7b7rIui3YLRSOThH5zfQkaxyeCjUbnt
+ +FmPFU6D/nr/bqXCN4Mk0Ekg+fY0zAJ6o+ijD/X5u3ZDCmM+qKZCbGjG/8xfIzNedc82DgyBA
+ mFSjEL9FjW2psB9RCqzD4SdAiDOajupzJPnM+loxnFOjijwkY/ddYK5ZisDmSEoY3FWUUPD0d
+ 75poipjEsekoUS7pwhmHzIcZQPpjyUKw0uETI3ALThjFiAtM3R3dV5fIJx4BnU72NRmAIDPVI
+ 2fsNGuPjiyNaBrFXIqWVtnNz7QeGxa+pq/tSlT2Ad/JpsyxaYuXuThr2rwa72hWP7IlGSlLPL
+ ZyLUcIxho8mFig94kDdTBg41KpOOn20gseF3oHUNrMdg5rc0xi64rBKXX68fqTftChaZksmsC
+ F4oF0iEDe9SnKw54dVyTR/H4mONrlekDN48cQPD2ChqnqGdRBQdpT0PWTKGr8LDgOsRJmmUxt
+ KF9vkJ4uCJIa1LVkaP5a4f1JAUu909QqnAN2mnyqxKRWTAQTntLHvjgaD25wNviUplZ1qp9M9
+ Gdpzu5MEau1YrpH64j9kYwWFYWctL3YsOC+G28qvUfl/UwpPBsM6oEM3IMGSMm0J8jJAO49Gf
+ vO7uu41i10Rf2Y7b4pJXylQ/5dIA7BJ4gCU4kFWVo9wk8hKERGaVdCkt4JNXavKnM58WYMdWT
+ L7QrH2PJPmMZOtzl6428uI07fuhhIWQlXrG+MiQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Srinidhi,
+Hi Han-Wen,
 
+On Thu, 1 Oct 2020, Han-Wen Nienhuys via GitGitGadget wrote:
 
-On Thu, 1 Oct 2020, Srinidhi Kaushik wrote:
+> From: Han-Wen Nienhuys <hanwen@google.com>
+>
+> This will be further split up once preceding commits have passed review.
 
-> Add a check to verify if the remote-tracking ref of the local branch
-> is reachable from one of its "reflog" entries.
->
-> The check iterates through the local ref's reflog to see if there
-> is an entry for the remote-tracking ref and collecting any commits
-> that are seen, into a list; the iteration stops if an entry in the
-> reflog matches the remote ref or if the entry timestamp is older
-> the latest entry of the remote ref's "reflog". If there wasn't an
-> entry found for the remote ref, "in_merge_bases_many()" is called
-> to check if it is reachable from the list of collected commits.
->
-> When a local branch that is based on a remote ref, has been rewound
-> and is to be force pushed on the remote, "--force-if-includes" runs
-> a check that ensures any updates to the remote-tracking ref that may
-> have happened (by push from another repository) in-between the time
-> of the last update to the local branch (via "git-pull", for instance)
-> and right before the time of push, have been integrated locally
-> before allowing a forced update.
->
-> If the new option is passed without specifying "--force-with-lease",
-> or specified along with "--force-with-lease=3D<refname>:<expect>" it
-> is a "no-op".
->
-> Calls to "in_merge_bases_many()" return different results depending
-> on whether the "commit-graph" feature is enabled or not -- it is
-> temporarily disabled when the check runs [1].
->
-> [1] https://lore.kernel.org/git/xmqqtuvhn6yx.fsf@gitster.c.googlers.com
-
-I can verify that the multiple calls to `in_merge_bases_many()` lead to a
-problem, and I intend to debug this further, but it is the wrong function
-to call to begin with.
-
-With these two patches, the tests pass for me, and they also reduce the
-complexity quite a bit (Junio, could I ask you to put them on top of
-sk/force-if-includes?):
+Before you further split it up, I encourage you to include these patches
+without which the CI builds will continue to fail (Junio, could I ask you
+to either cherry-pick them from https://github.com/git-for-windows/git's
+shears/seen branch, or apply them from the mbox?):
 
 =2D- snipsnap --
-=46rom 0e7bd31c4cb0ae08ad772ac230eea2dd7a884886 Mon Sep 17 00:00:00 2001
+=46rom e485e006f34922439f2e971a1c5c38b8ca56c011 Mon Sep 17 00:00:00 2001
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Fri, 2 Oct 2020 15:33:05 +0200
-Subject: [PATCH 1/2] fixup??? push: add reflog check for "--force-if-inclu=
-des"
+Date: Wed, 30 Sep 2020 14:46:59 +0200
+Subject: [PATCH 1/3] fixup??? reftable: rest of library
 
-This follows the pattern used elsewhere.
+	struct abc x =3D {}
 
-Maybe we should also rename this to `commit_array`? It is not a linked
-list, after all.
+is a GNUism.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 =2D--
- remote.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ reftable/dump.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 37533cafc44..2c6c63aa906 100644
-=2D-- a/remote.c
-+++ b/remote.c
-@@ -2441,6 +2441,7 @@ struct reflog_commit_list {
- 	struct commit **item;
- 	size_t nr, alloc;
- };
-+#define REFLOG_COMMIT_LIST_INIT { NULL, 0, 0 }
+diff --git a/reftable/dump.c b/reftable/dump.c
+index ed09f2e2f94..233f0434e39 100644
+=2D-- a/reftable/dump.c
++++ b/reftable/dump.c
+@@ -75,7 +75,7 @@ static int dump_table(const char *tablename)
+ static int compact_stack(const char *stackdir)
+ {
+ 	struct reftable_stack *stack =3D NULL;
+-	struct reftable_write_options cfg =3D {};
++	struct reftable_write_options cfg =3D { 0 };
 
- /* Append a commit to the list. */
- static void append_commit(struct reflog_commit_list *list,
-@@ -2514,7 +2515,7 @@ static int is_reachable_in_reflog(const char *local,=
- const struct ref *remote)
- 	struct commit *commit;
- 	struct commit **chunk;
- 	struct check_and_collect_until_cb_data cb;
--	struct reflog_commit_list list =3D { NULL, 0, 0 };
-+	struct reflog_commit_list list =3D REFLOG_COMMIT_LIST_INIT;
- 	size_t size =3D 0;
- 	int ret =3D 0;
-
+ 	int err =3D reftable_new_stack(&stack, stackdir, cfg);
+ 	if (err < 0)
+@@ -94,7 +94,7 @@ static int compact_stack(const char *stackdir)
+ static int dump_stack(const char *stackdir)
+ {
+ 	struct reftable_stack *stack =3D NULL;
+-	struct reftable_write_options cfg =3D {};
++	struct reftable_write_options cfg =3D { 0 };
+ 	struct reftable_iterator it =3D { NULL };
+ 	struct reftable_ref_record ref =3D { NULL };
+ 	struct reftable_log_record log =3D { NULL };
 =2D-
 2.28.0.windows.1.18.g5300e52e185
 
 
-=46rom 10ea5640015f4bc7144e8e5b025e31294329c600 Mon Sep 17 00:00:00 2001
+=46rom d5faa818a1bc00016e310d27602551127db620fb Mon Sep 17 00:00:00 2001
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Fri, 2 Oct 2020 15:35:58 +0200
-Subject: [PATCH 2/2] fixup??? push: add reflog check for "--force-if-inclu=
-des"
+Date: Wed, 30 Sep 2020 14:55:28 +0200
+Subject: [PATCH 2/3] fixup??? reftable: rest of library
 
-We should not call `in_merge_bases_many()` repeatedly: there is a much
-better API for that: `get_reachable_subset()`.
+0-sized arrays are actually not portable.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 =2D--
- remote.c | 43 ++++---------------------------------------
- 1 file changed, 4 insertions(+), 39 deletions(-)
+ reftable/stack_test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 2c6c63aa906..881415921e2 100644
-=2D-- a/remote.c
-+++ b/remote.c
-@@ -2513,10 +2513,9 @@ static int is_reachable_in_reflog(const char *local=
-, const struct ref *remote)
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 534463829cb..e863cc3c0a2 100644
+=2D-- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -572,11 +572,11 @@ static void test_sizes_to_segments(void)
+
+ static void test_sizes_to_segments_empty(void)
  {
- 	timestamp_t date;
- 	struct commit *commit;
--	struct commit **chunk;
- 	struct check_and_collect_until_cb_data cb;
- 	struct reflog_commit_list list =3D REFLOG_COMMIT_LIST_INIT;
--	size_t size =3D 0;
-+	struct commit_list *reachable;
- 	int ret =3D 0;
+-	uint64_t sizes[0];
++	uint64_t sizes[1];
 
- 	commit =3D lookup_commit_reference(the_repository, &remote->old_oid);
-@@ -2542,61 +2541,27 @@ static int is_reachable_in_reflog(const char *loca=
-l, const struct ref *remote)
- 	 * Check if the remote commit is reachable from any
- 	 * of the commits in the collected list, in batches.
- 	 */
--	for (chunk =3D list.item; chunk < list.item + list.nr; chunk +=3D size) =
-{
--		size =3D list.item + list.nr - chunk;
--		if (MERGE_BASES_BATCH_SIZE < size)
--			size =3D MERGE_BASES_BATCH_SIZE;
--
--		if ((ret =3D in_merge_bases_many(commit, size, chunk)))
+ 	int seglen =3D 0;
+ 	struct segment *segs =3D
+-		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
++		sizes_to_segments(&seglen, sizes, 0);
+ 	assert(seglen =3D=3D 0);
+ 	reftable_free(segs);
+ }
+=2D-
+2.28.0.windows.1.18.g5300e52e185
+
+
+=46rom d446e1a7354c676d60114b50ba96a6ea083441ae Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Wed, 30 Sep 2020 15:19:28 +0200
+Subject: [PATCH 3/3] fixup??? reftable: rest of library
+
+Avoid using `getopt()`: it might be POSIX, but Git's audience is much
+larger than POSIX. MSVC, for example, does not support `getopt()`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ reftable/dump.c | 32 +++++++++++++-------------------
+ 1 file changed, 13 insertions(+), 19 deletions(-)
+
+diff --git a/reftable/dump.c b/reftable/dump.c
+index 233f0434e39..b63c9fe9e81 100644
+=2D-- a/reftable/dump.c
++++ b/reftable/dump.c
+@@ -160,40 +160,34 @@ static void print_help(void)
+ int reftable_dump_main(int argc, char *const *argv)
+ {
+ 	int err =3D 0;
+-	int opt;
+ 	int opt_dump_table =3D 0;
+ 	int opt_dump_stack =3D 0;
+ 	int opt_compact =3D 0;
+-	const char *arg =3D NULL;
+-	while ((opt =3D getopt(argc, argv, "2chts")) !=3D -1) {
+-		switch (opt) {
+-		case '2':
+-			hash_id =3D 0x73323536;
++	const char *arg =3D NULL, *argv0 =3D argv[0];
++
++	for (; argc > 1; argv++, argc--)
++		if (*argv[1] !=3D '-')
+ 			break;
+-		case 't':
++		else if (!strcmp("-2", argv[1]))
++			hash_id =3D 0x73323536;
++		else if (!strcmp("-t", argv[1]))
+ 			opt_dump_table =3D 1;
 -			break;
+-		case 's':
++		else if (!strcmp("-s", argv[1]))
+ 			opt_dump_stack =3D 1;
+-			break;
+-		case 'c':
++		else if (!strcmp("-c", argv[1]))
+ 			opt_compact =3D 1;
+-			break;
+-		case '?':
+-		case 'h':
++		else if (!strcmp("-?", argv[1]) || !strcmp("-h", argv[1])) {
+ 			print_help();
+ 			return 2;
+-			break;
+ 		}
 -	}
-+	reachable =3D get_reachable_subset(list.item, list.nr, &commit, 1, 0);
-+	ret =3D !!reachable;
-+	free_commit_list(reachable);
 
- cleanup_return:
- 	free_reflog_commit_list(&list);
- 	return ret;
- }
+-	if (argv[optind] =3D=3D NULL) {
++	if (argc !=3D 2) {
+ 		fprintf(stderr, "need argument\n");
+ 		print_help();
+ 		return 2;
+ 	}
 
--/* Toggle the "commit-graph" feature; return the previously set state. */
--static int toggle_commit_graph(struct repository *repo, int disable) {
--	int prev =3D repo->commit_graph_disabled;
--	static int should_toggle =3D -1;
--
--	if (should_toggle < 0) {
--		/*
--		 * The in_merge_bases_many() seems to misbehave when
--		 * the commit-graph feature is in use.  Disable it for
--		 * normal users, but keep it enabled when specifically
--		 * testing the feature.
--		 */
--		should_toggle =3D !git_env_bool("GIT_TEST_COMMIT_GRAPH", 0);
--	}
--
--	if (should_toggle)
--		repo->commit_graph_disabled =3D disable;
--	return prev;
--}
--
- /*
-  * Check for reachability of a remote-tracking
-  * ref in the reflog entries of its local ref.
-  */
- static void check_if_includes_upstream(struct ref *remote)
- {
--	int prev;
- 	struct ref *local =3D get_local_ref(remote->name);
- 	if (!local)
- 		return;
+-	arg =3D argv[optind];
++	arg =3D argv[1];
 
--	/*
--	 * TODO: Remove "toggle_commit_graph()" calls around the check.
--	 * Depending on whether "commit-graph" enabled or not,
--	 * "in_merge_bases_many()" returns different results;
--	 * disable it temporarily when the check runs.
--	 */
--	prev =3D toggle_commit_graph(the_repository, 1);
- 	if (is_reachable_in_reflog(local->name, remote) <=3D 0)
- 		remote->unreachable =3D 1;
--	toggle_commit_graph(the_repository, prev);
- }
+ 	if (opt_dump_table) {
+ 		err =3D dump_table(arg);
+@@ -204,7 +198,7 @@ int reftable_dump_main(int argc, char *const *argv)
+ 	}
 
- static void apply_cas(struct push_cas_option *cas,
+ 	if (err < 0) {
+-		fprintf(stderr, "%s: %s: %s\n", argv[0], arg,
++		fprintf(stderr, "%s: %s: %s\n", argv0, arg,
+ 			reftable_error_str(err));
+ 		return 1;
+ 	}
 =2D-
 2.28.0.windows.1.18.g5300e52e185
 
