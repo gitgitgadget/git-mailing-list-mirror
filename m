@@ -2,139 +2,119 @@ Return-Path: <SRS0=BObu=DK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F337DC4363D
-	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 18:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13746C4363D
+	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 19:25:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95188206DD
-	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 18:56:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8A7D206DB
+	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 19:25:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ebm75Y9J"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UWCA8+/j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725829AbgJCS4Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Oct 2020 14:56:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54453 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725818AbgJCS4Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Oct 2020 14:56:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 022A982F94;
-        Sat,  3 Oct 2020 14:56:19 -0400 (EDT)
+        id S1725848AbgJCTZq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Oct 2020 15:25:46 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64645 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725832AbgJCTZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Oct 2020 15:25:46 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 66CB2EC5AE;
+        Sat,  3 Oct 2020 15:25:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z/cwn0H8x0R49pwiV2ExTHsUL0E=; b=ebm75Y
-        9JHCYl83myGskf0Ypmzp941nbDSuA0upP0Sze9It6TTlmWn2IfgMkUHsNctD/9j4
-        AUOFVLUaZ1TqZBUhTk9Im+62/dawF0tcIOlzIpFF93gKOeOyUWdR6LOf47L3s7UG
-        NdQxPZ4P2BQy4lgVTNg/+HCU5XmoMaqHCnVIA=
+        :content-type; s=sasl; bh=/EOXP57V+ZbGLkE5FTf52sdLpLI=; b=UWCA8+
+        /jaGOeHwSmexUG1EqVoqs92VF43Bxuu+d7GzYikL2gF8LG8euWX5/NlF6cl1Os7m
+        YtuIMTKZ1G+wIGgjuCBA+3iHZeCw28kJ/hm4PIdjCiJQMoS+Q5r9jiGI1iiDE6TG
+        nCvjVMfYAefRb7eFy6B63/OCwh70Yhj5EAUok=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XrLunxCjWP3b31eu0nHIzrhQt+Oc/6PE
-        p5Ski7e5E9l0dhC5/zKgNPgGiHHzca3E/8OIwwpdNhJgfTnMeJVadJH749ARF/+F
-        9saN/sszxmCgsLPd9ls2GMhbDqymw8oAPgO6Jfovnx25GhmvFm8fHCeMOhfKGy2Q
-        KOaXnsQI3x4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED60B82F93;
-        Sat,  3 Oct 2020 14:56:18 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=BbMWu57zcb07quwJjZUq55g96xu/9ODm
+        WwA84NoHVj8Zrla8jhGgV/UdOl1DOB6l4yO6fd5UGFL/E7v6WbuDLQ4qgBvGfc65
+        abV305MGKr7ndWr6pr3ymn7pfkIupSYu7FeptKUR7mOPTjTDAGaJNkj1O1OTwfyg
+        //Cq1Cjag60=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FA08EC5AD;
+        Sat,  3 Oct 2020 15:25:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3BCFE82F91;
-        Sat,  3 Oct 2020 14:56:18 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A600CEC5AB;
+        Sat,  3 Oct 2020 15:25:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Nico Weber via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Nico Weber <thakis@chromium.org>
 Subject: Re: [PATCH] bisect: add a --verify flag to `bisect run`
 References: <pull.741.git.1601750003858.gitgitgadget@gmail.com>
-Date:   Sat, 03 Oct 2020 11:56:17 -0700
+Date:   Sat, 03 Oct 2020 12:25:36 -0700
 In-Reply-To: <pull.741.git.1601750003858.gitgitgadget@gmail.com> (Nico Weber
         via GitGitGadget's message of "Sat, 03 Oct 2020 18:33:23 +0000")
-Message-ID: <xmqqlfgn87fy.fsf@gitster.c.googlers.com>
+Message-ID: <xmqqeemf8633.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1EB3B2D4-05AA-11EB-92E6-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 37681780-05AE-11EB-8DE1-843F439F7C89-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 "Nico Weber via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> From: Nico Weber <thakis@chromium.org>
+>
 > If it's passed, then `git bisect run --verify script` will first
 > check out the good revision and verify that the script passes there,
-
-The subject of the sentence is "git bisect run --verify script", so
-"it" in "If it's passed" cannot be any of the "run", "--verify" or
-"script".  So what is getting passed to that command???
-
 > then check out the bad revision and verify that it fails there,
 > and only then start the actual `git bisect run script`.
-
-Is the intended use case
-
-    - you have *not* run "git bisect" at all, but know two
-      revisions, one $bad and one $good
-
-    - you run "git bisect start $bad $good" just once, and then
-
-    - you run "git bisect run [--verify] script"
-
-or does this intend to cover more cases, like
-
-    - you have *not* run "git bisect" at all, but know two
-      revisions, one $bad and one $good
-
-    - you run "git bisect start $bad $good", and
-
-    - you iterate manually and use "git bisect good" and/or "git
-      bisect bad" to mark points you tested, which advances $bad and
-      accumulates good revisions, and after that
-
-    - you run "git bisect run [--verify] script"
-
-If the latter (and I hope it is), it is wrong to assume that the
-command can "first check out THE good revision and verify".  There
-may have been multiple points in the hsitory where you said "good"
-and any of them may fail the script.
-
+>
 > We use `git bisect run` heavily for bisecting bugs in LLVM when using
 > clang to build Chromium. We sometimes end up with run scripts that are
 > broken in some way, either by missing the +x bit, or in more subtle
 > ways, and this adds a simple, low conceptual overhead way to smoke check
 > the run script before starting a bisect that could run for a day or two.
 
-Very good intentions.
+In our log message, we tend NOT to say "This commit does X" or "X is
+done", because such a statement is often insufficient to illustrate
+if the commit indeed does X, and explain why it is a good thing to
+do X in the first place.
+
+Instead, we 
+
+ - first explain that the current system does not do X (in present
+   tense, so we do NOT say "previously we did not do X"), then
+
+ - explain why doing X would be a good thing, and finally
+
+ - give an order to the codebase to start doing X.
 
 
+For this change, it might look like this:
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-741%2Fnico%2Frunverifyforupstreaming-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-741/nico/runverifyforupstreaming-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/741
->
->  Documentation/git-bisect.txt |  12 +++-
->  git-bisect.sh                | 110 ++++++++++++++++++++++++++++++++++-
->  t/t6030-bisect-porcelain.sh  |  16 +++++
->  3 files changed, 134 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-> index fbb39fbdf5..37658d8ed8 100644
-> --- a/Documentation/git-bisect.txt
-> +++ b/Documentation/git-bisect.txt
-> @@ -26,7 +26,7 @@ on the subcommand:
->   git bisect (visualize|view)
->   git bisect replay <logfile>
->   git bisect log
-> - git bisect run <cmd>...
-> + git bisect run [--verify] <cmd>...
->   git bisect help
->  
->  This command uses a binary search algorithm to find which commit in
+  The script given to the `git bisect run script` may broken in some
+  way.  [Explain why it is bad that 'script' is not run on the known
+  bad or good revisions here in the current code.  The script is run
+  to test on the midway commit anyway and the lack of +x bit would
+  be noticed just as quickly as you retest a known good or bad
+  revision, so this 'feature' appears as a pure overhead to cause
+  extra checkouts and builds for no great additional benefit, at
+  least to me, and I tried but cannot make a good case for you
+  here].
+
+  As we already know at least one bad revision and good revision(s)
+  when the command is run, we can sanity check the script by running
+  on these revisions and checking if it produces expected results.
+
+  Introduce `--verify` option to the `git bisect run` command for
+  this purpose.  It would cost checking out extra revisions and
+  retesting them but gives a basic sanity check for the script, to
+  save a potentially long "bisect" session that may span days.
+
 > @@ -93,7 +93,6 @@ Eventually there will be no more revisions left to inspect, and the
 >  command will print out a description of the first bad commit. The
 >  reference `refs/bisect/bad` will be left pointing at that commit.
@@ -142,7 +122,13 @@ Very good intentions.
 > -
 >  Bisect reset
 >  ~~~~~~~~~~~~
->  
+
+Why this removal?  Just checking to make sure that the document does
+not use double-blank lines between sections, in which case this
+removal is a bad idea.  In any case, this change does not have
+anything to do with the `--verify` option, so leave it out---we can
+review a documentation clean-up patch separately if you want.
+
 > @@ -317,7 +316,7 @@ If you have a script that can tell if the current source code is good
 >  or bad, you can bisect by issuing the command:
 >  
@@ -163,61 +149,34 @@ Very good intentions.
 > +except 125, then check out the current good revision and verify that
 > +the script exits with code 0. If not, abort the bisect run.
 > +
->  EXAMPLES
->  --------
->  
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> index 2f60fefcfa..99ac01fb55 100755
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -26,7 +26,7 @@ git bisect replay <logfile>
->  	replay bisection log.
->  git bisect log
->  	show bisect log.
-> -git bisect run <cmd>...
-> +git bisect run [--verify | --no-verify] <cmd>...
->  	use <cmd>... to automatically bisect.
->  
->  Please use "git help bisect" to get the full man page.'
-> @@ -38,6 +38,8 @@ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
->  _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
->  TERM_BAD=bad
->  TERM_GOOD=good
-> +CURRENT_BISECT_BAD=
-> +CURRENT_BISECT_GOOD=
->  
->  bisect_head()
->  {
-> @@ -215,6 +217,7 @@ bisect_replay () {
->  		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
->  		if test "$git" = "git-bisect"
->  		then
-> +			tail="$rev"
->  			rev="$command"
->  			command="$bisect"
->  		fi
-> @@ -237,7 +240,112 @@ bisect_replay () {
->  	bisect_auto_next
->  }
->  
+
+"current bad revision" is OK, there is no concenpt of "current good
+revision", but "the last revision marked as good" is a better way to
+phrase what the above paragraph may be trying to address.
+
 > +get_current_bisect_bounds () {
 > +	test -s "$GIT_DIR/BISECT_LOG" || die "$(gettext "We are not bisecting.")"
 > +	oIFS="$IFS" IFS="$IFS$(printf '\015')"
+
+What is this CR about?  Is anybody manually futzing with DOS line endings?
+
 > +	while read git bisect command rev tail
 > +	do
-> +		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
-> +		if test "$git" = "git-bisect"
-> +		then
-> +			tail="$rev"
-> +			rev="$command"
-> +			command="$bisect"
-> +		fi
-> +		get_terms
-> +		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
-> +		get_terms
-> +		case "$command" in
-> +		skip)
-> +			;;
+
+There are bisect/bad ref and bisect/good-* refs that lets you figure
+out exactly where the unknown territories are, but because you are
+only trying to find one bad and one good rev to use as a sample, you
+do not have to enumerate all of them.
+
+But I doubt that reading the bisect log a good way to do this.  If
+you only want one good and one bad rev to test, why not peek into
+the implementation of bisect_next and find
+
+    git show-ref --hash --verify refs/bisect/$TERM_BAD
+    git for-each-ref --format="%(objectname" "refs/bisect/$TERM_GOOD-*"
+
+that can easily be mimicked?
+
 > +		start)
 > +			CURRENT_BISECT_BAD="$rev"
 > +			CURRENT_BISECT_GOOD="$tail"
@@ -226,13 +185,16 @@ Very good intentions.
 > +			CURRENT_BISECT_GOOD="$rev" ;;
 > +		"$TERM_BAD")
 > +			CURRENT_BISECT_BAD="$rev" ;;
-> +		*)
-> +			die "$(gettext "?? what are you talking about?")" ;;
-> +		esac
-> +	done <"$GIT_DIR/BISECT_LOG"
-> +	IFS="$oIFS"
-> +}
-> +
+
+These variables are better called LAST_BISECT_(GOOD/BAD), as current
+set of good revs have multiple commits in it.  CURRENT_BISECT_BAD is
+OK as-is when taken by itself, but as a contrasting pair to
+LAST_BISECT_GOOD, renaming it to LAST_BISECT_BAD would make more
+sense.
+
+In any case, I am not sure why we need to read thru the log, futzing
+with $IFS and all that.
+
 >  bisect_run () {
 > +	verify=
 > +	while test $# -ne 0
@@ -245,9 +207,14 @@ Very good intentions.
 > +			verify=
 > +			;;
 > +	--)
+
+Funny indentation.
+
 > +			shift
 > +			break
 > +			;;
+
+
 > +		-*)
 > +			usage
 > +			;;
@@ -259,12 +226,30 @@ Very good intentions.
 > +	done
 > +
 > +	if [ -n "$verify" ]; then
+
+Style (Documentation/CodingGuidelines):
+
+ - We prefer "test" over "[ ... ]".
+
+ - Do not write control structures on a single line with semicolon.
+   "then" should be on the next line for if statements, and "do"
+   should be on the next line for "while" and "for".
+
 > +		git rev-parse --verify -q BISECT_HEAD > /dev/null && die "$(gettext "bisect run --verify is incompatible with --no-checkout")"
+
+ - Overlong line (cut after && _without_ adding trailing backslash)
+
+ - Redirection operators should be written with space before, but no
+   space after them.  In other words, write 'echo test >"$file"'
+   instead of 'echo test> $file' or 'echo test > $file'.
+
 > +
 > +		get_current_bisect_bounds
 > +		test -n "$CURRENT_BISECT_BAD" || die "$(gettext "bisect run --verify: no current bad revision")"
 > +		test -n "$CURRENT_BISECT_GOOD" || die "$(gettext "bisect run --verify: no current good revision")"
-> +
+
+Dotto.
+
 > +		bisected_head=$(bisect_head)
 > +		rev=$(git rev-parse --verify "$bisected_head") ||
 > +			die "$(eval_gettext "Bad rev input: \$bisected_head")"
@@ -273,6 +258,9 @@ Very good intentions.
 > +
 > +		# Check script passes for good rev.
 > +		command="$@"
+
+What effect do we expect out of this assignment to $command?
+
 > +		eval_gettextln "verifying script passes at \$TERM_GOOD rev"
 > +		eval git checkout -q "$CURRENT_BISECT_GOOD" || die "$(eval_gettext "failed to check out \$TERM_GOOD rev")"
 > +		"$@"
@@ -284,57 +272,16 @@ Very good intentions.
 > +
 > +		# Check script fails orderly for bad rev.
 > +		command="$@"
+
+Ditto.
+
 > +		eval_gettextln "verifying script fails at \$TERM_BAD rev"
 > +		eval git checkout -q "$CURRENT_BISECT_BAD" || die "$(eval_gettext "failed to check out \$TERM_BAD rev")"
 > +		"$@"
 > +		res=$?
 > +		if [ $res -lt 0 -o $res -ge 128 ]
-> +		then
-> +			die "$(eval_gettext "aborting: exit code \$res is < 0 or >= 128")"
-> +		fi
-> +		if [ $res -eq 0 ]
-> +		then
-> +			die "$(eval_gettext "aborting: run script passes for \$TERM_BAD rev")"
-> +		fi
-> +		if [ $res -eq 125 ]
-> +		then
-> +			die "$(eval_gettext "aborting: run sript returns 125 (skip) for \$TERM_BAD rev")"
-> +		fi
-> +
-> +		# Check out pre-verify rev again.
-> +		git checkout -q "$rev"
-> +		trap '-' 0
-> +	fi
-> +
->  	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
->  
->  	test -n "$*" || die "$(gettext "bisect run failed: no command provided.")"
-> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> index b886529e59..acb01dcfff 100755
-> --- a/t/t6030-bisect-porcelain.sh
-> +++ b/t/t6030-bisect-porcelain.sh
-> @@ -321,6 +321,22 @@ test_expect_success 'bisect run & skip: find first bad' '
->  	grep "$HASH6 is the first bad commit" my_bisect_log.txt
->  '
->  
-> +test_expect_success 'bisect run --verify: script fails for good rev' '
-> +	git bisect reset &&
-> +	git bisect start $HASH7 $HASH1 &&
-> +	test_must_fail git bisect run --verify false >my_bisect_log3.txt 2>&1 &&
-> +	test_i18ngrep "aborting: run script fails for good rev" my_bisect_log3.txt
-> +'
-> +
-> +test_expect_success 'bisect run --verify: script passes for bad rev' '
-> +	git bisect reset &&
-> +	git bisect start &&
-> +	git bisect bad $HASH7 &&
-> +	git bisect good $HASH1 &&
-> +	test_must_fail git bisect run --verify true >my_bisect_log5.txt 2>&1 &&
-> +	test_i18ngrep "aborting: run script passes for bad rev" my_bisect_log5.txt
-> +'
-> +
->  test_expect_success 'bisect skip only one range' '
->  	git bisect reset &&
->  	git bisect start $HASH7 $HASH1 &&
->
-> base-commit: 9bc233ae1cf19a49e51842c7959d80a675dbd1c0
+
+
+ - We do not write our "test" command with "-a" and "-o" and use "&&"
+   or "||" to concatenate multiple "test" commands instead,...
+
