@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA147C41604
-	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 12:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EA8BC4727E
+	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 12:11:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B7F6206F8
+	by mail.kernel.org (Postfix) with ESMTP id CAAA1207DE
 	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 12:11:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n4Ys1x1+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YV1V+WrZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725796AbgJCMK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Oct 2020 08:10:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57184 "EHLO
+        id S1725809AbgJCMLA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Oct 2020 08:11:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbgJCMKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Oct 2020 08:10:55 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54B5C0613D0
-        for <git@vger.kernel.org>; Sat,  3 Oct 2020 05:10:55 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id k8so3365297pfk.2
-        for <git@vger.kernel.org>; Sat, 03 Oct 2020 05:10:55 -0700 (PDT)
+        with ESMTP id S1725803AbgJCMK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Oct 2020 08:10:59 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A36CC0613D0
+        for <git@vger.kernel.org>; Sat,  3 Oct 2020 05:10:59 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id kk9so2579056pjb.2
+        for <git@vger.kernel.org>; Sat, 03 Oct 2020 05:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vlQl3daZbl2Y0b8h7gzqdxF1pGd5+sEn54oZLpst0NA=;
-        b=n4Ys1x1+wypNpTHGM+n5Du0xwZCFX4NlMwhfo/1Dj3wzYOEgNw5r9+KSzLx44QSbp5
-         DxoIVSTMlJYagqiOPBypq8LYaUZaR61ayHylPWRN1wK32VFGtcNU9G50EYfOkvbyQGBj
-         voK8EdqSW3jYMH4aX6CzIx+6NKrqj1/hMGOj0wfFyKkxvIfEKDWfeym3xZVfK+Uk4IiX
-         rtYhATfp2N80WC9EDLOD3g+WbafYC58ZrAmwAXLnq0A5NFPohKHTq7BR0Dwc7IWLwCpb
-         BzOEVbUffRVAJSbxIUo4512eWqsAzCFUcKFv0dgiCUnrtuwTQ+nsrC9Uy2o1WPoAQ3tn
-         YSkA==
+        bh=fLtTwKHiBgE0JoQUBA/GU0Uqj02c91oqRD3866C3LVw=;
+        b=YV1V+WrZc8NFAVkf119jYQ1wpccABDYzpRXbqGg1tRiFe9uCAov6PLKe5FYYMS7fJJ
+         08mAtnqlQrW57txiaXg/hrBgiI2nXr1DMc7dsFFY5X7vOYp/z54gLo7D4yxDZYI5pqWp
+         SfcpXT9W5sAzQRxXZuU7vEOAt4CiBzCGx93GegPQqJSQaViAp99RjjC3m9jzcZ6Q9AW4
+         aWJABMnw8MyRg0x4arYsJMI3uGrPzVr9crkWGu9s8yff5CWDucZa67sudFFalN2Fjpif
+         JFoOF/78vxKdW5ABXdYduPOcJIORyisD6e1/hQfXDbKz0Ff35kvt6Ai315DNGQSkjajt
+         9BJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vlQl3daZbl2Y0b8h7gzqdxF1pGd5+sEn54oZLpst0NA=;
-        b=FHRKdyJ45v9mrch1depDv8eTzTXj+QZ82hgDhiTZlU5D/B3llBbo8QU8s9KOBwwtOx
-         G2bLx1LMHodPWesIqgbYnMhvG3c1YI7PsMiPHn1fuhBVfUUjIxKaywt8TFUgY0RtRtpT
-         1nVrqi+ZlmCZI5pbUSSOVItox14vPw0i8heDLTiOrqoCF02Rpp6/3in2GLanqmW9QauC
-         vdE3MztyrsAj3YAf9JR/IMggOwRKmPDaPLGMkV2DYX0cNHZd/cQxaAHYwYT1B05gG6g6
-         iQDh18p+JplU2XwXtOUF2ZRyD+raN+/8jrXoxDJtxqkLJdFYh6K3F4GPKxl61uPpw4sD
-         hAWQ==
-X-Gm-Message-State: AOAM531VMfjyHfgoni82+ecP2Iq2jr8zPck3zkldhxXKRghXgNKHsAPp
-        JbpFXV9uXeaAqAXvNCLWSujDq10PhaSFkw==
-X-Google-Smtp-Source: ABdhPJyxmsUXOvR9u/27vHxVTcCHCeDpTOU1Lmj9gPS6/dRunRVXp7AqaOGt0LtKwtZ2GbDXioPnSQ==
-X-Received: by 2002:a63:d506:: with SMTP id c6mr6272813pgg.396.1601727054606;
-        Sat, 03 Oct 2020 05:10:54 -0700 (PDT)
+        bh=fLtTwKHiBgE0JoQUBA/GU0Uqj02c91oqRD3866C3LVw=;
+        b=TnWnQoBesoCKMuU3SROIkZY8tnXNe6j/UFQPIuW2uKTh4P+R9jZoewqUQ+SAXLWCpE
+         HZcBQFqWdr8qUYU4Nvy8qpnUT6NQiGcHmTHUmIkt+vuGgqTnRWwVbMEE0Ao8sQw0wXNp
+         s0wNQYtLjnZWszsxO35NEAxSmecHNCRpqtLRvYc0aTR2MsWxqd0fi7h8nhyPjEFca/YH
+         +d8qxSN/+W7at1bA5FXhBu7Fn9JFsRbnThf9mzM4iihkSVFWYCdbF2U+qSrhnnRnzrXW
+         PsBHK4DyHCi0uiA6SkmGZKU49sV1X56TqkOZCpJeZsu/1K7uEi9xRacjhD0MKJUJpwYG
+         mSGA==
+X-Gm-Message-State: AOAM533vugRRlg7VdRiI0FYPDnmPuJai4pfoyISgu1pQ+gSdFJGf/BR1
+        Km+ia/5wTwWtStnbOwluvsIWU0aY7/Gcew==
+X-Google-Smtp-Source: ABdhPJxr/87TcLmaI+RZX6EvfExt9BLumtrQU/XYHbpCk4vB5zR0pXy1Fx33BqFALOQgiZdra96hgQ==
+X-Received: by 2002:a17:90a:77c1:: with SMTP id e1mr7042149pjs.39.1601727058142;
+        Sat, 03 Oct 2020 05:10:58 -0700 (PDT)
 Received: from localhost.localdomain ([124.123.104.31])
-        by smtp.gmail.com with ESMTPSA id e21sm4821652pgi.91.2020.10.03.05.10.53
+        by smtp.gmail.com with ESMTPSA id e21sm4821652pgi.91.2020.10.03.05.10.56
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Oct 2020 05:10:54 -0700 (PDT)
+        Sat, 03 Oct 2020 05:10:57 -0700 (PDT)
 From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH v10 1/3] push: add reflog check for "--force-if-includes"
-Date:   Sat,  3 Oct 2020 17:40:44 +0530
-Message-Id: <20201003121046.60604-2-shrinidhi.kaushik@gmail.com>
+Subject: [PATCH v10 3/3] t, doc: update tests, reference for "--force-if-includes"
+Date:   Sat,  3 Oct 2020 17:40:46 +0530
+Message-Id: <20201003121046.60604-4-shrinidhi.kaushik@gmail.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201003121046.60604-1-shrinidhi.kaushik@gmail.com>
 References: <20201001082118.19441-1-shrinidhi.kaushik@gmail.com>
@@ -74,398 +74,275 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a check to verify if the remote-tracking ref of the local branch
-is reachable from one of its "reflog" entries.
+Update test cases for the new option, and document its usage
+and update related references.
 
-The check iterates through the local ref's reflog to see if there
-is an entry for the remote-tracking ref and collecting any commits
-that are seen, into a list; the iteration stops if an entry in the
-reflog matches the remote ref or if the entry timestamp is older
-the latest entry of the remote ref's "reflog". If there wasn't an
-entry found for the remote ref, "in_merge_bases_many()" is called
-to check if it is reachable from the list of collected commits.
+Update test cases for the new option, and document its usage
+and update related references.
 
-When a local branch that is based on a remote ref, has been rewound
-and is to be force pushed on the remote, "--force-if-includes" runs
-a check that ensures any updates to the remote-tracking ref that may
-have happened (by push from another repository) in-between the time
-of the last update to the local branch (via "git-pull", for instance)
-and right before the time of push, have been integrated locally
-before allowing a forced update.
+ - t/t5533-push-cas.sh:
+   Update test cases for "compare-and-swap" when used along with
+   "--force-if-includes" helps mitigate overwrites when remote
+   refs are updated in the background; allows forced updates when
+   changes from remote are integrated locally.
 
-If the new option is passed without specifying "--force-with-lease",
-or specified along with "--force-with-lease=<refname>:<expect>" it
-is a "no-op".
+ - Documentation:
+   Add reference for the new option, configuration setting
+   ("push.useForceIfIncludes") and advise messages.
 
 Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 ---
- builtin/send-pack.c |   5 ++
- remote.c            | 184 ++++++++++++++++++++++++++++++++++++++++++--
- remote.h            |  12 ++-
- send-pack.c         |   1 +
- transport-helper.c  |   5 ++
- transport.c         |   6 ++
- 6 files changed, 205 insertions(+), 8 deletions(-)
+ Documentation/config/advice.txt |   9 ++-
+ Documentation/config/push.txt   |   6 ++
+ Documentation/git-push.txt      |  26 +++++-
+ t/t5533-push-cas.sh             | 137 ++++++++++++++++++++++++++++++++
+ 4 files changed, 174 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 7af148d733..516cba7336 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -71,6 +71,11 @@ static void print_helper_status(struct ref *ref)
- 			msg = "stale info";
- 			break;
- 
-+		case REF_STATUS_REJECT_REMOTE_UPDATED:
-+			res = "error";
-+			msg = "remote ref updated since checkout";
-+			break;
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index bdd37c3eaa..acbd0c09aa 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -10,9 +10,8 @@ advice.*::
+ 		that the check is disabled.
+ 	pushUpdateRejected::
+ 		Set this variable to 'false' if you want to disable
+-		'pushNonFFCurrent',
+-		'pushNonFFMatching', 'pushAlreadyExists',
+-		'pushFetchFirst', and 'pushNeedsForce'
++		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
++		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
+ 		simultaneously.
+ 	pushNonFFCurrent::
+ 		Advice shown when linkgit:git-push[1] fails due to a
+@@ -41,6 +40,10 @@ advice.*::
+ 		we can still suggest that the user push to either
+ 		refs/heads/* or refs/tags/* based on the type of the
+ 		source object.
++	pushRefNeedsUpdate::
++		Shown when linkgit:git-push[1] rejects a forced update of
++		a branch when its remote-tracking ref has updates that we
++		do not have locally.
+ 	statusAheadBehind::
+ 		Shown when linkgit:git-status[1] computes the ahead/behind
+ 		counts for a local ref compared to its remote tracking ref,
+diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+index f5e5b38c68..21b256e0a4 100644
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -114,3 +114,9 @@ push.recurseSubmodules::
+ 	specifying '--recurse-submodules=check|on-demand|no'.
+ 	If not set, 'no' is used by default, unless 'submodule.recurse' is
+ 	set (in which case a 'true' value means 'on-demand').
 +
- 		case REF_STATUS_REJECT_ALREADY_EXISTS:
- 			res = "error";
- 			msg = "already exists";
-diff --git a/remote.c b/remote.c
-index eafc14cbe7..10e0be9097 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1471,12 +1471,23 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 * with the remote-tracking branch to find the value
- 		 * to expect, but we did not have such a tracking
- 		 * branch.
-+		 *
-+		 * If the tip of the remote-tracking ref is unreachable
-+		 * from any reflog entry of its local ref indicating a
-+		 * possible update since checkout; reject the push.
- 		 */
- 		if (ref->expect_old_sha1) {
- 			if (!oideq(&ref->old_oid, &ref->old_oid_expect))
- 				reject_reason = REF_STATUS_REJECT_STALE;
-+			else if (ref->check_reachable && ref->unreachable)
-+				reject_reason =
-+					REF_STATUS_REJECT_REMOTE_UPDATED;
- 			else
--				/* If the ref isn't stale then force the update. */
-+				/*
-+				 * If the ref isn't stale, and is reachable
-+				 * from from one of the reflog entries of
-+				 * the local branch, force the update.
-+				 */
- 				force_ref_update = 1;
- 		}
++push.useForceIfIncludes::
++	If set to "true", it is equivalent to specifying
++	`--force-if-includes` as an option to linkgit:git-push[1]
++	in the command line. Adding `--no-force-if-includes` at the
++	time of push overrides this configuration setting.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 3b8053447e..ab103c82cf 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+ 	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
+ 	   [--[no-]signed|--signed=(true|false|if-asked)]
+-	   [--force-with-lease[=<refname>[:<expect>]]]
++	   [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
+ 	   [--no-verify] [<repository> [<refspec>...]]
  
-@@ -2251,12 +2262,13 @@ int is_empty_cas(const struct push_cas_option *cas)
+ DESCRIPTION
+@@ -320,6 +320,14 @@ seen and are willing to overwrite, then rewrite history, and finally
+ force push changes to `master` if the remote version is still at
+ `base`, regardless of what your local `remotes/origin/master` has been
+ updated to in the background.
+++
++Alternatively, specifying `--force-if-includes` as an ancillary option
++along with `--force-with-lease[=<refname>]` (i.e., without saying what
++exact commit the ref on the remote side must be pointing at, or which
++refs on the remote side are being protected) at the time of "push" will
++verify if updates from the remote-tracking refs that may have been
++implicitly updated in the background are integrated locally before
++allowing a forced update.
  
- /*
-  * Look at remote.fetch refspec and see if we have a remote
-- * tracking branch for the refname there.  Fill its current
-- * value in sha1[].
-+ * tracking branch for the refname there. Fill the name of
-+ * the remote-tracking branch in *dst_refname, and the name
-+ * of the commit object at its tip in oid[].
-  * If we cannot do so, return negative to signal an error.
-  */
- static int remote_tracking(struct remote *remote, const char *refname,
--			   struct object_id *oid)
-+			   struct object_id *oid, char **dst_refname)
- {
- 	char *dst;
+ -f::
+ --force::
+@@ -341,6 +349,22 @@ one branch, use a `+` in front of the refspec to push (e.g `git push
+ origin +master` to force a push to the `master` branch). See the
+ `<refspec>...` section above for details.
  
-@@ -2265,9 +2277,150 @@ static int remote_tracking(struct remote *remote, const char *refname,
- 		return -1; /* no tracking ref for refname at remote */
- 	if (read_ref(dst, oid))
- 		return -1; /* we know what the tracking ref is but we cannot read it */
++--[no-]force-if-includes::
++	Force an update only if the tip of the remote-tracking ref
++	has been integrated locally.
+++
++This option enables a check that verifies if the tip of the
++remote-tracking ref is reachable from one of the "reflog" entries of
++the local branch based in it for a rewrite. The check ensures that any
++updates from the remote have been incorporated locally by rejecting the
++forced update if that is not the case.
+++
++If the option is passed without specifying `--force-with-lease`, or
++specified along with `--force-with-lease=<refname>:<expect>`, it is
++a "no-op".
+++
++Specifying `--no-force-if-includes` disables this behavior.
 +
-+	*dst_refname = dst;
- 	return 0;
+ --repo=<repository>::
+ 	This option is equivalent to the <repository> argument. If both
+ 	are specified, the command-line argument takes precedence.
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index 0b0eb1d025..7813e8470e 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -13,6 +13,46 @@ setup_srcdst_basic () {
+ 	)
  }
  
-+/*
-+ * The struct "reflog_commit_array" and related helper functions
-+ * are used for collecting commits into an array during reflog
-+ * traversals in "check_and_collect_until()".
-+ */
-+struct reflog_commit_array {
-+	struct commit **item;
-+	size_t nr, alloc;
-+};
-+
-+#define REFLOG_COMMIT_ARRAY_INIT { NULL, 0, 0 }
-+
-+/* Append a commit to the array. */
-+static void append_commit(struct reflog_commit_array *arr,
-+			  struct commit *commit)
-+{
-+	ALLOC_GROW(arr->item, arr->nr + 1, arr->alloc);
-+	arr->item[arr->nr++] = commit;
++# For tests with "--force-if-includes".
++setup_src_dup_dst () {
++	rm -fr src dup dst &&
++	git init --bare dst &&
++	git clone --no-local dst src &&
++	git clone --no-local dst dup
++	(
++		cd src &&
++		test_commit A &&
++		test_commit B &&
++		test_commit C &&
++		git push origin
++	) &&
++	(
++		cd dup &&
++		git fetch &&
++		git merge origin/master &&
++		git switch -c branch master~2 &&
++		test_commit D &&
++		test_commit E &&
++		git push origin --all
++	) &&
++	(
++		cd src &&
++		git switch master &&
++		git fetch --all &&
++		git branch branch --track origin/branch &&
++		git rebase origin/master
++	) &&
++	(
++		cd dup &&
++		git switch master &&
++		test_commit F &&
++		test_commit G &&
++		git switch branch &&
++		test_commit H &&
++		git push origin --all
++	)
 +}
 +
-+/* Free and reset the array. */
-+static void free_commit_array(struct reflog_commit_array *arr)
-+{
-+	FREE_AND_NULL(arr->item);
-+	arr->nr = arr->alloc = 0;
-+}
-+
-+struct check_and_collect_until_cb_data {
-+	struct commit *remote_commit;
-+	struct reflog_commit_array *local_commits;
-+	timestamp_t remote_reflog_timestamp;
-+};
-+
-+/* Get the timestamp of the latest entry. */
-+static int peek_reflog(struct object_id *o_oid, struct object_id *n_oid,
-+		       const char *ident, timestamp_t timestamp,
-+		       int tz, const char *message, void *cb_data)
-+{
-+	timestamp_t *ts = cb_data;
-+	*ts = timestamp;
-+	return 1;
-+}
-+
-+static int check_and_collect_until(struct object_id *o_oid,
-+				   struct object_id *n_oid,
-+				   const char *ident, timestamp_t timestamp,
-+				   int tz, const char *message, void *cb_data)
-+{
-+	struct commit *commit;
-+	struct check_and_collect_until_cb_data *cb = cb_data;
-+
-+	/* An entry was found. */
-+	if (oideq(n_oid, &cb->remote_commit->object.oid))
-+		return 1;
-+
-+	if ((commit = lookup_commit_reference(the_repository, n_oid)))
-+		append_commit(cb->local_commits, commit);
-+
-+	/*
-+	 * If the reflog entry timestamp is older than the remote ref's
-+	 * latest reflog entry, there is no need to check or collect
-+	 * entries older than this one.
-+	 */
-+	if (timestamp < cb->remote_reflog_timestamp)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+#define MERGE_BASES_BATCH_SIZE 8
-+
-+/*
-+ * Iterate through the reflog of the local ref to check if there is an entry
-+ * for the given remote-tracking ref; runs until the timestamp of an entry is
-+ * older than latest timestamp of remote-tracking ref's reflog. Any commits
-+ * are that seen along the way are collected into an array to check if the
-+ * remote-tracking ref is reachable from any of them.
-+ */
-+static int is_reachable_in_reflog(const char *local, const struct ref *remote)
-+{
-+	timestamp_t date;
-+	struct commit *commit;
-+	struct commit **chunk;
-+	struct check_and_collect_until_cb_data cb;
-+	struct reflog_commit_array arr = REFLOG_COMMIT_ARRAY_INIT;
-+	size_t size = 0;
-+	int ret = 0;
-+
-+	commit = lookup_commit_reference(the_repository, &remote->old_oid);
-+	if (!commit)
-+		goto cleanup_return;
-+
-+	/*
-+	 * Get the timestamp from the latest entry
-+	 * of the remote-tracking ref's reflog.
-+	 */
-+	for_each_reflog_ent_reverse(remote->tracking_ref, peek_reflog, &date);
-+
-+	cb.remote_commit = commit;
-+	cb.local_commits = &arr;
-+	cb.remote_reflog_timestamp = date;
-+	ret = for_each_reflog_ent_reverse(local, check_and_collect_until, &cb);
-+
-+	/* We found an entry in the reflog. */
-+	if (ret > 0)
-+		goto cleanup_return;
-+
-+	/*
-+	 * Check if the remote commit is reachable from any
-+	 * of the commits in the collected array, in batches.
-+	 */
-+	for (chunk = arr.item; chunk < arr.item + arr.nr; chunk += size) {
-+		size = arr.item + arr.nr - chunk;
-+		if (MERGE_BASES_BATCH_SIZE < size)
-+			size = MERGE_BASES_BATCH_SIZE;
-+
-+		if ((ret = in_merge_bases_many(commit, size, chunk)))
-+			break;
-+	}
-+
-+cleanup_return:
-+	free_commit_array(&arr);
-+	return ret;
-+}
-+
-+/*
-+ * Check for reachability of a remote-tracking
-+ * ref in the reflog entries of its local ref.
-+ */
-+static void check_if_includes_upstream(struct ref *remote)
-+{
-+	struct ref *local = get_local_ref(remote->name);
-+	if (!local)
-+		return;
-+
-+	if (is_reachable_in_reflog(local->name, remote) <= 0)
-+		remote->unreachable = 1;
-+}
-+
- static void apply_cas(struct push_cas_option *cas,
- 		      struct remote *remote,
- 		      struct ref *ref)
-@@ -2282,8 +2435,12 @@ static void apply_cas(struct push_cas_option *cas,
- 		ref->expect_old_sha1 = 1;
- 		if (!entry->use_tracking)
- 			oidcpy(&ref->old_oid_expect, &entry->expect);
--		else if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
-+		else if (remote_tracking(remote, ref->name,
-+					 &ref->old_oid_expect,
-+					 &ref->tracking_ref))
- 			oidclr(&ref->old_oid_expect);
-+		else
-+			ref->check_reachable = cas->use_force_if_includes;
- 		return;
- 	}
+ test_expect_success setup '
+ 	# create template repository
+ 	test_commit A &&
+@@ -256,4 +296,101 @@ test_expect_success 'background updates of REMOTE can be mitigated with a non-up
+ 	)
+ '
  
-@@ -2292,8 +2449,12 @@ static void apply_cas(struct push_cas_option *cas,
- 		return;
- 
- 	ref->expect_old_sha1 = 1;
--	if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
-+	if (remote_tracking(remote, ref->name,
-+			    &ref->old_oid_expect,
-+			    &ref->tracking_ref))
- 		oidclr(&ref->old_oid_expect);
-+	else
-+		ref->check_reachable = cas->use_force_if_includes;
- }
- 
- void apply_push_cas(struct push_cas_option *cas,
-@@ -2301,6 +2462,15 @@ void apply_push_cas(struct push_cas_option *cas,
- 		    struct ref *remote_refs)
- {
- 	struct ref *ref;
--	for (ref = remote_refs; ref; ref = ref->next)
-+	for (ref = remote_refs; ref; ref = ref->next) {
- 		apply_cas(cas, remote, ref);
++test_expect_success 'background updates to remote can be mitigated with "--force-if-includes"' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	git ls-remote dst refs/heads/branch >expect.branch &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git fetch --all &&
++		test_must_fail git push --force-with-lease --force-if-includes --all
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	git ls-remote dst refs/heads/branch >actual.branch &&
++	test_cmp expect.master actual.master &&
++	test_cmp expect.branch actual.branch
++'
 +
-+		/*
-+		 * If "compare-and-swap" is in "use_tracking[_for_rest]"
-+		 * mode, and if "--force-if-includes" was specified, run
-+		 * the check.
-+		 */
-+		if (ref->check_reachable)
-+			check_if_includes_upstream(ref);
-+	}
- }
-diff --git a/remote.h b/remote.h
-index eb62a47044..2d5391d281 100644
---- a/remote.h
-+++ b/remote.h
-@@ -107,12 +107,20 @@ struct ref {
- 	struct object_id new_oid;
- 	struct object_id old_oid_expect; /* used by expect-old */
- 	char *symref;
-+	char *tracking_ref;
- 	unsigned int
- 		force:1,
- 		forced_update:1,
- 		expect_old_sha1:1,
- 		exact_oid:1,
--		deletion:1;
-+		deletion:1,
-+		/* Need to check if local reflog reaches the remote tip. */
-+		check_reachable:1,
-+		/*
-+		 * Store the result of the check enabled by "check_reachable";
-+		 * implies the local reflog does not reach the remote tip.
-+		 */
-+		unreachable:1;
- 
- 	enum {
- 		REF_NOT_MATCHED = 0, /* initial value */
-@@ -142,6 +150,7 @@ struct ref {
- 		REF_STATUS_REJECT_NEEDS_FORCE,
- 		REF_STATUS_REJECT_STALE,
- 		REF_STATUS_REJECT_SHALLOW,
-+		REF_STATUS_REJECT_REMOTE_UPDATED,
- 		REF_STATUS_UPTODATE,
- 		REF_STATUS_REMOTE_REJECT,
- 		REF_STATUS_EXPECTING_REPORT,
-@@ -341,6 +350,7 @@ struct ref *get_stale_heads(struct refspec *rs, struct ref *fetch_map);
- 
- struct push_cas_option {
- 	unsigned use_tracking_for_rest:1;
-+	unsigned use_force_if_includes:1;
- 	struct push_cas {
- 		struct object_id expect;
- 		unsigned use_tracking:1;
-diff --git a/send-pack.c b/send-pack.c
-index 2d2f9997ac..b4d4a10a71 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -299,6 +299,7 @@ static int check_to_send_update(const struct ref *ref, const struct send_pack_ar
- 	case REF_STATUS_REJECT_FETCH_FIRST:
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
- 	case REF_STATUS_REJECT_STALE:
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
- 	case REF_STATUS_REJECT_NODELETE:
- 		return CHECK_REF_STATUS_REJECTED;
- 	case REF_STATUS_UPTODATE:
-diff --git a/transport-helper.c b/transport-helper.c
-index b573b6c730..6157de30c7 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -827,6 +827,10 @@ static int push_update_ref_status(struct strbuf *buf,
- 			status = REF_STATUS_REJECT_STALE;
- 			FREE_AND_NULL(msg);
- 		}
-+		else if (!strcmp(msg, "remote ref updated since checkout")) {
-+			status = REF_STATUS_REJECT_REMOTE_UPDATED;
-+			FREE_AND_NULL(msg);
-+		}
- 		else if (!strcmp(msg, "forced update")) {
- 			forced = 1;
- 			FREE_AND_NULL(msg);
-@@ -967,6 +971,7 @@ static int push_refs_with_push(struct transport *transport,
- 		case REF_STATUS_REJECT_NONFASTFORWARD:
- 		case REF_STATUS_REJECT_STALE:
- 		case REF_STATUS_REJECT_ALREADY_EXISTS:
-+		case REF_STATUS_REJECT_REMOTE_UPDATED:
- 			if (atomic) {
- 				reject_atomic_push(remote_refs, mirror);
- 				string_list_clear(&cas_options, 0);
-diff --git a/transport.c b/transport.c
-index ffe2115845..65fcd22b20 100644
---- a/transport.c
-+++ b/transport.c
-@@ -633,6 +633,11 @@ static int print_one_push_report(struct ref *ref, const char *dest, int count,
- 				 "stale info",
- 				 report, porcelain, summary_width);
- 		break;
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
-+				 "remote ref updated since checkout",
-+				 report, porcelain, summary_width);
-+		break;
- 	case REF_STATUS_REJECT_SHALLOW:
- 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
- 				 "new shallow roots not allowed",
-@@ -1185,6 +1190,7 @@ static int run_pre_push_hook(struct transport *transport,
- 		if (!r->peer_ref) continue;
- 		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
- 		if (r->status == REF_STATUS_REJECT_STALE) continue;
-+		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
- 		if (r->status == REF_STATUS_UPTODATE) continue;
- 
- 		strbuf_reset(&buf);
++test_expect_success 'background updates to remote can be mitigated with "push.useForceIfIncludes"' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git fetch --all &&
++		git config --local push.useForceIfIncludes true &&
++		test_must_fail git push --force-with-lease=master origin master
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	test_cmp expect.master actual.master
++'
++
++test_expect_success '"--force-if-includes" should be disabled for --force-with-lease="<refname>:<expect>"' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	git ls-remote dst refs/heads/master >expect.master &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		remote_head="$(git rev-parse refs/remotes/origin/master)" &&
++		git fetch --all &&
++		test_must_fail git push --force-if-includes --force-with-lease="master:$remote_head" 2>err &&
++		grep "stale info" err
++	) &&
++	git ls-remote dst refs/heads/master >actual.master &&
++	test_cmp expect.master actual.master
++'
++
++test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase")' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git pull --rebase origin master &&
++		git push --force-if-includes --force-with-lease="master"
++	)
++'
++
++test_expect_success '"--force-if-includes" should allow forced update after a rebase ("pull --rebase", local rebase)' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		test_commit I &&
++		git switch master &&
++		test_commit J &&
++		git pull --rebase origin master &&
++		git rebase --onto HEAD~4 HEAD~1 &&
++		git push --force-if-includes --force-with-lease="master"
++	)
++'
++
++test_expect_success '"--force-if-includes" should allow deletes' '
++	setup_src_dup_dst &&
++	test_when_finished "rm -fr dst src dup" &&
++	(
++		cd src &&
++		git switch branch &&
++		git pull --rebase origin branch &&
++		git push --force-if-includes --force-with-lease="branch" origin :branch
++	)
++'
++
+ test_done
 -- 
 2.28.0
 
