@@ -2,144 +2,218 @@ Return-Path: <SRS0=BObu=DK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AF1CC41604
-	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 13:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91400C41604
+	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 13:29:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F231206CD
-	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 13:28:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C370206CD
+	for <git@archiver.kernel.org>; Sat,  3 Oct 2020 13:29:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="GUMAckZm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IYcFWQx+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725788AbgJCN2Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Oct 2020 09:28:25 -0400
-Received: from mout.gmx.net ([212.227.17.21]:46439 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725781AbgJCN2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Oct 2020 09:28:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1601731690;
-        bh=afhHhMTxjCB2Fw5JH3DUEUGoqjRyPqm5V+lYlLVTvxw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GUMAckZmP1Y2Je9UlPShSkJg4DhY/8TcCixV4v5TQHil3xDBZTsGOyjoKRxjwV62y
-         fI3mXG5um4+YvdbU7g6jv0bvmcgVT9CJE43jU0MnBbMz/poKgBSjsTePTnzL5kPXEi
-         NZKafC1zN6iJ2T0ngX7XJwGAdPvE53IyH0YjuO/g=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.213.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mqs4f-1kl3xz1xJp-00mrkN; Sat, 03
- Oct 2020 15:28:10 +0200
-Date:   Sat, 3 Oct 2020 15:28:09 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>,
-        Nikita Leonov via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nikita Leonov <nykyta.leonov@gmail.com>
-Subject: Re: [PATCH v2 1/3] credential.c: fix credential reading with regards
- to CR/LF
-In-Reply-To: <xmqqk0w8a8re.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2010031527200.50@tvgsbejvaqbjf.bet>
-References: <pull.710.git.git.1581688196706.gitgitgadget@gmail.com>        <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>        <27f6400a21412d762b290a34a78ebe7296d36bf3.1601293224.git.gitgitgadget@gmail.com>        <20200929004220.GC898702@coredump.intra.peff.net>
-        <nycvar.QRO.7.76.6.2010021011540.50@tvgsbejvaqbjf.bet> <xmqqk0w8a8re.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725793AbgJCN3Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Oct 2020 09:29:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbgJCN3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Oct 2020 09:29:16 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49DE9C0613D0
+        for <git@vger.kernel.org>; Sat,  3 Oct 2020 06:29:15 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id v12so4482013wmh.3
+        for <git@vger.kernel.org>; Sat, 03 Oct 2020 06:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YXfuSFPFq4W6ILkAyxyQ+mbE2uukA/C38/Q7YsktYB4=;
+        b=IYcFWQx+s6VSH0Jhh1L/2whZTMkbopS5tczftcrMgdB3v98NQ9eKDO0APvVTa3dNum
+         gYyGSdDbsN17KyanVAA3WzZLLZ07gGuTtIdPVsvPI+n8qSzf0cHJTO1OLnO3BBUn2yop
+         jqHlqTPlTAbNvm2AUlbSeLy55ne5l7M+UN9sFLQp285oMXLm0PGztZKqcGX1g1qlMS4N
+         kUR6caclN4kFn5XQb9CqvrCzU1y8oP1m9RcSZ4D7mpp8xFNqEsUr5+UkwESm5yuhTaQn
+         gYkPgFOz6YfkT6Ifdkmexn0hvdPpetedyzA1fVlzJ13nHukCZhwMrq3FnR6fpfS1ZoXq
+         YhrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=YXfuSFPFq4W6ILkAyxyQ+mbE2uukA/C38/Q7YsktYB4=;
+        b=SFHDP4OI7JBl0ZWUnigiG6CVtAcXFC4kk4ji0kUMc98ZMJUXN4wYBoj9D8Ci8JRGio
+         hFXpVB/jVuFXY1LwKMQrjsxtMsd0diwcJRHx8AqWvBbwV5XRbw1f+WAlrbhrb2rpxP8T
+         FmsG5EO42VM/oDOi0AJarNRejMLSV03XQCvIPlIPaskFmdfCuuMllhuVBUpBMIKBbF1H
+         hPnKCJTvE4JV+rjeuGxL4JzUuUe9nlCyQ8TvWzyDqrpjj8M4D+fbUW+4cadL5NnsZKyw
+         kfaCF9SH29+gbhjfNaU6lycLCV19MI2i/F3G1sp7yBogsm94Gir/hQrU2nLJR/Z3YtH1
+         R0KQ==
+X-Gm-Message-State: AOAM531Ce+tu6jzU36jrBj/9g/OWAC2J6z6/WhtRc6SG7J/UiY3Odrz3
+        xyb9PSu8GUrIefUCzrNXmONiB1sw0H8=
+X-Google-Smtp-Source: ABdhPJxV9qYWELGW2KdWEPoG6/gv5bFrfroaudgXThem+U8w3XEVucwxeCNl78bYEuLSR8WhiwFxgA==
+X-Received: by 2002:a1c:8093:: with SMTP id b141mr5689750wmd.139.1601731753688;
+        Sat, 03 Oct 2020 06:29:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b8sm5241038wmb.4.2020.10.03.06.29.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Oct 2020 06:29:13 -0700 (PDT)
+Message-Id: <pull.710.v3.git.git.1601731752695.gitgitgadget@gmail.com>
+In-Reply-To: <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
+References: <pull.710.v2.git.git.1601293224.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 03 Oct 2020 13:29:12 +0000
+Subject: [PATCH v3] credential: treat CR/LF as line endings in the credential
+ protocol
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:a7LMr45TBkM+KkGfBxEM5F2u4E0rleZKHSL8xeVKYVx2VtXOhVE
- WpaDaOltol55BcLPNOqUH7QOwzeHHC/ZqH+tkpdTZORliofQ5COvHDhlaKpok0ElAvRPCfc
- 4bTEBe4meKt8WsVzuvJOl2HULpbFu50tTfwtYZKvuLCA9U/YkEcLxWQZSRxEo+eV1hY/TNt
- Lu24u7Fb9hw7dGqW8U8BA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NY01vZNNZLo=:lhJiViIpau7dTvmn099Q3e
- 9kNCMVlb74hNvUoH1PnPTfDOFMSjdR7PqoOEFeY6WM20ffFRvp/E0sbhIHTmucsaglCtA1pFV
- WWZm1/LDsanApRyNmawXmmc1pqsb9Ngj+uTzT2XmkTlssH6nKbOo9AbzeXu6RPDJAtecP71kn
- aF0b3p6aVhfpabq289W69VIvieDyWZkWC0IPhQ5iK++OmB5aA91Kf0H1zLk0jmqAxZBebRx+b
- RalT9+6xVayY0MPr8mALQX4c3gPy4lwN+1wfbqJGYV1gVvjXs7fkHrQJAdZi+rKTMX+9wKXHF
- u0yhETPV2BIqtXa9nV9fIhkWlCjI5PvhB4wHDj1ILdr/BQdY5xucEoGSkG/I36N9dwu5B3Wrc
- KUHby0Gdw/+dDDaDpk3jN2SYuksDDPUq+SVBM8fGhqmSTUlKeqby/Knp8RG2EpXGIyX5wbi2b
- tl+MsJjVShvLyROKTWqOomnRP+drOqwEe6SkxXZBIZTCvElffWrkxCG4714yu/hdnjjK9Xmie
- qOB8KUSM+zNbMOEAcKFsIBrbnjdYW2q7B1FqKhV641cxfNAOgua8EwWKk9Q6BPI4yDEIQ81Ra
- nGRRUCp7U5at7zFE1pvTTq6tYGFn9pKYDckb4FfEWQLfXYivJnNB1IExj+Wc49KFe7LUCZkGf
- ya+hCMder8SrI5NSG67fh7px1uX2DWLONujwr9b1bz0UccZtwoMGhGQ5e8pKyRnW0JaTFhLOH
- zaQRpbMKcZEcKTYQdCpPNEG5Kpwn0dkV/ps7zXdZfWwxPLk7U7kNxDB37Ycb+7aKddcwDXqUV
- 1ufNyivu8p+q/vQTCUv/ua6Frl6V3nYEJOZE8Jaas60zq2o1+hOstdpcuInaa6ueTd85nBeFs
- oG429waSZvDDcLifQirDgQMIYOaSm26TLjc8wwyO+AYv6Fq0qX+NK575RD8+AtChhc7G9DsMB
- a/BYVrY9aWXkl0XwdEUVjaLxT2nftAY+0EzyfcMnq1qKeTfLN+FmFwAJ46S2+7DUwEm6mGLsn
- ygNCOthAIp9wIcR3CVf0nSdVzctxBBJZ4RBFIYgzVEKNDsxS6Q9Fr4b+xTHx4SFLz6u+vqhZU
- imn/UymBLM9okCaoGsCTzSu77EMCPDt5ZgD5lUlN5EyIN8mayIqv+JLoZ2mQsuKQ/JOp4gulj
- 0jAAny94bfgHvwPsRJ2O59Pc7l37HuCT/ZWq/++NdmN7sVJ4/aKhvYBfpMM2abnd1gQcL/t7P
- R9ZN1JX4AnsEC1Cky4GSkHKYhSjca1m3SKvBJ9g==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Nikita Leonov <nykyta.leonov@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: Nikita Leonov <nykyta.leonov@gmail.com>
 
-On Fri, 2 Oct 2020, Junio C Hamano wrote:
+This fix makes using Git credentials more friendly to Windows users: it
+allows a credential helper to communicate using CR/LF line endings ("DOS
+line endings" commonly found on Windows) instead of LF-only line endings
+("Unix line endings").
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Therefore, I spent some time pouring over the commit message. This is =
-my
-> > current version:
-> >
-> >     credential: treat CR/LF as line endings in the credential protocol
-> >
-> >     This fix makes using Git credentials more friendly to Windows user=
-s: it
-> >     allows a credential helper to communicate using CR/LF line endings=
- ("DOS
-> >     line endings" commonly found on Windows) instead of LF-only line e=
-ndings
-> >     ("Unix line endings").
-> >
-> >     Note that this changes the behavior a bit: if a credential helper
-> >     produces, say, a password with a trailing Carriage Return characte=
-r,
-> >     that will now be culled even when the rest of the lines end only i=
-n Line
-> >     Feed characters, indicating that the Carriage Return was not meant=
- to be
-> >     part of the line ending.
-> >
-> >     In practice, it seems _very_ unlikely that something like this hap=
-pens.
-> >     Passwords usually need to consist of non-control characters, URLs =
-need
-> >     to have special characters URL-encoded, and user names, well, are =
-names.
-> >
-> >     So let's change the credential machinery to accept both CR/LF and =
-LF
-> >     line endings.
-> >
-> >     While we do this for the credential helper protocol, we do _not_ d=
-o
-> >     adjust `git credential-cache--daemon` (which won't work on Windows=
-,
-> >     anyway, because it requires Unix sockets) nor `git credential-stor=
-e`
-> >     (which writes the file `~/.git-credentials` which we consider an
-> >     implementation detail that should be opaque to the user, read: we =
-do
-> >     expect users _not_ to edit this file manually).
-> >
-> > What do you think?
->
-> I am not Peff, but I was also drawn into the same confusion by the
-> "we never see an empty line" red herring.
+Note that this changes the behavior a bit: if a credential helper
+produces, say, a password with a trailing Carriage Return character,
+that will now be culled even when the rest of the lines end only in Line
+Feed characters, indicating that the Carriage Return was not meant to be
+part of the line ending.
 
-:-)
+In practice, it seems _very_ unlikely that something like this happens.
+Passwords usually need to consist of non-control characters, URLs need
+to have special characters URL-encoded, and user names, well, are names.
 
-> There are some micronits, but the above made a lot easier to
-> understand (I think you could even add "quit\r" bit to make it even
-> easier to understand) than the original description.
+However, it _does_ help on Windows, where CR/LF line endings are common:
+as unrecognized commands are simply ignored by the credential machinery,
+even a command like `quit\r` (which is clearly intended to abort) would
+simply be ignored (silently) by Git.
 
-Okay, I incorporated a comment talking about `quit\r` and will submit
-a new iteration right now.
+So let's change the credential machinery to accept both CR/LF and LF
+line endings.
 
-Thanks,
-Dscho
+While we do this for the credential helper protocol, we do _not_ adjust
+`git credential-cache--daemon` (which won't work on Windows, anyway,
+because it requires Unix sockets) nor `git credential-store` (which
+writes the file `~/.git-credentials` which we consider an implementation
+detail that should be opaque to the user, read: we do expect users _not_
+to edit this file manually).
+
+Signed-off-by: Nikita Leonov <nykyta.leonov@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    Prepare git credential to read input with DOS line endings
+    
+    This contribution came in via Git for Windows
+    [https://github.com/git-for-windows/git/pull/2516].
+    
+    Sadly, I did not find the time to go through all the changes of 8f309aeb
+    ("strbuf: introduce strbuf_getline_{lf,nul}()", 2016-01-13) (as Junio
+    asked
+    [https://public-inbox.org/git/xmqqmu9lnjdh.fsf@gitster-ct.c.googlers.com]
+    ). Rather than delaying this patch indefinitely, I admit defeat on that
+    angle.
+    
+    Changes since v2:
+    
+     * Dropped the credential-cache--daemon and credential-store changes
+       again.
+     * Enhanced the commit message (also explaining why we don't touch the
+       daemon and the store).
+    
+    Changes since v1:
+    
+     * Added a commit to adjust credential-daemon and credential-store in
+       the same manner.
+     * Adjusted the documentation accordingly.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-710%2Fdscho%2Fcrlf-aware-git-credential-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-710/dscho/crlf-aware-git-credential-v3
+Pull-Request: https://github.com/git/git/pull/710
+
+Range-diff vs v2:
+
+ 1:  27f6400a21 ! 1:  f6eeb18d3a credential.c: fix credential reading with regards to CR/LF
+     @@ Metadata
+      Author: Nikita Leonov <nykyta.leonov@gmail.com>
+      
+       ## Commit message ##
+     -    credential.c: fix credential reading with regards to CR/LF
+     +    credential: treat CR/LF as line endings in the credential protocol
+      
+     -    This fix makes using Git credentials more friendly to Windows users. In
+     -    previous version it was unable to finish input correctly without
+     -    configuration changes (tested in PowerShell, CMD, Cygwin).
+     +    This fix makes using Git credentials more friendly to Windows users: it
+     +    allows a credential helper to communicate using CR/LF line endings ("DOS
+     +    line endings" commonly found on Windows) instead of LF-only line endings
+     +    ("Unix line endings").
+      
+     -    We know credential filling should be finished by empty input, but the
+     -    current implementation does not take into account CR/LF ending, and
+     -    hence instead of the empty string we get '\r', which is interpreted as
+     -    an incorrect string.
+     +    Note that this changes the behavior a bit: if a credential helper
+     +    produces, say, a password with a trailing Carriage Return character,
+     +    that will now be culled even when the rest of the lines end only in Line
+     +    Feed characters, indicating that the Carriage Return was not meant to be
+     +    part of the line ending.
+      
+     -    So this commit changes default reading function to a more Windows
+     -    compatible reading function.
+     +    In practice, it seems _very_ unlikely that something like this happens.
+     +    Passwords usually need to consist of non-control characters, URLs need
+     +    to have special characters URL-encoded, and user names, well, are names.
+     +
+     +    However, it _does_ help on Windows, where CR/LF line endings are common:
+     +    as unrecognized commands are simply ignored by the credential machinery,
+     +    even a command like `quit\r` (which is clearly intended to abort) would
+     +    simply be ignored (silently) by Git.
+     +
+     +    So let's change the credential machinery to accept both CR/LF and LF
+     +    line endings.
+     +
+     +    While we do this for the credential helper protocol, we do _not_ adjust
+     +    `git credential-cache--daemon` (which won't work on Windows, anyway,
+     +    because it requires Unix sockets) nor `git credential-store` (which
+     +    writes the file `~/.git-credentials` which we consider an implementation
+     +    detail that should be opaque to the user, read: we do expect users _not_
+     +    to edit this file manually).
+      
+          Signed-off-by: Nikita Leonov <nykyta.leonov@gmail.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+ 2:  f69076036f < -:  ---------- credentials: make line reading Windows compatible
+ 3:  61baea1061 < -:  ---------- docs: make notes regarding credential line reading
+
+
+ credential.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/credential.c b/credential.c
+index efc29dc5e1..e5202fbef2 100644
+--- a/credential.c
++++ b/credential.c
+@@ -202,7 +202,7 @@ int credential_read(struct credential *c, FILE *fp)
+ {
+ 	struct strbuf line = STRBUF_INIT;
+ 
+-	while (strbuf_getline_lf(&line, fp) != EOF) {
++	while (strbuf_getline(&line, fp) != EOF) {
+ 		char *key = line.buf;
+ 		char *value = strchr(key, '=');
+ 
+
+base-commit: 9bc233ae1cf19a49e51842c7959d80a675dbd1c0
+-- 
+gitgitgadget
