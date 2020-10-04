@@ -2,169 +2,85 @@ Return-Path: <SRS0=wQ61=DL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23F1CC4363C
-	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 18:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFBEAC4363C
+	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 18:53:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5E44206DD
-	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 18:03:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 940822068D
+	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 18:53:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WEp/8siJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lLl1xBFZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726443AbgJDSDB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Oct 2020 14:03:01 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62578 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726125AbgJDSDB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Oct 2020 14:03:01 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A1B99F3FFD;
-        Sun,  4 Oct 2020 14:02:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BGKMfavwBteOyKeKs9OxrO9S/1w=; b=WEp/8s
-        iJUCWEhk7S+5UzMDZhF1N4ASYvSej4Wg8b8NAdgyB3mk3xVe+lGqUI0G7f9N+VC0
-        aJpOI3l9tSiphav+DOMc4vGE1gI/NgVmQkexAyGUIEDinwMccbRAmyulrU7hiolw
-        PSrIRITxTCOg1oEvZlbG08p013xZSYtXLo2xA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VQJFNdgeG0TsqyiFKdgaDDJZu/QJOrO9
-        ZR4J1QBkjiqbB5S6eja6h06hvwfeYlh4xpoyfDopGeRoCMk+j0K0MaFQ5STZM4Ft
-        cJ20YxlvLba0xgsYkYwclPhZtKyLzkKlyR2Y3ffvH7glTvtzrUMkoLV7g/atYY/p
-        O9Pi31fJwV0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B23EF3FFC;
-        Sun,  4 Oct 2020 14:02:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E80CEF3FFB;
-        Sun,  4 Oct 2020 14:02:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] builtin/checkout: fix `git checkout -p HEAD...` bug
-References: <cover.1601814601.git.liu.denton@gmail.com>
-        <54f221411f4ec60a88521c376a1c77fa0a3e7553.1601814601.git.liu.denton@gmail.com>
-Date:   Sun, 04 Oct 2020 11:02:52 -0700
-In-Reply-To: <54f221411f4ec60a88521c376a1c77fa0a3e7553.1601814601.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Sun, 4 Oct 2020 05:30:33 -0700")
-Message-ID: <xmqqsgat7ttf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726294AbgJDSxj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Oct 2020 14:53:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56242 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbgJDSxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Oct 2020 14:53:39 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DA6C0613CE
+        for <git@vger.kernel.org>; Sun,  4 Oct 2020 11:53:38 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id dn5so7052223edb.10
+        for <git@vger.kernel.org>; Sun, 04 Oct 2020 11:53:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=fDSLVRG3GNB/YDoBTOTql6vV8yvvAmuTFEajY+cuYzg=;
+        b=lLl1xBFZXvRaheWQGNVz45iVLPkOtA2fsQPY1eIwX3beaWLa7egA72lbJLfqucR7g8
+         OD9+8tnGNIuRjYWH7A3UNPoqGU/JNMhAPDperuFiMBTVPCxCUl7jPFS636T+QeyPy3oH
+         A2C8IQaOCXZgA7Ddpxkw2Sst/6MmOiik5xM8cqDuN0H6npNCg+16WOiciL6fPh9SULHB
+         0TKVjbOi5F3ZHSbAmzq6mlhygELatOrUf/kCgQCKZTDw6NR+Lrl/pNkoYyzpUaDvQLVu
+         GSaKDpU8BOp8rhiqmUh2QgGEpaX3vwPGNeXTSxTdqWsKwhqSLuHUrBAHkpTU8AvLV8s3
+         6Gfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=fDSLVRG3GNB/YDoBTOTql6vV8yvvAmuTFEajY+cuYzg=;
+        b=OoQ6/V2UD0cQek61H9xzL7V+YCyaTa71CWBxR+0hBLCg3vrbgcjphjrcnlDh2Zc48e
+         aqEemkWGfCxls8y4q1rfZqUZ75ix5iHR64f9Wg6+ri4+fV6OuwIDtzw4boHL9ee7L8tC
+         tA4MQJ+t/1r2MPhr+hKGlLGwHH9qR2bhrD7WSyByKqGjiIMhBhfopbt9as7m5WW3yCDE
+         Dv8mkmOIt/RoJY0m7QEnjbueN8kfzCwKHGTjyfB7YVpCSPABkWARvFeHrqhknky+j+aC
+         z7mCME0zg/8rvYnDFJQygmaoA36PO03tiM25iSjt1Okxep6QHixlS+q53hxU10KYoeI1
+         Hz1A==
+X-Gm-Message-State: AOAM531KkGxOtZT+QCC5DljUOpRdEnfm/UpdycHvRflEnHT4HiUP8wVE
+        or+r1Eji6ddWsS/FUMJnuXqtHwYqs2o=
+X-Google-Smtp-Source: ABdhPJwxDqEa52YgCDaMi9NWupWUanWlpJkHco1G279mn53SRhbU+0zqbivgLOpObGbJ5yCweW7MuA==
+X-Received: by 2002:aa7:c7d7:: with SMTP id o23mr13294918eds.44.1601837617160;
+        Sun, 04 Oct 2020 11:53:37 -0700 (PDT)
+Received: from [192.168.1.98] ([94.31.83.233])
+        by smtp.gmail.com with ESMTPSA id g20sm6220837ejx.12.2020.10.04.11.53.36
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Oct 2020 11:53:36 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   =?UTF-8?Q?Jonathan_M=c3=bcller?= <jonathanmueller.dev@gmail.com>
+Subject: git add --intent-to-add and git stash
+Message-ID: <b16f61b9-7f0f-38ab-7200-58ad5e659321@gmail.com>
+Date:   Sun, 4 Oct 2020 20:53:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D3346854-066B-11EB-9899-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hello,
 
-> Fix this by using the hex of the found commit instead of the given name.
-> Note that "HEAD" is handled specially in run_add_interactive() so it's
-> explicitly not changed.
-> ...
-> +		const char *rev = new_branch_info->name;
-> +		char rev_oid[GIT_MAX_HEXSZ + 1];
-> +
-> +		/*
-> +		 * Since rev can be in the form of `<a>...<b>`, we must replace
-> +		 * the name with the hex of the commit for the
-> +		 * run_add_interactive() machinery to work properly. However,
-> +		 * there is special logic for the HEAD case so we mustn't
-> +		 * replace that.
-> +		 */
-> +		if (rev && strcmp(rev, "HEAD"))
-> +			rev = oid_to_hex_r(rev_oid, &new_branch_info->commit->object.oid);
+when I try to `git stash` a file I have previously added using `git add 
+--intent-to-add`, I get an `error: Entry 'X' not uptodate. Cannot 
+merge.` error. I have to manually remove the file from the index, stash, 
+and add it again after I've popped the stash.
 
-What the comment explains and the if condition special cases are
-different.  Surely, HEAD is treated differently, but the natural
-implementation of what the comment wants to achieve would be to not
-just make sure it is not HEAD, but to make sure that it is of <a>...<b>
-form, e.g.
+Can `git stash` be taught to handle such files automatically?
 
-		if (rev && strstr(rev, "..."))
-
-Having said that, I do like how your version looks like in two ways,
-i.e. it makes it clear HEAD is special, and it does not limit the
-special case to only the three-dot "merge-base" magic, which might
-be more futureproof.  On the other hand, your version would give the
-hexadecimal commit object name even when a plain-vanilla branch name
-is given and the above comment does not say if and why it is a safe
-thing to do.  We used to give "new_branch_info->name" to the helper
-that invokes "add -p".  Now we always give a hexadecimal or "HEAD".
-
-Come to think of it, perhaps "add -p" that special cases HEAD is a
-mistake.  If a plain vanilla branch name can be safely replaced by
-the hexadecimal commit object name, perhaps the code should be
-prepared to special case not just string "HEAD" but any other way to
-express the commit object referred to with "HEAD" the same way.  But
-that is not a suggestion for this patch---it may be a good idea to
-add NEEDSWORK: comment here to encourage our future selves to see if
-"add -p" needs to be fixed.
-
->  		if (opts->checkout_index && opts->checkout_worktree)
->  			patch_mode = "--patch=checkout";
-> @@ -481,7 +493,7 @@ static int checkout_paths(const struct checkout_opts *opts,
->  		else
->  			BUG("either flag must have been set, worktree=%d, index=%d",
->  			    opts->checkout_worktree, opts->checkout_index);
-> -		return run_add_interactive(new_branch_info->name, patch_mode, &opts->pathspec);
-> +		return run_add_interactive(rev, patch_mode, &opts->pathspec);
->  	}
->  
->  	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
-> diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
-> index 47aeb0b167..999620e507 100755
-> --- a/t/t2016-checkout-patch.sh
-> +++ b/t/t2016-checkout-patch.sh
-> @@ -59,6 +59,13 @@ test_expect_success PERL 'git checkout -p HEAD with change already staged' '
->  	verify_state dir/foo head head
->  '
->  
-> +test_expect_success PERL 'git checkout -p HEAD^...' '
-> +	# the third n is to get out in case it mistakenly does not apply
-> +	test_write_lines n y n | git checkout -p HEAD^... &&
-> +	verify_saved_state bar &&
-> +	verify_state dir/foo parent parent
-> +'
-> +
->  test_expect_success PERL 'git checkout -p HEAD^' '
->  	# the third n is to get out in case it mistakenly does not apply
->  	test_write_lines n y n | git checkout -p HEAD^ &&
-> diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
-> index 98b2476e7c..b5c5c0ff7e 100755
-> --- a/t/t2071-restore-patch.sh
-> +++ b/t/t2071-restore-patch.sh
-> @@ -60,6 +60,14 @@ test_expect_success PERL 'git restore -p --source=HEAD^' '
->  	verify_state dir/foo parent index
->  '
->  
-> +test_expect_success PERL 'git restore -p --source=HEAD^...' '
-> +	set_state dir/foo work index &&
-> +	# the third n is to get out in case it mistakenly does not apply
-> +	test_write_lines n y n | git restore -p --source=HEAD^... &&
-> +	verify_saved_state bar &&
-> +	verify_state dir/foo parent index
-> +'
-> +
->  test_expect_success PERL 'git restore -p handles deletion' '
->  	set_state dir/foo work index &&
->  	rm dir/foo &&
-
-You are just mimicking what is already there, but I thought "add -p"
-can use built-in replacement when GIT_TEST_ADD_I_USE_BUILTIN is
-given these days.  Perhaps we need to replace these PERL
-prerequisite with a new one, say ADD_I, which requires PERL if and
-only if GIT_TEST_ADD_I_USE_BUILTIN is not set, or something.  Again,
-that is not in the scope of this patch, but leaving NEEDSWORK:
-comment in these test scripts where they first use PERL prerequisite
-but they would use ADD_I prerequisite if available.
-
+Thanks,
+Jonathan
