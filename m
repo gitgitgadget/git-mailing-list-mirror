@@ -2,85 +2,85 @@ Return-Path: <SRS0=wQ61=DL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFBEAC4363C
-	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 18:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97EDFC4363C
+	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 19:55:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 940822068D
-	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 18:53:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C238206B6
+	for <git@archiver.kernel.org>; Sun,  4 Oct 2020 19:55:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lLl1xBFZ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TwaphdZx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726294AbgJDSxj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Oct 2020 14:53:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56242 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbgJDSxj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Oct 2020 14:53:39 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DA6C0613CE
-        for <git@vger.kernel.org>; Sun,  4 Oct 2020 11:53:38 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id dn5so7052223edb.10
-        for <git@vger.kernel.org>; Sun, 04 Oct 2020 11:53:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=fDSLVRG3GNB/YDoBTOTql6vV8yvvAmuTFEajY+cuYzg=;
-        b=lLl1xBFZXvRaheWQGNVz45iVLPkOtA2fsQPY1eIwX3beaWLa7egA72lbJLfqucR7g8
-         OD9+8tnGNIuRjYWH7A3UNPoqGU/JNMhAPDperuFiMBTVPCxCUl7jPFS636T+QeyPy3oH
-         A2C8IQaOCXZgA7Ddpxkw2Sst/6MmOiik5xM8cqDuN0H6npNCg+16WOiciL6fPh9SULHB
-         0TKVjbOi5F3ZHSbAmzq6mlhygELatOrUf/kCgQCKZTDw6NR+Lrl/pNkoYyzpUaDvQLVu
-         GSaKDpU8BOp8rhiqmUh2QgGEpaX3vwPGNeXTSxTdqWsKwhqSLuHUrBAHkpTU8AvLV8s3
-         6Gfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=fDSLVRG3GNB/YDoBTOTql6vV8yvvAmuTFEajY+cuYzg=;
-        b=OoQ6/V2UD0cQek61H9xzL7V+YCyaTa71CWBxR+0hBLCg3vrbgcjphjrcnlDh2Zc48e
-         aqEemkWGfCxls8y4q1rfZqUZ75ix5iHR64f9Wg6+ri4+fV6OuwIDtzw4boHL9ee7L8tC
-         tA4MQJ+t/1r2MPhr+hKGlLGwHH9qR2bhrD7WSyByKqGjiIMhBhfopbt9as7m5WW3yCDE
-         Dv8mkmOIt/RoJY0m7QEnjbueN8kfzCwKHGTjyfB7YVpCSPABkWARvFeHrqhknky+j+aC
-         z7mCME0zg/8rvYnDFJQygmaoA36PO03tiM25iSjt1Okxep6QHixlS+q53hxU10KYoeI1
-         Hz1A==
-X-Gm-Message-State: AOAM531KkGxOtZT+QCC5DljUOpRdEnfm/UpdycHvRflEnHT4HiUP8wVE
-        or+r1Eji6ddWsS/FUMJnuXqtHwYqs2o=
-X-Google-Smtp-Source: ABdhPJwxDqEa52YgCDaMi9NWupWUanWlpJkHco1G279mn53SRhbU+0zqbivgLOpObGbJ5yCweW7MuA==
-X-Received: by 2002:aa7:c7d7:: with SMTP id o23mr13294918eds.44.1601837617160;
-        Sun, 04 Oct 2020 11:53:37 -0700 (PDT)
-Received: from [192.168.1.98] ([94.31.83.233])
-        by smtp.gmail.com with ESMTPSA id g20sm6220837ejx.12.2020.10.04.11.53.36
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Oct 2020 11:53:36 -0700 (PDT)
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jonathan_M=c3=bcller?= <jonathanmueller.dev@gmail.com>
-Subject: git add --intent-to-add and git stash
-Message-ID: <b16f61b9-7f0f-38ab-7200-58ad5e659321@gmail.com>
-Date:   Sun, 4 Oct 2020 20:53:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726300AbgJDTzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Oct 2020 15:55:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61896 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbgJDTzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Oct 2020 15:55:46 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81C8F70288;
+        Sun,  4 Oct 2020 15:55:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HjesrlX0zpQKA+Nl06mY3wnRMJY=; b=Twaphd
+        ZxERJKamqXJu0w+bP5NvRxWFS5WZ8xK1jHDkblKls+SIwtkcwFsreSOQ5gKjR5Bs
+        B6mSPgnl8WUqr+dQyHEnnVRLkfh82gK572SbGq0OMpqjn5EAEOXaR8Snn5qA5dMm
+        mk+UTcfiRlKuwk3sadED6w5ryFg002JqbZTs4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=h350vylywEadEMVNRoFdbxeyQoVIYlFD
+        JNvNGs1zNcuDENSDOQLiiZtY6vIVm3WwPEA+FYLb8/u5m7MXM7bdZGBnrYo6mJbP
+        bGW3AfgvRYZkV7GA82DnwrYVkIMDOJQ+8PVMMXf1ydX0vy1D+su+RHx+tEYmNlyW
+        XXVkraK7A04=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7ACBA70287;
+        Sun,  4 Oct 2020 15:55:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B0D870285;
+        Sun,  4 Oct 2020 15:55:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] gitsubmodules: add '--recurse-submodules' for 'ls-files'
+References: <pull.861.git.git.1601774257696.gitgitgadget@gmail.com>
+Date:   Sun, 04 Oct 2020 12:55:43 -0700
+In-Reply-To: <pull.861.git.git.1601774257696.gitgitgadget@gmail.com> (Philippe
+        Blain via GitGitGadget's message of "Sun, 04 Oct 2020 01:17:37 +0000")
+Message-ID: <xmqqo8lh7olc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 967F7592-067B-11EB-8359-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-when I try to `git stash` a file I have previously added using `git add 
---intent-to-add`, I get an `error: Entry 'X' not uptodate. Cannot 
-merge.` error. I have to manually remove the file from the index, stash, 
-and add it again after I've popped the stash.
+> @@ -246,20 +246,23 @@ Workflow for an artificially split repo
+>    # regular commands recurse into submodules by default
+>    git config --global submodule.recurse true
+>  
+> -  # Unlike the other commands below clone still needs
+> +  # Unlike most other commands below, clone still needs
+>    # its own recurse flag:
+>    git clone --recurse <URL> <directory>
+>    cd <directory>
+>  
+>    # Get to know the code:
+>    git grep foo
+> -  git ls-files
+> +  git ls-files --recurse-submodules
+> +
+> +[NOTE]
+> +`git ls-files` also requires its own `--recurse-submodules` flag.
 
-Can `git stash` be taught to handle such files automatically?
-
-Thanks,
-Jonathan
+Makes sense.  Thanks, will queue.
