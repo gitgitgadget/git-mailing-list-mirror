@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 152E7C47420
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D723C4727F
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D76902078D
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 448032078D
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726657AbgJEMQm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 08:16:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49588 "EHLO cloud.peff.net"
+        id S1726680AbgJEMQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 08:16:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49598 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725994AbgJEMQl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 08:16:41 -0400
-Received: (qmail 32253 invoked by uid 109); 5 Oct 2020 12:16:40 -0000
+        id S1726000AbgJEMQr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 08:16:47 -0400
+Received: (qmail 32267 invoked by uid 109); 5 Oct 2020 12:16:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Oct 2020 12:16:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Oct 2020 12:16:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19049 invoked by uid 111); 5 Oct 2020 12:16:40 -0000
+Received: (qmail 19057 invoked by uid 111); 5 Oct 2020 12:16:45 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Oct 2020 08:16:40 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Oct 2020 08:16:45 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 5 Oct 2020 08:16:39 -0400
+Date:   Mon, 5 Oct 2020 08:16:45 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 5/8] t7450: test .gitmodules symlink matching against
- obscured names
-Message-ID: <20201005121639.GE2907394@coredump.intra.peff.net>
+Subject: [PATCH v2 7/8] verify_path(): disallow symlinks in .gitattributes
+ and .gitignore
+Message-ID: <20201005121645.GG2907394@coredump.intra.peff.net>
 References: <20201005121609.GA2907272@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,142 +43,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In t7450 we check that both verify_path() and fsck catch malformed
-.gitmodules entries in trees. However, we don't check that we catch
-filesystem-equivalent forms of these (e.g., ".GITMOD~1" on Windows).
-Our name-matching functions are exercised well in t0060, but there's
-nothing to test that we correctly call the matching functions from the
-actual fsck and verify_path() code.
+In commit 10ecfa7649 (verify_path: disallow symlinks in .gitmodules,
+2018-05-04) we made it impossible to load a .gitmodules file that's a
+symlink into the index. The security reasons for doing so are described
+there. We also discussed forbidding symlinks of other .git files as part
+of that fix, but the tradeoff was less compelling:
 
-So instead of testing just .gitmodules, let's repeat our tests for a few
-basic cases. We don't need to be exhaustive here (t0060 handles that),
-but just make sure we hit one name of each type.
+  1. Unlike .gitmodules, the other files don't have content-level fsck
+     checks. So an attacker using symlinks to evade those checks isn't a
+     problem.
 
-Besides pushing the tests into a function that takes the path as a
-parameter, we'll need to do a few things:
+  2. Unlike .gitmodules, Git will never write .gitignore or
+     .gitattributes itself, making it much less likely to use them to
+     write outside the repo. They could be used for out-of-repo reads,
+     however.
 
-  - adjust the directory name to accommodate the tests running multiple
-    times
+  3. The .gitmodules change was part of a critical bug-fix that was
+     not publicly disclosed until it was released. Changing the other
+     files was not needed for the minimal fix.
 
-  - set core.protecthfs for index checks. Fsck always protects all types
-    by default, but we want to be able to exercise the HFS routines on
-    every system. Note that core.protectntfs is already the default
-    these days, but it doesn't hurt to explicitly label our need for it.
+However, it's still a reasonable idea to forbid symlinks for these
+files:
 
-  - we'll also take the filename ("gitmodules") as a parameter. All
-    calls use the same name for now, but a future patch will extend this
-    to handle other .gitfoo files. Note that our fake-content symlink
-    destination is somewhat .gitmodules specific. But it isn't necessary
-    for other files (which don't do a content check). And it happens to
-    be a valid attribute and ignore file anyway.
+  - As noted, they can still be used to read out-of-repo files (which is
+    fairly restricted, but in some circumstances you can probe file
+    content by speculatively creating files and seeing if they get
+    ignored)
+
+  - They don't currently behave well in all cases. We sometimes read
+    these files from the index, where we _don't_ follow symlinks (we'd
+    just treat the symlink target as the .gitignore or .gitattributes
+    content, which is actively wrong).
+
+This patch forbids symlinked versions of these files from entering the
+index. We already have helpers for obscured forms of the names from
+e7cb0b4455 (is_ntfs_dotgit: match other .git files, 2018-05-11) and
+0fc333ba20 (is_hfs_dotgit: match other .git files, 2018-05-02), which
+were done as part of the series touching .gitmodules.
+
+No tests yet, as we'll add them in a subsequent patch once we have fsck
+support, too.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t7450-bad-dotgitx-files.sh | 91 +++++++++++++++++++++---------------
- 1 file changed, 53 insertions(+), 38 deletions(-)
+ read-cache.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7450-bad-dotgitx-files.sh b/t/t7450-bad-dotgitx-files.sh
-index 8bfd32b10a..0cd0f71c39 100755
---- a/t/t7450-bad-dotgitx-files.sh
-+++ b/t/t7450-bad-dotgitx-files.sh
-@@ -139,44 +139,59 @@ test_expect_success 'index-pack --strict works for non-repo pack' '
- 	grep gitmodulesName output
- '
- 
--test_expect_success 'set up repo with symlinked .gitmodules file' '
--	git init symlink &&
--	(
--		cd symlink &&
--
--		# Make the tree directly to avoid index restrictions.
--		#
--		# Because symlinks store the target as a blob, choose
--		# a pathname that could be parsed as a .gitmodules file
--		# to trick naive non-symlink-aware checking.
--		tricky="[foo]bar=true" &&
--		content=$(git hash-object -w ../.gitmodules) &&
--		target=$(printf "$tricky" | git hash-object -w --stdin) &&
--		{
--			printf "100644 blob $content\t$tricky\n" &&
--			printf "120000 blob $target\t.gitmodules\n"
--		} >bad-tree
--	) &&
--	tree=$(git -C symlink mktree <symlink/bad-tree)
--'
--
--test_expect_success 'fsck detects symlinked .gitmodules file' '
--	(
--		cd symlink &&
--
--		# Check not only that we fail, but that it is due to the
--		# symlink detector
--		test_must_fail git fsck 2>output &&
--		test_i18ngrep "tree $tree: gitmodulesSymlink" output
--	)
--'
--
--test_expect_success 'refuse to load symlinked .gitmodules into index' '
--	test_must_fail git -C symlink read-tree $tree 2>err &&
--	test_i18ngrep "invalid path.*gitmodules" err &&
--	git -C symlink ls-files >out &&
--	test_must_be_empty out
--'
-+check_forbidden_symlink () {
-+	name=$1
-+	type=$2
-+	path=$3
-+	dir=symlink-$name-$type
-+
-+	test_expect_success "set up repo with symlinked $name ($type)" '
-+		git init $dir &&
-+		(
-+			cd $dir &&
-+
-+			# Make the tree directly to avoid index restrictions.
-+			#
-+			# Because symlinks store the target as a blob, choose
-+			# a pathname that could be parsed as a .gitmodules file
-+			# to trick naive non-symlink-aware checking.
-+			tricky="[foo]bar=true" &&
-+			content=$(git hash-object -w ../.gitmodules) &&
-+			target=$(printf "$tricky" | git hash-object -w --stdin) &&
-+			{
-+				printf "100644 blob $content\t$tricky\n" &&
-+				printf "120000 blob $target\t$path\n"
-+			} >bad-tree
-+		) &&
-+		tree=$(git -C $dir mktree <$dir/bad-tree)
-+	'
-+
-+	test_expect_success "fsck detects symlinked $name ($type)" '
-+		(
-+			cd $dir &&
-+
-+			# Check not only that we fail, but that it is due to the
-+			# symlink detector
-+			test_must_fail git fsck 2>output &&
-+			test_i18ngrep "tree $tree: ${name}Symlink" output
-+		)
-+	'
-+
-+	test_expect_success "refuse to load symlinked $name into index ($type)" '
-+		test_must_fail \
-+			git -C $dir \
-+			    -c core.protectntfs \
-+			    -c core.protecthfs \
-+			    read-tree $tree 2>err &&
-+		test_i18ngrep "invalid path.*$name" err &&
-+		git -C $dir ls-files -s >out &&
-+		test_must_be_empty out
-+	'
-+}
-+
-+check_forbidden_symlink gitmodules vanilla .gitmodules
-+check_forbidden_symlink gitmodules ntfs ".gitmodules ."
-+check_forbidden_symlink gitmodules hfs ".${u200c}gitmodules"
- 
- test_expect_success 'fsck detects non-blob .gitmodules' '
- 	git init non-blob &&
+diff --git a/read-cache.c b/read-cache.c
+index ecf6f68994..63aec6c35d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -947,7 +947,9 @@ static int verify_dotfile(const char *rest, unsigned mode)
+ 			return 0;
+ 		if (S_ISLNK(mode)) {
+ 			rest += 3;
+-			if (skip_iprefix(rest, "modules", &rest) &&
++			if ((skip_iprefix(rest, "modules", &rest) ||
++			     skip_iprefix(rest, "ignore", &rest) ||
++			     skip_iprefix(rest, "attributes", &rest)) &&
+ 			    (*rest == '\0' || is_dir_sep(*rest)))
+ 				return 0;
+ 		}
+@@ -980,7 +982,9 @@ int verify_path(const char *path, unsigned mode)
+ 				if (is_hfs_dotgit(path))
+ 					return 0;
+ 				if (S_ISLNK(mode)) {
+-					if (is_hfs_dotgitmodules(path))
++					if (is_hfs_dotgitmodules(path) ||
++					    is_hfs_dotgitignore(path) ||
++					    is_hfs_dotgitattributes(path))
+ 						return 0;
+ 				}
+ 			}
+@@ -992,7 +996,9 @@ int verify_path(const char *path, unsigned mode)
+ 				if (is_ntfs_dotgit(path))
+ 					return 0;
+ 				if (S_ISLNK(mode)) {
+-					if (is_ntfs_dotgitmodules(path))
++					if (is_ntfs_dotgitmodules(path) ||
++					    is_ntfs_dotgitignore(path) ||
++					    is_ntfs_dotgitattributes(path))
+ 						return 0;
+ 				}
+ 			}
 -- 
 2.28.0.1295.gf70bcb366f
 
