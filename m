@@ -7,90 +7,98 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C4BCC4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D55D1C4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:30:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04BE0204EC
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:27:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DC14206B5
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:30:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krbk9j8r"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EdSL/Ji5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgJEX1U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 19:27:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37880 "EHLO
+        id S1727065AbgJEXaT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 19:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725973AbgJEX1T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 19:27:19 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BAD4C0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:27:17 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id d23so287050pll.7
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:27:17 -0700 (PDT)
+        with ESMTP id S1725973AbgJEXaT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 19:30:19 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C59C0613CE
+        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:30:19 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id y20so289529pll.12
+        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=3eTnnt4S1FzTxq1CCbNR3TM4eS589urjia4/Dg6O75o=;
-        b=krbk9j8ryIlO2el0rFsmpGdCHPyeMdcexM3c8vlKUJit1hxq0zL/XYBJ5S5zXEpkKs
-         mPBPOS9puXHwSOU2yRkwEknPuzB7F7b7h830hHb8o77PtbMpoe8CZ9L4bCGe2QGwikb4
-         1ttjdNz/BMJAeuFlSxtqaSu2/runAo5Rvq/0FxZ+sK+lAkgQs0iEVFcFIA+srajyITvU
-         nfpY7mEP+0DJClyznzjCvSatTDurIGszqpZGlWkMjjvQFjfUqX6C2MQOkeV+p2UhhA8R
-         P6UAYOi4lhRrTJUkrEft2/tnKsC/smOx6jcwjJH3NV39j/nU2OEdWirj6JEICGe0SATi
-         Kyug==
+        bh=TOKiCHRw0gPzLt3XU5sylJ85jR6R2nFv5bUuXMe7xc0=;
+        b=EdSL/Ji5n8LR5jz1uw7dxDA9t+VULzUHittP+JT5uUCmEoYrsn/gR3nCLbGLj7DnSc
+         Wx/TguBxdP1PNlJklOyDG7za0gLZ/jXSbvOUl868TKLEr/DBUplB7tSCzuxopSObkRY/
+         5qP8qTmQTKXi/oX9td+3uKRvrG99q25eXXWTFk4c47/rJwwVm87aq+RHea17nyp2U8mE
+         Oyot0lKO7FNs7OfA8X13seKyBqsOgv0wY5Yp1FtSQUIgpjtyCesqYhJQsL1OES+adW0G
+         S88jNLhbmtxFuFR32zBgkaDtw0ecboFq4ohFWFZvsb3PHeVXqroqqE84B2Srwxj5AJPO
+         a+yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=3eTnnt4S1FzTxq1CCbNR3TM4eS589urjia4/Dg6O75o=;
-        b=Zt2SKCtLC5Nt+s9H/xVuWNoxBqpxhDv+67tkqX7XHtiB+0AiGbIMcwTF41y0NL5vHB
-         YxxNwpj0R9gaWP6DauO2Dtu0TbA69IX+8NbbQtXOjxPi0oxfftSHwxt7V3RngpCLmBxE
-         xKBDRLF1j1Ov2XQ4Ln+PA6TDCeDOdZR9rZ3syq5mlhxj1OQtu5U1QBX25egbe0SVckxa
-         hFk6aIneOGn1IW5mu6FWyHAaIna93CTrhMZJ7iU492XXmpzcKjq+j5oKA0aTfCfjHXOw
-         0vchitVSO38I721Hu/1rURvws8LXkNNbLbiD+lw7VKDJDLXQzJbUYBUf4dpJN0mchAI+
-         1Jwg==
-X-Gm-Message-State: AOAM533IRy0u2yn2CQhgd+xW3lcCn+4nVE8Kp7+QmaeBJauGlqrsHHxv
-        O7pLbbuQbwSGOOEjGDdw4cc=
-X-Google-Smtp-Source: ABdhPJxnvVI+hYzGe/ewbF7xREWs3ZlMs+rBz61AKkyvDvhMLJVsVuZNZglekRKIr0mwvE44yNcqlw==
-X-Received: by 2002:a17:902:8543:b029:d3:9c44:7230 with SMTP id d3-20020a1709028543b02900d39c447230mr730597plo.10.1601940437126;
-        Mon, 05 Oct 2020 16:27:17 -0700 (PDT)
+        bh=TOKiCHRw0gPzLt3XU5sylJ85jR6R2nFv5bUuXMe7xc0=;
+        b=NFdUKkL1d6C3QlV/5q3bV/wj/rQVHZsp5egIOH1xK73+IBAvXVp6jdCptyyc+8uUDy
+         B4kM05anJelFTUg0uhr6lMFoVJQIHaClc+Lyq+ihwEVtf7U1Fp1UNXf8Nc119Zq7hjrT
+         Yn8CNFextgBuJMt+UZx2SpFH4Ywa2bSviOpDdgHahGOgzo2wr2yF6OipVysgVRuvxmCK
+         FJ5+OU/I3YevDo33M1aq6a8q4oPO+TxLHBXu2BqJ1W9bfKfsuLfMXKOrYrg7YemxU+Jd
+         lW8VIcfyFiN8IrLX2NvREGijqJdoCR3rtXoJ5amuRt4mVEGbh7V7tV5pmUgNz8TtUQNs
+         Alyg==
+X-Gm-Message-State: AOAM530KuZLQ5tlkvyy1qmf5tr9r/Nf0YqQ2TiOCjyP9GVWke6MeAtbb
+        4jfDISb3dT5fN+3nU9FsuTPqBNPercY=
+X-Google-Smtp-Source: ABdhPJw3lbxbh3rEK8Blj/Kz/sQ8PX/34mPJtJPmNHlRC9uR0Y2i/srGcByAUuMV3DBAhEKHTbBFmg==
+X-Received: by 2002:a17:90b:3798:: with SMTP id mz24mr1697156pjb.46.1601940618978;
+        Mon, 05 Oct 2020 16:30:18 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id j6sm1030000pfi.129.2020.10.05.16.27.16
+        by smtp.gmail.com with ESMTPSA id x16sm1109324pff.14.2020.10.05.16.30.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 16:27:16 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 16:27:14 -0700
+        Mon, 05 Oct 2020 16:30:18 -0700 (PDT)
+Date:   Mon, 5 Oct 2020 16:30:16 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 3/9] hook: add list command
-Message-ID: <20201005232714.GB1393696@google.com>
+Subject: Re: [PATCH v4 5/9] parse-options: parse into strvec
+Message-ID: <20201005233016.GC1393696@google.com>
 References: <20200909004939.1942347-1-emilyshaffer@google.com>
- <20200909004939.1942347-4-emilyshaffer@google.com>
+ <20200909004939.1942347-6-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200909004939.1942347-4-emilyshaffer@google.com>
+In-Reply-To: <20200909004939.1942347-6-emilyshaffer@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Emily Shaffer wrote:
 
-> --- a/Documentation/git-hook.txt
-> +++ b/Documentation/git-hook.txt
-> @@ -8,12 +8,47 @@ git-hook - Manage configured hooks
-[...]
-> +COMMANDS
-> +--------
-> +
-> +list <hook-name>::
-> +
-> +List the hooks which have been configured for <hook-name>. Hooks appear
-> +in the order they should be run, and note the config scope where the relevant
-> +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
+> This is useful if collecting generic arguments to pass through to
+> another command, for example, 'git hook run --arg "--quiet" --arg
+> "--format=pretty" some-hook'. The resulting strvec would contain
+> { "--quiet", "--format=pretty" }.
 
-A little bit of futureproofing: this may want to mention that the
-output is intended to be human-readable and is subject to change over
-time (scripters beware!).
+An alternative is to use OPT_STRING_LIST and then convert in the
+caller.  One advantage of that is that it would guarantee the behavior
+with --no-arg etc is going to match exactly.
+
+I prefer this OPT_STRVEC approach nonetheless.  Can the
+parse_opt_strvec and parse_opt_string_list functions get comments
+pointing to each other as an alternative way to encourage that kind of
+consistency?
+
+[...]
+> --- a/Documentation/technical/api-parse-options.txt
+> +++ b/Documentation/technical/api-parse-options.txt
+> @@ -173,6 +173,11 @@ There are some macros to easily define options:
+>  	The string argument is stored as an element in `string_list`.
+>  	Use of `--no-option` will clear the list of preceding values.
+>  
+> +`OPT_ARGV_ARRAY(short, long, &struct argv_array, arg_str, description)`::
+
+nit: this should be OPT_STRVEC
 
 Thanks,
 Jonathan
