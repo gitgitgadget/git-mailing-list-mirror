@@ -2,363 +2,166 @@ Return-Path: <SRS0=R7wA=DM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E6FC4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 19:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B45E7C4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 21:20:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B8AD212CC
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 19:57:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B8E3208C3
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 21:20:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+pRx5pC"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PjuHUBFB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729500AbgJET5Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 15:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33886 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729424AbgJET5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 15:57:23 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8009DC0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 12:57:23 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id y2so12340127lfy.10
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 12:57:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=I2NdEI23vLXnc+2M/PryR54apt4wk8SbijkTvWCcfPQ=;
-        b=g+pRx5pCA1G3JI360buoC+kwcYrWpM66VLsDdDPRysjBqkw7yJgywpaZY8sCq04BTu
-         JCv7sCpfII6GAsYV7shyE3wqHJN0Xty/nt/YbPvGmxchF3jUbot8pF9VP93RNd54q1GE
-         eXzUPewg+Rs4GRICJ3XuUA9KxUk1mAkxm7gJzI8WhG9M4Iw8jlWu7KreznFBA2ZFCfZ4
-         EdDTAAHPUEsKsHf2lSrmlnlihG2aU1W9t6VUmWTFig+hy5Z3v4k6uABS8z5LiUXnCBkt
-         HpJCvVF8ZxnMjRKOJ6pDc+BO4vpoLXDtPWzzH16Fhrnp7y5y3QddSLVo34eOPYJORlMN
-         zNcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I2NdEI23vLXnc+2M/PryR54apt4wk8SbijkTvWCcfPQ=;
-        b=LFEJW273aw9zcaGz8du7iJ9pJzCLcYyDbv8nO6YzRjnYfQ2L05UXhoPPUJPI986lkf
-         8+iaVPaxSWh0fbVv6KwewpmrjvmnnGv+/8ksbREjwMKXZbW1XptPeMOxsl/xRlWnocOu
-         5SYRFyu5Gj5qaHek3QCClrEMFFHAI6lBUZeyZFZ5mApP0TZVww+0m8ZGmTHdDIHx0fbl
-         aEBHosPDZCPcyU2A0mXwcPZ+42I2sCqI/z2vRF8MK2Rq+LuuwfylchG3U4SpwET43H5U
-         HauG7V5yWCaxsTE6SPE/RljzaMD8+tfBZCpdsyh8SNHbfzZUJX4aeVz0QlrFr3UYcr7x
-         7qqw==
-X-Gm-Message-State: AOAM530sx/afEfoyUrxKcAgehHSbxT98dp1I+/+JsGTUvf6fA82SKdY7
-        kqI0blOECDgWIjgSNfk9ybs=
-X-Google-Smtp-Source: ABdhPJz2ki6MjCb5VZelKXx4fyTt3QdxW9kQaPoZvW2DB79k0N8tYSTWl31DWOY9ECgNFMWqzZiOpw==
-X-Received: by 2002:a19:6b08:: with SMTP id d8mr328295lfa.218.1601927841832;
-        Mon, 05 Oct 2020 12:57:21 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id z24sm213158lfe.54.2020.10.05.12.57.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 12:57:20 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com, congdanhqx@gmail.com,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "Derrick Stolee" <stolee@gmail.com>,
-        "Derrick Stolee" <derrickstolee@github.com>,
-        "Derrick Stolee" <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 6/7] maintenance: use default schedule if not configured
-Date:   Mon,  5 Oct 2020 21:57:01 +0200
-Message-Id: <20201005195701.14268-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <d833fffe89c94ecf3551c075960ba6d7607e9b17.1601902635.git.gitgitgadget@gmail.com>
-References: <d833fffe89c94ecf3551c075960ba6d7607e9b17.1601902635.git.gitgitgadget@gmail.com>
+        id S1728569AbgJEVUz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 17:20:55 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52569 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725785AbgJEVUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 17:20:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1601932850;
+        bh=GqZkDPmtQ0CaGy4baCZ3NXpK4OLaKtWO69fz0i2DhzA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PjuHUBFBAvBkyZnzHNeIuO2Dd/tylZZon1pI14jR1C7iBPBLpfcodfDfmtad5okSp
+         Kc7wshcIos8gA78U6GiyRUk8/NgOhDseto6uoiVqyqUpQmpWDgAFlHYetfAMPi61NM
+         aKJ2tFE2gGStbw5PxwhypOSPzXYUilt+/3vjX2vM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.73.169] ([89.1.215.145]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MbRjt-1kw7mF29IP-00bw6z; Mon, 05
+ Oct 2020 23:20:50 +0200
+Date:   Mon, 5 Oct 2020 23:20:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 5/7] t0060: test obscured .gitattributes and .gitignore
+ matching
+In-Reply-To: <20201005084051.GD2862927@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2010052306470.50@tvgsbejvaqbjf.bet>
+References: <20201005071751.GA2290770@coredump.intra.peff.net> <20201005072102.GE2291074@coredump.intra.peff.net> <20201005080353.GH1166820@google.com> <20201005084051.GD2862927@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:geAN9qULUzVdQV590E5ZeYbDBZXB+EUn4Wox/R0Fi6NhnPZ3N07
+ i+oTrXK/q0IoluRFxUSaDi0J5eccGFDioCyCVsas5Id2yhXyiT+GXvjLhviOUSLEXMjKZoP
+ WSjVSyGNcWDOwInDsL7nur0jStxlOSjZYUorVNvE9V0P+45rx2E9bNWHL5g3xMsO/mq7bjz
+ A/YOMVrYAJzfCvTa2QARA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:V0W1UeGrvZs=:tx+rag8yehabDeFol/a621
+ bKe+Ju6Nz1ydOSKC4iwUpgH6zH0HtxKHihn0W/ii2vxq3owJP/GVqFUwCoHTPszUr4CisAVx1
+ iBveJzPtToby5It2WVJpETwstgEOyAC047txArH7ZbtkgGaZKLoWmkne2bEifrI2zXndDP++6
+ kEktrc+5hCISavM5flYYAcgpscmfsSYwIi4SS3eZuMItWyFIQaF6wz1IbMH7rLptpFgADcVIX
+ 6ROI7Uvvj10MzEcWH/m0mJJYqubZ16W7jYfBqMigWIykKDxyqD1VktGuwAGrK76ONkZC3HmVJ
+ 7kUzgAnwkHyXFQV8RuQyMtV1fTC69kv93Ppq6eHY7Zhiln9S8OUR7SozDXPtsmjadfgMUr34G
+ tXkgnry1wtOYl9IIYVWeHZYsn4Emaw0cJTzhgwvI8mPIWKzrwi7QisPy0NYuDN1qo1BORMh9/
+ cDkSROgiuSiFeasCopTsodeznHlYIMnVL0n8dxgwdMGdjObX59MX4xi9Q5T2MM5AYr5BalCTs
+ ZCki11h6RQyQF0+v3mBqkvp9uaKmWFJwQjCFHiTBVhUfqdD5KboPxgJvktVq5FefYczMustyJ
+ X8oMUAmBY30yXNX0n6g6EgPM3I9/1EDkR98YdhiGMBI1Db+9fyeV7rmo6+CypsGfQi3tvTB/E
+ y9pbS6rtsUanK+PjRNFGCm8rt1RWkUmrwlOgmxz1II8DTj7G2Uim2fNQPLbfFL1Ajt80zKaVR
+ VLmZ8Y/NIhaeHemVPiT6RnTHX+xM9zGqxtSSTqvObrLKS7CAOsCNB16MCEZlcHmMLvbfTxX6f
+ XkU/UjYL7kiUkhohYsOxgE2mOQLEblx1QsWNb0dN/EUIu5rlHSCPLtotyeCZIsSqj4e1xTI8/
+ e0lew95TGwnm3ftZtmpG6/OYgRfs833soq9/n5jxkwgAakAB/OY6kZ9ZdOU/6NomLyQQDIApa
+ HbTrN0CW8uhFNLSuaoUA94D14KyMa+evKnpJsrMGvAj5Fgp6d3iKijyOwl2Li1grkG3a7m+Cu
+ XrwfcFFhXNCLNBAumOFgCXgGyZL5DhTHAHgC2XTY5BRz5EtxOq5ySPR/3Ifj75jAcPgqOOOLw
+ BfE+Avj1kGXggCoOWQzKMXK+WYZsWxiQfNhlsx97z/bQe0Jq+uXBdphtvQU7DShVzVYnbt7yp
+ +Z6TV5NujsHHgYp/V6MRVZRDx4sNsLAnix8t01M8HVtSwMOz1YznXsLom4yHs3PpCg+EGzo8s
+ zszgaEngxob+HudmdD+GCODBvBjM2/PK6QOJckQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+Hi Peff & Jonathan N,
 
-On Mon, 5 Oct 2020 at 15:07, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> The 'git maintenance (register|start)' subcommands add the current
-> repository to the global Git config so maintenance will operate on that
-> repository. It does not specify what maintenance should occur or how
-> often.
+On Mon, 5 Oct 2020, Jeff King wrote:
 
-I see that you posted a "how about this?" some days ago. I was offline
-for the weekend with some margin on both sides, so I didn't see it until
-now. Good that you just went ahead and posted the whole series anyway.
-
-> If a user sets any 'maintenance.<task>.schedule' config value, then
-> they have chosen a specific schedule for themselves and Git should
-> respect that when running 'git maintenance run --schedule=<frequency>'.
+> On Mon, Oct 05, 2020 at 01:03:53AM -0700, Jonathan Nieder wrote:
 >
-> To make this process extremely simple for users, assume a default
-> schedule when no 'maintenance.<task>.schedule' or '...enabled' config
-> settings are concretely set. This is only an in-process assumption, so
-> future versions of Git could adjust this expected schedule.
-
-This obviously makes sense to me. ;-) One thing it does mean though is
-that something like this:
-
-  $ git maintenance register
-  # Time goes by...
-  # Someone said to try this:
-  $ git config --add maintenance.commit-graph.schedule hourly
-  $ git config --add maintenance.commit-graph.enable true
-  # That could have been a no-op, since we were already on
-  # such an hourly schedule, but it will effectively turn off
-  # all other scheduled tasks. So some time later:
-  # -- Why are my fetches so slow all of a sudden? :-(
-
-That could be different if `git maintenance register` would turn on,
-say, `maintenance.baseSchedule = standard` where setting those
-`maintenance.commit-graph.*` would tweak that "standard" "base
-schedule" (in a no-op way as it happens).
-
-> --- a/Documentation/git-maintenance.txt
-> +++ b/Documentation/git-maintenance.txt
-> @@ -37,6 +37,21 @@ register::
-
-Adding some more context manually:
-
-register::
-	Initialize Git config values so any scheduled maintenance will
-	start running on this repository. This adds the repository to the
-	`maintenance.repo` config variable in the current user's global
-	config and enables some recommended configuration values for
-> 	`maintenance.<task>.schedule`. The tasks that are enabled are safe
-> 	for running in the background without disrupting foreground
-> 	processes.
-
-The part about "and enables some recommended configuration values"
-should probably be in this patch, not an earlier one, and maybe it
-shouldn't even be here. With the new approach of this version, this
-doesn't really enable some recommended configuration values. Or maybe
-it does, I can't make up my mind, nor can I come up with an alternative
-formulation.
-
-> ++
-> +If your repository has no `maintenance.<task>.schedule` configuration
-> +values set, then Git will use a recommended default schedule that performs
-> +background maintenance that will not interrupt foreground commands. The
-> +default schedule is as follows:
-> ++
-
-If you add a line of "--" here...
-
-> +* `gc`: disabled.
-> +* `commit-graph`: hourly.
-> +* `prefetch`: hourly.
-> +* `loose-objects`: daily.
-> +* `incremental-repack`: daily.
-
-... and one here, you'll drop some indentation at this point so that
-the next paragraph doesn't align with the list above. (See patch below.)
-
-> ++
-> +`git maintenance register` will also disable foreground maintenance by
-> +setting `maintenance.auto = false` in the current repository. This config
-> +setting will remain after a `git maintenance unregister` command.
-
-That last paragraph does belong here. The part about the different
-tasks ... maybe. With this new approach of not actually setting any
-`schedule`/`enabled` configuration variables, that list doesn't
-obviously have its natural home here. Maybe under `--schedule`, which is
-where the detection actually happens and the default defaults are
-imposed? Or maybe in a separate "CONFIGURATION" section. It could
-include config/maintenance.txt, then go on to define the whole fallback
-mechanism without having to worry about breaking the reader's flow. (The
-way it is now, this `register` command is fairly heavy compared to the
-surrounding parts.)
-
-> +static int has_schedule_config(void)
-> +{
-> +       int i, found = 0;
-> +       struct strbuf config_name = STRBUF_INIT;
-> +       size_t prefix;
-> +
-> +       strbuf_addstr(&config_name, "maintenance.");
-> +       prefix = config_name.len;
-> +
-> +       for (i = 0; !found && i < TASK__COUNT; i++) {
-> +               char *value;
-> +
-> +               strbuf_setlen(&config_name, prefix);
-> +               strbuf_addf(&config_name, "%s.schedule", tasks[i].name);
-> +
-> +               if (!git_config_get_string(config_name.buf, &value)) {
-> +                       found = 1;
-> +                       FREE_AND_NULL(value);
-> +               }
-> +
-> +               strbuf_setlen(&config_name, prefix);
-> +               strbuf_addf(&config_name, "%s.enabled", tasks[i].name);
-> +
-> +               if (!git_config_get_string(config_name.buf, &value)) {
-> +                       found = 1;
-> +                       FREE_AND_NULL(value);
-> +               }
-> +       }
-> +
-> +       strbuf_release(&config_name);
-> +       return found;
-> +}
-
-I had the same reaction to `FREE_AND_NULL()` as on my previous reading.
-If you have $reasons for doing it this way, not a big deal. I offer a
-suggestion in patch form below anyway. Feel free to squash, adapt or
-ignore as you see fit.
-
-> +
-> +static void set_recommended_schedule(void)
-> +{
-> +       if (has_schedule_config())
-> +               return;
-> +
-> +       tasks[TASK_GC].enabled = 0;
-> +
-> +       tasks[TASK_PREFETCH].enabled = 1;
-> +       tasks[TASK_PREFETCH].schedule = SCHEDULE_HOURLY;
-> +
-> +       tasks[TASK_COMMIT_GRAPH].enabled = 1;
-> +       tasks[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY;
-> +
-> +       tasks[TASK_LOOSE_OBJECTS].enabled = 1;
-> +       tasks[TASK_LOOSE_OBJECTS].schedule = SCHEDULE_DAILY;
-> +
-> +       tasks[TASK_INCREMENTAL_REPACK].enabled = 1;
-> +       tasks[TASK_INCREMENTAL_REPACK].schedule = SCHEDULE_DAILY;
-> +}
-> +
-
-One thing I can't make up my mind about is how these `enabled` are used
-for two purposes: Deciding what to do on `git maintenance run` without
-any `--task`, and deciding what to do on `git maintenance run
---scheduled`.
-
->  static int maintenance_run_tasks(struct maintenance_run_opts *opts)
->  {
->         int i, found_selected = 0;
-> @@ -1280,6 +1333,8 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
+> > > Note that the ntfs magic prefix names in the tests come from the
+> > > algorithm described in e7cb0b4455 (and are different for each file).
+> >
+> > Doesn't block this patch, but I'm curious: how hard would it be to mak=
+e
+> > a test with an NTFS prerequisite that makes sure we got the magic pref=
+ix
+> > right?
 >
->         if (found_selected)
->                 QSORT(tasks, TASK__COUNT, compare_tasks_by_selection);
-> +       else if (opts->schedule != SCHEDULE_NONE)
-> +               set_recommended_schedule();
+> I suspect hard since Dscho punted on it in the original series. :) If I
+> understand correctly, it would require having an NTFS filesystem, and
+> generating 10,000+ files with a clashing prefix.
 
-... And especially how we only impose the magic
-`maintenance.<task>.enabled` values when we are running with
-`--schedule`. So the answer to "what is the default value of
-`maintenance.commit-graph.enabled`?" is "it depends on several factors".
+It's not quite _as_ bad: you only need to generate 4 files with a clashing
+prefix and then the real one:
 
-Sort of related: The presence of a `maintenance.<task>.schedule` is not
-sufficient to schedule the task. This looks like something that one
-could easily trip on. Maybe you have already considered letting a zero
-value for `maintenance.<task>.schedule` mean "disabled" and ignoring the
-`enabled` config item for the scheduled runs, but rejected that for good
-reasons?
+=2D- snip --
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitattributes1
 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 7715e40391..7154987fd2 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -305,11 +305,14 @@ test_expect_success 'register and unregister' '
->         git config --global --add maintenance.repo /existing1 &&
->         git config --global --add maintenance.repo /existing2 &&
->         git config --global --get-all maintenance.repo >before &&
-> +
->         git maintenance register &&
-> -       git config --global --get-all maintenance.repo >actual &&
-> -       cp before after &&
-> -       pwd >>after &&
-> -       test_cmp after actual &&
-> +       test_cmp_config false maintenance.auto &&
-> +       git config --global --get-all maintenance.repo >between &&
-> +       cp before expect &&
-> +       pwd >>expect &&
-> +       test_cmp expect between &&
-> +
->         git maintenance unregister &&
->         git config --global --get-all maintenance.repo >actual &&
->         test_cmp before actual
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitattributes2
 
-This tests the one-time config tweaking. But we don't test any of the
-"detect no config and impose a default" logic. Neither that it kicks in
-at all, nor that it doesn't when it shouldn't.
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitattributes3
 
-As mentioned above, I end with some minor suggestions.
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitattributes4
 
-Martin
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitattributes
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 738a4c7ebd..2085b53dc5 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -43,11 +43,13 @@ values set, then Git will use a recommended default schedule that performs
- background maintenance that will not interrupt foreground commands. The
- default schedule is as follows:
- +
-+--
- * `gc`: disabled.
- * `commit-graph`: hourly.
- * `prefetch`: hourly.
- * `loose-objects`: daily.
- * `incremental-repack`: daily.
-+--
- +
- `git maintenance register` will also disable foreground maintenance by
- setting `maintenance.auto = false` in the current repository. This config
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 965690704b..63f4c102b1 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1253,35 +1253,31 @@ static int compare_tasks_by_selection(const void *a_, const void *b_)
- 
- static int has_schedule_config(void)
- {
--	int i, found = 0;
-+	int i;
- 	struct strbuf config_name = STRBUF_INIT;
- 	size_t prefix;
-+	char *value = NULL;
- 
- 	strbuf_addstr(&config_name, "maintenance.");
- 	prefix = config_name.len;
- 
--	for (i = 0; !found && i < TASK__COUNT; i++) {
--		char *value;
--
-+	for (i = 0; i < TASK__COUNT; i++) {
- 		strbuf_setlen(&config_name, prefix);
- 		strbuf_addf(&config_name, "%s.schedule", tasks[i].name);
- 
--		if (!git_config_get_string(config_name.buf, &value)) {
--			found = 1;
--			FREE_AND_NULL(value);
--		}
-+		if (!git_config_get_string(config_name.buf, &value))
-+			break;
- 
- 		strbuf_setlen(&config_name, prefix);
- 		strbuf_addf(&config_name, "%s.enabled", tasks[i].name);
- 
--		if (!git_config_get_string(config_name.buf, &value)) {
--			found = 1;
--			FREE_AND_NULL(value);
--		}
-+		if (!git_config_get_string(config_name.buf, &value))
-+			break;
- 	}
- 
- 	strbuf_release(&config_name);
--	return found;
-+	free(value);
-+	return i < TASK__COUNT;
- }
- 
- static void set_recommended_schedule(void)
--- 
-2.28.0.297.g1956fa8f8d
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitignore1
 
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitignore2
+
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitignore3
+
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitignore4
+
+me@work MINGW64 ~/repros/ntfs-short-names
+$ touch .gitignore
+
+me@work MINGW64 ~/repros/ntfs-short-names
+$ cmd //c dir //x
+ Volume in drive C is OSDisk
+ Volume Serial Number is 5E6B-4E77
+
+ Directory of C:\Users\me\repros\ntfs-short-names
+
+10/05/2020  11:11 PM    <DIR>                       .
+10/05/2020  11:11 PM    <DIR>                       ..
+10/05/2020  11:08 PM                 0 GI7D29~1     .gitattributes
+10/05/2020  11:08 PM                 0 GITATT~1     .gitattributes1
+10/05/2020  11:08 PM                 0 GITATT~2     .gitattributes2
+10/05/2020  11:08 PM                 0 GITATT~3     .gitattributes3
+10/05/2020  11:08 PM                 0 GITATT~4     .gitattributes4
+10/05/2020  11:11 PM                 0 GI250A~1     .gitignore
+10/05/2020  11:11 PM                 0 GITIGN~1     .gitignore1
+10/05/2020  11:11 PM                 0 GITIGN~2     .gitignore2
+10/05/2020  11:11 PM                 0 GITIGN~3     .gitignore3
+10/05/2020  11:11 PM                 0 GITIGN~4     .gitignore4
+              10 File(s)              0 bytes
+               2 Dir(s)  314,658,705,408 bytes free
+=2D- snap --
+
+But I don't necessarily think that it would make sense to add that test:
+it adds churn _every_ time the regression test is run, and by deity, it
+sure takes way too long on Windows _already_, and the test would be for a
+regression _in the NTFS driver_.
+
+At this stage, I also highly doubt that the algorithm will change ever
+again (the last time it changed was several Windows versions ago, I want
+to say in Windows XP, but it could have been all the way back to NT).
+
+In light of that, I'd say that the bang is rather small and the buck would
+be not small at all, and would have to be paid by developers on Windows
+who already pay a disproportionately high price when running the test
+suite, so...
+
+Ciao,
+Dscho
