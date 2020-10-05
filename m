@@ -4,106 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C51CFC4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08A8AC4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:38:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FB232078D
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:34:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B961E20578
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:38:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FA7ICv8P"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHb41IRr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725937AbgJEIeo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 04:34:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40910 "EHLO
+        id S1725901AbgJEIiR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 04:38:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbgJEIeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 04:34:44 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E0FEC0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 01:34:44 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id l126so6369140pfd.5
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 01:34:44 -0700 (PDT)
+        with ESMTP id S1725893AbgJEIiR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 04:38:17 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F6EC0613CE
+        for <git@vger.kernel.org>; Mon,  5 Oct 2020 01:38:17 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id l126so6375545pfd.5
+        for <git@vger.kernel.org>; Mon, 05 Oct 2020 01:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=MEJ0Jl25lE9QMAMbWVTKMIxup+Ibh0tii0X5vGQjYKI=;
-        b=FA7ICv8PIao4CUCFO2IxJyGE+eLtyodQoHwx2eipOcxHuZcE/mNGKmHagTKfNsbMey
-         aDEtQgvPerS69mPODjkpR42c4vA34gPiQjyzgzJUsU00QjjkIEK92yTDRix5G9Q8ieNr
-         QIGu5Hq+L9Zdz5h3ltSGOR41QbpZDQpjHqhwzX7ttC20tyMmWotLk61EjMigyUvBZCBJ
-         DNwhkTjTGqOpFjNaRKNWTH8SowY/OhkXJ4RMdThYpKn85/Sfxi4Nulwa1HkopXKOo3u8
-         /jC365M6pHMrA+/bGqsNhGCLCQYPExwpVkj8pLUKP0tr+cjXeISgcRhAZ0yb30chN4OE
-         8ssg==
+        bh=hWJ5cgBYmJf7czsRLY/UMHstDMDOWfuyaX5hUVwsZ1o=;
+        b=AHb41IRrqmU+22ubR5gmIV6fzM9Q8ALX3Q6xpwGOeTNQ4QyIdis4gfinWHGEDvUZyO
+         zdmj5arhbDWL13wPBxsfTypv+ZTihI0cLW0uSI3iOfDu6YjO1Tp2SCQNV63UVQSeYs3w
+         C3BZ1dLrtnt14rSbnH/pa9bYxPxiTlISUXGkVNDwv0gV1qTaPUnjYiHwqNQ3qgQ5c8lt
+         FcEyPmTHM3mIukDHwcImGaS8kZPVMpRQrlyjdvBNsgTvma8mYiTX0PyaN624Qe91t2SU
+         j/kxXXQaqHEk/V78L+Xf882tvnxMJIlkSQRSptfk49vkvZj97OLRk/XAV9SY0d7wKj9/
+         X9vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=MEJ0Jl25lE9QMAMbWVTKMIxup+Ibh0tii0X5vGQjYKI=;
-        b=jIYDe5gXES8rOfOvv9oyi2/UwhHhdRsAtHeNy/aauxlmzJ3e2UeGncGUzSo25KMj1z
-         QDbX8rBCI1haPU4fSolucfcawThLamytthTFA4Hjx8DLeUT2YolAzaOZ7CtCGXQtrf/w
-         1/C8X29WcZgC+Wb0sg02LxOV1faZQzXfTzV0/JKb+E3nwtoqXksfH2redoMiLjvG0ODj
-         O5tLykeBgG9gwXJ8e/Labhy4GZl2dlMiY/MSOD1fie3q8kWPjzPU8WOoE917/du37uQ2
-         s+EAsy1sAbXvkx2fNcXAz+J7+ZwxXXa7J7WD7bmO9+lBIpuliE5azjumu0QOxAzsUB1M
-         WpTQ==
-X-Gm-Message-State: AOAM530gEg0y6oi9oe4a1Wm2uUmZzVokX6AJ5zvX3PmH3OYydseMa1ak
-        49mi7bx0OCvWnD1xTKyACo8=
-X-Google-Smtp-Source: ABdhPJwSAjjYkLuab7i0iQPE19LS4YLdrpnWNBvuh26jXnCDta3zrexu9KfyxxO5RTi+cdx+IKTrmA==
-X-Received: by 2002:a05:6a00:16c7:b029:152:54b8:ee32 with SMTP id l7-20020a056a0016c7b029015254b8ee32mr9284180pfc.76.1601886883628;
-        Mon, 05 Oct 2020 01:34:43 -0700 (PDT)
+        bh=hWJ5cgBYmJf7czsRLY/UMHstDMDOWfuyaX5hUVwsZ1o=;
+        b=C1dFaKJboM2GRKtT2h8oCknlEQDAbDaDSZC183NOiNkSII1wdLid+A5XTRI0DrL3L5
+         5Srvcr7HQIeGLSOr2wUx4Tuj1EYJJ++5pqX3hyEos1JLq8bFcBSItPDIPznPpZV41oln
+         83G075yXwv3HqbfZ6JigJtG6q6v8kTcl8L+gztpwTawZ2Vhia7H7XiF3jXnAJGx58NPs
+         QGfT56t+ImRkC+IyQQ7ES13vuqQvqfP96IPlyFByPMBRQyMVIBs07D8bEcjV/68dT2uV
+         WBWpiNvhR5DTiGJeeT/GxX+qH8lgMpXqpopXU4iHyOgh6QKW2pZ8Ei+W+QwwyBMzygWu
+         2leQ==
+X-Gm-Message-State: AOAM531oa//N6DVKfMpDE2WS4Y1L9EWHXEFplZDysMicNdrvB4X75lEW
+        wZiShA+LAYFwU078tZ58WYEIreyQEA0=
+X-Google-Smtp-Source: ABdhPJxD3iVGb3YBZiJo4KEf7m1n7PsOdCnhwlGPjrVjFzSW9Tk0uM7CQVBssidZKDdIq01/sBcbZQ==
+X-Received: by 2002:a62:1844:0:b029:152:80d3:8647 with SMTP id 65-20020a6218440000b029015280d38647mr4408375pfy.18.1601887096549;
+        Mon, 05 Oct 2020 01:38:16 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id x4sm11481428pfm.86.2020.10.05.01.34.42
+        by smtp.gmail.com with ESMTPSA id 138sm12012785pfu.180.2020.10.05.01.38.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 01:34:43 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 01:34:41 -0700
+        Mon, 05 Oct 2020 01:38:16 -0700 (PDT)
+Date:   Mon, 5 Oct 2020 01:38:14 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/7] t7415: rename to expand scope
-Message-ID: <20201005083441.GL1166820@google.com>
+Subject: Re: [PATCH 4/7] t7450: test verify_path() handling of gitmodules
+Message-ID: <20201005083814.GM1166820@google.com>
 References: <20201005071751.GA2290770@coredump.intra.peff.net>
- <20201005071954.GC2291074@coredump.intra.peff.net>
- <20201005075020.GF1166820@google.com>
- <20201005082448.GB2862927@coredump.intra.peff.net>
+ <20201005072015.GD2291074@coredump.intra.peff.net>
+ <20201005075311.GG1166820@google.com>
+ <20201005083004.GC2862927@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201005082448.GB2862927@coredump.intra.peff.net>
+In-Reply-To: <20201005083004.GC2862927@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King wrote:
-> On Mon, Oct 05, 2020 at 12:50:20AM -0700, Jonathan Nieder wrote:
+> On Mon, Oct 05, 2020 at 12:53:11AM -0700, Jonathan Nieder wrote:
 >> Jeff King wrote:
 
->>>  rename t/{t7415-submodule-names.sh => t7450-bad-meta-files.sh} (95%)
+>>> @@ -155,8 +155,14 @@ test_expect_success 'fsck detects symlinked .gitmodules file' '
+>>>  		{
+>>>  			printf "100644 blob $content\t$tricky\n" &&
+>>>  			printf "120000 blob $target\t.gitmodules\n"
+>>> -		} >bad-tree &&
+>>> -		tree=$(git mktree <bad-tree) &&
+>>> +		} >bad-tree
+>>> +	) &&
+>>> +	tree=$(git -C symlink mktree <symlink/bad-tree)
+>>> +'
 >>
->> I've never heard of a "meta file" before, but I don't tend to discover
->> test scripts based on their filename anyway. :)  Thanks for updating the
->> test_description.
+>> This is super nitpicky, but: test scripts can be hard to maintain when
+>> there's this kind of state carried from assertion to assertion without
+>> it being made obvious.
+>>
+>> Can this include "setup" or "set up" in the name to do that?  E.g.
+>>
+>> 	test_expect_success 'set up repo with symlinked .gitmodules file' '
+>> 		...
+>> 	'
 >
-> I couldn't think of a better name for "files that start with .git". I
-> almost called it "dot-git", but then I worried about confusion with the
-> actual ".git" directory.
+> Hmph. I specifically _tried_ to do that by breaking it into a separate
+> test with the name "create" in it, which I thought was one of the
+> code-words for "I'm doing stuff that will be used in another test". But
+> I guess there's no official rule on that. I dug up:
+>
+>   https://lore.kernel.org/git/20130826173501.GS4110@google.com/
+>
+> but I guess I mis-remembered "create" being present there.
 
-t7450-dot-gitfoo-files.sh seems clear to me.
+I can try to find some time today to introduce a test_setup helper.
+Having to figure out and rely on this kind of ad hoc convention is not
+something I really want to ask of patch authors and reviewers.
 
-[...]
-> In practice, I doubt it matters that much. We don't tend to run the test
-> suite serially in order these days anyway, so the notion that finding a
-> bug in an early test might save you CPU time or time spent reading error
-> messages likely no longer applies.
-
-I see --- the point here is that because it's using e.g. "git clone
---recurse-submodules", we want it to be later than the other clone
-tests?
-
-I think I'd like us to move away from having the numbers at all some
-day (since collisions are very common), but there's probably not much
-to discuss there until one of us comes up with a proposal that still
-makes it easy to do things like "skip all git-svn tests". :)
+The reason I find "set up" clearer than "create" is that the latter is
+something I can easily imagine myself genuinely wanting to test.  "Set
+up for a later test" is more explicit about what the commands are
+being run for.
 
 Jonathan
