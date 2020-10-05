@@ -2,103 +2,81 @@ Return-Path: <SRS0=R7wA=DM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D55D1C4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF21C4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:33:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DC14206B5
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:30:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEEBF206B5
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:33:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EdSL/Ji5"
+	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="ow75tcI7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727065AbgJEXaT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 19:30:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38340 "EHLO
+        id S1727096AbgJEXda (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 19:33:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725973AbgJEXaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 19:30:19 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C59C0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:30:19 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id y20so289529pll.12
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:30:19 -0700 (PDT)
+        with ESMTP id S1726614AbgJEXd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 19:33:29 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7D82C0613A7
+        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:33:29 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id l8so11059080ioh.11
+        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TOKiCHRw0gPzLt3XU5sylJ85jR6R2nFv5bUuXMe7xc0=;
-        b=EdSL/Ji5n8LR5jz1uw7dxDA9t+VULzUHittP+JT5uUCmEoYrsn/gR3nCLbGLj7DnSc
-         Wx/TguBxdP1PNlJklOyDG7za0gLZ/jXSbvOUl868TKLEr/DBUplB7tSCzuxopSObkRY/
-         5qP8qTmQTKXi/oX9td+3uKRvrG99q25eXXWTFk4c47/rJwwVm87aq+RHea17nyp2U8mE
-         Oyot0lKO7FNs7OfA8X13seKyBqsOgv0wY5Yp1FtSQUIgpjtyCesqYhJQsL1OES+adW0G
-         S88jNLhbmtxFuFR32zBgkaDtw0ecboFq4ohFWFZvsb3PHeVXqroqqE84B2Srwxj5AJPO
-         a+yw==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lXiPJPLBllyPob1halc69SSReCoTJuEufqY7SNQHS/Y=;
+        b=ow75tcI7vKFZs8MD3KEMgfhvCUJuvTHMI7uixbRoqUq5xuTqA1qizEAH6GBqdnx3bD
+         8B113ybKzWntlgvS4Fu+Ri7qWDTEfhqIjRfaVogVb8SwV13nh4JI98uoXCrJneYLhPOb
+         d3pGVGuiKcr8i0mBMi65bMxJqhD0hGXdUbC66iI265HzqIAA8RfHbgIn3KoK89kruDVx
+         yTELX+iDXhuFb+WBf4ZZMNXJ7Pe1LylXnG+R1YvJyQBRv3YSJfSvYOsY4aWgItlUELbg
+         bRkWxeIk08UutKDJ+sdDO4+ut1giRmXRKAl7SfpZLOgKgYIST90bDu89lmiwN5WnbRFI
+         TZPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TOKiCHRw0gPzLt3XU5sylJ85jR6R2nFv5bUuXMe7xc0=;
-        b=NFdUKkL1d6C3QlV/5q3bV/wj/rQVHZsp5egIOH1xK73+IBAvXVp6jdCptyyc+8uUDy
-         B4kM05anJelFTUg0uhr6lMFoVJQIHaClc+Lyq+ihwEVtf7U1Fp1UNXf8Nc119Zq7hjrT
-         Yn8CNFextgBuJMt+UZx2SpFH4Ywa2bSviOpDdgHahGOgzo2wr2yF6OipVysgVRuvxmCK
-         FJ5+OU/I3YevDo33M1aq6a8q4oPO+TxLHBXu2BqJ1W9bfKfsuLfMXKOrYrg7YemxU+Jd
-         lW8VIcfyFiN8IrLX2NvREGijqJdoCR3rtXoJ5amuRt4mVEGbh7V7tV5pmUgNz8TtUQNs
-         Alyg==
-X-Gm-Message-State: AOAM530KuZLQ5tlkvyy1qmf5tr9r/Nf0YqQ2TiOCjyP9GVWke6MeAtbb
-        4jfDISb3dT5fN+3nU9FsuTPqBNPercY=
-X-Google-Smtp-Source: ABdhPJw3lbxbh3rEK8Blj/Kz/sQ8PX/34mPJtJPmNHlRC9uR0Y2i/srGcByAUuMV3DBAhEKHTbBFmg==
-X-Received: by 2002:a17:90b:3798:: with SMTP id mz24mr1697156pjb.46.1601940618978;
-        Mon, 05 Oct 2020 16:30:18 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id x16sm1109324pff.14.2020.10.05.16.30.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 16:30:18 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 16:30:16 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 5/9] parse-options: parse into strvec
-Message-ID: <20201005233016.GC1393696@google.com>
-References: <20200909004939.1942347-1-emilyshaffer@google.com>
- <20200909004939.1942347-6-emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lXiPJPLBllyPob1halc69SSReCoTJuEufqY7SNQHS/Y=;
+        b=lR7U9oEiIKTlZfs499jk7amnh/t2QqeqeOiG+oeuK0mAYM1IVGUGeY9pY8OAKKYV/p
+         ULXhwqlkbZoA8Ux4AJgxMCru9RIsBQLb8S0ss/Xk5QJ4xK4htt7d7FuG3Jjt9r70tqEo
+         zevBfzEt8pgKUDh4S6m5LpxQj0WbLf4N8732IS4cF91K/bce5zNXLTGWJIRTFlLgS6M6
+         UEMwtNGLhiX0MXNKRB/n18WB7/HfMZfqGZldDeWBlVaAOvfcMlRWNuJJ/5rHoH0GVoPC
+         7g27h+tyFA4vfJ325cRHn4oLny4TaJevxj/kA8jSwAx5D/7j8dxAb1OFgTRDbPbKlfkM
+         B2UA==
+X-Gm-Message-State: AOAM5309dq9tjR1BlC+dU2NL3DWR8gXUNlaIyZGuDFJUhUsOYEs8DW9C
+        bSHBJ4FDuxdYU/LVLmHnLs6ol2jueJ6tAziMylgAHA==
+X-Google-Smtp-Source: ABdhPJwBLlubx4vdoL+pwkH4nDaNYihiO8vD2QEqabU9I3UsaGxI1l23hunR2FvxQhKXi/6Uig9V4Ysxe57Lz/eGLwI=
+X-Received: by 2002:a6b:5c06:: with SMTP id z6mr1813090ioh.49.1601940808820;
+ Mon, 05 Oct 2020 16:33:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200909004939.1942347-6-emilyshaffer@google.com>
+References: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Mon, 5 Oct 2020 16:33:17 -0700
+Message-ID: <CAGyf7-Hbs8nTUWzF+bo96x-HNR-pR16MzVjK2Pn-+=bs3Ki7Ww@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer wrote:
+On Mon, Oct 5, 2020 at 3:41 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> An early preview release Git v2.29.0-rc0 is now available for
+> testing at the usual places.
 
-> This is useful if collecting generic arguments to pass through to
-> another command, for example, 'git hook run --arg "--quiet" --arg
-> "--format=pretty" some-hook'. The resulting strvec would contain
-> { "--quiet", "--format=pretty" }.
+I've run Bitbucket Server's test matrix over the release candidate. No
+failures to report.
 
-An alternative is to use OPT_STRING_LIST and then convert in the
-caller.  One advantage of that is that it would guarantee the behavior
-with --no-arg etc is going to match exactly.
+Thanks again for these early milestones! I really appreciate the
+testing opportunity.
 
-I prefer this OPT_STRVEC approach nonetheless.  Can the
-parse_opt_strvec and parse_opt_string_list functions get comments
-pointing to each other as an alternative way to encourage that kind of
-consistency?
-
-[...]
-> --- a/Documentation/technical/api-parse-options.txt
-> +++ b/Documentation/technical/api-parse-options.txt
-> @@ -173,6 +173,11 @@ There are some macros to easily define options:
->  	The string argument is stored as an element in `string_list`.
->  	Use of `--no-option` will clear the list of preceding values.
->  
-> +`OPT_ARGV_ARRAY(short, long, &struct argv_array, arg_str, description)`::
-
-nit: this should be OPT_STRVEC
-
-Thanks,
-Jonathan
+Bryan
