@@ -2,107 +2,131 @@ Return-Path: <SRS0=R7wA=DM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58F46C4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68035C4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:20:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA60420781
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:12:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHvJbGHP"
+	by mail.kernel.org (Postfix) with ESMTP id 3E4A32075A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 08:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725914AbgJEIMg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 04:12:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbgJEIMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 04:12:36 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D9F6C0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 01:12:36 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id t14so5505016pgl.10
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 01:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Jeubxp9V/LHMPR2bjwoFvfcKIwBa+o3T73JPQuxtvMU=;
-        b=AHvJbGHP2BKLB8dY38Tym7ItWIUuXY6i0+mvIUxXtXesm3fKETzECpA2YpydGZYRXT
-         msGvofUTZoFr+AKsgFCQfWebtS3kJWRsNXHOAIA4VBYeUDOqrm+HQ72BAT2/oSdbGULc
-         /Igfvm2QaMUmR1lqrpgytGpSjd5Nv7ZGEVbwgI9VHrBakj9SuNrEhfSrCbHWkErkS7co
-         lwekSq9Ac+8ywJrof7sOqCqWMXC/OuFoX9l04QMJPAV7AoMZjVzXGaInk5Vpk/MFmad4
-         cs8RtYJujWybgUJ18uszvF70cYpV3yhfKBEj3zoN0JBc2Uw8Ii/FSgR0aP1qNM2dj2+P
-         dd/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Jeubxp9V/LHMPR2bjwoFvfcKIwBa+o3T73JPQuxtvMU=;
-        b=FTizJWe7/iTWoPF8fgtTHJOp1/sQZoYV7Rh6m9GVGehh8SylACa+TBFrQLZZf4YUff
-         RkaxrYonOEDGqI5pW6g9Vd6Dz8BEd66b17g3n0oJbRkw0Yv3W75ibcbnnyjtfErlcTkW
-         Oxumzo1AKxu4ELhNxWko+iksVosh1U+l/Ba0Xn+2Br4Tn4XDjsZzMCEvA7qlIT+A4hqK
-         FkZlMod9tvtebiG96jbYuWnyFR03Zo44kBZlETKtXtGJfJT92NuIjYorLjVUid62QfHB
-         JlY/9ABoCJxfsi+qZmgFmKx9esoDHkqkToGXaQCj6Xrf2Y8xmgJgIq8BRTCOqto0vLIe
-         r1Tw==
-X-Gm-Message-State: AOAM530Hcd7qN9Oub3KFrfaBCyLNpYtM42u0m+TASCZFlowsoI7d1mwu
-        NaxTe6vxv4LNu8vcZOVG/gk=
-X-Google-Smtp-Source: ABdhPJwAW+h7+eDZjKDhl2o0r7B6SzKCGlVqk8mkcbveyaP9yuGWPjx9SrwPzpscZNMzQ+1FNQuOig==
-X-Received: by 2002:a05:6a00:1b:b029:13e:d13d:a101 with SMTP id h27-20020a056a00001bb029013ed13da101mr15458106pfk.29.1601885556026;
-        Mon, 05 Oct 2020 01:12:36 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id c10sm763212pfc.196.2020.10.05.01.12.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 01:12:35 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 01:12:33 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
+        id S1726160AbgJEIU2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 04:20:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49362 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725885AbgJEIUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 04:20:25 -0400
+Received: (qmail 31160 invoked by uid 109); 5 Oct 2020 08:20:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Oct 2020 08:20:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17113 invoked by uid 111); 5 Oct 2020 08:20:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Oct 2020 04:20:24 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 5 Oct 2020 04:20:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 7/7] fsck: complain when .gitattributes or .gitignore is
- a symlink
-Message-ID: <20201005081233.GJ1166820@google.com>
+Subject: Re: [PATCH 1/7] fsck_tree(): fix shadowed variable
+Message-ID: <20201005082023.GA2862927@coredump.intra.peff.net>
 References: <20201005071751.GA2290770@coredump.intra.peff.net>
- <20201005072503.GG2291074@coredump.intra.peff.net>
+ <20201005071905.GA2291074@coredump.intra.peff.net>
+ <20201005074404.GD1166820@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201005072503.GG2291074@coredump.intra.peff.net>
+In-Reply-To: <20201005074404.GD1166820@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+On Mon, Oct 05, 2020 at 12:44:04AM -0700, Jonathan Nieder wrote:
 
-> The previous commit made it impossible to have a symlinked
-> .gitattributes or .gitignore file via verify_path(). Let's add the same
-> check to fsck, which matches how we handle .gitmodules symlinks, via
-> b7b1fca175 (fsck: complain when .gitmodules is a symlink, 2018-05-04).
->
-> Note that we won't add these to the existing gitmodules block. Its logic
-> is a bit more complicated, as we also check the content of non-symlink
-> instances we find. But for these new files, there is no content check;
-> we're just looking at the name and mode of the tree entry (and we can
-> avoid even the complicated name checks in the common case that the mode
-> doesn't indicate a symlink).
+> > Our tests didn't catch this because they checked only that we found the
+> > expected fsck problem, not that it was attached to the correct object.
+> 
+> Oh, goodness.  Does this mean we should be similarly checking oid in
+> the rest of the fsck test scripts?  (I'm not saying this patch should
+> do so, just curious about what you think on the subject.)
 
-On the subject of where the check gets added, the old description said
+I don't feel strongly either way. It would be a bigger change than you
+might hope, I'd expect, because it requires collecting the oid of the
+bad object in the test script as we create it. So I'm not planning to
+work on it, but if somebody else wants to, be my guest.
 
-	It's easier to handle than .gitmodules, because we don't care
-	about checking the blob content. This is really just about
-	whether the name and mode for the tree entry are valid.
+> > Let's rename both variables in the function to avoid confusion. This
+> > makes the diff a little noisy (e.g., all of the report() calls outside
+> > the loop wee already correct but need touched), but makes sure we catch
+> 
+> nit: s/wee/are/, s/need touched/need to be touched/
 
-which I think was self-explanatory enough.  The new text is a little
-more confusing because I get lost in figuring out what the "it" in
-"Its" refers to.
+Foiled by my last-minute editing. It was originally "are", but I meant
+to change it to "were".
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  fsck.c                    | 15 +++++++++++++++
->  t/t7450-bad-meta-files.sh |  9 +++++++++
->  2 files changed, 24 insertions(+)
+> > -static int fsck_tree(const struct object_id *oid,
+> > +static int fsck_tree(const struct object_id *tree_oid,
+> 
+> optional: we could call it "tree".
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Thanks for a pleasant read.
+Yeah, I started that way but wondered if it was confusing with a "struct
+tree" (which we don't have here; the point of the change that introduced
+the shadowing was getting rid of that). Being longer doesn't hurt too
+much and is quite clear.
+
+> > @@ -664,11 +664,11 @@ static int fsck_tree(const struct object_id *oid,
+> >  	while (desc.size) {
+> >  		unsigned short mode;
+> >  		const char *name, *backslash;
+> > -		const struct object_id *oid;
+> > +		const struct object_id *entry_oid;
+> >  
+> > -		oid = tree_entry_extract(&desc, &name, &mode);
+> > +		entry_oid = tree_entry_extract(&desc, &name, &mode);
+> 
+> optional: could call it "child".
+
+IMHO that's too vague. We have a child name, a child mode, etc.
+
+Another option is to just refer to desc.entry.oid directly, but that's
+longer and seemed a bit too intimate with how tree_entry_extract works.
+
+> not about this patch: Could report() notice when the oid doesn't match
+> the type passed in, to more easily catch this kind of mistake?
+
+Hmm. It would incur an extra hash lookup, but since we expect to
+report() infrequently, I don't think the cost would be too high. I
+suspect we could even drop the "type" field and have report() figure it
+out from the oid, but that is working in the opposite direction of your
+suggestion. ;)
+
+I'm not 100% sure we'd always be able to look up such a struct, though.
+This code path also gets called from index-pack as it's checking objects
+(so likewise we might not even have something in the object database
+yet).
+
+> >  		# Check not only that we fail, but that it is due to the
+> >  		# symlink detector; this grep string comes from the config
+> >  		# variable name and will not be translated.
+> >  		test_must_fail git fsck 2>output &&
+> > -		test_i18ngrep gitmodulesSymlink output
+> > +		test_i18ngrep "tree $tree: gitmodulesSymlink" output
+> 
+> Makes sense.
+> 
+> By the way, why does GETTEXT_POISON lose the gitmodulesSymlink
+> keyword?  Is this just a limitation of GETTEXT_POISON losing
+> information that's passed in with %s?
+
+Yes, I think so. It comes from 674ba34038 (fsck: mark strings for
+translation, 2018-11-10) which is passing through our string. Arguably
+that commit made the comment lines rather confusing and pointless.
+
+Though hmm. Looks like the "tree %s: %s" part is in the translated
+string. So a translation _could_ change it, though I'd expect it to only
+change the words and not the syntax. Maybe an RTL language would. I
+dunno.
+
+-Peff
