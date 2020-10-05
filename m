@@ -4,171 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 160CDC4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA4BC4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:42:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2D3420756
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:39:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 562A92075A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:42:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U49/xpZP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CNepwfZb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727022AbgJEXjG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 19:39:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39710 "EHLO
+        id S1727022AbgJEXmm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 19:42:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725973AbgJEXjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 19:39:06 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6324AC0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:39:06 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id l126so7944256pfd.5
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:39:06 -0700 (PDT)
+        with ESMTP id S1725947AbgJEXmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 19:42:42 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F122C0613CE
+        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:42:40 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id bb1so301662plb.2
+        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:42:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Y/FUUEK+bJCZ6isW4Xq+t7yUpCsGPn5s6lCXIwH6Mv0=;
-        b=U49/xpZPofKiP7uACPor1KE9LNXFTzDhrBIwvQusw4MYM4TKSA3r4sNY5BQMUDARJh
-         cb6Qy/lVgk6zW/LTP4Mvn3JmNu9st/z9JMXwltfpYWNinhm2hPhXJuwqbF6LceySs9uj
-         rWvQftfo8nRWAVBYZ2dt+WQQPeOD/lLXcNRUEQcW7oRw0KYGNOnmYDdYJaRuvlxL/pzZ
-         bLCwZbl+ckDJb/uqLHFoyZKxvzGvHGFcbxB2UJFVtMSFJ+J05G5+qgolzUicJn5qwtAh
-         phc9YCUPr+r+w6os4mnsUUGTtbK8YHTMx+8nP2Qf5lGF8ZcpqcA806CKJXDTmPRuvcrH
-         47eg==
+        bh=YULWb//7H+AN1PeK7+8LMJfHh/GeHUjV04JbSrEctxw=;
+        b=CNepwfZb7C/rp7HB+5V11eh4cYgc/Qoc9FbcaReck3HrdvLuytOyeTIIw9NiXCtbYz
+         ald/iEiMz1K6yJjXg2TOq7B30KOB3L1460XV/BEgVGzbFvDWeS6Dcq1fw1ErAZHkYlWE
+         2PwAW4syCGyXIyiveNeL5oobpYYH24fCF8B0JGb6rIqBq3sl1k96/aTvXt0RBBBcj+DF
+         skvgojBJpKNITjTYQ+2sH+1ut3Yn+AxFIYVlS4SYu3GSkxi9CAw2BHRwfljb9CIsLkes
+         fsSgI3NXeA4mr+eDQfV3PPnepllNpCC7z0EIE0DBAft0uAt8/5BhlqWuQAatebR1NItF
+         G5TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Y/FUUEK+bJCZ6isW4Xq+t7yUpCsGPn5s6lCXIwH6Mv0=;
-        b=qnb9vEB0bcxe3GX2LFTAmgMM43slX5Vp1ct+X0CtAt7mPQqynSRbz0eWpRs2JmEPos
-         n9YBtVkOvYOWROnl1HlmTmu4opeNJJ3wcBCItdVq8TgdZwqDfY3HbcN9FGwPohr1xF9e
-         GOY7EaRmQgoaQ/lQH0Dmy5AWVs04MJO5imjhwBFNAtX8VVmNMhtI4CkzybuirLD6ZeQ8
-         ZzwIEE+rekpuhOePFf1vgxOLtfUCANYiHGqlZaM8irCcnz1T+ohDlp1eTaGxxbmRvtwq
-         YVrvoGtJQQttvtw01MjPS+utPPjnYM4eXfKmetgZcd4U0OP2aqiviSp4VGuKABVqnutJ
-         DxTw==
-X-Gm-Message-State: AOAM530xS/HFwvWZ2WL6Na6VUvywcpxG/7jtLExqiku1Jvo87zBG6CkK
-        lAP7rbDFGnlI7UYDZHj72XzGyL8fG8I=
-X-Google-Smtp-Source: ABdhPJxiQXhtr0+UcvSuhjLbiw0XUhy9q6win/X1cG/8xAgrpiRTGrDqtgE/8pUdVKZ3HSTWEnW3kg==
-X-Received: by 2002:a63:b64a:: with SMTP id v10mr1588017pgt.192.1601941145872;
-        Mon, 05 Oct 2020 16:39:05 -0700 (PDT)
+        bh=YULWb//7H+AN1PeK7+8LMJfHh/GeHUjV04JbSrEctxw=;
+        b=GvjRTgsaSE2yzMRio5gE+PyBeq4wx7ucf0q3RdTEvtVHyv9055fFcsEeKlB3I+4/0U
+         HHthh8LcnEAlzMWKAkKb3NNDMxcWq8qZCuXHl7lhAv7W39Cn52dtzRkZFYAwgy00YXJR
+         BDdTEVHTn3WtGxmdzALjCAQsa57/Uau3oMW8JoP9z//XQqnoGukjSx02BPIxn6MVEosr
+         IMqTkvA7/DRta+CB1yoiyc5IvCSRdRAvGwH2ghZFITC3bpmsjIbE2lXCO53a1WOBhoS9
+         EQspgWn5BfFbX1274MWDfBwAxXMWERRxeXGByeAXqiDKkjnXot44RhvXYhKUnYJ4pIh+
+         QCRw==
+X-Gm-Message-State: AOAM533i2TnwVD9KxA5rGrcuUgJ5YQh5xKtccDUjAMI+pnUIRxOqpbsk
+        gmo1bIG9YJLMmhIEMVCya3o=
+X-Google-Smtp-Source: ABdhPJx5z7IIvWB15Rotae8HIzg4yN7WEI9K7Qzi7+9Yym7aoIpkiaGQDceYNmUyzJI+ykyDRDsSXw==
+X-Received: by 2002:a17:90a:b287:: with SMTP id c7mr1729480pjr.141.1601941360180;
+        Mon, 05 Oct 2020 16:42:40 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id 189sm818036pfw.123.2020.10.05.16.39.04
+        by smtp.gmail.com with ESMTPSA id q6sm1157389pfn.10.2020.10.05.16.42.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 16:39:05 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 16:39:03 -0700
+        Mon, 05 Oct 2020 16:42:39 -0700 (PDT)
+Date:   Mon, 5 Oct 2020 16:42:37 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 6/9] hook: add 'run' subcommand
-Message-ID: <20201005233903.GD1393696@google.com>
+Subject: Re: [PATCH v4 7/9] hook: replace run-command.h:find_hook
+Message-ID: <20201005234237.GE1393696@google.com>
 References: <20200909004939.1942347-1-emilyshaffer@google.com>
- <20200909004939.1942347-7-emilyshaffer@google.com>
+ <20200909004939.1942347-8-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200909004939.1942347-7-emilyshaffer@google.com>
+In-Reply-To: <20200909004939.1942347-8-emilyshaffer@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 Emily Shaffer wrote:
 
-> In order to enable hooks to be run as an external process, by a
-> standalone Git command, or by tools which wrap Git, provide an external
-> means to run all configured hook commands for a given hook event.
+> Subject: hook: replace run-command.h:find_hook
 
-Exciting!
-
-I would even be tempted to put this earlier in the series: providing a
-"git hook run" command that only supports legacy hooks and then
-improving it from there to support config-based hooks.  This ordering is
-also fine, though.
-
-[...]
-> ---
->  builtin/hook.c                | 30 ++++++++++++++++++++
->  hook.c                        | 52 ++++++++++++++++++++++++++++++++---
->  hook.h                        |  3 ++
->  t/t1360-config-based-hooks.sh | 28 +++++++++++++++++++
->  4 files changed, 109 insertions(+), 4 deletions(-)
-
-Needs docs.
-
-[...]
-> --- a/builtin/hook.c
-> +++ b/builtin/hook.c
-> @@ -5,9 +5,11 @@
-[...]
-> +static int run(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct strbuf hookname = STRBUF_INIT;
-> +	struct strvec envs = STRVEC_INIT;
-> +	struct strvec args = STRVEC_INIT;
-> +
-> +	struct option run_options[] = {
-> +		OPT_STRVEC('e', "env", &envs, N_("var"),
-> +			   N_("environment variables for hook to use")),
-> +		OPT_STRVEC('a', "arg", &args, N_("args"),
-> +			   N_("argument to pass to hook")),
-> +		OPT_END(),
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, run_options,
-> +			     builtin_hook_usage, 0);
-> +
-> +	if (argc < 1)
-> +		usage_msg_opt(_("a hookname must be provided to operate on."),
-> +			      builtin_hook_usage, run_options);
-
-Error message nit: what does it mean to operate on a hookname?
-
-Perhaps this should allude to the usage string?
-
-	usage_msg_opt(_("missing <hookname> parameter"), ...);
-
-Or to match the conversational approach of commands like "clone":
-
-	usage_msg_opt(_("You must specify a hook to run."), ...);
+tiny nit: This doesn't remove find_hook, so this may want to be
+described as "add replacement for" instead of "replace".
 
 [...]
 > --- a/hook.c
 > +++ b/hook.c
-> @@ -2,6 +2,7 @@
->  
->  #include "hook.h"
->  #include "config.h"
-> +#include "run-command.h"
->  
->  /*
->   * NEEDSWORK: a stateful hook_head means we can't run two hook events in the
-> @@ -21,13 +22,15 @@ void free_hook(struct hook *ptr)
->  	}
+> @@ -111,6 +111,15 @@ struct list_head* hook_list(const struct strbuf* hookname)
+>  	return &hook_head;
 >  }
 >  
-> -static void emplace_hook(struct list_head *pos, const char *command)
-> +static void emplace_hook(struct list_head *pos, const char *command, int quoted)
->  {
->  	struct hook *to_add = malloc(sizeof(struct hook));
->  	to_add->origin = current_config_scope();
->  	strbuf_init(&to_add->command, 0);
-> -	/* even with use_shell, run_command() needs quotes */
-> -	strbuf_addf(&to_add->command, "'%s'", command);
-> +	if (quoted)
-> +		strbuf_addf(&to_add->command, "'%s'", command);
-> +	else
-> +		strbuf_addstr(&to_add->command, command);
->  
->  	list_add_tail(&to_add->list, pos);
->  }
+> +int hook_exists(const char *hookname)
+> +{
+> +	const char *value = NULL;
+> +	struct strbuf hook_key = STRBUF_INIT;
+> +	strbuf_addf(&hook_key, "hook.%s.command", hookname);
+> +
+> +	return (!git_config_get_value(hook_key.buf, &value)) || !!find_hook(hookname);
+> +}
 
-This would need to use sq_quote_* to be safe, but we can do something
-simpler: if we accumulate parameters in an argv_array passed to
-run_command, then they will be safely passed to the shell without
-triggering expansion.
+This feels a bit fragile, since it can go out of sync with run_hooks.
+I think I'd prefer if they shared code and this function either
+returned a parsed structure that could be used later to run hooks or
+cached the result keyed by hookname.
 
 Thanks,
 Jonathan
