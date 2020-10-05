@@ -2,330 +2,204 @@ Return-Path: <SRS0=R7wA=DM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AFB8C4363D
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D457C4727F
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD5682075A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19FFB20774
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 12:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726534AbgJEMQR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 08:16:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49560 "EHLO cloud.peff.net"
+        id S1726576AbgJEMQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 08:16:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49570 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726209AbgJEMQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 08:16:11 -0400
-Received: (qmail 32211 invoked by uid 109); 5 Oct 2020 12:16:10 -0000
+        id S1726391AbgJEMQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 08:16:29 -0400
+Received: (qmail 32227 invoked by uid 109); 5 Oct 2020 12:16:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Oct 2020 12:16:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Oct 2020 12:16:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18986 invoked by uid 111); 5 Oct 2020 12:16:09 -0000
+Received: (qmail 19014 invoked by uid 111); 5 Oct 2020 12:16:27 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Oct 2020 08:16:09 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Oct 2020 08:16:27 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 5 Oct 2020 08:16:09 -0400
+Date:   Mon, 5 Oct 2020 08:16:27 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 0/8] forbidding symlinked .gitattributes and .gitignore
-Message-ID: <20201005121609.GA2907272@coredump.intra.peff.net>
-References: <20201005071751.GA2290770@coredump.intra.peff.net>
+Subject: [PATCH v2 1/8] fsck_tree(): fix shadowed variable
+Message-ID: <20201005121627.GA2907394@coredump.intra.peff.net>
+References: <20201005121609.GA2907272@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201005071751.GA2290770@coredump.intra.peff.net>
+In-Reply-To: <20201005121609.GA2907272@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 05, 2020 at 03:17:51AM -0400, Jeff King wrote:
+Commit b2f2039c2b (fsck: accept an oid instead of a "struct tree" for
+fsck_tree(), 2019-10-18) introduced a new "oid" parameter to
+fsck_tree(), and we pass it to the report() function when we find
+problems. However, that is shadowed within the tree-walking loop by the
+existing "oid" variable which we use to store the oid of each tree
+entry. As a result, we may report the wrong oid for some problems we
+detect within the loop (the entry oid, instead of the tree oid).
 
-> About 2 years ago as part of a security release we made it illegal to
-> have a symlinked .gitmodules file (refusing it both in the index and via
-> fsck). At the time we discussed (on the security list) outlawing
-> symlinks for other .git files in the same way, but we decided not to do
-> so as part of the security release, as it wasn't strictly necessary.
-> 
-> We publicly revisited the topic in:
-> 
->   https://lore.kernel.org/git/20190114230902.GG162110@google.com/
-> 
-> but there were a few fixes needed, and it got forgotten. So here it is
-> again, with those fixes:
-> [...]
+Our tests didn't catch this because they checked only that we found the
+expected fsck problem, not that it was attached to the correct object.
 
-And here's a v2 incorporating feedback from Jonathan. There are no
-substantial changes in the code. Most of the fixes are cosmetic, but the
-tests are beefed up a bit, as well:
+Let's rename both variables in the function to avoid confusion. This
+makes the diff a little noisy (e.g., all of the report() calls outside
+the loop were already correct but need to be touched), but makes sure we
+catch all cases and will avoid similar confusion in the future.
 
- - we now test that ntfs and hfs names are matched via fsck and
-   verify_path() for all file types. The bulk of this is in a new patch
-   5, and the final patches are adjusted to use the new helper.
+Note that our test change removes the comment about translation. It was
+arguably confusing since 674ba34038 (fsck: mark strings for translation,
+2018-11-10); we wouldn't translate gitmodulesSymlink, but it did get
+removed by GETTEXT_POISON because that feature eats embedded
+%s characters. But certainly after this patch, when we look for the
+"tree %s: %s" format, we could get foiled by translation.
 
- - we confirm that read-tree doesn't write the forbidden entry into the
-   index (in addition to seeing that it complains)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ fsck.c                     | 40 +++++++++++++++++++-------------------
+ t/t7415-submodule-names.sh |  8 ++++----
+ 2 files changed, 24 insertions(+), 24 deletions(-)
 
- - the test script name is now "bad-dotgitx" instead of the vague
-   "bad-meta-files"
+diff --git a/fsck.c b/fsck.c
+index f82e2fe9e3..46a108839f 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -633,7 +633,7 @@ static int verify_ordered(unsigned mode1, const char *name1,
+ 	return c1 < c2 ? 0 : TREE_UNORDERED;
+ }
+ 
+-static int fsck_tree(const struct object_id *oid,
++static int fsck_tree(const struct object_id *tree_oid,
+ 		     const char *buffer, unsigned long size,
+ 		     struct fsck_options *options)
+ {
+@@ -654,7 +654,7 @@ static int fsck_tree(const struct object_id *oid,
+ 	struct name_stack df_dup_candidates = { NULL };
+ 
+ 	if (init_tree_desc_gently(&desc, buffer, size)) {
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
+ 		return retval;
+ 	}
+ 
+@@ -664,11 +664,11 @@ static int fsck_tree(const struct object_id *oid,
+ 	while (desc.size) {
+ 		unsigned short mode;
+ 		const char *name, *backslash;
+-		const struct object_id *oid;
++		const struct object_id *entry_oid;
+ 
+-		oid = tree_entry_extract(&desc, &name, &mode);
++		entry_oid = tree_entry_extract(&desc, &name, &mode);
+ 
+-		has_null_sha1 |= is_null_oid(oid);
++		has_null_sha1 |= is_null_oid(entry_oid);
+ 		has_full_path |= !!strchr(name, '/');
+ 		has_empty_name |= !*name;
+ 		has_dot |= !strcmp(name, ".");
+@@ -678,10 +678,10 @@ static int fsck_tree(const struct object_id *oid,
+ 
+ 		if (is_hfs_dotgitmodules(name) || is_ntfs_dotgitmodules(name)) {
+ 			if (!S_ISLNK(mode))
+-				oidset_insert(&gitmodules_found, oid);
++				oidset_insert(&gitmodules_found, entry_oid);
+ 			else
+ 				retval += report(options,
+-						 oid, OBJ_TREE,
++						 tree_oid, OBJ_TREE,
+ 						 FSCK_MSG_GITMODULES_SYMLINK,
+ 						 ".gitmodules is a symbolic link");
+ 		}
+@@ -692,9 +692,9 @@ static int fsck_tree(const struct object_id *oid,
+ 				has_dotgit |= is_ntfs_dotgit(backslash);
+ 				if (is_ntfs_dotgitmodules(backslash)) {
+ 					if (!S_ISLNK(mode))
+-						oidset_insert(&gitmodules_found, oid);
++						oidset_insert(&gitmodules_found, entry_oid);
+ 					else
+-						retval += report(options, oid, OBJ_TREE,
++						retval += report(options, tree_oid, OBJ_TREE,
+ 								 FSCK_MSG_GITMODULES_SYMLINK,
+ 								 ".gitmodules is a symbolic link");
+ 				}
+@@ -703,7 +703,7 @@ static int fsck_tree(const struct object_id *oid,
+ 		}
+ 
+ 		if (update_tree_entry_gently(&desc)) {
+-			retval += report(options, oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
++			retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
+ 			break;
+ 		}
+ 
+@@ -751,25 +751,25 @@ static int fsck_tree(const struct object_id *oid,
+ 	name_stack_clear(&df_dup_candidates);
+ 
+ 	if (has_null_sha1)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
+ 	if (has_full_path)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_FULL_PATHNAME, "contains full pathnames");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_FULL_PATHNAME, "contains full pathnames");
+ 	if (has_empty_name)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_EMPTY_NAME, "contains empty pathname");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_EMPTY_NAME, "contains empty pathname");
+ 	if (has_dot)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_HAS_DOT, "contains '.'");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_HAS_DOT, "contains '.'");
+ 	if (has_dotdot)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_HAS_DOTDOT, "contains '..'");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_HAS_DOTDOT, "contains '..'");
+ 	if (has_dotgit)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_HAS_DOTGIT, "contains '.git'");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_HAS_DOTGIT, "contains '.git'");
+ 	if (has_zero_pad)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_ZERO_PADDED_FILEMODE, "contains zero-padded file modes");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_ZERO_PADDED_FILEMODE, "contains zero-padded file modes");
+ 	if (has_bad_modes)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_BAD_FILEMODE, "contains bad file modes");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_BAD_FILEMODE, "contains bad file modes");
+ 	if (has_dup_entries)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_DUPLICATE_ENTRIES, "contains duplicate file entries");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_DUPLICATE_ENTRIES, "contains duplicate file entries");
+ 	if (not_properly_sorted)
+-		retval += report(options, oid, OBJ_TREE, FSCK_MSG_TREE_NOT_SORTED, "not properly sorted");
++		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_TREE_NOT_SORTED, "not properly sorted");
+ 	return retval;
+ }
+ 
+diff --git a/t/t7415-submodule-names.sh b/t/t7415-submodule-names.sh
+index f70368bc2e..d1781ef10c 100755
+--- a/t/t7415-submodule-names.sh
++++ b/t/t7415-submodule-names.sh
+@@ -148,13 +148,13 @@ test_expect_success 'fsck detects symlinked .gitmodules file' '
+ 		{
+ 			printf "100644 blob $content\t$tricky\n" &&
+ 			printf "120000 blob $target\t.gitmodules\n"
+-		} | git mktree &&
++		} >bad-tree &&
++		tree=$(git mktree <bad-tree) &&
+ 
+ 		# Check not only that we fail, but that it is due to the
+-		# symlink detector; this grep string comes from the config
+-		# variable name and will not be translated.
++		# symlink detector
+ 		test_must_fail git fsck 2>output &&
+-		test_i18ngrep gitmodulesSymlink output
++		test_i18ngrep "tree $tree: gitmodulesSymlink" output
+ 	)
+ '
+ 
+-- 
+2.28.0.1295.gf70bcb366f
 
- - whitespace, typo-fixes, clarity, etc; the range diff is below
-
-  [1/8]: fsck_tree(): fix shadowed variable
-  [2/8]: fsck_tree(): wrap some long lines
-  [3/8]: t7415: rename to expand scope
-  [4/8]: t7450: test verify_path() handling of gitmodules
-  [5/8]: t7450: test .gitmodules symlink matching against obscured names
-  [6/8]: t0060: test obscured .gitattributes and .gitignore matching
-  [7/8]: verify_path(): disallow symlinks in .gitattributes and .gitignore
-  [8/8]: fsck: complain when .gitattributes or .gitignore is a symlink
-
- fsck.c                                        | 79 +++++++++++----
- read-cache.c                                  | 12 ++-
- t/helper/test-path-utils.c                    | 41 +++++---
- t/t0060-path-utils.sh                         | 20 ++++
- ...le-names.sh => t7450-bad-dotgitx-files.sh} | 99 +++++++++++++------
- 5 files changed, 187 insertions(+), 64 deletions(-)
- rename t/{t7415-submodule-names.sh => t7450-bad-dotgitx-files.sh} (73%)
-
-1:  d4c4b98188 ! 1:  78689a44ba fsck_tree(): fix shadowed variable
-    @@ Commit message
-     
-         Let's rename both variables in the function to avoid confusion. This
-         makes the diff a little noisy (e.g., all of the report() calls outside
-    -    the loop wee already correct but need touched), but makes sure we catch
-    -    all cases and will avoid similar confusion in the future.
-    +    the loop were already correct but need to be touched), but makes sure we
-    +    catch all cases and will avoid similar confusion in the future.
-    +
-    +    Note that our test change removes the comment about translation. It was
-    +    arguably confusing since 674ba34038 (fsck: mark strings for translation,
-    +    2018-11-10); we wouldn't translate gitmodulesSymlink, but it did get
-    +    removed by GETTEXT_POISON because that feature eats embedded
-    +    %s characters. But certainly after this patch, when we look for the
-    +    "tree %s: %s" format, we could get foiled by translation.
-     
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-    @@ t/t7415-submodule-names.sh: test_expect_success 'fsck detects symlinked .gitmodu
-     +		tree=$(git mktree <bad-tree) &&
-      
-      		# Check not only that we fail, but that it is due to the
-    - 		# symlink detector; this grep string comes from the config
-    - 		# variable name and will not be translated.
-    +-		# symlink detector; this grep string comes from the config
-    +-		# variable name and will not be translated.
-    ++		# symlink detector
-      		test_must_fail git fsck 2>output &&
-     -		test_i18ngrep gitmodulesSymlink output
-     +		test_i18ngrep "tree $tree: gitmodulesSymlink" output
-2:  29d0d3af44 = 2:  b1f7ec465c fsck_tree(): wrap some long lines
-3:  8679f0b2f2 ! 3:  d26ef683fd t7415: rename to expand scope
-    @@ Commit message
-     
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-    - ## t/t7415-submodule-names.sh => t/t7450-bad-meta-files.sh ##
-    + ## t/t7415-submodule-names.sh => t/t7450-bad-dotgitx-files.sh ##
-     @@
-      #!/bin/sh
-      
-4:  84e58f7f46 ! 4:  493a4c79a3 t7450: test verify_path() handling of gitmodules
-    @@ Commit message
-     
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-    - ## t/t7450-bad-meta-files.sh ##
-    -@@ t/t7450-bad-meta-files.sh: test_expect_success 'index-pack --strict works for non-repo pack' '
-    + ## t/t7450-bad-dotgitx-files.sh ##
-    +@@ t/t7450-bad-dotgitx-files.sh: test_expect_success 'index-pack --strict works for non-repo pack' '
-      	grep gitmodulesName output
-      '
-      
-     -test_expect_success 'fsck detects symlinked .gitmodules file' '
-    -+test_expect_success 'create repo with symlinked .gitmodules file' '
-    ++test_expect_success 'set up repo with symlinked .gitmodules file' '
-      	git init symlink &&
-      	(
-      		cd symlink &&
-    -@@ t/t7450-bad-meta-files.sh: test_expect_success 'fsck detects symlinked .gitmodules file' '
-    +@@ t/t7450-bad-dotgitx-files.sh: test_expect_success 'fsck detects symlinked .gitmodules file' '
-      		{
-      			printf "100644 blob $content\t$tricky\n" &&
-      			printf "120000 blob $target\t.gitmodules\n"
-    @@ t/t7450-bad-meta-files.sh: test_expect_success 'fsck detects symlinked .gitmodul
-     +		cd symlink &&
-      
-      		# Check not only that we fail, but that it is due to the
-    - 		# symlink detector; this grep string comes from the config
-    -@@ t/t7450-bad-meta-files.sh: test_expect_success 'fsck detects symlinked .gitmodules file' '
-    + 		# symlink detector
-    +@@ t/t7450-bad-dotgitx-files.sh: test_expect_success 'fsck detects symlinked .gitmodules file' '
-      	)
-      '
-      
-    -+test_expect_success 'refuse to load symlinked .gitmodule into index' '
-    ++test_expect_success 'refuse to load symlinked .gitmodules into index' '
-     +	test_must_fail git -C symlink read-tree $tree 2>err &&
-    -+	test_i18ngrep "invalid path.*gitmodules" err
-    ++	test_i18ngrep "invalid path.*gitmodules" err &&
-    ++	git -C symlink ls-files >out &&
-    ++	test_must_be_empty out
-     +'
-     +
-      test_expect_success 'fsck detects non-blob .gitmodules' '
--:  ---------- > 5:  db5e78ff5b t7450: test .gitmodules symlink matching against obscured names
-5:  e141e49a5b ! 6:  b5962a75a4 t0060: test obscured .gitattributes and .gitignore matching
-    @@ t/helper/test-path-utils.c: static struct test_data dirname_data[] = {
-     +		if (!strcmp("--not", *argv))
-     +			expect = !expect;
-     +		else if (expect != (is_hfs(*argv) || is_ntfs(*argv)))
-    -+			 res = error("'%s' is %s.%s", *argv,
-    -+				     expect ? "not " : "", x);
-    ++			res = error("'%s' is %s.git%s", *argv,
-    ++				    expect ? "not " : "", x);
-     +		else
-    -+			fprintf(stderr, "ok: '%s' is %s.%s\n",
-    ++			fprintf(stderr, "ok: '%s' is %s.git%s\n",
-     +				*argv, expect ? "" : "not ", x);
-     +	}
-     +	return !!res;
-    @@ t/helper/test-path-utils.c: int cmd__path_utils(int argc, const char **argv)
-     -				fprintf(stderr, "ok: '%s' is %s.gitmodules\n",
-     -					argv[i], expect ? "" : "not ");
-     -		return !!res;
-    -+		return check_dotgitx("gitmodules", argv + 2,
-    ++		return check_dotgitx("modules", argv + 2,
-     +				     is_hfs_dotgitmodules,
-     +				     is_ntfs_dotgitmodules);
-     +	}
-     +	if (argc > 2 && !strcmp(argv[1], "is_dotgitignore")) {
-    -+		return check_dotgitx("gitignore", argv + 2,
-    ++		return check_dotgitx("ignore", argv + 2,
-     +				     is_hfs_dotgitignore,
-     +				     is_ntfs_dotgitignore);
-     +	}
-     +	if (argc > 2 && !strcmp(argv[1], "is_dotgitattributes")) {
-    -+		return check_dotgitx("gitattributes", argv + 2,
-    ++		return check_dotgitx("attributes", argv + 2,
-     +				     is_hfs_dotgitattributes,
-     +				     is_ntfs_dotgitattributes);
-      	}
-6:  d214bbd8ec ! 7:  e4ec698a5b verify_path(): disallow symlinks in .gitattributes and .gitignore
-    @@ Commit message
-         0fc333ba20 (is_hfs_dotgit: match other .git files, 2018-05-02), which
-         were done as part of the series touching .gitmodules.
-     
-    +    No tests yet, as we'll add them in a subsequent patch once we have fsck
-    +    support, too.
-    +
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-      ## read-cache.c ##
-    @@ read-cache.c: int verify_path(const char *path, unsigned mode)
-      						return 0;
-      				}
-      			}
-    -
-    - ## t/t7450-bad-meta-files.sh ##
-    -@@ t/t7450-bad-meta-files.sh: test_expect_success 'git dirs of sibling submodules must not be nested' '
-    - 	test_i18ngrep "is inside git dir" err
-    - '
-    - 
-    -+test_expect_success 'create repo with symlinked .gitattributes file' '
-    -+	git init symlink-attr &&
-    -+	target=$(echo target | git -C symlink-attr hash-object -w --stdin) &&
-    -+	tree=$(
-    -+		printf "120000 blob $target\t.gitattributes\n" |
-    -+		git -C symlink-attr mktree
-    -+	)
-    -+'
-    -+
-    -+test_expect_success 'refuse to load symlinked .gitattributes into index' '
-    -+	test_must_fail git -C symlink-attr read-tree $tree 2>err &&
-    -+	test_i18ngrep "invalid path.*gitattributes" err
-    -+'
-    -+
-    -+test_expect_success 'create repo with symlinked .gitignore file' '
-    -+	git init symlink-ignore &&
-    -+	target=$(echo target | git -C symlink-ignore hash-object -w --stdin) &&
-    -+	tree=$(
-    -+		printf "120000 blob $target\t.gitignore\n" |
-    -+		git -C symlink-ignore mktree
-    -+	)
-    -+'
-    -+
-    -+test_expect_success 'refuse to load symlinked .gitignore into index' '
-    -+	test_must_fail git -C symlink-ignore read-tree $tree 2>err &&
-    -+	test_i18ngrep "invalid path.*gitignore" err
-    -+'
-    -+
-    -+
-    - test_done
-7:  49423d03b5 ! 8:  58c9ce0f3c fsck: complain when .gitattributes or .gitignore is a symlink
-    @@ Commit message
-         check to fsck, which matches how we handle .gitmodules symlinks, via
-         b7b1fca175 (fsck: complain when .gitmodules is a symlink, 2018-05-04).
-     
-    -    Note that we won't add these to the existing gitmodules block. Its logic
-    -    is a bit more complicated, as we also check the content of non-symlink
-    -    instances we find. But for these new files, there is no content check;
-    -    we're just looking at the name and mode of the tree entry (and we can
-    -    avoid even the complicated name checks in the common case that the mode
-    -    doesn't indicate a symlink).
-    +    Note that we won't add these to the existing gitmodules block. The logic
-    +    for gitmodules is a bit more complicated, as we also check the content
-    +    of non-symlink instances we find. But for these new files, there is no
-    +    content check; we're just looking at the name and mode of the tree entry
-    +    (and we can avoid even the complicated name checks in the common case
-    +    that the mode doesn't indicate a symlink).
-    +
-    +    We can reuse the test helper function we defined for .gitmodules,
-    +    though (and this covers the verify_path() change from the previous
-    +    commit, as well).
-     
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-    @@ fsck.c: static int fsck_tree(const struct object_id *tree_oid,
-      			while (backslash) {
-      				backslash++;
-     
-    - ## t/t7450-bad-meta-files.sh ##
-    -@@ t/t7450-bad-meta-files.sh: test_expect_success 'refuse to load symlinked .gitattributes into index' '
-    - 	test_i18ngrep "invalid path.*gitattributes" err
-    - '
-    + ## t/t7450-bad-dotgitx-files.sh ##
-    +@@ t/t7450-bad-dotgitx-files.sh: check_forbidden_symlink gitmodules vanilla .gitmodules
-    + check_forbidden_symlink gitmodules ntfs ".gitmodules ."
-    + check_forbidden_symlink gitmodules hfs ".${u200c}gitmodules"
-      
-    -+test_expect_success 'fsck detects symlinked .gitattributes file' '
-    -+	test_must_fail git -C symlink-attr fsck 2>err &&
-    -+	test_i18ngrep "tree $tree: gitattributesSymlink" err
-    -+'
-    ++check_forbidden_symlink gitattributes vanilla .gitattributes
-    ++check_forbidden_symlink gitattributes ntfs ".gitattributes ."
-    ++check_forbidden_symlink gitattributes hfs ".${u200c}gitattributes"
-     +
-    - test_expect_success 'create repo with symlinked .gitignore file' '
-    - 	git init symlink-ignore &&
-    - 	target=$(echo target | git -C symlink-ignore hash-object -w --stdin) &&
-    -@@ t/t7450-bad-meta-files.sh: test_expect_success 'refuse to load symlinked .gitignore into index' '
-    - 	test_i18ngrep "invalid path.*gitignore" err
-    - '
-    - 
-    -+test_expect_success 'fsck detects symlinked .gitignore file' '
-    -+	test_must_fail git -C symlink-ignore fsck 2>err &&
-    -+	test_i18ngrep "tree $tree: gitignoreSymlink" err
-    -+'
-    - 
-    - test_done
-    ++check_forbidden_symlink gitignore vanilla .gitignore
-    ++check_forbidden_symlink gitignore ntfs ".gitignore ."
-    ++check_forbidden_symlink gitignore hfs ".${u200c}gitignore"
-    ++
-    + test_expect_success 'fsck detects non-blob .gitmodules' '
-    + 	git init non-blob &&
-    + 	(
