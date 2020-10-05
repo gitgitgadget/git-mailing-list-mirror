@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28A62C4727D
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 13:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E04E1C4363A
+	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 13:04:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF507208B6
+	by mail.kernel.org (Postfix) with ESMTP id 93D59207BC
 	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 13:04:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oan35E6l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQntGy2t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbgJENEL (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726742AbgJENEL (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 5 Oct 2020 09:04:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54454 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbgJENEK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726073AbgJENEK (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Oct 2020 09:04:10 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE9E5C0613B2
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 05:57:19 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id d4so8499522wmd.5
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 05:57:19 -0700 (PDT)
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97639C0613B3
+        for <git@vger.kernel.org>; Mon,  5 Oct 2020 05:57:20 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id p15so4035159wmi.4
+        for <git@vger.kernel.org>; Mon, 05 Oct 2020 05:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Sy1fNp0IvDLU7VY072G0Tf6lU7VIhiL8U5UrQvwJNbo=;
-        b=oan35E6lLiPLgytYdz9+UwLx92MVJRbSpPoof5zIuHMrdXY/VKKc6tNiWEzYKq4eKi
-         FSlGmKQYJMwqxF3oeX6Er8Y9xsPCmyeS29odAZSTIfRKPHdlhtKeh1cWKVTgt4dr+4Yj
-         18cX2BRoo6rctsNDyd/0eDYmL7FHBKqqjyOs1TMBfhPxwlyV/nU240vcrxZpniMDlBJJ
-         3W14RJ+aD8sytCfzpxYslYIrLbPdWsPim0RKVtWFKFQbj09Q6ZpzjaOymrDYhayoUBgH
-         XG0VA4nDHjLIZn2c6t1ZxfaCxbvGojzrASzExYCxVuXXn6pI5G/qXDfJcn5uY1YzXc3I
-         ueBw==
+        bh=LJaF+KBq6DinuUhew6phz3UG9LLuWbKh+8DAyadGgBc=;
+        b=aQntGy2tMrEy3oBONC3gGiu/wsfA6GHRHlq+pgL0YmPLgO98myJtoo45d4AT/vpL4V
+         LByNEFHYz2rRN5gVyuf3WrGkxsK+l0pB6te1hRjeFTsSNIvmRcfKfjPcuCRChJQdTuFB
+         5hnbCIRlXwRIjiIvi3C/2p12ffiS4WnY6ep+7uX8NDK9Mu1BQAkuJaD6DCYsxW26MR5y
+         JmjGbPIfUJuixOFbCugLhD2YH5dsCtim+rULy3Nq5cXCqLA3JT8c/r8RexAfZ94lqg20
+         MdEodxpOrbkK0JO4QkqyiBIItGOa2dj7MGDx3cDa5hbsLJPeU+gYHr9gmbzrN7XYOT6R
+         cSdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Sy1fNp0IvDLU7VY072G0Tf6lU7VIhiL8U5UrQvwJNbo=;
-        b=klB3V261dxO9mHQeH1VsAsLj9u9AgacZ5Wxr9G0kHGnOkGV98PW1F8hrTyP0haqW/o
-         dKEr1wqjsxFrvOJDimzYo6mojljVbehtg3dWfEx2d51U09iy5hvvf6aQ/AVHdPGI5+bY
-         a4Q3SJy99/AgVB4L5HWZoJG+mb8KPfULbOgOp/xUljWCxIm6yHaGXQonfgXIbr8v3gGt
-         UD0IghQhxrjjU1qSzD9wU7/RdC5Z1hUiFLrOCJtlJSsyGddPFWEdnemGb6d11JbXpr5v
-         BQyq4e9LVzqv5rR93SvIhT+LVhDp1AFS0s8eEhozciM8pKZ8r9amkYkYzGqCuqiIGENG
-         UEHg==
-X-Gm-Message-State: AOAM5332jMpjbCPVhJ7o7bT9wdC/4FdzQ2pzYjAt7C9BK3zKwIorRkrs
-        S2eKp56fz5qaI0qL06l9+VBylKWJwuM=
-X-Google-Smtp-Source: ABdhPJyNtLHU7DmRdn6mgIidq45CYHnpCM1S9zcLphAMXk1piS4+XEFyDOXghaNBVxNMlBjRbsxAVQ==
-X-Received: by 2002:a1c:1d89:: with SMTP id d131mr4331508wmd.119.1601902638182;
-        Mon, 05 Oct 2020 05:57:18 -0700 (PDT)
+        bh=LJaF+KBq6DinuUhew6phz3UG9LLuWbKh+8DAyadGgBc=;
+        b=M9Cfe4BbCZjWBwn1vv3TAYhPEIZMlmxvRC5vGrDYPGYuSZ6W38+RmvTvdKnJhIt2b3
+         /O3PynpPNqUTTG1zR+s4oQ7jWlRhyH00an586ImUQPoEhGa0L3z0Nem0fNKDcGE1qUCO
+         +V173xECXGMD/6rem/2UNaIlOkQu9vllkPN9xDNTFBSJEDT3Qi1Iw/RPxUrfCTcu6xUg
+         UbUp7EkC+X1N0rSRx6YbHDuZslJS97G91ws/oFTgHfwnZlavGpRKaxS8QdiqsyQ0vacG
+         vVfMnYw199Ez1cQDs4fY2LIWfxnH5Mxjjf7oLFYgEMqcuQeWVa4thilGaJ3BFQBJ/8QY
+         lGEA==
+X-Gm-Message-State: AOAM5313qtjcjSsvKClO4MeWlvXBm9/uh+kwVs2upeNQv2ek0ChufV5k
+        CXCq2s90VRdqd2ew9dOkA24i1kq4BmM=
+X-Google-Smtp-Source: ABdhPJwVXkQzBPPbDxMeO+24HMMmhXGSsoyrKzrh0VwU6g9KcguR+BhMbzDe//SOLYpRf6YXfe51cg==
+X-Received: by 2002:a1c:a7cc:: with SMTP id q195mr7047892wme.8.1601902639028;
+        Mon, 05 Oct 2020 05:57:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m11sm12908469wmf.10.2020.10.05.05.57.17
+        by smtp.gmail.com with ESMTPSA id l18sm13126367wrp.84.2020.10.05.05.57.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 05:57:17 -0700 (PDT)
-Message-Id: <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1601902635.git.gitgitgadget@gmail.com>
+        Mon, 05 Oct 2020 05:57:18 -0700 (PDT)
+Message-Id: <dd9237927395ef69663ab376a2da74da4654c495.1601902635.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
 References: <pull.724.v2.git.1599846560.gitgitgadget@gmail.com>
         <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Oct 2020 12:57:09 +0000
-Subject: [PATCH v3 2/7] maintenance: add --schedule option and config
+Date:   Mon, 05 Oct 2020 12:57:10 +0000
+Subject: [PATCH v3 3/7] for-each-repo: run subcommands on configured repos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,258 +83,255 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Maintenance currently triggers when certain data-size thresholds are
-met, such as number of pack-files or loose objects. Users may want to
-run certain maintenance tasks based on frequency instead. For example,
-a user may want to perform a 'prefetch' task every hour, or 'gc' task
-every day. To help these users, update the 'git maintenance run' command
-to include a '--schedule=<frequency>' option. The allowed frequencies
-are 'hourly', 'daily', and 'weekly'. These values are also allowed in a
-new config value 'maintenance.<task>.schedule'.
+It can be helpful to store a list of repositories in global or system
+config and then iterate Git commands on that list. Create a new builtin
+that makes this process simple for experts. We will use this builtin to
+run scheduled maintenance on all configured repositories in a future
+change.
 
-The 'git maintenance run --schedule=<frequency>' checks the '*.schedule'
-config value for each enabled task to see if the configured frequency is
-at least as frequent as the frequency from the '--schedule' argument. We
-use the following order, for full clarity:
-
-	'hourly' > 'daily' > 'weekly'
-
-Use new 'enum schedule_priority' to track these values numerically.
-
-The following cron table would run the scheduled tasks with the correct
-frequencies:
-
-  0 1-23 * * *    git -C <repo> maintenance run --schedule=hourly
-  0 0    * * 1-6  git -C <repo> maintenance run --schedule=daily
-  0 0    * * 0    git -C <repo> maintenance run --schedule=weekly
-
-This cron schedule will run --schedule=hourly every hour except at
-midnight. This avoids a concurrent run with the --schedule=daily that
-runs at midnight every day except the first day of the week. This avoids
-a concurrent run with the --schedule=weekly that runs at midnight on
-the first day of the week. Since --schedule=daily also runs the
-'hourly' tasks and --schedule=weekly runs the 'hourly' and 'daily'
-tasks, we will still see all tasks run with the proper frequencies.
+The test is very simple, but does highlight that the "--" argument is
+optional.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/maintenance.txt |  5 +++
- Documentation/git-maintenance.txt    | 13 +++++-
- builtin/gc.c                         | 64 ++++++++++++++++++++++++++--
- t/t7900-maintenance.sh               | 40 +++++++++++++++++
- 4 files changed, 118 insertions(+), 4 deletions(-)
+ .gitignore                          |  1 +
+ Documentation/git-for-each-repo.txt | 59 +++++++++++++++++++++++++++++
+ Makefile                            |  1 +
+ builtin.h                           |  1 +
+ builtin/for-each-repo.c             | 58 ++++++++++++++++++++++++++++
+ command-list.txt                    |  1 +
+ git.c                               |  1 +
+ t/t0068-for-each-repo.sh            | 30 +++++++++++++++
+ 8 files changed, 152 insertions(+)
+ create mode 100644 Documentation/git-for-each-repo.txt
+ create mode 100644 builtin/for-each-repo.c
+ create mode 100755 t/t0068-for-each-repo.sh
 
-diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-index 06db758172..70585564fa 100644
---- a/Documentation/config/maintenance.txt
-+++ b/Documentation/config/maintenance.txt
-@@ -10,6 +10,11 @@ maintenance.<task>.enabled::
- 	`--task` option exists. By default, only `maintenance.gc.enabled`
- 	is true.
- 
-+maintenance.<task>.schedule::
-+	This config option controls whether or not the given `<task>` runs
-+	during a `git maintenance run --schedule=<frequency>` command. The
-+	value must be one of "hourly", "daily", or "weekly".
+diff --git a/.gitignore b/.gitignore
+index a5808fa30d..5eb2a2be71 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -67,6 +67,7 @@
+ /git-filter-branch
+ /git-fmt-merge-msg
+ /git-for-each-ref
++/git-for-each-repo
+ /git-format-patch
+ /git-fsck
+ /git-fsck-objects
+diff --git a/Documentation/git-for-each-repo.txt b/Documentation/git-for-each-repo.txt
+new file mode 100644
+index 0000000000..94bd19da26
+--- /dev/null
++++ b/Documentation/git-for-each-repo.txt
+@@ -0,0 +1,59 @@
++git-for-each-repo(1)
++====================
 +
- maintenance.commit-graph.auto::
- 	This integer config option controls how often the `commit-graph` task
- 	should be run as part of `git maintenance run --auto`. If zero, then
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 3f5d8946b4..ed94f66e36 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -110,7 +110,18 @@ OPTIONS
- 	only if certain thresholds are met. For example, the `gc` task
- 	runs when the number of loose objects exceeds the number stored
- 	in the `gc.auto` config setting, or when the number of pack-files
--	exceeds the `gc.autoPackLimit` config setting.
-+	exceeds the `gc.autoPackLimit` config setting. Not compatible with
-+	the `--schedule` option.
++NAME
++----
++git-for-each-repo - Run a Git command on a list of repositories
 +
-+--schedule::
-+	When combined with the `run` subcommand, run maintenance tasks
-+	only if certain time conditions are met, as specified by the
-+	`maintenance.<task>.schedule` config value for each `<task>`.
-+	This config value specifies a number of seconds since the last
-+	time that task ran, according to the `maintenance.<task>.lastRun`
-+	config value. The tasks that are tested are those provided by
-+	the `--task=<task>` option(s) or those with
-+	`maintenance.<task>.enabled` set to true.
- 
- --quiet::
- 	Do not report progress or other information over `stderr`.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 2b99596ec8..03b24ea0db 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -703,14 +703,51 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
--static const char * const builtin_maintenance_run_usage[] = {
--	N_("git maintenance run [--auto] [--[no-]quiet] [--task=<task>]"),
-+static const char *const builtin_maintenance_run_usage[] = {
-+	N_("git maintenance run [--auto] [--[no-]quiet] [--task=<task>] [--schedule]"),
- 	NULL
- };
- 
-+enum schedule_priority {
-+	SCHEDULE_NONE = 0,
-+	SCHEDULE_WEEKLY = 1,
-+	SCHEDULE_DAILY = 2,
-+	SCHEDULE_HOURLY = 3,
++
++SYNOPSIS
++--------
++[verse]
++'git for-each-repo' --config=<config> [--] <arguments>
++
++
++DESCRIPTION
++-----------
++Run a Git command on a list of repositories. The arguments after the
++known options or `--` indicator are used as the arguments for the Git
++subprocess.
++
++THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
++
++For example, we could run maintenance on each of a list of repositories
++stored in a `maintenance.repo` config variable using
++
++-------------
++git for-each-repo --config=maintenance.repo maintenance run
++-------------
++
++This will run `git -C <repo> maintenance run` for each value `<repo>`
++in the multi-valued config variable `maintenance.repo`.
++
++
++OPTIONS
++-------
++--config=<config>::
++	Use the given config variable as a multi-valued list storing
++	absolute path names. Iterate on that list of paths to run
++	the given arguments.
+++
++These config values are loaded from system, global, and local Git config,
++as available. If `git for-each-repo` is run in a directory that is not a
++Git repository, then only the system and global config is used.
++
++
++SUBPROCESS BEHAVIOR
++-------------------
++
++If any `git -C <repo> <arguments>` subprocess returns a non-zero exit code,
++then the `git for-each-repo` process returns that exit code without running
++more subprocesses.
++
++Each `git -C <repo> <arguments>` subprocess inherits the standard file
++descriptors `stdin`, `stdout`, and `stderr`.
++
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 65f8cfb236..7c588ff036 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1071,6 +1071,7 @@ BUILTIN_OBJS += builtin/fetch-pack.o
+ BUILTIN_OBJS += builtin/fetch.o
+ BUILTIN_OBJS += builtin/fmt-merge-msg.o
+ BUILTIN_OBJS += builtin/for-each-ref.o
++BUILTIN_OBJS += builtin/for-each-repo.o
+ BUILTIN_OBJS += builtin/fsck.o
+ BUILTIN_OBJS += builtin/gc.o
+ BUILTIN_OBJS += builtin/get-tar-commit-id.o
+diff --git a/builtin.h b/builtin.h
+index 17c1c0ce49..ff7c6e5aa9 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -150,6 +150,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix);
+ int cmd_fetch_pack(int argc, const char **argv, const char *prefix);
+ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix);
+ int cmd_for_each_ref(int argc, const char **argv, const char *prefix);
++int cmd_for_each_repo(int argc, const char **argv, const char *prefix);
+ int cmd_format_patch(int argc, const char **argv, const char *prefix);
+ int cmd_fsck(int argc, const char **argv, const char *prefix);
+ int cmd_gc(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+new file mode 100644
+index 0000000000..5bba623ff1
+--- /dev/null
++++ b/builtin/for-each-repo.c
+@@ -0,0 +1,58 @@
++#include "cache.h"
++#include "config.h"
++#include "builtin.h"
++#include "parse-options.h"
++#include "run-command.h"
++#include "string-list.h"
++
++static const char * const for_each_repo_usage[] = {
++	N_("git for-each-repo --config=<config> <command-args>"),
++	NULL
 +};
 +
-+static enum schedule_priority parse_schedule(const char *value)
++static int run_command_on_repo(const char *path,
++			       void *cbdata)
 +{
-+	if (!value)
-+		return SCHEDULE_NONE;
-+	if (!strcasecmp(value, "hourly"))
-+		return SCHEDULE_HOURLY;
-+	if (!strcasecmp(value, "daily"))
-+		return SCHEDULE_DAILY;
-+	if (!strcasecmp(value, "weekly"))
-+		return SCHEDULE_WEEKLY;
-+	return SCHEDULE_NONE;
++	int i;
++	struct child_process child = CHILD_PROCESS_INIT;
++	struct strvec *args = (struct strvec *)cbdata;
++
++	child.git_cmd = 1;
++	strvec_pushl(&child.args, "-C", path, NULL);
++
++	for (i = 0; i < args->nr; i++)
++		strvec_push(&child.args, args->v[i]);
++
++	return run_command(&child);
 +}
 +
-+static int maintenance_opt_schedule(const struct option *opt, const char *arg,
-+				    int unset)
++int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
 +{
-+	enum schedule_priority *priority = opt->value;
++	static const char *config_key = NULL;
++	int i, result = 0;
++	const struct string_list *values;
++	struct strvec args = STRVEC_INIT;
 +
-+	if (unset)
-+		die(_("--no-schedule is not allowed"));
++	const struct option options[] = {
++		OPT_STRING(0, "config", &config_key, N_("config"),
++			   N_("config key storing a list of repository paths")),
++		OPT_END()
++	};
 +
-+	*priority = parse_schedule(arg);
++	argc = parse_options(argc, argv, prefix, options, for_each_repo_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
 +
-+	if (!*priority)
-+		die(_("unrecognized --schedule argument '%s'"), arg);
++	if (!config_key)
++		die(_("missing --config=<config>"));
 +
-+	return 0;
++	for (i = 0; i < argc; i++)
++		strvec_push(&args, argv[i]);
++
++	values = repo_config_get_value_multi(the_repository,
++					     config_key);
++
++	for (i = 0; !result && i < values->nr; i++)
++		result = run_command_on_repo(values->items[i].string, &args);
++
++	return result;
 +}
+diff --git a/command-list.txt b/command-list.txt
+index 0e3204e7d1..581499be82 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -94,6 +94,7 @@ git-fetch-pack                          synchingrepositories
+ git-filter-branch                       ancillarymanipulators
+ git-fmt-merge-msg                       purehelpers
+ git-for-each-ref                        plumbinginterrogators
++git-for-each-repo                       plumbinginterrogators
+ git-format-patch                        mainporcelain
+ git-fsck                                ancillaryinterrogators          complete
+ git-gc                                  mainporcelain
+diff --git a/git.c b/git.c
+index 24f250d29a..1cab64b5d1 100644
+--- a/git.c
++++ b/git.c
+@@ -511,6 +511,7 @@ static struct cmd_struct commands[] = {
+ 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
+ 	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
+ 	{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
++	{ "for-each-repo", cmd_for_each_repo, RUN_SETUP_GENTLY },
+ 	{ "format-patch", cmd_format_patch, RUN_SETUP },
+ 	{ "fsck", cmd_fsck, RUN_SETUP },
+ 	{ "fsck-objects", cmd_fsck, RUN_SETUP },
+diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
+new file mode 100755
+index 0000000000..136b4ec839
+--- /dev/null
++++ b/t/t0068-for-each-repo.sh
+@@ -0,0 +1,30 @@
++#!/bin/sh
 +
- struct maintenance_run_opts {
- 	int auto_flag;
- 	int quiet;
-+	enum schedule_priority schedule;
- };
- 
- /* Remember to update object flag allocation in object.h */
-@@ -1158,6 +1195,8 @@ struct maintenance_task {
- 	maintenance_auto_fn *auto_condition;
- 	unsigned enabled:1;
- 
-+	enum schedule_priority schedule;
++test_description='git for-each-repo builtin'
 +
- 	/* -1 if not selected. */
- 	int selected_order;
- };
-@@ -1253,6 +1292,9 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
- 		     !tasks[i].auto_condition()))
- 			continue;
- 
-+		if (opts->schedule && tasks[i].schedule < opts->schedule)
-+			continue;
++. ./test-lib.sh
 +
- 		trace2_region_enter("maintenance", tasks[i].name, r);
- 		if (tasks[i].fn(opts)) {
- 			error(_("task '%s' failed"), tasks[i].name);
-@@ -1273,13 +1315,23 @@ static void initialize_task_config(void)
- 
- 	for (i = 0; i < TASK__COUNT; i++) {
- 		int config_value;
-+		char *config_str;
- 
--		strbuf_setlen(&config_name, 0);
-+		strbuf_reset(&config_name);
- 		strbuf_addf(&config_name, "maintenance.%s.enabled",
- 			    tasks[i].name);
- 
- 		if (!git_config_get_bool(config_name.buf, &config_value))
- 			tasks[i].enabled = config_value;
-+
-+		strbuf_reset(&config_name);
-+		strbuf_addf(&config_name, "maintenance.%s.schedule",
-+			    tasks[i].name);
-+
-+		if (!git_config_get_string(config_name.buf, &config_str)) {
-+			tasks[i].schedule = parse_schedule(config_str);
-+			free(config_str);
-+		}
- 	}
- 
- 	strbuf_release(&config_name);
-@@ -1323,6 +1375,9 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
- 	struct option builtin_maintenance_run_options[] = {
- 		OPT_BOOL(0, "auto", &opts.auto_flag,
- 			 N_("run tasks based on the state of the repository")),
-+		OPT_CALLBACK(0, "schedule", &opts.schedule, N_("frequency"),
-+			     N_("run tasks based on frequency"),
-+			     maintenance_opt_schedule),
- 		OPT_BOOL(0, "quiet", &opts.quiet,
- 			 N_("do not report progress or other information over stderr")),
- 		OPT_CALLBACK_F(0, "task", NULL, N_("task"),
-@@ -1343,6 +1398,9 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
- 			     builtin_maintenance_run_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
-+	if (opts.auto_flag && opts.schedule)
-+		die(_("use at most one of --auto and --schedule=<frequency>"));
-+
- 	if (argc != 0)
- 		usage_with_options(builtin_maintenance_run_usage,
- 				   builtin_maintenance_run_options);
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index c7caaa7a55..33d73cd01c 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -260,4 +260,44 @@ test_expect_success 'maintenance.incremental-repack.auto' '
- 	test_subcommand git multi-pack-index write --no-progress <trace-B
- '
- 
-+test_expect_success '--auto and --schedule incompatible' '
-+	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
-+	test_i18ngrep "at most one" err
++test_expect_success 'run based on configured value' '
++	git init one &&
++	git init two &&
++	git init three &&
++	git -C two commit --allow-empty -m "DID NOT RUN" &&
++	git config run.key "$TRASH_DIRECTORY/one" &&
++	git config --add run.key "$TRASH_DIRECTORY/three" &&
++	git for-each-repo --config=run.key commit --allow-empty -m "ran" &&
++	git -C one log -1 --pretty=format:%s >message &&
++	grep ran message &&
++	git -C two log -1 --pretty=format:%s >message &&
++	! grep ran message &&
++	git -C three log -1 --pretty=format:%s >message &&
++	grep ran message &&
++	git for-each-repo --config=run.key -- commit --allow-empty -m "ran again" &&
++	git -C one log -1 --pretty=format:%s >message &&
++	grep again message &&
++	git -C two log -1 --pretty=format:%s >message &&
++	! grep again message &&
++	git -C three log -1 --pretty=format:%s >message &&
++	grep again message
 +'
 +
-+test_expect_success 'invalid --schedule value' '
-+	test_must_fail git maintenance run --schedule=annually 2>err &&
-+	test_i18ngrep "unrecognized --schedule" err
-+'
-+
-+test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
-+	git config maintenance.loose-objects.enabled true &&
-+	git config maintenance.loose-objects.schedule hourly &&
-+	git config maintenance.commit-graph.enabled true &&
-+	git config maintenance.commit-graph.schedule daily &&
-+	git config maintenance.incremental-repack.enabled true &&
-+	git config maintenance.incremental-repack.schedule weekly &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/hourly.txt" \
-+		git maintenance run --schedule=hourly 2>/dev/null &&
-+	test_subcommand git prune-packed --quiet <hourly.txt &&
-+	test_subcommand ! git commit-graph write --split --reachable \
-+		--no-progress <hourly.txt &&
-+	test_subcommand ! git multi-pack-index write --no-progress <hourly.txt &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/daily.txt" \
-+		git maintenance run --schedule=daily 2>/dev/null &&
-+	test_subcommand git prune-packed --quiet <daily.txt &&
-+	test_subcommand git commit-graph write --split --reachable \
-+		--no-progress <daily.txt &&
-+	test_subcommand ! git multi-pack-index write --no-progress <daily.txt &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/weekly.txt" \
-+		git maintenance run --schedule=weekly 2>/dev/null &&
-+	test_subcommand git prune-packed --quiet <weekly.txt &&
-+	test_subcommand git commit-graph write --split --reachable \
-+		--no-progress <weekly.txt &&
-+	test_subcommand git multi-pack-index write --no-progress <weekly.txt
-+'
-+
- test_done
++test_done
 -- 
 gitgitgadget
 
