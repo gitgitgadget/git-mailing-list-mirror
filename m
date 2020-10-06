@@ -2,117 +2,150 @@ Return-Path: <SRS0=+hCi=DN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB072C41604
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 18:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51F4EC41604
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 19:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54103206F4
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 18:55:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC490206CB
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 19:06:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pvkvLt2i"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bp85DqSv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbgJFSzU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Oct 2020 14:55:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50079 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726903AbgJFSzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Oct 2020 14:55:20 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F450E3F6F;
-        Tue,  6 Oct 2020 14:55:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PFwQ4u3RzboKFzoqk0M7YpiUhVk=; b=pvkvLt
-        2iC6qVhqCt8V6ALVsNBi3Hn9jIwA+OpPbZvtGMmAvp+WxmLrfxtkU/+keltA2S3T
-        h4K9vZ/vx91Gl1hH5LO3Oc+lBYByJgd0GOEG6MO7OXa2ndROol4R1/hsi/50vJV9
-        7yZvyYq9pH9ZCoIejef/N82IbXpRSY9OapKkI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HNFDqGp9Yp3RzMDoAHlcyqhs8C5AerEg
-        0NdJzFNUtG8rxe8EtVlxmVsmVT7/L0hiSRbWAJTxHe3ugLJyYMNJOdLtxm7vPb2A
-        iNAzeI3L+NmNoAeBgmPHyGVBuK3PotjhCP33oTVMzqnlfJM+9X9Fdy4VuJqxtmkc
-        L4acTua4N7Y=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 67F5EE3F6E;
-        Tue,  6 Oct 2020 14:55:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC4C9E3F6B;
-        Tue,  6 Oct 2020 14:55:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Javier Spagnoletti via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Javier Spagnoletti <phansys@gmail.com>
-Subject: Re: [PATCH] Improve diff pattern for PHP files
-References: <pull.864.git.git.1601980656554.gitgitgadget@gmail.com>
-        <d262c797-29eb-1e08-8de0-6a2dd2a5d47f@kdbg.org>
-Date:   Tue, 06 Oct 2020 11:55:14 -0700
-In-Reply-To: <d262c797-29eb-1e08-8de0-6a2dd2a5d47f@kdbg.org> (Johannes Sixt's
-        message of "Tue, 6 Oct 2020 20:27:06 +0200")
-Message-ID: <xmqqpn5v5gml.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726997AbgJFTGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Oct 2020 15:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726760AbgJFTGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Oct 2020 15:06:22 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F886C061755
+        for <git@vger.kernel.org>; Tue,  6 Oct 2020 12:06:22 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id b26so6242683pff.3
+        for <git@vger.kernel.org>; Tue, 06 Oct 2020 12:06:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=M2BosvCX9iJhj/o5+Nlr7dPVjGXtE1PXnUqB/UHx22o=;
+        b=bp85DqSvfYWJ9RwWqHFidjoz34aqViTbhirihLV0eACbnlLgqH+6Xya0t9zQzT8N9g
+         2aYkC/i30H0QvIHctYhaHhsL2oR2M+bWbI+X464YIKU8PkmIagCy0YETuLr/clwSdq5y
+         ZwU337a0ezH0OlK/U2530lIj9/YBZywBRqUuSvp9X0cXZzUvNctQIYCX4Ey2bq9kJF2A
+         xskxx0aIpJC5IIu80xrvxPmmdGxg4R30pqbw+L4skK7e0viYrwa9P9DHcw/QaaJnV73d
+         9SA74b2OiKATRNtp89ZUU+ykJmMIrIE3fkdJVNgshV/KhJyru9x/zu3F2ItClZ3UwLfQ
+         oHpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=M2BosvCX9iJhj/o5+Nlr7dPVjGXtE1PXnUqB/UHx22o=;
+        b=rZvSy0U9D295AeU+8W/0aPVE2DvQpRr/f+Ep4Y5lYDYtsh+O4qNFptz4+gmBo2Ljxx
+         L3JpcDNLh+1mdfa1jZgc54Kqh6D8f1Xchj6zMQNeMpfSzdZY/K8ginjPiFelCvU/nHxv
+         P/oEGxuyA8AQhbKuCUM5rx1oQc2dicxeDugVvhXziiVZCFETgKwr8y7PYdIYAKMe2P4G
+         AX1dn4PX4yHQur1gcJj8pvDA7StUAuz1/N9KWj65k6MeLjJlr/+Tmai3pRy/Br81hgqI
+         yfNm2JaAK8TvFDUkWf0516iP6Wmh4C0TRURdUdcJroaHio2KuU1j5L3+R4hvLa5vK4K6
+         Chhg==
+X-Gm-Message-State: AOAM530tWavqi5gSs1z1ZthMgZaot+WB+aj4ZKeBzXjDi8YV4tpKQECW
+        uEGJbfEtuPDmk5OO21QyR7Ucmg==
+X-Google-Smtp-Source: ABdhPJxZABEQgQ1g/eqG+Ni5x0XvnEGscVzbeup0rssSnU8xe5j53XgQSOXj6w8MUzRlnfG6w4z4LQ==
+X-Received: by 2002:a63:f60f:: with SMTP id m15mr5082552pgh.298.1602011181452;
+        Tue, 06 Oct 2020 12:06:21 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
+        by smtp.gmail.com with ESMTPSA id z13sm3616613pjn.51.2020.10.06.12.06.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Oct 2020 12:06:20 -0700 (PDT)
+Date:   Tue, 6 Oct 2020 12:06:16 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 2/9] hook: scaffolding for git-hook subcommand
+Message-ID: <20201006190616.GI331156@google.com>
+References: <20200909004939.1942347-1-emilyshaffer@google.com>
+ <20200909004939.1942347-3-emilyshaffer@google.com>
+ <20201005232418.GA1393696@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 78AA5FB0-0805-11EB-913F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201005232418.GA1393696@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Mon, Oct 05, 2020 at 04:24:18PM -0700, Jonathan Nieder wrote:
+> 
+> Hi,
+> 
+> Emily Shaffer wrote:
+> 
+> > Introduce infrastructure for a new subcommand, git-hook, which will be
+> > used to ease config-based hook management. This command will handle
+> > parsing configs to compose a list of hooks to run for a given event, as
+> > well as adding or modifying hook configs in an interactive fashion.
+> >
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> >  .gitignore                    |  1 +
+> >  Documentation/git-hook.txt    | 19 +++++++++++++++++++
+> >  Makefile                      |  1 +
+> >  builtin.h                     |  1 +
+> >  builtin/hook.c                | 21 +++++++++++++++++++++
+> >  git.c                         |  1 +
+> >  t/t1360-config-based-hooks.sh | 11 +++++++++++
+> >  7 files changed, 55 insertions(+)
+> >  create mode 100644 Documentation/git-hook.txt
+> >  create mode 100644 builtin/hook.c
+> >  create mode 100755 t/t1360-config-based-hooks.sh
+> 
+> optional: I could imagine this being squashed into patch 3 --- that way,
+> the command has functionality as soon as it exists.  Alternatively:
 
-> Please choose a commit summary line of the form "area: summary", for
-> example:
->
->    userdiff: PHP: catch "abstract" and "final" functions
->
-> Am 06.10.20 um 12:37 schrieb Javier Spagnoletti via GitGitGadget:
->> From: Javier Spagnoletti <phansys@gmail.com>
->> 
->> Improve the output diff readability for php files by taking into account some missing function modifiers.
->
-> "Improve" is a noise word and need not be mentioned; a non-improvement
-> would not be accepted. Also, wrap long lines to at most 72 characters.
-> Perhaps:
->
->    PHP permits functions to be defined like
->
->        public final function foo() { }
->        protected abstract function bar() { }
->
->    but our hunk header pattern does not recognize these decorations.
->    Add "final" and "abstract" to the list of function modifiers.
->
-> I am not a PHP expert, so I cannot tell whether what I have written
-> above makes sense.
+I would prefer to leave it on its own. Managing changes like
+builtin<->standalone or even the one you mentioned below about
+RUN_SETUP_GENTLY is somewhat easier to manage when they aren't in the
+same patch as the business logic, IMO.
 
-Me neither, but the new pattern does look like it was written tp
-specifically allow these combinations.  Thanks for a good example
-log message to guide new developers with.
+> 
+> [...]
+> > --- /dev/null
+> > +++ b/Documentation/git-hook.txt
+> > @@ -0,0 +1,19 @@
+> > +git-hook(1)
+> > +===========
+> > +
+> > +NAME
+> > +----
+> > +git-hook - Manage configured hooks
+> > +
+> > +SYNOPSIS
+> > +--------
+> > +[verse]
+> > +'git hook'
+> > +
+> > +DESCRIPTION
+> > +-----------
+> > +You can list, add, and modify hooks with this command.
+> 
+> This could say something like "This is a placeholder command that will
+> gain functionality in subsequent patches" to make the current state
+> clear.
 
->>  PATTERNS("php",
->> -	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
->> +	 "^[\t ]*(((public|protected|private|static|abstract|final)[\t ]+)*function.*)$\n"
->>  	 "^[\t ]*((((final|abstract)[\t ]+)?class|interface|trait).*)$",
+Done.
 
-It probably does not matter in practice, but I wondered what the
-reason for the ordering between final and abstract here (and one
-line above) ;-)
+> 
+> [...]
+> > --- a/git.c
+> > +++ b/git.c
+> > @@ -519,6 +519,7 @@ static struct cmd_struct commands[] = {
+> >  	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
+> >  	{ "hash-object", cmd_hash_object },
+> >  	{ "help", cmd_help },
+> > +	{ "hook", cmd_hook, RUN_SETUP },
+> 
+> This makes the command require that it run within a git repository,
+> but I can imagine wanting to list hooks outside of any.  Should it use
+> RUN_SETUP_GENTLY instead?
 
->>  	 /* -- */
->>  	 "[a-zA-Z_][a-zA-Z0-9_]*"
->
-> It would be great if you could add test cases to t/4018/ that
-> demonstrate how these new keywords are handled.
-
-Yes.  It seems that we saw another userdiff patch with a test
-update recently and that may serve as an example, too.
-
-Thanks, both.
+Nice catch. I'll add a test to the list patch to that effect also.
