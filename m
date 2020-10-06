@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3ED0C41604
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8F1C3279D
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88BFB208E4
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 359DA208B8
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XXPuexN4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nsSj4Zcf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727449AbgJFWFX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Oct 2020 18:05:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49590 "EHLO
+        id S1727160AbgJFWFW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Oct 2020 18:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727148AbgJFWFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Oct 2020 18:05:21 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B43BBC061755
-        for <git@vger.kernel.org>; Tue,  6 Oct 2020 15:05:20 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id l11so353884wmh.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2020 15:05:20 -0700 (PDT)
+        with ESMTP id S1726681AbgJFWFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Oct 2020 18:05:18 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C41C0613D3
+        for <git@vger.kernel.org>; Tue,  6 Oct 2020 15:05:18 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id z1so15132003wrt.3
+        for <git@vger.kernel.org>; Tue, 06 Oct 2020 15:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=02D01SreVWC3QQ327aPFNuK9f8RLXupMf7UWyHd6hwE=;
-        b=XXPuexN4Km6v5tc3WRoi3oNcJ37J/x7PFRYq+k+CIVBietDkvoZVPQTkUgYzZo2oq3
-         cUPsb+bZJ363s3O/JpBw3vgOQN2Zv9q0MaUNxodm4Ls9nhhCK5dVoAC68fXaxDvcQ/S+
-         KMqVS/Df1gT+K0YykizkubenNZX6igB1atGF/sZos70oPmb7efN5kZde6Oun3Wv6smik
-         qMMNhOwlp2VUR/n4QXwEC6vY1Qrk1xBVyol6/vg1y9ySSgUIZwdW6a1OQxkqFvu2Cxx1
-         drwhZxzQF+NoPM+v0toBSB5APipUzjMvTGYdpZrsPr1Pq4dFQqK25/wUrTHZz0D91IzT
-         WcDQ==
+        bh=7Re0tTXNL4gDIhFxT3jXKNLquiU/iqwZdKc/tizSqJc=;
+        b=nsSj4ZcfPmwjI1gVZXB9AKG4mBslDLMy0blALE26ZacVpmhJkIwVNhRuhPlvzqJJ+g
+         R06MDjrbcxP054YmRb669QxXzSPhzkgx2dsRA78Wz/ggkuFau0PaPU5kBTrZzOYQPRHI
+         L+OwfMxOJXzZM0CZDLJAAefkLIudmuW+2W61rMMAR7rt/CbBC/yEz/Y++oJujSOVHbNq
+         B607m791DopS7rOq4rqf6CWPkQM0NMpnmCSTSapOmycmo8RSMdP08hDT5o+oMNyr/xM7
+         Is/MONjVWZ7fRqbUhxDBtfY8FMAwIpeFNrWNGjmOcFdoFRJIjDzIy4ef5c5+PxTFYq99
+         vhLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=02D01SreVWC3QQ327aPFNuK9f8RLXupMf7UWyHd6hwE=;
-        b=OAhXpM/sjT7Ua0meWW7nFW3oOZXrGe+cBai/PNcZxIorXYfOTNOZ9bdZpAsdoxGS9i
-         g4T2zK+N5cOVrftdiCFyBTLvXfQ7RbvWOPpCH7DziqPLFyGt0KnEt2gwerrQikymLEpT
-         oQeWQUaXyGggscbfTkRaTcixgDFZoZBbzTcCcO5A9+ahIyBNpOV8DoXVQAz4Cy7n5uji
-         yQfjzMOmDVOk6n1AXvT73ojOd4Fpc2mgHMMe6kuJ74oXskxo7iAJ9cpz2yTazm7h4Wwz
-         aaoLCowYEUNqiSWt04ji/4m86m7GSHQ31wC/mk95MV1DWo2CNXVx2S2wpTlcMdJLejBj
-         uQJg==
-X-Gm-Message-State: AOAM5332hCfm3OxXWz7Ch6+pY9ZqCgK9LuGrZq7YlZYTWzCsPXP8KPnL
-        wKRyZqzZU2YWvtVXB05DDNYUXeE2T5A=
-X-Google-Smtp-Source: ABdhPJwyHapIcNB4z1Bfy85eVkteDdDaYQhX74HGSSuCKeqsauwKa2qmriKwFDvibj1uVmMUQRpIOQ==
-X-Received: by 2002:a1c:9cd3:: with SMTP id f202mr46880wme.148.1602021919290;
-        Tue, 06 Oct 2020 15:05:19 -0700 (PDT)
+        bh=7Re0tTXNL4gDIhFxT3jXKNLquiU/iqwZdKc/tizSqJc=;
+        b=iD7bo3iKkN8Simuped4PAzYPfv3bWy3gNmHMkdEIwQXAGTh1DcwCEtV3qjB8RTHtb0
+         d5iiAxiRUxS+gXXXxdWVj8ZFmTziK61czlVwalPi67ixRZhwoaBgawyMQnDuK6dKzkUg
+         WcUCi5wC+pXvaCRpicbJMZLrPI4lYlKupcroY12WV026dqpl6/ucjBwZJW20ZjozVuJo
+         J6MsIMh8FoiywLKfuYhjBAfzUEjgBLJzkoU5vt87FbmXLQDAPD9Mhcx/jWnu7EaMqoCL
+         keb3FLD++AY1ZV/gA/pFExOq0BEchUO+1sAeQgKmmYx1yeB7d18HJA8dIof7V28M0i0P
+         3j1g==
+X-Gm-Message-State: AOAM533caMuDrObBuyKpfHXK0uWzDo8tT6nk016SdgWw9EGfZu95kebT
+        mDkLVNyDnc//b2N0ACXLC4JmZYOXLnY=
+X-Google-Smtp-Source: ABdhPJzfGk2JVK7Qe+seaiVSwtC5cJ9QiyGwBP6UcFWne2/KzSnI8ncxLXsSwZNDD9adke6505ukmA==
+X-Received: by 2002:adf:bbc6:: with SMTP id z6mr46759wrg.298.1602021916900;
+        Tue, 06 Oct 2020 15:05:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n65sm120029wmb.12.2020.10.06.15.05.18
+        by smtp.gmail.com with ESMTPSA id o129sm107616wmb.25.2020.10.06.15.05.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2020 15:05:18 -0700 (PDT)
-Message-Id: <a7aaedfed3785c6ca693f60f05e76156f68a5d39.1602021913.git.gitgitgadget@gmail.com>
+        Tue, 06 Oct 2020 15:05:16 -0700 (PDT)
+Message-Id: <8eec18388c86071db47512b84118e3b9111bd34d.1602021913.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.493.v2.git.1602021913.gitgitgadget@gmail.com>
 References: <pull.493.git.1589176201.gitgitgadget@gmail.com>
         <pull.493.v2.git.1602021913.gitgitgadget@gmail.com>
 From:   "Tom Clarkson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 06 Oct 2020 22:05:12 +0000
-Subject: [PATCH v2 6/7] subtree: more robustly distinguish subtree and
- mainline commits
+Date:   Tue, 06 Oct 2020 22:05:09 +0000
+Subject: [PATCH v2 3/7] subtree: persist cache between split runs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,71 +80,123 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Tom Clarkson <tom@tqclarkson.com>
 
-Prevent a mainline commit without $dir being treated as a subtree
-commit and pulling in the entire mainline history. Any valid subtree
-commit will have only valid subtree commits as parents, which will be
-unchanged by check_parents.
+Provide a mechanism for handling problematic commits. If the algorithm
+in process_split_commit is getting something wrong, you can write a
+corrected value to the cache before running split.
 
 Signed-off-by: Tom Clarkson <tom@tqclarkson.com>
 ---
- contrib/subtree/git-subtree.sh | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ contrib/subtree/git-subtree.sh | 37 ++++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index e56621a986..fa6293b372 100755
+index 160bad95c1..c21d620610 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -224,8 +224,6 @@ cache_setup () {
- 	fi
+@@ -27,6 +27,7 @@ b,branch=     create a new branch from the split subtree
+ ignore-joins  ignore prior --rejoin commits
+ onto=         try connecting new tree to an existing one
+ rejoin        merge the new branch back into HEAD
++clear-cache   reset the subtree mapping cache
+  options for 'add', 'merge', and 'pull'
+ squash        merge subtree changes as a single commit
+ "
+@@ -48,6 +49,7 @@ annotate=
+ squash=
+ message=
+ prefix=
++clearcache=
+ 
+ debug () {
+ 	if test -n "$debug"
+@@ -131,6 +133,9 @@ do
+ 	--no-rejoin)
+ 		rejoin=
+ 		;;
++	--clear-cache)
++		clearcache=1
++		;;
+ 	--ignore-joins)
+ 		ignore_joins=1
+ 		;;
+@@ -206,9 +211,13 @@ debug "opts: {$*}"
+ debug
+ 
+ cache_setup () {
+-	cachedir="$GIT_DIR/subtree-cache/$$"
+-	rm -rf "$cachedir" ||
+-		die "Can't delete old cachedir: $cachedir"
++	cachedir="$GIT_DIR/subtree-cache/$prefix"
++	if test -n "$clearcache"
++	then
++		debug "Clearing cache"
++		rm -rf "$cachedir" ||
++			die "Can't delete old cachedir: $cachedir"
++	fi
  	mkdir -p "$cachedir" ||
  		die "Can't create new cachedir: $cachedir"
--	mkdir -p "$cachedir/notree" ||
--		die "Can't create new cachedir: $cachedir/notree"
- 	debug "Using cachedir: $cachedir" >&2
+ 	mkdir -p "$cachedir/notree" ||
+@@ -266,6 +275,16 @@ cache_set () {
+ 	echo "$newrev" >"$cachedir/$oldrev"
  }
  
-@@ -255,18 +253,11 @@ check_parents () {
- 	local indent=$(($2 + 1))
- 	for miss in $missed
- 	do
--		if ! test -r "$cachedir/notree/$miss"
--		then
--			debug "  unprocessed parent commit: $miss ($indent)"
--			process_split_commit "$miss" "" "$indent"
--		fi
-+		debug "  unprocessed parent commit: $miss ($indent)"
-+		process_split_commit "$miss" "" "$indent"
- 	done
- }
- 
--set_notree () {
--	echo "1" > "$cachedir/notree/$1"
--}
--
- cache_set () {
- 	oldrev="$1"
- 	newrev="$2"
-@@ -719,11 +710,18 @@ process_split_commit () {
- 	# vs. a mainline commit?  Does it matter?
- 	if test -z "$tree"
++cache_set_if_unset () {
++	oldrev="$1"
++	newrev="$2"
++	if test -e "$cachedir/$oldrev"
++	then
++		return
++	fi
++	echo "$newrev" >"$cachedir/$oldrev"
++}
++
+ rev_exists () {
+ 	if git rev-parse "$1" >/dev/null 2>&1
  	then
--		set_notree "$rev"
+@@ -375,13 +394,13 @@ find_existing_splits () {
+ 			then
+ 				# squash commits refer to a subtree
+ 				debug "  Squash: $sq from $sub"
+-				cache_set "$sq" "$sub"
++				cache_set_if_unset "$sq" "$sub"
+ 			fi
+ 			if test -n "$main" -a -n "$sub"
+ 			then
+ 				debug "  Prior: $main -> $sub"
+-				cache_set $main $sub
+-				cache_set $sub $sub
++				cache_set_if_unset $main $sub
++				cache_set_if_unset $sub $sub
+ 				try_remove_previous "$main"
+ 				try_remove_previous "$sub"
+ 			fi
+@@ -688,6 +707,8 @@ process_split_commit () {
  		if test -n "$newparents"
  		then
--			cache_set "$rev" "$rev"
-+			if test "$newparents" = "$parents"
-+			then
-+				# if all parents were subtrees, this can be a subtree commit
-+				cache_set "$rev" "$rev"
-+			else
-+				# a mainline commit with tree missing is equivalent to the initial commit
-+				cache_set "$rev" ""
-+			fi
- 		else
-+			# no parents with valid subtree mappings means a commit prior to subtree add
- 			cache_set "$rev" ""
+ 			cache_set "$rev" "$rev"
++		else
++			cache_set "$rev" ""
  		fi
  		return
+ 	fi
+@@ -785,7 +806,7 @@ cmd_split () {
+ 			# the 'onto' history is already just the subdir, so
+ 			# any parent we find there can be used verbatim
+ 			debug "  cache: $rev"
+-			cache_set "$rev" "$rev"
++			cache_set_if_unset "$rev" "$rev"
+ 		done
+ 	fi
+ 
+@@ -798,7 +819,7 @@ cmd_split () {
+ 		git rev-list --topo-order --skip=1 $mainline |
+ 		while read rev
+ 		do
+-			cache_set "$rev" ""
++			cache_set_if_unset "$rev" ""
+ 		done || exit $?
+ 	fi
+ 
 -- 
 gitgitgadget
 
