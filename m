@@ -1,4 +1,4 @@
-Return-Path: <SRS0=R7wA=DM=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=+hCi=DN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -7,104 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A34CC4363A
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F2BCC4363A
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 00:14:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3CF320789
-	for <git@archiver.kernel.org>; Mon,  5 Oct 2020 23:48:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E5F6206F4
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 00:14:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMnLRplf"
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="t6tRFIWn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727022AbgJEXsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 19:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41180 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725872AbgJEXsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 19:48:43 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D66EEC0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 16:48:42 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id d6so307171plo.13
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 16:48:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KLSDv1ioIZYpEwPkqxrHj6W3t0W+S6PULdiHvs/E9C8=;
-        b=RMnLRplf5Cxf4/XDubA3Aijgq9WZ0he4EwnFijS5CkEb/4UpdlWQChdskpNO3stYlL
-         kgJpTVYs1YVQGUzkyLQi/JrMC8OYjDLKlAIjjT4TE0DdJrDmcHn0cJ8qi78R5a5XlCP1
-         XOfazDElPzES2Q57RvWwKJKuP0TiP8nZ5A4xtkJbswoCy/E2qXlktmdIIvmLntdABrfn
-         YP9gGgZGsr5MT4VJyLKqK2v+uAEBFlLhasbDjg25bvapqptfotpGKZgWz/3eFiP4ua6I
-         9aPaOxMceVWQnmzpLoWk4k+gERFja5kY2MOvhl0bu+RtqMEf6SUV6sNL68ci8croc0Wy
-         TygQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KLSDv1ioIZYpEwPkqxrHj6W3t0W+S6PULdiHvs/E9C8=;
-        b=R3bPwQrarxd09JQg2jggg3ig1hdi+vHBICoEyuq3hskQTcYvXqIA1O2SdAKvSeeGSf
-         irdQbJuQYAELtWTu0cliKYvtRgUek20srJIAeNejmT2XB/1ts+3Bglv0SybCVZHzqsCk
-         NIOAOX4xw//l/tkZkisKYQ9gPkbry6n90mqRRIITQkYt+C5V8igE/6Ee0KL2vcvRkxp+
-         j6lmGi00yfORsid/a6VjyzxGct7pSvSxfNe5i1YTR2mfU6Fa0CDW7lHPC92PhqAYLb3o
-         i3EDJSQO7UH6q4+ZNkWlze6oIstJ/R3eQ4FqK9UNR/oxgQy5DgBTosrDclckoA8ZuJx5
-         peDg==
-X-Gm-Message-State: AOAM5331umjMAnz08zEIGHOzfZ6jwXr0f9Z2BP/CdJm/tybL6oh2d8Ga
-        Tib8WRaC7IhdBiIYMTZ6KXhnu3bFA2E=
-X-Google-Smtp-Source: ABdhPJz9AR2B6cYt7gtAgkEGvWcOZ9RER9MNMmrbudcB1R/ZN1jULDGsxFpnH0LnRB9ftXArQNV5kQ==
-X-Received: by 2002:a17:90a:4b4e:: with SMTP id o14mr1870701pjl.216.1601941722353;
-        Mon, 05 Oct 2020 16:48:42 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id e11sm1093952pfl.58.2020.10.05.16.48.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2020 16:48:41 -0700 (PDT)
-Date:   Mon, 5 Oct 2020 16:48:39 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4 8/9] commit: use config-based hooks
-Message-ID: <20201005234839.GF1393696@google.com>
-References: <20200909004939.1942347-9-emilyshaffer@google.com>
- <20200923234734.1294057-1-jonathantanmy@google.com>
- <20201005212751.GH331156@google.com>
-MIME-Version: 1.0
+        id S1726753AbgJFAOD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 20:14:03 -0400
+Received: from st43p00im-ztbu10063701.me.com ([17.58.63.178]:44013 "EHLO
+        st43p00im-ztbu10063701.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725865AbgJFAOC (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Oct 2020 20:14:02 -0400
+X-Greylist: delayed 453 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2020 20:14:02 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1601942789;
+        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+        h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:To;
+        b=t6tRFIWndhcQgOmDO7uYKudPXgAmNVwY5sUzvBqEZGcWuuNzOQ5xsWqmjQy4RwYh/
+         0iTqaQ4AbSJPOf/U5Xac5zww8NpfyWYuFcqvu/Op5M6MQZ884Q1Vli9W8oMSwjCP4/
+         G5jhKrV79yemy+v+t3DIxEPByGbgEr4eUuNFjqXapc0dtChczwQbxI7FU8pQmYXrp+
+         i3d+n4CXw2CEQqGUiPrUuh4qBcOb/bAVhioUq13xEhlGOqJyjDU1oVEihTW9aylWs0
+         EWY5i2f1aRschdMZZ3W+yJHWE1A0nyW2tfMcfSWOSzjc1aRNeSYMaUrauhuJKv8Y2L
+         7fbAaYcLljr1Q==
+Received: from [172.16.30.1] (unknown [172.98.76.98])
+        by st43p00im-ztbu10063701.me.com (Postfix) with ESMTPSA id F187A9A0347;
+        Tue,  6 Oct 2020 00:06:28 +0000 (UTC)
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201005212751.GH331156@google.com>
+Content-Transfer-Encoding: 7bit
+From:   Luv MeZza <lovemizu55@icloud.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] unpack-trees: do not set SKIP_WORKTREE on submodules
+Date:   Mon, 5 Oct 2020 20:06:27 -0400
+Message-Id: <79226541-6B0D-4C54-A7F6-A7B276F5EC31@icloud.com>
+Cc:     dstolee@microsoft.com, git@vger.kernel.org,
+        matheus.bernardino@usp.br, newren@gmail.com
+To:     gitgitgadget@gmail.com
+X-Mailer: iPhone Mail (17C54)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235,18.0.687
+ definitions=2020-10-05_19:2020-10-05,2020-10-05 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=511 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-2006250000 definitions=main-2010050170
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer wrote:
-> On Wed, Sep 23, 2020 at 04:47:34PM -0700, Jonathan Tan wrote:
 
->>  - As for whether (1) it is OK for none of the hooks to be converted (and
->>    instead rely on the user to edit their hook scripts to call "git hook
->>    run ???"), or if (2) we should require some hooks to be
->>    converted, or if (3) we should require all hooks to be converted: I'd
->>    rather have (2) or (3) so that we don't have dead code. I prefer (3),
->>    especially since a reviewer wouldn't have to worry about leftover
->>    usages of old functions like find_hook() (as I mentioned at the start
->>    of this email), but I'm not fully opposed to (2) either.
->
-> I personally prefer (3) - I think the user experience with (2) in a
-> release (or even in 'next', which all Googlers use) is pretty bad. The
-> downside, of course, is that a large topic gets merged all at once and
-> makes some pretty nasty reviewer overhead.
 
-One approach is to build up a series with "git hook run" and "git hook
-list" demonstrating and testing the functionality and [PATCH n+1/n]
-extra patches at the end converting existing hooks.  The user
-experience from "git hook run" and even "git hook list" supporting a
-preview of the future without built-in commands living in that future
-yet would not be so bad, methinks.  And then a final series could
-update the built-in commands' usage of hooks and would still be fairly
-small.
-
-In other words, I think I like (1), except *without* the
-recommendation for users to edit their hook scripts to call "git hook
-run" --- instead, the recommendation would be "try running this
-command if you want to see what hooks will do in the future".
-
-Thanks,
-Jonathan
+Sent from my iPhone
