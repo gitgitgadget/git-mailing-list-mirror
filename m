@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0512C4363D
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BFEBC41604
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E27C208C3
+	by mail.kernel.org (Postfix) with ESMTP id A510D208C7
 	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 22:05:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VrURtn2h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j8DlhiRT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727119AbgJFWFU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Oct 2020 18:05:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49582 "EHLO
+        id S1727150AbgJFWFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Oct 2020 18:05:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726702AbgJFWFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Oct 2020 18:05:19 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 279FEC0613D4
-        for <git@vger.kernel.org>; Tue,  6 Oct 2020 15:05:19 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id j136so353839wmj.2
-        for <git@vger.kernel.org>; Tue, 06 Oct 2020 15:05:19 -0700 (PDT)
+        with ESMTP id S1726671AbgJFWFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Oct 2020 18:05:18 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F3BC0613D2
+        for <git@vger.kernel.org>; Tue,  6 Oct 2020 15:05:18 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id d3so343855wma.4
+        for <git@vger.kernel.org>; Tue, 06 Oct 2020 15:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qHR3+3mHYmznNp1HGoR9hffJqdaCSV+4vNzb0cmV3ms=;
-        b=VrURtn2h5D5CL1Y2aTaxFa7Ge3KTbaFLfT3THPQM+SuFLmQhJUWQgDJWlYKyKuZLYz
-         oMNsCdJclqbAdzC6gf0oh4uVtuvJNEaNGP3VEcm8r+atUrRYEbYW+dLpoL41HFM2iy75
-         IIBUBlXm/WiFWzywS+RM7wuFRxOwEJSsng4a2EEmOakyFa8TgYiglTMhzP+An5/p+788
-         V5mHOOcaIcFwDpQm5K5M77S9sYSiscIIq1h1Q3PH8toqs3ju89IUpCwuOkVu2KxFwFuK
-         JAeAhlH0Xkb4bvigoEzBjbmYMY2ZzsDtym1gDmTod5r8/KvJcewrrmYeYsdsbNsCmWKt
-         7dzw==
+        bh=7Vnx6oi5i4zCWbmrw65bCDUY3HsC4utGO4Q4LcSDH20=;
+        b=j8DlhiRT6vo+jrcE3zdbqNGgjEUs2zs5fxUBqxFinadV+bSlmgiAN4RTE5iuslAM3F
+         CvoprDEQ+ImD9oB9fMadkz7H/epP2klEwAt0pu/zSOJGbB4Kmi1XyqKYSxub/Sc6WzuB
+         OViky8Joji9UQlL1YMNf4JE5T96ymx3PSw/kCbVY5E1H3/v5owkU+RWTgpiD8+ashtPx
+         3oJw6OyG6LvHUErAe6b8v+2Y47HZVxdTQrFEBfWmymj/6xb42V21tAvsuMGsIIzkm662
+         ur7g/Dz4PQJyiaN4AYImJ5Uc9D8qnn480qG6SJQ1OlK6NU5r2BOYX1jsUkf4hsyv/T06
+         Vl/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qHR3+3mHYmznNp1HGoR9hffJqdaCSV+4vNzb0cmV3ms=;
-        b=bdRrm7rgMN5HXNXDTmyMoxPldcA03qrkVsFdowUt19EvPxRWUFFqe61MPtiIuDw2t5
-         BK2uJQzi/J8BK48ncnOdx0V9x45vpXnMzry53vsLTxIxwURR0BZhvj4UrXaqfeOYszdn
-         sbLTjc4oVWrexHaD1XeBqU503jls1XplCgAY7ky26S8bJHQKEgUEgQ5JD42tch2EGTlM
-         kf30ABVWd5RMoHcT1gIHh9IPcgVt90lS4d9x+OwGuPqbPPkXiZa3T0vbqOe/Al6UOqCx
-         F/Xtpdo8YAhNWIC2dAnmFVyajkgn5yQ69lc2Xxmkn/p0B9m1EeaLS6nRe3QpSlFa072G
-         xfrg==
-X-Gm-Message-State: AOAM5308mkJ+o8hA6NMZbXMI2sqBudBd5/xtpLTfyVNAn/siA9au0RNs
-        JjJo0xxftbSrxeCv1EAt3fU4QQ15xA0=
-X-Google-Smtp-Source: ABdhPJwVxnNktGj5P8TIwMvRwo3csr1Jsb7ZYZuPGV1tQRph8otL9l/ExIP1+xlST5wCOBWM95Kmcg==
-X-Received: by 2002:a1c:2b05:: with SMTP id r5mr11316wmr.179.1602021917723;
-        Tue, 06 Oct 2020 15:05:17 -0700 (PDT)
+        bh=7Vnx6oi5i4zCWbmrw65bCDUY3HsC4utGO4Q4LcSDH20=;
+        b=cEbr1etTIKq26RXaPyAD7iBcK5NfhxppxylVrwCUWPp0/49XqPOCFQkhV7icHx0/Pj
+         Nnw78XfhDuLnhtkPHci7PoYw7ha7HXPV+ve015RlRPj0C+uEsXwRz2fqFpuoYSAR2T61
+         VN/JCO6q/LflrcBxN00ilIdXSG9abbYCcy/2D5ISWLp3mgra6slAFsAgtPSpWoEyjprW
+         tWWoxb3SiL1bomXiHP75RdJqTYOrAphMqXYVdLIF4es+lz1Yu+YY3n5btQNObyuZYP57
+         GF3SFAwSOVEsk1pNUsYZyfyDI/1iTtaWz/fQF/iYvovurjuT+gkAJQoxaprikTYr7sw9
+         HsAg==
+X-Gm-Message-State: AOAM533aT1eDEQcrpop2xVKkMYMG9moJpEycZHZqutLUQGlbo7njoY24
+        nOJM3+XFqXxAMGxxiOuVwbNGHlCcSS0=
+X-Google-Smtp-Source: ABdhPJxceWqb7E7UsbhRyv9y74hc1kOIlPHqVb/yRqZpVzJ1Zn0FRD1Ib8SeDjiOPZ7WBiICXc/CxQ==
+X-Received: by 2002:a1c:96cf:: with SMTP id y198mr58142wmd.104.1602021915222;
+        Tue, 06 Oct 2020 15:05:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e7sm195686wrm.6.2020.10.06.15.05.17
+        by smtp.gmail.com with ESMTPSA id s12sm106422wmd.20.2020.10.06.15.05.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2020 15:05:17 -0700 (PDT)
-Message-Id: <1490ce111463b56eed35016c2e6232eea1faa3db.1602021913.git.gitgitgadget@gmail.com>
+        Tue, 06 Oct 2020 15:05:14 -0700 (PDT)
+Message-Id: <9cff2a0cf66f037bf10866b7787496c6cf02ad94.1602021913.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.493.v2.git.1602021913.gitgitgadget@gmail.com>
 References: <pull.493.git.1589176201.gitgitgadget@gmail.com>
         <pull.493.v2.git.1602021913.gitgitgadget@gmail.com>
 From:   "Tom Clarkson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 06 Oct 2020 22:05:10 +0000
-Subject: [PATCH v2 4/7] subtree: add git subtree map command
+Date:   Tue, 06 Oct 2020 22:05:07 +0000
+Subject: [PATCH v2 1/7] subtree: handle multiple parents passed to cache_miss
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,67 +80,24 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Tom Clarkson <tom@tqclarkson.com>
 
-Adds an entry to the subtree cache so that subsequent split runs can skip
-any commits that turn out to be problematic.
-
 Signed-off-by: Tom Clarkson <tom@tqclarkson.com>
 ---
- contrib/subtree/git-subtree.sh | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ contrib/subtree/git-subtree.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index c21d620610..1559100c0e 100755
+index 868e18b9a1..9867718503 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -15,6 +15,7 @@ git subtree merge --prefix=<prefix> <commit>
- git subtree pull  --prefix=<prefix> <repository> <ref>
- git subtree push  --prefix=<prefix> <repository> <ref>
- git subtree split --prefix=<prefix> <commit>
-+git subtree map   --prefix=<prefix> <mainline> <subtree>
- --
- h,help        show the help
- q             quiet
-@@ -161,7 +162,7 @@ command="$1"
- shift
- 
- case "$command" in
--add|merge|pull)
-+add|merge|pull|map)
- 	default=
- 	;;
- split|push)
-@@ -192,7 +193,8 @@ dir="$(dirname "$prefix/.")"
- 
- if test "$command" != "pull" &&
- 		test "$command" != "add" &&
--		test "$command" != "push"
-+		test "$command" != "push" &&
-+		test "$command" != "map"
- then
- 	revs=$(git rev-parse $default --revs-only "$@") || exit $?
- 	dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
-@@ -793,6 +795,21 @@ cmd_add_commit () {
- 	say "Added dir '$dir'"
+@@ -238,7 +238,7 @@ cache_miss () {
  }
  
-+cmd_map () {
-+	oldrev="$1"
-+	newrev="$2"
-+
-+	if test -z "$oldrev"
-+	then
-+		die "You must provide a revision to map"
-+	fi
-+
-+	cache_setup || exit $?
-+	cache_set "$oldrev" "$newrev"
-+
-+	say "Mapped $oldrev => $newrev"
-+}
-+
- cmd_split () {
- 	debug "Splitting $dir..."
- 	cache_setup || exit $?
+ check_parents () {
+-	missed=$(cache_miss "$1")
++	missed=$(cache_miss $1)
+ 	local indent=$(($2 + 1))
+ 	for miss in $missed
+ 	do
 -- 
 gitgitgadget
 
