@@ -2,109 +2,119 @@ Return-Path: <SRS0=+hCi=DN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 696B2C4363A
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 01:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9602EC46466
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 03:57:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E146207F7
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 01:43:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44F9D208B6
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 03:57:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHNj36pr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ayyg2cNs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725917AbgJFBnI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Oct 2020 21:43:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58784 "EHLO
+        id S1725909AbgJFD5O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Oct 2020 23:57:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbgJFBnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Oct 2020 21:43:08 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F22C0613CE
-        for <git@vger.kernel.org>; Mon,  5 Oct 2020 18:43:08 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id l126so8087143pfd.5
-        for <git@vger.kernel.org>; Mon, 05 Oct 2020 18:43:08 -0700 (PDT)
+        with ESMTP id S1726858AbgJFD5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Oct 2020 23:57:14 -0400
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35803C0613CE;
+        Mon,  5 Oct 2020 20:57:14 -0700 (PDT)
+Received: by mail-vk1-xa44.google.com with SMTP id d125so1557558vkh.10;
+        Mon, 05 Oct 2020 20:57:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xwwfb84wAnCR7bk5O+WHnZgVStMwahw31hXm9xbCIEI=;
-        b=jHNj36pr8xfMUT4oZV5BmqWQ1OD8ey/bsR8T/aozbstb7uaoLhcjmovq8kTNghSflq
-         XocFP+2DrKGMtvb2cMJ7ChKhRSoZq5YtV38FMLyg/5PKCT0Tm785THC/9CbyzXDcwYko
-         QgTXbCuOXQIJ+OAVSPv33ZuwRYkiQgyNn8fWnqCc0K1VrIDqzB6CCERKACJB/BqG7qtT
-         5YXM/7oPqueMAR+KdYBG1KV85vQnRYLQCd8/zgX8OYm0ClW6XTFzjdZQR6ocuA7kg6gr
-         0kMCrMq6w9WJqQUFexWH7o7XcnxwHZ7K4OW6lCkFQCBvnFLuq3VI1MZVv9DCvNNVA3IZ
-         QoqQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HH7xhhlnmd3Dg58XEz48SP2OGgWs2Ku3LIn7+NT7bjM=;
+        b=Ayyg2cNsss3TC8/XzOvjJfWBuW+gWaQfFYHV2Mq4P7hb7xGzJvOINM3oPb2VPA2fxF
+         8DveQoAU0vh1gBH+6y90xZGKZstXd5cdPYTzvfzu/UNgUSIC7hB5a0xwlhoob2N6wDtK
+         buP3W5ay9aIc8mEjzpRowyEWP4+DGdjlfrFRWCSDLoB0driy8YaFTyYlrtrDxGpbXQz+
+         1Psklb1Ktj5zPJrqO0MsDQdh4W1LX5Wa6PqUht0fTIoSW6Zk5J8HDzlHmAYc8WmnY5xh
+         K0rJI+zQ08PXT2cgoEE9xrdGc58RCEMRJZTvc6qrzloeFRqYR18y4K88A19crq3ZIxlq
+         aB7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xwwfb84wAnCR7bk5O+WHnZgVStMwahw31hXm9xbCIEI=;
-        b=n/2KMkSUa/RModVnz0z2RcM358CUd0NeGPfNwyXFzAQ4aRS6356wKRlOZjhfBMS+Ng
-         DEB/kAnyl4eNLXgK+X+aXXnsHlkSxzjMaoUiejOFgImbavDzG7xeRc/FrXhj6IhGa+zr
-         WBRrRi39tTbZHvELROWNCcAaDk45Xk9PlTNjyZuZAKnabLkzo+JNR55Ro7x7Z7PN/cTo
-         xgpJVOAJni/JfeuJvpgDNQSAhzisdkIrVRyUprtWgAs3RQN9hoKbSIKv3FN1uigQhyIy
-         s4ONx4da/rdHRZRK+LDfgj4+/jnBq7AZmGaTWdZK3kjXcjTjoJUDU9pL/8lMVFDlzfVf
-         KGzw==
-X-Gm-Message-State: AOAM530CAiBNc33ikXbKSnbvH+i5bo+Fm9ydNxRm0YgKfJcGwYNHC8ts
-        WymX9H2nmz7j7rOOTfP29Z/BvkgVs7eKmQ==
-X-Google-Smtp-Source: ABdhPJwa4n5NEQJNEqs4HvFE8TYsQPoO6kfZ1o0CuM7mje4Jqm7o2oVZAM+bwjNMN9OtT97Mmh0IVw==
-X-Received: by 2002:aa7:9af1:0:b029:152:6101:ad12 with SMTP id y17-20020aa79af10000b02901526101ad12mr2491639pfp.40.1601948587565;
-        Mon, 05 Oct 2020 18:43:07 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id u18sm957882pgk.18.2020.10.05.18.43.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Oct 2020 18:43:06 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Daniel Santos <hello@brighterdan.com>
-Subject: [L10N] Kickoff for Git 2.29.0 round #1
-Date:   Mon,  5 Oct 2020 21:42:58 -0400
-Message-Id: <20201006014258.26369-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HH7xhhlnmd3Dg58XEz48SP2OGgWs2Ku3LIn7+NT7bjM=;
+        b=h398eU/MVYIhhd610A2uYboA9/4ckggNw/heeR5QO8ox1JlGO2/Sz6o5nmAkjH6l8O
+         L673KKn/IjSoeu0h7AVS1DY8aKMHAFZ5ODiogdb89WGdxGVcGEJec+WrizVq0oStA3JQ
+         G4FElxHdfeRCljNqn2XtseqAR4JHjwoGp6ezD3BV0ubnfZ+/NDTCMpbvaN6UviwgyrNK
+         I43ol1idWrPlbSXmEIwIQrsVe8xE9Zh/DhfxUfYg8qtghSQkE3g5OXP7Oz4Drf8NO5XP
+         1zzzvH/ArTGGd5BobFCJ1UeM82AjCSGF7bi0oqd6G0sTuCZSZf6k7bNcGMCNL/QzU2Zo
+         ZQ/Q==
+X-Gm-Message-State: AOAM5312dV3FrVa1j/httTnxA5cqxpryLYaIOlZ0A/oyjH3I/zyO7kC9
+        e0rav9SK+6L6Qn40ts7FnPMncMaNgHxpNL86plI=
+X-Google-Smtp-Source: ABdhPJyrMJkL/lB7fMsFdh79DyNTsPpi0AcOzskikSuFaCZjatVVdBQ7wM7aU+DIflncfB9lZcpBFCQ+uutXgOVMU1o=
+X-Received: by 2002:a1f:a5d2:: with SMTP id o201mr2047770vke.15.1601956633406;
+ Mon, 05 Oct 2020 20:57:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 6 Oct 2020 05:57:02 +0200
+Message-ID: <CAN0heSrKgNSHKDL07-BWrbF9n6fyWUZVDykdHPCD6CfwgV8QNA@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-Git v2.29.0-rc0 has been released, and it's time to start new round of git l10n.
-This time there are 124 updated messages need to be translated since last
-update:
+Thanks for the release candidate!
 
-    l10n: git.pot: v2.29.0 round 1 (124 new, 42 removed)
-    
-    Generate po/git.pot from v2.29.0-rc0 for git v2.29.0 l10n round 1.
-    
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Minor comments follow.
 
-You can get it from the usual place:
+On Tue, 6 Oct 2020 at 01:00, Junio C Hamano <gitster@pobox.com> wrote:
+>  * The final leg of SHA-256 transition plus doc updates.  Note that
+>    there is no inter-operability between SHA-1 and SHA-256
+>    repositories yet.
 
-    https://github.com/git-l10n/git-po/
+I suspect the dash in "inter-operability" should be dropped.
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
+>  * Various callers of run_command API has been modernized.
+>    (merge afbdba391e jc/run-command-use-embedded-args later to maint).
 
---
-Jiang Xin
+s/has/have/
+
+>  * List of options offered and accepted by "git add -i/-p" were
+>    inconsistent, which have been corrected.
+>    (merge ce910287e7 pw/add-p-allowed-options-fix later to maint).
+>
+>  * Various callers of run_command API has been modernized.
+>    (merge afbdba391e jc/run-command-use-embedded-args later to maint).
+
+Here's that entry again from my previous comment.
+
+>  * "git status" has trouble showing where it came from by interpreting
+>    reflog entries that record certain events, e.g. "checkout @{u}", and
+>    gives a hard/fatal error.  Even though it inherently is impossible
+>    to give a correct answer because the reflog entries lose some
+>    information (e.g. "@{u}" does not record what branch the user was
+>    on hence which branch 'the upstream' needs to be computed, and even
+>    if the record were available, the relationship between branches may
+>    have changed), at least hide the error to allow "status" show its
+>    output.
+
+s/show/to &/ ?
+
+>  * There is a logic to estimate how many objects are in the
+>    repository, which is mean to run once per process invocation, but
+
+s/mean/meant/, I think.
+
+>  * The "unshelve" subcommand of "git p4" used incorrectly used
+
+s/used // (without 'g' flag!)
+
+Martin
