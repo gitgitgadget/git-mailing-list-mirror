@@ -2,114 +2,150 @@ Return-Path: <SRS0=+hCi=DN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAB98C41604
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 19:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59FC1C41604
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 19:11:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 584C4206B5
-	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 19:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5968206CB
+	for <git@archiver.kernel.org>; Tue,  6 Oct 2020 19:11:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jIkZEh/Y"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k7fznEbG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726920AbgJFTIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Oct 2020 15:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726760AbgJFTIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Oct 2020 15:08:48 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5FEC061755
-        for <git@vger.kernel.org>; Tue,  6 Oct 2020 12:08:48 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id e10so9025858pfj.1
-        for <git@vger.kernel.org>; Tue, 06 Oct 2020 12:08:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FgYecRfVzScDItnnz488ifiwAivC171GOyraNCoSzy0=;
-        b=jIkZEh/Yft5p2Dgi193tAzdSlUX2jHotWZar4Nd99mt7bA8HE5YTrWRBdyCOpBbE+A
-         lpdT9CSLkYADv8J4Hljyy+7AZdvZDhsDWb09K9QF/EovJj8tm0T4TeBre8NRVVL3HkDR
-         /VT7Zu+iZQddnBPFKhGB3JF3Im+pmUP+m15tja6tNmwTcoaEOLK5bnroF88W/jedFpYg
-         ZKrQVanHjWgC9GAjSGg49EJvvzLmNOMkkHaB5MzzZxuJIb9vk2b+4kgYJ232X3ZINMCo
-         21OTyc2lulReA9fBag8bT1fuGS1/6E6VCHT7wxHIhWjoHEVS/Dwr/BvnS/ERpU07kK0I
-         PA8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FgYecRfVzScDItnnz488ifiwAivC171GOyraNCoSzy0=;
-        b=Q/3yHM2a3PHmXm1aMk8hfJvrCbtz0Uay+ANfPYUqsqOTNhrV7hXjBPQE6wiUDrbr9F
-         qT8EWjLumLcPv0ZTV1ShWzWKrlh1eJDE/vAu0dXX8fmStuPM+Q2QzFwK1nWJVksgLqWL
-         PLnCS8nQ1Nx58OuOkAZz+pRp44uSiwU4i+oY9hdGHssYK320I2iaVBY2t+lKjofAZqW6
-         fzYlUNi07ig2adkKDlqlUqklUj0qBuS3/5NLq+RIleOa8sRx64YHFIpiegMDywc5eIpm
-         hnEsJmwFJAVYM7mftu5TXFKDjAaYbdga2nWagbBE1RLchVW+twdAwpA2O0B+rBoN1OZE
-         /T0Q==
-X-Gm-Message-State: AOAM5320TQeKgaR1it08rG1zFhZoU/47EsoktB6aIldMbbIPo2zMY2jv
-        WMdKDjJdJsob4tSS4A+B32wm8Q==
-X-Google-Smtp-Source: ABdhPJw/GvpeO8z/SGLuuZGSKuAocN3JEeSF85hmx/9p8ScVHNmXsg/YEnH4zTziNQ9OPsd6kEYNIA==
-X-Received: by 2002:a65:5249:: with SMTP id q9mr5331310pgp.79.1602011327940;
-        Tue, 06 Oct 2020 12:08:47 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id 15sm3906840pgt.24.2020.10.06.12.08.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2020 12:08:47 -0700 (PDT)
-Date:   Tue, 6 Oct 2020 12:08:42 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4 8/9] commit: use config-based hooks
-Message-ID: <20201006190842.GJ331156@google.com>
-References: <20200909004939.1942347-9-emilyshaffer@google.com>
- <20200923234734.1294057-1-jonathantanmy@google.com>
- <20201005212751.GH331156@google.com>
- <20201005234839.GF1393696@google.com>
+        id S1726987AbgJFTLI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Oct 2020 15:11:08 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59568 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726760AbgJFTLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Oct 2020 15:11:08 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E2BD8E4253;
+        Tue,  6 Oct 2020 15:11:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=UzZISOmddlLX
+        aApzkFnhZfi6Hko=; b=k7fznEbGoIErPoUilCjDQyMlvI7m4qnuHYhgMnMwEftN
+        pDUW9yGoiJ4Dkb6/EXJ+DDvYm1O0LjFlhzq1YlQ7K8MwOV5J4ovygidAk/fpfnMp
+        kL5nK1Kf8jRpb7fqtu1Hvob2zrMxZi0v1kgHqutn8ghn+Sw7xYn+g7vPsohQLJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rHssXI
+        qwUY4j2InSfj5yTumlNKycfwQVVwi37BPP3jRFW7ci2Nb4nVPMcg+cW1cnT5G7Gq
+        xhYYDDI64IAHtN+oaENAFKLz362WB2uD06VUzx17OdzZj6h73EGiZcQH/kedsS3j
+        faSESJxSBU7xw2T8jL36+IOENp/mNHBOF1QTs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DC6D9E4251;
+        Tue,  6 Oct 2020 15:11:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3328DE424F;
+        Tue,  6 Oct 2020 15:11:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t5534: split stdout and stderr redirection
+References: <20201006150818.15698-1-congdanhqx@gmail.com>
+Date:   Tue, 06 Oct 2020 12:11:00 -0700
+In-Reply-To: <20201006150818.15698-1-congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
+ =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
+        Danh"'s message of "Tue, 6 Oct 2020 22:08:18 +0700")
+Message-ID: <xmqqft6r5fwb.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201005234839.GF1393696@google.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: ACD31B72-0807-11EB-9E0D-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 05, 2020 at 04:48:39PM -0700, Jonathan Nieder wrote:
-> 
-> Emily Shaffer wrote:
-> > On Wed, Sep 23, 2020 at 04:47:34PM -0700, Jonathan Tan wrote:
-> 
-> >>  - As for whether (1) it is OK for none of the hooks to be converted (and
-> >>    instead rely on the user to edit their hook scripts to call "git hook
-> >>    run ???"), or if (2) we should require some hooks to be
-> >>    converted, or if (3) we should require all hooks to be converted: I'd
-> >>    rather have (2) or (3) so that we don't have dead code. I prefer (3),
-> >>    especially since a reviewer wouldn't have to worry about leftover
-> >>    usages of old functions like find_hook() (as I mentioned at the start
-> >>    of this email), but I'm not fully opposed to (2) either.
-> >
-> > I personally prefer (3) - I think the user experience with (2) in a
-> > release (or even in 'next', which all Googlers use) is pretty bad. The
-> > downside, of course, is that a large topic gets merged all at once and
-> > makes some pretty nasty reviewer overhead.
-> 
-> One approach is to build up a series with "git hook run" and "git hook
-> list" demonstrating and testing the functionality and [PATCH n+1/n]
-> extra patches at the end converting existing hooks.  The user
-> experience from "git hook run" and even "git hook list" supporting a
-> preview of the future without built-in commands living in that future
-> yet would not be so bad, methinks.  And then a final series could
-> update the built-in commands' usage of hooks and would still be fairly
-> small.
-> 
-> In other words, I think I like (1), except *without* the
-> recommendation for users to edit their hook scripts to call "git hook
-> run" --- instead, the recommendation would be "try running this
-> command if you want to see what hooks will do in the future".
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-Ok. I'll fix up the wording in the design doc and follow through with my
-plan to split the series into two parts.
+> On atomic pushing failure with GnuPG, we expect a very specific output
+> in stdout due to `--porcelain` switch.
+>
+> On such failure, we also write down some helpful hint into stderr
+> in order to help user understand what happens and how to continue from
+> those failures.
+>
+> On a lot of system, those hint (in stderr) will be flushed first,
+> then those messages in stdout will be flushed. In such systems, the
+> current test code is fine as is.
+>
+> However, we don't have such guarantee, (at least) there're some real
+> systems that writes those stream interleaved. On such systems, we may
+> see the stderr stream written in the middle of stdout stream.
+>
+> Let's split those stream redirection. By splitting those stream,
+> the output stream will contain exactly what we want to compare,
+> thus, saving us a "sed" invocation.
 
- - Emily
+Makes sense.
+
+> While we're at it, change the `test_i18ncmp` to `test_cmp` because we
+> will never translate those messages (because of `--porcelain`).
+
+Good thinking.  It would make sure that we will catch when we
+accidentally mark messages meant for --porcelain with the
+gettext-poison tests.
+
+> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@g=
+mail.com>
+> ---
+>  Arguably, I would say it's OK to change the:
+>  =09
+>  	test_i18ngrep ! "gpg failed to sign"
+>
+>  to:
+>
+>  	! grep "gpg failed to sign"
+>
+>  since the latter will be correct even if GIT_TEST_GETTEXT_POISON=3Dtru=
+e
+
+Is it because we haven't managed to translate this particular
+message, or is it because we should never ever translate it perhaps
+because the message is meant for machine consumption?  If the
+latter, yes, I agree with the reasoning, but I do not see a reason
+why this message should never be translated.
+
+>  t/t5534-push-signed.sh | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
+> index 7e928aff66..af0385fb89 100755
+> --- a/t/t5534-push-signed.sh
+> +++ b/t/t5534-push-signed.sh
+> @@ -282,10 +282,9 @@ test_expect_success GPG 'failed atomic push does n=
+ot execute GPG' '
+>  	EOF
+>  	test_must_fail env PATH=3D"$TRASH_DIRECTORY:$PATH" git push \
+>  			--signed --atomic --porcelain \
+> -			dst noop ff noff >out 2>&1 &&
+> +			dst noop ff noff >out 2>err &&
+> =20
+> -	test_i18ngrep ! "gpg failed to sign" out &&
+> -	sed -n -e "/^To dst/,$ p" out >actual &&
+> +	test_i18ngrep ! "gpg failed to sign" err &&
+>  	cat >expect <<-EOF &&
+>  	To dst
+>  	=3D	refs/heads/noop:refs/heads/noop	[up to date]
+> @@ -293,7 +292,7 @@ test_expect_success GPG 'failed atomic push does no=
+t execute GPG' '
+>  	!	refs/heads/noff:refs/heads/noff	[rejected] (non-fast-forward)
+>  	Done
+>  	EOF
+> -	test_i18ncmp expect actual
+> +	test_cmp expect out
+>  '
+> =20
+>  test_done
