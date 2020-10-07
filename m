@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38087C4727F
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 14:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAA55C47095
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 14:10:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3FC421531
+	by mail.kernel.org (Postfix) with ESMTP id 929A12076C
 	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 14:10:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frsJx7Gf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a60paE88"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728596AbgJGOKD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 10:10:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56888 "EHLO
+        id S1728598AbgJGOKE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 10:10:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728586AbgJGOJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 10:09:59 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BEBDC0613D4
-        for <git@vger.kernel.org>; Wed,  7 Oct 2020 07:09:59 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id w5so2334482wrp.8
-        for <git@vger.kernel.org>; Wed, 07 Oct 2020 07:09:59 -0700 (PDT)
+        with ESMTP id S1728532AbgJGOKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 10:10:01 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3848C0613D5
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 07:10:00 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id n18so2355795wrs.5
+        for <git@vger.kernel.org>; Wed, 07 Oct 2020 07:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wuBwySB8Ix03KXrrpRqQJSaf3en/EhrTFRYzWh2SViU=;
-        b=frsJx7Gf/YB1u67lvMJ6yIyFa44GJMDesv7xSJZLfLfXhiBzG3PrES9eo22Idq+nSZ
-         NBwxU51HLXbk/nfH7RhAF3d7UBIpJrnYQ9SbEZrQcDqnqXGwYjvBgmGoX/xdesRw7+Bl
-         VnVzBWmdBeHbHvrpgY+o7NkO5L3tpkG0XHr5y3ZB34X30Eg8SIKCXOZOgRTAlpCiElD5
-         k7LQyWcEHH4dpVYcF5ev1Dz5yjz5Yw2MbsQdJDuZ1aowpO7e+ZVBHwLKbWTlnDkDixls
-         m54plAzv6D8l60+CFzjdYPbXHtwL/Aqj2u7HX44ONqgPRYS0Win+4tP2nW7AKtGoXCmV
-         RhMQ==
+        bh=aEiKPs+ct87ku14xOM1B4f4rXmdc7luCwwUm3MWBZCQ=;
+        b=a60paE88GDJFMmUDggZbzjzU0tsa8gAeB7KVnwA+9pUYUtq0lgsGuP2f+B58rPVL+3
+         MENQEdks19Pq1UZnKk/6P/9sy6kiU2oYKn2M68Neid2PPzLgMb/nWOJJ5qkNXChK8IIf
+         H6nG+QQUPnN8wsbjZ+h9mHTlrmXNmy0AyKVjmXpQK9L4uvECYY3bWeM/XbpqCJRlAxlt
+         /v9djHgPklT0ZzwlaKZ5bM9Gd2j9UmIlZp9F2nkRf7JEVpjRqIZ0Kcnz1mTSVeHvPUw7
+         ygLEEbJsPrrFNng5OSPBJOVUYoztKjceVMKl5ER1H3cEiMZgCdUAyqAkuoWY275InGpA
+         NzfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wuBwySB8Ix03KXrrpRqQJSaf3en/EhrTFRYzWh2SViU=;
-        b=h/l+4YJAF0ncvC08WSs6ZAGlbHwDgM3LLl/7673wuqmyqrKkb5nUl3iqz7SEXXnztM
-         YsFpd7QKDDHKLAdEMONmSYPQMZNsB4Ye7sHCtzvtdpV5GePPnWtDu6jUbwCJTgMLtU3w
-         JNSapFaugNXF7jjCA/FR3hyF4PB7Zw1WO8jVY0lSmFpz3RR9PWxjubHyVbZHUfLCERq5
-         L6pnXp35qIFJ2XY23Zns/O0JxCKQrZ6huCfDScKwDrS9EiBBX5QfKEznodPkmZUahSjY
-         8JmRZOKawZcYjblzhngw1sVLOSX7tutzIgXCaDjmFeXRSxqgM9OnrK8tN11maqBXS3+p
-         XABQ==
-X-Gm-Message-State: AOAM532XrDFIDdr2Qoa1AGFmv9URlo2p1OBKQAFbjjsCMvYV54Vrw1wp
-        hyfvtMIKODyA3boLkkasxZw3hZYucRE=
-X-Google-Smtp-Source: ABdhPJybuXvnK9wJpG/WdNlvTbkkPO6hfjtV8JokJL61h9ia7OIurt5WY93f0ywpGN2z0bRNDQkH2Q==
-X-Received: by 2002:adf:f70d:: with SMTP id r13mr3828381wrp.317.1602079797452;
-        Wed, 07 Oct 2020 07:09:57 -0700 (PDT)
+        bh=aEiKPs+ct87ku14xOM1B4f4rXmdc7luCwwUm3MWBZCQ=;
+        b=BDUxYD/dwplAIEGCUT3Dgytv36ZngJYCh90QQjZ8ZAwuAKklDkDv4M3vFeo60o08Bj
+         M9HfRQwY2YzlSwyUZpq+rzf8ucPiDNSUMf8MKmqdxCVuBrwgZt7frnAVIvj+y3WPR9Iy
+         DsHrRHGCo62w7yVnvnb/Oea4yjHQJ4UCI4KxTH0dFIhnl4cX7z1KrUw5/Oa3LXxVMDbp
+         Aygk986lZ3dKnp4SFF0vhsR3FAUKKudRJECUWiFySOuwBrZOdkq2847QZGoS1n3GxyiU
+         pk3PTZj36A+tXa9mUJWujFyJPxgqtTU4dxuirgEWKz4CA0Sy4xI8XqS33DPUkMQChKT1
+         Yl7w==
+X-Gm-Message-State: AOAM533EUjw+KQiEqD02niLCxJZPXMlkw7smoiD9DxyZPfHPvJ40Pr1i
+        eQbEX+Wi04CUPoUIlg5qqz1rzxXib50=
+X-Google-Smtp-Source: ABdhPJxNKBgzI1E0AWZa2/OpVRp9QdWyD+B0GkJfsh2tSTLJveLneqJ/X6EKSbpO1gWnxYC30W53XQ==
+X-Received: by 2002:adf:f784:: with SMTP id q4mr3754224wrp.126.1602079799283;
+        Wed, 07 Oct 2020 07:09:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g144sm2972999wmg.30.2020.10.07.07.09.55
+        by smtp.gmail.com with ESMTPSA id m11sm2853161wmf.10.2020.10.07.07.09.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2020 07:09:56 -0700 (PDT)
-Message-Id: <8ec119edc66814ad4d63908c79437a7f9dd3c08c.1602079786.git.gitgitgadget@gmail.com>
+        Wed, 07 Oct 2020 07:09:58 -0700 (PDT)
+Message-Id: <bb9b02af32d028fc0c26d372aa490e260c74e74d.1602079786.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
 References: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
         <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Oct 2020 14:09:43 +0000
-Subject: [PATCH v4 08/10] commit-graph: use generation v2 only if entire chain
- does
+Date:   Wed, 07 Oct 2020 14:09:44 +0000
+Subject: [PATCH v4 09/10] commit-reach: use corrected commit dates in
+ paint_down_to_common()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,240 +83,143 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-Since there are released versions of Git that understand generation
-numbers in the commit-graph's CDAT chunk but do not understand the GDAT
-chunk, the following scenario is possible:
+With corrected commit dates implemented, we no longer have to rely on
+commit date as a heuristic in paint_down_to_common().
 
-1. "New" Git writes a commit-graph with the GDAT chunk.
-2. "Old" Git writes a split commit-graph on top without a GDAT chunk.
+While using corrected commit dates Git walks nearly the same number of
+commits as commit date, the process is slower as for each comparision we
+have to access a commit-slab (for corrected committer date) instead of
+accessing struct member (for committer date).
 
-Because of the current use of inspecting the current layer for a
-chunk_generation_data pointer, the commits in the lower layer will be
-interpreted as having very large generation values (commit date plus
-offset) compared to the generation numbers in the top layer (topological
-level). This violates the expectation that the generation of a parent is
-strictly smaller than the generation of a child.
+For example, the command `git merge-base v4.8 v4.9` on the linux
+repository walks 167468 commits, taking 0.135s for committer date and
+167496 commits, taking 0.157s for corrected committer date respectively.
 
-It is difficult to expose this issue in a test. Since we _start_ with
-artificially low generation numbers, any commit walk that prioritizes
-generation numbers will walk all of the commits with high generation
-number before walking the commits with low generation number. In all the
-cases I tried, the commit-graph layers themselves "protect" any
-incorrect behavior since none of the commits in the lower layer can
-reach the commits in the upper layer.
+t6404-recursive-merge setups a unique repository where all commits have
+the same committer date without well-defined merge-base.
 
-This issue would manifest itself as a performance problem in this case,
-especially with something like "git log --graph" since the low
-generation numbers would cause the in-degree queue to walk all of the
-commits in the lower layer before allowing the topo-order queue to write
-anything to output (depending on the size of the upper layer).
+While running tests with GIT_TEST_COMMIT_GRAPH unset, we use committer
+date as a heuristic in paint_down_to_common(). 6404.1 'combined merge
+conflicts' merges commits in the order:
+- Merge C with B to form a intermediate commit.
+- Merge the intermediate commit with A.
 
-When writing the new layer in split commit-graph, we write a GDAT chunk
-only if the topmost layer has a GDAT chunk. This guarantees that if a
-layer has GDAT chunk, all lower layers must have a GDAT chunk as well.
+With GIT_TEST_COMMIT_GRAPH=1, we write a commit-graph and subsequently
+use the corrected committer date, which changes the order in which
+commits are merged:
+- Merge A with B to form a intermediate commit.
+- Merge the intermediate commit with C.
 
-Rewriting layers follows similar approach: if the topmost layer below
-the set of layers being rewritten (in the split commit-graph chain)
-exists, and it does not contain GDAT chunk, then the result of rewrite
-does not have GDAT chunks either.
+While resulting repositories are equivalent, 6404.4 'virtual trees were
+processed' fails with GIT_TEST_COMMIT_GRAPH=1 as we are selecting
+different merge-bases and thus have different object ids for the
+intermediate commits.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+As this has already causes problems (as noted in 859fdc0 (commit-graph:
+define GIT_TEST_COMMIT_GRAPH, 2018-08-29)), we disable commit graph
+within t6404-recursive-merge.
+
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- commit-graph.c                | 29 +++++++++++-
- commit-graph.h                |  1 +
- t/t5324-split-commit-graph.sh | 86 +++++++++++++++++++++++++++++++++++
- 3 files changed, 115 insertions(+), 1 deletion(-)
+ commit-graph.c             | 14 ++++++++++++++
+ commit-graph.h             |  8 +++++++-
+ commit-reach.c             |  2 +-
+ t/t6404-recursive-merge.sh |  5 ++++-
+ 4 files changed, 26 insertions(+), 3 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 71d0b243db..5d15a1399b 100644
+index 5d15a1399b..3de1933ede 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -605,6 +605,21 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
- 	return graph_chain;
+@@ -705,6 +705,20 @@ int generation_numbers_enabled(struct repository *r)
+ 	return !!first_generation;
  }
  
-+static void validate_mixed_generation_chain(struct commit_graph *g)
++int corrected_commit_dates_enabled(struct repository *r)
 +{
-+	int read_generation_data;
++	struct commit_graph *g;
++	if (!prepare_commit_graph(r))
++		return 0;
 +
-+	if (!g)
-+		return;
++	g = r->objects->commit_graph;
 +
-+	read_generation_data = !!g->chunk_generation_data;
++	if (!g->num_commits)
++		return 0;
 +
-+	while (g) {
-+		g->read_generation_data = read_generation_data;
-+		g = g->base_graph;
-+	}
++	return g->read_generation_data;
 +}
 +
- struct commit_graph *read_commit_graph_one(struct repository *r,
- 					   struct object_directory *odb)
+ struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
  {
-@@ -613,6 +628,8 @@ struct commit_graph *read_commit_graph_one(struct repository *r,
- 	if (!g)
- 		g = load_commit_graph_chain(r, odb);
- 
-+	validate_mixed_generation_chain(g);
-+
- 	return g;
- }
- 
-@@ -782,7 +799,7 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
- 	date_low = get_be32(commit_data + g->hash_len + 12);
- 	item->date = (timestamp_t)((date_high << 32) | date_low);
- 
--	if (g->chunk_generation_data) {
-+	if (g->chunk_generation_data && g->read_generation_data) {
- 		offset = (timestamp_t) get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
- 
- 		if (offset & CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW) {
-@@ -2030,6 +2047,9 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
- 		}
- 	}
- 
-+	if (!ctx->write_generation_data && g->chunk_generation_data)
-+		ctx->write_generation_data = 1;
-+
- 	if (flags != COMMIT_GRAPH_SPLIT_REPLACE)
- 		ctx->new_base_graph = g;
- 	else if (ctx->num_commit_graphs_after != 1)
-@@ -2274,6 +2294,7 @@ int write_commit_graph(struct object_directory *odb,
- 		struct commit_graph *g = ctx->r->objects->commit_graph;
- 
- 		while (g) {
-+			g->read_generation_data = 1;
- 			g->topo_levels = &topo_levels;
- 			g = g->base_graph;
- 		}
-@@ -2300,6 +2321,9 @@ int write_commit_graph(struct object_directory *odb,
- 
- 		g = ctx->r->objects->commit_graph;
- 
-+		if (g && !g->chunk_generation_data)
-+			ctx->write_generation_data = 0;
-+
- 		while (g) {
- 			ctx->num_commit_graphs_before++;
- 			g = g->base_graph;
-@@ -2318,6 +2342,9 @@ int write_commit_graph(struct object_directory *odb,
- 
- 		if (ctx->opts)
- 			replace = ctx->opts->split_flags & COMMIT_GRAPH_SPLIT_REPLACE;
-+
-+		if (replace)
-+			ctx->write_generation_data = 1;
- 	}
- 
- 	ctx->approx_nr_objects = approximate_object_count();
+ 	struct commit_graph *g = r->objects->commit_graph;
 diff --git a/commit-graph.h b/commit-graph.h
-index 19a02001fd..ad52130883 100644
+index ad52130883..d2c048dc64 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -64,6 +64,7 @@ struct commit_graph {
- 	struct object_directory *odb;
+@@ -89,13 +89,19 @@ struct commit_graph *read_commit_graph_one(struct repository *r,
+ struct commit_graph *parse_commit_graph(struct repository *r,
+ 					void *graph_map, size_t graph_size);
  
- 	uint32_t num_commits_in_base;
-+	unsigned int read_generation_data;
- 	struct commit_graph *base_graph;
++struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r);
++
+ /*
+  * Return 1 if and only if the repository has a commit-graph
+  * file and generation numbers are computed in that file.
+  */
+ int generation_numbers_enabled(struct repository *r);
  
- 	const uint32_t *chunk_oid_fanout;
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index 651df89ab2..d0949a9eb8 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -440,4 +440,90 @@ test_expect_success '--split=replace with partial Bloom data' '
- 	verify_chain_files_exist $graphdir
+-struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r);
++/*
++ * Return 1 if and only if the repository has a commit-graph
++ * file and generation data chunk has been written for the file.
++ */
++int corrected_commit_dates_enabled(struct repository *r);
+ 
+ enum commit_graph_write_flags {
+ 	COMMIT_GRAPH_WRITE_APPEND     = (1 << 0),
+diff --git a/commit-reach.c b/commit-reach.c
+index 20b48b872b..46f5a9e638 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -39,7 +39,7 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 	int i;
+ 	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
+ 
+-	if (!min_generation)
++	if (!min_generation && !corrected_commit_dates_enabled(r))
+ 		queue.compare = compare_commits_by_commit_date;
+ 
+ 	one->object.flags |= PARENT1;
+diff --git a/t/t6404-recursive-merge.sh b/t/t6404-recursive-merge.sh
+index 332cfc53fd..7055771b62 100755
+--- a/t/t6404-recursive-merge.sh
++++ b/t/t6404-recursive-merge.sh
+@@ -15,6 +15,8 @@ GIT_COMMITTER_DATE="2006-12-12 23:28:00 +0100"
+ export GIT_COMMITTER_DATE
+ 
+ test_expect_success 'setup tests' '
++	GIT_TEST_COMMIT_GRAPH=0 &&
++	export GIT_TEST_COMMIT_GRAPH &&
+ 	echo 1 >a1 &&
+ 	git add a1 &&
+ 	GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
+@@ -66,7 +68,7 @@ test_expect_success 'setup tests' '
  '
  
-+test_expect_success 'setup repo for mixed generation commit-graph-chain' '
-+	mkdir mixed &&
-+	graphdir=".git/objects/info/commit-graphs" &&
-+	test_oid_cache <<-EOM &&
-+	oid_version sha1:1
-+	oid_version sha256:2
-+	EOM
-+	cd "$TRASH_DIRECTORY/mixed" &&
-+	git init &&
-+	git config core.commitGraph true &&
-+	git config gc.writeCommitGraph false &&
-+	for i in $(test_seq 3)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git reset --hard commits/1 &&
-+	for i in $(test_seq 4 5)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git reset --hard commits/2 &&
-+	for i in $(test_seq 6 10)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git commit-graph write --reachable --split &&
-+	git reset --hard commits/2 &&
-+	git merge commits/4 &&
-+	git branch merge/1 &&
-+	git reset --hard commits/4 &&
-+	git merge commits/6 &&
-+	git branch merge/2 &&
-+	GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph write --reachable --split=no-merge &&
-+	test-tool read-graph >output &&
-+	cat >expect <<-EOF &&
-+	header: 43475048 1 $(test_oid oid_version) 4 1
-+	num_commits: 2
-+	chunks: oid_fanout oid_lookup commit_metadata
-+	EOF
-+	test_cmp expect output &&
-+	git commit-graph verify
-+'
-+
-+test_expect_success 'does not write generation data chunk if not present on existing tip' '
-+	cd "$TRASH_DIRECTORY/mixed" &&
-+	git reset --hard commits/3 &&
-+	git merge merge/1 &&
-+	git merge commits/5 &&
-+	git merge merge/2 &&
-+	git branch merge/3 &&
-+	git commit-graph write --reachable --split=no-merge &&
-+	test-tool read-graph >output &&
-+	cat >expect <<-EOF &&
-+	header: 43475048 1 $(test_oid oid_version) 4 2
-+	num_commits: 3
-+	chunks: oid_fanout oid_lookup commit_metadata
-+	EOF
-+	test_cmp expect output &&
-+	git commit-graph verify
-+'
-+
-+test_expect_success 'writes generation data chunk when commit-graph chain is replaced' '
-+	cd "$TRASH_DIRECTORY/mixed" &&
-+	git commit-graph write --reachable --split=replace &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	test_line_count = 1 $graphdir/commit-graph-chain &&
-+	verify_chain_files_exist $graphdir &&
-+	graph_read_expect 15 &&
-+	git commit-graph verify
-+'
-+
-+test_expect_success 'add one commit, write a tip graph' '
-+	cd "$TRASH_DIRECTORY/mixed" &&
-+	test_commit 11 &&
-+	git branch commits/11 &&
-+	git commit-graph write --reachable --split &&
-+	test_path_is_missing $infodir/commit-graph &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 2 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
-+
- test_done
+ test_expect_success 'combined merge conflicts' '
+-	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git merge -m final G
++	test_must_fail git merge -m final G
+ '
+ 
+ test_expect_success 'result contains a conflict' '
+@@ -82,6 +84,7 @@ test_expect_success 'result contains a conflict' '
+ '
+ 
+ test_expect_success 'virtual trees were processed' '
++	# TODO: fragile test, relies on ambigious merge-base resolution
+ 	git ls-files --stage >out &&
+ 
+ 	cat >expect <<-EOF &&
 -- 
 gitgitgadget
 
