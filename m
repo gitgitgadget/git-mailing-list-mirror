@@ -2,177 +2,107 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F23C41604
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA182C41604
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:38:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87053206F7
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:21:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60A6C2168B
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:38:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qmsPDlq9"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UK2Wd0ED"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728344AbgJGRV4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 13:21:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65366 "EHLO
+        id S1727828AbgJGRio (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 13:38:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50574 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728198AbgJGRV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 13:21:56 -0400
+        with ESMTP id S1727534AbgJGRin (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 13:38:43 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A63B97E471;
-        Wed,  7 Oct 2020 13:21:52 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBAB57E5B2;
+        Wed,  7 Oct 2020 13:38:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0DTBGZpxlWQdHalUZwnagOz+pxk=; b=qmsPDl
-        q9SyIyDD5a5CFtHRejkGuvpSvH73OFUMl6+KwH3NXfDyHC8aZ1onh8xaBpLPW825
-        iq5a4PfS05cZZGddxrHcpBpaDSQJ/n5wpASldkFtIuAseAjYPKRqweRugFB41QWK
-        qFyGJrwbgebfWIYSGasclDQbMj2WRPZF1oREA=
+        :content-type; s=sasl; bh=aaJdGwrMlk8mgyRu5X6++AFfJMg=; b=UK2Wd0
+        ED3+IzBLgE2dXL2t/+uS7qDy3NfGdr/YpPFoFgKeWx0Ew8R/ruekylsosweCJDce
+        yTdiYtpK17nki9+uqAAbbjC574nOWJ633OOY4G1pr7np0jwKzU6PEJs4MIxUrQud
+        mpheOk1ADPU0Zp4/FYrtoo7+OFD7NhlC38AF8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JOjJK3BZ2rlmf8LMGZGhFHiI8JPPJ9st
-        FNlBAf1CQ6OBJBKjmu4Sq8k6AwIiq0mG8Nkk8k5hoJVrndCFWq2bePI7+UbERVTO
-        2aqLvy49zt3jxiGqqLIMk+uBTnyQxVj4rtbwVL1jgHgAdi0AIKFsD0p7Kgs2JKUU
-        WM3M2CqqSrk=
+        :content-type; q=dns; s=sasl; b=E+ZVBlQmiu7QXxYdxGZjEpCIYd0uNwUX
+        XcXZ5Hi2gIQr0kcu72hzuDqyBerrPidDbcqEoRfV92n20pCQXWs76vuqcK72Jude
+        FkIs87XHNiSfBEcgOEVGMjRV8SaO2Mv/JH5SpgpA6iusbZBBtgxpicchBc3WvXNH
+        GHJcFz4eALE=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DA547E470;
-        Wed,  7 Oct 2020 13:21:52 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B42CC7E5B1;
+        Wed,  7 Oct 2020 13:38:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 262D87E46F;
-        Wed,  7 Oct 2020 13:21:52 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4328B7E5B0;
+        Wed,  7 Oct 2020 13:38:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] help: do not expect built-in commands to be hardlinked
-References: <pull.745.git.1602074589460.gitgitgadget@gmail.com>
-Date:   Wed, 07 Oct 2020 10:21:51 -0700
-In-Reply-To: <pull.745.git.1602074589460.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Wed, 07 Oct 2020 12:43:09
-        +0000")
-Message-ID: <xmqqpn5u2bps.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
+References: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+        <20201007153947.GA181281@coredump.intra.peff.net>
+        <20201007154533.GA186764@coredump.intra.peff.net>
+Date:   Wed, 07 Oct 2020 10:38:40 -0700
+In-Reply-To: <20201007154533.GA186764@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 7 Oct 2020 11:45:33 -0400")
+Message-ID: <xmqqlfgi2axr.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 971A9458-08C1-11EB-B962-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: F09558E0-08C3-11EB-810B-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Hmm. That commit removes the call to display_progress() from the main
+> loop of threaded_second_pass(), and doesn't appear to add another one
+> anywhere. Is the solution really as simple as adding it back in? I.e.
 >
-> When building with SKIP_DASHED_BUILT_INS=YesPlease, the built-in
-> commands are no longer present in the `PATH` as hardlinks to `git`.
->
-> As a consequence, `load_command_list()` needs to be taught to find the
-> names of the built-in commands from elsewhere.
->
-> This only affected the output of `git --list-cmds=main`, but not the
-> output of `git help -a` because the latter includes the built-in
-> commands by virtue of them being listed in command-list.txt.
->
-> The bug was detected via a patch series that turns the merge strategies
-> included in Git into built-in commands: `git merge -s help` relies on
-> `load_command_list()` to determine the list of available merge
-> strategies.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     Fix the command list with SKIP_DASHED_BUILT_INS=YesPlease
->     
->     In a recent patch series
->     [https://lore.kernel.org/git/20201005122646.27994-12-alban.gruin@gmail.com/#r]
->     , the merge strategies were converted into built-ins, which is good.
->     
->     Together with the change where we stop hard-linking the built-in
->     commands in CI builds, this broke t9902.199.
->     
->     The actual root cause is that git merge -s help relies on 
->     load_command_list() to find all available Git commands, and that
->     function had the long-standing bug that it expects the built-in commands
->     to be available in the PATH.
->
-
-That is not a bug in "merge -s help" or "longstanding" at all.  It
-has been a quite natural and long-standing expectation to find all
-the merge strategies on PATH (after GIT_EXEC_PATH is added to it),
-because that was the promise we gave to our users long time ago and
-have kept.
-
-The bug is in load_command_list() and it was introduced by the
-recent SKIP_DASHED_BUILT_INS series.  We forgot to teach the
-function that in the new world order, what we see on disk plus what
-we have in the built-in table are the set of subcommands available
-to us, and the rule that was valid in the old world order can no
-longer be relied upon, and nobody noticed  the breakage while
-developing or reviewing.
-
->  git.c  | 13 +++++++++++++
->  help.c |  2 ++
->  help.h |  1 +
->  3 files changed, 16 insertions(+)
->
-> diff --git a/git.c b/git.c
-> index d51fb5d2bf..a6224badce 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -641,6 +641,19 @@ static void list_builtins(struct string_list *out, unsigned int exclude_option)
->  	}
->  }
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 8acd078aa0..6dbb4317e0 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1028,6 +1028,10 @@ static void *threaded_second_pass(void *data)
+>  		struct object_entry *child_obj;
+>  		struct base_data *child;
 >  
-> +void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
-> +{
-> +	const char *name;
-> +	int i;
+> +		counter_lock();
+> +		display_progress(progress, nr_resolved_deltas);
+> +		counter_unlock();
 > +
-> +	if (!skip_prefix(prefix, "git-", &prefix))
-> +		return;
-
-Do we want to explain that this is for dropping "gitk" and the like
-in a comment near here?
-
-> +	for (i = 0; i < ARRAY_SIZE(commands); i++)
-> +		if (skip_prefix(commands[i].cmd, prefix, &name))
-> +			add_cmdname(cmds, name, strlen(name));
-> +}
-> +
->  #ifdef STRIP_EXTENSION
->  static void strip_extension(const char **argv)
->  {
-> diff --git a/help.c b/help.c
-> index 4e2468a44d..919cbb9206 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -263,6 +263,8 @@ void load_command_list(const char *prefix,
->  	const char *env_path = getenv("PATH");
->  	const char *exec_path = git_exec_path();
->  
-> +	load_builtin_commands(prefix, main_cmds);
-> +
->  	if (exec_path) {
->  		list_commands_in_dir(main_cmds, exec_path, prefix);
->  		QSORT(main_cmds->names, main_cmds->cnt, cmdname_compare);
-> diff --git a/help.h b/help.h
-> index dc02458855..5871e93ba2 100644
-> --- a/help.h
-> +++ b/help.h
-> @@ -32,6 +32,7 @@ const char *help_unknown_cmd(const char *cmd);
->  void load_command_list(const char *prefix,
->  		       struct cmdnames *main_cmds,
->  		       struct cmdnames *other_cmds);
-> +void load_builtin_commands(const char *prefix, struct cmdnames *cmds);
->  void add_cmdname(struct cmdnames *cmds, const char *name, int len);
->  /* Here we require that excludes is a sorted list. */
->  void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
+>  		work_lock();
+>  		if (list_empty(&work_head)) {
+>  			/*
 >
-> base-commit: 8f7759d2c8c13716bfdb9ae602414fd987787e8d
+> That _seems_ to work fine, but I'm not sure why it was removed in the
+> first place (for a good reason, or simply as an accident when rewriting
+> the variable declarations at the top of the loop?).
+
+The above looks like an obvious and trivial fix to go back closer to
+the original.
+
+We seem to have removed find_unresolved_deltas() helper function in
+that series, but there remains a mention to it in a comment, which
+we would probably should rethink (it just may be the matter of
+removing the mention, or if "just like in ..." may have been the
+last example of doing what the comment suggests all code to do, it
+may reveal a need for larger clean-up---I dunno).
+
+Thanks.
+
+
+
