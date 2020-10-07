@@ -2,79 +2,101 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 095B8C4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E38EC4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:51:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A82EB2076B
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:46:27 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uNL4TMxa"
+	by mail.kernel.org (Postfix) with ESMTP id B17322083B
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728376AbgJGUq0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 16:46:26 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53538 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728373AbgJGUq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 16:46:26 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C62C5EEDD9;
-        Wed,  7 Oct 2020 16:46:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QLSe27TbEmsWRoZU23hFyQ1fw+0=; b=uNL4TM
-        xaNbLnrEyZ+055eTpivo67vvotn2Aw2RtLMq5+ZWlvSnOWR5nMo8JPYNHQV+btlW
-        2bx4USeJfNabAsnSvhxZsyMk+0/ssLmcuV9fHGN05T9SK2BayyWTFvD9l849qkF4
-        6s8d1ciy/vOqPucjUFnEXZ/oy5aSjQGHHHL3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mcx7nLHqngGSSXiZuf/CcM4Jggij0avp
-        6C4r1oOaofHcWzmXeRVoiCVVqrgCYOaoR9g6yHqfWhS9LQbGKzh1tqs/DcGrBqUl
-        +Y/djlJPbsEBHvkmUOmjuwzhO37Xjd9xB/RaLuYraw43nI6sglSjTg8Rnhs9xF+r
-        5hauefbmgCY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C04ABEEDD8;
-        Wed,  7 Oct 2020 16:46:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0F583EEDD7;
-        Wed,  7 Oct 2020 16:46:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH] index-pack: make get_base_data() comment clearer
-References: <20201007184852.GB222564@coredump.intra.peff.net>
-        <20201007201658.1322116-1-jonathantanmy@google.com>
-Date:   Wed, 07 Oct 2020 13:46:20 -0700
-In-Reply-To: <20201007201658.1322116-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 7 Oct 2020 13:16:58 -0700")
-Message-ID: <xmqq7ds1228z.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727261AbgJGUvS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 16:51:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34776 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726013AbgJGUvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 16:51:18 -0400
+X-Greylist: delayed 1359 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 07 Oct 2020 13:51:18 PDT
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:84a3::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DEEDC061755
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 13:51:18 -0700 (PDT)
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1kQG3A-0001m3-U2; Wed, 07 Oct 2020 22:28:36 +0200
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: 2.29.0.rc0.windows.1: Duplicate commit id error message when fetching
+Message-ID: <55f8f00c-a61c-67d4-889e-a9501c596c39@virtuell-zuhause.de>
+Date:   Wed, 7 Oct 2020 22:28:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 288926AE-08DE-11EB-9364-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1602103878;1a0260ff;
+X-HE-SMSGID: 1kQG3A-0001m3-U2
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi,
 
-> A comment mentions that we may free cached delta bases via
-> find_unresolved_deltas(), but that function went away in f08cbf60fe
-> (index-pack: make quantum of work smaller, 2020-09-08). Since we need to
-> rewrite that comment anyway, make the entire comment clearer.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> OK - here it is, with "reconstruct" instead of "uncompress". This
-> replaces patch 3 of Peff's patch set.
+I'm using
 
-Thanks.  Will replace.
+$ git --version
+git version 2.29.0.rc0.windows.1
+
+Since I upgraded to that version (thanks to dscho for providing these so
+early) I'm seeing occasionally
+
+$ git fetch origin +refs/head/abcd:refs/remotes/origin/abcd
+fatal: unexpected duplicate commit id
+31a13139875bc5f49ddcbd42b4b4d3dc18c16576
+
+The local branch abcd is at
+
+$ git rev-parse HEAD
+b6ae1ee2adcb75aee09c4a8d72bfd66f32f6fae1
+
+while its remote tracking branch is at
+
+$ git rev-parse @{u}
+31a13139875bc5f49ddcbd42b4b4d3dc18c16576
+
+I have pull.rebase=true set but I think this does not matter for fetch.
+I do have protocol V2 enabled.
+
+A full trace is
+
+$ GIT_TRACE=1 git fetch origin +refs/heads/abcd:refs/remotes/origin/abcd
+22:23:42.016859 exec-cmd.c:237          trace: resolved executable dir:
+C:/Program Files/Git/mingw64/bin
+22:23:42.018858 git.c:444               trace: built-in: git fetch
+origin +refs/heads/abcd:refs/remotes/origin/abcd
+22:23:42.020858 run-command.c:663       trace: run_command: unset
+GIT_PREFIX; GIT_PROTOCOL=version=2 ssh -o SendEnv=GIT_PROTOCOL
+git@github.com 'git-upload-pack '\''XXX/YYY.git'\'''
+22:23:43.284643 run-command.c:663       trace: run_command: git rev-list
+--objects --stdin --not --all --quiet --alternate-refs
+22:23:43.344644 run-command.c:663       trace: run_command: git rev-list
+--objects --stdin --not --all --quiet --alternate-refs
+22:23:43.358613 exec-cmd.c:237          trace: resolved executable dir:
+C:/Program Files/Git/mingw64/libexec/git-core
+22:23:43.360614 git.c:444               trace: built-in: git rev-list
+--objects --stdin --not --all --quiet --alternate-refs
+22:23:43.492616 run-command.c:1617      run_processes_parallel:
+preparing to run up to 1 tasks
+22:23:43.492616 run-command.c:1649      run_processes_parallel: done
+fatal: unexpected duplicate commit id
+31a13139875bc5f49ddcbd42b4b4d3dc18c16576
+
+The repo is public, so if it helps I can provide a link.
+
+Anything I'm doing wrong here?
+
+Thanks,
+Thomas
