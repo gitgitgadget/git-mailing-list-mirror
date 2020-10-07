@@ -2,88 +2,89 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A61BC4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB7C7C4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:10:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EA64207EA
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:09:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F219207EA
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:10:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vzCBYjs4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aymo0gd/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728158AbgJGUJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 16:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56500 "EHLO
+        id S1728249AbgJGUK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 16:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727958AbgJGUJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 16:09:10 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705E9C061755
-        for <git@vger.kernel.org>; Wed,  7 Oct 2020 13:09:09 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id u16so1842292plq.18
-        for <git@vger.kernel.org>; Wed, 07 Oct 2020 13:09:09 -0700 (PDT)
+        with ESMTP id S1727657AbgJGUK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 16:10:57 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6872C061755
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 13:10:55 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id d197so3889105iof.0
+        for <git@vger.kernel.org>; Wed, 07 Oct 2020 13:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=6XI2yQOZagMJOnBqpdvY+jRicxWR2I+qvywowchdWN0=;
-        b=vzCBYjs4/lUABVpIh3iKQpbehESKdzmYb2Ltuuzty4KYOc5SsjFjxQaDCyMCNrAxyQ
-         KJXZxMAbNS25ahw6C6MW31Xj5ax5SY902TJGStZL3cUsG/rgIBepdIYVsnny3zsRXPoI
-         BLIdm5g30JsDxABZ89Z0c+TDqZ9zIibBzh2HrognUm+yP0y1rSdornmTlgssIm6h+xZ0
-         kgeAXglKoa7v4gn5ZPwghmDHYSVZA3ep/8engaoZ5LFarPwrXeBafsYs0GNQefsXkxFt
-         LNXgcYyvmKENevs8ilMqRSFaji6mLNC7Jg8aVl+cQuyi7hArpcw78lRyhJR/y7YE5+C7
-         yHNA==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=fwg8Pb2VvogpRKU9bgl9LdD4H4bRCENM5K2GVJW2SZs=;
+        b=aymo0gd/wvv5TvGKuj25cL6RAQPT/zCbonk+jwwNDeel1xr1ZkhqVzP7WpFCcupX3/
+         i2q/cm1ciSLE92nFEZoJVoL/TMjpOXM+C8YiYcY8JnVzRrfqpJpkpSQ1wr9TJ8h4EOkE
+         u0TQOZEpNNkncmzp7wJr1o4OofPtgaNAjjTQK1JBfM86uPmnBH290RxzsJ21VO4U35qG
+         lRRZ6q0PH8HifxI0wuQ51IBvkv5k1IGLTFK+f27TvwwNxUMoXh/8gHhu9r/LMKciC82X
+         dv+OiCGH+BH8NWnvbpS5QZzyUzbgM1/gO9562PmqQBB6f9DUFbzE2dMeSqsqOtQlIwh3
+         QoKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=6XI2yQOZagMJOnBqpdvY+jRicxWR2I+qvywowchdWN0=;
-        b=HsfAR11Th22BTeDr5ckiX5msvSN3bHeibJqhPvcJFEBRGxf5d8BmS9CdudG9jq+3P/
-         VuYRJI7gPrvhs5tF+r3ciM7E2ijaghg0Q93iFNvK+YELzEGzSLtGVa/DCOhugC0AYND4
-         9j7XHFfgm+cLHKaRdrl1J8AuVRr92Yk/ojCqvdcVCwMFNB18rNniYsLFgaveE3o74XJc
-         C8m+LkyK8ulKMDaIBzn5wE3c/6/F3441qktDawued4Mys7N+W36/36Jonpnd1dQ7VKFc
-         hKCnunM0T/K2REXtryZT6UHR5AlXTq5jw6boyvAUsEkqeTYgcyY2XMD6sDQCk3jBUY8+
-         HRcg==
-X-Gm-Message-State: AOAM531g3Wr7nScWQEkTqp6x2c362AF3C33VTvIa+/81uhjIi0nXCxNC
-        HkLyhhpaXqoyg//UdpnXxNn8IxPnFzSCS+Lfdz8d
-X-Google-Smtp-Source: ABdhPJx3wxsDablvrV3a47nhrDRRIS9u/2wJYrJCCRVe/97ylHo8NrCs28qNR2Up/g6oQTbjA+dQ6oAgeMeFXgZ7sBie
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:b107:b029:d2:ab87:c418 with
- SMTP id q7-20020a170902b107b02900d2ab87c418mr4386934plr.40.1602101348943;
- Wed, 07 Oct 2020 13:09:08 -0700 (PDT)
-Date:   Wed,  7 Oct 2020 13:09:06 -0700
-In-Reply-To: <20201007181943.GB1976631@coredump.intra.peff.net>
-Message-Id: <20201007200906.1318031-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20201007181943.GB1976631@coredump.intra.peff.net>
-X-Mailer: git-send-email 2.28.0.806.g8561365e88-goog
-Subject: Re: [PATCH 2/3] index-pack: drop type_cas mutex
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     gitster@pobox.com, jonathantanmy@google.com, git@vger.kernel.org
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=fwg8Pb2VvogpRKU9bgl9LdD4H4bRCENM5K2GVJW2SZs=;
+        b=Op9Y5KUjoxhb3WWObg3X8Vt8jXV4jG79jeQhBl25/1A9Hgv2ZCniSL1qJwTKIdSHzl
+         cbUo8slkd8xbU1kk9Nw+33XJZ91f9hP7X9BRrsPqr4eYFMNTJbUOOEb1lOLryP1bzRIQ
+         /LNwcOxaWYYTJBH5HxKdKP9C/PouVlT6ny3MJeWzhFiuXIdktggmirkB9uwQFrKu4xz6
+         L0koK1UUlv+gXkOu5V4zkmzQaj5SpM/DIs15xqSPqaz2TXroC7WuSKXzZiijrbUIyEtN
+         /K+T5f7itWlAtv0ckZLQVNruo8Pq5jERensbhCHzM8R8rhIx8B+afafXEF7hjMqg11Mv
+         0t6g==
+X-Gm-Message-State: AOAM5337nUIJ0pcUJVTkS7tdGulxuwgvdaX8uFdLvDdjpdvZU/EAAx8a
+        syQT4083KoMvitEPX3u0dXcBg31rn1Lyj6bEleryMGucd5k=
+X-Google-Smtp-Source: ABdhPJyWR7jez9oU8mm5TYBNbrAuhvGQeU8am4y2ANpQqVxL5fbkFM63TGpcqT6DwWwDcZH9YwnTa6d0uTAA/Yt8BSw=
+X-Received: by 2002:a6b:dc15:: with SMTP id s21mr3513638ioc.162.1602101454706;
+ Wed, 07 Oct 2020 13:10:54 -0700 (PDT)
+MIME-Version: 1.0
+From:   Sangeeta NB <sangunb09@gmail.com>
+Date:   Thu, 8 Oct 2020 01:40:44 +0530
+Message-ID: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
+Subject: [Outreachy] Introduction
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The type_cas lock lost all of its callers in f08cbf60fe (index-pack:
-> make quantum of work smaller, 2020-09-08), so we can safely delete it.
-> The compiler didn't alert us that the variable became unused, because we
-> still call pthread_mutex_init() and pthread_mutex_destroy() on it.
-> 
-> It's worth considering also whether that commit was in error to remove
-> the use of the lock. Why don't we need it now, if we did before, as
-> described in ab791dd138 (index-pack: fix race condition with duplicate
-> bases, 2014-08-29)? I think the answer is that we now look at and assign
-> the child_obj->real_type field in the main thread while holding the
-> work_lock(). So we don't have to worry about racing with the worker
-> threads.
+Hello everyone,
 
-Yeah - I probably should have made the change without removing the
-compare-and-swap, and then removed the compare-and-swap in a subsequent
-patch. Thanks for catching this.
+My name is Sangeeta and I=E2=80=99m one of the Outreachy applicants.  I wou=
+ld
+like to work on the microproject "Unify the meaning of dirty between
+diff and describe".
+
+While looking at the files for `describe` and `diff` commands I found
+that the `describe.c`  is present in builtin[1] folder whereas diff.c
+is found in the root[2] folder as well as builtin[3] folder. I could
+not find any implementation of --dirty in the diff.c present in
+builtin[3] folder. So is it that I have to compare the implementation
+of describe.c[1] and diff.c(of root folder)?
+
+Also, I was curious to know why is there a builtin folder when many
+commands described in that are described again in the root folder?
+
+Looking forward to working with you all.
+
+Sangeeta
+[1] https://github.com/git/git/blob/master/builtin/describe.c
+[2] https://github.com/git/git/blob/master/builtin/diff.c
+[3] https://github.com/git/git/blob/master/diff.c
