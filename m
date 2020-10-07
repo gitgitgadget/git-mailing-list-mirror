@@ -2,90 +2,187 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C612C4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 19:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0C71C4727E
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 19:42:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80AA9207EA
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 19:41:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54A14207EA
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 19:42:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=xapek.org header.i=@xapek.org header.b="t9/ss4rd"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ti3Q6s+w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728409AbgJGTlB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 15:41:01 -0400
-Received: from mail.ghostdub.de ([95.216.78.222]:33644 "EHLO mail.ghostdub.de"
+        id S1728430AbgJGTmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 15:42:54 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57075 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728387AbgJGTlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 15:41:01 -0400
-X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2020 15:41:00 EDT
-Received: from authenticated-user (PRIMARY_HOSTNAME [PUBLIC_IP])
-        by mail.ghostdub.de (Postfix) with ESMTPA id 27B3147A1D7E
-        for <git@vger.kernel.org>; Wed,  7 Oct 2020 19:32:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xapek.org; s=dkim;
-        t=1602099143;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=gxCesvsjio8v8NnEH/buhOdL0dMPedXPcHN2y3v1WDU=;
-        b=t9/ss4rdhcg9gspB4K07RXQMWcIPIyeXaBHViSLVo3QDSrJzO+isNdvLXBLD9oojJpr86x
-        JktxO4UEJkAFoqVPjqZ/+IKqlO1R2/57fHoidHDZ2o3RDBBG/BkMGiUEtc/DgX+6Sk1eHR
-        D3YNQFDSCVkYRhy01vUlq8FFvDEQWB4=
+        id S1728336AbgJGTmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 15:42:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1602099766;
+        bh=Ubawc7EPVehzuvV2pdNNB8h8Ct8y/Msz+ILIlODcmUY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Ti3Q6s+wQWkIPew4uw74Ec1QQR5h2cGzuqa/oWu6fHgxudlAf4fS6/hcy1Fw41TFa
+         X5WkqJq3VxTZZGHHEthYsQyz6pV13l7c2hOV0YAKqWaOyHfM8jumc4qFTU/S6IzC0d
+         LEZgslryYrfanZDkAQz+VdqLnnexmyOuYfTBlXWk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdvmO-1kxvzU2V4Y-00b1AO; Wed, 07
+ Oct 2020 21:42:46 +0200
+Date:   Wed, 7 Oct 2020 21:42:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Tom Clarkson via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
+        Ed Maste <emaste@freebsd.org>,
+        Tom Clarkson <tom@tqclarkson.com>,
+        Tom Clarkson <tom@tqclarkson.com>
+Subject: Re: [PATCH v2 6/7] subtree: more robustly distinguish subtree and
+ mainline commits
+In-Reply-To: <a7aaedfed3785c6ca693f60f05e76156f68a5d39.1602021913.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2010072128130.50@tvgsbejvaqbjf.bet>
+References: <pull.493.git.1589176201.gitgitgadget@gmail.com> <pull.493.v2.git.1602021913.gitgitgadget@gmail.com> <a7aaedfed3785c6ca693f60f05e76156f68a5d39.1602021913.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Date:   Wed, 07 Oct 2020 19:32:22 +0000
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rUV/o68XOyrB3JpXBxdQpRPBCCvnGk7HJvdzkuIe0MTCDuIrPez
+ kWrEedtCbLhG7Td8QiJIXagwcOiWEPdgMPm8/7WEqbyQ3uTgHRSEqtd4Vsr9v2S2lbvjLIY
+ 8OnsOtnn9CZ1vNf/nlSpSBxfa+KfJzq5kmm5q/9XsV+NA8YcaaJCwY9KxbBVF/W3Z310J8G
+ n/btUytwbO5mIAmOqTf9A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SYlV2MKfEFI=:GFrSr3qs6tVO0T4tFO53N5
+ qnqkSpAia8+rfsrKzjCM8z736bYPqIAW8UmgFeOKCW/wkpLb+wlFT4zlvK8E7igFGkAdlLAzw
+ iUBvEQKQ+KHidPFiK7yCmIeCNr0NzbXZoGh1BxvoDO83TLXWbjGIp8PRZ8OBIQTk15e9weKtW
+ 6iOBb9vukuK+vvB8dQmwo/Y3qM7bRWQarSp4438BW2sEiZnk4e7JQuT5Q931eiw7sJqAlvMga
+ RQW+6ARx3p1uZXJkJQW7GljHPM9IcoQgYzClgGYE/UwQbXd+DpaY/yE+VE/srIZIYBpGsc6y+
+ YUvrhUtDDWuFq4BG7e4oAt0atZkVeg4bzL/reKwrWQMpCLeqJUrdjMQVPrn0m1bQhek8KdB9v
+ Da5xFKLEEU9V3zljravfALl0Lobjk49rLUjECOy+aUgdhOUGPn0Mtra75pmOC4/06XyooW796
+ 1NieQg7/q0qbQTxVjUoWlgx9E5HLY5gFxbXKLFEDOh2/w6jkdwfIN2MF25bpD4RCSWCRLfunb
+ 9WitQ82DqkhBZfLduiDbxUqyGS1EU5eHxbfSFSZcFvFyT8seb2Wrgvb/keatZVNFoGrIxJagc
+ t/GcpGF49sGup5xRHGivrPXf5QlC5VWIEjNt5g66MDJwUrTvKrS7LxVsVF9v2d1VMRY0/l7Dq
+ HOXz5yUGJkJoyU9RTg/HDb7r5uouJdoVuFIUM3DLHffcsboaAJZX/BkxQ/28HgulmY01bHWnr
+ A4G7Cgbv7Fcj+Y7taYCRexyWtIEBmYx5oDx8Bc5JcZuvG7LXoms6qnFHr/O7CUzvgQ/wbqZW9
+ l9nuOEaKKsUMTzYT4tgx45ctIdef0P8YtXjhCD0Fb3nv6/CHoOZ7sXzAzEZmECfLmhUOpCCsg
+ +4t3ewTehs21fotnVWKZl2WYDG3tdSBG/6DPwqSlkq9yr+oKk/GsffTBncDyL7WT35yA0mAtD
+ 27gfvUneDoS5ib72YJUeOOx/lcU4TIkRD/MOIXJ6zGMbOKaR4rrOYFPwmfrOY5SYP/5T7zT1s
+ 72JwdI56Aq1jdDaZZGsU9XfqLkfWEqmMmaX5qa7YNm691ytyxg1sdUsU32nKriz6Eg9m2GyHD
+ kFYdaTnckGbvIq2LVBsN1ldtIwFYlHoqLRuUcOV2YQlKiFFRRpLjuSWNAQwGfz8Zj6ZXnPaN6
+ a6+kVu1JnhF/JCL9GVZ3Emhm0jWi3UfTPXUWIA7DnAmdfEbIPvbP8UfkQhZUd/o7x/yHAAQev
+ fOSruDgVI4Piaed2yQAelkm3jgIKeyfXVwGhfrw==
 Content-Transfer-Encoding: quoted-printable
-From:   "Yves Fischer" <yvesf@xapek.org>
-Message-ID: <995c4c10c68d39e84aa48ae967f81da6@xapek.org>
-Subject: git clean -X deletes ignored directory
-To:     git@vger.kernel.org
-Authentication-Results: mail.ghostdub.de;
-        auth=pass smtp.auth=yvesf@ghostdub.de smtp.mailfrom=yvesf@xapek.org
-X-Spamd-Bar: /
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,=0A=0AI found a behavior with git-clean that appears to be=
- unexpected.=0A=0AIt is related to the change in 95c11ec which, if I read=
- the history correctly, got later corrected in cada730.=0A=0AExample (in =
-git repo after build):=0A=3D=3D=3D=3D=3D=3D=0A./git init test=0Acd test=
-=0Amkdir ignored-subdir=0Atouch test.c test.o ignored-subdir/some-file=0A=
-echo \*.o > .gitignore=0Aecho ignored-subdir >> .gitignore =0A../git add =
-.=0A../git commit -m test=0A../git clean -X -d -n '*.o'=0A# Would remove =
-ignored-subdir/  <--- why?=0A# Would remove test.o=0A=3D=3D=3D=3D=3D=3D=
-=0A=0AIn the example I would have expected that the "ignored-subdir" is n=
-ot deleted because it's not matched by the path argument. The manpage of =
-git-clean says:=0A> If any optional <path>... arguments are given, only t=
-hose paths are affected.=0A=0AI believe the issue is fixed in cada730 onl=
-y for files. It seems to persist for directories.=0A=0AThe attached diff =
-has a test that tries to cover this.=0A=0AKind regards,=0AYves=0A=0A----=
-=0A=0Adiff --git a/t/t7300-clean.sh b/t/t7300-clean.sh=0Aindex cb5e34d94c=
-..77d834d34a 100755=0A--- a/t/t7300-clean.sh=0A+++ b/t/t7300-clean.sh=0A@=
-@ -746,4 +746,49 @@ test_expect_success 'clean untracked paths by pathspe=
-c' '=0A        test_must_be_empty actual=0A '=0A =0A+# fixed by cada730=
-=0A+test_expect_success 'git clean x1' '=0A+=0A+       git init clean-x1 =
-&&=0A+       touch clean-x1/test.c clean-x1/test.o clean-x1/other-untrack=
-ed-file &&=0A+       echo \*.o >> clean-x1/.gitignore &&=0A+       echo o=
-ther-untracked-file >> clean-x1/.gitignore &&=0A+       git -C clean-x1 a=
-dd . &&=0A+       git -C clean-x1 commit -m setup &&=0A+       git -C cle=
-an-x1 clean -X -d -f "*.o" &&=0A+       ! test -f clean-x1/test.o &&=0A+ =
-      test -f clean-x1/other-untracked-file=0A+=0A+'=0A+=0A+# fixed by ca=
-da730=0A+test_expect_success 'git clean x2' '=0A+=0A+       git init clea=
-n-x2 &&=0A+       touch clean-x2/test.c clean-x2/test.o clean-x2/other-un=
-tracked-file &&=0A+       echo \*.o >> clean-x2/.gitignore &&=0A+       e=
-cho other-untracked-file >> clean-x2/.gitignore &&=0A+       git -C clean=
--x2 add . &&=0A+       git -C clean-x2 commit -m setup &&=0A+       git -=
-C clean-x2 clean -X -f "*.o" &&=0A+       ! test -f clean-x2/test.o &&=0A=
-+       test -f clean-x2/other-untracked-file=0A+=0A+'=0A+=0A+test_expect=
-_success 'git clean x3' '=0A+=0A+       git init clean-x3 &&=0A+       mk=
-dir other-untracked-dir &&=0A+       touch clean-x3/test.c clean-x3/test.=
-o clean-x3/other-untracked-dir/foo &&=0A+       echo \*.o >> clean-x3/.gi=
-tignore &&=0A+       echo other-untracked-dir >> clean-x3/.gitignore &&=
-=0A+       git -C clean-x3 add . &&=0A+       git -C clean-x3 commit -m s=
-etup &&=0A+       git -C clean-x3 clean -X -f "*.o" &&=0A+       ! test -=
-f clean-x3/test.o &&=0A+       test -f clean-x3/other-untracked-dir/foo=
-=0A+=0A+'=0A+=0A test_done
+Hi,
+
+On Tue, 6 Oct 2020, Tom Clarkson via GitGitGadget wrote:
+
+> From: Tom Clarkson <tom@tqclarkson.com>
+>
+> Prevent a mainline commit without $dir being treated as a subtree
+> commit and pulling in the entire mainline history. Any valid subtree
+> commit will have only valid subtree commits as parents, which will be
+> unchanged by check_parents.
+
+I feel like this is only half the picture because I have a hard time
+stitching these two sentences together.
+
+After studying the code and your patch a bit, it appears to me that
+`process_split_commit()` calls `check_parents()` first, which will call
+`process_split_commit()` for all as yet unmapped parents. So basically, it
+recurses until it found a commit all of whose parents are already mapped,
+then permeates that information all the way back.
+
+Doesn't this cause serious issues with stack overflows and all for long
+commit histories?
+
+> Signed-off-by: Tom Clarkson <tom@tqclarkson.com>
+> ---
+>  contrib/subtree/git-subtree.sh | 24 +++++++++++-------------
+>  1 file changed, 11 insertions(+), 13 deletions(-)
+>
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtre=
+e.sh
+> index e56621a986..fa6293b372 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -224,8 +224,6 @@ cache_setup () {
+>  	fi
+>  	mkdir -p "$cachedir" ||
+>  		die "Can't create new cachedir: $cachedir"
+> -	mkdir -p "$cachedir/notree" ||
+> -		die "Can't create new cachedir: $cachedir/notree"
+
+It might make sense to talk about this a bit in the commit message.
+Essentially, you are replacing the `notree/<rev>` files by mapping `<rev>`
+to the empty string.
+
+This makes me wonder, again, whether the file system layout of the cache
+can hold up to the demands. If a main project were to merge a subtree
+with, say, 10 million commits, wouldn't that mean that `git subtree` would
+now fill one directory with 10 million files? I cannot imagine that this
+performs well, still.
+
+>  	debug "Using cachedir: $cachedir" >&2
+>  }
+>
+> @@ -255,18 +253,11 @@ check_parents () {
+>  	local indent=3D$(($2 + 1))
+>  	for miss in $missed
+>  	do
+> -		if ! test -r "$cachedir/notree/$miss"
+> -		then
+> -			debug "  unprocessed parent commit: $miss ($indent)"
+> -			process_split_commit "$miss" "" "$indent"
+> -		fi
+> +		debug "  unprocessed parent commit: $miss ($indent)"
+> +		process_split_commit "$miss" "" "$indent"
+
+That makes sense to me, as the `missed` variable only contains as yet
+unmapped commits, therefore we do not have to have an equivalent `test -r`
+check.
+
+Ciao,
+Dscho
+
+>  	done
+>  }
+>
+> -set_notree () {
+> -	echo "1" > "$cachedir/notree/$1"
+> -}
+> -
+>  cache_set () {
+>  	oldrev=3D"$1"
+>  	newrev=3D"$2"
+> @@ -719,11 +710,18 @@ process_split_commit () {
+>  	# vs. a mainline commit?  Does it matter?
+>  	if test -z "$tree"
+>  	then
+> -		set_notree "$rev"
+>  		if test -n "$newparents"
+>  		then
+> -			cache_set "$rev" "$rev"
+> +			if test "$newparents" =3D "$parents"
+> +			then
+> +				# if all parents were subtrees, this can be a subtree commit
+> +				cache_set "$rev" "$rev"
+> +			else
+> +				# a mainline commit with tree missing is equivalent to the initial =
+commit
+> +				cache_set "$rev" ""
+> +			fi
+>  		else
+> +			# no parents with valid subtree mappings means a commit prior to sub=
+tree add
+>  			cache_set "$rev" ""
+>  		fi
+>  		return
+> --
+> gitgitgadget
+>
+>
