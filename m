@@ -2,141 +2,139 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CFDAC4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE74C4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:47:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A524B2173E
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:41:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 916B42177B
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:47:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TGBQ7MKp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XVA2Y5ld"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727854AbgJGSlt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 14:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42850 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728109AbgJGSls (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 14:41:48 -0400
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605F3C0613D2
-        for <git@vger.kernel.org>; Wed,  7 Oct 2020 11:41:48 -0700 (PDT)
-Received: by mail-qt1-x849.google.com with SMTP id v33so1984376qtd.3
-        for <git@vger.kernel.org>; Wed, 07 Oct 2020 11:41:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=VXb0bqrC7GDgpHMbLIS8upOJ/NWQMlpptoy1eXLp+h8=;
-        b=TGBQ7MKp/V2yQK5HrQQ6PK0a1c0Mw0EHcHtkmxzAppq32q4hyDXgEkWrc8zyVbhmis
-         aVujhJS7Z4n6nFUQ/uk25nYViYKmkqS0u4fpIzal/UBM0S6CVb/Gxah4/eK7fVuOnckp
-         CMlOun1uIqgBMjJX6oO1CkK3gx0XYc2vpfb3DfbS/aI6qVPmBus+xDR91ZxAJJNVLLwc
-         TCNi9NcKikwFa+X1omGdd706DSFCrwdMpTbMIJNWj7m8u1rxRSxcW8iCES4NqrxafujR
-         6J6tlKj2SywJLsn5VIi5VLnYRHE5o9Bs/27u1e+J0WoEY9Yh/LmeABD+mQ3q2HZL/1pa
-         KjCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=VXb0bqrC7GDgpHMbLIS8upOJ/NWQMlpptoy1eXLp+h8=;
-        b=o/dtjx6tojdHVRt7y5djBRZ66osDB0AxJlFuqdHx2pQ77vwnDoxqsH8uoz+Zeu+/x2
-         01B+5lfQEe2zHYPH0/sIE9/GX5UYYksqKrYi1aULED3IKPQyaERtTIitfzIhMOyiTflS
-         IKaXp2JK07pBIJC1MN2d0H8i3HtKj1OV6HyRAugPJDEH1elHfpfIn3WE3Sef8+AEZdwY
-         x8AsNMWmUJd04Vo4lkIX8rvHnb74VnSjOlftvJBv3X/u4XDPtUGNVpIDirurQ0ZSttIc
-         mXtNW9GEP8z60IVty6EwvzCZ66PTI0DhdzpBuPyANwnO2BtqX8UlxUD5Y9BfDRXzjvpA
-         NhXA==
-X-Gm-Message-State: AOAM533Yyix94vn4KYED+Ph1Mu2l6YiS9yt1lAtwo0NO3PNNSImXiDfA
-        Pit3vCoEVCpGz79CPyw8TPcEj7JzbdLH1E9qvNuh
-X-Google-Smtp-Source: ABdhPJy3QFwFWX+Zbl0iEFXVwSuc+q6iVYMh+8eMZUprD2cxuOfDKzFFGBDInsNAC5XGUIGPkhPawQVzm9mLodB5ACSM
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0c:f1cb:: with SMTP id
- u11mr4511234qvl.21.1602096107460; Wed, 07 Oct 2020 11:41:47 -0700 (PDT)
-Date:   Wed,  7 Oct 2020 11:41:43 -0700
-In-Reply-To: <xmqqlfgi2axr.fsf@gitster.c.googlers.com>
-Message-Id: <20201007184143.1304267-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqlfgi2axr.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.28.0.806.g8561365e88-goog
-Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     peff@peff.net, jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1728136AbgJGSrU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 14:47:20 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51310 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728225AbgJGSrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 14:47:20 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02F34EDE56;
+        Wed,  7 Oct 2020 14:47:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eoT2DCeXl2L/x8LkriVdspWe0ac=; b=XVA2Y5
+        ldHROAX+0zhzIhUYBXM5NhjhG7A5BpruZxh5oUlr4EkXUTjc8TmBBlpNtRhCw4+B
+        dDi1LjST1EXLG5SbUkMk86ipSYPIlId2OVCcV3DmFuL2FicujZwdBDhZMRwWae9c
+        pZ1Iki32ggEahzOe35VYcU5cTYRxDa/pODXwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=m9r218ujZohpenqyp7ncTmnpxskxRWfz
+        IoXj7PQ4b1GngIZtjVcbfPbDRmQB6vJSm6kSV/h5wvvuHkKZipKfb6j9n/eapWGs
+        PXz54E+RTFPQr5mAXg88ZFetNSEPgU3lWpZDjz0AbdyhLuS3WhWlrlmkTE1DQqeK
+        M9x/ZrtZhuQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E48B8EDE54;
+        Wed,  7 Oct 2020 14:47:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 22C9AEDE52;
+        Wed,  7 Oct 2020 14:47:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Javier Spagnoletti <phansys@gmail.com>
+Subject: Re: [PATCH v2] Improve diff pattern for PHP files
+References: <pull.864.git.git.1601980656554.gitgitgadget@gmail.com>
+        <pull.864.v2.git.git.1602041898670.gitgitgadget@gmail.com>
+        <xmqqeema4la5.fsf@gitster.c.googlers.com>
+Date:   Wed, 07 Oct 2020 11:47:12 -0700
+In-Reply-To: <xmqqeema4la5.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 06 Oct 2020 23:12:18 -0700")
+Message-ID: <xmqqpn5t27rj.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 840BA616-08CD-11EB-AF5F-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Hmm. That commit removes the call to display_progress() from the main
-> > loop of threaded_second_pass(), and doesn't appear to add another one
-> > anywhere. Is the solution really as simple as adding it back in? I.e.
-> >
-> > diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> > index 8acd078aa0..6dbb4317e0 100644
-> > --- a/builtin/index-pack.c
-> > +++ b/builtin/index-pack.c
-> > @@ -1028,6 +1028,10 @@ static void *threaded_second_pass(void *data)
-> >  		struct object_entry *child_obj;
-> >  		struct base_data *child;
-> >  
-> > +		counter_lock();
-> > +		display_progress(progress, nr_resolved_deltas);
-> > +		counter_unlock();
-> > +
-> >  		work_lock();
-> >  		if (list_empty(&work_head)) {
-> >  			/*
-> >
-> > That _seems_ to work fine, but I'm not sure why it was removed in the
-> > first place (for a good reason, or simply as an accident when rewriting
-> > the variable declarations at the top of the loop?).
-> 
-> The above looks like an obvious and trivial fix to go back closer to
-> the original.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for noticing it, Peff. Yes, that looks like the correct fix. I
-thought that it might have crept in when I was rebasing, but looks like
-it was present in the original version [1].
+> "Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+>> Subject: Re: [PATCH v2] Improve diff pattern for PHP files
+>
+> You seem to have read J6t's excellent suggestion well but forgot to
+> retitle.
 
-[1] https://lore.kernel.org/git/505d8e79cd983d5b3dfd56c4f0432ad647132957.1570663470.git.jonathantanmy@google.com/
+Will queue with minimum copy-editing (reproduced below).
 
-> We seem to have removed find_unresolved_deltas() helper function in
-> that series, but there remains a mention to it in a comment, which
-> we would probably should rethink (it just may be the matter of
-> removing the mention, or if "just like in ..." may have been the
-> last example of doing what the comment suggests all code to do, it
-> may reveal a need for larger clean-up---I dunno).
+Thanks.
 
-Maybe the whole comment block should be deleted and replaced with
-something like:
+commit aff92827b54f4b7f9e339982a49bab4bdbd1fc55
+Author: Javier Spagnoletti <phansys@gmail.com>
+Date:   Wed Oct 7 03:38:18 2020 +0000
 
- Ensure that this node has been uncompressed and return its contents.
+    userdiff: PHP: catch "abstract" and "final" functions
+    
+    PHP permits functions to be defined like
+    
+           final public function foo() { }
+           abstract protected function bar() { }
+    
+    but our hunk header pattern does not recognize these decorations.
+    Add "final" and "abstract" to the list of function modifiers.
+    
+    Helped-by: Johannes Sixt <j6t@kdbg.org>
+    Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
- In the typical and best case, this node would already be uncompressed
- (through the invocation to resolve_delta() in threaded_second_pass())
- and it would not be pruned. However, if pruning of this node was
- necessary due to reaching delta_base_cache_limit, this function will
- find the closest ancestor with uncompressed data that has not been
- pruned (or if there is none, the ultimate base object), and uncompress
- each node in the delta chain in order to generate the uncompressed data
- for this node.
-
-(I'm using "uncompress" here because I find the original "deflate" term
-confusing - I thought that "deflate" meant compress, and thus the
-"data" here would be the uncompressed form, and hence undeflated or
-inflated.)
-
-The original comment [2] was describing two paths in which uncompressed
-forms could be generated - one in find_unresolved_deltas() going from
-parent to children, and one here from "current node to top parent"; and
-it said that all generated uncompressed forms (here, and "just like in
-find_unresolved_deltas()" - as Junio quoted) can be pruned. I think my
-suggested comment block above retains that information.
-
-[2] https://kernel.googlesource.com/pub/scm/git/git/+/refs/tags/v2.28.0/builtin/index-pack.c#868
+diff --git a/t/t4018/php-abstract-method b/t/t4018/php-abstract-method
+new file mode 100644
+index 0000000000..ce215df75a
+--- /dev/null
++++ b/t/t4018/php-abstract-method
+@@ -0,0 +1,7 @@
++abstract class Klass
++{
++    abstract public function RIGHT(): ?string
++    {
++        return 'ChangeMe';
++    }
++}
+diff --git a/t/t4018/php-final-method b/t/t4018/php-final-method
+new file mode 100644
+index 0000000000..537fb8ad9a
+--- /dev/null
++++ b/t/t4018/php-final-method
+@@ -0,0 +1,7 @@
++class Klass
++{
++    final public function RIGHT(): string
++    {
++        return 'ChangeMe';
++    }
++}
+diff --git a/userdiff.c b/userdiff.c
+index fde02f225b..4e2b55a5e0 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -147,7 +147,7 @@ PATTERNS("perl",
+ 	 "|=~|!~"
+ 	 "|<<|<>|<=>|>>"),
+ PATTERNS("php",
+-	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
++	 "^[\t ]*(((public|protected|private|static|abstract|final)[\t ]+)*function.*)$\n"
+ 	 "^[\t ]*((((final|abstract)[\t ]+)?class|interface|trait).*)$",
+ 	 /* -- */
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
