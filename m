@@ -2,234 +2,141 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2628C4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CFDAC4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:41:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 452B12176B
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:37:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A524B2173E
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:41:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="izvW6DfU"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TGBQ7MKp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727376AbgJGShx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 14:37:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64639 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbgJGShx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 14:37:53 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B9818D276;
-        Wed,  7 Oct 2020 14:37:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rGRI6ErR1fpw5wDGBQi3QBgEfZI=; b=izvW6D
-        fUrjl+5Ej6/eV9RbnwhRhhBCACeY4epLJ7WTMlfLTEGQI+Te0aSmh9Zbs78gpWJm
-        SqIdTMnw+c3QR1NdPktR56uMfphLbpLPJVROCfs1ZN0WQTSIeY52u9VWLk/7P2bz
-        NXPCohpWWshdMcVZCGxC4o5BD5TC2P4z2jRFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QLSCkls14GHjP8zpywVjiyAKY/4pQyhA
-        gkzeRZbm6r+WizwnpXb3hq7fMIiDvDRoyHYYCKylcRifzc4QgqtYlM6wvNRu7YTz
-        H8zBd6lKd20ddS5hF9mwZIWR1rXTSmcBO65Z4IwsMbtXUUVPg//H14aT6Yz/EC4+
-        izQn1ovNXPY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 83C058D275;
-        Wed,  7 Oct 2020 14:37:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 117EF8D274;
-        Wed,  7 Oct 2020 14:37:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
-        liu.denton@gmail.com, Prathamesh Chavan <pc44800@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 2/3] submodule: port submodule subcommand 'add' from
- shell to C
-References: <20201007074538.25891-1-shouryashukla.oo@gmail.com>
-        <20201007074538.25891-3-shouryashukla.oo@gmail.com>
-Date:   Wed, 07 Oct 2020 11:37:48 -0700
-In-Reply-To: <20201007074538.25891-3-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Wed, 7 Oct 2020 13:15:37 +0530")
-Message-ID: <xmqqtuv52877.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 333CEE3A-08CC-11EB-9371-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1727854AbgJGSlt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 14:41:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728109AbgJGSls (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 14:41:48 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605F3C0613D2
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 11:41:48 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id v33so1984376qtd.3
+        for <git@vger.kernel.org>; Wed, 07 Oct 2020 11:41:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=VXb0bqrC7GDgpHMbLIS8upOJ/NWQMlpptoy1eXLp+h8=;
+        b=TGBQ7MKp/V2yQK5HrQQ6PK0a1c0Mw0EHcHtkmxzAppq32q4hyDXgEkWrc8zyVbhmis
+         aVujhJS7Z4n6nFUQ/uk25nYViYKmkqS0u4fpIzal/UBM0S6CVb/Gxah4/eK7fVuOnckp
+         CMlOun1uIqgBMjJX6oO1CkK3gx0XYc2vpfb3DfbS/aI6qVPmBus+xDR91ZxAJJNVLLwc
+         TCNi9NcKikwFa+X1omGdd706DSFCrwdMpTbMIJNWj7m8u1rxRSxcW8iCES4NqrxafujR
+         6J6tlKj2SywJLsn5VIi5VLnYRHE5o9Bs/27u1e+J0WoEY9Yh/LmeABD+mQ3q2HZL/1pa
+         KjCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=VXb0bqrC7GDgpHMbLIS8upOJ/NWQMlpptoy1eXLp+h8=;
+        b=o/dtjx6tojdHVRt7y5djBRZ66osDB0AxJlFuqdHx2pQ77vwnDoxqsH8uoz+Zeu+/x2
+         01B+5lfQEe2zHYPH0/sIE9/GX5UYYksqKrYi1aULED3IKPQyaERtTIitfzIhMOyiTflS
+         IKaXp2JK07pBIJC1MN2d0H8i3HtKj1OV6HyRAugPJDEH1elHfpfIn3WE3Sef8+AEZdwY
+         x8AsNMWmUJd04Vo4lkIX8rvHnb74VnSjOlftvJBv3X/u4XDPtUGNVpIDirurQ0ZSttIc
+         mXtNW9GEP8z60IVty6EwvzCZ66PTI0DhdzpBuPyANwnO2BtqX8UlxUD5Y9BfDRXzjvpA
+         NhXA==
+X-Gm-Message-State: AOAM533Yyix94vn4KYED+Ph1Mu2l6YiS9yt1lAtwo0NO3PNNSImXiDfA
+        Pit3vCoEVCpGz79CPyw8TPcEj7JzbdLH1E9qvNuh
+X-Google-Smtp-Source: ABdhPJy3QFwFWX+Zbl0iEFXVwSuc+q6iVYMh+8eMZUprD2cxuOfDKzFFGBDInsNAC5XGUIGPkhPawQVzm9mLodB5ACSM
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:f1cb:: with SMTP id
+ u11mr4511234qvl.21.1602096107460; Wed, 07 Oct 2020 11:41:47 -0700 (PDT)
+Date:   Wed,  7 Oct 2020 11:41:43 -0700
+In-Reply-To: <xmqqlfgi2axr.fsf@gitster.c.googlers.com>
+Message-Id: <20201007184143.1304267-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqlfgi2axr.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.28.0.806.g8561365e88-goog
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     peff@peff.net, jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Hmm. That commit removes the call to display_progress() from the main
+> > loop of threaded_second_pass(), and doesn't appear to add another one
+> > anywhere. Is the solution really as simple as adding it back in? I.e.
+> >
+> > diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> > index 8acd078aa0..6dbb4317e0 100644
+> > --- a/builtin/index-pack.c
+> > +++ b/builtin/index-pack.c
+> > @@ -1028,6 +1028,10 @@ static void *threaded_second_pass(void *data)
+> >  		struct object_entry *child_obj;
+> >  		struct base_data *child;
+> >  
+> > +		counter_lock();
+> > +		display_progress(progress, nr_resolved_deltas);
+> > +		counter_unlock();
+> > +
+> >  		work_lock();
+> >  		if (list_empty(&work_head)) {
+> >  			/*
+> >
+> > That _seems_ to work fine, but I'm not sure why it was removed in the
+> > first place (for a good reason, or simply as an accident when rewriting
+> > the variable declarations at the top of the loop?).
+> 
+> The above looks like an obvious and trivial fix to go back closer to
+> the original.
 
-> From: Prathamesh Chavan <pc44800@gmail.com>
->
-> Convert submodule subcommand 'add' to a builtin and call it via
-> 'git-submodule.sh'.
->
-> Also, since the command die()s out in case of absence of commits in the
-> submodule, the keyword 'fatal' is prefixed in the error messages.
-> Therefore, prepend the keyword in the expected output of test t7400.6.
->
-> While at it, eliminate the extra preprocessor directive
-> `#include "dir.h"` at the start of 'submodule--helper.c'.
->
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Stefan Beller <stefanbeller@gmail.com>
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-> ---
->  builtin/submodule--helper.c | 391 +++++++++++++++++++++++++++++++++++-
->  git-submodule.sh            | 161 +--------------
->  t/t7400-submodule-basic.sh  |   2 +-
->  3 files changed, 392 insertions(+), 162 deletions(-)
+Thanks for noticing it, Peff. Yes, that looks like the correct fix. I
+thought that it might have crept in when I was rebasing, but looks like
+it was present in the original version [1].
 
-Whoa.  That looks like a huge change.  Makes me wonder if we want
-this split into multiple pieces, but let's read on.
+[1] https://lore.kernel.org/git/505d8e79cd983d5b3dfd56c4f0432ad647132957.1570663470.git.jonathantanmy@google.com/
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index de5ad73bb8..ec0a50d032 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -19,7 +19,6 @@
->  #include "diffcore.h"
->  #include "diff.h"
->  #include "object-store.h"
-> -#include "dir.h"
->  #include "advice.h"
->  
->  #define OPT_QUIET (1 << 0)
-> @@ -2744,6 +2743,395 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
->  	return !!ret;
->  }
->  
-> +struct add_data {
-> +	const char *prefix;
-> +	const char *branch;
-> +	const char *reference_path;
-> +	const char *sm_path;
-> +	const char *sm_name;
-> +	const char *repo;
-> +	const char *realrepo;
-> +	int depth;
-> +	unsigned int force: 1;
-> +	unsigned int quiet: 1;
-> +	unsigned int progress: 1;
-> +	unsigned int dissociate: 1;
-> +};
-> +#define ADD_DATA_INIT { NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0 }
+> We seem to have removed find_unresolved_deltas() helper function in
+> that series, but there remains a mention to it in a comment, which
+> we would probably should rethink (it just may be the matter of
+> removing the mention, or if "just like in ..." may have been the
+> last example of doing what the comment suggests all code to do, it
+> may reveal a need for larger clean-up---I dunno).
 
-This is used in a context like this:
+Maybe the whole comment block should be deleted and replaced with
+something like:
 
-	struct add_data data = ADD_DATA_INIT;
+ Ensure that this node has been uncompressed and return its contents.
 
-It is a tangent, but wouldn't
+ In the typical and best case, this node would already be uncompressed
+ (through the invocation to resolve_delta() in threaded_second_pass())
+ and it would not be pruned. However, if pruning of this node was
+ necessary due to reaching delta_base_cache_limit, this function will
+ find the closest ancestor with uncompressed data that has not been
+ pruned (or if there is none, the ultimate base object), and uncompress
+ each node in the delta chain in order to generate the uncompressed data
+ for this node.
 
-	#define ADD_DATA_INIT { 0 }
+(I'm using "uncompress" here because I find the original "deflate" term
+confusing - I thought that "deflate" meant compress, and thus the
+"data" here would be the uncompressed form, and hence undeflated or
+inflated.)
 
-be a more appropriate way to express that there is nothing other
-than the initialization to zero values going on?
+The original comment [2] was describing two paths in which uncompressed
+forms could be generated - one in find_unresolved_deltas() going from
+parent to children, and one here from "current node to top parent"; and
+it said that all generated uncompressed forms (here, and "just like in
+find_unresolved_deltas()" - as Junio quoted) can be pruned. I think my
+suggested comment block above retains that information.
 
-> +/*
-> + * Guess dir name from repository: strip leading '.*[/:]',
-> + * strip trailing '[:/]*.git'.
-> + */
-
-The original also strips trailing '/'.  The original does these in
-order:
-
- - if $repo ends with '/', remove that.  The above description does
-   not mention it.
-
- - if the result of the above ends with zero or more ':', followed
-   by zero or more '/', followed by ".git", drop the matching part.
-   The above description sounds as if it will remove ":/:/:.git"
-   from the end (and the code seems to have the same bug, as
-   after_slash_or_colon won't allow the code to know if the previous
-   character before ".git" was slash or colon).
-
- - if the result of the above has '/' or ':' in it, remove everything
-   before it and '/' or ':' itself.
-
-> +static char *guess_dir_name(const char *repo)
-> +{
-> +	const char *p, *start, *end, *limit;
-> +	int after_slash_or_colon;
-> +
-> +	after_slash_or_colon = 0;
-> +	limit = repo + strlen(repo);
-> +	start = repo;
-> +	end = limit;
-> +	for (p = repo; p < limit; p++) {
-> +		if (starts_with(p, ".git")) {
-> +			/* strip trailing '[:/]*.git' */
-> +			if (!after_slash_or_colon)
-> +				end = p;
-> +			p += 3;
-> +		} else if (*p == '/' || *p == ':') {
-> +			/* strip leading '.*[/:]' */
-> +			if (end == limit)
-> +				end = p;
-> +			after_slash_or_colon = 1;
-> +		} else if (after_slash_or_colon) {
-> +			start = p;
-> +			end = limit;
-> +			after_slash_or_colon = 0;
-> +		}
-> +	}
-> +	return xstrndup(start, end - start);
-
-So, this looks quite bogus and unnatural.  Checking for ".git" at
-every position in the string is meaningless.
-
-I wonder if something along the following (beware: not even compile
-tested or checked for off-by-ones) would be easier to follow and
-more faithful conversion to the original.
-
-	ep = repo + strlen(repo);
-
-        /*
-         * eat trailing slashes - a conversion less faithful to
-         * the original may want to loop to cull duplicated trailing
-	 * slashes, but we can leave it as user-error for now.
-	 */
-	if (repo < ep - 1 && ep[-1] == '/')
-		ep--;
-
-	/* eat ":*/*\.git" at the tail */
-	if (repo < ep - 4 && !memcmp(".git", ep - 4, 4)) {
-		ep -= 4;
-		while (repo < ep - 1 && ep[-1] == '/')
-			ep--;
-		while (repo < ep - 1 && ep[-1] == ':')
-			ep--;
-	}
-
-	/* find the last ':' or '/' */
-	for (sp = ep - 1; repo <= sp; sp--) {
-		if (*sp == '/' || *sp == ':')
-			break;
-	}
-        sp++; /* exclude '/' or ':' itself */
-
-        /* sp point at the beginning, and ep points at the end */
-	return xmemdupz(sp, ep - sp);
-
-> +}
-
-That's it for now; I didn't look at the remainder of this patch
-during this sitting before I have to move on, but I may revisit the
-rest at some other time.
-
-Thanks.
+[2] https://kernel.googlesource.com/pub/scm/git/git/+/refs/tags/v2.28.0/builtin/index-pack.c#868
