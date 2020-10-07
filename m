@@ -2,200 +2,117 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83C59C4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 03:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A5F4C4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 05:09:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D010208C3
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 03:38:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC16C208C7
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 05:09:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qp6lVvSG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZqMr5D9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726999AbgJGDiW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Oct 2020 23:38:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44238 "EHLO
+        id S1726100AbgJGFJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 01:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726878AbgJGDiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Oct 2020 23:38:22 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BE5EC061755
-        for <git@vger.kernel.org>; Tue,  6 Oct 2020 20:38:22 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id e18so445143wrw.9
-        for <git@vger.kernel.org>; Tue, 06 Oct 2020 20:38:22 -0700 (PDT)
+        with ESMTP id S1725970AbgJGFJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 01:09:26 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 924BCC0613D2
+        for <git@vger.kernel.org>; Tue,  6 Oct 2020 22:09:26 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id y14so613375pgf.12
+        for <git@vger.kernel.org>; Tue, 06 Oct 2020 22:09:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=oklf9iDwLKAZ5HkFn5tCh8cKsJ1REjKjnvsrUNcCuU8=;
-        b=qp6lVvSG+8F9x26bBPTTJ+sg5C/kQqEGQg9juwB3xLAa6+EfV1s7xwVaFF7SHEbFds
-         628DOFep0+YuHbA6lnKW3LoaLfKdIOidNlJHePyXLXA5KwcEDzN3nDWKxdDi5A0FgbHR
-         RMzkyblqbPumfwwuKGl1uLwUt8Cvl1oGQzdZ8h6tRG3+wgMElWsJjUzwi4qjcI5Dt4jT
-         3CAeihTZEKNfi1B7DE/dVIBgEQntlcs04fgx63ZVM1zt/x/36vvZw2KI2c/Uj6tKhyRK
-         4QvmgpYuKYGwoyf1Yxrv7kmICNcZsCztNHPFZNqKMDqVuKr8FHdBd8zid6XFjSNRlDbT
-         2RDQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=rSDQFwwU9U0XPnizLMK7RwRZdstZGhgKUdKQUokSiLU=;
+        b=GZqMr5D9b7hiEjtIqnm2nZtVKNBLfBwOKRpBGnmYyEHMaYNa6gluaQ1AU9KnIJ3M+N
+         9LNnWQ4zUmlS+293D56VqsaOTOHJkN5/jHn5cJ4oZD0sZbeo8PKWEi6hv+OUQ3FqLvw0
+         Sfpdpzfxgr8MADa237bpUOQ6uRAl1upyoNGMmO6XMltJrENICvObuaDoOncyuXoB5X4g
+         MtH1ls8+GOxgU786A+Hug45cVdPa0w+LZUAJZ5Jv1RAt52ph9PbH2A15EGnxTvmtFnm1
+         0GWPDnHbh48RvdGOWn8+HgkQ21dauCljMCbCqSbvCAyUG83Y2duA+AXacee4IcQOgECW
+         r8YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oklf9iDwLKAZ5HkFn5tCh8cKsJ1REjKjnvsrUNcCuU8=;
-        b=IeMqY9ycZ4/CDK8j/BeOVDUXIuLP6VHhmbobc2nnfqbV3V0jXJP0fbOcHuwvLexHvB
-         JwnHaa4MMVgmkRc/p9jw0EyF7gt4AG7LgVxfsaRCn8MxtJpIuMIZ1NZMTEsaJZhWYeO8
-         ceWD+D0VSTvP5Wkgk4PUOhqh2yS32PV1hmIJGBVZ5EJLQGL9bOOJtRarhVxlfq3W4MvF
-         /QgwqPk/RyjKtwl+lqgiIruY442IR89PFT3XGQboUv3thm1/eeM7IZGPiVtk1vaN4oh8
-         pFXw0mJXaLtxd0xMj6HbtyKrr1D8kn+kuFIfT59hI28tzIVAhu58IkedG2QNjw78YmpN
-         F0zg==
-X-Gm-Message-State: AOAM531D9fqE57TEhJzU3wb5XqgUWxOyMrFhySLfsqvtL0vtIZpkHrEB
-        TyBDDh7nimSSzb6uH3OBlSVeq+2V7mg=
-X-Google-Smtp-Source: ABdhPJzmS3Z4ybBxgIpefQiYpdB4lJYR0eatQv+cFHnypgRcM1Vu4HJcipc+j5OcR2CaxDWAYo3oUQ==
-X-Received: by 2002:a05:6000:104c:: with SMTP id c12mr980268wrx.133.1602041900727;
-        Tue, 06 Oct 2020 20:38:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w11sm904790wrs.26.2020.10.06.20.38.19
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rSDQFwwU9U0XPnizLMK7RwRZdstZGhgKUdKQUokSiLU=;
+        b=BAiR0xfgT3KeXpLOk131ENxk9reaRMqr8l55hTpFolBIa2+5/21XR4+wkxud0yfxqw
+         f7W+5xHhmdYq8yWysmdbSsyVPbI3RX5Na1i4TIWe7DtubDXFgvsxQRkMDJWs8fg6KLQu
+         MTaO7oSM2biVZvUVunIDOhrCYZUrLkizdNm5FU70xrHEYnqVNTa1L55B/3zgKe7aL8Ot
+         LOFWF4NxZAysZj39n11W6BUbCKnw9KaCSACVbIvDxWXDmnmCxMzPVrDT5zix0wYL9OVj
+         v8zaYWK50+z/6Ehm2NESwM1RXGBCypq0RC9t7I7j+Pxf20cR9zvgdyZlyCVN0ub++SfU
+         J2QQ==
+X-Gm-Message-State: AOAM530IpmEHGqk6IH/g1XQsP/Y1CQ4oYnSK92/ctR9WoUa7zYGE8uvM
+        E4gB7+k4NBZ0vrDo1LFVAZY7r2tg84g=
+X-Google-Smtp-Source: ABdhPJznuD70D/Fx3zZAgnL6lFeQiMvcUI9+rr2hmp20qoZWyv0nJNsI7ljsVAVN33Xvg6km5ZJPuQ==
+X-Received: by 2002:a63:f4c:: with SMTP id 12mr1464990pgp.65.1602047365823;
+        Tue, 06 Oct 2020 22:09:25 -0700 (PDT)
+Received: from archbookpro.hsd1.ca.comcast.net (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
+        by smtp.gmail.com with ESMTPSA id x23sm1053621pfc.47.2020.10.06.22.09.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Oct 2020 20:38:19 -0700 (PDT)
-Message-Id: <pull.864.v2.git.git.1602041898670.gitgitgadget@gmail.com>
-In-Reply-To: <pull.864.git.git.1601980656554.gitgitgadget@gmail.com>
-References: <pull.864.git.git.1601980656554.gitgitgadget@gmail.com>
-From:   "Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Oct 2020 03:38:18 +0000
-Subject: [PATCH v2] Improve diff pattern for PHP files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 06 Oct 2020 22:09:25 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/2] Documentation/config/checkout: replace sq with backticks
+Date:   Tue,  6 Oct 2020 22:09:08 -0700
+Message-Id: <f08d3f796a806b5ec20f12cc85683b2c2e99b1a8.1602047333.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.28.0.942.g77c4c6094c
+In-Reply-To: <cover.1602047333.git.liu.denton@gmail.com>
+References: <cover.1601810233.git.liu.denton@gmail.com> <cover.1602047333.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Javier Spagnoletti <phansys@gmail.com>,
-        Javier Spagnoletti <phansys@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Javier Spagnoletti <phansys@gmail.com>
+The modern style for Git documentation is to use backticks to quote
+any command-line documenation so that it is typeset in monospace.
+Replace all single quotes with backticks to conform to this.
 
-PHP allows some function modifiers that are not recognized in our current hunk header pattern
-
-       final public function foo() { }
-       abstract protected function bar() { }
-
-Add "final" and "abstract" to the list of function modifiers.
-
-Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
-    Improve diff pattern for PHP files
-    
-    PHP allows some function modifiers that are not recognized in our
-    current hunk header pattern
-    
-       final public function foo() { }
-       abstract protected function bar() { }
-    
-    Add "final" and "abstract" to the list of function modifiers. See:
-    
-     * https://www.php.net/manual/en/language.oop5.abstract.php#example-213;
-     * https://www.php.net/manual/en/language.oop5.final.php#language.oop5.traits.static.ex1
-       .
-    
-    Signed-off-by: Javier Spagnoletti phansys@gmail.com [phansys@gmail.com]
+ Documentation/config/checkout.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-864%2Fphansys%2Fuserdiff_php-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-864/phansys/userdiff_php-v2
-Pull-Request: https://github.com/git/git/pull/864
-
-Range-diff vs v1:
-
- 1:  aa65d43a40 ! 1:  4cb59950ff Improve diff pattern for PHP files
-     @@ Metadata
-       ## Commit message ##
-          Improve diff pattern for PHP files
-      
-     -    Improve the output diff readability for php files by taking into account some missing function modifiers.
-     +    PHP allows some function modifiers that are not recognized in our current hunk header pattern
-     +
-     +           final public function foo() { }
-     +           abstract protected function bar() { }
-     +
-     +    Add "final" and "abstract" to the list of function modifiers.
-      
-          Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
-      
-     + ## t/t4018/php-abstract-method (new) ##
-     +@@
-     ++abstract class Klass
-     ++{
-     ++    abstract public function RIGHT(): ?string
-     ++    {
-     ++        return 'ChangeMe';
-     ++    }
-     ++}
-     +
-     + ## t/t4018/php-final-method (new) ##
-     +@@
-     ++class Klass
-     ++{
-     ++    final public function RIGHT(): string
-     ++    {
-     ++        return 'ChangeMe';
-     ++    }
-     ++}
-     +
-       ## userdiff.c ##
-      @@ userdiff.c: PATTERNS("perl",
-       	 "|=~|!~"
-
-
- t/t4018/php-abstract-method | 7 +++++++
- t/t4018/php-final-method    | 7 +++++++
- userdiff.c                  | 2 +-
- 3 files changed, 15 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/php-abstract-method
- create mode 100644 t/t4018/php-final-method
-
-diff --git a/t/t4018/php-abstract-method b/t/t4018/php-abstract-method
-new file mode 100644
-index 0000000000..ce215df75a
---- /dev/null
-+++ b/t/t4018/php-abstract-method
-@@ -0,0 +1,7 @@
-+abstract class Klass
-+{
-+    abstract public function RIGHT(): ?string
-+    {
-+        return 'ChangeMe';
-+    }
-+}
-diff --git a/t/t4018/php-final-method b/t/t4018/php-final-method
-new file mode 100644
-index 0000000000..537fb8ad9a
---- /dev/null
-+++ b/t/t4018/php-final-method
-@@ -0,0 +1,7 @@
-+class Klass
-+{
-+    final public function RIGHT(): string
-+    {
-+        return 'ChangeMe';
-+    }
-+}
-diff --git a/userdiff.c b/userdiff.c
-index 1df884ef0b..a99d84a7e3 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -143,7 +143,7 @@ PATTERNS("perl",
- 	 "|=~|!~"
- 	 "|<<|<>|<=>|>>"),
- PATTERNS("php",
--	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
-+	 "^[\t ]*(((public|protected|private|static|abstract|final)[\t ]+)*function.*)$\n"
- 	 "^[\t ]*((((final|abstract)[\t ]+)?class|interface|trait).*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
-
-base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
+index 6b646813ab..e3684a5459 100644
+--- a/Documentation/config/checkout.txt
++++ b/Documentation/config/checkout.txt
+@@ -1,18 +1,18 @@
+ checkout.defaultRemote::
+-	When you run 'git checkout <something>'
+-	or 'git switch <something>' and only have one
++	When you run `git checkout <something>`
++	or `git switch <something>` and only have one
+ 	remote, it may implicitly fall back on checking out and
+-	tracking e.g. 'origin/<something>'. This stops working as soon
+-	as you have more than one remote with a '<something>'
++	tracking e.g. `origin/<something>`. This stops working as soon
++	as you have more than one remote with a `<something>`
+ 	reference. This setting allows for setting the name of a
+ 	preferred remote that should always win when it comes to
+ 	disambiguation. The typical use-case is to set this to
+ 	`origin`.
+ +
+ Currently this is used by linkgit:git-switch[1] and
+-linkgit:git-checkout[1] when 'git checkout <something>'
+-or 'git switch <something>'
+-will checkout the '<something>' branch on another remote,
+-and by linkgit:git-worktree[1] when 'git worktree add' refers to a
++linkgit:git-checkout[1] when `git checkout <something>`
++or `git switch <something>`
++will checkout the `<something>` branch on another remote,
++and by linkgit:git-worktree[1] when `git worktree add` refers to a
+ remote branch. This setting might be used for other checkout-like
+ commands or functionality in the future.
 -- 
-gitgitgadget
+2.28.0.942.g77c4c6094c
+
