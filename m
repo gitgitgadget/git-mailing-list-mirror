@@ -7,102 +7,117 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA182C41604
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18822C41604
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:48:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60A6C2168B
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:38:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACF832168B
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 17:48:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UK2Wd0ED"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YOOUkj5s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727828AbgJGRio (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 13:38:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50574 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727534AbgJGRin (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 13:38:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBAB57E5B2;
-        Wed,  7 Oct 2020 13:38:41 -0400 (EDT)
+        id S1728328AbgJGRsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 13:48:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54686 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727828AbgJGRsr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 13:48:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AAF76F0B51;
+        Wed,  7 Oct 2020 13:48:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aaJdGwrMlk8mgyRu5X6++AFfJMg=; b=UK2Wd0
-        ED3+IzBLgE2dXL2t/+uS7qDy3NfGdr/YpPFoFgKeWx0Ew8R/ruekylsosweCJDce
-        yTdiYtpK17nki9+uqAAbbjC574nOWJ633OOY4G1pr7np0jwKzU6PEJs4MIxUrQud
-        mpheOk1ADPU0Zp4/FYrtoo7+OFD7NhlC38AF8=
+        :content-type; s=sasl; bh=2Jsb5NppxVnmJGk4ZttD3dnfYEI=; b=YOOUkj
+        5syDH6IHffEWNeBlpQ/ijH+uUgPpmwBsaw0LCdfUGd1doXOwHUV6yndl+aEwA8Js
+        ddaAU6PgdqMutxYwAru21q/jzKrvREoRouNcejYvosqlI8SG2PoVd8D3kRA4T+XR
+        V6dbQtZOXUz5Nemk3IeZUds4JEkoMwD0yd0Yw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E+ZVBlQmiu7QXxYdxGZjEpCIYd0uNwUX
-        XcXZ5Hi2gIQr0kcu72hzuDqyBerrPidDbcqEoRfV92n20pCQXWs76vuqcK72Jude
-        FkIs87XHNiSfBEcgOEVGMjRV8SaO2Mv/JH5SpgpA6iusbZBBtgxpicchBc3WvXNH
-        GHJcFz4eALE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B42CC7E5B1;
-        Wed,  7 Oct 2020 13:38:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=H4tPTO/DvAQH5133NQ+41JDi7aBgxc7n
+        j/woQoGPpzpbqF+G5nlbA3YCZvilycx+TxTvV1ixmXMfOvYy3N4A6tmeAYmp/xs0
+        0I5ZK/PD/1TzLBc1ErGpG2kERbfJJddrTaj8U0eytIVh0MyFWSmUoO0+YzD+Kqom
+        eIy5f0nE3rE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3DE8F0B50;
+        Wed,  7 Oct 2020 13:48:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4328B7E5B0;
-        Wed,  7 Oct 2020 13:38:41 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F401BF0B4F;
+        Wed,  7 Oct 2020 13:48:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
-References: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
-        <20201007153947.GA181281@coredump.intra.peff.net>
-        <20201007154533.GA186764@coredump.intra.peff.net>
-Date:   Wed, 07 Oct 2020 10:38:40 -0700
-In-Reply-To: <20201007154533.GA186764@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 7 Oct 2020 11:45:33 -0400")
-Message-ID: <xmqqlfgi2axr.fsf@gitster.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] help: do not expect built-in commands to be hardlinked
+References: <pull.745.git.1602074589460.gitgitgadget@gmail.com>
+        <xmqqpn5u2bps.fsf@gitster.c.googlers.com>
+Date:   Wed, 07 Oct 2020 10:48:41 -0700
+In-Reply-To: <xmqqpn5u2bps.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 07 Oct 2020 10:21:51 -0700")
+Message-ID: <xmqqh7r62ah2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F09558E0-08C3-11EB-810B-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 573CD5A4-08C5-11EB-92F9-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hmm. That commit removes the call to display_progress() from the main
-> loop of threaded_second_pass(), and doesn't appear to add another one
-> anywhere. Is the solution really as simple as adding it back in? I.e.
->
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 8acd078aa0..6dbb4317e0 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1028,6 +1028,10 @@ static void *threaded_second_pass(void *data)
->  		struct object_entry *child_obj;
->  		struct base_data *child;
->  
-> +		counter_lock();
-> +		display_progress(progress, nr_resolved_deltas);
-> +		counter_unlock();
-> +
->  		work_lock();
->  		if (list_empty(&work_head)) {
->  			/*
->
-> That _seems_ to work fine, but I'm not sure why it was removed in the
-> first place (for a good reason, or simply as an accident when rewriting
-> the variable declarations at the top of the loop?).
+> ... in the new world order, what we see on disk plus what
+> we have in the built-in table are the set of subcommands available
+> to us, and the rule that was valid in the old world order can no
+> longer be relied upon, and nobody noticed  the breakage while
+> developing or reviewing.
 
-The above looks like an obvious and trivial fix to go back closer to
-the original.
+>> diff --git a/help.c b/help.c
+>> index 4e2468a44d..919cbb9206 100644
+>> --- a/help.c
+>> +++ b/help.c
+>> @@ -263,6 +263,8 @@ void load_command_list(const char *prefix,
+>>  	const char *env_path = getenv("PATH");
+>>  	const char *exec_path = git_exec_path();
+>>  
+>> +	load_builtin_commands(prefix, main_cmds);
+>> +
+>>  	if (exec_path) {
+>>  		list_commands_in_dir(main_cmds, exec_path, prefix);
+>>  		QSORT(main_cmds->names, main_cmds->cnt, cmdname_compare);
 
-We seem to have removed find_unresolved_deltas() helper function in
-that series, but there remains a mention to it in a comment, which
-we would probably should rethink (it just may be the matter of
-removing the mention, or if "just like in ..." may have been the
-last example of doing what the comment suggests all code to do, it
-may reveal a need for larger clean-up---I dunno).
+I wondered if we need, after this change, to worry about duplicates,
+because some Git subcommands, even after they made into a built-in
+and callable internally, must have on-disk footprint.
 
-Thanks.
+It turns out that after the post-context in this hunk we do make a
+call to uniq(main_cmds) so it is fine.
 
+This was unexpected to me, as we read only from a single directory
+"exec_path" and the need to call uniq() in the old world order would
+have meant that readdir in exec_path gave us duplicate entries.
 
+In fact, the very original version of load_command_list() did not
+have this unnecessary call to uniq().  It was introduced in 1f08e5ce
+(Allow git help work without PATH set, 2008-08-28); perhaps Alex saw
+12 years into the future and predicted that we would start needing
+it ;-)
 
+In any case, the patch is good thanks to that existing uniq() call.
+
+>> diff --git a/help.h b/help.h
+>> index dc02458855..5871e93ba2 100644
+>> --- a/help.h
+>> +++ b/help.h
+>> @@ -32,6 +32,7 @@ const char *help_unknown_cmd(const char *cmd);
+>>  void load_command_list(const char *prefix,
+>>  		       struct cmdnames *main_cmds,
+>>  		       struct cmdnames *other_cmds);
+>> +void load_builtin_commands(const char *prefix, struct cmdnames *cmds);
+>>  void add_cmdname(struct cmdnames *cmds, const char *name, int len);
+>>  /* Here we require that excludes is a sorted list. */
+>>  void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
+>>
+>> base-commit: 8f7759d2c8c13716bfdb9ae602414fd987787e8d
