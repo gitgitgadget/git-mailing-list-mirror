@@ -2,105 +2,105 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8886FC41604
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F1ADC41604
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:47:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 032162064E
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:31:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E176D206FC
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:47:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="b8KIoPKP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aC9Qf1xZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727505AbgJGQbm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 12:31:42 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56649 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726388AbgJGQbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 12:31:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602088297;
-        bh=GMUQ3vV1eXwVZvfK2qh0mKD8iz02romNQZzj2iU9DHw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=b8KIoPKPK1oHuS1B+svFmpD0yuA7/+XJIS9fyfREf9SWKdbn6NhkCX0Nfqh7MiG9w
-         a5ftV3MJzt8GQ3xQisssbdeBApV5VOOgN9wtBoD1cNpHjL4Z2x+rVFEMZ+cOLkmS8Y
-         9K4SkT4P8IaDmAJG5SgFLfPRd9gYSsyprP6POqIk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3siG-1kYl0T0zzc-00zlXb; Wed, 07
- Oct 2020 18:31:37 +0200
-Date:   Wed, 7 Oct 2020 18:31:34 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ed Maste <emaste@freebsd.org>
-cc:     Tom Clarkson via GitGitGadget <gitgitgadget@gmail.com>,
-        git mailing list <git@vger.kernel.org>,
-        Avery Pennarun <apenwarr@gmail.com>,
-        Tom Clarkson <tom@tqclarkson.com>
-Subject: Re: [PATCH 0/7] subtree: Fix handling of complex history
-In-Reply-To: <CAPyFy2BeHnacdqd_C8BdPntsN7FCoTciL+s8fDXGhBU0H01FaA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010071829590.50@tvgsbejvaqbjf.bet>
-References: <pull.493.git.1589176201.gitgitgadget@gmail.com> <CAPyFy2BsFLZZeEY=54evEJwed9q+Dc3TX3s1O+cr-nqwjCRHvg@mail.gmail.com> <nycvar.QRO.7.76.6.2010042124320.50@tvgsbejvaqbjf.bet> <CAPyFy2BeHnacdqd_C8BdPntsN7FCoTciL+s8fDXGhBU0H01FaA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727716AbgJGQrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 12:47:48 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57631 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727005AbgJGQrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 12:47:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E48B8F041E;
+        Wed,  7 Oct 2020 12:47:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DpFUylcnv3hzR2VFc3U/F3oStBI=; b=aC9Qf1
+        xZZgZ2Xb31WDSd7XhE8bfLFEDQjSKXUn/FIasLtFG4DRe2xIlgo6qbhRytN2bjcC
+        uAEGjUj2MdHDvVk3FfXTbzL4Na26lVAuJfOEU8JxFXoVYgvCOqoYIgdnBMnljxYl
+        QgI+qfQxgxKJx+/eKiesiBfmdvQqIM8RCx8Vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=AlPeWnnQfXnpuw0caWTJ1GxDW5kP7lV1
+        teTxjjP6URCg+PFOMipolUxrQjaRZ3y2JrHBWcv9gOeeU4W9kV/rkcgPcsG/080k
+        t+kOdJx3ef29baJ+B02b6z2qSLHc/0cffsZIVYWc+AHC4g0B/b5xTI3hmZuShNhC
+        1Xp2Zi5pSfQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBAE6F041D;
+        Wed,  7 Oct 2020 12:47:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AB44F041A;
+        Wed,  7 Oct 2020 12:47:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] checkout: learn to respect checkout.guess
+References: <cover.1601810233.git.liu.denton@gmail.com>
+        <cover.1602047333.git.liu.denton@gmail.com>
+        <2678680a08e025e9652c6769501dbc604560394b.1602047333.git.liu.denton@gmail.com>
+Date:   Wed, 07 Oct 2020 09:47:41 -0700
+In-Reply-To: <2678680a08e025e9652c6769501dbc604560394b.1602047333.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Tue, 6 Oct 2020 22:09:09 -0700")
+Message-ID: <xmqqy2ki2daq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ijLtkVPr+/dSCGhts2M98L1TfrCbTuOZ9TikWvFB0HjbXp1vrLo
- 24rCoXZpTpu74gFsmJoZSCVj0ETZAlUIHrmHZknjacfTx4oFyJZGr2Xdzbjz35Rw9OO2AEs
- waXIOlF6oIXvAAzs45ir0eEy3pVjhtsAKYP4c29T6t/ivP6LqBm9egh9ChPuh5zCM8jr3lW
- c6SFAba846NZTZuCSdO3w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5jMK2s+h8n0=:M5J2k58AcnkTx3qnyDkHDd
- cgQeYlOmpN28PbQiAL3o+WUrlkAooKA0mSD/UPssegIHdJE89rX2seQZ69PIq6JV5+nQq2B+x
- Gb09o/cAN9vuGdVrvjtDNh4qAwE4G/OeaPNAC2iZJt/ps6ZrZVhlof7zb/kf/ntRIp0A7qt1A
- Tptq0VFbrE3ztdoYjYaoUQAGVeXEktdPy1utcROnRBvVSgak2cz+t2EmCp5SQ/RzbQdhTx5rs
- yvwyfnL4fwSNPThvFrtgMTm8yO4jK1Q/pJvB1ZStO1i/ZwX4aNEnQiNYtnmRhXuLt7wUNRjGT
- UOSXCVEZ3z76BLP9KH6HUd2rVSHnWH0fw7Um66Za2MhFyGgaAi4+g7plCopqRxfrw/Eapa+MH
- sUKpFDUddnVDpudn008ptFfqnyRrblNtbeADT6fEiQPmU8QAkYQyyuS21hTQxNyrPLOAyNBYk
- pyrEqvfpzq/FjHxNUr5Vc46jUMyJPwPI/l31Tm2iekbxM8OwtC6hPUPb8zFyzfTyikEkTwXBm
- b06YKWprnAJWAPXfa1vNHKFDWcYqTIHDyb8HoCxIVwmlOfETA4cuztZYxPkXVXnVJ1G9xJ6Uk
- G63qPOUWQHkbqbWhG3+2T+5SgfegAp1itPEB9x1TkZxaOJxl9wMQEJ+hQHsOOu/tN1CKBDpgS
- OK+iLNQskbMbm+d3+RgGyazVR6i/XIrmuEJM4bmoQ3ctdf9ttvWsTw5oSBEhIV8gJyJZKQWiw
- nf6vEGGFlB2Ppi9S2dLz1MRF7U++gGo+2n3irbrWdgPloJS+xRek8WMInevW6ufhlsyBADTLh
- IxVBQqHsxOVoL4OpZu46MB8oL76sqMS48E5SJkdfcTIGMS8SPfwrWCVFsd1/NHlgUp7uURst+
- D2Cb9tz6aOUZKgRCnjbcIACaffx4NQSSVokLov7jp4Fn1jIJqtmrsFtKDC2AI84cFoqmJpSeM
- 0BvJ1Kx2pXnyMqIMKPc+Vg0Lt9XcXDrA1m4P/774ZzeBqhEXe+n/CYlkTiUIxAVrzPa1VolfS
- 10T8IysVvbiYqEFgDK+CiKXtXBu2HjgqK9vGnaFFRnBmYeY+mWa6sB0pYDBDMd/Dq9LYyv64C
- eY+kKUvMInRsXJIYRmMoFjM21gcUDE1/xaI4Cb2CGZcJ0ILc5BNi+q0Hz7nyiC+U6/7FxpRQw
- p0i3EmBBvn3rucGstU2HAglO4BohTrl2hs/GfZk1Mx/M2XFF9DIDIqZzAAEFNXjY7KPX94lE1
- mqL+UX7YMokIUDRuPYGQjCMYsvTyaLC2vSp2hHQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D1D02BD0-08BC-11EB-AE21-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ed,
+Denton Liu <liu.denton@gmail.com> writes:
 
-On Mon, 5 Oct 2020, Ed Maste wrote:
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+> index afa5c11fd3..28f656d04e 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -193,6 +193,9 @@ branches from there if `<branch>` is ambiguous but exists on the
+>  linkgit:git-config[1].
+>  +
+>  Use `--no-guess` to disable this.
+> ++
+> +The default behavior can be set via the `checkout.guess` configuration
+> +variable.
+>  
+>  -l::
+>  	Create the new branch's reflog; see linkgit:git-branch[1] for
+> diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
+> index 3759c3a265..5c438cd505 100644
+> --- a/Documentation/git-switch.txt
+> +++ b/Documentation/git-switch.txt
+> @@ -103,6 +103,9 @@ ambiguous but exists on the 'origin' remote. See also
+>  `checkout.defaultRemote` in linkgit:git-config[1].
+>  +
+>  `--guess` is the default behavior. Use `--no-guess` to disable it.
+> ++
+> +The default behavior can be set via the `checkout.guess` configuration
+> +variable.
 
-> On Mon, 5 Oct 2020 at 09:18, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > FWIW there have been more comments in favor of this patch in
-> > https://github.com/gitgitgadget/git/pull/493.
-> >
-> > I guess what this patch series needs to proceed further is an ACK by
-> > Avery?
->
-> Avery says "if it's good enough for Johannes it's good enough for me"
-> https://twitter.com/apenwarr/status/1313231132721401861
+Contrasting the above two, one cannot help but notice that it is
+totally unclear how "git checkout" that is not explicitly told by
+command line or configuration behaves.  Perhaps "`--guess` is the
+default behaviour." needs to be transplated from the description
+for "git switch" to clarify?
 
-What Avery does not quite understand is that Johannes has not a lot of
-clue about `git subtree`... ;-)
+This is not a new issue, but is made stand out even more prominently
+due to the addition.
 
-Seriously, I am not a user, unfamiliar with the implementation details
-(although I am getting a bit more familiar through the review I started
-and plan on finishing later). My biggest connection with `git subtree` is
-that there seem to be a couple of Git for Windows users who actively use
-that command (which is the reason why we include it in Git for Windows,
-unlike many other things from `contrib/`).
-
-Ciao,
-Dscho
+Thanks.
