@@ -2,189 +2,95 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40414C4363D
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 09:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7480AC4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 09:54:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1AE220872
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 09:25:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 336A62076C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 09:54:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bV/v5S16"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QN0pwK6+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbgJGJZa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 05:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41110 "EHLO
+        id S1727434AbgJGJyI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 05:54:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbgJGJZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 05:25:29 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56980C061755
-        for <git@vger.kernel.org>; Wed,  7 Oct 2020 02:25:29 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id h7so1320225wre.4
-        for <git@vger.kernel.org>; Wed, 07 Oct 2020 02:25:29 -0700 (PDT)
+        with ESMTP id S1726989AbgJGJyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 05:54:08 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9F0C061755
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 02:54:08 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id ly6so2046489ejb.8
+        for <git@vger.kernel.org>; Wed, 07 Oct 2020 02:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=I7VXybb0qwKBFZy7vF9j6DhV9lnXXH+rzMqtzYeGSIg=;
-        b=bV/v5S16TyhEWJhDS74UExp0Dcd5L4RslzHzO48btGj6EGBtF22/qVyPAR1K1Pk3WR
-         cb9m16sqLQgOuUuPm7xO6QIOuuY2Iu2YRdpcgAnD0NKcBr8AZWyBESq9SkNYP3DWGRyI
-         hG7zfHjUHK6NRHN6nPxZMlJ5A9q0ZZyKIqLSJaeVtRBBCUv0ee0YUI+JMwA+Rt4ZD+wr
-         IBcBn4jyehXzW86BNGJ8+0oaLCnJjxt0tuSMJ5RV5+KmVIFnWIbGu3O5HW94gyiZFcDV
-         32sWs+SGrUop33nlYCre1cUy3TsYcXRLIkWoC0SDae3EVXDTI2yMyzmv4VZzNhCBEcwG
-         LN7w==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=JDiBBVsq08xU45wZRx174QzJMcWyCZ53edzzUBMbuOw=;
+        b=QN0pwK6+CY9pdwJ7vR4jVPHumszjGlV4R22EYYcsLfOWIoO2XrYFexRkvT0hLfFQKj
+         2pYzSLz3NAKExVjCbWu18kxgfxGOp9mvFD6bkDIIy/oX3FsUzuzxImiJofvLawbD/gNx
+         tUnf7guwMzJmnZ5i1A13OGTcmsrq49k3e2rOlrr18b0U2vRppJZVRUR/QeBhc3e/A7b9
+         vf8pVJw0mQJKxauGu/Ps6i3LWvAJOfIzuIlUqITasdroge10btoNRMwm60Lpa1GWplCl
+         C0p2C3kXFQz3qL20N7KHzXGGWH0txFUb1XEa0uXqA8N2qt0nsBXySFoITyBO6peGuRyK
+         BS3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=I7VXybb0qwKBFZy7vF9j6DhV9lnXXH+rzMqtzYeGSIg=;
-        b=i7ns8YACF9GXa48ensr8vRafKhyEDXVNey5vVIL+vcNmmPUHJgYhSg9ZezhT6hCQQR
-         xKNLbe0ph/jqJD7ZKFgt9yeNRCavFqE/9oWBi5CC8wZU2UcTiAHv7cZuX3RrGgE74Zj3
-         F+xrs5LHYS1ka4mjTDIHpifxEUjTQEHLwoKb106Pz7WGinjfR5p4BMgvNSRTz0hVrl21
-         e4skr11N1bkH+l1gSTi9vEZz/fzQb0Uv/p3onNU8eoGnkXUfHjpb1jPNV1jgv42n41y/
-         DbCMR7YrODGgMIHb46rAh0U7Xvw649reXZW8xY75JBbvqaEbNTj9tBq8A0MvPfYZUCQN
-         8dlA==
-X-Gm-Message-State: AOAM532lm/l0fy9SKxJfWYwYdUScUlrTyLbQV2nW699ycZ0MAZNjvmEm
-        tSju/BaDUOH4505WIpOVI9XyZ3djDq0=
-X-Google-Smtp-Source: ABdhPJyz6fF/sB5VR0p6fT3H4DRyEtRcO2+sOcnwheI0ws5hYQDWyNLBknAL1f0LtiKAtAeCTvzXUA==
-X-Received: by 2002:adf:8141:: with SMTP id 59mr2611789wrm.132.1602062727763;
-        Wed, 07 Oct 2020 02:25:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m3sm2120539wme.3.2020.10.07.02.25.26
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=JDiBBVsq08xU45wZRx174QzJMcWyCZ53edzzUBMbuOw=;
+        b=be4G+/+YCSSOuLd6Noy7jrRMmYW3ykY/9uzN1ieoj1uqQR8nt/7gsOcFhqVGX1WcB0
+         KwgasqobClEVyXpD//531UsOr5F6/U34CUwA8GJbG1dJEAa2of8ef2Tz3/OJ4ryktxCO
+         DT9Ei1T1q8BEl4/1Y/+ysNWs8fRAmQe1NInrORbO+PoRClrMfAO5NTc71jKbdj70IN+z
+         hqVT6MgwDIa+r25PM4IpSga2IPgLWVyPuR+w9QDTpdIZXSG75eaBcKPYotfm1vwv8xON
+         D5vJXozH4PjfQSKQ9Z4UxBbfF2TX22YVE/rkd/9kzt7XNGwlx3KOFidr0M1hMgV7x8c2
+         ts3w==
+X-Gm-Message-State: AOAM532Qwgy6Ey512oWyK4TKK7wA0UNdKS2qrmYOQ0XYV5MwY1db78iO
+        W8FvDkb3g9qrrFcsUH1autMl0H2v3GN/YQ==
+X-Google-Smtp-Source: ABdhPJy82N36E5duYDQU93VPsLKPFT4D9hrU0gPgiOxMxeY03pJ8z2KtIVPidU9tPDTufNXI1ZJ58g==
+X-Received: by 2002:a17:906:cede:: with SMTP id si30mr2596836ejb.236.1602064446615;
+        Wed, 07 Oct 2020 02:54:06 -0700 (PDT)
+Received: from evledraar (dhcp-077-248-252-018.chello.nl. [77.248.252.18])
+        by smtp.gmail.com with ESMTPSA id i14sm1158930ejp.2.2020.10.07.02.54.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2020 02:25:27 -0700 (PDT)
-Message-Id: <pull.866.git.git.1602062726316.gitgitgadget@gmail.com>
-From:   "Sohom Datta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Oct 2020 09:25:26 +0000
-Subject: [PATCH] userdiff: expand detected chunk headers for css
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 07 Oct 2020 02:54:05 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc0
+References: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <xmqqa6x070tn.fsf@gitster.c.googlers.com>
+Date:   Wed, 07 Oct 2020 11:54:04 +0200
+Message-ID: <87k0w2gy4j.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sohom Datta <sohom.datta@learner.manipal.edu>,
-        Sohom <sohom.datta@learner.manipal.edu>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sohom <sohom.datta@learner.manipal.edu>
 
-Added support for classes, ids, :root selectors
-as well as @-based statements (ex: @page, @media
-and @keyframes ).
+On Tue, Oct 06 2020, Junio C Hamano wrote:
 
-Also added tests for the same.
+> An early preview release Git v2.29.0-rc0 is now available for
+> testing at the usual places.  It is comprised of 588 non-merge
+> commits since v2.28.0, contributed by 76 people, 22 of which are
+> new faces.
+> [...]
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (17):
+> [...]
+>       remote-mediawiki: convert to quoted run_git() invocation
+>       remote-mediawiki: annotate unquoted uses of run_git()
+>       remote-mediawiki: use "sh" to eliminate unquoted commands
 
-Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
----
-    userdiff: Expand detected chunk headers for css
-    
-    Currently, the regex used for the CSS builtin diff driver in git is only
-    able to show chunk headers for lines that start with a number, a letter
-    or an underscore.
-    
-    However, the regex fails to detect classes (starts with a .), ids
-    (starts with a #), :root and attribute-value based selectors (for
-    example [class*="col-"]), as well as @based block-level statements like 
-    @page,@keyframes and @media since all of them, start with a special
-    character.
-    
-    I've modified the chunk header CSS regex so that it is able to detect
-    the statements above and add them to the chunk header.
+We didn't do a point release for this security fix, but I think we
+should still credit it in the same way we've done for security point
+releases, e.g. in the notes for v2.7.6 and v2.10.5.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-866%2Fsohomdatta1%2Fcss-userdiff-fix-test-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-866/sohomdatta1/css-userdiff-fix-test-v1
-Pull-Request: https://github.com/git/git/pull/866
-
- t/t4018/css-attribute-value-selector |  4 ++++
- t/t4018/css-block-level-@-statements | 10 ++++++++++
- t/t4018/css-class-selector           |  4 ++++
- t/t4018/css-id-selector              |  4 ++++
- t/t4018/css-root-selector            |  4 ++++
- userdiff.c                           |  2 +-
- 6 files changed, 27 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/css-attribute-value-selector
- create mode 100644 t/t4018/css-block-level-@-statements
- create mode 100644 t/t4018/css-class-selector
- create mode 100644 t/t4018/css-id-selector
- create mode 100644 t/t4018/css-root-selector
-
-diff --git a/t/t4018/css-attribute-value-selector b/t/t4018/css-attribute-value-selector
-new file mode 100644
-index 0000000000..918256b20c
---- /dev/null
-+++ b/t/t4018/css-attribute-value-selector
-@@ -0,0 +1,4 @@
-+[class*="RIGHT"] {
-+    background : #000;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-block-level-@-statements b/t/t4018/css-block-level-@-statements
-new file mode 100644
-index 0000000000..d6755f2f3d
---- /dev/null
-+++ b/t/t4018/css-block-level-@-statements
-@@ -0,0 +1,10 @@
-+@keyframes RIGHT {
-+    from {
-+        background : #000;
-+        border : 10px ChangeMe #C6C6C6;
-+    }
-+    to {
-+        background : #fff;
-+        border : 10px solid #C6C6C6;
-+    }
-+}
-diff --git a/t/t4018/css-class-selector b/t/t4018/css-class-selector
-new file mode 100644
-index 0000000000..f790a0062f
---- /dev/null
-+++ b/t/t4018/css-class-selector
-@@ -0,0 +1,4 @@
-+.RIGHT {
-+    background : #000;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-id-selector b/t/t4018/css-id-selector
-new file mode 100644
-index 0000000000..17c5111052
---- /dev/null
-+++ b/t/t4018/css-id-selector
-@@ -0,0 +1,4 @@
-+#RIGHT {
-+    background : #000;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/t/t4018/css-root-selector b/t/t4018/css-root-selector
-new file mode 100644
-index 0000000000..22b958e369
---- /dev/null
-+++ b/t/t4018/css-root-selector
-@@ -0,0 +1,4 @@
-+:RIGHT {
-+    background : #000;
-+    border : 10px ChangeMe #C6C6C6;
-+}
-diff --git a/userdiff.c b/userdiff.c
-index fde02f225b..49c9771891 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -200,7 +200,7 @@ PATTERNS("csharp",
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
- IPATTERN("css",
- 	 "![:;][[:space:]]*$\n"
--	 "^[_a-z0-9].*$",
-+	 "^(([_a-z0-9]|[:[@.#][_a-z0-9]).*)$",
- 	 /* -- */
- 	 /*
- 	  * This regex comes from W3C CSS specs. Should theoretically also
-
-base-commit: d98273ba77e1ab9ec755576bc86c716a97bf59d7
--- 
-gitgitgadget
+It's still an RCE, and even if we considered it minor due to the
+obscurity of the exposed component every little thing we can do to
+encourage responsible security research & reporting helps.
