@@ -2,113 +2,217 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43C1CC4727E
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B552CC4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:07:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C267A21707
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:06:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4ECE921707
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 18:07:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EFUP8P5m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tY+roTfN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728652AbgJGSGD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 14:06:03 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50465 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728783AbgJGSF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 14:05:58 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D91B4F0DCB;
-        Wed,  7 Oct 2020 14:05:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rslAKaM7HOb8gQKKHDTrpv+7OKA=; b=EFUP8P
-        5mfkoABmWvKnTnYexwqL2MmJ25bK0pNNcki8N0CPv2cqirTgufkDEdBA7QTM/3/8
-        B7WkseYyiw/YHePrmn3rgRiA6tRkdrY1lVvJtIuaUppo5z773hM9iNVDtyUaXpGU
-        QHndhJtyvQ9rCBkKP6Dk2QobmMoHyfpOT4fxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=as0zZmt+c58RKjRQdk27/s7yA5k/Lo0R
-        QUPAfDIYyqlM+xKSHeN6cJ+k90fUnzA/35L7vHJjp6QJv4aOUjML+cMPvQyfp1RH
-        udhNY43iKPAFvj+5CO2t0ZtsncrDCvcg+COi5bgWeRV4jGYWi2TkQDr28n3bNIai
-        Pi4JwnCl5sU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF7E2F0DCA;
-        Wed,  7 Oct 2020 14:05:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1F7A6F0DC2;
-        Wed,  7 Oct 2020 14:05:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
-        liu.denton@gmail.com
-Subject: Re: [PATCH v2 1/3] dir: change the scope of function
- 'directory_exists_in_index()'
-References: <20201007074538.25891-1-shouryashukla.oo@gmail.com>
-        <20201007074538.25891-2-shouryashukla.oo@gmail.com>
-Date:   Wed, 07 Oct 2020 11:05:52 -0700
-In-Reply-To: <20201007074538.25891-2-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Wed, 7 Oct 2020 13:15:36 +0530")
-Message-ID: <xmqq8sch3o8v.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727814AbgJGSH4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 14:07:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726181AbgJGSH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 14:07:56 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07B9C061755
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 11:07:55 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id e17so3288442wru.12
+        for <git@vger.kernel.org>; Wed, 07 Oct 2020 11:07:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PkURvJ+OXakhaMBj28RwNBlwxjYwGZw5di6CFjkeNns=;
+        b=tY+roTfNGy5SvSP86I/pPqtcPgMUAy+lJ0ZovHcQtdvCpL8+zZoLFShhX0i6USHFqp
+         AQS3yGWxV8dEuPjpbY5EfpkVz8w2FAdnvta7EmQkS7fh0wMfGS9V7JP9bnSeaLmOqNeT
+         DWlF4fSG/wkHFVOkWj/JBTg9G29rnWjTxEwxAtvyakNSqSUmY9sBeyxImh47mD6TwUHd
+         gIY496HUBmgWw5MqcZ1Tu4FRi7yKiZnHFolZeezin9on8FsZcIpTs1thOOW0xD4c/Fzd
+         lLDy0xqvARNYxBMpJS0t15vHtasaeQe0mitAQ7GMpmjzrx4RyVsN74e4I6xl1jcXUTNA
+         x97g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=PkURvJ+OXakhaMBj28RwNBlwxjYwGZw5di6CFjkeNns=;
+        b=a5mIco4CmF3MQGFYsKz9yYMuOeo86aS+XzK2FrALgU+2bdh/9eOBLVnTl9/t/ZFOEF
+         EPUe3/sbyMmZcDYumM/vFF4mmJOK2GsTseNDJ/46EftMtgQCtLpj2EX/iy4FDobm1zrJ
+         d2dinlV9WdpmjQlt7Fm0gJUVcRDbeBcz3TGiUq4stLX7LuGtEhkBeRX97NAcYH5rdF5d
+         US4kjzWFq6lDo4rJ4bXwpacJFE6c/iqp1Z8BUgy4sG2NWTNmx+I1wDXNjwB7HsLnhZ0a
+         J+QBqzJqxEvE8k/OvFE7qspTvIjUsGOIHyEZQOZEG9uCG1MG7oBvDSDGm2+Kg5itVMxN
+         yqUw==
+X-Gm-Message-State: AOAM532/mvLLayd+mTvR5W1BaoOPmkgcnTW80BSWS7dYKZ1T/v0rnW5e
+        zqY3mo0TVNaTJzcZ+hci4uJVV1ssKjY=
+X-Google-Smtp-Source: ABdhPJyPoX9IMGh55D9/5bh9nfOJNDEBKMUWPXtzJOGGHrcMCOFvgy4iliK40aGkLL09aEjs0EJ+yA==
+X-Received: by 2002:adf:9d81:: with SMTP id p1mr4707273wre.13.1602094074056;
+        Wed, 07 Oct 2020 11:07:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h1sm3546502wrx.33.2020.10.07.11.07.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Oct 2020 11:07:51 -0700 (PDT)
+Message-Id: <pull.864.v3.git.git.1602094069865.gitgitgadget@gmail.com>
+In-Reply-To: <pull.864.v2.git.git.1602041898670.gitgitgadget@gmail.com>
+References: <pull.864.v2.git.git.1602041898670.gitgitgadget@gmail.com>
+From:   "Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 07 Oct 2020 18:07:49 +0000
+Subject: [PATCH v3] userdiff: php: Add "final" and "abstract" to the list of
+ function modifiers
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BDD6DB28-08C7-11EB-8137-D609E328BF65-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Javier Spagnoletti <phansys@gmail.com>,
+        Javier Spagnoletti <phansys@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+From: Javier Spagnoletti <phansys@gmail.com>
 
-> diff --git a/dir.h b/dir.h
-> index a3c40dec51..e46f240528 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -370,6 +370,15 @@ int read_directory(struct dir_struct *, struct index_state *istate,
->  		   const char *path, int len,
->  		   const struct pathspec *pathspec);
->  
-> +enum exist_status {
-> +	index_nonexistent = 0,
-> +	index_directory,
-> +	index_gitdir
-> +};
+PHP allows some function modifiers that are not recognized in our current hunk header pattern
 
-These were adequate as private names used within the wall of dir.c,
-but I doubt that they are named specific enough to stand out as
-public symbols.
+       final public function foo() { }
+       abstract protected function bar() { }
 
-Unlike say "index_state" (the name of a struct type), whose nature
-is quite global to any code that wants to access the in-core index,
-"index_directory" is *NOT* such a name.  It is only of interest to
-those who want to see "I have a directory name---does it appear as a
-directory in the index?".  It is not even interesting to those who
-want to ask similar and related questions like "I have this
-pathname---does it appear as anything in the index, and if so what
-type of entry is it?".  A worse part of this is that even if such a
-helper function file_exists_in_index() were to be written, the
-"exist_status" enum won't be usable to return the answer that
-question, but yet the enum squats on a perfectly good name to
-express "status" for the whole class that it does not represent.
+Some context about the PHP semantics:
 
-So, NAK.  We need to come up with a better name for these symbols if
-we were to expose them to the outside world.  The only good name
-this patch makes public is "directory_exists_in_index()", which is
-specific enough.
+In PHP a class can be declared as abstract and final, while methods can be declared as final,
+static and abstract, along with its visibility (public, protected and private).
+Regarding classes, an abstract class can not be declared as final.
+For the methods, from a strict syntax perspective, the order of the modifiers is irrelevant.
 
-> +enum exist_status directory_exists_in_index(struct index_state *istate,
-> +					    const char *dirname, int len);
-> +
->  enum pattern_match_result {
->  	UNDECIDED = -1,
->  	NOT_MATCHED = 0,
+For more information, see:
+
+* https://www.php.net/manual/en/language.oop5.abstract.php#example-213;
+* https://www.php.net/manual/en/language.oop5.final.php#language.oop5.traits.static.ex1.
+
+This commit adds "final" and "abstract" to the list of function modifiers.
+
+Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
+---
+    userdiff: php: Add "final" and "abstract" to the list of function
+    modifiers
+    
+    PHP allows some function modifiers that are not recognized in our
+    current hunk header pattern
+    
+       final public function foo() { }
+       abstract protected function bar() { }
+    
+    Some context about the PHP semantics:
+    
+    In PHP a class can be declared as abstract and final, while methods can
+    be declared as final, static and abstract, along with its visibility
+    (public, protected and private). Regarding classes, an abstract class
+    can not be declared as final. For the methods, from a strict syntax
+    perspective, the order of the modifiers is irrelevant.
+    
+    For more information, see:
+    
+     * https://www.php.net/manual/en/language.oop5.abstract.php#example-213;
+     * https://www.php.net/manual/en/language.oop5.final.php#language.oop5.traits.static.ex1
+       .
+    
+    This commit adds "final" and "abstract" to the list of function
+    modifiers.
+    
+    Signed-off-by: Javier Spagnoletti phansys@gmail.com [phansys@gmail.com]
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-864%2Fphansys%2Fuserdiff_php-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-864/phansys/userdiff_php-v3
+Pull-Request: https://github.com/git/git/pull/864
+
+Range-diff vs v2:
+
+ 1:  4cb59950ff ! 1:  43acd70aba Improve diff pattern for PHP files
+     @@ Metadata
+      Author: Javier Spagnoletti <phansys@gmail.com>
+      
+       ## Commit message ##
+     -    Improve diff pattern for PHP files
+     +    userdiff: php: Add "final" and "abstract" to the list of function modifiers
+      
+          PHP allows some function modifiers that are not recognized in our current hunk header pattern
+      
+                 final public function foo() { }
+                 abstract protected function bar() { }
+      
+     -    Add "final" and "abstract" to the list of function modifiers.
+     +    Some context about the PHP semantics:
+     +
+     +    In PHP a class can be declared as abstract and final, while methods can be declared as final,
+     +    static and abstract, along with its visibility (public, protected and private).
+     +    Regarding classes, an abstract class can not be declared as final.
+     +    For the methods, from a strict syntax perspective, the order of the modifiers is irrelevant.
+     +
+     +    For more information, see:
+     +
+     +    * https://www.php.net/manual/en/language.oop5.abstract.php#example-213;
+     +    * https://www.php.net/manual/en/language.oop5.final.php#language.oop5.traits.static.ex1.
+     +
+     +    This commit adds "final" and "abstract" to the list of function modifiers.
+      
+          Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
+      
+
+
+ t/t4018/php-abstract-method | 7 +++++++
+ t/t4018/php-final-method    | 7 +++++++
+ userdiff.c                  | 2 +-
+ 3 files changed, 15 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4018/php-abstract-method
+ create mode 100644 t/t4018/php-final-method
+
+diff --git a/t/t4018/php-abstract-method b/t/t4018/php-abstract-method
+new file mode 100644
+index 0000000000..ce215df75a
+--- /dev/null
++++ b/t/t4018/php-abstract-method
+@@ -0,0 +1,7 @@
++abstract class Klass
++{
++    abstract public function RIGHT(): ?string
++    {
++        return 'ChangeMe';
++    }
++}
+diff --git a/t/t4018/php-final-method b/t/t4018/php-final-method
+new file mode 100644
+index 0000000000..537fb8ad9a
+--- /dev/null
++++ b/t/t4018/php-final-method
+@@ -0,0 +1,7 @@
++class Klass
++{
++    final public function RIGHT(): string
++    {
++        return 'ChangeMe';
++    }
++}
+diff --git a/userdiff.c b/userdiff.c
+index 1df884ef0b..a99d84a7e3 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -143,7 +143,7 @@ PATTERNS("perl",
+ 	 "|=~|!~"
+ 	 "|<<|<>|<=>|>>"),
+ PATTERNS("php",
+-	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
++	 "^[\t ]*(((public|protected|private|static|abstract|final)[\t ]+)*function.*)$\n"
+ 	 "^[\t ]*((((final|abstract)[\t ]+)?class|interface|trait).*)$",
+ 	 /* -- */
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+
+base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+-- 
+gitgitgadget
