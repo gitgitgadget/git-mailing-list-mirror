@@ -2,105 +2,172 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F1ADC41604
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BE1CC41604
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:51:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E176D206FC
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:47:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aC9Qf1xZ"
+	by mail.kernel.org (Postfix) with ESMTP id 0BCF52087D
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 16:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727716AbgJGQrs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 12:47:48 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57631 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727005AbgJGQrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 12:47:47 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E48B8F041E;
-        Wed,  7 Oct 2020 12:47:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DpFUylcnv3hzR2VFc3U/F3oStBI=; b=aC9Qf1
-        xZZgZ2Xb31WDSd7XhE8bfLFEDQjSKXUn/FIasLtFG4DRe2xIlgo6qbhRytN2bjcC
-        uAEGjUj2MdHDvVk3FfXTbzL4Na26lVAuJfOEU8JxFXoVYgvCOqoYIgdnBMnljxYl
-        QgI+qfQxgxKJx+/eKiesiBfmdvQqIM8RCx8Vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AlPeWnnQfXnpuw0caWTJ1GxDW5kP7lV1
-        teTxjjP6URCg+PFOMipolUxrQjaRZ3y2JrHBWcv9gOeeU4W9kV/rkcgPcsG/080k
-        t+kOdJx3ef29baJ+B02b6z2qSLHc/0cffsZIVYWc+AHC4g0B/b5xTI3hmZuShNhC
-        1Xp2Zi5pSfQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBAE6F041D;
-        Wed,  7 Oct 2020 12:47:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AB44F041A;
-        Wed,  7 Oct 2020 12:47:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] checkout: learn to respect checkout.guess
-References: <cover.1601810233.git.liu.denton@gmail.com>
-        <cover.1602047333.git.liu.denton@gmail.com>
-        <2678680a08e025e9652c6769501dbc604560394b.1602047333.git.liu.denton@gmail.com>
-Date:   Wed, 07 Oct 2020 09:47:41 -0700
-In-Reply-To: <2678680a08e025e9652c6769501dbc604560394b.1602047333.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 6 Oct 2020 22:09:09 -0700")
-Message-ID: <xmqqy2ki2daq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727608AbgJGQvH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 12:51:07 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:41254 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726138AbgJGQvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 12:51:07 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4C60hn5FVkz5tl9;
+        Wed,  7 Oct 2020 18:51:05 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id D4918212C;
+        Wed,  7 Oct 2020 18:51:04 +0200 (CEST)
+Subject: Re: [PATCH] userdiff: expand detected chunk headers for css
+To:     Sohom Datta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Sohom Datta <sohom.datta@learner.manipal.edu>
+References: <pull.866.git.git.1602062726316.gitgitgadget@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <98994014-c049-f13f-bf5c-20ca9059707d@kdbg.org>
+Date:   Wed, 7 Oct 2020 18:51:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D1D02BD0-08BC-11EB-AE21-D609E328BF65-77302942!pb-smtp21.pobox.com
+In-Reply-To: <pull.866.git.git.1602062726316.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Am 07.10.20 um 11:25 schrieb Sohom Datta via GitGitGadget:
+> From: Sohom <sohom.datta@learner.manipal.edu>
+> 
+> Added support for classes, ids, :root selectors
 
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index afa5c11fd3..28f656d04e 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -193,6 +193,9 @@ branches from there if `<branch>` is ambiguous but exists on the
->  linkgit:git-config[1].
->  +
->  Use `--no-guess` to disable this.
-> ++
-> +The default behavior can be set via the `checkout.guess` configuration
-> +variable.
->  
->  -l::
->  	Create the new branch's reflog; see linkgit:git-branch[1] for
-> diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
-> index 3759c3a265..5c438cd505 100644
-> --- a/Documentation/git-switch.txt
-> +++ b/Documentation/git-switch.txt
-> @@ -103,6 +103,9 @@ ambiguous but exists on the 'origin' remote. See also
->  `checkout.defaultRemote` in linkgit:git-config[1].
->  +
->  `--guess` is the default behavior. Use `--no-guess` to disable it.
-> ++
-> +The default behavior can be set via the `checkout.guess` configuration
-> +variable.
+s/Added/Add/ since we prefer this sentence in imperative mood.
 
-Contrasting the above two, one cannot help but notice that it is
-totally unclear how "git checkout" that is not explicitly told by
-command line or configuration behaves.  Perhaps "`--guess` is the
-default behaviour." needs to be transplated from the description
-for "git switch" to clarify?
+> as well as @-based statements (ex: @page, @media
+> and @keyframes ).
+> 
+> Also added tests for the same.
 
-This is not a new issue, but is made stand out even more prominently
-due to the addition.
+Ditto, or just drop this sentence.
 
-Thanks.
+> 
+> Signed-off-by: Sohom Datta <sohom.datta@learner.manipal.edu>
+> ---
+>     userdiff: Expand detected chunk headers for css
+>     
+>     Currently, the regex used for the CSS builtin diff driver in git is only
+>     able to show chunk headers for lines that start with a number, a letter
+>     or an underscore.
+>     
+>     However, the regex fails to detect classes (starts with a .), ids
+>     (starts with a #), :root and attribute-value based selectors (for
+>     example [class*="col-"]), as well as @based block-level statements like 
+>     @page,@keyframes and @media since all of them, start with a special
+>     character.
+
+This text would have made a very good introductory part of the commit
+message, but since it is after the three-dash separator, it is ignored.
+
+The patch text looks good.
+
+>     
+>     I've modified the chunk header CSS regex so that it is able to detect
+>     the statements above and add them to the chunk header.
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-866%2Fsohomdatta1%2Fcss-userdiff-fix-test-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-866/sohomdatta1/css-userdiff-fix-test-v1
+> Pull-Request: https://github.com/git/git/pull/866
+> 
+>  t/t4018/css-attribute-value-selector |  4 ++++
+>  t/t4018/css-block-level-@-statements | 10 ++++++++++
+>  t/t4018/css-class-selector           |  4 ++++
+>  t/t4018/css-id-selector              |  4 ++++
+>  t/t4018/css-root-selector            |  4 ++++
+>  userdiff.c                           |  2 +-
+>  6 files changed, 27 insertions(+), 1 deletion(-)
+>  create mode 100644 t/t4018/css-attribute-value-selector
+>  create mode 100644 t/t4018/css-block-level-@-statements
+>  create mode 100644 t/t4018/css-class-selector
+>  create mode 100644 t/t4018/css-id-selector
+>  create mode 100644 t/t4018/css-root-selector
+> 
+> diff --git a/t/t4018/css-attribute-value-selector b/t/t4018/css-attribute-value-selector
+> new file mode 100644
+> index 0000000000..918256b20c
+> --- /dev/null
+> +++ b/t/t4018/css-attribute-value-selector
+> @@ -0,0 +1,4 @@
+> +[class*="RIGHT"] {
+> +    background : #000;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/t/t4018/css-block-level-@-statements b/t/t4018/css-block-level-@-statements
+> new file mode 100644
+> index 0000000000..d6755f2f3d
+> --- /dev/null
+> +++ b/t/t4018/css-block-level-@-statements
+> @@ -0,0 +1,10 @@
+> +@keyframes RIGHT {
+> +    from {
+> +        background : #000;
+> +        border : 10px ChangeMe #C6C6C6;
+> +    }
+> +    to {
+> +        background : #fff;
+> +        border : 10px solid #C6C6C6;
+> +    }
+> +}
+> diff --git a/t/t4018/css-class-selector b/t/t4018/css-class-selector
+> new file mode 100644
+> index 0000000000..f790a0062f
+> --- /dev/null
+> +++ b/t/t4018/css-class-selector
+> @@ -0,0 +1,4 @@
+> +.RIGHT {
+> +    background : #000;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/t/t4018/css-id-selector b/t/t4018/css-id-selector
+> new file mode 100644
+> index 0000000000..17c5111052
+> --- /dev/null
+> +++ b/t/t4018/css-id-selector
+> @@ -0,0 +1,4 @@
+> +#RIGHT {
+> +    background : #000;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/t/t4018/css-root-selector b/t/t4018/css-root-selector
+> new file mode 100644
+> index 0000000000..22b958e369
+> --- /dev/null
+> +++ b/t/t4018/css-root-selector
+> @@ -0,0 +1,4 @@
+> +:RIGHT {
+> +    background : #000;
+> +    border : 10px ChangeMe #C6C6C6;
+> +}
+> diff --git a/userdiff.c b/userdiff.c
+> index fde02f225b..49c9771891 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -200,7 +200,7 @@ PATTERNS("csharp",
+>  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
+>  IPATTERN("css",
+>  	 "![:;][[:space:]]*$\n"
+> -	 "^[_a-z0-9].*$",
+> +	 "^(([_a-z0-9]|[:[@.#][_a-z0-9]).*)$",
+>  	 /* -- */
+>  	 /*
+>  	  * This regex comes from W3C CSS specs. Should theoretically also
+> 
+> base-commit: d98273ba77e1ab9ec755576bc86c716a97bf59d7
+> 
+
