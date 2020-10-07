@@ -2,155 +2,88 @@ Return-Path: <SRS0=6EDX=DO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0353FC4363C
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A61BC4363C
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:09:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F1D42083B
-	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:08:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EA64207EA
+	for <git@archiver.kernel.org>; Wed,  7 Oct 2020 20:09:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PsLo/XSa"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vzCBYjs4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727918AbgJGUIS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Oct 2020 16:08:18 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63215 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726434AbgJGUIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Oct 2020 16:08:18 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EAC4F1CAC;
-        Wed,  7 Oct 2020 16:08:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=95uU94ElOZJR
-        jPIFeOusbz+PIQk=; b=PsLo/XSaGSWEUZT9acP6/O4U+z1a/LF8dHkQVdkREqBx
-        6qvz4nLB+tyWWF9kZuDl/z9KwMpasJrai4kl53WMW8vVpMveDWvLMiHY4oOvvMME
-        ugMfvczAzpgjVwBVWxDNw1yuprmGA6K64yAIjO4Ujr7MazsqNEbtNVDGuBmaD6I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dRuoTF
-        aE+23c55/IhiK3UQ373KzFVa4boUa5HoGRolbigiyYxQqaEqqXNQv+733n5oLlRz
-        /dlmyXNyh5ipfKjGsrN05ejqxfPfYIX/0L8YBweVWDGLKASaXLHOXNwkPRY4tFQe
-        iYI2c2z7TvzKVFf+8rlFBK+/uvQ0I/M1SnRTo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97178F1CAB;
-        Wed,  7 Oct 2020 16:08:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DBF1FF1CA8;
-        Wed,  7 Oct 2020 16:08:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] diff: add -I<regex> that ignores matching changes
-References: <20201001120606.25773-1-michal@isc.org>
-        <20201001120606.25773-2-michal@isc.org>
-        <xmqqy2kpbye9.fsf@gitster.c.googlers.com>
-        <20201007194821.GA20549@larwa.hq.kempniu.pl>
-Date:   Wed, 07 Oct 2020 13:08:12 -0700
-In-Reply-To: <20201007194821.GA20549@larwa.hq.kempniu.pl> (=?utf-8?B?Ik1p?=
- =?utf-8?B?Y2hhxYIgS8SZcGllxYQiJ3M=?=
-        message of "Wed, 7 Oct 2020 21:48:21 +0200")
-Message-ID: <xmqqft6p240j.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D4AF6FD4-08D8-11EB-AE9E-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1728158AbgJGUJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Oct 2020 16:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727958AbgJGUJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Oct 2020 16:09:10 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705E9C061755
+        for <git@vger.kernel.org>; Wed,  7 Oct 2020 13:09:09 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id u16so1842292plq.18
+        for <git@vger.kernel.org>; Wed, 07 Oct 2020 13:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=6XI2yQOZagMJOnBqpdvY+jRicxWR2I+qvywowchdWN0=;
+        b=vzCBYjs4/lUABVpIh3iKQpbehESKdzmYb2Ltuuzty4KYOc5SsjFjxQaDCyMCNrAxyQ
+         KJXZxMAbNS25ahw6C6MW31Xj5ax5SY902TJGStZL3cUsG/rgIBepdIYVsnny3zsRXPoI
+         BLIdm5g30JsDxABZ89Z0c+TDqZ9zIibBzh2HrognUm+yP0y1rSdornmTlgssIm6h+xZ0
+         kgeAXglKoa7v4gn5ZPwghmDHYSVZA3ep/8engaoZ5LFarPwrXeBafsYs0GNQefsXkxFt
+         LNXgcYyvmKENevs8ilMqRSFaji6mLNC7Jg8aVl+cQuyi7hArpcw78lRyhJR/y7YE5+C7
+         yHNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=6XI2yQOZagMJOnBqpdvY+jRicxWR2I+qvywowchdWN0=;
+        b=HsfAR11Th22BTeDr5ckiX5msvSN3bHeibJqhPvcJFEBRGxf5d8BmS9CdudG9jq+3P/
+         VuYRJI7gPrvhs5tF+r3ciM7E2ijaghg0Q93iFNvK+YELzEGzSLtGVa/DCOhugC0AYND4
+         9j7XHFfgm+cLHKaRdrl1J8AuVRr92Yk/ojCqvdcVCwMFNB18rNniYsLFgaveE3o74XJc
+         C8m+LkyK8ulKMDaIBzn5wE3c/6/F3441qktDawued4Mys7N+W36/36Jonpnd1dQ7VKFc
+         hKCnunM0T/K2REXtryZT6UHR5AlXTq5jw6boyvAUsEkqeTYgcyY2XMD6sDQCk3jBUY8+
+         HRcg==
+X-Gm-Message-State: AOAM531g3Wr7nScWQEkTqp6x2c362AF3C33VTvIa+/81uhjIi0nXCxNC
+        HkLyhhpaXqoyg//UdpnXxNn8IxPnFzSCS+Lfdz8d
+X-Google-Smtp-Source: ABdhPJx3wxsDablvrV3a47nhrDRRIS9u/2wJYrJCCRVe/97ylHo8NrCs28qNR2Up/g6oQTbjA+dQ6oAgeMeFXgZ7sBie
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:b107:b029:d2:ab87:c418 with
+ SMTP id q7-20020a170902b107b02900d2ab87c418mr4386934plr.40.1602101348943;
+ Wed, 07 Oct 2020 13:09:08 -0700 (PDT)
+Date:   Wed,  7 Oct 2020 13:09:06 -0700
+In-Reply-To: <20201007181943.GB1976631@coredump.intra.peff.net>
+Message-Id: <20201007200906.1318031-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201007181943.GB1976631@coredump.intra.peff.net>
+X-Mailer: git-send-email 2.28.0.806.g8561365e88-goog
+Subject: Re: [PATCH 2/3] index-pack: drop type_cas mutex
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     gitster@pobox.com, jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Micha=C5=82 K=C4=99pie=C5=84 <michal@isc.org> writes:
+> The type_cas lock lost all of its callers in f08cbf60fe (index-pack:
+> make quantum of work smaller, 2020-09-08), so we can safely delete it.
+> The compiler didn't alert us that the variable became unused, because we
+> still call pthread_mutex_init() and pthread_mutex_destroy() on it.
+> 
+> It's worth considering also whether that commit was in error to remove
+> the use of the lock. Why don't we need it now, if we did before, as
+> described in ab791dd138 (index-pack: fix race condition with duplicate
+> bases, 2014-08-29)? I think the answer is that we now look at and assign
+> the child_obj->real_type field in the main thread while holding the
+> work_lock(). So we don't have to worry about racing with the worker
+> threads.
 
->> cannot be memset(0) before use?  It seems like a much better
->> approach to ensure that we clear the structure.
->
-> I do not know of any reason for xpparam_t structures to not be
-> zero-initialized.  In fact, they _are_ zero-initialized most of the
-> time; AFAICT, there are just three places in the tree in which they are
-> not.
->
-> Would you like me to address that in a separate patch in this patch
-> series?
-
-Yes, as a preliminary clean-up patch before the real/fun stuff ;-)
-
->> > +-I<regex>::
->> > +	Ignore changes whose all lines match <regex>.
->> > +
->>=20
->> The implementation seems to allow only one regex, but I suspect we'd
->> want to mimic
->>=20
->>     $ printf "%s\n" a a a >test_a
->>     $ printf "%s\n" b b b >test_b
->>     $ diff -Ia     test_a test_b
->>     $ diff     -Ib test_a test_b
->>     $ diff -Ia -Ib test_a test_b
->
-> Ah, sure.  After skimming through various man pages available online, I
-> was not sure whether all standalone versions of diff which support -I
-> allow that switch to be used multiple times and I thought it would be
-> better to start with the simplest thing possible.  If you would rather
-> have the above implemented immediately, I can sure try that in v2.
->
->> and until that happens, the explanation needs to say something about
->> earlier <regex> being discarded when this option is given more than
->> once.
->
-> Sorry, where do I look for that explanation?=20
-
-You wrote "Ignore changes whose all lines match <regex>"; I was
-suggesting that we also need "when given more than once, all but the
-last <regex> are ignored" after that sentence, because that is not
-what people who know how -I works in versions of "diff" that support
-it expect.
-
-But I think it should be trivial to make it a list of patterns and
-try to match against them in a loop.  So let's support multiple
-patterns from the get-go.
-
-> I have not thought about this approach before, but it sounds elegant to
-> me, at least at first glance - option parsing code sounds like the righ=
-t
-> place for sanitizing user-provided parameters.  Doubly so if we take th=
-e
-> multiple -I options approach.  I will try this in v2.
-
-Sounds good.
-
->> I agree with what you said in the cover letter that it would be a
->> good idea to name the existing xdl_mark_ignorable() and the new one
->> in such a way that they look similar and parallel, by renaming the
->> former to xdl_mark_ignorable_lines or something.
->
-> Then I will do that in v2.  Separate patch?
-
-Given that the function has only one caller, I think it is better
-done within the same patch.  xdl_mark_ignorable() as the name of the
-function is not wrong per-se, so it does not deserve to be renamed
-standalone in a preliminary clean-up patch---there is nothing to be
-cleaned up.  The fact that we introduce a similarly tasked function
-makes its current name less desirable, so adjusting to the new world
-order is better done as part of the same patch.
-
-> My pleasure ;-)  And thanks for taking a look.  Sorry about the long
-> turnaround time, but unfortunately this is the best I can do at the
-> moment.
-
-Pleasure is mutual ;-)
-
-We've survived without -I for 15 years.  Even a few more months
-would not hurt anybody.  Take time, aim for a quality job, and most
-importantly, have fun.
-
-Thanks.
+Yeah - I probably should have made the change without removing the
+compare-and-swap, and then removed the compare-and-swap in a subsequent
+patch. Thanks for catching this.
