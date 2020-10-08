@@ -2,103 +2,76 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4036FC433DF
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 19:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92D19C433DF
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 20:24:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA07422227
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 19:53:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E5E22222D
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 20:24:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729298AbgJHTxL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 15:53:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54390 "EHLO cloud.peff.net"
+        id S1730282AbgJHUYR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 16:24:17 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:5528 "EHLO smtp6-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728538AbgJHTxK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 15:53:10 -0400
-Received: (qmail 31351 invoked by uid 109); 8 Oct 2020 19:53:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Oct 2020 19:53:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27921 invoked by uid 111); 8 Oct 2020 19:53:10 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Oct 2020 15:53:10 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Oct 2020 15:53:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] contrib/git-resurrect.sh: use hash-agnostic OID
- pattern
-Message-ID: <20201008195309.GA2841047@coredump.intra.peff.net>
-References: <cover.1602139448.git.liu.denton@gmail.com>
- <6fad1fc7fdad98c3dda1ec334a10a6a9e311fef8.1602139448.git.liu.denton@gmail.com>
- <20201008161345.GD2823778@coredump.intra.peff.net>
- <xmqqwo00woz5.fsf@gitster.c.googlers.com>
+        id S1730278AbgJHUYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 16:24:16 -0400
+Received: from localhost.localdomain (unknown [IPv6:2a01:e0a:d1:f360:889b:81bb:28ab:56e7])
+        by smtp6-g21.free.fr (Postfix) with ESMTP id E5008780375;
+        Thu,  8 Oct 2020 22:24:12 +0200 (CEST)
+From:   =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH 4/4] doc: fix the bnf like style of some commands
+Date:   Thu,  8 Oct 2020 22:23:57 +0200
+Message-Id: <20201008202357.15490-4-jn.avila@free.fr>
+X-Mailer: git-send-email 2.28.0.rc0
+In-Reply-To: <20201008202357.15490-1-jn.avila@free.fr>
+References: <20201008202357.15490-1-jn.avila@free.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwo00woz5.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 08, 2020 at 11:29:34AM -0700, Junio C Hamano wrote:
+In command line options, variables are entered between < and >
 
-> >   Side note: It's a shame that there is no way to convince rev-list not
-> >   to print the "commit ..." header, which is really what we're avoiding
-> >   here. We probably should have suppressed it with user-formats when
-> >   they were introduced, but it's too late to make that change. I wonder
-> >   if it would be worth adding a command-line option, though. I've often
-> >   had to hack around this when parsing rev-list output (and sometimes
-> >   even resort to using git-log if it's a one-off).
-> 
-> Or make "git log" without frills as fast as rev-list, perhaps?
-> 
-> What extra things do we do that makes "log" inherently slower than
-> "rev-list"?
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/git-init.txt  | 2 +-
+ builtin/submodule--helper.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-It's not the speed of log that is a problem, but just that I usually try
-to use plumbing when scripting. So I often reach for rev-list first.
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index f35f70f13d..59ecda6c17 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -70,7 +70,7 @@ repository.
+ +
+ If this is reinitialization, the repository will be moved to the specified path.
+ 
+--b <branch-name::
++-b <branch-name>::
+ --initial-branch=<branch-name>::
+ 
+ Use the specified name for the initial branch in the newly created repository.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index de5ad73bb8..c30896c897 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1308,7 +1308,7 @@ static int module_summary(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	const char *const git_submodule_helper_usage[] = {
+-		N_("git submodule--helper summary [<options>] [commit] [--] [<path>]"),
++		N_("git submodule--helper summary [<options>] [<commit>] [--] [<path>]"),
+ 		NULL
+ 	};
+ 
+-- 
+2.28.0.rc0
 
-I do think for just listing commit hashes that log is slower, though.
-One reason is that when there's a commit-graph, it's not as good at
-avoiding reading the commit objects. E.g.:
-
-  $ time git rev-list HEAD >/dev/null
-  real	0m0.031s
-  user	0m0.027s
-  sys	0m0.004s
-
-  $ time git -c core.commitgraph=false rev-list HEAD >/dev/null
-  real	0m0.362s
-  user	0m0.345s
-  sys	0m0.016s
-
-  $ time git log --format=%H HEAD >/dev/null
-  real	0m0.371s
-  user	0m0.355s
-  sys	0m0.016s
-
-So running "git log" takes about the same time as rev-list if we disable
-the commit-graph. Which makes sense. The pretty-print code is aggressive
-about loading the object contents, even if we end up not needing it
-(because really, everything _except_ userformat does need it, and even
-userformat usually needs it).
-
-I think it would be nice to make the formatting code smarter about
-reporting exactly which parts it needs.
-
-> I do not mind a new option (e.g. --no-header) to "rev-list", though.
-
-I took a brief look at this earlier today and it was more awkward than I
-expected. The "commit <oid>" header might also have other stuff attached
-to it (revision marks, parents, and who even knew we had a "--timestamp"
-option?). It's not clear where those things should go if we suppress the
-header (for oneline, they just get stuck in front of the oneline; would
-that be OK for userformats, too?).
-
--Peff
