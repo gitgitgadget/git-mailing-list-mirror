@@ -2,139 +2,126 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D53D7C43467
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0168C433E7
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:13:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73A3820B1F
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:05:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56D6F21531
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:13:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Yx+zacpv"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jrKBAY1l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728358AbgJHIFo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 04:05:44 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49903 "EHLO mout.gmx.net"
+        id S1728671AbgJHINj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 04:13:39 -0400
+Received: from mout.gmx.net ([212.227.15.18]:36243 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725966AbgJHIFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 04:05:44 -0400
+        id S1728582AbgJHINi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 04:13:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602144342;
-        bh=H9a8yzQcfhBazRC/yfqc5SxviFBxzJZ9KDUB1kBYkZ8=;
+        s=badeba3b8450; t=1602144810;
+        bh=ND3QC8T6DzlkM1MXwumYq/WoXUhrvJlzK9kmXJvXBpI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Yx+zacpvmVWqCo3mgu+lLgjvoMQ8x+/DRSKNQUDzo+DxECORT4YZFxiWH6E860/7B
-         aAIoY5HF5e2EEN19lQVffm2yu8j3dxeQL3EuJrLnuH1Uhb0kuh9vuHcQP17hRno+9t
-         zjQDtgMJuH9pZr8FH0bzQHQR1ErzfX+lG6tV0Fvo=
+        b=jrKBAY1lY6yh9wuWat9o3k+9BWDRl/Sob0W7uxI9sZs7dzMlXVdV0A5WCvHq/nJ6i
+         On5Sk8iQqpgl5QdN8iGLLwhhs5qlK9SjdSaapcIiSla7cLSqK3PpLzk+j8Hye/y9mQ
+         wc9MfJRCnGqFe6RFGglqB1R+eiJWIixrFMjCH2qY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma20q-1juWRe0P8W-00VxsE; Thu, 08
- Oct 2020 10:05:42 +0200
-Date:   Thu, 8 Oct 2020 10:05:41 +0200 (CEST)
+Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9o1v-1kLEWl2EWj-005m42; Thu, 08
+ Oct 2020 10:13:30 +0200
+Date:   Thu, 8 Oct 2020 10:13:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/2] tests: avoid using the branch name `main`
-In-Reply-To: <20201005095930.GO1166820@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2010080957100.50@tvgsbejvaqbjf.bet>
-References: <pull.743.git.1601888196.gitgitgadget@gmail.com> <6045ceb938836355b7d43bc2088ca2504b05dde4.1601888196.git.gitgitgadget@gmail.com> <20201005095930.GO1166820@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org, tytso@mit.edu,
+        Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>
+Subject: Re: [RFC PATCH 2/2] core.fsyncObjectFiles: make the docs less
+ flippant
+In-Reply-To: <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2010081012490.50@tvgsbejvaqbjf.bet>
+References: <87sgbghdbp.fsf@evledraar.gmail.com>        <20200917112830.26606-3-avarab@gmail.com> <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YQQ07aqB8D+C2yFkEjMBwgEU84cJ6xUE+PhawFR0kGXuu+wY9E1
- kiFsg7azOfOaeXlAG1sIdv/EiebxMAh2iwlRgmnu0qsyKqY05+ezu85RdsG3HWtlc/cfCGn
- OqC6Wvmyuz7R8PblHHAarGBYxfeC9ibQsuiKu4gSnyBUi+Er84FDp+jOByRcqhjrUtnnu98
- KMru/8BewZIf/7xJqJHuw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mPPTBEW1VKA=:c0Fb4l5n1ajrh0bNOB6DEP
- V/zEeLVKinHtLWcvCVGHjR45p8vJS1HAM615Sc+cbsTYb55a1WhiceWVC/FykHuLb+eOF5snd
- V0UwTvZ3DC0FeiniaXPejyHqIpKLT/CAoID7Xr8QgFK74ioXAd0kYojTYtSnm8wuIfhDKHwxp
- vvD+VUHI3Vo6RO1qy2eK+9S4uzTWy5olTGFXDanupDxfOBFKUWmtFLkvjSXbJlyGSLYsWpiHC
- z6sRTSRhL+ujL6NoLpzLOlvBJ0YG/NtLZ2526PK687hoJ9L3sBX/b27vxTsJDQnMoy+CyPwOu
- abL0Xuk/mx2G7y2hbc9cpYpNTZxISI/QJq3eDtvxTiTrBxLiQuMoYjri57vwxehzMhph5z2zr
- yeZItuJ6zPVoKAN/53Mop1vVKwvUcb2zCNdOrOE7iCRUUYFLJgrU8FPoEORsHdRMi/hqvOk7r
- vFdfIsNMtu9PqwRG3PzYQYp0fdgpa6iBO7vf+9tWZSz3qgDPXCzz0y+AUc6ZDSJ3H3wsoN2HB
- b4G6PznN/ETiOMci7K0/IMgYR1QEZDTA0OnWS2EjSNACRRoVoIRb32JaAq1NV3iO0Szec/Div
- shzOypJ9W3iXfH3PbrPXZLWItAxs0MQ/rwaA7dtKAjlrmn6jpuFGsHyh6+ODpJHv+g9zrHqEf
- UaszszgZZb9VyE/cKWgyh1AFeyc1cWAFz2eXDdwd7jAMz8/lL2UXxTk4tpPBgNVd6ZFgIZcDj
- cYoLTQmLrq2acLuc3Za+lfutQA1A/lMZBKPP7obLPICEFBhLGIjzrZCjrHYqA0yV1npb+kQDc
- HJkCj/yFcCXJvsksOH+VjeuIOck+z0zK8lWVXg7JF9cKDacmX7ar8/c0dGEZ7AxwR7b9xuZYW
- Zy/j6q9t+5IP2o6jLgf88nKm89wGVV8VZ7oqBuKZzoTJI0TBlPCDtB9BEhchNp2P9PmfmrZ7H
- ihNdZ74xcQs8Prqbefe8E59sPvYWpCZ1CCMwFgHwh1d0ZEEsaiQGOqNw1dPCs443FyXVUvuff
- LcpwNw0dQSanEx+7Nbd0kKYbExDmiZEeIT+pDWxe63t8II6+jeW+/IyaLS4dKAZYy2LVYQttH
- LbSVhvsc36kalW147mwcf7HJ3yyyGXocmWlg7JcA4RKuohS1o6LGepH13lkYrPL62BGqe4tEn
- igdq96MBYvKW8JyDN/OUSANIeO6ITXT3cvCEyoPAWnelJhBBDYfLlmEnTfcKi8paE+GftOrvf
- K8AZLptAfZXyxyu1AYKNHL6ERagBrM4yZGa7E8Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-860472456-1602144811=:50"
+X-Provags-ID: V03:K1:JUptP6/9Eo2dkPlDKE0uRIK1JkYJVCoP/B8SN+A697YcrwVGYKE
+ IzWhOWHYAHqujVDBzL27EqfuJKiYf+i3tKFWuXp0VrxBhboE4oHmEvAUrfcy44t6FhcAtGR
+ ALCfyfG2EIXb2WZy3u4hGVT0Q1E2rCrSPdy8Wp6ZGzzJ4aJyFA+RXKthrlGP4zYA336iHrO
+ bPE6TLjvw0nZl25XrMIBg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+esBftxN4Qg=:b+TiawBwXn3Pzbuddu9CB7
+ XEOGXNehCbaFxMwcTPTA66cWKajrbBhondBIGlfsm6BqEsnHj8V0teYyi5DHTIL3Ogzz5cs23
+ 94LtHMR17l7ft9C3a2P3zLUFdikF70SNE3MrepQn5Ah3SBthatvOmBnhgd2j/E95+BdOZfgjG
+ umsRA3TdkwwQ4i7V8uua6a2QcBDFGX6BztQ89J12ZAm0+VTif7ny7aSUMGouG8UfzGgY4cKvJ
+ sD2CZSwJUOKS2/p3HBqLYPJd5euB0yjLZgyOM14wVaaSU5T4FxmqLH3nhm27YMcscu0TA3ahp
+ oAzDG7cZolNC4cifCDKofnkh+obTQSsO3KeA1e8JVy99PNLXFpvxeIaUk1n34p6AQjF5A2gcc
+ +f5WHNKIMcYnRsXQl9V15aAaIKwIQuzSzqFq8UDTHdRVQdHHRMt6b1kXFvCyCNkQIyfwKp/+F
+ vFiWFEwIduMzbmv88o4hsLtXuZfem+e1kbb5AiVhcGPA/k1oiFQzNDn4YgxSi2ba9IHPysv+S
+ ZCj3Eg6HWwyVVbdTS/wWl/Dk0fTcfjdv+fcrDIvGyGLr5ufw2UMNjxc+PRz7EpCCWJMb2jjXJ
+ CQxcQ1a44osPvxa83fzWGz1s5pMsXBSUwV935A8B51lKR7uEr6rFin6zuAPdaMN12/eeF/NZI
+ N8hOrNqfaef8Jf+j1uuCkCqSLnkxKRvPkbjMyoVnotXJXLp2O1GN5ngBDImHqUWXWvxnJeqyX
+ tL2EiyQsYfpqYyyT+YibegP6BP7AQBw3a1YS2slm+1GHvWwFIL0QTs2mJuzfqpGaP38q13ViF
+ +X6MOjw39KZddp8B5/vl2XUPIPhjgUVJ+8K04j1XCv9JPg3K8PkWAoAb+iT4sxF9ppl10IrwG
+ 063XJAlJPdSZHVrpt3I8DIj75c+7NuKLqQes/0vsHFVFXVv/AYWiyjzML38HgBcWCTms0mEe4
+ jxQMf1FQcXcnWozeieLGcOmYeDcc5kKxhmX3a2VjFoR7ITD0bN0kjlT6bXfhoFOnOb38keWA7
+ UZWlpvPdT9QDwFImHMkaLTf2zepWiITjh+MwlDa+k9Q8ITTbuR2FTbazwWzaGhY22md8GSltU
+ 1+KMzWG6tJkrjfWBWhn8Z/Ijv123G4mL6dUun4FLqpvIpHIVj0Bm+yW3cBbc3b0i40teHLAKR
+ K8eYPDi6djzQPKalQ2xcGcQRHrjGGG9x4m7yQyDcGutxVKbv496JHeyHf+0TKxVimCmK9oSXr
+ 0SJ557NPF00vssTWVR72L5o0Tu4YZab2xG28OaQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 5 Oct 2020, Jonathan Nieder wrote:
+--8323328-860472456-1602144811=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Schindelin wrote:
+Hi Junio and =C3=86var,
+
+On Thu, 17 Sep 2020, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
-> > In the near future, we want to change Git's default branch name to
-> > `main`. In preparation for that, stop using it as a branch name in the
-> > test suite. Replace that branch name by `primary`.
+> > As amusing as Linus's original prose[1] is here it doesn't really expl=
+ain
+> > in any detail to the uninitiated why you would or wouldn't enable
+> > this, and the counter-intuitive reason for why git wouldn't fsync your
+> > precious data.
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > So elaborate (a lot) on why this may or may not be needed. This is my
+> > best-effort attempt to summarize the various points raised in the last
+> > ML[2] discussion about this.
+> >
+> > 1.  aafe9fbaf4 ("Add config option to enable 'fsync()' of object
+> >     files", 2008-06-18)
+> > 2. https://lore.kernel.org/git/20180117184828.31816-1-hch@lst.de/
+> >
+> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
 > > ---
-> >  t/t6012-rev-list-simplify.sh |  8 ++++----
-> >  t/t6400-merge-df.sh          |  8 ++++----
-> >  t/t6409-merge-subtree.sh     | 12 ++++++------
-> >  t/t6430-merge-recursive.sh   |  4 ++--
-> >  4 files changed, 16 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.=
-sh
-> > index b6fa43ace0..f1296c29e6 100755
-> > --- a/t/t6012-rev-list-simplify.sh
-> > +++ b/t/t6012-rev-list-simplify.sh
-> > @@ -171,7 +171,7 @@ test_expect_success '--full-diff is not affected b=
-y --parents' '
-> >  test_expect_success 'rebuild repo' '
-> >  	rm -rf .git * &&
-> >  	git init &&
-> > -	git switch -c main &&
-> > +	git switch -c primary &&
+> >  Documentation/config/core.txt | 42 ++++++++++++++++++++++++++++++----=
+-
+> >  1 file changed, 36 insertions(+), 6 deletions(-)
 >
-> Is there a secondary corresponding to this primary?
+> When I saw the subject in my mailbox, I expected to see that you
+> would resurrect Christoph's updated text in [*1*], but you wrote a
+> whole lot more ;-) And they are quite informative to help readers to
+> understand what the option does.  I am not sure if the understanding
+> directly help readers to decide if it is appropriate for their own
+> repositories, though X-<.
 
-Nope, of course not ;-)
-
-> I guess the idea is that this is the trunk that other branches branch
-> from?  Looking at the history, it seems that this test was added
-> relatively recently and it may have had the upcoming branch name change
-> in mind (or in other words if it were an older test it might be expected
-> to use "master").
-
-I guess that Stolee (Cc:ed) had something like that in mind.
-
-When I look at 8d049e182e2 (revision: --show-pulls adds helpful
-merges, 2020-04-10), I get the impression that does not _really_ care
-about the name of the main branch, it just wants to know the name so it
-can switch back and forth.
-
-If I had had the presence of mind when reviewing that patch back in April,
-I would probably have advocated for the use of `git switch -`...
-
-In any case, I would like to keep this consistent with the remainder of
-the test scripts modified by this patch, and use the relatively neutral
-`topic` here.
+I agree that it is an improvement, and am therefore in favor of applying
+the patch.
 
 Ciao,
 Dscho
 
-> That suggests an alternative that is agnostic to init.defaultBranch:
-> what if this uses "git switch -C main"?
->
-> Thanks,
-> Jonathan
->
+--8323328-860472456-1602144811=:50--
