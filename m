@@ -2,126 +2,103 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0168C433E7
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D290C43467
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:20:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56D6F21531
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:13:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA39721531
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:20:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jrKBAY1l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sUjxyLIs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728671AbgJHINj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 04:13:39 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36243 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728582AbgJHINi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 04:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602144810;
-        bh=ND3QC8T6DzlkM1MXwumYq/WoXUhrvJlzK9kmXJvXBpI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jrKBAY1lY6yh9wuWat9o3k+9BWDRl/Sob0W7uxI9sZs7dzMlXVdV0A5WCvHq/nJ6i
-         On5Sk8iQqpgl5QdN8iGLLwhhs5qlK9SjdSaapcIiSla7cLSqK3PpLzk+j8Hye/y9mQ
-         wc9MfJRCnGqFe6RFGglqB1R+eiJWIixrFMjCH2qY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9o1v-1kLEWl2EWj-005m42; Thu, 08
- Oct 2020 10:13:30 +0200
-Date:   Thu, 8 Oct 2020 10:13:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org, tytso@mit.edu,
-        Christoph Hellwig <hch@lst.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Subject: Re: [RFC PATCH 2/2] core.fsyncObjectFiles: make the docs less
- flippant
-In-Reply-To: <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2010081012490.50@tvgsbejvaqbjf.bet>
-References: <87sgbghdbp.fsf@evledraar.gmail.com>        <20200917112830.26606-3-avarab@gmail.com> <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728348AbgJHIUc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 04:20:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbgJHIUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 04:20:32 -0400
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2469DC061755
+        for <git@vger.kernel.org>; Thu,  8 Oct 2020 01:20:32 -0700 (PDT)
+Received: by mail-qv1-xf41.google.com with SMTP id y7so1279960qvn.13
+        for <git@vger.kernel.org>; Thu, 08 Oct 2020 01:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vhUz8PTZWTM+7gsEN1si4tfzl8ikFB0IdNzbzfPmxZs=;
+        b=sUjxyLIs8hCorB46YSKujiSiBkwL4cQEUdDUMIvdOCOS1IC/Hbh7Q5OVMhrUv1OoAZ
+         PUrek9Nq8gMV0uZDxxVxOuAfWPMJXOf4mzVFzpG48yBhxTdBEmuB1bm2u/KCTyakcrvN
+         iTmVo5Z+/aXRUNjf/HAr78EJZD661ha8MKdOY9OpwQWYXo0NrzZOVo2Ct82YC88EMAPd
+         hgfgq20Oze9pZ0zP62RrpSdRVSf1/53YMlT+/pSyrjn+8PDCyyy0Xkl23RLth01IurAM
+         /Dr48s5Hp2035g+5o1HgYDH4YMoWjNmRGFpb2K0T/pt0h7fFVw7Ufr2BqE8Cvcjsoutx
+         Mdtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vhUz8PTZWTM+7gsEN1si4tfzl8ikFB0IdNzbzfPmxZs=;
+        b=FdvCufyP/YxrY1/SN3KYhcFx/9//uRFuphz/7sk/3AqdpRDuqwAJbOS86Dr5e4Shyk
+         DbdSso8hnOSYUWZSi8Yq3cY+lMYXZgUr9OO9UenWMap5v9YYb/UdFOFTcjPUk72O0YGy
+         5qi8yUXPX/cUyXw55OXweC8mlHII4ulA12DderM3CwKhdTnvXZb/ceDU4GRHaKnwcmiE
+         5Er1bQmblU5doJcpjz4CO7AypSsQgrbj0UVxkoyxUVX1Bg62EaGEBHVJNWfl+pMY5g7v
+         renoTMQOI19BSUogvr/NyBb8KCkJT2pIfLRq79M2rTMClLfkqPwd5BKj6GJ39k9UZQQ7
+         qgHQ==
+X-Gm-Message-State: AOAM533bdtSauzjLIhWYofe/C02eTzGNx2PGojluHlWYdx/eR4xwP83r
+        TaPKh1fs2BuyJc8qf9MStgI=
+X-Google-Smtp-Source: ABdhPJwrRZjLbUeoWxMvt1RAwmR9Sarq3GY4BMcu9dpHYspX8Ymux2ksQDqkOMaE+rNr4o4E9V2PtA==
+X-Received: by 2002:ad4:5843:: with SMTP id de3mr7187275qvb.12.1602145231093;
+        Thu, 08 Oct 2020 01:20:31 -0700 (PDT)
+Received: from partizan.lan ([46.98.122.162])
+        by smtp.gmail.com with ESMTPSA id d10sm3304722qkk.1.2020.10.08.01.20.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Oct 2020 01:20:29 -0700 (PDT)
+From:   Serg Tereshchenko <serg.partizan@gmail.com>
+To:     me@yadavpratyush.com
+Cc:     git@vger.kernel.org, serg.partizan@gmail.com
+Subject: Re: [PATCH] git-gui: Basic dark mode support
+Date:   Thu,  8 Oct 2020 11:20:04 +0300
+Message-Id: <20201008082004.5643-1-serg.partizan@gmail.com>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20201007111333.iojf5dbwoxbnie3z@yadavpratyush.com>
+References: <20201007111333.iojf5dbwoxbnie3z@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-860472456-1602144811=:50"
-X-Provags-ID: V03:K1:JUptP6/9Eo2dkPlDKE0uRIK1JkYJVCoP/B8SN+A697YcrwVGYKE
- IzWhOWHYAHqujVDBzL27EqfuJKiYf+i3tKFWuXp0VrxBhboE4oHmEvAUrfcy44t6FhcAtGR
- ALCfyfG2EIXb2WZy3u4hGVT0Q1E2rCrSPdy8Wp6ZGzzJ4aJyFA+RXKthrlGP4zYA336iHrO
- bPE6TLjvw0nZl25XrMIBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+esBftxN4Qg=:b+TiawBwXn3Pzbuddu9CB7
- XEOGXNehCbaFxMwcTPTA66cWKajrbBhondBIGlfsm6BqEsnHj8V0teYyi5DHTIL3Ogzz5cs23
- 94LtHMR17l7ft9C3a2P3zLUFdikF70SNE3MrepQn5Ah3SBthatvOmBnhgd2j/E95+BdOZfgjG
- umsRA3TdkwwQ4i7V8uua6a2QcBDFGX6BztQ89J12ZAm0+VTif7ny7aSUMGouG8UfzGgY4cKvJ
- sD2CZSwJUOKS2/p3HBqLYPJd5euB0yjLZgyOM14wVaaSU5T4FxmqLH3nhm27YMcscu0TA3ahp
- oAzDG7cZolNC4cifCDKofnkh+obTQSsO3KeA1e8JVy99PNLXFpvxeIaUk1n34p6AQjF5A2gcc
- +f5WHNKIMcYnRsXQl9V15aAaIKwIQuzSzqFq8UDTHdRVQdHHRMt6b1kXFvCyCNkQIyfwKp/+F
- vFiWFEwIduMzbmv88o4hsLtXuZfem+e1kbb5AiVhcGPA/k1oiFQzNDn4YgxSi2ba9IHPysv+S
- ZCj3Eg6HWwyVVbdTS/wWl/Dk0fTcfjdv+fcrDIvGyGLr5ufw2UMNjxc+PRz7EpCCWJMb2jjXJ
- CQxcQ1a44osPvxa83fzWGz1s5pMsXBSUwV935A8B51lKR7uEr6rFin6zuAPdaMN12/eeF/NZI
- N8hOrNqfaef8Jf+j1uuCkCqSLnkxKRvPkbjMyoVnotXJXLp2O1GN5ngBDImHqUWXWvxnJeqyX
- tL2EiyQsYfpqYyyT+YibegP6BP7AQBw3a1YS2slm+1GHvWwFIL0QTs2mJuzfqpGaP38q13ViF
- +X6MOjw39KZddp8B5/vl2XUPIPhjgUVJ+8K04j1XCv9JPg3K8PkWAoAb+iT4sxF9ppl10IrwG
- 063XJAlJPdSZHVrpt3I8DIj75c+7NuKLqQes/0vsHFVFXVv/AYWiyjzML38HgBcWCTms0mEe4
- jxQMf1FQcXcnWozeieLGcOmYeDcc5kKxhmX3a2VjFoR7ITD0bN0kjlT6bXfhoFOnOb38keWA7
- UZWlpvPdT9QDwFImHMkaLTf2zepWiITjh+MwlDa+k9Q8ITTbuR2FTbazwWzaGhY22md8GSltU
- 1+KMzWG6tJkrjfWBWhn8Z/Ijv123G4mL6dUun4FLqpvIpHIVj0Bm+yW3cBbc3b0i40teHLAKR
- K8eYPDi6djzQPKalQ2xcGcQRHrjGGG9x4m7yQyDcGutxVKbv496JHeyHf+0TKxVimCmK9oSXr
- 0SJ557NPF00vssTWVR72L5o0Tu4YZab2xG28OaQ==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+> How do you tell git-gui which theme to use? I had some trouble setting 
+> the theme and ended up adding code to source the theme files and then 
+> set the theme via `ttk::style theme use`. I hope there is a better way 
+> than that.
 
---8323328-860472456-1602144811=:50
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Yes, there is. To change theme on the fly use:
 
-Hi Junio and =C3=86var,
+    echo '*TkTheme: clam' | xrdb -merge -
 
-On Thu, 17 Sep 2020, Junio C Hamano wrote:
+To set theme, add "*TkTheme: clam" to ~/.Xresources and run
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
-> > As amusing as Linus's original prose[1] is here it doesn't really expl=
-ain
-> > in any detail to the uninitiated why you would or wouldn't enable
-> > this, and the counter-intuitive reason for why git wouldn't fsync your
-> > precious data.
-> >
-> > So elaborate (a lot) on why this may or may not be needed. This is my
-> > best-effort attempt to summarize the various points raised in the last
-> > ML[2] discussion about this.
-> >
-> > 1.  aafe9fbaf4 ("Add config option to enable 'fsync()' of object
-> >     files", 2008-06-18)
-> > 2. https://lore.kernel.org/git/20180117184828.31816-1-hch@lst.de/
-> >
-> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
-> > ---
-> >  Documentation/config/core.txt | 42 ++++++++++++++++++++++++++++++----=
--
-> >  1 file changed, 36 insertions(+), 6 deletions(-)
->
-> When I saw the subject in my mailbox, I expected to see that you
-> would resurrect Christoph's updated text in [*1*], but you wrote a
-> whole lot more ;-) And they are quite informative to help readers to
-> understand what the option does.  I am not sure if the understanding
-> directly help readers to decide if it is appropriate for their own
-> repositories, though X-<.
+    xrdb -merge ~/.Xresources
 
-I agree that it is an improvement, and am therefore in favor of applying
-the patch.
+There is lack of dark themes in default tk installs right now,
+i'm using awdark: https://sourceforge.net/projects/tcl-awthemes/
 
-Ciao,
-Dscho
+To install theme you need to unpack it somewhere like ~/.local/share/tk-themes/awthemes
+And tell tcl where to find it.
 
---8323328-860472456-1602144811=:50--
+    export TCLLIBPATH=$HOME/.local/share/tk-themes
+
+I had to modify version numbers inside awthemes package to make in work,
+but hope it'll be fixed upstream.
+
+Here is blog post which explains this in greater detail:
+http://blog.serindu.com/2019/03/07/applying-tk-themes-to-git-gui/
+
+--
+Regards,
+Serg Tereshchenko
