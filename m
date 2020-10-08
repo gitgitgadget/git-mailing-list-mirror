@@ -2,81 +2,87 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31ACDC43457
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 16:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F8BDC433DF
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 16:13:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C51D5221FD
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 16:08:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA7BE221F1
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 16:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730173AbgJHQIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 12:08:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53896 "EHLO cloud.peff.net"
+        id S1730794AbgJHQNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 12:13:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53914 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725802AbgJHQIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 12:08:17 -0400
-Received: (qmail 29559 invoked by uid 109); 8 Oct 2020 16:08:17 -0000
+        id S1729164AbgJHQNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 12:13:46 -0400
+Received: (qmail 29608 invoked by uid 109); 8 Oct 2020 16:13:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Oct 2020 16:08:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Oct 2020 16:13:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25126 invoked by uid 111); 8 Oct 2020 16:08:16 -0000
+Received: (qmail 25194 invoked by uid 111); 8 Oct 2020 16:13:45 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Oct 2020 12:08:16 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Oct 2020 12:13:45 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Oct 2020 12:08:16 -0400
+Date:   Thu, 8 Oct 2020 12:13:45 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Makefile: ASCII-sort += lists
-Message-ID: <20201008160816.GC2823778@coredump.intra.peff.net>
-References: <f0f1ef1f677133eabd1bce00c6cdbbcc6477f00b.1602142738.git.liu.denton@gmail.com>
- <nycvar.QRO.7.76.6.2010081156350.50@tvgsbejvaqbjf.bet>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] contrib/git-resurrect.sh: use hash-agnostic OID
+ pattern
+Message-ID: <20201008161345.GD2823778@coredump.intra.peff.net>
+References: <cover.1602139448.git.liu.denton@gmail.com>
+ <6fad1fc7fdad98c3dda1ec334a10a6a9e311fef8.1602139448.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2010081156350.50@tvgsbejvaqbjf.bet>
+In-Reply-To: <6fad1fc7fdad98c3dda1ec334a10a6a9e311fef8.1602139448.git.liu.denton@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 08, 2020 at 12:06:47PM +0200, Johannes Schindelin wrote:
+On Wed, Oct 07, 2020 at 11:44:40PM -0700, Denton Liu wrote:
 
-> My little script also finds this:
-> 
-> -- snip --
-> @@ -1231,8 +1231,8 @@ space := $(empty) $(empty)
-> 
->  ifdef SANITIZE
->  SANITIZERS := $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(flag))
-> -BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
->  BASIC_CFLAGS += -fno-omit-frame-pointer
-> +BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
->  ifneq ($(filter undefined,$(SANITIZERS)),)
->  BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
->  endif
-> -- snap --
-> 
-> I am not _so_ sure that we want to order `BASIC_CFLAGS`, but then, it does
-> not hurt, does it?
+> diff --git a/contrib/git-resurrect.sh b/contrib/git-resurrect.sh
+> index 57a77c03f9..d843df3afd 100755
+> --- a/contrib/git-resurrect.sh
+> +++ b/contrib/git-resurrect.sh
+> @@ -37,19 +37,18 @@ search_reflog_merges () {
+>  	)
+>  }
+>  
+> -_x40="[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
+> -_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+> +oid_pattern=$(git hash-object --stdin </dev/null | sed -e 's/./[0-9a-f]/g')
 
-I agree it would not be wrong to reorder here from the compiler's
-perspective, but:
+This looks correct, although...
 
-  - the current ordering is not arbitrary; the intent was to show that
-    we are enabling -fsanitize, and then follow it up with any other
-    related options (first any that apply to all sanitizers, of which
-    there is only one, and then any sanitizer-specific ones). The patch
-    above splits that logic apart.
+>  search_merges () {
+>  	git rev-list --all --grep="Merge branch '$1'" \
+>  		--pretty=tformat:"%P %s" |
+> -	sed -ne "/^$_x40 \($_x40\) Merge .*/ {s//\1/p;$early_exit}"
+> +	sed -ne "/^$oid_pattern \($oid_pattern\) Merge .*/ {s//\1/p;$early_exit}"
+>  }
+>  
+>  search_merge_targets () {
+>  	git rev-list --all --grep="Merge branch '[^']*' into $branch\$" \
+>  		--pretty=tformat:"%H %s" --all |
+> -	sed -ne "/^\($_x40\) Merge .*/ {s//\1/p;$early_exit} "
+> +	sed -ne "/^\($oid_pattern\) Merge .*/ {s//\1/p;$early_exit} "
+>  }
 
-  - I'd worry that there are cases in which order _does_ matter to the
-    compiler. I'm not sure if anything that goes in CFLAGS might
-    qualify, but certainly order can matter for other parts of the
-    command-line (e.g., static library order).
+in both cases we are matching output we asked for, so we really matching
+[0-9a-f]\+ would be correct and sufficient. That's a little simpler. I
+don't feel too strongly either way, though.
 
-    So it might be setting us up for confusion later.
+  Side note: It's a shame that there is no way to convince rev-list not
+  to print the "commit ..." header, which is really what we're avoiding
+  here. We probably should have suppressed it with user-formats when
+  they were introduced, but it's too late to make that change. I wonder
+  if it would be worth adding a command-line option, though. I've often
+  had to hack around this when parsing rev-list output (and sometimes
+  even resort to using git-log if it's a one-off).
 
 -Peff
