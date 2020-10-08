@@ -8,103 +8,125 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF24AC43467
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 07:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBC83C43467
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 07:39:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 722262173E
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 07:31:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6357021927
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 07:39:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jUdfZTWf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bvf1tJHf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726028AbgJHHbM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 03:31:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
+        id S1727754AbgJHHjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 03:39:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725849AbgJHHbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 03:31:12 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 120BEC061755
-        for <git@vger.kernel.org>; Thu,  8 Oct 2020 00:31:12 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id b26so3280760pff.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2020 00:31:12 -0700 (PDT)
+        with ESMTP id S1727224AbgJHHja (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 03:39:30 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2C3C061755
+        for <git@vger.kernel.org>; Thu,  8 Oct 2020 00:39:30 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id d23so2347704pll.7
+        for <git@vger.kernel.org>; Thu, 08 Oct 2020 00:39:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=opJcOU49FvPcMH0Zakz5rDRSpMUaulUUbtuFhBAfh50=;
-        b=jUdfZTWf8msUJMkHYUkQSFjmSWsVLQLnmXzbeA89wbb/V0kvEgYZDx7+NIPBU1hH2c
-         oIirGwwVCO3GzxwzdMOI1J9SFLxA7kGoIrQQ1KooQl0cjCokm5JBfqCsTg+NlRaelTuD
-         kdHuDhN7C08TC4flIuPz5iqSW4FpiO885Ts3/BOlSlskFBfU6JxmuvzhKLo8kwYuMZgi
-         iUxLs2AWu1HhOP3wlJF58qpG0VurOR5yS53M00rkIs+MdIg51g5J5zrVfcEXKdLT9Tcr
-         yoKHxRhhnqHQi+6Sur8OimLlzaOHUVHjxGCkVDD1bbhc7Hmd36UHt497Wy3cdogOn2Me
-         ZnzQ==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TZbtnHUjQL92kRjIQPaPYiVZAYq+9GqBEtY0QRlamg4=;
+        b=bvf1tJHfVIs+PFKwN8g4twUjuRtSfg6glNAqP+tRas4zxj664EUeAVomICRvI+L/49
+         qzTtDVa++n8FAk80DF6hxeRcqkYWVcou7/3H+eIudl8Hb3oldC1E2ET8e7dtwq5Qdd2M
+         2jvOEVtKSj2PrG/d7sH/FjUBfV6CSr/fDr1cS6LzL9ACgGaytoOM7wxYUXpq1Mj2qa2y
+         HMzXLp0gsN3wOI62K8fkyjRZ4c60R3fR4F0n/LrNedMpGTzMA6HcXYFZ/SYVrzIyXyBg
+         Q3QlzPh8hcCMEhwnSQhUaOSj9DQUJcSW1dweh4lPUb9FmkN31QoIqB6Bz/K0+lH91n25
+         nVpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=opJcOU49FvPcMH0Zakz5rDRSpMUaulUUbtuFhBAfh50=;
-        b=Xj7DP8ny4lQ2YuQNcZm0aiw1Z2MijVEEIA3tswR1GUqS99Yxe3wvMvK4zvx5F0UlRd
-         Z5TCmZX77Z+yPG9b8y/bZ/2X3XMqHYox7APlKxOMJ6pySHHyQFz7r94HSt1bBYwF3q3U
-         fcozeAB+VXr2O1/jxRnfH9vuZCohXVY4l55wJ/PUEtg5/2igx3U0hwu6XG9Y0Nqnqhbo
-         6/A2WjB6v9xHMR+kVTlvFCCbw2vV1Rnmm4rh+obK8hAj4wNWDipjQ85eklyUMAw5QQ7P
-         EhBX4El19he+lkLSafa9O8jcBW/45nMMV3ZnuhB5bLtcEbljvrHw6/mi8KtaBpj7OuCp
-         Emsg==
-X-Gm-Message-State: AOAM531qnt5Wn9sE2ev+VgA6SMxnbszbgrkL6+7dyNJHU/ddEjVhpFFC
-        ZrBYtwzuGEXlkVy8ksETY/Mav1l6HqY=
-X-Google-Smtp-Source: ABdhPJyGVU5qCqYv98+mXKqsAm5XaVFbv4oljrjhzvBMpiDRk69/0gLIAftce7V5VpBmcOSN85leWw==
-X-Received: by 2002:a17:90a:2ec8:: with SMTP id h8mr6951181pjs.173.1602142271253;
-        Thu, 08 Oct 2020 00:31:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TZbtnHUjQL92kRjIQPaPYiVZAYq+9GqBEtY0QRlamg4=;
+        b=WEvfjkqfvPAYRA2ItpFbhrBew+TDKGepj2wV80l2q8YPoLIiRuIBDkv3TntvJhD/v2
+         aKy5QvNibsAqGWYQWGfsQk0CRnBZ+qX17hj0WBCJn+e52qGKQUThM+hJNnAlz0SDaeEW
+         zr5N47tS+yKFw4qd3+aU5kbcxW8lp9zqmiPeuU7neR1AEe1JiUCdTJZli0ZdRftt3x8U
+         3QUT5TAu7SQ0MrRmvJ7x+I4WjS1hCtMDsSDl1tCkurJAZ190Yyd0LeqPpZzMCmQsfYHj
+         T33CGcvHymz6pIriqQf9bgI1a4f5YATcX7tEgcwofra0vq8wT5Zej/z0gB4uL0x7o/IQ
+         R3+g==
+X-Gm-Message-State: AOAM532c+Z2O9Dxen8exgNLTNvCaEXd+6SfC0tKx67vyPuKzA0MLV+1B
+        d3RH4b53vTDRNgKJm79NIZF0fKnKBfk=
+X-Google-Smtp-Source: ABdhPJxvd0Ts6cqeOvAIXhQ5Sxygc9mXAtG3dGvefQC9cf2hwJjMB/iFlDCnhVtjCnYwCF34l1ViQg==
+X-Received: by 2002:a17:902:b901:b029:d2:8abd:f640 with SMTP id bf1-20020a170902b901b02900d28abdf640mr5995692plb.30.1602142769469;
+        Thu, 08 Oct 2020 00:39:29 -0700 (PDT)
 Received: from archbookpro.hsd1.ca.comcast.net (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
-        by smtp.gmail.com with ESMTPSA id n12sm2111250pjt.16.2020.10.08.00.31.09
+        by smtp.gmail.com with ESMTPSA id q5sm5926553pgh.16.2020.10.08.00.39.28
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2020 00:31:10 -0700 (PDT)
+        Thu, 08 Oct 2020 00:39:28 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC PATCH] Makefile: create externcheck target
-Date:   Thu,  8 Oct 2020 00:30:55 -0700
-Message-Id: <1c2ee1c40ccde18a008262aeaf23a17da2064eae.1602142232.git.liu.denton@gmail.com>
+Subject: [PATCH] Makefile: ASCII-sort += lists
+Date:   Thu,  8 Oct 2020 00:39:26 -0700
+Message-Id: <f0f1ef1f677133eabd1bce00c6cdbbcc6477f00b.1602142738.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc0.261.g7178c9af9c
-In-Reply-To: <9e5a8625cab217bd6aaba68da081bc801354b903.1602059508.git.liu.denton@gmail.com>
-References: <9e5a8625cab217bd6aaba68da081bc801354b903.1602059508.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In b199d7147a (*.[ch]: remove extern from function declarations using
-sed, 2019-04-29), we used sed to remove extern from function
-definitions. In order to help find and remove future instances of this,
-teach Makefile the `externcheck` target which runs the sed script
-included in that commit on all applicable source files.
+In 805d9eaf5e (Makefile: ASCII-sort += lists, 2020-03-21), the += lists
+in the Makefile were sorted into ASCII order. Since then, more out of
+order elements have been introduced. Resort these lists back into ASCII
+order.
+
+This patch is best viewed with `--color-moved`.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
-
-Notes:
-    I run this target periodically to ensure that no new instances of extern
-    function definitions are introduced. Is this something that we want to
-    consider adding for real?
-
- Makefile | 3 +++
- 1 file changed, 3 insertions(+)
+ Makefile | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 5311b1d2c4..791faa24cf 100644
+index 5311b1d2c4..95571ee3fc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2885,6 +2885,9 @@ COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
- 	fi
- coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/coccinelle/*.cocci)))
+@@ -820,8 +820,8 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
  
-+externcheck: $(filter-out $(THIRD_PARTY_SOURCES),$(filter %.c %.h,$(shell $(FIND_SOURCE_FILES))))
-+	sed -i 's/^\(\s*\)extern \([^(]*([^*]\)/\1\2/' $^
-+
- # See contrib/coccinelle/README
- coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
+-GENERATED_H += config-list.h
+ GENERATED_H += command-list.h
++GENERATED_H += config-list.h
  
+ LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
+ 	$(FIND) . \
+@@ -998,9 +998,9 @@ LIB_OBJS += sigchain.o
+ LIB_OBJS += split-index.o
+ LIB_OBJS += stable-qsort.o
+ LIB_OBJS += strbuf.o
+-LIB_OBJS += strvec.o
+ LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
++LIB_OBJS += strvec.o
+ LIB_OBJS += sub-process.o
+ LIB_OBJS += submodule-config.o
+ LIB_OBJS += submodule.o
+@@ -1066,15 +1066,15 @@ BUILTIN_OBJS += builtin/checkout-index.o
+ BUILTIN_OBJS += builtin/checkout.o
+ BUILTIN_OBJS += builtin/clean.o
+ BUILTIN_OBJS += builtin/clone.o
+-BUILTIN_OBJS += builtin/credential-cache.o
+-BUILTIN_OBJS += builtin/credential-cache--daemon.o
+-BUILTIN_OBJS += builtin/credential-store.o
+ BUILTIN_OBJS += builtin/column.o
+ BUILTIN_OBJS += builtin/commit-graph.o
+ BUILTIN_OBJS += builtin/commit-tree.o
+ BUILTIN_OBJS += builtin/commit.o
+ BUILTIN_OBJS += builtin/config.o
+ BUILTIN_OBJS += builtin/count-objects.o
++BUILTIN_OBJS += builtin/credential-cache--daemon.o
++BUILTIN_OBJS += builtin/credential-cache.o
++BUILTIN_OBJS += builtin/credential-store.o
+ BUILTIN_OBJS += builtin/credential.o
+ BUILTIN_OBJS += builtin/describe.o
+ BUILTIN_OBJS += builtin/diff-files.o
 -- 
 2.29.0.rc0.261.g7178c9af9c
 
