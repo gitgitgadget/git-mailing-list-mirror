@@ -2,100 +2,127 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A16CC43467
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 614C2C43467
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 09:07:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CC6A21734
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:55:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01377215A4
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 09:07:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="alVwwqrk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qFU/opBt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725900AbgJHIzk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 04:55:40 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53355 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725845AbgJHIzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 04:55:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602147336;
-        bh=Kac3I5I11/CgAtgyMXzLhlhigb6jmiMxyLnr3aDkg+M=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=alVwwqrkSj2tgIe+1BbZd/pdO2QDjSG3acW05Azf8p9bLU+LqlLU5T7/IEuoJJFU6
-         9UW8tDXZBInk0XF/uIxF0YGCFnLm+wlJp8nTt4hWtNLvbYVc+4S6VyCJxiMqHoVk4p
-         RUVtGdYUzbFsX3bEf8/elvrRQ9bPRCB3tnQ6YzbQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MG9g4-1k9y7Q034u-00GcPA; Thu, 08
- Oct 2020 10:55:36 +0200
-Date:   Thu, 8 Oct 2020 10:55:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Bryan Turner <bturner@atlassian.com>
-cc:     git-for-windows <git-for-windows@googlegroups.com>,
-        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
-Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.29.0-rc0
-In-Reply-To: <CAGyf7-Enk2Dk2gzGssW+6FEQe6vn7PazyEEJMAQfRzULQ1cHqw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010081054250.50@tvgsbejvaqbjf.bet>
-References: <20201006092535.6419-1-johannes.schindelin@gmx.de> <CAGyf7-Enk2Dk2gzGssW+6FEQe6vn7PazyEEJMAQfRzULQ1cHqw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726055AbgJHJHp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 05:07:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725802AbgJHJHp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 05:07:45 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A5DC061755
+        for <git@vger.kernel.org>; Thu,  8 Oct 2020 02:07:45 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id d4so5614460wmd.5
+        for <git@vger.kernel.org>; Thu, 08 Oct 2020 02:07:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2rd6lZ0eikS2lwG5JylJ/NPlpJY1yb7cwghbOIMWdGY=;
+        b=qFU/opBtXfn4d9bITF2hdAcv6ZS0aslfhsg2FZ43uzsVcv7sA4MGQoKtpfIO1Bfo9f
+         Uqv8WzU/hJJj18X1MrhQj0ofTt3XARAMP5ixb75nDz1BFjR8J2gZ3JbxkdQAhhv3g3MS
+         RvwtgmzFVqh8xFeDU5BoR6wKMGw3grPKFEZR4jV6gc+FefGOPQ5iqibAPd06AXgFM5ta
+         YV95S86vlU2NYhGoWMKQk5+ZyTCTuWkKz8qijovV+HbeJBqiug4N1SMNpuObaSPmxYjF
+         EPjwPxCDGYxHucJ34+ExTKCv6TDBU//Egf9mTrw3G07PL/mBj2OLtCJiz+1sdjom2PFB
+         123Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2rd6lZ0eikS2lwG5JylJ/NPlpJY1yb7cwghbOIMWdGY=;
+        b=ndUzY7K/k/bcGCfguKRlVp8zmeSF1eKD3kttrb3cHTnANoTerrxQIwk3o/7HxvngHD
+         APLzyn7z0lhFH7Y0UpT4uJCvNlUnwCN05uAafZgNLlxrvGS3NcahNaWR+gXlUVq59M4h
+         8u7Zo2Lj2Q/IQZVDKqD6/FQ776MjeMMCBIhwShAEuNpHR64zKXZivzAwXT66VY8gIJM/
+         q1azTTj2vsf94/49DSV4xdQ0Z3SgnzZXXsmHn3muLJsYc55YLJzbItQ/YvRaotDzOA2u
+         6CI7v/ICu/ciNQXvVQqtZPYh3zQk1T/0gse2GYGC26GDYKGMXZZf4nvgf2I842WYQGcd
+         p8Ew==
+X-Gm-Message-State: AOAM532hAawkXCHwxl7xn2amL8IJ2C1DYXzfzi0+SLtPce1SQhJC3xzZ
+        eTpZCPw4QIIaJzm6LNFinycfPrtl35U=
+X-Google-Smtp-Source: ABdhPJwDDP0/84GNM05Iz+6MqPsKYa4rwzvSHqXlUWBTlXrBXgKr/ROrcseYlYrqLoAV8tXD6d70Tg==
+X-Received: by 2002:a1c:bdc4:: with SMTP id n187mr8089496wmf.185.1602148063402;
+        Thu, 08 Oct 2020 02:07:43 -0700 (PDT)
+Received: from [192.168.1.21] (88-105-142-27.dynamic.dsl.as9105.com. [88.105.142.27])
+        by smtp.gmail.com with ESMTPSA id c8sm6695627wmd.18.2020.10.08.02.07.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Oct 2020 02:07:42 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy] Introduction
+To:     Sangeeta NB <sangunb09@gmail.com>, git@vger.kernel.org
+References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
+Date:   Thu, 8 Oct 2020 10:07:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:F6KW8gu9gSSle8HZQmSRhX+Zs00zfhRPyghRb376Ju2VQ1HGQgu
- KrNMpNWP1Lk+39xIx+VW6AigA20EAIO1si8rA0bT1pq+88zR/OKWa89m8BxPRUeFqvG36X1
- ktTLPYCfR2Rwc9lGHXV4TEnO/YOHM9ztlb78Ft2c7h9NdbCwjl3k5hQtFTOtL6Cb63XIl5l
- eZ27knyw2Mp2Fb5cSnlzQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:slCQZuXBegs=:skF+ZfcV7UAeErII2mYKfh
- CftmJpz9JiT2ddj02/xC21xb1+jJTly0r2YU7/Qfw9UUzyFhpTVLyYGhd8iFe5S7xHCiw9uit
- ArgGHv4Irn4nwAnzvbsNtTpngcITgaoyj4XAV2fY5b0adQsTsIHDNxNCn6dF9I7qwKSFmqeBe
- Cl/HdcO442MXMQOI5URe+DWVsMWSBOFmNWsiCqzadtFiitu3JWtFSMGB9xlnayVKwMRFEIpks
- mxdRsF1aMzYbYFiHGGDJy4dllhzq8euwLBJ4J8vptNa+cWC8LR01b3BYoBRsodtumZSNbZDzL
- FLkli5gN/9PKrfZrSp0MNFf3dlpBX0vySCu5zny/EqftzayAR5leTkWlL1w3SQxLvDD/vRHYP
- I1LvUrxqBfs45U+mpZuF0KIFqlaevCL9SHOAF/GQSVXe7nAu44CQRxlwJ6Ru8KDApZkIMjD+/
- GpqqfWVpbFX6slhNatDy9QMo52LzdrIqrWLyKU0EfgcDbB2Yn1jRTf46noRDqjOcdApjPsepz
- GcL/YLHIclS+Kv9wYwZOvFxRxWCX9tsl+uYizOJWnS5OhNNxqqFTYs1uVR1JzEZnzb+B2KC3c
- 62eW/dRmcNDbM3+wNHhMlfEYw2skxCceR2Jvdi4OUh4w7UBHlG2lxf4UtC281v2CDHGb3S/E2
- BR8t0HlbYKQ/GEKyN42cpA1x3MKPNqbNs0AFs68qo+bEcZBYwtvLS/WmEpCwsk4c/0oTHPMOM
- odnJ+AOLNgKQwx495lMQgkDZgLF2h4SIacB1SbpYeQogFag693/3BHn6k0BEAEWCRQh1yy40A
- LkNZ/kCBCTSVdymd/m1q3uvd3DkoqwBoYFBET1KuQuUqyIcMzatqC9mINhZy3C+rQuxzaHzvP
- jd4YNwAhf3/6KI+gUNVSmcFsCGr6LyGxH/CTUo6P7p4e/5zp3fz4t3TjzUWFZ7t/9TTbqSkrg
- 276lxA1FSo42I6YYRaDOTqn9y77Q1Gkzb4BjYSxVWYY7/tQVKFKSfjsCPF8caS5JZHrrQjVTb
- WaIVpJSP3ln573rRcHsNsTStwdJNpfiE+oDBYpnG2S4cI6T246LavucZqoesquldOAeTKjli9
- zGQlXWyMtY6SHwCu2SPhO3aw688mxEjv/gWOudPMkSjWAwbl7iPMycoGGWKrcKbsg5rl7SR6s
- vyM4LaiX9mp6Rh/X/XPzwxinyKZet8hcG0LQ3AIRyyokvMHpBmaxaxgIjsPKD9SlScHeD8HET
- RRXlxBSVnaTajEanqHtEYacLMkXxZyXQdclLNmg==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bryan,
+Hi Sangeeta
 
-On Wed, 7 Oct 2020, Bryan Turner wrote:
+On 07/10/2020 21:10, Sangeeta NB wrote:
+> Hello everyone,
 
-> On Tue, Oct 6, 2020 at 2:25 AM Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> >
-> > Dear Git users,
-> >
-> > I hereby announce that Git for Windows 2.29.0-rc0 is available from:
-> >
-> >     https://github.com/git-for-windows/git/releases/tag/v2.29.0-rc0.wi=
-ndows.1
->
-> We've added Git for Windows 2.29.0-rc0 to Bitbucket Server's test
-> matrix. No test failures to report.
+Welcome to the list
 
-Thank you so much!
+> My name is Sangeeta and I’m one of the Outreachy applicants.  I would
+> like to work on the microproject "Unify the meaning of dirty between
+> diff and describe".
+> 
+> While looking at the files for `describe` and `diff` commands I found
+> that the `describe.c`  is present in builtin[1] folder whereas diff.c
+> is found in the root[2] folder as well as builtin[3] folder. I could
+> not find any implementation of --dirty in the diff.c present in
+> builtin[3] folder. So is it that I have to compare the implementation
+> of describe.c[1] and diff.c(of root folder)?
+> 
+> Also, I was curious to know why is there a builtin folder when many
+> commands described in that are described again in the root folder?
 
-Since one of the biggest changes in Git for Windows v2.29.0 will be the
-automatic upgrade from GCM(W) to GCM Core: do you override and/or exercise
-a custom credential helper in that test matrix?
+The files in the root directory are (mostly) library code that ends up 
+in libgit.a. The builtin directory contains the individual git commands 
+that form the git binary that is linked with libgit.a. builtin/diff.c 
+contains cmd_diff() which will be called when the user runs `git diff`. 
+That function parses the command line options and sets up the necessary 
+data to pass to the diff implementation in /diff.c. The diff and log 
+family of commands are a bit different to most of the other commands in 
+that the option parsing is mostly done by calling setup_revisions() in 
+/revision.c rather than using the option parsing library routines in 
+/parse-options.c directly. I think the `--dirty` option for diff ends up 
+being handled by handle_ignore_submodules_arg() in submodule.c, I'll 
+leave it to you to see where that is called from (you can use `git grep`).
 
-Thanks,
-Dscho
+I'm going to be off line for the rest of today, hopefully someone else 
+will be able to help if you get stuck or I'll try and answer any other 
+questions tomorrow.
+
+Best Wishes
+
+Phillip
+
+> Looking forward to working with you all.
+> 
+> Sangeeta
+> [1] https://github.com/git/git/blob/master/builtin/describe.c
+> [2] https://github.com/git/git/blob/master/builtin/diff.c
+> [3] https://github.com/git/git/blob/master/diff.c
+> 
