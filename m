@@ -2,94 +2,100 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC1E4C433E7
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A16CC43467
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:55:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 923F021734
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:44:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CC6A21734
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 08:55:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iMtpN2OI"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="alVwwqrk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728649AbgJHIoU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 04:44:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725915AbgJHIoR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 04:44:17 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49806C061755
-        for <git@vger.kernel.org>; Thu,  8 Oct 2020 01:44:17 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id 188so6088663qkk.12
-        for <git@vger.kernel.org>; Thu, 08 Oct 2020 01:44:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nmgoTkr/PZgj46YIsgx21QS33+vkWi6FMW5xFbOS8gM=;
-        b=iMtpN2OIIp0kQlqnl+1RALkm/LYXNNDK1cfja0+yCw6THzWQ9av34GKO/OLScrz9il
-         omuFN3khGlmBKamWVpA6otlhtNKVEct5eawhwiYYBjjTrgX21mptnzByL9NUyYEmU1J2
-         3NYUOm7dpkDgd7ZYVexjPJ342lMUncYZn6bebSqP8fUFk3setJi9RPEXbdYR5xp7eDgq
-         //CJtlgpYhet90sRDABAImnCntqHb4cjyLcmWV56jnb6Iggj3HgcT0U80Su5icfy8NJ/
-         SMGTH7mZ72/jHw2z1uoYgoG8eVsD65lgN2DQcqjfoTkVmsggkfuRiFYZ9BZf7Jz6Jz/R
-         I+Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nmgoTkr/PZgj46YIsgx21QS33+vkWi6FMW5xFbOS8gM=;
-        b=tY2Df7Appn6vtKfR3d/w0Fz+zezMW3Wl+d0oMuAeJdj+HO2/23weAf15X1wCxEsjc9
-         GaGwF7BlUumrkaMBW1zx/d5310s+5H+/rFec9AYDNCpEcYavrmbP56hpNVPRbT1PjpBj
-         zKq7BzO/pl34R/7Z4ZV4J/e3VV3euLRgU/iiAQ9iYGC8/K5olWEeC6jlIMOrl5DLutEK
-         QdE0Gxxx+hDUzU5nGbhu+8kVtAsciliK5mFnIuereQi8Hn+5kxm2lL1OIYEL8hRW8yOS
-         DAWKSKQIRxa3Wr5iXb2nlNb+j1gWFardW4OQMBw4+tmIjZccYhw5tss6frvcF8K4oStx
-         mM6w==
-X-Gm-Message-State: AOAM531eXeGQDwCS6EgByjingOSSDBze6WAKJo0F+tAieJ+e3KUeddca
-        nrHHDie8YVjGkrXewhPN3gA=
-X-Google-Smtp-Source: ABdhPJzzHnLyAwpJmroTAiJebAT5IN9cUvT0RuEXKxmS5CDVAYRCTe1t0YHwExIfZrGftkTI28fa5Q==
-X-Received: by 2002:a37:c202:: with SMTP id i2mr7252569qkm.169.1602146656397;
-        Thu, 08 Oct 2020 01:44:16 -0700 (PDT)
-Received: from partizan.lan ([46.98.122.162])
-        by smtp.gmail.com with ESMTPSA id a200sm3463938qkb.66.2020.10.08.01.44.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2020 01:44:15 -0700 (PDT)
-From:   Serg Tereshchenko <serg.partizan@gmail.com>
-To:     me@yadavpratyush.com
-Cc:     git@vger.kernel.org, serg.partizan@gmail.com
-Subject: Re: [PATCH] git-gui: Basic dark mode support
-Date:   Thu,  8 Oct 2020 11:44:06 +0300
-Message-Id: <20201008084406.7494-1-serg.partizan@gmail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201008082829.h4wno3mntb4kk6oo@yadavpratyush.com>
-References: <20201008082829.h4wno3mntb4kk6oo@yadavpratyush.com>
+        id S1725900AbgJHIzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 04:55:40 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53355 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725845AbgJHIzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 04:55:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1602147336;
+        bh=Kac3I5I11/CgAtgyMXzLhlhigb6jmiMxyLnr3aDkg+M=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=alVwwqrkSj2tgIe+1BbZd/pdO2QDjSG3acW05Azf8p9bLU+LqlLU5T7/IEuoJJFU6
+         9UW8tDXZBInk0XF/uIxF0YGCFnLm+wlJp8nTt4hWtNLvbYVc+4S6VyCJxiMqHoVk4p
+         RUVtGdYUzbFsX3bEf8/elvrRQ9bPRCB3tnQ6YzbQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MG9g4-1k9y7Q034u-00GcPA; Thu, 08
+ Oct 2020 10:55:36 +0200
+Date:   Thu, 8 Oct 2020 10:55:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Bryan Turner <bturner@atlassian.com>
+cc:     git-for-windows <git-for-windows@googlegroups.com>,
+        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
+Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.29.0-rc0
+In-Reply-To: <CAGyf7-Enk2Dk2gzGssW+6FEQe6vn7PazyEEJMAQfRzULQ1cHqw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2010081054250.50@tvgsbejvaqbjf.bet>
+References: <20201006092535.6419-1-johannes.schindelin@gmx.de> <CAGyf7-Enk2Dk2gzGssW+6FEQe6vn7PazyEEJMAQfRzULQ1cHqw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:F6KW8gu9gSSle8HZQmSRhX+Zs00zfhRPyghRb376Ju2VQ1HGQgu
+ KrNMpNWP1Lk+39xIx+VW6AigA20EAIO1si8rA0bT1pq+88zR/OKWa89m8BxPRUeFqvG36X1
+ ktTLPYCfR2Rwc9lGHXV4TEnO/YOHM9ztlb78Ft2c7h9NdbCwjl3k5hQtFTOtL6Cb63XIl5l
+ eZ27knyw2Mp2Fb5cSnlzQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:slCQZuXBegs=:skF+ZfcV7UAeErII2mYKfh
+ CftmJpz9JiT2ddj02/xC21xb1+jJTly0r2YU7/Qfw9UUzyFhpTVLyYGhd8iFe5S7xHCiw9uit
+ ArgGHv4Irn4nwAnzvbsNtTpngcITgaoyj4XAV2fY5b0adQsTsIHDNxNCn6dF9I7qwKSFmqeBe
+ Cl/HdcO442MXMQOI5URe+DWVsMWSBOFmNWsiCqzadtFiitu3JWtFSMGB9xlnayVKwMRFEIpks
+ mxdRsF1aMzYbYFiHGGDJy4dllhzq8euwLBJ4J8vptNa+cWC8LR01b3BYoBRsodtumZSNbZDzL
+ FLkli5gN/9PKrfZrSp0MNFf3dlpBX0vySCu5zny/EqftzayAR5leTkWlL1w3SQxLvDD/vRHYP
+ I1LvUrxqBfs45U+mpZuF0KIFqlaevCL9SHOAF/GQSVXe7nAu44CQRxlwJ6Ru8KDApZkIMjD+/
+ GpqqfWVpbFX6slhNatDy9QMo52LzdrIqrWLyKU0EfgcDbB2Yn1jRTf46noRDqjOcdApjPsepz
+ GcL/YLHIclS+Kv9wYwZOvFxRxWCX9tsl+uYizOJWnS5OhNNxqqFTYs1uVR1JzEZnzb+B2KC3c
+ 62eW/dRmcNDbM3+wNHhMlfEYw2skxCceR2Jvdi4OUh4w7UBHlG2lxf4UtC281v2CDHGb3S/E2
+ BR8t0HlbYKQ/GEKyN42cpA1x3MKPNqbNs0AFs68qo+bEcZBYwtvLS/WmEpCwsk4c/0oTHPMOM
+ odnJ+AOLNgKQwx495lMQgkDZgLF2h4SIacB1SbpYeQogFag693/3BHn6k0BEAEWCRQh1yy40A
+ LkNZ/kCBCTSVdymd/m1q3uvd3DkoqwBoYFBET1KuQuUqyIcMzatqC9mINhZy3C+rQuxzaHzvP
+ jd4YNwAhf3/6KI+gUNVSmcFsCGr6LyGxH/CTUo6P7p4e/5zp3fz4t3TjzUWFZ7t/9TTbqSkrg
+ 276lxA1FSo42I6YYRaDOTqn9y77Q1Gkzb4BjYSxVWYY7/tQVKFKSfjsCPF8caS5JZHrrQjVTb
+ WaIVpJSP3ln573rRcHsNsTStwdJNpfiE+oDBYpnG2S4cI6T246LavucZqoesquldOAeTKjli9
+ zGQlXWyMtY6SHwCu2SPhO3aw688mxEjv/gWOudPMkSjWAwbl7iPMycoGGWKrcKbsg5rl7SR6s
+ vyM4LaiX9mp6Rh/X/XPzwxinyKZet8hcG0LQ3AIRyyokvMHpBmaxaxgIjsPKD9SlScHeD8HET
+ RRXlxBSVnaTajEanqHtEYacLMkXxZyXQdclLNmg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Thanks. This is a bit complicated to be honest. I don't think we can do 
-> much about the "installing Tk themes" part, but we can certainly make it 
-> easier to select an installed theme in git-gui. A config option like 
-> gui.tktheme would be good. Something to consider in the future...
+Hi Bryan,
 
-I think application should not be responsible for setting theme.
+On Wed, 7 Oct 2020, Bryan Turner wrote:
 
-Of course, it is simpler for user to set git-gui theme in app config,
-but right way to do it - is to set theme on system level.
+> On Tue, Oct 6, 2020 at 2:25 AM Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> >
+> > Dear Git users,
+> >
+> > I hereby announce that Git for Windows 2.29.0-rc0 is available from:
+> >
+> >     https://github.com/git-for-windows/git/releases/tag/v2.29.0-rc0.wi=
+ndows.1
+>
+> We've added Git for Windows 2.29.0-rc0 to Bitbucket Server's test
+> matrix. No test failures to report.
 
-On mac it is already using aqua (with dark colors if set), and user even
-don't know about it.
+Thank you so much!
 
-On windows it uses some windows-like theme by default.
+Since one of the biggest changes in Git for Windows v2.29.0 will be the
+automatic upgrade from GCM(W) to GCM Core: do you override and/or exercise
+a custom credential helper in that test matrix?
 
-On linux, yes, we must change ~/.Xresources, but this is just how we set themes
-for tk apps. It's systemwide, and all tk apps will resect this choice.
-
---
-Regards,
-Serg Tereshchenko
+Thanks,
+Dscho
