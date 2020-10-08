@@ -2,118 +2,81 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CDAAC433DF
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 18:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 219C5C433E7
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 19:12:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA1DD21789
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 18:53:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCB522184D
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 19:12:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VWvF/5AF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9zZBKrf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729369AbgJHSxp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 14:53:45 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58584 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725908AbgJHSxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 14:53:44 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 243C7889DB;
-        Thu,  8 Oct 2020 14:53:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Usx5W2hRFbMq
-        gFa98Cv5wzREUKU=; b=VWvF/5AFYm2u+9a5VnKJx758hZ4DbRT2AgOMQMpxFgtJ
-        Ec9fP/pQXZahJMXjhISsm9Mpl97ZynYJ8u4pQNhfAzDJdD+04jlD+fb/hqd0ytxQ
-        M+byX/r5VYYBrFjkMSn6Bk5X3TZpp6pfIvIY/XOcOknddqkylwhnjrTq2s+EdIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rLt84q
-        44iaZnqYnub+3/R0XYZzEBtUwIiWaC2nk428DdooRT+hsZKTInNnLduQStg17M9b
-        Lvh3mYwAYj7wB47DMpsfVDIf/J3Qg1m8jnAym5hiFak+dnA1278U2QouY+D6RFS/
-        jCjLTbc/awN8x/srND9TD4gYsgB7NxOM52jpQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BFAB889DA;
-        Thu,  8 Oct 2020 14:53:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 98A6F889D9;
-        Thu,  8 Oct 2020 14:53:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, tytso@mit.edu, Christoph Hellwig <hch@lst.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Subject: Re: [RFC PATCH 2/2] core.fsyncObjectFiles: make the docs less flippant
-References: <87sgbghdbp.fsf@evledraar.gmail.com>
-        <20200917112830.26606-3-avarab@gmail.com>
-        <xmqqv9gcs91k.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2010081012490.50@tvgsbejvaqbjf.bet>
-        <87eem8hfrp.fsf@evledraar.gmail.com>
-Date:   Thu, 08 Oct 2020 11:53:40 -0700
-In-Reply-To: <87eem8hfrp.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 08 Oct 2020 17:57:30 +0200")
-Message-ID: <xmqqo8lcwnuz.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1729579AbgJHTMz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 15:12:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44268 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbgJHTMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 15:12:55 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 505A4C061755
+        for <git@vger.kernel.org>; Thu,  8 Oct 2020 12:12:55 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id p15so7547305wmi.4
+        for <git@vger.kernel.org>; Thu, 08 Oct 2020 12:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FfRaG/pRbAEXezZrb2QHPfUsVGu4WjVwJR3upN/P+tA=;
+        b=i9zZBKrfnm/NH1viCFtioeugXzhvASpqk2iQRdVdkLx9FUJMvGWsvzex3UQtk857e3
+         YkRnzu9TODRzmGohMG0EFDXCIJjEMVIqSJ1GN81piGZ06RYACGU4JmNq1A0G/vKbz948
+         nSad0+qz8dWqkAusEr0AlvYMi8lToG2s30iIdU7AYAgsEx2efcJfT7HZM0LbNm3GGGeW
+         2meCY1+3Akuim2WEXisyTIxw84eHhlY057nhmuMGJUaqC9B4UzCgRCPf2BMJ2l9XK1sg
+         ciV0qk3UCdfwBJ+SgjquQeKOBsoAg+qEYEuG0GtvmPIOX2ZJgHlJkGYt8+NItJLAhZKj
+         jIAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FfRaG/pRbAEXezZrb2QHPfUsVGu4WjVwJR3upN/P+tA=;
+        b=j2GnqfqaitcmTGzgwwjH22YDHMSL1cMnM34geT8aNXNJXTe2foCsifpnN/WG+b4JFy
+         PQH86lLnMEWopDlJ0dR6j7ki54PlbLPaAGrJp8sQQovnMGQaN7wtephGmFVE21j3M/Yu
+         Mr6ZBDREn4b5uYHBLCkYjxHY8dLaDAI/27vdSYPksz4N8Zf8ZZlthsAiAa3L2CBD+PIl
+         xE/cG94b19dilc3YI3+SEzbg+PgH55gS0NeScnarovaxft0diVGOrv/1altb/uhIt/Ww
+         4qnsjljjkHkDdQ3cCj6ZlFmk1LwKgUzi8mljI+WR0SngKjHKSLuEFtXJjGR4aYdC8GDp
+         WaCA==
+X-Gm-Message-State: AOAM532pcqCLZBBNwgiln03jf7BJNKm20QEi0Z5QBONEKbPYPTetYqUt
+        2Ke7gA0a4XGhQCWRvq7jnOld65gX1iKc5l+muYLriBqyIlk1Thzi
+X-Google-Smtp-Source: ABdhPJzKvJgwSbgoSsoZR1ws53whozzl+tU9CSg4un/NRAJHA95VjyawmIg487OHfck4UZF1LuR9bBGezRHIGghwKf0=
+X-Received: by 2002:a1c:e089:: with SMTP id x131mr10311463wmg.78.1602184373797;
+ Thu, 08 Oct 2020 12:12:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 94D1B56A-0997-11EB-8AF6-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Amanda Shafack <shafack.likhene@gmail.com>
+Date:   Thu, 8 Oct 2020 20:11:18 +0100
+Message-ID: <CAGxm6oXSaKoTR3btKRV4bMYUsc3-oKeWSfzrWKkCXgrRorAEAQ@mail.gmail.com>
+Subject: Introduction - An Outreachy 2020 Applicant
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Good day.
 
->>> When I saw the subject in my mailbox, I expected to see that you
->>> would resurrect Christoph's updated text in [*1*], but you wrote a
->>> whole lot more ;-) And they are quite informative to help readers to
->>> understand what the option does.  I am not sure if the understanding
->>> directly help readers to decide if it is appropriate for their own
->>> repositories, though X-<.
->>
->> I agree that it is an improvement, and am therefore in favor of applyi=
-ng
->> the patch.
->
-> Just the improved docs, or flipping the default of core.fsyncObjectFile=
-s
-> to "true"?
+I am Amanda Shafack, an Outreachy 2020 applicant who wishes to
+contribute to the "Add Git protocol support to Wireshark" project.
 
-I am not Dscho, but "applying THE patch" meant, at least to me, the
-patch [2/2] to the docs, which was the message we are responding to.
+In addition, I have some experience coding in C and I hope to enhance
+my skill set by contributing to this project.
 
-> I've been meaning to re-roll this. I won't have time anytime soon to fi=
-x
-> git's fsync() use, i.e. ensure that we run up & down modified
-> directories and fsync()/fdatasync() file/dir fd's as appropriate but I
-> think documenting it and changing the core.fsyncObjectFiles default
-> makes sense and is at least a step in the right direction.
->
-> I do think it makes more sense for a v2 to split most of this out into
-> some section that generally discusses data integrity in the .git
-> directory. I.e. that says that currently where we use fsync() (such as
-> pack/commit-graph writes) we don't fsync() the corresponding
-> director{y,ies), and ref updates don't fsync() at all.
+I am currently going through the project description and contribution
+guidelines.
 
-Yes, I think all of these are sensible things to do sometime in the
-future.
+Thanks.
 
+-- 
 
-> Where to put that though? gitrepository-layout(5)? Or a new page like
-> gitrepository-integrity(5) (other suggestions welcome..).
+Cheers!
 
-I do not have a good suggestion at this moment on this.
-
-
-
-
+Amanda  Shafack
