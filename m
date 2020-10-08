@@ -2,203 +2,255 @@ Return-Path: <SRS0=Rj9+=DP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB0CC43467
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 10:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E08DC43467
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 10:13:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2692E2065C
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 10:06:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBE2E20708
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 10:13:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TVUh9H8y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LADlCEOb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729231AbgJHKGv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 06:06:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37663 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729148AbgJHKGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 06:06:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602151608;
-        bh=jWGKGQ+y3IwuHWDe2lRgIXorh2Who/Y1IpoCB7a3PKY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TVUh9H8yJEmAkoJYiFOtQiBY8Nl4ErQS/KaRI5IbSfYpL8HV8QERNtOFpgA5m3pr9
-         4Wu0mQ1Fz3j9BU0UJ2nl9KIcuXYUkUgxGvW/qh1S9qacCGIct1K68L8syrBO9BN8+2
-         3icCZgNWl4mZM0cyOQePWN02IF6PaW59oo7dcV0A=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.184]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mdvqg-1kxs6A24ZC-00b7FX; Thu, 08
- Oct 2020 12:06:48 +0200
-Date:   Thu, 8 Oct 2020 12:06:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Makefile: ASCII-sort += lists
-In-Reply-To: <f0f1ef1f677133eabd1bce00c6cdbbcc6477f00b.1602142738.git.liu.denton@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010081156350.50@tvgsbejvaqbjf.bet>
-References: <f0f1ef1f677133eabd1bce00c6cdbbcc6477f00b.1602142738.git.liu.denton@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729322AbgJHKNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 06:13:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45470 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729132AbgJHKNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 06:13:50 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7399DC061755
+        for <git@vger.kernel.org>; Thu,  8 Oct 2020 03:13:50 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id y12so558445wrp.6
+        for <git@vger.kernel.org>; Thu, 08 Oct 2020 03:13:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fis0V9TQ3Gy1MWJNmSG7X3X5UQIdDNJ+tzyb9aUb4pc=;
+        b=LADlCEObTYcHupHB3shPZiqLOcZkBAHBV53XtjU1JCi/VUFsMPElOHqhUcq5kLAHRn
+         XaTUgTTOM61zhhWEpYDdDuaQULcI9DFwbipRT47tY+fL6GtnhdsukjFe9A2Ear4/ebpa
+         ODYb64JsyDNOT66/VvW+RlEgCg3ipC/kZ/IX0WPml5bDNcXzQfiRCeKWL/d22245VIyn
+         1yNhW4U8NQhlJMNWL//k92VNdGRh0UBCJboUHvMldi8RZf4e64dLawLQhRVMSM5Piq/a
+         DYQp7jfp4/kZE8sMj6tKe9aXUtJrQQcqNod35Dwf3M2Av69eY/2NOT2TBaIMiirWX3td
+         Ehpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=fis0V9TQ3Gy1MWJNmSG7X3X5UQIdDNJ+tzyb9aUb4pc=;
+        b=P/ve37mk/R3w7UGfFAjHxCJL2eqwP4Z08TkOCeLxmpjgFPak9g8k0KWC0h/iQ1GqYN
+         K/nR3NXVToygaqr+/qVYjh3DCIYZihtVxNzcQ6IPEe3yAdlavZMEzhhqgGm0pOoFMqY/
+         dho6Mohl5E/8GGpyW1faV2Ry2DjLpjN2q6uUKrIJLKA8xxGVWLyW+0IJUVxYqfE58YUe
+         M+olAM7i6MfCTtO9iWabNpnCtMiKHJdQaSdzZOWBqytaGcDKy8tVeZhzpulJzH/QO5JX
+         BRvoIH4pszKRSXaec4x9Bq2rMlxxSBo7K4heb1o7AF7VPkRPMvi56FPOeFfhVeSUqkRQ
+         vBLA==
+X-Gm-Message-State: AOAM533Nx+N5lfVSsjl/QdR7PkBQCReWnpAwLkW49qL6t79v+vJ3AmZT
+        629EP5pgsyru2N+eycv8Py5RtqzcYJk=
+X-Google-Smtp-Source: ABdhPJyAhBR0F7D1K8ajN6slPowiVHJF6bAC57d6voseQCTX4f4XJDgj9mIPZPDOvOsbgroN1UyXiQ==
+X-Received: by 2002:adf:eac6:: with SMTP id o6mr8934015wrn.117.1602152028860;
+        Thu, 08 Oct 2020 03:13:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z5sm5453177wrw.37.2020.10.08.03.13.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Oct 2020 03:13:48 -0700 (PDT)
+Message-Id: <pull.743.v2.git.1602152027.gitgitgadget@gmail.com>
+In-Reply-To: <pull.743.git.1601888196.gitgitgadget@gmail.com>
+References: <pull.743.git.1601888196.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 08 Oct 2020 10:13:45 +0000
+Subject: [PATCH v2 0/2] Avoid main as branch name in the test suite
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WLj1lZ8YX77GvkH8fJXUvnb2ctWZLxfBQxoQ988hW4Oy2DU7127
- ont+MEn8Ym2q0MeKj+kwEw05jo/uaRukZs0RoAQg5P5Fshl/hlqZPW9EG9f/mQ3WGJfYu9M
- tggHeW0YGCGaRaGke/uKfgAoF4t8+ws91JfpsmLIvLABScuNGko2YDyxh3R3ahFk50SL8W1
- aMezmfzZ592JlMK7s0tEg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MteDY+ICpLQ=:od5k60OE4+PJ4PRL1W/MEh
- eo5TVhWtYW5BUfXidmhzBqdhN+ioiJXFigxeEx+6GSoksMvWJ306TqDleA4CdLvQPNlC37trv
- FxLdO1xHSuE3NhwMOpAzmwdy5QbLDmgYjAb4rNLRZSjblmgZ5D63jJeYT3yg2fpI2Bq0Wv7Jx
- XivhBgbWmvzqtqPTlA8xrrGhrHzHKqrKrQFxTpJccNLCfZ7/guD+07+zMQh9IiRNJqriBHodO
- XF4oTefnGwTs7uGdiubmOlz0ibh8i0i/v//2LJdSv/vJnvcDzkQBQiUNz/eqQzyTVniTIQneN
- ywLtl0TCYYWeVA9PzvMY4cSX4Xxhfia2YA2W2rNxC1ArR0zDTX7KhCV89JHldRP8XK0PYhAla
- +2EMTqrjtN0o1D8eHxrgakRZE/Elhjbta6YP+CPsKI7gFIMdhneYy7224Z5BIqZhc+I+yt1QU
- a+sC4TQJ/bM4GGHzNGSDjKuYKthrC0sIIzjihBFyevCyjRbgJgND791aY3wSEGtM2Lnm+11wC
- fqqzNMW5agsVxAy/vofLx0M6UbXqgczukY8VvnvwSWSJavUoG71pKOGMwi88v857EHfMknrYw
- h6RQQDNEgSOTr6kZ5Des1YjDf/hu0+RDdSm7DfQV90ywjrvtxOINZGm2B3lB2AORRQr/Q+9+i
- Asac5trdZu1JSb7vXAas+q6XiUMfand9rVCJmIHAeOIR2w3ajRmsDef7HZtkZITy1Sg94XgiO
- yBqk042bgLTyyMrB28CtoWhyD1yF6gjQ/4Y56h5DPtE703MMmp2NIkkilU46MJtmEtQzwpHL8
- Oiegu4GnZtU/ieamR4OjMBJ4WySgG46Nqg4Va9lZGARJIfVbQT0wTrUAsn0rCetbAXT67m6eM
- 2VLwbUsQwN34ARcL2fspV5nKtqLxfP44Enl1u8Ui7e9/SvGSbWhPILIiqCee8UummH26sWJEl
- Y09DJMapmBOEwXrQeabtkYfn80pb+ZJb34DJt1AsoN4i0yfdvaRSHRmwB15jRsPoLJLAPiunQ
- 2EZOBpp4WnLJnwqG4Rs7vuq2W1Rvv7gPaOOJm/+94su7xbM3aC2KGU4AGDRLqNBSquB/t7uMi
- yUCvRmvKTyE1hfVcy+jaTRfRAFX/dedvdp7FOwB24wBBpmSU48PfUUX5Ddv6TODyD79wG/3Z5
- 656T3NiYYzQ2tM3YpS73M/fodvheF8Bf+1LVAhAiqLxiw9rKG9K/qzdt0Y3TG14B7fQDJPzg5
- S54xXRh3aWpN22H66DRYcMFgpRJ3tLzBSXeLXvQ==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+In preparation for changing the default branch name to main, let's stop
+using it as non-default branch name in the test suite.
 
-On Thu, 8 Oct 2020, Denton Liu wrote:
+This is the last preparatory step before the patch series that intends to
+change the default branch name to main. See 
+https://github.com/gitgitgadget/git/pull/655 for the entire game plan.
 
-> In 805d9eaf5e (Makefile: ASCII-sort +=3D lists, 2020-03-21), the +=3D li=
-sts
-> in the Makefile were sorted into ASCII order. Since then, more out of
-> order elements have been introduced. Resort these lists back into ASCII
-> order.
+Changes since v1:
 
-Personally, I would write "Re-sort" or even "Sort again", so that readers
-such as myself do not stumble over the verb "resort" (as in "We resort to
-desperate measures").
+ * The commit message of the t1415 patch elaborates a but more about the
+   rationale for the change.
+ * Instead of primary, the second patch renames all of those branches to 
+   topic, imitating b6211b89eb3 (tests: avoid variations of the master 
+   branch name, 2020-09-26).
 
-Also, this strikes me as yet another task that is so automatable that we
-should really avoid bothering humans with it. I gave it a quick whirl, and
-this Perl script seems to do the job for me:
+Johannes Schindelin (2):
+  t1415: avoid using `main` as ref name
+  tests: avoid using the branch name `main`
 
-	$key =3D '';
-	@to_sort =3D ();
+ t/t1415-worktree-refs.sh     | 18 +++++++++---------
+ t/t6012-rev-list-simplify.sh |  8 ++++----
+ t/t6400-merge-df.sh          |  8 ++++----
+ t/t6409-merge-subtree.sh     | 12 ++++++------
+ t/t6430-merge-recursive.sh   |  4 ++--
+ 5 files changed, 25 insertions(+), 25 deletions(-)
 
-	sub flush_sorted {
-		if ($#to_sort >=3D 0) {
-			print join('', sort @to_sort);
-			@to_sort =3D ();
-		}
-	}
 
-	while (<>) {
-		if (/^(\S+) \+=3D/) {
-			if ($key ne $1) {
-				flush_sorted;
-				$key =3D $1;
-			}
-			push @to_sort, $_;
-		} else {
-			flush_sorted;
-			print $_;
-		}
-	}
-	flush_sorted;
+base-commit: 306ee63a703ad67c54ba1209dc11dd9ea500dc1f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-743%2Fdscho%2Favoid-main-as-branch-name-in-tests-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-743/dscho/avoid-main-as-branch-name-in-tests-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/743
 
-It is not the most elegant Perl script I ever wrote, but it does the job
-for me. And we could probably adapt and use it for other instances where
-we want to keep things sorted (think `commands[]` in `git.c` and the
-`cmd_*()` declarations in `builtin.h`, for example) and hook it up in
-`ci/run-static-analysis.sh` for added benefit.
+Range-diff vs v1:
 
-My little script also finds this:
+ 1:  d3f7b39a2f ! 1:  2c6f41f9ad t1415: avoid using `main` as ref name
+     @@ Commit message
+          `init.defaultBranch` to `main`, let's not use `main` as ref name in this
+          test script.
+      
+     -    Since we already use the name "second" for a secondary worktree that is
+     -    created in this test, let's use the name "first" for those refs instead.
+     +    Otherwise, the `git for-each-ref ... | grep main` which wants to catch
+     +    those refs would also unexpectedly catch `refs/heads/main`.
+      
+     -    While at it, adjust the test titles where "repo" was used by mistake
+     -    instead of the term "worktree".
+     +    Since the refs in question are worktree-local ones (i.e. each worktree
+     +    has their own, just like `HEAD`), and since the test case already uses a
+     +    secondary worktree called "second", let's use the name "first" for those
+     +    refs instead.
+     +
+     +    While at it, adjust the test titles that talk about a "repo" when they
+     +    meant a "worktree" instead.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+ 2:  6045ceb938 ! 2:  b187571778 tests: avoid using the branch name `main`
+     @@ Commit message
+      
+          In the near future, we want to change Git's default branch name to
+          `main`. In preparation for that, stop using it as a branch name in the
+     -    test suite. Replace that branch name by `primary`.
+     +    test suite. Replace that branch name by `topic`, the same name we used
+     +    to rename variations of `master` in b6211b89eb3 (tests: avoid variations
+     +    of the `master` branch name, 2020-09-26).
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     @@ t/t6012-rev-list-simplify.sh: test_expect_success '--full-diff is not affected b
+       	rm -rf .git * &&
+       	git init &&
+      -	git switch -c main &&
+     -+	git switch -c primary &&
+     ++	git switch -c topic &&
+       
+       	echo base >file &&
+       	git add file &&
+     @@ t/t6012-rev-list-simplify.sh: test_expect_success 'rebuild repo' '
+       	test_commit B &&
+       
+      -	git switch main &&
+     -+	git switch primary &&
+     ++	git switch topic &&
+       	test_must_fail git merge -m "M" B &&
+       	echo A >file &&
+       	echo B >>file &&
+     @@ t/t6012-rev-list-simplify.sh: test_expect_success 'rebuild repo' '
+       	note R &&
+       
+      -	git switch main &&
+     -+	git switch primary &&
+     ++	git switch topic &&
+       	git merge -m N R &&
+       	note N &&
+       
+     @@ t/t6012-rev-list-simplify.sh: test_expect_success 'rebuild repo' '
+       	test_commit Z &&
+       
+      -	git switch main &&
+     -+	git switch primary &&
+     ++	git switch topic &&
+       	git merge -m O Z &&
+       	note O &&
+       
+     @@ t/t6400-merge-df.sh: test_expect_success 'Simple merge in repo with interesting
+       		git commit -m initial &&
+       
+      -		git branch main &&
+     -+		git branch primary &&
+     ++		git branch topic &&
+       		git branch other &&
+       
+       		git checkout other &&
+     @@ t/t6400-merge-df.sh: test_expect_success 'Simple merge in repo with interesting
+       
+      -		git checkout main &&
+      -		echo main >foo/bar/baz &&
+     -+		git checkout primary &&
+     -+		echo primary >foo/bar/baz &&
+     ++		git checkout topic &&
+     ++		echo topic >foo/bar/baz &&
+       		git add -u &&
+      -		git commit -m main &&
+     -+		git commit -m primary &&
+     ++		git commit -m topic &&
+       
+       		git merge other &&
+       		git ls-files -s >out &&
+     @@ t/t6409-merge-subtree.sh: test_expect_success 'setup branch sub' '
+       
+      -test_expect_success 'setup branch main' '
+      -	git checkout -b main master &&
+     -+test_expect_success 'setup branch primary' '
+     -+	git checkout -b primary master &&
+     ++test_expect_success 'setup topic branch' '
+     ++	git checkout -b topic master &&
+       	git merge -s ours --no-commit --allow-unrelated-histories sub &&
+       	git read-tree --prefix=dir/ -u sub &&
+      -	git commit -m "initial merge of sub into main" &&
+     -+	git commit -m "initial merge of sub into primary" &&
+     ++	git commit -m "initial merge of sub into topic" &&
+       	test_path_is_file dir/foo.t &&
+       	test_path_is_file hello
+       '
+     @@ t/t6409-merge-subtree.sh: test_expect_success 'update branch sub' '
+      -test_expect_success 'update branch main' '
+      -	git checkout main &&
+      -	git merge -s subtree sub -m "second merge of sub into main" &&
+     -+test_expect_success 'update branch primary' '
+     -+	git checkout primary &&
+     -+	git merge -s subtree sub -m "second merge of sub into primary" &&
+     ++test_expect_success 'update topic branch' '
+     ++	git checkout topic &&
+     ++	git merge -s subtree sub -m "second merge of sub into topic" &&
+       	test_path_is_file dir/bar.t &&
+       	test_path_is_file dir/foo.t &&
+       	test_path_is_file hello
+     @@ t/t6430-merge-recursive.sh: test_expect_failure 'merge-recursive rename vs. rena
+       test_expect_success 'merging with triple rename across D/F conflict' '
+       	git reset --hard HEAD &&
+      -	git checkout -b main &&
+     -+	git checkout -b primary &&
+     ++	git checkout -b topic &&
+       	git rm -rf . &&
+       
+       	echo "just a file" >sub1 &&
+     @@ t/t6430-merge-recursive.sh: test_expect_success 'merging with triple rename acro
+       	git commit -a -m changesimplefile &&
+       
+      -	git checkout main &&
+     -+	git checkout primary &&
+     ++	git checkout topic &&
+       	git rm sub1 &&
+       	git mv sub2 sub1 &&
+       	test_tick &&
 
-=2D- snip --
-@@ -1231,8 +1231,8 @@ space :=3D $(empty) $(empty)
-
- ifdef SANITIZE
- SANITIZERS :=3D $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(f=
-lag))
--BASIC_CFLAGS +=3D -fsanitize=3D$(SANITIZE) -fno-sanitize-recover=3D$(SANI=
-TIZE)
- BASIC_CFLAGS +=3D -fno-omit-frame-pointer
-+BASIC_CFLAGS +=3D -fsanitize=3D$(SANITIZE) -fno-sanitize-recover=3D$(SANI=
-TIZE)
- ifneq ($(filter undefined,$(SANITIZERS)),)
- BASIC_CFLAGS +=3D -DSHA1DC_FORCE_ALIGNED_ACCESS
- endif
-=2D- snap --
-
-I am not _so_ sure that we want to order `BASIC_CFLAGS`, but then, it does
-not hurt, does it?
-
-Ciao,
-Dscho
-
->
-> This patch is best viewed with `--color-moved`.
->
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  Makefile | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 5311b1d2c4..95571ee3fc 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -820,8 +820,8 @@ TEST_SHELL_PATH =3D $(SHELL_PATH)
->  LIB_FILE =3D libgit.a
->  XDIFF_LIB =3D xdiff/lib.a
->
-> -GENERATED_H +=3D config-list.h
->  GENERATED_H +=3D command-list.h
-> +GENERATED_H +=3D config-list.h
->
->  LIB_H :=3D $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':=
-!Documentation/' 2>/dev/null || \
->  	$(FIND) . \
-> @@ -998,9 +998,9 @@ LIB_OBJS +=3D sigchain.o
->  LIB_OBJS +=3D split-index.o
->  LIB_OBJS +=3D stable-qsort.o
->  LIB_OBJS +=3D strbuf.o
-> -LIB_OBJS +=3D strvec.o
->  LIB_OBJS +=3D streaming.o
->  LIB_OBJS +=3D string-list.o
-> +LIB_OBJS +=3D strvec.o
->  LIB_OBJS +=3D sub-process.o
->  LIB_OBJS +=3D submodule-config.o
->  LIB_OBJS +=3D submodule.o
-> @@ -1066,15 +1066,15 @@ BUILTIN_OBJS +=3D builtin/checkout-index.o
->  BUILTIN_OBJS +=3D builtin/checkout.o
->  BUILTIN_OBJS +=3D builtin/clean.o
->  BUILTIN_OBJS +=3D builtin/clone.o
-> -BUILTIN_OBJS +=3D builtin/credential-cache.o
-> -BUILTIN_OBJS +=3D builtin/credential-cache--daemon.o
-> -BUILTIN_OBJS +=3D builtin/credential-store.o
->  BUILTIN_OBJS +=3D builtin/column.o
->  BUILTIN_OBJS +=3D builtin/commit-graph.o
->  BUILTIN_OBJS +=3D builtin/commit-tree.o
->  BUILTIN_OBJS +=3D builtin/commit.o
->  BUILTIN_OBJS +=3D builtin/config.o
->  BUILTIN_OBJS +=3D builtin/count-objects.o
-> +BUILTIN_OBJS +=3D builtin/credential-cache--daemon.o
-> +BUILTIN_OBJS +=3D builtin/credential-cache.o
-> +BUILTIN_OBJS +=3D builtin/credential-store.o
->  BUILTIN_OBJS +=3D builtin/credential.o
->  BUILTIN_OBJS +=3D builtin/describe.o
->  BUILTIN_OBJS +=3D builtin/diff-files.o
-> --
-> 2.29.0.rc0.261.g7178c9af9c
->
->
+-- 
+gitgitgadget
