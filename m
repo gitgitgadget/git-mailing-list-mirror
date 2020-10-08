@@ -7,67 +7,73 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C8FBC433DF
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 18:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BBAC433E7
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 18:15:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1C7C21527
-	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 18:12:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 303D5221FE
+	for <git@archiver.kernel.org>; Thu,  8 Oct 2020 18:15:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ovJErDv1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YF4g6rFx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725931AbgJHSMy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 14:12:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35052 "EHLO
+        id S1726831AbgJHSPq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 14:15:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbgJHSMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 14:12:54 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF572C061755
-        for <git@vger.kernel.org>; Thu,  8 Oct 2020 11:12:52 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id f10so6403875otb.6
-        for <git@vger.kernel.org>; Thu, 08 Oct 2020 11:12:52 -0700 (PDT)
+        with ESMTP id S1725857AbgJHSPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 14:15:45 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2518BC061755
+        for <git@vger.kernel.org>; Thu,  8 Oct 2020 11:15:44 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id t77so7302189oie.4
+        for <git@vger.kernel.org>; Thu, 08 Oct 2020 11:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=y+JEDlmdz8R3rB3z9yVvj06HI46ZKof7K6WfmnrKHc8=;
-        b=ovJErDv1Ejeqp2m3oietlOHksVszMAh4X6eq6HJ4EHN0xCbMG+uMjcrNdWeEUASb5w
-         j9/pedKUTID5gxyGU9xUOmS1r8FUBOO13gZQZQdxhJcxAHEq9Fzg8k0SR5XnVqIyW9Kt
-         BYAYCKwLeVmdSbbpNZjRGUKyHgQnIcmeCjMDLvvQ+osJdpcOKrZkH9bwH6vjg3Oo0A01
-         Pv7SWmuSPLdlIG2Opg+ezYJwpzZeX2++tgYXObj78bjzJoGi58DFy1eaxvO1qGU2a4X8
-         bQttto8eAskE0Fvk7zR5tCS2UGvPjMYAzJCmeaUziFqaFFDa9D78X39QxFPFNZsEhgcc
-         nZKw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OmKlzQBThI0bEYpOLkJkYEZTS2KScCBjbDJKhMabZ5A=;
+        b=YF4g6rFxPkRWyrcd/HH9/61pOA3U0X45f9C5ubcx3/T6gAbFh9IKV63Dgxp0TAIYEf
+         kxjkho/vMYAjJK9mSjY5Er00epF1ETg+eRDjT2rK4KywIuroo3xnRCr8atw7YIekitkE
+         +0+olAduN34og46K0HQwMotYvdpMMF7QTptuPwDhCDaISZKQeOQmdDdC2kpx4VYKZ5cf
+         UqfJRGz4PMkE5+I+DAEXr6hK1ZR4dq9QWEFUnrxG2ALr4GPuiYiWonsJJkV5b1K9dlhI
+         FRnJKv4GLQQrC9P0WyXoWjr2QWOfH1WVDT8NLfItRaDU6Fvsx+gh2hnVy58ItjGZW80L
+         Oy8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=y+JEDlmdz8R3rB3z9yVvj06HI46ZKof7K6WfmnrKHc8=;
-        b=rWTiFI+bYES6F0ecoUJEmGF4NUM8NNPfpnafkfcCTE3Kt/msDrRpR4tZNlj4bnvDfx
-         IxAVKDMMLFnyiKMa84gATe0SKvx8lNo/RrA9nxcilmO/gX1oYAeWyVV+wgHArjyQ+ecs
-         q39GcCoG1xBXsmpv61/CjQu23ksaTEqi0xgy9loQ9BjmBgluW4hrIfbXPX7n4OBJ+8QX
-         ya3SuL2f/yMpL5f7gOk45z3eow1MKHAynUJk9QRpYkmqMUjTl2pZ8/p75Z2GEiHiXKGw
-         6K+N0IkBrM/Bh+DyO9/5wbye7EG0nxMvDBl4KSkUVCzT7QeLguP0/YHwQgSfuHgmBYLV
-         3/+Q==
-X-Gm-Message-State: AOAM5300yndFWLJ2jIxafw9ptYp/ZWU4RxNiK8MU1V09Ys5F0ZVr5MfH
-        EXEtaEwxbd8e1XdNIBSrMrhE2zjzjLVfIQ==
-X-Google-Smtp-Source: ABdhPJzjFGiDr+gRFLYaQ9zeTQC09dv6QYMOwbfQE/tzMPxBE3eya3fQKkkwxuYSpLw3xQKMMpJ5eg==
-X-Received: by 2002:a05:6830:19d9:: with SMTP id p25mr6281682otp.135.1602180771739;
-        Thu, 08 Oct 2020 11:12:51 -0700 (PDT)
+        bh=OmKlzQBThI0bEYpOLkJkYEZTS2KScCBjbDJKhMabZ5A=;
+        b=oihXOdD4dRZb374sTxbpuZQdSBqbk7uTz/Nl2CHO6hkeAkSUr+15qAOMRB5Ptk64P3
+         fytV3yH5FVNyye93dWxNCEVAgdtaZCQQGI9W3CNsZg6vYafOT7GK8jBlOFbRJi99ZJs5
+         R3+c+CEpNDBhRTB6p9L4LNwlXBh7nLmY63QEUfyTcOXQL3hptIqscCK1npPo09BHrYvi
+         aiD3GjCsY7TCVr2nJ3CptkBuwIJbVRM05S6ODFS7TMZjxr/9fh4Wd10rJsLjj/jdIhxN
+         3imso4Fzhtav6L22TwRTw/G7GH78H0bOobWKprJCXcfEJ6yNCIOLQarX0lJNGlrBNEuo
+         H5wQ==
+X-Gm-Message-State: AOAM532jb54tZgotp/+dfii/NUYZVI2TWPyHVnJsDiUSOe80kG83DdGY
+        paxYukr/13J7dkeOoqtzZZ49mojPaKu+tQ==
+X-Google-Smtp-Source: ABdhPJwjSJhrN9DjE17jpvW1A076P9ypPS1aG6+jl1qvqRf5HmnFROWGcWByMdhij9YBH0RqLs+4Ng==
+X-Received: by 2002:aca:120f:: with SMTP id 15mr46487ois.155.1602180942952;
+        Thu, 08 Oct 2020 11:15:42 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:859b:7143:ba12:a6eb? ([2600:1700:e72:80a0:859b:7143:ba12:a6eb])
-        by smtp.gmail.com with UTF8SMTPSA id 68sm4569524otu.33.2020.10.08.11.12.50
+        by smtp.gmail.com with UTF8SMTPSA id q81sm5332087oia.46.2020.10.08.11.15.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Oct 2020 11:12:50 -0700 (PDT)
-Subject: Re: [RFC PATCH] log: add log.showStat configuration variable
-To:     Robert Karszniewicz <avoidr@posteo.de>, git@vger.kernel.org
-References: <20201008162015.23898-1-avoidr@posteo.de>
+        Thu, 08 Oct 2020 11:15:42 -0700 (PDT)
+Subject: Re: [PATCH 2/2] tests: avoid using the branch name `main`
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.743.git.1601888196.gitgitgadget@gmail.com>
+ <6045ceb938836355b7d43bc2088ca2504b05dde4.1601888196.git.gitgitgadget@gmail.com>
+ <20201005095930.GO1166820@google.com>
+ <nycvar.QRO.7.76.6.2010080957100.50@tvgsbejvaqbjf.bet>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bec999ef-5f9c-0ca1-ddd9-70b54b8c51b1@gmail.com>
-Date:   Thu, 8 Oct 2020 14:12:50 -0400
+Message-ID: <4d093b96-cdb3-e71a-c669-ee54fbd58ab7@gmail.com>
+Date:   Thu, 8 Oct 2020 14:15:41 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101
  Thunderbird/82.0
 MIME-Version: 1.0
-In-Reply-To: <20201008162015.23898-1-avoidr@posteo.de>
+In-Reply-To: <nycvar.QRO.7.76.6.2010080957100.50@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,50 +81,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/8/2020 12:20 PM, Robert Karszniewicz wrote:
-> Changes default behaviour of `git log` and `git show` when no
-> command-line options are given. Doesn't affect behaviour otherwise (same
-> behaviour as with stash.showStat).
-> ---
-> I've wanted to have `show` and `log` show --stat by default, and I
-> couldn't find any better solution for it. And I've discovered that there
-> is stash.showStat, which is exactly what I want. So I wanted to bring
-> stash.showStat to `show` and `log`.
-
-I'm wondering: why should this be a config setting instead of just
-a configure alias?
-
-	git config --global alias.logs "log --stat"
- 
-My personal preference is to use "--graph --oneline" by default, so
-I use
-
-	git config --global alias.lg "log --graph --oneline"
-
-and then type "git lg ..." whenever I'm looking at history. I also
-have an easy way to turn off the graph by using just "git log" when
-I want that disabled.
-
-> So far, setting log.showStat affects behaviour as described in the
-> commit message.
-> But it does so for `show` and `log` at the same time. I think they
-> should be configurable separately. (log.showStat and show.showStat)
+On 10/8/2020 4:05 AM, Johannes Schindelin wrote:
+> On Mon, 5 Oct 2020, Jonathan Nieder wrote:
+>> Johannes Schindelin wrote:
+>>> -	git switch -c main &&
+>>> +	git switch -c primary &&
+>>
+>> Is there a secondary corresponding to this primary?
 > 
-> Before I do all the work, please tell me if this is the right approach
-> so far, and if the feature - when ready - would be accepted. (I'm aware
-> that documentation and tests are missing.)
+> Nope, of course not ;-)
+> 
+>> I guess the idea is that this is the trunk that other branches branch
+>> from?  Looking at the history, it seems that this test was added
+>> relatively recently and it may have had the upcoming branch name change
+>> in mind (or in other words if it were an older test it might be expected
+>> to use "master").
+> 
+> I guess that Stolee (Cc:ed) had something like that in mind.
+> 
+> When I look at 8d049e182e2 (revision: --show-pulls adds helpful
+> merges, 2020-04-10), I get the impression that does not _really_ care
+> about the name of the main branch, it just wants to know the name so it
+> can switch back and forth.
 
-If this is something we want to do as a config instead of alias,
-I'm wondering if it is worth expanding the scope and thinking about
-these other arguments (like --graph, --oneline, etc.) and how they
-could be incorporated into a coherent config system.
+The branch name here is not important, so please replace it
+with whatever works best for you.
 
-I worry that this initial step leads us down a road of slowly adding
-one-off config settings for each option when:
-
- 1. aliases exist, and
- 2. it becomes unclear which arguments have configured defaults.
+What _is_ important is keeping the commit messages in agreement with
+the commented ASCII-art DAG above this test. It does not mention the
+branch names, so this change will not cause an inconsistent comment.
 
 Thanks,
 -Stolee
-
