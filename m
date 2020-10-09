@@ -2,179 +2,124 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 927FDC433DF
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BBBCC433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:26:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52FE922282
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:16:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E80D2227E
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:26:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YkMjlnnP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388524AbgJITP7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 15:15:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46868 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726118AbgJITP6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Oct 2020 15:15:58 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S2388655AbgJIT04 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 15:26:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55354 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388639AbgJIT04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 15:26:56 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 48CEB7218D;
+        Fri,  9 Oct 2020 15:26:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=zQPkuF4GM2hvVko4SMUf3M7o5Bk=; b=YkMjlnnP/oqIPjjVhsaT
+        jGfpJOKr8deTgcU5v33+o5/6flkIFZAjtDmfmc0Dfjlwn/XX8UeoSCqLyoO5NVmI
+        hyHrSwWLytkVhlgzj4XTO3eH5CKVaQqPtmKNDndVw45jlAsKEX/QlDI1akMQqs1x
+        n2hXYrxbu9uCZtbqXVG22Kc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=xjXyFrG8Fwru/fD6BN56NolgriKr8ucWBh3EtfAOmGXU0I
+        asPH8w0wKKIGrV+Fv71zxX6o4du6Ym7C92QWzTfIACuofFMrYcQcKCLUdnYNxQkk
+        0QLWOdjyINz0+i3f/k9EihS8jY0ic9y3UFyc1ZVVwzNTM2lPDirUKmoTmrMNM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F7F07218C;
+        Fri,  9 Oct 2020 15:26:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0FCC06046C;
-        Fri,  9 Oct 2020 19:15:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1602270927;
-        bh=HQnS2/swOqT23YL4XyQ14rVMVpigpOhFCnDkeSDgiOg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Q/oh94o5QwAdFaxQMEyGbe1SzMmHAEenn1xrdE5ub3fsSBFjYOwBZGHtFrGr6KWk+
-         Hlfs22nrR73QuYIeougmdYR4oV6naD4ebRaJNIp/kDD8rETsVxJnGGcQL+L6+//6It
-         4LmzwbqEIJeW0avZOCmCBa3gdxaAVVLVhdpAZjEBYuZv8Zci1N30YbgKYNXOPyBCu+
-         WAMHnp8PH477Lg2mK/Zu3lgUZ1IbrZqYL0C8F00KICib9bk9J+oIW0iqu8YeZFk2P1
-         O8qgHTlQIBGZLe0SubMkXRFo+q8KCKe+kOKdWe7X3yiQuGealJrZPvJwxIVfH/3eAU
-         nXUybWMiNT42NXjLROydg3DSyh91umbrF3tMDgXeC285iOEKo2dWsPFEOhpCWsMvAX
-         MAOYtTDZRG4i5O4uszeOzJi1oEiRKvdzaGXHD+zZukjM6hQ8xjF+MAJ39817VQDvYH
-         qR75Y2ndQCb42NMD8r/folL4lDPTaf50L7RFDbDd8Mh16/tI/bF
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 1/2] abspath: add a function to resolve paths with missing components
-Date:   Fri,  9 Oct 2020 19:15:10 +0000
-Message-Id: <20201009191511.267461-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.28.0.297.g1956fa8f8d
-In-Reply-To: <20201009191511.267461-1-sandals@crustytoothpaste.net>
-References: <20201009191511.267461-1-sandals@crustytoothpaste.net>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BA6A7218B;
+        Fri,  9 Oct 2020 15:26:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clean up extern decl of functions
+References: <xmqq8scgzqis.fsf@gitster.c.googlers.com>
+        <20201009015505.GB1314@generichostname>
+        <xmqqtuv4uncn.fsf@gitster.c.googlers.com>
+Date:   Fri, 09 Oct 2020 12:26:49 -0700
+Message-ID: <xmqqy2kfryiu.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 615EF5FC-0A65-11EB-97A2-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We'd like to canonicalize paths such that we can preserve any number of
-trailing components that may be missing.  Let's add a function to do
-that that calls strbuf_realpath to find the canonical path for the
-portion we do have and then append the missing part.  We adjust
-strip_last_component to return us the component it has stripped and use
-that to help us accumulate the missing part.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Note that it is intentional that we invoke strbuf_realpath here,
-repeatedly if necessary, because on Windows that function is replaced
-with a version that uses the proper system semantics for
-canonicalization.  Trying to adjust strbuf_realpath to perform this kind
-of canonicalization with an additional option would fail to work
-properly on Windows.  The present approach is equivalent to
-strbuf_realpath for cases where the path exists, and the only other
-cases where we will use this function the additional overhead of
-multiple invocations is not significant.
+>> Why are we re-introducing an explicit "extern"? Since function decls are
+>> extern by default, what do we gain by doing this?
+>>
+>> You mentioned in the past[0]
+>>
+>> 	I think there is a push to drop the "extern " from decls of
+>> 	functions in *.h header files.
+>>
+>> so are we reversing that push now?
+>
+> That is certainly on the table.  Re-read what you quoted and realize
+> that I was not expressing my opinion on the "push"; it was just
+> stating that other reviewers seem to be in favor.
+>
+> See my other response why I think the "push"  was a bad idea.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- abspath.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++----
- cache.h   |  1 +
- 2 files changed, 47 insertions(+), 4 deletions(-)
+I'd elaborate a bit more.  A proposed update to CodingGuidelines
+will be sent separately as a follow-up to this message.
 
-diff --git a/abspath.c b/abspath.c
-index 6f15a418bb..092bb33b64 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -11,8 +11,12 @@ int is_directory(const char *path)
- 	return (!stat(path, &st) && S_ISDIR(st.st_mode));
- }
- 
--/* removes the last path component from 'path' except if 'path' is root */
--static void strip_last_component(struct strbuf *path)
-+/*
-+ * Removes the last path component from 'path' except if 'path' is root.
-+ *
-+ * If last is not NULL, the last path component is copied to last.
-+ */
-+static void strip_last_component(struct strbuf *path, struct strbuf *last)
- {
- 	size_t offset = offset_1st_component(path->buf);
- 	size_t len = path->len;
-@@ -20,6 +24,10 @@ static void strip_last_component(struct strbuf *path)
- 	/* Find start of the last component */
- 	while (offset < len && !is_dir_sep(path->buf[len - 1]))
- 		len--;
-+
-+	if (last)
-+		strbuf_addstr(last, path->buf + len);
-+
- 	/* Skip sequences of multiple path-separators */
- 	while (offset < len && is_dir_sep(path->buf[len - 1]))
- 		len--;
-@@ -118,7 +126,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 			continue; /* '.' component */
- 		} else if (next.len == 2 && !strcmp(next.buf, "..")) {
- 			/* '..' component; strip the last path component */
--			strip_last_component(resolved);
-+			strip_last_component(resolved, NULL);
- 			continue;
- 		}
- 
-@@ -169,7 +177,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 				 * strip off the last component since it will
- 				 * be replaced with the contents of the symlink
- 				 */
--				strip_last_component(resolved);
-+				strip_last_component(resolved, NULL);
- 			}
- 
- 			/*
-@@ -202,6 +210,40 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 	return retval;
- }
- 
-+/*
-+ * Like strbuf_realpath, but trailing components which do not exist are copied
-+ * through.
-+ */
-+char *strbuf_realpath_missing(struct strbuf *resolved, const char *path)
-+{
-+	struct strbuf remaining = STRBUF_INIT;
-+	struct strbuf trailing = STRBUF_INIT;
-+	struct strbuf component = STRBUF_INIT;
-+
-+	strbuf_addstr(&remaining, path);
-+
-+	while (remaining.len) {
-+		if (strbuf_realpath(resolved, remaining.buf, 0)) {
-+			strbuf_addbuf(resolved, &trailing);
-+
-+			strbuf_release(&component);
-+			strbuf_release(&remaining);
-+			strbuf_release(&trailing);
-+
-+			return resolved->buf;
-+		}
-+		strip_last_component(&remaining, &component);
-+		strbuf_insertstr(&trailing, 0, "/");
-+		strbuf_insertstr(&trailing, 1, component.buf);
-+		strbuf_reset(&component);
-+	}
-+
-+	strbuf_release(&component);
-+	strbuf_release(&remaining);
-+	strbuf_release(&trailing);
-+	return NULL;
-+}
-+
- char *real_pathdup(const char *path, int die_on_error)
- {
- 	struct strbuf realpath = STRBUF_INIT;
-diff --git a/cache.h b/cache.h
-index c0072d43b1..e1e17e108e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1320,6 +1320,7 @@ static inline int is_absolute_path(const char *path)
- int is_directory(const char *);
- char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 		      int die_on_error);
-+char *strbuf_realpath_missing(struct strbuf *resolved, const char *path);
- char *real_pathdup(const char *path, int die_on_error);
- const char *absolute_path(const char *path);
- char *absolute_pathdup(const char *path);
+"Are we reversing that push now?"  That is not a question I can
+unilaterally answer yes/no---I do not run dictatorship where I
+cannot survive without telling all the contributors how to cross
+their t's and dot their i's.  There are things in our coding
+guidelines that tells me to do something differently from how I
+would, but I can adjust and survive if the primary benefit of having
+guidelines, i.e. making things uniform one way or the other, is net
+win.  When a guideline turns out to be a bad idea, however, I can
+propose to change it.  So can you or anybody else ;-)
+
+In that message, I just told Emily that there is a push to omit
+extern, in the sense that it was the opinion of the prevailing
+louder voices.  Back then, I didn't have an opinion strong enough to
+favor either way myself, and I was willing to go with the majority
+if many contributors wanted to drop "extern" in the hope that it
+will result in quality code.
+
+But with the Makefile patch you posted with Dscho's review this
+morning, it has become apparent to me that it wasn't a great idea
+after all.  It caused you to spend your time to write the RFC patch
+and come up with the regexp, and caused the project to spend
+reviewer bandwidth on the patch.
+
+Of course, how you spend your time is entirely up to you.  But if
+you are going to contribute your time on this project, the project
+appreciates if the time is spent on things that make the codebase
+better.  And to me, unlike to me "in the past[0]", it is reasonably
+clear that the push of omitting "extern" ended up wasting resources
+without doing much good for the project.
+
+Seeing that the pattern that were trying to be careful didn't catch
+the decls fixed by the patch you were responding to in this thread
+did not help improve my impression on the idea of omitting "extern".
+
+I think these two decls I touched in this patch were left behind
+when somebody, possibly you in b199d714 (*.[ch]: remove extern from
+function declarations using sed, 2019-04-29), tried to "clean up"
+the last time, because the pattern used in the conversion did not
+catch it.
