@@ -2,142 +2,119 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3A9EC43457
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 17:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8515FC433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 17:46:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAD4022256
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 17:27:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4782722284
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 17:46:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="XjXp8HSU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VOYFNzYO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732671AbgJIRZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 13:25:27 -0400
-Received: from mout.gmx.net ([212.227.17.21]:43125 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732515AbgJIRYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 13:24:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602264292;
-        bh=tFIQrQyuERMP+x0FLUp8B5QS3QXvlQ4JnE08MxeHpsU=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=XjXp8HSUeHUXNI32TMk2i/84bVB73oACWp/hTvqQOueiurydih1NNbrTMC37oAtUx
-         0tbmBwTCqPv74kaYk3zoToEtG+xO46J11IK58SL3UDVg6RrqpLVM6dIQIXTggcz0A9
-         230XahUt3CrleilfNK6ELiM1ZzRkQVrsSwJiC2e0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az773.0kh3nbpurmsexhfal0r3fkdi4d.bx.internal.cloudapp.net
- ([52.150.12.252]) by mail.gmx.com (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MRTNF-1koMHB1xpN-00NQ1l; Fri, 09 Oct 2020 19:24:52 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.29.0-rc1
-Date:   Fri,  9 Oct 2020 17:24:50 +0000
-Message-Id: <20201009172450.6345-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.28.0
-Content-Type: text/plain; charset=UTF-8
+        id S2387940AbgJIRqL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 13:46:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55840 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387928AbgJIRqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 13:46:10 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A29C0613D2
+        for <git@vger.kernel.org>; Fri,  9 Oct 2020 10:46:10 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id l4so9734544ota.7
+        for <git@vger.kernel.org>; Fri, 09 Oct 2020 10:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CMWIYgcZuHSgHr2+aU5jLfetKa5uAtMKdjOeI1tNk5E=;
+        b=VOYFNzYOn08/oeP+X/kMh+s1w/6cRMcOoZ5pzGMM2q5/s1zjnQ/+q5+aqxFWZH8207
+         wOAdddiI3CER84Perih+0FOa2AJGuFZvTOV9W/puMp58ltgxN+gds8aGtxnI9aoPlL2Z
+         nfVkWeKQwJd36IZoQfdyPKO9mb3UzK2S5OKYYA3CtJAsXFQ1c//tcJzBO3sa40XFtuQy
+         E1vzLOQV+iEFBvtYby4TBcO8m74KvyPq87pizzFFY3vOzlxipFFb68Xlbi3IyfXyYVmb
+         3fc6RkoRFj+y6YeuWNqfEiPASE1TLkFNSjW32+r98Wd5c7182rWGQqZIUBtZJaWxHcMZ
+         e8Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CMWIYgcZuHSgHr2+aU5jLfetKa5uAtMKdjOeI1tNk5E=;
+        b=lF19k7zvK6m99FauM1L72ajPB4Rnu/9WSVQUnLmyVqcboDUIEIjo/9giZWNZxSS9lr
+         gdFHLynwdUe/6nuoNF9Eyj/v3snhtJc9nj7i6u/xJToxWFtgbI8NJLwyD0M1peyvorDj
+         LuZwTe4efwfcdSiiNpnbilcE+WsgKvJvBjVQJ7nJteMqaoZ+H6h4NxEffgK0PjRTPP6w
+         vejIi5l2lMP2MemUVxUSdF61tmrS1YvU46alRbE02DCG1PcET1ogrWDh2Q5E5B2UlCNV
+         KegmCyjkz/iH8v/VqAtXVdCmMNiY06gGhe9gd17iufvgWq2I5Es/UI7JSInTeZXViIIT
+         Pdsw==
+X-Gm-Message-State: AOAM53086dN4iYfczb2ReSXEr82uprPk6fhgHDQZvhcDeCf5YDYix1uM
+        xFRAxb0210+kHOEGcuPv64HcRtcnYj6u+Q==
+X-Google-Smtp-Source: ABdhPJzCgaFaOOqIyiBKhvsw+oGOA6qGbzdHvl5y3D1By2sUErmubdfNcmvXwpWilcgiCXsEo5QUiQ==
+X-Received: by 2002:a05:6830:3154:: with SMTP id c20mr8252453ots.367.1602265569318;
+        Fri, 09 Oct 2020 10:46:09 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:7515:c4a7:ed16:ef48? ([2600:1700:e72:80a0:7515:c4a7:ed16:ef48])
+        by smtp.gmail.com with UTF8SMTPSA id t5sm5438911ool.8.2020.10.09.10.46.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2020 10:46:08 -0700 (PDT)
+Subject: Re: 2.29.0.rc0.windows.1: Duplicate commit id error message when
+ fetching
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <55f8f00c-a61c-67d4-889e-a9501c596c39@virtuell-zuhause.de>
+ <20201007210609.GA1984296@coredump.intra.peff.net>
+ <329d91ed-097f-38ac-f1b1-73b4d57ce8ad@virtuell-zuhause.de>
+ <20201008120658.GA2689590@coredump.intra.peff.net>
+ <52782500-274e-2c72-39e2-be4252959d47@gmail.com>
+ <5bbdaed5-df29-8bfe-01c2-eb2462dcca22@gmail.com>
+ <267a9f46-cce9-0bd3-f28d-55e71cc8a399@virtuell-zuhause.de>
+ <0d25e0ab-31ab-54c2-b518-bd9c0b0c4b7a@gmail.com>
+ <2f30099a-4a3d-00f7-bb08-ca6c1f76bcd4@virtuell-zuhause.de>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <64de22fd-2e1b-aaab-3a8e-f6f1d630a46e@gmail.com>
+Date:   Fri, 9 Oct 2020 13:46:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101
+ Thunderbird/82.0
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:ikYVYJ0Y0VTQ66JorwPAVuKlpOqXIOSeOtvBHpO9fsxJZlLJDaE
- 0xtU3RWnsne48DjBo2saK7hlM783oPZJDp0v58/GaQOdxJvFHmnHgWRg7rc3RayUZ/Zh0y+
- BPTLxAYs16fjVZopx6E0+zmtlvwQzR/ZgKiRkyURW56ylGQnWtvoghCSQiwmAgHNSs9jbdD
- QYNeC5mH69tql9GYdUMOQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Yg3QhoEGK10=:bm9Pbm8CUf0W78GeO0aIp2
- QieA1NVPZ92yD6yZa/jINgAV09D3qm7euMIEG4+7JawYtBAMB0tRw6aVvylqCjQEZwBYs3SiL
- tN0vjG6NSJxmm+HG641FDR6RiDRhlXHlFyFpv+JZn/72Npy1OTIQKDYnfpwafwFLROAM8zJzk
- GHhpgc2p9qE9X+Tkg6KoeyFITvyRYPMuAXUlHycrlrDtiZZgUZTgdDxo+E/Kq0WR8SM05U380
- DB+5/WoAZ3Eo1FLbb5aS9f5+PwP4YP9qQSUhM3QKdodgvDknq9WBnmJDN37aYhJc/3eWXIwGk
- fli0oeUx7QT0TGfKaeH7+5017RJwDY/rmZYq+5ImNdkcx6Tj3Bmt1xVJsX4ktVZxYrIRg/nWv
- yI8TMv/nB9ZQDImR728eFVjHKhKs8arcpDAcgxaR446Zg+XWeOFM7XyHNQUsrgc5PptjEbaHW
- EJCr78nSK3xnlaqRUpMMwqgAakwcdM6tA+1uZUFoD2ZxmQgeH1JjOz3pHgX3gzzMpNV18JrZu
- 12ADYTPaHKg7psqcb1YnGuE8UfG8/ZNLrOmMlYPhw3hTJ2e8IJ4kG7Y9re0wBv/ihuI6MAy5J
- U65Abn5J+5Eht1n52yBP2IvBadd9sas9sXdPSAMEGqq+LmMdDPqDrIysnDH9DRehojPK2lJ6J
- YINy9YB6xWmux2NwCYLgLUAwLk/rhfGsQ06Pv+oc4L+DOPcOHkvy/de36eCv04LVp3a/6Juzf
- Vh3+CdiaQbKdDPAwGJbZM3XcvjfT0cEgRYZf963O2WCuOlpEXOXTjtb+1+lvfjuyN2UP7VoHd
- FENP0V7tXP07+CeNUFuVPjHQHM6CzcPWIvVqLu7F/tjrz7urzcxxkNFOadVeYQ9gOtumh2rue
- WB+zLdh/cpVh/JaZqEcGqVaOYnYnIDEaPg1ysOQiYef09V7+C8nD3KDIFOuav0JKi1ZaLMlOH
- JEXuNG6YmJw/4vzHgmtNcZd7Kv/btiApzwzaHzn7Nsl0C5jaJnOO8FABzJ27CS7SEtc0gnCo4
- Fhs4Op0PLHRx7L+uERzgHtwbm5MZvMZZ4S+H/tTAArxFIbs4E6jq3BAtmhzdmKE/gDc8C5WIW
- 2f3TxfKd3qUnOTBoRE7dSn6bK9gaDQMw/PkQkqqR7zjSnp+t7tY8JYNgKZePdFdIDlnULBxxC
- SkLWRNga7KEhVWux3EWFGncdiBADqKut5PtvGYdeYNGNyOxZ9bTPWk7ofSHTMSJsaEA4FYQfR
- gBpcUnJMXUf6Knzu2/h1wJYh3C+wEvTv1v64+nA==
+In-Reply-To: <2f30099a-4a3d-00f7-bb08-ca6c1f76bcd4@virtuell-zuhause.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On 10/9/2020 1:12 PM, Thomas Braun wrote:
+> Sure! Please find them attached. I retried with no jobs parameter as
+> well, same issues.
+> 
+> I did some more bisecting of my git settings. And now it's getting
+> embarrassing...
+> 
+> Can you reproduce it if you do
+> 
+> git config core.commitGraph false
+> git config fetch.writeCommitGraph true
+> ?
 
-I hereby announce that Git for Windows 2.29.0-rc1 is available from:
+I _can_ repro it in this case! I think there must be something
+very interesting going on where the commit-graph is parsed in
+_some_ places, but not in others. This is something that I can
+really start to dig into.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.29.0-rc1.windows.1
+It's important to note that the final "git fetch" adds a layer
+to the commit-graph chain even though we shouldn't be reading
+from the commit-graph file! This is an unusual situation that
+is unexpected, but should be handled correctly.
 
-Changes since Git for Windows v2.28.0 (July 28th 2020)
+My gut reaction is to end early in any commit-graph write
+method when core.commitGraph is false. But that only papers
+over the real issue here. I'll keep digging.
 
-This version upgrades existing users of Git Credential Manager for
-Windows (which was just deprecated) to Git Credential Manager Core
-("GCM Core", which is the designated successor of the former). This is
-necessary because GitHub deprecated password-based authentication and
-intends to remove support for it soon, and GCM Core is prepared for
-this change.
+Thanks for the logs, they may come in handy!
+-Stolee
 
-Also, the option to override the branch name used by git init for the
-initial branch is now featured prominently in the installer.
-
-New Features
-
-  * Comes with Git v2.29.0-rc1.
-  * Comes with cURL v7.72.0.
-  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-    3.1.7.
-  * Comes with Git LFS v2.12.0.
-  * Comes with GNU Privacy Guard v2.2.23.
-  * Comes with OpenSSL v1.1.1h.
-  * Comes with libcbor v0.8.0.
-  * Comes with libfido2 v1.5.0.
-  * Comes with OpenSSH v8.4p1.
-  * Comes with Git Credential Manager Core v2.0.252.766.
-  * Existing Git Credential Manager for Windows users are now
-    automatically upgraded to Git Credential Manager Core.
-  * Git for Windows' installer learned to let users override the
-    default branch used by git init.
-  * The installer size was reduced by dropping a couple unneeded .dll
-    files.
-
-Bug Fixes
-
-  * The credential helper selector (used as default credential helper
-    in the Portable Git) now persists the users choice correctly again.
-  * The full command-lines of MSYS2 processes (such as cp.exe) spawned
-    from Git's Bash can now be seen in sysmon, wmic etc by default.
-  * A bug preventing Unicode characters from being used in the window
-    title of Git Bash was fixed.
-  * OpenSSH was patched to no longer warn about an "invalid format"
-    when private and public keys are stored separately.
-  * Non-ASCII output of paged Git commands is now rendered correctly in
-    Windows Terminal.
-  * It is now possible to use wordpad.exe as Git's editor of choice.
-  * When using Git via the "Run As..." function, it now uses the
-    correct home directory.
-  * The Git Bash prompt now works even after calling set -u.
-  * Git for Windows can now be installed even with stale AutoRun
-    registry entries (e.g. left-overs from a Miniconda installation).
-
-Git-2.29.0-rc1-64-bit.exe | fbf5f1417554aad85581717aa706ae3576af133f201259624ead248f12fc76ff
-Git-2.29.0-rc1-32-bit.exe | 36a1d5258876acdeb4c6eca4a80fdf707ddebbef253f8979d8c7252935bc77f5
-PortableGit-2.29.0-rc1-64-bit.7z.exe | 9df5265d082e07b39b86d65530fc545987ac1ea7cb24794ab04444c5129aa597
-PortableGit-2.29.0-rc1-32-bit.7z.exe | 08fbb7c1df62da5237bf72af6201b51fd03f8311af9ff8029964e2f21bc1d7fb
-MinGit-2.29.0-rc1-64-bit.zip | f5746f9c4f5a9658439c7017b8c38ff272c52f6c6738ac094fc60e1910f19af4
-MinGit-2.29.0-rc1-32-bit.zip | 02e44aec2181dfefdec464b51c245092a19e5b44b8d5a1fcfb0fd476d255965b
-MinGit-2.29.0-rc1-busybox-64-bit.zip | 936b908c3e96247af686e231171919047ebc619b01d2225225ca2c5a85316780
-MinGit-2.29.0-rc1-busybox-32-bit.zip | f39162ab626c4114d25c64c5b4d43977de7cbe76501c79ebc8b8acea36a7e837
-Git-2.29.0-rc1-64-bit.tar.bz2 | 873c42a8424f6c148f772dc1949b839822bdb16e2f615edc12b3211fc4a24ac6
-Git-2.29.0-rc1-32-bit.tar.bz2 | cd5608154fcdf0198e2d8c8b1e83e76d9e878f75424e58bf9b130e772f93cdd7
-
-Ciao,
-Johannes
