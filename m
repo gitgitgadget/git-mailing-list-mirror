@@ -2,103 +2,116 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5963C433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 01:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1808C43457
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 02:45:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 741F222248
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 01:55:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E30922203
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 02:45:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/LQ+Aat"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UjEVLrXx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730765AbgJIBzJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Oct 2020 21:55:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49722 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730755AbgJIBzI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Oct 2020 21:55:08 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5157C0613D2
-        for <git@vger.kernel.org>; Thu,  8 Oct 2020 18:55:08 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id b26so5523328pff.3
-        for <git@vger.kernel.org>; Thu, 08 Oct 2020 18:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Uwi0gQ5TU3luA2jQU9LlSYaGiK0PMCSGsGvGJ7lTkfA=;
-        b=c/LQ+AatB/004lHiugTj8hQ366R6jeUMloAMTy40OX0gLmshlJHA4/3qTAG1SF853f
-         II2pSTND4JS/G7Wi2X09eRyV9aLyMABM+listj2FCBWvVajFsfTT3XHNH/GctqfGPBXA
-         hZovJrT5FXslxVdjW1bWdEvwZx6lkpHyWXHdgHjHPVaiHbEjwzNSwhjQ1rFDXTWNouh0
-         JHIaDsxXHizs2ZoRQGI+xAo6naaUNZkiABvT7X0gJbHVqv35Hpo5u31Xdab7RMM4ZzO6
-         u3E1S5rikXTMFv+VVf21Fl76qMfx0f8ric4i7gvw1Dj7pqvsWucm9gCKMXZDfq5MKAal
-         /kVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Uwi0gQ5TU3luA2jQU9LlSYaGiK0PMCSGsGvGJ7lTkfA=;
-        b=F2U1sHXDFSz1FrNXomr3MMYv+xkuX4cQE+9yGu3/YcUQWPAjGK+OiD5dgRQFfr0/xA
-         j4x6MtrwJie4Vk5FWROHVDPiDN0L6g+XJ0JsDlVTUPA4IQ5bR6NBpI8l5yYestMGextK
-         ePYWX+OxqqtvcUOcmaSZInj3b/VBnJ6Zr3+774z5XylDUaGowdv5WjbyUxPm1fQD8AHS
-         Pe2g3DR6QIJY3C1QrdHV/V87tUJDnbTVuoWAzBAPmG1sDBj0jpyIEQgUwOV0z+NdhJAb
-         PeqdzyGcg7rnifRSR6gyptzNhTH0u88RMKlGwPNESDqarCLfHXJtElsRTpkzvUtWmGiE
-         swbQ==
-X-Gm-Message-State: AOAM533/FHTGHbD9BOrwzGzZV3NDvIntaS5NouiRhtyGlvRMLxRjPu+X
-        UkLPzZuPSJ2HpGykp9okkOA=
-X-Google-Smtp-Source: ABdhPJwrXwtF9/8lxXMHD7pEdgrJaz037jyUt/NXdTzty+fPbQmKXhQR9S3D46vbRk7nxiYCW46/DQ==
-X-Received: by 2002:a17:90a:ad98:: with SMTP id s24mr1868462pjq.199.1602208507947;
-        Thu, 08 Oct 2020 18:55:07 -0700 (PDT)
-Received: from generichostname (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
-        by smtp.gmail.com with ESMTPSA id b185sm8841911pgc.68.2020.10.08.18.55.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2020 18:55:07 -0700 (PDT)
-Date:   Thu, 8 Oct 2020 18:55:05 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clean up extern decl of functions
-Message-ID: <20201009015505.GB1314@generichostname>
-References: <xmqq8scgzqis.fsf@gitster.c.googlers.com>
+        id S1730053AbgJICpQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Oct 2020 22:45:16 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56123 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725908AbgJICpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Oct 2020 22:45:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85987FA668;
+        Thu,  8 Oct 2020 22:45:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=FWmJWZOB4KpzTEZzx60nXV4MIvg=; b=UjEVLrXxqGG6/vJRDayu
+        nyFnimIxiJvJnaqpHzRJS2do0tvBXuz94+DecA0tU/79xeTsRcCynUgqxahx+1Om
+        e2/dp6t3o7bYix7yp0ZUKdCxAM5fwP3CWT02AZOFEDu7IEXw4IJFFwkEJwhZogVh
+        EGuGj2VoayzcIkAuvc7QJDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=whf2XwZVs06ojfq75qw4FHerTgj59QiYlwLWQ/F0g3+Y4K
+        6JvFiWJENF6e/jwCCkueu9SaO93q+iX7m2RlbJMVjDY/+Jyf5+2WYTO/4tvBgeY7
+        Y7likEWEepqVVClclK+6yVtUsiCvUTW/7/UXpCC3DbZuyBSJlKFFZAspbZAGE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E166FA667;
+        Thu,  8 Oct 2020 22:45:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C4A9EFA665;
+        Thu,  8 Oct 2020 22:45:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] Makefile: create externcheck target
+References: <9e5a8625cab217bd6aaba68da081bc801354b903.1602059508.git.liu.denton@gmail.com>
+        <1c2ee1c40ccde18a008262aeaf23a17da2064eae.1602142232.git.liu.denton@gmail.com>
+Date:   Thu, 08 Oct 2020 19:45:09 -0700
+Message-ID: <xmqqy2kgungq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8scgzqis.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73AD2DE6-09D9-11EB-B2B7-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Denton Liu <liu.denton@gmail.com> writes:
 
-On Thu, Oct 08, 2020 at 08:27:55AM -0700, Junio C Hamano wrote:
-> Among external function declarations, somehow only these two
-> functions that return pointer-to-function were declared with
-> "extern" in front.
-> 
-> Ideally, we should standardise to _have_ explicit "extern" in front
-> for all function (and data) decls, but let's make things uniform
-> first.  Bulk re-addition of extern can be done without any extra
-> difficulty with or without this change.
+> +externcheck: $(filter-out $(THIRD_PARTY_SOURCES),$(filter %.c %.h,$(shell $(FIND_SOURCE_FILES))))
+> +	sed -i 's/^\(\s*\)extern \([^(]*([^*]\)/\1\2/' $^
 
-Why are we re-introducing an explicit "extern"? Since function decls are
-extern by default, what do we gain by doing this?
+I am not enthused by this particular patch for a few reasons, and I
+am moderately negative on the whole idea.
 
-You mentioned in the past[0]
+ - We don't aim to support "only GNU and some BSD"; let's not do
+   "-i" which as far as I know is used only in config.mak.uname for
+   vcxproj target (which is OK as we know that is run only on a very
+   narrow target, but probably is a bad idea as it would be another
+   source of copy-and-paste for those who do not even think why it
+   is acceptable there but not in all other places).
 
-	I think there is a push to drop the "extern " from decls of
-	functions in *.h header files.
+ - Same for \s.  If it is easy enough to write [        ]*, why
+   risk breaking for somebody you don't even know?
 
-so are we reversing that push now?
+ - The initial [^*] may be an attempt to avoid triggering on a
+   global pointer-to-function, but doesn't it also make the pattern
+   fail to trigger on a global function whose return type is a
+   pointer-to-function?
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+ - If this is a "check" target, we shouldn't apply a wholesale
+   transformation that is potentially buggy to user's files.  Using
+   "grep" to just point out the places where your opinion differ
+   from user's (and to fail the "make foocheck" operation) would be
+   more appropriate.
 
-The code part looks good to me. Good catch.
+Quite honestly, I suspect that the "push" that b199d714 (*.[ch]:
+remove extern from function declarations using sed, 2019-04-29)
+talks about was misguided in the first place.
 
-Thanks,
-Denton
+Sure, we can write these external function declarations without
+'extern' in front, because the language allows it and without
+'static' in front, it by default is 'extern'.  It however does
+not automatically mean we _should_ drop 'extern'.
 
-[0]: https://public-inbox.org/git/xmqqef67zz7u.fsf@gitster-ct.c.googlers.com/
+Sure, for function decls, it may not make a difference to have or
+not have "extern" in front, but for decls of data (including
+pointers to functions), it makes a whole lot of difference.  Not
+standardising to the rule "our external declarations always are
+marked with leading 'extern', regardless of the type of the
+identifier being declared" forces us to spend our brain cycles to
+think if we should or should not write 'extern' in front.  And is
+that a good thing to spend our brain cycles on, or just waste of our
+effort?  I am moderately in favor of saying that it is a waste.
+
+In addition, seeing these 'extern ' in header files will train our
+eyes to spot the same in the source files more easily.  External
+decls in the source (as opposed to inclusion of a header that does
+the decls) can happen but they ought to be exceptions and it is good
+to make them stand out.
