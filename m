@@ -2,71 +2,71 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49A21C43457
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 840DFC433DF
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:38:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDB7F22284
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:34:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E3B7222BA
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:38:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hjbaVmWp"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Bx24jKMX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390664AbgJISe6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 14:34:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34898 "EHLO
+        id S1731806AbgJISiR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 14:38:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390445AbgJISdE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 14:33:04 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FF06C0613D2
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 11:33:04 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id t77so11181645oie.4
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 11:33:04 -0700 (PDT)
+        with ESMTP id S1730740AbgJIShz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 14:37:55 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C2CC0613D2
+        for <git@vger.kernel.org>; Fri,  9 Oct 2020 11:37:53 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id x20so4589050qkn.1
+        for <git@vger.kernel.org>; Fri, 09 Oct 2020 11:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nYs0BB9o0o04Pe0mGWxDEjvm/zYblzfW/tpeSKyulOc=;
-        b=hjbaVmWpNqfbVNYx2Z4a8dv/lQjWwzz+aM9synyVu9wRE+lGX5OJrJLyPuOERJySKB
-         C1FFs5MTvOfhjoaeeu7xgxNdT2xsu5aQqIySIcpWeT/+InzHbo2FSzZyBiQ6/qL4M5gX
-         MX0vp+57gys/DhW+AJqe017eXNib4MfHXS8JFks4TiN4a+6cld7Z7PBhVBIn5FraCs5d
-         PTJMbpLOJ3/sPp3gPUqKLkaLD+XF9/MMI3YvfrWrrOSDo7UzS9Gl+DM/Gfm6UdBs6UqG
-         rXqvK7zDKHgu4epKJj0sv/qoJaRSNf6zAdtxHOwIgGKDOiH/vC7HWBMD8Qgnpid1G8E1
-         /rOg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=imskBWmgMbIMeK/q9KqDnZdjDF1a4HNKpeAAP2G9OqQ=;
+        b=Bx24jKMXSozTVvfsaSlRu/9hJrzWtwzWAclARlGOeC+weIvPSUNuBVSGKlit10K0bb
+         lCRRNYmhLy+AlHCo3PI6XjULC8Q6A7ngNXWNacpf7nR/m5YVb4WklgCpT0aSaGE477gi
+         hNTjhl9NjaScnOtuUGUupsaaftUUnNhXoK9N3YV3yISVCiYHpB8UWce+1DRm7vc7yEp3
+         mOTvSA5FRPDKXOOFvJxkpe+rgrc+3UwEDECs2urSYPQ9Jdsxf5toA5OAgGgcq7IOBuWo
+         IvpcS99Y/1gLkFWrLDdjyS0N0OK+ek2VC3TCSErqupZSWua4QTzAaCrBZy3AhODsxBwe
+         QqGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=nYs0BB9o0o04Pe0mGWxDEjvm/zYblzfW/tpeSKyulOc=;
-        b=SjKJXVR/5ZTIfFN1mxNAhIZ1rvspiJSrePrkU22DANGxn32zWqAIWKyEh2G3Mpv8uP
-         jyfYcE/SreCOdY9klBUaPqGhjG6bKjpUv8yEA/s4auaggTiaRpSrNGQJ1jsFjPGOVnEP
-         SN0h6yDwjGh0XzCfFcD+Lpc98Lp2DTmgbyCmDW5/g9mWo8TxBSjqWTTBEDReZC3NuSAa
-         GAwKL0wMf7l8b8UMaqwbpUnsB7Xny+/osZA+X0dqiKveIvODJJ1koNuKhBkSZ9QG2o3v
-         9lMfoL+PFCscjShBQ4pJUoyUvMM8Eyb/5ldNZJtIIjbNLYkmc1/nghxhy6yB9QClCGLp
-         QGpQ==
-X-Gm-Message-State: AOAM53044AvhiWr1fql688enLXRddBraVfAleRFoRIgQdSS5t+usURjQ
-        dInWl3FP04wjk1bAc573U8U=
-X-Google-Smtp-Source: ABdhPJw4f49CN65NhQNtUcoZtWsPOAE7uDLfKtHbz5HLmKqvwARNRAWdsaArSKMR9ISQVH60mXgvvA==
-X-Received: by 2002:aca:5945:: with SMTP id n66mr3427935oib.11.1602268383334;
-        Fri, 09 Oct 2020 11:33:03 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:7515:c4a7:ed16:ef48? ([2600:1700:e72:80a0:7515:c4a7:ed16:ef48])
-        by smtp.gmail.com with UTF8SMTPSA id t29sm6693206otd.51.2020.10.09.11.33.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 11:33:02 -0700 (PDT)
-Subject: Re: 2.29.0.rc0.windows.1: Duplicate commit id error message when
- fetching
-To:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=imskBWmgMbIMeK/q9KqDnZdjDF1a4HNKpeAAP2G9OqQ=;
+        b=eSjFQnuA4goe9i9s9d4+EDPigQDBQ1NGDnuiMxDS2AZDlYCg0RmRYmhMzB+lTkeXdW
+         ZkTYi9VvBun6M0BsgEStMeFIDyClMJHAoTRdX5ETWcNqaBasYT5BmwbfoiyiC+CtzVB0
+         H5Gq2+D4OPXqXO5tQHRueN+ZGdhZ0fQQ1iSj39YySMh4Q4IvF5nvy0MZyzxADdaygpEw
+         4D0N9wyR2nC7hZPSDnNxjxvqKTIZe9pho190Df6XXJ235wRzn2oW5gic3V4WWAbiu3e/
+         8+Q7+yV7TW2TtIcJFHlvNueHpoASbeqn8NwmdUt43Mpk35HqKXxpP4ejyRLvMyP78gqK
+         Cqiw==
+X-Gm-Message-State: AOAM532ZtYho/GtPZrgLYKQNQw+UOmG/oj0tkDnl3llk9KiVCLJG0NgF
+        En5fid09BAnURquIF0zjbGEolA==
+X-Google-Smtp-Source: ABdhPJz8UypVjPPAEqpbjDL+X++FH9+XQEzMt4S+QkRe0td70MmkhOPXTpK7CUSKyO+PxbjgFYaC3A==
+X-Received: by 2002:a37:a68b:: with SMTP id p133mr13933909qke.272.1602268673038;
+        Fri, 09 Oct 2020 11:37:53 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:b0d1:9fbe:54fa:3044])
+        by smtp.gmail.com with ESMTPSA id p5sm5113222qtu.13.2020.10.09.11.37.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Oct 2020 11:37:52 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 14:37:50 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
         GIT Mailing-list <git@vger.kernel.org>,
         Derrick Stolee <dstolee@microsoft.com>
-References: <20201007210609.GA1984296@coredump.intra.peff.net>
- <329d91ed-097f-38ac-f1b1-73b4d57ce8ad@virtuell-zuhause.de>
- <20201008120658.GA2689590@coredump.intra.peff.net>
+Subject: Re: 2.29.0.rc0.windows.1: Duplicate commit id error message when
+ fetching
+Message-ID: <20201009183750.GA437683@nand.local>
+References: <20201008120658.GA2689590@coredump.intra.peff.net>
  <52782500-274e-2c72-39e2-be4252959d47@gmail.com>
  <5bbdaed5-df29-8bfe-01c2-eb2462dcca22@gmail.com>
  <267a9f46-cce9-0bd3-f28d-55e71cc8a399@virtuell-zuhause.de>
@@ -75,82 +75,63 @@ References: <20201007210609.GA1984296@coredump.intra.peff.net>
  <64de22fd-2e1b-aaab-3a8e-f6f1d630a46e@gmail.com>
  <20201009175506.GA957408@coredump.intra.peff.net>
  <20201009182833.GA437455@nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4c138121-ef58-c870-60b2-8140e6e0cbee@gmail.com>
-Date:   Fri, 9 Oct 2020 14:33:02 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101
- Thunderbird/82.0
+ <4c138121-ef58-c870-60b2-8140e6e0cbee@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20201009182833.GA437455@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4c138121-ef58-c870-60b2-8140e6e0cbee@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/9/2020 2:28 PM, Taylor Blau wrote:
-> On Fri, Oct 09, 2020 at 01:55:06PM -0400, Jeff King wrote:
->> On Fri, Oct 09, 2020 at 01:46:07PM -0400, Derrick Stolee wrote:
->>
->>>> Can you reproduce it if you do
->>>>
->>>> git config core.commitGraph false
->>>> git config fetch.writeCommitGraph true
->>>> ?
->>>
->>> I _can_ repro it in this case! I think there must be something
->>> very interesting going on where the commit-graph is parsed in
->>> _some_ places, but not in others. This is something that I can
->>> really start to dig into.
->>
->> Here's a much more minimal reproduction:
->>
->>   git init repo
->>   cd repo
->>
->>   git commit --allow-empty -m one
->>   git rev-parse HEAD |
->>   git -c core.commitGraph=false \
->>       commit-graph write --split=no-merge --stdin-commits
->>   git rev-parse HEAD |
->>   git -c core.commitGraph=false \
->>       commit-graph write --split=no-merge --stdin-commits
->>
->>   git commit --allow-empty -m two
->>   git rev-parse HEAD |
->>   git commit-graph write --split --stdin-commits
->>
->> The final write will die() with the "unexpected duplicate" message.
-> 
-> Makes sense; the second commit-graph write won't know that 'one' is
-> already in the graph because 'core.commitGraph' prevents
-> 'prepare_commit_graph()' from actually loading the graph (actually
-> loading the graph would be enough to stop the second write from
-> occurring at all.)
+On Fri, Oct 09, 2020 at 02:33:02PM -0400, Derrick Stolee wrote:
+> > Makes sense; the second commit-graph write won't know that 'one' is
+> > already in the graph because 'core.commitGraph' prevents
+> > 'prepare_commit_graph()' from actually loading the graph (actually
+> > loading the graph would be enough to stop the second write from
+> > occurring at all.)
+>
+> Right. We aren't parsing from the commit-graph, so we don't see
+> that these commits are already in the file.
 
-Right. We aren't parsing from the commit-graph, so we don't see
-that these commits are already in the file.
+OK, I feel even better knowing that you and I both agree on the cause of
+this buglet ;-).
 
-> I'm of two minds about what we could be doing here:
-> 
->   - On the one hand we could be ignoring `core.commitGraph` setting
->     during commit-graph writes and forcibly loading the commit-graph
->     anyway.
-> 
->   - But on the other hand, writing a commit graph with `core.commitGraph` set
->     to false makes no sense. So, I'd almost rather have us die()
->     immediately if core.commitGraph is set to false.
+This also makes me think that this has probably existed since the
+beginning of commit-graphs, and that it only became easier to tickle in
+recent releases with things like '--split=no-merge'.
 
-I agree that we should just give up, but die() would not be correct.
-We should just "return 0", possibly with a warning.
+> >   - But on the other hand, writing a commit graph with `core.commitGraph` set
+> >     to false makes no sense. So, I'd almost rather have us die()
+> >     immediately if core.commitGraph is set to false.
+>
+> I agree that we should just give up, but die() would not be correct.
+> We should just "return 0", possibly with a warning.
 
-> I think I'd advocate for the latter, along with Stolee's patch to not
-> die in the case of duplicate commits in multiple layers of the graph.
+Yeah; that sounds much better.
 
-If we agree that writing a commit-graph makes no sense if the feature
-is disabled, then I can include a patch that has a test similar to
-Peff's and that change.
+> > I think I'd advocate for the latter, along with Stolee's patch to not
+> > die in the case of duplicate commits in multiple layers of the graph.
+>
+> If we agree that writing a commit-graph makes no sense if the feature
+> is disabled, then I can include a patch that has a test similar to
+> Peff's and that change.
+
+Sounds good. I'm certainly on board, but I want to hear what others
+think, too.
+
+I thought that we had a configuration variable to control whether or not
+we write changed-path Bloom filters, so I was going to ask about what we
+should do if that was set to false, and the caller passed
+'--changed-paths'. But, I guess that my memory was wrong, since I
+couldn't find such a variable to begin with (we _do_ have
+'commitGraph.readChangedPaths', but since that only controls reading no
+additional special care has to be taken).
+
+Thanks for working on this.
+
+> Thanks,
+> -Stolee
 
 Thanks,
--Stolee
+Taylor
