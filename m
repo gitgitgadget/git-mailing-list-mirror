@@ -2,151 +2,202 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3E9CC433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 13:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CEFC433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 13:30:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60E65223AB
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 13:08:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58707222BA
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 13:30:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="RI3DarDr"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hjJ9cPG3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388153AbgJINI4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 09:08:56 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40317 "EHLO mout.gmx.net"
+        id S1733297AbgJINas (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 09:30:48 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57765 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732547AbgJINI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 09:08:56 -0400
+        id S1732173AbgJINas (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 09:30:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602248933;
-        bh=8Xchu9aXFG3qz58nn0gJc8jAfG+xVwEhvRDCHdThsiM=;
+        s=badeba3b8450; t=1602250245;
+        bh=z0zErdnVwctlGzXSILNeNAf4e9Uz0oxNd7CPJ7o4rRc=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RI3DarDrDONy5HDjxkTN9JyeXhZN/0FAaGyPoTQTSPxy7vgA9kYY60jxeim4mKtQd
-         Lw0AXSYNm3eQJtYRqkV85IBQkVTTkbvXEvc0LHHODfHniwNjJGGgY1kRSQwxPdrOXb
-         SKPpf4WDTxsKYyOJzbQH2C4xwCzAUgQS6y1C2CKY=
+        b=hjJ9cPG3jUPFbs/LlvvxIUc52R9qJTH9dWAsxJ7BW9nfe8+P1v3cQE2SL6LLvc/tf
+         M7NxrxeceBlgffFpO74fedqIvEWxeD20mCLsyQ4aitbCWQQG856SO6vdyyCpYPkTVD
+         ihWdlpozeqmwVIcfcK5811sWdLHIs+ybFLMCmRzI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.213.205]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MaJ81-1kwxqS32ZB-00WExl; Fri, 09
- Oct 2020 15:08:53 +0200
-Date:   Fri, 9 Oct 2020 12:51:11 +0200 (CEST)
+Received: from [172.20.73.169] ([89.1.213.205]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRCK6-1knv971beO-00NAbz; Fri, 09
+ Oct 2020 15:30:45 +0200
+Date:   Fri, 9 Oct 2020 13:13:03 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Makefile: ASCII-sort += lists
-In-Reply-To: <20201009014528.GA1314@generichostname>
-Message-ID: <nycvar.QRO.7.76.6.2010091250200.50@tvgsbejvaqbjf.bet>
-References: <f0f1ef1f677133eabd1bce00c6cdbbcc6477f00b.1602142738.git.liu.denton@gmail.com> <nycvar.QRO.7.76.6.2010081156350.50@tvgsbejvaqbjf.bet> <20201009014528.GA1314@generichostname>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] ci: skip GitHub workflow runs for already-tested
+ commits/trees
+In-Reply-To: <20201009072922.GC24813@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.2010091254180.50@tvgsbejvaqbjf.bet>
+References: <pull.619.git.1587748660308.gitgitgadget@gmail.com> <pull.619.v2.git.1602170976.gitgitgadget@gmail.com> <914868d558b1aa8ebec6e9196c5ae83a2bd566bf.1602170976.git.gitgitgadget@gmail.com> <20201009072922.GC24813@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5CT6QmH0d3ZfZzpCLaCIo9RxJarv73cEWZsrf49SiHosdAqMXo1
- IXt3U4ZBAhH6Vm38Ma2CxFi2aOSzdAZzl28CEORda+GfXFFWXbWQa5mn5RT5uN6kPrU2SZU
- QMkmYS+NWo9PlPavi9TA0xLS8XibW7XOjkmj+8LhQNQG6kby+BS2d31ykKJzvUVaoxZ+Of0
- 66DHBZj+vv5/TwEErJbHw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MSUSn4jenTQ=:z/XpYolSA8n1RxsIB2fdd7
- jxWpOLArX5VrOj+eop5gXvl/zF20zPlusx2ol2ckstwf+Djebj7tq+5pmsdZF+CoSh9mxYyju
- zRTE8V3H107HVfFzJ/l28iCf2x27WLwq6MpnqE5Oje9n0NfVi6yT5SSskTnlVEDVIG1jt6X3E
- F9GrWt6ZxZigxcJgtFABqBRWr1U9H/BkKRFG6QHTcM+e4J+/oRcig6736RvXgCJG2XtQBAKwQ
- ac2glPhEE+TcrPfj8FiyLRNF6hyYYAfwxAIETUFoqKvoQSWJGR6VlQAw1IJmEJD7Bnpt1DXsp
- osKxRtJ1WlUIEL/pWQOeXZ52uKW1ekMoUkrWM0WkKOkCdDku0eZUT0lPy250eTBtGdfdvL5DI
- WQIJgVoFWvuxfW1g9I0OiZDSOTj0yBzrwL60E2vvXgLycZCWJNjuNDXE/jqzh/+crPDhtXjUY
- m457XeO7fo2LSkxrdKnSv0SlX8ZYw54U9WrWnCaEcrP30cm0WaF3n3txtyp0ZRooZhZwffeoD
- irvY1UtSocZtJjNoPSkujq4YK8CsfqjinH2krjEwZrG00DuFV7jnEVJfyQdAtIDiM3GMDeeqh
- JxqLFdxPAbYKix1UjWYcjr/NdvzQLpPe5mSZ8qiAxxNaIl4FX+utyXzOKh9YOSwZzCMGVns9y
- uUcu7XzOKxSMS+hZVifDW32i9NAE6k0/IiA62r5ygAM9zkjqqsZfU/4ayDZDMr9RHIbQAjnLW
- 7g/rNZEIkUKAV74421TK5Ag8o5CkV7HQ9yqc8ZkUWloNPluw87RUXqYPaiMOhKrWJyMf/bwUt
- pAQ8P/Pews0S1H156PR27bp+lhExAc+JGm0Zp2HvqZU5qHzBgSWYmjB8uMEFKE+ilrgQ/BsQI
- W9bpITD0k3JYfbshO2O5zm92wsX+Iq9d16i64c8qcNFPsAnXHaD3cUBdYxwU2W0gJqvg9hk9j
- OP9wg5yntAXyMX1WbxIgMNvva4MTcPthb5aUGjhJD5AzYWttDGvukl9erg3XLdS+X1aHEGItc
- va3S9XPlswOvYbPU3hO0s7hKxzEqUOlwOXcXKHLTOiMLDWvgy4W6thXiqnqtbCzdwy029Tl/0
- rTXidYQWJ35muvBQ+oB6uRI5IEa6dp0Ocf6oLxqL3Oa8TkQts0Pa1MejX8+m+ittaysWVUXvY
- r4yp5thn3R3/c49EZYX+5GjWnJJwH4ixeW+lCOnCxMLiWkAzdqpmpV0+GW1WK2NtpGYRa+Kr2
- /eIbp7ewIa3GkKem7oabXhQCQXRQVb5EE/XUr+Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-148249349-1602241984=:50"
+X-Provags-ID: V03:K1:/JNu8qvHVdWtXnez2S5h8hRJarL/s+/cL+DdRWdcCrWTVtMNJJE
+ 4vEkU5j4DTvrmVG6osHRf16CoIpgvUQlGvSMja1ucahPrs1KAm5k5SEu+LJN/AHVvNkp/2U
+ 0be6/1WtQ6PmJ15WNGzTCW5eFVe+4qd3Hhlft9ne/D1Q9DgcWDsBdPM36nTjH5BJiDcUU67
+ j5Fbe53hiCFhF7n+e/M6Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:b5XNS6YdyXI=:QlzJzfTMiugN3HYRwUcBTB
+ gcOVUfE7YzR7ZtzQnPCNvgE32WqDbZAQqqUG2ShGrconiNzuoTIW44I2+V3sH5vti0qORwAU0
+ asMlmgp3Te22f+ZyEDeq+sl4JkOmtCUUfcRARCIClJp56hxRJj514aMxcB0yc5R6FuFHXmu6K
+ t09czKh3mjbN2rWA9AlQpBCwaZ6nEWIx+5H+GOemOaIAv77qNoSe7oRhh5IVZJhb8s+ZdoA3X
+ oIdWHW8WVtj/U5a9zeqqUJqgClv4OamwvN/1I9eDssqBmiXTfPwBWXG9asvkyJZ/zgO667OIS
+ J78i/wS4EHlT+iJFcsp6uD/31fIhM+/R7/MmhDPb38fUU4CaA7YJ1FSXYAmsV8GGal1inyTb0
+ HFfqAyf3pFPtyn2TWfQiuc5Sm5nVQtjGJ8ki0PPWnhsg+HADuINEyeUaXY7GxNYOkO3VfrRcL
+ yXb8dkivi3KN+C1LOURwWoiru+2GpCovZc6CsSyF2dQO/NV57T3MwaMf1XB87IRVL53H7TUt4
+ 4LiNWYW8aDjRFpWIX1sPni6jXwnALXps2iYTOuL3tpmUqtaAhEqhHV6pwxlipcYFAE5OSTlHl
+ AYYtDpKu4lRCNOTr+4MoleTMvVIT9kqQGQ5UB0KoWAYV9U5XZ03wfGgtER964rwwHbRmqBO/u
+ /MirvXqDc0h94c+WT9hsORvxh7sCONU4PL1pQjil4Sy9svylkOk0jpEVxLa6nY9AbRsoSsaPc
+ +4qONFzOUN2gaD2+9uIjfdtc4/L5BXZcLhHplUA44aukHztSEboc9279u7EJgOi9+bK/XpK5N
+ wuzBokaRLNIneaKxB5ti/WJXTkTAnfYeXjahUhljrLOuvD/5JcltBcxQRxfdPWRNqoGXbB+Ab
+ 5/msksUNmXUInJ3Ut2vZ+AfJ8lwK+BxDah3yE8fY5WNYZ6RAGwXXD94JPHPPbQ299Wi2YtxKg
+ r/KekHa4YmMm8Ji0Kwj1G0pHOCp91XPxT2xf636ZGmDMbYX9Zy7ZcNcZecyljhiAGAQSrCM6T
+ ImwVDHaKw7aK6Bl7p99DB4hwnS2/DeNHF2dGz3nYBxFbnbXr2oU39bBxLysHRbXn7QXAZA84u
+ I6V9Kwf+aYacP+H/Z9jXxB7xU84ev14izcN7oGOGnULzGqsCa4Ys4tY1LYxo5+prdHLIEx6oC
+ 9nI1jnQL46u2uMKciTOWNXKKu8BxfZ/0wIQK6doK3VIhfYZnj/+jLQ2Y/2Ej1VyzprfJFYQdt
+ F5r0fxWINwxh25SDy6/lT2WqlOE13mbOCbXJjxA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 8 Oct 2020, Denton Liu wrote:
+--8323328-148249349-1602241984=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Thu, Oct 08, 2020 at 12:06:47PM +0200, Johannes Schindelin wrote:
-> > Also, this strikes me as yet another task that is so automatable that =
-we
-> > should really avoid bothering humans with it.
+Hi G=C3=A1bor,
+
+On Fri, 9 Oct 2020, SZEDER G=C3=A1bor wrote:
+
+> On Thu, Oct 08, 2020 at 03:29:34PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When pushing a commit that has already passed a CI or PR build
+> > successfully, it makes sense to save some energy and time and skip the
+> > new build.
+> >
+> > Let's teach our GitHub workflow to do that.
+> >
+> > For good measure, we also compare the tree ID, which is what we actual=
+ly
+> > test (the commit ID might have changed due to a reworded commit messag=
+e,
+> > which should not affect the outcome of the run).
 >
-> Yep, I found these changes via a similar-looking Python script. I like
-> the Perl version, though, since it gives a path for inclusion so that we
-> can automate this task.
+> We have been doing this on Travis CI for a few years now.  Does that
+> approach not work on GitHub actions?  Please explain in the commit
+> message why a different approach is taken here.
 
-Heh, when it comes to string processing, I always reach for Perl.
+You're not being terribly clear about what exactly "We have been doing".
 
-> > I gave it a quick whirl, and
-> > this Perl script seems to do the job for me:
-> >
-> > 	$key =3D '';
-> > 	@to_sort =3D ();
-> >
-> > 	sub flush_sorted {
-> > 		if ($#to_sort >=3D 0) {
-> > 			print join('', sort @to_sort);
-> > 			@to_sort =3D ();
-> > 		}
-> > 	}
-> >
-> > 	while (<>) {
-> > 		if (/^(\S+) \+=3D/) {
-> > 			if ($key ne $1) {
-> > 				flush_sorted;
-> > 				$key =3D $1;
-> > 			}
-> > 			push @to_sort, $_;
-> > 		} else {
-> > 			flush_sorted;
-> > 			print $_;
-> > 		}
-> > 	}
-> > 	flush_sorted;
-> >
-> > It is not the most elegant Perl script I ever wrote, but it does the j=
-ob
-> > for me. And we could probably adapt and use it for other instances whe=
-re
-> > we want to keep things sorted (think `commands[]` in `git.c` and the
-> > `cmd_*()` declarations in `builtin.h`, for example) and hook it up in
-> > `ci/run-static-analysis.sh` for added benefit.
-> >
-> > My little script also finds this:
-> >
-> > -- snip --
-> > @@ -1231,8 +1231,8 @@ space :=3D $(empty) $(empty)
-> >
-> >  ifdef SANITIZE
-> >  SANITIZERS :=3D $(foreach flag,$(subst $(comma),$(space),$(SANITIZE))=
-,$(flag))
-> > -BASIC_CFLAGS +=3D -fsanitize=3D$(SANITIZE) -fno-sanitize-recover=3D$(=
-SANITIZE)
-> >  BASIC_CFLAGS +=3D -fno-omit-frame-pointer
-> > +BASIC_CFLAGS +=3D -fsanitize=3D$(SANITIZE) -fno-sanitize-recover=3D$(=
-SANITIZE)
-> >  ifneq ($(filter undefined,$(SANITIZERS)),)
-> >  BASIC_CFLAGS +=3D -DSHA1DC_FORCE_ALIGNED_ACCESS
-> >  endif
-> > -- snap --
->
-> I opted to exclude this hunk because it didn't seem like a list that
-> should be sorted. Perhaps if we include this in the static-analysis
-> script, we could define a whitelist of lists that we want to keep
-> sorted?
+Are you referring to the `skip_good_tree()` function that stores
+information in a file in the `good_trees_file`?
 
-I agree, modulo s/whitelist/allow list/.
+If so, no, we cannot do that anywhere else than on Travis because that
+relies on a directory that is somehow shared between runs. And that is a
+feature that only Travis offers as far as I know (and it does not come
+without issues, e.g. when two concurrent runs try to write to the same
+file at the same time).
 
-Thanks,
+Since this strategy relies on a Travis-only feature that does not work on
+the three other CI services we use (Cirrus CI, Azure DevOps, GitHub
+Actions), I see little point mentioning it in this commit message...
+
+However, I might be very well wrong on that assessment.
+
+Ciao,
 Dscho
+
+>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  .github/workflows/main.yml | 39 +++++++++++++++++++++++++++++++++++++=
+-
+> >  1 file changed, 38 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> > index 5bd321e5e1..7391b46d61 100644
+> > --- a/.github/workflows/main.yml
+> > +++ b/.github/workflows/main.yml
+> > @@ -9,7 +9,7 @@ jobs:
+> >    ci-config:
+> >      runs-on: ubuntu-latest
+> >      outputs:
+> > -      enabled: ${{ steps.check-ref.outputs.enabled }}
+> > +      enabled: ${{ steps.check-ref.outputs.enabled }}${{ steps.skip-i=
+f-redundant.outputs.enabled }}
+> >      steps:
+> >        - name: try to clone ci-config branch
+> >          continue-on-error: true
+> > @@ -35,6 +35,43 @@ jobs:
+> >              enabled=3Dno
+> >            fi
+> >            echo "::set-output name=3Denabled::$enabled"
+> > +      - name: skip if the commit or tree was already tested
+> > +        id: skip-if-redundant
+> > +        uses: actions/github-script@v3
+> > +        if: steps.check-ref.outputs.enabled =3D=3D 'yes'
+> > +        with:
+> > +          github-token: ${{secrets.GITHUB_TOKEN}}
+> > +          script: |
+> > +            // Figure out workflow ID, commit and tree
+> > +            const { data: run } =3D await github.actions.getWorkflowR=
+un({
+> > +              owner: context.repo.owner,
+> > +              repo: context.repo.repo,
+> > +              run_id: context.runId,
+> > +            });
+> > +            const workflow_id =3D run.workflow_id;
+> > +            const head_sha =3D run.head_sha;
+> > +            const tree_id =3D run.head_commit.tree_id;
+> > +
+> > +            // See whether there is a successful run for that commit =
+or tree
+> > +            const { data: runs } =3D await github.actions.listWorkflo=
+wRuns({
+> > +              owner: context.repo.owner,
+> > +              repo: context.repo.repo,
+> > +              per_page: 500,
+> > +              status: 'success',
+> > +              workflow_id,
+> > +            });
+> > +            for (const run of runs.workflow_runs) {
+> > +              if (head_sha =3D=3D=3D run.head_sha) {
+> > +                core.warning(`Successful run for the commit ${head_sh=
+a}: ${run.html_url}`);
+> > +                core.setOutput('enabled', ' but skip');
+> > +                break;
+> > +              }
+> > +              if (tree_id =3D=3D=3D run.head_commit.tree_id) {
+> > +                core.warning(`Successful run for the tree ${tree_id}:=
+ ${run.html_url}`);
+> > +                core.setOutput('enabled', ' but skip');
+> > +                break;
+> > +              }
+> > +            }
+> >
+> >    windows-build:
+> >      needs: ci-config
+> > --
+> > gitgitgadget
+> >
+>
+
+--8323328-148249349-1602241984=:50--
