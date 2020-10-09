@@ -2,89 +2,199 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	TVD_PH_BODY_META_ALL,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F13C433DF
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 15:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 224FCC433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 15:40:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9060622261
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 15:38:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9B1B22251
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 15:40:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PVfLW5bn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jEahvIe+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389345AbgJIPi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 11:38:26 -0400
-Received: from mout.gmx.net ([212.227.15.18]:34397 "EHLO mout.gmx.net"
+        id S2389397AbgJIPkT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 11:40:19 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59437 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389286AbgJIPi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 11:38:26 -0400
+        id S2389165AbgJIPkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 11:40:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602257898;
-        bh=Ss8Z+KHOJazfy1FWcU8/UpsxUwfLNnzaM5QAA/uO40Y=;
+        s=badeba3b8450; t=1602258016;
+        bh=roQIsZT0SF8J17NYlyRI+k0MSOzvBoxUMwQi1urd4tg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PVfLW5bne8xg9jhYy4ElXivZgrcPqug1LbAynXki+Ms6OiXeZPOfjzXfvEMOe7+++
-         ho408Xg9QYnsdq4hxkHzxliQv7Z9wwAWbLdRYYsWIABCljISDqzL4XSnwrr9Tegygd
-         NACgCdrUa3cie3brto+zyx1DOfAUhmIh8S5c2hB4=
+        b=jEahvIe+mBavh+i9ywvjyumaQCOYyoKsM7LIiP4HYidgDpsfZfTW4itRZ4CFu+HX+
+         2LCebpI7ltT9ktS/nwYSFsVnaCLwoSnVRklU/FUE/pbLX94XjCBDeN/nYr7625PEG4
+         LeaQfW2vycKxhkt8gMUGNl+zXQSkUv0mN+AiNphc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([213.196.213.92]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6qv-1k7r3x1CEl-00pb2g; Fri, 09
- Oct 2020 17:38:18 +0200
-Date:   Fri, 9 Oct 2020 15:20:35 +0200 (CEST)
+Received: from [172.20.73.169] ([213.196.213.92]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mz9Yv-1kEUKJ17eF-00wEZY; Fri, 09
+ Oct 2020 17:40:16 +0200
+Date:   Fri, 9 Oct 2020 15:22:34 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Chris Webster <chris@webstech.net>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>,
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH] ci: github action - add check for whitespace errors
-In-Reply-To: <CAGT1KpXz4nFBu2xkVSaoW4DgXc_5oB69MQRQW=365gfgd_R-mQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010091519460.50@tvgsbejvaqbjf.bet>
-References: <pull.709.git.1600759684548.gitgitgadget@gmail.com> <20200922170745.GA541915@coredump.intra.peff.net> <xmqq1ritlmrk.fsf@gitster.c.googlers.com> <CAGT1KpU4Kjv2PEAA7-bNbGp2DFvfsKqABuUK68128xkLjdcEhA@mail.gmail.com>
- <CAGT1KpXz4nFBu2xkVSaoW4DgXc_5oB69MQRQW=365gfgd_R-mQ@mail.gmail.com>
+Subject: Re: [PATCH] git-gui: accommodate for intent-to-add files
+In-Reply-To: <20201009093455.yxh5xnyvcjqvn54a@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.2010091522150.50@tvgsbejvaqbjf.bet>
+References: <pull.699.git.1597244777943.gitgitgadget@gmail.com> <20200826113030.xnutfxxfmdhgoq5o@yadavpratyush.com> <nycvar.QRO.7.76.6.2008260936010.56@tvgsbejvaqbjf.bet> <20200826145217.gx2prxltyoyuoxo3@yadavpratyush.com> <nycvar.QRO.7.76.6.2010090855260.50@tvgsbejvaqbjf.bet>
+ <20201009093455.yxh5xnyvcjqvn54a@yadavpratyush.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+MD4TxmR8wpxpsMMHIQFJcqKrdnOGDIo5zw1JvMs006mOn+4qPB
- Q9aOKqx4VBaGUSibqB7QRIMpwerM0BRaXXgJvLqpJ2RV+e98QUaaYqvPPqGInAmAa6vOjr7
- og5GUWwfkDS7Djk0aRNF1+jKB8vBgZk2uR9QnWye8IXGvyUWDPrqJSvnrJpU13DeYbncWkJ
- IIUaMfdUWKshgfPEspB5Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nle9I5Gqz3I=:9xMY1gkRilK7q6zJbfgrQH
- Z6hej8NPMF2bbzPJP2LffQh7IO9YdDJ+CXrrj47gCyJIBNJFq8Hp9/7qOBJ6knr4e7XFNfqTl
- cPkvrrJpJbcjyWrPS8DngnLPfHpzJmsNDwTItrgBFJajLdDpprXf9j454R8GFc1e1yFc/+Jn3
- mfmBwvkh/29tDLx6kjXeykB4SCwuLmTN/b5YP/G9mYCW4tyoSCyVtOpaE03IBbp2JVyYFuXs6
- Q1H7nuMAenOd4cMQ2CUTJapSxEYvV2BxlNVQmmzJ/RI6czEDhlr1w0Q42atIU9K3wWDDaqen5
- YCsi9y4DdA9vix3084ZEiEgoTt9hgZidXPG29VgS8ZwNd/g8KJ9FJT0YdAAFAXaJlzLI4qVBR
- I7bC1mEryo4+NozYiCOQuyvFMjaRQB1bFjpHIm9sPitebbd3eA3NLCqJM8cDkIo+XTQijSmk4
- pLLMBxObSpWXX6pi+N/NE81+LhHUN/qQLX9rAyliQDYmkbDOr9Uc4iOgktZfyo3OxRjRdCi+R
- aY78M68Vdtl8VRWs74DC65cOUPugiA0/naRb5BLyNg5cwqQPALptn3EiDcVyA/0oCbEqMRyKX
- DSz6nBOECZ1qd8/wu53Bk2Q3MEiZLo6GOdGLS/s8swmn6lfPG94aoW7QliYlfPpRMm33Lmvb0
- SVdMVxigOKhaSi52tW3GE9ZAXY4RULczASGmnMVryn78q1gBpdzU/AhRmf/VyMVLJRwZvCxAV
- 5dPyIJKfYzRZUHXqIJilOC2cyEsozLpXxbbKJctLXt45N5IGEQp+w/irWkXZ+cHUBiFppexMq
- adrh5mHQ0U/SWqaI4HwBadSuXSbYDN3hfNLfoSDGnsqKUWtnhrsnCEih9JZGc6kYnnqrroLWf
- dGj+gk5AKTAvzhxz3tWEwj0QN187qAw39/Uvr1FR/AtRS8OlXRipTOEVsYm/RFpGwX0Hyc2I9
- JVyb/8qd9f4LUq5XL5onfSwaCcScjY1ZRU41+LCpdHbSEceJMZWA4JjWpXtPjJzWrnXTPgvJj
- rIDgXs/kYJJUIWbR8vESmZyB+hgPb7J2EU9vwwYSZGILNe8smj8uNrmfYHHqVrcINOO+D+VsF
- e0qWm6hTSIpi6PaXiQbf5BOCKROTAoF+gTp4+Dj2nCjV3suzFl5iPg7QGmRFNvC3RrLpvIyLq
- LmpDCJ2KVg1znM0wxAajCBkH6A79a1N8f4i/p2Fe916YdvWCIInvel1jNQphzgn6VaSqXCr5T
- 5HJcYTeN0/85D4dtPppay3LQChUqG4jVbV4BS5A==
+X-Provags-ID: V03:K1:9bOOK22/je8A77DlWVeLYlZcSqCP7dMI8xxUjSBXs/jh0Cm1Vts
+ 5g22VewQKeTMJen5Q5O2PF32W7gVPnEiM8pm0iQJgQ5VPfFvnIV/ONNosj+XFkZHyTo+xQb
+ Els01ZrsBj1yTChfKFBJUTbwYYFtPA8lyBQBzzVv5/HWtWT6TyI7fu7kPRrTLvLCNVVNbd7
+ +820wkBckNNgxjbdUKqTA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3VzLRCBvORk=:ZSr2B56tUWU3EqXc1IPczG
+ OimPyv+ewEGbyrG4VNbACnZf/617WouU1X0ieZlJ72dGC7fsBAAvcco3TmIM3CP/5p5RECKF2
+ AeIilhtpfCjTTjUNm7kT1iwgTdfB3vjKPWnWkx8NmDYW/VMxwFakYK8n7GIWKwzM9zfLOFSWt
+ qaYGUsp59Y5dB7svX5FqIaBOA4Iprp2KQ/rRT3USMnxHTfzJLgk9z3yuo0JVQa5dWoKxPpoYB
+ ERSGJM4O31gP4809Y1NcfHZwt1D32afQgRKD7CmB914O1YmnpnHmberErYoL4lRss3PZxoWkg
+ w9ZH0ik4w5w5iTvbw346bIq4R4vFl5Wdj2hAKRW71GieCoawCq3zS/r4s7jGreUTQaP/rrpcm
+ 7KdBRQLK+m7gzd5anf+8nzmA41uebR3HCEcuO+tjKcTMf+xEe4McS1N1ydDy54YfVrHE0SQTm
+ Mi12EJagtwohH2g5taeZwU6PLcxjcrs472lDS5lUjKJ+oX5o2hRpqZYiIOs/Jh3MvCPk6ETzd
+ 0c6g2XSivT9Rhr9ALW7osfL3lJ9t6SEWkPVikduZmq6wgBGaV0oKXVotRy881UTax0jdCe5yq
+ tQHOdPhQrqYddUTEfxSV6l75fn3IpsShxi56ERGH9cSLST7N3VbNfSypPCl/r/Wlwliy7tlL2
+ bReoQTRLNl4TUDmS70lsC6JvBUs5cDMWJbB9NvZ1Jop871rnoi6zOYM2P0NQ85ckFLhKBuZz+
+ 0ePTa4MP5liYI5W++Wdskmr/tovQKPxp1aiqe8ry+ygTBpblhL/cBBZocDJy9OqZBUkDZeQ+K
+ Jp81zyclRVEA9W2jwRZqUx3r+RVGNnf2qp8ZzJDz3oSINB39lsOQsC07BGp31qL0aUz5I/rHN
+ 1ZVT8rImmr/nUqxSwGdfLEATCcPkjlKjWg66DlH6kYOtY6BBBaNGFSebhtmfq9BSuE25aSlKQ
+ pZnliVqUQaDRE+bGRrlw5h3r6VDQgu17c1uWr8ai+mP8Ocfue0lE89Rkvfur6nptP9OYZydWJ
+ ToSY3NlHTkrBhQOdTMnp3YS0uWnHckLdVZ7wd5WyzKjlZQExaZEwuwp3ubcKdUVArKVCaM3C2
+ 3S/wtHVYCnLcQV1KUsqBmYqPbyYgr3WVFcaWsGyjIQ02mKh/LEYVwEbmpqqgWp7dyTx2pFXUr
+ u/H129sam/3iYsvafz6F3ZzkOPuIhEDMjMFOUnlCcEuWNwLYkoVGSLMtuVHYjgC+esvn4KQjd
+ UlWl8S34ReK5mxtUApmO8HUBgcHALXIdgMfL9mg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris,
+Hi Pratyush,
 
-On Thu, 8 Oct 2020, Chris Webster wrote:
+On Fri, 9 Oct 2020, Pratyush Yadav wrote:
 
-> Is this waiting for some action on my part?  I thought the question of
-> running on push vs pull had been resolved (in favour of pull).
+> On 09/10/20 08:56AM, Johannes Schindelin wrote:
+> >
+> > On Wed, 26 Aug 2020, Pratyush Yadav wrote:
+> >
+> > > On 26/08/20 09:36AM, Johannes Schindelin wrote:
+> > >
+> > > > On Wed, 26 Aug 2020, Pratyush Yadav wrote:
+> > > >
+> > > > > On 12/08/20 03:06PM, Johannes Schindelin via GitGitGadget wrote:
+> > > > > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > > > >
+> > > > > > As of Git v2.28.0, the diff for files staged via `git add -N` =
+marks them
+> > > > > > as new files. Git GUI was ill-prepared for that, and this patc=
+h teaches
+> > > > > > Git GUI about them.
+> > > > > >
+> > > > > > Please note that this will not even fix things with v2.28.0, a=
+s the
+> > > > > > `rp/apply-cached-with-i-t-a` patches are required on Git's sid=
+e, too.
+> > > > > >
+> > > > > > This fixes https://github.com/git-for-windows/git/issues/2779
+> > > > > >
+> > > > > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de=
+>
+> > > > > > ---
+> > > > > >     git-gui: accommodate for intent-to-add files
+> > > > > >
+> > > > > >     This fixes the intent-to-add bug reported in
+> > > > > >     https://github.com/git-for-windows/git/issues/2779: after =
+a file was
+> > > > > >     staged with git add -N, staging hunks/lines would fail sil=
+ently.
+> > > > > >
+> > > > > >     On its own, this patch is not enough, as it requires the p=
+atches
+> > > > > >     provided in rp/apply-cached-with-i-t-a to be applied on Gi=
+t's side.
+> > > > > >
+> > > > > >     Please note that this patch might need a bit more help, as=
+ I do not
+> > > > > >     really know whether showing "new file mode 100644" in the =
+diff view is
+> > > > > >     desirable, or whether we should somehow try to retain the
+> > > > > >     "intent-to-add" state so that unstaging all hunks would re=
+turn the file
+> > > > > >     to "intent-to-add" state.
+> > > > >
+> > > > > I built latest Git master (e9b77c84a0) which has
+> > > > > `rp/apply-cached-with-i-t-a` and tested this patch. It works... =
+for the
+> > > > > most part.
+> > > > >
+> > > > > I can select a line set of lines and they get staged/unstaged, w=
+hich is
+> > > > > good. The part that is not good though is that a lot of common
+> > > > > operations still don't work as they should:
+> > > > >
+> > > > > - I can't click on the icon in the "Unstaged Changes" pane to st=
+age the
+> > > > >   whole file. Nothing happens when I do that.
+> > > > >
+> > > > > - The file that is marked as intent-to-add shows up in both the =
+"Staged
+> > > > >   Changes" and "Unstaged Changes" panes, with the "Staged Change=
+s" part
+> > > > >   being empty. Ideally it should only show up in the "Unstaged C=
+hanges"
+> > > > >   pane.
+> > > > >
+> > > > > - Selecting the whole file and choosing "Stage Lines for Commit"=
+ works
+> > > > >   well. But choosing "Stage Hunk for Commit" does not. While the=
+ changes
+> > > > >   do get staged, the UI is not properly updated and the file is =
+still
+> > > > >   listed in the "Unstaged Changes" pane.
+> > > > >
+> > > > >   I think the difference here is because for
+> > > > >   `apply_or_revert_range_or_line`, we call `do_rescan` after it =
+to
+> > > > >   update the UI, but for `apply_or_revert_hunk` we update the UI
+> > > > >   "manually" in the function after we are done applying or rever=
+ting the
+> > > > >   changes. So the logic to update the UI needs to be updated to =
+account
+> > > > >   for this change. Or we can get rid of all that logic and just =
+run a
+> > > > >   rescan.
+> > > > >
+> > > > > And also, like you mentioned, we don't retain the i-t-a state wh=
+en
+> > > > > unstaging. But with some quick testing, I see that Git command l=
+ine
+> > > > > doesn't either (I tried a plain `git restore --staged`). So IMO =
+we
+> > > > > should mimic what the command line UI does and not retain the i-=
+t-a
+> > > > > state when unstaging.
+> > > >
+> > > > To be quite honest, I had hoped that this might be a good patch to=
+ start
+> > > > from... for somebody else (you?)
+> > >
+> > > I'll take a stab at this during the weekend :-)
+> >
+> > Just a gentle ping: did you get a chance to get this patch into a bett=
+er
+> > shape?
+>
+> No, I have not. I'll try my hand on it tomorrow and try to get it done
+> in time for 2.29.
 
-FWIW I agree that the current shape is the best we can do for now (and of
-course, full disclosure: I was the one suggesting to restrict this to Pull
-Requests because we know exactly the commit range to check in that case).
+Thank you so much!
 
-Thanks,
+Ciao,
 Dscho
