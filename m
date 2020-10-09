@@ -2,148 +2,169 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 211F7C433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 22:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B91A8C433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 23:00:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9A6022314
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 22:50:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B7F522314
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 23:00:39 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IsSXMUjj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392013AbgJIWuo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 18:50:44 -0400
-Received: from mail-ej1-f68.google.com ([209.85.218.68]:45362 "EHLO
-        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391164AbgJIWuP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 18:50:15 -0400
-Received: by mail-ej1-f68.google.com with SMTP id dt13so15327011ejb.12
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 15:50:14 -0700 (PDT)
+        id S2389215AbgJIXAi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 19:00:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48114 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731374AbgJIXAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 19:00:38 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8B4C0613D2
+        for <git@vger.kernel.org>; Fri,  9 Oct 2020 16:00:38 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id g9so8435141pgh.8
+        for <git@vger.kernel.org>; Fri, 09 Oct 2020 16:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cTSymlMRgS2Jf1L3FCZLhZRfaW7luP06ZB885Mgp1hQ=;
+        b=IsSXMUjjIT1JnGYrM0w8aEceEh4FjvXxve5B1h8XHIvME1PW1QrzFsf5Au6bil9Pzf
+         vdbnnLHrJdk8wZ6pRhmAeOtkdXvdHLNnVSA90yWUAbtu1hsp68eYrQ1udK9SitdWGb2e
+         1GY67zlHdG3mzUrhAKtz0ZjbAPogRqKzLxQgEbdWMCphR7SCVyjcUnyZRaz8ngAIsgO9
+         c3xtWUf7GfCb1qg2pRDUKfPmiAWSIDXWxlnmLGpIslmOsUziBNJSPTidmnaSKLPywGsp
+         Wo5vc/my+jSX/dHkv3ivoK58Sp7s83fRTFIPbWI96+VWlA7m+8mPxy8mJjrOzl/luuMc
+         rnNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XbXY+FMpb0TEv4OQoqQf4ucYFM7EDdtmbrGC6TBML9E=;
-        b=kPB02u6J1+5BcDAXFRS2YsUy5QjydDDCjG9iifZ9gKB2D9ICWtRZhjh5Wd2Ro0b7QB
-         5dAe8R52VS1bbWJOuiyEzdChuOlo2pVGsZRl0KSMuQKBz18SaennR/uHyGvNJ5S/GMAh
-         seG9R8uUa21x1LUucqEJQwcIw5ynCTL3nG86AgKNZk18WgbodjkLEkjZHDLKlwrAkMuo
-         1+f/q3MXylzavkHoAmsP4br/BF0aWlY+YVMsARROPIPgTLJSiTnJDMOJm8zxXtR2G6kH
-         hud7MlVCx2Vb9io2AGFh72E2cycQ8WePSbELI87LwaWXxG4MD1Vd7VhC8bZWOYdi7q9H
-         iG1A==
-X-Gm-Message-State: AOAM531GWYLAil/S2DGowXYxSJByqZ8GIhi+owix852e1LABeiLrqL6v
-        6JtoTgn+78zZi/naGDG7sMOrYmB9/dWSRNFq8kM=
-X-Google-Smtp-Source: ABdhPJwjC44OQBXXW4QR6AdxIRdrMpr83fD5D4A8mz+n5Xd5HgqkpMoR0J1eHH9cyTwuZ3pM1dxyflRGL1n9ucV3P8s=
-X-Received: by 2002:a17:907:68c:: with SMTP id wn12mr16367016ejb.202.1602283813423;
- Fri, 09 Oct 2020 15:50:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cTSymlMRgS2Jf1L3FCZLhZRfaW7luP06ZB885Mgp1hQ=;
+        b=YbClTnrGW3y49AxT8fpHXfL+g1K75us4Cf08dQlsIhG4VjpdD+1QOwPRD64qrwhv6C
+         c+hP5aVXdOJgelKBUEwPwL/Zu3XIZd0jz59FpyprIw8ii7IGJldXuZ7/woPLFqTgQwIl
+         cQD9Uz7SmDKqkeFiXZUp7sXlR/1Xu2rlO+XERViCzsyNy3zZFgw7eliIocGzSwN/WHji
+         F1b8D+QSrITwarSbFmPIV/Fl8+ltxZEINqMnqgU4FfSf3WoIzKho79MAs3kDu1nZuCQf
+         YYOzHn1t/sQhSvEpp5UHiDmoYBI+LgKxDVLU4yaoudcaJHhWYWluFzTho318y6YbCsG7
+         jg7Q==
+X-Gm-Message-State: AOAM532FRnfuZhYKIahTSrtwxx3+RaZcAo49N4EuksvEIniB3BW6tOQf
+        4wwi/PaEBSPeeBapbi1iGnU=
+X-Google-Smtp-Source: ABdhPJweEgCWDLF+weHARXOfdxu+ueQeC5JPcnW3c4bOzMtuS2RRvmPxOf1MtA8fKEsVGGpfz4WOzA==
+X-Received: by 2002:a17:90a:3b48:: with SMTP id t8mr7091310pjf.32.1602284437440;
+        Fri, 09 Oct 2020 16:00:37 -0700 (PDT)
+Received: from generichostname (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
+        by smtp.gmail.com with ESMTPSA id 11sm12936596pja.8.2020.10.09.16.00.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Oct 2020 16:00:36 -0700 (PDT)
+Date:   Fri, 9 Oct 2020 16:00:33 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [RFC] CodingGuidelines: mark external declarations with "extern"
+Message-ID: <20201009230033.GA31120@generichostname>
+References: <xmqq8scgzqis.fsf@gitster.c.googlers.com>
+ <20201009015505.GB1314@generichostname>
+ <xmqqtuv4uncn.fsf@gitster.c.googlers.com>
+ <xmqqy2kfryiu.fsf@gitster.c.googlers.com>
+ <xmqqtuv3ryhr.fsf_-_@gitster.c.googlers.com>
+ <20201009195701.GA967869@coredump.intra.peff.net>
+ <xmqqpn5rrvfg.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
- <CAPig+cQXkP8vTNR+LJ4fZRT-an0vEgKxcFpfi+aQ-BdipTgq=A@mail.gmail.com> <20201002162802.GA15646@contrib-buster.localdomain>
-In-Reply-To: <20201002162802.GA15646@contrib-buster.localdomain>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 9 Oct 2020 18:50:02 -0400
-Message-ID: <CAPig+cR8D13cM8OewRVYfg7wNjVC05tVQw80-dm4B5XPmjHJWw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] teach `worktree list` to mark locked worktrees
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpn5rrvfg.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 2, 2020 at 12:28 PM Rafael Silva
-<rafaeloliveira.cs@gmail.com> wrote:
-> On Wed, Sep 30, 2020 at 03:19:27AM -0400, Eric Sunshine wrote:
-> > [...] For reference, here are some earlier messages related to
-> > this topic:
->
-> Thank you for all this reference, it's really helpful. It is nice to see
-> that we already have few discussion on this topic that we can use and
-> work on top of that.
->
-> Sorry for the bit late response.
+Hi Junio,
 
-Likewise.
-
-> > I'm not suggesting that this patch series implement verbose mode, but
-> > bring it to attention to make sure we don't paint ourselves into a
-> > corner when deciding how the "locked" annotation should be presented.
->
-> Doing a little investigation on the code, it seems the machinery for checking
-> whether a worktree is prunable it seems is already there implemented
-> on the `should_prune_worktree()`.
-
-Yes, when I mentioned that in [1], I envisioned
-should_prune_worktree() being moved from builtin/worktree.c to
-top-level worktree.c and possibly generalized a bit if necessary.
-
-One thing to note is that should_prune_worktree() is somewhat
-expensive, so we'd probably want to make determination of "prunable
-reason" lazy, much like the lock reason is retrieved lazily rather
-than doing it when get_worktrees() is called. Thus, like the lock
-reason, the prunable reason would be accessed indirectly via a
-function, say worktree_prunable_reason(), rather than directly from
-'struct worktree'.
-
-[1]: https://lore.kernel.org/git/CAPig+cTTrv2C7JLu1dr4+N8xo+7YQ+deiwLDA835wBGD6fhS1g@mail.gmail.com/
-
-> In such case, I would love to get started working on a bigger patch that
-> will implemented not only the annotation, but the verbose mode as well.
-> Specially because I was also thinking about how to make the "locked reason"
-> message available to the command output and the design proposed by [2]
-> sounds like a good way to manage that.
-
-I'd be happy to see that implemented.
-
-> Additionally, having the ability to see the annotation and the reason in
-> case you see the annotation seems like more complete work for the intention
-> of the patch.
->
-> Unless you think that is better to start with the annotation, and some time
-> later addressing the other changes specified by [2].
-
-Whatever you feel comfortable tackling is fine. The simple "locked"
-annotation is nicely standalone, so it could be resubmitted with the
-changes suggested by reviewers, and graduate without waiting for the
-more complex tasks which could be done as follow-up series. Or, expand
-the current series to tackle verbose mode and/or prunable status or
-both or any combination.
-
-> > A reason that it would be nice to address the shortcomings of
-> > porcelain format is because there are several additional pieces of
-> > information it could be providing. Summarizing from [1], in addition
-> > to the worktree path, its head, checked out branch, whether its bare
-> > or detached, for each worktree, porcelain could also show:
+On Fri, Oct 09, 2020 at 01:33:39PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > The argument for including it is less clear to me. You say below:
 > >
-> >   * whether it is locked
-> >    - the lock reason (if available)
-> >    - and whether the worktree is currently accessible (mounted)
-> >   * whether it can be pruned
-> >    - and the prune reason if so
-> >   * worktree ID (the <id> of .git/worktrees/<id>/)
->
-> That something that can also work on. But I agreed that it could be bit
-> more work for a newcomer. I was thinking that I can split the work in
-> three series of patches.
->
->  1. Implementing the annotation for the standards "list" command, implementing
->   not only the locked but the prunable as on aforementioned in [2].
->
->  2. A second series of patch that will introduce the verbose as defined in [2]
->
->  3. Third and final series that extend the porcelain format.
->
-> I would like to kindly ask your opnion on this. Whether you think it will
-> be a good idea to implement all these changes this way and I can start
-> working on that.
+> >> [...]By doing so, we would also prevent a
+> >> mistake of not writing "extern" when we need to (i.e. decls of data
+> >> items, that are not functions) when less experienced developers try
+> >> to mimic how the existing surrounding declarations are written.
+> >
+> > but to my recollection that has not been a big problem. And it's one
+> > that's usually easily caught by the compiler. A missing "extern" on a
+> > variable will usually get you a multiple-definition warning at
+> > link-time (if you manage to also omit the actual definition you won't
+> > see that, though "make sparse" will warn that your variable ought to be
+> > static).
+> 
+> Not really, that is where the "common" extension comes in, to help
+> us with it hurt others without it, unknowingly X-<.
 
-Such an organization would be fine. Tackle what you feel is
-appropriate and what "scratches your itch". Breaking the changes down
-into smaller chunks, as you propose, also helps reviewers since it's
-easier to review a shorter series than a long one.
+I'm not really sure what you mean by the "common" extension. 
 
-> I will change this series to become the first part of annotations, specially
-> because after reading your response and references, it seems this will be
-> much complete functionality that I would like to have on Git.
+>         $ cat >a.c <<\EOF
+>         #include <stdio.h>
+>         #include "c.h"
+> 
+>         int common = 47;
+> 
+>         int main(int ac, char **av)
+>         {
+>             printf("%d\n", common + other);
+>             return 0;
+>         }
+>         EOF
+>         $ cat >b.c <<\EOF
+>         #include "c.h"
+> 
+>         int other = 22;
+>         EOF
+>         $ cat >c.h <<\EOF
+>         int common;
+>         int other;
+>         EOF
+>         $ gcc -Wall -o c a.c b.c; ./c
+>         59
 
-Makes sense.
+On gcc 10.2.0, it errors out successfully. Although on clang 10.0.1, it
+compiles successfully and produces "69". That being said, I think extern
+variables are relatively rare in our codebase and, when it happens, they
+usually come as part of lists of other extern variables so a developer
+who's mimicking the surrounding code would be able to copy it
+successfully. Otherwise, the decl usually pops out in header files as it
+is quite unusual.
+
+> And I have a strong preference, after thinking about it, to have
+> "extern" in front in the declarations.  It gives another clue for
+> patterns I feed to "git grep" to latch onto, and help my eyes to
+> scan and tell decls and defns apart in the output.  The benefit
+> alone is worth the extra 7 columns in front spent, which you call
+> "clutter".
+
+To be honest, I do not have any preference between having the explicit
+extern or not. I do have a strong preference, however, for having a
+codebase that's consistently written. When I was doing the refactor, I
+wouldn't have minded introducing extern everywhere although that wasn't
+suggested as an alternative.
+
+I agree that these are all benefits of declaring functions explicitly as
+extern. However, I don't think they're worth the cost of either another
+huge rewrite or an inconsistent codebase.
+
+> > IMHO the real problem here is that C's syntax for returning a function
+> > pointer is so horrendous. How about this (on top of your earlier patch
+> > to drop the extern from that declaration)?
+> 
+> In general, I like a typedef for callback function that shortens the
+> decl of a function that takes such a callback, so I think
+> 
+> > +void set_error_routine(report_fn routine);
+> > +void set_warn_routine(report_fn routine);
+> > +report_fn get_error_routine(void);
+> > +report_fn get_warn_routine(void);
+> 
+> these are good, but they are better with "extern" in front in a
+> header file to make it clear they are declarations and not
+> definitions when they appear in "git grep" output.
+
+I agree that this looks a lot better, with or without the extern.
