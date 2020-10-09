@@ -3,158 +3,232 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1A56C433DF
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 20:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57184C43457
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 21:10:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7025622261
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 20:53:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04DDA222E9
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 21:10:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N3KKtjBW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="In7yC0pJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390988AbgJIUx6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 16:53:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390960AbgJIUx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 16:53:57 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AC3C0613D5
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 13:53:57 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id a72so490329wme.5
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 13:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BeZky0ifivjf2ThY4p57yacIS4TlpNjuiehrhMNG82Q=;
-        b=N3KKtjBWF5nt5eFL78DvsD8kS30s3Y7gigIEatG3R4kPNOM3n09fOFQfJ1synY5gvH
-         BYPam+vkTkS2taOZeyOjiIRK+82++FUg5c2wKxmgf79UqCqJkAEpUODn5HLNBMipCJvx
-         M3od7QkfE9cSZA2EWa5/nq2P9L7UT8fdBuEQJThsK2RZMu2NbJp22gklRFTM3qBjoE6d
-         cFCbcxLqEbwYxxCzEauk1kHWbAMrqI2F0lPr2RbpqCmTFXrG4dtsO9GGErXX/WogXwfX
-         tHB1mj8vyWFb5arzTjWQcLEU65Q6rLOwWbLUgLRT0viCWL1xiLziEniL9LWaC7a5XFBI
-         um/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BeZky0ifivjf2ThY4p57yacIS4TlpNjuiehrhMNG82Q=;
-        b=KAArOc/zODo+uRbRmyigP+Aa8uTZeIksSzlN3E80j24M2Nwz9PHWZbXLhmLH0LUckD
-         0xwmfP2vyGCRQns8v9RC61VqaPI51UZp4jOsYXzdduSamApB5NCWyOINXQIEQCH57NG+
-         ddHPhcox8irQ7sSLehEQN2NwtJYr90W2J+Kt8TOp7n/Xi3C9V7UM/qWvajhk7Mi7UBHR
-         yZmGkxlbUTP4Kmdfik6gKul1ZsiuWEJck3JcZTeyr2/m2+g3M1xJ8IL51xW+xTftuew8
-         hHS7duw9MS7qfngKUPtsW2zenvRai307SUbkZvFcKz27Banmtf1aoaDkFCQHImrAPXF/
-         /vug==
-X-Gm-Message-State: AOAM531q0chQbUFdNUerlx7z5rLGpqM7/rEoL9S8QU20bWZ6l9+f00O0
-        2kiwl2T8mddrMm4JUgplSdZ10s5FoYw=
-X-Google-Smtp-Source: ABdhPJyvYsEiDobfjEDVdED5XHYWEwOWLxYUHowwdG1VDoiyvr9f45VC4rLxyACsvqdUo+MQ4TLpoA==
-X-Received: by 2002:a1c:bd43:: with SMTP id n64mr15252044wmf.113.1602276835582;
-        Fri, 09 Oct 2020 13:53:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 30sm3746327wrs.84.2020.10.09.13.53.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2020 13:53:55 -0700 (PDT)
-Message-Id: <4439e8ae8fdc9abf28df29d3038a1483d9084cf2.1602276832.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.747.v4.git.1602276832.gitgitgadget@gmail.com>
-References: <pull.747.v3.git.1602169479482.gitgitgadget@gmail.com>
-        <pull.747.v4.git.1602276832.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 09 Oct 2020 20:53:52 +0000
-Subject: [PATCH v4 2/2] commit-graph: don't write commit-graph when disabled
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2391291AbgJIVKL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 17:10:11 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54055 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389097AbgJIVKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 17:10:10 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E69F100E57;
+        Fri,  9 Oct 2020 17:10:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hRlSAKNqcL3in7okxONTFgHtWFE=; b=In7yC0
+        pJD+46oU/pNsO4qRrYXjaOkied5CwRI/E6A/6f8fC9NsgdFRoyTgOu2H5+HIwfCy
+        sFFAEEzA+ENEmRBG668cCydxHO/Mv4LfTAKHk5EHsO05C2A3nA5FfjhecdnJIxGa
+        19RTK19Ju+xrg0PV2tVCOlMunBbTeP8nzSj/I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=asxEqEjq8eM8I6EtRzdTsbCnsBjT9mib
+        XsP63baUNHeuEsAi5VfVDAT9gBACkA6r7iU8yhykWp/JcqHPz2ELJeNEn+W/Uj/7
+        K0I9dr+ZsxBuYK9qr2xj0vMGfr1CRke8ArA3yYznu8L1xxKDx9TYsmB6p3GeuErC
+        hU6ChapgqO4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3656A100E56;
+        Fri,  9 Oct 2020 17:10:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4E21C100E55;
+        Fri,  9 Oct 2020 17:10:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 1/2] abspath: add a function to resolve paths with
+ missing components
+References: <20201009191511.267461-1-sandals@crustytoothpaste.net>
+        <20201009191511.267461-2-sandals@crustytoothpaste.net>
+Date:   Fri, 09 Oct 2020 14:10:04 -0700
+In-Reply-To: <20201009191511.267461-2-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 9 Oct 2020 19:15:10 +0000")
+Message-ID: <xmqqk0vzrtqr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CE4A30BA-0A73-11EB-9EF5-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-The core.commitGraph config setting can be set to 'false' to prevent
-parsing commits from the commit-graph file(s). This causes an issue when
-trying to write with "--split" which needs to distinguish between
-commits that are in the existing commit-graph layers and commits that
-are not. The existing mechanism uses parse_commit() and follows by
-checking if there is a 'graph_pos' that shows the commit was parsed from
-the commit-graph file.
+> We'd like to canonicalize paths such that we can preserve any number of
+> trailing components that may be missing.
 
-When core.commitGraph=false, we do not parse the commits from the
-commit-graph and 'graph_pos' indicates that no commits are in the
-existing file. The --split logic moves forward creating a new layer on
-top that holds all reachable commits, then possibly merges down into
-those layers, resulting in duplicate commits. The previous change makes
-that merging process more robust to such a situation in case it happens
-in the written commit-graph data.
+Sorry, but at least to me, the above gives no clue what kind of
+operation is desired to be done on paths.  How would one preserve
+what does not exist (i.e. are missing)?
 
-The easy answer here is to avoid writing a commit-graph if reading the
-commit-graph is disabled. Since the resulting commit-graph will would not
-be read by subsequent Git processes. This is more natural than forcing
-core.commitGraph to be true for the 'write' process.
+Do you mean some leading components in a path point at existing
+directories and after some point a component names a directory
+that does not exist, so everything after that does not yet exist
+until you "mkdir -p" them?
 
-Reported-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-commit-graph.txt | 4 +++-
- commit-graph.c                     | 5 +++++
- t/t5324-split-commit-graph.sh      | 3 ++-
- 3 files changed, 10 insertions(+), 2 deletions(-)
+I guess my confusion comes primarily from the fuzziness of the verb
+"canonicalize" in the sentence.  We want to handle a/b/../c/d and
+there are various combinations of missng and existing directories,
+e.g. a/b may not exist or a/b may but a/c may not, etc.  Is that
+what is going on?  Makes me wonder if it makes sense to canonicalize
+a/b/../c/d into a/c/d when a/b does not exist in the first place,
+though.
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index de6b6de230..e1f48c95b3 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -39,7 +39,9 @@ COMMANDS
- --------
- 'write'::
- 
--Write a commit-graph file based on the commits found in packfiles.
-+Write a commit-graph file based on the commits found in packfiles. If
-+the config option `core.commitGraph` is disabled, then this command will
-+output a warning, then return success without writing a commit-graph file.
- +
- With the `--stdin-packs` option, generate the new commit graph by
- walking objects only in the specified pack-indexes. (Cannot be combined
-diff --git a/commit-graph.c b/commit-graph.c
-index 0280dcb2ce..6f62a07313 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2160,6 +2160,11 @@ int write_commit_graph(struct object_directory *odb,
- 	int replace = 0;
- 	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
- 
-+	prepare_repo_settings(the_repository);
-+	if (!the_repository->settings.core_commit_graph) {
-+		warning(_("attempting to write a commit-graph, but 'core.commitGraph' is disabled"));
-+		return 0;
-+	}
- 	if (!commit_graph_compatible(the_repository))
- 		return 0;
- 
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index a314ce0368..4d3842b83b 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -442,8 +442,9 @@ test_expect_success '--split=replace with partial Bloom data' '
- 
- test_expect_success 'prevent regression for duplicate commits across layers' '
- 	git init dup &&
--	git -C dup config core.commitGraph false &&
- 	git -C dup commit --allow-empty -m one &&
-+	git -C dup -c core.commitGraph=false commit-graph write --split=no-merge --reachable 2>err &&
-+	test_i18ngrep "attempting to write a commit-graph" err &&
- 	git -C dup commit-graph write --split=no-merge --reachable &&
- 	git -C dup commit --allow-empty -m two &&
- 	git -C dup commit-graph write --split=no-merge --reachable &&
--- 
-gitgitgadget
+> Let's add a function to do
+> that that calls strbuf_realpath to find the canonical path for the
+> portion we do have and then append the missing part.  We adjust
+> strip_last_component to return us the component it has stripped and use
+> that to help us accumulate the missing part.
+
+OK, so if we have a/b/c/d and know a/b/c/d does not exist on the
+filesystem, we start by splitting it to a/b/c and d, see if a/b/c
+exists, and if not, do the same recursively to a/b/c to split it
+into a/b and c, and prefix the latter to 'd' that we split earlier
+(i.e. now we have a/b and c/d), until we have an existing directory
+on the first half?
+
+> Note that it is intentional that we invoke strbuf_realpath here,
+> repeatedly if necessary, because on Windows that function is replaced
+> with a version that uses the proper system semantics for
+> canonicalization.  Trying to adjust strbuf_realpath to perform this kind
+> of canonicalization with an additional option would fail to work
+> properly on Windows.  The present approach is equivalent to
+> strbuf_realpath for cases where the path exists, and the only other
+> cases where we will use this function the additional overhead of
+> multiple invocations is not significant.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  abspath.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++----
+>  cache.h   |  1 +
+>  2 files changed, 47 insertions(+), 4 deletions(-)
+>
+> diff --git a/abspath.c b/abspath.c
+> index 6f15a418bb..092bb33b64 100644
+> --- a/abspath.c
+> +++ b/abspath.c
+> @@ -11,8 +11,12 @@ int is_directory(const char *path)
+>  	return (!stat(path, &st) && S_ISDIR(st.st_mode));
+>  }
+>  
+> -/* removes the last path component from 'path' except if 'path' is root */
+> -static void strip_last_component(struct strbuf *path)
+> +/*
+> + * Removes the last path component from 'path' except if 'path' is root.
+> + *
+> + * If last is not NULL, the last path component is copied to last.
+> + */
+> +static void strip_last_component(struct strbuf *path, struct strbuf *last)
+>  {
+>  	size_t offset = offset_1st_component(path->buf);
+>  	size_t len = path->len;
+> @@ -20,6 +24,10 @@ static void strip_last_component(struct strbuf *path)
+>  	/* Find start of the last component */
+>  	while (offset < len && !is_dir_sep(path->buf[len - 1]))
+>  		len--;
+> +
+> +	if (last)
+> +		strbuf_addstr(last, path->buf + len);
+> +
+>  	/* Skip sequences of multiple path-separators */
+>  	while (offset < len && is_dir_sep(path->buf[len - 1]))
+>  		len--;
+> @@ -118,7 +126,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>  			continue; /* '.' component */
+>  		} else if (next.len == 2 && !strcmp(next.buf, "..")) {
+>  			/* '..' component; strip the last path component */
+> -			strip_last_component(resolved);
+> +			strip_last_component(resolved, NULL);
+>  			continue;
+>  		}
+>  
+> @@ -169,7 +177,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>  				 * strip off the last component since it will
+>  				 * be replaced with the contents of the symlink
+>  				 */
+> -				strip_last_component(resolved);
+> +				strip_last_component(resolved, NULL);
+>  			}
+>  
+>  			/*
+> @@ -202,6 +210,40 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>  	return retval;
+>  }
+>  
+> +/*
+> + * Like strbuf_realpath, but trailing components which do not exist are copied
+> + * through.
+> + */
+> +char *strbuf_realpath_missing(struct strbuf *resolved, const char *path)
+> +{
+> +	struct strbuf remaining = STRBUF_INIT;
+> +	struct strbuf trailing = STRBUF_INIT;
+> +	struct strbuf component = STRBUF_INIT;
+> +
+> +	strbuf_addstr(&remaining, path);
+> +
+> +	while (remaining.len) {
+> +		if (strbuf_realpath(resolved, remaining.buf, 0)) {
+> +			strbuf_addbuf(resolved, &trailing);
+> +
+> +			strbuf_release(&component);
+> +			strbuf_release(&remaining);
+> +			strbuf_release(&trailing);
+> +
+> +			return resolved->buf;
+> +		}
+> +		strip_last_component(&remaining, &component);
+> +		strbuf_insertstr(&trailing, 0, "/");
+> +		strbuf_insertstr(&trailing, 1, component.buf);
+
+I may be utterly confused, but is this where
+
+    - we started with a/b/c/d, pushed 'd' into trailing and decided
+      to redo with a/b/c
+
+    - now we split the a/b/c into a/b and c, and adjusting what is
+      in trailing from 'd' to 'c/d'
+
+happens place?  It's a bit sad that we need to repeatedly use
+insertstr to prepend in front, instead of appending.
+
+> +		strbuf_reset(&component);
+> +	}
+> +
+> +	strbuf_release(&component);
+> +	strbuf_release(&remaining);
+> +	strbuf_release(&trailing);
+> +	return NULL;
+> +}
+> +
+>  char *real_pathdup(const char *path, int die_on_error)
+>  {
+>  	struct strbuf realpath = STRBUF_INIT;
+> diff --git a/cache.h b/cache.h
+> index c0072d43b1..e1e17e108e 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1320,6 +1320,7 @@ static inline int is_absolute_path(const char *path)
+>  int is_directory(const char *);
+>  char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>  		      int die_on_error);
+> +char *strbuf_realpath_missing(struct strbuf *resolved, const char *path);
+>  char *real_pathdup(const char *path, int die_on_error);
+>  const char *absolute_path(const char *path);
+>  char *absolute_pathdup(const char *path);
