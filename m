@@ -2,136 +2,137 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 840DFC433DF
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D12CC433DF
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:57:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E3B7222BA
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:38:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 338FC22284
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 18:57:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Bx24jKMX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l3qlrmsL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731806AbgJISiR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 14:38:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35662 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730740AbgJIShz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 14:37:55 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C2CC0613D2
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 11:37:53 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id x20so4589050qkn.1
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 11:37:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=imskBWmgMbIMeK/q9KqDnZdjDF1a4HNKpeAAP2G9OqQ=;
-        b=Bx24jKMXSozTVvfsaSlRu/9hJrzWtwzWAclARlGOeC+weIvPSUNuBVSGKlit10K0bb
-         lCRRNYmhLy+AlHCo3PI6XjULC8Q6A7ngNXWNacpf7nR/m5YVb4WklgCpT0aSaGE477gi
-         hNTjhl9NjaScnOtuUGUupsaaftUUnNhXoK9N3YV3yISVCiYHpB8UWce+1DRm7vc7yEp3
-         mOTvSA5FRPDKXOOFvJxkpe+rgrc+3UwEDECs2urSYPQ9Jdsxf5toA5OAgGgcq7IOBuWo
-         IvpcS99Y/1gLkFWrLDdjyS0N0OK+ek2VC3TCSErqupZSWua4QTzAaCrBZy3AhODsxBwe
-         QqGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=imskBWmgMbIMeK/q9KqDnZdjDF1a4HNKpeAAP2G9OqQ=;
-        b=eSjFQnuA4goe9i9s9d4+EDPigQDBQ1NGDnuiMxDS2AZDlYCg0RmRYmhMzB+lTkeXdW
-         ZkTYi9VvBun6M0BsgEStMeFIDyClMJHAoTRdX5ETWcNqaBasYT5BmwbfoiyiC+CtzVB0
-         H5Gq2+D4OPXqXO5tQHRueN+ZGdhZ0fQQ1iSj39YySMh4Q4IvF5nvy0MZyzxADdaygpEw
-         4D0N9wyR2nC7hZPSDnNxjxvqKTIZe9pho190Df6XXJ235wRzn2oW5gic3V4WWAbiu3e/
-         8+Q7+yV7TW2TtIcJFHlvNueHpoASbeqn8NwmdUt43Mpk35HqKXxpP4ejyRLvMyP78gqK
-         Cqiw==
-X-Gm-Message-State: AOAM532ZtYho/GtPZrgLYKQNQw+UOmG/oj0tkDnl3llk9KiVCLJG0NgF
-        En5fid09BAnURquIF0zjbGEolA==
-X-Google-Smtp-Source: ABdhPJz8UypVjPPAEqpbjDL+X++FH9+XQEzMt4S+QkRe0td70MmkhOPXTpK7CUSKyO+PxbjgFYaC3A==
-X-Received: by 2002:a37:a68b:: with SMTP id p133mr13933909qke.272.1602268673038;
-        Fri, 09 Oct 2020 11:37:53 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:b0d1:9fbe:54fa:3044])
-        by smtp.gmail.com with ESMTPSA id p5sm5113222qtu.13.2020.10.09.11.37.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2020 11:37:52 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 14:37:50 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: 2.29.0.rc0.windows.1: Duplicate commit id error message when
- fetching
-Message-ID: <20201009183750.GA437683@nand.local>
-References: <20201008120658.GA2689590@coredump.intra.peff.net>
- <52782500-274e-2c72-39e2-be4252959d47@gmail.com>
- <5bbdaed5-df29-8bfe-01c2-eb2462dcca22@gmail.com>
- <267a9f46-cce9-0bd3-f28d-55e71cc8a399@virtuell-zuhause.de>
- <0d25e0ab-31ab-54c2-b518-bd9c0b0c4b7a@gmail.com>
- <2f30099a-4a3d-00f7-bb08-ca6c1f76bcd4@virtuell-zuhause.de>
- <64de22fd-2e1b-aaab-3a8e-f6f1d630a46e@gmail.com>
- <20201009175506.GA957408@coredump.intra.peff.net>
- <20201009182833.GA437455@nand.local>
- <4c138121-ef58-c870-60b2-8140e6e0cbee@gmail.com>
+        id S2388301AbgJIS5C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 14:57:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56024 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388231AbgJIS5B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 14:57:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 062C7DC1ED;
+        Fri,  9 Oct 2020 14:56:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EXHesWrSz3iOSKb/qP7oJokoE2k=; b=l3qlrm
+        sLsARLWMJTMLobH/x2oTSbc2W10Ug+odgl720s1IAut84iMDCT0O2WpLIyxw3cVU
+        HxLprjZkJsrRxCZLoRGFCCpFUcy2gvj1+lAQ5vYFawJCgEmT1RxECqPZcqir5OWJ
+        MlTC1vzvC4Iw9pEQC9HoD+IaGyWqfv9ydP6V8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xRJdlZon4anIe4gjn04kT/wkKpsYSESs
+        m5Hl9+v1d0WEk/6e4TfVvpnCQ7YScA5KcPVTsZlxKxwAtDeoGbn39V0Jm7p4Ibun
+        4E34bVKzkMTIG/vquv4/+oSPo2O1x6szOfOmQgyb7maRv1MYOrK8no2g5Q3gVJYV
+        MM7WG8QZ2wY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F3543DC1EB;
+        Fri,  9 Oct 2020 14:56:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8C6FADC1E9;
+        Fri,  9 Oct 2020 14:56:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Chris Webster <chris@webstech.net>,
+        "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ci: github action - add check for whitespace errors
+References: <pull.709.git.1600759684548.gitgitgadget@gmail.com>
+        <20200922170745.GA541915@coredump.intra.peff.net>
+        <xmqq1ritlmrk.fsf@gitster.c.googlers.com>
+        <CAGT1KpU4Kjv2PEAA7-bNbGp2DFvfsKqABuUK68128xkLjdcEhA@mail.gmail.com>
+        <CAGT1KpXz4nFBu2xkVSaoW4DgXc_5oB69MQRQW=365gfgd_R-mQ@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2010091519460.50@tvgsbejvaqbjf.bet>
+        <xmqqtuv3tlkv.fsf@gitster.c.googlers.com>
+        <20201009175917.GA963340@coredump.intra.peff.net>
+        <xmqqeem7tgh4.fsf@gitster.c.googlers.com>
+        <20201009181827.GA965760@coredump.intra.peff.net>
+Date:   Fri, 09 Oct 2020 11:56:52 -0700
+In-Reply-To: <20201009181827.GA965760@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 9 Oct 2020 14:18:27 -0400")
+Message-ID: <xmqq8scfteh7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4c138121-ef58-c870-60b2-8140e6e0cbee@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 32D5932A-0A61-11EB-805D-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 09, 2020 at 02:33:02PM -0400, Derrick Stolee wrote:
-> > Makes sense; the second commit-graph write won't know that 'one' is
-> > already in the graph because 'core.commitGraph' prevents
-> > 'prepare_commit_graph()' from actually loading the graph (actually
-> > loading the graph would be enough to stop the second write from
-> > occurring at all.)
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Oct 09, 2020 at 11:13:43AM -0700, Junio C Hamano wrote:
 >
-> Right. We aren't parsing from the commit-graph, so we don't see
-> that these commits are already in the file.
-
-OK, I feel even better knowing that you and I both agree on the cause of
-this buglet ;-).
-
-This also makes me think that this has probably existed since the
-beginning of commit-graphs, and that it only became easier to tickle in
-recent releases with things like '--split=no-merge'.
-
-> >   - But on the other hand, writing a commit graph with `core.commitGraph` set
-> >     to false makes no sense. So, I'd almost rather have us die()
-> >     immediately if core.commitGraph is set to false.
+>> > As the other person in the discussion, I'm sufficiently convinced that
+>> > doing this just for PRs is a good step for now. I.e., I think the
+>> > "completed form" is just what was posted already (though I agree it is
+>> > often convenient to the maintainer to re-post the patch as part of the
+>> > ping).
+>> 
+>> Yes, and CC'ing those who were involved in the review would give
+>> them the last chance to say "oh, no, that extra change you added
+>> for this final submission was not something I meant to suggest!",
+>> etc.
+>> 
+>> So, is <pull.709.git.1600759684548.gitgitgadget@gmail.com> as-is the
+>> one we should take?
 >
-> I agree that we should just give up, but die() would not be correct.
-> We should just "return 0", possibly with a warning.
+> AFAIK it's the only one on the list. :) So yes, that one is fine with
+> me.
 
-Yeah; that sounds much better.
+Thanks.
 
-> > I think I'd advocate for the latter, along with Stolee's patch to not
-> > die in the case of duplicate commits in multiple layers of the graph.
->
-> If we agree that writing a commit-graph makes no sense if the feature
-> is disabled, then I can include a patch that has a test similar to
-> Peff's and that change.
+Another thing the resending does is that it can credit who helped
+the patch into the final shape with Reviewed-by/Helped-by etc.  If
+the maintainer must hunt for the names of those who had input to the
+discussion and judge the degree of contribution for a topic whose
+review has been delegated to trusted others, that defeats the whole
+point of delegation (I think the attached clarification may help).
 
-Sounds good. I'm certainly on board, but I want to hear what others
-think, too.
+For this particular patch, I added Reviewed-by: naming you before
+applying.
 
-I thought that we had a configuration variable to control whether or not
-we write changed-path Bloom filters, so I was going to ask about what we
-should do if that was set to false, and the caller passed
-'--changed-paths'. But, I guess that my memory was wrong, since I
-couldn't find such a variable to begin with (we _do_ have
-'commitGraph.readChangedPaths', but since that only controls reading no
-additional special care has to be taken).
+Thanks.
 
-Thanks for working on this.
+ Documentation/SubmittingPatches | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-> Thanks,
-> -Stolee
-
-Thanks,
-Taylor
+diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
+index 291b61e262..87089654ae 100644
+--- c/Documentation/SubmittingPatches
++++ w/Documentation/SubmittingPatches
+@@ -290,12 +290,14 @@ identify them), to solicit comments and reviews.
+ :git-ml: footnote:[The mailing list: git@vger.kernel.org]
+ 
+ After the list reached a consensus that it is a good idea to apply the
+-patch, re-send it with "To:" set to the maintainer{current-maintainer} and "cc:" the
+-list{git-ml} for inclusion.
++patch, re-send it with "To:" set to the maintainer{current-maintainer}
++and "cc:" the list{git-ml} for inclusion.  This is especially relevant
++when the maintainer did not heavily participate in the discussion and
++instead left the review to trusted others.
+ 
+ Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:` and
+ `Tested-by:` lines as necessary to credit people who helped your
+-patch.
++patch, and "cc:" them when sending such a final version for inclusion.
+ 
+ [[sign-off]]
+ === Certify your work by adding your "Signed-off-by: " line
