@@ -2,161 +2,143 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F6F1C433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2993C433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:42:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 329AF22244
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:29:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 606FA22277
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:42:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awTnfBD8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BBM6fLoi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732019AbgJIH33 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 03:29:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44738 "EHLO
+        id S1732095AbgJIHmL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 03:42:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732006AbgJIH31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 03:29:27 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209CEC0613D2
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 00:29:26 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id w5so9147274wrp.8
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 00:29:26 -0700 (PDT)
+        with ESMTP id S1726326AbgJIHmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 03:42:11 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB45C0613D2
+        for <git@vger.kernel.org>; Fri,  9 Oct 2020 00:42:11 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id o9so3829874ilo.0
+        for <git@vger.kernel.org>; Fri, 09 Oct 2020 00:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0Bh/IUY86XNmqOkLMHoiDV6SsM4pRlD6jmKOeLCI3Y4=;
-        b=awTnfBD86lxmVAAQg4fsPxAkLxiWJttCEXW8uUiSpPB5SJ8scmQg4HGItDulWZL8iQ
-         m7wLHXqpVemj36N6BDg6Z7u4jsyrSm9NDSwT5LjAHK+TXV4UdnHYOhXaJ3ZZjqVZnIZA
-         z7EiCFmTAD/wGnQ+F4gabvAv3UUOcEJMa40gj3NJNrlsf/WeG74azyv9pxEije5jxrtK
-         7JvuANj9x65D0gpsmduTYPGVORrja/n7fp78VFMj4cH20+HV+9YAlI70aQuXOy7URKYi
-         /4L0yfkNv7Kwutk48Np9+hkF02ye1K0vdBt8yZ0EYxgY/+j6FkWKKFAMz8VEdVHxXub1
-         Gd1A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3oG9deTibpFKMUW3yag8DOq7r7i/RFzq5B1TwUOPTaY=;
+        b=BBM6fLoiv4b4U15xC1PlzByEjW4jFDn2a7WI7MlKXcPb6xBcrm+UyeLx6Pg6WKjiah
+         B3EL8MOoRAMvrS/qgq1dXGPdspwAyJ23KJB5R55v+cze6j19ln9SO8Duu94M74eQ3Qgf
+         gph6JrmuyijpfULouAaf+LNEuTgOZpHmZaTKHp9zZkIT/O7GMn9aOL12GTJT6a2evaSJ
+         2vuB6H5vHUUqZLldEuTF8iDN6NZ2vFKnT47Rnkkt/Fd7G90TOpZBQ/ckjAA1yss4jkQP
+         bnwBW0j0rkS7kIdPINiRwzIN2jFzwWff4kVRexe9USyGKk+4p1czPsTcn47kq7zbj0Yt
+         lNBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0Bh/IUY86XNmqOkLMHoiDV6SsM4pRlD6jmKOeLCI3Y4=;
-        b=FkHitfvhjzizBdfOdhAKbLdrcDzKsTP3qZ44sRxwZosBr0bT7v6LjlHWrJngKm8Bpu
-         +JztmTrC+1Jk5d3oUuv8Cr+vB0XE9Ws/xSV/tKFsRdOlJV4BsOMAUGHdJNO/DkXThHwX
-         /DTff/zt+TwJai6nUiOW43RJ5ilDI9rqI5yoaUH/iCcm1H0DQJAweE81O+s7IuPCKd8z
-         IVipINFLEojwrznCjEGRlKFYVOELWYQKI0ImGIubc73BpEG7IsjXmA8lBlOjKzoCx2Va
-         uikeUBaPfUpf4/cK/Ok7H05gEUOfDuj2UbD03SCGkMmkVHqXQvHdLzIgfhYInhgxYZK8
-         Xm9w==
-X-Gm-Message-State: AOAM530RQnT50cM/ZyOphen0Qmd409PIdqMDW2P7XN3wbtLn3uVkFxi8
-        ADEaa2CM2bssYdmy3QXMAPEc2npjj8Q=
-X-Google-Smtp-Source: ABdhPJzGp/BykE57Fs31lI35gvJo2ly12aCcJZ2LiexEA+CnK8klwWvL72FuPDXBVTB5FYVataL4Ug==
-X-Received: by 2002:a5d:4c86:: with SMTP id z6mr12819460wrs.23.1602228564849;
-        Fri, 09 Oct 2020 00:29:24 -0700 (PDT)
-Received: from szeder.dev (92-249-246-51.pool.digikabel.hu. [92.249.246.51])
-        by smtp.gmail.com with ESMTPSA id d2sm398306wrq.34.2020.10.09.00.29.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Oct 2020 00:29:24 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 09:29:22 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] ci: skip GitHub workflow runs for already-tested
- commits/trees
-Message-ID: <20201009072922.GC24813@szeder.dev>
-References: <pull.619.git.1587748660308.gitgitgadget@gmail.com>
- <pull.619.v2.git.1602170976.gitgitgadget@gmail.com>
- <914868d558b1aa8ebec6e9196c5ae83a2bd566bf.1602170976.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3oG9deTibpFKMUW3yag8DOq7r7i/RFzq5B1TwUOPTaY=;
+        b=PEd0gXN4kfrpftDb/CWT8DiPNTkclLoZzVCK+eVXpgYOChDID2t0gI6LoxJSR7OluJ
+         B1g8E7hImC3EpALlA6LwGCEVFwGx992WIg/fiKhi39cAYuChzC+vxmEmuLOQL8NjjsA6
+         85/5yYrOUGVXtg9yBD3uO/oS5GXSyvNMHTEn3ECAf0DOpO2hC18D4b6X+zNIap580tBR
+         SEwMV2lPpuZlw8ihhbJX+knZtILQPMYl8YO0WUCamgfydOItQZY8XTvCWc8B8Hx8sasl
+         tKCGssN+idRDbvCrrGhXk4BNpG70iVyEJxYydmIUwW/WNsrI9Ng88TaaKkUwsxJEOdQg
+         6pcw==
+X-Gm-Message-State: AOAM533O5nXO242qYdE/W40CBitMmLyVDq5oEnnl/khv6MoTLqWpoy/Y
+        yNlXnLlsIpr3e7TXWwwUPYW2jgDvdXSf0j2aaaYb0p9N
+X-Google-Smtp-Source: ABdhPJxARADmzviz5Zv8VeE0IIN0XnAVVRQLNENrNqNBdjHjJ/fWV71OJk5nyg7Ny/H/iVamD8tvg0Gfzx48MTEXvIM=
+X-Received: by 2002:a05:6e02:10:: with SMTP id h16mr8837178ilr.5.1602229330423;
+ Fri, 09 Oct 2020 00:42:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <914868d558b1aa8ebec6e9196c5ae83a2bd566bf.1602170976.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
+ <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
+In-Reply-To: <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
+From:   Sangeeta NB <sangunb09@gmail.com>
+Date:   Fri, 9 Oct 2020 13:11:59 +0530
+Message-ID: <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
+Subject: Re: [Outreachy] Introduction
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 08, 2020 at 03:29:34PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> When pushing a commit that has already passed a CI or PR build
-> successfully, it makes sense to save some energy and time and skip the
-> new build.
-> 
-> Let's teach our GitHub workflow to do that.
-> 
-> For good measure, we also compare the tree ID, which is what we actually
-> test (the commit ID might have changed due to a reworded commit message,
-> which should not affect the outcome of the run).
+Thanks for the explanation, Philips. I think there's a long road ahead
+to understand how everything is implemented and put together.
 
-We have been doing this on Travis CI for a few years now.  Does that
-approach not work on GitHub actions?  Please explain in the commit
-message why a different approach is taken here.
+Coming to the microproject, it was said that there is an inconsistency
+in --dirty behavior shown by `git diff` and `git describe --dirty` for
+submodule state when the files are untracked.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .github/workflows/main.yml | 39 +++++++++++++++++++++++++++++++++++++-
->  1 file changed, 38 insertions(+), 1 deletion(-)
-> 
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 5bd321e5e1..7391b46d61 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -9,7 +9,7 @@ jobs:
->    ci-config:
->      runs-on: ubuntu-latest
->      outputs:
-> -      enabled: ${{ steps.check-ref.outputs.enabled }}
-> +      enabled: ${{ steps.check-ref.outputs.enabled }}${{ steps.skip-if-redundant.outputs.enabled }}
->      steps:
->        - name: try to clone ci-config branch
->          continue-on-error: true
-> @@ -35,6 +35,43 @@ jobs:
->              enabled=no
->            fi
->            echo "::set-output name=enabled::$enabled"
-> +      - name: skip if the commit or tree was already tested
-> +        id: skip-if-redundant
-> +        uses: actions/github-script@v3
-> +        if: steps.check-ref.outputs.enabled == 'yes'
-> +        with:
-> +          github-token: ${{secrets.GITHUB_TOKEN}}
-> +          script: |
-> +            // Figure out workflow ID, commit and tree
-> +            const { data: run } = await github.actions.getWorkflowRun({
-> +              owner: context.repo.owner,
-> +              repo: context.repo.repo,
-> +              run_id: context.runId,
-> +            });
-> +            const workflow_id = run.workflow_id;
-> +            const head_sha = run.head_sha;
-> +            const tree_id = run.head_commit.tree_id;
-> +
-> +            // See whether there is a successful run for that commit or tree
-> +            const { data: runs } = await github.actions.listWorkflowRuns({
-> +              owner: context.repo.owner,
-> +              repo: context.repo.repo,
-> +              per_page: 500,
-> +              status: 'success',
-> +              workflow_id,
-> +            });
-> +            for (const run of runs.workflow_runs) {
-> +              if (head_sha === run.head_sha) {
-> +                core.warning(`Successful run for the commit ${head_sha}: ${run.html_url}`);
-> +                core.setOutput('enabled', ' but skip');
-> +                break;
-> +              }
-> +              if (tree_id === run.head_commit.tree_id) {
-> +                core.warning(`Successful run for the tree ${tree_id}: ${run.html_url}`);
-> +                core.setOutput('enabled', ' but skip');
-> +                break;
-> +              }
-> +            }
->  
->    windows-build:
->      needs: ci-config
-> -- 
-> gitgitgadget
-> 
+From what I understood by looking at the code, the diff files states
+that we should ignore untracked submodule states. So is it that I have
+to make changes in the way git describe is implemented by ignoring the
+changes in the untracked submodule?
+
+Also, I wasn't able to look for this inconsistency in my local
+machine. Any pointers on how to reproduce this might be helpful.
+
+Thanks and regards,
+
+Sangeeta
+
+On Thu, Oct 8, 2020 at 2:37 PM Phillip Wood <phillip.wood123@gmail.com> wro=
+te:
+>
+> Hi Sangeeta
+>
+> On 07/10/2020 21:10, Sangeeta NB wrote:
+> > Hello everyone,
+>
+> Welcome to the list
+>
+> > My name is Sangeeta and I=E2=80=99m one of the Outreachy applicants.  I=
+ would
+> > like to work on the microproject "Unify the meaning of dirty between
+> > diff and describe".
+> >
+> > While looking at the files for `describe` and `diff` commands I found
+> > that the `describe.c`  is present in builtin[1] folder whereas diff.c
+> > is found in the root[2] folder as well as builtin[3] folder. I could
+> > not find any implementation of --dirty in the diff.c present in
+> > builtin[3] folder. So is it that I have to compare the implementation
+> > of describe.c[1] and diff.c(of root folder)?
+> >
+> > Also, I was curious to know why is there a builtin folder when many
+> > commands described in that are described again in the root folder?
+>
+> The files in the root directory are (mostly) library code that ends up
+> in libgit.a. The builtin directory contains the individual git commands
+> that form the git binary that is linked with libgit.a. builtin/diff.c
+> contains cmd_diff() which will be called when the user runs `git diff`.
+> That function parses the command line options and sets up the necessary
+> data to pass to the diff implementation in /diff.c. The diff and log
+> family of commands are a bit different to most of the other commands in
+> that the option parsing is mostly done by calling setup_revisions() in
+> /revision.c rather than using the option parsing library routines in
+> /parse-options.c directly. I think the `--dirty` option for diff ends up
+> being handled by handle_ignore_submodules_arg() in submodule.c, I'll
+> leave it to you to see where that is called from (you can use `git grep`)=
+.
+>
+> I'm going to be off line for the rest of today, hopefully someone else
+> will be able to help if you get stuck or I'll try and answer any other
+> questions tomorrow.
+>
+> Best Wishes
+>
+> Phillip
+>
+> > Looking forward to working with you all.
+> >
+> > Sangeeta
+> > [1] https://github.com/git/git/blob/master/builtin/describe.c
+> > [2] https://github.com/git/git/blob/master/builtin/diff.c
+> > [3] https://github.com/git/git/blob/master/diff.c
+> >
