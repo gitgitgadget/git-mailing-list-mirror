@@ -5,140 +5,123 @@ X-Spam-Level:
 X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2993C433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7076C433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 606FA22277
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:42:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 274F522267
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 07:48:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BBM6fLoi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YS5oNpj6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732095AbgJIHmL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 03:42:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46702 "EHLO
+        id S1732288AbgJIHsp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 03:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726326AbgJIHmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 03:42:11 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB45C0613D2
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 00:42:11 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id o9so3829874ilo.0
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 00:42:11 -0700 (PDT)
+        with ESMTP id S1730467AbgJIHso (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 03:48:44 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB864C0613D2
+        for <git@vger.kernel.org>; Fri,  9 Oct 2020 00:48:42 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id e2so8879969wme.1
+        for <git@vger.kernel.org>; Fri, 09 Oct 2020 00:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3oG9deTibpFKMUW3yag8DOq7r7i/RFzq5B1TwUOPTaY=;
-        b=BBM6fLoiv4b4U15xC1PlzByEjW4jFDn2a7WI7MlKXcPb6xBcrm+UyeLx6Pg6WKjiah
-         B3EL8MOoRAMvrS/qgq1dXGPdspwAyJ23KJB5R55v+cze6j19ln9SO8Duu94M74eQ3Qgf
-         gph6JrmuyijpfULouAaf+LNEuTgOZpHmZaTKHp9zZkIT/O7GMn9aOL12GTJT6a2evaSJ
-         2vuB6H5vHUUqZLldEuTF8iDN6NZ2vFKnT47Rnkkt/Fd7G90TOpZBQ/ckjAA1yss4jkQP
-         bnwBW0j0rkS7kIdPINiRwzIN2jFzwWff4kVRexe9USyGKk+4p1czPsTcn47kq7zbj0Yt
-         lNBw==
+         :cc;
+        bh=NPazIjOleca3MlPlk7O4g/lav9Bqy0pibQY050zPbs0=;
+        b=YS5oNpj6ab8JMThmN5f/wDTdBgik9f4mVdwdOMWzmR8BLS35xird8a0yFNsLe/eGz+
+         xGfZlMrSqtUEINejOJUxR8mPPUwjUJgakQUDI98xobhlhwP6liG+bagmZ5VuXed0k7uc
+         Pg1j0VIPYbpk0ITfW97Jp5a0AgfUFnH1ztE1td5i/qfZD/H66uI5N4Fl76jsTRuwbujO
+         UATUxhxwD7ibsNC6KXOp5pVW5xaXef+dI+TclCAM9jouusk+XL80ffRoG4uPXJV/xknR
+         +1PFwPB4AZeYPAJ2ziIyJFyLX4MmdWlQTK5Z85uGpsE86XD9JFsHLYayUNUeIWmroDfH
+         acyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3oG9deTibpFKMUW3yag8DOq7r7i/RFzq5B1TwUOPTaY=;
-        b=PEd0gXN4kfrpftDb/CWT8DiPNTkclLoZzVCK+eVXpgYOChDID2t0gI6LoxJSR7OluJ
-         B1g8E7hImC3EpALlA6LwGCEVFwGx992WIg/fiKhi39cAYuChzC+vxmEmuLOQL8NjjsA6
-         85/5yYrOUGVXtg9yBD3uO/oS5GXSyvNMHTEn3ECAf0DOpO2hC18D4b6X+zNIap580tBR
-         SEwMV2lPpuZlw8ihhbJX+knZtILQPMYl8YO0WUCamgfydOItQZY8XTvCWc8B8Hx8sasl
-         tKCGssN+idRDbvCrrGhXk4BNpG70iVyEJxYydmIUwW/WNsrI9Ng88TaaKkUwsxJEOdQg
-         6pcw==
-X-Gm-Message-State: AOAM533O5nXO242qYdE/W40CBitMmLyVDq5oEnnl/khv6MoTLqWpoy/Y
-        yNlXnLlsIpr3e7TXWwwUPYW2jgDvdXSf0j2aaaYb0p9N
-X-Google-Smtp-Source: ABdhPJxARADmzviz5Zv8VeE0IIN0XnAVVRQLNENrNqNBdjHjJ/fWV71OJk5nyg7Ny/H/iVamD8tvg0Gfzx48MTEXvIM=
-X-Received: by 2002:a05:6e02:10:: with SMTP id h16mr8837178ilr.5.1602229330423;
- Fri, 09 Oct 2020 00:42:10 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=NPazIjOleca3MlPlk7O4g/lav9Bqy0pibQY050zPbs0=;
+        b=tnIBkhrZcJ9ypjTT1PE9Mo5YHMHxi99FBD0BYF9VR9NalSrRRyC9MTquFsh24JfYN/
+         9BKhfH3lWrbBEJFk7GV8TeuG6jEsWDOjT1hsZGQYi08FzYk3Mmg+UpWxYf665b7iuu6b
+         X5Da7RbYabFoNcoGl0fhtbq2sGnYoI4f18qP0qj9kAPbqLM1HN7bsBuIktcv16iW766s
+         GZiGagEmpXbIkNjM3FHz5Nd6gRYX4Vbl8sezTNh7e85u9UnG37HAVvlnLn3UnzFP2sl3
+         iEGEIv9id5Iv7jaSPGdBO1axXTtE9ScgkTBUlaTEsDL7qSlrTswQVythIcFLnk1krs57
+         14WA==
+X-Gm-Message-State: AOAM530L24WNEgEUPENjkLgkx20+g9vcQzcOpTss4K2WiMyM+nXDQH1L
+        wrEqzTs/IX0bnmn4g01J2NKbAtrlQ7WvtOooANP1yWV+XLRrng==
+X-Google-Smtp-Source: ABdhPJzyZPE6FYb1EqDDu+opGughwOt5KTiW+ZLwpm//8l53YI2z2B1BUmjkuioYhNhVCJTiwM7OxQRihuDJV9jp25s=
+X-Received: by 2002:a1c:9910:: with SMTP id b16mr12069304wme.64.1602229721533;
+ Fri, 09 Oct 2020 00:48:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
- <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
-In-Reply-To: <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
-From:   Sangeeta NB <sangunb09@gmail.com>
-Date:   Fri, 9 Oct 2020 13:11:59 +0530
-Message-ID: <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
-Subject: Re: [Outreachy] Introduction
-To:     phillip.wood@dunelm.org.uk
+References: <CAGxm6oXSaKoTR3btKRV4bMYUsc3-oKeWSfzrWKkCXgrRorAEAQ@mail.gmail.com>
+ <20201009002541.GB2415320@google.com>
+In-Reply-To: <20201009002541.GB2415320@google.com>
+From:   Amanda Shafack <shafack.likhene@gmail.com>
+Date:   Fri, 9 Oct 2020 08:47:06 +0100
+Message-ID: <CAGxm6oU+cn7=St=1VjP1L9VZutdM2k1ui9=FsLxak8yg_-YCQg@mail.gmail.com>
+Subject: Re: Introduction - An Outreachy 2020 Applicant
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the explanation, Philips. I think there's a long road ahead
-to understand how everything is implemented and put together.
+Thanks for the details, Jonathan.
+I'll get right on it
 
-Coming to the microproject, it was said that there is an inconsistency
-in --dirty behavior shown by `git diff` and `git describe --dirty` for
-submodule state when the files are untracked.
 
-From what I understood by looking at the code, the diff files states
-that we should ignore untracked submodule states. So is it that I have
-to make changes in the way git describe is implemented by ignoring the
-changes in the untracked submodule?
-
-Also, I wasn't able to look for this inconsistency in my local
-machine. Any pointers on how to reproduce this might be helpful.
-
-Thanks and regards,
-
-Sangeeta
-
-On Thu, Oct 8, 2020 at 2:37 PM Phillip Wood <phillip.wood123@gmail.com> wro=
-te:
+On Fri, Oct 9, 2020 at 1:25 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
-> Hi Sangeeta
+> +wireshark-dev@wireshark.org
+> Hi Amanda,
 >
-> On 07/10/2020 21:10, Sangeeta NB wrote:
-> > Hello everyone,
+> Amanda Shafack wrote:
 >
-> Welcome to the list
->
-> > My name is Sangeeta and I=E2=80=99m one of the Outreachy applicants.  I=
- would
-> > like to work on the microproject "Unify the meaning of dirty between
-> > diff and describe".
+> > I am Amanda Shafack, an Outreachy 2020 applicant who wishes to
+> > contribute to the "Add Git protocol support to Wireshark" project.
 > >
-> > While looking at the files for `describe` and `diff` commands I found
-> > that the `describe.c`  is present in builtin[1] folder whereas diff.c
-> > is found in the root[2] folder as well as builtin[3] folder. I could
-> > not find any implementation of --dirty in the diff.c present in
-> > builtin[3] folder. So is it that I have to compare the implementation
-> > of describe.c[1] and diff.c(of root folder)?
+> > In addition, I have some experience coding in C and I hope to enhance
+> > my skill set by contributing to this project.
 > >
-> > Also, I was curious to know why is there a builtin folder when many
-> > commands described in that are described again in the root folder?
+> > I am currently going through the project description and contribution
+> > guidelines.
 >
-> The files in the root directory are (mostly) library code that ends up
-> in libgit.a. The builtin directory contains the individual git commands
-> that form the git binary that is linked with libgit.a. builtin/diff.c
-> contains cmd_diff() which will be called when the user runs `git diff`.
-> That function parses the command line options and sets up the necessary
-> data to pass to the diff implementation in /diff.c. The diff and log
-> family of commands are a bit different to most of the other commands in
-> that the option parsing is mostly done by calling setup_revisions() in
-> /revision.c rather than using the option parsing library routines in
-> /parse-options.c directly. I think the `--dirty` option for diff ends up
-> being handled by handle_ignore_submodules_arg() in submodule.c, I'll
-> leave it to you to see where that is called from (you can use `git grep`)=
-.
+> Welcome!
 >
-> I'm going to be off line for the rest of today, hopefully someone else
-> will be able to help if you get stuck or I'll try and answer any other
-> questions tomorrow.
+> Since this project would involve Git (for Git protocol) and Wireshark
+> (where the dissector goes), we're comfortable working with you on
+> contributions to both Git and Wireshark during the application[1]
+> period.
 >
-> Best Wishes
+> https://gitlab.com/wireshark/wireshark/-/wikis/Development/ has some
+> pointers on getting started with Wireshark development.  I'm cc-ing
+> the wireshark developers list in case they have suggestions for an
+> approachable "first patch" idea to get used to that project's
+> contribution flow.
 >
-> Phillip
+> It's also a good idea to build and run wireshark and see if anything
+> strikes your eye as something you'd be interested in seeing work
+> differently.
 >
-> > Looking forward to working with you all.
-> >
-> > Sangeeta
-> > [1] https://github.com/git/git/blob/master/builtin/describe.c
-> > [2] https://github.com/git/git/blob/master/builtin/diff.c
-> > [3] https://github.com/git/git/blob/master/diff.c
-> >
+> For Git we have some suggestions for microprojects at
+> https://git.github.io/Outreachy-21-Microprojects/
+>
+> Thanks for writing, and I look forward to working with you.  These are
+> two open source projects that I love and I hope you enjoy working with
+> them, too. :)
+>
+> Sincerely,
+> Jonathan
+>
+> [1] https://www.outreachy.org/apply/
+
+
+
+-- 
+
+Cheers!
+
+Amanda  Shafack
