@@ -2,215 +2,148 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74F83C433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 21:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 211F7C433E7
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 22:50:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D13622282
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 21:17:31 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ngx/V/ex"
+	by mail.kernel.org (Postfix) with ESMTP id E9A6022314
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 22:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388815AbgJIVRa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 17:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60556 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731914AbgJIVRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 17:17:30 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6120C0613D2
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 14:17:29 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id a9so9066710qto.11
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 14:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YQPmmRIKLjQ99p8eK0xmM1cMGpw+k47vqcY0PH7TkYY=;
-        b=ngx/V/ex2FfaBEPFBlVK4kUH1wKp5Yy1fNWNwo2vGOqH2tPqSgTnYwe5IdDvZzGszU
-         8bv0403ZSBeNuoNBOSRhx8odLK7ds+mzT139r2slDXTHVPJHtdUysFeyBoAYJbglQa++
-         xc1gKem61u5TNEEA1Dbd3nJ7kdPS99mOFldRDSJJVWMNdYE0BnvDn39t+v0pQqP6MFdQ
-         MPsEmMk2URrRwJLsmTGPIybgUxuQ+Yp6yq34oHPJuLXrEfpa5KzDmfSAoEHidDlWf3kc
-         ZBz4XqOrT/Zt8hLGjwifaXJqr2ohuThEUJfnrQqjlAf89S62PIykvbH2M0+PSkuTLf+k
-         YXhA==
+        id S2392013AbgJIWuo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 18:50:44 -0400
+Received: from mail-ej1-f68.google.com ([209.85.218.68]:45362 "EHLO
+        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391164AbgJIWuP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 18:50:15 -0400
+Received: by mail-ej1-f68.google.com with SMTP id dt13so15327011ejb.12
+        for <git@vger.kernel.org>; Fri, 09 Oct 2020 15:50:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YQPmmRIKLjQ99p8eK0xmM1cMGpw+k47vqcY0PH7TkYY=;
-        b=Qvt8My5FCJ3AIfQHZ5yHLz59ad4aHbI6QH7W8dhjMhYxy6Nk5eVljLiPji8vYAH2V7
-         ju6j1lBZ9+kAlCTIVgdUszwkwv4L0WX2ss75B8C4V1aVPpDUTsRaha/K2+XTDtvvCaL/
-         ulGtkaE46ya9fdaghpljXTzyFEGopip4oEAM7DihXCwMhO5Kw5X5UxkUI1NQBD4z+9jq
-         oCbME+upeYGUGo7KrCLPpGggl/op1HNgcsBCJrbN42SDi3wKVIIPch9j2QxUA5IGoTtI
-         6x9xQhoHyzirHRcBvuTnhYSPb6rmh9BqMJxNTIrCClLc2XgJSJdRDaMxegwoOAhfCoTT
-         Vr7Q==
-X-Gm-Message-State: AOAM530q2qXjHvqabqsE/750Yfyl6hQlKQ1aRE1BFshy5gJIq4fe0PSf
-        Is03HP+KPyg77N6WXNT9tUHvJg==
-X-Google-Smtp-Source: ABdhPJzGB2eQZkPmKozWF1q98Iz8/p9FmHaX0XSw01o9vkiF9Xa5qs9VF3FnnwCh/p+P4hmVcDn2/A==
-X-Received: by 2002:ac8:6c3a:: with SMTP id k26mr8505127qtu.169.1602278248896;
-        Fri, 09 Oct 2020 14:17:28 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:b0d1:9fbe:54fa:3044])
-        by smtp.gmail.com with ESMTPSA id q6sm6916222qkc.85.2020.10.09.14.17.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2020 14:17:28 -0700 (PDT)
-Date:   Fri, 9 Oct 2020 17:17:25 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 2/2] commit-graph: don't write commit-graph when
- disabled
-Message-ID: <20201009211725.GA450854@nand.local>
-References: <pull.747.v3.git.1602169479482.gitgitgadget@gmail.com>
- <pull.747.v4.git.1602276832.gitgitgadget@gmail.com>
- <4439e8ae8fdc9abf28df29d3038a1483d9084cf2.1602276832.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XbXY+FMpb0TEv4OQoqQf4ucYFM7EDdtmbrGC6TBML9E=;
+        b=kPB02u6J1+5BcDAXFRS2YsUy5QjydDDCjG9iifZ9gKB2D9ICWtRZhjh5Wd2Ro0b7QB
+         5dAe8R52VS1bbWJOuiyEzdChuOlo2pVGsZRl0KSMuQKBz18SaennR/uHyGvNJ5S/GMAh
+         seG9R8uUa21x1LUucqEJQwcIw5ynCTL3nG86AgKNZk18WgbodjkLEkjZHDLKlwrAkMuo
+         1+f/q3MXylzavkHoAmsP4br/BF0aWlY+YVMsARROPIPgTLJSiTnJDMOJm8zxXtR2G6kH
+         hud7MlVCx2Vb9io2AGFh72E2cycQ8WePSbELI87LwaWXxG4MD1Vd7VhC8bZWOYdi7q9H
+         iG1A==
+X-Gm-Message-State: AOAM531GWYLAil/S2DGowXYxSJByqZ8GIhi+owix852e1LABeiLrqL6v
+        6JtoTgn+78zZi/naGDG7sMOrYmB9/dWSRNFq8kM=
+X-Google-Smtp-Source: ABdhPJwjC44OQBXXW4QR6AdxIRdrMpr83fD5D4A8mz+n5Xd5HgqkpMoR0J1eHH9cyTwuZ3pM1dxyflRGL1n9ucV3P8s=
+X-Received: by 2002:a17:907:68c:: with SMTP id wn12mr16367016ejb.202.1602283813423;
+ Fri, 09 Oct 2020 15:50:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4439e8ae8fdc9abf28df29d3038a1483d9084cf2.1602276832.git.gitgitgadget@gmail.com>
+References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
+ <CAPig+cQXkP8vTNR+LJ4fZRT-an0vEgKxcFpfi+aQ-BdipTgq=A@mail.gmail.com> <20201002162802.GA15646@contrib-buster.localdomain>
+In-Reply-To: <20201002162802.GA15646@contrib-buster.localdomain>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 9 Oct 2020 18:50:02 -0400
+Message-ID: <CAPig+cR8D13cM8OewRVYfg7wNjVC05tVQw80-dm4B5XPmjHJWw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] teach `worktree list` to mark locked worktrees
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 09, 2020 at 08:53:52PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+On Fri, Oct 2, 2020 at 12:28 PM Rafael Silva
+<rafaeloliveira.cs@gmail.com> wrote:
+> On Wed, Sep 30, 2020 at 03:19:27AM -0400, Eric Sunshine wrote:
+> > [...] For reference, here are some earlier messages related to
+> > this topic:
 >
-> The core.commitGraph config setting can be set to 'false' to prevent
-> parsing commits from the commit-graph file(s). This causes an issue when
-> trying to write with "--split" which needs to distinguish between
-> commits that are in the existing commit-graph layers and commits that
-> are not. The existing mechanism uses parse_commit() and follows by
-> checking if there is a 'graph_pos' that shows the commit was parsed from
-> the commit-graph file.
+> Thank you for all this reference, it's really helpful. It is nice to see
+> that we already have few discussion on this topic that we can use and
+> work on top of that.
 >
-> When core.commitGraph=false, we do not parse the commits from the
-> commit-graph and 'graph_pos' indicates that no commits are in the
-> existing file. The --split logic moves forward creating a new layer on
-> top that holds all reachable commits, then possibly merges down into
-> those layers, resulting in duplicate commits. The previous change makes
-> that merging process more robust to such a situation in case it happens
-> in the written commit-graph data.
+> Sorry for the bit late response.
 
-You're noting something interesting here which is that I actually think
-setting 'core.commitGraph' _would_ be OK for non-split writes, and
-'--split=replace' (along with any other split that happens to write a
-single layer).
+Likewise.
 
-But, I think that actually enforcing that rule (i.e., "if you have
-core.commitGraph set to false, you can't run `git commit-graph write`
-except in X Y Z certain situations") is overly-complex and confusing to
-users. So, I like what you have here a lot.
-
-> The easy answer here is to avoid writing a commit-graph if reading the
-> commit-graph is disabled. Since the resulting commit-graph will would not
-> be read by subsequent Git processes. This is more natural than forcing
-> core.commitGraph to be true for the 'write' process.
+> > I'm not suggesting that this patch series implement verbose mode, but
+> > bring it to attention to make sure we don't paint ourselves into a
+> > corner when deciding how the "locked" annotation should be presented.
 >
-> Reported-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-> Helped-by: Jeff King <peff@peff.net>
-> Helped-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Doing a little investigation on the code, it seems the machinery for checking
+> whether a worktree is prunable it seems is already there implemented
+> on the `should_prune_worktree()`.
 
-You can add my:
+Yes, when I mentioned that in [1], I envisioned
+should_prune_worktree() being moved from builtin/worktree.c to
+top-level worktree.c and possibly generalized a bit if necessary.
 
-  Signed-off-by: Taylor Blau <me@ttaylorr.com>
+One thing to note is that should_prune_worktree() is somewhat
+expensive, so we'd probably want to make determination of "prunable
+reason" lazy, much like the lock reason is retrieved lazily rather
+than doing it when get_worktrees() is called. Thus, like the lock
+reason, the prunable reason would be accessed indirectly via a
+function, say worktree_prunable_reason(), rather than directly from
+'struct worktree'.
 
-to the patch below, too, unless you want to take my suggestion below...
+[1]: https://lore.kernel.org/git/CAPig+cTTrv2C7JLu1dr4+N8xo+7YQ+deiwLDA835wBGD6fhS1g@mail.gmail.com/
 
-> ---
->  Documentation/git-commit-graph.txt | 4 +++-
->  commit-graph.c                     | 5 +++++
->  t/t5324-split-commit-graph.sh      | 3 ++-
->  3 files changed, 10 insertions(+), 2 deletions(-)
+> In such case, I would love to get started working on a bigger patch that
+> will implemented not only the annotation, but the verbose mode as well.
+> Specially because I was also thinking about how to make the "locked reason"
+> message available to the command output and the design proposed by [2]
+> sounds like a good way to manage that.
+
+I'd be happy to see that implemented.
+
+> Additionally, having the ability to see the annotation and the reason in
+> case you see the annotation seems like more complete work for the intention
+> of the patch.
 >
-> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-> index de6b6de230..e1f48c95b3 100644
-> --- a/Documentation/git-commit-graph.txt
-> +++ b/Documentation/git-commit-graph.txt
-> @@ -39,7 +39,9 @@ COMMANDS
->  --------
->  'write'::
+> Unless you think that is better to start with the annotation, and some time
+> later addressing the other changes specified by [2].
+
+Whatever you feel comfortable tackling is fine. The simple "locked"
+annotation is nicely standalone, so it could be resubmitted with the
+changes suggested by reviewers, and graduate without waiting for the
+more complex tasks which could be done as follow-up series. Or, expand
+the current series to tackle verbose mode and/or prunable status or
+both or any combination.
+
+> > A reason that it would be nice to address the shortcomings of
+> > porcelain format is because there are several additional pieces of
+> > information it could be providing. Summarizing from [1], in addition
+> > to the worktree path, its head, checked out branch, whether its bare
+> > or detached, for each worktree, porcelain could also show:
+> >
+> >   * whether it is locked
+> >    - the lock reason (if available)
+> >    - and whether the worktree is currently accessible (mounted)
+> >   * whether it can be pruned
+> >    - and the prune reason if so
+> >   * worktree ID (the <id> of .git/worktrees/<id>/)
 >
-> -Write a commit-graph file based on the commits found in packfiles.
-> +Write a commit-graph file based on the commits found in packfiles. If
-> +the config option `core.commitGraph` is disabled, then this command will
-> +output a warning, then return success without writing a commit-graph file.
->  +
->  With the `--stdin-packs` option, generate the new commit graph by
->  walking objects only in the specified pack-indexes. (Cannot be combined
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 0280dcb2ce..6f62a07313 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -2160,6 +2160,11 @@ int write_commit_graph(struct object_directory *odb,
->  	int replace = 0;
->  	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+> That something that can also work on. But I agreed that it could be bit
+> more work for a newcomer. I was thinking that I can split the work in
+> three series of patches.
 >
-> +	prepare_repo_settings(the_repository);
-> +	if (!the_repository->settings.core_commit_graph) {
-> +		warning(_("attempting to write a commit-graph, but 'core.commitGraph' is disabled"));
-> +		return 0;
-> +	}
-
-Should this check be folded into 'commit_graph_compatible()'? Maybe in
-'prepare_commit_graph()' which itself calls 'commit_graph_compatible()'?
-I admit that I find this chain of callers to be confusing.
-
-I suppose one argument for checking it here _before_ calling
-'commit_graph_compatible()' is that it allows you to issue a specific
-warning before returning from this function, so I'm OK with it.
-
-I also don't have a concrete suggestion of where a better place for this
-hunk might be, so I'm fine with what you wrote.
-
->  	if (!commit_graph_compatible(the_repository))
->  		return 0;
+>  1. Implementing the annotation for the standards "list" command, implementing
+>   not only the locked but the prunable as on aforementioned in [2].
 >
-> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-> index a314ce0368..4d3842b83b 100755
-> --- a/t/t5324-split-commit-graph.sh
-> +++ b/t/t5324-split-commit-graph.sh
-> @@ -442,8 +442,9 @@ test_expect_success '--split=replace with partial Bloom data' '
+>  2. A second series of patch that will introduce the verbose as defined in [2]
 >
->  test_expect_success 'prevent regression for duplicate commits across layers' '
->  	git init dup &&
-> -	git -C dup config core.commitGraph false &&
->  	git -C dup commit --allow-empty -m one &&
-> +	git -C dup -c core.commitGraph=false commit-graph write --split=no-merge --reachable 2>err &&
-> +	test_i18ngrep "attempting to write a commit-graph" err &&
->  	git -C dup commit-graph write --split=no-merge --reachable &&
->  	git -C dup commit --allow-empty -m two &&
->  	git -C dup commit-graph write --split=no-merge --reachable &&
+>  3. Third and final series that extend the porcelain format.
+>
+> I would like to kindly ask your opnion on this. Whether you think it will
+> be a good idea to implement all these changes this way and I can start
+> working on that.
 
-Hmm. I would have preferred to see a new test here. Unless I'm wrong, I
-believe the patched version of this test _doesn't_ have a duplicate
-commit across multiple layers:
+Such an organization would be fine. Tackle what you feel is
+appropriate and what "scratches your itch". Breaking the changes down
+into smaller chunks, as you propose, also helps reviewers since it's
+easier to review a shorter series than a long one.
 
-  - We try to write a layer with 'one', but don't (because
-    'core.commitGraph' is set to false).
+> I will change this series to become the first part of annotations, specially
+> because after reading your response and references, it seems this will be
+> much complete functionality that I would like to have on Git.
 
-  - Then we write a layer for 'one' with 'core.commitGraph' unset.
-
-  - Then we write a layer for 'two' (and only 'two'), since we read the
-    below layer containing 'one'.
-
-But, I'm not sure of a better way to test this, either. You fixed the
-bug that this is trying to exercise, so it's no longer being exercised
-here, but then again neither is the new code that is supposed to handle
-it.
-
-I wonder if it is maybe worth having some sample commit-graphs laying
-around in a t5324 directory that _would_ demonstrate this problem. OTOH,
-maybe that is just me being overly pedantic and worrying about something
-that isn't actually a problem.
-
-I trust your judgement, so whatever you feel like is fine with me.
-
-Thanks,
-Taylor
+Makes sense.
