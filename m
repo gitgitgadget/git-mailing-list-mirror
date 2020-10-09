@@ -2,192 +2,142 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4840C433DF
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 16:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3A9EC43457
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 17:27:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E65522280
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 16:49:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAD4022256
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 17:27:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jPqh/y41"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="XjXp8HSU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389889AbgJIQtX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 12:49:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47050 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389431AbgJIQtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 12:49:23 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEB65C0613D2
-        for <git@vger.kernel.org>; Fri,  9 Oct 2020 09:49:22 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id l18so2506123ooa.9
-        for <git@vger.kernel.org>; Fri, 09 Oct 2020 09:49:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pPaDg4K4etIljEJciHnXiEmJSlB5j778PlrtwK3LGWQ=;
-        b=jPqh/y41lFM6CtP40ArKrZIqI1ca4KVmS87KVEMRYLepQZ22sr4VdvDSfm1ErvV8OG
-         pFa2QLedCHaXJBUP0R+Zl31buZFjfMcmJckUCi902rl9h1BYVBny96ZuOz8pwXMONVru
-         FW3CgKKLSf/y/K3q2+V0l9h2Q8Dv8z0sWotdyvDegap7xXOBgK1KRw49n9ifgLJkK7PG
-         xriWz/v6hfy+ggygSY700052zFZsGZp4tq45JTXMKL3kQMBfuKEqFMPnPiVv5+g2I6Jn
-         bITP9mekFsYcrJFiJb02F++XMpZdZZ9r4pQFfr3uFUeUv2uLIWZFM0vKkr4lSp5D0bwB
-         c2Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pPaDg4K4etIljEJciHnXiEmJSlB5j778PlrtwK3LGWQ=;
-        b=Nb4oeAssY/EEgv7B54etD+svGwH1nh219pappshTSuQVWAvFA5xpefDkuC9h7mA3Tx
-         UDVkNdyu0Fugjno8X1WpLnpri0NYx5Am5pz0r9uqw9BW0F3OAR0s3qpq7DexxTh72MvT
-         /38ouGHocrGl3yELNse1zCq8V054zVJuzy0fG2Tf4FrQh9M/ghEqiv9NGvrqFSr1fRtf
-         G7T6T2sYVdj88LqGYFsbMvSxTF+1iyJ0SiT/1cGXBt6BJY30T1vj6xLaGphgOovn/9DT
-         5nwOfGGQJWBWYL4uU6KtrD3Rwy2k56XD9jvoJtybkJr0osPq+wrLSc1Q4Krq3VAJX8b+
-         MpfA==
-X-Gm-Message-State: AOAM531SFduDEFMLbLkzMhS+cjxVrxkaHJ5WMAP2MzP+yAxsujpGQf7H
-        hUy3pea0YlANQmbXOwPxwmA=
-X-Google-Smtp-Source: ABdhPJws3KVBWMfwJaTM+2/4ndBLO7qxFPHjbNnxV9Ow5fDgzZ83cHAW23uuUMiAWOr9+RG/clSVEA==
-X-Received: by 2002:a4a:751a:: with SMTP id j26mr9788650ooc.14.1602262162168;
-        Fri, 09 Oct 2020 09:49:22 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:859b:7143:ba12:a6eb? ([2600:1700:e72:80a0:859b:7143:ba12:a6eb])
-        by smtp.gmail.com with UTF8SMTPSA id t22sm6308986otk.24.2020.10.09.09.49.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2020 09:49:21 -0700 (PDT)
-Subject: Re: 2.29.0.rc0.windows.1: Duplicate commit id error message when
- fetching
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <55f8f00c-a61c-67d4-889e-a9501c596c39@virtuell-zuhause.de>
- <20201007210609.GA1984296@coredump.intra.peff.net>
- <329d91ed-097f-38ac-f1b1-73b4d57ce8ad@virtuell-zuhause.de>
- <20201008120658.GA2689590@coredump.intra.peff.net>
- <52782500-274e-2c72-39e2-be4252959d47@gmail.com>
- <5bbdaed5-df29-8bfe-01c2-eb2462dcca22@gmail.com>
- <267a9f46-cce9-0bd3-f28d-55e71cc8a399@virtuell-zuhause.de>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0d25e0ab-31ab-54c2-b518-bd9c0b0c4b7a@gmail.com>
-Date:   Fri, 9 Oct 2020 12:49:21 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101
- Thunderbird/82.0
-MIME-Version: 1.0
-In-Reply-To: <267a9f46-cce9-0bd3-f28d-55e71cc8a399@virtuell-zuhause.de>
+        id S1732671AbgJIRZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 13:25:27 -0400
+Received: from mout.gmx.net ([212.227.17.21]:43125 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732515AbgJIRYy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 13:24:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1602264292;
+        bh=tFIQrQyuERMP+x0FLUp8B5QS3QXvlQ4JnE08MxeHpsU=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=XjXp8HSUeHUXNI32TMk2i/84bVB73oACWp/hTvqQOueiurydih1NNbrTMC37oAtUx
+         0tbmBwTCqPv74kaYk3zoToEtG+xO46J11IK58SL3UDVg6RrqpLVM6dIQIXTggcz0A9
+         230XahUt3CrleilfNK6ELiM1ZzRkQVrsSwJiC2e0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az773.0kh3nbpurmsexhfal0r3fkdi4d.bx.internal.cloudapp.net
+ ([52.150.12.252]) by mail.gmx.com (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MRTNF-1koMHB1xpN-00NQ1l; Fri, 09 Oct 2020 19:24:52 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.29.0-rc1
+Date:   Fri,  9 Oct 2020 17:24:50 +0000
+Message-Id: <20201009172450.6345-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.28.0
 Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Fcc:    Sent
+X-Provags-ID: V03:K1:ikYVYJ0Y0VTQ66JorwPAVuKlpOqXIOSeOtvBHpO9fsxJZlLJDaE
+ 0xtU3RWnsne48DjBo2saK7hlM783oPZJDp0v58/GaQOdxJvFHmnHgWRg7rc3RayUZ/Zh0y+
+ BPTLxAYs16fjVZopx6E0+zmtlvwQzR/ZgKiRkyURW56ylGQnWtvoghCSQiwmAgHNSs9jbdD
+ QYNeC5mH69tql9GYdUMOQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Yg3QhoEGK10=:bm9Pbm8CUf0W78GeO0aIp2
+ QieA1NVPZ92yD6yZa/jINgAV09D3qm7euMIEG4+7JawYtBAMB0tRw6aVvylqCjQEZwBYs3SiL
+ tN0vjG6NSJxmm+HG641FDR6RiDRhlXHlFyFpv+JZn/72Npy1OTIQKDYnfpwafwFLROAM8zJzk
+ GHhpgc2p9qE9X+Tkg6KoeyFITvyRYPMuAXUlHycrlrDtiZZgUZTgdDxo+E/Kq0WR8SM05U380
+ DB+5/WoAZ3Eo1FLbb5aS9f5+PwP4YP9qQSUhM3QKdodgvDknq9WBnmJDN37aYhJc/3eWXIwGk
+ fli0oeUx7QT0TGfKaeH7+5017RJwDY/rmZYq+5ImNdkcx6Tj3Bmt1xVJsX4ktVZxYrIRg/nWv
+ yI8TMv/nB9ZQDImR728eFVjHKhKs8arcpDAcgxaR446Zg+XWeOFM7XyHNQUsrgc5PptjEbaHW
+ EJCr78nSK3xnlaqRUpMMwqgAakwcdM6tA+1uZUFoD2ZxmQgeH1JjOz3pHgX3gzzMpNV18JrZu
+ 12ADYTPaHKg7psqcb1YnGuE8UfG8/ZNLrOmMlYPhw3hTJ2e8IJ4kG7Y9re0wBv/ihuI6MAy5J
+ U65Abn5J+5Eht1n52yBP2IvBadd9sas9sXdPSAMEGqq+LmMdDPqDrIysnDH9DRehojPK2lJ6J
+ YINy9YB6xWmux2NwCYLgLUAwLk/rhfGsQ06Pv+oc4L+DOPcOHkvy/de36eCv04LVp3a/6Juzf
+ Vh3+CdiaQbKdDPAwGJbZM3XcvjfT0cEgRYZf963O2WCuOlpEXOXTjtb+1+lvfjuyN2UP7VoHd
+ FENP0V7tXP07+CeNUFuVPjHQHM6CzcPWIvVqLu7F/tjrz7urzcxxkNFOadVeYQ9gOtumh2rue
+ WB+zLdh/cpVh/JaZqEcGqVaOYnYnIDEaPg1ysOQiYef09V7+C8nD3KDIFOuav0JKi1ZaLMlOH
+ JEXuNG6YmJw/4vzHgmtNcZd7Kv/btiApzwzaHzn7Nsl0C5jaJnOO8FABzJ27CS7SEtc0gnCo4
+ Fhs4Op0PLHRx7L+uERzgHtwbm5MZvMZZ4S+H/tTAArxFIbs4E6jq3BAtmhzdmKE/gDc8C5WIW
+ 2f3TxfKd3qUnOTBoRE7dSn6bK9gaDQMw/PkQkqqR7zjSnp+t7tY8JYNgKZePdFdIDlnULBxxC
+ SkLWRNga7KEhVWux3EWFGncdiBADqKut5PtvGYdeYNGNyOxZ9bTPWk7ofSHTMSJsaEA4FYQfR
+ gBpcUnJMXUf6Knzu2/h1wJYh3C+wEvTv1v64+nA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/9/2020 11:29 AM, Thomas Braun wrote:
-> I think I have a starting point for what goes wrong. I found a local
-> repo with another broken commit graph. And after some fiddling the
-> following script can reproduce it. I tried with git/git first but that
-> seems not to trigger that.
+Dear Git users,
 
-I'm glad you're able to trigger bad commit-graph data somehow.
-Let's see what's going on:
+I hereby announce that Git for Windows 2.29.0-rc1 is available from:
 
-> # rm -rf dummy
-> mkdir dummy
-> cd dummy
-> 
-> git init
-> 
-> git remote add origin https://github.com/tango-controls/cppTango
-> git remote add fork1 https://github.com/bourtemb/cppTango
-> git remote add fork2 https://github.com/t-b/cppTango
-> git fetch --all --jobs 12
+    https://github.com/git-for-windows/git/releases/tag/v2.29.0-rc1.windows.1
 
-My gut reaction is that this parallel fetching is causing
-an issue, but we will see. Do you get a repro if you drop
-the "--jobs 12"?
+Changes since Git for Windows v2.28.0 (July 28th 2020)
 
-> git commit-graph verify
-> rm -rf .git/objects/info/commit-graphs/
-> git commit-graph verify
-> git fetch --jobs 12
-> git remote add fork3 git@github.com:t-b/cppTango.git
-> git commit-graph verify
-> git remote add fork4 git@github.com:t-b/cppTango.git
-> git fetch --jobs 12
-> git commit-graph verify
-> 
-> The last verify outputs
-> 
-> commit-graph generation for commit
-> 029341567c24582030592585b395f4438273263f is 1054 != 1
-> commit-graph generation for commit
-> 1e8d10aec7ca6075f622c447d416071390698124 is 4294967295 != 1171
-> commit-graph generation for commit
-> 296e93516189c0134843fd56ac4f10d36ccf284f is 1054 != 1
-> commit-graph generation for commit
-> 4c0a7a3cd369d06b99d867be6b47a96c519efd7f is 1054 != 1
-> commit-graph has non-zero generation number for commit
-> 4d39849950d3dc02b7426c780ac7991ec7221176, but zero elsewhere
-> commit-graph has non-zero generation number for commit 4
-> [....]
+This version upgrades existing users of Git Credential Manager for
+Windows (which was just deprecated) to Git Credential Manager Core
+("GCM Core", which is the designated successor of the former). This is
+necessary because GitHub deprecated password-based authentication and
+intends to remove support for it soon, and GCM Core is prepared for
+this change.
 
-This looks more troubling than just duplicate rows, but
-perhaps those duplicate rows are causing sufficient
-confusion when reading the commit-graph during the
-'verify' command?
+Also, the option to override the branch name used by git init for the
+initial branch is now featured prominently in the installer.
 
-I tried incorporating this into the Git test suite so I
-could test it on v2.29.0-rc0 and the current merge-check,
-but I'm failing to reproduce the failure with this script:
+New Features
 
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index c334ee9155..2b3f3db593 100755
---- a/t/t5324-split-commit-graph.sh
-+++ b/t/t5324-split-commit-graph.sh
-@@ -440,4 +440,26 @@ test_expect_success '--split=replace with partial Bloom data' '
- 	verify_chain_files_exist $graphdir
- '
- 
-+test_expect_success 'test' '
-+	git init dummy &&
-+	(
-+		cd dummy &&
-+		export GIT_TRACE2_EVENT="$TRASH_DIRECTORY/../trace.txt" &&
-+		git config fetch.writeCommitGraph true &&
-+		git remote add origin https://github.com/tango-controls/cppTango &&
-+		git remote add fork1 https://github.com/bourtemb/cppTango &&
-+		git remote add fork2 https://github.com/t-b/cppTango &&
-+		git fetch --all --jobs 12 &&
-+		git commit-graph verify &&
-+		rm -rf .git/objects/info/commit-graphs/ &&
-+		git commit-graph verify &&
-+		git fetch --jobs 12 &&
-+		git remote add fork3 git@github.com:t-b/cppTango.git &&
-+		git commit-graph verify &&
-+		git remote add fork4 git@github.com:t-b/cppTango.git &&
-+		git fetch --jobs 12 &&
-+		git commit-graph verify
-+	)
-+'
-+
- test_done
+  * Comes with Git v2.29.0-rc1.
+  * Comes with cURL v7.72.0.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.1.7.
+  * Comes with Git LFS v2.12.0.
+  * Comes with GNU Privacy Guard v2.2.23.
+  * Comes with OpenSSL v1.1.1h.
+  * Comes with libcbor v0.8.0.
+  * Comes with libfido2 v1.5.0.
+  * Comes with OpenSSH v8.4p1.
+  * Comes with Git Credential Manager Core v2.0.252.766.
+  * Existing Git Credential Manager for Windows users are now
+    automatically upgraded to Git Credential Manager Core.
+  * Git for Windows' installer learned to let users override the
+    default branch used by git init.
+  * The installer size was reduced by dropping a couple unneeded .dll
+    files.
 
-I tried this on Linux and Windows, and under "--stress" but never
-saw a failure.
+Bug Fixes
 
-Thomas: some things that could possibly help is if you repro this
-situation but also do something like
+  * The credential helper selector (used as default credential helper
+    in the Portable Git) now persists the users choice correctly again.
+  * The full command-lines of MSYS2 processes (such as cp.exe) spawned
+    from Git's Bash can now be seen in sysmon, wmic etc by default.
+  * A bug preventing Unicode characters from being used in the window
+    title of Git Bash was fixed.
+  * OpenSSH was patched to no longer warn about an "invalid format"
+    when private and public keys are stored separately.
+  * Non-ASCII output of paged Git commands is now rendered correctly in
+    Windows Terminal.
+  * It is now possible to use wordpad.exe as Git's editor of choice.
+  * When using Git via the "Run As..." function, it now uses the
+    correct home directory.
+  * The Git Bash prompt now works even after calling set -u.
+  * Git for Windows can now be installed even with stale AutoRun
+    registry entries (e.g. left-overs from a Miniconda installation).
 
-	export GIT_TRACE2_EVENT="$(pwd)/trace.txt"
+Git-2.29.0-rc1-64-bit.exe | fbf5f1417554aad85581717aa706ae3576af133f201259624ead248f12fc76ff
+Git-2.29.0-rc1-32-bit.exe | 36a1d5258876acdeb4c6eca4a80fdf707ddebbef253f8979d8c7252935bc77f5
+PortableGit-2.29.0-rc1-64-bit.7z.exe | 9df5265d082e07b39b86d65530fc545987ac1ea7cb24794ab04444c5129aa597
+PortableGit-2.29.0-rc1-32-bit.7z.exe | 08fbb7c1df62da5237bf72af6201b51fd03f8311af9ff8029964e2f21bc1d7fb
+MinGit-2.29.0-rc1-64-bit.zip | f5746f9c4f5a9658439c7017b8c38ff272c52f6c6738ac094fc60e1910f19af4
+MinGit-2.29.0-rc1-32-bit.zip | 02e44aec2181dfefdec464b51c245092a19e5b44b8d5a1fcfb0fd476d255965b
+MinGit-2.29.0-rc1-busybox-64-bit.zip | 936b908c3e96247af686e231171919047ebc619b01d2225225ca2c5a85316780
+MinGit-2.29.0-rc1-busybox-32-bit.zip | f39162ab626c4114d25c64c5b4d43977de7cbe76501c79ebc8b8acea36a7e837
+Git-2.29.0-rc1-64-bit.tar.bz2 | 873c42a8424f6c148f772dc1949b839822bdb16e2f615edc12b3211fc4a24ac6
+Git-2.29.0-rc1-32-bit.tar.bz2 | cd5608154fcdf0198e2d8c8b1e83e76d9e878f75424e58bf9b130e772f93cdd7
 
-so we can read the details of everything Git is tracing during
-these parallel jobs. We might be able to stitch together a
-sequence of events that lead to these failures.
-
-Thanks,
-Stolee
+Ciao,
+Johannes
