@@ -2,202 +2,142 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CEFC433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 13:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 033CBC433DF
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 15:29:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58707222BA
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 13:30:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hjJ9cPG3"
+	by mail.kernel.org (Postfix) with ESMTP id C8BBD22261
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 15:29:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733297AbgJINas (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 09:30:48 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57765 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732173AbgJINas (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 09:30:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602250245;
-        bh=z0zErdnVwctlGzXSILNeNAf4e9Uz0oxNd7CPJ7o4rRc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hjJ9cPG3jUPFbs/LlvvxIUc52R9qJTH9dWAsxJ7BW9nfe8+P1v3cQE2SL6LLvc/tf
-         M7NxrxeceBlgffFpO74fedqIvEWxeD20mCLsyQ4aitbCWQQG856SO6vdyyCpYPkTVD
-         ihWdlpozeqmwVIcfcK5811sWdLHIs+ybFLMCmRzI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.213.205]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRCK6-1knv971beO-00NAbz; Fri, 09
- Oct 2020 15:30:45 +0200
-Date:   Fri, 9 Oct 2020 13:13:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ci: skip GitHub workflow runs for already-tested
- commits/trees
-In-Reply-To: <20201009072922.GC24813@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.2010091254180.50@tvgsbejvaqbjf.bet>
-References: <pull.619.git.1587748660308.gitgitgadget@gmail.com> <pull.619.v2.git.1602170976.gitgitgadget@gmail.com> <914868d558b1aa8ebec6e9196c5ae83a2bd566bf.1602170976.git.gitgitgadget@gmail.com> <20201009072922.GC24813@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388880AbgJIP36 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 11:29:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34514 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732056AbgJIP35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 11:29:57 -0400
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:84a3::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2C93C0613D2
+        for <git@vger.kernel.org>; Fri,  9 Oct 2020 08:29:57 -0700 (PDT)
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1kQuLD-00080x-3v; Fri, 09 Oct 2020 17:29:55 +0200
+Subject: Re: 2.29.0.rc0.windows.1: Duplicate commit id error message when
+ fetching
+To:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <55f8f00c-a61c-67d4-889e-a9501c596c39@virtuell-zuhause.de>
+ <20201007210609.GA1984296@coredump.intra.peff.net>
+ <329d91ed-097f-38ac-f1b1-73b4d57ce8ad@virtuell-zuhause.de>
+ <20201008120658.GA2689590@coredump.intra.peff.net>
+ <52782500-274e-2c72-39e2-be4252959d47@gmail.com>
+ <5bbdaed5-df29-8bfe-01c2-eb2462dcca22@gmail.com>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <267a9f46-cce9-0bd3-f28d-55e71cc8a399@virtuell-zuhause.de>
+Date:   Fri, 9 Oct 2020 17:29:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.3.2
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-148249349-1602241984=:50"
-X-Provags-ID: V03:K1:/JNu8qvHVdWtXnez2S5h8hRJarL/s+/cL+DdRWdcCrWTVtMNJJE
- 4vEkU5j4DTvrmVG6osHRf16CoIpgvUQlGvSMja1ucahPrs1KAm5k5SEu+LJN/AHVvNkp/2U
- 0be6/1WtQ6PmJ15WNGzTCW5eFVe+4qd3Hhlft9ne/D1Q9DgcWDsBdPM36nTjH5BJiDcUU67
- j5Fbe53hiCFhF7n+e/M6Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:b5XNS6YdyXI=:QlzJzfTMiugN3HYRwUcBTB
- gcOVUfE7YzR7ZtzQnPCNvgE32WqDbZAQqqUG2ShGrconiNzuoTIW44I2+V3sH5vti0qORwAU0
- asMlmgp3Te22f+ZyEDeq+sl4JkOmtCUUfcRARCIClJp56hxRJj514aMxcB0yc5R6FuFHXmu6K
- t09czKh3mjbN2rWA9AlQpBCwaZ6nEWIx+5H+GOemOaIAv77qNoSe7oRhh5IVZJhb8s+ZdoA3X
- oIdWHW8WVtj/U5a9zeqqUJqgClv4OamwvN/1I9eDssqBmiXTfPwBWXG9asvkyJZ/zgO667OIS
- J78i/wS4EHlT+iJFcsp6uD/31fIhM+/R7/MmhDPb38fUU4CaA7YJ1FSXYAmsV8GGal1inyTb0
- HFfqAyf3pFPtyn2TWfQiuc5Sm5nVQtjGJ8ki0PPWnhsg+HADuINEyeUaXY7GxNYOkO3VfrRcL
- yXb8dkivi3KN+C1LOURwWoiru+2GpCovZc6CsSyF2dQO/NV57T3MwaMf1XB87IRVL53H7TUt4
- 4LiNWYW8aDjRFpWIX1sPni6jXwnALXps2iYTOuL3tpmUqtaAhEqhHV6pwxlipcYFAE5OSTlHl
- AYYtDpKu4lRCNOTr+4MoleTMvVIT9kqQGQ5UB0KoWAYV9U5XZ03wfGgtER964rwwHbRmqBO/u
- /MirvXqDc0h94c+WT9hsORvxh7sCONU4PL1pQjil4Sy9svylkOk0jpEVxLa6nY9AbRsoSsaPc
- +4qONFzOUN2gaD2+9uIjfdtc4/L5BXZcLhHplUA44aukHztSEboc9279u7EJgOi9+bK/XpK5N
- wuzBokaRLNIneaKxB5ti/WJXTkTAnfYeXjahUhljrLOuvD/5JcltBcxQRxfdPWRNqoGXbB+Ab
- 5/msksUNmXUInJ3Ut2vZ+AfJ8lwK+BxDah3yE8fY5WNYZ6RAGwXXD94JPHPPbQ299Wi2YtxKg
- r/KekHa4YmMm8Ji0Kwj1G0pHOCp91XPxT2xf636ZGmDMbYX9Zy7ZcNcZecyljhiAGAQSrCM6T
- ImwVDHaKw7aK6Bl7p99DB4hwnS2/DeNHF2dGz3nYBxFbnbXr2oU39bBxLysHRbXn7QXAZA84u
- I6V9Kwf+aYacP+H/Z9jXxB7xU84ev14izcN7oGOGnULzGqsCa4Ys4tY1LYxo5+prdHLIEx6oC
- 9nI1jnQL46u2uMKciTOWNXKKu8BxfZ/0wIQK6doK3VIhfYZnj/+jLQ2Y/2Ej1VyzprfJFYQdt
- F5r0fxWINwxh25SDy6/lT2WqlOE13mbOCbXJjxA==
+In-Reply-To: <5bbdaed5-df29-8bfe-01c2-eb2462dcca22@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1602257397;60b371db;
+X-HE-SMSGID: 1kQuLD-00080x-3v
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 08.10.2020 15:22, Derrick Stolee wrote:
+> On 10/8/2020 8:50 AM, Derrick Stolee wrote:
+>> On 10/8/2020 8:06 AM, Jeff King wrote:
+>>> But regardless, it seems unfriendly that we can't
+>>> get out of it while merging the graphs. Doing this obviously makes the
+>>> problem go away:
+>>>
+>>> diff --git a/commit-graph.c b/commit-graph.c
+>>> index cb042bdba8..ae1f94ccc4 100644
+>>> --- a/commit-graph.c
+>>> +++ b/commit-graph.c
+>>> @@ -2023,8 +2023,11 @@ static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
+>>>  
+>>>  		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
+>>>  			  &ctx->commits.list[i]->object.oid)) {
+>>> -			die(_("unexpected duplicate commit id %s"),
+>>> -			    oid_to_hex(&ctx->commits.list[i]->object.oid));
+>>> +			/*
+>>> +			 * quietly ignore duplicates; these could come from
+>>> +			 * incremental graph files mentioning the same commit.
+>>> +			 */
+>>> +			continue;
+>>>  		} else {
+>>>  			unsigned int num_parents;
+>>>  
+>>>
+>>> but it's not clear to me if that's papering over another bug, or
+>>> gracefully handling a situation that we ought to be.
+>>
+>> I think this is a good thing to do, at minimum. As I discussed above,
+>> the "input data" of the incremental commit-graph chain with duplicate
+>> commits across layers isn't actually _invalid_. It's unexpected based
+>> on what Git "should" be doing.
+> 
+> As I was working on my own version of this, I realized that just
+> commenting here still creates duplicate commits in the new layer,
+> which is even MORE unexpected. It could cause some confusion with
+> the binary search, but likely that is still fine. The only "real"
+> issue is that it is wasted data.
+> 
+> I'll send [1] to the list soon (after build & test validation),
+> but it includes copying the pointers to a new "de-duplicated" list.
 
---8323328-148249349-1602241984=:50
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks both for digging into it.
 
-Hi G=C3=A1bor,
+I think I have a starting point for what goes wrong. I found a local
+repo with another broken commit graph. And after some fiddling the
+following script can reproduce it. I tried with git/git first but that
+seems not to trigger that.
 
-On Fri, 9 Oct 2020, SZEDER G=C3=A1bor wrote:
+# rm -rf dummy
+mkdir dummy
+cd dummy
 
-> On Thu, Oct 08, 2020 at 03:29:34PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When pushing a commit that has already passed a CI or PR build
-> > successfully, it makes sense to save some energy and time and skip the
-> > new build.
-> >
-> > Let's teach our GitHub workflow to do that.
-> >
-> > For good measure, we also compare the tree ID, which is what we actual=
-ly
-> > test (the commit ID might have changed due to a reworded commit messag=
-e,
-> > which should not affect the outcome of the run).
->
-> We have been doing this on Travis CI for a few years now.  Does that
-> approach not work on GitHub actions?  Please explain in the commit
-> message why a different approach is taken here.
+git init
 
-You're not being terribly clear about what exactly "We have been doing".
+git remote add origin https://github.com/tango-controls/cppTango
+git remote add fork1 https://github.com/bourtemb/cppTango
+git remote add fork2 https://github.com/t-b/cppTango
+git fetch --all --jobs 12
+git commit-graph verify
+rm -rf .git/objects/info/commit-graphs/
+git commit-graph verify
+git fetch --jobs 12
+git remote add fork3 git@github.com:t-b/cppTango.git
+git commit-graph verify
+git remote add fork4 git@github.com:t-b/cppTango.git
+git fetch --jobs 12
+git commit-graph verify
 
-Are you referring to the `skip_good_tree()` function that stores
-information in a file in the `good_trees_file`?
+The last verify outputs
 
-If so, no, we cannot do that anywhere else than on Travis because that
-relies on a directory that is somehow shared between runs. And that is a
-feature that only Travis offers as far as I know (and it does not come
-without issues, e.g. when two concurrent runs try to write to the same
-file at the same time).
+commit-graph generation for commit
+029341567c24582030592585b395f4438273263f is 1054 != 1
+commit-graph generation for commit
+1e8d10aec7ca6075f622c447d416071390698124 is 4294967295 != 1171
+commit-graph generation for commit
+296e93516189c0134843fd56ac4f10d36ccf284f is 1054 != 1
+commit-graph generation for commit
+4c0a7a3cd369d06b99d867be6b47a96c519efd7f is 1054 != 1
+commit-graph has non-zero generation number for commit
+4d39849950d3dc02b7426c780ac7991ec7221176, but zero elsewhere
+commit-graph has non-zero generation number for commit 4
+[....]
 
-Since this strategy relies on a Travis-only feature that does not work on
-the three other CI services we use (Cirrus CI, Azure DevOps, GitHub
-Actions), I see little point mentioning it in this commit message...
+Does that reproduce on your end as well?
 
-However, I might be very well wrong on that assessment.
-
-Ciao,
-Dscho
-
->
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  .github/workflows/main.yml | 39 +++++++++++++++++++++++++++++++++++++=
--
-> >  1 file changed, 38 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> > index 5bd321e5e1..7391b46d61 100644
-> > --- a/.github/workflows/main.yml
-> > +++ b/.github/workflows/main.yml
-> > @@ -9,7 +9,7 @@ jobs:
-> >    ci-config:
-> >      runs-on: ubuntu-latest
-> >      outputs:
-> > -      enabled: ${{ steps.check-ref.outputs.enabled }}
-> > +      enabled: ${{ steps.check-ref.outputs.enabled }}${{ steps.skip-i=
-f-redundant.outputs.enabled }}
-> >      steps:
-> >        - name: try to clone ci-config branch
-> >          continue-on-error: true
-> > @@ -35,6 +35,43 @@ jobs:
-> >              enabled=3Dno
-> >            fi
-> >            echo "::set-output name=3Denabled::$enabled"
-> > +      - name: skip if the commit or tree was already tested
-> > +        id: skip-if-redundant
-> > +        uses: actions/github-script@v3
-> > +        if: steps.check-ref.outputs.enabled =3D=3D 'yes'
-> > +        with:
-> > +          github-token: ${{secrets.GITHUB_TOKEN}}
-> > +          script: |
-> > +            // Figure out workflow ID, commit and tree
-> > +            const { data: run } =3D await github.actions.getWorkflowR=
-un({
-> > +              owner: context.repo.owner,
-> > +              repo: context.repo.repo,
-> > +              run_id: context.runId,
-> > +            });
-> > +            const workflow_id =3D run.workflow_id;
-> > +            const head_sha =3D run.head_sha;
-> > +            const tree_id =3D run.head_commit.tree_id;
-> > +
-> > +            // See whether there is a successful run for that commit =
-or tree
-> > +            const { data: runs } =3D await github.actions.listWorkflo=
-wRuns({
-> > +              owner: context.repo.owner,
-> > +              repo: context.repo.repo,
-> > +              per_page: 500,
-> > +              status: 'success',
-> > +              workflow_id,
-> > +            });
-> > +            for (const run of runs.workflow_runs) {
-> > +              if (head_sha =3D=3D=3D run.head_sha) {
-> > +                core.warning(`Successful run for the commit ${head_sh=
-a}: ${run.html_url}`);
-> > +                core.setOutput('enabled', ' but skip');
-> > +                break;
-> > +              }
-> > +              if (tree_id =3D=3D=3D run.head_commit.tree_id) {
-> > +                core.warning(`Successful run for the tree ${tree_id}:=
- ${run.html_url}`);
-> > +                core.setOutput('enabled', ' but skip');
-> > +                break;
-> > +              }
-> > +            }
-> >
-> >    windows-build:
-> >      needs: ci-config
-> > --
-> > gitgitgadget
-> >
->
-
---8323328-148249349-1602241984=:50--
+Thomas
