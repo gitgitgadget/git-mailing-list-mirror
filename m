@@ -2,124 +2,141 @@ Return-Path: <SRS0=ku3G=DQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BBBCC433E7
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A2F5C433DF
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:27:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E80D2227E
-	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:26:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F2072184D
+	for <git@archiver.kernel.org>; Fri,  9 Oct 2020 19:27:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YkMjlnnP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ThXFi0+M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388655AbgJIT04 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Oct 2020 15:26:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55354 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388639AbgJIT04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Oct 2020 15:26:56 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 48CEB7218D;
-        Fri,  9 Oct 2020 15:26:52 -0400 (EDT)
+        id S2388672AbgJIT1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Oct 2020 15:27:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60193 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388639AbgJIT1b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Oct 2020 15:27:31 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7923989702;
+        Fri,  9 Oct 2020 15:27:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=zQPkuF4GM2hvVko4SMUf3M7o5Bk=; b=YkMjlnnP/oqIPjjVhsaT
-        jGfpJOKr8deTgcU5v33+o5/6flkIFZAjtDmfmc0Dfjlwn/XX8UeoSCqLyoO5NVmI
-        hyHrSwWLytkVhlgzj4XTO3eH5CKVaQqPtmKNDndVw45jlAsKEX/QlDI1akMQqs1x
-        n2hXYrxbu9uCZtbqXVG22Kc=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GZjGsKu/Mxi/sPUfrS2/V7OL0cQ=; b=ThXFi0
+        +M+dUx20jl/GVVdEeeORDa23HEoiCnMHr4KLVjRIXMTsSYve7/V6+Q8wc/+JL2TO
+        VpQDYOAUlKFKf9kU+WWsotjPPpzrQCxIZscExALBvtw9/D6bpnrMXFkcDg1w0ANT
+        V1F3fHrPibeP7u/flc3I0g110VRGw+gQol41M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=xjXyFrG8Fwru/fD6BN56NolgriKr8ucWBh3EtfAOmGXU0I
-        asPH8w0wKKIGrV+Fv71zxX6o4du6Ym7C92QWzTfIACuofFMrYcQcKCLUdnYNxQkk
-        0QLWOdjyINz0+i3f/k9EihS8jY0ic9y3UFyc1ZVVwzNTM2lPDirUKmoTmrMNM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F7F07218C;
-        Fri,  9 Oct 2020 15:26:52 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ppua1QGby4PXig8rzBbmRdBCf2k97gB/
+        WpOMf/z0W319ic7hH+GilXic3SN+Vhbg+zC1XAR0UOePlrt5uyN8HkntSwCNN0CE
+        w4PzL5a3UKcTQH18GSXFMOZibUo+NayA9rGO/VqSR0MY8L/KsYx+4SUhwPvFIJNU
+        7csLXcXgds4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 709D689701;
+        Fri,  9 Oct 2020 15:27:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BA6A7218B;
-        Fri,  9 Oct 2020 15:26:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CEE40896FF;
+        Fri,  9 Oct 2020 15:27:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clean up extern decl of functions
+To:     git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>
+Subject: [RFC] CodingGuidelines: mark external declarations with "extern"
 References: <xmqq8scgzqis.fsf@gitster.c.googlers.com>
         <20201009015505.GB1314@generichostname>
         <xmqqtuv4uncn.fsf@gitster.c.googlers.com>
-Date:   Fri, 09 Oct 2020 12:26:49 -0700
-Message-ID: <xmqqy2kfryiu.fsf@gitster.c.googlers.com>
+        <xmqqy2kfryiu.fsf@gitster.c.googlers.com>
+Date:   Fri, 09 Oct 2020 12:27:28 -0700
+In-Reply-To: <xmqqy2kfryiu.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 09 Oct 2020 12:26:49 -0700")
+Message-ID: <xmqqtuv3ryhr.fsf_-_@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 615EF5FC-0A65-11EB-97A2-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 782692C2-0A65-11EB-BB44-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+The document recommends not to write "extern" in front of a function
+declaration, with justification that a decl by default is extern.
 
->> Why are we re-introducing an explicit "extern"? Since function decls are
->> extern by default, what do we gain by doing this?
->>
->> You mentioned in the past[0]
->>
->> 	I think there is a push to drop the "extern " from decls of
->> 	functions in *.h header files.
->>
->> so are we reversing that push now?
->
-> That is certainly on the table.  Re-read what you quoted and realize
-> that I was not expressing my opinion on the "push"; it was just
-> stating that other reviewers seem to be in favor.
->
-> See my other response why I think the "push"  was a bad idea.
+While it is true that by default decls are extern unless marked with
+"static", it does not justify the choice.  It only justifies why we
+could omit it if we wanted to, but does not say anything about the
+reason why we would want to omit it in the first place.
 
-I'd elaborate a bit more.  A proposed update to CodingGuidelines
-will be sent separately as a follow-up to this message.
+Recently we saw that past mechanical conversion attempts kept a few
+function decls with "extern" in front.  It seems that it was left
+because the mechanical conversion tried not to touch external
+declaration of pointers to functions, but the pattern used was
+faulty and excluded functions that return pointers to functions.
 
-"Are we reversing that push now?"  That is not a question I can
-unilaterally answer yes/no---I do not run dictatorship where I
-cannot survive without telling all the contributors how to cross
-their t's and dot their i's.  There are things in our coding
-guidelines that tells me to do something differently from how I
-would, but I can adjust and survive if the primary benefit of having
-guidelines, i.e. making things uniform one way or the other, is net
-win.  When a guideline turns out to be a bad idea, however, I can
-propose to change it.  So can you or anybody else ;-)
+For example, a pointer to a function may look like this:
 
-In that message, I just told Emily that there is a push to omit
-extern, in the sense that it was the opinion of the prevailing
-louder voices.  Back then, I didn't have an opinion strong enough to
-favor either way myself, and I was willing to go with the majority
-if many contributors wanted to drop "extern" in the hope that it
-will result in quality code.
+    extern void (*default_frotz_handler)(int frotz);
 
-But with the Makefile patch you posted with Dscho's review this
-morning, it has become apparent to me that it wasn't a great idea
-after all.  It caused you to spend your time to write the RFC patch
-and come up with the regexp, and caused the project to spend
-reviewer bandwidth on the patch.
+We must not omit "extern" from this decl, which says "There exists a
+variable whose name is default_frotz_handler, which points at a
+function that takes an integer and returns nothing."  It is not a
+function declaration and if written without "extern" in front,
+requires the "common" extension to be correctly built.
 
-Of course, how you spend your time is entirely up to you.  But if
-you are going to contribute your time on this project, the project
-appreciates if the time is spent on things that make the codebase
-better.  And to me, unlike to me "in the past[0]", it is reasonably
-clear that the push of omitting "extern" ended up wasting resources
-without doing much good for the project.
+But a function that returns a pointer to a function looks similar:
 
-Seeing that the pattern that were trying to be careful didn't catch
-the decls fixed by the patch you were responding to in this thread
-did not help improve my impression on the idea of omitting "extern".
+    extern void (*get_error_routine(void))(const char *message, ...);
 
-I think these two decls I touched in this patch were left behind
-when somebody, possibly you in b199d714 (*.[ch]: remove extern from
-function declarations using sed, 2019-04-29), tried to "clean up"
-the last time, because the pattern used in the conversion did not
-catch it.
+which says "There is a get_error_routine() function that takes no
+parameters, and it returns a pointer to a function that takes these
+parameters and returns nothing".
+
+The current rule tells us not to write "extern" in front, but the
+earlier mechanical conversion missed it.  People when writing would
+also miss it unless they are careful.
+
+Instead of forcing contributors to spend time on on thinking if they
+should or should not write "extern" in front of each of their decl
+when they write new code, tell them that our external declarations
+always say "extern" in front.  By doing so, we would also prevent a
+mistake of not writing "extern" when we need to (i.e. decls of data
+items, that are not functions) when less experienced developers try
+to mimic how the existing surrounding declarations are written.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/CodingGuidelines | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 45465bc0c9..eafe41bec8 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -433,10 +433,12 @@ For C programs:
+  - Use Git's gettext wrappers to make the user interface
+    translatable. See "Marking strings for translation" in po/README.
+ 
+- - Variables and functions local to a given source file should be marked
+-   with "static". Variables that are visible to other source files
+-   must be declared with "extern" in header files. However, function
+-   declarations should not use "extern", as that is already the default.
++ - Variables and functions local to a given source file should be
++   marked with "static". Variables that are visible to other source
++   files must be declared with "extern" in header files.  External
++   function declarations should also use "extern", while external
++   function definition should not, to make it easier to visually tell
++   them apart.
+ 
+  - You can launch gdb around your program using the shorthand GIT_DEBUGGER.
+    Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
+-- 
+2.29.0-rc1-92-g713508e020
+
