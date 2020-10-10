@@ -2,183 +2,114 @@ Return-Path: <SRS0=cZ0k=DR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF7BC43457
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFDF5C433DF
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 383262075E
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78CF820795
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ecCCepPU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731255AbgJJW4D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Oct 2020 18:56:03 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:39369 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730330AbgJJSv2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 10 Oct 2020 14:51:28 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id BA06C102C
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 14:38:48 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
-  by compute1.internal (MEProxy); Sat, 10 Oct 2020 14:38:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudoforge.com;
-         h=mime-version:message-id:in-reply-to:references:date:from:to
-        :subject:content-type:content-transfer-encoding; s=fm2; bh=Nou3B
-        off7NnsJnJhNOAguTxZnaDsSL2IxnYttUXkZEw=; b=grHGh29zckoAWhonctZuX
-        NwT6JWzWiZlThSqB7vi2S93vvhqfmK1QTF7M2ZXvaPGwHYbyDp7L1u4YisJj4Qeq
-        xGQSSPoloPfVf8eS5KFgTZ7rKxswsTZebeWs9j+PO9smPSXaBdGPEwW9RaeCSTl6
-        FBIkWamxakr+Wft5yEh7P1k10Fl4XcZ0g6S2QDmiHoTqAM+yFqS3ckzm6NHv6cZE
-        8kIqoXisb9Rvkj9ylJAmUcjcJAOiirhoMZUjt2N0BszbPcA4NvTz48lZGWaLRXQl
-        5ZklWL0LU1m+vKS0dLzwtVdEZ0mVPuPH/KGmydlTm1h6t+fW0xaPO3fAdZZmUFtN
-        A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=Nou3Boff7NnsJnJhNOAguTxZnaDsSL2IxnYttUXkZ
-        Ew=; b=foN2R7ecZ7KuJ4XbscaVaOHeKmMhkctaiWe0Itg4Ic7917RwUuclcjtzt
-        LKI+yU8zzvTADF8jmxg7EcZMuopvREcQ3IBJp9sM/4P7A6oQSGOQzbXxNYeJg0av
-        Qf0PlNy2/2UMt8uP9PcE1x6AFJecpSiGX9qqWEegYhGhSFllPjiV/kpz4dsht/Uc
-        6QrzgiFY9bRcJCZWJ9Y52z6T4RQKIfhWLDDjI+HphszPaPDGEW7xSDpwas8m6Dyy
-        jdrAagdw6o1rDRd1+yObAlfW4tbeElDhbp4ywSQXFbEWAo8iE5ZPhFG+mzLtitIc
-        wCQ6FGfK68DOAAFe/+0v3r2K7MmNA==
-X-ME-Sender: <xms:uP-BX0lRJT3ZhRElWNc1lFSOOAEZOQJN2OIQGoBId5EmU52TRyEing>
-    <xme:uP-BXz1OLRWIuVqvtDyi_G6f9HkmMtM0N1jT6Sof7EzM6ejL5OqoF-VTsI3TvRzwY
-    w8H8z-4e0HXAh5ubA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrheefgdduvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
-    hqredtreerjeenucfhrhhomhepfdeuvghnucffvghnhhgrrhhtohhgfdcuoegsvghnsehs
-    uhguohhfohhrghgvrdgtohhmqeenucggtffrrghtthgvrhhnpeefteetudegheffteevtd
-    ethfeghedvvdejkeekgefgjeefheevieduteeuteelkeenucffohhmrghinhepfhhoohdr
-    tghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    gsvghnsehsuhguohhfohhrghgvrdgtohhm
-X-ME-Proxy: <xmx:uP-BXyp2MbbLzJPNbjyqniyDbnpO5dTdv2PgcCe6R6bcEg_psKmJuw>
-    <xmx:uP-BXwl41KJYpAgZNUdz9dnxiZoUX_-_zHX1bHGxkxMSl5ft6QLu4A>
-    <xmx:uP-BXy323uo7DPYlAci01SgvXwpftWEUyrOtlYMijxz6zGVKjgSD7A>
-    <xmx:uP-BXzA8KbK5clCYB96Ey2iQu_Dj7-lOYzO7Ony4N8MDwnOp5ZD2PA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id C2507E00D8; Sat, 10 Oct 2020 14:38:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-407-g461656c-fm-20201004.001-g461656c6
-Mime-Version: 1.0
-Message-Id: <77a13a76-89b2-4fd7-91d8-1b9e47a5bc37@www.fastmail.com>
-In-Reply-To: <dab3f28e-1a4b-4756-9a50-a5804b438804@www.fastmail.com>
-References: <dab3f28e-1a4b-4756-9a50-a5804b438804@www.fastmail.com>
-Date:   Sat, 10 Oct 2020 12:38:25 -0600
-From:   "Ben Denhartog" <ben@sudoforge.com>
+        id S1731319AbgJJW4F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Oct 2020 18:56:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730412AbgJJS4B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Oct 2020 14:56:01 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343A1C0613BD
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 11:56:01 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id l15so11144839wmh.1
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 11:56:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=j9Vh9JspTRPWqKqfpfLy0C4ZHDDp2SRIIL68sApYSuc=;
+        b=ecCCepPUE9GxMm6YSOziIINnZXoG00w5OwqsmXpEc7P1rbVeDN203AcINXRLhp2OvG
+         i1wzFtOXrsXFyWIwUnUwbWM64MC1/jC+koFiZYbizxeHhynYeevQW1bG1V0QVNkd0ZpO
+         8zYFuqPmZbRkDpBMpat/E90ps6X6/KnGnuxEVghWzOmxb/zI8tpPk5HSWjBAUy/58LDD
+         FWfjK1PUIJnfCBA3Dw6LwoSDghzqLldNtR5r65R1pNlM/bysnxxMuR/ad4gvu/QTE1LG
+         yTsjTVuC4tmgjFuYiaSStHmXZ+sHDPpSfZpE6TKo4ZZBcIV5Rr66PqZyEbQU0F6uYsQP
+         bMAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=j9Vh9JspTRPWqKqfpfLy0C4ZHDDp2SRIIL68sApYSuc=;
+        b=UvVYiOCjIxdmZVgqIqwOsWdX3AN9xI+hdsK99ir9ArWlqzCePpmI+BSYlOONEbk/zz
+         N94LMhL7gcwuyCxHkEmhxJDOCtW6TGnTgfOett5YhWKKe1DLNrHihimsnUJrup6F0HvH
+         ck4PlNoJIEQrWldwBExQ5SXgp7umab0QfeKgMguR9VgY1AJ3cwTqNzr+c/0j6zYn9QpK
+         p/1SCSxd2a874l1fhdebyTwv5eXMXDOm6uyPEEehZ7PNHglPFSDcENJtnxvjkbJhGaCD
+         3XXZylHzXpuY06mKycybJFo708wZKcEh1AyilrppRJJNsbii7313MTMulD4r6qBXT8M8
+         VJ5w==
+X-Gm-Message-State: AOAM532PLC8cd7nybwp3Uwml5SYabDdfx8rIzimGcIuZ9K4IbpoAPJLg
+        zDXNvTtbI/8meOcH0izPn6FWqYzmYmMpvg==
+X-Google-Smtp-Source: ABdhPJzLSIv24WmWxAMdON/g4SzbroQg/8JWErED/svz6DYBfYn28XNNWKbi0I9x75IiReCwPCah3g==
+X-Received: by 2002:a7b:c10c:: with SMTP id w12mr3877821wmi.175.1602356159522;
+        Sat, 10 Oct 2020 11:55:59 -0700 (PDT)
+Received: from contrib-buster.auto1.local ([79.140.120.253])
+        by smtp.gmail.com with ESMTPSA id u5sm19620325wru.63.2020.10.10.11.55.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Oct 2020 11:55:58 -0700 (PDT)
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     git@vger.kernel.org
-Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Cc:     sunshine@sunshineco.com, gitster@pobox.com,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
+Subject: [PATCH v2 0/1] Teach "worktree list" to annotate locked worktrees 
+Date:   Sat, 10 Oct 2020 18:55:20 +0000
+Message-Id: <20201010185521.23032-1-rafaeloliveira.cs@gmail.com>
+X-Mailer: git-send-email 2.29.0.rc0.253.gc238dab514
+In-Reply-To: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
+References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's a small typo that I didn't catch here -- `branch.main.merge` sho=
-uld be `refs/heads/main` in this example. Rest assured this is not the s=
-ource of my issue (the actual repository I used for this still uses `mas=
-ter` as `HEAD`)
+This patch introduces a new information on the "git worktree list"
+command output to annotate when a worktree is locked with a "locked" text.
 
---=20
-  Ben Denhartog
-  ben@sudoforge.com
+The intent is to improve the user experience as the "git worktree remove"
+refuses to remove a locked worktree. By adding the "locked" annotation
+to the "git worktree list" command, the user would not attempt to remove
+a worktree or would know how use "git worktree remove -f -f <path>"
+to force a worktree removal.
 
-On Sat, Oct 10, 2020, at 12:27, Ben Denhartog wrote:
-> I have a few repositories on my system that exist primarily as local=20=
+The output of the "worktree list" command becomes:
 
-> copies of remote repositories, in that I normally just want to track=20=
+  $ git worktree list
+  /path/to/main             abc123 [master]
+  /path/to/worktree         456def [brancha]
+  /path/to/locked-worktree  123abc (detached HEAD) locked
 
-> and follow the upstream project (however, I periodically contribute=20=
+Changes since v1:
 
-> back upstream so they are technically forks -- origin is my remote,=20=
+  * Drooped the parenthesis in "(locked)" to reduce the noise and allow
+    easier extensions of more annotations design proposed in [2].
+  * Rewrite of the commit message with a much better one
+  * Simplification of the test added to `t2402` with only caring about
+    the "locked" annotation at the end of the "worktree list" output.
 
-> upstream is theirs).
->=20
-> In these repositories, I set the following configuration:
->=20
-> ```
-> [remote "origin"]
->   url =3D https://git.foo.com/me/bar.git
->   fetch =3D +refs/heads/*:refs/remotes/origin/*
-> [remote "upstream"]
->   url =3D https://git.foo.com/them/bar.git
->   fetch =3D +refs/heads/main:refs/remotes/upstream/main
->   tagopt =3D --no-tags
-> [branch "main"]
->   remote =3D upstream
->   pushRemote =3D origin
->   merge =3D refs/heads/master
->   rebase =3D true
-> ```
->=20
-> Based on my understanding, this should effectively force my local=20
-> `main` branch to track against `upstream/main`, but push to=20
-> `origin/main`. I notice some odd behavior when fetching, primarily tha=
-t=20
-> FETCH_HEAD doesn't resolve to `upstream/main` as I would expect:
->=20
-> ```
-> =E2=9E=9C git fetch --all
-> Fetching origin
-> Fetching upstream
-> remote: Enumerating objects: 23, done.
-> remote: Counting objects: 100% (23/23), done.
-> remote: Total 32 (delta 23), reused 23 (delta 23), pack-reused 9
-> Unpacking objects: 100% (32/32), 12.97 KiB | 949.00 KiB/s, done.
-> From https://git.foo.com/them/bar
->    63f7159..e65b80e  main     -> upstream/main
->=20
->=20
-> =E2=9E=9C git status -sbu
-> ## main...upstream/main [behind 9]
->=20
->=20
-> =E2=9E=9C git rev-parse HEAD upstream/main origin/main FETCH_HEAD
-> 63f71597979edb16cb9f80d0431115e22dcb716d
-> e65b80edd2a2162f67120a98e84bb489f15fcf97
-> 23e6881719f661c37336d9fcf7a9005a7dfce0cf
-> 23e6881719f661c37336d9fcf7a9005a7dfce0cf
-> ```
->=20
-> As we see from the output, `FETCH_HEAD` is resolving to the same commi=
-t=20
-> as `origin/main`, when I would instead expect it to resolve to the sam=
-e=20
-> commit as `upstream/main`. Here are the contents of `.git/FETCH_HEAD`=20=
+[2]: https://lore.kernel.org/git/CAPig+cQF6V8HNdMX5AZbmz3_w2WhSfA4SFfNhQqxXBqPXTZL+w@mail.gmail.com/
 
-> in its entirety:
->=20
-> ```
-> =E2=9E=9C cat .git/FETCH_HEAD
-> 23e6881719f661c37336d9fcf7a9005a7dfce0cf        not-for-merge   branch=
-=20
-> 'main' of https://git.foo.com/me/foo
-> e65b80edd2a2162f67120a98e84bb489f15fcf97                branch 'main'=20=
+Thank you Junio C Hamano and Eric Sunshine for the detailed review and
+helping with this patch.
 
-> of https://git.foo.com/them/foo
-> ```
->=20
-> Curiously, `git rebase FETCH_HEAD` seems to think the local branch is=20=
+Rafael Silva (1):
+  worktree: teach `list` to annotate locked worktree
 
-> up to date (erroneously), however `git-pull --rebase=3Dtrue` and=20
-> `git-merge FETCH_HEAD` both work as expected and merge/rebase with=20
-> `upstream/main`.
->=20
-> Am I going about this incorrectly? The main purpose behind configuring=
-=20
-> my "mostly just a fork" repository is that it simplifies tracking=20
-> against an upstream remote for projects which I do not work on=20
-> actively. Of course, you might argue that I don't need to keep my=20
-> remote around for this purpose and can just use a straightforward=20
-> `git-clone` here -- but I'd rather not, and would prefer responses=20
-> addressing the perceived bug rather than suggesting this particular=20=
+ Documentation/git-worktree.txt |  3 ++-
+ builtin/worktree.c             |  5 ++++-
+ t/t2402-worktree-list.sh       | 10 ++++++++++
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
-> alternative workflow.
->=20
-> --=20
->   Ben Denhartog
->   ben@sudoforge.com
+-- 
+2.29.0.rc0.253.gc238dab514
+
