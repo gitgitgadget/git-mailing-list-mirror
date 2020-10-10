@@ -2,132 +2,242 @@ Return-Path: <SRS0=cZ0k=DR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7F69C433E7
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51525C35266
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:09:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80EE120795
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11F892075E
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:09:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xe4Vx0uB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RIET8rhl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731542AbgJJW4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Oct 2020 18:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
+        id S1731776AbgJJW4k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Oct 2020 18:56:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731169AbgJJTxO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731163AbgJJTxO (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 10 Oct 2020 15:53:14 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7720FC05BD16
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 07:08:54 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id a72so1878402wme.5
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 07:08:54 -0700 (PDT)
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B8A8C0613DC
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 02:23:02 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id t25so16467012ejd.13
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 02:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=b23EmFzFsxwo1S2gWctHs5EJQtfiHMxDw6hxTgsP6JA=;
-        b=Xe4Vx0uBjIMZ0W58485jDe+sG0IL0/zEIie7TnqHV6ObRPVDWco3kFNgcEwcy4hdeI
-         S+JRUKJ7knA1kdOWS8ewYNaDOxzsW358mdU7gMfGLG+oxD4n+z53Had26rZ2+SXgSxhk
-         26SoocK2bQnpApNXDR+2Kq+ww46qphjiHgHuyHVyNUet5fGCD9ZLxcHCoEEEbMDKrbd4
-         3k6xO4raRnoJLBqDh6h3ACPFvumaZIljYaJZnqdcSISd99YKTAQy/rnwRnJJ3e6oI9Yk
-         ISKN0r0M1rD62LF8iotEu7DcDlYsHsaUK2LN5X+0LQCzBSDySHHsTy+eL25uhLXSi9nj
-         YZVA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hsJ4X5NHXrPon7xwoSFTnawJ33Gf1jQvpOxVmw1NQbg=;
+        b=RIET8rhld/ljMaGbSHaO2I64urlDtbs4X9FECjkG9KJbsC+CVeQc9n6bEBEPKNgFSs
+         aVT2B6IndmaUjbl7fEgdcRhqpAgCzK8U71zlnGoVROFy5tDIKhNRUsBSJd6FgXl42DDT
+         ZMZtBf9EHDZ9b5Op9MfDIgPyYzolmBDrY2Xttin2iDIsu72wUkpt//OpNyx/FxlvN7Ke
+         OhjzOD0ltw42EaqcBHcKBIO5aAO9XHDFlmo0hnvvL4GBdAcexVJroIhPllgrP0ay9Uiw
+         iVyhw9c+yaQO19tOZKRDbQFLpypwHUthSpKeuWaYdDxtvWSRcjRF/juARrnZMyhPcPu9
+         ZzAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=b23EmFzFsxwo1S2gWctHs5EJQtfiHMxDw6hxTgsP6JA=;
-        b=Fu0ynJ5GVIxlk9WXviLoZjtLvvwFwS7VE6jNqYbipekYbdTq70C153MbTUfQo/l6tv
-         V2kced82KAZnk8QXeBz+d6zsnjNaDu2S9wYTPMdLPCiYz6HIzpRNUGvQgRK8GSbNK2hM
-         pDVO9jSGJVptBJfEDmlwuuKZ5/mIZO91TdvfhKHU5vaAAZnjtciImOdPwvg+diEesDko
-         i8VlBC8i51GGdzzuGyXio3SGn4tOLmJgCCWJAMFSKNXBoHo0uB30YXCQjifyx/IUL+e8
-         PDbhH07+ru9EKGNVoxzpw+aM7loSKDt/+qft65uTu1RC+0RIMwKBqYeyVj1v6JDvpWWw
-         PYqA==
-X-Gm-Message-State: AOAM531T23BBwhKnEwS2nc+xtN7wN4YXY702FlL2oXTxfSsnjN0wqPO7
-        uvr59A/aM1ugdFXycNjo+4efCM96KW8=
-X-Google-Smtp-Source: ABdhPJzr5hfpKeR+QBOtaIOef29mOiEHPJHdqa+Y3LP+44JtqGqkGu64BpOMs9aiW5visuciXGMWcA==
-X-Received: by 2002:a1c:dcc3:: with SMTP id t186mr2916362wmg.70.1602338932834;
-        Sat, 10 Oct 2020 07:08:52 -0700 (PDT)
-Received: from localhost.localdomain ([91.242.153.231])
-        by smtp.gmail.com with ESMTPSA id g83sm15746737wmf.15.2020.10.10.07.08.51
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Oct 2020 07:08:52 -0700 (PDT)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v10 0/7]Finish converting git bisect to C part 2 subset 2
-Date:   Sat, 10 Oct 2020 16:07:36 +0200
-Message-Id: <20201010140743.580-1-mirucam@gmail.com>
-X-Mailer: git-send-email 2.25.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hsJ4X5NHXrPon7xwoSFTnawJ33Gf1jQvpOxVmw1NQbg=;
+        b=kIB/VOgDKbypRhALKzuwk94Lx1681rbh9FoUygLxArOgMW9nusewVrkWHR8nPbJyqu
+         4WIiJ8aSNtq1TpkFyOhdr+ZUoSy57vlP4O776W1ZDwutrEkkDogdq5jaTBO5y59vgLSe
+         y5E6JZOYlAgQIP3IBcdqIU+K86eWu4kRAZAzlVHHrIjha0EfoDsKAaKa7QcHtye6g5OK
+         DB4u8lu1ytTajyiVkS7Jou1BtW3wdGlEo0fReiR1l3b1OWF5i2X5aeP7irZfEtP8hYKv
+         vMW3v603YU1wPOJUTtEqDq5QpcCda2JKojP+anTsN3AHCYoZLqpBkjvPsOfslem2EILO
+         EEyQ==
+X-Gm-Message-State: AOAM531k2cQlmwWN/JtTfP1yymbAXsJ4S90AYCA5etZu0En0T8K6qmum
+        qIpr1GAz6S+uA3CCbSU1RUsZJm4pCo0+zLnIawSE1/clxyDu4Q==
+X-Google-Smtp-Source: ABdhPJzGJBiziz1SPoCgc7GZwrrAtYPaR8V2rH8PUhNQMGFi2ZfubTbF8+T2U7BM3RmD0/gtHGwXa64UBCCXJ3AQKG8=
+X-Received: by 2002:a17:906:3cc:: with SMTP id c12mr18060502eja.216.1602321780932;
+ Sat, 10 Oct 2020 02:23:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <945ab20e-dcde-540e-83a5-83992c2187b1@enigmage.de>
+In-Reply-To: <945ab20e-dcde-540e-83a5-83992c2187b1@enigmage.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 10 Oct 2020 11:22:49 +0200
+Message-ID: <CAP8UFD2dWrUXJUuiFtgCu6krbnbGGqJZ7K+6KqstGTcNmSc_xQ@mail.gmail.com>
+Subject: Re: Feature request: Exponential search in git bisect
+To:     =?UTF-8?Q?Manuel_B=C3=A4renz?= <manuel@enigmage.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These patches correspond to a second part of patch series 
-of Outreachy project "Finish converting `git bisect` from shell to C" 
-started by Pranit Bauva and Tanushree Tumane
-(https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
-continued by me.
+On Fri, Oct 9, 2020 at 9:35 PM Manuel B=C3=A4renz <manuel@enigmage.de> wrot=
+e:
+>
+> This feature was requested 8 years ago and briefly discussed:
+> https://public-inbox.org/git/20120318212957.GS1219@chaosreigns.com/
+>
+>
+>   TL;DR
+>
+> Before doing git bisect, I want to use exponential search to
+> automatically find a good commit, in logarithmic time.
 
-This patch series version is composed by the last seven patches of part2
-set. 
+Ok, but the conclusion of the above discussion is that the problem
+with this idea is being able to distinguish between a commit that is
+bad and a commit where the feature that you want to test cannot be
+tested for example because it hasn't been implemented yet.
 
-These patch series emails were generated from:
-https://gitlab.com/mirucam/git/commits/git-bisect-work-part2-v10-subset2.
+>   Scenario
+>
+>   * I have a bug in HEAD.
+>   * I strongly suspect that it was introduced some time ago, but I don't
+>     know when exactly.
+>   * I have an automated test that will find the bug if the test can run
+>     properly.
+>   * Most of the commits in the repository are not testable, i.e. the
+>     test doesn't run properly. (E.g. because the feature it tests wasn't
+>     introduced yet, refactoring, etc.)
+>   * I have no idea what a good commit might be, because I don't know
+>     when the first /testable/ good commit is.
 
-I would like to thank Johannes Schindelin for reviewing this patch series
-and to Christian Couder for his advice and help.
+Ok, so your test cannot distinguish between a bad commit and a commit
+where the feature hasn't been implemented.
 
+When you say that most of the commits in the repository are not
+testable, it usually means that the feature has been implemented
+relatively recently compared to the history of the project.
 
-General information
--------------------
+> This sounds like a standard application for git bisect. No matter how
+> big the repo, with binary search we would expect to find the first bad
+> commit in logarithmic time.
 
-* Rebased on d4a392452e (Git 2.29-rc1, 2020-10-08) to build with latest
-changes in bisect--helper.c file.
+Not necessarily. If you cannot distinguish in any way between a bad
+commit and a commit where the feature hasn't been implemented, then it
+might be very difficult to find a good commit. And you need a good
+commit before you can properly bisect.
 
-Specific changes
-----------------
+Suppose for example that the first bad commit (the commit that
+introduced the bug you are looking for) is a direct child of the
+commit that introduced the feature. Then unless you are very lucky any
+binary search using your script will only test either bad commits or
+commits where the feature hasn't been implemented yet, and it is
+unable to distinguish between them in your scenario.
 
-[1/7]bisect--helper: finish porting `bisect_start()` to C
+>   Failed attempt
+>
+> The zeroth idea might be trying to find the good commit by hand, by
+> reading changelogs, by trying some commits, whatever. In some
+> situations, this is not feasible. In fact, such situations occur
+> frequently for me, for example for undocumented features, unversioned
+> rolling releases, incidental complexity leading to older commits not
+> being testable, etc.
 
-* Add comment in commit message related with `eval` command.
-* Remove code comment that does not apply anymore.
+I understand that it's not always easy to find a good commit.
 
----
+> The first idea that comes to mind - and it was recommended 8 years agos,
+> and I've tried it a few times already - is to simply mark the root
+> commit as good. (Now, there might be several roots, but that's a puzzle
+> you typically only have to figure out once per repo.) This sounds great
+> in theory because binary search should get through the good old commits
+> in logarithmic time.
 
-[4/7]bisect--helper: reimplement `bisect_state` & `bisect_head` shell
-    functions in C
-    
-* Add comment in commit message related with `eval` command.
-* Change some code to convert shell command more faithfully.
-* Add call to bisect_autostart() in bisect_state().
-* Amend error message.
-    
----
+It is not necessarily a good idea to do that. And in the thread, what
+was actually suggested by Peff (Jeff King) was to test released
+versions (for example 1.6.0, 1.7.0, etc in the Git code base).
 
+> The problem with this approach is that if most older commits are
+> untestable, I have to git bisect skip them.
 
-Pranit Bauva (7):
-  bisect--helper: finish porting `bisect_start()` to C
-  bisect--helper: retire `--bisect-clean-state` subcommand
-  bisect--helper: retire `--next-all` subcommand
-  bisect--helper: reimplement `bisect_state` & `bisect_head` shell
-    functions in C
-  bisect--helper: retire `--check-expected-revs` subcommand
-  bisect--helper: retire `--write-terms` subcommand
-  bisect--helper: retire `--bisect-autostart` subcommand
+Skipping untestable commits is not always the right thing to do. If
+you know that they are untestable because the feature has not been
+implemented yet, it might be better to mark them as good instead.
 
- builtin/bisect--helper.c | 185 +++++++++++++++++++++++----------------
- git-bisect.sh            |  81 ++---------------
- 2 files changed, 115 insertions(+), 151 deletions(-)
+This is by the way what an ideal script should do. It should mark
+commits where the feature has not been implemented yet as good, and
+should "skip" only the commits where the feature has already been
+implemented but that are not testable for another reason, like another
+"temporary" bug or "temporary" compile failures.
 
--- 
-2.25.0
+> This basically kills the
+> logarithmic performance, because bisect skip doesn't do binary search,
+> but something rather random.
 
+I would say that the actual reason here is that bisect skip is used
+when it shouldn't be used.
+
+> Just yesterday I killed a bisect search
+> that took hours because it kept skipping and didn't find actual good
+> commits.
+
+Ok.
+
+> You might say that instead of skipping old commits, one should mark them
+> as good.
+
+Yes, they should be marked as good when the feature has not been
+implemented yet.
+
+> That's problematic because then I might accidentally mark a
+> commit as good that was already untestable bad. Given that bisect has no
+> undo functionality, that can quickly mess up my search. Distinguishing
+> untestable good from untestable bad is really hard automatically. I
+> shouldn't have to do that.
+
+Sometimes it's not very difficult to test if the feature has been
+implemented yet or not. For example with Git you could check if an
+option for a command has been implemented by just checking if it
+appears in the doc. So the bisection script could first check that and
+exit 0 (which means good) if the option doesn't appear in the doc. If
+it appears in the doc, then it could do the regular test: "skip" if
+untestable, "good" if there is no bug, "bad" otherwise.
+
+> Long story short: Going from the root commit typically isn't feasible.
+> I've tried it.
+
+It seems that you might not have tried in the best possible way.
+
+>   Proposal: Exponential search
+>
+> Instead of going from the root commit, what I do manually before
+> starting git bisect is this:
+>
+> git checkout HEAD~10
+> ./test.sh # Says: "Bug is present"
+> git checkout HEAD~20
+> ./test.sh # Says: "Bug is still present"
+> git checkout HEAD~40
+> ./test.sh # Says: "Bug is still present"
+> [...] # Proceed exponentially
+> git checkout HEAD~640
+> ./test.sh # Says: "Bug is GONE!"
+> git bisect good
+
+If your script cannot distinguish between a bad commit and a commit
+where the feature hasn't been implemented, then you were lucky that
+that HEAD~640 was good. If the feature had been introduced between
+HEAD~639 and HEAD~321 then your script would have said  "Bug is still
+present".
+
+> This technique is known as
+> https://en.wikipedia.org/wiki/Exponential_search, and it works very well
+> in practice. I find a good commit long before I enter the "untestable
+> good" region.
+
+If you are lucky, yes, you find a good commit long before you enter
+the "untestable good" region.
+
+> But it's tedious to do this manually. In this example, I
+> needed to run the script 8 times manually, but of course it can be more
+> often, and compiling and running the test may take time. This is ok for
+> a one-off search, but it's tedious for regular usages.
+>
+> Yes, I could wrap this up in a shell script, but I guess there are
+> caveats that I didn't think of when the history isn't linear. Maybe
+> someone even already has, and I'm unaware of that. But it feels like
+> this could be a proper git bisect feature, and a very useful one.
+
+I agree that it could be useful. It could be especially useful if
+people have a script that can actually distinguish between a bad
+commit and a commit where the feature hasn't been implemented.
+
+So if someone plans to implement that in Git, particular care in the
+documentation should be taken to explain the issues related to testing
+a feature when it might not be implemented yet.
