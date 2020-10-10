@@ -2,127 +2,101 @@ Return-Path: <SRS0=cZ0k=DR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB419C433DF
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4016C43467
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BDB420795
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B386C20795
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 22:56:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rItrnqDI"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H8D/T+xp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731478AbgJJW4N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Oct 2020 18:56:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34924 "EHLO
+        id S1731630AbgJJW4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Oct 2020 18:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731271AbgJJTGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Oct 2020 15:06:15 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8342CC0613BD
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 12:06:14 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id n6so13631364wrm.13
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 12:06:14 -0700 (PDT)
+        with ESMTP id S1731320AbgJJTJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Oct 2020 15:09:34 -0400
+Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7E2C08EAC2
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 10:32:20 -0700 (PDT)
+Received: by mail-vk1-xa41.google.com with SMTP id c63so2873452vkb.7
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 10:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+pC7wpRiac4x1Bar8vBsxpe7MYAxKBROLdV7NEP1/0E=;
-        b=rItrnqDIdbVsg8A8F7Xt+5I1szUE4p8472w5GQBfnnl5L1CV34gvA3Z6MP4apG+0oO
-         eClG8Kck9s6HLKvZCE4SVhZji8+pbg5WFMrWN2YPDp/+m/mxfzHDwwRw6fcqXfPBFA8U
-         Uiy75Rw1CeDqsmg5Ho6WE8+R8GGprcVS9buQmtA93DD2v20qh0fcj/EhzyOka2SRW/yr
-         IybffU4P5PtN88xP0onKXMogE0mlxC1sskeuuvLLKf9m+cTqSqBknwv1ozqYiRBMAOFT
-         txPaq3Wz7s7PQfZA91uUMV+bM3YhY9wpnCzDezYQcKVdUsFTok3MuDp+eomrTgl53aAA
-         Vrzg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=66/wvmw4UqfuPEBYp3TqxE0zSzvkU1U9494bQaqwP5g=;
+        b=H8D/T+xpbbFAdg2zGbXHDDBm7TwrfSX5h5rrCjOQLuqqymOuiGo01NcysYzy+VVPLH
+         u54Fejlf8V/dGE2XPC3c/9B+PnzZ9O7LqZhH3i0opiZu18s54/jVdjB9ElBB/4GwJ7KZ
+         BOG2w0/W8mJ2ADm8sfoKUwtM/XuerKBnZYCxVFVK/Q2Qmcpb7fm+CebX8CjRMVe11J7Y
+         gAGQA6eu+Sw9TvzUAZ6cwDxdjWjgBdw3W9r4NCU26p4eTnyzMcBFBSyFpC8YFftyCBkq
+         yZhpmeA+G7YXRq9tIsMfvOeFXU92qa0QydsyTShkg4Vs6IYlomgZOP+jDkwbGya1z/KC
+         tBtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+pC7wpRiac4x1Bar8vBsxpe7MYAxKBROLdV7NEP1/0E=;
-        b=kKDrTzb31ig3O94BPIT75OjF17Kjdai75Rmpc4uISHXCPI7QVDRI1/9S9FcR2rBHSV
-         gQOtxq8v1U4QYP4+Lyid+kZTP7bG7JsvjL38MMBcSNFJPg7TraAf8z+zNQDoXzuUgQG2
-         r1KoLTtwX28W9ryyPO2MJCHa/Pea2M6IeekznayFBBLpqA7HnKNVIR8NohzGtxYlQ2wl
-         +UEpr2DcZBiYakLFlf7qtKYF3VFIgzlw88B/jeJwC3Y/Udsy6j4w1EehOVw1L9T+I/gZ
-         BQ97/6IRXyq8bwHRpcU+JqKvVb81EMZI2oIWX2zd8p3/1yenBlcDsx1VmS8foJYn2Tof
-         BWuQ==
-X-Gm-Message-State: AOAM531WixYbwB2HACieaouhCqcFH8YlgHXNgkMSnzCngH3P4gLIlVq0
-        jniSryt2LxBTHCWNBPpr6QY=
-X-Google-Smtp-Source: ABdhPJxs0Ms2n3EXzo7zG5XgTqtV1YUZARLzRuFtRoQnUFzMmkIUVlHSh87ULwWz9gZgk4EEDYrw9Q==
-X-Received: by 2002:a5d:4cd1:: with SMTP id c17mr8990907wrt.109.1602356773181;
-        Sat, 10 Oct 2020 12:06:13 -0700 (PDT)
-Received: from contrib-buster.localdomain ([79.140.120.253])
-        by smtp.gmail.com with ESMTPSA id h25sm32410wrc.55.2020.10.10.12.06.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Oct 2020 12:06:12 -0700 (PDT)
-Date:   Sat, 10 Oct 2020 19:06:10 +0000
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/2] teach `worktree list` to mark locked worktrees
-Message-ID: <20201010190610.GA23099@contrib-buster.localdomain>
-References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
- <CAPig+cQXkP8vTNR+LJ4fZRT-an0vEgKxcFpfi+aQ-BdipTgq=A@mail.gmail.com>
- <20201002162802.GA15646@contrib-buster.localdomain>
- <CAPig+cR8D13cM8OewRVYfg7wNjVC05tVQw80-dm4B5XPmjHJWw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=66/wvmw4UqfuPEBYp3TqxE0zSzvkU1U9494bQaqwP5g=;
+        b=sckeoTkjhker0PjBnb6BV7WWX2/iXQHIX/5r/aMTEO7ZiixQqpGZgtqT3Sv08+PhCQ
+         J5Xh1UbPtWcpb/0pfwZIrZVzAhi1m7Ywn6YN1MDLA3GCfPChmfeVSwLlPuKKppNVmEvW
+         fB8i8D+rO9QJNmJOBzhQQ1GI8Leh8I4CpsNfMirYpGx0mYjqoUImViO4x9SJ2t5MrjG9
+         nMhDJswib2rwL1GTbn7QximLkYaQPTSMlTRFXSIis6NFo5CiZ1Apq7x0Qt/DDs5ard6F
+         XCfrFtqbodUPQp4GU3P7IXQBsy0a3mU72DP7srW5rKqS0dNWvTjCCSbARXhWzG3QSu5P
+         u2wg==
+X-Gm-Message-State: AOAM532/oPJMv5t4ASAty6IJavjsfzWuHkouGaxsUkhV6fDqE2/MhIwy
+        QpTXGI1j//5ug9omxdnTLo/Kp6mzVWpISY4wNsxN8g==
+X-Google-Smtp-Source: ABdhPJx2kuAPsB4Wxg4dEpA6ikx0C967sdW0zXh62uRum+OGahzqy6LNspMYeZ7dLHezxaE5J3TKi9k1fEWPwxG/6Ss=
+X-Received: by 2002:a1f:1c17:: with SMTP id c23mr10729103vkc.0.1602351138650;
+ Sat, 10 Oct 2020 10:32:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cR8D13cM8OewRVYfg7wNjVC05tVQw80-dm4B5XPmjHJWw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
+ <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com>
+ <20201002041214.GE3252492@google.com>
+In-Reply-To: <20201002041214.GE3252492@google.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Sat, 10 Oct 2020 19:32:07 +0200
+Message-ID: <CAFQ2z_NL1UrmonMH3qLKrEkjsPjm9qTbtoeY0OHQZzkVW2t3-w@mail.gmail.com>
+Subject: Re: [PATCH v2 05/13] reftable: utility functions
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 09, 2020 at 06:50:02PM -0400, Eric Sunshine wrote:
-> >
-> > Sorry for the bit late response.
-> 
-> Likewise.
-> 
-> >
-> > Doing a little investigation on the code, it seems the machinery for checking
-> > whether a worktree is prunable it seems is already there implemented
-> > on the `should_prune_worktree()`.
-> 
-> Yes, when I mentioned that in [1], I envisioned
-> should_prune_worktree() being moved from builtin/worktree.c to
-> top-level worktree.c and possibly generalized a bit if necessary.
-> 
-> One thing to note is that should_prune_worktree() is somewhat
-> expensive, so we'd probably want to make determination of "prunable
-> reason" lazy, much like the lock reason is retrieved lazily rather
-> than doing it when get_worktrees() is called. Thus, like the lock
-> reason, the prunable reason would be accessed indirectly via a
-> function, say worktree_prunable_reason(), rather than directly from
-> 'struct worktree'.
-> 
-> [1]: https://lore.kernel.org/git/CAPig+cTTrv2C7JLu1dr4+N8xo+7YQ+deiwLDA835wBGD6fhS1g@mail.gmail.com/
+On Fri, Oct 2, 2020 at 6:12 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> [...]
+> > +int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
+>
+> How does this compare to stdlib's bsearch?
 
-Appreciate the tip, I will be working on the prunable annotations, verbose
-and other information that was proposed previously for the "worktree list"
-command.
+bsearch gives you back NULL if it doesn't find an exact match.
 
-> > Additionally, having the ability to see the annotation and the reason in
-> > case you see the annotation seems like more complete work for the intention
-> > of the patch.
-> >
-> > Unless you think that is better to start with the annotation, and some time
-> > later addressing the other changes specified by [2].
-> 
-> Whatever you feel comfortable tackling is fine. The simple "locked"
-> annotation is nicely standalone, so it could be resubmitted with the
-> changes suggested by reviewers, and graduate without waiting for the
-> more complex tasks which could be done as follow-up series. Or, expand
-> the current series to tackle verbose mode and/or prunable status or
-> both or any combination.
-> 
+> > +     reftable_free(a);
+> > +}
+>
+> Are there other callers that need custom free?
 
-Thanks. I've just resubmitted the "locked" annotation patch, as you said,
-it's nice standalone and can be integrated and hopefully will be already
-useful for other git users and soon (hopefully :) ) will submit new patches
-for the other changes as proposed by [1].
+The libgit2 folks requested the ability to set memory allocation
+routines, hence reftable_free().
 
-[1]: https://lore.kernel.org/git/CAPig+cTTrv2C7JLu1dr4+N8xo+7YQ+deiwLDA835wBGD6fhS1g@mail.gmail.com/
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
