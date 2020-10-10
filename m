@@ -2,137 +2,129 @@ Return-Path: <SRS0=cZ0k=DR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D60B8C3279D
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3880DC2D0A1
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4D5F2075E
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0605A2075E
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gglXI6eb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BrjaLqy5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388506AbgJJW41 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Oct 2020 18:56:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41772 "EHLO
+        id S1731517AbgJJW4Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Oct 2020 18:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730456AbgJJTvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Oct 2020 15:51:00 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926E1C05BD19
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 07:08:58 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id p15so12450522wmi.4
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 07:08:58 -0700 (PDT)
+        with ESMTP id S1731312AbgJJTJY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Oct 2020 15:09:24 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BE66C08E81A
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 09:43:16 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id b69so13865702qkg.8
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 09:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2odWCcl+peeWRLiAEIKMZhirbEEEvODwaGttKMWIFr4=;
-        b=gglXI6ebySWcvh4w3E7uyRVWALPV/JeBejrx39Z+roUDJlOpk6iT2mTXIY9OKfJvtL
-         WPpsCouylEhZzuz7iqp4pMKAjvGHKFb8NtUx1k068ETinWhnK9AmQ66qKezIER3oUGvM
-         kVYDHMTjJWZBVlMlJw8nN0RpGJr/vqv4qkdwa8GQO3yF1r4qRO5z20ZSu+B1V/quPSXt
-         8r8x481oWTNITQVYke+gVsfsuIpiQArfZMW2fVyNyXoKAB/J85vKyl2P2vWh2DYVnB5s
-         OGstycAq1GM0dRaKzsh38OC4teUUTOCnhWfqUikxsoZdjC1m7hEThu0JsPcDmb6qe6vf
-         lc1A==
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=jVvA3o/wEimEwsZo8Xd9L7IbN1Aq7XOJB7bZJM2bdmE=;
+        b=BrjaLqy5TKV95nf/muLVsa0WOw9ZuOi0exCx7q5ABVpkwVgHcLfPCYEwXbMdmkNNfW
+         RugAzcp2AK9WZsRUckN5QeNQDp6lhnjAK1DPL+mdL+bt0V/NpO3QKqscrtQFJtCEcojX
+         vqr+t7XX6S6mgYQaKMJB3nLLu7JtUHM67owbU3yG3HcKchDJSE4QQl+lJuulCurQl0af
+         zE6KITrX3JTmoSNOKfgsSBsmVi0XmYr8gOi3ba7z7IgFMHhfONJ+mCsovJ/x2aiPrJsM
+         eD96Uk/1hlMgm55bT/G+EEWUmSsCEAnUW7kQ5NtavsH5VD3KtHe+zkeWarZv+PflOdnA
+         X/kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2odWCcl+peeWRLiAEIKMZhirbEEEvODwaGttKMWIFr4=;
-        b=tIC2sm5aSrVql3wQBaMCoA4mhkHGFJVaSOgEJnuKIyd+3ATXgw/uWpcQB/HLSKFG7X
-         mGglaL6lm+4nUZ7B0J6Uve+0qGVKClK+Sa2H9xncQ7H/LYe/B65E23ov89xOEbX6v5x7
-         8O0G0t4pU0zFLd3kVPc+lrP7GNbFC381DmGXMV54XWuXsIP6veFvcoNiBV6pGHYCLsSK
-         1hwgxE40gpJOnKCmsWQDE/NyByO1W/i+hHK/x05dVHKiOnhVVjszD03/X0KOzA2pyjd9
-         b2YoJgyV5VnaAv46nGUntbWg9nRhwMY+cqu1nSEKj80uPe2wQh9bT+ufknG082P0vgHW
-         qqyg==
-X-Gm-Message-State: AOAM533YeOUClCkCS1lrOR2jHIlL2Hip8gpLV148Utkb9QTfPCdMOuDM
-        BhxgSA3TrcMVX3dWtv71B4RBSzlYF3g=
-X-Google-Smtp-Source: ABdhPJy6LraP9nHMss+2Dv86CjhViAlvCmTiEb6jN6mNOrrt4UTIN+XZPUj2sA2qqzTGPOaBdEQwDw==
-X-Received: by 2002:a1c:87:: with SMTP id 129mr2847075wma.103.1602338936841;
-        Sat, 10 Oct 2020 07:08:56 -0700 (PDT)
-Received: from localhost.localdomain ([91.242.153.231])
-        by smtp.gmail.com with ESMTPSA id g83sm15746737wmf.15.2020.10.10.07.08.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Oct 2020 07:08:56 -0700 (PDT)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v10 3/7] bisect--helper: retire `--next-all` subcommand
-Date:   Sat, 10 Oct 2020 16:07:39 +0200
-Message-Id: <20201010140743.580-4-mirucam@gmail.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20201010140743.580-1-mirucam@gmail.com>
-References: <20201010140743.580-1-mirucam@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=jVvA3o/wEimEwsZo8Xd9L7IbN1Aq7XOJB7bZJM2bdmE=;
+        b=KqfvyfGcNYfuEOjtx0Anoo8VFGsArSiZS0FXSH3KWbXk7NRn7TZGdOePsLZ4HxBtKQ
+         4hC9VyY2CV3iBVVcBM3qnhen+GhZyaF4PDpOCvjthGn9hTyYYlL7t2Wqbj98iJhly0Dm
+         q6RkoXbirHVTy20ELWfynMnSGRIsmbTNl8fgYjCxyZGyIs+FEQCdoWDO+O2/WVWdZIQD
+         +2Zi2ztZedT+06ViXqDsKVvfI8VB/OGCmGtpf15NUUP1P0+aIR9f1n8/37A2cjAskd1z
+         3BI38oj7f++ALpapAax5o8sRIRa4IWIdlh9L+9x70yz5t2ovGZ0WHnJxjWEaKFWYYz5Q
+         qJbw==
+X-Gm-Message-State: AOAM530bUBpewVqnScWLC5mG9kmU19Py9yTjsPVP2r8cCLbZvz0+B2/h
+        rAI72bKO+bOpR+c2yfLy/toSZ9+xs+Q=
+X-Google-Smtp-Source: ABdhPJxZCeq+KAOcEUPbYrHisWxnhZ9cTfHh8RhGgDTW8PJ5z+bAETMerQvGdhw7xAyIleknYYF5rg==
+X-Received: by 2002:a37:7f85:: with SMTP id a127mr3074381qkd.257.1602348194976;
+        Sat, 10 Oct 2020 09:43:14 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id x91sm3971173qte.69.2020.10.10.09.43.13
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Sat, 10 Oct 2020 09:43:13 -0700 (PDT)
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Subject: [BUG?] After 'git checkout',  files deleted upstream are left in the working directory as untracked
+Message-Id: <3D3C5F5D-830E-4EC7-A527-DC595D983BB2@gmail.com>
+Date:   Sat, 10 Oct 2020 12:43:10 -0400
+To:     Git mailing list <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+Hello all,
 
-The `--next-all` subcommand is no longer used from the git-bisect.sh
-shell script. Instead the function `bisect_next_all()` is called from
-the C implementation of `bisect_next()`.
+I've noticed a weird behaviour of 'git checkout' and I don't know if =
+it's a bug.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+I went back to an old clone which had an old feature branch =
+('stale-branch')=20
+checkout out, and its working directory and index matching HEAD=20
+('git status' is clean).
+Then I did `git checkout other-branch`, where 'other branch' is a more=20=
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index fbb9046737..f1a7cfbfaf 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -20,7 +20,6 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
- static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
--	N_("git bisect--helper --next-all"),
- 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
- 	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
-@@ -858,8 +857,7 @@ static int bisect_autostart(struct bisect_terms *terms)
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
--		NEXT_ALL = 1,
--		WRITE_TERMS,
-+		WRITE_TERMS = 1,
- 		CHECK_EXPECTED_REVS,
- 		BISECT_RESET,
- 		BISECT_WRITE,
-@@ -873,8 +871,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	} cmdmode = 0;
- 	int res = 0, nolog = 0;
- 	struct option options[] = {
--		OPT_CMDMODE(0, "next-all", &cmdmode,
--			 N_("perform 'git bisect next'"), NEXT_ALL),
- 		OPT_CMDMODE(0, "write-terms", &cmdmode,
- 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
- 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
-@@ -911,9 +907,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_bisect_helper_usage, options);
- 
- 	switch (cmdmode) {
--	case NEXT_ALL:
--		res = bisect_next_all(the_repository, prefix);
--		break;
- 	case WRITE_TERMS:
- 		if (argc != 2)
- 			return error(_("--write-terms requires two arguments"));
--- 
-2.25.0
+recent feature branch, based on a more recent commit on 'master'.
+After the checkout, `git status` reports untracked files. These are =
+files that were=20
+deleted on 'master' between the commit on which 'stale-branch' was based =
+(d9f6f3b619)
+and the commit on which 'other-branch' is based (d4a392452e).
+
+The thing is, I can't reproduce it on a fresh clone. If I could, this =
+would be a reproducer:
+
+```
+$ git clone git@github.com:phil-blain/git.git && cd git
+$ git checkout stale-branch
+$ git checkout other-branch
+$ git status # the following is what is shown in my old clone
+On branch other-branch
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	git-legacy-stash
+	git-remote-testsvn
+	t/helper/test-line-buffer
+	t/helper/test-svn-fe
+
+nothing added to commit but untracked files present (use "git add" to =
+track)
+```
+
+I did not modify or delete any of these 4 files myself, neither in the =
+commits=20
+on 'stale-branch' or in the commits on 'other-branch'. They were deleted =
+by
+other feature branches that were merged to 'master' between d9f6f3b619 =
+and
+d4a392452e.
+
+This is not the first time that I've seen this happen, and I'd like to =
+understand
+if this is a bug, and why I can't reproduce it on a fresh clone (I'm =
+guessing maybe
+the index is at play here, but I'm not sure how to diagnose it)...
+
+Thanks and cheers,
+
+Philippe.
 
