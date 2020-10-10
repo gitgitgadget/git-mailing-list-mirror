@@ -2,105 +2,137 @@ Return-Path: <SRS0=cZ0k=DR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AADDDC43457
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D60B8C3279D
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C87F2075E
-	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4D5F2075E
+	for <git@archiver.kernel.org>; Sat, 10 Oct 2020 23:10:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="N++wmCzm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gglXI6eb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388544AbgJJW4W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Oct 2020 18:56:22 -0400
-Received: from mout.web.de ([212.227.17.12]:53069 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731529AbgJJTd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Oct 2020 15:33:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1602358403;
-        bh=ht/59yOKtBWuynfyoZ1ezGSKTcer32ItmnzYJfoABO4=;
-        h=X-UI-Sender-Class:From:Subject:To:References:Date:In-Reply-To;
-        b=N++wmCzm8ZTgJsZvr+XvaIXSR7ZihwC5xGYx/rlKo+v6j5vmcVQPczd3bVv9mua2x
-         8Dj11zRl6tI4opnqY8ZsDA/k1rR0vBpqgzf6FN273kxpg7F1hk4kB8xxL+rcGLdl9/
-         QhbC7n0RTZxx0211olbTJ+ZgHAFK2RcfKdN4SkXw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.158.172]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MY6sm-1kw0AG03cm-00UuiI; Sat, 10
- Oct 2020 18:45:16 +0200
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [ANNOUNCE] Git v2.29.0-rc1
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq7drzv1bn.fsf@gitster.c.googlers.com>
-Message-ID: <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
-Date:   Sat, 10 Oct 2020 18:45:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S2388506AbgJJW41 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Oct 2020 18:56:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730456AbgJJTvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Oct 2020 15:51:00 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926E1C05BD19
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 07:08:58 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id p15so12450522wmi.4
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 07:08:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2odWCcl+peeWRLiAEIKMZhirbEEEvODwaGttKMWIFr4=;
+        b=gglXI6ebySWcvh4w3E7uyRVWALPV/JeBejrx39Z+roUDJlOpk6iT2mTXIY9OKfJvtL
+         WPpsCouylEhZzuz7iqp4pMKAjvGHKFb8NtUx1k068ETinWhnK9AmQ66qKezIER3oUGvM
+         kVYDHMTjJWZBVlMlJw8nN0RpGJr/vqv4qkdwa8GQO3yF1r4qRO5z20ZSu+B1V/quPSXt
+         8r8x481oWTNITQVYke+gVsfsuIpiQArfZMW2fVyNyXoKAB/J85vKyl2P2vWh2DYVnB5s
+         OGstycAq1GM0dRaKzsh38OC4teUUTOCnhWfqUikxsoZdjC1m7hEThu0JsPcDmb6qe6vf
+         lc1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2odWCcl+peeWRLiAEIKMZhirbEEEvODwaGttKMWIFr4=;
+        b=tIC2sm5aSrVql3wQBaMCoA4mhkHGFJVaSOgEJnuKIyd+3ATXgw/uWpcQB/HLSKFG7X
+         mGglaL6lm+4nUZ7B0J6Uve+0qGVKClK+Sa2H9xncQ7H/LYe/B65E23ov89xOEbX6v5x7
+         8O0G0t4pU0zFLd3kVPc+lrP7GNbFC381DmGXMV54XWuXsIP6veFvcoNiBV6pGHYCLsSK
+         1hwgxE40gpJOnKCmsWQDE/NyByO1W/i+hHK/x05dVHKiOnhVVjszD03/X0KOzA2pyjd9
+         b2YoJgyV5VnaAv46nGUntbWg9nRhwMY+cqu1nSEKj80uPe2wQh9bT+ufknG082P0vgHW
+         qqyg==
+X-Gm-Message-State: AOAM533YeOUClCkCS1lrOR2jHIlL2Hip8gpLV148Utkb9QTfPCdMOuDM
+        BhxgSA3TrcMVX3dWtv71B4RBSzlYF3g=
+X-Google-Smtp-Source: ABdhPJy6LraP9nHMss+2Dv86CjhViAlvCmTiEb6jN6mNOrrt4UTIN+XZPUj2sA2qqzTGPOaBdEQwDw==
+X-Received: by 2002:a1c:87:: with SMTP id 129mr2847075wma.103.1602338936841;
+        Sat, 10 Oct 2020 07:08:56 -0700 (PDT)
+Received: from localhost.localdomain ([91.242.153.231])
+        by smtp.gmail.com with ESMTPSA id g83sm15746737wmf.15.2020.10.10.07.08.55
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Oct 2020 07:08:56 -0700 (PDT)
+From:   Miriam Rubio <mirucam@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>
+Subject: [PATCH v10 3/7] bisect--helper: retire `--next-all` subcommand
+Date:   Sat, 10 Oct 2020 16:07:39 +0200
+Message-Id: <20201010140743.580-4-mirucam@gmail.com>
+X-Mailer: git-send-email 2.25.0
+In-Reply-To: <20201010140743.580-1-mirucam@gmail.com>
+References: <20201010140743.580-1-mirucam@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq7drzv1bn.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:bwqhwq3McYxiMBrF64rrfqqYO0XN2QzCKpQel9GTQD19zppDpyD
- mrd0gAp+AdC2kZDfAue+mOcyaNpR466bc+PvNYzU+cD321NIethFb6Lc5/Vmvon00mWVg9z
- WwfdBCrfoKj+4yZ8rfqmdTND7NX3N1d5pA+oNimJndIcUDMwqf9ZZH4wgqTJwS4KZoNUdNo
- caM8Pb3Re8aAvLPYbkiSg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/QrgSTVwDaM=:sJfh8i+nTsciGFxRy3VISK
- jMM7IEbMIyDxwimqNunzX+wkoKSMkLPprPDaYSY+OnDK4NhWuS7J8ZY61bGLZx6zqVBbLVbyI
- BrK3yLOIQNi5YaXgmRWxUwXj7UAw7yF7NUEh4fEcYfSbW3XUU/NM3a9wG2Wm9PGwtx95nTWzr
- SXYhwOI6+VigtDZqotIcWyJ65/HxDpKgUD45U5FrmZeD08UpeGQewKpfP7c8Qqe/c03Qy5b7g
- H7XWYweZWLYpIBL/Rngz8m7kC1BOkXzl5M8Thosn0tfJWUHBPbWk+ES0cE0KZTqrJmLvjt8Bd
- xkXuZ17/iwlDk4H0SO6LQAdOHHjvJEcB/ZaZdg37+o3N6YCdC/c4CsoyqniqRPSlJOkKSJHoA
- kEqErvbu+eKKAj7plPOLk7qOJOEaDAZL1/Q8JbmIpUSHDpsN+76TC1j3za9A8d/V/0pNHBHet
- PH80+6v1/qa162hMqL3in7M543CUnkEn2OkGID0mliJ7kwXv0pQdeFgVGhPQpi2/4tkbXUmO1
- agl5sjr5Y6vrF+xkCXxAE5Gw2MZGWNIFabSnI1gryNT3Z5PhpwTs0T8gnSjpNr8o/3Cmc7WzH
- 0nKHIsDzmkTaiNSXnwvApXkFsVX4DJJUM8wq2eKZCgu80MB2zl04VsneWx26AldS3im2tSORK
- 0fR0vSN1/Z3Se5D52AjtIBXzA6b9dPEHJoJP5VmPe/K0VZiho/67eYCfqSpIe9Hs+/dJ4HkzQ
- vZCos9EE0JMEi+Q6JnSB8nZouVjLyQiEyMK6zZ6LfEhdy8tSiXtKqMjs5A1PYslg+LfAtdn8p
- W9cUoZzAq05oPsPZD0m/EmIhhGC7OuvfIDHY5j9yzePec8xzB1U0pE6EKCvJCFbmC7Px/V6li
- S3JQcQtjzNn7Jl+fvAnHvyny9jWiCFWzk3Q/V0wqGj8/n73l7dlAMIRMZSIwXgtdf0un/19MJ
- +AMuWQOwLoIvOUayPLHTRqw62e8bqvNBICsQsRp+1/xiSO/cm2jamSr8IDNQ+AnRD/P8mMi2t
- 2QuefVjmHJZeRokbLoCd+Ci+dO3MwRNest8LW3CUChV3eqtSPZjcjzgq9ovZou1sXpGeg4PDY
- eE5Lp6K+8oiHNWavq9bk7xRLLGKulaak8MmztRep7ESHsFvLvRt7u6xendwTtU9qdvx69F3/g
- 5YJB0joZv8KaEd7vtj6KqQPpLy2ERK9ohhXjrGH5Yc5GERWtVxoCCQCXSFiME+Ehurrz4iE8W
- KFXUreXmyvmyoUCiP
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.10.20 um 17:58 schrieb Junio C Hamano:
->  * "git archive" learns the "--add-file" option to include untracked
->    files into a snapshot from a tree-ish.
+From: Pranit Bauva <pranit.bauva@gmail.com>
 
->       archive: read short blobs in archive.c::write_archive_entry()
->       archive: add --add-file
->       Makefile: use git-archive --add-file
+The `--next-all` subcommand is no longer used from the git-bisect.sh
+shell script. Instead the function `bisect_next_all()` is called from
+the C implementation of `bisect_next()`.
 
-Oh, this feature landed quickly, with little discussion.  I dropped the
-ball while being distracted by other things and working on supporting
-other use cases, like dist-doc and artifacts-tar.
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+---
+ builtin/bisect--helper.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-The option --add-file in rc1 is peculiar in that it captures the value
-of --prefix at the time of left-to-right parsing.  I don't know any
-other option that does that.  It gives users a way to craft in-archive
-paths, but simply adding them with their original path (just normalized
-to use slashes as directory separators) would probably suffice.
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index fbb9046737..f1a7cfbfaf 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -20,7 +20,6 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+ 
+ static const char * const git_bisect_helper_usage[] = {
+-	N_("git bisect--helper --next-all"),
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
+@@ -858,8 +857,7 @@ static int bisect_autostart(struct bisect_terms *terms)
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+-		NEXT_ALL = 1,
+-		WRITE_TERMS,
++		WRITE_TERMS = 1,
+ 		CHECK_EXPECTED_REVS,
+ 		BISECT_RESET,
+ 		BISECT_WRITE,
+@@ -873,8 +871,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	} cmdmode = 0;
+ 	int res = 0, nolog = 0;
+ 	struct option options[] = {
+-		OPT_CMDMODE(0, "next-all", &cmdmode,
+-			 N_("perform 'git bisect next'"), NEXT_ALL),
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+ 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
+@@ -911,9 +907,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+ 	switch (cmdmode) {
+-	case NEXT_ALL:
+-		res = bisect_next_all(the_repository, prefix);
+-		break;
+ 	case WRITE_TERMS:
+ 		if (argc != 2)
+ 			return error(_("--write-terms requires two arguments"));
+-- 
+2.25.0
 
-The option serves a niche use case, so this weirdness might be bearable,
-but I wouldn't have expected it to be merged without debate.  Perhaps
-we want to slap an "experimental" label on it?
-
-We can create the dist-doc tars easily without --add-file and tar(1);
-patch forthcoming.
-
-We could do the same for artifacts-tar, but that would generate a huge
-archive due to the many hardlinks for dash aliases that are flattened
-into copies.  Implementing hardlink support might be worthwhile anyway
-and we would not even have to make it optional.  This target doesn't use
-TAR_DIST_EXTRA_OPTS, so this is a separate topic anyway, though.
-
-Ren=C3=A9
