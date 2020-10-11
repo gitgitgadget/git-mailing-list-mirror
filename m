@@ -2,81 +2,103 @@ Return-Path: <SRS0=tPyM=DS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F637C433E7
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 09:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 980CDC433E7
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 09:59:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDB022083B
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 09:25:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4831B207FB
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 09:59:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M7a7Mcnh"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="VcoeXPwf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728989AbgJKJZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Oct 2020 05:25:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbgJKJZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Oct 2020 05:25:51 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3273AC0613CE
-        for <git@vger.kernel.org>; Sun, 11 Oct 2020 02:25:51 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id y16so9064061ila.7
-        for <git@vger.kernel.org>; Sun, 11 Oct 2020 02:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=DSuU+KR7Xh8NmlI9Kuo3KrtQ50TlxQ7K0ePii5kNG2c=;
-        b=M7a7McnhU8OJPvoWDXPfuWccI1JOjun5QBGXH+ueM2+EfuBmZ7JWgOLPSrUsyPhJYt
-         e20b01l2A8iaSijRzy/1Uy+MUZjuNazNgV8pwZWmdZLboJj9QVVyulPvTX8pdc23zOU1
-         n9wwWqNw/xkYNK189rPlB4H3CB6AoZk6QkmTIrDICCGGJfGndMk61eZKvH1c+PlmUrhm
-         i2xkTDdeWavK4uuVCKi9LUoxuI/NUVHeCCJHummEw8XPe8n1YA4GUDN+gAnUPTgqM1iA
-         6m6W6T/1ba+rIetyD/kFXo7UiqFMdSB4RC6HUshD5EjRH0NRx/TRNSuaHNuGujCEB3sb
-         3n8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=DSuU+KR7Xh8NmlI9Kuo3KrtQ50TlxQ7K0ePii5kNG2c=;
-        b=NJpS24npl+DTaAokgw+ltig4IekyMejrJ1HHDhVp9uqRfFINTBi2Njxf5JK+03bsAB
-         VZVEdzAaK/KVs26DtnwfpCrTXtv7+VWURnl2VNfMQ9VRansVjkuwcEF/SWZJo52f2lsy
-         gX7YP9fCzNrBCBmb7+YF+e+RrSUHpK09aH2F15SdkaCYnFQizjaRnnCLrBblRauUUW12
-         CYzZGqZHxODnKDJpdJkfrOBqgiozmKq8FuJEX6+OT+BiWubHbVDjB0U5q4h2IQS0ujON
-         dCOgs3GCriqStZp0f6B0HJP0tSLHAXMvdUOxU7615FSZOISO+tUkJIV6TH7+hEpTsYrH
-         MboA==
-X-Gm-Message-State: AOAM530ipPMJRLGPBESwCqLZ5+hSNDSftb5lZ/x7VdaQecz/Wuz2Alps
-        P3i8imiDham8u7w/YlICBvEWG3IaeiYZxhswCeT/Oo75Bj6m
-X-Google-Smtp-Source: ABdhPJy3qTe3StDCUDDCM5DWO0bgTdKbV0GNATpsdF7LHoMiLjCK1NnHZY9meJbJmxac5NIhnWSStZbcSoX4YPPu91Q=
-X-Received: by 2002:a92:d742:: with SMTP id e2mr15072615ilq.11.1602408349844;
- Sun, 11 Oct 2020 02:25:49 -0700 (PDT)
+        id S2387508AbgJKJ70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Oct 2020 05:59:26 -0400
+Received: from mout01.posteo.de ([185.67.36.65]:33821 "EHLO mout01.posteo.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387502AbgJKJ7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Oct 2020 05:59:25 -0400
+Received: from submission (posteo.de [89.146.220.130]) 
+        by mout01.posteo.de (Postfix) with ESMTPS id 31B2D16005F
+        for <git@vger.kernel.org>; Sun, 11 Oct 2020 11:59:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+        t=1602410359; bh=/TlrV9peW0OOxPvqlBQau9tZyx06fS+LSlj2FMnFffI=;
+        h=Date:From:To:Cc:Subject:From;
+        b=VcoeXPwf2hJ6SuIueTQ0nlGpcQKZ+itJCxP4+2lDUZG0ctx0RQrK9iiO7ObfGFBa3
+         1LEWk/b/5bVpaw8croy0gsLgb1OqWeelOyfncnnJst9b9QKWL1bhJPCIzZ4O7pD3PN
+         eUmRMTdczivGqaTBXpqXE4cDZ+2Jbw75nie1n5g9Zbdcc/9GKkKs07la5d/I6qSCSO
+         xBFu6RRLcn7XE+bPwWP5O7PTsOQoDUFNL/NBRkAdWqnqwEQOZECGjEMseqW2ORZW9d
+         zUv36EKkqP198hOM1eZ4g95ZyMnXAKt2FAixbWvHt97vDXPxjTqcmCcRXhwrE7ADig
+         o02/vhAeIOJ+g==
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4C8HMp26y6z6tm9;
+        Sun, 11 Oct 2020 11:59:18 +0200 (CEST)
+Date:   Sun, 11 Oct 2020 11:59:16 +0200
+From:   Robert Karszniewicz <avoidr@posteo.de>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] log: add log.showStat configuration variable
+Message-ID: <20201011095916.GA14933@HP>
+References: <20201008162015.23898-1-avoidr@posteo.de>
+ <bec999ef-5f9c-0ca1-ddd9-70b54b8c51b1@gmail.com>
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Gabriel_N=C3=BCtzi?= <gnuetzi@gmail.com>
-Date:   Sun, 11 Oct 2020 11:25:38 +0200
-Message-ID: <CAA9rTuf4gP5hy2GNubxGmDy_N2R+WoNX99sDUOo-QNym3pB=dQ@mail.gmail.com>
-Subject: Git hooks and stdin/stderr/stdout.
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bec999ef-5f9c-0ca1-ddd9-70b54b8c51b1@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear all,
+On Thu, Oct 08, 2020 at 02:12:50PM -0400, Derrick Stolee wrote:
+> On 10/8/2020 12:20 PM, Robert Karszniewicz wrote:
+> > Changes default behaviour of `git log` and `git show` when no
+> > command-line options are given. Doesn't affect behaviour otherwise (same
+> > behaviour as with stash.showStat).
+> > ---
+> > I've wanted to have `show` and `log` show --stat by default, and I
+> > couldn't find any better solution for it. And I've discovered that there
+> > is stash.showStat, which is exactly what I want. So I wanted to bring
+> > stash.showStat to `show` and `log`.
+> 
+> I'm wondering: why should this be a config setting instead of just
+> a configure alias?
 
-I have a question regarding git hooks and would have liked to get some
-better understanding of how internally a hook is run. Especially I
-want to know  what happens under the hood because the behavior kind of
-puzzles me. So what I've understood:
+I answered this in the reply to Junio C Hamano.
 
-When git runs the hook, git does
-- connects stdin of the hook process to it (is that always the case?)
-- redirects stdout of  the hook process to the stderr of the hook
-process. So anything you write to stdout/stderr in the hook process
-ends up in the stderr of the git process.
+Actually, the first thing I tried, was make an alias named after the git
+command, like so:
 
-Is that understanding correct? Is there a doc describing this?
+  git config --global alias.show "show --stat"
+  git config --global alias.log "log --stat"
 
-Thanks for the help.
+But that didn't work. Why, actually? We're used to it from our POSIX
+shells, and other places I can't think of, but it feels familiar.
+Perhaps this would be a good way to enable changing default behaviour of
+each git command without having to change anything about config
+handling? Would this be difficult to do?
 
-BR Gabriel
+> If this is something we want to do as a config instead of alias,
+> I'm wondering if it is worth expanding the scope and thinking about
+> these other arguments (like --graph, --oneline, etc.) and how they
+> could be incorporated into a coherent config system.
+> 
+> I worry that this initial step leads us down a road of slowly adding
+> one-off config settings for each option when:
+
+I worried about that, too. But I think the initial step was already in
+2015, when stash.showStat and stash.showPatch were added. No flood of
+options happened since then? I was actually surprised about it, too,
+that it took so long until someone wanted to have showStat for show and
+log, too.
+
+> 
+>  1. aliases exist, and
+>  2. it becomes unclear which arguments have configured defaults.
+> 
+> Thanks,
+> -Stolee
+> 
+
+Thank you!
