@@ -2,69 +2,87 @@ Return-Path: <SRS0=tPyM=DS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40C6EC433E7
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 05:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B23A2C433DF
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:11:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF161207E8
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 05:08:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 541BD20795
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:11:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="D2Eq3T2r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726221AbgJKFI7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Oct 2020 01:08:59 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36769 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbgJKFI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Oct 2020 01:08:58 -0400
-Received: by mail-ed1-f65.google.com with SMTP id l16so13521732eds.3
-        for <git@vger.kernel.org>; Sat, 10 Oct 2020 22:08:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IxhB/K2X+ZRKyvfu+XhnQQYUWo9cyVu4EwWkyrGKS3o=;
-        b=kBs9BlRBk0fIashyfqCoP82jbMTOMLGoUsORVRn22NUaugzHBElJSMMMfvLmzILTWZ
-         ATkuPG2eXiNnCaYl8v4Hs9g5eRSR/voIkeScPR/vTiqVWTSUJM1YVRuOJY55vkgEAw55
-         yfPyr3455lDKUOakj9zNwGcPEuWeDLjT0vhDrOYuHglYA3vXgWuFnVzPqUcHPc2AlYVB
-         5wUNDy3wypNGdEzA/ctuHjATm2L5ftbu6TRHxuelwAKK7UQf8PblgrpbbZybSoWnbxx6
-         BrSoLxprjG4eweL5xwulnCVZbx/qFd4o/32fYg0XDklvBfSiOPsZEUR9hTP9ehAw0lHs
-         Tmsw==
-X-Gm-Message-State: AOAM530oZtYJKmAsi561zjWJneT7c9KEPthTE7eG1M7CCZpa3NtcLrhs
-        aptBNAyG529wiKpgWKzpZqH+4Zwtw3TgpiwVtmI=
-X-Google-Smtp-Source: ABdhPJyv9QoDK7fVq/Vdj8Ojubr8GW6oDeDOTS99XpSvrL45SLU4Rb38qQZ1DMxAyC2ztoPbuSYqgvfxAZjOjUK4zHY=
-X-Received: by 2002:aa7:c746:: with SMTP id c6mr7468095eds.221.1602392936141;
- Sat, 10 Oct 2020 22:08:56 -0700 (PDT)
+        id S1726547AbgJKGLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Oct 2020 02:11:22 -0400
+Received: from mout.web.de ([212.227.17.12]:57345 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725882AbgJKGLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Oct 2020 02:11:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1602396677;
+        bh=1QgtGEYIR9A2vAzk8vr3CsceyraO/7HaqZHcKlwSXKY=;
+        h=X-UI-Sender-Class:Subject:From:To:References:Date:In-Reply-To;
+        b=D2Eq3T2rqxbOjpTdDhxs9+oXuQN4aQ8AR3CoUiSSaDwKkhzuRKObIprkgRfg9n7ue
+         d+6epHPm5BVNI39v5Z4hQz0ihPhGiveH/ad5cJCdC0hvsxSpjIJ+2n7FGSX+4iaeE0
+         lnx6/MSxJWMit9sLsGIkTO4d8FT8JtCOxYGd7F0s=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.158.172]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LtFUV-1kKWUB41jX-012nV5; Sun, 11
+ Oct 2020 08:11:17 +0200
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc1
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq7drzv1bn.fsf@gitster.c.googlers.com>
+ <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
+Message-ID: <e7b33ed0-b7e8-d14d-c97a-1fe13840ee29@web.de>
+Date:   Sun, 11 Oct 2020 08:11:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <4e2e5829-b9a7-b9b4-5605-ac28e8dbc45a@onlinehome.de>
- <20200123163151.GC6837@szeder.dev> <CAPig+cTixT9JYDPn-umKdQLtTm5byA1wwmvVY1ryuh+hv2=6MQ@mail.gmail.com>
- <xmqqpnfa3sj1.fsf@gitster-ct.c.googlers.com> <xmqqk15i3rp7.fsf_-_@gitster-ct.c.googlers.com>
- <20200123192707.GA110440@coredump.intra.peff.net> <8be28321-3108-4846-ac6a-d5c7977774dc@onlinehome.de>
-In-Reply-To: <8be28321-3108-4846-ac6a-d5c7977774dc@onlinehome.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 11 Oct 2020 01:08:45 -0400
-Message-ID: <CAPig+cT1drHWic4bm=NPMd4RnGuLe-WwUJ-82nHkze_ZOoYerg@mail.gmail.com>
-Subject: Re: [PATCH] gitk: to run in a bare repository (was: gitk can't be run
- from non-worktree folders)
-To:     ch <cr@onlinehome.de>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Martin von Zweigbergk <martinvonz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:xmr+797HhDCc8dpegsiG+EPFpRuu6ADK3A7d0Pb6W7RkzMOApir
+ yVQupGR8nLps8RAD2Uea76+J53sK73jQ0qpxxLDIvktxqA6OgofGXimog3ZKNhhTcaPPdyR
+ Jvephn3g9PcQTwSYvselauvQVzG2yR9gufv3hzeWwjPF7lhHxRlM3XVmiBLFn60pwwt2lTI
+ 9nRvkjVhh6f+guXoDN5HA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:izBVRazHzAE=:OSHSE8zm2pdDcTagcFcsOV
+ 0eaFZRHUeWUzBirL0QXGeLifj+aidvMB8eqOsKzhVgbpErT4NOs20tlnUdwoNGPUYg9GJdpzf
+ pR/watKc7vxMlSLx4CrsFDQR9fXPdnnH6gugQ4cZDxnsX6f9epOM809C5C6QLV3APP3dWvJAi
+ S6sO3F3BC6lshnwpmepnd1rQdVrskasb6snP9ScS1MEW2wNaYq/7jIFZ5/94107pMBjYy8aYq
+ JPkQwYlL/s3Jt+iJqf1GZro0sLbL5zvYhu08/7Qj5d2IBS6RBWGDXsFi999TMDJczkZ6AG0ZT
+ 7/UeaPshDiw1HExJ56RHwCv5Y6hIzBQlaqCdad74wV8RPqbzGnMzaQN7byARw9s1JIBvzuLwz
+ vtaNpWtuTQQp4z6OpQz05UkmCoLKR++JYlr9Nb53yelhYjfTEEXz+qVljIyv/bqhabMTd8G2w
+ Nrc5nN6wyUYnBjI2ZxuikcmrYYKzsTVOCEObbKqnRexeaxOvHDqYf3bjRd9kgXVoSLPSAAsGM
+ zAlU5uRhVo6itglAb/BeXatu5mI8tbLHH4Ma7iF3fqPnzuolV319kpAmEDNi5wQl5zVzRrRBf
+ lr0QksyDkJFW0uRVWf9vg4CMtEX5flq+xV0D8CpzpdM3Edg1CiYJRxRP59EB7g1N/dbDk+KW4
+ XX9rfAHA/bHv3LcXUKz4xaSP0B6Yg4DXcepFomH7bSJqgONGGwB4bSC5eP8PgMCxTM/f7xcSX
+ uuawJQdtEX0h7yboNZP28FoIzXxqg45MUnZQAiTQZpxoEh+ST/tTZQRSpWx71OdxoEvJPy8IN
+ VXyK2LIvtvVUcEMNL9pOsq1SwYc6aZoIZKrhnSRKdZO+Lpsm1+CsGdSy51JnsRmXHMJoxtWF6
+ YXg3ZvdhxeaPymRhUEITRiHlvm3Dy4bynKy8Y3WKGCmvqTtc4SbM3SrU2GejxDzTTAZIg7wu8
+ cxq4vuNPUn1dTm/nRBznuxAUPdIMr2DyxQK0lTi1XG340QwpAYO3tLPe3FFYzD/l/PX8EImy1
+ 2HjEsm5NYaPdvUFz8qydWMgqLRweVqHipEsWXutn8EW+z7ksA470rFFxNUk5zRdUN3fT9wTZe
+ Wm4zb1qCVsf/Y54KnQpXyrbvHQHaYG3ClonBNtmdLjyj/m1yoe1ccOT1kcDC44oFRTBgG69pE
+ X8/7nEZxh4u19FhRxnZ4h3ti+yUKmCbRAjZIm+o5RID0idEA0qSKqv+gWj6FkbfRGmbNb6+x4
+ Mb33mjLdk59VTQ9Gb
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 30, 2020 at 11:21 AM ch <cr@onlinehome.de> wrote:
-> On Thu, Jan 23, 2020 at 11:20:36AM -0800, Junio C Hamano wrote:
->  > Subject: [PATCH] gitk: be prepared to be run in a bare repository
->
-> Sorry for bumping this thread but what's the integration status of the patch?
-> The issue still seems to be present in v2.26.0.windows.1.
+Am 10.10.20 um 18:45 schrieb Ren=C3=A9 Scharfe:
+> Implementing hardlink support might be worthwhile anyway
+> and we would not even have to make it optional.
 
-Junio just recently pulled commits into git.git from Paul's gitk
-repository which contain this fix, and it looks like it will make it
-into the Git 2.29.0 release.
+It would be useful to have the contents duplicate blobs included only once
+in a tar file generated by git archive, but could have unexpected
+consequences.  Hard links would be extracted as such on platforms that
+support it.  Changing one of them might change all linked files, depending
+on the editor used.  That may be intended, but it could also be surprising=
+.
+So this feature (if implemented) cannot be turned on unconditionally.
+
+Ren=C3=A9
