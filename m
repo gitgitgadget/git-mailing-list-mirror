@@ -2,87 +2,97 @@ Return-Path: <SRS0=tPyM=DS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B23A2C433DF
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AAA8C433E7
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:14:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 541BD20795
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:11:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB2102083B
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:14:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="D2Eq3T2r"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="epxwUuBn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726547AbgJKGLW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Oct 2020 02:11:22 -0400
-Received: from mout.web.de ([212.227.17.12]:57345 "EHLO mout.web.de"
+        id S1726586AbgJKGOk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Oct 2020 02:14:40 -0400
+Received: from mout.web.de ([212.227.17.12]:48993 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725882AbgJKGLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Oct 2020 02:11:22 -0400
+        id S1725882AbgJKGOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Oct 2020 02:14:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1602396677;
-        bh=1QgtGEYIR9A2vAzk8vr3CsceyraO/7HaqZHcKlwSXKY=;
-        h=X-UI-Sender-Class:Subject:From:To:References:Date:In-Reply-To;
-        b=D2Eq3T2rqxbOjpTdDhxs9+oXuQN4aQ8AR3CoUiSSaDwKkhzuRKObIprkgRfg9n7ue
-         d+6epHPm5BVNI39v5Z4hQz0ihPhGiveH/ad5cJCdC0hvsxSpjIJ+2n7FGSX+4iaeE0
-         lnx6/MSxJWMit9sLsGIkTO4d8FT8JtCOxYGd7F0s=
+        s=dbaedf251592; t=1602396877;
+        bh=rZkb43SmGyvomselihgptu0lmB59WESVL8X6uy7efpo=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=epxwUuBnV0i6P1rmK9AcTxqxI92I1Cm12ETA8ust/7Cm0fakn331k6xJ9W8Edminb
+         ETdNNiDtjtwAvIawrE7DEA0r29cvgJccVfU7b14JQSprHsnHTgN5LKxXlxQCVavVfG
+         OSsrm169+PXlQi2ka1K3j/u/FxiDRsrzOZymY85E=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.158.172]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LtFUV-1kKWUB41jX-012nV5; Sun, 11
- Oct 2020 08:11:17 +0200
-Subject: Re: [ANNOUNCE] Git v2.29.0-rc1
+Received: from [192.168.178.26] ([91.47.158.172]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M5j1c-1kXZAd27fW-007BtQ; Sun, 11
+ Oct 2020 08:14:37 +0200
+Subject: [PATCH 2/1] Makefile: remove the unused variable TAR_DIST_EXTRA_OPTS
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq7drzv1bn.fsf@gitster.c.googlers.com>
- <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
-Message-ID: <e7b33ed0-b7e8-d14d-c97a-1fe13840ee29@web.de>
-Date:   Sun, 11 Oct 2020 08:11:11 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <40da2404-8504-e134-7176-f3429c081f12@web.de>
+Message-ID: <a3cf2838-b67d-841e-f5be-887825b5e1e7@web.de>
+Date:   Sun, 11 Oct 2020 08:14:35 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
+In-Reply-To: <40da2404-8504-e134-7176-f3429c081f12@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xmr+797HhDCc8dpegsiG+EPFpRuu6ADK3A7d0Pb6W7RkzMOApir
- yVQupGR8nLps8RAD2Uea76+J53sK73jQ0qpxxLDIvktxqA6OgofGXimog3ZKNhhTcaPPdyR
- Jvephn3g9PcQTwSYvselauvQVzG2yR9gufv3hzeWwjPF7lhHxRlM3XVmiBLFn60pwwt2lTI
- 9nRvkjVhh6f+guXoDN5HA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:izBVRazHzAE=:OSHSE8zm2pdDcTagcFcsOV
- 0eaFZRHUeWUzBirL0QXGeLifj+aidvMB8eqOsKzhVgbpErT4NOs20tlnUdwoNGPUYg9GJdpzf
- pR/watKc7vxMlSLx4CrsFDQR9fXPdnnH6gugQ4cZDxnsX6f9epOM809C5C6QLV3APP3dWvJAi
- S6sO3F3BC6lshnwpmepnd1rQdVrskasb6snP9ScS1MEW2wNaYq/7jIFZ5/94107pMBjYy8aYq
- JPkQwYlL/s3Jt+iJqf1GZro0sLbL5zvYhu08/7Qj5d2IBS6RBWGDXsFi999TMDJczkZ6AG0ZT
- 7/UeaPshDiw1HExJ56RHwCv5Y6hIzBQlaqCdad74wV8RPqbzGnMzaQN7byARw9s1JIBvzuLwz
- vtaNpWtuTQQp4z6OpQz05UkmCoLKR++JYlr9Nb53yelhYjfTEEXz+qVljIyv/bqhabMTd8G2w
- Nrc5nN6wyUYnBjI2ZxuikcmrYYKzsTVOCEObbKqnRexeaxOvHDqYf3bjRd9kgXVoSLPSAAsGM
- zAlU5uRhVo6itglAb/BeXatu5mI8tbLHH4Ma7iF3fqPnzuolV319kpAmEDNi5wQl5zVzRrRBf
- lr0QksyDkJFW0uRVWf9vg4CMtEX5flq+xV0D8CpzpdM3Edg1CiYJRxRP59EB7g1N/dbDk+KW4
- XX9rfAHA/bHv3LcXUKz4xaSP0B6Yg4DXcepFomH7bSJqgONGGwB4bSC5eP8PgMCxTM/f7xcSX
- uuawJQdtEX0h7yboNZP28FoIzXxqg45MUnZQAiTQZpxoEh+ST/tTZQRSpWx71OdxoEvJPy8IN
- VXyK2LIvtvVUcEMNL9pOsq1SwYc6aZoIZKrhnSRKdZO+Lpsm1+CsGdSy51JnsRmXHMJoxtWF6
- YXg3ZvdhxeaPymRhUEITRiHlvm3Dy4bynKy8Y3WKGCmvqTtc4SbM3SrU2GejxDzTTAZIg7wu8
- cxq4vuNPUn1dTm/nRBznuxAUPdIMr2DyxQK0lTi1XG340QwpAYO3tLPe3FFYzD/l/PX8EImy1
- 2HjEsm5NYaPdvUFz8qydWMgqLRweVqHipEsWXutn8EW+z7ksA470rFFxNUk5zRdUN3fT9wTZe
- Wm4zb1qCVsf/Y54KnQpXyrbvHQHaYG3ClonBNtmdLjyj/m1yoe1ccOT1kcDC44oFRTBgG69pE
- X8/7nEZxh4u19FhRxnZ4h3ti+yUKmCbRAjZIm+o5RID0idEA0qSKqv+gWj6FkbfRGmbNb6+x4
- Mb33mjLdk59VTQ9Gb
+X-Provags-ID: V03:K1:PvR4UxQ9VbW68LXa8AsW0zrXYN/uiCuY2Je1T7R2Iusu8MJzEyD
+ j/yiRf13Ivewu7rUoE6MTLfO8onk4kgtfrlOW+yhem1UFzveMiX3GtMPIshxezhc0uegVcN
+ oj1iNw6xn99ZEwfBtmTW0DEHbMI2HIAaQmCHs8WHaXeo/KGzFq5qSV0dJBZxFLzIbozK7es
+ KKZr2t9JpFj7S9pz6N9ng==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sxszp7P+b9s=:KQIranPR6DXthTzmulQ02C
+ LVHFtSbTqI0eqSGH4gFsmcs74S2pyHS1I+EBzwti0fzvL6vZSSchlc86U18wh9yllN78KWXfU
+ iskJmVlUbonI1ntT+tsIqlGjwl92mKT/Llu6n6PqGNDW5e47YWq8pLbgSR1mXYBlra8gbNyNR
+ DLuIuNyT6SvKMHzr5F6HWxEoZSi4+6OO3JVR07nTV4qYND//a8dvCsO7Y0r+exUjCOxmqHpa9
+ V7koEueoaj5hc+96SnjwRCsoKHAu3hTw3++SnuLdPjD719FKQtWpIGKDO7mJnxPejTrO/42eh
+ adwU3M+/ZHxzxLGKpKDe1aXjAtIsUJ2DopUBvNGL6J0N79I3kDLD2J+gU3DLS+5a9GogspLAO
+ dg4ApDCPgLpWY+MWXNRIZI4T3lAFVJX9Ho8HNZItF8Y0g4JU/DcPmgak6pBBFs4qJg8Mu6Gt2
+ YjbFJg7hSa/qa2UgMSyEEBusbHy/OTtDou2k2pGvd3kbqv1zuifn+xqVxrUPF4l5TSZhK5HPE
+ CLS0Lujx1QA5Dm4b98/4FFESTs+zHw/yCBHN4XqcnLqIoHNn6SFwghfBu2XZ6E5cwwIiLijJh
+ vjQuxYgr5rF8Q72jkg8DPD1vvm/nI+NKY1rFmeLHwH+lwwXkw7vae30yuvmAzrbhdvXKBxApG
+ gZRysIUnJ319fFVR3TwlzTzB99lSORZg7UzdN+Ju9nxL9jQqGdLgvTHm4ITf5m9WTStqguStM
+ Kiy6WfGR8DYFLG0kgs0RB+4G3uu1s/EhrEK8t8dce/SjtJ85GOv6WFK3dglDyE7ms42f7daOJ
+ Hxv934fbhccwEF2NrX+1JwEuZ+TFYVhE+HZiSfkxhleg/YDal4EZGIU1RIxUvO25ILsOoL4lI
+ 6nXokY7x5wN9tadJmJL0m+udwFYHvKb+EHt3VPlcQNpmQvm8pbw9a9ex1in5Hf0RR3KA75E7B
+ bdGSxn+eXP3ClkKPt8Gm6heKy3Gv6ev4Mg8lfYm8v8QLjOpv6aqWyUeFp0opZnT1oEsUOTjbs
+ GiKS/a18J86+FhHQusTY7UcmuLhV/ueJALf4gz9ePJSyFRHyToxUZbu+JQBwQ/GJi8WQl+k44
+ DNZLaf2dxn+rYg5+O6VATr0DLkRbyM1f+sremKhhaHvmzChtnC5WLz5qADW8hqvjPOkl4GK3u
+ mbmpM1WaroFwsole5bizEf4c+mY+QjEghND0OAaMPmo+r+nqc+ceTS5CZ34yt6mzjvZpruvfz
+ s7LVflwfvCXctP8W8
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.10.20 um 18:45 schrieb Ren=C3=A9 Scharfe:
-> Implementing hardlink support might be worthwhile anyway
-> and we would not even have to make it optional.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ Makefile | 3 ---
+ 1 file changed, 3 deletions(-)
 
-It would be useful to have the contents duplicate blobs included only once
-in a tar file generated by git archive, but could have unexpected
-consequences.  Hard links would be extracted as such on platforms that
-support it.  Changing one of them might change all linked files, depending
-on the editor used.  That may be intended, but it could also be surprising=
-.
-So this feature (if implemented) cannot be turned on unconditionally.
+diff --git a/Makefile b/Makefile
+index b7f3708292..db8f07898d 100644
+=2D-- a/Makefile
++++ b/Makefile
+@@ -3053,9 +3053,6 @@ quick-install-html:
 
-Ren=C3=A9
+ ### Maintainer's dist rules
+
+-# Allow tweaking to hide local environment effects, like perm bits.
+-# With GNU tar, "--mode=3Du+rwX,og+rX,og-w" would be a good idea, for exa=
+mple.
+-TAR_DIST_EXTRA_OPTS =3D
+ GIT_TARNAME =3D git-$(GIT_VERSION)
+ GIT_ARCHIVE_EXTRA_FILES =3D \
+ 	--prefix=3D$(GIT_TARNAME)/ \
+=2D-
+2.28.0
