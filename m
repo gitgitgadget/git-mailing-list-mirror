@@ -2,97 +2,156 @@ Return-Path: <SRS0=tPyM=DS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AAA8C433E7
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9841BC433DF
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:26:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB2102083B
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:14:41 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="epxwUuBn"
+	by mail.kernel.org (Postfix) with ESMTP id 595FA20795
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 06:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726586AbgJKGOk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Oct 2020 02:14:40 -0400
-Received: from mout.web.de ([212.227.17.12]:48993 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725882AbgJKGOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Oct 2020 02:14:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1602396877;
-        bh=rZkb43SmGyvomselihgptu0lmB59WESVL8X6uy7efpo=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=epxwUuBnV0i6P1rmK9AcTxqxI92I1Cm12ETA8ust/7Cm0fakn331k6xJ9W8Edminb
-         ETdNNiDtjtwAvIawrE7DEA0r29cvgJccVfU7b14JQSprHsnHTgN5LKxXlxQCVavVfG
-         OSsrm169+PXlQi2ka1K3j/u/FxiDRsrzOZymY85E=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.158.172]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M5j1c-1kXZAd27fW-007BtQ; Sun, 11
- Oct 2020 08:14:37 +0200
-Subject: [PATCH 2/1] Makefile: remove the unused variable TAR_DIST_EXTRA_OPTS
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <40da2404-8504-e134-7176-f3429c081f12@web.de>
-Message-ID: <a3cf2838-b67d-841e-f5be-887825b5e1e7@web.de>
-Date:   Sun, 11 Oct 2020 08:14:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1727181AbgJKG0p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Oct 2020 02:26:45 -0400
+Received: from mail-ej1-f66.google.com ([209.85.218.66]:41904 "EHLO
+        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727067AbgJKG0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Oct 2020 02:26:45 -0400
+Received: by mail-ej1-f66.google.com with SMTP id x7so8678801eje.8
+        for <git@vger.kernel.org>; Sat, 10 Oct 2020 23:26:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gzdV2GTdzxPUq/1JcznseA+3MGbqkWrPGIS1oGUfNzE=;
+        b=OfKWnsGCM2WAka6Wps1Ba3D9+z1CiNAhV7s/ynSWC7CR8/oh9bb6HV2iQB0JFuHnAf
+         DZULngc49s7F+OZmaVxfjrAQTHqFzxgZeMzwsreUzSrEy6VJglxFKbc9bNa9dz3VteKS
+         NHtvO1BDPiSEFJoHvSAq/B914+bnB8bZcp7NdMZEvxe02MYfGc2umUuNCOWQwYSZu5Nq
+         Z5W8Z7PE+RyCZ/TwHNdBwr5UL2WCfdNvDj+MCQ6UP/RQ2d32bbRXCZXPIcEHrcgds7j6
+         93DvsRsoFmZQvsuG2i+od4JaEDEBvUL4SxssnMtVMgmrog68rqniOnIgmXcTp1g/Q4Sj
+         AQjg==
+X-Gm-Message-State: AOAM532Gk8ETpvfvjacXih5MQng50wtdP4XiyRfoRihyb7NseI/dxNP+
+        s81ILU5jORjpepIJhDeZcxwZJD7Vpw3wuKysZFU=
+X-Google-Smtp-Source: ABdhPJxJz/aeea1yh0r7FIZYh0/Qsu6OExxx7mmiphib5dx6QJSLHJuuyJARkJEwR/RJ6wAI50e80TQTQ5Q/s6UylKw=
+X-Received: by 2002:a17:906:5f96:: with SMTP id a22mr22149194eju.168.1602397602558;
+ Sat, 10 Oct 2020 23:26:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <40da2404-8504-e134-7176-f3429c081f12@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PvR4UxQ9VbW68LXa8AsW0zrXYN/uiCuY2Je1T7R2Iusu8MJzEyD
- j/yiRf13Ivewu7rUoE6MTLfO8onk4kgtfrlOW+yhem1UFzveMiX3GtMPIshxezhc0uegVcN
- oj1iNw6xn99ZEwfBtmTW0DEHbMI2HIAaQmCHs8WHaXeo/KGzFq5qSV0dJBZxFLzIbozK7es
- KKZr2t9JpFj7S9pz6N9ng==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sxszp7P+b9s=:KQIranPR6DXthTzmulQ02C
- LVHFtSbTqI0eqSGH4gFsmcs74S2pyHS1I+EBzwti0fzvL6vZSSchlc86U18wh9yllN78KWXfU
- iskJmVlUbonI1ntT+tsIqlGjwl92mKT/Llu6n6PqGNDW5e47YWq8pLbgSR1mXYBlra8gbNyNR
- DLuIuNyT6SvKMHzr5F6HWxEoZSi4+6OO3JVR07nTV4qYND//a8dvCsO7Y0r+exUjCOxmqHpa9
- V7koEueoaj5hc+96SnjwRCsoKHAu3hTw3++SnuLdPjD719FKQtWpIGKDO7mJnxPejTrO/42eh
- adwU3M+/ZHxzxLGKpKDe1aXjAtIsUJ2DopUBvNGL6J0N79I3kDLD2J+gU3DLS+5a9GogspLAO
- dg4ApDCPgLpWY+MWXNRIZI4T3lAFVJX9Ho8HNZItF8Y0g4JU/DcPmgak6pBBFs4qJg8Mu6Gt2
- YjbFJg7hSa/qa2UgMSyEEBusbHy/OTtDou2k2pGvd3kbqv1zuifn+xqVxrUPF4l5TSZhK5HPE
- CLS0Lujx1QA5Dm4b98/4FFESTs+zHw/yCBHN4XqcnLqIoHNn6SFwghfBu2XZ6E5cwwIiLijJh
- vjQuxYgr5rF8Q72jkg8DPD1vvm/nI+NKY1rFmeLHwH+lwwXkw7vae30yuvmAzrbhdvXKBxApG
- gZRysIUnJ319fFVR3TwlzTzB99lSORZg7UzdN+Ju9nxL9jQqGdLgvTHm4ITf5m9WTStqguStM
- Kiy6WfGR8DYFLG0kgs0RB+4G3uu1s/EhrEK8t8dce/SjtJ85GOv6WFK3dglDyE7ms42f7daOJ
- Hxv934fbhccwEF2NrX+1JwEuZ+TFYVhE+HZiSfkxhleg/YDal4EZGIU1RIxUvO25ILsOoL4lI
- 6nXokY7x5wN9tadJmJL0m+udwFYHvKb+EHt3VPlcQNpmQvm8pbw9a9ex1in5Hf0RR3KA75E7B
- bdGSxn+eXP3ClkKPt8Gm6heKy3Gv6ev4Mg8lfYm8v8QLjOpv6aqWyUeFp0opZnT1oEsUOTjbs
- GiKS/a18J86+FhHQusTY7UcmuLhV/ueJALf4gz9ePJSyFRHyToxUZbu+JQBwQ/GJi8WQl+k44
- DNZLaf2dxn+rYg5+O6VATr0DLkRbyM1f+sremKhhaHvmzChtnC5WLz5qADW8hqvjPOkl4GK3u
- mbmpM1WaroFwsole5bizEf4c+mY+QjEghND0OAaMPmo+r+nqc+ceTS5CZ34yt6mzjvZpruvfz
- s7LVflwfvCXctP8W8
+References: <20200928154953.30396-1-rafaeloliveira.cs@gmail.com>
+ <20201010185521.23032-1-rafaeloliveira.cs@gmail.com> <20201010185521.23032-2-rafaeloliveira.cs@gmail.com>
+In-Reply-To: <20201010185521.23032-2-rafaeloliveira.cs@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 11 Oct 2020 02:26:31 -0400
+Message-ID: <CAPig+cTq5tz8m0bCJ3GtCa9yzOMNvd7j4fSJNwO9xjqkfK+YOg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] worktree: teach `list` to annotate locked worktree
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Makefile | 3 ---
- 1 file changed, 3 deletions(-)
+On Sat, Oct 10, 2020 at 2:56 PM Rafael Silva
+<rafaeloliveira.cs@gmail.com> wrote:
+> The "git worktree list" shows the absolute path to the working tree,
+> the commit that is checked out and the name of the branch. It is not
+> immediately obvious which of the worktrees, if any, are locked.
+>
+> "git worktree remove" refuses to remove a locked worktree with
+> an error message. If "git worktree list" told which worktrees
+> are locked in its output, the user would not even attempt to
+> remove such a worktree or would know how to use
+> `git worktree remove -f -f <path>`
 
-diff --git a/Makefile b/Makefile
-index b7f3708292..db8f07898d 100644
-=2D-- a/Makefile
-+++ b/Makefile
-@@ -3053,9 +3053,6 @@ quick-install-html:
+I would drop "how" from "would know how to" so it instead reads "would
+know to" since seeing the `locked` annotation only lets the user know
+that removal must be forced; the `locked` annotation doesn't teach the
+user _how_ to remove the worktree using force. But, perhaps, my
+original suggestion[1], which did not use "how", was confusing. Maybe
+it could be worded instead:
 
- ### Maintainer's dist rules
+    ... not even attempt to remove such a worktree, or would
+    realize that `git worktree remove -f -f <path>` is required.
 
--# Allow tweaking to hide local environment effects, like perm bits.
--# With GNU tar, "--mode=3Du+rwX,og+rX,og-w" would be a good idea, for exa=
-mple.
--TAR_DIST_EXTRA_OPTS =3D
- GIT_TARNAME =3D git-$(GIT_VERSION)
- GIT_ARCHIVE_EXTRA_FILES =3D \
- 	--prefix=3D$(GIT_TARNAME)/ \
-=2D-
-2.28.0
+Anyhow, this is a very minor nit about the commit message; not
+necessarily worth a re-roll. More comments below...
+
+[1]: https://lore.kernel.org/git/CAPig+cQHDuWy1vc_ngXbMQZQ=a9fd6S5_cCU-2sb_+Te5aEOhw@mail.gmail.com/
+
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> @@ -97,7 +97,8 @@ list::
+>  List details of each working tree.  The main working tree is listed first,
+>  followed by each of the linked working trees.  The output details include
+>  whether the working tree is bare, the revision currently checked out, and the
+> -branch currently checked out (or "detached HEAD" if none).
+> +branch currently checked out (or "detached HEAD" if none). For a locked
+> +worktree the `locked` annotation is also shown.
+
+I might have dropped the "and" in the final context line and instead
+written this as:
+
+    ... branch currently checked out (or "detached HEAD" if none),
+    and "locked" if the worktree is locked.
+
+But not worth a re-roll.
+
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -676,8 +676,11 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+>                 } else
+>                         strbuf_addstr(&sb, "(error)");
+>
+> +       if (!is_main_worktree(wt) && worktree_lock_reason(wt))
+> +               strbuf_addstr(&sb, " locked");
+
+I was going to ask if "locked" should be localizable like this:
+
+    strbuf_addf(&sb, " %s", _("locked"));
+
+but I see that none of the other words ("bare", "detached", "error")
+in this function are localizable, so this is fine as-is.
+
+However, all of the other human-consumable text emitted by "git
+worktree" is localizable, so making these strings localizable, as
+well, is something that can be added to a To-Do list. Note that I'm
+talking only about human-consumable "git worktree list" output, not
+porcelain format. Also, I'm not suggesting you tackle it, and it's
+certainly not something that this patch or patch series needs to do;
+just something which someone can tackle in the future.
+
+> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+> @@ -61,6 +61,16 @@ test_expect_success '"list" all worktrees --porcelain' '
+> +test_expect_success '"list" all worktress with locked annotation' '
+> +       test_when_finished "rm -rf locked unlocked out && git worktree prune" &&
+> +       git worktree add --detach locked master &&
+> +       git worktree add --detach unlocked master &&
+> +       git worktree lock locked &&
+> +       git worktree list >out &&
+> +       grep "/locked *[0-9a-f].* locked" out &&
+> +       ! grep "/unlocked *[0-9a-f].* locked" out
+> +'
+
+These grep invocations are a bit loose, thus concern me a little bit.
+
+First, in Junio's original example of using grep[2], he had two spaces
+after the path component, not one as you have here. The two spaces in
+the regex ensure that there is at least one space separating `/locked`
+and `/unlocked` from the OID hex string, whereas with just one space
+in the regex, as is done here, the space following the path component
+is entirely optional (thus is a less desirable regex).
+
+Second, because these regexes are not anchored, they could match with
+a false-positive if the person's TRASH_DIRECTORY path is something
+like `/home/proj/unlocked dead locked/git/t/...`. If you anchor the
+pattern with `$`, then this problem goes away:
+
+    grep "/locked  *[0-9a-f].* locked$" out &&
+    ! grep "/unlocked  *[0-9a-f].* locked$" out
+
+Third, this is checking only that the first character following the
+path component is a hex digit but then accepts _anything_ before
+"locked". The regex can be tightened to allow only hex digits:
+
+    grep "/locked  *[0-9a-f][0-9a-f]* locked$" out &&
+    ! grep "/unlocked  *[0-9a-f][0-9a-f]* locked$" out
+
+[2]: https://lore.kernel.org/git/xmqq3631lg8f.fsf@gitster.c.googlers.com/
