@@ -2,121 +2,123 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB6BEC433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5875DC433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:02:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 035E02080D
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:38:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4F9C208D5
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:02:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QCHbbfu9"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="dcIpI73B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729412AbgJLJi3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 05:38:29 -0400
-Received: from mout.gmx.net ([212.227.15.19]:38795 "EHLO mout.gmx.net"
+        id S1729518AbgJLKCE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 06:02:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50037 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726104AbgJLJi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 05:38:28 -0400
+        id S1726104AbgJLKCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 06:02:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602495507;
-        bh=vZTQYLay7cHGYpqPgLxO6RhEyd8auk6zOkzpUv3Bl4c=;
+        s=badeba3b8450; t=1602496914;
+        bh=fLaCzqTlZbbrkFvhXlxkqkFjRK8jDMyIuczgHpcS5MI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QCHbbfu9AD+4Lm1jcaViGMoYrIo5+OemIVvDztUhC8OgHkCbw8LrE7k/xiZunLQra
-         ZJMe/ZIPfYqs1l06LjgZC4ge8weLKki/NFUrmYoxkn3/KHd+qe4enmwdXCenjdFmyX
-         fvU4cJNwZC4cIcROwAT8XwWx9KN/fnbG9jqHnS9g=
+        b=dcIpI73BLpRAIAqiwAqS7gdDC39SParhE1SSGeurNl8ngBCVd5Ap/00HJOepGEhwG
+         4d2Emm9PaDP7VYr3Bj4Wp3Bp7Jj0CQoSi4z/YM/qCkqow/xJiM3Fqz2faOjSliq2ne
+         Uo5ZvvhC1rkfQBESA6/cQDjS5N3auxA4LJI66nb0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.20.73.169] ([89.1.215.146]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MO9zH-1kqTZz3geP-00OXmj; Mon, 12
- Oct 2020 11:38:26 +0200
-Date:   Sun, 11 Oct 2020 12:28:33 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N95e9-1kNQrV1VMl-016AyK; Mon, 12
+ Oct 2020 12:01:54 +0200
+Date:   Sun, 11 Oct 2020 12:52:01 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ci: skip GitHub workflow runs for already-tested
- commits/trees
-In-Reply-To: <20201010072508.GD24813@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.2010111221350.50@tvgsbejvaqbjf.bet>
-References: <pull.619.git.1587748660308.gitgitgadget@gmail.com> <pull.619.v2.git.1602170976.gitgitgadget@gmail.com> <914868d558b1aa8ebec6e9196c5ae83a2bd566bf.1602170976.git.gitgitgadget@gmail.com> <20201009072922.GC24813@szeder.dev>
- <nycvar.QRO.7.76.6.2010091254180.50@tvgsbejvaqbjf.bet> <20201010072508.GD24813@szeder.dev>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 05/13] reftable: utility functions
+In-Reply-To: <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2010111247450.50@tvgsbejvaqbjf.bet>
+References: <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com> <20201008014855.1416580-1-jonathantanmy@google.com> <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-305546987-1602412115=:50"
-X-Provags-ID: V03:K1:ZnqFnaarUFfNfuicJBXMDdtBZQEpVcAD/8/VBvr97y8N2SqFT7R
- KFIWRKzJQiZq0aaMCbBE3dMcMgeWDrvddNF5nooZyyJYVrgMkL9M72/6MJ9zHOXVz9+Hlae
- RNEstmaQkez4Wnn6xpSezljfL1uPyIzNfWnNvwhkTm12J66ClhW2ThT5NM4GgxWvDqoGdbt
- IJ01QdGMvZKu0HF/wo51A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sZifHWlhDbM=:Fnf3MwaEr5m3a8nGDYzVUw
- 3OnlODV8nYRNtQqWQvtd4evPzJBovnwTD7fnc0hFoKQRDw7hqMy52r8kpg2xnZeqNPrcZq55U
- LE+6daxL2Dd2tKSkp5IDUZIROrCAVglDgO6KBbpug97HXcB5a84WgqJspJF3irTAjYUvWgouX
- VUTxJ8yrAWRrlGE28YfZKh34q9A9ZBkF9LtOj6oWEfx9eKwWk/CktmnRKkJfrBpuSS4NjISCT
- 1TuO3TYHMHV1wRxakjQgVgVA1g5DbH2wVQFCzAMyFqHA3tGT/rIHLSb1ZyrCoK//9nsvndgRq
- cUoRtcOdJpdQ6cwXLB1gtr5maBvRvB/pYdm5y9L+Niod+7C90wOWcRB5pIiObXKDAjVVKqozW
- 7r2yjD/DHyN+k1i55wu5DjsJaTmhiHVqz3XvSHC8Q5EUmS3TW7Rr5Pz1BMBQ0pQG/prjTO0qw
- l3ZWyPBXEuMer12fwI4HH5JwZx85PW2vGQv0KUlIUq+5CimSowUyHTaYF0JJOKyGuwwRPlJ8x
- aKdpixRcqIvJotcLC+512gSEa+6fAUAIkhNKkH1JjapmFr42+OQ4Xwoxw3E+kOd/OZxsxupWA
- 4vDZQscabpz+tPwJ7QkBsb27Zwlw1EhP3t3kamYZ0yNR395d1WH8TiwLa+X4obpR7POqKOPC5
- ikfxlz6VQI4ySbeXtqx/3MXDBfNwOY2G5Mr7WRArjQlK6/2mEcwTzf1KMZZrYApkO3+s3yFbH
- laxfUtXOjbhMfCdnT+l/VrL3d8So8/BnDQL4BT7cRAdzk/0udTUedwK1KAwPlkBDH/sOgP5oj
- GPdqO5ZXidVjIse34gYGXx9NS80khOBpZ5AXoxXpGzLhduh1BP7vwzHYfqEW7gB9Z2jcKySAW
- qHb5AZjEcOFeGGVBWz466SipG2e/jDa5xS/CBIvDrbmMq/BqJb6qmgtTNmHzTfK4fziWoACEO
- XUYf7dEAiwY4Ve7RAuoUKVz62/Ena1KKyHUmOve4R0UgHtVAvEH6NV4AnFZSj9NoHr4IQoci1
- wQQRMqV3bNKkQ1S4Ezoiqd2AFz2k5YIc2jklo54JzTC3eUApBPvYUSqyAGKpJM/KxcruTMp/G
- G8c7SK8HEUdbOk7BndKBv30ZYJAXZ5FqfQRVg733uCDoKovRVJ1AGkE184zsALRFrILOVc5w0
- 8aplnttB37XDI5cg5NIAUokzkqqgkIjiMU5uTgN/XafpxRuJficz5n3LfjTRTIBsfIZjmumAr
- At5IS7T9tWYwGm9hcsr+Sg5hevMhPrB+HkkA31w==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zdKkuRsi+bxhPC1fben1JOQzxzmEzCftm2Al4mEP9vEbA1EEHIM
+ ND9AZcg2mwHr95xYNFYcSm8o8bjxVzUvH8qSs4hTjb75cCw+qhdM2itfwkAWI5TRV45oVZB
+ pzfj0tiiUBGv+bAmI7lribKyDbxO6tqDiQ9/eiMoDTPTsrUzNcHQJXctwmnl3lr/KU16+i7
+ AKMThqU7vrhaeaKEBoTgg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TYiNf/3T0Lo=:qEmvNj15sS5Vf+jF8b5XMA
+ Fh4eKOahn0XRfqjVVo9R7q4XxHo2JOumMRcPmqgPG01Xx61dDcfR2P8rfKath4r+bxti2uRHC
+ gwb68d/krtr+89rXlrKK/sKAOqx1lnmPqrAfe2GYuiq6g4hsaoagg/nr78eEkPVN9YD/y+/qa
+ Zh2F4p8diciKHP3S0vLOX4G7NDlUuMK5w9t6Tvoe9w+TW5iy+u9jdUm9PUn3THYbmybD0qKXY
+ JqliIyBAS9peyoH1lmKB3t6HUhzMfKeCLUeJvGW2SFIVgXhV8QXoJS6WYlllBmwlP/1B3HmJD
+ usQchMx4R0+VA/bE6FQ7T5gn+92F/M30DqdZbeTGulUKQMJ8rhK8rka1EfJC/KcMcfHJB9wqJ
+ jk9SQKVCwUmhPFkGAGCWdelj0DcCH3RJ6zEBJmuhvR+17HOGm1TT+UpJugEl6yvyEdKe8BDKQ
+ 1hJ04+kX6IXy3zDn7N/TVYlwg7LMa8UE/cqrsbD7iUQUziDasb87rfoUWgPoO3GOmEn1bdG70
+ DwaBwG09A4t2eOzj7Qr3Sv2IFjPk87h8d8YscfIZGDY/7AhcUxG7HGu6m6UaqR2gnbqV+J4T9
+ Uzvk6aymfEzXFRp+SCdxGd57RtL74Yo3rlE2X9febJbLrtRQCluTurxv+zMJKYOEhh7neJWT9
+ 9sh7rs57OnnQyw52rSvOwn3oQdU6MCrRr6TTq7/dCCpUj95HXpPfKkaIrEcCOUadtqvtAfexE
+ mmbYiLlLdKQ8sqUYMR56ccIk6S26e8fJMUwVjHDgJOyH80jZlOYkt1t+YYcNYUucgIgYgPTWD
+ x8FSF4z3so6RVVJzC/UMIn/X/pexHz/8cH7Hqdc5HHI29EDTfyJU4M6iH5vrkyUQysWnA5smh
+ Ig8Dmbv88UcXy+vvL3IROFc4TRm4YPYulZSfww4dOPFMrmkR6ox3g/vslx5aoowICJ4rOkZRI
+ Ywyat8o+vmOORnuOcx1FnFLWybQXjFophPKIMpZc1CP5hrMil0mKosUV/07JQHBUi/a6iF1tg
+ Dz3LJUXUWaveKDP+jtLFA1ypbBMf5Z4UAsMc/ZW4YO1KqEstZVEwN74rTLfeiIYtm3sf5mZ9h
+ lvM+0pvGCo1XgAgSdbN6Zji3cmG0Wo/QtwONT76gcl8eM4DFnwQNbqQP43/siWwJU5LAgzeGA
+ ueKid0KzYWWrllSrA2y7AIGX4+1bp5F8NyZseRUqcTA3Ct8V6wknuEVyeJQI2EGkRh1qC4yof
+ UYZcceA9+t481JjLF0lGRzmHT1BuowPkkZJLqpw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Han-Wen,
 
---8323328-305546987-1602412115=:50
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, 10 Oct 2020, Han-Wen Nienhuys wrote:
 
-Hi G=C3=A1bor,
-
-On Sat, 10 Oct 2020, SZEDER G=C3=A1bor wrote:
-
-> On Fri, Oct 09, 2020 at 01:13:03PM +0200, Johannes Schindelin wrote:
+> On Thu, Oct 8, 2020 at 3:48 AM Jonathan Tan <jonathantanmy@google.com> w=
+rote:
+> >
+> > > From: Han-Wen Nienhuys <hanwen@google.com>
+> > >
+> > > This commit provides basic utility classes for the reftable library.
+> > >
+> > > Since the reftable library must compile standalone, there may be som=
+e overlap
+> > > with git-core utility functions.
 >
-> > Since this strategy relies on a Travis-only feature that does not work
-> > on the three other CI services we use (Cirrus CI, Azure DevOps, GitHub
-> > Actions), I see little point mentioning it in this commit message...
+> > I think duplicating things like strbuf is an unnecessary burden if Git
+> > is to maintain this library. Something like "reftable will only import
+> > git-compat-util.h and strbuf.h, and any project that wants to use
+> > reftable must make sure that these functions and data structures are
+> > available" would be more plausible.
 >
-> This commit duplicates already existing functionality, so, yes, the
-> commit message should definitely have explained why that already
-> existing approach was not suitable for GitHub Actions.
+> Sure, but how do we ensure that the directory won't take on
+> dependencies beyond these headers? I am worried that I will be
+> involved in a tedious back & forth process to keep updates going into
+> libgit2 and/or also have to keep maintaining
+> github.com/google/reftable.
+>
+> FWIW, the duplication is really tiny: according to
+>
+>  $ wc $(grep -l REFTABLE_STANDALONE *[ch])
+>
+> it's just 431 lines of code.
 
-No, this is not duplicating functionality.
+The `merge_bases_many()` function has only 33 lines of code, partially
+duplicating `get_reachable_subset()`. Yet, it had a bug in it for two
+years that was not found.
 
-The `skip_good_tree()` function requires a persistent directory into which
-it writes a record of the trees it considers good, based on past runs. It
-later recalls which trees are considers good and skips the current run if
-there is a record for this tree.
+How much worse will the situation be with your 431 lines of code.
 
-The fact that it requires a persistent directory binds it to Travis CI. As
-far as I can tell, no other CI service offers that feature (and from where
-I sit, for good reason, because it is asking for all kinds of fun in
-concurrent scenarios).
+Even more so when you consider the fact that you intend to shove the same
+duplication down libgit2's throat. It's "triplicating" code.
 
-What my patch does might duplicate the intention, but absolutely not the
-functionality. For one, there is no extra record required. It uses the API
-to query the existing logs.
-
-Also, the patch specifically adjusts the GitHub workflow itself.
-Therefore, unlike the `skip_good_tree()` function, it does not pretend to
-be generic (which `skip_good_tree()` really is not, as pointed out above).
+So I find the argument you made above quite unconvincing.
 
 Ciao,
 Dscho
-
---8323328-305546987-1602412115=:50--
