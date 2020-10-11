@@ -2,120 +2,158 @@ Return-Path: <SRS0=tPyM=DS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D936BC433DF
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 10:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B308AC43457
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 10:12:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 874F52078A
-	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 10:12:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7118E2078A
+	for <git@archiver.kernel.org>; Sun, 11 Oct 2020 10:12:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jQuL3/Bf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9nYZe57"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726222AbgJKKM2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Oct 2020 06:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60472 "EHLO
+        id S1726576AbgJKKMl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Oct 2020 06:12:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbgJKKM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Oct 2020 06:12:28 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0A4C0613CE
-        for <git@vger.kernel.org>; Sun, 11 Oct 2020 03:12:27 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id a72so3784062wme.5
-        for <git@vger.kernel.org>; Sun, 11 Oct 2020 03:12:27 -0700 (PDT)
+        with ESMTP id S1725863AbgJKKMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Oct 2020 06:12:40 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CF36C0613CE
+        for <git@vger.kernel.org>; Sun, 11 Oct 2020 03:12:40 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id b8so2290998wrn.0
+        for <git@vger.kernel.org>; Sun, 11 Oct 2020 03:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vZmbCjH56S2ZZ50icWNGCIbjTMWtDuMp5PS9Q2Er0Rk=;
-        b=jQuL3/BfISLZf6OOHXYbzacEcWj2u34G28m2eg6abkjnUdmYJ95Aw8enMLBRWignvy
-         5dskh9QS7sYjLBHIwvioNDcGuk3esJ6wWU/WRpLDYBDAa+5/hZ/Fny2nLbkz2ET88faU
-         op9RupVcgOVCBzQnEzB1AMtim/WEY4giLBEzEoeerqhM40PZgyuAVKJ5dtdJh9KufM/A
-         G3ziysF2YM+xdKFGdN0q2rK+F8+d/i3FT+0jGmb0XO3oG7OBTJFUh9ptiThp0dzjksXX
-         FA3CgVRKlM5/LFJbO95ruzNwkvYxmmrHIYOIOwjlWS6bMBLttfa5uZWhsOd6by66cHzQ
-         dEOg==
+        bh=1F5trvZZdVn0cyGSodlVJXFoupNIxVyFr9OBOuC6spE=;
+        b=M9nYZe57FPURwoEpr2ARSVb5fhIvluK2tyUbtK46oM0UXxyeiDnwWG+ldBbu+jGbhu
+         3mse+zpq4R4INR3kHAAxvpS7gL79ThGeiXi9Y7dhXhGmzByAhrXiuNORPJzZI6fzJY5I
+         0m4untJ7po/Df31Ql5FH3UvlQqfRph/qSGivwjl27qrrqKAYkfVlpi8eS+CWmuY68ure
+         pjCslnJXAqgopGhMuAH7rjCdK/9RNqge4CgEEm5zJpbnnTyhTC2hct9t2XjPJ0UiIH50
+         UJtglWNzmTyE6CRr4nDZvcHxQW4aeynDogdZ7R0Pb82QeHKhPQmfQg/7GVXNTeJraznn
+         v+AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vZmbCjH56S2ZZ50icWNGCIbjTMWtDuMp5PS9Q2Er0Rk=;
-        b=j3ya+/l5NXxuYIDzfx04gQ9AqwRLiQvAuY6bpriAGykNCavvsR2XlSswvZ/ex5rLr+
-         e9mVwPsO+G8giggw/IukwiHgrbfKs7bfEN/Y1obZQiDIH56o7j4SbK4yjxaC1bAijl81
-         VJFvhjZ3ga05dLg7JfbuRH2QcbXuvf8HZ7Lrj8OFheQSayck9TWQfQcKUfFJK3gCTqPm
-         GNnvqKxwN6htb80GsR7N8VnWmaO2f2JpS4zceR3MJj6Y8av3CqBRtTM5cYBOMXgvs2K0
-         EEnAUfpSb85Qs1YA63kJmEV0jqemFIYMkxuMMucRTaPKpRbcmbH+9O34SotH+6PwCqNo
-         YhmA==
-X-Gm-Message-State: AOAM533oePC2YKw8t5IUj/7HkWH+d4X66KSV3uK+aw3amKbYKT12swXF
-        +SO8vCNcPsN9LpGNQ7bgZyHF1SmBlxM4AQ==
-X-Google-Smtp-Source: ABdhPJxd7WB2skQiAD7h1VtZABYE1O3zX9sRP5wE45eYwLzjSyl4ZO6lbXK2tH0aQ1OsisoOVYxGpg==
-X-Received: by 2002:a1c:40d5:: with SMTP id n204mr6091718wma.148.1602411144844;
-        Sun, 11 Oct 2020 03:12:24 -0700 (PDT)
+        bh=1F5trvZZdVn0cyGSodlVJXFoupNIxVyFr9OBOuC6spE=;
+        b=kYjRenPCYaFUSDf95TAf8dlLyo+gdweq37znvoCXW4wbrgdC7pQGvIx8Eqt1J/UjpQ
+         Oa0JBAcfwF862kBZ2SiJdn4YA0T3JjN7m1+xYnAj4SrQHaCJV3WKGEkgY5mM5hnYH3tg
+         T9L1F1E/Wy9lzCCRZDGIG00Uv+QFyP3PPxkKNP1Vyr6UfuoHzNsmRIpAS4JjwpjqjNNJ
+         e2/WtU92D7vD236LKdShNdsE3lGfHDp+mGKgcfo9qxHQ0uYy6GurMA8Ou6cTqgjtnS2A
+         ilaq8BHEN3Mv8nRFcTnLFkhG/KD0K4Jtq16ideiYeje48DHxT5ha5d1RRM/G/6SLG12y
+         tC2Q==
+X-Gm-Message-State: AOAM53081utV8OLtVnaaEgjuuHSCT08uZBlurBq1Uxc47KNETOYIWBri
+        nB74S4b/EcXufhMYxR+7waUu5x/cIrnAiA==
+X-Google-Smtp-Source: ABdhPJwXMoJGBaT4MJpW6oLZj6qEKF6ekE2GIvitpw5hufHjdy0fWpdv9CKGl5+qRAzCgzQlKa8Qug==
+X-Received: by 2002:a05:6000:10cd:: with SMTP id b13mr19926197wrx.4.1602411158611;
+        Sun, 11 Oct 2020 03:12:38 -0700 (PDT)
 Received: from contrib-buster.auto1.local ([79.140.120.253])
-        by smtp.gmail.com with ESMTPSA id f8sm7363093wrw.85.2020.10.11.03.12.23
+        by smtp.gmail.com with ESMTPSA id f8sm7363093wrw.85.2020.10.11.03.12.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Oct 2020 03:12:24 -0700 (PDT)
+        Sun, 11 Oct 2020 03:12:37 -0700 (PDT)
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sunshine@sunshineco.com, gitster@pobox.com,
         Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH v3 0/1] Teach "worktree list" to annotate locked worktrees
-Date:   Sun, 11 Oct 2020 10:11:51 +0000
-Message-Id: <20201011101152.5291-1-rafaeloliveira.cs@gmail.com>
+Subject: [PATCH v3] worktree: teach `list` to annotate locked worktree
+Date:   Sun, 11 Oct 2020 10:11:52 +0000
+Message-Id: <20201011101152.5291-2-rafaeloliveira.cs@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc0.253.gc238dab514
-In-Reply-To: <20201010185521.23032-1-rafaeloliveira.cs@gmail.com>
+In-Reply-To: <20201011101152.5291-1-rafaeloliveira.cs@gmail.com>
 References: <20201010185521.23032-1-rafaeloliveira.cs@gmail.com>
+ <20201011101152.5291-1-rafaeloliveira.cs@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch introduces a new information on the "git worktree list"
-command output to annotate when a worktree is locked with a "locked" text.
+The "git worktree list" shows the absolute path to the working tree,
+the commit that is checked out and the name of the branch. It is not
+immediately obvious which of the worktrees, if any, are locked.
 
-The intent is to improve the user experience as the "git worktree remove"
-refuses to remove a locked worktree. By adding the "locked" annotation
-to the "git worktree list" command, the user would not attempt to remove
-a worktree or would know to use "git worktree remove -f -f <path>"
-to force a worktree removal.
+"git worktree remove" refuses to remove a locked worktree with
+an error message. If "git worktree list" told which worktrees
+are locked in its output, the user would not even attempt to
+remove such a worktree, or would realize that
+"git worktree remove -f -f <path>" is required.
 
-The output of the "worktree list" command becomes:
+Teach "git worktree list" to append "locked" to its output.
+The output from the command becomes like so:
 
-  $ git worktree list
-  /path/to/main             abc123 [master]
-  /path/to/worktree         456def [brancha]
-  /path/to/locked-worktree  123abc (detached HEAD) locked
+    $ git worktree list
+    /path/to/main             abc123 [master]
+    /path/to/worktree         456def (detached HEAD)
+    /path/to/locked-worktree  123abc (detached HEAD) locked
 
-Changes since v2:
-
-  * Regexes used to test the "locked" anotation are anchored and space is added
-    between the worktree path and OID hex string to avoid false-positives and
-    to ensure there is space between the worktree path and the OID.  
-
-Changes since v1:
-
-  * Drooped the parenthesis in "(locked)" to reduce the noise and allow
-    easier extensions of more annotations design proposed in [2].
-  * Rewrite of the commit message with a much better one.
-  * Simplification of the test added to `t2402` with only caring about
-    the "locked" annotation at the end of the "worktree list" output.
-
-[2]: https://lore.kernel.org/git/CAPig+cQF6V8HNdMX5AZbmz3_w2WhSfA4SFfNhQqxXBqPXTZL+w@mail.gmail.com/
-
-Thank you Junio C Hamano and Eric Sunshine for the detailed review
-and helping with this patch.
-
-Rafael Silva (1):
-  worktree: teach `list` to annotate locked worktree
-
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
+---
  Documentation/git-worktree.txt |  3 ++-
  builtin/worktree.c             |  5 ++++-
  t/t2402-worktree-list.sh       | 10 ++++++++++
  3 files changed, 16 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 32e8440cde..6a6b7c4ad1 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -97,7 +97,8 @@ list::
+ List details of each working tree.  The main working tree is listed first,
+ followed by each of the linked working trees.  The output details include
+ whether the working tree is bare, the revision currently checked out, and the
+-branch currently checked out (or "detached HEAD" if none).
++branch currently checked out (or "detached HEAD" if none), and "locked" if
++the worktree is locked.
+ 
+ lock::
+ 
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 99abaeec6c..ce56fdaaa9 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -676,8 +676,11 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+ 		} else
+ 			strbuf_addstr(&sb, "(error)");
+ 	}
+-	printf("%s\n", sb.buf);
+ 
++	if (!is_main_worktree(wt) && worktree_lock_reason(wt))
++		strbuf_addstr(&sb, " locked");
++
++	printf("%s\n", sb.buf);
+ 	strbuf_release(&sb);
+ }
+ 
+diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+index 52585ec2aa..b85bd2655d 100755
+--- a/t/t2402-worktree-list.sh
++++ b/t/t2402-worktree-list.sh
+@@ -61,6 +61,16 @@ test_expect_success '"list" all worktrees --porcelain' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '"list" all worktress with locked annotation' '
++	test_when_finished "rm -rf locked unlocked out && git worktree prune" &&
++	git worktree add --detach locked master &&
++	git worktree add --detach unlocked master &&
++	git worktree lock locked &&
++	git worktree list >out &&
++	grep "/locked  *[0-9a-f].* locked$" out &&
++	! grep "/unlocked  *[0-9a-f].* locked$" out
++'
++
+ test_expect_success 'bare repo setup' '
+ 	git init --bare bare1 &&
+ 	echo "data" >file1 &&
 -- 
 2.29.0.rc0.253.gc238dab514
 
