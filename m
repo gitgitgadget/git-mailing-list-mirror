@@ -2,94 +2,171 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 733C9C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 17:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1ED0C433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 18:01:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27C8B2074F
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 17:48:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 991BE205CA
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 18:01:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="atfNhSAH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tSlbHkoj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404125AbgJLRsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 13:48:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63996 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404029AbgJLRsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 13:48:22 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C29EC9FA40;
-        Mon, 12 Oct 2020 13:48:20 -0400 (EDT)
+        id S2404122AbgJLSBK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 14:01:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57175 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404069AbgJLSBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 14:01:10 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12CCF8C935;
+        Mon, 12 Oct 2020 14:01:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Gp8f+Q0VEFEqsfK9iVWcNsRBLkk=; b=atfNhS
-        AHVATm4bOnAfdswTNidkAp5uO2xQ4N74Dr5I8P26p/SuFkBeTJVZdOZkSLxp84NC
-        mhDDcGhM69FsX31qmJ2YIPzea5Y30rvyA7695vsvSgOtsXz0ONNB67rO6HYmbIdE
-        9TQyeS+tyzjh+ePKywwVu5db1kt2K7a8M1gE8=
+        :content-type:content-transfer-encoding; s=sasl; bh=/YVbtyrOvhqt
+        hmZqobMDKJuDvO4=; b=tSlbHkoj3ULJZf46XvIQIqZ/tLUUjkWunLtPiOctNcOq
+        0zuPRWhpcC+rqA7e7f7XT8gGqpDA0FjwKH7/JB/x/Qxd603964VEeL+XE1sZLEVb
+        HjkmcN1BMi5jrsxT1DU+Iw+pynf8ZRthD9eWQ5WfR9LngorXkDaLUXphve+FVW8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nuZo/6REaP5T9Xn0nyY047IZMhhRfKwN
-        hqbuxUN/LuT1/hqpU7xwmZ0U+etf7aeVffy6nMuuOfqHZ3PRjWg68dgwEvDnJpOF
-        Uf1n8XsxG3eEK3vDlYbppizEeEdGO6JsY3Xa8iIgBD/9ijfDPBCHtHlr4r3/mmh6
-        LrpwEB71GDA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB05A9FA3F;
-        Mon, 12 Oct 2020 13:48:20 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jgOYmN
+        eLRgQqU2jO0LafFv5j0m2sKDFxsxcgVyFFyDE4HaYtoWnCZfQgYCMEBV6WxM9i+8
+        BJoye/mZ4YgRcqkmHuLxB70fJMUfHLc2TIsVZCOR4h2N+OqhFz8Hev5oi+qrDUa6
+        vXkSO6vnKzLdbZ6nDJKQP3+rKS+k3GxVJUsrs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 033808C934;
+        Mon, 12 Oct 2020 14:01:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D0D29FA3E;
-        Mon, 12 Oct 2020 13:48:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 527A48C933;
+        Mon, 12 Oct 2020 14:01:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Konstantin Tokarev <annulen@yandex.ru>
-Cc:     Victor Porton <porton@narod.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feature: checkout and merge
-References: <28a86c75-de4d-acbe-dab7-e5512961538c@narod.ru>
-        <5293161602514983@mail.yandex.ru>
-Date:   Mon, 12 Oct 2020 10:48:19 -0700
-In-Reply-To: <5293161602514983@mail.yandex.ru> (Konstantin Tokarev's message
-        of "Mon, 12 Oct 2020 18:04:19 +0300")
-Message-ID: <xmqqo8l7pc7w.fsf@gitster.c.googlers.com>
+To:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] diff: add -I<regex> that ignores matching changes
+References: <20201001120606.25773-1-michal@isc.org>
+        <20201012091751.19594-1-michal@isc.org>
+        <20201012091751.19594-3-michal@isc.org>
+Date:   Mon, 12 Oct 2020 11:01:02 -0700
+In-Reply-To: <20201012091751.19594-3-michal@isc.org> (=?utf-8?B?Ik1pY2hh?=
+ =?utf-8?B?xYIgS8SZcGllxYQiJ3M=?=
+        message of "Mon, 12 Oct 2020 11:17:50 +0200")
+Message-ID: <xmqqk0vvpbmp.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1DC8BB70-0CB3-11EB-89C5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E49E1910-0CB4-11EB-A435-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Tokarev <annulen@yandex.ru> writes:
+Micha=C5=82 K=C4=99pie=C5=84 <michal@isc.org> writes:
 
-> 12.10.2020, 14:12, "Victor Porton" <porton@narod.ru>:
->> It is a very often need to checkout a branch and them merge the branch
->> that was before the checkout. Moreover after this is very often needed
->> to push.
->>
->> So please add the flags to `checkout`:
->>
->> 1. to merge the old branch immediately after checkout
->>
->> 2. to push after checkout
->>
->> I repeatedly write:
->>
->> git checkout stable && git merge main && git push && git checkout main
->>
->> (I am not subscribed to this mailing list.)
+> Add a new diff option that enables ignoring changes whose all lines
+> (changed, removed, and added) match a given regular expression.  This i=
+s
+> similar to the -I option in standalone diff utilities and can be used
+> e.g. to ignore changes which only affect code comments or to look for
+> unrelated changes in commits containing a large number of automatically
+> applied modifications (e.g. a tree-wide string replacement).  The
+> difference between -G/-S and the new -I option is that the latter
+> filters output on a per-change basis.
 >
-> Why not make a shell script to do this?
+> Use the 'ignore' field of xdchange_t for marking a change as ignored or
+> not.  Since the same field is used by --ignore-blank-lines, identical
+> hunk emitting rules apply for --ignore-blank-lines and -I.  These two
+> options can also be used together in the same git invocation (they are
+> complementary to each other).
+>
+> Rename xdl_mark_ignorable() to xdl_mark_ignorable_lines(), to indicate
+> that it is logically a "sibling" of xdl_mark_ignorable_regex() rather
+> than its "parent".
+>
+> Signed-off-by: Micha=C5=82 K=C4=99pie=C5=84 <michal@isc.org>
 
-Sounds like a very sensible suggestion.  "merging and then pushing
-immediately after" without any validation step in between is not for
-everybody and being able to implement such a custom workflow is why
-we have these individual steps as discrete commands.
+Well explained.
+
+> +-I<regex>::
+
+Since we are mimicking other folks' feature, giving also the
+
+--ignore-matching-lines=3D<regex>
+
+synonym to that their users are familiar with would be a good idea,
+no?
+
+> +	Ignore changes whose all lines match <regex>.  This option may
+> +	be specified more than once.
+> +
+>  --inter-hunk-context=3D<lines>::
+>  	Show the context between diff hunks, up to the specified number
+>  	of lines, thereby fusing hunks that are close to each other.
+> diff --git a/diff.c b/diff.c
+> index 2bb2f8f57e..c5d4920fee 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3587,6 +3587,8 @@ static void builtin_diff(const char *name_a,
+>  		if (header.len && !o->flags.suppress_diff_headers)
+>  			ecbdata.header =3D &header;
+>  		xpp.flags =3D o->xdl_opts;
+> +		xpp.ignore_regex =3D o->ignore_regex;
+> +		xpp.ignore_regex_nr =3D o->ignore_regex_nr;
+>  		xpp.anchors =3D o->anchors;
+>  		xpp.anchors_nr =3D o->anchors_nr;
+>  		xecfg.ctxlen =3D o->context;
+> @@ -3716,6 +3718,8 @@ static void builtin_diffstat(const char *name_a, =
+const char *name_b,
+>  		memset(&xpp, 0, sizeof(xpp));
+>  		memset(&xecfg, 0, sizeof(xecfg));
+>  		xpp.flags =3D o->xdl_opts;
+> +		xpp.ignore_regex =3D o->ignore_regex;
+> +		xpp.ignore_regex_nr =3D o->ignore_regex_nr;
+>  		xpp.anchors =3D o->anchors;
+>  		xpp.anchors_nr =3D o->anchors_nr;
+>  		xecfg.ctxlen =3D o->context;
+> @@ -5203,6 +5207,22 @@ static int diff_opt_patience(const struct option=
+ *opt,
+>  	return 0;
+>  }
+> =20
+> +static int diff_opt_ignore_regex(const struct option *opt,
+> +				 const char *arg, int unset)
+> +{
+> +	struct diff_options *options =3D opt->value;
+> +	regex_t *regex;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	regex =3D xcalloc(1, sizeof(*regex));
+> +	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE))
+> +		die("invalid regex: %s", arg);
+> +	ALLOC_GROW(options->ignore_regex, options->ignore_regex_nr + 1,
+> +		   options->ignore_regex_alloc);
+> +	options->ignore_regex[options->ignore_regex_nr++] =3D regex;
+> +	return 0;
+> +}
+
+Don't these parse-options callback functions have a way to tell the
+caller die instead of them themselves dying like this?  Would it
+work better to "return error(... message ...)", or would that give
+two error messages?  In anycase, this is end-user facing, so we'd
+want it to be localizable, e.g.
+
+	die(_("invalid regexp given to -I: '%s'", arg));
+
+probably.
+
+>  static int diff_opt_pickaxe_regex(const struct option *opt,
+>  				  const char *arg, int unset)
+>  {
+
+Other than that, nicely done.
 
 Thanks.
