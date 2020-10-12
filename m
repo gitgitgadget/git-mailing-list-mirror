@@ -2,163 +2,110 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E6AC433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 17:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1F1BC433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 17:45:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7D0320776
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 17:30:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A952206CB
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 17:45:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aVg8XW81"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHZS68IA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403838AbgJLRan (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 13:30:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60050 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389613AbgJLRam (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 13:30:42 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 05216F73C1;
-        Mon, 12 Oct 2020 13:30:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1p/0XemaMXdVo8PpO/Q92kfGB+c=; b=aVg8XW
-        81uchwejxUhBJ0kuT2Eno2ibgAdMFd4rAO2tQi5M0plk6BYvy4XQrIUJXSaW3jhK
-        jpUWo2ADLKnkbDnBlEZpPPMTJ97m7kPnsk9HgZrJfZ8gjKVXNTLWUe8Uuurk++R7
-        uLz6z9z0UKggXTx/B7+q0WFpdMDrospfoPdBQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LcyBY9/VKweVCMPOzrR0QC2dAP8BXmXF
-        GQiRhE5gU8ZTnyw1vDn8Q6EAStEYGW2Wv0PEN5VDuS09SSfgd0PWgyblVkP40Elf
-        KIA2LW3QdiGBNucYaxFzW3CYzl0yhPi/v49OcgeHbvFfzGf4Qos8TmlXtpRigt2O
-        HoOwjWJUe2c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F1DBFF73C0;
-        Mon, 12 Oct 2020 13:30:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3CA07F73BF;
-        Mon, 12 Oct 2020 13:30:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] maintenance: core.commitGraph=false prevents writes
-References: <pull.749.git.1602509314545.gitgitgadget@gmail.com>
-Date:   Mon, 12 Oct 2020 10:30:33 -0700
-In-Reply-To: <pull.749.git.1602509314545.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Mon, 12 Oct 2020 13:28:34
-        +0000")
-Message-ID: <xmqqwnzvpd1i.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2390751AbgJLRpL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 13:45:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389562AbgJLRpL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 13:45:11 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11173C0613D0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 10:45:11 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id n9so15019395pgf.9
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 10:45:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6Kd0AbwI0Y/rAZ6GyBmXKRfroPQVDvEvW/zjyoqaiTw=;
+        b=KHZS68IAHiytyPZVAsGX7gf4AKKnZxvvAfQFVeAPFjfUBp0v1AV0g0l8268Ix5X/+i
+         s66BLb8DW3VPVqpY3V+hOA4sUjqQwQ3gjKU058kOPO9jFtCLqdtMw0wQj/SGiNuiJTJD
+         RGhFy1TFG+/fjqqIbi8Eg9NyM3ZnEoDsqYok2ZbfrxBBoKZpOrpKSvGeRrU6YCxgR+wI
+         oOGPF0Gr09rAjBW5F9arfujeMaFFLWJrqpjwY4MDSiwJiCpXmaphhhzZQ7h3EURqPYPb
+         ad2TDJKB8jsPoGtFD/KkQLQT998Xneg5NxNc9o0vBUXmfcg+QGu85ZfH/kbz7MRRtIC4
+         wkHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6Kd0AbwI0Y/rAZ6GyBmXKRfroPQVDvEvW/zjyoqaiTw=;
+        b=tcdbxT2h0BQMdfHhGuUkD95YJpAifhyG1XSHj8hnPWZ9JZZw0dwuM6xKy9FI9DU/ue
+         g3JpN0V0Yaodt+9Fbqb6u70vqJGghHfwqR8XGsDrbJlQ/yx5MC8cUWM6NDUwHHv8qoVQ
+         nGrUSgAF028yyoDEKnEke76aJTs27txJ7c5cGklcgtcdxoZz6qxyXFXo4Sk/mZbtST9M
+         MshJN/9eg8ZiZ76l3A/+r7oxcUDY2SYSViIzb+0vJd9jYO/st2hRRPItt+Lp5agWA4oQ
+         +t/fOgHakS2Aw+5It/sjXJZM4Fk+kZukpsj2fq4goZGbZbQ6GJvvQJT3fzHA1ZjLYLuc
+         SPQw==
+X-Gm-Message-State: AOAM533blknwcIAoNWnNe2dfQ0PyjbjmzyjP5sQaGwlZ4gh9TU5FpIcU
+        WI6eAB1VQoULxRNirQm1ra4=
+X-Google-Smtp-Source: ABdhPJzsrilZg8q9NPA9AgcUSwKX5yOFLerWBYcJxfMixOoWgoMDBEzON+9MjX9ulWRf64I1b/s4rA==
+X-Received: by 2002:aa7:8287:0:b029:142:2501:39ec with SMTP id s7-20020aa782870000b0290142250139ecmr23861709pfm.59.1602524710422;
+        Mon, 12 Oct 2020 10:45:10 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id 15sm19599129pgt.24.2020.10.12.10.45.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2020 10:45:09 -0700 (PDT)
+Date:   Mon, 12 Oct 2020 10:45:07 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 05/13] reftable: utility functions
+Message-ID: <20201012174507.GD3740546@google.com>
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
+ <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
+ <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com>
+ <20201002041214.GE3252492@google.com>
+ <CAFQ2z_NL1UrmonMH3qLKrEkjsPjm9qTbtoeY0OHQZzkVW2t3-w@mail.gmail.com>
+ <20201012152505.GB3740546@google.com>
+ <20201012170527.GA21606@xps>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A2F40E7E-0CB0-11EB-B8B9-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201012170527.GA21606@xps>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt wrote:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
+> In order to be as thorough as possible, we thus also need to replace
+> these function pointers for libgit2's dependencies. As registration of
+> the allocator happens at runtime, we need to also be able to replace
+> function pointers of dependencies at runtime. E.g. for OpenSSL, it
+> provides an API `CRYPTO_set_mem_functions(malloc, realloc, free)` which
+> we call on global initialization of the libgit2 library.
 >
-> Recently, a user had an issue due to combining
-> fetch.writeCommitGraph=true with core.commitGraph=false. The root bug
-> has been resolved by preventing commit-graph writes when
-> core.commitGraph is disabled. This happens inside the 'git commit-graph
-> write' command, but we can be more aware of this situation and prevent
-> that process from ever starting in the 'commit-graph' maintenance task.
+> So, to answer your questions:
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->     maintenance: core.commitGraph=false prevents writes
->     
->     As requested [1], this prevents the extra process when core.commitGraph
->     is disabled.
-
-That's not a request.  I was just wondering aloud.
-
-If you took inspiration from my thinking aloud, that is wonderful,
-but the actual work to ensure it is not an idea that horribly breaks
-some underlying assumption I didn't know about in the code and
-deciding it is a good idea to do so is all done by you, so please
-take the credit due.
-
->     This is based on ds/maintenance-commit-graph-auto-fix.
->     
->     [1] https://lore.kernel.org/git/xmqqft6nrtlw.fsf@gitster.c.googlers.com/
->     
->     Thanks, -Stolee
-
-Hmph.  
-
-There is a call to prepare_repo_settings() in cmd_gc().
-
-I have to wonder if it should be done much earlier and in a more
-central place, perhaps in cmd_maintenance() before anything else
-happens.  Even though commit-graph may feel somewhat special only
-because it is relatively new, it is not hard to imagine that other
-maintenance tasks (both older ones and future ones) would eventually
-want to have similar access to the feature settings.
-
-It is OK to keep "the maintenance command works only in the single
-repository", and not passing a "repo" that cmd_maintenance() would
-prepare by calling prepare_repo_settings() down in the callchain, at
-least right now, but we might want to consider doing so in the
-future.
-
-Thanks.
-
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-749%2Fderrickstolee%2Fmaintenance-core-commit-graph-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-749/derrickstolee/maintenance-core-commit-graph-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/749
+>     - The allocator is global and cannot be changed after initialization
+>       of libgit2.
 >
->  builtin/gc.c           | 4 ++++
->  t/t7900-maintenance.sh | 8 ++++++++
->  2 files changed, 12 insertions(+)
+>     - It is pluggable, users can set up their own allocators by filling
+>       a structure with function pointers for `free`, `malloc`, `realloc`
+>       etc.
 >
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 12ddb68bba..e80331c4e2 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -813,6 +813,10 @@ static int run_write_commit_graph(struct maintenance_run_opts *opts)
->  
->  static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
->  {
-> +	prepare_repo_settings(the_repository);
-> +	if (!the_repository->settings.core_commit_graph)
-> +		return 0;
-> +
->  	close_object_store(the_repository->objects);
->  	if (run_write_commit_graph(opts)) {
->  		error(_("failed to write commit-graph"));
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index ee1f4a7ae4..9776154a2a 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -52,6 +52,14 @@ test_expect_success 'run --task=<task>' '
->  	test_subcommand git commit-graph write --split --reachable --no-progress <run-both.txt
->  '
->  
-> +test_expect_success 'core.commitGraph=false prevents write process' '
-> +	GIT_TRACE2_EVENT="$(pwd)/no-commit-graph.txt" \
-> +		git -c core.commitGraph=false maintenance run \
-> +		--task=commit-graph 2>/dev/null &&
-> +	test_subcommand ! git commit-graph write --split --reachable --no-progress \
-> +		<no-commit-graph.txt
-> +'
-> +
->  test_expect_success 'commit-graph auto condition' '
->  	COMMAND="maintenance run --task=commit-graph --auto --quiet" &&
->  
+>     - Due to the pluggable nature, we need to be able to set up those
+>       pointers at runtime. We can provide a set of static wrappers
+>       though which then call into the pluggable functions, so defines
+>       would probably work for us, too.
 >
-> base-commit: 8f801804befa12a9c4ddff91275cf03612f1895d
+> I hope that answers all of your questions.
+
+Thanks!  Yes, that's very helpful.
+
+Jonathan
