@@ -2,213 +2,115 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B794BC43467
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5077C433DF
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:27:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6582720878
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:26:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E68420776
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:27:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kNEppR+P"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uv/SOtNr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391039AbgJLT0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 15:26:18 -0400
-Received: from mout.gmx.net ([212.227.17.22]:41491 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387595AbgJLT0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 15:26:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602530766;
-        bh=rRsMaTJDdYnK37lOoJyCuppSvyhfNe0YjGRLkNPcE4k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kNEppR+PdV/B7KmvW/pa2vxqk5ZWeluqING7iauYWH53MBfmpbGkBJpji+TA77o01
-         b0E79lRDdPJvpwnkiklnXr8vmA7o1xtD+bnG25gRY8W7d4DF+sLbiDP/SZTG5MqxRQ
-         dghV7DQp9eZv7b0xdjHU8RYldPS+P95UXrQbcrHY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.212.188]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MI5UN-1kexVB01LT-00FGBG; Mon, 12
- Oct 2020 21:26:06 +0200
-Date:   Mon, 12 Oct 2020 21:26:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Sean McAllister <smcallis@google.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        masayasuzuki@google.com
-Subject: Re: [PATCH 2/3] replace CURLOPT_FILE With CURLOPT_WRITEDATA
-In-Reply-To: <20201012184806.166251-2-smcallis@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2010122119580.50@tvgsbejvaqbjf.bet>
-References: <20201012184806.166251-1-smcallis@google.com> <20201012184806.166251-2-smcallis@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2390043AbgJLT1D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 15:27:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388652AbgJLT1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 15:27:03 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C934AC0613D0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 12:27:02 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id h5so10468527wrv.7
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 12:27:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=g1ps0DPcEPp4su98jXzY5nJuOCnivt4ORTovpted/6U=;
+        b=Uv/SOtNr8OSsB7MZ0Pcsg28mlWM8iUvaCsV42kLFano0BfKK7VJVYn/Udge2NRlORG
+         CXe+jHBsW6UZ/yZ3TOH6LXJmsOAnZWeJuVeJ9g2ebUKFSjkgVW03NY02LAWiCsFfNLQd
+         3BHEc5HBy4EoXg5oyHyX8PlaXpOwR5QkCzFj1CK9q0R8C6G4IyEDUI/MYzff1yI52Cdf
+         RPGuVTmytSFRkAKVEyEEYVSn3ChBLopik9aW8jprfZlIKE57Le128OxWZKMCdTqWTPYl
+         c27eZ7ex6YAPMaoNh2g/eDvt7rIdXW2sbaAG0QMtrb/fgqdPw5Rd/ERyRC8CZ3+1X37k
+         qpWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=g1ps0DPcEPp4su98jXzY5nJuOCnivt4ORTovpted/6U=;
+        b=b0h9guQkE5Qj8diyJSvngJcjCBQfgA5bxwo6fxrvREcimzB2Ict0sO9kY5nUxCiEtL
+         c295bJvWtkEwhvsnM7XCCG1wbXhJfjVEhVNQLtqGfPUdQ6lY9lP1pXLjZNx5yFZuh6TT
+         Pf27A9RZG+qHEb4BHSQhZbNnSfLZ4eS3mO1ANNLRWdw7xOVDhA0Z5ih7pe/elWOVfgCk
+         ctIngWuUY1qwkbgYQEpiu6ETpgJ4s0Zxg5vyNKTrFK1fYSvXYfkVN4ItSUZhP0h789I4
+         xyduNimThMZJIiKdVKkYXLL+yxavWSYqOJVeGm+g6Jg86/bMqTgz+ObFpTBmoYxF7MtI
+         n6oQ==
+X-Gm-Message-State: AOAM532i6C4HUVEYD6uYiBiQPkDL5I+1hYYNLA1ED9jWVoNc3KRBQhLu
+        wY+dbudpYS0nqHAdBTSh1xk=
+X-Google-Smtp-Source: ABdhPJwcZy+4hKq2iqg8R5CKzVpAnbg1YX0C81wqmYS5Lzo60cGyfpUrhyuZczpsugRfUUjrQxa1eg==
+X-Received: by 2002:adf:9282:: with SMTP id 2mr30488219wrn.43.1602530821551;
+        Mon, 12 Oct 2020 12:27:01 -0700 (PDT)
+Received: from [192.168.1.240] (39.16.7.51.dyn.plus.net. [51.7.16.39])
+        by smtp.gmail.com with ESMTPSA id h1sm23513356wrx.33.2020.10.12.12.26.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Oct 2020 12:27:00 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] sequencer: fix gpg option passed to octopus merge
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?Samuel_=c4=8cavoj?= <samuel@cavoj.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+References: <20201011224804.722607-1-samuel@cavoj.net>
+ <20201011225850.GA490427@camp.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2010121233590.50@tvgsbejvaqbjf.bet>
+ <6f650960-6b32-4be5-b909-86685c6ad5ea@gmail.com>
+ <xmqq5z7fqt6k.fsf@gitster.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <865afe23-3e83-59a0-76ce-fee91f3fb554@gmail.com>
+Date:   Mon, 12 Oct 2020 20:26:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9npECT0xQ31tlqJyhRxdLQKNEnRVL39iYNyWduuPyAeqPJmDU0n
- /Oxj019DaYUvHWVtW9GWvpNskYOmkna1F3xRDI2rBvBh1oZmcZwipqjCAoD9P040KjkQTQN
- vL9OoeVEfgXMLqEG3PCiWUfhYgkihVvZrDeG3PT7jbY2bIs2wLiLvAhUulf1vkKJ4P70k6T
- Lqm7vEUF1b1srR28r1tkg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gZRtwLOGF+0=:VyaiyMIYYEuWdRsywnYt4f
- H1+6Yo+xVUx1f763PS3AVgfwpiueG+XIevIjC6MU1IAD7qwEPj6NyzsBK0Gu5Rvqi1MJF2YmG
- E1g4GiXd9Gu1YaXVuD1p0LdLPktarWtuP7WPPEt9r+b/nPlTPBbh5QlSrZE0K/5KWceRbQZda
- 8csZGnziOWe3lJXxdtPihlOn/MJhwmVtrQpIm5v7MKXIIv1NDFXW5FjwTj0Wm7baQIrHS1Qmr
- 711IUDmP0qFdCvhV+qrHpDNrYI4vUHfDTJlE08EhFsGn7XrV6wbFL5Tj3TyDr1TH5okj92XSf
- OQ7dU+8A5/jGV455uM20F+gJuo/UDZqufF3R4OK5V+udGCqE4jX04xmLaZIny1gtYVgDSDKu0
- imfIiQ7xGurq6Uhd8tIZVviG13atpO/9b/6xi0I+hJnileDbHXeUwVtCjAQzu5Fv11Bkth/Ww
- 4ZhqTuy+u2Yv2/WvUuK8/kcnfcxNY7KkfWo/8HWOk1Hxt8WlGqxX6VDsVnZv3g4fmIysQCsE8
- i+gCnEv5iOS9OACu6JQutuQjtfn2zqVy4wYUUtsA88y2qBGMVaOuqbsLLUe/v2W29QeX4uap6
- opUqVCJy2ooyrxnJM9YDH3+3qLDhWqqL2ma+nIyG2/YdWAk+ZgXUc8shaGdVLFGJkKDynQMcv
- 2Ob0Mhcox2q+AChzDHyof+LZJ7jfBidLp3n6f0wvA2lxH6ZD1wcxGbfEu5l7DQ0JhGo1Dfbq2
- deFPRZCnZYIvxWTa1UToOTK6fujExKEGRJRKOVkYLatj8lGI9F6vD0bQ1Ohbkqykzy70avKxE
- gRm2K9+axwB4D9mBaA9VyJ02mt97OH16tELmewRj7JQLzmgs+9lex0AAHkbHpF9OByBxqcJfK
- TumiarGOUYf2r+8NVVsUUyEQNJffd+JWQdr07aLNxD6TpjrH4NUR5jK8mL39OuOSUSjtBqyk+
- RUlngjTlkZhxgVU8jC2wZWuOYnYPiG+FsK5AAHl14pmhE10b1cpdOw0zc93VOADGpIoK3e9Hv
- Vw+NDFPqOcLh5XTgzl+PJZ2Z4NwcDWmO2oPZE/7GOdpT8X2Z4rlXBiohZrzu715beTAHR23QA
- U9jEEghJPKGvGeRNG8+EN2lbqjeTY75AEG8gVNAfGu6aAh5G3T/N2NlyTMkfZwMp69K2ZY4S9
- 2xPsmbfdX4Q4S4bLrUS2dH+zrcC7MCqpMHoyGMbGS6wCj0yOPo+uxCw0ldASTDMqrM/9TBTZG
- ZsH9Ylcz6gGLIiOLgIVo2gIFAUZZsxcAB0KiLLw==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq5z7fqt6k.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sean,
+On 12/10/2020 17:56, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> In run_git_commit() we do
+>>
+>> 	if (opts->gpg_sign)
+>> 		strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+>> 	else
+>> 		strvec_push(&cmd.args, "--no-gpg-sign");
+>>
+>> I'm not immediately clear why we pass --no-gpg-sign when
+>> opts->gpg_sign isn't set ...
+> 
+> Isn't it because there is a configuration that the &cmd may honor
+> that forces gpg signing all the time?
 
-On Mon, 12 Oct 2020, Sean McAllister wrote:
+Yes you're right, so we should be passing --no-gpg-sign here if 
+opts->gpg_sign == NULL, otherwise `git merge` will still sign commits 
+when it is run by `git rebase --no-gpg-sign`
 
-> CURLOPT_FILE has been deprecated since 2003.
+Best Wishes
 
-To be precise, it has been aliased to `CURLOPT_WRITEDATA` in cURL v7.9.7:
-https://github.com/curl/curl/commit/980a47b42b95d7b9ff3378dc7b0f2e1c453fb6=
-49
+Phillip
 
-The `CURLOPT_WRITEDATA` symbol became the preferred one only in v7.37.1 in
-2014, though:
-https://github.com/curl/curl/commit/5fcef972b289bdc7f3dbd7a55a5ada0460b74b=
-2d
-
-Ciao,
-Dscho
-
->
-> Signed-off-by: Sean McAllister <smcallis@google.com>
-> ---
->  http-push.c   | 6 +++---
->  http-walker.c | 2 +-
->  http.c        | 6 +++---
->  remote-curl.c | 4 ++--
->  4 files changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/http-push.c b/http-push.c
-> index 6a4a43e07f..2e6fee3305 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -894,7 +894,7 @@ static struct remote_lock *lock_remote(const char *p=
-ath, long timeout)
->  	slot->results =3D &results;
->  	curl_setup_http(slot->curl, url, DAV_LOCK, &out_buffer, fwrite_buffer)=
-;
->  	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-> -	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &in_buffer);
->
->  	lock =3D xcalloc(1, sizeof(*lock));
->  	lock->timeout =3D -1;
-> @@ -1151,7 +1151,7 @@ static void remote_ls(const char *path, int flags,
->  	curl_setup_http(slot->curl, url, DAV_PROPFIND,
->  			&out_buffer, fwrite_buffer);
->  	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-> -	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &in_buffer);
->
->  	if (start_active_slot(slot)) {
->  		run_active_slot(slot);
-> @@ -1225,7 +1225,7 @@ static int locking_available(void)
->  	curl_setup_http(slot->curl, repo->url, DAV_PROPFIND,
->  			&out_buffer, fwrite_buffer);
->  	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
-> -	curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &in_buffer);
->
->  	if (start_active_slot(slot)) {
->  		run_active_slot(slot);
-> diff --git a/http-walker.c b/http-walker.c
-> index 4fb1235cd4..6c630711d1 100644
-> --- a/http-walker.c
-> +++ b/http-walker.c
-> @@ -384,7 +384,7 @@ static void fetch_alternates(struct walker *walker, =
-const char *base)
->  	alt_req.walker =3D walker;
->  	slot->callback_data =3D &alt_req;
->
-> -	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &buffer);
->  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, url.buf);
->
-> diff --git a/http.c b/http.c
-> index 8b23a546af..b3c1669388 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1921,7 +1921,7 @@ static int http_request(const char *url,
->  		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
->  	} else {
->  		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-> -		curl_easy_setopt(slot->curl, CURLOPT_FILE, result);
-> +		curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, result);
->
->  		if (target =3D=3D HTTP_REQUEST_FILE) {
->  			off_t posn =3D ftello(result);
-> @@ -2337,7 +2337,7 @@ struct http_pack_request *new_direct_http_pack_req=
-uest(
->  	}
->
->  	preq->slot =3D get_active_slot();
-> -	curl_easy_setopt(preq->slot->curl, CURLOPT_FILE, preq->packfile);
-> +	curl_easy_setopt(preq->slot->curl, CURLOPT_WRITEDATA, preq->packfile);
->  	curl_easy_setopt(preq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
->  	curl_easy_setopt(preq->slot->curl, CURLOPT_URL, preq->url);
->  	curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
-> @@ -2508,7 +2508,7 @@ struct http_object_request *new_http_object_reques=
-t(const char *base_url,
->
->  	freq->slot =3D get_active_slot();
->
-> -	curl_easy_setopt(freq->slot->curl, CURLOPT_FILE, freq);
-> +	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEDATA, freq);
->  	curl_easy_setopt(freq->slot->curl, CURLOPT_FAILONERROR, 0);
->  	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_=
-file);
->  	curl_easy_setopt(freq->slot->curl, CURLOPT_ERRORBUFFER, freq->errorstr=
-);
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 32cc4a0c55..7f44fa30fe 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -847,7 +847,7 @@ static int probe_rpc(struct rpc_state *rpc, struct s=
-lot_results *results)
->  	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
->  	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
->  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
-> -	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buf);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &buf);
->
->  	err =3D run_slot(slot, results);
->
-> @@ -1012,7 +1012,7 @@ static int post_rpc(struct rpc_state *rpc, int sta=
-teless_connect, int flush_rece
->  	rpc_in_data.slot =3D slot;
->  	rpc_in_data.check_pktline =3D stateless_connect;
->  	memset(&rpc_in_data.pktline_state, 0, sizeof(rpc_in_data.pktline_state=
-));
-> -	curl_easy_setopt(slot->curl, CURLOPT_FILE, &rpc_in_data);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &rpc_in_data);
->  	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
->
->
-> --
-> 2.28.0.1011.ga647a8990f-goog
->
->
+> 
+>> but it makes me wonder if we should be doing
+>> that here as well
+> 
+> Possibly.
+> 
