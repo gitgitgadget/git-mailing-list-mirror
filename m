@@ -2,117 +2,85 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2F5AC433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 16:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CC01C433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 16:14:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91C8B206CB
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 16:13:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29A59206CB
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 16:14:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P9oWhujY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KzgNrVYb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390574AbgJLQNA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 12:13:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56359 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390043AbgJLQNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 12:13:00 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26D688BB37;
-        Mon, 12 Oct 2020 12:12:58 -0400 (EDT)
+        id S2390515AbgJLQOh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 12:14:37 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56438 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390043AbgJLQOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 12:14:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 562E4F694C;
+        Mon, 12 Oct 2020 12:14:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iXlp2ukgdTZyPrg4O53ApM9jKsc=; b=P9oWhu
-        jY72h0wldB4JKbrGF0UzXLOfxdkm2u8mNoACZCbjsCUhJY55PGCsMEl6gwfQta9H
-        95Jnex7ij+l35kHFngylRNpgHrNYruTT+Ug174rcTTmQXStZ1qZYaotHCv5OxK4k
-        WjVjpf5XCczO9cdKCUB63xq6/GOUp2O0ALi8w=
+        :content-type; s=sasl; bh=awg5/iarTlkhNQngt1BhLJpqHK0=; b=KzgNrV
+        Yb/Qv511fzScPXmIl7i4F+qT69bRIBvftq83e+HGJAVHk6Hq5HciaFNTGGS0DdKJ
+        ZU+otLTJ+abga9pQx6COC/WnRM63Ri8MGIvAD/2+qQPXJ1fWUfns9W1Y0hmMu3F1
+        MelYsjkXxHhjyL1QosZiRWm0sNgzl6gMHXGtY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BVHLLslpZlFApv5mv9iGgETcTdO2GoWp
-        sUQqTVWAcPEEAVk2im8clJ54EV9gqypsoyuBiFk/wMYrhr1s27NofYYRK/s5sIz+
-        SEvTcA1BQCAu5TnmGXsTUhwXJk6swOugkhvg4u4Jn3t/JDfKBfgMtgvQduKb9m9V
-        jxS2PoCmlDw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E4758BB36;
-        Mon, 12 Oct 2020 12:12:58 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=KisLBBJWO26kXzmcHTvUAaobtg1TSpyV
+        HXIv7KKp7ecgYV0sf3yR1WSbipJBmiOt4HMgyZIbA2enxX9mp68bKDELyYBOXhyx
+        ITlxA7B98ly/j79l0MN/4dQfwEju57Z8FtqYvNrw+j6+pgLHvipdKTG/d/qHybaR
+        42PVbcM9E58=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4FD1BF694B;
+        Mon, 12 Oct 2020 12:14:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89CA08BB35;
-        Mon, 12 Oct 2020 12:12:57 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9C32CF6948;
+        Mon, 12 Oct 2020 12:14:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ci: skip GitHub workflow runs for already-tested
- commits/trees
-References: <pull.619.git.1587748660308.gitgitgadget@gmail.com>
-        <pull.619.v2.git.1602170976.gitgitgadget@gmail.com>
-        <914868d558b1aa8ebec6e9196c5ae83a2bd566bf.1602170976.git.gitgitgadget@gmail.com>
-        <20201009072922.GC24813@szeder.dev>
-        <nycvar.QRO.7.76.6.2010091254180.50@tvgsbejvaqbjf.bet>
-        <20201010072508.GD24813@szeder.dev>
-        <nycvar.QRO.7.76.6.2010111221350.50@tvgsbejvaqbjf.bet>
-Date:   Mon, 12 Oct 2020 09:12:56 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2010111221350.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sun, 11 Oct 2020 12:28:33 +0200 (CEST)")
-Message-ID: <xmqqy2kbqv7b.fsf@gitster.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Robert Karszniewicz <avoidr@posteo.de>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] log: add log.showStat configuration variable
+References: <20201008162015.23898-1-avoidr@posteo.de>
+        <bec999ef-5f9c-0ca1-ddd9-70b54b8c51b1@gmail.com>
+        <20201011095916.GA14933@HP>
+        <1f53a7d8-6aa5-e1c7-ecb9-b99a37500034@gmail.com>
+Date:   Mon, 12 Oct 2020 09:14:31 -0700
+In-Reply-To: <1f53a7d8-6aa5-e1c7-ecb9-b99a37500034@gmail.com> (Derrick
+        Stolee's message of "Mon, 12 Oct 2020 08:50:35 -0400")
+Message-ID: <xmqqtuuzqv4o.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CAC24DCC-0CA5-11EB-A964-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 036D7E1C-0CA6-11EB-B7AA-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> Also, the patch specifically adjusts the GitHub workflow itself.
-> Therefore, unlike the `skip_good_tree()` function, it does not pretend to
-> be generic (which `skip_good_tree()` really is not, as pointed out above).
+>> I worried about that, too. But I think the initial step was already in
+>> 2015, when stash.showStat and stash.showPatch were added. No flood of
+>> options happened since then? I was actually surprised about it, too,
+>> that it took so long until someone wanted to have showStat for show and
+>> log, too.
+>
+> I'm not sure these examples will help your case.
+>
+> Does 'stash' have more things that would be beneficial to show
+> every time? If no, then 'stash' is much more specialized than
+> 'show' and 'log' which have many more options. If yes, then this
+> is exactly what we want to avoid happening: an incomplete set of
+> config options that are tailored to a small subset of options.
 
-I think skip_good_tree aspired to be a generic one, by having the
-"if we are not in travis nor GitHub actions, return early" at its
-very beginning.  The person who adds support to GitHub workflow
-could have done one of two things.  
-
-One is to recognise the aspiration, and restructure existing
-skip_good_tree from
-
-    skip_good_tree () {
-	return if not travis and if not github actions
-
-	bunch of code that happens to work only on travis
-    }
-
-to
-
-    skip_good_tree () {
-	if travis
-	then
-	    bunch of code that happens to work only on travis
-	else if github actions
-	    bunch of code that happens to work only with github
-	fi
-    }
-
-without touching the caller.  That lets skip_good_tree to be
-generic.
-
-Another is to completely ignore that aspiration, maybe doing all
-that inside the workflow script (which by definition works only with
-github).
-
-I think the latter (i.e. what the patch choose to do, which is not
-to bother with the ci/*.sh scripts at all) would be cleaner in this
-particular case, but then it would have made the intention more
-clear if the conditional at the beginning of skip_good_tree() were
-adjusted, perhaps?
+Well said---I do not have anything more to add to that point that
+'stash' is not a very good example to mimic.
