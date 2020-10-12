@@ -2,92 +2,93 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E060C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13AA7C433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:41:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32D5A20878
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:38:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C080A2087E
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:41:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DCm1MEEQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxIxJTpf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730202AbgJLTiy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 15:38:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58518 "EHLO
+        id S1730950AbgJLTlZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 15:41:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727198AbgJLTix (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 15:38:53 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0B40C0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 12:38:53 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id b193so14463338pga.6
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 12:38:53 -0700 (PDT)
+        with ESMTP id S1727131AbgJLTlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 15:41:24 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2A7AC0613D0
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 12:41:24 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id c20so3899508pfr.8
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 12:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=IJ4q7wFlqbvViojEZkgF98VrQMP8PFjdMqHlzMhKCfQ=;
-        b=DCm1MEEQB14dt0xOSXjoWHxomFxOKMdqxTAamFi3SQsjmrGa2Ho7NL4gEQ5mcWEQYq
-         hEgpc6iGX9KbXVF2AXqAguWKFPrpzy/iWAVMcprrOlsoFXcBP2125qGq7pS8el3WHMIt
-         09KaK2uShpisB/z1dxKutTnfOoAmRVsBq0zuimrENC+WSg0pOkWbB77Z/RIap4NJrcIB
-         EkFxCp7vYYWLhQrJNN6T7oJcFKCrEYWhwa3DUOk6gXVEz7DKHGSzQ162oFHEvdtWF0jo
-         BvfsCxA8lz1kAfcBS/YBFR1CCcS1HajaGyAVQwSyXxATobLXRwXKZUeO7Ygsp9qTGNTg
-         CPtA==
+        bh=qrbcQ/g91LkdSLDT9GILCLjTwsr+jSgpZiA/B+5cmF0=;
+        b=YxIxJTpfBryGIXl0v+QNh+Gsu/E6Pg4JIOi9rb0kUgM24UdpZwfbKbaY0oAb4mWvv/
+         yHq1OgJBg3m4byFQij0H3LNPjFnRbBRfwwjCdkm0N+ox/aj+WfdojFMIcnrS7WrxqnS+
+         +yD/aZTr/1VH4yXSWE1qpp/Ng6faAzmPtaSOpHugaV7joSZhm7CQUoFioFpvWAdpC/tF
+         pM09dsaXmaeIAoAkvwxrEaxOr45Kh3+UFKAvkpdx4m+6s49em58iw9BMQi0IFCIGW+js
+         0du6XERzNvfY74W4nGXh5ON8/j2AF30JK0VIeakUga4o88qv58MhCT0ylgf4rtRCD+xX
+         aVPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=IJ4q7wFlqbvViojEZkgF98VrQMP8PFjdMqHlzMhKCfQ=;
-        b=VanU8PqiJdg40KzZ8RkAHVN3p0Ckqbi+AXd8wtmRMg9E1YBiOjJp5X5JxJqYsFfn+A
-         hXTB53TeP4fAKsgo3Lx5xm9GgptLOkQgCMGa/yjELnQD9fUK6xc8F19i9ztwCZVOshY0
-         P5R8EOpD3wJPqYFKFnCaN2zSv5m8ybrSqekjqzyqt/W4BbHiyKULEvDtPk+OHRqyyemP
-         i/X1J33st6MBJ2e1J7fHsMC3lmvLxLhYR7gl2EYKvdRJSno6ds6ciwkM08e6cNgizfCw
-         TyQwOUDIW4lPHevIT1tSnNxusDQqn+VtTCuyh4Gddu+VItAIiIesE6L00+TwOgTmFV1B
-         eGWQ==
-X-Gm-Message-State: AOAM532UhI/g6mcNkfy9aCQ0XVz+7liB2T/Tcbysx7tU4Wwd2jQsTn5y
-        wIx9jKY/4GS0FEsbwphQdqM=
-X-Google-Smtp-Source: ABdhPJzViySZKiKLi/nmfqx/TZbxQzdRX1CukRaq16O0I7yU0jLcmObOd9Ead0MG8iLQWrRyuq02nA==
-X-Received: by 2002:aa7:8e54:0:b029:142:2501:34d2 with SMTP id d20-20020aa78e540000b0290142250134d2mr24257423pfr.43.1602531533337;
-        Mon, 12 Oct 2020 12:38:53 -0700 (PDT)
+        bh=qrbcQ/g91LkdSLDT9GILCLjTwsr+jSgpZiA/B+5cmF0=;
+        b=OxVHsFWPjaskHtNrvIqgi7p1KLEiu8O2Uhwwy+uipeX3xV8Du2N1IsQ1+ImWuSuJWT
+         4sOnJjOh3dSkwwAjXmKwoX+EsBHjWogIEJwA45r/Oe1DyAyHrWFOCa9mSZs42aGSIKu2
+         kYhnyjDSekD5wE66hko2uQRewM0Ly2H9LcmZpGhf3pvrUIRlD2zQww/X9kFwMASnLQeY
+         FwYosXS5zHWjMXVmNe9Bv70ISnqRf2h4fCjwv4TYO65+89aTxLsC/LiC5eLdbj7lhMxY
+         twHistkTo3dv6C1qE1kPNtGTgVzKPv21cQXQYT/Gx+J/EBxOvHSQa1u7B/FU0QQciaBl
+         11iQ==
+X-Gm-Message-State: AOAM533QS5k7zWli3hDRlrfFwqK1q9z/fkDmtsVswdpKLmds9V8r0pZA
+        KojjA2DVn7x4jfAPPOI3NTE=
+X-Google-Smtp-Source: ABdhPJzj1R5wUji9a5fP0+RK/j2fEawkqt8/UgfzwU4nqEJ9F1vTUIJt2JF0hLmi6rqDEtZZKaAHYw==
+X-Received: by 2002:a62:cd85:0:b029:152:6881:5e2c with SMTP id o127-20020a62cd850000b029015268815e2cmr24349717pfg.36.1602531684202;
+        Mon, 12 Oct 2020 12:41:24 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id g14sm20751505pfo.17.2020.10.12.12.38.52
+        by smtp.gmail.com with ESMTPSA id r23sm11438714pfr.62.2020.10.12.12.41.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 12:38:52 -0700 (PDT)
-Date:   Mon, 12 Oct 2020 12:38:50 -0700
+        Mon, 12 Oct 2020 12:41:23 -0700 (PDT)
+Date:   Mon, 12 Oct 2020 12:41:21 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: Patchwork now does the right thing with GGG submissions
-Message-ID: <20201012193850.GE3740546@google.com>
-References: <20201012180034.tu4rmeoadhy5j4w7@chatter.i7.local>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 05/13] reftable: utility functions
+Message-ID: <20201012194121.GA3814681@google.com>
+References: <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com>
+ <20201008014855.1416580-1-jonathantanmy@google.com>
+ <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2010111247450.50@tvgsbejvaqbjf.bet>
+ <20201012151919.GA3740546@google.com>
+ <nycvar.QRO.7.76.6.2010122035330.50@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201012180034.tu4rmeoadhy5j4w7@chatter.i7.local>
+In-Reply-To: <nycvar.QRO.7.76.6.2010122035330.50@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Ryabitsev wrote:
+Johannes Schindelin wrote:
 
-> Just FYI, I made the necessary tweaks to patchwork to make it properly
-> assign "From" for gitgitgadget submissions:
->
-> https://patchwork.kernel.org/patch/11832689/
+>                                                          Of course, at
+> this stage I understand that my feedback is not very welcome,
 
-\o/ Thanks much for this.
+Do you mean because you don't feel that your feedback has been
+sufficiently acted upon, or is there something else you are alluding
+to?
 
-For the curious, any links to the change behind the scenes that made
-that happens?  Does it use Sender[1] or a different field?  Does the
-change live in [2] or [3]?
-
-Sincerely,
+Puzzled,
 Jonathan
-
-[1] https://lore.kernel.org/git/xmqqiml4bsra.fsf@gitster-ct.c.googlers.com/
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/mricon/korg-helpers.git/
-[3] https://github.com/getpatchwork/patchwork
