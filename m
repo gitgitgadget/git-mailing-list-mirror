@@ -2,219 +2,217 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C639C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 22:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8347C433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 22:22:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 452D22078E
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 22:21:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7233520838
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 22:22:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C+xzlrKM"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m12VFL/o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388649AbgJLWVC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 18:21:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55676 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388218AbgJLWVC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 18:21:02 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B3CC0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 15:21:02 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id a200so15006620pfa.10
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 15:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=89cvwtHc8RYAxAv0TyxWR5LeztXozLvuOXyKHWNe7f8=;
-        b=C+xzlrKMk9S4XOjLi1OsXxv2oYEg2uZOjUQqclcBqWtAuPQbPH71tv541smBIfqOfc
-         nT3ef5TR7m7CcPDZ8PQQwjmBHJ4iQtbJ6EFlGHlNe+FIB3vi6siq/Zt2ictr7hwPnPYb
-         05Vg5k+K3BlBZWrZu1YKGdSW+AxiUZAAjb/d5YjLFH7WU5UP6Rgv5agd28oTVMn2Q1oG
-         xohNOAIWuvSwAZLKKmb7DrCt7fry9+TPfJtAus3xZU7T4gQtv5ZiHo/g/Rvp5i7I1Ti8
-         izFM7R2la79JcQbtj555e7K1U6KcBt+t98R4x8ACjZcG5sGSsmJIrlubYVDh+LWu6KSS
-         JMoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=89cvwtHc8RYAxAv0TyxWR5LeztXozLvuOXyKHWNe7f8=;
-        b=etiiV9W6V4Dbbzeyys+VQC9qO+v+NiHONpuaR8cXDNM2PhefEz7wozJTYYoGB6AwG1
-         vjpBzz6mOXjylM2lX1whMV3TrYPyyCZ4fyNAerpSbQiSHFT9G3PAghguPEpLKmgndcO3
-         xWNGkc0a/YO4wa3B4AHPYyXh+J78lA3d7/4xNt+7aUC/jC6BfO1KtKP42wCqJNhMzzAw
-         JsRxbuhjdlBQpaHtGrChC01IUfI1PFNwTV4a5UBWfshQtozFkH/vjCjvbPCXXX52x6io
-         xYAP+nArR1/qIk2DEE/yKsMEgzDIHnuvCb1/8MJi76ZQJbAxVAVIhF8TLsiUe0CBvH3I
-         GdXA==
-X-Gm-Message-State: AOAM533XLlo3IZEPeS+Tfgbvqqi5GTtDSN3eVTyPARWzlXaeANkVrkQ8
-        SD8AiyC3tsBfOOKuC0RA0Z9oV0cy+o07dMCRAi2Qb/mUu2Vhkw==
-X-Google-Smtp-Source: ABdhPJwG/s5Y4ugRPgpsi0vlxQYeDBGVkt9KP2Z93YYvad/hL0MPcneA3KeB3og3LLv0le2VvCjHDFZXwXWBfD0PHDk=
-X-Received: by 2002:aa7:874a:0:b029:153:3ed1:917e with SMTP id
- g10-20020aa7874a0000b02901533ed1917emr24643140pfo.7.1602541261273; Mon, 12
- Oct 2020 15:21:01 -0700 (PDT)
+        id S2389197AbgJLWWS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 18:22:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50173 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389660AbgJLWWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 18:22:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE76CF2F31;
+        Mon, 12 Oct 2020 18:22:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=K2wM3kguFUmeFbWMY6OIDVNrQJE=; b=m12VFL
+        /omprfXxdu+EnfM2+qPyRfQl+2FNHD/ddTmYib3Ynod0Cvtrh4SMPE8EZK5zEdvR
+        ORLeH71mAY1vCgtz9iK8RE7tmgM2caZZkz/wNDM1OEt3HyTxn+R4vRt9o+WYyayH
+        VI3lAQv9ZDS7nM6+vSv+SBCv9oQC0xCahqgXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DgqGNk26Dwc7U3VpEzibbj0w8FQTS2Ph
+        CJx6mSAnSrFAJGxuuC7Q9CfXMWaW+OXjrGLi3b6lLsGBR495BIwdV82EvYtoAA85
+        tWwFHhva0TReGjGGNridRWC8qCsxShXa2uFcL7o2c0RnCpRB8id5NvhQLrOuHTsi
+        ZHzpYNMr1c0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D61C9F2F30;
+        Mon, 12 Oct 2020 18:22:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2FC43F2F2F;
+        Mon, 12 Oct 2020 18:22:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        John Keeping <john@keeping.me.uk>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v3 1/3] t: add lib-crlf-messages.sh for messages
+ containing CRLF
+References: <pull.576.v2.git.1583807093.gitgitgadget@gmail.com>
+        <pull.576.v3.git.1602526169.gitgitgadget@gmail.com>
+        <f17d182c3bf5e758490441801423cdb0da17060d.1602526169.git.gitgitgadget@gmail.com>
+Date:   Mon, 12 Oct 2020 15:22:10 -0700
+In-Reply-To: <f17d182c3bf5e758490441801423cdb0da17060d.1602526169.git.gitgitgadget@gmail.com>
+        (Philippe Blain via GitGitGadget's message of "Mon, 12 Oct 2020
+        18:09:27 +0000")
+Message-ID: <xmqqlfgbm6el.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20201012184806.166251-1-smcallis@google.com> <20201012201940.229694-1-smcallis@google.com>
- <xmqqy2kbmalb.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqy2kbmalb.fsf@gitster.c.googlers.com>
-From:   Sean McAllister <smcallis@google.com>
-Date:   Mon, 12 Oct 2020 16:20:49 -0600
-Message-ID: <CAM4o00e4wYOHkn38H8UwqboRMSzAs4QCvTN6Ef6PuUnYfwOoXg@mail.gmail.com>
-Subject: Re: [PATCH] remote-curl: add testing for intelligent retry for HTTP
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, masayasuzuki@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5FF2AFE4-0CD9-11EB-B714-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Sean McAllister <smcallis@google.com> writes:
->
-> > +# generate a random 12 digit string
-> > +gen_nonce() {
-> > +    test_copy_bytes 12 < /dev/urandom | tr -dc A-Za-z0-9
-> > +}
->
-> What is the randomness requirement of this application?  IOW, what
-> breaks if we just change this to "echo 0123456789ab"?
->
-> Or "date | git hash-object --stdin" for that matter?
->
-> We'd want to make our tests more predictiable, not less.
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The randomness requirement is just that I need nonces to be unique
-during a single run of the HTTP server
-as they uniquefy the files I put on disk to make the HTTP hack-ily
-stateful.  I'd be fine with your date/hash-object
-solution, but I don't know that it will help make the tests more predictable.
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> A following commit will fix a bug in the ref-filter API that causes
+> commit and tag messages containing CRLF to be incorrectly parsed and
+> displayed.
+>
+> Add a test library (t/lib-crlf-messages.sh) that creates refs with such
+> commit messages, so that we can easily test that this bug does not
+> appear in other commands in the future.
+> ...
+> The function `test_crlf_subject_body_and_contents` can be used to test
+> that the `--format` option of `branch`, `tag`, `for-each-ref` and
+> `log` correctly displays the subject, body and raw content of commits and
+> tag messages.
 
->
-> > diff --git a/t/lib-httpd/error-ntime.sh b/t/lib-httpd/error-ntime.sh
-> > new file mode 100755
-> > index 0000000000..e4f91ab816
-> > --- /dev/null
-> > +++ b/t/lib-httpd/error-ntime.sh
-> > @@ -0,0 +1,79 @@
-> > +#!/bin/sh
-> > +
-> > +# Script to simulate a transient error code with Retry-After header set.
-> > +#
-> > +# PATH_INFO must be of the form /<nonce>/<times>/<retcode>/<retry-after>/<path>
-> > +#   (eg: /dc724af1/3/429/10/some/url)
-> > +#
-> > +# The <nonce> value uniquely identifies the URL, since we're simulating
-> > +# a stateful operation using a stateless protocol, we need a way to "namespace"
-> > +# URLs so that they don't step on each other.
-> > +#
-> > +# The first <times> times this endpoint is called, it will return the given
-> > +# <retcode>, and if the <retry-after> is non-negative, it will set the
-> > +# Retry-After head to that value.
-> > +#
-> > +# Subsequent calls will return a 302 redirect to <path>.
-> > +#
-> > +# Supported error codes are 429,502,503, and 504
-> > +
-> > +print_status() {
-> > +      if [ "$1" -eq "302" ]; then printf "Status: 302 Found\n"
-> > +    elif [ "$1" -eq "429" ]; then printf "Status: 429 Too Many Requests\n"
-> > +    elif [ "$1" -eq "502" ]; then printf "Status: 502 Bad Gateway\n"
-> > +    elif [ "$1" -eq "503" ]; then printf "Status: 503 Service Unavailable\n"
-> > +    elif [ "$1" -eq "504" ]; then printf "Status: 504 Gateway Timeout\n"
-> > +    else
-> > +        printf "Status: 500 Internal Server Error\n"
-> > +    fi
-> > +    printf "Content-Type: text/plain\n"
->
-> Style????? (I won't repeat this comment for the rest of this script)
->
-> I briefly wondered "oh, are t/lib-httpd/* scripts excempt from the
-> coding guidelines?" but a quick look at them tells me that that is
-> not the case.
->
+I am not sure about the wisdom of this arrangement.  Surely you do
+not want to write duplicated set-up for (existing) test scripts for
+for-each-ref, branch and tag subcommands, assuming that these test
+scripts are separated for subcommands they test.
 
-I mistakenly thought the Makefile in t/ was linting these as well.
-I've gone back through and fixed formatting issues and removed
-non-posix constructs.
+But you can have a single test script, that is differentiated from
+all other test scripts by what it tests: having to deal with commits
+that use CRLF.  Then we do not have to add dot-includable test
+library that lets various tests to create these same funny commits.
+Instead, we can just do these as normal set-up step(s) for that
+single test scripts, and then in that test scripts, verify what is
+shown by various commands that share the underlying ref-filter
+machinery.  No?
 
-> > +}
-> > +
-> > +# read in path split into cmoponents
-> > +IFS='/'
-> > +tokens=($PATH_INFO)
-> > +
-> > +# break out code/retry parts of path
-> > +nonce=${tokens[1]}
-> > +times=${tokens[2]}
-> > +code=${tokens[3]}
-> > +retry=${tokens[4]}
->
-> You said /bin/sh upfront.  Don't use non-POSIX shell arrays.
->
-> > +
-> > +# get redirect path
-> > +cnt=0
-> > +path=""
-> > +for ((ii=0; ii < ${#PATH_INFO}; ii++)); do
-> > +    if [ "${PATH_INFO:${ii}:1}" == "/" ]; then
-> > +        let cnt=${cnt}+1
-> > +    fi
-> > +    if [ "${cnt}" -eq 5 ]; then
-> > +        path="${PATH_INFO:${ii}}"
-> > +        break
-> > +    fi
-> > +done
-> > +
-> > +# leave a cookie for this request/retry count
-> > +state_file="request_${REMOTE_ADDR}_${nonce}_${times}_${code}_${retry}"
-> > +
-> > +if [ ! -f "$state_file" ]; then
-> > +    echo 0 > "$state_file"
-> > +fi
-> > +
-> > +
-> > +read cnt < "$state_file"
-> > +if [ "$cnt" -lt "$times" ]; then
-> > +    let cnt=cnt+1
-> > +    echo "$cnt" > "$state_file"
-> > +
-> > +    # return error
-> > +    print_status "$code"
-> > +    if [ "$retry" -ge "0" ]; then
-> > +        printf "Retry-After: %s\n" "$retry"
-> > +    fi
-> > +else
-> > +    # redirect
-> > +    print_status 302
-> > +    printf "Location: %s?%s\n" "$path" "${QUERY_STRING}"
-> > +fi
-> > +
-> > +echo
-> > diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> > index 7df3c5373a..71d4307001 100755
-> > --- a/t/t5601-clone.sh
-> > +++ b/t/t5601-clone.sh
-> > @@ -756,6 +756,15 @@ test_expect_success 'partial clone using HTTP' '
-> >       partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
-> >  '
-> >
-> > +test_expect_success 'partial clone using HTTP with redirect' '
-> > +    _NONCE=`gen_nonce` && export _NONCE &&
-> > +    curl "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server" > /dev/null &&
-> > +    curl "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server" > /dev/null &&
-> > +    curl "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server" > /dev/null &&
->
-> These lines are not indented with HT?
->
-> Don't redirect test output to /dev/null, which is done by test_expect_success
-> for us.  >/dev/null makes it less useful to run the test under "-v" option.
->
 
-Fixed in v2.
+> diff --git a/t/lib-crlf-messages.sh b/t/lib-crlf-messages.sh
+> new file mode 100644
+> index 0000000000..10a2b57280
+> --- /dev/null
+> +++ b/t/lib-crlf-messages.sh
+> @@ -0,0 +1,90 @@
+> +# Setup refs with commit and tag messages containing CRLF
+> +
+> +LIB_CRLF_BRANCHES=""
+> +
+> +create_crlf_ref () {
+> +	message="$1" &&
+> +	subject="$2" &&
+> +	body="$3" &&
+> +	branch="$4" &&
+> +	printf "${message}" >.crlf-message-${branch}.txt &&
+> +	printf "${subject}" >.crlf-subject-${branch}.txt &&
+> +	printf "${body}" >.crlf-body-${branch}.txt &&
+> +	LIB_CRLF_BRANCHES="${LIB_CRLF_BRANCHES} ${branch}"
+> +	test_tick &&
+> +	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
+> +	git branch ${branch} ${hash} &&
+> +	git tag tag-${branch} ${branch} -F .crlf-message-${branch}.txt --cleanup=verbatim
+> +}
+> +
+> +create_crlf_refs () {
+> +	message="Subject first line\r\n\r\nBody first line\r\nBody second line\r\n" &&
+> +	body="Body first line\r\nBody second line\r\n" &&
+> +	subject="Subject first line" &&
+> +	branch="crlf" &&
+> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}" &&
+> +	message="Subject first line\r\n\r\n\r\nBody first line\r\nBody second line\r\n" &&
+> +	branch="crlf-empty-lines-after-subject" &&
+> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}" &&
+> +	message="Subject first line\r\nSubject second line\r\n\r\nBody first line\r\nBody second line\r\n" &&
+> +	subject="Subject first line Subject second line" &&
+> +	branch="crlf-two-line-subject" &&
+> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}" &&
+> +	message="Subject first line\r\nSubject second line" &&
+> +	subject="Subject first line Subject second line" &&
+> +	body="" &&
+> +	branch="crlf-two-line-subject-no-body" &&
+> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}" &&
+> +	message="Subject first line\r\nSubject second line\r\n" &&
+> +	branch="crlf-two-line-subject-no-body-trailing-newline" &&
+> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}" &&
+> +	message="Subject first line\r\nSubject second line\r\n\r" &&
+> +	branch="crlf-two-line-subject-no-body-trailing-newline2" &&
+> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}"
+> +}
+> +
+> +test_create_crlf_refs () {
+> +	test_expect_success 'setup refs with CRLF commit messages' '
+> +		create_crlf_refs
+> +	'
+> +}
+> +
+> +cleanup_crlf_refs () {
+> +	for branch in ${LIB_CRLF_BRANCHES}; do
+> +		git branch -D ${branch} &&
+> +		git tag -d tag-${branch} &&
+> +		rm .crlf-message-${branch}.txt &&
+> +		rm .crlf-subject-${branch}.txt &&
+> +		rm .crlf-body-${branch}.txt
+> +	done
+> +}
+> +
+> +test_cleanup_crlf_refs () {
+> +	test_expect_success 'cleanup refs with CRLF commit messages' '
+> +		cleanup_crlf_refs
+> +	'
+> +}
+> +
+> +test_crlf_subject_body_and_contents() {
 
-> > +     partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server"
-> > +'
-> > +
-> > +
-> >  # DO NOT add non-httpd-specific tests here, because the last part of this
-> >  # test script is only executed when httpd is available and enabled.
+It does not excempt a script from being subject to the coding
+guidelines to be a test library.
+
+> +	command_and_args="$@" &&
+> +	command=$1 &&
+> +	if [ ${command} = "branch" ] || [ ${command} = "for-each-ref" ] || [ ${command} = "tag" ]; then
+> +		atoms="(contents:subject) (contents:body) (contents)"
+> +	elif [ ${command} = "log" ] || [ ${command} = "show" ]; then
+> +		atoms="s b B"
+> +	fi &&
+
+This is the part that made me react to the organization.  Even
+though this helper "library" pretends to be generic, it needs to
+actually know exactly what subcommands are going to be tested with
+the helper.  It is probably easier to read and understand if these
+helper functions are defined in the same script as the one that
+tests these various commands but for one specific aspect of these
+commands (i.e. how the log message with funny line ending convention
+are split into subject and body).
+
+> +	files="subject body message" &&
+> +	while  [ -n "${atoms}" ]; do
+> +		set ${atoms} && atom=$1 && shift && atoms="$*" &&
+> +		set ${files} &&	file=$1 && shift && files="$*" &&
+> +		test_expect_success "${command}: --format='%${atom}' works with CRLF input" "
+> +			rm -f expect &&
+> +			for ref in ${LIB_CRLF_BRANCHES}; do
+> +				cat .crlf-${file}-\"\${ref}\".txt >>expect &&
+> +				printf \"\n\" >>expect
+> +			done &&
+> +			git $command_and_args --format=\"%${atom}\" >actual &&
+> +			test_cmp expect actual
+> +		"
+> +	done
+> +}
