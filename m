@@ -2,231 +2,108 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8F35C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 22:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 185FFC433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:26:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63DF6206A1
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 22:47:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F9BF20878
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:26:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIUs1Mzl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WKimVUgt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389057AbgJLWrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 18:47:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59792 "EHLO
+        id S1731494AbgJLX0I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 19:26:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727222AbgJLWrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 18:47:16 -0400
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E28B7C0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 15:47:15 -0700 (PDT)
-Received: by mail-io1-xd42.google.com with SMTP id r4so11822706ioh.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 15:47:15 -0700 (PDT)
+        with ESMTP id S1730794AbgJLX0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 19:26:08 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380F9C0613D1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 16:26:08 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id g12so21458943wrp.10
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 16:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TAEELHbEfyhgF9t2qbXcHs1PbJdsn+tfzkZEnx+e0W0=;
-        b=JIUs1MzlfWRJ5G6c6Q3NtWprHGoOyLYPj9b6WU0Qc+h0q0CpJ4KudL/dPWSabuBoFR
-         hbTi2x++oIvp2WxUcroVTQR89nKCc7Mx0m+gvMMbyVWRTTKK7oOKbn32AORRsIhX6dlp
-         yeb9RBtguAQ9xWWaDp+W/raCCzGTvWpKr15ZrtRmX8C7snTURoCR3pKifGztFXdiXDTE
-         Gn5+TRQt4u+NNReEODNo9GZUsMyFUag8ZY4Fnve9bKeghdu5RG/sFqO6yGEVukwbTWxl
-         t+3Cn6P8olsN4KbzvJcPSVMhMDYV79HQq4+1sV7cqxAW72wodGXmsbllOoe2LdteQC2k
-         00+g==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=i93HAMYtcSP4u8Uv0bFm7VUYocqbCMfLSgFR4CyGCj4=;
+        b=WKimVUgtZLIRCz6lSUaVz3Qu1o3dJRSm+5bGNzSDTVMbWD8mOGX0QwuS7RWqqVDxNH
+         wDbVszOuHwQWD8i4F6NbjiplkET7WjSec0+VR6KUaX5yPR2QiNRJPOM2AqF0KdiDdl/x
+         jgIAWMIXlM7IH9IX1PcPUAK7/Z9SPIO29CZH76tXFtin11ZDdqI7q1Uvgr+j++vq2aiR
+         m338Agz4c5pUG7UR+i1ikVK27uv8akhjmrGEM0RiCQ5QmeNQpZr0zptaoExwsCnlqVeS
+         wKnmOZu1+Uxggcieh8QS204nwtoq3DV37AU9ZAItPbfypT2aUPrcM2/GmgjEsMM/OyTM
+         yfHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=TAEELHbEfyhgF9t2qbXcHs1PbJdsn+tfzkZEnx+e0W0=;
-        b=MmP7c6wlsFfSfogud7NQ6C1jCYTANPdVIoSCtMfffJtaUcfXdZLx8m3RyMc4LRIOQk
-         dk293VcOYmCvNwKnE8GUSQ1F21MDQe7SYvvfeH5RpSHQzw3UEpUE2vQ5O9scDCVFL5Dl
-         GBAMrMG/5ESsTdbtbGvtvLoL8JptTfdbNlc9jLo0DklGvI1OhU//G2P6rsDNNyagVchU
-         o6js0dPqTMx/WWu+WAXxDg2LFVVs1NQPI95/3vQB5ZDkBIERt2wZ7+8zvHD28o9ekWGK
-         drsw11En2Cy62B+Oq7cYUwssSWapBQFctan0UUOAZ/cs65SLNFPoRP1E66/fAlF5Bea2
-         M5Eg==
-X-Gm-Message-State: AOAM532Hct12rFZfeNletOYFuKcUE4GOiA5uKRO0oD0AGUpuLkBKlJ+r
-        VyYx6uNgPaTBqHaEMorJG40=
-X-Google-Smtp-Source: ABdhPJzc0CpaQB3VdU/iFZOdOXYyErtCnexDjCfSUEWbygAOEKoiwb0aSLUnniUWDu91XY/47DDfjw==
-X-Received: by 2002:a02:17ca:: with SMTP id 193mr7900725jah.115.1602542834919;
-        Mon, 12 Oct 2020 15:47:14 -0700 (PDT)
-Received: from flurp.local (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id s69sm10287632ili.54.2020.10.12.15.47.13
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=i93HAMYtcSP4u8Uv0bFm7VUYocqbCMfLSgFR4CyGCj4=;
+        b=qEcsHFHXr0WdJtPhhSpoUV+ZCu0si25oXmQAeJKlLmkNT6r320Bqmgc0v6m6ZlkV5b
+         Tm9nv43i7Z1zCd6MeGeRV3NkP+/9aYjfayyD2t/takdrDcwBGYQYWgdB4jR7h1Km5Cf9
+         dRqi5+C7BUb3mawFOx0FJzTsmTiP1CYiuTdYdkmvALcgml1T3ZO8fzgA/EzkikYALlVg
+         K9quMQxb/Af5zUmVCVcJOImnKWomBroyBMeK5fUtdC1sSta0uFVdC/wm6agbqj3kigan
+         R0sjnDyMjkAxKoi9xIcBRkvjiNf5Eo2ev+xR+sAlyQ1lq1heZb3txCBh0A5mz0BTEexl
+         A3Xg==
+X-Gm-Message-State: AOAM531hv67dJt8BQbtsZDpORSjczKHv/5iA8m4XHilBmmoAFsq+BBvN
+        ulFL4mRT/meQcRbAjHnBOecoEdFxp5E=
+X-Google-Smtp-Source: ABdhPJzb/AXcjCSb4eSDZ38M5fdukmsnwfTGbIEYOr10yLdmQZUl6ehb5CPPVW1Xd7uKVWAGdTq7yQ==
+X-Received: by 2002:a5d:63cb:: with SMTP id c11mr26650839wrw.243.1602545165665;
+        Mon, 12 Oct 2020 16:26:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x15sm29713828wrr.36.2020.10.12.16.26.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 15:47:14 -0700 (PDT)
-Sender: Eric Sunshine <ericsunshine@gmail.com>
-Date:   Mon, 12 Oct 2020 18:47:06 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        John Keeping <john@keeping.me.uk>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v3 1/3] t: add lib-crlf-messages.sh for messages
- containing CRLF
-Message-ID: <20201012224706.GA4318@flurp.local>
-References: <pull.576.v2.git.1583807093.gitgitgadget@gmail.com>
- <pull.576.v3.git.1602526169.gitgitgadget@gmail.com>
- <f17d182c3bf5e758490441801423cdb0da17060d.1602526169.git.gitgitgadget@gmail.com>
+        Mon, 12 Oct 2020 16:26:05 -0700 (PDT)
+Message-Id: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 12 Oct 2020 23:26:01 +0000
+Subject: [PATCH 0/3] Make test selection easier by specifying description substrings instead of
+ just numeric counters
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f17d182c3bf5e758490441801423cdb0da17060d.1602526169.git.gitgitgadget@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 12, 2020 at 06:09:27PM +0000, Philippe Blain via GitGitGadget wrote:
-> Add a test library (t/lib-crlf-messages.sh) that creates refs with such
-> commit messages, so that we can easily test that this bug does not
-> appear in other commands in the future.
+This patch series enables me to change
 
-In addition to Junio's review comments...
+ ./t9999-my-test.sh --run=1-3,5,17,19
 
-> 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
-> diff --git a/t/lib-crlf-messages.sh b/t/lib-crlf-messages.sh
-> @@ -0,0 +1,90 @@
-> +create_crlf_ref () {
-> +	message="$1" &&
-> +	subject="$2" &&
-> +	body="$3" &&
-> +	branch="$4" &&
-> +	printf "${message}" >.crlf-message-${branch}.txt &&
-> +	printf "${subject}" >.crlf-subject-${branch}.txt &&
-> +	printf "${body}" >.crlf-body-${branch}.txt &&
-> +	LIB_CRLF_BRANCHES="${LIB_CRLF_BRANCHES} ${branch}"
+into
 
-Broken &&-chain.
+ ./t9999-my-test.sh --run=setup,rename,symlink
 
-> +	test_tick &&
-> +	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
-> +	git branch ${branch} ${hash} &&
-> +	git tag tag-${branch} ${branch} -F .crlf-message-${branch}.txt --cleanup=verbatim
-> +}
-> +
-> +create_crlf_refs () {
-> +	message="Subject first line\r\n\r\nBody first line\r\nBody second line\r\n" &&
-> +	body="Body first line\r\nBody second line\r\n" &&
-> +	subject="Subject first line" &&
-> +	branch="crlf" &&
-> +	create_crlf_ref "${message}" "${subject}" "${body}" "${branch}" &&
+and have it pick out tests with "setup", "rename", or "symlink" in their
+description and run those. Saves me a lot of time, especially since numbers
+for tests aren't readily accessible. The easiest way for me to get the
+numbers corresponding to the tests I want to run, is to run all the tests
+and look at the output to match up the descriptions with their numbers --
+thus defeating the point of selecting just a subset of the tests to run in
+the first place.
 
-This is somewhat onerous to digest and compose. Have you considered
-making it more automated and easier to read? Perhaps something like
-this:
+Elijah Newren (3):
+  test-lib: allow selecting tests by substring/regex with --run
+  t6006, t6012: adjust tests to use 'setup' instead of synonyms
+  test-lib: reduce verbosity of skipped tests
 
-    create_crlf_ref () {
-        branch=$1
-        cat >.crlf-message-$branch.txt &&
-        sed -n "1,/^$/p" <.crlf-message-$branch.txt | sed "/^$/d" | append_cr >.crlf-subject-$branch.txt &&
-        sed -n "/^$/,\$p" <.crlf-message-$branch.txt | sed "1d" | append_cr >.crlf-body-$branch.txt &&
-        ...
-    }
+ t/README                     | 26 +++++++++++++++++------
+ t/t0000-basic.sh             | 41 ++++++++++++++++++++++--------------
+ t/t6006-rev-list-format.sh   |  2 +-
+ t/t6012-rev-list-simplify.sh |  2 +-
+ t/test-lib.sh                | 15 +++++++------
+ 5 files changed, 54 insertions(+), 32 deletions(-)
 
-    create_crlf_refs () {
-        create_crlf_ref crlf <<-\EOF
-        Subject first line
 
-        Body first line
-        Body second line
-        EOF
-        ...
-    }
-
-> +test_create_crlf_refs () {
-> +	test_expect_success 'setup refs with CRLF commit messages' '
-> +		create_crlf_refs
-> +	'
-> +}
-
-This almost seems like an unnecessary indirection since callers could
-just as easily do this on their own, like this:
-
-    test_expect_success 'setup refs with CRLF commit messages' '
-        create_crlf_refs
-    '
-
-which isn't very burdensome. However, I suppose doing it this way
-gives consistent test titles between scripts, so not necessarily a
-strong objection on my part.
-
-> +cleanup_crlf_refs () {
-> +	for branch in ${LIB_CRLF_BRANCHES}; do
-
-Our style is to place 'do' on its own line:
-
-    for branch in $LIB_CRLF_BRANCHES
-    do
-        ...
-
-This would be a syntax error if LIB_CRLF_BRANCHES is empty for some
-reason, but I suppose we don't really have to worry about it here(?).
-
-> +		git branch -D ${branch} &&
-> +		git tag -d tag-${branch} &&
-> +		rm .crlf-message-${branch}.txt &&
-> +		rm .crlf-subject-${branch}.txt &&
-> +		rm .crlf-body-${branch}.txt
-> +	done
-> +}
-> +
-> +test_cleanup_crlf_refs () {
-> +	test_expect_success 'cleanup refs with CRLF commit messages' '
-> +		cleanup_crlf_refs
-> +	'
-> +}
-> +
-> +test_crlf_subject_body_and_contents() {
-> +	command_and_args="$@" &&
-> +	command=$1 &&
-> +	if [ ${command} = "branch" ] || [ ${command} = "for-each-ref" ] || [ ${command} = "tag" ]; then
-> +		atoms="(contents:subject) (contents:body) (contents)"
-> +	elif [ ${command} = "log" ] || [ ${command} = "show" ]; then
-> +		atoms="s b B"
-> +	fi &&
-
-Style:
-
-    if test "$command" = "branch" || test ...
-    then
-        ...
-    elif test ...
-    then
-        ...
-    fi &&
-
-> +	files="subject body message" &&
-> +	while  [ -n "${atoms}" ]; do
-
-Too many spaces after 'while'.
-
-Style:
-
-    while tests -n "..."
-    do
-        ...
-
-> +		set ${atoms} && atom=$1 && shift && atoms="$*" &&
-> +		set ${files} &&	file=$1 && shift && files="$*" &&
-> +		test_expect_success "${command}: --format='%${atom}' works with CRLF input" "
-> +			rm -f expect &&
-> +			for ref in ${LIB_CRLF_BRANCHES}; do
-
-Style.
-
-> +				cat .crlf-${file}-\"\${ref}\".txt >>expect &&
-> +				printf \"\n\" >>expect
-> +			done &&
-> +			git $command_and_args --format=\"%${atom}\" >actual &&
-> +			test_cmp expect actual
-> +		"
-> +	done
-> +}
+base-commit: d98273ba77e1ab9ec755576bc86c716a97bf59d7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-878%2Fnewren%2Ftest-selection-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-878/newren/test-selection-v1
+Pull-Request: https://github.com/git/git/pull/878
+-- 
+gitgitgadget
