@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9B76C433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E09EC433DF
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:18:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FC9320790
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:18:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 102E420790
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728167AbgJLJSD convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 12 Oct 2020 05:18:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46972 "EHLO
+        id S1729332AbgJLJSE convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 12 Oct 2020 05:18:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729032AbgJLJSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 05:18:01 -0400
+        with ESMTP id S1729322AbgJLJSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 05:18:02 -0400
 Received: from mx.pao1.isc.org (mx.pao1.isc.org [IPv6:2001:4f8:0:2::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12069C0613D0
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5457C0613D1
         for <git@vger.kernel.org>; Mon, 12 Oct 2020 02:18:01 -0700 (PDT)
 Received: from zmx1.isc.org (zmx1.isc.org [149.20.0.20])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx.pao1.isc.org (Postfix) with ESMTPS id 097BA3AB0CA
+        by mx.pao1.isc.org (Postfix) with ESMTPS id DB2AA3AB0DB
         for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
 Received: from zmx1.isc.org (localhost [127.0.0.1])
-        by zmx1.isc.org (Postfix) with ESMTPS id 01507160037
+        by zmx1.isc.org (Postfix) with ESMTPS id D1F3816008A
         for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
 Received: from localhost (localhost [127.0.0.1])
-        by zmx1.isc.org (Postfix) with ESMTP id E796616003E
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:00 +0000 (UTC)
+        by zmx1.isc.org (Postfix) with ESMTP id C5AD0160050
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
 Received: from zmx1.isc.org ([127.0.0.1])
         by localhost (zmx1.isc.org [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id L4rqhD4BAdGz for <git@vger.kernel.org>;
-        Mon, 12 Oct 2020 09:18:00 +0000 (UTC)
+        with ESMTP id OtAdVrrvssgA for <git@vger.kernel.org>;
+        Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
 Received: from larwa.hq.kempniu.pl (unknown [212.180.223.213])
-        by zmx1.isc.org (Postfix) with ESMTPSA id 5BD73160037
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:00 +0000 (UTC)
+        by zmx1.isc.org (Postfix) with ESMTPSA id 3822F16003E
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
 From:   =?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <michal@isc.org>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 1/3] merge-base, xdiff: zero out xpparam_t structures
-Date:   Mon, 12 Oct 2020 11:17:49 +0200
-Message-Id: <20201012091751.19594-2-michal@isc.org>
+Subject: [PATCH v2 2/3] diff: add -I<regex> that ignores matching changes
+Date:   Mon, 12 Oct 2020 11:17:50 +0200
+Message-Id: <20201012091751.19594-3-michal@isc.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201012091751.19594-1-michal@isc.org>
 References: <20201001120606.25773-1-michal@isc.org>
@@ -56,57 +56,206 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-xpparam_t structures are usually zero-initialized before their specific
-fields are assigned to, but there are three locations in the tree where
-that does not happen.  Add the missing memset() calls in order to make
-initialization of xpparam_t structures consistent tree-wide and to
-prevent stack garbage from being used as field values.
+Add a new diff option that enables ignoring changes whose all lines
+(changed, removed, and added) match a given regular expression.  This is
+similar to the -I option in standalone diff utilities and can be used
+e.g. to ignore changes which only affect code comments or to look for
+unrelated changes in commits containing a large number of automatically
+applied modifications (e.g. a tree-wide string replacement).  The
+difference between -G/-S and the new -I option is that the latter
+filters output on a per-change basis.
+
+Use the 'ignore' field of xdchange_t for marking a change as ignored or
+not.  Since the same field is used by --ignore-blank-lines, identical
+hunk emitting rules apply for --ignore-blank-lines and -I.  These two
+options can also be used together in the same git invocation (they are
+complementary to each other).
+
+Rename xdl_mark_ignorable() to xdl_mark_ignorable_lines(), to indicate
+that it is logically a "sibling" of xdl_mark_ignorable_regex() rather
+than its "parent".
 
 Signed-off-by: Michał Kępień <michal@isc.org>
 ---
- builtin/merge-tree.c | 1 +
- xdiff/xhistogram.c   | 2 ++
- xdiff/xpatience.c    | 2 ++
- 3 files changed, 5 insertions(+)
+ Documentation/diff-options.txt |  4 +++
+ diff.c                         | 23 +++++++++++++++++
+ diff.h                         |  4 +++
+ xdiff/xdiff.h                  |  4 +++
+ xdiff/xdiffi.c                 | 47 ++++++++++++++++++++++++++++++++--
+ 5 files changed, 80 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index e72714a5a8..de8520778d 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -109,6 +109,7 @@ static void show_diff(struct merge_list *entry)
- 	xdemitconf_t xecfg;
- 	xdemitcb_t ecb;
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 573fb9bb71..f8ccf85173 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -687,6 +687,10 @@ endif::git-format-patch[]
+ --ignore-blank-lines::
+ 	Ignore changes whose lines are all blank.
  
-+	memset(&xpp, 0, sizeof(xpp));
- 	xpp.flags = 0;
- 	memset(&xecfg, 0, sizeof(xecfg));
- 	xecfg.ctxlen = 3;
-diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index c7b35a9667..e694bfd9e3 100644
---- a/xdiff/xhistogram.c
-+++ b/xdiff/xhistogram.c
-@@ -235,6 +235,8 @@ static int fall_back_to_classic_diff(xpparam_t const *xpp, xdfenv_t *env,
- 		int line1, int count1, int line2, int count2)
- {
- 	xpparam_t xpparam;
++-I<regex>::
++	Ignore changes whose all lines match <regex>.  This option may
++	be specified more than once.
 +
-+	memset(&xpparam, 0, sizeof(xpparam));
- 	xpparam.flags = xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
+ --inter-hunk-context=<lines>::
+ 	Show the context between diff hunks, up to the specified number
+ 	of lines, thereby fusing hunks that are close to each other.
+diff --git a/diff.c b/diff.c
+index 2bb2f8f57e..c5d4920fee 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3587,6 +3587,8 @@ static void builtin_diff(const char *name_a,
+ 		if (header.len && !o->flags.suppress_diff_headers)
+ 			ecbdata.header = &header;
+ 		xpp.flags = o->xdl_opts;
++		xpp.ignore_regex = o->ignore_regex;
++		xpp.ignore_regex_nr = o->ignore_regex_nr;
+ 		xpp.anchors = o->anchors;
+ 		xpp.anchors_nr = o->anchors_nr;
+ 		xecfg.ctxlen = o->context;
+@@ -3716,6 +3718,8 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 		memset(&xpp, 0, sizeof(xpp));
+ 		memset(&xecfg, 0, sizeof(xecfg));
+ 		xpp.flags = o->xdl_opts;
++		xpp.ignore_regex = o->ignore_regex;
++		xpp.ignore_regex_nr = o->ignore_regex_nr;
+ 		xpp.anchors = o->anchors;
+ 		xpp.anchors_nr = o->anchors_nr;
+ 		xecfg.ctxlen = o->context;
+@@ -5203,6 +5207,22 @@ static int diff_opt_patience(const struct option *opt,
+ 	return 0;
+ }
  
- 	return xdl_fall_back_diff(env, &xpparam,
-diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-index 3c5601b602..20699a6f60 100644
---- a/xdiff/xpatience.c
-+++ b/xdiff/xpatience.c
-@@ -318,6 +318,8 @@ static int fall_back_to_classic_diff(struct hashmap *map,
- 		int line1, int count1, int line2, int count2)
- {
- 	xpparam_t xpp;
++static int diff_opt_ignore_regex(const struct option *opt,
++				 const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++	regex_t *regex;
 +
-+	memset(&xpp, 0, sizeof(xpp));
- 	xpp.flags = map->xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
++	BUG_ON_OPT_NEG(unset);
++	regex = xcalloc(1, sizeof(*regex));
++	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE))
++		die("invalid regex: %s", arg);
++	ALLOC_GROW(options->ignore_regex, options->ignore_regex_nr + 1,
++		   options->ignore_regex_alloc);
++	options->ignore_regex[options->ignore_regex_nr++] = regex;
++	return 0;
++}
++
+ static int diff_opt_pickaxe_regex(const struct option *opt,
+ 				  const char *arg, int unset)
+ {
+@@ -5491,6 +5511,9 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_BIT_F(0, "ignore-blank-lines", &options->xdl_opts,
+ 			  N_("ignore changes whose lines are all blank"),
+ 			  XDF_IGNORE_BLANK_LINES, PARSE_OPT_NONEG),
++		OPT_CALLBACK_F('I', NULL, options, N_("<regex>"),
++			       N_("ignore changes whose all lines match <regex>"),
++			       0, diff_opt_ignore_regex),
+ 		OPT_BIT(0, "indent-heuristic", &options->xdl_opts,
+ 			N_("heuristic to shift diff hunk boundaries for easy reading"),
+ 			XDF_INDENT_HEURISTIC),
+diff --git a/diff.h b/diff.h
+index 11de52e9e9..80dbd3dfdc 100644
+--- a/diff.h
++++ b/diff.h
+@@ -234,6 +234,10 @@ struct diff_options {
+ 	 */
+ 	const char *pickaxe;
  
- 	return xdl_fall_back_diff(map->env, &xpp,
++	/* see Documentation/diff-options.txt */
++	regex_t **ignore_regex;
++	size_t ignore_regex_nr, ignore_regex_alloc;
++
+ 	const char *single_follow;
+ 	const char *a_prefix, *b_prefix;
+ 	const char *line_prefix;
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index 032e3a9f41..883a0d770e 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -79,6 +79,10 @@ typedef struct s_mmbuffer {
+ typedef struct s_xpparam {
+ 	unsigned long flags;
+ 
++	/* See Documentation/diff-options.txt. */
++	regex_t **ignore_regex;
++	size_t ignore_regex_nr;
++
+ 	/* See Documentation/diff-options.txt. */
+ 	char **anchors;
+ 	size_t anchors_nr;
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index bd035139f9..380eb728ed 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -998,7 +998,7 @@ static int xdl_call_hunk_func(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+ 	return 0;
+ }
+ 
+-static void xdl_mark_ignorable(xdchange_t *xscr, xdfenv_t *xe, long flags)
++static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
+ {
+ 	xdchange_t *xch;
+ 
+@@ -1019,6 +1019,46 @@ static void xdl_mark_ignorable(xdchange_t *xscr, xdfenv_t *xe, long flags)
+ 	}
+ }
+ 
++static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
++	regmatch_t regmatch;
++	int i;
++
++	for (i = 0; i < xpp->ignore_regex_nr; i++)
++		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
++				 &regmatch, 0))
++			return 1;
++
++	return 0;
++}
++
++static void xdl_mark_ignorable_regex(xdchange_t *xscr, const xdfenv_t *xe,
++				     xpparam_t const *xpp)
++{
++	xdchange_t *xch;
++
++	for (xch = xscr; xch; xch = xch->next) {
++		xrecord_t **rec;
++		int ignore = 1;
++		long i;
++
++		/*
++		 * Do not override --ignore-blank-lines.
++		 */
++		if (xch->ignore)
++			continue;
++
++		rec = &xe->xdf1.recs[xch->i1];
++		for (i = 0; i < xch->chg1 && ignore; i++)
++			ignore = record_matches_regex(rec[i], xpp);
++
++		rec = &xe->xdf2.recs[xch->i2];
++		for (i = 0; i < xch->chg2 && ignore; i++)
++			ignore = record_matches_regex(rec[i], xpp);
++
++		xch->ignore = ignore;
++	}
++}
++
+ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+ 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
+ 	xdchange_t *xscr;
+@@ -1038,7 +1078,10 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+ 	}
+ 	if (xscr) {
+ 		if (xpp->flags & XDF_IGNORE_BLANK_LINES)
+-			xdl_mark_ignorable(xscr, &xe, xpp->flags);
++			xdl_mark_ignorable_lines(xscr, &xe, xpp->flags);
++
++		if (xpp->ignore_regex)
++			xdl_mark_ignorable_regex(xscr, &xe, xpp);
+ 
+ 		if (ef(&xe, xscr, ecb, xecfg) < 0) {
+ 
 -- 
 2.28.0
 
