@@ -2,93 +2,128 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83EE1C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6504C433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:20:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2BB42074A
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:19:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BC0320757
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 19:20:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="sC6Dyvh8"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o7ChpqjA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388547AbgJLTTy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 15:19:54 -0400
-Received: from mout.web.de ([212.227.15.4]:48487 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730275AbgJLTTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 15:19:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1602530389;
-        bh=1ozC5TntdoUjP0sHCbZoczLAToH2lmWwVFiVDpIpvpI=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=sC6Dyvh8JIo2+2Gi+YIM1VVYguMrciEebOp2chlvmm0EQNhop2f1k2yC0gw5P4R5E
-         iarcT2eC9Nquyj3GvmrGVJkp7KlfQ3Rmt28WZNnjMnstP69tvEKGIMrqwaWfuxDsD0
-         kaGTRBP1GM+LiO6AiZ0cUDFOzDziVUQLi5IZHarM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.28.94]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lheu9-1k6B0e0Bph-00mtE3; Mon, 12
- Oct 2020 21:19:49 +0200
-Subject: Re: [ANNOUNCE] Git v2.29.0-rc1
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqq7drzv1bn.fsf@gitster.c.googlers.com>
- <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
- <xmqqmu0rqu8h.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <61bafa3b-bd23-f01f-9a4a-c348b7588f37@web.de>
-Date:   Mon, 12 Oct 2020 21:19:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S2390144AbgJLTUw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 15:20:52 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63291 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730275AbgJLTUw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 15:20:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27382F810D;
+        Mon, 12 Oct 2020 15:20:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=X+20nww1E40v
+        al/bBLCf6PCLpiY=; b=o7ChpqjAKvD8aHiqDrEZwrXh5O20vD3IU4+uSN+/OPdH
+        FwkSKUVlQB69LbhrHqpSSL9K7k0itzDn9km7MHVItCtbJ/22HxlZsCtFU47w995b
+        wVEviIBOAlCSxlcFqAHY3oHAdagMNm0sufiHdh/BNPx/S6qsQdX3pjEj11of5bQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bmQZcj
+        dk6Tiq5tu3+DzO7WOeN1WfruxwpodNM0m/vnkCXFULHp5mcSxDRabgRzO/curYWH
+        OAO0IDI2my5a6HQY6VHVVyogtFCWB1YgnUyxK+B1McPBGd8PViMYgi+U6U8WjnSq
+        tbUjc5novgZHQ+OGXcoKO/F+USCtmqGLiLTVk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D09BF810C;
+        Mon, 12 Oct 2020 15:20:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6617FF810B;
+        Mon, 12 Oct 2020 15:20:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] Makefile: use git init/add/commit/archive for dist-doc
+References: <40da2404-8504-e134-7176-f3429c081f12@web.de>
+Date:   Mon, 12 Oct 2020 12:20:47 -0700
+In-Reply-To: <40da2404-8504-e134-7176-f3429c081f12@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 10 Oct 2020 18:45:18 +0200")
+Message-ID: <xmqqft6jp7xs.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqmu0rqu8h.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+X-Pobox-Relay-ID: 094E6C5A-0CC0-11EB-AB94-D609E328BF65-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:giEAXckexlZqJahfMcH7YBlK4Yg/LoH3hUyySVIFky9mqATKRe8
- qYi/DDUN5wYUmLac/+4A4Zs7WkUgxR51BKWsPwR9q7bL+HigzFN2qY6Eq9dFlxXeqhJR6Ia
- AsH7Ix1G2gSZIvCHPzdvU0j9Im6UUedXV0+tF7rlp3qvs44vrqTChACDpzc3xFQtd8fAxvu
- y6PNxDZZpFZXfgm4n/xmA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CYPkTzWy6bg=:sRcx1X06+OxkUPKpgAlRXt
- kTZukeqDW8sD2ryneCfXzM181rSaOnJNY5bt4Nzw0J1rshExfwNqIRIF5W6WfPF0l51siTLpF
- OC333lu8lDWKqidx2IqV4a0U6ttpQZHcG5oNHq5olSQdhwWQzOGvL87/JykxRfPJruzGbgi+h
- V+36Iy4obOaHkpTDz+2Nd4Wr8S8u+bFP/XQvCpzH4Co1ek4b3c3AutK0EA9ESR/cKSQ89JnuX
- Mh246mb8XTWz14o0Lu/H0/VzEtiLP0+RrNq51YHQKsTDjFjj9J1FtPlacgVtjgecaPjEhiWCc
- pzL7a25hf7d72IA7hsDDztabCaymwN3mvoeQ0Yfdn/YO9jXE4Rb5ClqNrJAQXMxAcqFvKCqFF
- QAXTOo06oEfFH3aQ2kW0KD/+lYzHbM0jGwNekliw00mdaTH5SmGMF9oILvVUQmoy+XDIZp4CA
- Z7MqJsGKMmfcpI7dpB1qruSvZ+SgWwu15BTBElTjsQ18mnIrdo21sAY//j8cqmLRxGb1zVrRT
- /tJoTeOuSOeyLSxt0CvqsAbg+eiB5EN7IHbo3W9/blySYiMFCjyA/xOXctZLl74AYgFbxA3Ti
- I3R0lKvKy9XDkGlJjcU/8X1ZnPXeWc1T7/usBOqXfLas9zCTJE06zno8UFc07D0JuIDGIIU3b
- PoNy9Z9usIXCXKaZWvrAYi24dQsLRWhqMKHEK4l9Z/i3Yw2yZ1HeIkaTa5dcFurWhTDOPn1Gw
- AfE8/xgGlAJq4p7GMBgE2pgdvffBASkhPLlJJPxjwBSyAwNjvURqaUlm2M8cUHIAh+sXI9M0n
- XHqyjtEggsrC0Z9G4rR5wtrLFVROQE2lHqHgjY5OSH/V+oIOJM/m5cxxHuksZYoVR5hpglVBh
- YZqzPPau5IRVeVNsptGwaXkRxK2n+EkK8FFegLtjehtbDpQdIotXlJmJaFGa6fOV+26dzE7jJ
- hjSXvTD3f19/LCkyr0W/e5QMOR37QtkXMhGjmJ2weTZmNn3aHW+TZ0znLI5H6UBNQ2briwd8+
- zrleQNWUgqcRhbreYFmJyP/tbwY4qpUdayDeMWQ/MBSQof23qR1fDu8usCIeinng0ZuHqCoIx
- 0NeKoDh0BsTN74hLsTsprCoAhB/fYtlSH6T00PVz3ws67wxk9iuMkPh+tkySvBmPtaLXaktmM
- SYU1B+PCOwITx7B0FQk3KjLXEBIYw3+xw5q0X3M/U4SNFXbPiCrgaSkffTBDtE93v12E1DXtA
- AdXVZjTuak+jQW9Mv
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.10.20 um 18:33 schrieb Junio C Hamano:
-> If this "feature" were experimental and if the experiment turns out
-> to be a failure, would we have a viable alternative definition?
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
+> Reduce the dependency on external tools by generating the distribution
+> archives for HTML documentation and manpages using git commands instead
+> of tar. This gives the archive entries the same meta data as those in
+> the dist archive for binaries.
+
+Hmph.  I vaguely recall somebody on a more exotic platform wanted
+our "tar" invocations to be tweakable as their "tar" lacked options
+or something like that, and hopefully pushing our build procedure in
+this direction would help them.
+
+Will queue.  Thanks.
+
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  Makefile | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
 >
-> Perhaps "--add-file names an untracked file in the working tree and
-> the single '--prefix' that is used for entries that come from the
-> tree object is applied"?  Or perhaps remove --add-file entirely as a
-> failed experiment?
-
-Removing --add-file entirely is certainly possible, but it's used in the
-Makefile now and I can't imagine what would make its disposal necessary.
-
-Turning it into a standard OPT_STRING_LIST option for full untracked
-paths and using the last --prefix value for all archive entries would be
-a more straightforward UI and might be versatile enough.
-
-Ren=C3=A9
+> diff --git a/Makefile b/Makefile
+> index 95571ee3fc..b7f3708292 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3105,11 +3105,15 @@ artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SC=
+RIPT_LIB) $(OTHER_PROGRAMS) \
+>  htmldocs =3D git-htmldocs-$(GIT_VERSION)
+>  manpages =3D git-manpages-$(GIT_VERSION)
+>  .PHONY: dist-doc distclean
+> -dist-doc:
+> +dist-doc: git$X
+>  	$(RM) -r .doc-tmp-dir
+>  	mkdir .doc-tmp-dir
+>  	$(MAKE) -C Documentation WEBDOC_DEST=3D../.doc-tmp-dir install-webdoc
+> -	cd .doc-tmp-dir && $(TAR) cf ../$(htmldocs).tar $(TAR_DIST_EXTRA_OPTS=
+) .
+> +	./git -C .doc-tmp-dir init
+> +	./git -C .doc-tmp-dir add .
+> +	./git -C .doc-tmp-dir commit -m htmldocs
+> +	./git -C .doc-tmp-dir archive --format=3Dtar --prefix=3D./ HEAD^{tree=
+} \
+> +		> $(htmldocs).tar
+>  	gzip -n -9 -f $(htmldocs).tar
+>  	:
+>  	$(RM) -r .doc-tmp-dir
+> @@ -3119,7 +3123,11 @@ dist-doc:
+>  		man5dir=3D../.doc-tmp-dir/man5 \
+>  		man7dir=3D../.doc-tmp-dir/man7 \
+>  		install
+> -	cd .doc-tmp-dir && $(TAR) cf ../$(manpages).tar $(TAR_DIST_EXTRA_OPTS=
+) .
+> +	./git -C .doc-tmp-dir init
+> +	./git -C .doc-tmp-dir add .
+> +	./git -C .doc-tmp-dir commit -m manpages
+> +	./git -C .doc-tmp-dir archive --format=3Dtar --prefix=3D./ HEAD^{tree=
+} \
+> +		> $(manpages).tar
+>  	gzip -n -9 -f $(manpages).tar
+>  	$(RM) -r .doc-tmp-dir
+>
+> --
+> 2.28.0
