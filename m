@@ -2,123 +2,127 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5875DC433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A7CCC433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:11:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4F9C208D5
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:02:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23FA220776
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:11:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="dcIpI73B"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k1Yq4nSe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729518AbgJLKCE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 06:02:04 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50037 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726104AbgJLKCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 06:02:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602496914;
-        bh=fLaCzqTlZbbrkFvhXlxkqkFjRK8jDMyIuczgHpcS5MI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dcIpI73BLpRAIAqiwAqS7gdDC39SParhE1SSGeurNl8ngBCVd5Ap/00HJOepGEhwG
-         4d2Emm9PaDP7VYr3Bj4Wp3Bp7Jj0CQoSi4z/YM/qCkqow/xJiM3Fqz2faOjSliq2ne
-         Uo5ZvvhC1rkfQBESA6/cQDjS5N3auxA4LJI66nb0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.215.146]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N95e9-1kNQrV1VMl-016AyK; Mon, 12
- Oct 2020 12:01:54 +0200
-Date:   Sun, 11 Oct 2020 12:52:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Han-Wen Nienhuys <hanwen@google.com>
-cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v2 05/13] reftable: utility functions
-In-Reply-To: <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010111247450.50@tvgsbejvaqbjf.bet>
-References: <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com> <20201008014855.1416580-1-jonathantanmy@google.com> <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729501AbgJLKLt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 06:11:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727340AbgJLKLs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 06:11:48 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8925DC0613CE
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 03:11:48 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id t18so8312164plo.1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 03:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Q8ELDBYIxXF0BjIEaoZyj1K2rYy5PSlbaI0HRELM6vY=;
+        b=k1Yq4nSeR3/bVUV4pF/MHnzCd2L3tv6Ec69LUA01nfNWRK8AFST34/jf7FDtG4P99n
+         AVTVpnilgcan2xW9M+FZWZ2NBEdhHk7bFMVWjPft4a3nbh9si+yBNaosCNskgAZ+NBLc
+         /TRGro9id6C5EFpNgVNbAZvVUWZrneTWbGfWChja+odtCyv//v1f8ZlGhM+UwzxC0Y2Q
+         hR5ZPAJ7H9jQ8m32JoE4hwD3FLwudhBSopXQSc7QFdW8s/42mRsCzpmHRJVkjPEuT45u
+         VG5kCWUgm1Kz/tUJEz0rGNHLdvOxDvjLPjsJsra3wAGkNXgeS2xfsmX6SKPozj7QMpcb
+         dWLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Q8ELDBYIxXF0BjIEaoZyj1K2rYy5PSlbaI0HRELM6vY=;
+        b=mZsXzNlqw0jetiFYjzYiBohNK6iQD+WT3t5MRluMtGwoof68SWpMqsWnlIg2AdbL3u
+         3bg4UCPEIT48RCDgcc43x328F5asiBsX/saP3tBNvQBADgCAvWgESfzmje1aPXFJMBHu
+         82ht14Yq9GIOv0vWCk3iwtR2qQPpo5sGr9BhRsBuIAjAWVLSh5Szzm0Ul+R28lYC2vaJ
+         c2amdIDoHL5WTf7nLAsnZ+4aAj+Eo0VrGQ3wAV1KwoHtB25VAWtODCfZz+18CVYM54R1
+         XHtRCgk0iOoiviECBX79fVMKO8gba7+3ZSKWFQZuxUKzq5AM0zyKxDveMLXFTGlr91AQ
+         KMOw==
+X-Gm-Message-State: AOAM532GCPETT9xoiWzv5WgYm/6+h6dYrkxu5j3OaXrAwnp6aSfXpzZo
+        b/CGMIfDMMIePy/IG6o2Xko=
+X-Google-Smtp-Source: ABdhPJw5+uarJ74qfOHiA/ZBsuNktjz13GtUULH59kGFyyx6E/ujC/xc95b435hcUrYgcFGQblFV2A==
+X-Received: by 2002:a17:902:465:b029:d0:89f1:9e2a with SMTP id 92-20020a1709020465b02900d089f19e2amr22665921ple.6.1602497507867;
+        Mon, 12 Oct 2020 03:11:47 -0700 (PDT)
+Received: from konoha ([45.127.46.169])
+        by smtp.gmail.com with ESMTPSA id l14sm18422796pfc.170.2020.10.12.03.11.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2020 03:11:47 -0700 (PDT)
+Date:   Mon, 12 Oct 2020 15:41:40 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
+        liu.denton@gmail.com
+Subject: Re: [PATCH v2 1/3] dir: change the scope of function
+ 'directory_exists_in_index()'
+Message-ID: <20201012101140.GA12637@konoha>
+References: <20201007074538.25891-1-shouryashukla.oo@gmail.com>
+ <20201007074538.25891-2-shouryashukla.oo@gmail.com>
+ <xmqq8sch3o8v.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zdKkuRsi+bxhPC1fben1JOQzxzmEzCftm2Al4mEP9vEbA1EEHIM
- ND9AZcg2mwHr95xYNFYcSm8o8bjxVzUvH8qSs4hTjb75cCw+qhdM2itfwkAWI5TRV45oVZB
- pzfj0tiiUBGv+bAmI7lribKyDbxO6tqDiQ9/eiMoDTPTsrUzNcHQJXctwmnl3lr/KU16+i7
- AKMThqU7vrhaeaKEBoTgg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TYiNf/3T0Lo=:qEmvNj15sS5Vf+jF8b5XMA
- Fh4eKOahn0XRfqjVVo9R7q4XxHo2JOumMRcPmqgPG01Xx61dDcfR2P8rfKath4r+bxti2uRHC
- gwb68d/krtr+89rXlrKK/sKAOqx1lnmPqrAfe2GYuiq6g4hsaoagg/nr78eEkPVN9YD/y+/qa
- Zh2F4p8diciKHP3S0vLOX4G7NDlUuMK5w9t6Tvoe9w+TW5iy+u9jdUm9PUn3THYbmybD0qKXY
- JqliIyBAS9peyoH1lmKB3t6HUhzMfKeCLUeJvGW2SFIVgXhV8QXoJS6WYlllBmwlP/1B3HmJD
- usQchMx4R0+VA/bE6FQ7T5gn+92F/M30DqdZbeTGulUKQMJ8rhK8rka1EfJC/KcMcfHJB9wqJ
- jk9SQKVCwUmhPFkGAGCWdelj0DcCH3RJ6zEBJmuhvR+17HOGm1TT+UpJugEl6yvyEdKe8BDKQ
- 1hJ04+kX6IXy3zDn7N/TVYlwg7LMa8UE/cqrsbD7iUQUziDasb87rfoUWgPoO3GOmEn1bdG70
- DwaBwG09A4t2eOzj7Qr3Sv2IFjPk87h8d8YscfIZGDY/7AhcUxG7HGu6m6UaqR2gnbqV+J4T9
- Uzvk6aymfEzXFRp+SCdxGd57RtL74Yo3rlE2X9febJbLrtRQCluTurxv+zMJKYOEhh7neJWT9
- 9sh7rs57OnnQyw52rSvOwn3oQdU6MCrRr6TTq7/dCCpUj95HXpPfKkaIrEcCOUadtqvtAfexE
- mmbYiLlLdKQ8sqUYMR56ccIk6S26e8fJMUwVjHDgJOyH80jZlOYkt1t+YYcNYUucgIgYgPTWD
- x8FSF4z3so6RVVJzC/UMIn/X/pexHz/8cH7Hqdc5HHI29EDTfyJU4M6iH5vrkyUQysWnA5smh
- Ig8Dmbv88UcXy+vvL3IROFc4TRm4YPYulZSfww4dOPFMrmkR6ox3g/vslx5aoowICJ4rOkZRI
- Ywyat8o+vmOORnuOcx1FnFLWybQXjFophPKIMpZc1CP5hrMil0mKosUV/07JQHBUi/a6iF1tg
- Dz3LJUXUWaveKDP+jtLFA1ypbBMf5Z4UAsMc/ZW4YO1KqEstZVEwN74rTLfeiIYtm3sf5mZ9h
- lvM+0pvGCo1XgAgSdbN6Zji3cmG0Wo/QtwONT76gcl8eM4DFnwQNbqQP43/siWwJU5LAgzeGA
- ueKid0KzYWWrllSrA2y7AIGX4+1bp5F8NyZseRUqcTA3Ct8V6wknuEVyeJQI2EGkRh1qC4yof
- UYZcceA9+t481JjLF0lGRzmHT1BuowPkkZJLqpw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8sch3o8v.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Han-Wen,
+On 07/10 11:05, Junio C Hamano wrote:
+> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> 
+> > diff --git a/dir.h b/dir.h
+> > index a3c40dec51..e46f240528 100644
+> > --- a/dir.h
+> > +++ b/dir.h
+> > @@ -370,6 +370,15 @@ int read_directory(struct dir_struct *, struct index_state *istate,
+> >  		   const char *path, int len,
+> >  		   const struct pathspec *pathspec);
+> >  
+> > +enum exist_status {
+> > +	index_nonexistent = 0,
+> > +	index_directory,
+> > +	index_gitdir
+> > +};
+> 
+> These were adequate as private names used within the wall of dir.c,
+> but I doubt that they are named specific enough to stand out as
+> public symbols.
+> 
+> Unlike say "index_state" (the name of a struct type), whose nature
+> is quite global to any code that wants to access the in-core index,
+> "index_directory" is *NOT* such a name.  It is only of interest to
+> those who want to see "I have a directory name---does it appear as a
+> directory in the index?".  It is not even interesting to those who
+> want to ask similar and related questions like "I have this
+> pathname---does it appear as anything in the index, and if so what
+> type of entry is it?".  A worse part of this is that even if such a
+> helper function file_exists_in_index() were to be written, the
+> "exist_status" enum won't be usable to return the answer that
+> question, but yet the enum squats on a perfectly good name to
+> express "status" for the whole class that it does not represent.
+> 
+> So, NAK.  We need to come up with a better name for these symbols if
+> we were to expose them to the outside world.  The only good name
+> this patch makes public is "directory_exists_in_index()", which is
+> specific enough.
 
-On Sat, 10 Oct 2020, Han-Wen Nienhuys wrote:
+Understandable. So, how would it be if the function I wrote in
+'submodule--helper.c' could instead be written here (in dir.c) and
+would help to check if the path is there in the index or not. It could be anything
+ranging from a filename to a SM. Since the return type will be an
+integer, this PATCH 1/3 can be eliminated and we won't need to change
+the scope of the 'directory_exists_in_index()' function and the enum can
+stay visible only in dir.c
 
-> On Thu, Oct 8, 2020 at 3:48 AM Jonathan Tan <jonathantanmy@google.com> w=
-rote:
-> >
-> > > From: Han-Wen Nienhuys <hanwen@google.com>
-> > >
-> > > This commit provides basic utility classes for the reftable library.
-> > >
-> > > Since the reftable library must compile standalone, there may be som=
-e overlap
-> > > with git-core utility functions.
->
-> > I think duplicating things like strbuf is an unnecessary burden if Git
-> > is to maintain this library. Something like "reftable will only import
-> > git-compat-util.h and strbuf.h, and any project that wants to use
-> > reftable must make sure that these functions and data structures are
-> > available" would be more plausible.
->
-> Sure, but how do we ensure that the directory won't take on
-> dependencies beyond these headers? I am worried that I will be
-> involved in a tedious back & forth process to keep updates going into
-> libgit2 and/or also have to keep maintaining
-> github.com/google/reftable.
->
-> FWIW, the duplication is really tiny: according to
->
->  $ wc $(grep -l REFTABLE_STANDALONE *[ch])
->
-> it's just 431 lines of code.
+What are your thoughts on this?
 
-The `merge_bases_many()` function has only 33 lines of code, partially
-duplicating `get_reachable_subset()`. Yet, it had a bug in it for two
-years that was not found.
-
-How much worse will the situation be with your 431 lines of code.
-
-Even more so when you consider the fact that you intend to shove the same
-duplication down libgit2's throat. It's "triplicating" code.
-
-So I find the argument you made above quite unconvincing.
-
-Ciao,
-Dscho
