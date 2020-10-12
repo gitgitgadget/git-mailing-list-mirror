@@ -2,81 +2,139 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A53EFC433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E2EBC433E7
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:17:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0D39208FE
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:12:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 917F62076E
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:16:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=narod.ru header.i=@narod.ru header.b="FmcIoCva"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="h/7KTmbu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388003AbgJLLMw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 07:12:52 -0400
-Received: from forward100p.mail.yandex.net ([77.88.28.100]:41983 "EHLO
-        forward100p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387617AbgJLLMw (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Oct 2020 07:12:52 -0400
-X-Greylist: delayed 408 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Oct 2020 07:12:51 EDT
-Received: from mxback22j.mail.yandex.net (mxback22j.mail.yandex.net [IPv6:2a02:6b8:0:1619::222])
-        by forward100p.mail.yandex.net (Yandex) with ESMTP id 8305C5980D31
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 14:05:59 +0300 (MSK)
-Received: from myt6-016ca1315a73.qloud-c.yandex.net (myt6-016ca1315a73.qloud-c.yandex.net [2a02:6b8:c12:4e0e:0:640:16c:a131])
-        by mxback22j.mail.yandex.net (mxback/Yandex) with ESMTP id cAdksRSCLR-5xjWAApJ;
-        Mon, 12 Oct 2020 14:05:59 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narod.ru; s=mail; t=1602500759;
-        bh=CAkJPVjAl5ur27OD1RJbF4MoB+snqPII+GZOYccA1Ak=;
-        h=Subject:From:To:Date:Message-ID;
-        b=FmcIoCvafM6V1sUlK+3TTnywaThGV1gFMlnEn6DZ9LePsu9BpdIf9bFoaGgagM0bC
-         pj/dN7fyX6WRBoZsAbZf30VpFeLSLnPz4iTlOM3M1RVft8Ue2SgAedHPPQWx7uqp6r
-         53w4y/mFFI2a3oazP9fgBnXxCfzRabm95w1TK2M8=
-Authentication-Results: mxback22j.mail.yandex.net; dkim=pass header.i=@narod.ru
-Received: by myt6-016ca1315a73.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id TRvitCdDUz-5wmC3XXG;
-        Mon, 12 Oct 2020 14:05:59 +0300
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client certificate not present)
-To:     git@vger.kernel.org
-From:   Victor Porton <porton@narod.ru>
-Subject: Feature: checkout and merge
-Autocrypt: addr=porton@narod.ru; keydata=
- mDMEX3jsrhYJKwYBBAHaRw8BAQdAe070of34x3DrKbRD/txe/g8cWLeKEXuC9hXVTfFoTM20
- H1ZpY3RvciBQb3J0b24gPHBvcnRvbkBuYXJvZC5ydT6IkAQTFggAOBYhBFvZfvcPyBy3zb0E
- tMg/jYQvC2W6BQJfeOyuAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEMg/jYQvC2W6
- /Z4BALR9Ftngv/bjrj0QoQHJf55ph7Xu6ARBEXQGTzklBXdJAP9ZssTJEe+QnnCxdUlgY913
- 2M1vn7uBx+8KrPNvGy84A7g4BF947K4SCisGAQQBl1UBBQEBB0BjrVMq/DFtBsyNkUy3pBdC
- Lj3FGBl9sWO0ROrYtXSUBgMBCAeIeAQYFggAIBYhBFvZfvcPyBy3zb0EtMg/jYQvC2W6BQJf
- eOyuAhsMAAoJEMg/jYQvC2W6/ZcBAIQayxy650jTa81o9xF22+U4xS9TlhKhD3gNhUBNFr58
- AQD5Bz6FTt78i4/CZuw7xpXQFPgqHnDVcD8KhRD2echFBA==
-Message-ID: <28a86c75-de4d-acbe-dab7-e5512961538c@narod.ru>
-Date:   Mon, 12 Oct 2020 14:05:58 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S2387635AbgJLLQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 07:16:58 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56791 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387597AbgJLLQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 07:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1602501292;
+        bh=JCWks76MJBEFrDTJ3cSsMxTqDYUOKYc4FIwB1MtP0sg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h/7KTmbuNJasDP7Kx25Aa3i5QwIukIo+oHUQIeawoB9GR7QJis4y41fYNV+Ua5y+4
+         k5qCADItLq/nN/hHoGWlopM9v8yd+wgeoGMao1LsecdAuddQdtD6iwpoQMh/uvom4G
+         6xhblqBZQmFaSX1B/FUyGlTvnemhcp5k0Q7qxEMI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.73.169] ([89.1.215.146]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3UUy-1kSTks1Yxu-000Zdr; Mon, 12
+ Oct 2020 13:14:52 +0200
+Date:   Mon, 12 Oct 2020 13:14:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Micha=C5=82_K=C4=99pie=C5=84?= <michal@isc.org>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] merge-base, xdiff: zero out xpparam_t
+ structures
+In-Reply-To: <20201012091751.19594-2-michal@isc.org>
+Message-ID: <nycvar.QRO.7.76.6.2010121313020.50@tvgsbejvaqbjf.bet>
+References: <20201001120606.25773-1-michal@isc.org> <20201012091751.19594-1-michal@isc.org> <20201012091751.19594-2-michal@isc.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: multipart/mixed; boundary="8323328-1277350703-1602501292=:50"
+X-Provags-ID: V03:K1:bJbi0yUs4HOyNRG9FPIW9OgnC0UuueiOO1iKIC7SkmZxeM8/FRm
+ Wd2Q5s3UnhID9IwJjcXTWJJRHu+71NymalwWXFqUZJPzFMJINnm5tsLD/2cjxXynr7cOlDK
+ xtKvE50MZAg7EtvF5TbwJzkyhd/JPYHdu1NeZX81zsgVFfL6qLwCACYkHjkeIxK9QTgd1Bc
+ cIyIFuCh+G368osxhNKAw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:b4zYqgZgkqk=:wE0Qa7TlfYCFS3aYUKcBD4
+ gUZfZ0248M7SEqZjVD32SwZKu6AWHp90zHgaKjW4TNkq4JEIcuFjd3NnaMjODWd9jE1PL/8dD
+ IPlkW0jpyXEJHfD4FxSkSbLqVdfasUp0KVyJ11/Q1Y95vYq4ro9e7PsYyFeYTcOF7R/VcCMSG
+ AGBoMZk1u0D3uBZc2U40hDi3gA+6ynANfEjZ8D9doIouVFG5Xo0jm6KBJV16ugTVzh1JpgSob
+ /2lHwEz4+GdSryw+YhDi8vjT99eckVP43mBAdgrg5B3JuIR01M9XcDp/8trTujECqNJVM7pwC
+ P7pKTRHhse/HNoQ65Arh7BiJcYA+luGL6KpcNAFV+1wGHVCdk3r0nwJWKoHeF5Au85CHXOWuA
+ VBd5bTsUolTkSrpEICH9ExvQMZTo2xnMLyfpR8LnLlu8JQmwrsFaD6QX/meVR4JFjgYM0ZPyy
+ Uuh/vtAer9+lBwQxfh2eeBWMWYplU4HjsO47plo1SHiYb84aHhdD4oyTTHUI+Cl1cBPajaJwM
+ jHcGsG/nhPt5ak87Q0kzi9EfuD0ebh7PVGRJNK8r7I+wN5HkS3xw6l3LugHMOcgBh5j9/4ko9
+ B9kkFvNd74D5n4wpFZQzs7JK8en22oVUOf37YlEPhj1717t+GxYCfjo2DcPm1/ydN1fjHLtZf
+ /No6sVBAx123U0YbubomkzH32Gp6sSgvzmi9zRrwZ/DZW7yYInpxMVheI3CErR8GyABd7/BNe
+ XJBwZmKpAm2hbxk7UH7s8vrdsFPlwiuyDtN5MalWDPStVFjORWpZpwd1WrxfRx6BFzt40Dnib
+ rX2QEJDzRQmk/MwPfXEvyZ9/KdaK9KgZQwtowoyztobyydn0jnAkFpuUgyyItn1qvU91CFdGC
+ P4VssUnP8iYfmWWOARxmEGc7OUFsEIDX3v+Za+6RYaEQ8L4D3ZW2nBTT5J/61yBaIZcj0odUs
+ oFUeQnSK9AzdeglHsm+Ic4LKg+MvRySvH7P8E6CxtKGEIBFFXbn4peFANLiUuw75ILKSVc3+2
+ K81AYIYuUdQjWfQZWeqA2nTbJ0EJktXqMCU4X7OsUV0fBhKB+B3nbnrrCLqPX28CmS6P9QUxB
+ dBki5S7gpyjrW548QHB/ubNiEzuy6T9XwfEMKaTdW5XaFf2x6B3DUHo9u47GWIe2Y0OqEv4Sg
+ 55qNovL2sUwse6alvphP484p5wSF9OgC/g0AxYWOp8UpRpmau8DO48j8BKzGhRsoS5NZ8bjBJ
+ YrTHD9QFRGEoOLJdo8iQsgMPX/lgZkgDt5/aczA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is a very often need to checkout a branch and them merge the branch
-that was before the checkout. Moreover after this is very often needed
-to push.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-So please add the flags to `checkout`:
+--8323328-1277350703-1602501292=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-1. to merge the old branch immediately after checkout
+Hi Micha=C5=82,
 
-2. to push after checkout
-
-I repeatedly write:
-
-git checkout stable && git merge main && git push && git checkout main
-
-(I am not subscribed to this mailing list.)
+On Mon, 12 Oct 2020, Micha=C5=82 K=C4=99pie=C5=84 wrote:
 
 
+> diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
+> index c7b35a9667..e694bfd9e3 100644
+> --- a/xdiff/xhistogram.c
+> +++ b/xdiff/xhistogram.c
+> @@ -235,6 +235,8 @@ static int fall_back_to_classic_diff(xpparam_t const=
+ *xpp, xdfenv_t *env,
+>  		int line1, int count1, int line2, int count2)
+>  {
+>  	xpparam_t xpparam;
+> +
+> +	memset(&xpparam, 0, sizeof(xpparam));
+
+A slightly more elegant way to do this would be
+
+	xpparam_t xpparam =3D { 0l };
+
+Or even
+
+	xpparam_t xpparam =3D XPPARAM_T_INIT;
+
+with
+
+	#define XPPARAM_T_INIT { 0l, NULL, 0 }
+
+in `xdiff/xdiff.h`.
+
+Thanks,
+Dscho
+
+>  	xpparam.flags =3D xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
+>
+>  	return xdl_fall_back_diff(env, &xpparam,
+> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+> index 3c5601b602..20699a6f60 100644
+> --- a/xdiff/xpatience.c
+> +++ b/xdiff/xpatience.c
+> @@ -318,6 +318,8 @@ static int fall_back_to_classic_diff(struct hashmap =
+*map,
+>  		int line1, int count1, int line2, int count2)
+>  {
+>  	xpparam_t xpp;
+> +
+> +	memset(&xpp, 0, sizeof(xpp));
+>  	xpp.flags =3D map->xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
+>
+>  	return xdl_fall_back_diff(map->env, &xpp,
+> --
+> 2.28.0
+>
+>
+>
+
+--8323328-1277350703-1602501292=:50--
