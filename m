@@ -2,154 +2,129 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F979C433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3BD5C433DF
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:34:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4977F208B6
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:18:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4107E20790
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 10:34:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bY3QpAb4"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="YqExVkg9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgJLKSh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 06:18:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726104AbgJLKSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 06:18:37 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCA2CC0613CE
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 03:18:36 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id b8so5300053wrn.0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 03:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jh6RWAJU7hKOqTLs9hUpOae5JY2gp7zZNcQBJ9o1Z6M=;
-        b=bY3QpAb4bc80HKUHA8yRqACB7B5xiU2s+kr+nnMdKf2FDsU+e8MkDev8SaHKIeHtdP
-         LZNZMqtXdgMtk4ub+C9xqoY6ONsXC+7hoUHLQymah+c0NvQX3f6WqU7fZKwZfvQ+4Qur
-         rSLh/kQG0K7wAFyAl/OG3xQqnUA9KCgZAHJoc5HbbfoyaKikX9KKiLpgxVM+AahOgP6K
-         I/5voH+C+1p+RvlOcqiN3lrpalEIH7k0XZ4dyLKSOru4J7pJfrNyAjwa17a7YtMffGUh
-         R/JMtRi60AIy0T64fw14F2o864TWANeYeCp9p9lQHxpwg2fc9dhyXjSEqcFbsVMdusii
-         63Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jh6RWAJU7hKOqTLs9hUpOae5JY2gp7zZNcQBJ9o1Z6M=;
-        b=W6+4UUcLyg519Uzqtot772bkq8sXxv7B1nhdkclAxckg00Sj3ySg4MJzB2oG+FN+rx
-         kSMLG4ga/faVEz3lMI3Y2Oed0TqtY61n69CkqlaqSRSDvEw+DkGGDxg6CVMaQ6DeOdgm
-         n4zvlB6IaDJxhsBAkuUy4eJC8iH+k2TMNX2xiP/3hwX7xEcP4+keltKry35G3IHjEfQH
-         TFjgB84rjByj+s90soYqui8yb0dwjp72G1NDezj2GdsOFVqShegQmX//+MovFMbbwVOA
-         BxtDKjHbe69zb39rXDMV4svw92VM5afaoKZVSC2NOMCSJqbRP8859OdZwDtT1igVnkgy
-         fwZQ==
-X-Gm-Message-State: AOAM531KOULVAsg9k9xfYc5ZQVB851G8o+RSCYExvwDoX6dAvQtbH83R
-        uqPPI0gJjmKpeMrKg6MHBNUQc8PLWn4=
-X-Google-Smtp-Source: ABdhPJyZP7A4VVsJizJP857TiDnzwFj5MjhknF5LSokZX4AmIesG5th9jSRy0kj+5wilF94d6g03eg==
-X-Received: by 2002:adf:d4c5:: with SMTP id w5mr4492606wrk.226.1602497915270;
-        Mon, 12 Oct 2020 03:18:35 -0700 (PDT)
-Received: from [192.168.1.201] (39.16.7.51.dyn.plus.net. [51.7.16.39])
-        by smtp.googlemail.com with ESMTPSA id 71sm23532924wrm.20.2020.10.12.03.18.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Oct 2020 03:18:34 -0700 (PDT)
-Subject: Re: [Outreachy] Introduction
-To:     Sangeeta NB <sangunb09@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org
-References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
- <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
- <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
- <7d691f37-b8b7-510d-ba46-51a4a7587226@gmail.com>
- <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <eb1d6d2a-868f-7d1a-e004-30efc1950d9a@gmail.com>
-Date:   Mon, 12 Oct 2020 11:18:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S2387569AbgJLKe5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 06:34:57 -0400
+Received: from mout.gmx.net ([212.227.15.18]:33561 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387463AbgJLKe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 06:34:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1602498874;
+        bh=8ienZduKFF0e5nLlBc9LRm8eZMgUQc+6Ptw2o/mtL/E=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=YqExVkg9KkoO+1XBWtB9XajIOK9M2MBxVUkUojX2mzNxuqy+MN/lpM29WTlVuIb4a
+         1gUp2y6afKRx1vRIPBACof549j0UKBXK8JgI5qU+jMYk0HmgkRsBWwBYiuugWNZLRx
+         /9E1xhx4e2zfzB85T9+sHQqb6mnXovagKo2C5Ycs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.73.169] ([89.1.215.146]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4hvR-1kJ1Zt1zWx-011nDZ; Mon, 12
+ Oct 2020 12:34:34 +0200
+Date:   Mon, 12 Oct 2020 12:34:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     =?UTF-8?Q?Samuel_=C4=8Cavoj?= <samuel@cavoj.net>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] sequencer: fix gpg option passed to octopus merge
+In-Reply-To: <20201011225850.GA490427@camp.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2010121233590.50@tvgsbejvaqbjf.bet>
+References: <20201011224804.722607-1-samuel@cavoj.net> <20201011225850.GA490427@camp.crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1069393321-1602498874=:50"
+X-Provags-ID: V03:K1:+O25QQWoGFN3IGFc6XVx2tNXJAw+kkOwFS3+OoU3heGa/Cu+5p9
+ 3Ro03zICuvfUQnjrwkse6ETehZY8tUfzv577Rg2BBJy9RwbpmeRsEilbX/McfHUeezkiNES
+ remhEjNKiPOfeIUX5LRyjiQxPtIrebkVU1eTgr9c3L5gOk5JXFfBNFiCdWU0InmyYOJkjgf
+ 7Rnpwvj1//DO3A2nh69UA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:IJ5mevb1Tu8=:TNekGuVKfrYt+LSiEp15JU
+ kCto8Wsn2ReGMiU0ZiKjR0NDdQZhor/gpFSZgC4JrthUPdqd63AjDF72Ss47FRDBtp4e6/BcA
+ yCu/q7LChNGSxo9zYGQ6ywP0osLC/MkRBbZIlmfBpVyINV1Gp7+vgJGAu0gBgYu0Aua8QEpBe
+ rgdgZKdW1tC/15lrTz5w7dgqiM/VX9++LgyBuXRO4YvtPrVkQFjNhIptEuXxrF5EfkNxOwKsN
+ vT9wI3MgAAn2lKCdkTIO7JxQ+QDvXbzCB/81cPSDnTvfCjF0F0mK4cEMbzoWm7XVTEVtzXIyE
+ LeiL0uZbUGywgf6pcb1f3g4BdOrd2W9tlqcojJEotNlGTlHuPtM8y3mvgazNcyp+ZBxi4Yd5D
+ 7vcnfqQ/nakuPwjO9xb/r4KWQjS/80FSmYIJVC7vFteDStsw6xXQ7TPZmGAYpnqOiAVqAx/C6
+ CaQV1ZffecRM/oVN3N4D3DxJUp1qdPSHBhqW+0g15SHvU68HKpVqD/GIyNvM9+4mBxA2lpqb1
+ 83uVBbTBaUwyY/j1V9Jy1pqsH/mwBFplYOyIclChJfmc70DwatAbbGoHhmxAsIInPo8WWVxur
+ 9aO+SPLUcXupq3eWMBGNJStOLAoXwPJU3AfBdVVjcqlAG921QpmhkDfInYAzsdAcX5lUeC3tM
+ rFYR5hKfr2qB39pR8SfF4kbpjZ3qG7A1tIhJkimHBLxzTNMwGDxnGttdANYK8ATwwmzHNAfyy
+ bx1efxJQUoETi29AmWVKQ2E0qwxT13cYlXYPG1P8lN9ACbrX17EAImeH+yBKArzZK1iR6ClhT
+ q79ISzcMc2IV36LCxjwPwI5dXqok9aJbS2XBAzb7wy7gtWOrLDbaUb1MuNeXdDfuGGHR5iedB
+ q9KGKqTmisQNqdvhKc8azmrNuLr6EKRHrjFdw1WAAfVqXFzB2Axq7vjQpsGpRBbjFXOPXOH4F
+ b7hbGueZl/q4nVRgkmTb5OVNmvRWwnlfx+s/6Mk6ymwpqlbt4Rfapa41cb8olsYqfYrbHg3jh
+ kiV19oN89LofpxIiot+tS8tJa6IVn/U4UhJFVCMd4BdMqdFumnE6QJPVqXKw3JzSUkhxcg1xJ
+ HWtBdOlHpqYUBdBgJVFPKuwnLvG1JL5qpsIGMjDivHgPQWMRdksjN518nabORVcgBJobU86xB
+ SuIh9uzItd4PnSLRk0fc+9OGYOm/2F7S7y/n2B4JtsLdg2VN5/0y720fa8bEQpNZXiae35KC6
+ OWqgpWRJphwZ79sozrcO8UR6st91haq4vPnK6Pw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sangeeta
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 11/10/2020 12:30, Sangeeta NB wrote:
-> Thanks for the help, Philip.
-> 
-> On Fri, Oct 9, 2020 at 11:59 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> 
->> I struggled to find the mircoprojects page - I must have missed the link
->> on the outreachy site.
-> 
-> In case anyone else is struggling to find the microprojects page,
-> here's the link [1]
-> 
-> [1] https://git.github.io/Outreachy-21-Microprojects/
-> 
->> As I understand it if a submodule contains any untracked files (i.e. a
->> file that has not been added with `git add` and is not ignored by any
->> .gitignore or .git/info/exclude entries) then running `git diff` in the
->> superproject will report that the submodule is dirty - there will be a
->> line something like "+Subproject commit abcdef-dirty". However if we run
->> `git describe --dirty` in the submodule directory then it will not
->> append "-dirty" to it's output unless there are changes to tracked files.
-> 
-> On running `git diff HEAD --ignore-submodules=untracked` the submodule
-> wasn't reported as dirty.
+--8323328-1069393321-1602498874=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-That's great
+Hi,
 
-> I guess this is what we are expecting. So should I make it the default
-> behavior for diff?
+On Sun, 11 Oct 2020, brian m. carlson wrote:
 
-I think that is a good route forward, we probably want to change the 
-default for `diff-index` and `diff-files` as well
+> On 2020-10-11 at 22:48:04, Samuel =C4=8Cavoj wrote:
+> > When performing octopus merges with interactive rebase with gpgsign
+> > enabled (either using rebase -S or config commit.gpgsign), the operati=
+on
+> > would fail on the merge. Instead of "-S%s" with the key id substituted=
+,
+> > only the bare key id would get passed to the underlying merge command,
+> > which tried to interpret it as a ref.
+> >
+> > Signed-off-by: Samuel =C4=8Cavoj <samuel@cavoj.net>
+> > ---
+> > It is unclear to me whether I should have based this off of maint or
+> > master, master made more sense to me. I apologize if maint was the
+> > correct one, please tell and I will resubmit.
+> > ---
+> >  sequencer.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 00acb12496..88ccff4838 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -3677,7 +3677,7 @@ static int do_merge(struct repository *r,
+> >  		strvec_push(&cmd.args, "-F");
+> >  		strvec_push(&cmd.args, git_path_merge_msg(r));
+> >  		if (opts->gpg_sign)
+> > -			strvec_push(&cmd.args, opts->gpg_sign);
+> > +			strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+>
+> Yeah, this seems obviously correct, and it's very similar to what we do
+> elsewhere in the file.  This will also handle the case where the option
+> is empty (because we want to do autodetection of the key to sign)
+> correctly as well.
 
-> 
-> A fix for making this as the default behaviour can be:
-> 
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -422,6 +422,7 @@ int git_diff_ui_config(const char *var, const char
-> *value, void *cb)
->          if (git_color_config(var, value, cb) < 0)
->                  return -1;
-> 
-> +       handle_ignore_submodules_arg(&default_diff_options, "untracked");
->          return git_diff_basic_config(var, value, cb);
->   }
-> 
-> But this would also involve a lot of changes in the way tests are
-> written as 12 out of 19 tests in t4027-diff-submodule.sh failed after
-> adding this patch. I am working on any other workaround for this. Let
-> me know whether I am on right path or not. Also any pointers on how to
-> proceed would be helpful. Thanks!
+ACK
 
-We'd expect some tests to fail but only the ones that are testing if 
-untracked files cause the submodule to be considered dirty.
+It is unclear to me whether we want to bother introducing a test case for
+this; Octopus merges are somewhat rare...
 
-git_diff_ui_config() is a callback that is invoked once per config key 
-in the config files so I don't think it is a good place to make the 
-change as it is inefficient and overrides the users' 
-`diff.ignoreSubmodules` setting . It also only applies to `diff` and not 
-`diff-index` or `diff-files`. I think it would be better to set the 
-default in diff_setup() though we need to be careful not to override 
-`diff.ignoreSubmodules` setting so we might need to add a global flag to 
-remember if the user has set `diff.ignoreSubmodules` in their config
+Ciao,
+Dscho
 
-Best Wishes
-
-Phillip
-
-> 
-
+--8323328-1069393321-1602498874=:50--
