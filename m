@@ -2,109 +2,84 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0C09C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBE2AC43457
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:10:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66420208FE
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:10:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EB59208FE
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 11:10:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lq8ZfRp1"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=narod.ru header.i=@narod.ru header.b="FtPVwbqG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387736AbgJLLKE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 07:10:04 -0400
-Received: from mout.gmx.net ([212.227.15.19]:60613 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387594AbgJLLKE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 07:10:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602501001;
-        bh=1q6CJOZp+txtR5KSt2ZpMIhAWDEXWcyYL3TEONF3d1s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lq8ZfRp1buwZHoWXaBOZqm+jJTRxXA33NnUnfXBJT98TMoMN2Qk2A7SYnT0Nf6o+d
-         2X1opac08xFiZqhjtMPyttAFfXCLC1cwQ9Xc14hZroK7jXc+o5wSR3v0/IylMR5F//
-         NiEyoeNfDqYcbgfG5nnLv9QAr9cEcITM7lBuUW+Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.215.146]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXXuH-1kyfQc2Wjf-00Z1x7; Mon, 12
- Oct 2020 13:10:01 +0200
-Date:   Mon, 12 Oct 2020 13:10:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [BUG?] After 'git checkout',  files deleted upstream are left
- in the working directory as untracked
-In-Reply-To: <3D3C5F5D-830E-4EC7-A527-DC595D983BB2@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2010121306470.50@tvgsbejvaqbjf.bet>
-References: <3D3C5F5D-830E-4EC7-A527-DC595D983BB2@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387926AbgJLLKv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 07:10:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387783AbgJLLKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 07:10:48 -0400
+X-Greylist: delayed 312 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 12 Oct 2020 04:10:48 PDT
+Received: from forward100o.mail.yandex.net (forward100o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::600])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57023C0613CE
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 04:10:48 -0700 (PDT)
+Received: from mxback6j.mail.yandex.net (mxback6j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10f])
+        by forward100o.mail.yandex.net (Yandex) with ESMTP id D48854AC19A8
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 14:05:31 +0300 (MSK)
+Received: from myt6-efff10c3476a.qloud-c.yandex.net (myt6-efff10c3476a.qloud-c.yandex.net [2a02:6b8:c12:13a3:0:640:efff:10c3])
+        by mxback6j.mail.yandex.net (mxback/Yandex) with ESMTP id GbCCdqYDho-5VOqjVUS;
+        Mon, 12 Oct 2020 14:05:31 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narod.ru; s=mail; t=1602500731;
+        bh=+z5seupsXbdgGO8p4p6ORsWYLVtyGeuGscUCdFIXWwI=;
+        h=Subject:From:To:Date:Message-ID;
+        b=FtPVwbqGJcM3vcXMQ6gIzpQzxNJcuvmJwekb760TWNg6k5MMg7oPytYXiYKp6KQvs
+         0Liy/8NS5VoX57T4o+7ks8rTCJclieiZt6usbFrUss3kjSOs9yyjiv617Xg88LvtQc
+         0XVDkfVp2FgoVZO1SQd/j7yb0vQ9Hr9icxWEdG90=
+Authentication-Results: mxback6j.mail.yandex.net; dkim=pass header.i=@narod.ru
+Received: by myt6-efff10c3476a.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id GMxQoqOyAP-5VmexPkr;
+        Mon, 12 Oct 2020 14:05:31 +0300
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client certificate not present)
+To:     git@vger.kernel.org
+From:   Victor Porton <porton@narod.ru>
+Subject: Feature: checkout and merge
+Autocrypt: addr=porton@narod.ru; keydata=
+ mDMEX3jsrhYJKwYBBAHaRw8BAQdAe070of34x3DrKbRD/txe/g8cWLeKEXuC9hXVTfFoTM20
+ H1ZpY3RvciBQb3J0b24gPHBvcnRvbkBuYXJvZC5ydT6IkAQTFggAOBYhBFvZfvcPyBy3zb0E
+ tMg/jYQvC2W6BQJfeOyuAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEMg/jYQvC2W6
+ /Z4BALR9Ftngv/bjrj0QoQHJf55ph7Xu6ARBEXQGTzklBXdJAP9ZssTJEe+QnnCxdUlgY913
+ 2M1vn7uBx+8KrPNvGy84A7g4BF947K4SCisGAQQBl1UBBQEBB0BjrVMq/DFtBsyNkUy3pBdC
+ Lj3FGBl9sWO0ROrYtXSUBgMBCAeIeAQYFggAIBYhBFvZfvcPyBy3zb0EtMg/jYQvC2W6BQJf
+ eOyuAhsMAAoJEMg/jYQvC2W6/ZcBAIQayxy650jTa81o9xF22+U4xS9TlhKhD3gNhUBNFr58
+ AQD5Bz6FTt78i4/CZuw7xpXQFPgqHnDVcD8KhRD2echFBA==
+Message-ID: <1884b456-e80a-c0f1-775b-1f517d82ad6c@narod.ru>
+Date:   Mon, 12 Oct 2020 14:05:30 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DzQaWEC4YtwH41GM2VnwsFYxB8GpMAOvuRq70zC8yJUi9LeDnhV
- MOIqvrEf6tBce5RNf16EOZgFsKE5lQVaocxMmwD7Gl7rs7pEAm6KfneuvFS1np/ycVrq5Em
- Ans9qntWu61dypd0mmcFeZpC2UyvOiSiPMQtxbaFCw+fKuYVnsvHvSEhVhje5r5FnB9d9UO
- ehra7wt5Yr5YeaaRhqtBQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0XKUaGfZApA=:d9/iE249rimP3AuHc7g/GC
- hCaI+OlOva+6LupB3yoHx4kb7ivUjL4MuAN7Vjjzdq+8HRCgC0PDYZ2ijXiwtC7sv/RDwX+Fb
- ZXCoJsP4Fv/a76x/JgLLlnr1qWtL8kwWXnsT9/dgwcC2Pn9LU5si1AvFYF52GRn5hku/9d0xK
- 7xvtDkslQETMj5eNfZtXMwqOCDf9iipV3v3nHxU6YERP4rPOBHqKQZVM/V+APx8xnjcfTlKEL
- eEtQHv8fsrllP4Tc3bWIfb66Qdp0hccnI9uCn50H/0X01/qIWJN88xSZG4qtNBdmwmhUlHLkP
- aW6i9ZpcwYjclm6Ta8q7Vd/i6cf64te+gj/Qbgz6qO24LAff+Rjs74WAIEh2weOib/hMIvGCG
- eTqhI90PfDa82VTX8brc/sRoGVWNvWGNklWQdGCwkn+1xE/BXRR1H84q87VNqi6tN4IowJBmj
- UgdzjMEvPyBcIGkYb8Ve5Jqc/a5uCDdFT9eyKZQk44WhJw5WpD4r0aresb5vw5wCsMOMxm6Gw
- 2bumrbZYL2K0Mhb9vOVhgclZN9s84aGeVKF+cpO0pJ655wG6+5jeTsdKxGq3NVU2KFd81wIuH
- kDBvjo+c3Ay5TFCHVMLD2MchJi18SqIIh2XzNpMn8zPOtBKc/kIOfmxVmLsNwxr+Sv828K4ZL
- ILdcLaFulal++15e43GjmNijNoyNbDEdQOCRofpP23epkhy7a9RVKUWv8aNGvEiQ/rq5VbGZI
- H/o+sX/1UWvmFrXSQ1B/oQqduCX45uf5A2Uq1k8lGdV6w2vlMRJ6MnH40ryiXGMIoKYEvFtji
- mCO7UVnv4360elKRvjBjx61Jx8NEZ+RU2DUwMSNlp+HXhg2rTmeR6lN2/VCjt6iUZO550eEFh
- AiLmXAzNp86dT3LLYudVrcf5z4lL5GpfXeTGI8c4j1WtECe87V8OKIAOzmSazA7bxW7D3Wxh2
- 4m2d5EcO8AkTwBtXUyEr8ZP78ZBnJBl0zUpPZyVFbELM9L3Zt2b8lcIo3sGRXJJ+9VMMnHboD
- RrPwxKDxcLZj9FJqT9cT0fAgg9HjjK80FJRrKlDd1Hp7Z2v/NgM/8h0FbDung4pPyAgWp+tTS
- ctKl91FYy47Jk2RHsfRoJnXxmCLA0cNA3mAlBmoOz/REGHF1qeli/uKHRyOtK/rY9Y3H1aV4q
- HAGTAd2qZidx/P115YlNEMPo60Z7uQmCw7MlPa60zgKbeO6lT4EDPzrUQsjlH+RCHtjF0Dv8e
- /3Lvvt68yUHwkAZXUKoaCjnjZvE80adoAofNciw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+It is a very often need to checkout a branch and them merge there the
+branch that was before the checkout. Moreover after this is very often
+needed to push.
 
-On Sat, 10 Oct 2020, Philippe Blain wrote:
+So please add the flags to `checkout`:
 
-> $ git status # the following is what is shown in my old clone
-> On branch other-branch
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->
-> 	git-legacy-stash
-> 	git-remote-testsvn
-> 	t/helper/test-line-buffer
-> 	t/helper/test-svn-fe
+1. to merge the old branch immediately after checkout
 
-These files were generated previously, but are no longer generated
-(`legacy-stash` was retired in favor of the built-in `stash`,
-`remote-testsvn` was dropped because it languished for long enough without
-anybody picking it back up, and the test helpers were necessary to test
-`test-svn`).
+2. to push after checkout
 
-Since they are no longer generated, those build products are no longer
-desired.
+I repeatedly write:
 
-And you don't see them in a fresh clone because they were only compiled in
-previous revisions.
+git checkout stable && git merge main && git push && git checkout main
 
-So this works as expected.
+(I am not subscribed to this mailing list.)
 
-What you will want to do is to run `git clean -dn` to see what `clean`
-would remove, and once satisfied that it's all good, actually remove the
-files using `git clean -df`.
 
-Ciao,
-Dscho
