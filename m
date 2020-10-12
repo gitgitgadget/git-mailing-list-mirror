@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E09EC433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E427EC43457
 	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:18:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 102E420790
+	by mail.kernel.org (Postfix) with ESMTP id 84F9E20790
 	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 09:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729332AbgJLJSE convert rfc822-to-8bit (ORCPT
+        id S2387423AbgJLJSE convert rfc822-to-8bit (ORCPT
         <rfc822;git@archiver.kernel.org>); Mon, 12 Oct 2020 05:18:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46974 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729322AbgJLJSC (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729324AbgJLJSC (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Oct 2020 05:18:02 -0400
 Received: from mx.pao1.isc.org (mx.pao1.isc.org [IPv6:2001:4f8:0:2::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5457C0613D1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 02:18:01 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C12EBC0613CE
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 02:18:02 -0700 (PDT)
 Received: from zmx1.isc.org (zmx1.isc.org [149.20.0.20])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx.pao1.isc.org (Postfix) with ESMTPS id DB2AA3AB0DB
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
+        by mx.pao1.isc.org (Postfix) with ESMTPS id B847B3AB0EB
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:02 +0000 (UTC)
 Received: from zmx1.isc.org (localhost [127.0.0.1])
-        by zmx1.isc.org (Postfix) with ESMTPS id D1F3816008A
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
+        by zmx1.isc.org (Postfix) with ESMTPS id AF4A316008E
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:02 +0000 (UTC)
 Received: from localhost (localhost [127.0.0.1])
-        by zmx1.isc.org (Postfix) with ESMTP id C5AD0160050
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
+        by zmx1.isc.org (Postfix) with ESMTP id A291E16008D
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:02 +0000 (UTC)
 Received: from zmx1.isc.org ([127.0.0.1])
         by localhost (zmx1.isc.org [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id OtAdVrrvssgA for <git@vger.kernel.org>;
-        Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
+        with ESMTP id MEbMlUTulPHa for <git@vger.kernel.org>;
+        Mon, 12 Oct 2020 09:18:02 +0000 (UTC)
 Received: from larwa.hq.kempniu.pl (unknown [212.180.223.213])
-        by zmx1.isc.org (Postfix) with ESMTPSA id 3822F16003E
+        by zmx1.isc.org (Postfix) with ESMTPSA id 13FA616008A
         for <git@vger.kernel.org>; Mon, 12 Oct 2020 09:18:01 +0000 (UTC)
 From:   =?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <michal@isc.org>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 2/3] diff: add -I<regex> that ignores matching changes
-Date:   Mon, 12 Oct 2020 11:17:50 +0200
-Message-Id: <20201012091751.19594-3-michal@isc.org>
+Subject: [PATCH v2 3/3] t: add -I<regex> tests
+Date:   Mon, 12 Oct 2020 11:17:51 +0200
+Message-Id: <20201012091751.19594-4-michal@isc.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201012091751.19594-1-michal@isc.org>
 References: <20201001120606.25773-1-michal@isc.org>
@@ -56,206 +56,447 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new diff option that enables ignoring changes whose all lines
-(changed, removed, and added) match a given regular expression.  This is
-similar to the -I option in standalone diff utilities and can be used
-e.g. to ignore changes which only affect code comments or to look for
-unrelated changes in commits containing a large number of automatically
-applied modifications (e.g. a tree-wide string replacement).  The
-difference between -G/-S and the new -I option is that the latter
-filters output on a per-change basis.
-
-Use the 'ignore' field of xdchange_t for marking a change as ignored or
-not.  Since the same field is used by --ignore-blank-lines, identical
-hunk emitting rules apply for --ignore-blank-lines and -I.  These two
-options can also be used together in the same git invocation (they are
-complementary to each other).
-
-Rename xdl_mark_ignorable() to xdl_mark_ignorable_lines(), to indicate
-that it is logically a "sibling" of xdl_mark_ignorable_regex() rather
-than its "parent".
+Exercise the new -I<regex> diff option in various scenarios to ensure it
+behaves as expected.
 
 Signed-off-by: Michał Kępień <michal@isc.org>
 ---
- Documentation/diff-options.txt |  4 +++
- diff.c                         | 23 +++++++++++++++++
- diff.h                         |  4 +++
- xdiff/xdiff.h                  |  4 +++
- xdiff/xdiffi.c                 | 47 ++++++++++++++++++++++++++++++++--
- 5 files changed, 80 insertions(+), 2 deletions(-)
+ t/t4069-diff-ignore-regex.sh | 426 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 426 insertions(+)
+ create mode 100755 t/t4069-diff-ignore-regex.sh
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 573fb9bb71..f8ccf85173 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -687,6 +687,10 @@ endif::git-format-patch[]
- --ignore-blank-lines::
- 	Ignore changes whose lines are all blank.
- 
-+-I<regex>::
-+	Ignore changes whose all lines match <regex>.  This option may
-+	be specified more than once.
+diff --git a/t/t4069-diff-ignore-regex.sh b/t/t4069-diff-ignore-regex.sh
+new file mode 100755
+index 0000000000..4ddf5c67ae
+--- /dev/null
++++ b/t/t4069-diff-ignore-regex.sh
+@@ -0,0 +1,426 @@
++#!/bin/sh
 +
- --inter-hunk-context=<lines>::
- 	Show the context between diff hunks, up to the specified number
- 	of lines, thereby fusing hunks that are close to each other.
-diff --git a/diff.c b/diff.c
-index 2bb2f8f57e..c5d4920fee 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3587,6 +3587,8 @@ static void builtin_diff(const char *name_a,
- 		if (header.len && !o->flags.suppress_diff_headers)
- 			ecbdata.header = &header;
- 		xpp.flags = o->xdl_opts;
-+		xpp.ignore_regex = o->ignore_regex;
-+		xpp.ignore_regex_nr = o->ignore_regex_nr;
- 		xpp.anchors = o->anchors;
- 		xpp.anchors_nr = o->anchors_nr;
- 		xecfg.ctxlen = o->context;
-@@ -3716,6 +3718,8 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
- 		xpp.flags = o->xdl_opts;
-+		xpp.ignore_regex = o->ignore_regex;
-+		xpp.ignore_regex_nr = o->ignore_regex_nr;
- 		xpp.anchors = o->anchors;
- 		xpp.anchors_nr = o->anchors_nr;
- 		xecfg.ctxlen = o->context;
-@@ -5203,6 +5207,22 @@ static int diff_opt_patience(const struct option *opt,
- 	return 0;
- }
- 
-+static int diff_opt_ignore_regex(const struct option *opt,
-+				 const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+	regex_t *regex;
++test_description='Test diff -I<regex>'
 +
-+	BUG_ON_OPT_NEG(unset);
-+	regex = xcalloc(1, sizeof(*regex));
-+	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE))
-+		die("invalid regex: %s", arg);
-+	ALLOC_GROW(options->ignore_regex, options->ignore_regex_nr + 1,
-+		   options->ignore_regex_alloc);
-+	options->ignore_regex[options->ignore_regex_nr++] = regex;
-+	return 0;
-+}
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/diff-lib.sh
 +
- static int diff_opt_pickaxe_regex(const struct option *opt,
- 				  const char *arg, int unset)
- {
-@@ -5491,6 +5511,9 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_BIT_F(0, "ignore-blank-lines", &options->xdl_opts,
- 			  N_("ignore changes whose lines are all blank"),
- 			  XDF_IGNORE_BLANK_LINES, PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F('I', NULL, options, N_("<regex>"),
-+			       N_("ignore changes whose all lines match <regex>"),
-+			       0, diff_opt_ignore_regex),
- 		OPT_BIT(0, "indent-heuristic", &options->xdl_opts,
- 			N_("heuristic to shift diff hunk boundaries for easy reading"),
- 			XDF_INDENT_HEURISTIC),
-diff --git a/diff.h b/diff.h
-index 11de52e9e9..80dbd3dfdc 100644
---- a/diff.h
-+++ b/diff.h
-@@ -234,6 +234,10 @@ struct diff_options {
- 	 */
- 	const char *pickaxe;
- 
-+	/* see Documentation/diff-options.txt */
-+	regex_t **ignore_regex;
-+	size_t ignore_regex_nr, ignore_regex_alloc;
++test_expect_success setup '
++	test_seq 20 >x &&
++	git update-index --add x
++'
 +
- 	const char *single_follow;
- 	const char *a_prefix, *b_prefix;
- 	const char *line_prefix;
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 032e3a9f41..883a0d770e 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -79,6 +79,10 @@ typedef struct s_mmbuffer {
- typedef struct s_xpparam {
- 	unsigned long flags;
- 
-+	/* See Documentation/diff-options.txt. */
-+	regex_t **ignore_regex;
-+	size_t ignore_regex_nr;
++test_expect_success 'one line changed' '
++	test_seq 20 | sed "s/10/100/" >x &&
 +
- 	/* See Documentation/diff-options.txt. */
- 	char **anchors;
- 	size_t anchors_nr;
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index bd035139f9..380eb728ed 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -998,7 +998,7 @@ static int xdl_call_hunk_func(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 	return 0;
- }
- 
--static void xdl_mark_ignorable(xdchange_t *xscr, xdfenv_t *xe, long flags)
-+static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
- {
- 	xdchange_t *xch;
- 
-@@ -1019,6 +1019,46 @@ static void xdl_mark_ignorable(xdchange_t *xscr, xdfenv_t *xe, long flags)
- 	}
- }
- 
-+static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
-+	regmatch_t regmatch;
-+	int i;
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -7,7 +7,7 @@
++	 7
++	 8
++	 9
++	-10
++	+100
++	 11
++	 12
++	 13
++	EOF
++	compare_diff_patch expected plain &&
 +
-+	for (i = 0; i < xpp->ignore_regex_nr; i++)
-+		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
-+				 &regmatch, 0))
-+			return 1;
++	# Both old and new line match regex - ignore change
++	git diff -I "^10" >actual &&
++	test_must_be_empty actual &&
 +
-+	return 0;
-+}
++	# Both old and new line match some regex - ignore change
++	git diff -I "^10\$" -I "^100" >actual &&
++	test_must_be_empty actual &&
 +
-+static void xdl_mark_ignorable_regex(xdchange_t *xscr, const xdfenv_t *xe,
-+				     xpparam_t const *xpp)
-+{
-+	xdchange_t *xch;
++	# Only old line matches regex - do not ignore change
++	git diff -I "^10\$" >actual &&
++	compare_diff_patch plain actual &&
 +
-+	for (xch = xscr; xch; xch = xch->next) {
-+		xrecord_t **rec;
-+		int ignore = 1;
-+		long i;
++	# Only new line matches regex - do not ignore change
++	git diff -I "^100" >actual &&
++	compare_diff_patch plain actual &&
 +
-+		/*
-+		 * Do not override --ignore-blank-lines.
-+		 */
-+		if (xch->ignore)
-+			continue;
++	# Only old line matches some regex - do not ignore change
++	git diff -I "^10\$" -I "^101" >actual &&
++	compare_diff_patch plain actual &&
 +
-+		rec = &xe->xdf1.recs[xch->i1];
-+		for (i = 0; i < xch->chg1 && ignore; i++)
-+			ignore = record_matches_regex(rec[i], xpp);
++	# Only new line matches some regex - do not ignore change
++	git diff -I "^11\$" -I "^100" >actual &&
++	compare_diff_patch plain actual
++'
 +
-+		rec = &xe->xdf2.recs[xch->i2];
-+		for (i = 0; i < xch->chg2 && ignore; i++)
-+			ignore = record_matches_regex(rec[i], xpp);
++test_expect_success 'one line removed' '
++	test_seq 20 | sed "10d" >x &&
 +
-+		xch->ignore = ignore;
-+	}
-+}
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -7,7 +7,6 @@
++	 7
++	 8
++	 9
++	-10
++	 11
++	 12
++	 13
++	EOF
++	compare_diff_patch expected plain &&
 +
- int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
- 	xdchange_t *xscr;
-@@ -1038,7 +1078,10 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	}
- 	if (xscr) {
- 		if (xpp->flags & XDF_IGNORE_BLANK_LINES)
--			xdl_mark_ignorable(xscr, &xe, xpp->flags);
-+			xdl_mark_ignorable_lines(xscr, &xe, xpp->flags);
++	# Removed line matches regex - ignore change
++	git diff -I "^10" >actual &&
++	test_must_be_empty actual &&
 +
-+		if (xpp->ignore_regex)
-+			xdl_mark_ignorable_regex(xscr, &xe, xpp);
- 
- 		if (ef(&xe, xscr, ecb, xecfg) < 0) {
- 
++	# Removed line matches some regex - ignore change
++	git diff -I "^10" -I "^100" >actual &&
++	test_must_be_empty actual &&
++
++	# Removed line does not match regex - do not ignore change
++	git diff -I "^101" >actual &&
++	compare_diff_patch plain actual &&
++
++	# Removed line does not match any regex - do not ignore change
++	git diff -I "^100" -I "^101" >actual &&
++	compare_diff_patch plain actual
++'
++
++test_expect_success 'one line added' '
++	test_seq 21 >x &&
++
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -18,3 +18,4 @@
++	 18
++	 19
++	 20
++	+21
++	EOF
++	compare_diff_patch expected plain &&
++
++	# Added line matches regex - ignore change
++	git diff -I "^21" >actual &&
++	test_must_be_empty actual &&
++
++	# Added line matches some regex - ignore change
++	git diff -I "^21" -I "^22" >actual &&
++	test_must_be_empty actual &&
++
++	# Added line does not match regex - do not ignore change
++	git diff -I "^212" >actual &&
++	compare_diff_patch plain actual &&
++
++	# Added line does not match any regex - do not ignore change
++	git diff -I "^211" -I "^212" >actual &&
++	compare_diff_patch plain actual
++'
++
++test_expect_success 'last two lines changed' '
++	test_seq 20 | sed "s/19/21/; s/20/22/" >x &&
++
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -16,5 +16,5 @@
++	 16
++	 17
++	 18
++	-19
++	-20
++	+21
++	+22
++	EOF
++	compare_diff_patch expected plain &&
++
++	# All changed lines match regex - ignore change
++	git diff -I "^[12]" >actual &&
++	test_must_be_empty actual &&
++
++	# All changed lines match some regex - ignore change
++	git diff -I "^1" -I "^2" >actual &&
++	test_must_be_empty actual &&
++
++	# Not all changed lines match regex - do not ignore change
++	git diff -I "^2" >actual &&
++	compare_diff_patch plain actual &&
++
++	# Not all changed lines match some regex - do not ignore change
++	git diff -I "^2" -I "^3" >actual &&
++	compare_diff_patch plain actual
++'
++
++test_expect_success 'two non-adjacent lines removed in the same hunk' '
++	test_seq 20 | sed "1d; 3d" >x &&
++
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -1,6 +1,4 @@
++	-1
++	 2
++	-3
++	 4
++	 5
++	 6
++	EOF
++	compare_diff_patch expected plain &&
++
++	# Both removed lines match regex - ignore hunk
++	git diff -I "^[1-3]" >actual &&
++	test_must_be_empty actual &&
++
++	# Both removed lines match some regex - ignore hunk
++	git diff -I "^1" -I "^3" >actual &&
++	test_must_be_empty actual &&
++
++	# First removed line does not match regex - do not ignore hunk
++	git diff -I "^[2-3]" >actual &&
++	compare_diff_patch plain actual &&
++
++	# First removed line does not match any regex - do not ignore hunk
++	git diff -I "^2" -I "^3" >actual &&
++	compare_diff_patch plain actual &&
++
++	# Second removed line does not match regex - do not ignore hunk
++	git diff -I "^[1-2]" >actual &&
++	compare_diff_patch plain actual &&
++
++	# Second removed line does not match any regex - do not ignore hunk
++	git diff -I "^1" -I "^2" >actual &&
++	compare_diff_patch plain actual
++'
++
++test_expect_success 'two non-adjacent lines removed in the same hunk, with -U1' '
++	test_seq 20 | sed "1d; 3d" >x &&
++
++	# Get plain diff
++	git diff -U1 >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -1,4 +1,2 @@
++	-1
++	 2
++	-3
++	 4
++	EOF
++	compare_diff_patch expected plain &&
++
++	# Both removed lines match regex - ignore hunk
++	git diff -U1 -I "^[1-3]" >actual &&
++	test_must_be_empty actual &&
++
++	# Both removed lines match some regex - ignore hunk
++	git diff -U1 -I "^1" -I "^3" >actual &&
++	test_must_be_empty actual &&
++
++	# First removed line does not match regex, but is out of context - ignore second change
++	git diff -U1 -I "^[2-3]" >actual &&
++	cat >second-change-ignored <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -1,2 +1 @@
++	-1
++	 2
++	EOF
++	compare_diff_patch second-change-ignored actual &&
++
++	# First removed line does not match any regex, but is out of context - ignore second change
++	git diff -U1 -I "^2" -I "^3" >actual &&
++	compare_diff_patch second-change-ignored actual &&
++
++	# Second removed line does not match regex, but is out of context - ignore first change
++	git diff -U1 -I "^[1-2]" >actual &&
++	cat >first-change-ignored <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -2,3 +1,2 @@
++	 2
++	-3
++	 4
++	EOF
++	compare_diff_patch first-change-ignored actual &&
++
++	# Second removed line does not match any regex, but is out of context - ignore first change
++	git diff -U1 -I "^1" -I "^2" >actual &&
++	compare_diff_patch first-change-ignored actual
++'
++
++test_expect_success 'multiple hunks' '
++	test_seq 20 | sed "1d; 20d" >x &&
++
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -1,4 +1,3 @@
++	-1
++	 2
++	 3
++	 4
++	@@ -17,4 +16,3 @@
++	 17
++	 18
++	 19
++	-20
++	EOF
++	compare_diff_patch expected plain &&
++
++	# Ignore both hunks (single regex)
++	git diff -I "^[12]" >actual &&
++	test_must_be_empty actual &&
++
++	# Ignore both hunks (multiple regexes)
++	git diff -I "^1" -I "^2" >actual &&
++	test_must_be_empty actual &&
++
++	# Only ignore first hunk (single regex)
++	git diff -I "^1" >actual &&
++	cat >first-hunk-ignored <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -17,4 +16,3 @@
++	 17
++	 18
++	 19
++	-20
++	EOF
++	compare_diff_patch first-hunk-ignored actual &&
++
++	# Only ignore first hunk (multiple regexes)
++	git diff -I "^0" -I "^1" >actual &&
++	compare_diff_patch first-hunk-ignored actual &&
++
++	# Only ignore second hunk (single regex)
++	git diff -I "^2" >actual &&
++	cat >second-hunk-ignored <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -1,4 +1,3 @@
++	-1
++	 2
++	 3
++	 4
++	EOF
++	compare_diff_patch second-hunk-ignored actual &&
++
++	# Only ignore second hunk (multiple regexes)
++	git diff -I "^2" -I "^3" >actual &&
++	compare_diff_patch second-hunk-ignored actual
++'
++
++test_expect_success 'multiple hunks, with --ignore-blank-lines' '
++	echo >x &&
++	test_seq 21 >>x &&
++
++	# Get plain diff
++	git diff >plain &&
++	cat >expected <<-EOF &&
++	diff --git a/x b/x
++	--- a/x
++	+++ b/x
++	@@ -1,3 +1,4 @@
++	+
++	 1
++	 2
++	 3
++	@@ -18,3 +19,4 @@
++	 18
++	 19
++	 20
++	+21
++	EOF
++	compare_diff_patch expected plain &&
++
++	# -I does not override --ignore-blank-lines - ignore both hunks (single regex)
++	git diff --ignore-blank-lines -I "^21" >actual &&
++	test_must_be_empty actual &&
++
++	# -I does not override --ignore-blank-lines - ignore both hunks (multiple regexes)
++	git diff --ignore-blank-lines -I "^21" -I "^12" >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'diffstat' '
++	test_seq 20 | sed "s/^5/0/p; s/^15/10/; 16d" >x &&
++
++	# Get plain diffstat
++	git diff --stat >actual &&
++	cat >expected <<-EOF &&
++	 x | 6 +++---
++	 1 file changed, 3 insertions(+), 3 deletions(-)
++	EOF
++	test_cmp expected actual &&
++
++	# Ignore both hunks (single regex)
++	git diff --stat -I "^[0-5]" >actual &&
++	test_must_be_empty actual &&
++
++	# Ignore both hunks (multiple regexes)
++	git diff --stat -I "^0" -I "^1" -I "^5" >actual &&
++	test_must_be_empty actual &&
++
++	# Only ignore first hunk (single regex)
++	git diff --stat -I "^[05]" >actual &&
++	cat >expected <<-EOF &&
++	 x | 3 +--
++	 1 file changed, 1 insertion(+), 2 deletions(-)
++	EOF
++	test_cmp expected actual &&
++
++	# Only ignore first hunk (multiple regexes)
++	git diff --stat -I "^0" -I "^5" >actual &&
++	test_cmp expected actual &&
++
++	# Only ignore second hunk (single regex)
++	git diff --stat -I "^1" >actual &&
++	cat >expected <<-EOF &&
++	 x | 3 ++-
++	 1 file changed, 2 insertions(+), 1 deletion(-)
++	EOF
++	test_cmp expected actual &&
++
++	# Only ignore second hunk (multiple regexes)
++	git diff --stat -I "^1" -I "^2" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'invalid regexes' '
++	>x &&
++
++	# Single invalid regex
++	git diff -I "^[1" 2>&1 | grep "invalid regex: " &&
++
++	# Two regexes: first invalid, second valid
++	git diff -I "^[1" -I "^1" 2>&1 | grep "invalid regex: " &&
++
++	# Two invalid regexes
++	git diff -I "^[1" -I "^[2" 2>&1 | grep "invalid regex: "
++'
++
++test_done
 -- 
 2.28.0
 
