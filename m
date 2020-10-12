@@ -2,108 +2,127 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACA10C433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 15:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3764C433DF
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 15:57:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60C90208B6
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 15:25:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 619A32067C
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 15:57:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o5lt796f"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wcSO1gNB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389892AbgJLPZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 11:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388984AbgJLPZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 11:25:08 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57278C0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 08:25:08 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id y14so14578190pgf.12
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 08:25:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ph9osJw0o2ul8c9RtD9NNWZyf03TYLh5jRl/DqBIRoo=;
-        b=o5lt796fm1I3RlMczyXvNMkeHpCScyn5bQpGGLLTawL5BkLzc7Z6zf8UiTrZPet9mF
-         oOi/ec4PI36/Rj3h0wmQYh/BLKxM4KQR010A2qJgAAhXMfYWWIYvWTxaQb/RD9Lrd9DS
-         Bb0V+w/Kr8VFp50J4pV/v6+Kf45AGY5aE0j20Ml+2MlMiYv/VInP1fsvdkV7zQhh6dd0
-         DaT2Z2r/42T4kQIqwniT/rN7oqrSG/E9VAOw7HtzGjMj0cAv29EBYV6ZxqPqi2l9Qtxk
-         6AHji3IQU9ZgSaxauH/H9h85YTFRCaO78bbezw//nJTV2/oQl3r5Okw5j2VYVzKtdQCx
-         hQJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ph9osJw0o2ul8c9RtD9NNWZyf03TYLh5jRl/DqBIRoo=;
-        b=qf0vWRtnpNjLjdxCy/J2XHXw4+1wshd7bFag/ZFV3eHdIkwgOTRYyscOgh54Voy6OS
-         rznn6qB6pTa/CPOHbFSBCY1jRIewE1t+H4GodiLnRt4Z6A7bKb9j6ZzYfF1iogRTfx+Q
-         yqTPGZ7T8aUjmJqOdh+DZzfOHvDHy4OM/Hih156mytvm/L3QtahHCOQWewaQmsaAcpte
-         oy+0jWie34A4m20+xVKnym6ynJr6maejyP9A4iwJUtkrt7vNYOtWkR8YjB8K3rZLvZJQ
-         R+97TcmlOeHE5j/cwbOJn4TnNrpViS2k9AoXKwO33F59dw7ydfcHZRDyBPqTCpi1bBTW
-         u5XQ==
-X-Gm-Message-State: AOAM532qaWCyJPFOoNcP0nGRV4Ooushn203xgPAmemde7dTTl9ieo3k2
-        ot4pGMmlUev2XlHDb523drU=
-X-Google-Smtp-Source: ABdhPJzQwpa8h+b4JX3BzFL6WprC7B4Toz2jVcheb0xtC8JKo+4dr0HNl0sxRZdN1JMpDGjVvfOKaA==
-X-Received: by 2002:a17:90a:c28f:: with SMTP id f15mr20150109pjt.143.1602516307859;
-        Mon, 12 Oct 2020 08:25:07 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id g1sm20452891pfm.124.2020.10.12.08.25.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 08:25:07 -0700 (PDT)
-Date:   Mon, 12 Oct 2020 08:25:05 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 05/13] reftable: utility functions
-Message-ID: <20201012152505.GB3740546@google.com>
-References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
- <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
- <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com>
- <20201002041214.GE3252492@google.com>
- <CAFQ2z_NL1UrmonMH3qLKrEkjsPjm9qTbtoeY0OHQZzkVW2t3-w@mail.gmail.com>
+        id S1730190AbgJLP5e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 11:57:34 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61775 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726742AbgJLP5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 11:57:34 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E584F00C4;
+        Mon, 12 Oct 2020 11:57:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WZaI+FJDbaYtekJVdWq2LpmgQjQ=; b=wcSO1g
+        NBZ0/4aMcRVbRp9Uakf2c5AYKsI/TFz2O+sDeAPa5g9IiM622cuZczKx216JTaLX
+        sTu4SQB2l0VHcYIJXo2JvpUN9MnNFbeCdXoRUK3GN3zCN1YPes+45jFRVz2mtjeC
+        04RYgQVpHlJil+jygS0189Eb81Cq0Qij5QV3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CMejL4SY+JoO71TqoAW3J3qbxQavyGWB
+        Y9kiGFlDIwBmR4GhVmbKJeoK/zhOM/v8KqojCN/F9C0QxPE4+CACqc2QPr93MxIs
+        IZ9WC++6HYkRb52TOSNhQG+cI7o2Ok1XkjppA3KSxW8ATQWa8ORb3byIHbSNgI8+
+        gwGA9ow7+h8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1FF8BF00C1;
+        Mon, 12 Oct 2020 11:57:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 684DDF00BE;
+        Mon, 12 Oct 2020 11:57:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sangeeta NB <sangunb09@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: [Outreachy] Introduction
+References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
+        <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
+        <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
+        <7d691f37-b8b7-510d-ba46-51a4a7587226@gmail.com>
+        <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
+Date:   Mon, 12 Oct 2020 08:57:27 -0700
+In-Reply-To: <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
+        (Sangeeta NB's message of "Sun, 11 Oct 2020 17:00:56 +0530")
+Message-ID: <xmqq362jsahk.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFQ2z_NL1UrmonMH3qLKrEkjsPjm9qTbtoeY0OHQZzkVW2t3-w@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A18B6D46-0CA3-11EB-9CB9-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+cc: Patrick Steinhardt from libgit2)
-Hi,
+Sangeeta NB <sangunb09@gmail.com> writes:
 
-Han-Wen Nienhuys wrote[1]:
-> On Fri, Oct 2, 2020 at 6:12 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Han-Wen Nienhuys wrote:
-
->>> +     reftable_free(a);
->>> +}
->>
->> Are there other callers that need custom free?
+> A fix for making this as the default behaviour can be:
 >
-> The libgit2 folks requested the ability to set memory allocation
-> routines, hence reftable_free().
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -422,6 +422,7 @@ int git_diff_ui_config(const char *var, const char
+> *value, void *cb)
+>         if (git_color_config(var, value, cb) < 0)
+>                 return -1;
+>
+> +       handle_ignore_submodules_arg(&default_diff_options, "untracked");
+>         return git_diff_basic_config(var, value, cb);
 
-Thanks.  Patrick or Han-Wen, can you say a little more about this use
-case?  That would help with making sure we are making an API that
-meets its needs.
+This function is called for each and every element of configuration
+item in your ~/.gitconfig and .git/config; by definition, the
+default behaviour is what is used when the user did not specify
+anything so what is usually done is to do that kind of defaulting
+before the code calls git_config() with a callback function like
+this.
 
-For example, is a custom allocator something that would be set
-globally or something attached to a handle?  If the former, would code
-that uses xmalloc and free and gets #define-d away when used in
-libgit2 work?  If the latter, what does the handle look like?
+And more importantly, the users may have
 
-Thanks,
-Jonathan
+    [diff] ignoresubmodules=<value>
 
-[1] context: https://lore.kernel.org/git/pull.847.git.git.1600283416.gitgitgadget@gmail.com/T/#r2337ddc80848c80f6c9699d904ab64d4297d2c54
+in their configuration file.  After calling handle_ignore_submodules_arg()
+with the value the user desires, the above code will overwrite it with
+a hardcoded default---at that point that is no longer "the default"
+to be used when the user didn't specify.
+
+I am wondering if the init_diff_ui_defaults() function is the right
+location to add the above call.
+
+>  }
+>
+> But this would also involve a lot of changes in the way tests are
+> written as 12 out of 19 tests in t4027-diff-submodule.sh failed after
+> adding this patch.
+
+If the tests expect that the -dirty suffix is added at the end of
+"Subproject commit 2f256705..." when the submodule directory has a
+untracked file, it is expected that such tests need to be updated
+to the new world order you are introducing, which is "just like 'git
+describe --dirty' does not consider having an untracked file does not
+make otherwise clean checkout a dirty one, 'git diff' should not
+show that a submodule is dirty in its output if its working tree has
+an untracked file but is otherwise clean".
+
+
+
+What follows is a note for more experienced developers, but I notice
+that over the years, we seems to have done a shoddy job adjusting
+the implementation in diff.c file in the hope of adding support to
+work in multiple repositories; most file-scope static globals like
+default_diff_options and diff_detect_rename_default are still only
+read while in the main repository, yet repo_diff_setup() pretends as
+if an invocation of the diff machinery in a different repository can
+use settings that are repository specific.  Again, this is not
+something you need to be worried about.
