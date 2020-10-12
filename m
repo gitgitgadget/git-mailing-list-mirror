@@ -2,121 +2,106 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 379CCC433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 20:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFA9BC433DF
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 20:04:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE6C92087E
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 20:01:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68D2C206D4
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 20:04:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KYslefOz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AoDzMiGF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390564AbgJLUAe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 16:00:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58070 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388844AbgJLUAb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 16:00:31 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45BE1F86B1;
-        Mon, 12 Oct 2020 16:00:27 -0400 (EDT)
+        id S1726701AbgJLUEj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 16:04:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61131 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726120AbgJLUEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 16:04:39 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FAF98D92E;
+        Mon, 12 Oct 2020 16:04:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=CU5gFnJ3uOcx
-        m1BI1uLOt9Owh24=; b=KYslefOzfPA+gYECnjIvgcY0cX7Htfh1fmjwXOqFpx38
-        UNXokKdmR3lfacK7lf6iT5yjhAxSIcZKn0eWnrrx21hgve1W7MkYXIYyJQRMo7gC
-        iNilnNiL7LJXZr9goO1XcTHXQEIAQnrfdN3wOIO+CS5N8NsqzEKkvRWnloWCxKc=
+        :content-type:content-transfer-encoding; s=sasl; bh=u1Da9TXB7C89
+        YSeGyqX2YkhXYDk=; b=AoDzMiGFPVZA4+0gsx0D9WusvC+qvHFxwFlSfJbmSO9z
+        IrkcvZzNj+jErNjCsAWIFI4GTgWz1kfT+i61KqKEGvnszaaCh/kWvbpNcsuRD41y
+        RcvFhOCuxBSujQPu4bBqAm2kqL64lkkQ/AktV5h1eg2p6Zm25i1zGBX0X9yuE+8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wfkiap
-        g59H0dzrEOyt/R9smwYsZkWOyRgK/iG9I5Vg9l7uQ43De/D2O7c/GC9eIQGm9bs/
-        AJsYDmIAEcmKffvopad0eYiIkUBE0CYyP9Xuw9O/jQwD28doRv22+RpO9HVUv+SV
-        cvbargUMyK54HT+iS1jAdwQp9y0fpmrgL10U0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E52EF86B0;
-        Mon, 12 Oct 2020 16:00:27 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H65gfu
+        WdIBYJzszT+u4sjddLGYIGDkc86CNvDV7spR/9j6okLkF3mhQJXdfelSEfkk2M5d
+        O+ozdncZxo7HZ0qkliFR06dFZgQBaiRgnFKr/yVFjEzbSwMp/+5bowe2YWQ40YdM
+        z/+tKC+7jrSvrfPP1rXeqZtD/D8a8Zh4OKRgE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3843A8D92D;
+        Mon, 12 Oct 2020 16:04:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8CE3BF86AE;
-        Mon, 12 Oct 2020 16:00:24 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BCA1B8D92B;
+        Mon, 12 Oct 2020 16:04:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>,
-        git@vger.kernel.org
+To:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Cc:     git@vger.kernel.org
 Subject: Re: [PATCH v2 2/3] diff: add -I<regex> that ignores matching changes
 References: <20201001120606.25773-1-michal@isc.org>
         <20201012091751.19594-1-michal@isc.org>
         <20201012091751.19594-3-michal@isc.org>
-        <nycvar.QRO.7.76.6.2010121315170.50@tvgsbejvaqbjf.bet>
-Date:   Mon, 12 Oct 2020 13:00:23 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2010121315170.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 12 Oct 2020 13:20:13 +0200 (CEST)")
-Message-ID: <xmqqo8l7nrjc.fsf@gitster.c.googlers.com>
+Date:   Mon, 12 Oct 2020 13:04:36 -0700
+In-Reply-To: <20201012091751.19594-3-michal@isc.org> (=?utf-8?B?Ik1pY2hh?=
+ =?utf-8?B?xYIgS8SZcGllxYQiJ3M=?=
+        message of "Mon, 12 Oct 2020 11:17:50 +0200")
+Message-ID: <xmqqk0vvnrcb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9102A1FC-0CC5-11EB-AB3B-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2755A51E-0CC6-11EB-92A1-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Micha=C5=82 K=C4=99pie=C5=84 <michal@isc.org> writes:
 
-> Hi Micha=C5=82,
->
-> On Mon, 12 Oct 2020, Micha=C5=82 K=C4=99pie=C5=84 wrote:
->
->> @@ -5203,6 +5207,22 @@ static int diff_opt_patience(const struct optio=
-n *opt,
->>  	return 0;
->>  }
->>
->> +static int diff_opt_ignore_regex(const struct option *opt,
->> +				 const char *arg, int unset)
->> +{
->> +	struct diff_options *options =3D opt->value;
->> +	regex_t *regex;
->> +
->> +	BUG_ON_OPT_NEG(unset);
->> +	regex =3D xcalloc(1, sizeof(*regex));
->> +	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE))
->> +		die("invalid regex: %s", arg);
->> +	ALLOC_GROW(options->ignore_regex, options->ignore_regex_nr + 1,
->> +		   options->ignore_regex_alloc);
->> +	options->ignore_regex[options->ignore_regex_nr++] =3D regex;
->
-> A slightly more elegant way would be to have `ignore_regex` have the ty=
-pe
-> `regex_t *` and use `ALLOC_GROW_BY()` (which zeroes the newly-added
-> elements automagically).
+> +	/* see Documentation/diff-options.txt */
 
-It may be "elegant", but we we know if it is "correct" on
-everybody's implementation of regex_t?
+This comment adds negative value.
 
-A struct like
+If it were
 
-	struct foo {
-		char *str;
-		char in_place_buffer[10];
-	};
+	/* "-I<regexp>" */
 
-where str points at in_place_buffer[] only when it needs to point at
-a very short string, and points at an allocated memory on heap, can
-not be safely copied and used, and an array of such a struct breaks
-when ALLOC_GROW_BY() needs to call realloc().  Keeping an array of
-pointers to regex_t and growing it would not break even for such a
-structure type.
+the readers won't have to switch to the file only to find out that
+the comment didn't tell them where in the file to look at.=20
 
-Since we cannot rely on the implementation detail of regex_t on a
-single platform, I'd rather not to see anybody suggest such an
-"elegant" approach.
+> +	regex_t **ignore_regex;
+> +	size_t ignore_regex_nr, ignore_regex_alloc;
+> +
+>  	const char *single_follow;
+>  	const char *a_prefix, *b_prefix;
+>  	const char *line_prefix;
+> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+> index 032e3a9f41..883a0d770e 100644
+> --- a/xdiff/xdiff.h
+> +++ b/xdiff/xdiff.h
+> @@ -79,6 +79,10 @@ typedef struct s_mmbuffer {
+>  typedef struct s_xpparam {
+>  	unsigned long flags;
+> =20
+> +	/* See Documentation/diff-options.txt. */
 
-Thanks.
+Likewise.
+
+> +	regex_t **ignore_regex;
+> +	size_t ignore_regex_nr;
+> +
+>  	/* See Documentation/diff-options.txt. */
+>  	char **anchors;
+>  	size_t anchors_nr;
