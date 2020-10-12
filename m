@@ -2,118 +2,91 @@ Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37024C433DF
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46E05C433DF
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:49:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E737C20878
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:27:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 081DA20790
+	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:49:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r74hAoUt"
+	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="DvIjJPIo";
+	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="DvIjJPIo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732261AbgJLX0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 19:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37572 "EHLO
+        id S2389532AbgJLXtJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 19:49:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732248AbgJLX0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 19:26:11 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C11C8C0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 16:26:08 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id d3so19571886wma.4
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 16:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=CzrCPnbUvNSakWF2bvkdGZ4dwzkAgsYCMdLnhb7Mw8c=;
-        b=r74hAoUtv07NVZqMhBvtHGhgS4Y6Nhi3x4HXo0gqHS/nUbEMThv96ZBeMsxfHiROWb
-         zr2pbFMmrzV5jmfN+20r8W0pxc+FD9IWPu1CFlpijxyyAThCuNlIoIA/qlJ0UtvZrInF
-         K5RCqpxYkyZ1Gl+gWbRnED56QlNjmvjqgTPKBLx04Tc2xtjBqnED+MCoRn0A3XkQgurK
-         ZVbDSOGJXAsDvJc2/TxEF732Q1Y/TUawXBa3EW5KyMYPHpwP2REytI13/qlLd0/BZvc+
-         pCh9ooOmIIuogbxosT4aECkTNfXt11IEaWZMlymo74NP+WRDX1NWuMoAu2n8G6Tp0KlV
-         0bYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CzrCPnbUvNSakWF2bvkdGZ4dwzkAgsYCMdLnhb7Mw8c=;
-        b=dNVOtl5et/jmWnrAQR3cz9HIZm9WTbRusunkpwNkFAxRA8Km9EYIlvxCGf1vlDKLyh
-         v0j4kuHUIP58MuGBj6wM0CXXGBcMkxjZ6iDIIPbjw87uc8B/nokGJC5B+Lyoyta98cob
-         6m8m8pxGuYHxVTucs2bANOk7CWKsoW0RU3G2iCm6/l2ytlWLuTcJM9Oe7KEKz6yGYSkT
-         3ZrT9NVn0DRZpWA3T5uGDlKprGhVdnSaQ5VK1bBVe6KFhp7TO9LBInBb2AylMdWXPT8L
-         jsFe78cTKOUTctdA0YnH3JOrtHmlZGh222LHUUggZx7naet+YKNCZO1P5n9LYvUrh87h
-         Ou2A==
-X-Gm-Message-State: AOAM533f8nulu+2SxeG60AmkaaYqc4Ov9xsOZB52ots4tuJozimkN3iS
-        0LSE6b+T/Fg6/2U0O9cJnm3LT2ytd2o=
-X-Google-Smtp-Source: ABdhPJwPvesZtj30PY/BFUjDt6u+RdGIXhZns2iYXlWvl5zrVyFRaEEzr/p5GvvPQ2+ZOxCLCHKO5Q==
-X-Received: by 2002:a1c:7d54:: with SMTP id y81mr12179203wmc.114.1602545167263;
-        Mon, 12 Oct 2020 16:26:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f14sm27707016wrt.53.2020.10.12.16.26.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 16:26:06 -0700 (PDT)
-Message-Id: <d1d73400e838107b7a9a8562a20ec24a2a9a2ba6.1602545164.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
-References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Oct 2020 23:26:03 +0000
-Subject: [PATCH 2/3] t6006, t6012: adjust tests to use 'setup' instead of
- synonyms
-Fcc:    Sent
+        with ESMTP id S2389460AbgJLXtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 19:49:08 -0400
+Received: from mail.sammserver.com (sammserver.com [IPv6:2001:470:5a5b:1::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC4BC0613D1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 16:49:08 -0700 (PDT)
+Received: by mail.sammserver.com (Postfix, from userid 5011)
+        id 214FB110583C; Tue, 13 Oct 2020 01:49:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
+        t=1602546546; bh=kLEXT3KXiLM2rb9NTyPvLjz7LiWHDW+0asHyeqak6rY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=DvIjJPIo8sOd3RR4X2YszF8j0yx3qyb0kn33YqoiXdjL6iphzkk4WftzJ1nuhoLFh
+         oSzfA/t/TfIIh+FpfoGGkc9DT7+lAO/aJCW1hHqbSHBuhFR6i7imytgjvb1yi8c/03
+         +P2PNSzJj8YjqLWrVh1hgNjGYdipwZfk7se9pcr8=
+Received: from fastboi.localdomain (fastboi.wg [10.32.40.5])
+        by mail.sammserver.com (Postfix) with ESMTP id EB2C21105838;
+        Tue, 13 Oct 2020 01:49:05 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
+        t=1602546546; bh=kLEXT3KXiLM2rb9NTyPvLjz7LiWHDW+0asHyeqak6rY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=DvIjJPIo8sOd3RR4X2YszF8j0yx3qyb0kn33YqoiXdjL6iphzkk4WftzJ1nuhoLFh
+         oSzfA/t/TfIIh+FpfoGGkc9DT7+lAO/aJCW1hHqbSHBuhFR6i7imytgjvb1yi8c/03
+         +P2PNSzJj8YjqLWrVh1hgNjGYdipwZfk7se9pcr8=
+Received: by fastboi.localdomain (Postfix, from userid 1000)
+        id D5EB314200ED; Tue, 13 Oct 2020 01:49:05 +0200 (CEST)
+From:   =?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>
+Subject: [PATCH v2 2/2] sequencer: pass explicit --no-gpg-sign to merge
+Date:   Tue, 13 Oct 2020 01:49:01 +0200
+Message-Id: <20201012234901.1356948-2-samuel@cavoj.net>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20201012234901.1356948-1-samuel@cavoj.net>
+References: <20201012234901.1356948-1-samuel@cavoj.net>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+The merge subcommand launched for merges with non-default strategy would
+use its own default behaviour to decide how to sign commits, regardless
+of what opts->gpg_sign was set to. For example the --no-gpg-sign flag
+given to rebase explicitly would get ignored, if commit.gpgsign was set
+to true.
 
-With the new ability to pass --run=setup to select which tests to run,
-it is more convenient if tests use the term "setup" instead of synonyms
-like 'prepare' or 'rebuild'.  There are undoubtedly many other tests in
-our testsuite that could be changed over too, these are just a couple
-that I ran into.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
 ---
- t/t6006-rev-list-format.sh   | 2 +-
- t/t6012-rev-list-simplify.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sequencer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index bc95da8a5f..99a1eaf332 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -339,7 +339,7 @@ commit $head1
- .. (hinzugef${added_utf8_part_iso88591}gt) foo
- EOF
+diff --git a/sequencer.c b/sequencer.c
+index 88ccff4838..043d606829 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3678,6 +3678,8 @@ static int do_merge(struct repository *r,
+ 		strvec_push(&cmd.args, git_path_merge_msg(r));
+ 		if (opts->gpg_sign)
+ 			strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
++		else
++			strvec_push(&cmd.args, "--no-gpg-sign");
  
--test_expect_success 'prepare expected messages (for test %b)' '
-+test_expect_success 'setup expected messages (for test %b)' '
- 	cat <<-EOF >expected.utf-8 &&
- 	commit $head3
- 	This commit message is much longer than the others,
-diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-index b6fa43ace0..7254060240 100755
---- a/t/t6012-rev-list-simplify.sh
-+++ b/t/t6012-rev-list-simplify.sh
-@@ -168,7 +168,7 @@ test_expect_success '--full-diff is not affected by --parents' '
- #
- # This example is explained in Documentation/rev-list-options.txt
- 
--test_expect_success 'rebuild repo' '
-+test_expect_success 'setup rebuild repo' '
- 	rm -rf .git * &&
- 	git init &&
- 	git switch -c main &&
+ 		/* Add the tips to be merged */
+ 		for (j = to_merge; j; j = j->next)
 -- 
-gitgitgadget
+2.28.0
 
