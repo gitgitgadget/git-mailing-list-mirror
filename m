@@ -2,360 +2,272 @@ Return-Path: <SRS0=7dzq=DU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CF3AC43467
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14E78C433DF
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:19:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C1F720BED
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:17:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A249220BED
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:19:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SoEVDtOj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGThcJgb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbgJMTRq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Oct 2020 15:17:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52284 "EHLO
+        id S1726202AbgJMTTv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Oct 2020 15:19:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725919AbgJMTRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Oct 2020 15:17:45 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53DC6C0613D0
-        for <git@vger.kernel.org>; Tue, 13 Oct 2020 12:17:45 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id y7so854676ybh.10
-        for <git@vger.kernel.org>; Tue, 13 Oct 2020 12:17:45 -0700 (PDT)
+        with ESMTP id S1726019AbgJMTTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Oct 2020 15:19:51 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB55DC0613D2
+        for <git@vger.kernel.org>; Tue, 13 Oct 2020 12:19:50 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id n6so639843wrm.13
+        for <git@vger.kernel.org>; Tue, 13 Oct 2020 12:19:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=BBfsiTtx4TLB/Uphsh1a5P1NcnNbUCe3CdTEt+GWi7o=;
-        b=SoEVDtOjDnEJa+R7OCP6HkFZkWD2BcaL3XFQ0Jtgqa6YACG4tIcvi6hinsnh17zcy0
-         ZFq3lda078JE+b9KzarBcK8hWlHYsSHj2zXO1CRYwBHmNWYQKWTsVBjsBXhO0nkWC0Hh
-         bC+eKGpWmj+v+lNhVP2LN+Jz1HXp1/6FmMDMplFeBWSabMz0yegywQA5f4ontgWhbS45
-         B6o3XYQ8Y8zrgc7tADfKYEtkYMGyLIWRwNDckHIjrYqOCYYfiRJpJrz5555gA8mu704d
-         UubN/N+iEldd2kzMu3Clb0PNrNcmpKPUku6S1Wsgi7Z/ebXDniONju2Mmvcd0xozy1ow
-         D2Wg==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YuNJdO9pR0bHiFnx6lSI0tlgkHGMuxw9CKtpl6ZZQ7o=;
+        b=bGThcJgbimKHGhIXRvznCTNTNuSD5/aU/nXSU2WpPo/SNWiYSk1SEHBPSnsu9yxetG
+         AGxagIkWBoOA74CSgE6lRfBXLyYNRqYM9/AzK7R8ffE1dL4WnjE7LxOTPBbkt6xw02VT
+         msDBM1bH4uxDm8vYMu3gFCvzZ8LhqgR8dw1rw+1c9pbjFozUDzIm/dPlBBYJoiN0oPSq
+         CAQX3LJ3C9MzhlOFC8HZDBAWzNAgNe3R5/yOL96e7ol3GXv1B2YCxLc84u9gZxCcoYgc
+         dwEp9rPF2OaKUTKqK4aaaHEmA3rYclzCtvt3GFfpQg4w0un3tktYVP4E4CMRZrrENiYU
+         9DjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=BBfsiTtx4TLB/Uphsh1a5P1NcnNbUCe3CdTEt+GWi7o=;
-        b=dcNbI3GIfX6j4W42VMlJxLBkptrHfspVH3CplWUoSAau2nfTZW+Vk2yB2HHO3J4hz9
-         5cy1Tc0vn4DW8QVqi90qjgTUzpNCYBQuxudEAzxi2JBJnTkkKdoW43K9KNnsQwzQblJW
-         XSKBNshn9Dwp+AtxwjXv7rO7LLExIkSG3LZhqB3RF4eyUSq8XKhM3rMU/yt9uySesg13
-         jnESKaRqFyaDAH1Lm3wYsBZoXdtpcO+ebrEClDfTFrymC393E+PinRYNWm4VOku+oWOC
-         iks6wfCqyHapZm1TKMQ0L9TaPDOa2PApezoq675SQj+qc089rRh0ACju4ng4xBNSGeHb
-         JaXw==
-X-Gm-Message-State: AOAM530Y/Mel4YWbpwwDUTeoTF41NEhqC/0jBh97trKHulh/9D9k0OlT
-        GGoRwSQfOiPineu5jwj/m0bnPKQHSdLTxselO/7KRl33Bo/lbneyl5jPhsXnmV6dcLQkHtjnf2D
-        jbHcYqt+gZPE8lZmgeZtUBhbXeFZbNAzlOdjCWWgLxbffmDZcGLSlIR/7FDehiVs=
-X-Google-Smtp-Source: ABdhPJyCYko+5oG7onFXI5RXpl3cDlWW/70vlOYejHP8tlyJQMOZcvm1fwpyGYYHU2Lg9fHXuHxgdZw6qNY2JA==
-Sender: "smcallis via sendgmr" <smcallis@smcallis.bld.corp.google.com>
-X-Received: from smcallis.bld.corp.google.com ([2620:15c:183:200:a6ae:11ff:fe11:fc5d])
- (user=smcallis job=sendgmr) by 2002:a5b:44a:: with SMTP id
- s10mr2215865ybp.172.1602616664451; Tue, 13 Oct 2020 12:17:44 -0700 (PDT)
-Date:   Tue, 13 Oct 2020 13:17:29 -0600
-In-Reply-To: <20201013191729.2524700-1-smcallis@google.com>
-Message-Id: <20201013191729.2524700-3-smcallis@google.com>
-Mime-Version: 1.0
-References: <20201013191729.2524700-1-smcallis@google.com>
-X-Mailer: git-send-email 2.28.0.1011.ga647a8990f-goog
-Subject: [PATCH v2 3/3] http: automatically retry some requests
-From:   Sean McAllister <smcallis@google.com>
-To:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        masayasuzuki@google.com, jrnieder@gmail.com
-Cc:     Sean McAllister <smcallis@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=YuNJdO9pR0bHiFnx6lSI0tlgkHGMuxw9CKtpl6ZZQ7o=;
+        b=idtT5qKjDW15HPb5XOLH6Qc/diNv+2AzxMcKMXSRfgz+mrfDtl9uRiXXy9ztaCp1vc
+         wa8ui8aEKg6wnrQn7QIENOWZk2heYXBWHiVb6PkCyu/vVVIf9kDtGatJmdjE+0KIUrYY
+         UZIKBrclrMaZb8eR2txXCuPeb8ImqsQBkIbcEht/Ee2fZ/sDlLrZthmTfQewERU9AwjH
+         bStd6LN88NWBsY8pIVQ12dbgWX4w/TBH0k/9cYMpxidrhleKjKCvs9xm4euu1iyT1F3e
+         CUu3/dZyLDEHkq5FuI7c80QavhYdLk+7aas4mOGwVCKTymjZOY2kNRP7nmDmgpoRqy6i
+         lNaw==
+X-Gm-Message-State: AOAM532ttbYNAY/ttSXePCLtPbFr1Mro8txEkjogwmwrAW7wLGNnSoPE
+        Tmd+xqkuzbbxW79nhLAg94o1Wr3W8No=
+X-Google-Smtp-Source: ABdhPJzCpbBEOcwc85RUXmkWosslef6W/URI5HJBrigq29JHf4afUPmRxhGr5Tpcy5bfCOM1OuLLjw==
+X-Received: by 2002:a5d:4409:: with SMTP id z9mr1281148wrq.236.1602616789179;
+        Tue, 13 Oct 2020 12:19:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j5sm669085wrx.88.2020.10.13.12.19.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2020 12:19:48 -0700 (PDT)
+Message-Id: <41e2528e83ba7087c9d21f0b15efed416f1512f8.1602616786.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.878.v2.git.git.1602616786.gitgitgadget@gmail.com>
+References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
+        <pull.878.v2.git.git.1602616786.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 13 Oct 2020 19:19:44 +0000
+Subject: [PATCH v2 1/3] test-lib: allow selecting tests by substring/regex
+ with --run
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some HTTP response codes indicate a server state that can support
-retrying the request rather than immediately erroring out.  The server
-can also provide information about how long to wait before retries to
-via the Retry-After header.  So check the server response and retry
-some reasonable number of times before erroring out to better accomodate
-transient errors.
+From: Elijah Newren <newren@gmail.com>
 
-Exiting immediately becomes irksome when pulling large multi-repo code
-bases such as Android or Chromium, as often the entire fetch operation
-has to be restarted from the beginning due to an error in one repo. If
-we can reduce how often that occurs, then it's a big win.
+Many of our test scripts have several "setup" tests.  It's a lot easier
+to say
 
-Signed-off-by: Sean McAllister <smcallis@google.com>
+   ./t0050-filesystem.sh --run=setup,9
+
+in order to run all the setup tests as well as test #9, than it is to
+track down what all the setup tests are and enter all their numbers in
+the list.  Also, I often find myself wanting to run just one or a couple
+tests from the test file, but I don't know the numbering of any of the
+tests -- to get it I either have to first run the whole test file (or
+start counting by hand or figure out some other clever but non-obvious
+tricks).  It's really convenient to be able to just look at the test
+description(s) and then run
+
+   ./t6416-recursive-corner-cases.sh --run=symlink
+
+or
+
+   ./t6402-merge-rename.sh --run='setup,unnecessary update'
+
+Add such an ability to test selection which relies on merely matching
+against the test description.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/config/http.txt |   5 ++
- http.c                        | 124 +++++++++++++++++++++++++++++++++-
- http.h                        |   2 +-
- remote-curl.c                 |   2 +-
- t/t5601-clone.sh              |   6 +-
- 5 files changed, 133 insertions(+), 6 deletions(-)
+ t/README         | 29 +++++++++++++++++++----------
+ t/t0000-basic.sh | 41 +++++++++++++++++++++++++----------------
+ t/test-lib.sh    | 13 +++++++------
+ 3 files changed, 51 insertions(+), 32 deletions(-)
 
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index 3968fbb697..5d5baef967 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -260,6 +260,11 @@ http.followRedirects::
- 	the base for the follow-up requests, this is generally
- 	sufficient. The default is `initial`.
+diff --git a/t/README b/t/README
+index 2adaf7c2d2..5fd8eaf595 100644
+--- a/t/README
++++ b/t/README
+@@ -258,16 +258,13 @@ For an individual test suite --run could be used to specify that
+ only some tests should be run or that some tests should be
+ excluded from a run.
  
-+http.retryLimit::
-+	Some HTTP status codes (eg: 429, 503) can reasonably be retried if
-+	they're encountered.  This value configures the number of retry attempts
-+	before giving up.  The default retry limit is 3.
+-The argument for --run is a list of individual test numbers or
+-ranges with an optional negation prefix that define what tests in
+-a test suite to include in the run.  A range is two numbers
+-separated with a dash and matches a range of tests with both ends
+-been included.  You may omit the first or the second number to
+-mean "from the first test" or "up to the very last test"
+-respectively.
+-
+-Optional prefix of '!' means that the test or a range of tests
+-should be excluded from the run.
++The argument for --run, <test-selector>, is a list of description
++substrings or regexes or individual test numbers or ranges with an
++optional negation prefix (of '!') that define what tests in a test
++suite to include (or exclude, if negated) in the run.  A range is two
++numbers separated with a dash and matches a range of tests with both
++ends been included.  You may omit the first or the second number to
++mean "from the first test" or "up to the very last test" respectively.
+ 
+ If --run starts with an unprefixed number or range the initial
+ set of tests to run is empty. If the first item starts with '!'
+@@ -317,6 +314,18 @@ test in the test suite except from 7 up to 11:
+ 
+     $ sh ./t9200-git-cvsexport-commit.sh --run='!7-11'
+ 
++Sometimes there may be multiple tests with e.g. "setup" in their name
++that are needed and rather than figuring out the number for all of them
++we can just use "setup" as a substring/regex to match against the test
++description:
 +
- http.<url>.*::
- 	Any of the http.* options above can be applied selectively to some URLs.
- 	For a config key to match a URL, each element of the config key is
-diff --git a/http.c b/http.c
-index b3c1669388..f0147582f9 100644
---- a/http.c
-+++ b/http.c
-@@ -92,6 +92,9 @@ static const char *http_proxy_ssl_key;
- static const char *http_proxy_ssl_ca_info;
- static struct credential proxy_cert_auth = CREDENTIAL_INIT;
- static int proxy_ssl_cert_password_required;
-+static int http_retry_limit = 3;
-+static int http_default_delay_sec = 2;
-+static int http_max_delay_sec = 60;
++    $ sh ./t0050-filesystem.sh --run=setup,9-11
++
++or one could select both the setup tests and the rename ones (assuming all
++relevant tests had those words in their descriptions):
++
++    $ sh ./t0050-filesystem.sh --run=setup,rename
++
+ Some tests in a test suite rely on the previous tests performing
+ certain actions, specifically some tests are designated as
+ "setup" test, so you cannot _arbitrarily_ disable one test and
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 923281af93..07105b2078 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -705,7 +705,31 @@ test_expect_success '--run empty selectors' "
+ 	EOF
+ "
  
- static struct {
- 	const char *name;
-@@ -219,6 +222,56 @@ size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
- 	return nmemb;
+-test_expect_success '--run invalid range start' "
++test_expect_success '--run substring selector' "
++	run_sub_test_lib_test run-substring-selector \
++		'--run empty selectors' \
++		--run='relevant' <<-\\EOF &&
++	test_expect_success \"relevant test\" 'true'
++	for i in 1 2 3 4 5 6
++	do
++		test_expect_success \"other test #\$i\" 'true'
++	done
++	test_done
++	EOF
++	check_sub_test_lib_test run-substring-selector <<-\\EOF
++	> ok 1 - relevant test
++	> ok 2 # skip other test #1 (--run)
++	> ok 3 # skip other test #2 (--run)
++	> ok 4 # skip other test #3 (--run)
++	> ok 5 # skip other test #4 (--run)
++	> ok 6 # skip other test #5 (--run)
++	> ok 7 # skip other test #6 (--run)
++	> # passed all 7 test(s)
++	> 1..7
++	EOF
++"
++
++test_expect_success '--run keyword selection' "
+ 	run_sub_test_lib_test_err run-inv-range-start \
+ 		'--run invalid range start' \
+ 		--run='a-5' <<-\\EOF &&
+@@ -735,21 +759,6 @@ test_expect_success '--run invalid range end' "
+ 	EOF_ERR
+ "
+ 
+-test_expect_success '--run invalid selector' "
+-	run_sub_test_lib_test_err run-inv-selector \
+-		'--run invalid selector' \
+-		--run='1?' <<-\\EOF &&
+-	test_expect_success \"passing test #1\" 'true'
+-	test_done
+-	EOF
+-	check_sub_test_lib_test_err run-inv-selector \
+-		<<-\\EOF_OUT 3<<-\\EOF_ERR
+-	> FATAL: Unexpected exit with code 1
+-	EOF_OUT
+-	> error: --run: invalid non-numeric in test selector: '1?'
+-	EOF_ERR
+-"
+-
+ 
+ test_set_prereq HAVEIT
+ haveit=no
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index ef31f40037..2aca398e1e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -769,6 +769,8 @@ match_pattern_list () {
  }
  
-+
-+/* return 1 for a retryable HTTP code, 0 otherwise */
-+static int retryable_code(int code)
-+{
-+	switch(code) {
-+	case 429: /* fallthrough */
-+	case 502: /* fallthrough */
-+	case 503: /* fallthrough */
-+	case 504: return 1;
-+	default:  return 0;
-+	}
-+}
-+
-+/*
-+ * Query the value of an HTTP header.
-+ *
-+ * If the header is found, then a newly allocate string containing the value
-+ * is returned.
-+ *
-+ * If not found, returns NULL
-+ */
-+static char* http_header_value(const struct strbuf headers, const char *header)
-+{
-+	const size_t header_len = strlen(header);
-+	const char* beg = headers.buf, *end;
-+	const char* ptr = strcasestr(beg, header), *eol;
-+
-+	while (ptr) {
-+		/* headers should have no leading whitespace, and end with ':' */
-+		end = ptr + header_len;
-+		if ((ptr != beg && ptr[-1] != '\n') || *end != ':') {
-+			ptr = strcasestr(end, header);
-+			continue;
-+		}
-+
-+		/* skip leading LWS */
-+		ptr = end + 1;
-+		while (*ptr && isspace(*ptr) && *ptr != '\r')
-+			ptr++;
-+
-+		/* skip trailing LWS */
-+		eol = strchrnul(ptr, '\r');
-+		while (eol > ptr && isspace(eol[-1]))
-+			eol--;
-+
-+		return xstrndup(ptr, eol-ptr);
-+	}
-+	return NULL;
-+}
-+
- static void closedown_active_slot(struct active_request_slot *slot)
- {
- 	active_requests--;
-@@ -452,6 +505,11 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
+ match_test_selector_list () {
++	operation="$1"
++	shift
+ 	title="$1"
+ 	shift
+ 	arg="$1"
+@@ -805,13 +807,13 @@ match_test_selector_list () {
+ 			*-*)
+ 				if expr "z${selector%%-*}" : "z[0-9]*[^0-9]" >/dev/null
+ 				then
+-					echo "error: $title: invalid non-numeric in range" \
++					echo "error: $operation: invalid non-numeric in range" \
+ 						"start: '$orig_selector'" >&2
+ 					exit 1
+ 				fi
+ 				if expr "z${selector#*-}" : "z[0-9]*[^0-9]" >/dev/null
+ 				then
+-					echo "error: $title: invalid non-numeric in range" \
++					echo "error: $operation: invalid non-numeric in range" \
+ 						"end: '$orig_selector'" >&2
+ 					exit 1
+ 				fi
+@@ -819,9 +821,8 @@ match_test_selector_list () {
+ 			*)
+ 				if expr "z$selector" : "z[0-9]*[^0-9]" >/dev/null
+ 				then
+-					echo "error: $title: invalid non-numeric in test" \
+-						"selector: '$orig_selector'" >&2
+-					exit 1
++					echo "$title" | grep -q "$selector" && return
++					continue
+ 				fi
+ 		esac
  
-+	if (!strcmp("http.retrylimit", var)) {
-+		http_retry_limit = git_config_int(var, value);
-+		return 0;
-+	}
-+
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
- }
-@@ -1668,7 +1726,7 @@ static int handle_curl_result(struct slot_results *results)
- }
- 
- int run_one_slot(struct active_request_slot *slot,
--		 struct slot_results *results)
-+		 struct slot_results *results, int *http_code)
- {
- 	slot->results = results;
- 	if (!start_active_slot(slot)) {
-@@ -1678,6 +1736,8 @@ int run_one_slot(struct active_request_slot *slot,
- 	}
- 
- 	run_active_slot(slot);
-+	if (http_code)
-+		*http_code = results->http_code;
- 	return handle_curl_result(results);
- }
- 
-@@ -1903,20 +1963,58 @@ static void http_opt_request_remainder(CURL *curl, off_t pos)
- #define HTTP_REQUEST_STRBUF	0
- #define HTTP_REQUEST_FILE	1
- 
-+/*
-+ * check for a retry-after header in the given headers string, if found, then
-+ * honor it, otherwise do an exponential backoff up to the max on the current
-+ * delay
-+*/
-+static int http_retry_after(const struct strbuf headers, int cur_delay_sec)
-+{
-+	int delay_sec;
-+	char *end;
-+	char* value = http_header_value(headers, "retry-after");
-+
-+	if (value) {
-+		delay_sec = strtol(value, &end, 0);
-+		free(value);
-+		if (*value && *end == '\0' && delay_sec >= 0) {
-+			if (delay_sec > http_max_delay_sec) {
-+				die(Q_("server requested retry after %d second,"
-+					   " which is longer than max allowed\n",
-+					   "server requested retry after %d seconds,"
-+					   " which is longer than max allowed\n", delay_sec),
-+					delay_sec);
-+			}
-+			return delay_sec;
-+		}
-+	}
-+
-+	cur_delay_sec *= 2;
-+	return cur_delay_sec >= http_max_delay_sec ? http_max_delay_sec : cur_delay_sec;
-+}
-+
- static int http_request(const char *url,
- 			void *result, int target,
- 			const struct http_get_options *options)
- {
- 	struct active_request_slot *slot;
- 	struct slot_results results;
--	struct curl_slist *headers = http_copy_default_headers();
-+	struct curl_slist *headers;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf result_headers = STRBUF_INIT;
- 	const char *accept_language;
- 	int ret;
-+	int retry_cnt = 0;
-+	int retry_delay_sec = http_default_delay_sec;
-+	int http_code;
- 
-+retry:
- 	slot = get_active_slot();
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
- 
-+	curl_easy_setopt(slot->curl, CURLOPT_HEADERDATA, &result_headers);
-+	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_buffer);
-+
- 	if (result == NULL) {
- 		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
- 	} else {
-@@ -1936,6 +2034,7 @@ static int http_request(const char *url,
- 
- 	accept_language = get_accept_language();
- 
-+	headers = http_copy_default_headers();
- 	if (accept_language)
- 		headers = curl_slist_append(headers, accept_language);
- 
-@@ -1961,7 +2060,26 @@ static int http_request(const char *url,
- 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
- 	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
- 
--	ret = run_one_slot(slot, &results);
-+	http_code = 0;
-+	ret = run_one_slot(slot, &results, &http_code);
-+
-+	/* remove header data fields since not all slots will use them */
-+	curl_easy_setopt(slot->curl, CURLOPT_HEADERDATA, NULL);
-+	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, NULL);
-+
-+	if (ret != HTTP_OK) {
-+		if (retryable_code(http_code) && retry_cnt < http_retry_limit) {
-+			retry_cnt++;
-+			retry_delay_sec = http_retry_after(result_headers, retry_delay_sec);
-+			warning(Q_("got HTTP response %d, retrying after %d second (%d/%d)\n",
-+					   "got HTTP response %d, retrying after %d seconds (%d/%d)\n",
-+					   retry_delay_sec),
-+				http_code, retry_delay_sec, retry_cnt, http_retry_limit);
-+			sleep(retry_delay_sec);
-+
-+			goto retry;
-+		}
-+	}
- 
- 	if (options && options->content_type) {
- 		struct strbuf raw = STRBUF_INIT;
-diff --git a/http.h b/http.h
-index 5de792ef3f..faf9f1060e 100644
---- a/http.h
-+++ b/http.h
-@@ -99,7 +99,7 @@ void finish_all_active_slots(void);
-  *
-  */
- int run_one_slot(struct active_request_slot *slot,
--		 struct slot_results *results);
-+		 struct slot_results *results, int *http_code);
- 
- #ifdef USE_CURL_MULTI
- void fill_active_slots(void);
-diff --git a/remote-curl.c b/remote-curl.c
-index 7f44fa30fe..2657c95bcb 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -805,7 +805,7 @@ static int run_slot(struct active_request_slot *slot,
- 	if (!results)
- 		results = &results_buf;
- 
--	err = run_one_slot(slot, results);
-+	err = run_one_slot(slot, results, NULL);
- 
- 	if (err != HTTP_OK && err != HTTP_REAUTH) {
- 		struct strbuf msg = STRBUF_INIT;
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 72aaed5a93..3965cd265d 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -757,13 +757,17 @@ test_expect_success 'partial clone using HTTP' '
- '
- 
- test_expect_success 'partial clone using HTTP with redirect' '
--	_NONCE=`gen_nonce` && export _NONCE &&
-+	_NONCE=$(gen_nonce) &&
- 	curl "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server" &&
- 	curl "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server" &&
- 	curl "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server" &&
- 	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/error_ntime/${_NONCE}/3/502/10/smart/server"
- '
- 
-+test_expect_success 'partial clone with retry' '
-+	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/error_ntime/$(gen_nonce)/3/429/1/smart/server" 2>err &&
-+	test_i18ngrep "got HTTP response 429" err
-+'
- 
- # DO NOT add non-httpd-specific tests here, because the last part of this
- # test script is only executed when httpd is available and enabled.
+@@ -1031,7 +1032,7 @@ test_skip () {
+ 		skipped_reason="GIT_SKIP_TESTS"
+ 	fi
+ 	if test -z "$to_skip" && test -n "$run_list" &&
+-	   ! match_test_selector_list '--run' $test_count "$run_list"
++	   ! match_test_selector_list '--run' "$1" $test_count "$run_list"
+ 	then
+ 		to_skip=t
+ 		skipped_reason="--run"
 -- 
-2.28.0.1011.ga647a8990f-goog
+gitgitgadget
 
