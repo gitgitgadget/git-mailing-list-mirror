@@ -2,93 +2,110 @@ Return-Path: <SRS0=7dzq=DU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A10DC433E7
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 15:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5611BC433DF
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 15:39:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E819A251C0
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 15:31:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04C82251E7
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 15:39:06 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Fqrgqahv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731081AbgJMPbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Oct 2020 11:31:44 -0400
-Received: from relay8-d.mail.gandi.net ([217.70.183.201]:59989 "EHLO
-        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726749AbgJMPbo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Oct 2020 11:31:44 -0400
-X-Originating-IP: 103.82.80.152
-Received: from localhost (unknown [103.82.80.152])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id 986331BF20C;
-        Tue, 13 Oct 2020 15:31:40 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     ch <cr@onlinehome.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Paul Mackerras <paulus@ozlabs.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Martin von Zweigbergk <martinvonz@gmail.com>
-Subject: Re: [PATCH] gitk: to run in a bare repository
-References: <4e2e5829-b9a7-b9b4-5605-ac28e8dbc45a@onlinehome.de>
-        <20200123163151.GC6837@szeder.dev>
-        <CAPig+cTixT9JYDPn-umKdQLtTm5byA1wwmvVY1ryuh+hv2=6MQ@mail.gmail.com>
-        <xmqqpnfa3sj1.fsf@gitster-ct.c.googlers.com>
-        <xmqqk15i3rp7.fsf_-_@gitster-ct.c.googlers.com>
-        <20200123192707.GA110440@coredump.intra.peff.net>
-        <8be28321-3108-4846-ac6a-d5c7977774dc@onlinehome.de>
-        <CAPig+cT1drHWic4bm=NPMd4RnGuLe-WwUJ-82nHkze_ZOoYerg@mail.gmail.com>
-        <96216301-e831-3fd0-8bd8-8d0d752c580c@onlinehome.de>
-Date:   Tue, 13 Oct 2020 21:01:38 +0530
-In-Reply-To: <96216301-e831-3fd0-8bd8-8d0d752c580c@onlinehome.de> (ch's
-        message of "Tue, 13 Oct 2020 16:25:10 +0200")
-Message-ID: <87blh66t2d.fsf@yadavpratyush.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1730958AbgJMPjF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Oct 2020 11:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730535AbgJMPjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Oct 2020 11:39:05 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6168EC0613D0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2020 08:39:05 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id k25so23187037ioh.7
+        for <git@vger.kernel.org>; Tue, 13 Oct 2020 08:39:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ohk8nafRNnMvvlCBAXFv81tB5v5cbJVJ24hvktyVU4g=;
+        b=FqrgqahvMG2/GPVU6+0zGoNvnYmkW9kR42z667EoLM+YFFl9FX9/KiiJbrsongw5Q8
+         hkEItexthKWRXEVdHReaN1ammYHhv07VMxEKk5OPG2Wst9g5U1x5Jp0izIX2Mwqp86fA
+         SBM78+LZF+O/v5zJO82w1p7F2338OxaozPfDQ+PwnnFYVFPtBE09im3UEAQPPMYVEzfN
+         CXshVX2QuU594FzT0l97le5H+D4wXcr4xOUIpk9/+huA256RZfk0JR3TEabNWNj+g4cU
+         ofhCcmQKxHa1KLY9uYmmrzW0Hcjt5cZYTm+8L5DuNPjRPDQYkKd8yV5TdgVK0aQDY4iC
+         5aHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ohk8nafRNnMvvlCBAXFv81tB5v5cbJVJ24hvktyVU4g=;
+        b=c3v8ZfByaSyk4N3Dh5lE7waThFF/vQUzxCP68TGp02QEhHr9iToE2DvTeJ1pXgGjXv
+         h9pXxMhNxU46grnPzQafCwASjPn0GuaQicmSZ1TccLHaq5w17Xy/LRtwdabsKykDf3ir
+         TgrNwoj8S9xGe7ZFwp6J09kRo3C6axed6UpJYSgB3Yi0NZOfwxFkMPXCHQA5GNj45NjE
+         29QbqdFGK/YkY3fTFvVhbLpuNu+xI/ZWyfi4J6NX54h7rYZOfPHHeqYZpg2fZf6Osrz4
+         LkBAkDHH8Jp9gVhdtoUt5C23a3naP3Wvr49GMbfMl8Vo/JNbLIhXN4AgveamgPMag+MB
+         hwhQ==
+X-Gm-Message-State: AOAM532Kh0EPXGy+ocZVg+8rFcMdxKb8HNg25AAih1FUTnBOT/lKqMF/
+        q8ynSK4P7aEF5ZKMrWtnsz+vk6v+9h80znln
+X-Google-Smtp-Source: ABdhPJwaby+VyufcAkVLEiZg3WxHEhcviHH9UZFFnYEMDWh3vpn13UmpNyJ/aVHjfXpxjRdasXH5sQ==
+X-Received: by 2002:a6b:fd08:: with SMTP id c8mr25185ioi.16.1602603544497;
+        Tue, 13 Oct 2020 08:39:04 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:a4a8:cfa:3aeb:51fa])
+        by smtp.gmail.com with ESMTPSA id v84sm149592ila.85.2020.10.13.08.39.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2020 08:39:03 -0700 (PDT)
+Date:   Tue, 13 Oct 2020 11:39:01 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/3] test-lib: allow selecting tests by substring/regex
+ with --run
+Message-ID: <20201013153901.GA1913367@nand.local>
+References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
+ <46fce3a844c90b4078578f5aa2058bd6825af1d6.1602545164.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-GND-Spam-Score: 400
-X-GND-Status: SPAM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <46fce3a844c90b4078578f5aa2058bd6825af1d6.1602545164.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 13 2020, ch wrote:
-
-Hi,
-
-Please avoid top posting.
-
-> Sounds good. Thanks for the heads-up!
+On Mon, Oct 12, 2020 at 11:26:02PM +0000, Elijah Newren via GitGitGadget wrote:
+> diff --git a/t/README b/t/README
+> index 2adaf7c2d2..23639c5bcf 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -258,13 +258,13 @@ For an individual test suite --run could be used to specify that
+>  only some tests should be run or that some tests should be
+>  excluded from a run.
 >
-> Will the release also include a fix for git-gui (which exhibits
-> similar behavior as gitk; see [0])?
+> -The argument for --run is a list of individual test numbers or
+> -ranges with an optional negation prefix that define what tests in
+> -a test suite to include in the run.  A range is two numbers
+> -separated with a dash and matches a range of tests with both ends
+> -been included.  You may omit the first or the second number to
+> -mean "from the first test" or "up to the very last test"
+> -respectively.
+> +The argument for --run, <test-selector>, is a list of description
+> +substrings or regexes or individual test numbers or ranges with an
+> +optional negation prefix that define what tests in a test suite to
+> +include in the run.  A range is two numbers separated with a dash and
+> +matches a range of tests with both ends been included.  You may omit
+> +the first or the second number to mean "from the first test" or "up to
+> +the very last test" respectively.
 >
-> -ch
->
-> [0] https://lore.kernel.org/git/3c1a3e23-cf52-48cc-e9b6-f80642ca67ac@onlinehome.de/
+>  Optional prefix of '!' means that the test or a range of tests
+>  should be excluded from the run.
 
-I'm seeing this patch for the first time. It was never formally
-submitted to me. So as of now I have not queued it for the next release.
-I'll take a look at the problem and see if the patch is the correct fix
-and integrate it before the 2.29 release. But I don't have a lot of free
-time so no promises.
+This piece of documentation looks to be now out of date; it mentions a
+"test or range of tests", but that only covers a two of the now four
+ways to describe a test.
 
->
-> On 11.10.2020 07:08, Eric Sunshine wrote:
->> On Mon, Mar 30, 2020 at 11:21 AM ch <cr@onlinehome.de> wrote:
->>> On Thu, Jan 23, 2020 at 11:20:36AM -0800, Junio C Hamano wrote:
->>>   > Subject: [PATCH] gitk: be prepared to be run in a bare repository
->>>
->>> Sorry for bumping this thread but what's the integration status of the patch?
->>> The issue still seems to be present in v2.26.0.windows.1.
->> Junio just recently pulled commits into git.git from Paul's gitk
->> repository which contain this fix, and it looks like it will make it
->> into the Git 2.29.0 release.
->> 
->
+The rest of the patch looks great to me; and I, too, am very excited
+about it.
 
--- 
-Regards,
-Pratyush Yadav
+Thanks,
+Taylor
