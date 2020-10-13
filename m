@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3AE4C8300B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9CEEC8300A
 	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 02:42:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B632F221FF
+	by mail.kernel.org (Postfix) with ESMTP id 953AF221FC
 	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 02:42:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hs8hJlmL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vz4k2Osd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727934AbgJMAlG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 20:41:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49168 "EHLO
+        id S1727928AbgJMAlF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 20:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727917AbgJMAlB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727922AbgJMAlB (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Oct 2020 20:41:01 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0354C0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 17:41:00 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id x7so13096889wrl.3
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 17:41:00 -0700 (PDT)
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EA0CC0613D1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 17:41:01 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id d3so19770759wma.4
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 17:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fSoV1INTQ09lAoLPXCoEd4scIa7g6B+DTa5en96mUT8=;
-        b=hs8hJlmLPTAhlp4YvWcmZrjKpI25Ts50lpuM1UDwC6kVw9y8dZNHyl6wEbA7auahDe
-         2T6L8MccgDqSGvg1w/K24Jic0U17FnXp+jLAaJ2Sdw8EBoWp9UQej26gNgzAUaHhgyjm
-         c5bY0RpqnhB3FXkP0Cbc+/tA68LG/wBzNY5O0QOH4VyrfhZIkL2QKdgRwZYjlXn1kB1S
-         mzm99eXTIWIDIVHdMj8kUo3DJ4pawTaAWnbWrGk0cROdMfyPGJTB1Sk3+sr4EJKZViyr
-         gDgIBPYSzDAAa9qi1PP/pT66A7lvI8Ca0Zo8ScgbIGAAQzUy68oCz8WLN1pI6qs//qS2
-         f35w==
+        bh=iWvAwS9aXbUqDr3/4BBwlTWRv2d1rnfnw12nVrdpWDc=;
+        b=Vz4k2Osdng01RKivC067jphnQ4KKzvWqPDPLsOBKwIrw8tRhRTZO9f6Z/TaamcyXQ+
+         rTgocB6RXER5FzeLl5NxrgVUeyqL8pW2hwuOAJ6S0pN/dM8rxsNEjmEZMQXG8UoptxI1
+         Ha3CqdZQMxdnqpxsqarziXup98fMKdMFfP7QWjpdJQt5rYukeGOlYJ++1scn4H9FU5Dc
+         pnHv2nTbp5jdJQdY8W/NIHaCA4ciQ7KK4AWDHRQ2C9AjBjaxj6BpSMxklvboIb5YlrI2
+         /7baJwsrHSE6Yutf9pZN4CTIPmuYlE6y6bizT2NjdRTjP3MleJCTmLbiNGOv0UhQ6n3s
+         Y4hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fSoV1INTQ09lAoLPXCoEd4scIa7g6B+DTa5en96mUT8=;
-        b=W2Wo3sC6zUhYCaNN5dxCZc4opcuV1zUs9o0KUoJrJ3CPylkL7lcKsEk/SyjGME715I
-         b6Sm1jKGAC2PoJGTm4Z7yyUoJrQR7O4MimPI+6STZlmaaOzF53HJtaGEhTp6upQf5/o9
-         bBkuLRgwEQcWdw7a2w5ptutYfifkUI6pBMPYQKJGCAFT4MMdZ1DAntdQeQ2XCWUb0bHh
-         QH3Ize+15VGPB/LcoTPTzqgPjsUr5d73/AFisQ+Q5OhHHsPimJcZWctRQ2GKMl3HG7HA
-         YOhjrySuurdrFEou+YLzRnNjZqopPqxy/E/Q1iTRh3sIF/wVOjhJSFM5vc1M7QlP6HvW
-         /clw==
-X-Gm-Message-State: AOAM531NL5cmxTqpCn2I7azgMJ2eScB4wvEP581nopPv/dfYOy9GBmVR
-        S0tvBLz9EgB3Y4xRnIubto01fV5XesQ=
-X-Google-Smtp-Source: ABdhPJxfvy5+yTGCBfPRqvi+HFu5hRSRUXHUWmHLWOduMQzqD4ooZrsPqQKGwevMWBIbgVgUc7d0PQ==
-X-Received: by 2002:adf:fcc3:: with SMTP id f3mr3112151wrs.336.1602549659326;
-        Mon, 12 Oct 2020 17:40:59 -0700 (PDT)
+        bh=iWvAwS9aXbUqDr3/4BBwlTWRv2d1rnfnw12nVrdpWDc=;
+        b=Z5vpyWO1isbKttMTISBH9m7CcxtuWiNpXC87B6PCyWQxWUgfI4K1K1FwH3l5A5k7cc
+         +R8pwmnoRgq5dFJBIskMyPfEJx3G9Q08xvvVExKqHFYgDey+oVQyj+yEEWwpUO+ZG7Qk
+         Hv/SyfGbx7n5TivkhOHOSABjf1yjd8/v9HHOi8QQlUFbyWflKwwcli3rAdemR9nDBXZ+
+         XvSlUN9DVXlV0VtBFr7zcTJMohppjQoPAZJYGnlcLHuh/OAafVgfJGPIYy99XBVcfNr9
+         B+nVyLEVnlHRqhqfjXJHFlfSxgO7XKbiVB6jUlp+cskF6TBYR10OEoMR0UDwIlZyMNwG
+         0GQg==
+X-Gm-Message-State: AOAM5314bAvpTAf9ZqbNaN2lD4OHmDFXpODUAzS6st8PBx2qBhF/ct3c
+        5eNuApFFKrtqVxJ6aAP7DiUpzNxkneQ=
+X-Google-Smtp-Source: ABdhPJyu+Y4k5Wz+QmlbFViDY0hijdFvPrf3PQN19Kk7MBly6faG+mWwR7VyveWOkDtrfY27jGii0Q==
+X-Received: by 2002:a7b:c01a:: with SMTP id c26mr12945743wmb.35.1602549660080;
+        Mon, 12 Oct 2020 17:41:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i10sm8501715wrq.27.2020.10.12.17.40.58
+        by smtp.gmail.com with ESMTPSA id o6sm26860258wrm.69.2020.10.12.17.40.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2020 17:40:58 -0700 (PDT)
-Message-Id: <cc8d702f98f94fd9202d227d19be43a912467e84.1602549650.git.gitgitgadget@gmail.com>
+        Mon, 12 Oct 2020 17:40:59 -0700 (PDT)
+Message-Id: <490d3a42add2cc5f0d30db8f2351614294e00121.1602549650.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
 References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
         <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Oct 2020 00:40:48 +0000
-Subject: [PATCH v2 08/10] strmap: add functions facilitating use as a
- string->int map
+Date:   Tue, 13 Oct 2020 00:40:49 +0000
+Subject: [PATCH v2 09/10] strmap: add a strset sub-type
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,132 +77,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Although strmap could be used as a string->int map, one either had to
-allocate an int for every entry and then deallocate later, or one had to
-do a bunch of casting between (void*) and (intptr_t).
+Similar to adding strintmap for special-casing a string -> int mapping,
+add a strset type for cases where we really are only interested in using
+strmap for storing a set rather than a mapping.  In this case, we'll
+always just store NULL for the value but the different struct type makes
+it clearer than code comments how a variable is intended to be used.
 
-Add some special functions that do the casting.  Also, rename put->set
-for such wrapper functions since 'put' implied there may be some
-deallocation needed if the string was already found in the map, which
-isn't the case when we're storing an int value directly in the void*
-slot instead of using the void* slot as a pointer to data.
-
-A note on the name: if anyone has a better name suggestion than
-strintmap, I'm happy to take it.  It seems slightly unwieldy, but I have
-not been able to come up with a better name.
+The difference in usage also results in some differences in API: a few
+things that aren't necessary or meaningful are dropped (namely, the
+free_util argument to *_clear(), and the *_get() function), and
+strset_add() is chosen as the API instead of strset_put().
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- strmap.c | 11 ++++++++
- strmap.h | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 91 insertions(+)
+ strmap.h | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/strmap.c b/strmap.c
-index 47cbf11ec7..d5003a79e3 100644
---- a/strmap.c
-+++ b/strmap.c
-@@ -126,3 +126,14 @@ void strmap_remove(struct strmap *map, const char *str, int free_util)
- 		free((char*)ret->key);
- 	free(ret);
- }
-+
-+void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt)
-+{
-+	struct strmap_entry *entry = find_strmap_entry(&map->map, str);
-+	if (entry) {
-+		intptr_t *whence = (intptr_t*)&entry->value;
-+		*whence += amt;
-+	}
-+	else
-+		strintmap_set(map, str, amt);
-+}
 diff --git a/strmap.h b/strmap.h
-index 5bb7650d65..fe15e74b78 100644
+index fe15e74b78..2ad6696950 100644
 --- a/strmap.h
 +++ b/strmap.h
-@@ -98,4 +98,84 @@ static inline unsigned int strmap_get_size(struct strmap *map)
- 		var = hashmap_iter_next_entry_offset(iter, \
- 						     OFFSETOF_VAR(var, ent)))
+@@ -178,4 +178,68 @@ static inline void strintmap_set(struct strintmap *map, const char *str,
  
-+
+ void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt);
+ 
 +/*
-+ * strintmap:
-+ *    A map of string -> int, typecasting the void* of strmap to an int.
++ * strset:
++ *    A set of strings.
 + *
-+ * Primary differences:
-+ *    1) Since the void* value is just an int in disguise, there is no value
-+ *       to free.  (Thus one fewer argument to strintmap_clear)
-+ *    2) strintmap_get() returns an int; it also requires an extra parameter to
-+ *       be specified so it knows what value to return if the underlying strmap
-+ *       has not key matching the given string.
-+ *    3) No strmap_put() equivalent; strintmap_set() and strintmap_incr()
-+ *       instead.
++ * Primary differences with strmap:
++ *    1) The value is always NULL, and ignored.  As there is no value to free,
++ *       there is one fewer argument to strset_clear
++ *    2) No strset_get() because there is no value.
++ *    3) No strset_put(); use strset_add() instead.
 + */
 +
-+struct strintmap {
++struct strset {
 +	struct strmap map;
 +};
 +
-+#define strintmap_for_each_entry(mystrmap, iter, var)	\
-+	strmap_for_each_entry(&(mystrmap)->map, iter, var)
++#define strset_for_each_entry(mystrset, iter, var)	\
++	strmap_for_each_entry(&(mystrset)->map, iter, var)
 +
-+static inline void strintmap_init(struct strintmap *map)
++static inline void strset_init(struct strset *set)
 +{
-+	strmap_init(&map->map);
++	strmap_init(&set->map);
 +}
 +
-+static inline void strintmap_ocd_init(struct strintmap *map,
-+				      int strdup_strings)
++static inline void strset_ocd_init(struct strset *set,
++				   int strdup_strings)
 +{
-+	strmap_ocd_init(&map->map, strdup_strings);
++	strmap_ocd_init(&set->map, strdup_strings);
 +}
 +
-+static inline void strintmap_clear(struct strintmap *map)
++static inline void strset_clear(struct strset *set)
 +{
-+	strmap_clear(&map->map, 0);
++	strmap_clear(&set->map, 0);
 +}
 +
-+static inline void strintmap_partial_clear(struct strintmap *map)
++static inline void strset_partial_clear(struct strset *set)
 +{
-+	strmap_partial_clear(&map->map, 0);
++	strmap_partial_clear(&set->map, 0);
 +}
 +
-+static inline int strintmap_contains(struct strintmap *map, const char *str)
++static inline int strset_contains(struct strset *set, const char *str)
 +{
-+	return strmap_contains(&map->map, str);
++	return strmap_contains(&set->map, str);
 +}
 +
-+static inline void strintmap_remove(struct strintmap *map, const char *str)
++static inline void strset_remove(struct strset *set, const char *str)
 +{
-+	return strmap_remove(&map->map, str, 0);
++	return strmap_remove(&set->map, str, 0);
 +}
 +
-+static inline int strintmap_empty(struct strintmap *map)
++static inline int strset_empty(struct strset *set)
 +{
-+	return strmap_empty(&map->map);
++	return strmap_empty(&set->map);
 +}
 +
-+static inline unsigned int strintmap_get_size(struct strintmap *map)
++static inline unsigned int strset_get_size(struct strset *set)
 +{
-+	return strmap_get_size(&map->map);
++	return strmap_get_size(&set->map);
 +}
 +
-+static inline int strintmap_get(struct strintmap *map, const char *str,
-+				int default_value)
++static inline void strset_add(struct strset *set, const char *str)
 +{
-+	struct strmap_entry *result = strmap_get_entry(&map->map, str);
-+	if (!result)
-+		return default_value;
-+	return (intptr_t)result->value;
++	strmap_put(&set->map, str, NULL);
 +}
-+
-+static inline void strintmap_set(struct strintmap *map, const char *str,
-+				 intptr_t v)
-+{
-+	strmap_put(&map->map, str, (void *)v);
-+}
-+
-+void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt);
 +
  #endif /* STRMAP_H */
 -- 
