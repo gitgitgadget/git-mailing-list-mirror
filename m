@@ -2,96 +2,65 @@ Return-Path: <SRS0=7dzq=DU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3151C433E7
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0E7C433DF
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:02:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE37220BED
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:01:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4363920BED
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 19:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732322AbgJMTBR convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 13 Oct 2020 15:01:17 -0400
-Received: from mx.pao1.isc.org ([149.20.64.53]:63556 "EHLO mx.pao1.isc.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727733AbgJMTBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Oct 2020 15:01:17 -0400
-Received: from zmx1.isc.org (zmx1.isc.org [149.20.0.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.pao1.isc.org (Postfix) with ESMTPS id 0F1C93AB1AA;
-        Tue, 13 Oct 2020 19:01:17 +0000 (UTC)
-Received: from zmx1.isc.org (localhost [127.0.0.1])
-        by zmx1.isc.org (Postfix) with ESMTPS id C813C16008D;
-        Tue, 13 Oct 2020 19:01:16 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
-        by zmx1.isc.org (Postfix) with ESMTP id B66F2160090;
-        Tue, 13 Oct 2020 19:01:16 +0000 (UTC)
-Received: from zmx1.isc.org ([127.0.0.1])
-        by localhost (zmx1.isc.org [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id EcJhHPNrvsxd; Tue, 13 Oct 2020 19:01:16 +0000 (UTC)
-Received: from larwa.hq.kempniu.pl (unknown [212.180.223.213])
-        by zmx1.isc.org (Postfix) with ESMTPSA id F024016008D;
-        Tue, 13 Oct 2020 19:01:15 +0000 (UTC)
-Date:   Tue, 13 Oct 2020 21:01:13 +0200
-From:   =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] t: add -I<regex> tests
-Message-ID: <20201013190113.GB9341@larwa.hq.kempniu.pl>
-References: <20201001120606.25773-1-michal@isc.org>
- <20201012091751.19594-1-michal@isc.org>
- <20201012091751.19594-4-michal@isc.org>
- <nycvar.QRO.7.76.6.2010121320190.50@tvgsbejvaqbjf.bet>
- <20201013063846.GF3278@larwa.hq.kempniu.pl>
- <nycvar.QRO.7.76.6.2010131337320.50@tvgsbejvaqbjf.bet>
+        id S2387591AbgJMTCx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Oct 2020 15:02:53 -0400
+Received: from dd36226.kasserver.com ([85.13.153.21]:59738 "EHLO
+        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbgJMTCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Oct 2020 15:02:53 -0400
+Received: from client3368.fritz.box (i5C747545.versanet.de [92.116.117.69])
+        by dd36226.kasserver.com (Postfix) with ESMTPA id AE6EE3C0808;
+        Tue, 13 Oct 2020 21:02:51 +0200 (CEST)
+From:   Stefan Haller <stefan@haller-berlin.de>
+To:     git@vger.kernel.org
+Cc:     me@yadavpratyush.com
+Subject: [PATCH] git-gui: Make usettk off by default on Mac OS X
+Date:   Tue, 13 Oct 2020 21:02:43 +0200
+Message-Id: <20201013190243.62313-1-stefan@haller-berlin.de>
+X-Mailer: git-send-email 2.29.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2010131337320.50@tvgsbejvaqbjf.bet>
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+This option is supposed to make a Tcl/Tk app look more like a native app
+for the respective platform. This doesn't seem to work on Mac, it looks
+worse than the non-ttk appearance (for instance, the colored pane
+headers are grey).
 
-> > First, let me say that the goal of minimizing the run time of a test
-> > suite is close to my heart (it is an issue at my day job).  Yet, I
-> > assumed that this new test would not be detrimental to test suite run
-> > times as it takes about half a second to run t4069-diff-ignore-regex.sh
-> > on my machine - and (I hope) its contents are in line with the "tests
-> > are the best documentation" proverb.
-> 
-> Sadly, the test is not quite as fast on Windows. I just ran this (on a not
-> quite idle machine, admittedly) and it ended in this:
-> 
-> 	# passed all 11 test(s)
-> 	1..11
-> 
-> 	real    0m51.470s
-> 	user    0m0.046s
-> 	sys     0m0.015s
-> 
-> Yes, that's almost a minute.
+Users who really prefer the ttk look can still turn it on with the
+gui.usettk config.
 
-Out of curiosity: is that under Cygwin?  I have seen shell-based tests
-finishing in 15 *seconds* on Unix-like systems and in 15 *minutes* under
-Cygwin, which would be in line with your measurements provided above.
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+---
+ git-gui.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> > Right, neat, though this does not (yet) test:
-> >
-> >   - the interaction between -I and --ignore-blank-lines (this is visible
-> >     in code coverage),
-> 
-> Right. Any chance you can finagle that in, e.g. by yet another `-e`
-> argument to the `sed` call?
-
-I will try in v3 (while also looking at what I can do for other missing
--I<regex> tests I pointed out).
-
+diff --git a/git-gui.sh b/git-gui.sh
+index 867b8ce..f7e13ca 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -897,7 +897,7 @@ set default_config(gui.fontui) [font configure font_ui]
+ set default_config(gui.fontdiff) [font configure font_diff]
+ # TODO: this option should be added to the git-config documentation
+ set default_config(gui.maxfilesdisplayed) 5000
+-set default_config(gui.usettk) 1
++set default_config(gui.usettk) [expr ![is_MacOSX]]
+ set default_config(gui.warndetachedcommit) 1
+ set default_config(gui.tabsize) 8
+ set font_descs {
 -- 
-Best regards,
-Michał Kępień
+2.29.0.rc1
+
