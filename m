@@ -8,115 +8,123 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0161BC433E7
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 14:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FAB4C433DF
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 14:19:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9904C247CA
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 14:10:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCF2B24802
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 14:19:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="FodoiVVi"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="E0JP9c5c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388401AbgJMOKH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Oct 2020 10:10:07 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57321 "EHLO mout.gmx.net"
+        id S1729296AbgJMOTy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Oct 2020 10:19:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:43309 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388390AbgJMOKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Oct 2020 10:10:07 -0400
+        id S1726822AbgJMOTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Oct 2020 10:19:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602598181;
-        bh=Qmc9MaMQ8MdWlSmaHiurCCRLNoIk3ebymgO4jOwW+Yc=;
+        s=badeba3b8450; t=1602598781;
+        bh=mp2Q7Ctoa9v453P2R5PNmbb18OmMse6bqsBpLM+J4xU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FodoiVViF68cty9sG68o32CK+Td2zphSSlO45bIRsbyZn0jJq9Kn71MSox+enXjmo
-         BJk2+QFwUq/wAF64ORTXzNTxbqMRRR/ZxOegayhwPyxUZ1ZBjUAtpMKMf805rKKfVs
-         LwDXtOwIqx2aMYcdSafahEk47vd3DgJYCBA5qx3c=
+        b=E0JP9c5cPH3c6Y0FBrU5zSadFiuz5nahNZZ6Bu2wbkfC31/1wetSfSXKtwoF11I4+
+         tiQnhfVIEkiuqO+YHKJwEvQ+9DfGYqHu4D4gb5REVORaHUkQSPWAHCShsklTMoWEkT
+         GyzKJ03I+r9VPv6hU7NWB16a4VkDYxJR/TcDe8AY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.73.169] ([89.1.212.188]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3DJl-1kTALI2t13-003ac0; Tue, 13
- Oct 2020 16:09:41 +0200
-Date:   Tue, 13 Oct 2020 14:02:05 +0200 (CEST)
+Received: from [172.20.73.169] ([89.1.212.188]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmlT2-1k1DKN1GtS-00jpu7; Tue, 13
+ Oct 2020 16:19:41 +0200
+Date:   Tue, 13 Oct 2020 14:12:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Micha=C5=82_K=C4=99pie=C5=84?= <michal@isc.org>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] diff: add -I<regex> that ignores matching
- changes
-In-Reply-To: <20201013063646.GB3278@larwa.hq.kempniu.pl>
-Message-ID: <nycvar.QRO.7.76.6.2010131401110.50@tvgsbejvaqbjf.bet>
-References: <20201001120606.25773-1-michal@isc.org> <20201012091751.19594-1-michal@isc.org> <20201012091751.19594-3-michal@isc.org> <nycvar.QRO.7.76.6.2010121315170.50@tvgsbejvaqbjf.bet> <20201013063646.GB3278@larwa.hq.kempniu.pl>
+To:     Patrick Steinhardt <ps@pks.im>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 05/13] reftable: utility functions
+In-Reply-To: <20201012170527.GA21606@xps>
+Message-ID: <nycvar.QRO.7.76.6.2010131405380.50@tvgsbejvaqbjf.bet>
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com> <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com> <20201002041214.GE3252492@google.com>
+ <CAFQ2z_NL1UrmonMH3qLKrEkjsPjm9qTbtoeY0OHQZzkVW2t3-w@mail.gmail.com> <20201012152505.GB3740546@google.com> <20201012170527.GA21606@xps>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-709682026-1602590527=:50"
-X-Provags-ID: V03:K1:a0LeBG7ABBAuP6YiY0Ev9cHxbAhoebzcmjwuargkSulG0rBW3Q6
- nATXWRWLdfN59a4M+GS1l3rEyQf31pHTDlJHDS+Z3z7NHfu7jDPiNBID7brsLN7onTEWZlE
- Z1RV09YScRAD3quw88owLrN1ylLEyL1pTsUaYYZ2SWcBWcVYqOmiP2f4S0xr2Qb64zyMR7H
- +exhLZht8kZg5whbXKf9g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7LFVaU42Ix4=:nAPqi8Q4cJbt7SqkDxR9dc
- 1jbiVAfk6kvYjV8PWBc+EOR+IoKN4nq/PNdOy683Y37385D+oRLEaU26D1tyQrPo/UEN4w+Xk
- AxwuL+nCOXtZfZJBnMcznqoKqvTUUGWNMg+eaey4lwAVSKsl7TbkKcFmAJSaCqWEaFaEQCjwT
- wE2gItAA+IXgBYFcQOYGRKkOVi/BhSNKTQYLm8g1XCfJbdcSU2tYlsVJf/vwAf700tCXbvXQ+
- LNqr4N14uT9HVpJDTuMKeAnNRqy+z/Ydvdtr4tXfLlHQISgVXcRmUUNTtuSnM1yxvbuTE/41I
- RyV+DS/hxJhdC5eqv7bPyC1A0wabazkOFgOOpM6MEF9trdfu/zU0onzjm7/ZEch3Plwen1tou
- ApmzsZuW4laZHkogMIPKW4E8CA7QAcm0RGhtJqldlLDXOYdB6dkolYZS9DzdQNJMvLvcRYSlZ
- J2h75YWHMs8bXN4/EHqsvHpRVk5z50Ye51lHS/nhOHRadbdxMrrBnoAYEfAZUrcIVYpmh+7s3
- LzpXih7FSm9WxAgBNMCdzm9Hbl+mMylfkDMH8YQQvPYJkJYIXmCWMOSLCu8NGQBonovQm/O/k
- 10MXFw0f8n2FRERqERCseMmKahutzA44yQX2Wc7oUFnIHPOPyqHZBEU6ZqW6j6UOb+BqL9TtF
- bb7OBq82v+ElfxlI4kB9lWX5nGWeVEem1yWDYcLS1s6A/elCZNrf5rmEsvzPWMOI/jDdo2wlk
- M27kkpjiX7uJVAunmeEb2GiL7CwSReo6YVMf19rYzKBzQ94RqBQ5lZt499HvO5/hzKeaA4UuG
- tmtP4p4Gu234OpUJLaC0oFlM2MwuaFGN8Qgw6s7Mgy7p3FmVs2eK+DDKvQMxdZMEzFFAK1GEF
- RD+L2Gkriq4XY+LTaAoB03IDWWIR0SGdC+t8PS2Q8AZIswP/dJRbvlgWpDmzp1URmzq55bEfx
- HxW7pyRszxMvqJgeEop/dSD3xuNjpVj7iew3g+pWkznfAW6Tf0C6IRrzLhpD8v0zF1zAsF600
- SqXd45nmzW0iYSNxWmhyqM2/t4M9MlAXZQ6H9TwR8YmCpcb/VergY/0uDHxHYe69ujBLnygjs
- GfDal1ZgOjliSh40vgpYuplcXOERHUi0yh+cvy2yXqa8d9wrFO0HS9CDb+UBCTGdbxIZf4eQB
- ouoDESJ/ATBRQstwysOTVwAaY52yeuj6rdhVgi/OZ8eHcgONex0DURV/BDeErnwQINsvob+Mg
- Zngy3Kq0OCYWWzxVCmTUIDArE7ESiXP7T2Qyzug==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wwRRY7mdK1K/3ILEMcidddE82aComlxA8p7MJP7ll7w1nlAeONT
+ +lhUX1axR77a/y9C3r7opK68LENlbQcB+SNk1TSWkCdZQ0lYwxohWbzT1j9cKCMJU13wR1F
+ TyUZn4Zd5X9um8Gko7pfkZGJmPFgTBqkUlVPFxjmyui00rNd3BULc1RVgZLdxe8854V9qAL
+ zbc+t4qNYoENRxURDirQA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:m/zzJUiE4Fs=:1WQ3zvxy8mp43CaU/SHmtR
+ Ll9AOjXnWCpEcqIS9ObFKCGD6QMY564ht0Zwers7QSybYK+0XgsRZBFXva+YHJ2Cod3Ozz16m
+ 7ZfxzMoReQR7YsyBBD4/BoG0ge+24knpJkr/K/3XL1FZTL6Ahug44fOxDIR/ZW/kOtBBLwggb
+ wUSMbVf0PMt6X5g3/dPgG89wB33GUhtS9BV38ErkVXkuXs2tGnGJIbY76Rlx7/T3rPzjMm0It
+ DCuIw66F9cdKkTmLMddarVbRbQuEJw/BkX8dzawpxQtdtqgOE8nhRn5dMGsquZT+fQi6Sav5X
+ YkEpcU5a6FAqDG7jekQQMIAR0x5QyDnmVmLWvEe/OcvP20AAJ+EQoojRwNTZZFRC7dSF445X/
+ avT+XG9nTRKFegpn7AnbOcx5Y6BD71Z1GwY4qLiK48yfpuXmflS2zJdlyxtaABg8MW73qIGiC
+ yVhG5GOEwJmwpnbfWcadHIDoc4GnrFKl5Q9TS2LvTei2JltHtf3DMnUn/Ah32ZYg80abgNMQc
+ wIrW6Y69Oj7Q2ENXHFcRkBcMR0Rf7hUyOysarm8eJIm9paSy1trSaE7MPuELTBx5uLjByRPhr
+ 8GDSq5xkIiSEuRjm0AbqufvbWZXqG0TfnQN2vwq/WKRyU8QGnzOLdIfh6ddV86OOLZBTYTcFo
+ /V9u2EmMFaBVfWWtbZZghG+ozZDWwKIt+rsgCsUJZGE1jYs2djdXfSmsfMw3IAdp4mN3K0jFJ
+ i//8hTgqaCy6wPYoYNjHALhRGKwTgeY3Om6y5dlVa0/RQWlLBHnTwuV+ChQ498p7zfapi2292
+ PDjU8VuUxwooK3tBUfsTUlHjufreZrPT18KavNKKMtWJPa1ayzRAachEwQd392ne4ophb8fAS
+ MJPel+NP+Y+XyCUrqQ4/KLUoqydTHDkoXDXHiqiiE=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Patrick,
 
---8323328-709682026-1602590527=:50
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, 12 Oct 2020, Patrick Steinhardt wrote:
 
-Hi Micha=C5=82,
-
-On Tue, 13 Oct 2020, Micha=C5=82 K=C4=99pie=C5=84 wrote:
-
-> Hi Johannes,
->
-> > > @@ -5491,6 +5511,9 @@ static void prep_parse_options(struct diff_opt=
-ions *options)
-> > >  		OPT_BIT_F(0, "ignore-blank-lines", &options->xdl_opts,
-> > >  			  N_("ignore changes whose lines are all blank"),
-> > >  			  XDF_IGNORE_BLANK_LINES, PARSE_OPT_NONEG),
-> > > +		OPT_CALLBACK_F('I', NULL, options, N_("<regex>"),
-> > > +			       N_("ignore changes whose all lines match <regex>"),
-> > > +			       0, diff_opt_ignore_regex),
-> > >  		OPT_BIT(0, "indent-heuristic", &options->xdl_opts,
-> > >  			N_("heuristic to shift diff hunk boundaries for easy reading"),
-> > >  			XDF_INDENT_HEURISTIC),
+> On Mon, Oct 12, 2020 at 08:25:05AM -0700, Jonathan Nieder wrote:
+> > (+cc: Patrick Steinhardt from libgit2)
+> > Hi,
 > >
-> > Are we releasing the `ignore_regex` anywhere?
+> > Han-Wen Nienhuys wrote[1]:
+> > > On Fri, Oct 2, 2020 at 6:12 AM Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> > >> Han-Wen Nienhuys wrote:
+> >
+> > >>> +     reftable_free(a);
+> > >>> +}
+> > >>
+> > >> Are there other callers that need custom free?
+> > >
+> > > The libgit2 folks requested the ability to set memory allocation
+> > > routines, hence reftable_free().
+> >
+> > Thanks.  Patrick or Han-Wen, can you say a little more about this use
+> > case?  That would help with making sure we are making an API that
+> > meets its needs.
+> >
+> > For example, is a custom allocator something that would be set
+> > globally or something attached to a handle?  If the former, would code
+> > that uses xmalloc and free and gets #define-d away when used in
+> > libgit2 work?  If the latter, what does the handle look like?
 >
-> Oops, I tried to mimic what is done for 'anchors', and I failed to
-> notice that apparently the elements of the options->anchors array are
-> only free()'d when --patience is also used and the array pointer itself
-> is never free()'d at all.  Given this, I believe I need to fix
-> diff_opt_ignore_regex() in patch 2 and also make sure that the memory
-> allocated in diff_opt_anchored() gets properly released - in another
-> preliminary clean-up patch?
->
-> At first glance, diff_flush() - specifically the part below the
-> 'free_queue' label - looks like a sane place to free() things.  Am I
-> mistaken?
+> We have global pluggable allocators in libgit2 which can be set up
+> before calling `git_libgit2_init()`. The user of libgit2 can fill a
+> `git_allocator` structure with a set of funtcion pointers, most
+> importantly with implementations of `free` and `malloc`. Those then get
+> used across all of libgit2 for all subsequent allocations.
 
-Oh wow, from a cursory look it seems as if the diff machinery was not
-exactly careful with releasing memory. I might be mistaken, but if I am
-not, then this would deserve a separate patch series, methinks.
+I did not find out how those are used in the `deps/` part of libgit2's
+source code. For example, I see a couple of instances where `malloc()` is
+used in `ntlmclient` and in `pcre`.
+
+The thing I was looking for would have been something like
+
+	#define malloc(size) git__malloc(size)
+	...
+
+This would also have been what I imagined to be the best strategy to
+integrate the reftable code once it is properly embedded in libgit.a (and
+of course using libgit.a's API as much as it can).
+
+Somewhat related: I was wondering whether it would make sense for git.git
+to rename `strbuf` to `git_buf`? Would that make it easier to exchange
+code between the two projects? Or would it just be unnecessary churn?
 
 Ciao,
 Dscho
-
---8323328-709682026-1602590527=:50--
