@@ -6,96 +6,103 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83937C433DF
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 17:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B051C433E7
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 17:53:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17AA12537A
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 17:45:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 956DE2538F
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 17:53:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mqgjLkQR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mgMtcU6F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726174AbgJMRpI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Oct 2020 13:45:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61802 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbgJMRpH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Oct 2020 13:45:07 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 164E3FA9D7;
-        Tue, 13 Oct 2020 13:45:06 -0400 (EDT)
+        id S1727080AbgJMRxc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Oct 2020 13:53:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54707 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbgJMRxb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Oct 2020 13:53:31 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F3D4E100891;
+        Tue, 13 Oct 2020 13:53:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Fc4B7mqVGJb6Nlnv/y+Iutj/57w=; b=mqgjLk
-        QRi5EcZks/AEdtGR0p11HsqmloGtfBPv8iM9vJ24ZruUQU6U3/zhtc2XsnHvL492
-        GKpUTmDhOM7o2hYjwk4qNB7Khdk5ApXngLxTo19xPkkg7e9rBxJdXx+Om2TvrgUw
-        yacflVO28NEUwzq1bKbyN0IBFTtKLr7+zxnvo=
+        :content-type; s=sasl; bh=8AhKcNh0Ra9oeX3LE4ksCKTR8cg=; b=mgMtcU
+        6FiPKJ3QKKmwQzFRG2TGCaemB4TG2EAN/QkpVufwXtZ8aPO/7Z3Pa03cdhserCUh
+        a8y9YmwR/sR/d2s6z2lbiEIsFo89qdSZIgfo29PiK7GBoggMSJR41GQq5DALBGXw
+        D2djjrZjVweO5QGS51atMu/r4+P2te4G7AxVA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Yij7dBPaMolyNnZdS4KYQwrMsWqGgzim
-        yOMeGY2fLzknE9qXJHTGhlzoQGyZIpbOTgxH2dwg+K50d52lRFBKx1aMIE/NjAEN
-        916iTHgEElSXpZ203r76wj0hBPh04I/W2ne+SGVUBVuT342Hp2UJ4wqQE4lh3aAS
-        kE33Ay29rCo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0E590FA9D6;
-        Tue, 13 Oct 2020 13:45:06 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=OurpSo2ilL/6wTls8iR9Gv/EH4HZngwK
+        9zz/S/rJM8/6ckyxajY5iV1yPoNY4ERCjbDpkgkqRYuNS/QuFu5QLd0uo2ZUICVF
+        DvhyDQJedQ2QTXTWuRCnHByOTgfZLvhcK5n6hSMqAqmdNezmmqyPH7vFOwDujh3M
+        cVSII5JXaYo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EDB55100890;
+        Tue, 13 Oct 2020 13:53:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F150FA9D5;
-        Tue, 13 Oct 2020 13:45:03 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 403C110088F;
+        Tue, 13 Oct 2020 13:53:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sean McAllister <smcallis@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, peff@peff.net,
-        Masaya Suzuki <masayasuzuki@google.com>
-Subject: Re: [PATCH 3/3] http: automatically retry some requests
-References: <20201012184806.166251-1-smcallis@google.com>
-        <20201012184806.166251-3-smcallis@google.com>
-        <nycvar.QRO.7.76.6.2010122126280.50@tvgsbejvaqbjf.bet>
-        <CAM4o00fL4oGNG_Z7tF5bL=Kp===683LBo1RhmZ=vZ6Kie=-jzA@mail.gmail.com>
-Date:   Tue, 13 Oct 2020 10:45:01 -0700
-In-Reply-To: <CAM4o00fL4oGNG_Z7tF5bL=Kp===683LBo1RhmZ=vZ6Kie=-jzA@mail.gmail.com>
-        (Sean McAllister's message of "Tue, 13 Oct 2020 09:03:15 -0600")
-Message-ID: <xmqq362ikoki.fsf@gitster.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t5500.43: make the check a bit more robust
+References: <pull.753.git.1602600323973.gitgitgadget@gmail.com>
+Date:   Tue, 13 Oct 2020 10:53:24 -0700
+In-Reply-To: <pull.753.git.1602600323973.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Tue, 13 Oct 2020 14:45:23
+        +0000")
+Message-ID: <xmqqy2kaj9m3.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D2B4321C-0D7B-11EB-811B-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: FE8E6366-0D7C-11EB-B9CB-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sean McAllister <smcallis@google.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->> > +static int http_retry_limit = 3;
->> > +static int http_default_delay = 2;
->>
->> Should there be a config option for that? Also, it took me some time to
->> find the code using this variable in order to find out what unit to use:
->> it is seconds (not microseconds, as I had expected). Maybe this can be
->> documented in the variable name, or at least in a comment?
+> Note: we have code in `demultiplex_sideband()` _specifically_ to stitch
+> back together lines that were delivered in separate sideband packets.
+> However, this stitching fails when a primary packet is delivered in
+> between the two sideband packets: since a primary packet was received,
+> `demultiplex_sideband()` has to return that (and cannot wait for other
+> sideband packets, and therefore has to flush any incomplete line it
+> received).
+
+Ouch.  Good find.
+
+>  	git -C myclient fetch --progress origin 2>log &&
+> -	test_i18ngrep "remote: Total 3 " log
+> +	if ! test_i18ngrep "remote: Total 3 " log
+> +	then
+> +		# It is possible that the "Total 3" line is delivered in
+> +		# multiple sideband packets, and that a primary packet is
+> +		# delivered in between. When that happens, the line will be
+> +		# presented on multiple "remote:" lines.
+> +		sed "/^remote: T/{
+> +			:a
+> +			N
+> +			s/\nremote: //
+> +			ba
+
+OK, so if we see multiple and adjacent "remote:" lines, we strip the
+leading "remote: " prefix from the second and subsequent lines and
+concatenate them into one giant line?  Sounds good.
+
+Will queue.  Thanks.
+
+> +		}" log >log.unsplit &&
+> +		test_i18ngrep "remote: Total 3 " log.unsplit
+> +	fi
+>  '
+>  
+>  test_expect_success 'in_vain resetted upon ACK' '
 >
-> Junio tossed that out during our private review and I think we decided to just
-
-Needs clarification.  Here "that" in "tossed that out" only refers
-to "static int const http_retry_limit = 3" and friends and nothing
-else.  There weren't any discussion on units or comments.  I did
-mention that it is an obvious future possibility to make these
-configurable and that was why I suggested to "toss out" the const.
-
-It seems we'll see names with "seconds" in them somewhere, which is
-good.
-
-> I've been writing a lot of python code lately =D  So splitting into
-> lines was a natural paradigm for me.  You're right, I like yours more.  I've
-> refactored it to be closer to that.  Little bit of fiddling to deal with header
-> whitespace properly, but it's pretty close.
-
-Good.  I personally think strbuf_split() is a mistaken API whose use
-needs to be killed, so it makes me happy to see one new callsite we
-didn't have to add ;-)
-
-Thanks.
+> base-commit: d4a392452e292ff924e79ec8458611c0f679d6d4
