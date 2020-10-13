@@ -2,96 +2,116 @@ Return-Path: <SRS0=7dzq=DU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58A87C433E7
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 16:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31A25C433E7
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 17:23:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E788D2522E
-	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 16:00:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8B0B25351
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 17:23:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EMcB084R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQ9n9rQv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731433AbgJMQAP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Oct 2020 12:00:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56225 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731302AbgJMQAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Oct 2020 12:00:14 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 22393945AC;
-        Tue, 13 Oct 2020 12:00:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LmEiHl1Ne/VQuYXez2dCK+QC/7U=; b=EMcB08
-        4Rq9z/2h0Uic+swvZryyks70tES7JlWJhc54gicx55AVluy0CFtEuJTOkTYJw+9T
-        W7F9vcHhjaMAcApnTBIIJnxR8eXsIOdG7B8K2DYYfl3TWs9Z3WIDiNqiD/MbQ2Y0
-        iJaEBGY1EE3UArepH5n7hACK40Oshbtkprplw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jGAPCRZk4n+trm0PyepIIrA7220Gm8Cq
-        Qm1DC4M2zBrM7RaMsx53HYOCNN4WEADPa/6dUowMw4iBuLNNecT+HbNLaEtZ1caR
-        gb6cjqxht1+3rXPOo9gbeE6ob1rPORcjtIUEXC+YT50RBwt7TJvLfCihR0wFUcZg
-        +vHoizS1Fkw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CBD4F945A9;
-        Tue, 13 Oct 2020 12:00:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9E411945A8;
-        Tue, 13 Oct 2020 12:00:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] t: add -I<regex> tests
-References: <20201001120606.25773-1-michal@isc.org>
-        <20201012091751.19594-1-michal@isc.org>
-        <20201012091751.19594-4-michal@isc.org>
-        <nycvar.QRO.7.76.6.2010121320190.50@tvgsbejvaqbjf.bet>
-        <20201013063846.GF3278@larwa.hq.kempniu.pl>
-        <nycvar.QRO.7.76.6.2010131337320.50@tvgsbejvaqbjf.bet>
-Date:   Tue, 13 Oct 2020 09:00:09 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2010131337320.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 13 Oct 2020 14:00:31 +0200 (CEST)")
-Message-ID: <xmqqblh6ktfa.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1730024AbgJMRXp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Oct 2020 13:23:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725970AbgJMRXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Oct 2020 13:23:45 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC30C0613D0
+        for <git@vger.kernel.org>; Tue, 13 Oct 2020 10:23:45 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id i12so760677ota.5
+        for <git@vger.kernel.org>; Tue, 13 Oct 2020 10:23:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=igTB3bpC+SU7keNUWVkBO4iL6vebpwOPYYyDDCazSKo=;
+        b=gQ9n9rQvyAM6E66kng7FvFUYdNYeV48cHRVeLw/HOh3N7RK05gIoDKnMpUWv83EC8O
+         6znaqDF+r/f5NDG0IRCtq9U9002cUMfoNO56UYZebcuFkd5bWjQtv5DYQZbq2xXmMeTo
+         zDhdgYLX5Uprek+SN+ezhYU0BFFalWRd2kr5B21ZcqzyteU3fpBnYTl7Yl8tf2qEwx7B
+         Z2qvU6q8DgpTIp0E41eiaY5/f7g3H6MoxCLUBWxYY7OKyPvyY4Ysm2E2a7eyYGLLrd6W
+         fsF7/MUfyZezBDWVtYPmIkWJm7p/k9r/BmEYa80KynJCm0uEv1ntgi22FPSlw2IwgNmV
+         gBSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=igTB3bpC+SU7keNUWVkBO4iL6vebpwOPYYyDDCazSKo=;
+        b=HOwL8wf1kFYqUKrjaJgtUJIBXURXTShB2i9kjilO7LOm89OesxCxqTCWMjwNZj4IgK
+         T9DE/Sfp70OVM/V5N43FSeAOnWkBhXiqngWF2r3gSCqVteYaD9sAxZTI8hfMFZBlbtHz
+         OOP0fnGagS6h6sJ+A3BU8ve465OIUz+L5y5lIWDh6DOOwcjkXiET5m9u8uoxLappPl/5
+         Psc8ghwq2AfwT/EIzhPNiYGW15CKfHwShfaArexsT1xXJvPXuLQ6xM/klgys+thVGoP4
+         brIXaBN/w06KCljciwEzK07mMv3ETeinJCTywC5ckCdH9O48HJf1STXWE8+jijnGR8EV
+         E1cg==
+X-Gm-Message-State: AOAM531aT/sjyiuq/Elt413dL3vANOFvPeZxq9ha6ITKDAejG565Gjb7
+        9cYSErqOwRpjaXUzY2SGiSpxpR9pvf9qbn0wVd4=
+X-Google-Smtp-Source: ABdhPJzthfN8C/UpIDfACMmXdnbTqZz92tIqU4ADPwkIbYXMsMnmHShILKFkZT1XKNgDP5kkDfXJ3i6GVAsO5ogQeHA=
+X-Received: by 2002:a9d:6e96:: with SMTP id a22mr500765otr.345.1602609824343;
+ Tue, 13 Oct 2020 10:23:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C0E6E36-0D6D-11EB-902B-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
+ <46fce3a844c90b4078578f5aa2058bd6825af1d6.1602545164.git.gitgitgadget@gmail.com>
+ <20201013153901.GA1913367@nand.local>
+In-Reply-To: <20201013153901.GA1913367@nand.local>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 13 Oct 2020 10:23:32 -0700
+Message-ID: <CABPp-BF4bqNXGusoUgzKUTecaR9bzXJbVODGVB2kqX5qTp2Fug@mail.gmail.com>
+Subject: Re: [PATCH 1/3] test-lib: allow selecting tests by substring/regex
+ with --run
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
->>   - diffstat with -I<regex>,
+On Tue, Oct 13, 2020 at 8:39 AM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> I am not worried about that, either, as `diffstat` consumes `xdiff`'s
-> output, therefore if one consumer works, another consumer will work, too.
+> On Mon, Oct 12, 2020 at 11:26:02PM +0000, Elijah Newren via GitGitGadget wrote:
+> > diff --git a/t/README b/t/README
+> > index 2adaf7c2d2..23639c5bcf 100644
+> > --- a/t/README
+> > +++ b/t/README
+> > @@ -258,13 +258,13 @@ For an individual test suite --run could be used to specify that
+> >  only some tests should be run or that some tests should be
+> >  excluded from a run.
+> >
+> > -The argument for --run is a list of individual test numbers or
+> > -ranges with an optional negation prefix that define what tests in
+> > -a test suite to include in the run.  A range is two numbers
+> > -separated with a dash and matches a range of tests with both ends
+> > -been included.  You may omit the first or the second number to
+> > -mean "from the first test" or "up to the very last test"
+> > -respectively.
+> > +The argument for --run, <test-selector>, is a list of description
+> > +substrings or regexes or individual test numbers or ranges with an
+> > +optional negation prefix that define what tests in a test suite to
+> > +include in the run.  A range is two numbers separated with a dash and
+> > +matches a range of tests with both ends been included.  You may omit
+> > +the first or the second number to mean "from the first test" or "up to
+> > +the very last test" respectively.
+> >
+> >  Optional prefix of '!' means that the test or a range of tests
+> >  should be excluded from the run.
+>
+> This piece of documentation looks to be now out of date; it mentions a
+> "test or range of tests", but that only covers a two of the now four
+> ways to describe a test.
 
-Careful.  Such a "we know what happens in the code" transparent-box
-testing attitude is laying a minefield for later our selves.
+Personally, I had read "test or range of tests" as general enough to
+cover all the cases (I would have agreed that "test *number* or range
+of tests" would sound out of date), and just left it.  However, if
+there's something clearer, I'm happy to adopt it.  Do you have an
+alternate wording suggestion?
 
-As we learned in a recent bug in sequencer, some corners of
-implementation do the same thing in different codepaths as
-optimization.  The really bad part of the story is that such an
-implementation detail can and will change over time, since that is
-the kind of thing we do when optimizing code.
-
-In other words, we only know what happens in the current code.  And
-automated tests protect us from the future, when done right.  If
-written with too intimate knowledge of how the current code works,
-well, what are we really testing?  It's a balancing act and there is
-no single "right" answer, but I'd draw the line on a bit more
-careful side than you are drawing here.
-
-Thanks.
-
+> The rest of the patch looks great to me; and I, too, am very excited
+> about it.
+>
+> Thanks,
+> Taylor
