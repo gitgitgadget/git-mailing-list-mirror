@@ -1,121 +1,144 @@
-Return-Path: <SRS0=3/hf=DT=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=7dzq=DU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A48FEC433E7
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1319C64E8A
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 02:42:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36407206BE
-	for <git@archiver.kernel.org>; Mon, 12 Oct 2020 23:52:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56B0D221FC
+	for <git@archiver.kernel.org>; Tue, 13 Oct 2020 02:42:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="UYQyCGlo";
-	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="UYQyCGlo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rTbaKI6g"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730243AbgJLXwg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Oct 2020 19:52:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41602 "EHLO
+        id S1727896AbgJMAkz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Oct 2020 20:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728821AbgJLXwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Oct 2020 19:52:36 -0400
-Received: from mail.sammserver.com (sammserver.com [IPv6:2001:470:5a5b:1::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2036C0613D0
-        for <git@vger.kernel.org>; Mon, 12 Oct 2020 16:52:35 -0700 (PDT)
-Received: by mail.sammserver.com (Postfix, from userid 5011)
-        id 634E71105882; Tue, 13 Oct 2020 01:52:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
-        t=1602546754; bh=95cTR0CruAOlkit3nmqsvLS2MlFeEK4RuYTbCTQK8mY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UYQyCGloba61JkuaPvKc+xx7CgStnvSYVdybnKjLwsdYJ7DvjUjvd0OGjPuIoHWhj
-         czwFTLghUgZCA5TlYK6l5+r45xrhalEwm5tH0QwpqqXSGOYtLcD3WHiEoBu9UPbLI/
-         YX5XJPyUkl9dTAz1e0iENqswJjC9pswlkS6Hl1Zs=
-Received: from fastboi.localdomain (fastboi.wg [10.32.40.5])
-        by mail.sammserver.com (Postfix) with ESMTP id 2AC6E110587F;
-        Tue, 13 Oct 2020 01:52:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
-        t=1602546754; bh=95cTR0CruAOlkit3nmqsvLS2MlFeEK4RuYTbCTQK8mY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UYQyCGloba61JkuaPvKc+xx7CgStnvSYVdybnKjLwsdYJ7DvjUjvd0OGjPuIoHWhj
-         czwFTLghUgZCA5TlYK6l5+r45xrhalEwm5tH0QwpqqXSGOYtLcD3WHiEoBu9UPbLI/
-         YX5XJPyUkl9dTAz1e0iENqswJjC9pswlkS6Hl1Zs=
-Received: by fastboi.localdomain (Postfix, from userid 1000)
-        id 1B2421420A8F; Tue, 13 Oct 2020 01:52:34 +0200 (CEST)
-Date:   Tue, 13 Oct 2020 01:52:34 +0200
-From:   Samuel =?utf-8?B?xIxhdm9q?= <samuel@cavoj.net>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] sequencer: fix gpg option passed to merge
- subcommand
-Message-ID: <20201012235234.mj7ejpmnbkfshte6@fastboi.localdomain>
-References: <20201012234901.1356948-1-samuel@cavoj.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        with ESMTP id S1727403AbgJMAkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Oct 2020 20:40:55 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC6BC0613D1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 17:40:55 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id f21so19143376wml.3
+        for <git@vger.kernel.org>; Mon, 12 Oct 2020 17:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=oFAswi3o4d7CVNEpLSnDCYqFONh+d8GGqoJ1wyK3dI8=;
+        b=rTbaKI6gofH8NVyrb0w4V22aSi7XwFCT9zm8nwH1DJP47xYtF4byFteGqJTbPklXKR
+         c/K2vqc5+qKYJp/jXLzJyJImLGAvhLfbMWmaYyaj6wVbqQt0TA944TywkvfZrZz346TL
+         f8xbQLwuUrAos5K8NV2mAqfhA/vRj1bEmSPQz7AlK36tAPu6C0bvg4GI7Hls6len1JKL
+         yAtfuq0p+zM85u8vak78hrZDNjzzGNsA152nM5TZ88InGwppajoBckYSk7eSDYiUaCQu
+         x2CnExht1HEg/PinLM7C9SM0LxCvfaZhwzlRSoq/EILdlIAa7MbpBZWpsOzn239S/1Dw
+         W7FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=oFAswi3o4d7CVNEpLSnDCYqFONh+d8GGqoJ1wyK3dI8=;
+        b=Z3XfwxR1PwhCJghl0MA5aSgIe6s/Xh9g4u7ItycX0MANuV6x26wdZHKaz4LUrpzjkA
+         qNmMbitAlRzzMtd9X9VRM93p5840mFA/Y3MZygDJPKSUqPdINzfQOGpkvzMYeWQfFqqj
+         XRh8hzz2A724OKgYUYeYR2Mz6ZZWO5uEFI+3i+urS4e135vE35szEz/3RFhT7v88uytt
+         RpjlOQkZWO2DZY8lSEqnJZZuQ7YVqgEyLp8/4DhFfM1iaTXXJS2GZv8vT2nug832RgWV
+         NOqxKCG689LKYv8WwiQcg+UbHxXiPK/RBK0ur/lRGot63VLqvFMsl5sHN1/wwxFspNNR
+         RoPw==
+X-Gm-Message-State: AOAM5321BtKeYfB9Qc3r6UWlYCyrv0Y1q3edpVVEUN37iSvmxfQTmagu
+        7Tq2Q9+Mm8DgTM4mdX6ll6bAMJvAiV0=
+X-Google-Smtp-Source: ABdhPJylsKYFKbRk5RY00o7KWKdC6Yy1h6EMuQi32DoAqXivbhVVb/yx4esgnxAVqDYhA66YEcf5Ig==
+X-Received: by 2002:a7b:c305:: with SMTP id k5mr13379038wmj.102.1602549653440;
+        Mon, 12 Oct 2020 17:40:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a3sm17780247wrh.94.2020.10.12.17.40.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2020 17:40:52 -0700 (PDT)
+Message-Id: <af6b6fcb460be900d3fffeb743a42f3f87ce6b7f.1602549650.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
+References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
+        <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 13 Oct 2020 00:40:41 +0000
+Subject: [PATCH v2 01/10] hashmap: add usage documentation explaining
+ hashmap_free[_entries]()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201012234901.1356948-1-samuel@cavoj.net>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13.10.2020 01:49, Samuel Čavoj wrote:
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Elijah Newren <newren@gmail.com>
 
-Oh boy, I left in a line by accident. Please remove this before
-applying, unless a v3 comes around. Sorry about that.
+The existence of hashmap_free() and hashmap_free_entries() confused me,
+and the docs weren't clear enough.  We are dealing with a map table,
+entries in that table, and possibly also things each of those entries
+point to.  I had to consult other source code examples and the
+implementation.  Add a brief note to clarify the differences.  This will
+become even more important once we introduce a new
+hashmap_partial_clear() function which will add the question of whether
+the table itself has been freed.
 
-> 
-> When performing a rebase with --rebase-merges using either a custom
-> strategy specified with -s or an octopus merge, and at the same time
-> having gpgsign enabled (either rebase -S or config commit.gpgsign), the
-> operation would fail on making the merge commit. Instead of "-S%s" with
-> the key id substituted, only the bare key id would get passed to the
-> underlying merge command, which tried to interpret it as a ref.
-> 
-> Fix the issue and add a test case as suggested by Johannes Schindelin.
-> 
-> Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
-> ---
-> changed v1 -> v2:
->     added test case
-> ---
->  sequencer.c                | 2 +-
->  t/t3435-rebase-gpg-sign.sh | 6 ++++++
->  2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 00acb12496..88ccff4838 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3677,7 +3677,7 @@ static int do_merge(struct repository *r,
->  		strvec_push(&cmd.args, "-F");
->  		strvec_push(&cmd.args, git_path_merge_msg(r));
->  		if (opts->gpg_sign)
-> -			strvec_push(&cmd.args, opts->gpg_sign);
-> +			strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
->  
->  		/* Add the tips to be merged */
->  		for (j = to_merge; j; j = j->next)
-> diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
-> index b47c59c190..f70b280f5c 100755
-> --- a/t/t3435-rebase-gpg-sign.sh
-> +++ b/t/t3435-rebase-gpg-sign.sh
-> @@ -68,4 +68,10 @@ test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
->  	test_must_fail git verify-commit HEAD
->  '
->  
-> +test_expect_success 'rebase -r, GPG and merge strategies' '
-> +	git reset --hard merged &&
-> +	git rebase -fr --gpg-sign -s resolve --root &&
-> +	git verify-commit HEAD
-> +'
-> +
->  test_done
-> -- 
-> 2.28.0
-> 
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ hashmap.h | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+diff --git a/hashmap.h b/hashmap.h
+index b011b394fe..2994dc7a9c 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -236,13 +236,40 @@ void hashmap_init(struct hashmap *map,
+ void hashmap_free_(struct hashmap *map, ssize_t offset);
+ 
+ /*
+- * Frees a hashmap structure and allocated memory, leaves entries undisturbed
++ * Frees a hashmap structure and allocated memory for the table, but does not
++ * free the entries nor anything they point to.
++ *
++ * Usage note:
++ *
++ * Many callers will need to iterate over all entries and free the data each
++ * entry points to; in such a case, they can free the entry itself while at it.
++ * Thus, you might see:
++ *
++ *    hashmap_for_each_entry(map, hashmap_iter, e, hashmap_entry_name) {
++ *      free(e->somefield);
++ *      free(e);
++ *    }
++ *    hashmap_free(map);
++ *
++ * instead of
++ *
++ *    hashmap_for_each_entry(map, hashmap_iter, e, hashmap_entry_name) {
++ *      free(e->somefield);
++ *    }
++ *    hashmap_free_entries(map, struct my_entry_struct, hashmap_entry_name);
++ *
++ * to avoid the implicit extra loop over the entries.  However, if there are
++ * no special fields in your entry that need to be freed beyond the entry
++ * itself, it is probably simpler to avoid the explicit loop and just call
++ * hashmap_free_entries().
+  */
+ #define hashmap_free(map) hashmap_free_(map, -1)
+ 
+ /*
+  * Frees @map and all entries.  @type is the struct type of the entry
+- * where @member is the hashmap_entry struct used to associate with @map
++ * where @member is the hashmap_entry struct used to associate with @map.
++ *
++ * See usage note above hashmap_free().
+  */
+ #define hashmap_free_entries(map, type, member) \
+ 	hashmap_free_(map, offsetof(type, member));
+-- 
+gitgitgadget
+
