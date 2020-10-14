@@ -8,61 +8,65 @@ X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FE44C433E7
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1E29C433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B255C22257
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3858122259
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K2jN9zXc"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qk2wj5Uk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732417AbgJOByt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 21:54:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53096 "EHLO
+        id S1732449AbgJOByu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 21:54:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732411AbgJOByi (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1732402AbgJOByi (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Oct 2020 21:54:38 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 288CCC08EADD
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:22 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id m23so861344qkh.10
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:22 -0700 (PDT)
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE38C08EAC1
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:04 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id w78so504793pfc.15
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=Pjn7CZtn5A4vJ1nojmkcd3nLpwhUey7lEEA3HcBRwfU=;
-        b=K2jN9zXcFWyS5ssDc9ze1PUhiatYZRnI2pb/M2TnMoY0zCxBjHqZi10NQpexxy7wZD
-         xByHdaWz2LY8cOjnU9RESbNLBWfTM4QStQ9ekGYMK216aKrvioP13cLsh+j0HbcdgP8F
-         LV48hoH1lf4YijmBs2023RGSfjV7ajleMj9wt5eKBwsXYS3sQMuJG/MqA4uzVrJXUvCr
-         ZKCweBKzRURmK1FKDL/LLMIsbguUtQuKHt0Ui2DpVy9/cFTEKq/E6ZJbk5yCbc+Kggkx
-         0hP/Ae0HKVqObaNFUHg5dZ9yV7t8lzxCbPDxJl4pNw4OLbvIA0iSPxuT5C2KYLinQC5+
-         T6Iw==
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=x1230MfiafhTEHlMUxwGcwVR7XUFArfqKELjukUYBMo=;
+        b=qk2wj5UkKvk4BmwjRAXJGteu1yZS4CB92Rqj423btSnDNl4bK1r7tIlqkegI+7uwoH
+         9iP2PsHeuS6Eq4lUxMpOJH7Jwr3I1gZvquLqeS6bomuuK4dDD9c6j2LxwFfyKJL7sejh
+         YcWWZzNUWbvIddm5DIrkfbCl8teBRjMQIq2PCSQfPHtEkhAaPtyrDsBtr0uuIo1MWSah
+         dg2KQS7JlS+Jeov9tCquAUZHzT5JMUZSwxJLHqgPEISrHWU1IdBTx2Sjt+23skSJC0K9
+         QxZzybbbUZa2ObbeSnmOU1VTROjxtTuU7XjSoMXRAC3HIHS8qCYwDgqcQb5ySMTixGNV
+         1KSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=Pjn7CZtn5A4vJ1nojmkcd3nLpwhUey7lEEA3HcBRwfU=;
-        b=byL0vrLli6DMyfuQZ8teqW0/frl1ddVYTPg9OHzvtWCEqCosNoflfKWvR7qOHcPteP
-         eUFeGYUyPjNvuCVF1QsTO0sw+qrbJiHB/cBk3TTVM349lsplsfexQcph3WcYQgUA/uyZ
-         PnEbJCYkaY5oGwvOAyxaz8C12QlXJFqZoCmd7SD4DJ4Jdpi1rKLvhXJvqrLm6DTC/dvk
-         CB0uEmtyRitT1irOm5MXwbOzlYdYGx1XdOODqtqVezBkJVLmpVTvgvsewOJ+KFCkYsnw
-         VlIFT/qKY+j7LDIxRxvgFR5MB6nG2TCLvuDsQM86jyRc5zN1Xc58JZq4Y22pzVF6ZXln
-         I8cw==
-X-Gm-Message-State: AOAM531MhN5YEtaJwiDFKhwGCuyKkOZMnYiLfh9bVhYp7cDvcTkh6KFl
-        Ef/2AAVePXaUjDonayz0stKKLxaiuoG5M4yzTOeziaJNbkPcLW4fRBqUXNBUNDezcYt9v2pDTl8
-        uxgbv0B3+LRZn4OH0Gs7NpWT8u14J7CNCzOKLv4mtZpaf9ShhkUAkOcSIKECzbZmKtwDk3WzuOg
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=x1230MfiafhTEHlMUxwGcwVR7XUFArfqKELjukUYBMo=;
+        b=WQ30vESrfV3uSzsEadjlXHNLW/gfHkPbsWMino7Xudb0DjZ/LfJeKZnYCe2Rws1Xs6
+         e/leZEYxuaTbMLgellyBSgoY9k757U4INptP8dDsPaRjN/ZKyh0yG9vbI6bZ5NLFz/de
+         Sdqk27co0vn1kK0KyiupUUq/lIwaBRgM/aAxhpRn+16z3qOFpnQrL8HPXOMybJbRZLM7
+         CSgnwGyCQSVxg2LPGnJGUCrTIeD7N9pDcqyuGsx3qY1v4Oxqy6aPtLwWIu7s0TBVa8+R
+         7WNRNvgsLl+71Q9LYav3WAPwf4qqm/iB81qrM6vY6FofYtkWmgRqEWfwxWPo/AwgwoLa
+         KgFQ==
+X-Gm-Message-State: AOAM531/TrWxwxRbGIoRQk4+A1QaGOu+oKvHr9DkLs2SBsqL9pig/ujn
+        7K4AQ7bTgLLeBA1rDkWtUsUD6gWv9m8VDCigx8uU0wCYNMI9iA+JSHV9ayPC+0ssBO5pNpc+E/e
+        gCxdsWoh/5i8D6IM+qLu8w9tXQqyHdBUYqoEoeT0LzhjrXYfefKqW8qaW4NL6SzFHG5qA9TClAw
         ==
-X-Google-Smtp-Source: ABdhPJzxsLtvVQF69Qc/F5Z9FeVpjh0X5o38zO8ak/GSF6nGCInOxLxVE9o/xlW2LUSehCUqQNhHIBmO5LCp6hJCVLc=
+X-Google-Smtp-Source: ABdhPJyFw0/ghkbMElbW2kG/g7P4xIDnqkqML5Nny4ejKzIJbEeU1ZDs8SfONzzFSZHVFVEHotI8fIBfrGGvwikRsyU=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:b902:: with SMTP id
- u2mr1663488qvf.7.1602717921249; Wed, 14 Oct 2020 16:25:21 -0700 (PDT)
-Date:   Wed, 14 Oct 2020 16:25:17 -0700
-Message-Id: <20201014232517.3068298-1-emilyshaffer@google.com>
+ (user=emilyshaffer job=sendgmr) by 2002:aa7:9501:0:b029:155:3b11:d5c4 with
+ SMTP id b1-20020aa795010000b02901553b11d5c4mr1506192pfp.76.1602717903273;
+ Wed, 14 Oct 2020 16:25:03 -0700 (PDT)
+Date:   Wed, 14 Oct 2020 16:24:43 -0700
+In-Reply-To: <20201014232447.3050579-1-emilyshaffer@google.com>
+Message-Id: <20201014232447.3050579-5-emilyshaffer@google.com>
 Mime-Version: 1.0
+References: <20201014232447.3050579-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH] commit: use config-based hooks (config-based hooks part II)
+Subject: [PATCH v5 4/8] hook: include hookdir hook in list
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -71,154 +75,339 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As part of the adoption of config-based hooks, teach run_commit_hook()
-to call hook.h instead of run-command.h. This covers 'pre-commit',
-'commit-msg', and 'prepare-commit-msg'. Additionally, ask the hook
-library - not run-command - whether any hooks will be run, as it's
-possible hooks may exist in the config but not the hookdir.
+Historically, hooks are declared by placing an executable into
+$GIT_DIR/hooks/$HOOKNAME (or $HOOKDIR/$HOOKNAME). Although hooks taken
+from the config are more featureful than hooks placed in the $HOOKDIR,
+those hooks should not stop working for users who already have them.
+
+When we add hooks from $HOOKDIR to the list of all hooks to run, to
+support paths with spaces in them, quote legacy hook paths.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
 
-This is based on es/config-based-hooks (v5).
+Notes:
+    Newly split into its own commit since v4, and taking place much sooner.
+    
+    An unfortunate side effect of adding this support *before* the
+    hook.runHookDir support is that the labels on the list are not clear -
+    because we aren't yet flagging which hooks are from the hookdir versus
+    the config. I suppose we could move the addition of that field to the
+    struct hook up to this patch, but it didn't make a lot of sense to me to
+    do it just for cosmetic purposes.
 
-Since config-based hooks v4, I split a new branch for the conversions of
-existing hook callers. I'm hoping this will make it easier for me to
-work on the architecture without needing to juggle these
-hopefully-slow-moving patches as frequently, and will reduce the load on
-reviewers.
+ Documentation/config/hook.txt |  5 +++
+ builtin/hook.c                | 70 +++++++++++++++++++++++++++++++----
+ hook.c                        | 36 ++++++++++++++++++
+ hook.h                        | 16 ++++++++
+ t/t1360-config-based-hooks.sh | 62 +++++++++++++++++++++++++++++++
+ 5 files changed, 182 insertions(+), 7 deletions(-)
 
-Since v4 also I removed the second patch changing the run_commit_hook()
-API. I had figured it might not be well received when I sent it, and it
-wasn't, so no worries.
-
-I'm hoping to have updates to this series pretty soon too with new
-conversions... so I guess this one may just be noise. Ah well.
-
- - Emily
-
- builtin/commit.c                                |  3 ++-
- builtin/merge.c                                 |  3 ++-
- commit.c                                        | 10 +++++++++-
- ...503-pre-commit-and-pre-merge-commit-hooks.sh | 17 +++++++++++++++--
- 4 files changed, 28 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1dfd799ec5..a337ecd4c2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -36,6 +36,7 @@
- #include "help.h"
- #include "commit-reach.h"
- #include "commit-graph.h"
-+#include "hook.h"
+diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
+index 71449ecbc7..75312754ae 100644
+--- a/Documentation/config/hook.txt
++++ b/Documentation/config/hook.txt
+@@ -7,3 +7,8 @@ hookcmd.<name>.command::
+ 	A command to execute during a hook for which <name> has been specified
+ 	as a command. This can be an executable on your device or a oneliner for
+ 	your shell. See linkgit:git-hook[1].
++
++hook.runHookDir::
++	Controls how hooks contained in your hookdir are executed. Can be any of
++	"yes", "warn", "interactive", or "no". Defaults to "yes". See
++	linkgit:git-hook[1] and linkgit:git-config[1] "core.hooksPath").
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 4d36de52f8..16324d4195 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -11,11 +11,14 @@ static const char * const builtin_hook_usage[] = {
+ 	NULL
+ };
  
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [<options>] [--] <pathspec>..."),
-@@ -983,7 +984,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
++static enum hookdir_opt should_run_hookdir;
++
+ static int list(int argc, const char **argv, const char *prefix)
+ {
+ 	struct list_head *head, *pos;
+ 	struct hook *item;
+ 	struct strbuf hookname = STRBUF_INIT;
++	struct strbuf hookdir_annotation = STRBUF_INIT;
+ 
+ 	struct option list_options[] = {
+ 		OPT_END(),
+@@ -40,12 +43,39 @@ static int list(int argc, const char **argv, const char *prefix)
  		return 0;
  	}
  
--	if (!no_verify && find_hook("pre-commit")) {
-+	if (!no_verify && hook_exists("pre-commit", configured_hookdir_opt())) {
- 		/*
- 		 * Re-read the index as pre-commit hook could have updated it,
- 		 * and write it out as a tree.  We must do this before we invoke
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9d5359edc2..36ba138f4e 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -41,6 +41,7 @@
- #include "commit-reach.h"
- #include "wt-status.h"
- #include "commit-graph.h"
-+#include "hook.h"
++	switch (should_run_hookdir) {
++		case hookdir_no:
++			strbuf_addstr(&hookdir_annotation, _(" (will not run)"));
++			break;
++		case hookdir_interactive:
++			strbuf_addstr(&hookdir_annotation, _(" (will prompt)"));
++			break;
++		case hookdir_warn:
++		case hookdir_unknown:
++			strbuf_addstr(&hookdir_annotation, _(" (will warn)"));
++			break;
++		case hookdir_yes:
++		/*
++		 * The default behavior should agree with
++		 * hook.c:configured_hookdir_opt().
++		 */
++		default:
++			break;
++	}
++
+ 	list_for_each(pos, head) {
+ 		item = list_entry(pos, struct hook, list);
+-		if (item)
+-			printf("%s: %s\n",
+-			       config_scope_name(item->origin),
+-			       item->command.buf);
++		if (item) {
++			/* Don't translate 'hookdir' - it matches the config */
++			printf("%s: %s%s\n",
++			       (item->from_hookdir
++				? "hookdir"
++				: config_scope_name(item->origin)),
++			       item->command.buf,
++			       (item->from_hookdir
++				? hookdir_annotation.buf
++				: ""));
++		}
+ 	}
  
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -829,7 +830,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	 * and write it out as a tree.  We must do this before we invoke
- 	 * the editor and after we invoke run_status above.
- 	 */
--	if (find_hook("pre-merge-commit"))
-+	if (hook_exists("pre-merge-commit", configured_hookdir_opt()))
- 		discard_cache();
- 	read_cache_from(index_file);
- 	strbuf_addbuf(&msg, &merge_msg);
-diff --git a/commit.c b/commit.c
-index f53429c0ac..b338f50103 100644
---- a/commit.c
-+++ b/commit.c
-@@ -21,6 +21,7 @@
- #include "commit-reach.h"
- #include "run-command.h"
- #include "shallow.h"
-+#include "hook.h"
+ 	clear_hook_list(head);
+@@ -56,14 +86,40 @@ static int list(int argc, const char **argv, const char *prefix)
  
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -1635,8 +1636,11 @@ int run_commit_hook(int editor_is_used, const char *index_file,
+ int cmd_hook(int argc, const char **argv, const char *prefix)
  {
- 	struct strvec hook_env = STRVEC_INIT;
- 	va_list args;
-+	const char *arg;
-+	struct strvec hook_args = STRVEC_INIT;
- 	int ret;
- 
++	const char *run_hookdir = NULL;
 +
- 	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
- 
- 	/*
-@@ -1646,9 +1650,13 @@ int run_commit_hook(int editor_is_used, const char *index_file,
- 		strvec_push(&hook_env, "GIT_EDITOR=:");
- 
- 	va_start(args, name);
--	ret = run_hook_ve(hook_env.v, name, args);
-+	while ((arg = va_arg(args, const char *)))
-+		strvec_push(&hook_args, arg);
- 	va_end(args);
+ 	struct option builtin_hook_options[] = {
++		OPT_STRING(0, "run-hookdir", &run_hookdir, N_("option"),
++			   N_("what to do with hooks found in the hookdir")),
+ 		OPT_END(),
+ 	};
+-	if (argc < 2)
 +
-+	ret = run_hooks(hook_env.v, name, &hook_args, configured_hookdir_opt());
- 	strvec_clear(&hook_env);
-+	strvec_clear(&hook_args);
++	argc = parse_options(argc, argv, prefix, builtin_hook_options,
++			     builtin_hook_usage, 0);
++
++	/* after the parse, we should have "<command> <hookname> <args...>" */
++	if (argc < 1)
+ 		usage_with_options(builtin_hook_usage, builtin_hook_options);
  
- 	return ret;
+-	if (!strcmp(argv[1], "list"))
+-		return list(argc - 1, argv + 1, prefix);
++
++	/* argument > config */
++	if (run_hookdir)
++		if (!strcmp(run_hookdir, "no"))
++			should_run_hookdir = hookdir_no;
++		else if (!strcmp(run_hookdir, "yes"))
++			should_run_hookdir = hookdir_yes;
++		else if (!strcmp(run_hookdir, "warn"))
++			should_run_hookdir = hookdir_warn;
++		else if (!strcmp(run_hookdir, "interactive"))
++			should_run_hookdir = hookdir_interactive;
++		else
++			die(_("'%s' is not a valid option for --run-hookdir "
++			      "(yes, warn, interactive, no)"), run_hookdir);
++	else
++		should_run_hookdir = configured_hookdir_opt();
++
++	if (!strcmp(argv[0], "list"))
++		return list(argc, argv, prefix);
+ 
+ 	usage_with_options(builtin_hook_usage, builtin_hook_options);
  }
-diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-index b3485450a2..fc93bc3d23 100755
---- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-+++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-@@ -5,8 +5,8 @@ test_description='pre-commit and pre-merge-commit hooks'
- . ./test-lib.sh
+diff --git a/hook.c b/hook.c
+index 937dc768c8..340e5a35c8 100644
+--- a/hook.c
++++ b/hook.c
+@@ -2,6 +2,7 @@
  
- HOOKDIR="$(git rev-parse --git-dir)/hooks"
--PRECOMMIT="$HOOKDIR/pre-commit"
--PREMERGE="$HOOKDIR/pre-merge-commit"
-+PRECOMMIT="$(pwd)/$HOOKDIR/pre-commit"
-+PREMERGE="$(pwd)/$HOOKDIR/pre-merge-commit"
+ #include "hook.h"
+ #include "config.h"
++#include "run-command.h"
  
- # Prepare sample scripts that write their $0 to actual_hooks
- test_expect_success 'sample script setup' '
-@@ -103,6 +103,19 @@ test_expect_success 'with succeeding hook' '
- 	test_cmp expected_hooks actual_hooks
+ void free_hook(struct hook *ptr)
+ {
+@@ -34,6 +35,7 @@ static void append_or_move_hook(struct list_head *head, const char *command)
+ 		to_add = xmalloc(sizeof(struct hook));
+ 		strbuf_init(&to_add->command, 0);
+ 		strbuf_addstr(&to_add->command, command);
++		to_add->from_hookdir = 0;
+ 	}
+ 
+ 	/* re-set the scope so we show where an override was specified */
+@@ -95,11 +97,33 @@ static int hook_config_lookup(const char *key, const char *value, void *cb_data)
+ 	return 0;
+ }
+ 
++enum hookdir_opt configured_hookdir_opt(void)
++{
++	const char *key;
++	if (git_config_get_value("hook.runhookdir", &key))
++		return hookdir_yes; /* by default, just run it. */
++
++	if (!strcmp(key, "no"))
++		return hookdir_no;
++
++	if (!strcmp(key, "yes"))
++		return hookdir_yes;
++
++	if (!strcmp(key, "warn"))
++		return hookdir_warn;
++
++	if (!strcmp(key, "interactive"))
++		return hookdir_interactive;
++
++	return hookdir_unknown;
++}
++
+ struct list_head* hook_list(const struct strbuf* hookname)
+ {
+ 	struct strbuf hook_key = STRBUF_INIT;
+ 	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
+ 	struct hook_config_cb cb_data = { &hook_key, hook_head };
++	const char *legacy_hook_path = NULL;
+ 
+ 	INIT_LIST_HEAD(hook_head);
+ 
+@@ -110,6 +134,18 @@ struct list_head* hook_list(const struct strbuf* hookname)
+ 
+ 	git_config(hook_config_lookup, (void*)&cb_data);
+ 
++	if (have_git_dir())
++		legacy_hook_path = find_hook(hookname->buf);
++
++	/* Unconditionally add legacy hook, but annotate it. */
++	if (legacy_hook_path) {
++		struct hook *legacy_hook;
++
++		append_or_move_hook(hook_head, absolute_path(legacy_hook_path));
++		legacy_hook = list_entry(hook_head->prev, struct hook, list);
++		legacy_hook->from_hookdir = 1;
++	}
++
+ 	strbuf_release(&hook_key);
+ 	return hook_head;
+ }
+diff --git a/hook.h b/hook.h
+index 8ffc4f14b6..ca45d388d3 100644
+--- a/hook.h
++++ b/hook.h
+@@ -12,6 +12,7 @@ struct hook
+ 	enum config_scope origin;
+ 	/* The literal command to run. */
+ 	struct strbuf command;
++	int from_hookdir;
+ };
+ 
+ /*
+@@ -20,6 +21,21 @@ struct hook
+  */
+ struct list_head* hook_list(const struct strbuf *hookname);
+ 
++enum hookdir_opt
++{
++	hookdir_no,
++	hookdir_warn,
++	hookdir_interactive,
++	hookdir_yes,
++	hookdir_unknown,
++};
++
++/*
++ * Provides the hookdir_opt specified in the config without consulting any
++ * command line arguments.
++ */
++enum hookdir_opt configured_hookdir_opt(void);
++
+ /* Free memory associated with a 'struct hook' */
+ void free_hook(struct hook *ptr);
+ /* Empties the list at 'head', calling 'free_hook()' on each entry */
+diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
+index 6e4a3e763f..91127a50a4 100755
+--- a/t/t1360-config-based-hooks.sh
++++ b/t/t1360-config-based-hooks.sh
+@@ -23,6 +23,14 @@ setup_hookcmd () {
+ 	test_config_global hookcmd.abc.command "/path/abc" --add
+ }
+ 
++setup_hookdir () {
++	mkdir .git/hooks
++	write_script .git/hooks/pre-commit <<-EOF
++	echo \"Legacy Hook\"
++	EOF
++	test_when_finished rm -rf .git/hooks
++}
++
+ test_expect_success 'git hook rejects commands without a mode' '
+ 	test_must_fail git hook pre-commit
+ '
+@@ -85,4 +93,58 @@ test_expect_success 'git hook list reorders on duplicate commands' '
+ 	test_cmp expected actual
  '
  
-+# NEEDSWORK: when 'git hook add' and 'git hook remove' have been added, use that
-+# instead
-+test_expect_success 'with succeeding hook (config-based)' '
-+	test_when_finished "git config --unset hook.pre-commit.command success.sample" &&
-+	test_when_finished "rm -f expected_hooks actual_hooks" &&
-+	git config hook.pre-commit.command "$HOOKDIR/success.sample" &&
-+	echo "$HOOKDIR/success.sample" >expected_hooks &&
-+	echo "more" >>file &&
-+	git add file &&
-+	git commit -m "more" &&
-+	test_cmp expected_hooks actual_hooks
++test_expect_success 'git hook list shows hooks from the hookdir' '
++	setup_hookdir &&
++
++	cat >expected <<-EOF &&
++	hookdir: $(pwd)/.git/hooks/pre-commit
++	EOF
++
++	git hook list pre-commit >actual &&
++	test_cmp expected actual
 +'
 +
- test_expect_success 'with succeeding hook (merge)' '
- 	test_when_finished "rm -f \"$PREMERGE\" expected_hooks actual_hooks" &&
- 	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
++test_expect_success 'hook.runHookDir = no is respected by list' '
++	setup_hookdir &&
++
++	test_config hook.runHookDir "no" &&
++
++	cat >expected <<-EOF &&
++	hookdir: $(pwd)/.git/hooks/pre-commit (will not run)
++	EOF
++
++	git hook list pre-commit >actual &&
++	# the hookdir annotation is translated
++	test_i18ncmp expected actual
++'
++
++test_expect_success 'hook.runHookDir = warn is respected by list' '
++	setup_hookdir &&
++
++	test_config hook.runHookDir "warn" &&
++
++	cat >expected <<-EOF &&
++	hookdir: $(pwd)/.git/hooks/pre-commit (will warn)
++	EOF
++
++	git hook list pre-commit >actual &&
++	# the hookdir annotation is translated
++	test_i18ncmp expected actual
++'
++
++
++test_expect_success 'hook.runHookDir = interactive is respected by list' '
++	setup_hookdir &&
++
++	test_config hook.runHookDir "interactive" &&
++
++	cat >expected <<-EOF &&
++	hookdir: $(pwd)/.git/hooks/pre-commit (will prompt)
++	EOF
++
++	git hook list pre-commit >actual &&
++	# the hookdir annotation is translated
++	test_i18ncmp expected actual
++'
++
+ test_done
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
