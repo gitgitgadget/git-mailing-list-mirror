@@ -3,78 +3,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6C5C433DF
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D09C433DF
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:56:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 866CD2222C
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:55:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B6C22222C
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726934AbgJNRzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 13:55:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59984 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726057AbgJNRzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 13:55:13 -0400
-Received: (qmail 18154 invoked by uid 109); 14 Oct 2020 17:55:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Oct 2020 17:55:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19137 invoked by uid 111); 14 Oct 2020 17:55:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Oct 2020 13:55:12 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Oct 2020 13:55:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 3/3] test-lib: reduce verbosity of skipped tests
-Message-ID: <20201014175512.GA24279@coredump.intra.peff.net>
-References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
- <pull.878.v2.git.git.1602616786.gitgitgadget@gmail.com>
- <85a4ca164a9f665016d4aad0f29cbef6f62f36b0.1602616786.git.gitgitgadget@gmail.com>
- <20201014165329.GA21687@coredump.intra.peff.net>
- <CABPp-BERKaLTLFjXYSo2mbT+3RSMR+5M7pzPmHH-0hNP2KFMOA@mail.gmail.com>
+        id S1727445AbgJNR4C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 13:56:02 -0400
+Received: from mail-ej1-f49.google.com ([209.85.218.49]:38660 "EHLO
+        mail-ej1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726057AbgJNR4C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 13:56:02 -0400
+Received: by mail-ej1-f49.google.com with SMTP id ce10so6102615ejc.5
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 10:56:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pC6bH8YGFIFKas1bS1z1FpeMjbO//3teLh54OMIOHN4=;
+        b=a9ifjB80rMJc5yyp6OTbjPv8OJVd2YXAAQIobH6YUNZUUk5RF7GqZMF8st4dFW8Odp
+         5hTFANEF9OD7nXaWKZEzT3KQTsWkAhzNdL0shCsqxVYFL05TCrK2QrG1mP7UBSWqbiRH
+         zv0XUb37/+F/9OdfAFpILHY03SS7FFMXnOUYWmNoL8FzWbPoyr0BgV6La2cxLltxi9S9
+         PgP9gn7bsdt/J/yvTR7qsOHj+hIoa0//Nz9dg3oGW9hgHsAs7om4o9rTkMYpF8xWJT1N
+         ErkS0d2e/2LR3g56UwluTaMJBqFiRi/aPt96hVVs7+3L8asOlHS/FrYLNJ2INh8LiYeB
+         pcWg==
+X-Gm-Message-State: AOAM532AiRVDJHPZwuKmoBDMyFpyb3bi9CWtzgOTuqgjjyUvXztil4mV
+        6KKzLXCI0YhpypJwEqkwVRvtCpSIs/xXZugi2odtwDUgu50=
+X-Google-Smtp-Source: ABdhPJx4ncjnbGT7FcvonF0tXrHdqoKMNo8RsWDn/LVUQ2S3ask6CEohNuQ9KbUGfpfU0CfngC6TfzO5vk36S7qBrQg=
+X-Received: by 2002:a17:906:a149:: with SMTP id bu9mr200104ejb.115.1602698160040;
+ Wed, 14 Oct 2020 10:56:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BERKaLTLFjXYSo2mbT+3RSMR+5M7pzPmHH-0hNP2KFMOA@mail.gmail.com>
+References: <703071109.20201014201106@yandex.ru>
+In-Reply-To: <703071109.20201014201106@yandex.ru>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 14 Oct 2020 10:55:45 -0700
+Message-ID: <CAPc5daVAJxfZVz0HwTFwhq-EfERrESU2Ta6-0fAyXrzf3YJREg@mail.gmail.com>
+Subject: Re: BUG: git rebase shows different commit message
+To:     Eugen Konkov <kes-kes@yandex.ru>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 10:39:01AM -0700, Elijah Newren wrote:
+> $git log --graph --decorate --pretty=oneline --abbrev-commit
+> * 093010ea (local/dev) Change column 'Label' => 'OPFG' and added column 'comment'
+> * 86221a47  Updated OpenAPI schema according to SCHEMA 193
+> * 6202eb08 Added opfg.html
+>
+> $git rebase -i --autostash --rebase-merges 86221a47^
+> label onto
+>
+> reset onto
+> pick 86221a47 Updated OpenAPI schema according to SCHEMA 193
+> pick 093010ea Change column 'Label' => 'OPFG' and added column 'comment'
+>
+> Here commit message is shown without leading space.
+> I  think  that this is wrong. Because if space was shown then I reword
+> commit message
+>
+> r 86221a47 Updated OpenAPI schema according to SCHEMA 193
+> pick 093010ea Change column 'Label' => 'OPFG' and added column 'comment'
+>
+> but now I just do not see that I shold reword it =(
 
-> On Wed, Oct 14, 2020 at 9:53 AM Jeff King <peff@peff.net> wrote:
-> >
-> > On Tue, Oct 13, 2020 at 07:19:46PM +0000, Elijah Newren via GitGitGadget wrote:
-> >
-> > > From: Elijah Newren <newren@gmail.com>
-> > >
-> > > When using the --run flag to run just two or three tests from a test
-> > > file which contains several dozen tests, having every skipped test print
-> > > out dozens of lines of output for the test code for that skipped test
-> > > adds up to hundreds or thousands of lines of irrelevant output that make
-> > > it very hard to fish out the relevant results you were looking for.
-> > > Simplify the output for skipped tests down to just showing the one-line
-> > > descriptions.
-> >
-> > This last sentence is inaccurate in this version, isn't it?
-> 
-> Maybe I could make it clearer, but I think that it is accurate[1].  If
-> this wording seems confusing, though, I could simplify the commit
-> message by reducing the sentence to "Simplify the output for skipped
-> tests."
+These one-line titles are shown to help you identify the commit to futz with,
+not to help you review them. After all, you see only titles here
+without the body
+of the log message [*1*].
 
-Yeah, I wondered if you might have been thinking that. It makes sense in
-the context of the other discussion, but the single-line TAP output is
-not even mentioned here. And it might be worth doing so, because the
-real reason it is OK to delete this line entirely is that it is
-redundant with that line.
+Besides, if the "breakage" in the title were not just an extra
+whitespace but some
+control characters that take the terminal into an insane state, we
+should sanitize
+the title we'd show here for identification purposes, so "show the
+title as-is" is not
+a good idea to begin with.
 
--Peff
+So, NAK.
+
+[Footnote]
+*1* ... and if majority of your commits have a single-liner titles, I cannot
+imagine how these logs can be useful to its consumers (i.e. those who
+use "git show" after identifying an old commit that broke things using
+"git bisect" or "git blame").
+
+A leading whitespace in such a "git log" output would be the least of your
+problems in such a history, I would have to say.
