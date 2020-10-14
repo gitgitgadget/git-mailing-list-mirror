@@ -2,135 +2,103 @@ Return-Path: <SRS0=1eW7=DV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F40C433DF
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C13CC433E7
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:11:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87F3821D7F
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:04:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 374582173E
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 17:11:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZxcIGqdO"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="r+Tf5YCj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731485AbgJNREa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 13:04:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55532 "EHLO
+        id S1728955AbgJNRL0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 13:11:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726517AbgJNREa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 13:04:30 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67BA0C061755
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 10:04:30 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id 65so280922otu.9
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 10:04:30 -0700 (PDT)
+        with ESMTP id S2388196AbgJNRL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 13:11:26 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C1DC061755
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 10:11:26 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id t18so53872plo.1
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 10:11:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=p+E0xiu/ARebHNUoQDnsQT8xdaAdEkv9xb56e43jNBg=;
-        b=ZxcIGqdOg1e4OHSU6T3qpux8E25uawK4SvIppayUG+Ma43febQKPU4efhgoCfFywGv
-         Phmt7+f36jXzy+6aG1NQqYlLPdqvUaUf8ACNrEj4YyENbogC8TkSsBe7mB8cPB+ehNHS
-         yBAc84IMvFJQShgTN1CWb4e1WHcQLA5vgS+Nnn/vb11sYVrWerPLt36TdgjxEcqGmmj5
-         LGp0DC/VZjKwL/7yZAtv7drFv9h5LwVN3mytt/6kCZxG0Wpf0wYYzzmTouoM7RfgMh0s
-         zu8/OABWUrecQwZD+dgOb1prmpDmeFMlRWaOK66QrotFdCGA6YFtiJAGephE2MM2/HvP
-         UkXQ==
+        bh=pBiF+Xsspr5jN9+hEBXSuVcBGeApW8RRvzaTUm8dhwU=;
+        b=r+Tf5YCjY5bCAsOvhq42ye8mcf+hooOwAMV+VMJ/sc7PMe25OdjC4zgLc1/uWG8ntP
+         KWN8GowBeUKvbstnottZIlhaEtoMPSQFYZWhLZUEWk6eKU3GPfR0iho7bSIdV4ZF3r/U
+         w95NAj6CWPPVhnJCKxp5bPXe+8LK5DD+dB2h8HB5jw59e++Z98venEwCD5ZjUqZrSOjA
+         arBQ6QXNUxTDYtfRv/6h1SC06RK5MYzk3OP/LmlDWykrBN4JY2GXiixIQwe2rTh5x7Lq
+         9QKH6RT/pYjj29HOXpFvE+Nm677mie6gYV9BC46IvZJ1TnwWsmAxBi0vdGzJ1I8zEvwA
+         PKwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=p+E0xiu/ARebHNUoQDnsQT8xdaAdEkv9xb56e43jNBg=;
-        b=Et/+FO8UREIwUiIambspYWWCpByE53GzVFIbHDE8ANt0fuoH2ONU3XU9WSCWq32SEC
-         yxeaGHKCSEGy9ioNngPN7l4p5xoJ17xkTVB9n3Rdm4jxreZahe/YhEs6IeeovDlHV0y2
-         64xOxHd6vIp7MvygApyncCGHJenroVEQVtWrFHOf45SvizcDqPEgTsZAFU7sU6skP3zy
-         aea7IHNxUn1ayEaTCMCFGl4MHJ7Ez0zpAeGdhRpFiLSxXYyQw9jYo2aaTSmD1dcibeDC
-         6dMiVBcgAyhHMXhxnDC6f8WXTcKLUFsf2n2AV6PuhsZe5h4gYBhlpzu+wOGjozG0vsWO
-         a7tw==
-X-Gm-Message-State: AOAM531CJ2TC6b1sHnwAKZ0MuusrY5EQp3+qtUordHy1+wFNf1PB+E0p
-        XF+5RbmSpKazl2ihFIPIzdvkwX0Yyv1So8EO65V8WsfbQ9Uj6U6S
-X-Google-Smtp-Source: ABdhPJwrDkdhTF58N2x1idv+yHqbaNdVnJzap7uw72zNCFYlXTfE8kv+CqOOu0qVzcxOZKaMEH3RN+fqUPcSqtFPubU=
-X-Received: by 2002:a05:6830:1347:: with SMTP id r7mr91611otq.172.1602695069585;
- Wed, 14 Oct 2020 10:04:29 -0700 (PDT)
+        bh=pBiF+Xsspr5jN9+hEBXSuVcBGeApW8RRvzaTUm8dhwU=;
+        b=Vz1lEC7T+wG5YjhPMJX4Ezyo7xGmsHo1bPIEUgMZqJTcM6F6KwhH61uzr94WWTVuDJ
+         nO9ALk1UM/XneI7w+XczLpSvXNaFABag/+OMv9HcblhEZN6Wlpxycvq9qxJPYGFG1bEq
+         zJfJKbSEsGGx9W9HzH17fDzVt7ZxWXeJxtDdKMod8lG7vmpQw9Z8G2xg/8EELr1gj7Jk
+         CYRT+BZEsxfurGmHqq1CzkFXxTbjZBdsqrYsSas4tAO7cZymLLZ6Q8Ze8QrCmaAqX58S
+         eUQA1+EwM3UxHon5XKga1v6FwAoo0RdklrGtRIjupGt4r9TzGqEMmTSyZVeI2C9HKm2k
+         +f9w==
+X-Gm-Message-State: AOAM53125F4aZLS+6OyG7AXpPry5A5eVTJp6yiXRZepK5HKccjrZWvJD
+        abTNYhTB2UkdX6Afw9tqbYL4HPBbQLC1IMFUKuGOsw==
+X-Google-Smtp-Source: ABdhPJwpir/NTI+8WeVLqFBAsIRs0XjlkjMtfjfgYpu7NUhS1khgJMnN9WoBHoyVP3g5ITIBfPT8CnsJ9rBZ3SZH4Jo=
+X-Received: by 2002:a17:90a:430a:: with SMTP id q10mr201326pjg.45.1602695485473;
+ Wed, 14 Oct 2020 10:11:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAN8Z4-XgctFZxZoTWRpD1V9NFr34ObzG2dxUoAfuJ4NOsBDdtg@mail.gmail.com>
- <20201014165607.GA2044338@nand.local>
-In-Reply-To: <20201014165607.GA2044338@nand.local>
-From:   Nipunn Koorapati <nipunn1313@gmail.com>
-Date:   Wed, 14 Oct 2020 18:04:18 +0100
-Message-ID: <CAN8Z4-XGbb_z3vmJYATONmBkxBcfxwyC-_4XEOkP0sxsdT9wxw@mail.gmail.com>
-Subject: Re: Partial clone fails with file:/// URI
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
+References: <20201013191729.2524700-1-smcallis@google.com> <20201013191729.2524700-2-smcallis@google.com>
+ <xmqq7drtkg6o.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq7drtkg6o.fsf@gitster.c.googlers.com>
+From:   Sean McAllister <smcallis@google.com>
+Date:   Wed, 14 Oct 2020 11:11:08 -0600
+Message-ID: <CAM4o00eZkkqwB=8+YCA_p1oY-V7F4EhdsqqqtToXjADXo2aZ_w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] replace CURLOPT_FILE With CURLOPT_WRITEDATA
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Masaya Suzuki <masayasuzuki@google.com>, jrnieder@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-I've been building git from source and directly using the executable. Roughly
-```
-cd git
-make
-cd ..
-git/git clone --filter=blob:none file://$(pwd)/git a_clone_of_git
-```
-
-This is what I was missing:
-git config uploadpack.allowanysha1inwant true
-
-If this is not set, then the checkout fails w/ a
-
-fatal: protocol error: bad pack header
-
-Perhaps the error message and/or docs could be improved here to
-something with more detail than "bad pack header"?
-Not seeing anything to suggest this in the docs
-https://git-scm.com/docs/partial-clone
-
-Thanks for the prompt response. Appreciated!
---Nipunn
-
-On Wed, Oct 14, 2020 at 5:56 PM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> Hi Nipunn,
+> Sean McAllister <smcallis@google.com> writes:
 >
-> On Wed, Oct 14, 2020 at 05:38:15PM +0100, Nipunn Koorapati wrote:
-> > Hi friends,
+> > CURLOPT_FILE has been deprecated since 2003.
+>
+> I thought that Dscho already mention this, but updating the above
+> description to mention that _WRITEDATA was introduce to overtake
+> _FILE as an equivalent in the same timeframe would be more helpful
+> to readers.
+>
+>
+I've updated the commit message in v3 to explain more about the
+history and details here.
+
+> > Signed-off-by: Sean McAllister <smcallis@google.com>
+> > ---
+> >  http-push.c   | 6 +++---
+> >  http-walker.c | 2 +-
+> >  http.c        | 6 +++---
+> >  remote-curl.c | 4 ++--
+> >  4 files changed, 9 insertions(+), 9 deletions(-)
 > >
-> > When I run a git clone with --filter and a file:/// URI - it fails.
-> >
-> > Repro steps:
-> >
-> > I have the `git` repo cloned and built into the CWD at v2.28.0
-> > git/git clone --filter=blob:none file:///home/nipunn/src/git git2
->
-> I couldn't quite reproduce this. Here's my reproduction:
->
->   #!/bin/sh
->
->   rm -fr repo clone
->   git init repo
->
->   (
->     cd repo
->
->     git config uploadpack.allowfilter true
->     git config uploadpack.allowanysha1inwant true
->
->     for f in a b; do
->       echo $f > $f
->       git add $f
->       git commit -m "$f: initial commit"
->     done
->   )
->
->   git clone --filter=blob:none file://$(pwd)/repo clone
->
-> That works on v2.28.0, and v2.29.0 for me. Is git installed properly on
-> your system?
->
-> Thanks,
-> Taylor
+> > diff --git a/http-push.c b/http-push.c
+> > index 6a4a43e07f..2e6fee3305 100644
+> > --- a/http-push.c
+> > +++ b/http-push.c
+> > @@ -894,7 +894,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+> >       slot->results = &results;
+> >       curl_setup_http(slot->curl, url, DAV_LOCK, &out_buffer, fwrite_buffer);
+> >       curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, dav_headers);
+> > -     curl_easy_setopt(slot->curl, CURLOPT_FILE, &in_buffer);
+> > +     curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &in_buffer);
+> >   ...
