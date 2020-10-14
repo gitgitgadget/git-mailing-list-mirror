@@ -6,73 +6,112 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6DBDC433E7
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B3CC433E7
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:55:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52597214D8
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:49:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C63C206DC
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728185AbgJNTt2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 15:49:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60202 "EHLO cloud.peff.net"
+        id S1728315AbgJNTzp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 15:55:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60220 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728146AbgJNTt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 15:49:27 -0400
-Received: (qmail 18489 invoked by uid 109); 14 Oct 2020 19:49:27 -0000
+        id S1726111AbgJNTzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 15:55:45 -0400
+Received: (qmail 18522 invoked by uid 109); 14 Oct 2020 19:55:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Oct 2020 19:49:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Oct 2020 19:55:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20320 invoked by uid 111); 14 Oct 2020 19:49:27 -0000
+Received: (qmail 20426 invoked by uid 111); 14 Oct 2020 19:55:44 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Oct 2020 15:49:26 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Oct 2020 15:55:44 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Oct 2020 15:49:26 -0400
+Date:   Wed, 14 Oct 2020 15:55:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 1/3] test-lib: allow selecting tests by
- substring/regex with --run
-Message-ID: <20201014194926.GB365553@coredump.intra.peff.net>
-References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
- <pull.878.v2.git.git.1602616786.gitgitgadget@gmail.com>
- <41e2528e83ba7087c9d21f0b15efed416f1512f8.1602616786.git.gitgitgadget@gmail.com>
- <20201014170413.GB21687@coredump.intra.peff.net>
- <CAPc5daVa4j5mDvTzCFCX2bLr1qVFLO=P=nSakT+mDG1kqeXa+g@mail.gmail.com>
- <20201014180707.GB24279@coredump.intra.peff.net>
- <CAPc5daU_aw=yWPKHG1XGt4X5A1AkEXeLfCmHqqVfZ+FzBD7nxg@mail.gmail.com>
- <CABPp-BE0_u=TAJKUGUTLrZbg8vk2MFYmfscT_+MgYwAS2rV8Aw@mail.gmail.com>
+To:     Sean McAllister <smcallis@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, masayasuzuki@google.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v2 3/3] http: automatically retry some requests
+Message-ID: <20201014195544.GA365911@coredump.intra.peff.net>
+References: <20201013191729.2524700-1-smcallis@google.com>
+ <20201013191729.2524700-3-smcallis@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BE0_u=TAJKUGUTLrZbg8vk2MFYmfscT_+MgYwAS2rV8Aw@mail.gmail.com>
+In-Reply-To: <20201013191729.2524700-3-smcallis@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 12:41:00PM -0700, Elijah Newren wrote:
+On Tue, Oct 13, 2020 at 01:17:29PM -0600, Sean McAllister wrote:
 
-> > I use "?" for the same purpose for globs. For things that are casual,
-> > I find that
-> > it tends to make the end-user (read: my) experience simpler to use globs than
-> > to use regexp, largely for your ".*" vs "*" reasons.
-> 
-> Oh, I thought you were arguing for globs over regexes here just due to
-> performance reasons.  Most of my uses of this feature so far are just
-> substring matches, so either globs or regexes would be fine for what
-> I've done so far.  Mostly, I was leaning towards regexes because I
-> figured they were a bit more flexible and perhaps there might arise a
-> usecase where that would be handy (plus Peff seemed to like them).
-> But if you find the normal usecase easier with globs, maybe I should
-> let you and Peff argue it out and then I'll resubmit with the
-> preferred solution?
+> +/*
+> + * check for a retry-after header in the given headers string, if found, then
+> + * honor it, otherwise do an exponential backoff up to the max on the current
+> + * delay
+> +*/
+> +static int http_retry_after(const struct strbuf headers, int cur_delay_sec)
+> +{
+> +	int delay_sec;
+> +	char *end;
+> +	char* value = http_header_value(headers, "retry-after");
+> +
+> +	if (value) {
+> +		delay_sec = strtol(value, &end, 0);
+> +		free(value);
+> +		if (*value && *end == '\0' && delay_sec >= 0) {
 
-Thinking on it more, globs are probably a more natural fit here.
-Especially if we do eventually allow selection of scripts by name, too
-(e.g., for GIT_SKIP_TESTS), matching those filenames with a glob would
-match what happens on the command-line.
+This looks at the contents of the just-freed "value" memory block.
+
+> +			if (delay_sec > http_max_delay_sec) {
+> +				die(Q_("server requested retry after %d second,"
+> +					   " which is longer than max allowed\n",
+> +					   "server requested retry after %d seconds,"
+> +					   " which is longer than max allowed\n", delay_sec),
+> +					delay_sec);
+> +			}
+> +			return delay_sec;
+
+I guess there's no point in being gentle here. We could shrink the retry
+time to our maximum allowed, but the server just told us not to bother.
+But would this die() mask the actual http error we encountered, which is
+surely the more interesting thing for the user?
+
+I wonder if it needs to be returning a "do not bother retrying" value,
+which presumably would cause the caller to propagate the real failure in
+the usual way.
+
+>  static int http_request(const char *url,
+>  			void *result, int target,
+>  			const struct http_get_options *options)
+>  {
+>  	struct active_request_slot *slot;
+>  	struct slot_results results;
+> -	struct curl_slist *headers = http_copy_default_headers();
+> +	struct curl_slist *headers;
+>  	struct strbuf buf = STRBUF_INIT;
+> +	struct strbuf result_headers = STRBUF_INIT;
+
+This new result_headers strbuf is filled in for every request, but I
+don't think us ever releasing it (whether we retry or not). So I think
+it's leaking for each request.
+
+It sounds like you're going to rework this to put the retry loop outside
+of http_request(), so it may naturally get fixed there. But I thought it
+worth mentioning.
+
+> +	curl_easy_setopt(slot->curl, CURLOPT_HEADERDATA, &result_headers);
+> +	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_buffer);
+
+After looking at your parsing code, I wondered if there was a way to
+just get a single header out of curl. But according to the documentation
+for CURLOPT_HEADERFUNCTION, it will pass back individual lines anyway.
+Perhaps it would be simpler to have the callback function understand
+that we only care about getting "Retry-After".
+
+The documentation says it doesn't support header folding, but that's
+probably OK for our purposes. It's deprecated, and your custom parsing
+doesn't handle it either. :) And most importantly, we won't misbehave
+terribly if we see it in the wild (we'll just ignore that header).
 
 -Peff
