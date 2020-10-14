@@ -2,102 +2,67 @@ Return-Path: <SRS0=1eW7=DV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SHORT_SHORTNER,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC58AC433E7
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 15:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A718C433DF
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 15:23:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AB4522201
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 15:17:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4C7A22203
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 15:23:13 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OyjYVjKI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731723AbgJNPRT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 11:17:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59752 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728247AbgJNPRQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 11:17:16 -0400
-Received: (qmail 17477 invoked by uid 109); 14 Oct 2020 15:17:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Oct 2020 15:17:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17753 invoked by uid 111); 14 Oct 2020 15:17:15 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Oct 2020 11:17:15 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Oct 2020 11:17:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Sean McAllister <smcallis@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, masayasuzuki@google.com, jrnieder@gmail.com
-Subject: Re: [PATCH v2 3/3] http: automatically retry some requests
-Message-ID: <20201014151714.GB12589@coredump.intra.peff.net>
-References: <20201013191729.2524700-1-smcallis@google.com>
- <20201013191729.2524700-3-smcallis@google.com>
- <20201013211453.GB3678071@coredump.intra.peff.net>
- <20201013234502.GB490427@camp.crustytoothpaste.net>
+        id S1728087AbgJNPXM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 11:23:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53231 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbgJNPXM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 11:23:12 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 05F177BA71;
+        Wed, 14 Oct 2020 11:23:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=B
+        UTzT3LmHb1AB0CqUvVrDDOr7T8=; b=OyjYVjKIZKdq19TmRx+JJIeSY2OUxLA1y
+        wdVWozSrfQ36T3nZnHkiOnV2IpMJg0s28Auzpm1RBvJOi+MP/buy7AYwIYfQ4B5z
+        zuFEA8/wobD9iVJfr/EObN1iAnJYydevp2ZjW0XAoImzv4m5TK7ovQdIx5RlUys/
+        BDEcYbRPfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=yL8
+        9EvVt25tWVi07XXJR2FKyeaP07i7OjhEwruHKpvNaaeipf1p2fln+V6C/UU+pKo6
+        Ysg+GxhKPVVahcldwMmc3hNsJO75l7uQoliX6CemTTWBqGI68zQlqdUwlQGZV9LW
+        yLdjJ0TR0pwXMtBK+ahNTUOht4uJ7enhudJ61q+o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F2BA47BA70;
+        Wed, 14 Oct 2020 11:23:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5E22C7BA6F;
+        Wed, 14 Oct 2020 11:23:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [Announce] 2.29-rc2 will be tagged tomorrow, not today
+Date:   Wed, 14 Oct 2020 08:23:08 -0700
+Message-ID: <xmqqr1q0j0gz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201013234502.GB490427@camp.crustytoothpaste.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2A7E4E0A-0E31-11EB-B9A2-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 13, 2020 at 11:45:02PM +0000, brian m. carlson wrote:
+tinyurl.com/gitCal has today marked for Git 2.29-rc2 but I will have
+to be off today, so it will be postponed by one day.
 
-> Yeah, I was about to mention the same thing.  It looks like we cover
-> only a subset of requests.  Moreover, I think this feature is going to
-> practically fail in some cases and we need to either document that
-> clearly or abandon this effort.
-> 
-> In remote-curl.c, we have post_rpc, which does a POST request to upload
-> data for a push.  However, if the data is larger than the buffer, we
-> stream it using chunked transfer-encoding.  Because we're reading from a
-> pipe, that data cannot be retried: the pack-objects stream will have
-> ended.
+Thanks.
 
-Right, this is the large_request code path there. We use the same
-function for fetches, too, though perhaps it's less likely that a
-negotiation request will exceed the post buffer size.
-
-We do send a probe rpc in this case, which lets us handle an HTTP 401
-auth request. We _could_ retry on errors to the probe rpc, but I'm not
-sure if it really accomplishes that much. The interesting thing is
-whether the actual request with content goes through. If retrying
-magically fixes things, there's no reason to think that the actual
-request is any less likely to intermittently fail than the probe request
-(in fact I'd expect it to fail more).
-
-It would be possible to restart even these large requests. Obviously we
-could spool the contents to disk in order to replay it. But that carries
-a cost for the common case that we either succeed or definitely fail on
-the first case, and never use the spooled copy.
-
-Another option is to simply restart the Git process that is generating
-the data that we're piping. But that has to happen outside of
-post_rpc(); only the caller knows the right way to invoke that again.
-And we kind of already have that: just run the Git command again.
-I know that sounds a little dismissive, but it has really been our
-recommended retry strategy for ages[1].
-
-So I'd wonder in Sean's use case why just restarting the whole Git
-process isn't a workable solution. It wouldn't respect Retry-After, but
-it might be reasonable to surface that header's value to the caller so
-it can act appropriately (and I guess likewise whether we saw an error
-that implies retrying might work).
-
-All of this is written from the perspective of v1. In v2, we do a lot
-more blind packet-shuffling (see remote-curl.c:stateless_connect()). I
-suspect it makes any kind of retry at the level of the http code much
-harder. Whereas just restarting the Git command would probably work just
-fine.
-
--Peff
-
-[1] I think git-submodule will retry failed clones, for example. TBH, I
-    have never once seen this retry accomplish anything, and it only
-    wastes time and makes the output more confusing (since we see the
-    failure twice). I have to admit I'm not thrilled to see more blind
-    retrying for that reason.
+Oh, no, nothing terrible happned.  Just that HR keeps telling me to
+spend vacation days somehow, so...
