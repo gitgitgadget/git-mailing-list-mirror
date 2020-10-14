@@ -7,156 +7,81 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05BD8C433DF
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67382C433E7
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:11:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9244C20691
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:09:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDB4420691
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:11:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nvC0QRWX"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ly0pZyjX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730453AbgJNTJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 15:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47242 "EHLO
+        id S2390243AbgJNTLE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 15:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730423AbgJNTJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 15:09:18 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A41A6C061755
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 12:09:18 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id gm14so272627pjb.2
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 12:09:18 -0700 (PDT)
+        with ESMTP id S2389693AbgJNTLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 15:11:04 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 224DAC061755
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 12:11:03 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id 10so380176pfp.5
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 12:11:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Cyqbpwb4rRhFgyz9qJpoJpSeWtkSaXUHJXdpa87L8+4=;
-        b=nvC0QRWXFIuqrAo2aaQV6a4oVDS1I/pzJ+IcPQux6BFTxByaULQTqj+CQ6ygllC5zY
-         S7OX8JkH1BtomqSYwEZHy6EpctBBLyNKN54HDv+ky71FXa9W/MISMVs7rzCbH3b5ApDw
-         7NDDT+MGHgPxlZPcGwubPHY/whNghkvugJb8YdtMVy8ebGDrH2AgHp6qiVbQKm/Zgc4n
-         Wy5TixPFmUBK+cwuoEWXKYWLlk3k94c1iRM5ts86iwEkzoWEyywqrgZLBn4/fp61amR6
-         WFUsufvEkBdf/482So451HcDSnN75MRS40vk7y60eEZsP/lDJfuSv9iswbyQAozLd78d
-         OliA==
+        bh=7K3cnw8C9uUt1pgvtCW00xXcmeyNYUd1C+Jof4ER/kg=;
+        b=Ly0pZyjXllKtXLAiqz3M80O/f/+3aWH3iLbn3eviCHhDZjVaSmwLbTAfBbv/Gtyw5u
+         H+KEZOE9dw29ESvPPaR9bVEN1LW0yPOz4BuwhSsm0WvpCACt1V4V5LNFuxyz9R+Ofctu
+         gkBg4kTbPr/BRc2A/m28rvCyKJaKIFm3sOqRjA+AHXFYr0m/hN9sJ/HTPueUdjTfpKfj
+         B/II7ncpcl4cxTcIra6idJEkDau2Z5wp2MJrvKupBk03ras2tcETczBHREq6Gpn+fiYT
+         1fH4kCJBGjBvK43t21/du5uu7rTFrsYlVrwaZtagK07A0tqgKQWt38vrff3lGQXH+Bqx
+         jnCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Cyqbpwb4rRhFgyz9qJpoJpSeWtkSaXUHJXdpa87L8+4=;
-        b=BHpGTxfwRpjR/wsuCjh71WvKdp6pHbbhXbINL5F/EhJvxdm9nmaJZkTtb9E43Io8Hp
-         QpDQs054/PPLLLiSPO55FUxEY+Sdw8jmX4OerMeS0mzwEbjrc/lmXybIV5xtEb6dCnxL
-         aMGtVPobt6GbZjpfrSgzDRYioJuQPxalyowDwQ194rLRrwoyQjbs0bN6NcsIPBNBqT8s
-         +0tbF0aq2wHjxIsbNBgNIXYS+4kKAFaalAJvuxQjp1OdJWpZ1/R7a5WhCDXK6qiboM7w
-         A7vnRi5/Af+Mg5DDztgJ3zVqcaUSyn8njnA8hBX1msE/1w0/s4G/OyAi2XKNvddc+hJs
-         ZRqg==
-X-Gm-Message-State: AOAM531HcNHfvGyY9XYXUzBhPp2oCGd6S4/LMKJpEmHs2s1rWE8Bfhfy
-        s7ALATjX+Cz3ld6Te5juEx1bfuwtagi1HunVFUinyQjGt/r6KA==
-X-Google-Smtp-Source: ABdhPJyr71sldRUNmuFu2R96e9+oAGEHGFT+sB1jASClanXAHPTXw/KD+cPMjbLeKk+4sqqBJaOGXBBTq8vS2I2rGlo=
-X-Received: by 2002:a17:902:ee52:b029:d5:b156:3ff8 with SMTP id
- 18-20020a170902ee52b02900d5b1563ff8mr374498plo.85.1602702557808; Wed, 14 Oct
- 2020 12:09:17 -0700 (PDT)
+        bh=7K3cnw8C9uUt1pgvtCW00xXcmeyNYUd1C+Jof4ER/kg=;
+        b=ogHps+TBCBmUMnMBfnyznK5Qr5Tz7WDUdxn6GxuienqsyD7Bq97q+y46rVOr6u6wED
+         ATAMwnBeQu9pecS7S1R/FSTeF0KmFKBdzmvffyA0BVm1pX+CkJ/1wrbrdidZaZgZGe31
+         4ePNitNwbo5TO3Ny5BwOJc+94cTMWpjdPt58zilAVTpv3lJoR3DBIAJV6pwylnae/a4/
+         qy3C01LDln5cr/V684BYOEqWCCvWr3qWqW9qYJQZMY8QeXhYKAfNJbowqwAgNAldC+Ew
+         qao1Gc8nBLPR7FSH2VwMYXTsmWzDv1VwLAokka2zSpnz5Zy9Y4/pC4mDuQE6hg1ldAch
+         tnOQ==
+X-Gm-Message-State: AOAM532V25qcmtl6CIyszlpELtbAHxBNR5z5//NvNyMaZeIWETcB94MP
+        I1P4Qhna3rFn6GFpXUKpzLG6gXGnbxzsyHHHC2ms+g==
+X-Google-Smtp-Source: ABdhPJy8Rsajq26rJKcKb5aAYfK/7TTv0Me8bf1FIYj7f+vcpSt0BmBJMnr5BlHbRPwQaI6jEom2HnbS1m4XWm+L2TI=
+X-Received: by 2002:a63:dc4f:: with SMTP id f15mr353931pgj.332.1602702662500;
+ Wed, 14 Oct 2020 12:11:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20201013191729.2524700-1-smcallis@google.com> <20201013191729.2524700-3-smcallis@google.com>
- <20201013211453.GB3678071@coredump.intra.peff.net>
-In-Reply-To: <20201013211453.GB3678071@coredump.intra.peff.net>
+ <20201013211453.GB3678071@coredump.intra.peff.net> <CAM4o00eCKP1+f=xBw4LJfNqrstEnutAe9StxknW9qLMtPBdhKQ@mail.gmail.com>
+In-Reply-To: <CAM4o00eCKP1+f=xBw4LJfNqrstEnutAe9StxknW9qLMtPBdhKQ@mail.gmail.com>
 From:   Sean McAllister <smcallis@google.com>
-Date:   Wed, 14 Oct 2020 13:09:00 -0600
-Message-ID: <CAM4o00eCKP1+f=xBw4LJfNqrstEnutAe9StxknW9qLMtPBdhKQ@mail.gmail.com>
+Date:   Wed, 14 Oct 2020 13:10:46 -0600
+Message-ID: <CAM4o00fO++JMNdES03JKRyxmZtiLjkrJ2nux0-TZYBdH2+0ijA@mail.gmail.com>
 Subject: Re: [PATCH v2 3/3] http: automatically retry some requests
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Masaya Suzuki <masayasuzuki@google.com>, jrnieder@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Masaya Suzuki <masayasuzuki@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 13, 2020 at 3:14 PM Jeff King <peff@peff.net> wrote:
+On Wed, Oct 14, 2020 at 1:09 PM Sean McAllister <smcallis@google.com> wrote:
 >
-> On Tue, Oct 13, 2020 at 01:17:29PM -0600, Sean McAllister wrote:
+> On Tue, Oct 13, 2020 at 3:14 PM Jeff King <peff@peff.net> wrote:
+> >
+> > I do think you could be leveraging CURLINFO_RETRY_AFTER rather than
+> > implementing your own header parsing, though.
+> >
+> Ah I didn't know about CURLINFO_RETRY_AFTER, I'll look at that and use
+> it if I can.
 >
-> > Exiting immediately becomes irksome when pulling large multi-repo code
-> > bases such as Android or Chromium, as often the entire fetch operation
-> > has to be restarted from the beginning due to an error in one repo. If
-> > we can reduce how often that occurs, then it's a big win.
->
-> I had hoped that libcurl might have some retry mechanisms, since the
-> curl command-line tool has several --retry-* options. But it looks like
-> that is all only at the tool level, and the library code doesn't know
-> anything about it. So we are stuck driving the process ourselves.
->
-> I do think you could be leveraging CURLINFO_RETRY_AFTER rather than
-> implementing your own header parsing, though.
->
-Ah I didn't know about CURLINFO_RETRY_AFTER, I'll look at that and use
-it if I can.
-
-> >  static int http_request(const char *url,
-> >                       void *result, int target,
-> >                       const struct http_get_options *options)
-> >  {
->
-> It looks like you trigger retries only from this function. But this
-> doesn't cover all http requests that Git makes. That might be sufficient
-> for your purposes (I think it would catch all of the initial contact),
-> but it might not (it probably doesn't cover subsequent POSTs for fetch
-> negotiation nor pack push; likewise I'm not sure if it covers much of
-> anything after v2 stateless-connect is established).
->
-You're right that I only trigger from this function.  I've since removed them
-in response to feedback on having too many tests, but I originally tested this
-with:
-  t5539-fetch-http-shallow.sh
-  t5540-http-push-webdav.sh
-  t5541-http-push-smart.sh
-  t5550-http-fetch-dumb.sh
-  t5551-http-fetch-smart.sh
-  t5601-clone.sh
-
-I'd have to look at the packet logs to see exactly what each of those
-protocols is doing, but it seemed to cover _most_ of what they were doing.
-
-Definitely open to adding retries in other places though.
-
-> >       struct active_request_slot *slot;
-> >       struct slot_results results;
-> > -     struct curl_slist *headers = http_copy_default_headers();
-> > +     struct curl_slist *headers;
->
-> So here we stop copying the headers at the top of the function...
->
-> > [...]
-> > +retry:
-> > [...]
-> > +     headers = http_copy_default_headers();
-> >       if (accept_language)
-> >               headers = curl_slist_append(headers, accept_language);
->
-> And instead set them up totally here. Which make some sense, because we
-> wouldn't want to append accept_language over and over. But who frees the
-> old ones? There is a call to curl_slist_free_all(headers) later in the
-> function, but it's after your "goto retry". So I think each retry would
-> leak another copy of the list.
->
-> The ideal thing would probably be to create the header list once, and
-> then use it for each retry. That would require reordering some of the
-> setup. If that's too much, then it would be OK to just create a new list
-> from scratch on each call. Though in the latter case I suspect it may be
-> simpler to wrap the whole function, like:
->
->   static int http_request(...)
->   {
->         int try;
->         int result;
->         for (try = 0; try < max_retries; i++) {
->                 result = http_request_try(...);
->                 if (...result is not retryable...)
->                         break;
->         }
->         return result;
->   }
->
-> and then we'd know that the single-try function just needs to be
-> self-contained, without worrying about gotos jumping around in it.
->
-> -Peff
-I like this idea, I've refactored it to do just this.
+I took a look, it looks like CURLINFO_RETRY_AFTER was only added in
+7.66 (September, 2019),  so
+I don't think it's reasonable to rely on it for getting the
+Retry-After value in this case.
