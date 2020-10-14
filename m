@@ -8,64 +8,61 @@ X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABF7FC4363A
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FE44C433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A12D22257
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B255C22257
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:54:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IPLqv19l"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K2jN9zXc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732438AbgJOByp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 21:54:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53098 "EHLO
+        id S1732417AbgJOByt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 21:54:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732437AbgJOByi (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1732411AbgJOByi (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Oct 2020 21:54:38 -0400
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 346AFC08EAC2
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:06 -0700 (PDT)
-Received: by mail-qt1-x849.google.com with SMTP id t4so753871qtd.23
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:06 -0700 (PDT)
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 288CCC08EADD
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:22 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id m23so861344qkh.10
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 16:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=rgP0+z5JIC8ipIr9bMvY+BnU+XsgUIaNny6z7kLU62g=;
-        b=IPLqv19lVKfYbAE7dCu8BL+w+Rby3kwt2a72S+v30AfSK/YbT+Q3DcUW7FMGU3ZwgI
-         P5mvZCE28HF1bMT5VtHRsPTu4X3mdDb7NtdbCYHXD72FLPJlgNLktRspDsKN434llVjI
-         Is880GTc39b+2onvn7h2clMnfF5hAGEXeJZZtonIJo6BbZ7IyTuM2S6Atxhz2Pxn4/ou
-         qQf85GGJD1Dw286wXqO9jARMYc6Lzs/8UYjSK4xpC1ysDAfNbQbd3AQpUE1TkwAP+igW
-         8f2hHeB+NoTLwCEfeCny7R12ZYDHKBE6cL91i7mk0O4fAl36HRakPrMXJnIHpeYSVpnt
-         6+9Q==
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=Pjn7CZtn5A4vJ1nojmkcd3nLpwhUey7lEEA3HcBRwfU=;
+        b=K2jN9zXcFWyS5ssDc9ze1PUhiatYZRnI2pb/M2TnMoY0zCxBjHqZi10NQpexxy7wZD
+         xByHdaWz2LY8cOjnU9RESbNLBWfTM4QStQ9ekGYMK216aKrvioP13cLsh+j0HbcdgP8F
+         LV48hoH1lf4YijmBs2023RGSfjV7ajleMj9wt5eKBwsXYS3sQMuJG/MqA4uzVrJXUvCr
+         ZKCweBKzRURmK1FKDL/LLMIsbguUtQuKHt0Ui2DpVy9/cFTEKq/E6ZJbk5yCbc+Kggkx
+         0hP/Ae0HKVqObaNFUHg5dZ9yV7t8lzxCbPDxJl4pNw4OLbvIA0iSPxuT5C2KYLinQC5+
+         T6Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=rgP0+z5JIC8ipIr9bMvY+BnU+XsgUIaNny6z7kLU62g=;
-        b=FKbnI12itr2BOdWNsI2YZJDBwxXyLOyerW/ap5Vv8QMsslTBeMArFobhZHIb677qxU
-         UMS+bCLsVuukdytqmdAuZ40S5PXUnSmQiBvX3gTMeZRolnj58J1dYiB+ZM8k/LdOae+I
-         siQXTBuyUEeA3ByDvwpBBX6w8JXTKMRs/33AfAdEGtK4NnG3KLQBzwwwqCSAKYj+iBMu
-         4fLB0t904yJvZxpp2p19/hfX7yN2u2tztPkKjSN327aakvhzYxrJAvFM1ySuHBvlmWMG
-         k2/3BmoOmRiDCTtXwYkC8m0fLjif9UCHG0c7ywUYWyI5IaMSCuvxgjPJHncizhxejA7y
-         8OIQ==
-X-Gm-Message-State: AOAM533bcyCuqToe253QCB1j0r+8IPENa9GH6BGmmWVfdYc5KYap7Req
-        wctqnFhqpWBPemgux9iaJ5mBZR2PP2DDtQoqDF08XZA0bsiexG/4I/8XPPPOFPvDjMdBOXnIsm5
-        d7fFsI+UUKbW+GgLdoywOs9vp7zZFy7aa18FoftT+b2nWPhJlNtpssjHIyF9J5Moa7rNE+/YOWw
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=Pjn7CZtn5A4vJ1nojmkcd3nLpwhUey7lEEA3HcBRwfU=;
+        b=byL0vrLli6DMyfuQZ8teqW0/frl1ddVYTPg9OHzvtWCEqCosNoflfKWvR7qOHcPteP
+         eUFeGYUyPjNvuCVF1QsTO0sw+qrbJiHB/cBk3TTVM349lsplsfexQcph3WcYQgUA/uyZ
+         PnEbJCYkaY5oGwvOAyxaz8C12QlXJFqZoCmd7SD4DJ4Jdpi1rKLvhXJvqrLm6DTC/dvk
+         CB0uEmtyRitT1irOm5MXwbOzlYdYGx1XdOODqtqVezBkJVLmpVTvgvsewOJ+KFCkYsnw
+         VlIFT/qKY+j7LDIxRxvgFR5MB6nG2TCLvuDsQM86jyRc5zN1Xc58JZq4Y22pzVF6ZXln
+         I8cw==
+X-Gm-Message-State: AOAM531MhN5YEtaJwiDFKhwGCuyKkOZMnYiLfh9bVhYp7cDvcTkh6KFl
+        Ef/2AAVePXaUjDonayz0stKKLxaiuoG5M4yzTOeziaJNbkPcLW4fRBqUXNBUNDezcYt9v2pDTl8
+        uxgbv0B3+LRZn4OH0Gs7NpWT8u14J7CNCzOKLv4mtZpaf9ShhkUAkOcSIKECzbZmKtwDk3WzuOg
         ==
-X-Google-Smtp-Source: ABdhPJxE5f82WzB5V6fSkX6GO8aGgtlyRxgIsx11CWAez3O/kb368pXpJXt7cAJB7PrF/5RmgEcLQVa6wjowcmnpL74=
+X-Google-Smtp-Source: ABdhPJzxsLtvVQF69Qc/F5Z9FeVpjh0X5o38zO8ak/GSF6nGCInOxLxVE9o/xlW2LUSehCUqQNhHIBmO5LCp6hJCVLc=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:a2a6:: with SMTP id
- g35mr1794550qva.4.1602717905253; Wed, 14 Oct 2020 16:25:05 -0700 (PDT)
-Date:   Wed, 14 Oct 2020 16:24:44 -0700
-In-Reply-To: <20201014232447.3050579-1-emilyshaffer@google.com>
-Message-Id: <20201014232447.3050579-6-emilyshaffer@google.com>
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:b902:: with SMTP id
+ u2mr1663488qvf.7.1602717921249; Wed, 14 Oct 2020 16:25:21 -0700 (PDT)
+Date:   Wed, 14 Oct 2020 16:25:17 -0700
+Message-Id: <20201014232517.3068298-1-emilyshaffer@google.com>
 Mime-Version: 1.0
-References: <20201014232447.3050579-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH v5 5/8] hook: implement hookcmd.<name>.skip
+Subject: [PATCH] commit: use config-based hooks (config-based hooks part II)
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -74,159 +71,154 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a user wants a specific repo to skip execution of a hook which is set
-at a global or system level, they can now do so by specifying 'skip' in
-their repo config:
-
-~/.gitconfig
-  [hook.pre-commit]
-    command = skippable-oneliner
-    command = skippable-hookcmd
-
-  [hookcmd.skippable-hookcmd]
-    command = foo.sh
-
-$GIT_DIR/.git/config
-  [hookcmd.skippable-oneliner]
-    skip = true
-  [hookcmd.skippable-hookcmd]
-    skip = true
-
-Later it may make sense to add an option like
-"hookcmd.<name>.<hook-event>-skip" - but for simplicity, let's start
-with a universal skip setting like this.
+As part of the adoption of config-based hooks, teach run_commit_hook()
+to call hook.h instead of run-command.h. This covers 'pre-commit',
+'commit-msg', and 'prepare-commit-msg'. Additionally, ask the hook
+library - not run-command - whether any hooks will be run, as it's
+possible hooks may exist in the config but not the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
 
-Notes:
-    New since v4.
-    
-    During the Google team's review club I was reminded about this whole
-    'skip' option I never implemented. It's true that it's impossible to
-    exclude a given hook without this; however, I think I have some more
-    work to do on it, so consider it RFC for now and tell me what you think
-    :)
-     - Emily
+This is based on es/config-based-hooks (v5).
 
- hook.c                        | 37 +++++++++++++++++++++++++----------
- t/t1360-config-based-hooks.sh | 23 ++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 10 deletions(-)
+Since config-based hooks v4, I split a new branch for the conversions of
+existing hook callers. I'm hoping this will make it easier for me to
+work on the architecture without needing to juggle these
+hopefully-slow-moving patches as frequently, and will reduce the load on
+reviewers.
 
-diff --git a/hook.c b/hook.c
-index 340e5a35c8..f4084e33c8 100644
---- a/hook.c
-+++ b/hook.c
-@@ -12,23 +12,24 @@ void free_hook(struct hook *ptr)
- 	}
- }
+Since v4 also I removed the second patch changing the run_commit_hook()
+API. I had figured it might not be well received when I sent it, and it
+wasn't, so no worries.
+
+I'm hoping to have updates to this series pretty soon too with new
+conversions... so I guess this one may just be noise. Ah well.
+
+ - Emily
+
+ builtin/commit.c                                |  3 ++-
+ builtin/merge.c                                 |  3 ++-
+ commit.c                                        | 10 +++++++++-
+ ...503-pre-commit-and-pre-merge-commit-hooks.sh | 17 +++++++++++++++--
+ 4 files changed, 28 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1dfd799ec5..a337ecd4c2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -36,6 +36,7 @@
+ #include "help.h"
+ #include "commit-reach.h"
+ #include "commit-graph.h"
++#include "hook.h"
  
--static void append_or_move_hook(struct list_head *head, const char *command)
-+static struct hook* find_hook_by_command(struct list_head *head, const char *command)
+ static const char * const builtin_commit_usage[] = {
+ 	N_("git commit [<options>] [--] <pathspec>..."),
+@@ -983,7 +984,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
+ 	}
+ 
+-	if (!no_verify && find_hook("pre-commit")) {
++	if (!no_verify && hook_exists("pre-commit", configured_hookdir_opt())) {
+ 		/*
+ 		 * Re-read the index as pre-commit hook could have updated it,
+ 		 * and write it out as a tree.  We must do this before we invoke
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 9d5359edc2..36ba138f4e 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -41,6 +41,7 @@
+ #include "commit-reach.h"
+ #include "wt-status.h"
+ #include "commit-graph.h"
++#include "hook.h"
+ 
+ #define DEFAULT_TWOHEAD (1<<0)
+ #define DEFAULT_OCTOPUS (1<<1)
+@@ -829,7 +830,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	 * and write it out as a tree.  We must do this before we invoke
+ 	 * the editor and after we invoke run_status above.
+ 	 */
+-	if (find_hook("pre-merge-commit"))
++	if (hook_exists("pre-merge-commit", configured_hookdir_opt()))
+ 		discard_cache();
+ 	read_cache_from(index_file);
+ 	strbuf_addbuf(&msg, &merge_msg);
+diff --git a/commit.c b/commit.c
+index f53429c0ac..b338f50103 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "hook.h"
+ 
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ 
+@@ -1635,8 +1636,11 @@ int run_commit_hook(int editor_is_used, const char *index_file,
  {
- 	struct list_head *pos = NULL, *tmp = NULL;
--	struct hook *to_add = NULL;
-+	struct hook *found = NULL;
+ 	struct strvec hook_env = STRVEC_INIT;
+ 	va_list args;
++	const char *arg;
++	struct strvec hook_args = STRVEC_INIT;
+ 	int ret;
  
--	/*
--	 * remove the prior entry with this command; we'll replace it at the
--	 * end.
--	 */
- 	list_for_each_safe(pos, tmp, head) {
- 		struct hook *it = list_entry(pos, struct hook, list);
- 		if (!strcmp(it->command.buf, command)) {
- 		    list_del(pos);
--		    /* we'll simply move the hook to the end */
--		    to_add = it;
-+		    found = it;
- 		}
- 	}
-+	return found;
-+}
 +
-+static void append_or_move_hook(struct list_head *head, const char *command)
-+{
-+	struct hook *to_add = find_hook_by_command(head, command);
+ 	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
  
- 	if (!to_add) {
- 		/* adding a new hook, not moving an old one */
-@@ -41,7 +42,7 @@ static void append_or_move_hook(struct list_head *head, const char *command)
- 	/* re-set the scope so we show where an override was specified */
- 	to_add->origin = current_config_scope();
+ 	/*
+@@ -1646,9 +1650,13 @@ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		strvec_push(&hook_env, "GIT_EDITOR=:");
  
--	list_add_tail(&to_add->list, pos);
-+	list_add_tail(&to_add->list, head);
+ 	va_start(args, name);
+-	ret = run_hook_ve(hook_env.v, name, args);
++	while ((arg = va_arg(args, const char *)))
++		strvec_push(&hook_args, arg);
+ 	va_end(args);
++
++	ret = run_hooks(hook_env.v, name, &hook_args, configured_hookdir_opt());
+ 	strvec_clear(&hook_env);
++	strvec_clear(&hook_args);
+ 
+ 	return ret;
  }
+diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
+index b3485450a2..fc93bc3d23 100755
+--- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
++++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
+@@ -5,8 +5,8 @@ test_description='pre-commit and pre-merge-commit hooks'
+ . ./test-lib.sh
  
- static void remove_hook(struct list_head *to_remove)
-@@ -73,8 +74,18 @@ static int hook_config_lookup(const char *key, const char *value, void *cb_data)
- 	if (!strcmp(key, hook_key)) {
- 		const char *command = value;
- 		struct strbuf hookcmd_name = STRBUF_INIT;
-+		int skip = 0;
-+
-+		/*
-+		 * Check if we're removing that hook instead. Hookcmds are
-+		 * removed by name, and inlined hooks are removed by command
-+		 * content.
-+		 */
-+		strbuf_addf(&hookcmd_name, "hookcmd.%s.skip", command);
-+		git_config_get_bool(hookcmd_name.buf, &skip);
+ HOOKDIR="$(git rev-parse --git-dir)/hooks"
+-PRECOMMIT="$HOOKDIR/pre-commit"
+-PREMERGE="$HOOKDIR/pre-merge-commit"
++PRECOMMIT="$(pwd)/$HOOKDIR/pre-commit"
++PREMERGE="$(pwd)/$HOOKDIR/pre-merge-commit"
  
- 		/* Check if a hookcmd with that name exists. */
-+		strbuf_reset(&hookcmd_name);
- 		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
- 		git_config_get_value(hookcmd_name.buf, &command);
- 
-@@ -89,7 +100,13 @@ static int hook_config_lookup(const char *key, const char *value, void *cb_data)
- 		 *   for each key+value, do_callback(key, value, cb_data)
- 		 */
- 
--		append_or_move_hook(head, command);
-+		if (skip) {
-+			struct hook *to_remove = find_hook_by_command(head, command);
-+			if (to_remove)
-+				remove_hook(&(to_remove->list));
-+		} else {
-+			append_or_move_hook(head, command);
-+		}
- 
- 		strbuf_release(&hookcmd_name);
- 	}
-diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-index 91127a50a4..ebd3bc623f 100755
---- a/t/t1360-config-based-hooks.sh
-+++ b/t/t1360-config-based-hooks.sh
-@@ -132,6 +132,29 @@ test_expect_success 'hook.runHookDir = warn is respected by list' '
- 	test_i18ncmp expected actual
+ # Prepare sample scripts that write their $0 to actual_hooks
+ test_expect_success 'sample script setup' '
+@@ -103,6 +103,19 @@ test_expect_success 'with succeeding hook' '
+ 	test_cmp expected_hooks actual_hooks
  '
  
-+test_expect_success 'git hook list removes skipped hookcmd' '
-+	setup_hookcmd &&
-+	test_config hookcmd.abc.skip "true" --add &&
-+
-+	cat >expected <<-EOF &&
-+	no commands configured for hook '\''pre-commit'\''
-+	EOF
-+
-+	git hook list pre-commit >actual &&
-+	test_i18ncmp expected actual
++# NEEDSWORK: when 'git hook add' and 'git hook remove' have been added, use that
++# instead
++test_expect_success 'with succeeding hook (config-based)' '
++	test_when_finished "git config --unset hook.pre-commit.command success.sample" &&
++	test_when_finished "rm -f expected_hooks actual_hooks" &&
++	git config hook.pre-commit.command "$HOOKDIR/success.sample" &&
++	echo "$HOOKDIR/success.sample" >expected_hooks &&
++	echo "more" >>file &&
++	git add file &&
++	git commit -m "more" &&
++	test_cmp expected_hooks actual_hooks
 +'
 +
-+test_expect_success 'git hook list removes skipped inlined hook' '
-+	setup_hooks &&
-+	test_config hookcmd."$ROOT/path/ghi".skip "true" --add &&
-+
-+	cat >expected <<-EOF &&
-+	global: $ROOT/path/def
-+	EOF
-+
-+	git hook list pre-commit >actual &&
-+	test_cmp expected actual
-+'
- 
- test_expect_success 'hook.runHookDir = interactive is respected by list' '
- 	setup_hookdir &&
+ test_expect_success 'with succeeding hook (merge)' '
+ 	test_when_finished "rm -f \"$PREMERGE\" expected_hooks actual_hooks" &&
+ 	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
