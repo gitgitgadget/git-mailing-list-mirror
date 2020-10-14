@@ -3,115 +3,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B3CC433E7
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E3A1C433E7
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 22:34:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C63C206DC
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 19:55:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B91D82223F
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 22:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728315AbgJNTzp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 15:55:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60220 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726111AbgJNTzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 15:55:45 -0400
-Received: (qmail 18522 invoked by uid 109); 14 Oct 2020 19:55:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Oct 2020 19:55:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20426 invoked by uid 111); 14 Oct 2020 19:55:44 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Oct 2020 15:55:44 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Oct 2020 15:55:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     Sean McAllister <smcallis@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, masayasuzuki@google.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v2 3/3] http: automatically retry some requests
-Message-ID: <20201014195544.GA365911@coredump.intra.peff.net>
-References: <20201013191729.2524700-1-smcallis@google.com>
- <20201013191729.2524700-3-smcallis@google.com>
+        id S1729165AbgJNWea (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 18:34:30 -0400
+Received: from mail-ej1-f67.google.com ([209.85.218.67]:45212 "EHLO
+        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726395AbgJNWea (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 18:34:30 -0400
+Received: by mail-ej1-f67.google.com with SMTP id dt13so738224ejb.12
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 15:34:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=11NWabKun++KgCv6LiIIuPf65u6EaBHBVTwC8JNnGA0=;
+        b=V7egqfaq7sHdXVhcx6NjJx9mkl7pU/XJXNWKGuxOWYqw4dDtGMqaEtRokZG+cU+I6g
+         Si0XpG3Gd00BLSqNYm7uhk6+3jseApNfY9QbLjPuzhWSHUc7CtsBRKmedbWqWOdoUsy8
+         3uzDBWq2IXS2vwjY8Vfi9t3/uObGIw2iE/YENwd64sgkUJRVQUylDFh05iwL7y6uTlW1
+         vfUnx5IA2rkPomsoDGBN6lCI60bStAQBRsPvOOQHnA4ZeLmYECSZQ+xXoeXH2Xs79urv
+         1inPIsaaTxBEGUTPLrZT5srVhEp6RYxDK6aV+vmy99B63WPD87SBcDYgHLzuw6HXE0Qm
+         +y3w==
+X-Gm-Message-State: AOAM531jQRQT1wjTi9GfziOF1CqIBHB1tbktM1xxyWbzU00TWD7CfRX0
+        BuFLhrvw4MacxesDS81AY7HHrP9BVI28ObFkYYMKgefO
+X-Google-Smtp-Source: ABdhPJzV7ad/vDkPaJuM+s08PHpRiWnnu6ecA4ZU6H2//GosX+Aj7miQ0VjdWJ8RaNJ+D7u2T4LwFRfhX0nyUiLrvQs=
+X-Received: by 2002:a17:906:5f96:: with SMTP id a22mr1351414eju.168.1602714869034;
+ Wed, 14 Oct 2020 15:34:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201013191729.2524700-3-smcallis@google.com>
+References: <20201014145506.45449-1-stefan@haller-berlin.de>
+In-Reply-To: <20201014145506.45449-1-stefan@haller-berlin.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 14 Oct 2020 18:34:18 -0400
+Message-ID: <CAPig+cSRX+5o645fxBZunm4hiBM-1Gr8jChijyUNgNkO1wHKdA@mail.gmail.com>
+Subject: Re: [PATCH] gitk: Add options --select-file and --select-line
+To:     Stefan Haller <stefan@haller-berlin.de>
+Cc:     Paul Mackerras <paulus@ozlabs.org>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 13, 2020 at 01:17:29PM -0600, Sean McAllister wrote:
+On Wed, Oct 14, 2020 at 10:55 AM Stefan Haller <stefan@haller-berlin.de> wrote:
+> These can be used in combination with --select-commit to jump to a given
+> line in a patch on startup. (They don't have any effect when
+> --select-commit is not used.)
+> [...]
+> ---
 
-> +/*
-> + * check for a retry-after header in the given headers string, if found, then
-> + * honor it, otherwise do an exponential backoff up to the max on the current
-> + * delay
-> +*/
-> +static int http_retry_after(const struct strbuf headers, int cur_delay_sec)
-> +{
-> +	int delay_sec;
-> +	char *end;
-> +	char* value = http_header_value(headers, "retry-after");
-> +
-> +	if (value) {
-> +		delay_sec = strtol(value, &end, 0);
-> +		free(value);
-> +		if (*value && *end == '\0' && delay_sec >= 0) {
-
-This looks at the contents of the just-freed "value" memory block.
-
-> +			if (delay_sec > http_max_delay_sec) {
-> +				die(Q_("server requested retry after %d second,"
-> +					   " which is longer than max allowed\n",
-> +					   "server requested retry after %d seconds,"
-> +					   " which is longer than max allowed\n", delay_sec),
-> +					delay_sec);
-> +			}
-> +			return delay_sec;
-
-I guess there's no point in being gentle here. We could shrink the retry
-time to our maximum allowed, but the server just told us not to bother.
-But would this die() mask the actual http error we encountered, which is
-surely the more interesting thing for the user?
-
-I wonder if it needs to be returning a "do not bother retrying" value,
-which presumably would cause the caller to propagate the real failure in
-the usual way.
-
->  static int http_request(const char *url,
->  			void *result, int target,
->  			const struct http_get_options *options)
->  {
->  	struct active_request_slot *slot;
->  	struct slot_results results;
-> -	struct curl_slist *headers = http_copy_default_headers();
-> +	struct curl_slist *headers;
->  	struct strbuf buf = STRBUF_INIT;
-> +	struct strbuf result_headers = STRBUF_INIT;
-
-This new result_headers strbuf is filled in for every request, but I
-don't think us ever releasing it (whether we retry or not). So I think
-it's leaking for each request.
-
-It sounds like you're going to rework this to put the retry loop outside
-of http_request(), so it may naturally get fixed there. But I thought it
-worth mentioning.
-
-> +	curl_easy_setopt(slot->curl, CURLOPT_HEADERDATA, &result_headers);
-> +	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_buffer);
-
-After looking at your parsing code, I wondered if there was a way to
-just get a single header out of curl. But according to the documentation
-for CURLOPT_HEADERFUNCTION, it will pass back individual lines anyway.
-Perhaps it would be simpler to have the callback function understand
-that we only care about getting "Retry-After".
-
-The documentation says it doesn't support header folding, but that's
-probably OK for our purposes. It's deprecated, and your custom parsing
-doesn't handle it either. :) And most importantly, we won't misbehave
-terribly if we see it in the wild (we'll just ignore that header).
-
--Peff
+Missing sign-off.
