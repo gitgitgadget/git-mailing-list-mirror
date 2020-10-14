@@ -2,119 +2,172 @@ Return-Path: <SRS0=1eW7=DV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70BEDC43457
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 09:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99161C433DF
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 09:23:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0670F214D8
-	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 09:22:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D938206DD
+	for <git@archiver.kernel.org>; Wed, 14 Oct 2020 09:23:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="GLWZwqQQ";
-	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="GLWZwqQQ"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sebres.de header.i=@sebres.de header.b="h5fpnj67"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731153AbgJNJVz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 05:21:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39946 "EHLO
+        id S1728107AbgJNJXv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 05:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729887AbgJNJVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 05:21:51 -0400
-Received: from mail.sammserver.com (sammserver.com [IPv6:2001:470:5a5b:1::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DEA6C0613E4
-        for <git@vger.kernel.org>; Tue, 13 Oct 2020 14:31:28 -0700 (PDT)
-Received: by mail.sammserver.com (Postfix, from userid 5011)
-        id CA534110A4C4; Tue, 13 Oct 2020 23:31:26 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
-        t=1602624686; bh=su5KAzqgrtMwRLhYFUv++V6jrwPYZWRt4O1Fo5Pt1TQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GLWZwqQQherodPEcMtuk2IpNGGGLtXn1eZTnwQ7RGXv8ZR+GoeWEz1NjVPH+rtmlo
-         9lhIKHm1P48OXsqxAeuBlssmxxgob8Kpnv70j4jLQ36zAGc0703Uxc+0DhGBLGKCk9
-         4stsxijtG82A9h9jEySj49gmsh9KGbvJUEv0edLo=
-Received: from fastboi.localdomain (fastboi.wg [10.32.40.5])
-        by mail.sammserver.com (Postfix) with ESMTP id 398EE110A4BA;
-        Tue, 13 Oct 2020 23:31:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
-        t=1602624686; bh=su5KAzqgrtMwRLhYFUv++V6jrwPYZWRt4O1Fo5Pt1TQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GLWZwqQQherodPEcMtuk2IpNGGGLtXn1eZTnwQ7RGXv8ZR+GoeWEz1NjVPH+rtmlo
-         9lhIKHm1P48OXsqxAeuBlssmxxgob8Kpnv70j4jLQ36zAGc0703Uxc+0DhGBLGKCk9
-         4stsxijtG82A9h9jEySj49gmsh9KGbvJUEv0edLo=
-Received: by fastboi.localdomain (Postfix, from userid 1000)
-        id 2233514200ED; Tue, 13 Oct 2020 23:31:24 +0200 (CEST)
-From:   =?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>
-Subject: [PATCH v3 2/3] sequencer: fix gpg option passed to merge subcommand
-Date:   Tue, 13 Oct 2020 23:30:23 +0200
-Message-Id: <20201013213021.3671432-2-samuel@cavoj.net>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201013213021.3671432-1-samuel@cavoj.net>
-References: <20201013213021.3671432-1-samuel@cavoj.net>
+        with ESMTP id S1731045AbgJNJXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 05:23:13 -0400
+Received: from sebres.de (sebres.de [IPv6:2a03:4000:3f:185::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D26BC0613DA
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 02:22:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sebres.de;
+         s=dkim; h=Message-ID:Reply-To:From:Date:Content-Transfer-Encoding:
+        Content-Type:MIME-Version:Subject:To:Sender:Cc:Content-ID:Content-Description
+        :Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=duE05f7YaFGi38JxlQN/OoB/QhB9TwPTf6cb5oPSpR8=; b=h5fpnj67RgSpYE3fK5DN9e10jV
+        3rTOuwQqYeBayYFGV7vd9zXdn099H5Ayb8yJeLJfhT0yz3Q0KyY46hEFzpiu6eRAnM5aIQ+Q/Fv9j
+        bxeXMIHTyA0d3oge27WzWDoynRxD+XIzC/w3wa6+OmbDMePfod6fncue5xq8O4/iGWZNDKc6tS+1d
+        EpLK6qfxqFM6cT2gEbs48p8MQorZz3of4RwQC1YyeHA/dFB5zE1bxWFVtyd9kuO0njFBhDrzyguKR
+        Res9FY0SIf/ecW/51O/6+fgIEWEaoCAAOTEMqsq87tBF+P7jQoylpS+dGnQOYN3gXNccrNr4dOzSF
+        5w+HJc+Q==;
+To:     git@vger.kernel.org
+Subject: git fast-import leaks memory drastically, so crashes with out of  memory by attempt to import 22MB export dump
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 14 Oct 2020 11:22:03 +0200
+From:   "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>
+Reply-To: serg.brester@gmx.net
+Mail-Reply-To: serg.brester@gmx.net
+Message-ID: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
+X-Sender: serg.brester@sebres.de
+User-Agent: Webmail/1.0.3
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When performing a rebase with --rebase-merges using either a custom
-strategy specified with -s or an octopus merge, and at the same time
-having gpgsign enabled (either rebase -S or config commit.gpgsign), the
-operation would fail on making the merge commit. Instead of "-S%s" with
-the key id substituted, only the bare key id would get passed to the
-underlying merge command, which tried to interpret it as a ref.
+Steps to reproduce the issue:
 
-Fix the issue and add test cases as suggested by Johannes Schindelin.
+  1. export from fossil and import the dump to the git:
+```
+fossil export --git --import-marks .git/.fossil2git-fssl --export-marks 
+.git/.fossil2git-fssl.tmp ^
+  | git fast-import --import-marks=.git/.fossil2git-git 
+--export-marks=.git/.fossil2git-git.tmp
+```
+  during the import git-fast-import.exe is growing on memory (more than I 
+have physically, e.g. noticed over 20GB),
+  SO FINALLY IT IS CRASHING WITH:
+```
+fatal: Out of memory, malloc failed (tried to allocate 2097152 bytes)
+fast-import: dumping crash report to .git/fast_import_crash_1800
+```
+  the crash report contains:
+```
+fast-import crash report:
+  fast-import process: 1800
+  parent process : 1
+  at 2020-10-13 18:55:19 +0000
 
-Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
----
-changed v2 -> v3:
-    - first test is now okay, thanks to patch 1/3
-    - added another test for config commit.gpgsign
----
- sequencer.c                |  2 +-
- t/t3435-rebase-gpg-sign.sh | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+fatal: Out of memory, malloc failed (tried to allocate 2097152 bytes)
 
-diff --git a/sequencer.c b/sequencer.c
-index 00acb12496..88ccff4838 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3677,7 +3677,7 @@ static int do_merge(struct repository *r,
- 		strvec_push(&cmd.args, "-F");
- 		strvec_push(&cmd.args, git_path_merge_msg(r));
- 		if (opts->gpg_sign)
--			strvec_push(&cmd.args, opts->gpg_sign);
-+			strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
- 
- 		/* Add the tips to be merged */
- 		for (j = to_merge; j; j = j->next)
-diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
-index 696cb6b6a4..9d2faffa03 100755
---- a/t/t3435-rebase-gpg-sign.sh
-+++ b/t/t3435-rebase-gpg-sign.sh
-@@ -68,4 +68,17 @@ test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
- 	test_must_fail git verify-commit HEAD
- '
- 
-+test_expect_success 'rebase -r, GPG --gpg-sign and merge strategies' '
-+	git reset --hard merged &&
-+	git rebase -fr --gpg-sign -s resolve --root &&
-+	git verify-commit HEAD
-+'
-+
-+test_expect_success 'rebase -r, GPG config and merge strategies' '
-+	git reset --hard merged &&
-+	test_config commit.gpgsign true &&
-+	git rebase -fr -s resolve --root &&
-+	git verify-commit HEAD
-+'
-+
- test_done
+Most Recent Commands Before Crash
+---------------------------------
+
+Active Branch LRU
+-----------------
+  active_branches = 0 cur, 5 max
+
+  pos clock name
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Inactive Branches
+-----------------
+
+Marks
+-----
+  exported to .git/.fossil2git-git.tmp
+
+-------------------
+END OF CRASH REPORT
+```
+
+  2. if I do the export firstly (redirect to file), fossil creates 22MB 
+large export dump-file,
+  if I import it via git hereafter, it crashes in the same way.
+```
+fossil export --git --import-marks .git/.fossil2git-fssl --export-marks 
+.git/.fossil2git-fssl.tmp > tmp-dump-out-of-mem.txt
+
+dir tmp-dump-out-of-mem.txt
+13.10.2020 20:37 22.916.280 tmp-dump-out-of-mem.txt
+
+type tmp-dump-out-of-mem.txt | git fast-import 
+--import-marks=.git/.fossil2git-git 
+--export-marks=.git/.fossil2git-git.tmp
+
+fatal: Out of memory, malloc failed (tried to allocate 2097152 bytes)
+fast-import: dumping crash report to .git/fast_import_crash_1800
+```
+
+I did not see any issues with (even much larger) imports, before I 
+upgraded git to 2.28.0 (from 2.25.1, I guess).
+
+[System Info]
+git version:
+git version 2.28.0.windows.1
+cpu: x86_64
+built from commit: 77982caf269b7ee713a76da2bcf260c34d3bf7a7
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Windows 10.0 18363
+compiler info: gnuc: 10.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+An attempt to repeat this with 2.27.0 (portable) changes nothing 
+(crashed with the same issue).
+
+BUT TRYING THAT WITH 2.14.4 (MINGIT-2.14.4.WINDOWS.7-64-BIT) WORKS WELL:
+```
+C:SoftDevGit-2.14mingw64bingit-fast-import.exe statistics:
+---------------------------------------------------------------------
+Alloc'd objects: 130000
+Total objects: 591 ( 80 duplicates )
+  blobs : 224 ( 0 duplicates 151 deltas of 224 attempts)
+  trees : 260 ( 80 duplicates 191 deltas of 260 attempts)
+  commits: 107 ( 0 duplicates 0 deltas of 0 attempts)
+  tags : 0 ( 0 duplicates 0 deltas of 0 attempts)
+Total branches: 201 ( 46 loads )
+  marks: 1048576 ( 129437 unique )
+  atoms: 1503
+Memory total: 10439 KiB
+  pools: 4346 KiB
+  objects: 6093 KiB
+---------------------------------------------------------------------
+pack_report: getpagesize() = 65536
+pack_report: core.packedGitWindowSize = 1073741824
+pack_report: core.packedGitLimit = 35184372088832
+pack_report: pack_used_ctr = 131659
+pack_report: pack_mmap_calls = 119
+pack_report: pack_open_windows = 66 / 66
+pack_report: pack_mapped = 488903419 / 488903419
+---------------------------------------------------------------------
+```
+
+The crash with newer versions is pretty well reproducible, so I have 
+frozen this state to be able to test it later (or check whether it gets 
+fixed).
+Don't hesitate to ping me if you need some data or tests.
+
 -- 
-2.28.0
 
+Regards,
+Sergey Brester
