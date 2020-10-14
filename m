@@ -7,136 +7,205 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 532C2C43457
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B2AC433DF
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:20:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1EE122258
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:20:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3DFE2225E
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 01:20:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D1hAD+Ru"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W0o7Ll8G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388522AbgJOBUJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Oct 2020 21:20:09 -0400
+        id S1731369AbgJOBUS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Oct 2020 21:20:18 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388058AbgJOBTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Oct 2020 21:19:38 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D11C004589
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 17:04:14 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id h6so688386pgk.4
-        for <git@vger.kernel.org>; Wed, 14 Oct 2020 17:04:14 -0700 (PDT)
+        with ESMTP id S2387959AbgJOBTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Oct 2020 21:19:37 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71BDC05BD3C
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 15:51:36 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id w17so1702654ilg.8
+        for <git@vger.kernel.org>; Wed, 14 Oct 2020 15:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7XCgWgcOgtb5ZeyKN64UmLeM5nrTuVqVzOiGROOOwUI=;
-        b=D1hAD+Ru1L4e1k5ctNpPZ1rjDFFR0ZxV/+YBriTGreF+OmjMVRb+CarqOc73XHOlgX
-         pzsEPQ8PpXCBNaKUS/pzPsJQGrq0xDWplldiGOPFAZ/tc9IcEQzAyTOXEskV7R6ZBIuw
-         fMVeaAza5RnxeQN+TcHcb4RD+oago6kfL2O/AD0Fdg9sQZLXizNQ7Z52mbNy1tb4YR0H
-         R/5/yqFTKPwifmH2w9lujk3ROG2dDA7IsCBPHYcMTIdnaW/nP8HOjeZ3CvP0J6lRYGud
-         9B1yLNBJfo2ZZU8ttdqY7C3iUGIAnu4SeYj+nVbDFscFeL/5P+Ejr42qckRVDDhm3x01
-         g4aw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=MrCwDkQQYOOsR00mXHZBLSK5tLz2YyODX65r56gbcH0=;
+        b=W0o7Ll8GGgDs4gnQqpPmTLSC1vwBR6b27FUGTPjghh5ARo4fwxgi5XOzvMVledDDD1
+         WxnlXdtLOI8xSuK8ofwlNRN0wXeDhtuR+bfVhHOK8xAiIXySQ6k7HWsalfcvVUc6HrQz
+         sqHQJXPGS1yQMn6bQZPCHE6YnSw4dhF1Oq/BQ7b8HZkM+B80oThPF171SXY6v9m6kc+Y
+         GwwN3bofk7llJv0qKYAeUz2uqpRjWFf68aw9pz0hM3v5TOWYx4ehM+iFWPt2GFV/3Fbx
+         72DQkmt5UuT3uSjcXOsUXWS0Ge437W7nmFTaUIR3uPc7rR0WzkQ2M1il2AJ3j+Dz7HOR
+         UjxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7XCgWgcOgtb5ZeyKN64UmLeM5nrTuVqVzOiGROOOwUI=;
-        b=MOO7j8CevTJPKgLzi4jrq59GukoI8npC1KFIHDXTEKggB3uc9n8HTFTd8QQHDhyXxg
-         DwlTKUlKBRBsV90SIngXuZDrue7vluodIs2WJbRctRhcegfeSSFxvB0JrWnTkg4zy2UY
-         x+811nc0FA2HZ5QZYHJ0c5HOwj+euEgOdeKAr0t027AZpRkV/507ehfXBJY6nBxvhtr8
-         VVuaa8oipjmSuNTS/bNobrOl4bCFUrSq4tdDCmpNJmhmc5FrosUVv089LHHmgrvqP2Jk
-         mnFsrKP9nWYmbbwJpTJcKd+5b7f3AsTgv20fj5OsTngKEALgaPVGV6HU4B25dGvBwrqF
-         LTag==
-X-Gm-Message-State: AOAM530Q6vXb8zYg1l172sVJHomoR2g9990Y+kKBww//fWEF8KHXQXQY
-        fgl3bPC6vZoOR1yA9OLtQMdnNyGc+OY=
-X-Google-Smtp-Source: ABdhPJzVCbQWhtLpAHCMXK1YvL8b56XFtTxc/hncaEvPnlawUdTOXYb7kuz+mD3MxFwF5tC2bMx+fA==
-X-Received: by 2002:a63:e547:: with SMTP id z7mr1193486pgj.12.1602720253608;
-        Wed, 14 Oct 2020 17:04:13 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id h2sm737387pjv.4.2020.10.14.17.04.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2020 17:04:12 -0700 (PDT)
-Date:   Wed, 14 Oct 2020 17:04:10 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Sean McAllister <smcallis@google.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Masaya Suzuki <masayasuzuki@google.com>
-Subject: Re: [PATCH v2 3/3] http: automatically retry some requests
-Message-ID: <20201015000410.GB328643@google.com>
-References: <20201013191729.2524700-1-smcallis@google.com>
- <20201013191729.2524700-3-smcallis@google.com>
- <20201013211453.GB3678071@coredump.intra.peff.net>
- <CAM4o00eCKP1+f=xBw4LJfNqrstEnutAe9StxknW9qLMtPBdhKQ@mail.gmail.com>
- <CAM4o00fO++JMNdES03JKRyxmZtiLjkrJ2nux0-TZYBdH2+0ijA@mail.gmail.com>
- <20201014193456.GA365553@coredump.intra.peff.net>
- <CAM4o00eZjr2apH6WO-sTvuOfR-cuiSh1yhh3j=14ZFstXDz7bA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAM4o00eZjr2apH6WO-sTvuOfR-cuiSh1yhh3j=14ZFstXDz7bA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=MrCwDkQQYOOsR00mXHZBLSK5tLz2YyODX65r56gbcH0=;
+        b=IJNFsRZfNqXRPesqz7et7MMzxVfGxcR8JnF+jD6Rq/PG5SpmnjRaoOs/ZjCsEG1OYU
+         xTSWkDiprmHNxgvSacr65O37aYWY6llsJ6EoBFAH3Wxpw42l4QSJHBAaeU3UEi6up6e8
+         0VYchzynFcvtBNNZAxdC//d51SPVWFrmyw39ioCIws2nVveZQw9SG7XLf/zwqjFad/4s
+         XhsL8ReLVFoS6Uno8zphtD2hb8WUswtyIXLjlseMsD/P6cleW7lDttWUpeGz46l+vUmq
+         t9Ykbidptb3INhPtu31AB2yCsufdamIeviYpWWfDhXZWuOsy4RQz6f1t8cx6k4FJcW0b
+         BUwA==
+X-Gm-Message-State: AOAM533OqKmbZLUYQiQCAM4k/URK4AuC3pigcRbIfGJTj4CuP264S/b2
+        +TTpwo0IYUmsVpbA3bNoqO0=
+X-Google-Smtp-Source: ABdhPJxfvz7opyTBUBoFlGO58uqfXa0C5Q5+oEBP3Alqr/lBkqijAvhzA2OAN52sA8ND7G2JaNgJ6w==
+X-Received: by 2002:a05:6e02:5c7:: with SMTP id l7mr1077950ils.43.1602715896118;
+        Wed, 14 Oct 2020 15:51:36 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id 128sm952626iow.50.2020.10.14.15.51.35
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Wed, 14 Oct 2020 15:51:35 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: git diff --submodule=diff and --stat/--dirstat/--name-only
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <CA+3n-Tpb4BGM5W3e5vHwqkU-Tnh2gs0_K1ciEcJ25SnYe5PTOw@mail.gmail.com>
+Date:   Wed, 14 Oct 2020 18:51:33 -0400
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D853766B-B4D8-46B3-A3BA-68519DCFC7C5@gmail.com>
+References: <CA+3n-TrVncSq6kY8sTTw=LiOvLKe=6k1yBE8cmmR3i40CaXR6w@mail.gmail.com> <E3D98950-2EA1-4BFE-8A2D-CE8AEAF5AD39@gmail.com> <CA+3n-Tpb4BGM5W3e5vHwqkU-Tnh2gs0_K1ciEcJ25SnYe5PTOw@mail.gmail.com>
+To:     Marc Sune <marcdevel@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Marc,
 
-Sean McAllister wrote:
-> On Wed, Oct 14, 2020 at 1:34 PM Jeff King <peff@peff.net> wrote:
->> On Wed, Oct 14, 2020 at 01:10:46PM -0600, Sean McAllister wrote:
+> Le 14 oct. 2020 =C3=A0 10:35, Marc Sune <marcdevel@gmail.com> a =C3=A9cr=
+it :
+>=20
+> Philippe,
+>=20
+> Missatge de Philippe Blain <levraiphilippeblain@gmail.com> del dia
+> dc., 14 d=E2=80=99oct. 2020 a les 15:29:
+>>=20
+>> Hi Marc,
+>>=20
+>>> Le 14 oct. 2020 =C3=A0 06:14, Marc Sune <marcdevel@gmail.com> a =
+=C3=A9crit :
+>>>=20
+>>> Hello all,
+>>>=20
+>>> First, thank you to the community for the great work. Worth saying =
+it
+>>> from time to time, I think.
+>>>=20
+>>> I am dealing with a couple of big repositories that use git
+>>> submodules. They have nested submodules, and some of them are pretty
+>>> huge. I came across:
+>>>=20
+>>> git diff --submodule=3Ddiff
+>>>=20
+>>> Which is very handy for creating some tooling, but it's obviously =
+slow
+>>> - in the order of tens of minutes in my case - for big diffs. I was
+>>> only interested in the list files that changed, in this particular
+>>> case, but:
+>>>=20
+>>> git diff --stat --submodule=3Ddiff
+>>>=20
+>>> doesn't seem to honour `--submodule=3Ddiff` and it doesn't go into =
+the
+>>> submodule(s) nor recurses, of course. Other options like `--dirstat`
+>>> or `--name-only` seem to behave the same way.
+>>>=20
+>>> I've tried this v2.20.1 and the HEAD of master (d4a392452e) with the
+>>> same results. Is this a missing feature, a bug or is it just the
+>>> intended behaviour?
+>>>=20
+>>> Regards
+>>> marc
+>>=20
+>> This would indeed be useful. It's a missing feature, and so intended =
+behaviour
+>> for the moment, I would say. It was discussed recently on the list =
+[1] :
+>>=20
+>>=20
+>> [1] =
+https://lore.kernel.org/git/20200924063829.GA1851751@coredump.intra.peff.n=
+et/t/#u
+>=20
+> Thank you for the pointer and the clarification.
+>=20
+> I am not sure extending `git diff` options (only) under
+> `--submodule=3D`, e.g. `--submodule=3Dstat` is the way to go. It seems
+> redundant to me.
+>=20
+> I am wondering if it would make sense to have basic options of git
+> commands, e.g. `git diff --stat`, be honoured for submodules too, and
+> just control whether git commands should get in the submodule(s) or
+> not, and perhaps the depth of the recursion (optionally).
 
->>> I took a look, it looks like CURLINFO_RETRY_AFTER was only added in
->>> 7.66 (September, 2019),  so
->>> I don't think it's reasonable to rely on it for getting the
->>> Retry-After value in this case.
->>
->> I agree that's pretty recent.
->>
->> How important is it that we respect it? I.e., we'd have some sane retry
->> behavior if the header is missing anyway. On older curl versions, how
->> bad would it be to just use that fallback behavior all the time?
->
-> Some large projects (Android, Chrome), use git with a distributed
-> backend to feed changes to automated builders and such.  We can
-> actually get into a case where DDOS mitigation kicks in and 429s start
-> going out.  In that case I think it's pretty important that we honor
-> the Retry-After field so we're good citizens and whoever's running the
-> backend service has some options for traffic shaping to manage load.
-> In general you're right it doesn't matter _that_ much but in at least
-> the specific case I have in my head, it does.
+Did you try `git submodule foreach` ? If you are scripting, you could =
+do:
 
-I see.  With Peff's proposal, the backend service could still set
-Retry-After, and *modern* machines with new enough libcurl would still
-respect it, but older machines[*] would have to use some fallback
-behavior.
+    git diff --stat && git submodule foreach [--recursive] git diff =
+--stat
 
-I suppose that fallback behavior could be to not retry at all.  That
-sounds appealing to me since it would be more maintainable (no custom
-header parsing) and the fallback would be decreasingly relevant over
-time as users upgrade to modern versions of libcurl and git.  What do
-you think?
+Although here the recursion is an all-or-nothing business.
 
-Thanks,
-Jonathan
+> For instance, I don't fully get the use-case(s) in which parts of the
+> output are --stat (supermodule) and submodules show something
+> different:
+>=20
+> git diff --stat --submodule=3Ddiff
+> git diff --stat --submodule=3Dlog
+>=20
+> Specially for log, this sounds to me like it should be under `git
+> log`, with the appropriate options.
 
-[*] This represents two cases: if CURLINFO_RETRY_AFTER is not defined,
-meaning that libcurl-dev was too old at *build time*, and if getinfo
-returned CURLE_UNKNOWN_OPTION, meaning that libcurl was too old at run
-time.
+I think 'log' is useful; it's more descriptive then having just a hash,
+which is the default...
 
-You might wonder how we handle the too-old-at-build-time case.  The
-usual trick is to provide a helper function with a stub
-implementation:
+> Perhaps you can shed some light on
+> the use-cases these combinations support.
+>=20
+> I would think something like:
+>=20
+> git diff --stat --submodule-follow
+> git diff --stat --submodule-follow-depth=3D4
+>=20
+> git diff --names-only --submodule-follow
+> git diff --dirstat --submodule-follow
+> and for other commands (some sort of header line should be printed to
+> note the history is under the submodule X):
+>=20
+> git log --submodule-follow
+> git log --submodule-follow-depth=3D4
+>=20
+> and of course allowing `--` modifier:
+>=20
+> git log --submodule-follow -- libs/library1
+>=20
+> would be easier to use.
 
- #ifndef CURLINFO_RETRY_AFTER
- static inline CURLcode retry_after(CURL *handle, curl_off_t *retry)
- {
- 	return CURLE_UNKNOWN_OPTION;
- }
- #else
- static inline CURLcode retry_after(CURL *handle, curl_off_t *retry)
- {
- 	return curl_easy_getinfo(handle, CURLINFO_RETRY_AFTER, retry);
- }
- #endif
+I'm not sure of the use case for these... The history
+of the submodule project can be seen with `git -C path/to/submodule log`=20=
+
+(or just `cd` there and `git log`), and the history of the gitlink in =
+the superproject
+with `git log -- path/to/submodule`...=20
+
+It does not really make sense to interleave the history of the =
+superproject and
+the submodule in the same output, in my opinion at least.
+
+> Let me know if any of this resonates, and if some patches along these
+> lines would be welcomed
+
+I can't really answer that, I'm just a small time contributor :)
+
+> (might ask some help offlist).
+
+You should ask on the list, on the mentoring list, or on IRC (see [1]).
+
+[1] https://git-scm.com/docs/MyFirstContribution#getting-help
+
+Cheers,
+Philippe.
+
