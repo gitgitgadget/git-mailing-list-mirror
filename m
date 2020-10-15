@@ -3,37 +3,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79984C433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 18:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 756FFC433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:05:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 147E2218AC
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 18:58:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BA31221EB
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:05:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391291AbgJOS64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 14:58:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33302 "EHLO cloud.peff.net"
+        id S1730117AbgJOTFe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 15:05:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33314 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391288AbgJOS6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 14:58:55 -0400
-Received: (qmail 23971 invoked by uid 109); 15 Oct 2020 18:58:54 -0000
+        id S1726474AbgJOTFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 15:05:34 -0400
+Received: (qmail 24003 invoked by uid 109); 15 Oct 2020 19:05:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Oct 2020 18:58:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Oct 2020 19:05:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31928 invoked by uid 111); 15 Oct 2020 18:58:53 -0000
+Received: (qmail 31976 invoked by uid 111); 15 Oct 2020 19:05:33 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2020 14:58:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2020 15:05:32 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 15 Oct 2020 14:58:53 -0400
+Date:   Thu, 15 Oct 2020 15:05:32 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
 Subject: Re: [PATCH] fast-import: fix over-allocation of marks storage
-Message-ID: <20201015185853.GA1108210@coredump.intra.peff.net>
+Message-ID: <20201015190532.GB1108210@coredump.intra.peff.net>
 References: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
  <20201015012636.GA387901@coredump.intra.peff.net>
  <72a4d4d8dff95351122bd192976dd6b1@sebres.de>
@@ -52,50 +52,26 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Oct 15, 2020 at 11:35:28AM -0700, Junio C Hamano wrote:
 
-> "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de> writes:
-> 
-> > May be this is a sign to introduce real issue tracker finally? :)
-> > No offence, but I was always wondering how a team is able to hold all
-> > the issue related stuff in form
-> > of a mailing list, without to experience such an "embarrassments".
-> > Especially on such large projects and communities.
-> 
-> I do not know if an issue-tracker would have helped, though.  The
-> issue was discovered and discussed there the day before:
-> 
->   https://lore.kernel.org/git/xmqqimg5o5fq.fsf@gitster.c.googlers.com/
+> For this particular case, what we need is a functioning
+> patch tracker *and* people who pay attention to patches in the "came
+> very close to conclusion but no final patch in the tree" state.  We
+> need people who can volunteer their eyeballs and attention to nudge,
+> prod and help patches to perfection, and that won't be me.
 
-Doh, and I was so proud of myself for diagnosing and fixing it. ;)
+Usually I'd expect this to be the responsibility of the patch submitter
+to make sure their stuff gets merged (and if not, to figure out why).
 
-I hadn't read either of the threads you linked before today (I found
-them in my "catch up on list reading" queue, though likely I would have
-declared bankruptcy before reading them anyway).
+Personally I make a branch for almost every patch/series I submit, no
+matter how trivial[1]. And then part of my daily ritual is seeing which
+ones have been merged, and dropping them. You can use git-cherry for
+that, though it's not 100% perfect (sometimes patches are munged as they
+are applied). I use a combination of that and aggressively rebasing
+patches forward (and eventually they rebase down into nothing when
+they've been fully merged).
 
-At least that explains my surprise that the issue was not reported
-earlier. It was. :)
-
-IMHO an issue tracker wouldn't really change things here. The original
-can be found in the first page of results of:
-
-  https://lore.kernel.org/git/?q=fast-import+leak
-
-(though if you add "-cooking -announce" there is even less noise). I
-don't know that searching an issue tracker would do much better.
-
-> By the way, now I know why it looked familiar---the fix largely was
-> my code.  And the diff between Brian's from June and Peff's in this
-> thread is indeed quite small (shown below), which actually worries
-> me.  Was there something in the old attempt that was incomplete that
-> made us wait for the final finishing touches?  If so, is the current
-> round missing the same thing?  Or perhaps the test was what was
-> missing in the old attempt, in which case it's perfect (in the
-> attached diff, I excluded t/ directroy as the old fix didn't have
-> tests).
-
-Looking over the thread, I don't see any problems pointed out (though
-as your diff below shows, the original patch missed the re-ordering
-required for the submodule mapping call).
-
-So I'd prefer my patch because of that fix and because of the tests.
+GitHub PRs can also serve as an open bookmark if people use them, but
+they're similarly not good at auto-closing because of our patch workflow
+(I don't know if GGG has any intelligence there, but it would presumably
+be subject to the same git-cherry issues).
 
 -Peff
