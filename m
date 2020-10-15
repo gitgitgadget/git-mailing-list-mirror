@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58279C433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C84AAC433DF
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:16:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDFE720679
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:16:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A71420674
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:16:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxkVz856"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AtOmFiDD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388778AbgJOTN7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 15:13:59 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59984 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728307AbgJOTN5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 15:13:57 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 00D0689738;
-        Thu, 15 Oct 2020 15:13:55 -0400 (EDT)
+        id S2389872AbgJOTQQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 15:16:16 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63415 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731043AbgJOTQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 15:16:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 12E43F7A8E;
+        Thu, 15 Oct 2020 15:16:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=66awHqjb0HlECbUvq0IUiXt89I0=; b=hxkVz8
-        56qWKMdoPFfyAnj+y5e3QPCicys8vzguPcaj67QWvp5NC8bbNuIFAhLVtbDA05HT
-        wS2EA4dDEwMtrrKDViej3agRG2d/Bn1FAF/tWJ7kuXJJCzLoeBo0M4R5cI1Pyh6T
-        a6R3Bddfa0kDapk9tSyF8bYWrGMiVQdWzqWF8=
+        :content-type; s=sasl; bh=TaljsibJuLGmY1CpPx+pg2JH8ig=; b=AtOmFi
+        DDZNzLmJzVq+tkLiBr0m6I4jRc6s9KQEG4Apbgre3xnRg3HnHEt7Ok5rVL324B4i
+        IzyX0lBbrBTRlPtpcEHRfsisEY+frIx+UqbPQgbEqiFEPErY+ndDdxncfdwfgvUv
+        qxt+jqBiZSwXQSCMP2vUmxf35XQtlKbZJxQXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mr86VA3L/7T5/g0eLrxGHWY+fS9qp2JF
-        0j/UmYTs5RmDtLFU5i6SGdFGxEco2KR3Q/uyu+SVasezoPTLE0WUnDdzbF5thG6J
-        T9uX1D8y5dqnGmUzKFSXCll3YZLxAhMhh3uJY/kxdevlP0v2n2HST52oThnxRW6i
-        E2OYIXdcq3Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED4DB89736;
-        Thu, 15 Oct 2020 15:13:54 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=WMf1QXury8zTmOWMt/RKd2TTqZdRx4Jd
+        Iodnqlj8ifN01mzG4cnA6Kdk/e3mAlLI6Tityim9EVXJhnw5hnaaPN7fbqbRELDE
+        vZeqPI1luFsTIcmuZ69s0PusXzQBdra+SodjfXna2PajTvVokyG0LW+jPBGXIzbx
+        LbA7RLTyqAM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0BCF4F7A8D;
+        Thu, 15 Oct 2020 15:16:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7878B89735;
-        Thu, 15 Oct 2020 15:13:54 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2AA77F7A8B;
+        Thu, 15 Oct 2020 15:16:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fast-import: fix over-allocation of marks storage
-References: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
-        <20201015012636.GA387901@coredump.intra.peff.net>
-        <72a4d4d8dff95351122bd192976dd6b1@sebres.de>
-        <20201015153849.GA551964@coredump.intra.peff.net>
-        <xmqqzh4nfldw.fsf@gitster.c.googlers.com>
-        <xmqqv9fbfl68.fsf@gitster.c.googlers.com>
-        <f3e4f7ccc36dc214201c1838acce4aff@sebres.de>
-        <xmqqo8l3fibz.fsf@gitster.c.googlers.com>
-        <20201015185853.GA1108210@coredump.intra.peff.net>
-Date:   Thu, 15 Oct 2020 12:13:53 -0700
-In-Reply-To: <20201015185853.GA1108210@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 15 Oct 2020 14:58:53 -0400")
-Message-ID: <xmqqft6ffgjy.fsf@gitster.c.googlers.com>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, phillip.wood123@gmail.com
+Subject: Re: [Outreachy] Introduction
+References: <CAPSFM5eK1RFTbdTbF8dHMzcRh1SnSfzqh_5re22qS=KFoVRNJg@mail.gmail.com>
+        <CAP8UFD1m2zXUm1PXmJKW2MxA9XZVUOkBFA62jLP7jx6_DCYZGw@mail.gmail.com>
+        <CAPSFM5cXN57z56Cvq-NX1H4raS7d8=qXEFDQqpypJfoYzbxcyA@mail.gmail.com>
+        <CAPSFM5dxuEsGkFNTjCF4tLE611n1zLt2z+2JU03dORHxSK1i6w@mail.gmail.com>
+Date:   Thu, 15 Oct 2020 12:16:09 -0700
+In-Reply-To: <CAPSFM5dxuEsGkFNTjCF4tLE611n1zLt2z+2JU03dORHxSK1i6w@mail.gmail.com>
+        (Charvi Mendiratta's message of "Fri, 16 Oct 2020 00:26:11 +0530")
+Message-ID: <xmqqblh3fgg6.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 913B980C-0F1A-11EB-956B-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E2B3577E-0F1A-11EB-98F2-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-> Looking over the thread, I don't see any problems pointed out (though
-> as your diff below shows, the original patch missed the re-ordering
-> required for the submodule mapping call).
+> Thank you Christian and also I apologise, since I forgot to cc the
+> mailing list on last reply .
 >
-> So I'd prefer my patch because of that fix and because of the tests.
+> I have submitted the patch[1] for the microproject "modernizing the
+> test scripts" and would be glad to have reviews from the community and
+> will work on updates required .
 
-Oh, no question about that.  I would take a fresh fix that was done
-on a more recent codebase than the one that was 4 months old and had
-to be rebased.  Having a test too is a huge plus.
+Welcome.
 
-Thanks.  And by the way, thanks for the "-cooking -announce" tip ;-)
+If "Charvi Mendiratta" is the name you go by, please correct the
+author names and sign-offs on your patches to match it.
 
+> While working on the same , I got familiar with the mailing list ,
+> guidelines , workflow and also learned more about the git commands.
+> Next , I would also like to know how to proceed further and learn more
+> about code base.
+
+Nice.
