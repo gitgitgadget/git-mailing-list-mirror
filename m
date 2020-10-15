@@ -2,98 +2,119 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBDE6C433E7
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 12:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 791B9C433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 12:49:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E4392145D
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 12:01:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 165352225A
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 12:49:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="D4NDC2CG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pql2Ljrl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729577AbgJOMB5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 08:01:57 -0400
-Received: from mout.gmx.net ([212.227.17.20]:44195 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726358AbgJOMB4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 08:01:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602763315;
-        bh=M6HxrKofA+wO/P/gqUKFi7n9Y4Ym6RF6VmgGSXdItbU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=D4NDC2CGNR7Js9Mj50nHbZ/nP2o5O58juMqfCZbH/xXJYegOwHHPTQ7AuVtJDxfAD
-         83ZYics3mqsP35xfB5/E0Q65SiHv8BkIEKkB37SpAyjJBcu2BKKFnv2tNuZjcqz4rh
-         twkl/C3XXYVgXr9g+4Z5XINSLjS7gYdVxYeMWec0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.213.107]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHoRK-1khol82Wmc-00EwEJ; Thu, 15
- Oct 2020 13:46:52 +0200
-Date:   Thu, 15 Oct 2020 13:46:50 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Patrick Steinhardt <ps@pks.im>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v2 05/13] reftable: utility functions
-In-Reply-To: <xmqqo8l6ku0y.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2010151346060.56@tvgsbejvaqbjf.bet>
-References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com> <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com> <20201002041214.GE3252492@google.com>
- <CAFQ2z_NL1UrmonMH3qLKrEkjsPjm9qTbtoeY0OHQZzkVW2t3-w@mail.gmail.com> <20201012152505.GB3740546@google.com> <20201012170527.GA21606@xps> <nycvar.QRO.7.76.6.2010131405380.50@tvgsbejvaqbjf.bet> <xmqqo8l6ku0y.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725899AbgJOMtZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 08:49:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41644 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbgJOMtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 08:49:25 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A34C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 05:49:23 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id n6so3272304wrm.13
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 05:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=GJlgomozRyvponr91F8dSZYiYUrxRziDiVbrAFusZlQ=;
+        b=pql2LjrlUZUOQcKhLTG41m4yaeVtPpIqBcHaHEHbgIQ68RLaNYEmODiVqWZrTwWXw9
+         4Ysg7phvvhXRIOcAUxwQYP4p6vvMEFC9JJjia4XWUnN7pcrBIu5itqsD2yvvU5Sf61c6
+         cCzwcBz49DItPDCPbxJlxqFvWIHUrWNkl7DMdvfBVr72fJ0ZyOIJN0SLn0W4c3QqU4AJ
+         81K1JzoauREI8LnjcBxGbHpKaCLEKNLTpmawvPh3GGXFuW3YQKHkqR++qYSrtyzETNSr
+         YrIEYu0qFSnODgjiAKDE4MBUeUES/U0gIDpGTJS7nytJ/EQYSF1rcsy3iCrfXPzhFGPn
+         DHPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=GJlgomozRyvponr91F8dSZYiYUrxRziDiVbrAFusZlQ=;
+        b=hIkwxz4evK0poo3kvoqLg1cdf4AEGEF0DyJn8OTxRRYb0g5e7Oxoj07dY9PfHuFD5A
+         O03c+Fy9V1CQqM6oUwymwSazV87j+nnjY/yLIajQt92WA0HRHesa3RXsWBMyRDY/dd6j
+         /gbDE5vCC9pA5UyGYr7lI/MG0Pmuj3oLyZkUsq1kjeAY0zYnM1PbekvZ3Bmzor2cFcPc
+         FfQa1S7rOaHTX7Rt2t0h4xqYh5gZkXVGzmcdVORDzhdItO3DfNwhsIxcDr5Q4CJWVBAJ
+         XUCjZkPrRSU2NJ4tdv12gAy9KtOP/NCj5S48JtTzYiLI3IJQPDwRuiSSgBjkGFrGFhWq
+         LYyQ==
+X-Gm-Message-State: AOAM531ZU0TIi+tMuiWMfQUwonOXAFyUbSfnNtoZ+aiyJGsireHsWv4y
+        QYdHoWV0Qo61Os/aFEtXX46C3g+tUa0=
+X-Google-Smtp-Source: ABdhPJx5tYVgewVErRmUJjKJi7Eb9JPSVMoR6JyrOOuE+pF8EEEyFhVXB0fHd1mGL4R0MNlueudy2A==
+X-Received: by 2002:a5d:5612:: with SMTP id l18mr4185486wrv.7.1602766162120;
+        Thu, 15 Oct 2020 05:49:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u20sm4080782wmm.29.2020.10.15.05.49.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2020 05:49:21 -0700 (PDT)
+Message-Id: <pull.757.git.1602766160815.gitgitgadget@gmail.com>
+From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 15 Oct 2020 12:49:20 +0000
+Subject: [PATCH] dir.c: fix comments to agree with argument name
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DBvGemsNXx9PXHUd/yADaahkHNn6IXRawA5/wNuO7m43HXYdWg3
- PAVJ1uyb6c/E8gRGZp1p46NcF87NtUjh1SRuS6ROJ0irlvLd8yENppgM62KfPBJLGCW8tbf
- sGdcBZ2Mfs49MRZ/JxL0kYlZF8ZpNT3fp8Bx+VeDxU9O7bkppOO7bDJAbusRVPp2DuLy66q
- hSgUxTbHV7E5Q7wJDyLtg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NXjGqp9pZgE=:I70QesOHtEQ3BHlO9JvmMc
- IFoT2cvKAPYmcWkht6GZa+hHKngLDzFh7zep0oDmFl/rPYjaqlFDyZWt7MybJtuK5FKZbhe8z
- X/0q/FaEUgttU5wVtDtuUR5f9vkXWWF1EzwT2N6Drse/LTstNJfNz8SUvnuGrrkIXbAYVpBxX
- TFQqej0xHiwlTvK+HUk3+OvUyQI5vc7mpxupQoOf5v25m4HCabVFNbsCtaB8DRx78fKXphBkY
- YI4Sh4v2OSPbl3TqqJGK0UBISryf/cxKsmvX4lxX7U1ySy4Z+5O5tyRaZo4s+VA68afUgzEeH
- LYai6UWbPIQYHhz1oy3mGisJbZE4TRkctHpjb9Pbj3+AmJjtqtkX16IXvtUpypWbYkEkLfAld
- TDaJQrVOCl/ReQYqjOWoo3NR9tepiwPnJLLqWMFvzZ2PGN3QAXzZ4Nt0SJNJLV7AZlStYNZro
- u001tBv6qfKefzoZxLgVUWfPsQqr1H++x2dKXIykXj5Y0bzghHeKAbZ2A5zbvyU2QtL7Dy/f8
- Mw5ZgBmRmZVw6HMt3VwWIKwzhlnzrWfB26ExiJQ3kVlfXDRaZWjUEHPB2T5wr1liTcotyaylK
- O/09MJUdRQAsHBRSN6saJjNaQaABHABBeMHhSu5epKI/4tU2W1nFpokAaesjDBLIb4WesNtNZ
- L09mt97eMDhNoyBsA81qATiZuhmtxW9Xi9AlkJ+M6erhYeV4WH534ubkd+eKmzoWURIAYktM5
- pxUuYB8+IgLciYhZF70b29qWhhtWXBRt8iBtWhZFKsqgiuPu2sYtKF55D+m7/or6B9YNM4sWj
- uI9z/wjG5TrJ5xHrXcNKElrG5gB1yfk614dOh8OZ+KNBi+Q3c1mHi8pw2RdU7mb+wqm6NHUu8
- CgMUs+uSN3C9dZHCbOsMnQMCYQ62IiKlgyzrrollQ=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Nipunn Koorapati <nipunn1313@gmail.com>,
+        Alex Vandiver <alexmv@dropbox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: Alex Vandiver <alexmv@dropbox.com>
 
-On Tue, 13 Oct 2020, Junio C Hamano wrote:
+Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
+Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
+---
+    dir.c: Fix comments to agree with argument name
+    
+    Comments are out of date with the variable names.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Somewhat related: I was wondering whether it would make sense for git.=
-git
-> > to rename `strbuf` to `git_buf`? Would that make it easier to exchange
-> > code between the two projects? Or would it just be unnecessary churn?
->
-> To us, "git_buf" is just as descriptive as "buf" and does not say
-> anything about the nature of 'buf' (other than apparently it was
-> invented and widely used here).  "git_strbuf" I can understand, but
-> why should we?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-757%2Fnipunn1313%2Fcomments-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-757/nipunn1313/comments-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/757
 
-If it makes code sharing between git.git and libgit2 easier, why shouldn't
-we ;-)
+ dir.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Obviously, if it doesn't make life easier, we shouldn't bother.
+diff --git a/dir.c b/dir.c
+index 78387110e6..4c79c4f0e1 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1040,9 +1040,9 @@ static int add_patterns_from_buffer(char *buf, size_t size,
+  * an index if 'istate' is non-null), parse it and store the
+  * exclude rules in "pl".
+  *
+- * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
++ * If "oid_stat" is not NULL, compute SHA-1 of the exclude file and fill
+  * stat data from disk (only valid if add_patterns returns zero). If
+- * ss_valid is non-zero, "ss" must contain good value as input.
++ * oid_stat.valid is non-zero, "oid_stat" must contain good value as input.
+  */
+ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			struct pattern_list *pl, struct index_state *istate,
+@@ -1090,7 +1090,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 			int pos;
+ 			if (oid_stat->valid &&
+ 			    !match_stat_data_racy(istate, &oid_stat->stat, &st))
+-				; /* no content change, ss->sha1 still good */
++				; /* no content change, oid_stat->oid still good */
+ 			else if (istate &&
+ 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
+ 				 !ce_stage(istate->cache[pos]) &&
 
-Ciao,
-Dscho
+base-commit: d4a392452e292ff924e79ec8458611c0f679d6d4
+-- 
+gitgitgadget
