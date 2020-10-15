@@ -5,69 +5,70 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F8D3C43467
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 060CFC43457
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:22:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBB3822254
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:22:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90C4722254
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:22:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tn9QllbK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/ifEZ2B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404928AbgJORWR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 13:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404910AbgJORWN (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2404915AbgJORWN (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 15 Oct 2020 13:22:13 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CE6C0613D5
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 10:22:12 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id y12so4498570wrp.6
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 10:22:11 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404909AbgJORWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 13:22:10 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5CAC0613D2
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 10:22:10 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id a72so3958415wme.5
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 10:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=94SAXSivWG4OcI2a7GTptHlUkUOgYpGZhKpX1SZa190=;
-        b=Tn9QllbKcU+E5S4H/boip9YtVTI33YBjN/JdsXjWPzwZrvupKjIMMdhA1aZwuFI8tR
-         ey4iDwnDlRozvxIy0Fa4EmO8a3tAaJ6qRhKD3aN8RW1Yp8Afy33/Os6EDXLTYbo5mnH7
-         crOpu7Zp3BAsjnRp+KmtgOKt5nL7JHVfmer44GOV5018QnaorQyd9rbTF5q3oapyLLC9
-         mH1XeuYcmD0ULM3Dpwuk93dlWR8rSq6jSOn9hU2tp/rBBmsKkQdlOaZAevUMwWqXjIAM
-         zTl6lLP76f1EcTs36NFZnhAp9SPmGnCe/iBi5RuzvCkUSMY0ybKd+uDZHMFwVIn0wlLD
-         UYvA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YZRvSJQSR01ZgZPGmy5Oy6QQ1M778dWiXzW4kSk/4UU=;
+        b=P/ifEZ2BEILu5G4je4Igo54EppJoJHoQYiynaMpn26BbXibQQneg9gsM06VzRuImMI
+         CEYK8igOJAq1BPzIVrKyTBLBw1Yfh9X+eMZ/mCCejwfs269es49QlsHYRYjvKVLG+bgv
+         akPth6tdIGHoj7kFLD+JFSZTwbhlwBo8KUTDQPqM/q3lyuuO78DbYe0+LnUFX3u/VlGd
+         L50TrzoUFaXMQsBjw/cuaO/MZ3Z+fNSo3aC1jcICBCC76k6qnwjwJXLxvDcAoyo23/xc
+         9hiytN4T67EqgEsRYECJiurkuhEdWIfuLAaFFkuwwzPuY3t3bMLoL9Wq1vtHfXFBCg8K
+         sNjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=94SAXSivWG4OcI2a7GTptHlUkUOgYpGZhKpX1SZa190=;
-        b=p8haszvLLNNoamh1iMihEPT2XzY2Y7i2kzrrDKselSHhGHSdMDcRUuNoIoG15CRuzz
-         iC+IPaD+A/+wrFmTAw4WgoAyA2QVojXH4LJhRCQ17QplV4opeF7aTki4zwOvTbX9Nw6Y
-         t1HJjmYFP9SWj5gj4xaLGtsXWjT5ok4+Um1c/W+oB4UiTGjRcX7AaGnjCmhqtLW49Yp1
-         9cAD0yHRJeZe1/D4BpCKzZzplsXqrmrsxU0tEvqfKq+iVKChpDC+ZNjenMKUAQXGzHpX
-         kCGBOUHzzHErpXDESSr8O5kx9f+l9GN0t0Gi0NjcWT3Hoterto+be1HJBpIo1ewmkJGT
-         u3pg==
-X-Gm-Message-State: AOAM530Sq6017OsHa395xk0ELvC2VvPBoNrfVIvIcez1AQgLmAh4yd9i
-        bNclXTvyaQxHE/4TpEJf9qTKtWBROj0=
-X-Google-Smtp-Source: ABdhPJz0ncKbxThWradrEXiqv8NYZixc5dtU1N+9KCNuO1yvuVsmFuvA/3VFy+0HGPi+8CBrOR5c6g==
-X-Received: by 2002:adf:e801:: with SMTP id o1mr5516904wrm.359.1602782530486;
-        Thu, 15 Oct 2020 10:22:10 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=YZRvSJQSR01ZgZPGmy5Oy6QQ1M778dWiXzW4kSk/4UU=;
+        b=IRkQVgMUIIe4HiIVyiJ+hrP3jEI9m9Z8yGJLc2vsJQ673dSQl5fpy3mnPXgE1U72fJ
+         iSQqjYm3qkbmQT3trAl3j93kF0qvUb/pe2GkznAyqH8l+7JYA8+gjQzRXeNbdmXIHL3O
+         TR+sjZg7XlaVoTbkKpeW2XV2FKxOZxoopeVkNNWiBvZFs3BdM9vhCbTdRG8zykMSyTUg
+         IlRo+a46iqVdNu6DGu+ZrtT4DGwAL2sgGY3VvJUnPygs3kiCXKqf3OtKwQcWXH9z/tkJ
+         EEU3Q2rt2+vyzZ2yhTRWxxWT7P8v1ZOigZhl7IyjvVNgYApZKnMV1OVKg4PO2+l1ZgkC
+         gmiw==
+X-Gm-Message-State: AOAM532dZl2a6yncJO8P2ruxthczK9XIMzAcQMAGqwNffc+vmnn1oeRC
+        FFET6F/xqlrmNjdJBOADqujoKYhZX4Q=
+X-Google-Smtp-Source: ABdhPJzQyeHhIjdTjJvm8ss7lpCekqqcv2W8lSl8AYMpD4uI78TgrAkJ7aukS8ZnApsgxnThcIUtlw==
+X-Received: by 2002:a05:600c:2888:: with SMTP id g8mr2096165wmd.130.1602782528765;
+        Thu, 15 Oct 2020 10:22:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v17sm6027515wrc.23.2020.10.15.10.22.09
+        by smtp.gmail.com with ESMTPSA id d4sm5799620wrp.47.2020.10.15.10.22.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2020 10:22:09 -0700 (PDT)
-Message-Id: <d696848b37f10afdc1f89381a62f277cf1e9e0a1.1602782524.git.gitgitgadget@gmail.com>
+        Thu, 15 Oct 2020 10:22:08 -0700 (PDT)
+Message-Id: <922b984c8aa4217a2f60307513dfa43f16475a00.1602782524.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
 References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
         <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Oct 2020 17:22:02 +0000
-Subject: [PATCH v4 6/8] maintenance: create maintenance.strategy config
-MIME-Version: 1.0
+Date:   Thu, 15 Oct 2020 17:22:00 +0000
+Subject: [PATCH v4 4/8] maintenance: add [un]register subcommands
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, jonathantanmy@google.com, sluongng@gmail.com,
         congdanhqx@gmail.com,
@@ -84,184 +85,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-To provide an on-ramp for users to use background maintenance without
-several 'git config' commands, create a 'maintenance.strategy' config
-option. Currently, the only important value is 'incremental' which
-assigns the following schedule:
+In preparation for launching background maintenance from the 'git
+maintenance' builtin, create register/unregister subcommands. These
+commands update the new 'maintenance.repos' config option in the global
+config so the background maintenance job knows which repositories to
+maintain.
 
-* gc: never
-* prefetch: hourly
-* commit-graph: hourly
-* loose-objects: daily
-* incremental-repack: daily
+These commands allow users to add a repository to the background
+maintenance list without disrupting the actual maintenance mechanism.
 
-These tasks are chosen to minimize disruptions to foreground Git
-commands and use few compute resources.
+For example, a user can run 'git maintenance register' when no
+background maintenance is running and it will not start the background
+maintenance. A later update to start running background maintenance will
+then pick up this repository automatically.
 
-The 'maintenance.strategy' is intended as a baseline that can be
-customzied further by manually assigning 'maintenance.<task>.enabled'
-and 'maintenance.<task>.schedule' config options, which will override
-any recommendation from 'maintenance.strategy'. This operates similarly
-to config options like 'feature.experimental' which operate as "meta"
-config options that change default config values.
+The opposite example is that a user can run 'git maintenance unregister'
+to remove the current repository from background maintenance without
+halting maintenance for other repositories.
 
-This presents a way forward for updating the 'incremental' strategy in
-the future or adding new strategies. For example, a potential strategy
-could be to include a 'full' strategy that runs the 'gc' task weekly
-and no other tasks by default.
-
-Helped-by: Martin Ågren <martin.agren@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/maintenance.txt | 15 +++++++++
- builtin/gc.c                         | 28 ++++++++++++++--
- t/t7900-maintenance.sh               | 49 ++++++++++++++++++++++++++++
- 3 files changed, 90 insertions(+), 2 deletions(-)
+ Documentation/git-maintenance.txt | 14 ++++++++
+ builtin/gc.c                      | 55 ++++++++++++++++++++++++++++++-
+ t/t7900-maintenance.sh            | 17 +++++++++-
+ 3 files changed, 84 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-index 70585564fa..a5ead09e4b 100644
---- a/Documentation/config/maintenance.txt
-+++ b/Documentation/config/maintenance.txt
-@@ -3,6 +3,21 @@ maintenance.auto::
- 	`git maintenance run --auto` after doing their normal work. Defaults
- 	to true.
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index ed94f66e36..1c59fd0cb5 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -29,6 +29,15 @@ Git repository.
+ SUBCOMMANDS
+ -----------
  
-+maintenance.strategy::
-+	This string config option provides a way to specify one of a few
-+	recommended schedules for background maintenance. This only affects
-+	which tasks are run during `git maintenance run --schedule=X`
-+	commands, provided no `--task=<task>` arguments are provided.
-+	Further, if a `maintenance.<task>.schedule` config value is set,
-+	then that value is used instead of the one provided by
-+	`maintenance.strategy`. The possible strategy strings are:
-++
-+* `none`: This default setting implies no task are run at any schedule.
-+* `incremental`: This setting optimizes for performing small maintenance
-+  activities that do not delete any data. This does not schedule the `gc`
-+  task, but runs the `prefetch` and `commit-graph` tasks hourly and the
-+  `loose-objects` and `incremental-repack` tasks daily.
++register::
++	Initialize Git config values so any scheduled maintenance will
++	start running on this repository. This adds the repository to the
++	`maintenance.repo` config variable in the current user's global
++	config and enables some recommended configuration values for
++	`maintenance.<task>.schedule`. The tasks that are enabled are safe
++	for running in the background without disrupting foreground
++	processes.
 +
- maintenance.<task>.enabled::
- 	This boolean config option controls whether the maintenance task
- 	with name `<task>` is run when no `--task` option is specified to
+ run::
+ 	Run one or more maintenance tasks. If one or more `--task` options
+ 	are specified, then those tasks are run in that order. Otherwise,
+@@ -36,6 +45,11 @@ run::
+ 	config options are true. By default, only `maintenance.gc.enabled`
+ 	is true.
+ 
++unregister::
++	Remove the current repository from background maintenance. This
++	only removes the repository from the configured list. It does not
++	stop the background maintenance processes from running.
++
+ TASKS
+ -----
+ 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index a387f46585..a8248e7a45 100644
+index 03b24ea0db..edf1d35ce5 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1308,12 +1308,35 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
- 	return result;
+@@ -1407,7 +1407,56 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
+ 	return maintenance_run_tasks(&opts);
  }
  
--static void initialize_task_config(void)
-+static void initialize_maintenance_strategy(void)
+-static const char builtin_maintenance_usage[] = N_("git maintenance run [<options>]");
++static int maintenance_register(void)
 +{
-+	char *config_str;
++	struct child_process config_set = CHILD_PROCESS_INIT;
++	struct child_process config_get = CHILD_PROCESS_INIT;
 +
-+	if (git_config_get_string("maintenance.strategy", &config_str))
-+		return;
++	/* There is no current repository, so skip registering it */
++	if (!the_repository || !the_repository->gitdir)
++		return 0;
 +
-+	if (!strcasecmp(config_str, "incremental")) {
-+		tasks[TASK_GC].schedule = SCHEDULE_NONE;
-+		tasks[TASK_COMMIT_GRAPH].enabled = 1;
-+		tasks[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY;
-+		tasks[TASK_PREFETCH].enabled = 1;
-+		tasks[TASK_PREFETCH].schedule = SCHEDULE_HOURLY;
-+		tasks[TASK_INCREMENTAL_REPACK].enabled = 1;
-+		tasks[TASK_INCREMENTAL_REPACK].schedule = SCHEDULE_DAILY;
-+		tasks[TASK_LOOSE_OBJECTS].enabled = 1;
-+		tasks[TASK_LOOSE_OBJECTS].schedule = SCHEDULE_DAILY;
-+	}
++	config_get.git_cmd = 1;
++	strvec_pushl(&config_get.args, "config", "--global", "--get", "maintenance.repo",
++		     the_repository->worktree ? the_repository->worktree
++					      : the_repository->gitdir,
++			 NULL);
++	config_get.out = -1;
++
++	if (start_command(&config_get))
++		return error(_("failed to run 'git config'"));
++
++	/* We already have this value in our config! */
++	if (!finish_command(&config_get))
++		return 0;
++
++	config_set.git_cmd = 1;
++	strvec_pushl(&config_set.args, "config", "--add", "--global", "maintenance.repo",
++		     the_repository->worktree ? the_repository->worktree
++					      : the_repository->gitdir,
++		     NULL);
++
++	return run_command(&config_set);
 +}
 +
-+static void initialize_task_config(int schedule)
++static int maintenance_unregister(void)
++{
++	struct child_process config_unset = CHILD_PROCESS_INIT;
++
++	if (!the_repository || !the_repository->gitdir)
++		return error(_("no current repository to unregister"));
++
++	config_unset.git_cmd = 1;
++	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
++		     "maintenance.repo",
++		     the_repository->worktree ? the_repository->worktree
++					      : the_repository->gitdir,
++		     NULL);
++
++	return run_command(&config_unset);
++}
++
++static const char builtin_maintenance_usage[] =	N_("git maintenance <subcommand> [<options>]");
+ 
+ int cmd_maintenance(int argc, const char **argv, const char *prefix)
  {
- 	int i;
- 	struct strbuf config_name = STRBUF_INIT;
- 	gc_config();
+@@ -1417,6 +1466,10 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
  
-+	if (schedule)
-+		initialize_maintenance_strategy();
-+
- 	for (i = 0; i < TASK__COUNT; i++) {
- 		int config_value;
- 		char *config_str;
-@@ -1389,7 +1412,6 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
- 	memset(&opts, 0, sizeof(opts));
+ 	if (!strcmp(argv[1], "run"))
+ 		return maintenance_run(argc - 1, argv + 1, prefix);
++	if (!strcmp(argv[1], "register"))
++		return maintenance_register();
++	if (!strcmp(argv[1], "unregister"))
++		return maintenance_unregister();
  
- 	opts.quiet = !isatty(2);
--	initialize_task_config();
- 
- 	for (i = 0; i < TASK__COUNT; i++)
- 		tasks[i].selected_order = -1;
-@@ -1402,6 +1424,8 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
- 	if (opts.auto_flag && opts.schedule)
- 		die(_("use at most one of --auto and --schedule=<frequency>"));
- 
-+	initialize_task_config(opts.schedule);
-+
- 	if (argc != 0)
- 		usage_with_options(builtin_maintenance_run_usage,
- 				   builtin_maintenance_run_options);
+ 	die(_("invalid subcommand: %s"), argv[1]);
+ }
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 7715e40391..7440a0ea19 100755
+index 33d73cd01c..8f383d01d9 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -300,6 +300,55 @@ test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
+@@ -9,7 +9,7 @@ GIT_TEST_MULTI_PACK_INDEX=0
+ 
+ test_expect_success 'help text' '
+ 	test_expect_code 129 git maintenance -h 2>err &&
+-	test_i18ngrep "usage: git maintenance run" err &&
++	test_i18ngrep "usage: git maintenance <subcommand>" err &&
+ 	test_expect_code 128 git maintenance barf 2>err &&
+ 	test_i18ngrep "invalid subcommand: barf" err &&
+ 	test_expect_code 129 git maintenance 2>err &&
+@@ -300,4 +300,19 @@ test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
  	test_subcommand git multi-pack-index write --no-progress <weekly.txt
  '
  
-+test_expect_success 'maintenance.strategy inheritance' '
-+	for task in commit-graph loose-objects incremental-repack
-+	do
-+		git config --unset maintenance.$task.schedule || return 1
-+	done &&
-+
-+	test_when_finished git config --unset maintenance.strategy &&
-+	git config maintenance.strategy incremental &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/incremental-hourly.txt" \
-+		git maintenance run --schedule=hourly --quiet &&
-+	GIT_TRACE2_EVENT="$(pwd)/incremental-daily.txt" \
-+		git maintenance run --schedule=daily --quiet &&
-+
-+	test_subcommand git commit-graph write --split --reachable \
-+		--no-progress <incremental-hourly.txt &&
-+	test_subcommand ! git prune-packed --quiet <incremental-hourly.txt &&
-+	test_subcommand ! git multi-pack-index write --no-progress \
-+		<incremental-hourly.txt &&
-+
-+	test_subcommand git commit-graph write --split --reachable \
-+		--no-progress <incremental-daily.txt &&
-+	test_subcommand git prune-packed --quiet <incremental-daily.txt &&
-+	test_subcommand git multi-pack-index write --no-progress \
-+		<incremental-daily.txt &&
-+
-+	# Modify defaults
-+	git config maintenance.commit-graph.schedule daily &&
-+	git config maintenance.loose-objects.schedule hourly &&
-+	git config maintenance.incremental-repack.enabled false &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/modified-hourly.txt" \
-+		git maintenance run --schedule=hourly --quiet &&
-+	GIT_TRACE2_EVENT="$(pwd)/modified-daily.txt" \
-+		git maintenance run --schedule=daily --quiet &&
-+
-+	test_subcommand ! git commit-graph write --split --reachable \
-+		--no-progress <modified-hourly.txt &&
-+	test_subcommand git prune-packed --quiet <modified-hourly.txt &&
-+	test_subcommand ! git multi-pack-index write --no-progress \
-+		<modified-hourly.txt &&
-+
-+	test_subcommand git commit-graph write --split --reachable \
-+		--no-progress <modified-daily.txt &&
-+	test_subcommand git prune-packed --quiet <modified-daily.txt &&
-+	test_subcommand ! git multi-pack-index write --no-progress \
-+		<modified-daily.txt
++test_expect_success 'register and unregister' '
++	test_when_finished git config --global --unset-all maintenance.repo &&
++	git config --global --add maintenance.repo /existing1 &&
++	git config --global --add maintenance.repo /existing2 &&
++	git config --global --get-all maintenance.repo >before &&
++	git maintenance register &&
++	git config --global --get-all maintenance.repo >actual &&
++	cp before after &&
++	pwd >>after &&
++	test_cmp after actual &&
++	git maintenance unregister &&
++	git config --global --get-all maintenance.repo >actual &&
++	test_cmp before actual
 +'
 +
- test_expect_success 'register and unregister' '
- 	test_when_finished git config --global --unset-all maintenance.repo &&
- 	git config --global --add maintenance.repo /existing1 &&
+ test_done
 -- 
 gitgitgadget
 
