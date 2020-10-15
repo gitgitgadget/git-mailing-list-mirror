@@ -7,120 +7,112 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45E08C433E7
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 20:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AD5EC433DF
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 20:16:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB7E42073A
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 20:08:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B39A620725
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 20:15:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ECAnor6W"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jg2lj+vl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388856AbgJOUIa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 16:08:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63780 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729327AbgJOUIa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 16:08:30 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C77D6F4A6A;
-        Thu, 15 Oct 2020 16:08:26 -0400 (EDT)
+        id S2392192AbgJOUP6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 16:15:58 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64391 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730592AbgJOUP6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 16:15:58 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45762884EF;
+        Thu, 15 Oct 2020 16:15:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=40J81x5kSPDviE0jCGXcQ0ttEP4=; b=ECAnor
-        6WUkRdY1MzJ5WdhO5vvLVwFGgtm/SRoFAibZiryoRXyeNILyonWNNl6vAkK4dzQ0
-        PBs7kgc0gX3jreV/RgUciDyNioitLLuA8BvX0hcQruMQhbiW2LAZSNT2kxUhp7KF
-        KdFabi4P+VM96S06GlETjM9gbkOFnGIVRPp+E=
+        :content-type; s=sasl; bh=J+oJ+NuTMlfFnsTfEJCXDcrUOvY=; b=jg2lj+
+        vlteBVInfF1aQaJPqSPbUqfZjBZjI1hPpO3Gi6GoMNXtgLUVmqgjFz8vrBEXA4gp
+        gyQtA/tI7uKzZ3+mVaPqYn1K6jAQ+8TPFzZ9HWPZ5BGk8afsF8aBqi5jqaQOLAnT
+        +IcQ+QRVKnIa52nxZT0T6ih9eoE+83C9gaftI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jujvCVwZpO6MLlqNnOm1f+CAgnyuul1A
-        Mc9kSc2N54PtnMcqxMLUi0Mop6aBLpsbtm7FwDf1ujXoU3tPfDQ3U8C7usxfae3r
-        ZMeD0TfCtSCsnqHAP/XKZpHLqWdKF+dJBJVqNeRDgi5IdAGjDMK5PmleMRbBERhm
-        etCFEfssj2E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF8CFF4A69;
-        Thu, 15 Oct 2020 16:08:26 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=gsNciNInw+64tBA0oTz2C/K8V7opC9a9
+        hBEjk4dK0swfzJ/AWV05EVxT/Rfw9VFvzBQdyIKXY0mcQR9N5DKUvBvNGhAPLS9w
+        nhAKIKbNoUqVL0cXaev1PxxrNYtx71Ppmmou1QEP++KnbbiT1Xnnc8MbZcKcaIyb
+        qGNmIQ04PjY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DE88884EE;
+        Thu, 15 Oct 2020 16:15:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0CEE2F4A68;
-        Thu, 15 Oct 2020 16:08:23 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B6FF8884ED;
+        Thu, 15 Oct 2020 16:15:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/3] test-lib: allow selecting tests by
- substring/regex with --run
-References: <pull.878.git.git.1602545164.gitgitgadget@gmail.com>
-        <pull.878.v2.git.git.1602616786.gitgitgadget@gmail.com>
-        <41e2528e83ba7087c9d21f0b15efed416f1512f8.1602616786.git.gitgitgadget@gmail.com>
-        <20201014170413.GB21687@coredump.intra.peff.net>
-        <xmqq1rhzihqa.fsf@gitster.c.googlers.com>
-        <20201015194648.GB1490964@coredump.intra.peff.net>
-Date:   Thu, 15 Oct 2020 13:08:22 -0700
-In-Reply-To: <20201015194648.GB1490964@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 15 Oct 2020 15:46:48 -0400")
-Message-ID: <xmqq7drrfe15.fsf@gitster.c.googlers.com>
+To:     "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>
+Cc:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] fast-import: fix over-allocation of marks storage
+References: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
+        <20201015012636.GA387901@coredump.intra.peff.net>
+        <72a4d4d8dff95351122bd192976dd6b1@sebres.de>
+        <20201015153849.GA551964@coredump.intra.peff.net>
+        <xmqqzh4nfldw.fsf@gitster.c.googlers.com>
+        <xmqqv9fbfl68.fsf@gitster.c.googlers.com>
+        <f3e4f7ccc36dc214201c1838acce4aff@sebres.de>
+        <xmqqo8l3fibz.fsf@gitster.c.googlers.com>
+        <65f46be7283239e86bb345e94bc5dbda@sebres.de>
+Date:   Thu, 15 Oct 2020 13:15:53 -0700
+In-Reply-To: <65f46be7283239e86bb345e94bc5dbda@sebres.de> (Dipl. Ing. Sergey
+        Brester's message of "Thu, 15 Oct 2020 21:17:58 +0200")
+Message-ID: <xmqq362ffdom.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2E0ACED0-0F22-11EB-9FEB-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 3A156068-0F23-11EB-9EE6-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Dipl. Ing. Sergey Brester" <serg.brester@sebres.de> writes:
 
-> On Thu, Oct 15, 2020 at 09:20:13AM -0700, Junio C Hamano wrote:
+> Well, a bug-tracker had some clear benefits:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > On Tue, Oct 13, 2020 at 07:19:44PM +0000, Elijah Newren via GitGitGadget wrote:
->> >
->> >> Many of our test scripts have several "setup" tests.  It's a lot easier
->> >> to say
->> >> 
->> >>    ./t0050-filesystem.sh --run=setup,9
->> >
->> > I like this direction very well.
->> >
->> > There was a small discussion recently that we might be better off
->> > dropping test script numbers entirely,...
->> 
->> I think I missed that one.  A pointer, if you have one handy?
+> 1. it has controlling and statistic mechanisms like a road-map,
+> milestones etc;
 >
-> The sub-thread between me and Jonathan starting here:
+> 2. the issues get a priority (so one is able to select bugs with high
+> precedence);
 >
->   https://lore.kernel.org/git/20201005082448.GB2862927@coredump.intra.peff.net/
+> 3. they can be labeled or even characterized with other metrics to
+> signal seriousness of the issue or
+> to emphasize them in order to be flashy in the road-map.
 >
-> but specifically:
+> 4. the issues are bound to the participating contributors (reporter,
+> devs, tester, etc), so for example there are reports like "open issues
+> belonging to me", which could also help to organize work a bit
+> ("remember" them).
 >
->   https://lore.kernel.org/git/20201005084946.GE2862927@coredump.intra.peff.net/
+> 5. Transparency of the representation of issue or some lists is not to
+> compare with a thread in a mailing list at all.
 
-Ah, I see.  I actually do use "git ls-files t/ | grep ..." to look
-for tests that are relevant to the issue I have at hand quite often,
-so unlike what Jonathan said in the thread, having a good name does
-matter to me.
+What is curious in the above list is that their benefits are heavily
+dependent on people actually curating them.  No issue tracker
+automatically makes random issues "prioritized", no issue tracker
+automatically closes a stale and/or irrelevant issue.  And without
+curation, it tends to become pile of useless reports.
 
-As far as I can tell, the numbers in the test names serve only two
-purposes.
+> I could continue yet, but unsure the arguments will be heard or
+> welcome ...
 
-One is as a unique key to avoid colliding in the test result
-aggrevation database, and the other is as a unique key to use in
-GIT_SKIP_TESTS (which in turn is used by the Meta/Make wrapper I
-use, found on the todo branch, like 'Meta/Make --test=0050,1400
-test').
+I actually think people already _know_ the benefit of having well
+curated tracker, and suspect that what needs to be stressed is *not*
+the "arguments" for having one.  It just is that those who bring it
+up on this list never seem to be interested in maintaining the
+tracker in useful state, and assumes that issue curation magically
+happens for free, and that is probably it never materializes.
 
-I would be heavily inconvenienced if we decide to remove numbers
-becuase it would rob the latter use case from me, but I'd survive if
-we just are going to lift the requirement that numbers must be
-unique.  I may end up running irrelevant 0050 and 1400 when the
-tests I really want to run are the other 0050 and 1400 with
-"--test=0050,1400", but when I am trying to run only 2 among 900+
-scripts, running 2 extra ones I didn't have to run only because
-their prefix collide is still much better and tolerable.
-
-Thanks.
+It would be great if you are volunteering to be one of the issue
+managers, of course.  FWIW, I think somebody (jrnieder?) already
+runs a tracker for us.  I do not know how much community
+participation the instance gets to to keep it relevant.
