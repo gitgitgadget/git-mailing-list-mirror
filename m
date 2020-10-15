@@ -2,76 +2,111 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB9A9C433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 624B6C433DF
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:24:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 483D922247
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:04:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wllno/AV"
+	by mail.kernel.org (Postfix) with ESMTP id 049E722249
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726334AbgJOHEA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 03:04:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44564 "EHLO
+        id S1726948AbgJOHYQ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 15 Oct 2020 03:24:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725208AbgJOHEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 03:04:00 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D997C061755
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 00:04:00 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id p21so1286469pju.0
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 00:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TMaxbZ+3Otjid4wValJ9+YS0bww6CPGz1d0tdaRPFd0=;
-        b=Wllno/AVnB8eSZbCR1xamDVPlsk1Kc9ht1ngey8hiVqhmIJI1CHzVOko2AWM8prZ/T
-         xfRCG6vES6EGAfGN3dbzfSTVB82s6qDfko+Gl18paTTD9B9D1REdA1MCU2O4yTY7sdIy
-         307k3c7GCNb8tGUw+GXV+p2IN2ERrsNmLZTEuxRBTORzvN38WJW4QRA1G6PDcidNHfpP
-         q8DHFIFcJPwn9ybV9zzdNOqvTjfdrzoFNeKnSwisavdF7BgVfWl2ilQCiBiNOmycVcbJ
-         pCJa9NmmKOi5LXPusK05IRT+fbD1ojf+vSybkopKoev80IwEPXNd+feaNovWuecU1gVl
-         bi2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TMaxbZ+3Otjid4wValJ9+YS0bww6CPGz1d0tdaRPFd0=;
-        b=fin+oQeCnvLLzbn30j9lsufbNbe5C3WheNMy/sB9XBLGjerY/wbELNe6oWILk8kqSC
-         /V8SdtISLq1zw0EaEUHTwt6O+UtrVuOrdXN2/4EQAiZETyGVKSF1IZbU1JFRuoefZpLT
-         G1dERbtGz1hywjd7FQ+nGUfARqV++rYWi7SanPBkqIJ8HyljxKl3JvTbFfNqfxwFMxfk
-         TiPUj1twDHqTG2qIpTQIGvqz22FTjrxG1VGNIHnaWsk9xfGts5/S+Zs4RXS8NjkfBh/y
-         zynIh7x+2N93T3PdTjJQXNgaFlOUMkW1ZJInxd+xLKz2uOqmzPJTmb3U4GdrpzCKkSrD
-         51cg==
-X-Gm-Message-State: AOAM533LfdwujlsTWrFNI9R0SbgtwNCSD753scl1je3Dw9fD6RrT2tg9
-        9qJpwNH3WZLroHbkd0RcHKi8awQ0+5rcSbriTZi1YgMI
-X-Google-Smtp-Source: ABdhPJxlZmZw/zL6MmdwT+vstUjFDVAIOJ3UfPkKMJy5fzkLOGhhzI/Erm1YUiBmTo+UQQ9gRANyXCbfTLktMF+v5DI=
-X-Received: by 2002:a17:90a:dc0c:: with SMTP id i12mr3076445pjv.67.1602745439082;
- Thu, 15 Oct 2020 00:03:59 -0700 (PDT)
-MIME-Version: 1.0
-From:   Zodwa Phakathi <phakathizc@gmail.com>
-Date:   Thu, 15 Oct 2020 09:03:45 +0200
-Message-ID: <CAGdqGXq2HtiS_ZD2k3y8y8enHJp+FUL+Sg8JiqQ05T7cjxAKbw@mail.gmail.com>
-Subject: Outreachy
+        with ESMTP id S1726245AbgJOHYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 03:24:15 -0400
+Received: from mx.pao1.isc.org (mx.pao1.isc.org [IPv6:2001:4f8:0:2::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE9B1C0613D2
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 00:24:15 -0700 (PDT)
+Received: from zmx1.isc.org (zmx1.isc.org [149.20.0.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.pao1.isc.org (Postfix) with ESMTPS id A035E3AB119
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 07:24:15 +0000 (UTC)
+Received: from zmx1.isc.org (localhost [127.0.0.1])
+        by zmx1.isc.org (Postfix) with ESMTPS id 9637F16006B
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 07:24:15 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+        by zmx1.isc.org (Postfix) with ESMTP id 87E6D16005D
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 07:24:15 +0000 (UTC)
+Received: from zmx1.isc.org ([127.0.0.1])
+        by localhost (zmx1.isc.org [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id tRa3A3ZVjHGT for <git@vger.kernel.org>;
+        Thu, 15 Oct 2020 07:24:15 +0000 (UTC)
+Received: from larwa.hq.kempniu.pl (unknown [212.180.223.213])
+        by zmx1.isc.org (Postfix) with ESMTPSA id F339F16006B
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 07:24:14 +0000 (UTC)
+From:   =?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <michal@isc.org>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH v3 1/2] merge-base, xdiff: zero out xpparam_t structures
+Date:   Thu, 15 Oct 2020 09:24:05 +0200
+Message-Id: <20201015072406.4506-2-michal@isc.org>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20201015072406.4506-1-michal@isc.org>
+References: <20201012091751.19594-1-michal@isc.org>
+ <20201015072406.4506-1-michal@isc.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good day,
+xpparam_t structures are usually zero-initialized before their specific
+fields are assigned to, but there are three locations in the tree where
+that does not happen.  Add the missing memset() calls in order to make
+initialization of xpparam_t structures consistent tree-wide and to
+prevent stack garbage from being used as field values.
 
-I hope this email finds you well. My name is Zodwa Phakathi from South
-Africa. I am one of the Outreachy applicants. I would like to
-participate in the following project. The project name is  Accelerate
-rename detection and the "range-diff" command in Git. I would like to
-know if you guys have any suggestions on which microproject I can
-currently work on. The microproject I would like  to work on is
-Modernize a test script, Is it still available to work on it.
+Signed-off-by: Michał Kępień <michal@isc.org>
+---
+ builtin/merge-tree.c | 1 +
+ xdiff/xhistogram.c   | 2 ++
+ xdiff/xpatience.c    | 2 ++
+ 3 files changed, 5 insertions(+)
 
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index e72714a5a8..de8520778d 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -109,6 +109,7 @@ static void show_diff(struct merge_list *entry)
+ 	xdemitconf_t xecfg;
+ 	xdemitcb_t ecb;
+ 
++	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = 0;
+ 	memset(&xecfg, 0, sizeof(xecfg));
+ 	xecfg.ctxlen = 3;
+diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
+index c7b35a9667..e694bfd9e3 100644
+--- a/xdiff/xhistogram.c
++++ b/xdiff/xhistogram.c
+@@ -235,6 +235,8 @@ static int fall_back_to_classic_diff(xpparam_t const *xpp, xdfenv_t *env,
+ 		int line1, int count1, int line2, int count2)
+ {
+ 	xpparam_t xpparam;
++
++	memset(&xpparam, 0, sizeof(xpparam));
+ 	xpparam.flags = xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
+ 
+ 	return xdl_fall_back_diff(env, &xpparam,
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index 3c5601b602..20699a6f60 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -318,6 +318,8 @@ static int fall_back_to_classic_diff(struct hashmap *map,
+ 		int line1, int count1, int line2, int count2)
+ {
+ 	xpparam_t xpp;
++
++	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = map->xpp->flags & ~XDF_DIFF_ALGORITHM_MASK;
+ 
+ 	return xdl_fall_back_diff(map->env, &xpp,
+-- 
+2.28.0
 
-kind regards,
-Zodwa.
