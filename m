@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A72D0C433E7
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E763BC433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:30:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74F6C206DD
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:30:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D6A9206DD
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 19:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391551AbgJOTaG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 15:30:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33368 "EHLO cloud.peff.net"
+        id S2391559AbgJOTaa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 15:30:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33378 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391545AbgJOTaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 15:30:05 -0400
-Received: (qmail 24164 invoked by uid 109); 15 Oct 2020 19:30:05 -0000
+        id S2391541AbgJOTaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 15:30:30 -0400
+Received: (qmail 24178 invoked by uid 109); 15 Oct 2020 19:30:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Oct 2020 19:30:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Oct 2020 19:30:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32178 invoked by uid 111); 15 Oct 2020 19:30:04 -0000
+Received: (qmail 32202 invoked by uid 111); 15 Oct 2020 19:30:29 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2020 15:30:04 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2020 15:30:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 15 Oct 2020 15:30:04 -0400
+Date:   Thu, 15 Oct 2020 15:30:29 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: [PATCH v2 1/2] usage: define a type for a reporting function
-Message-ID: <20201015193004.GA1129761@coredump.intra.peff.net>
+Subject: [PATCH v2 2/2] config.mak.dev: build with -fno-common
+Message-ID: <20201015193029.GB1129761@coredump.intra.peff.net>
 References: <20201015192845.GD1108210@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,101 +42,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The usage, die, warning, and error routines all work with a function
-pointer that takes the message to be reported. We usually just mention
-the function's full type inline. But this makes the use of these
-pointers hard to read, especially because C's syntax for returning a
-function pointer is so awful:
+It's an easy mistake to define a variable in a header with "int x;" when
+you really meant to only declare the variable as "extern int x;"
+instead. Clang and gcc will both allow this when building with
+"-fcommon"; they put these "tentative definitions" in a common block
+which the linker is able to resolve.
 
-  void (*get_error_routine(void))(const char *err, va_list params);
+This is the default in clang and was the default in gcc until gcc-10,
+since it helps some legacy code. However, we would prefer not to rely on
+this because:
 
-Unless you read it very carefully, this looks like a function pointer
-declaration. Let's instead use a single typedef to define a reporting
-function, which is the same for all four types.
+  - using "extern" makes the intent more clear (so it's a style issue,
+    but it's one the compiler can help us catch)
 
-Note that this also removes the "extern" from these declarations to
-match the surrounding functions. They were missed in 554544276a (*.[ch]:
-remove extern from function declarations using spatch, 2019-04-29)
-presumably because of the unusual syntax.
+  - according to the gcc manpage, it may yield a speed and code size
+    penalty
+
+So let's build explicitly with -fno-common when the DEVELOPER knob is
+set, which will let developers using clang and older versions of gcc
+notice these problems.
+
+I didn't bother making this conditional on a particular version of gcc.
+As far as I know, this option has been available forever in both gcc and
+clang, so old versions don't need to avoid it. And we already expect gcc
+and clang options throughout config.mak.dev, so it's unlikely anybody
+setting the DEVELOPER knob is using anything else. It's a noop on
+gcc-10, of course, but it's not worth trying to exclude it there.
+
+Note that there's nothing to fix in the code; we already don't have any
+issues here. But if you want to test the patch, you can add a bare "int
+x;" into cache.h, which will cause the link step to fail.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This replaces the tip of jk/report-fn-typedef.
+New in this version. It could be queued separately from the first.
 
- git-compat-util.h | 12 +++++++-----
- usage.c           | 18 +++++++++---------
- 2 files changed, 16 insertions(+), 14 deletions(-)
+ config.mak.dev | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 7a0fb7a045..adfea06897 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -489,11 +489,13 @@ static inline int const_error(void)
- #define error_errno(...) (error_errno(__VA_ARGS__), const_error())
- #endif
+diff --git a/config.mak.dev b/config.mak.dev
+index 89b218d11a..89fefacd94 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -15,6 +15,7 @@ DEVELOPER_CFLAGS += -Wpointer-arith
+ DEVELOPER_CFLAGS += -Wstrict-prototypes
+ DEVELOPER_CFLAGS += -Wunused
+ DEVELOPER_CFLAGS += -Wvla
++DEVELOPER_CFLAGS += -fno-common
  
--void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
--void set_error_routine(void (*routine)(const char *err, va_list params));
--extern void (*get_error_routine(void))(const char *err, va_list params);
--void set_warn_routine(void (*routine)(const char *warn, va_list params));
--extern void (*get_warn_routine(void))(const char *warn, va_list params);
-+typedef void (*report_fn)(const char *, va_list params);
-+
-+void set_die_routine(NORETURN_PTR report_fn routine);
-+void set_error_routine(report_fn routine);
-+report_fn get_error_routine(void);
-+void set_warn_routine(report_fn routine);
-+report_fn get_warn_routine(void);
- void set_die_is_recursing_routine(int (*routine)(void));
- 
- int starts_with(const char *str, const char *prefix);
-diff --git a/usage.c b/usage.c
-index 58fb5fff5f..06665823a2 100644
---- a/usage.c
-+++ b/usage.c
-@@ -108,33 +108,33 @@ static int die_is_recursing_builtin(void)
- 
- /* If we are in a dlopen()ed .so write to a global variable would segfault
-  * (ugh), so keep things static. */
--static NORETURN_PTR void (*usage_routine)(const char *err, va_list params) = usage_builtin;
--static NORETURN_PTR void (*die_routine)(const char *err, va_list params) = die_builtin;
--static void (*error_routine)(const char *err, va_list params) = error_builtin;
--static void (*warn_routine)(const char *err, va_list params) = warn_builtin;
-+static NORETURN_PTR report_fn usage_routine = usage_builtin;
-+static NORETURN_PTR report_fn die_routine = die_builtin;
-+static report_fn error_routine = error_builtin;
-+static report_fn warn_routine = warn_builtin;
- static int (*die_is_recursing)(void) = die_is_recursing_builtin;
- 
--void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params))
-+void set_die_routine(NORETURN_PTR report_fn routine)
- {
- 	die_routine = routine;
- }
- 
--void set_error_routine(void (*routine)(const char *err, va_list params))
-+void set_error_routine(report_fn routine)
- {
- 	error_routine = routine;
- }
- 
--void (*get_error_routine(void))(const char *err, va_list params)
-+report_fn get_error_routine(void)
- {
- 	return error_routine;
- }
- 
--void set_warn_routine(void (*routine)(const char *warn, va_list params))
-+void set_warn_routine(report_fn routine)
- {
- 	warn_routine = routine;
- }
- 
--void (*get_warn_routine(void))(const char *warn, va_list params)
-+report_fn get_warn_routine(void)
- {
- 	return warn_routine;
- }
+ ifndef COMPILER_FEATURES
+ COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
 -- 
 2.29.0.rc1.562.g7bd9bc8902
-
