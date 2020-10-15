@@ -2,92 +2,103 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C733C433E7
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 16:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E4EC433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 16:19:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B046222210
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 16:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 056C022240
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 16:19:38 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sebres.de header.i=@sebres.de header.b="mprih6+s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389525AbgJOQOs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 12:14:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32864 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389477AbgJOQOs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 12:14:48 -0400
-Received: (qmail 23080 invoked by uid 109); 15 Oct 2020 16:14:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Oct 2020 16:14:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29835 invoked by uid 111); 15 Oct 2020 16:14:47 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2020 12:14:47 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 15 Oct 2020 12:14:47 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Sean McAllister <smcallis@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Masaya Suzuki <masayasuzuki@google.com>
-Subject: Re: [PATCH v2 3/3] http: automatically retry some requests
-Message-ID: <20201015161447.GB1104947@coredump.intra.peff.net>
-References: <20201013191729.2524700-1-smcallis@google.com>
- <20201013191729.2524700-3-smcallis@google.com>
- <20201013211453.GB3678071@coredump.intra.peff.net>
- <CAM4o00eCKP1+f=xBw4LJfNqrstEnutAe9StxknW9qLMtPBdhKQ@mail.gmail.com>
- <CAM4o00fO++JMNdES03JKRyxmZtiLjkrJ2nux0-TZYBdH2+0ijA@mail.gmail.com>
- <20201014193456.GA365553@coredump.intra.peff.net>
- <CAM4o00eZjr2apH6WO-sTvuOfR-cuiSh1yhh3j=14ZFstXDz7bA@mail.gmail.com>
- <20201015000410.GB328643@google.com>
+        id S2389147AbgJOQTi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 12:19:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388695AbgJOQTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 12:19:37 -0400
+Received: from sebres.de (sebres.de [IPv6:2a03:4000:3f:185::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC503C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 09:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sebres.de;
+         s=dkim; h=Message-ID:References:In-Reply-To:Cc:From:Date:
+        Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:To:Sender:
+        Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+        :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=G9EpRqwKD4QeOsJ7ZpCPl60zPDHOB+Ui0FmHoOdom78=; b=mprih6+sWdLDkKcpZ2OApB6Owa
+        Tw9pVjaotd4Thahn1a6BR7IlbO2VRFitY+gsXEsba6dBG+NH7hEIlsRcMFnG6iwX25bcQjRhPdsAe
+        SNGvrpvI+bpcFHNGWSPfuDg7QkAkRbO8qoAfm5Gc1QitPeZCrYcx0SEGrv2X+gjABQbQQJpYKs2v6
+        YuUpIjXUaTTIIwLbI4eMa3pwUj735V4fY8nVFQ9ifXO2PlEqLPeWKfGHVc/3eD/fsx9fJ5moz+lhM
+        h5LKUiUBbFFTjyVt36pE11AfOQO7myZWOenCc+x62+w9u+3FYhuUDT6mHkEeFMZDvnOE22pJOiYj0
+        1ecg11nQ==;
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: git fast-import leaks memory drastically, so crashes with out  of memory by attempt to import 22MB export dump
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201015000410.GB328643@google.com>
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 15 Oct 2020 18:19:34 +0200
+From:   "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+In-Reply-To: <79cbeb4c-5840-d5b7-a2b9-d72cf47968df@web.de>
+References: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
+ <20201015012636.GA387901@coredump.intra.peff.net>
+ <72a4d4d8dff95351122bd192976dd6b1@sebres.de>
+ <79cbeb4c-5840-d5b7-a2b9-d72cf47968df@web.de>
+Message-ID: <181f35ca5dff05d8d2288f020354a860@sebres.de>
+X-Sender: serg.brester@sebres.de
+User-Agent: Webmail/1.0.3
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 14, 2020 at 05:04:10PM -0700, Jonathan Nieder wrote:
+15.10.2020 17:52, René Scharfe wrote:
 
-> > Some large projects (Android, Chrome), use git with a distributed
-> > backend to feed changes to automated builders and such.  We can
-> > actually get into a case where DDOS mitigation kicks in and 429s start
-> > going out.  In that case I think it's pretty important that we honor
-> > the Retry-After field so we're good citizens and whoever's running the
-> > backend service has some options for traffic shaping to manage load.
-> > In general you're right it doesn't matter _that_ much but in at least
-> > the specific case I have in my head, it does.
+> In case someone else is wondering about the meaning of those hashes,
+> here are their reference strings:
+> e83c516331 (Initial revision of "git", the information manager from 
+> hell, 2005-04-07)
+> dc04167d37 (Fourth batch, 2020-08-04)
+> 61addb841f (Merge branch 'jk/strvec' into next, 2020-08-04)
 > 
-> I see.  With Peff's proposal, the backend service could still set
-> Retry-After, and *modern* machines with new enough libcurl would still
-> respect it, but older machines[*] would have to use some fallback
-> behavior.
-> 
-> I suppose that fallback behavior could be to not retry at all.  That
-> sounds appealing to me since it would be more maintainable (no custom
-> header parsing) and the fallback would be decreasingly relevant over
-> time as users upgrade to modern versions of libcurl and git.  What do
-> you think?
 
-Yeah, the good-citizen behavior would be to err on the side of not
-retrying. And actually, I kind of like that better anyway. The
-retryable_code() list has things like 502 in it, which aren't
-necessarily temporary errors. If the server didn't give us a hint of
-when to retry, perhaps it's not a good idea to do so.
+These are just revisions of master branch, and the process was splittet 
+into two parts to generate a large marks file with a small partial dump, 
+that can be imported over first marks.
+So quasi to simulate normal situation (large repo, small partial export 
+dump), for which import/export with marks is basically used.
+It doesn't matter here, just helpful to export/import single branch only 
+(to bypass signed tags, avoid installing gpg keys, etc).
 
-That's slightly orthogonal to the CURLINFO_RETRY_AFTER question. It
-would mean an older Git would not retry in this case. But if you're
-primarily interested in fixing automated builders overloading your
-system, it's probably not that big a deal to make sure they're up to
-date (after all, they need the new Git, too ;) ).
+> So you use the marks generated by the first export to import the second
+> export.
 
-If you're hoping to help random developers on various platforms, then
-making the feature work with older curl is more compelling. Many people
-might upgrade their Git version there, but be stuck with an older system
-libcurl.
+It also doesn't matter, because you could import whole first dump 
+(several gigabytes, I guess) in order to generate new import marks...
+Which will then be the same after all :) just because it is the same 
+repository used for export (and all the revisions are already there, 
+moreover having the same hash values, let alone internal marks index and 
+the export sequence).
 
--Peff
+> I wonder if that's relevant to trigger the memory allocation issue.
+
+No, it is not relevant.
+Also note my initial report where it is affected by real situation (over 
+import marks generated previosly with git fast-import).
+
+> I can reproduce this on Debian -- but don't get a crash report, just a
+> notice from the OOM killer. It bisects to ddddf8d7e2 (fast-import:
+> permit reading multiple marks files, 2020-02-22).
+
+Sure, OOM manager kills this process (before it is able to crash e. g. 
+create a dump on failed malloc)...
+If you'll disable OOMK (or try to run it on windows), you'll see the 
+crash and dump is there. :)
+
+Regards,
+Sergey.
