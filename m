@@ -2,174 +2,128 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A65C433E7
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D70FC433DF
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:37:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0055622247
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:31:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F300D2224E
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 07:37:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="mJpI7Kpn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727736AbgJOHbs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 03:31:48 -0400
-Received: from dd36226.kasserver.com ([85.13.153.21]:36264 "EHLO
-        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726103AbgJOHbr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 03:31:47 -0400
-Received: from client3368.fritz.box (i5C7455D8.versanet.de [92.116.85.216])
-        by dd36226.kasserver.com (Postfix) with ESMTPA id 0F7523C0699;
-        Thu, 15 Oct 2020 09:31:44 +0200 (CEST)
-From:   Stefan Haller <stefan@haller-berlin.de>
-To:     paulus@ozlabs.org
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com
-Subject: [PATCH v2] gitk: Add options --select-file and --select-line
-Date:   Thu, 15 Oct 2020 09:31:38 +0200
-Message-Id: <20201015073138.50899-1-stefan@haller-berlin.de>
-X-Mailer: git-send-email 2.29.0.rc1.13.g3b7fca9674
-In-Reply-To: <CAPig+cSRX+5o645fxBZunm4hiBM-1Gr8jChijyUNgNkO1wHKdA@mail.gmail.com>
-References: <CAPig+cSRX+5o645fxBZunm4hiBM-1Gr8jChijyUNgNkO1wHKdA@mail.gmail.com>
+        id S1728036AbgJOHhC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 03:37:02 -0400
+Received: from forward102p.mail.yandex.net ([77.88.28.102]:46286 "EHLO
+        forward102p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726103AbgJOHhC (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 15 Oct 2020 03:37:02 -0400
+Received: from mxback6j.mail.yandex.net (mxback6j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10f])
+        by forward102p.mail.yandex.net (Yandex) with ESMTP id BE7831D40A03;
+        Thu, 15 Oct 2020 10:36:58 +0300 (MSK)
+Received: from sas8-6bf5c5d991b2.qloud-c.yandex.net (sas8-6bf5c5d991b2.qloud-c.yandex.net [2a02:6b8:c1b:2a1f:0:640:6bf5:c5d9])
+        by mxback6j.mail.yandex.net (mxback/Yandex) with ESMTP id P4zuvIqrYY-aws8dcth;
+        Thu, 15 Oct 2020 10:36:58 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1602747418;
+        bh=fl6+2uz6wefXETxdUdFDKKcRhK0psV5hf3Yys1V6Oqs=;
+        h=In-Reply-To:Subject:CC:To:From:References:Date:Message-ID;
+        b=mJpI7KpnFWZwylDMg8VffB54/lh2ZC2lCiv9qN4CTgdv0fN2xMPF9MoWsUtHrXTOM
+         flAH470X4MVZNFarBNxOupHlM/6biH/OZVwwBLevgCmglWmSqU6N1TcPwyR3dP7Nx0
+         gH1s3DspMyB6ovCnGGxvk7v+G5OJRHFREMvS+MkU=
+Authentication-Results: mxback6j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by sas8-6bf5c5d991b2.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id 4exAvrknr8-avmmYIn5;
+        Thu, 15 Oct 2020 10:36:57 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (Client certificate not present)
+Date:   Thu, 15 Oct 2020 10:36:56 +0300
+From:   Eugen Konkov <kes-kes@yandex.ru>
+Message-ID: <858416875.20201015103656@yandex.ru>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: BUG: git rebase shows different commit message
+In-Reply-To: <CAPc5daVAJxfZVz0HwTFwhq-EfERrESU2Ta6-0fAyXrzf3YJREg@mail.gmail.com>
+References: <703071109.20201014201106@yandex.ru> 
+  <CAPc5daVAJxfZVz0HwTFwhq-EfERrESU2Ta6-0fAyXrzf3YJREg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These can be used in combination with --select-commit to jump to a given
-line in a patch on startup. (They don't have any effect when
---select-commit is not used.)
+Hello Junio,
 
-This is useful for the "Show History Context" command in Git Gui's blame
-window, which currently only jumps to the right commit in gitk, but
-doesn't select the line that the context menu was opened on.
+>>>These one-line titles are shown to help you identify the commit to futz with,
+>>>not to help you review them.
 
-Also, these options allow for powerful editor integration; they make it
-possible to jump into gitk right from a text editor. For example, here's
-a small ruby script that takes a file path and a line number and opens
-gitk with the commit selected that last modified that line. This can
-easily be mapped to a key in vim or other editors.
+It  would  be  better, if these one-line titles also help me to review them.
 
-    #!/usr/bin/env ruby
+>>> but some control characters that take the terminal into an insane state, we
+>>> should sanitize the title we'd show here for identification purposes,
+I expect they are sanitized in **same way** as it done for `git log ...`
 
-    if ARGV.length != 2
-        puts "Usage: #{$0} <file> <line>"
-        exit 1
-    end
+>>> so "show the title as-is" is not
+So  it  would  be better if it was shown same as `git log ...` display them
 
-    file, line = ARGV
-    blame_output = `git blame -p -L#{line},+1 "#{file}"`
-    exit 1 if $?.exitstatus != 0
+and sorry, "as is" was bad word. I mean if in different places is used
+same  formatting,  so  **result should be same**.
+I do not expect that commit messages are differ
 
-    blame_output_lines = blame_output.split("\n")
-    commit, line = blame_output_lines[0].split
+Thank you.
 
-    file = blame_output_lines.grep(/^filename /)[0][9..-1]
-    date = blame_output_lines.grep(/^committer-time /)[0][15..-1]
-    two_weeks_later = date.to_i + 60 * 60 * 24 * 7 * 2
+Wednesday, October 14, 2020, 8:55:45 PM, you wrote:
 
-    system "gitk --before='#{two_weeks_later}' \
-                 --select-commit=#{commit} \
-                 --select-file='#{file}' \
-                 --select-line=#{line} &"
+>> $git log --graph --decorate --pretty=oneline --abbrev-commit
+>> * 093010ea (local/dev) Change column 'Label' => 'OPFG' and added column 'comment'
+>> * 86221a47  Updated OpenAPI schema according to SCHEMA 193
+>> * 6202eb08 Added opfg.html
+>>
+>> $git rebase -i --autostash --rebase-merges 86221a47^
+>> label onto
+>>
+>> reset onto
+>> pick 86221a47 Updated OpenAPI schema according to SCHEMA 193
+>> pick 093010ea Change column 'Label' => 'OPFG' and added column 'comment'
+>>
+>> Here commit message is shown without leading space.
+>> I  think  that this is wrong. Because if space was shown then I reword
+>> commit message
+>>
+>> r 86221a47 Updated OpenAPI schema according to SCHEMA 193
+>> pick 093010ea Change column 'Label' => 'OPFG' and added column 'comment'
+>>
+>> but now I just do not see that I shold reword it =(
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
-Second version: added Signed-off-by. No other changes.
+> These one-line titles are shown to help you identify the commit to futz with,
+> not to help you review them. After all, you see only titles here
+> without the body
+> of the log message [*1*].
 
- gitk | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+> Besides, if the "breakage" in the title were not just an extra
+> whitespace but some
+> control characters that take the terminal into an insane state, we
+> should sanitize
+> the title we'd show here for identification purposes, so "show the
+> title as-is" is not
+> a good idea to begin with.
 
-diff --git a/gitk b/gitk
-index 23d9dd1..cf70313 100755
---- a/gitk
-+++ b/gitk
-@@ -475,12 +475,17 @@ proc stop_rev_list {view} {
- }
+> So, NAK.
 
- proc reset_pending_select {selid} {
--    global pending_select mainheadid selectheadid
-+    global pending_select pending_select_file pending_select_line
-+    global mainheadid selectheadid select_file select_line
+> [Footnote]
+> *1* ... and if majority of your commits have a single-liner titles, I cannot
+> imagine how these logs can be useful to its consumers (i.e. those who
+> use "git show" after identifying an old commit that broke things using
+> "git bisect" or "git blame").
 
-     if {$selid ne {}} {
-         set pending_select $selid
-     } elseif {$selectheadid ne {}} {
-         set pending_select $selectheadid
-+        if {$select_file ne {} && $select_line ne {}} {
-+            set pending_select_file $select_file
-+            set pending_select_line $select_line
-+        }
-     } else {
-         set pending_select $mainheadid
-     }
-@@ -1612,6 +1617,16 @@ proc getcommitlines {fd inst view updating}  {
-     return 2
- }
+> A leading whitespace in such a "git log" output would be the least of your
+> problems in such a history, I would have to say.
 
-+proc select_pending_line {} {
-+    global pending_select pending_select_file pending_select_line
-+
-+    set desired_loc [expr {[info exists pending_select_file]
-+        ? [list $pending_select_file $pending_select_line]
-+        : {}}]
-+
-+    selectline [rowofcommit $pending_select] 1 $desired_loc
-+}
-+
- proc chewcommits {} {
-     global curview hlview viewcomplete
-     global pending_select
-@@ -1626,7 +1641,7 @@ proc chewcommits {} {
-             reset_pending_select {}
 
-             if {[commitinview $pending_select $curview]} {
--                selectline [rowofcommit $pending_select] 1
-+                select_pending_line
-             } else {
-                 set row [first_real_row]
-                 selectline $row 1
-@@ -5244,7 +5259,7 @@ proc layoutmore {} {
-     if {[info exists pending_select] &&
-         [commitinview $pending_select $curview]} {
-         update
--        selectline [rowofcommit $pending_select] 1
-+        select_pending_line
-     }
-     drawvisible
- }
-@@ -7325,6 +7340,8 @@ proc selectline {l isnew {desired_loc {}} {switch_to_patch 0}} {
-     global vinlinediff
 
-     unset -nocomplain pending_select
-+    unset -nocomplain pending_select_file
-+    unset -nocomplain pending_select_line
-     $canv delete hover
-     normalline
-     unsel_reflist
-@@ -12507,6 +12524,8 @@ if {[catch {set gitdir [exec git rev-parse --git-dir]}]} {
-
- set selecthead {}
- set selectheadid {}
-+set select_file {}
-+set select_line {}
-
- set revtreeargs {}
- set cmdline_files {}
-@@ -12522,6 +12541,12 @@ foreach arg $argv {
-         "--select-commit=*" {
-             set selecthead [string range $arg 16 end]
-         }
-+        "--select-file=*" {
-+            set select_file [string range $arg 14 end]
-+        }
-+        "--select-line=*" {
-+            set select_line [string range $arg 14 end]
-+        }
-         "--argscmd=*" {
-             set revtreeargscmd [string range $arg 10 end]
-         }
---
-2.29.0.rc1.13.g3b7fca9674
+-- 
+Best regards,
+Eugen Konkov
 
