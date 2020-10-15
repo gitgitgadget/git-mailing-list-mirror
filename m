@@ -2,90 +2,136 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5192CC433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 18:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C79BAC433DF
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 18:54:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBCE421527
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 18:41:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sGBkSVLF"
+	by mail.kernel.org (Postfix) with ESMTP id 75AED21527
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 18:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389109AbgJOSlk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 14:41:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52039 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731154AbgJOSlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 14:41:39 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FA44892CF;
-        Thu, 15 Oct 2020 14:41:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kbZOTi6cNElDqiNl86+CuRABbFI=; b=sGBkSV
-        LFX6mBiew5f/ulR7gMVfgZl7ukxXwEV0UmDsy00bZ7eNF/OnlzbRm/xjOYLLI6rl
-        L75cBznBbFoyiUCoNfXCwpDC4KokPsICcy9/RkuVviRlsviQmCVRdfHM02qpKPqv
-        IOjGZ86xo/bqZuz7wq6p37F7EJoQpZRGEZ4Lg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DQyZsRIPsUEilIItAI0QDlOm4gJtaUDL
-        GxoQ7i4D0PbCRMW6chHTL/+D1caS0yHi+XP0x9klbaTVZhSpMEeAsm9/2DaplXoX
-        jAnfTCOqAHJtAr3HDN3MeOj4ois0+xSqW0ItD0duFL+gD8OO5Dx3rbaumXJmtU3G
-        duDDEDSI4fI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97A17892CE;
-        Thu, 15 Oct 2020 14:41:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C760892CD;
-        Thu, 15 Oct 2020 14:41:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nipunn Koorapati <nipunn1313@gmail.com>,
-        Alex Vandiver <alexmv@dropbox.com>
-Subject: Re: [PATCH] dir.c: fix comments to agree with argument name
-References: <pull.757.git.1602766160815.gitgitgadget@gmail.com>
-        <20201015160725.GA1104947@coredump.intra.peff.net>
-Date:   Thu, 15 Oct 2020 11:41:36 -0700
-In-Reply-To: <20201015160725.GA1104947@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 15 Oct 2020 12:07:25 -0400")
-Message-ID: <xmqqk0vrfi1r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2391116AbgJOSy3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 14:54:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726487AbgJOSy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 14:54:29 -0400
+X-Greylist: delayed 396 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 15 Oct 2020 11:54:29 PDT
+Received: from coral.adamspiers.org (coral.adamspiers.org [IPv6:2001:ba8:1f1:f27f::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 503E1C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 11:54:29 -0700 (PDT)
+Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
+        by coral.adamspiers.org (Postfix) with ESMTPSA id 280E32E62A
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 19:47:49 +0100 (BST)
+From:   Adam Spiers <git@adamspiers.org>
+To:     git list <git@vger.kernel.org>
+Subject: [PATCH v1] hook: add sample template for push-to-checkout
+Date:   Thu, 15 Oct 2020 19:47:03 +0100
+Message-Id: <20201015184703.5015-1-git@adamspiers.org>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0E771C24-0F16-11EB-BAA4-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+The template is a more-or-less exact translation to shell of the C
+code for the default behaviour for git's push-to-checkout hook defined
+in the push_to_deploy() function in builtin/receive-pack.c, to serve
+as a convenient starting point for modification.
 
->> - * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
->> + * If "oid_stat" is not NULL, compute SHA-1 of the exclude file and fill
->
-> Makes sense. This changed as part of 4b33e60201 (dir: convert struct
-> sha1_stat to use object_id, 2018-01-28). Perhaps it would likewise make
-> sense to stop saying "SHA-1" here, and just say "hash" (or even "object
-> id", though TBH I think the fact that the hash is the same as an
-> object-id is largely an implementation detail).
+It also contains relevant text extracted from the git-config(1) and
+githooks(5) man pages.
 
-I do not quite get your "though TBH", though.  I do agree with you
-that it is an implementation detail that an object is named after
-the hash of its contents, so saying "compute object name" probably
-makes sense in more context than "compute hash" outside the narrow
-parts of the code that actually implements how object names are
-computed.  So I would have expected "because TBH", not "though TBH".
+Signed-off-by: Adam Spiers <git@adamspiers.org>
+---
+ templates/hooks--push-to-checkout.sample | 74 ++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+ create mode 100755 templates/hooks--push-to-checkout.sample
 
-Anyway.  Nipunn, can you fix both of them in the same commit, as
-they are addressing a problem from the same cause (i.e. we are no
-longer SHA-1 centric).
+diff --git a/templates/hooks--push-to-checkout.sample b/templates/hooks--push-to-checkout.sample
+new file mode 100755
+index 0000000000..2c6e06f8f1
+--- /dev/null
++++ b/templates/hooks--push-to-checkout.sample
+@@ -0,0 +1,74 @@
++#!/bin/bash
++
++# An example hook script to update a checked-out tree on a git push.
++#
++# This hook is invoked by git-receive-pack(1) when it reacts to git
++# push and updates reference(s) in its repository, and when the push
++# tries to update the branch that is currently checked out and the
++# receive.denyCurrentBranch configuration variable is set to
++# updateInstead.
++#
++# By default, such a push is refused if the working tree and the index
++# of the remote repository has any difference from the currently
++# checked out commit; when both the working tree and the index match
++# the current commit, they are updated to match the newly pushed tip
++# of the branch. This hook is to be used to override the default
++# behaviour; however the code below reimplements the default behaviour
++# as a starting point for convenient modification.
++#
++# The hook receives the commit with which the tip of the current
++# branch is going to be updated:
++commit="$1"
++#echo "push-to-checkout $commit"
++
++# It can exit with a non-zero status to refuse the push (when it does
++# so, it must not modify the index or the working tree).
++die () {
++    echo >&2 "$*"
++    exit 1
++}
++
++# Or it can make any necessary changes to the working tree and to the
++# index to bring them to the desired state when the tip of the current
++# branch is updated to the new commit, and exit with a zero status.
++#
++# For example, the hook can simply run git read-tree -u -m HEAD "$1"
++# in order to emulate git fetch that is run in the reverse direction
++# with git push, as the two-tree form of git read-tree -u -m is
++# essentially the same as git switch or git checkout that switches
++# branches while keeping the local changes in the working tree that do
++# not interfere with the difference between the branches.
++
++# The below is a more-or-less exact translation to shell of the C code
++# for the default behaviour for git's push-to-checkout hook defined in
++# the push_to_deploy() function in builtin/receive-pack.c.
++#
++# Note that the hook will be executed from the repository directory,
++# not from the working tree, so if you want to perform operations on
++# the working tree, you will have to adapt your code accordingly, e.g.
++# by adding "cd .." or using relative paths.
++
++if ! git update-index -q --ignore-submodules --refresh; then
++    die "Up-to-date check failed"
++fi
++
++if ! git diff-files --quiet --ignore-submodules --; then
++    die "Working directory has unstaged changes"
++fi
++
++# This is a rough translation of:
++#
++#    head_has_history() ? "HEAD" : EMPTY_TREE_SHA1_HEX
++if git cat-file -t HEAD >&/dev/null; then
++    head=HEAD
++else
++    head=4b825dc642cb6eb9a060e54bf8d69288fbee4904
++fi
++
++if ! git diff-index --quiet --cached --ignore-submodules $head --; then
++    die "Working directory has staged changes"
++fi
++
++if ! git read-tree -u -m $commit; then
++    die "Could not update working tree to new HEAD"
++fi
+-- 
+2.26.1
 
-Thanks.
