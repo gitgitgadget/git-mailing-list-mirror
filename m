@@ -2,234 +2,93 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D19B1C433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 09:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C753DC433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 09:51:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C81522243
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 09:26:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6276C2224A
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 09:51:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TPNEfQ6W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ufibu4dM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728274AbgJOJ0X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 05:26:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38382 "EHLO
+        id S2389023AbgJOJvn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 05:51:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727753AbgJOJ0X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 05:26:23 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE4BAC061755
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 02:26:22 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id d3so2753702wma.4
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 02:26:22 -0700 (PDT)
+        with ESMTP id S2389014AbgJOJvm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 05:51:42 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6A84C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 02:51:42 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id ev17so900824qvb.3
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 02:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=RcrUlzDOfx8Lrr9nrpcEkNWoHG2uZEK5NsQMzdw0vm0=;
-        b=TPNEfQ6W92drGpN8POA0Y67VLAm8HxiBsURVcpCWxwRcbxgl9WbzYb+VfB23BVibrs
-         qTycdIgpYm+feIp8BlOAEKwS48sQ/PITo8r13OmxlWbp0gZluYSyAwZIbbLcJh/rbPMz
-         1LQo9m7kEPCQQVdz2ucLgsO5RIySqwE6xAMvp2USFiQva9gqsQwLoF5vJYwi8e1Rub1E
-         +WFQBGaxVsoCPynqYF2UG/RlP0OTrrzr8r5K7iVFocZPfxUwC8Q01qdHxFzENXc6fZc0
-         RhF7v/eriH3imdFz23p+TX5HjJgzG1jq2fJlfHw7WTfJC6J/53FJGdS5e8laHqTtRduw
-         mAAA==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=l7e0V0zCZIl51dSIxoAkqjtVLttAEjKLLkWY27feHJM=;
+        b=ufibu4dMnksDZwpcLR+p8RAJwwqkt8RswDYLAvPTLev4LnIDDsLBRoWCoUxt2qm4aB
+         f0fWKPwd1tSTHXXVQbB2it7f8fX5EBwTwO+UUeGkg8ncD7tSZCpXn6yRsB6FS6ASu6x3
+         Vqk3WRU8o77rvcqWrTbKALmh6fV6mz+FIEG4rvaUB/IFU8AGaI17WeYdmecvHDHNiQbb
+         v3JDKDVrDHQGTLv77QW4um20cH8kWqTJOseFanhwm3zK8loyMeMW0XflGByuRvkKF5Kh
+         RfCi7y8402g5WNLQRmDJQ6XcOq0Ocp5tbhC3UhESPB5V0m1Gmp4Vq5IrfhOE0x38fLR9
+         Q68A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:from:to:cc:references
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=RcrUlzDOfx8Lrr9nrpcEkNWoHG2uZEK5NsQMzdw0vm0=;
-        b=ZZeWEeD+3/8K1VCwiXS39KEOnc96k8pRWgNQkL3quTgI0n6CAViV9UZyQQvJWHM3od
-         XAN3UAhX/TyBNzdH82gQ58lm9ltEAQDdnXlSzdo4HQJaBPcVrq+FAmXMOYgMj5yWuRCp
-         gt59PvuZjcEWGZ0B5V5tfJMqAQ76UtuoOniYAOFPdxWoUxT/UIY4i7sO6HYJ48Vwy2nM
-         hrbua+Zt0uvlBpOXWoDRsLnRKEc2P6u+uycKUpN0vrdMUvydLYvAYxaZY4VHSA/YJn8/
-         lPmKzMQmklCUqVnW2Lb/AVw54e8K/ZGIqUPi3VNy2j8Zt+yonoZx2/7dJncG2fc9SNvs
-         GnEg==
-X-Gm-Message-State: AOAM532fcnj1uxkYvtRK5a3bgZX7zNN3JP7Ga8kQwXyNKCorAR+icoQJ
-        NzMAZeTp9Jq0vLU3ifeECDtlhh+YOLE=
-X-Google-Smtp-Source: ABdhPJwh7et8xjSoDoYtN5AUzAxN6dO+hZr35+Zd9zIe05NYrpOz9/8bPtHON1ZGfarmSbcjcSq/Ag==
-X-Received: by 2002:a1c:e2d5:: with SMTP id z204mr2965421wmg.96.1602753980898;
-        Thu, 15 Oct 2020 02:26:20 -0700 (PDT)
-Received: from [192.168.1.240] (48.45.90.146.dyn.plus.net. [146.90.45.48])
-        by smtp.gmail.com with ESMTPSA id u8sm3465864wrn.62.2020.10.15.02.26.19
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=l7e0V0zCZIl51dSIxoAkqjtVLttAEjKLLkWY27feHJM=;
+        b=ukbtmdzFqKhYjpKTNBDh5hSbk9AJIlWZ1Src0YB7vF+LJJCK0EOXcqrggtZTlCK4Pr
+         0ivZn5CrL7o3g4vHQWdLD3OaGyfknouU4cLDXAE+PwwJJAD9nQyZuaYfYbtscbZG/5Y3
+         0oZe9ahiegiP8oSPMy3j6W/q3crGtC3tP7VdrqlR2PGtzcqH0GOCDpOEhggwVJaIje2H
+         6b7j4i2Jd0I2Ks6TD+KzS280Bdx3kiwG7xbcMM+/QFV6OFPbZrYPYp+FiHtGaWxKngW0
+         FEjZcKOxSdlse/uSzpj0uwTC6o9xiKqpLenhqd6zSl0TvOy8udghAAhexjsdcFKMOkvq
+         bsjA==
+X-Gm-Message-State: AOAM532TcUzHcHzicftRNpSYGEV6jPuIq0YAS+igs/ibiwZczCil6L1d
+        qwYNVg2HUdHzWvLc6GzFD+LupPqLs7Y=
+X-Google-Smtp-Source: ABdhPJxHG3BTCG6QgTCgmMxC4XXOgx/O4Xl/tWI236CJlPf8FsBpmxAD9NrDFyW9wtM6SOJmZR+pyw==
+X-Received: by 2002:ad4:42c6:: with SMTP id f6mr3507216qvr.21.1602755501438;
+        Thu, 15 Oct 2020 02:51:41 -0700 (PDT)
+Received: from [192.168.1.55] (c-174-56-144-2.hsd1.sc.comcast.net. [174.56.144.2])
+        by smtp.gmail.com with ESMTPSA id a10sm955408qkc.79.2020.10.15.02.51.40
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Oct 2020 02:26:20 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: [PATCH] fixup! diff: do not show submodule with untracked files as
- "-dirty"
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Sangeeta NB <sangunb09@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        phillip.wood@dunelm.org.uk, kaartic.sivaraam@gmail.com
-Cc:     git@vger.kernel.org
-References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
- <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
- <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
- <7d691f37-b8b7-510d-ba46-51a4a7587226@gmail.com>
- <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
- <xmqq362jsahk.fsf@gitster.c.googlers.com>
- <CAHjREB4Qw78xS-T=LA80yVf_u3=Hbpxg5tqBnP1QK44FRkBFOQ@mail.gmail.com>
- <3c0bf417-b3d5-b615-c605-49a5d8be4e06@gmail.com>
-Message-ID: <2d51c999-61cc-d490-46c9-0fac19aff066@gmail.com>
-Date:   Thu, 15 Oct 2020 10:26:19 +0100
+        Thu, 15 Oct 2020 02:51:40 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Leam Hall <leamhall@gmail.com>
+Subject: Branch Management questions
+Message-ID: <595540a9-0000-8dcd-c555-3168d1b2d066@gmail.com>
+Date:   Thu, 15 Oct 2020 05:51:39 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <3c0bf417-b3d5-b615-c605-49a5d8be4e06@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify checking if we've already set the flags for ignoring submodules
----
- builtin/checkout.c |  1 -
- diff.c             | 12 +++++-------
- diff.h             |  7 +------
- submodule.c        |  5 ++---
- wt-status.c        |  3 ---
- 5 files changed, 8 insertions(+), 20 deletions(-)
+1. Two developers.
+   Dev A is working on Branch A, off a release_candidate branch.
+   Dev B is working on Branch B, off the same release_candidate branch.
+   Branches usually run 1-4 weeks.
+   Dev A does some work that would help Branch B.
+   How does Dev A get the Branch B work that is needed, in a
+     way that does not confuse the merge process at the end
+     of the release cycle?
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 428201380e..0951f8fee5 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1095,7 +1095,6 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "diff.ignoresubmodules")) {
- 		struct checkout_opts *opts = cb;
--		diff_ignore_submodule_config =1;
- 		handle_ignore_submodules_arg(&opts->diff_options, value);
- 		return 0;
- 	}
-diff --git a/diff.c b/diff.c
-index 6c9d28d363..93bbb57f88 100644
---- a/diff.c
-+++ b/diff.c
-@@ -51,7 +51,6 @@ static int diff_no_prefix;
- static int diff_relative;
- static int diff_stat_graph_width;
- static int diff_dirstat_permille_default = 30;
--int diff_ignore_submodule_config = 0;
- static struct diff_options default_diff_options;
- static long diff_algorithm;
- static unsigned ws_error_highlight_default = WSEH_NEW;
-@@ -403,10 +402,8 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "diff.orderfile"))
- 		return git_config_pathname(&diff_order_file_cfg, var, value);
- 
--	if (!strcmp(var, "diff.ignoresubmodules")) {
--		diff_ignore_submodule_config =1;
-+	if (!strcmp(var, "diff.ignoresubmodules"))
- 		handle_ignore_submodules_arg(&default_diff_options, value);
--	}
- 
- 	if (!strcmp(var, "diff.submodule")) {
- 		if (parse_submodule_params(&default_diff_options, value))
-@@ -4598,8 +4595,10 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 
- 	options->color_moved = diff_color_moved_default;
- 	options->color_moved_ws_handling = diff_color_moved_ws_default;
--	if(!diff_ignore_submodule_config)
--		handle_ignore_submodules_arg(options, "untracked");
-+
-+	if(!options->flags.ignore_submodule_set)
-+		options->flags.ignore_untracked_in_submodules = 1;
-+
- 	prep_parse_options(options);
- }
- 
-@@ -5142,7 +5141,6 @@ static int diff_opt_ignore_submodules(const struct option *opt,
- 	if (!arg)
- 		arg = "all";
- 	options->flags.override_submodule_config = 1;
--	diff_ignore_submodule_config =1;
- 	handle_ignore_submodules_arg(options, arg);
- 	return 0;
- }
-diff --git a/diff.h b/diff.h
-index 9bfce084d8..2f5612ff7d 100644
---- a/diff.h
-+++ b/diff.h
-@@ -180,6 +180,7 @@ struct diff_flags {
- 	unsigned ignore_untracked_in_submodules;
- 	unsigned ignore_dirty_submodules;
- 	unsigned override_submodule_config;
-+	unsigned ignore_submodule_set;
- 	unsigned dirstat_by_line;
- 	unsigned funccontext;
- 	unsigned default_follow_renames;
-@@ -556,12 +557,6 @@ int diff_queue_is_empty(void);
- void diff_flush(struct diff_options*);
- void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc);
- 
--/* 
-- * This is for keeping a track whether ignoreSubmodules
-- * is  present in user defined config or not.
-- */
--extern int diff_ignore_submodule_config;
--
- /* diff-raw status letters */
- #define DIFF_STATUS_ADDED		'A'
- #define DIFF_STATUS_COPIED		'C'
-diff --git a/submodule.c b/submodule.c
-index a526c96ce2..8f6227c993 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -198,10 +198,8 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 			ignore = submodule->ignore;
- 		free(key);
- 
--		if (ignore){
--			diff_ignore_submodule_config =1;
-+		if (ignore)
- 			handle_ignore_submodules_arg(diffopt, ignore);
--		}
- 		else if (is_gitmodules_unmerged(the_repository->index))
- 			diffopt->flags.ignore_submodules = 1;
- 	}
-@@ -422,6 +420,7 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
- void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 				  const char *arg)
- {
-+	diffopt->flags.ignore_submodule_set = 1;
- 	diffopt->flags.ignore_submodules = 0;
- 	diffopt->flags.ignore_untracked_in_submodules = 0;
- 	diffopt->flags.ignore_dirty_submodules = 0;
-diff --git a/wt-status.c b/wt-status.c
-index 791af9321a..7074bbdd53 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -605,7 +605,6 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
- 		rev.diffopt.flags.ignore_untracked_in_submodules = 1;
- 	if (s->ignore_submodule_arg) {
- 		rev.diffopt.flags.override_submodule_config = 1;
--		diff_ignore_submodule_config =1;
- 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
- 	}
- 	rev.diffopt.format_callback = wt_status_collect_changed_cb;
-@@ -630,7 +629,6 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 	rev.diffopt.flags.override_submodule_config = 1;
- 	rev.diffopt.ita_invisible_in_index = 1;
- 	if (s->ignore_submodule_arg) {
--		diff_ignore_submodule_config =1;
- 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
- 	} else {
- 		/*
-@@ -641,7 +639,6 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 		 * shown any submodules she manually added (and which are
- 		 * staged to be committed), which would be really confusing.
- 		 */
--		diff_ignore_submodule_config =1;
- 		handle_ignore_submodules_arg(&rev.diffopt, "dirty");
- 	}
- 
--- 
-2.25.1.551.gd3318bf0d3.dirty
+
+2. One developer.
+   Working on Branch P, realizes that a new functionality X is
+     needed.
+   X isn't specific to Branch P, but critical to it.
+   What is the best way to deal with X, knowing that further work
+     on X will need to be done?
+
+
 
