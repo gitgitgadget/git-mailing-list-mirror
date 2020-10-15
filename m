@@ -2,119 +2,122 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04525C433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 21:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9996CC433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 22:10:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B45D2076A
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 21:59:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF0272076A
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 22:10:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pey6guL3"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b="Cgwf3FRr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730236AbgJOV7X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 17:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42258 "EHLO
+        id S1731733AbgJOWKH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 18:10:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729372AbgJOV7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 17:59:23 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8C11C061755
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 14:59:22 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e18so306145wrw.9
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 14:59:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=YPOFjOFpzvDc2rnSuf0/QFTMa1PctbJiNumbYn8x0PY=;
-        b=pey6guL3+19xPDyAtCaIC1tXfy1YptufzA3zcXteR9n2E46SZfs6LlQvEA77RCteC6
-         9aKN1lQhMSJktJ1RlYwOi0wm2amxh1c6ouBNpws9CLM/8nFlnOnfhSV8RUXMUSGXkN0d
-         zyHzFZChfW0ZUDxiW1zv2XWtlDXuQW2qR9K2U1VF0OZASEcqNTazXELUI1EKoSnIZafn
-         XOZrpm3y7JMix0g9U8XyKZHQcEk8UVkK8Jv/XNZEuT35LWlzl+Z7Y2nRDJy1TsdeMWEI
-         LkMYspkbSY5eKk7ICOvAZ/0IWhKwdR7V2ORW+YIMd0G6sJ93zCLQNqwxLs62nMjMTZaM
-         OmBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=YPOFjOFpzvDc2rnSuf0/QFTMa1PctbJiNumbYn8x0PY=;
-        b=Krc2FjZo9M9ehA/u1KvpDuXfR7GS5312afA0mSmZD87hCnFyQIRtrIC9bD+vP7C7Xb
-         o7Aee8SlOntYEZy3+LwQhtLBeDm+gS9vvoFfsYFBqSk/2CRuePWkaJ8vOJM3Ik/lrZSo
-         6ki5ePW6FdgIyjIcEo/peLUT2vAGzJ7Noa1N9aG7EsoPoL1p+H82dylhurC2RIqBbzH9
-         lY/Dgg3xXBahTNvmYPr3RntjxD1jT/H+UxGT+9qzSfjywCpB4gOpigbFP8OFtCt/LzAQ
-         49sYtiVAvy4HRm8fn7+d2ga/x/HTvtp99KpFMqnW9MKwggjuQ2n5uLPZKtCKRNkEQLRV
-         hfjQ==
-X-Gm-Message-State: AOAM530ZWeVV5PUL9cLNeS7Pf7x1qNdPE/70i5Ehrn96xMwtI9gIdrqr
-        Du6DatcEQwGTK9kLUcgI+hfnENZZY7k=
-X-Google-Smtp-Source: ABdhPJw32c7yVk0/6HJJPiKJghN1LbXJJXgrWwzDHbKvFy0U4I8zCqDsrvkVKLqjME+ErEonANaocw==
-X-Received: by 2002:adf:e589:: with SMTP id l9mr365702wrm.110.1602799161486;
-        Thu, 15 Oct 2020 14:59:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h206sm440131wmf.47.2020.10.15.14.59.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2020 14:59:21 -0700 (PDT)
-Message-Id: <pull.881.git.git.1602799160623.gitgitgadget@gmail.com>
-From:   "Thomas Koutcher via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Oct 2020 21:59:20 +0000
-Subject: [PATCH] credential: load default config
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S1731728AbgJOWKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 18:10:06 -0400
+X-Greylist: delayed 473 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 15 Oct 2020 15:10:06 PDT
+Received: from pine.sfconservancy.org (pine.sfconservancy.org [IPv6:2001:4801:7822:103:be76:4eff:fe10:7c55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1805C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 15:10:06 -0700 (PDT)
+Received: from localhost (unknown [216.161.86.19])
+        (Authenticated sender: bkuhn)
+        by pine.sfconservancy.org (Postfix) with ESMTPSA id 72905E9CA;
+        Thu, 15 Oct 2020 22:02:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sfconservancy.org;
+        s=pine; t=1602799333;
+        bh=tgU4HLdheir1K9hh0lGNU29hApkOja0geChpPQanR+4=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=Cgwf3FRr+gIbL8m2iEo8jVOf2JJZ38N8gJ3OybWRCdUD/9iJYpMzFwpWLGLtZ/at1
+         4VN/or79BmxJLggSWZHYwTRQARb6P86It2Av7jxPO1KrzS1SZEqKWdoTGXTwvp7jX6
+         m5VKKHGG0ozBL7URnT80zolaxE2jKb98rmCrM0tOiqsNTJtNZNqa7fK5V2kz/D7EFQ
+         +pQCP8RwRJcaehkU3gTwaAqst+hmOgaHvqqkMT0iXy8cTolK7P5ut58JbijrCDriaX
+         fI2mqCC+73il2kbFFIsrdkRg4LO7g8ubNcWAKS1Qmb3XJ7eWY/xrWzRoBNN3gEvmog
+         2nfkIMJk0eHFA==
+From:   "Bradley M. Kuhn" <bkuhn@sfconservancy.org>
 To:     git@vger.kernel.org
-Cc:     Thomas Koutcher <thomas.koutcher@online.fr>,
-        Thomas Koutcher <thomas.koutcher@online.fr>
+Subject: [PATCH 1/1] Documentation: Clarify and expand description of --signoff
+Date:   Thu, 15 Oct 2020 14:59:33 -0700
+Message-Id: <20201015215933.96425-2-bkuhn@sfconservancy.org>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20201015215933.96425-1-bkuhn@sfconservancy.org>
+References: <20201015215933.96425-1-bkuhn@sfconservancy.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Thomas Koutcher <thomas.koutcher@online.fr>
+Building on past documentation improvements in Commit
+b2c150d3aa (Expand documentation describing --signoff, 2016-01-05),
+further clarify that any project using Git may and often does set its
+own policy.
 
-Make `git credential fill` honour the core.askPass variable.
+However, leave intact reference to the Linux DCO, which Git also
+uses.  It is reasonable for Git to advocate for its own Signed-off-by
+methodology in its documentation, as long as the documentation
+remains respectful that YMMV and other projects may well have very
+different contributor representations tied to Signed-off-by.
 
-Signed-off-by: Thomas Koutcher <thomas.koutcher@online.fr>
+Signed-off-by: Bradley M. Kuhn <bkuhn@sfconservancy.org>
 ---
-    credential: load default config
-    
-    Make git credential fill honour the core.askPass variable.
-    
-    Signed-off-by: Thomas Koutcher thomas.koutcher@online.fr
-    [thomas.koutcher@online.fr]
+ Documentation/git-commit.txt    | 13 ++++++++-----
+ Documentation/merge-options.txt | 13 ++++++++-----
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-881%2Fkoutcher%2Fmaint-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-881/koutcher/maint-v1
-Pull-Request: https://github.com/git/git/pull/881
-
- builtin/credential.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/builtin/credential.c b/builtin/credential.c
-index 879acfbcda..d75dcdc64a 100644
---- a/builtin/credential.c
-+++ b/builtin/credential.c
-@@ -1,6 +1,7 @@
- #include "git-compat-util.h"
- #include "credential.h"
- #include "builtin.h"
-+#include "config.h"
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index a3baea32ae..93bbae4ded 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -166,11 +166,14 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ -s::
+ --signoff::
+ 	Add Signed-off-by line by the committer at the end of the commit
+-	log message.  The meaning of a signoff depends on the project,
+-	but it typically certifies that committer has
+-	the rights to submit this work under the same license and
+-	agrees to a Developer Certificate of Origin
+-	(see http://developercertificate.org/ for more information).
++	log message.  The meaning of a signoff depends on the project to which
++	you're committing.  For example, it may certify that the committer has
++	the rights to submit the work under the project's license or agrees to
++	some contributor representation, such as a Developer Certificate of
++	Origin.  (See http://developercertificate.org for the one used by the
++	Linux kernel and Git projects.)  Consult the documentation or
++	leadership of the project to which you're contributing to understand
++	how the signoffs are used in that project.
  
- static const char usage_msg[] =
- 	"git credential [fill|approve|reject]";
-@@ -10,6 +11,8 @@ int cmd_credential(int argc, const char **argv, const char *prefix)
- 	const char *op;
- 	struct credential c = CREDENTIAL_INIT;
+ -n::
+ --no-verify::
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 80d4831662..c9df9cc0f4 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -80,11 +80,14 @@ actual commits being merged.
+ --signoff::
+ --no-signoff::
+ 	Add Signed-off-by line by the committer at the end of the commit
+-	log message.  The meaning of a signoff depends on the project,
+-	but it typically certifies that committer has
+-	the rights to submit this work under the same license and
+-	agrees to a Developer Certificate of Origin
+-	(see http://developercertificate.org/ for more information).
++	log message.  The meaning of a signoff depends on the project to which
++	you're committing.  For example, it may certify that the committer has
++	the rights to submit the work under the project's license or agrees to
++	some contributor representation, such as a Developer Certificate of
++	Origin.  (See http://developercertificate.org for the one used by the
++	Linux kernel and Git projects.)  Consult the documentation or
++	leadership of the project to which you're contributing to understand
++	 how the signoffs are used in that project.
+ +
+ With --no-signoff do not add a Signed-off-by line.
  
-+	git_config(git_default_config, NULL);
-+
- 	if (argc != 2 || !strcmp(argv[1], "-h"))
- 		usage(usage_msg);
- 	op = argv[1];
-
-base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
 -- 
-gitgitgadget
+2.26.1
+
