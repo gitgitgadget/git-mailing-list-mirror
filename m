@@ -2,87 +2,105 @@ Return-Path: <SRS0=g1uB=DW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FCD7C433DF
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AF3C433E7
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:57:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3AC522243
-	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:34:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 193FA2145D
+	for <git@archiver.kernel.org>; Thu, 15 Oct 2020 17:57:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pDNp1OSS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n8RZG+iR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731182AbgJOReN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 13:34:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58083 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbgJOReN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 13:34:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 473498896E;
-        Thu, 15 Oct 2020 13:34:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ki5F+Icab4wOj6+EcvwXZEOqWR8=; b=pDNp1O
-        SS2pj0u53j2ek9u8Cp45Jg2ZzswegH7mji4t+DDvO+DMFWq6YIpIbGsGt8+hIiJS
-        Po9yKoWE15Ep73rXn9Xns8FuQ2AtQ81HBAp5yzdjchK1c8i6LNdtbLC7jKqX6SG0
-        bt8d2Reozk32Dmek2GU5MEKYRVvWb4Oup2Bes=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=c3cSq8ULSHCQf0OFSBzPD0aNfCrfjCul
-        rMIC+MyG31/s7MDAG4DmkHQjHA0S6+A95keH+FbfOW8miK31rit6Zk2vdJkJq+Nt
-        k+ujsAwYCUlzNVm599QaU/jdZVdA53LaoRGWe6eGkLutTQ8l3VlqOdeUfm2BIZFW
-        dHDucHIuy+s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D7758896D;
-        Thu, 15 Oct 2020 13:34:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 710398896C;
-        Thu, 15 Oct 2020 13:34:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fast-import: fix over-allocation of marks storage
-References: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
-        <20201015012636.GA387901@coredump.intra.peff.net>
-        <72a4d4d8dff95351122bd192976dd6b1@sebres.de>
-        <20201015153849.GA551964@coredump.intra.peff.net>
-        <xmqqzh4nfldw.fsf@gitster.c.googlers.com>
-Date:   Thu, 15 Oct 2020 10:34:07 -0700
-In-Reply-To: <xmqqzh4nfldw.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 15 Oct 2020 10:29:31 -0700")
-Message-ID: <xmqqv9fbfl68.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731764AbgJOR5r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 13:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33182 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730400AbgJOR5r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 13:57:47 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA1BC061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 10:57:47 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id v12so2003360ply.12
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 10:57:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NdQu4jg06JjyPIfMSt1Iad2x8+XOvGZtyNdFrhaQWVM=;
+        b=n8RZG+iRgtR7bfWxAPqLjLXZz7cLgeLhGscu5TEH+TaBCSjPeaj/39sSPIGjMLAnFM
+         yQmlmlZcGKcjzuo+fQJAu0v7+ROTzW9gY6tzIkKlyvi3NYAj7GLgLKbKXpGIxfDaw13o
+         VcRol8WezJkMd/8slXTHx/o/7nzSeKv/6sSdXO6/menAVTx7wAZnsROVYaxcEEENbarb
+         ekOLS5yI8UtpgJgPVOljulgS0Qg62nYmjakQ1wLlAH3SdRwFD5xGrniAVBIdTYLZIvqV
+         arHu8ZClPUTz0/5SVxBPY7VP/MSTkueylaZtyunEf0KSoR/XXGvQqsjTkqDVYCbV/YGT
+         6XaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NdQu4jg06JjyPIfMSt1Iad2x8+XOvGZtyNdFrhaQWVM=;
+        b=sz8c751fwQ4hik79R/OIcZHRf9QJX+O/19GKwut+Yf6BQaO+6oKsyOKGxJQjYBcyZU
+         Bd2gwz/l65CBG6mAMmj7p7hLjXvMMyA1r/Tj4nAphKciCpnwP4DJTMrBxRgP/TocqOT8
+         veGRYk4L9JNt3C/rT0YB7mR4u0+Bsk2duU942qcOZTcGLZrll/bf+KKbVB0lja573MaK
+         rx5jmAp0QRLzs8m7WvZKjglHWLRfZSNtUbhuRbsBNeCXHzjpvir0ZJRlj5u9PajZ4zrm
+         u/7iRcjlmaiWKiucKagXWxzekBP4qK9xDWUrPA8+SJFt2BIua20x86PGXNmfD3b0lOGe
+         EYzw==
+X-Gm-Message-State: AOAM532KKE3kI8nF+7IXUrY1ZM01s6Olec5rjEVly/CZ/2YDjzR5d7LZ
+        tPP6L0RP7tWSMGqrmtJjxOTLtgDrjmXdJMzn
+X-Google-Smtp-Source: ABdhPJxgxv84qHvEqzxN7qNKOehH2VkAzsca8VCA6su5/67W2+LynDDclfMZN5Biv9g3LFxxYRgz9w==
+X-Received: by 2002:a17:902:bb88:b029:d3:d3c7:15d5 with SMTP id m8-20020a170902bb88b02900d3d3c715d5mr4716092pls.49.1602784666412;
+        Thu, 15 Oct 2020 10:57:46 -0700 (PDT)
+Received: from localhost.localdomain ([2405:204:1309:c8:79e1:6677:5d35:9a95])
+        by smtp.gmail.com with ESMTPSA id n139sm3945930pfd.167.2020.10.15.10.57.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2020 10:57:45 -0700 (PDT)
+From:   charvi-077 <charvi077@gmail.com>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, phillip.wood123@gmail.com,
+        sunshine@sunshineco.com, charvi-077 <charvi077@gmail.com>
+Subject: [PATCH 0/5][Outreachy] modernizing the test scripts 
+Date:   Thu, 15 Oct 2020 23:27:04 +0530
+Message-Id: <20201015175709.20121-1-charvi077@gmail.com>
+X-Mailer: git-send-email 2.29.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A28595B2-0F0C-11EB-93B6-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is my first patch series to the GIT mailing list. I followed the
+link[1] and t7001 patches to modernize and clean up the test scripts.
 
-> Why does this vaguely look familiar, I wonder.  I can swear that we
-> saw a breakage due to a similar pattern that attempts to convert a
-> global to an arg that is passed down to the callchain but not doing
-> so fully.
+This patch series : 
+ -modernize the three test scripts : t7101 , t7201 and t102. 
+ - cleans up with 5 types of changes in all the three scripts.
+   1. Converting the old old style test format to new one
+   2. Removing blankspaces in test bodies 
+   3. Removing whitespaces after the redirect operator, according to
+      Codingguidelines .  
+   4. Using git -C instead of cd 
+   5. Placing all commands in seperate lines. 
 
-Are we revisiting this thread?
+Also, I have tested the scripts and set up travis CI[2].
+[1]https://lore.kernel.org/git/CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2SS_b7V8Hg@mail.gmail.com/
+[2]https://travis-ci.org/github/charvi-077/git/branches
 
-https://lore.kernel.org/git/xmqqtuzlld1d.fsf@gitster.c.googlers.com/
 
-I wonder what happend to the thread at the end ...
+charvi-077 (5):
+  t7101,t7102,t7201: modernize test formatting
+  t7102,t7201: remove unnecessary blank spaces in test body
+  t7102,t7201: remove whitespace after redirect operator
+  t7201: avoid using cd outside of subshells
+  t7201: place each command in its own line
 
-> Anyway, the diagnoses above look correct and cleanly described.
->
-> Will queue.  Thanks.
+ t/t7101-reset-empty-subdirs.sh |  66 ++++++++++-----------
+ t/t7102-reset.sh               |  63 ++++++++------------
+ t/t7201-co.sh                  | 102 +++++++++++++--------------------
+ 3 files changed, 96 insertions(+), 135 deletions(-)
+
+-- 
+2.29.0.rc1
+
