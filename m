@@ -2,169 +2,137 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 487A7C433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 523B4C433DF
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:30:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E691E2087D
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:18:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D181220897
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:30:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nt2jLGLg"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gT3rd0lS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393652AbgJPCSv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 22:18:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393649AbgJPCSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 22:18:50 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5633C061755
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 19:18:50 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id 32so1118906otm.3
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 19:18:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lFbni1+GIzneh0idT/dO0dGnKib8Wkddb6GdTsi4drI=;
-        b=nt2jLGLgLcuPBuOonCcqV0MZNBEzw/Dj75Sj1fz4PZHlZUKdIcaYLZ8RpM9rnMDGi4
-         URuHuuAcCvw+wVCFo2f5EStqRgO8VSo58YtxTdqFDj8wPi4fdqYAPch3BeUKsIerDiHc
-         FNlxSNpbLunCmUneh4Ck3rjdjhr4IGLhWs1Q+oWlsOSHgpg3t0JtmoaHAQBtIM4wsG67
-         pBaVTdHKey+6s2IX9W8EjeBgGLODeE//B0ei0gfLUhUvCljPSg1HFJtndfZ3o6/ZJfx3
-         ePtedZdJ2HN8u9HHMtBdwqNrVcue3jMFpK6qYLJTfyPTTWVDxK4IvmT1yF1GLAUVTpx2
-         lacw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lFbni1+GIzneh0idT/dO0dGnKib8Wkddb6GdTsi4drI=;
-        b=Zde174MbQBgfrv2XaIuQhmec9enHyErt4/cjOrW2Zny7LtG5H0GFrHQFoqInK1Wz6r
-         hnLc7xKvKI6KFTboD6bptVoyA6gBftdcw96nDc8mhMbeOA6RD3ER+f3NGEFMYFlAm3SX
-         hzsZk7Z69IaPXpd77YBAHZ+oTRNgSPRLL2HSNoRsbFvYRGZN+Elfb8rPU8Ah2FTpJ1pq
-         Bk7XMbUslXdYOjFQVbK7xtuq64XFRcyag6UJJv0YhwM9to6ngGHLlO958YPigX7uPRCR
-         fC85ihn6In97rqxjtcnoRMZ1xGwBOCT4Rp/P3U4RX6tbjbYmP2/VpFMC7iWpt4bNScSX
-         E0mg==
-X-Gm-Message-State: AOAM531TcTej71UuHrKT8PGBwQu+7NxrlD/LkgB2inhEnFQheJrJtf8m
-        3v7G1A7qlDXOKuJjiKLh84Q=
-X-Google-Smtp-Source: ABdhPJxAN+AcTSIol6M5vQtzuRIBDZIk8BEvmA9LIsWXQTzCI5GCq4uu6yOhOT9hLtUebrAKmFUnYA==
-X-Received: by 2002:a9d:6f96:: with SMTP id h22mr952865otq.344.1602814729900;
-        Thu, 15 Oct 2020 19:18:49 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:5421:4c38:9a16:23a4? ([2600:1700:e72:80a0:5421:4c38:9a16:23a4])
-        by smtp.gmail.com with UTF8SMTPSA id d11sm464265otf.44.2020.10.15.19.18.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Oct 2020 19:18:49 -0700 (PDT)
-Subject: Re: [PATCH v4 04/10] commit-graph: persist existence of changed-paths
-To:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, l.s.r@web.de,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
- <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
- <f1e3a8516ebd58b283166a5374843f5cb3332d08.1593610050.git.gitgitgadget@gmail.com>
- <20201015132147.GB24954@szeder.dev> <20201015214111.GA2176154@nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <103404f0-a164-2550-4730-6b8773d3ca1f@gmail.com>
-Date:   Thu, 15 Oct 2020 22:18:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101
- Thunderbird/82.0
+        id S2393739AbgJPCah (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 22:30:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56198 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393736AbgJPCah (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 22:30:37 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1E048AD7A;
+        Thu, 15 Oct 2020 22:30:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=j15V8HQ3UDXhsbKZLZsGfZyggAk=; b=gT3rd0
+        lS52kR0/JR5J9z86uwQGri+GPv5c2/swLPBWfqkxtbqf8HZGZwH61ZMUfQfkz1z4
+        mqcuzTtaXiNMGunpABJ0XDZ9bjOXnegJnYybVVztIZZM6gRe/2kxRTyhaqnXiCPy
+        dtXRke8GzYpSTDjZExaxb+S0IjlTNiP8vHTiM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CZxqxHD+JgaE5NoXwadYgHhPzDtLR3Yj
+        /lR04iO408PedYWzzsGU6i5xtPklDdICPpsmhWx2gwNL/BBN/QXEL2tz6OpPeocp
+        hmgUmA/jwH4K9CSJOtdU6iEYrdc0son3viAuFY0RK5Y0f2FXKL4X9FfMEaKiaWLP
+        319p8LIeDDY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A93988AD79;
+        Thu, 15 Oct 2020 22:30:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2ABCC8AD78;
+        Thu, 15 Oct 2020 22:30:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] Clarify and expand description of --signoff
+References: <20201015215933.96425-1-bkuhn@sfconservancy.org>
+        <59E3B060-63E3-41C2-A7C4-5B2C888F8D68@gmail.com>
+        <CAPc5daWenXds=0BW0CXa=4MOF2UxDeQ8DF2+7V9-WkKwCFCDBw@mail.gmail.com>
+        <20201016015937.GA3335046@coredump.intra.peff.net>
+Date:   Thu, 15 Oct 2020 19:30:34 -0700
+In-Reply-To: <20201016015937.GA3335046@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 15 Oct 2020 21:59:37 -0400")
+Message-ID: <xmqqft6eewc5.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20201015214111.GA2176154@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 920EB498-0F57-11EB-AF91-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/15/2020 5:41 PM, Taylor Blau wrote:
-> So, we need to be more aggressively checking the Bloom filter settings
-> in any layer we want to reuse a Bloom filter out of before reusing it
-> verbatim in the current layer. The patch below the scissors line is
-> sufficient to do that, and it causes the third test to start passing.
+Jeff King <peff@peff.net> writes:
 
-I think there are three things we should keep in mind:
+> We do already say pretty clearly what signed-off-by means in the
+> project:
+>
+>   $ grep -A14 '\[\[sign-off]]' Documentation/SubmittingPatches 
+>   [[sign-off]]
+>   === Certify your work by adding your "Signed-off-by: " line
+>   
+>   To improve tracking of who did what, we've borrowed the
+>   "sign-off" procedure from the Linux kernel project on patches
+>   that are being emailed around.  Although core Git is a lot
+>   smaller project it is a good discipline to follow it.
+>   
+>   The sign-off is a simple line at the end of the explanation for
+>   the patch, which certifies that you wrote it or otherwise have
+>   the right to pass it on as an open-source patch.  The rules are
+>   pretty simple: if you can certify the below D-C-O:
+>   
+>   [[dco]]
+>   .Developer's Certificate of Origin 1.1
+>
+> What should we change there? We could perhaps bring up signoffs earlier
+> or more prominently. Or tie it in to the git-commit docs by saying
+> explicitly: these are _our_ project rules for signoffs.
 
-1. Incompatible Bloom filter settings between layers should be seen
-   as _inconsistent data_ as Git should not be writing incremental
-   commit-graph files with inconsistent Bloom filter settings. Thus,
-   when reading the commit-graph chain we should prevent incompatible
-   filters from being used. One way to do this is to notice different
-   settings and completely disable Bloom filters. The other way would
-   be to take the settings from the first layer with filters and then
-   clear the chunk_bloom_indexes and chunk_bloom_data fields for the
-   layers that don't agree. This fits with an expectation that lower
-   layers are larger, so more filters can be used in that situation.
+That is almost good enough, but you can easily see that it was
+written back when the world only had choice between "Linux-style
+signed-off-by that means Linux-style DCO requirement" and "not
+signing off", and we chose to be in the former camp.
 
-2. We should be sure that Git will not agree to write incompatible
-   settings between layers of a commit-graph chain. Even more, it
-   should definitely not re-use filters when merging layers with
-   incompatible filter values. The strategy above to ignore Bloom
-   filters in incompatible upper layers is enough of a guard against
-   the "merge layers" situation.
+I think the most important clarification Bradley's making is that we
+no longer live in such a world.  "signed-off-by" means different
+things for different projects, and what we use is this one.  That
+choice may have been adopted from the Linux project and may have
+been identical to what they used back when we adopted it, but that
+is of secondary importance (most importantly, if they changed what
+it means, that won't directly affect this project).
 
-3. Allowing users (or future Git developers) to adjust the default
-   Bloom filter settings is one that is good to do for future-proofing,
-   but not one that I expect to be widely used (any gains here are
-   minuscule compared to the results already achieved with the defaults).
-   On top of that, including incompatible settings across layers is even
-   less likely to be a real use case. We should not be straining to make
-   the code even worse for this imaginary scenario.
+Perhaps I'd rewrite these two paragraphs like so:
 
-With that said...
- 
-> ...But, teaching the revision machinery how to handle a walk through
-> commits in multiple commit-graph layers with incompatible Bloom filter
-> settings is trickier. Right now we compute all of the Bloom keys up
-> front using the Bloom filter settings in the top layer. I think we'd
-> probably want to change this to lazily compute those keys by:
-It would probably be easiest to compute an array of bloom_key structs
-(per path) where the index corresponds to the depth of the commit-graph
-layer. You can then access the correct key after you have identified
-which layer the commit is from.
+    To improve tracking of who did what, we use the "sign off"
+    procedure.  By adding the "Signed-off-by:" line in the trailer
+    of your commit, you certify to this project the below D-C-O that
+    you have the right to pass your patch on under the same license
+    as ours.  Without such a sign-off, we cannot accept your patch:
 
-> At least, that's the best way that I can think to do it. It does get
-> kind of slow, though; we'd have to scan every commit graph layer at each
-> commit in the worst case to find the actual 'struct commit_graph *' in
-> order to get its Bloom filter settings. So, I think that's sort of
-> show-stoppingly slow, and that we should probably think more deeply
-> about it before taking up that direction.
-> 
-> Maybe Stolee has some better thoughts about how we can quickly go from a
-> commit to either (a) the commit-graph struct that that commit is stored
-> in, or (b) the Bloom filter settings belonging to that struct.
+    [[dco]]
+    .Developer's Certificate of Origin 1.1
 
-We already have code that finds a commit in a commit-graph layer
-based on its integer position by iterating until num_commits_in_base
-is below our position. The lexicographic position within that layer
-is found by subtracting num_commits_in_base.
+    ...
 
-For us, we would simply need:
+and after the DCO text, add this paragraph as a historical reference.
 
-int get_commit_graph_layer(struct commit_graph *g, uint32_t pos)
-{
-	uint32_t layer_index = 0;
+    This procedure originally came from the Linux kernel project, so
+    our rule is quite similar to theirs, but what exactly it means
+    to sign-off your patch differs from project to project, so it
+    may be different from that of the project you are accustomed to.
 
-	while (g && pos < g->num_commits_in_base) {
-		g = g->base_graph;
-		layer_index++;
-	}
+either before or after the "Random J Developer" example.  I think we
+should remove the "you can do this automatically by giving -s" or at
+least the word "automatically" from that sentence, while we are at
+it.
 
-	return layer_index;
-}
+Thanks.
 
-You could then use the response from get_commit_graph_layer()
-to load the correct Bloom key.
 
-Again, I strongly suggest _not_ working hard to support this
-case. We should only put in proper safeguards to prevent data
-like this being written and protect a Git process that might
-stumble across data in this shape.
-
-Thanks,
--Stolee
