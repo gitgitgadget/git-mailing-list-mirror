@@ -2,114 +2,122 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F9ABC433E7
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DC39C433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 03:05:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E074F20878
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:38:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 345B020789
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 03:05:25 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gUlAWRBX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404205AbgJPCiN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 22:38:13 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50716 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2393795AbgJPCiM (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 15 Oct 2020 22:38:12 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AE64160479;
-        Fri, 16 Oct 2020 02:37:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1602815861;
-        bh=OfBVQ06N3cOMmE1YZFOqTX9jMZXExNLPDUVc/hTS4QI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=eWwD/RuWP5NnS9qQx1Gjk6GzqvckbjzafJpV6OiXZat9KAjZF9WgIhWMvaDslRUMG
-         a3GGhSTZqvPlRkqJKqcuJDR0bjQobT0ioB4zMrvci1w0QJ/kZ9OGXuMgXsUtmOeqIb
-         nmU0QGqOIRqZH/HaMhKOMAwlZha3JlEM9dFl9RzYiwWQt8VTPewqVa5S0JGK6Lz4i2
-         UsO9TAc45FxnTqSon7jlpAEYMFGFXM00HuCwR1B8RNCIBz1OQ6AV7k/7TzZKJL4II/
-         LXJ1DTqaAs6RRvGBz3ExzYLkebBGNY+IirAQQvn/O1qIV1PCG9Bwkvp470DM5QgipQ
-         AFWt38oV+erjxcUyQw1YtrlsEjvVTsfEqvduLoWT5PNYLUMFX9pAQYfnVFS+6Y+CSe
-         mDVH1QPAKE9VVL0vGAkOSzv2QAKo4oD+hUxNOE8AEkI6ADQi6r/QE9aZv2NNsiiwuM
-         vo42j8Vne9nG7ToAE7MJAjnS016SR+V63R2Y9azrblvfWnVP0Gd
-Date:   Fri, 16 Oct 2020 02:37:35 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fast-import: fix over-allocation of marks storage
-Message-ID: <20201016023735.GD490427@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>,
-        git@vger.kernel.org
-References: <1eeb49305cb7c712e141dcae2c434d96@sebres.de>
- <20201015012636.GA387901@coredump.intra.peff.net>
- <72a4d4d8dff95351122bd192976dd6b1@sebres.de>
- <20201015153849.GA551964@coredump.intra.peff.net>
- <xmqqzh4nfldw.fsf@gitster.c.googlers.com>
- <xmqqv9fbfl68.fsf@gitster.c.googlers.com>
- <f3e4f7ccc36dc214201c1838acce4aff@sebres.de>
- <xmqqo8l3fibz.fsf@gitster.c.googlers.com>
- <20201015185853.GA1108210@coredump.intra.peff.net>
+        id S2393935AbgJPDFY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Oct 2020 23:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728261AbgJPDFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 23:05:23 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71728C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 20:05:22 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id r10so539085pgb.10
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 20:05:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=A7m5GoB1FvabU+rFeq4ujUJpJqT2pDOIzuMLhfUgjRY=;
+        b=gUlAWRBX4z1QXa0XfekwOx4+mm9bFDF0BT4QkzI8nc4rAxM6IOAlWT7gD+IiqST6tm
+         W9U/V811xEXoukA4s3WvLfGQN04jtqJSRTy9IHmob8RlnC3WrCHLFi1AN5WMonJS08n0
+         uQaj8zwJorYQ6pJcUYAF31yz65+L4JWYNSO/imXwUzdeWGoZVICD+yefa2+pClbzfuHN
+         2f277fM3R9ZIp6hogU8VETkh8og0L5rFwkFKX40Cdc2QnKOrNJeJxVygu3EQfjZMmBPq
+         72/Q7mS8RmCjbp4ZKRnB0eznUG7AHozoMtdV1cqe3DcHLzzm+vVEfVtj/SBblPjcah25
+         HkgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=A7m5GoB1FvabU+rFeq4ujUJpJqT2pDOIzuMLhfUgjRY=;
+        b=jGRfvGpviU0wSASfS1WhfC6WOZicjl1G+NNntenof8hP3oypwD7lmQPqvVseFg1jaA
+         GxPnTu0Gll8nz4ypsxXDtMOT5DBOLVUS3UkEg/sCn7cxDgPYMlOrUIN877LkYCz4bw7J
+         Klo59FKPRnzDm2RS87DFXP+kmeFvxubKVEwOerzxmozqzu1v15zTRwqmcOf7o+ITIvPP
+         7SBFPai+wsqOqK6fL+kPfbPoUTDaM39WISIk0+6JxdXWnZ5a9lzHltif0wNcOd894qr4
+         ZIHkHR/i5nGiVqPlfLKKnHVwIHQkdRa0BTJB321EqaGWBQ8s6GPLvS7hW9b6bjVAI6Xp
+         HqHw==
+X-Gm-Message-State: AOAM532EEjOu41QjLt3jDxe/J2DV+gNbx6wl8Zn6oTJiqYGRswFQol8S
+        U4FkOTblvwPEVB6d/CTp4ms=
+X-Google-Smtp-Source: ABdhPJzTsJUwAVEBVE5+h3Bmgqa7hYpwlXrlpZnM4YLlze/ylOEcmoUIOw2twCbJTJYVoRYJC0Kc5w==
+X-Received: by 2002:aa7:9f8d:0:b029:152:28de:812a with SMTP id z13-20020aa79f8d0000b029015228de812amr1652377pfr.65.1602817521717;
+        Thu, 15 Oct 2020 20:05:21 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id kb15sm733935pjb.17.2020.10.15.20.05.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2020 20:05:20 -0700 (PDT)
+Date:   Thu, 15 Oct 2020 20:05:18 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Amanda Shafack <shafack.likhene@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Developer support list for Wireshark 
+        <wireshark-dev@wireshark.org>
+Subject: Re: Introduction - An Outreachy 2020 Applicant
+Message-ID: <20201016030518.GE539114@google.com>
+References: <mailman.1.1602590401.25101.wireshark-dev@wireshark.org>
+ <CAGxm6oUcxLCqhN0+tSA37xsNUJbjcyj3ahraVdiwxnQn-7qC4g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PHCdUe6m4AxPMzOu"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201015185853.GA1108210@coredump.intra.peff.net>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+In-Reply-To: <CAGxm6oUcxLCqhN0+tSA37xsNUJbjcyj3ahraVdiwxnQn-7qC4g@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Amanda,
 
---PHCdUe6m4AxPMzOu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Amanda Shafack wrote:
 
-On 2020-10-15 at 18:58:53, Jeff King wrote:
-> On Thu, Oct 15, 2020 at 11:35:28AM -0700, Junio C Hamano wrote:
-> > I do not know if an issue-tracker would have helped, though.  The
-> > issue was discovered and discussed there the day before:
-> >=20
-> >   https://lore.kernel.org/git/xmqqimg5o5fq.fsf@gitster.c.googlers.com/
->=20
-> Doh, and I was so proud of myself for diagnosing and fixing it. ;)
+> Also, regarding my initial starter contribution, I chose the
+> "micro-project" titled "Avoid pipes in git related commands in test
+> scripts" (source https://bit.ly/3iZQcT2).
 
-Well, you did write a great commit message and patch with functional
-tests.
+Thanks, sounds good.
 
-> Looking over the thread, I don't see any problems pointed out (though
-> as your diff below shows, the original patch missed the re-ordering
-> required for the submodule mapping call).
->=20
-> So I'd prefer my patch because of that fix and because of the tests.
+> I plan to complete the micro-project and then move on to more research
+> on Git's HTTP protocol and other resources you've pointed out.
+>
+> Let me know your thoughts on this, thanks.
 
-Yeah, I'm fine with taking your patch as well.  Thanks for the tests,
-which I think help us avoid future regressions here.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+I think that a good next step after the Git micro-project is to get to
+know wireshark --- this would involve building wireshark, finding
+something to change, and then changing it.
 
---PHCdUe6m4AxPMzOu
-Content-Type: application/pgp-signature; name="signature.asc"
+https://gitlab.com/wireshark/wireshark/-/wikis/Development/ describes
+how to download and build wireshark.  Then for something to change, I
+have a few different ideas:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+a. tighten the error handling in epan/dissectors/packet-git.c
+   (for example, what happens when there are not exactly 4 hexdigits
+   at the beginning of a pkt-line?).  Git's
+   Documentation/technical/protocol-common.txt describes the pkt-line
+   format and Documentation/technical/pack-protocol.txt describes the
+   Git transport dissected by packet-git.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX4kHbwAKCRB8DEliiIei
-gTrsAP4ng5klNsvaZEM8Jxg17mgeW0O4GNvdv0WENSdSgEqUgAD+JVNM3WILfg/E
-HIacq4xSsUT7BsJxziR9WYjbM1owuwI=
-=9x24
------END PGP SIGNATURE-----
+b. add tests for the Git dissector.  test/README.test and the page it
+   links to describe how wireshark's tests work
 
---PHCdUe6m4AxPMzOu--
+c. try to parse out the service name and protocol version in
+   epan/dissectors/packet-git.c.  Git's
+   Documentation/technical/protocol-v2.txt describes where we can find
+   that information
+
+That would get us more comfortable with the wireshark codebase and
+would help prepare for fleshing out a plan for the internship.
+
+Thoughts?
+
+Sincerely,
+Jonathan
