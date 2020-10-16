@@ -2,87 +2,79 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D5B7C433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4352C433DF
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:40:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0AC220848
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:26:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75DE820848
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:40:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bpH/ev6D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mNTi9ZvK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408011AbgJPN0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 09:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
+        id S2407391AbgJPNkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 09:40:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407657AbgJPN0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 09:26:14 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EEF6C061755
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:26:14 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id h7so2943691wre.4
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:26:14 -0700 (PDT)
+        with ESMTP id S2407330AbgJPNkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 09:40:21 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C46C061755
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:40:20 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id s9so2964676wro.8
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0yxOV5K+FrfIo+ZKdFfrxe5T0Xlu01PQ1l0zQmtzfjI=;
-        b=bpH/ev6Dyz61/AsZgLvKXwVits/78pk8bNYpbqVgBiRVc6bLNEiGQzYjQzWZsHk9OZ
-         /zHCh6iF7Tjnpdni8BBloNeQC68lU7nJIwRVZjedURvC+wIglErWlFkhx0gd9+YNDmDk
-         Y3hkna/xjqGPyL29Pop2xqVrmhy2dnbNNvMX+T8T8ceJesmhMbnmmdMWgAhdZCEt75FL
-         Z1HLnYlEKNFeUeTRG1W56N4YERhm1+dwRUBuFZHB0XluD/yRXY1qcXPUrwQtmDPxmBG4
-         sYHsn4BYaOa6YZKH0Zick2yreYv4lla+BK4LnFmCDh0c1s+SceezaLn/6ee9HedF97O2
-         8/oQ==
+        bh=9b3oPIyf+FMMjtm6h2Yi85E10zpSlWoJqoge7jC57OE=;
+        b=mNTi9ZvKnMz3d5D9JtyQTdS66W2TTOcU7chWOVOv2ZX7ANaSS/TDae3crMaZHGfwbB
+         ftSS6ZE5khfPuean10PuseWVwQGqNwoTjFwKlXRPU0hKLC6vt5mLFkzgfp6o3QqAH+Ys
+         bbIs2dSRg9kJa07hbrEBU+sgRi9iSJqWRs/uaa9nM9miQWDukStqbw7ywzIZKHQJITMR
+         1eOej0aUGpEmQU1ea7jOqRiglV0vL00RvUwlq7OabZTTCrGPWfz0Sy+mns+LRWi4LahO
+         RulWCDqcnNtljC4lf6e9wJdICjk9VRBRKeJ518Qp45Mq/RxH052F+hl7v8WY4s41fFa5
+         H1Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=0yxOV5K+FrfIo+ZKdFfrxe5T0Xlu01PQ1l0zQmtzfjI=;
-        b=GyeXmHce/Xk7741CvDjd4TgqBo9Om+3+A9WkA0mqVHohCY9BQj2CGFa4AIYZ2M6QpQ
-         y9taBfDvnTFn+uGrDT6YetgX5wlshUcqLB8EQWzjHPVJIvak6Er6bZAdD88slDP856BI
-         l+L+c65Narptxy56g7gzGxGXCwITOPjAodZStF7iSlx4qf91CXsngJkSGO4kLIyX3PiE
-         RqlaOqX95RUp9pLUtbcC0byCVQUbv94xGTT0wKAcORwvnZ5j7gbpwqEpDziWzDHkF20M
-         Y+CnazBl6oEfs9OtPHagnc5Y4DN5DyGh8gK5hzY0sLJjmGfTYf1vAikp2DO9Yifslf4v
-         SVCA==
-X-Gm-Message-State: AOAM531Se++IiuF5LOdukTyAZeL5eC/DvHW6ZK1qeDPO3OCUkXid9Ixp
-        lPAnSLOsOeeJEQB9yxNYbSpROFMTYFM=
-X-Google-Smtp-Source: ABdhPJxwQTJ60QrEZQXGGiTx32bb/qgrbN0ceMPHoQmzICe+FYGw+j4ufPm6pfQz6xTUJRVss0FX3g==
-X-Received: by 2002:adf:f101:: with SMTP id r1mr4282095wro.392.1602854772977;
-        Fri, 16 Oct 2020 06:26:12 -0700 (PDT)
+        bh=9b3oPIyf+FMMjtm6h2Yi85E10zpSlWoJqoge7jC57OE=;
+        b=QrQiokQwco91SYSCzUmXr5m+/EMPJrLte71qtQZnvlQazhp3gZ9JcDc7N23ZPm7iIF
+         VdE0eJuCd2MijyY8ALBG8XU8CAPf87iV+CEq/TzQhLnFi50C9ecwPkwtE0HOP80EORJE
+         9QrKBSj4l65bMkHKx7xqLZgjRkTSTTcVETXOlrC9LLEHrM/rW+1K6x7M/EHeh4HUFT9K
+         CtjeRCRM/VuYE+1ptFLakYplIY2GVemAUliPLJtI5igFBr004Ucs5cEJDldg18BUO6oI
+         tdmHcsw2R3IYgFacfmU5z4UFCfN3RQRl//yhVFdqm3wTj/WlnLzGEUrxuIqZtErCy38v
+         BkBg==
+X-Gm-Message-State: AOAM531NgwdanweW3RHEAKcxVTW3aUY4dgomoYHii2Tps1P/G9J+EnRk
+        Fnpd9t3quTHCHIx0mLWz1xA=
+X-Google-Smtp-Source: ABdhPJyNKxy+7Npf1CVPY/bgQ1xcxXMxbr2F1/Lja2IsEiOVqKeFhyE0dDUXXa6xhhj5TR2MIOwszA==
+X-Received: by 2002:adf:ecc1:: with SMTP id s1mr3882450wro.120.1602855601578;
+        Fri, 16 Oct 2020 06:40:01 -0700 (PDT)
 Received: from [192.168.1.201] (48.45.90.146.dyn.plus.net. [146.90.45.48])
-        by smtp.googlemail.com with ESMTPSA id o63sm2847052wmo.2.2020.10.16.06.26.11
+        by smtp.googlemail.com with ESMTPSA id j7sm2795787wmc.7.2020.10.16.06.40.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Oct 2020 06:26:12 -0700 (PDT)
-Subject: Re: [Outreachy] Introduction
-To:     Sangeeta NB <sangunb09@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, kaartic.sivaraam@gmail.com,
-        git@vger.kernel.org
-References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
- <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com>
- <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
- <7d691f37-b8b7-510d-ba46-51a4a7587226@gmail.com>
- <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
- <xmqq362jsahk.fsf@gitster.c.googlers.com>
- <CAHjREB4Qw78xS-T=LA80yVf_u3=Hbpxg5tqBnP1QK44FRkBFOQ@mail.gmail.com>
- <3c0bf417-b3d5-b615-c605-49a5d8be4e06@gmail.com>
- <CAHjREB7xhBWHUCJ+T78i6dDGQr055sMAaYzG4gaQSr0T88cseg@mail.gmail.com>
- <95c90e7a-8f4c-32b9-2b0e-9efce2acfb8e@gmail.com>
- <CAHjREB6i7ZSSXk10OAOXcL-Av3WzesCkMKL2ES_aBRsrynT9DA@mail.gmail.com>
- <8c9b409b-4e44-ca8a-9075-36a7332f9765@gmail.com>
- <CAHjREB44_bjPF86fF3EToD6mVqeLbmtzsN8NPYu1QLes7kpwHg@mail.gmail.com>
+        Fri, 16 Oct 2020 06:40:01 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] sequencer: fix gpg option passed to merge
+ subcommand
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Samuel_=c4=8cavoj?= <samuel@cavoj.net>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20201012234901.1356948-1-samuel@cavoj.net>
+ <d2491759-e761-647b-7e76-3515b8eeaf3f@gmail.com>
+ <xmqqy2k9ixvz.fsf@gitster.c.googlers.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <05edf120-03fe-9b45-e39c-0d53a517d637@gmail.com>
-Date:   Fri, 16 Oct 2020 14:26:11 +0100
+Message-ID: <31ce457b-e71c-0ca0-e5be-a9aebb9cf785@gmail.com>
+Date:   Fri, 16 Oct 2020 14:40:00 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <CAHjREB44_bjPF86fF3EToD6mVqeLbmtzsN8NPYu1QLes7kpwHg@mail.gmail.com>
+In-Reply-To: <xmqqy2k9ixvz.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -90,92 +82,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sangeeta
+Hi Junio
 
-On 16/10/2020 06:27, Sangeeta NB wrote:
-> Hey everyone,
-> 
-> On Thu, Oct 15, 2020 at 8:15 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> 
->> diff --git a/submodule.c b/submodule.c
->> index 8f6227c993..c4182be633 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -1679,6 +1679,8 @@ unsigned is_submodule_modified(const char *path,
->> int ignore_untracked)
->>           strvec_pushl(&cp.args, "status", "--porcelain=2", NULL);
->>           if (ignore_untracked)
->>                   strvec_push(&cp.args, "-uno");
->> +       else
->> +               strvec_push (&cp.args, "--ignore-submodules=none");
->>
->>           prepare_submodule_repo_env(&cp.env_array);
->>           cp.git_cmd = 1;
->>
->> fixes it, I'm unsure at the moment if we should be adding the extra flag
->> here or setting the appropriate option in status when -uno and
->> --ignore-submodules=<option> are both omitted though
-> 
-> Ya, that does work and the PR passed all the tests after this correction.
-> I have submitted the patch[1] for it and would be glad to have reviews
-> on it from the git community.
-> 
-> [1] https://public-inbox.org/git/pull.751.git.1602781723670.gitgitgadget@gmail.com/T/#u
+It seems to be that the config handling here is another example an 
+interdependence between tests that makes life harder for contributors 
+and reviewers.
 
-I'll try and have a proper read through at the beginning of next week. 
-Hopefully others who use submodules more regularly will be have time to 
-comment as well
-
->>
->> Have you setup a config.mak file? Mine looks like
->>
->> DEVELOPER = 1
->> SANITIZE = address,leak
->> CFLAGS += -ggdb3
->> CFLAGS += -fvar-tracking-assignments
->> CFLAGS += -fno-omit-frame-pointer
->>
->> Which will build git with warnings enabled, debugging information and
->> enables the address sanitizer. Then you can run the git you have built
->> under gdb with
->>
->>          GIT_DEBUGGER=1 bin-wrappers/git
->>
->> If you want to debug a particular test then I find adding `test_pause`
->> to the test and then running
->>
->>          GIT_DEBUGGER=1 git
->>
->> in the shell that the test opens (it sets up the path appropriately).
->> You may want to add LSAN_OPTIONS=detect_leaks=0 to the commands above or
->> set up a suppressions file
->>
->> I also use printf quite a bit but it does tend to break other tests
->> which can be awkward.
->>
+On 13/10/2020 23:06, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> No, not yet. I would set it up. Thanks again!
+>>>    +test_expect_success 'rebase -r, GPG and merge strategies' '
+>>> +	git reset --hard merged &&
+>>> +	git rebase -fr --gpg-sign -s resolve --root &&
+>>> +	git verify-commit HEAD
+>>> +'
+>>
+>> Unfortunately I've just noticed that the test above runs
+>>
+>> 	git config commit.gpgsign true
+>>
+>> So this test would pass anyway if merge picks up that config
+>> setting. The previous test needs to be changed to
+>>
+>> 	test_config commit.gpgsign true
+>>
+>> so that the config setting is cleared when that test finishes.
 > 
-> As my next step, I was looking for some #good-first-issue to work on
-> where I found an issue[2]. Has someone already worked on it? If not, I
-> would love to work on this.
-> Or if you have anything else in mind that I could work on please do
-> suggest to me.
+> Thanks for a review, but I do not think that is a right way to go.
+> 
+> test_config has an inherent assumption that not having the config at
+> all is somehow the "natural" state, and if that holds true, that
+> would be OK.  But what is "natural" is subjective X-<.
 
-I'm not sure if someone else has worked on that - there has been some 
-work to convert more of bisect to C recently [1]. It should be easy 
-enough to test if bisect works from a subdirectory or not. I don't have 
-anything else in mind - my advice would be to pick things that interest you
+What is "natural" is subjective but what is the default config is not. 
+If test scripts set random config variables and assumes that they will 
+be cleared in later tests if they don't want them it makes it very hard 
+for contributors and reviewers to check that new tests are sound as they 
+have to analyze each existing test in the script. In this example I 
+believe the new test was contributed by dscho who is an experienced 
+contributor with an interest in the test suite. However the test did not 
+clear the relevant config variable - if an experienced contributor did 
+not realize that the variable needed to be cleared how are new 
+contributors supposed to figure it out? If each test starts with the 
+default config it is much easier to reason about it.
 
-[1] https://lore.kernel.org/git/20201015133838.85524-1-mirucam@gmail.com
+> The way each test is run by calling test_rebase_gpg_sign repeatedly
+> uses a different and more robust approach to ensure that previous
+> test does not affect the current one.  Each invocation of test
+> explicitly sets the configuration to the state the test wants to,
+> cancelling what the previous test did.
+
+It is only robust if contributors and reviewers realize that is what is 
+expected. Reviewers that only read the patch without loading up the test 
+file in their editor have no indication that the test should be clearing 
+the config variable.
 
 Best Wishes
 
 Phillip
 
-> [2] https://github.com/gitgitgadget/git/issues/486[3]
+> To blend in better with existing tests and match their robustness
+> expectations, the right fix is for this new test to explicitly use
+> "git config --set" or "git config --unset" to make the variable into
+> the desired state, regardless of what the previous tests did.
 > 
-> Thanks and Regards,
-> Sangeeta
+> If the test quoted at the beginning of this message wants to make
+> sure that --gpg-sign from the command line takes effect without
+> commit.gpgsign set, it should unset the variable explicitly.
+> Another combination worth testing is to ensure that --gpg-sign takes
+> effect when commit.gpgsign is explicitly set to false (not "left
+> unset").
+> 
+> Thanks.
+> 
+> 
 > 
 
