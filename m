@@ -7,86 +7,107 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C4A1C433E7
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 12:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF8CC433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 12:54:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B5F42158C
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 12:40:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 098EB207DE
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 12:54:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rIyNdXdR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S4J0alBB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405210AbgJPMkH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 08:40:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37288 "EHLO
+        id S2406604AbgJPMyj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 08:54:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394753AbgJPMkH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 08:40:07 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CA9FC061755
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 05:40:07 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id f2so577032ooj.2
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 05:40:07 -0700 (PDT)
+        with ESMTP id S2395307AbgJPMyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 08:54:38 -0400
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E039C061755
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 05:54:38 -0700 (PDT)
+Received: by mail-ed1-x541.google.com with SMTP id dn5so2202278edb.10
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 05:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=RDiUckgNco8GbnP1jS9SVbWiV69C6UzW56p4u1hJRmc=;
-        b=rIyNdXdRXPee3yjDeFGNaQPT/Q7H3ObG5gH5NfR7R/bblZEcVTwhtq6RbIVV9YEU9H
-         khVqfVxEmC28000aUbDy0/b39j3C4UZzkKNgm83mC85kQeZhr+v9ftOgfHN4T/LMS7xZ
-         e81Fyi+/uw9ZPoAMFLGdiItSrdqP8lLcBi+/J55nYjQujjDQcXh1yfDAIGJhCbVBzSR6
-         s5kb5c4hZT4joimSGCehuNJBLNmGB5X9uPDYAeNXdqiZFqcdrZMYIePYGgvMljIWO83p
-         gUTpNA6AmITpzLND1HNLqzTaqdbptcFAtIhKPagn8y3Wonep8e/zzpJ6raknULsfGPZd
-         xc4A==
+        bh=TEZzuOVYeAJv435PCa3dZoc49y0qXuJQTcZqS3EUZcE=;
+        b=S4J0alBBUrfnR5HNxEJ3Ib9iyE9fL0VFOmDB9fpas6leXR396ONwM9BB+kGr73Uvkz
+         CKEZOiG4pGAAOaHO192Da2EopmH1rq+fpGDu6+PEdKXEz9k4Ks4wXnFXu2Vb6s53QMlt
+         AvMGMJNibGUOaRs6bU2EkpcPvSc2F+66Yyj8bM/17yufdTRXgXmqIj4D03+sP9rbYCja
+         dRzLpTKS4PqrzvUJumLBSd9hUWqiQH7HYtr+u8X2/NHdMGvNLEYVP6rDyXwcCosRFe29
+         aFXAiPYxsPIdQRw6yu50c5DWsyfCW5BOyuq95p8ypLHvz3R4GtjhDhG4l3lLvYmNLCgD
+         Qlig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=RDiUckgNco8GbnP1jS9SVbWiV69C6UzW56p4u1hJRmc=;
-        b=EKKpFw4iiuy+gvnaz039ARe6iVoo2YmzM+H8IAUEnXiZSMrWPAqOaHVX7t/N05vx2K
-         nil1zknU2pkXvop90FX/tw0xlaP7i++frB0An+/aNEPUr2IJ1GY4ciciMqaVKui2myoe
-         6jZ1IQgpf91DDJKOzc1jcf4I7xlwouF1uxB3E17bg9VGhc0gj7d4MYvssRRwdTDovWjr
-         uktuUrQj/o7f6JxX9uazKGX7q7iz5hPQmWjXZfFDVnKHW9VXEod37dYUTb60ukqKsOfk
-         OTowDmszR75ciBEsZ69aEQrqQMle95Q7tyIZlGFnfQjgD8NfUXepKhYEgDM2O5QHUu3j
-         apbA==
-X-Gm-Message-State: AOAM531Fl0bhcgK/A4ovra2BnhZ/vWwW1LyVbPKNnUZzxgDFXcAbDmGd
-        FmEFakH7IjoL85ChoejGB4nOr2BbLRFIrOONpaE=
-X-Google-Smtp-Source: ABdhPJywDnAPr30Ur9bAZimq0o5SJJFhw6oJ3s5fUwnxVRAWYAghnbCluBqEV64z7xE/JKu5WGPq26LVjEHV7FElWgE=
-X-Received: by 2002:a4a:d654:: with SMTP id y20mr2560690oos.90.1602852006740;
- Fri, 16 Oct 2020 05:40:06 -0700 (PDT)
+        bh=TEZzuOVYeAJv435PCa3dZoc49y0qXuJQTcZqS3EUZcE=;
+        b=HqGO0lhJYDD8p+dJbEiU9SYQA4qzRAqMFYLrxqLv4NVjGuLkNNNYCiSaLkNnv3Uvxb
+         zONW5zoqHiPVCX562WqmMMd0N09ZWgZ47+HX1sRL2oYVy3gD1nX6XXhgNxNjdyT4uqs3
+         ak/gW5cULHTYkiEIrM78iDrFHSGRKXD6SNssi7DHYm8SiKZEg3hOIMVPxo2ZwquMi/0R
+         LgyqIocDRxbv0wQinxGk3DkTriR8rrCmYO2wsKf08cRYVvIAZAIdjGEK0D5L0xcN7UeD
+         wQP+K/3BoQikhQVLwSfecV7X9iX7c8JYUTqyC8RSmbiiyVQQao+t7rOtETbfoevfaoPb
+         Feig==
+X-Gm-Message-State: AOAM532QQ+VASKYpPvNx6/cJuHj1Nvt9hByRsyTpfSVwEdnqY2luBIP5
+        Hc1LuzxheAv7y1TokC8Dzgv3Ldm3cqu8qykPsoU=
+X-Google-Smtp-Source: ABdhPJwAcDtCLL2zityRD+/3gZjtxrJFbDoW/ubri+Gr+S7lhH8kyHtf0c1xIlvkrl6PF+KWBdwbsm2aWpE+QrMT2uk=
+X-Received: by 2002:a05:6402:384:: with SMTP id o4mr3712448edv.387.1602852876790;
+ Fri, 16 Oct 2020 05:54:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.757.git.1602766160815.gitgitgadget@gmail.com>
- <20201015160725.GA1104947@coredump.intra.peff.net> <xmqqk0vrfi1r.fsf@gitster.c.googlers.com>
- <20201015194158.GA1490964@coredump.intra.peff.net> <xmqqsgafdyri.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqsgafdyri.fsf@gitster.c.googlers.com>
-From:   Nipunn Koorapati <nipunn1313@gmail.com>
-Date:   Fri, 16 Oct 2020 13:39:55 +0100
-Message-ID: <CAN8Z4-Wiun-e1s5v2G_2qucy_BmWm=fomd=t3=ZU=9KBu_cVCA@mail.gmail.com>
-Subject: Re: [PATCH] dir.c: fix comments to agree with argument name
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Alex Vandiver <alexmv@dropbox.com>
+References: <20201015175709.20121-1-charvi077@gmail.com>
+In-Reply-To: <20201015175709.20121-1-charvi077@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 16 Oct 2020 14:54:24 +0200
+Message-ID: <CAP8UFD1J8hpcfyzMKvqy67-bMZipzsUvR9f1cXxtPR9Co5hNRA@mail.gmail.com>
+Subject: Re: [PATCH 0/5][Outreachy] modernizing the test scripts
+To:     charvi-077 <charvi077@gmail.com>
+Cc:     git <git@vger.kernel.org>, phillip.wood123@gmail.com,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sounds good to me. Please let me know if there's anything further I need to do.
-I'm relatively new to git contributions - and my understanding is that
-at this point a maintainer would merge the commit at their leisure.
-Happy to do any further cleanup required to make that possible
+On Thu, Oct 15, 2020 at 7:57 PM charvi-077 <charvi077@gmail.com> wrote:
+>
+> This is my first patch series to the GIT mailing list. I followed the
+> link[1] and t7001 patches to modernize and clean up the test scripts.
 
-Thanks
---Nipunn
+Thanks for getting started contributing!
 
-On Thu, Oct 15, 2020 at 9:23 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jeff King <peff@peff.net> writes:
->
-> >> Anyway.  Nipunn, can you fix both of them in the same commit, as
-> >> they are addressing a problem from the same cause (i.e. we are no
-> >> longer SHA-1 centric).
-> >
-> > The v2 that Nipunn sent with "oid" in the comment looks good to me.
->
-> OK, then all is good.  Thanks.
+> This patch series :
+>  -modernize the three test scripts : t7101, t7201 and t102.
+
+s/t102/t7102/
+
+On https://git.github.io/Outreachy-21-Microprojects/ we say:
+
+"Find one test script that needs some of the same changes and make them."
+
+So working only one test script, for example only t7101, would have
+been better than working on 3 test scripts. Now that you started
+working on 3 test scripts, it's ok to finish modernizing all these 3
+test scripts though.
+
+>  - cleans up with 5 types of changes in all the three scripts.
+>    1. Converting the old old style test format to new one
+
+s/old old/old/
+
+>    2. Removing blankspaces in test bodies
+>    3. Removing whitespaces after the redirect operator, according to
+>       Codingguidelines .
+
+s/Codingguidelines/CodingGuidelines/
+
+>    4. Using git -C instead of cd
+>    5. Placing all commands in seperate lines.
+
+s/seperate/separate/
+
+> Also, I have tested the scripts and set up travis CI[2].
+
+Nice!
+
+Thanks,
+Christian.
