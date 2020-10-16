@@ -2,121 +2,362 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40A85C433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 15:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A85C43457
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 15:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB17F20874
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 15:11:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B0BE20866
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 15:33:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WDdcfsAL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MIe9IQ6P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409798AbgJPPLm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 11:11:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42329 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406926AbgJPPLk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 11:11:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1602861065;
-        bh=q+x7rSCa/4j7zJe+wU8Us0dEMpb2am54iJPjStctpCk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WDdcfsALbcc5GpgQhqD1ZDHDrkD9eWYzzWUIZaORGbxkibI37Ns4zGSRgGpl/vRtp
-         vbFocuMbJ95NFFLqkeBmF4KaIWW4ecrjm5pUf8pOhqjAYYIyKhs4NiiZQ/uWHW/wln
-         oEXOxlCff8GErTmgQ6WteYjVcT0sPNM87IyraKwQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([89.1.212.47]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuDXp-1kAOay37iX-00uYOA; Fri, 16
- Oct 2020 17:11:05 +0200
-Date:   Fri, 16 Oct 2020 12:00:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Micha=C5=82_K=C4=99pie=C5=84?= <michal@isc.org>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] diff: add -I<regex> that ignores matching
- changes
-In-Reply-To: <20201015072406.4506-1-michal@isc.org>
-Message-ID: <nycvar.QRO.7.76.6.2010161200090.56@tvgsbejvaqbjf.bet>
-References: <20201012091751.19594-1-michal@isc.org> <20201015072406.4506-1-michal@isc.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2410278AbgJPPdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 11:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35962 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404478AbgJPPcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 11:32:54 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6CFBC0613D6
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 08:32:53 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id e23so2857271wme.2
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 08:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VbzDCv7aoFu5IU7YFRlAf5jY8QEDHx4mxdMEW1ojOZ4=;
+        b=MIe9IQ6PVbuLYVtjGVDjkMTkgEIYGo+zPoCSw/kkxOs3JlaD4omLDlBacy4GvNhMld
+         GL7Xx8F+0K7YwjT0Be6TkZS095ChzOyaRNNSqgoEcqUIB1BDhoXQwi2TSv5NjMHt7EYB
+         9f1okqHglpOWgoVL0N5avNM8+diSkzQN61JrOvggwo73ejHgG5FbW+R3z8qLEm32x1v7
+         ks8gmmYs7EHVP0kYZDJZyuk9Gw1zCCH+qQs82f2F3LykzQBfDBOfwibN1ADaaZm3ss0k
+         ndNMjc465VqrfvBbdRP/c76XY4AeAA5HJwPMnP1hLRfk2rMKVBOYc7ywJoY0IFI/i+Wh
+         HIZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VbzDCv7aoFu5IU7YFRlAf5jY8QEDHx4mxdMEW1ojOZ4=;
+        b=Ul6d10OzNTLuJEB9rKv6XzstgOAF+4yxCYO6gaRlzeq6SSgIwI3hb4gtWtlJgvuOcX
+         hwKTL0rAgKHqsgUEFlSAuCfgDQWiQDHq+Caow5sFWtD18j3U3Xpvli3d6EKUzNPfLs/v
+         IdUKwRqY/fA553E93CjSYVr4qmZRyAKBMZERQAtL3BCU+cQdmi+Q+/w2MUZj2s7Dq/DY
+         Hbho141xVnYLL/MZxAxviuBAxtBzGJ0E7Mv/8F4BMyb2BvH1oaxizBY1ZQoWXgkdz/0Z
+         ZoNCljnVOf78wHXTUfnOIdKA6uFMcDNYXE9hpiZd2Zi517yHYHFXRsl+/Xmzj91aEfFD
+         0tug==
+X-Gm-Message-State: AOAM53166s+hBK0sTGQzglKV2I2aAWytMld6Djs4r0YnNXt8bK8x4dLU
+        p6P6A2iWPx6w+OMTJF6OohB0DaQOa0A=
+X-Google-Smtp-Source: ABdhPJwYUGXHI5j414buTpiEyJdwnhbdc+uwl1Xe5YEmC/bfNRkxyG6Hr6qMoEcdzSghx8vC8wg4GA==
+X-Received: by 2002:a1c:a184:: with SMTP id k126mr4329739wme.39.1602862372166;
+        Fri, 16 Oct 2020 08:32:52 -0700 (PDT)
+Received: from [192.168.1.240] (48.45.90.146.dyn.plus.net. [146.90.45.48])
+        by smtp.gmail.com with ESMTPSA id 88sm4236701wrl.76.2020.10.16.08.32.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2020 08:32:51 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] diff: add -I<regex> that ignores matching changes
+To:     =?UTF-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>,
+        git@vger.kernel.org
+References: <20201012091751.19594-1-michal@isc.org>
+ <20201015072406.4506-1-michal@isc.org> <20201015072406.4506-3-michal@isc.org>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <afd3b1cf-b883-6df5-bea5-28f8e06d8702@gmail.com>
+Date:   Fri, 16 Oct 2020 16:32:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-760345371-1602842457=:56"
-X-Provags-ID: V03:K1:KHMhU4AEnN95XHHPhOTu2jMwRA0CP1EtHhR0dCsEC/6hWs0Jrv9
- 1Oc3N4lHGdUAs7RSYIAzoXRpO/YtfHv+KKGADQmtKt2dC6VqVvtJM3TL/EprdHjKuqPPW/j
- LGNpe/3HQmMCWxwjxJ4P6/UQ90wKvbZeaJ4p3qTpx3pabDz6Zvz3tRDw9Z2rt04itdlfEj2
- vTXweDOelif+TXc6MaB4A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DNOKbSSDaOs=:H4fP+prQ/5/oTPgjSYIX+J
- dAaKf8RyNF0BfonxvLjymysK4ES9qphJbIyHL2zcYzGMrTHsfQ9u2+klYE9nKCu21wSj9xhn7
- NIzvTsJ8qV4NMYpJpfD3hn5Q70pBnuguM1TJVAeklCMYlnyBQ4u1nGbcXBLkx0DBpVNRvbJ55
- bes0rtGofFi1+poTjqExIaWuF8Iamt9hYoiKuXmEoYRvcX8vb6x/pFKjNN4cGIoM4NbY7o9CO
- dY/e2PHPtALvTGt6CAIUFuauT4prd+imTdF9YDa8m5cps+Yu9ABMybdHOomTgEUhLW06RYOXW
- HlA/AbWbbLYU9+ItnNVaEQNEeKexzlYwOPVaNbbt/yN3/gkh15TpntdOzHcTSdYpkgMJnVV8m
- YppC8EW99thWpaYBghkRR0WwH10fTTzuH2pNnCONQiWcANpe2/NpGCXX/bfQ7KU59QmbU0DHu
- C2D9RFslvNTT1r8N6ssvmL7fvOYmGyhCzA4RWri3tMMAvZWQ4BL50rKVC8SaevEJLzo75KJHP
- Aq90+ZkCv3qcOkfiGLRFnB2i0X7T+lPm6ZG0INMOcO289WAfFDuBKUqrZnukUVIgl+Pj84ocY
- HL4HY23gAiQh8s8Yb5e2YKotQwpJqZazijwwRSHHCMKzI91/9PG4zKSt6uiLeQsCdAYsUN6Hk
- ktw5xrEkDV8e3mUOC5s7u/EdV5OX5/sMKC1aZ9tYM5vfHppPx7N7VGNJ3RtT/2jzcgxQZKww3
- cC24wvmnxNgRPSL4+cmyHaVMjFCrrxT2Ozk9ZCJPbBIit02QgiK5ROQ2ziKZuryiLPX7JW6mZ
- fQzezyUEvOYiZzFvY6tiSfZqSAipUFJ6Kg/wXydwJ9HX1f6OgDa7Dxg6JUioByowYLQ745C80
- Azee78N4D4FZO6QEGTmD+ZBTYps23vRPrRZNkP0Ss=
+In-Reply-To: <20201015072406.4506-3-michal@isc.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Michał
 
---8323328-760345371-1602842457=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks for working on this, it will be a useful addition. Unfortunately 
+there's a use-after-free error see below
 
-Hi Micha=C5=82,
+On 15/10/2020 08:24, Michał Kępień wrote:
+> Add a new diff option that enables ignoring changes whose all lines
+> (changed, removed, and added) match a given regular expression.  This is
+> similar to the -I/--ignore-matching-lines option in standalone diff
+> utilities and can be used e.g. to ignore changes which only affect code
+> comments or to look for unrelated changes in commits containing a large
+> number of automatically applied modifications (e.g. a tree-wide string
+> replacement).  The difference between -G/-S and the new -I option is
+> that the latter filters output on a per-change basis.
+> 
+> Use the 'ignore' field of xdchange_t for marking a change as ignored or
+> not.  Since the same field is used by --ignore-blank-lines, identical
+> hunk emitting rules apply for --ignore-blank-lines and -I.  These two
+> options can also be used together in the same git invocation (they are
+> complementary to each other).
+> 
+> Rename xdl_mark_ignorable() to xdl_mark_ignorable_lines(), to indicate
+> that it is logically a "sibling" of xdl_mark_ignorable_regex() rather
+> than its "parent".
+> 
+> Signed-off-by: Michał Kępień <michal@isc.org>
+> ---
+>   Documentation/diff-options.txt |  5 ++++
+>   diff.c                         | 28 ++++++++++++++++++++
+>   diff.h                         |  4 +++
+>   t/t4013-diff-various.sh        | 33 ++++++++++++++++++++++++
+>   xdiff/xdiff.h                  |  4 +++
+>   xdiff/xdiffi.c                 | 47 ++++++++++++++++++++++++++++++++--
+>   6 files changed, 119 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 573fb9bb71..ee52b65e46 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -687,6 +687,11 @@ endif::git-format-patch[]
+>   --ignore-blank-lines::
+>   	Ignore changes whose lines are all blank.
+>   
+> +-I<regex>::
+> +--ignore-matching-lines=<regex>::
+> +	Ignore changes whose all lines match <regex>.  This option may
+> +	be specified more than once.
+> +
+>   --inter-hunk-context=<lines>::
+>   	Show the context between diff hunks, up to the specified number
+>   	of lines, thereby fusing hunks that are close to each other.
+> diff --git a/diff.c b/diff.c
+> index 2bb2f8f57e..677de23352 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3587,6 +3587,8 @@ static void builtin_diff(const char *name_a,
+>   		if (header.len && !o->flags.suppress_diff_headers)
+>   			ecbdata.header = &header;
+>   		xpp.flags = o->xdl_opts;
+> +		xpp.ignore_regex = o->ignore_regex;
+> +		xpp.ignore_regex_nr = o->ignore_regex_nr;
+>   		xpp.anchors = o->anchors;
+>   		xpp.anchors_nr = o->anchors_nr;
+>   		xecfg.ctxlen = o->context;
+> @@ -3716,6 +3718,8 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+>   		memset(&xpp, 0, sizeof(xpp));
+>   		memset(&xecfg, 0, sizeof(xecfg));
+>   		xpp.flags = o->xdl_opts;
+> +		xpp.ignore_regex = o->ignore_regex;
+> +		xpp.ignore_regex_nr = o->ignore_regex_nr;
+>   		xpp.anchors = o->anchors;
+>   		xpp.anchors_nr = o->anchors_nr;
+>   		xecfg.ctxlen = o->context;
+> @@ -5203,6 +5207,22 @@ static int diff_opt_patience(const struct option *opt,
+>   	return 0;
+>   }
+>   
+> +static int diff_opt_ignore_regex(const struct option *opt,
+> +				 const char *arg, int unset)
+> +{
+> +	struct diff_options *options = opt->value;
+> +	regex_t *regex;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	regex = xmalloc(sizeof(*regex));
+> +	if (regcomp(regex, arg, REG_EXTENDED | REG_NEWLINE))
+> +		return error(_("invalid regex given to -I: '%s'"), arg);
+> +	ALLOC_GROW(options->ignore_regex, options->ignore_regex_nr + 1,
+> +		   options->ignore_regex_alloc);
+> +	options->ignore_regex[options->ignore_regex_nr++] = regex;
+> +	return 0;
+> +}
+> +
+>   static int diff_opt_pickaxe_regex(const struct option *opt,
+>   				  const char *arg, int unset)
+>   {
+> @@ -5491,6 +5511,9 @@ static void prep_parse_options(struct diff_options *options)
+>   		OPT_BIT_F(0, "ignore-blank-lines", &options->xdl_opts,
+>   			  N_("ignore changes whose lines are all blank"),
+>   			  XDF_IGNORE_BLANK_LINES, PARSE_OPT_NONEG),
+> +		OPT_CALLBACK_F('I', "ignore-matching-lines", options, N_("<regex>"),
+> +			       N_("ignore changes whose all lines match <regex>"),
+> +			       0, diff_opt_ignore_regex),
+>   		OPT_BIT(0, "indent-heuristic", &options->xdl_opts,
+>   			N_("heuristic to shift diff hunk boundaries for easy reading"),
+>   			XDF_INDENT_HEURISTIC),
+> @@ -6405,6 +6428,11 @@ void diff_flush(struct diff_options *options)
+>   	DIFF_QUEUE_CLEAR(q);
+>   	if (options->close_file)
+>   		fclose(options->file);
+> +	for (i = 0; i < options->ignore_regex_nr; i++) {
+> +		regfree(options->ignore_regex[i]);
+> +		free(options->ignore_regex[i]);
+> +	}
+> +	free(options->ignore_regex);
 
-On Thu, 15 Oct 2020, Micha=C5=82 K=C4=99pie=C5=84 wrote:
+If I run `git log -p -I foo` then the address sanitizer reports
 
-> This patch series adds a new diff option that enables ignoring changes
-> whose all lines (changed, removed, and added) match a given regular
-> expression.  This is similar to the -I/--ignore-matching-lines option in
-> standalone diff utilities and can be used e.g. to ignore changes which
-> only affect code comments or to look for unrelated changes in commits
-> containing a large number of automatically applied modifications (e.g. a
-> tree-wide string replacement).  The difference between -G/-S and the new
-> -I option is that the latter filters output on a per-change basis.
->
-> Changes from v2:
->
->   - Add a long option for -I (--ignore-matching-lines) as it is
->     commonplace in standalone diff utilities.  Update documentation and
->     commit log messages accordingly.
->
->   - Use xmalloc() instead of xcalloc() for allocating regex_t
->     structures in diff_opt_ignore_regex().
->
->   - Ensure the memory allocated in diff_opt_ignore_regex() gets
->     released.
->
->   - Use "return error(...)" instead of die() in the -I option callback.
->     Make the relevant error message localizable.
->
->   - Drastically reduce the number of -I<regex> tests due to excessive
->     run time of t/t4069-diff-ignore-regex.sh from v1/v2 on some
->     platforms (notably Windows).  Use a tweaked version of a test
->     suggested by Johannes Schindelin (thanks!).  Given its reduction in
->     size, squash patch 3 (which contained the tests) into patch 2.
->
->   - Replace "see Documentation/diff-options.txt" with "-I<regex>" in the
->     comments for the added structure fields, in order to make these
->     comments more useful.
+AddressSanitizer: heap-use-after-free xdiff/xdiffi.c:1027 in 
+record_matches_regex
 
-Thank you for this diligent work! I looked over the patches and like them
-a lot!
+after it has printed the diff for the first commit. I think freeing the 
+regex here is the cause of the problem.
 
-Thanks,
-Dscho
+Best Wishes
 
---8323328-760345371-1602842457=:56--
+Phillip
+
+>   	/*
+>   	 * Report the content-level differences with HAS_CHANGES;
+> diff --git a/diff.h b/diff.h
+> index 11de52e9e9..a402227b80 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -234,6 +234,10 @@ struct diff_options {
+>   	 */
+>   	const char *pickaxe;
+>   
+> +	/* -I<regex> */
+> +	regex_t **ignore_regex;
+> +	size_t ignore_regex_nr, ignore_regex_alloc;
+> +
+>   	const char *single_follow;
+>   	const char *a_prefix, *b_prefix;
+>   	const char *line_prefix;
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 5c7b0122b4..efaaee2ef0 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -6,6 +6,7 @@
+>   test_description='Various diff formatting options'
+>   
+>   . ./test-lib.sh
+> +. "$TEST_DIRECTORY"/diff-lib.sh
+>   
+>   test_expect_success setup '
+>   
+> @@ -473,4 +474,36 @@ test_expect_success 'diff-tree --stdin with log formatting' '
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success 'diff -I<regex>' '
+> +	test_seq 50 >I.txt &&
+> +	sed -e "s/13/ten and three/" -e "/7\$/d" <I.txt >J.txt &&
+> +	echo >>J.txt &&
+> +
+> +	test_expect_code 1 git diff --no-index --ignore-blank-lines -I"ten.*e" -I"^[124-9]" I.txt J.txt >actual &&
+> +	cat >expect <<-\EOF &&
+> +	diff --git a/I.txt b/J.txt
+> +	--- a/I.txt
+> +	+++ b/J.txt
+> +	@@ -34,7 +31,6 @@
+> +	 34
+> +	 35
+> +	 36
+> +	-37
+> +	 38
+> +	 39
+> +	 40
+> +	EOF
+> +	compare_diff_patch expect actual &&
+> +
+> +	test_expect_code 1 git diff --stat --no-index --ignore-blank-lines -I"ten.*e" -I"^[124-9]" I.txt J.txt >actual &&
+> +	cat >expect <<-\EOF &&
+> +	 I.txt => J.txt | 1 -
+> +	 1 file changed, 1 deletion(-)
+> +	EOF
+> +	test_cmp expect actual &&
+> +
+> +	test_expect_code 129 git diff --no-index --ignore-matching-lines="^[124-9]" --ignore-matching-lines="^[124-9" I.txt J.txt >output 2>&1 &&
+> +	test_i18ngrep "invalid regex given to -I: " output
+> +'
+> +
+>   test_done
+> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+> index 032e3a9f41..7a04605146 100644
+> --- a/xdiff/xdiff.h
+> +++ b/xdiff/xdiff.h
+> @@ -79,6 +79,10 @@ typedef struct s_mmbuffer {
+>   typedef struct s_xpparam {
+>   	unsigned long flags;
+>   
+> +	/* -I<regex> */
+> +	regex_t **ignore_regex;
+> +	size_t ignore_regex_nr;
+> +
+>   	/* See Documentation/diff-options.txt. */
+>   	char **anchors;
+>   	size_t anchors_nr;
+> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> index bd035139f9..380eb728ed 100644
+> --- a/xdiff/xdiffi.c
+> +++ b/xdiff/xdiffi.c
+> @@ -998,7 +998,7 @@ static int xdl_call_hunk_func(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
+>   	return 0;
+>   }
+>   
+> -static void xdl_mark_ignorable(xdchange_t *xscr, xdfenv_t *xe, long flags)
+> +static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
+>   {
+>   	xdchange_t *xch;
+>   
+> @@ -1019,6 +1019,46 @@ static void xdl_mark_ignorable(xdchange_t *xscr, xdfenv_t *xe, long flags)
+>   	}
+>   }
+>   
+> +static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
+> +	regmatch_t regmatch;
+> +	int i;
+> +
+> +	for (i = 0; i < xpp->ignore_regex_nr; i++)
+> +		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
+> +				 &regmatch, 0))
+> +			return 1;
+> +
+> +	return 0;
+> +}
+> +
+> +static void xdl_mark_ignorable_regex(xdchange_t *xscr, const xdfenv_t *xe,
+> +				     xpparam_t const *xpp)
+> +{
+> +	xdchange_t *xch;
+> +
+> +	for (xch = xscr; xch; xch = xch->next) {
+> +		xrecord_t **rec;
+> +		int ignore = 1;
+> +		long i;
+> +
+> +		/*
+> +		 * Do not override --ignore-blank-lines.
+> +		 */
+> +		if (xch->ignore)
+> +			continue;
+> +
+> +		rec = &xe->xdf1.recs[xch->i1];
+> +		for (i = 0; i < xch->chg1 && ignore; i++)
+> +			ignore = record_matches_regex(rec[i], xpp);
+> +
+> +		rec = &xe->xdf2.recs[xch->i2];
+> +		for (i = 0; i < xch->chg2 && ignore; i++)
+> +			ignore = record_matches_regex(rec[i], xpp);
+> +
+> +		xch->ignore = ignore;
+> +	}
+> +}
+> +
+>   int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+>   	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
+>   	xdchange_t *xscr;
+> @@ -1038,7 +1078,10 @@ int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
+>   	}
+>   	if (xscr) {
+>   		if (xpp->flags & XDF_IGNORE_BLANK_LINES)
+> -			xdl_mark_ignorable(xscr, &xe, xpp->flags);
+> +			xdl_mark_ignorable_lines(xscr, &xe, xpp->flags);
+> +
+> +		if (xpp->ignore_regex)
+> +			xdl_mark_ignorable_regex(xscr, &xe, xpp);
+>   
+>   		if (ef(&xe, xscr, ecb, xecfg) < 0) {
+>   
+> 
