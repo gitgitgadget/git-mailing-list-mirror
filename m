@@ -2,95 +2,91 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED6DC433E7
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73507C433DF
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:02:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC7E820874
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:00:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EABF520874
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:02:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dDEaAHPq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391648AbgJPUAc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 16:00:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34736 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391628AbgJPUAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 16:00:32 -0400
-Received: (qmail 31464 invoked by uid 109); 16 Oct 2020 20:00:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 Oct 2020 20:00:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12221 invoked by uid 111); 16 Oct 2020 20:00:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 Oct 2020 16:00:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 16 Oct 2020 16:00:31 -0400
-From:   Jeff King <peff@peff.net>
+        id S2391990AbgJPUCX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 16:02:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56825 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391817AbgJPUCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 16:02:22 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E4044FDBBE;
+        Fri, 16 Oct 2020 16:02:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NUKDcHXtG+30Vc/Uq1ZRJbiGlzo=; b=dDEaAH
+        Pq6gbl05QipJSrQkIGM6dpXHBYmxN+n+NC2Ev7H4mm3LhnhpceP6l+4ySooj1AE4
+        Nmw22G8aD5TbPfiir08wcxhobl2NmxUyZVspoWAHj5LGdZcCTMfpdaB/huXp7SGC
+        q2B6ZjPvZiKE+9If7tAHLskKQiPcMtUMG94is=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=b0KF1G8rjAUV6SnXI3P9DsIUqeCwTktw
+        N+TJYr+jQ8CCZIqDaWMMh5mwOh41LbXzdf65aoFlgmav/kbTkys3d2EJyaMvY00K
+        vMRC8Wv6praaiJ5bNtDSOVWHOIGYOZ3M6DgGV/G0YCNHfVVDqswPTe/HUApCtsAV
+        KL7Buy8hLqU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DCF13FDBBD;
+        Fri, 16 Oct 2020 16:02:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2C5E8FDBBA;
+        Fri, 16 Oct 2020 16:02:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Funny test flake failure: t7518-ident-corner-cases.sh, test 1
-Message-ID: <20201016200031.GA3355643@coredump.intra.peff.net>
-References: <CABPp-BHQK-AtAJa6V1mtu6_jq3oeUeL_0p00RCRNA6Jw3DpJSg@mail.gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/3] test-lib: allow selecting tests by
+ substring/glob with --run
+References: <pull.878.v2.git.git.1602616786.gitgitgadget@gmail.com>
+        <pull.878.v3.git.git.1602710025.gitgitgadget@gmail.com>
+        <9c8b6a1a943261635fa09bed22ae36e368686f15.1602710025.git.gitgitgadget@gmail.com>
+        <2b757512-793d-a6e0-0a50-368061e122dd@gmail.com>
+        <CABPp-BHkykWh8L_FYhLR1BCCpPDmc_2q+Tccg_yZ7W8ZHZ4WsA@mail.gmail.com>
+Date:   Fri, 16 Oct 2020 13:02:16 -0700
+In-Reply-To: <CABPp-BHkykWh8L_FYhLR1BCCpPDmc_2q+Tccg_yZ7W8ZHZ4WsA@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 16 Oct 2020 10:27:56 -0700")
+Message-ID: <xmqqd01iaqif.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHQK-AtAJa6V1mtu6_jq3oeUeL_0p00RCRNA6Jw3DpJSg@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7E60C3DA-0FEA-11EB-A665-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 16, 2020 at 12:29:26PM -0700, Elijah Newren wrote:
+Elijah Newren <newren@gmail.com> writes:
 
-> The issue comes from this test code:
-> 
->        (
->                sane_unset GIT_AUTHOR_EMAIL &&
->                GIT_AUTHOR_NAME= &&
->                test_must_fail git commit --allow-empty -m foo 2>err &&
->                test_i18ngrep ! null err
->        )
-> 
-> The last line expects 'null' to NOT be found in err, unfortunately,
-> the file err contained the line:
-> 
-> fatal: empty ident name (for
-> <runner@fv-az128-670.gcliasfzo2nullsdbrimjtbyhg.cx.internal.cloudapp.net>)
-> not allowed
-> 218
-> 
-> Note that 'null' appears as a substring of the domain name, found
-> within 'gcliasfzo2nullsdbrimjtbyhg'.
+> Given that t/README explicitly shows examples of space-separated lists
+> of numbers, I'm worried we're breaking long-built expectations of
+> other developers by changing IFS here.  Perhaps I could instead add
+> the following paragraph to t/README:
 
-Heh. That's an amusing find. Good detective work, and sorry I created
-the problem.
+Unlike something that would affect end-users, I think it is OK to
+break backward compatibility one-way.  If you suddenly forbid spaces
+and force our developers to use comma and nothing else, in muscle
+memory of their fingers and/or in their scripts, in a version merged
+to 'master', as long as their new habit and updated scripts use
+comma consistently, they work fine on 'maint', right?
 
-> +# confirm that we do not segfault _and_ that we do not say "(null)", as
-> +# glibc systems will quietly handle our NULL pointer
-> 
-> Should we tighten the test to check for "(null)" instead of "null", or
-> should we do something else?  Or just ignore it as it is somewhat
-> unlikely that anyone ever hits this flake again?
+If there is no such "works on both sides of the flag day" choice, it
+is a different story, of course, but comma should work fine for us
+in this case.
 
-I think it's worth tightening the test. The "(null)" phrasing is pretty
-common, and it's really the best we can do. The chance that somebody is
-on a platform that neither segfaults not prints "(null)", _and_ that
-they introduce a regression there seems pretty low. And in comparison,
-you already wasted time tracking down a false negative. Let's make sure
-that doesn't happen again.
-
-I wish there was an environment variable or something we could set in
-the test suite to convince glibc to actually segfault on NULL (because
-it _will_ segfault on other platforms, and we're rather catch such
-things sooner rather than later).
-
-Another option, I guess, is that we probably _do_ run the tests on such
-a platform (IIRC BSD will segfault, so macos probably does). So we could
-just remove the grep entirely from this test and let any regression get
-caught there.
-
-Of the two, I think I have a slight preference for matching (null), but
-I don't feel strongly.
-
--Peff
+Thanks.
