@@ -2,118 +2,148 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD574C43457
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F72C433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:56:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7228D2076C
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:52:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F4792076C
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 20:56:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kpST/0wM"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SnS2Lq2X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409046AbgJPUwn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 16:52:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57286 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408909AbgJPUwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 16:52:40 -0400
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62465C061755
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 13:52:40 -0700 (PDT)
-Received: by mail-qv1-xf4a.google.com with SMTP id u4so2293084qvk.3
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 13:52:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=miOpoCaXWedJXhOx5DhSvSMgZ4oVjfDrs3UqJCIhyTg=;
-        b=kpST/0wMAw0kPeiCZXfexLmaBa9hsyadLrb5ld2ShQJKVblXRrp3XSyttmABhIuaEC
-         wOQZOkYWSd5kBZBUqA5lSgaVJibJh3g7oSOrixqAdHQ3w0FTwtQCz3d2xuJnhjCN5Ib3
-         C36VoHPD+2/tRF+U/PqfQWsL72W7orTUsEDY2CQXh6ntDfXN+oatyL7T4b0h9N+smfyR
-         Kjft+gXDFNIU38QpC+DRmo5aZ8WJVLkXysMeExlFq9yB+XoVk5mQnBjnEC7L8amqPyAI
-         nqKMf9oabNNuVAVQrPqAi2/45wlGMysjRn4wu58XDDbX+2Y7aj7M8FlVeazZndz7occQ
-         xZoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=miOpoCaXWedJXhOx5DhSvSMgZ4oVjfDrs3UqJCIhyTg=;
-        b=rSrWHhRfTvFfC1SzrMhvWQOUtaZ9fZqLOTU6OS7a8o6aeqxg+dphNo7sgo/AK7AGmw
-         m6tYID+6rOOJHgr39wDl9ZvDmJyoQ0GrcIVZVUXeoogy28TeixJJZNQqFDMRWyg0UFI3
-         nmeldh2sJvMAduNmPJ50fqpgvK4HqIHHb2YsuMsDd3AAEJsyMGO4L8i8hu1x5HZb91tc
-         RsLFDZT/X3Bevg3Iw4+CxkyU0vXREwW8YS7UWBY2Mhg3zuPSI8vLSqfYaxsh4M/vp0I4
-         WP0AcbjJC2/VfjTwD9CfmBSzT5n9NPLmOiaCmogEVfzmnscsP+92whJSaZr4wwHb/Ss5
-         JWVg==
-X-Gm-Message-State: AOAM532N8skj2QubGFOZ0Do+VbFgG3JhVp+Kacsxj1x8ZfZDKHgoqsnz
-        wBJ6QOH2hsW5CBNqlJIDTGO3KadD7tEj3PHDUeOlVuvyJ3V2nhV9f5NhWNswx++Qqc57y5bOaN+
-        mMDgtw1/XI7MLVmWMN5hqIcdTI3S2yboCeMWfwLDrW/BoAOUmijAL9xy+stIALi3sCIcXfzIHfg
-        ==
-X-Google-Smtp-Source: ABdhPJy1N3DRFUXVYVD5c1ooUvVYRIGDnFXyWeMpRy62KmzgYuqfvaFTayB+PsasfFIhnQLtgv70o9PU1ZpjFvHIYjk=
-Sender: "emilyshaffer via sendgmr" 
-        <emilyshaffer@podkayne.svl.corp.google.com>
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:ad4:44b3:: with SMTP id
- n19mr6070740qvt.39.1602881559416; Fri, 16 Oct 2020 13:52:39 -0700 (PDT)
-Date:   Fri, 16 Oct 2020 13:52:31 -0700
-In-Reply-To: <20201016205232.2546562-1-emilyshaffer@google.com>
-Message-Id: <20201016205232.2546562-2-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20201016205232.2546562-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-Subject: [PATCH 1/2] MyFirstContribution: clarify asciidoc dependency
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S2409046AbgJPU4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 16:56:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55014 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732640AbgJPU4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 16:56:06 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2905930B9;
+        Fri, 16 Oct 2020 16:56:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=O/RiJ1Lx9SJf
+        dHi8RPVlSmXp1L0=; b=SnS2Lq2XiiDtCxr34EO2vYhHnjT3REdXl7VRYMK9OUxW
+        nB91Y9ccGao0cg6FY9n4NCOz8hfqqmJbwA47N9I1Mr5U9Sz4iuyhCPRAKjcf0CNI
+        NwVl3PX70KqwitIllSb4ncLkNnXSVsh+xLJphAmFvyqIg4LXnAlJJ2dOGs1LeX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SfYTqW
+        6JNqJ8/GNCnMJw7dzso6tLMBc4TNsI0T1uqtwaUksF6DnxsVFgIzhRVyODb+eclr
+        GyUqd/6yRTonD+FzkbQ55LtHwJmkVy9CmRhZBq03Qi6x8Tn8jHIZcphHf2PxoXae
+        vC5PoH5K+M/IrFnnoaMN8QPof2ZsEdA6yF7sE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 997AA930B8;
+        Fri, 16 Oct 2020 16:56:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 16D4A930B4;
+        Fri, 16 Oct 2020 16:56:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
+References: <20200809060810.31370-1-sunshine@sunshineco.com>
+        <20200809174209.15466-1-sunshine@sunshineco.com>
+        <20201016001704.GA2937048@coredump.intra.peff.net>
+        <CAPig+cSU=1GcQuqZab+0Vff_A-JmD59wEc3RMr3wDojpgRYUuw@mail.gmail.com>
+        <xmqqzh4maugq.fsf@gitster.c.googlers.com>
+Date:   Fri, 16 Oct 2020 13:56:00 -0700
+In-Reply-To: <xmqqzh4maugq.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 16 Oct 2020 11:36:53 -0700")
+Message-ID: <xmqqv9f9ao0v.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FFFB0598-0FF1-11EB-B810-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Per IRC:
+Junio C Hamano <gitster@pobox.com> writes:
 
-[19:52] <lkmandy> With respect to the MyFirstContribution tutorial, I
-will like to suggest this - Under the section "Adding Documentation",
-just before the "make all doc" command, it will be really helpful to
-prompt a user to check if they have the asciidoc package installed, if
-they don't, the command should be provided or they can just be pointed
-to install it
+> Hmph, I agree that the "both must be file" is a bit too eager and
+> ignores that "they must match, but the possible reasons they may not
+> include one of them may be missing" use case.
+>
+>> =C3=86var ran into the same issue recently[1] and came up with the sam=
+e
+>> workaround. Despite its good intention (trying to catch bugs in
+>> 'test_expect_failure' tests), this change[2] doesn't seem to have
+>> caught any genuine bugs (it wouldn't even have caught the bug which
+>> served as its inspiration[3]), but has nevertheless caused a couple
+>> hiccups already. As such, I would not be opposed to seeing the change
+>> reverted.
+>
+> Sounds good.  Anybody wants to do the honors?
 
-So, let's move the note about the dependency to before the build command
-blockquote.
+For now I've queued this directly on top of the offending change and
+merged the result in 'seen', perhaps to be advanced to 'next' and
+'master' after the 2.29 final unless a better version comes.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Thanks.
+
+-- >8 --
+commit b0b2d8b4e00fd34c0031b6dbcd67b4bcf22d864c
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Oct 16 13:51:04 2020 -0700
+
+    Revert "test_cmp: diagnose incorrect arguments"
+   =20
+    This reverts commit d572f52a64c6a69990f72ad6a09504b9b615d2e4; the
+    idea to detect that "test_cmp expect actual" was fed a misspelt
+    filename meant well, but when the version of Git tested exhibits a
+    bug, the reason why these two files do not match may be because one
+    of them did not get created as expected, in which case missing file
+    is not a sign of misspelt filename but is a genuine test failure.
 ---
- Documentation/MyFirstContribution.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/test-lib-functions.sh | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 4f85a089ef..7522387ae1 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -507,6 +507,9 @@ documentation is consistent with other Git and UNIX manpages; this makes life
- easier for your user, who can skip to the section they know contains the
- information they need.
- 
-+NOTE: Before trying to build the docs, make sure you have the package `asciidoc`
-+installed.
-+
- Now that you've written your manpage, you'll need to build it explicitly. We
- convert your AsciiDoc to troff which is man-readable like so:
- 
-@@ -522,8 +525,6 @@ $ make -C Documentation/ git-psuh.1
- $ man Documentation/git-psuh.1
- ----
- 
--NOTE: You may need to install the package `asciidoc` to get this to work.
--
- While this isn't as satisfying as running through `git help`, you can at least
- check that your help page looks right.
- 
--- 
-2.28.0.rc0.142.g3c755180ce-goog
-
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 21225330c2..3103be8a32 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -905,13 +905,7 @@ test_expect_code () {
+ # - not all diff versions understand "-u"
+=20
+ test_cmp() {
+-	test $# -eq 2 || BUG "test_cmp requires two arguments"
+-	if ! eval "$GIT_TEST_CMP" '"$@"'
+-	then
+-		test "x$1" =3D x- || test -e "$1" || BUG "test_cmp '$1' missing"
+-		test "x$2" =3D x- || test -e "$2" || BUG "test_cmp '$2' missing"
+-		return 1
+-	fi
++	eval "$GIT_TEST_CMP" '"$@"'
+ }
+=20
+ # Check that the given config key has the expected value.
+@@ -940,13 +934,7 @@ test_cmp_config() {
+ # test_cmp_bin - helper to compare binary files
+=20
+ test_cmp_bin() {
+-	test $# -eq 2 || BUG "test_cmp_bin requires two arguments"
+-	if ! cmp "$@"
+-	then
+-		test "x$1" =3D x- || test -e "$1" || BUG "test_cmp_bin '$1' missing"
+-		test "x$2" =3D x- || test -e "$2" || BUG "test_cmp_bin '$2' missing"
+-		return 1
+-	fi
++	cmp "$@"
+ }
+=20
+ # Use this instead of test_cmp to compare files that contain expected an=
+d
