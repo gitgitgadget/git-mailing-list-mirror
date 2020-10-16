@@ -2,107 +2,117 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92928C433E7
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9A79C433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:26:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B72120878
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77A87212CC
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:26:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qe6EeDvL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wl+aMKPh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407447AbgJPXOg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 19:14:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61314 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2409430AbgJPXOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 19:14:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B860282EDF;
-        Fri, 16 Oct 2020 19:14:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=avbvziTz7K7ej9aaG0uwdsvwgTw=; b=qe6EeD
-        vLnlczKm+W2TwAc56106yyeLNTXRv7u7Y1o6Xq0+4zDLSt/+sMSGsFFRGky7VHL2
-        qXVoQTL8b3wtrfbc/xXoswHmIz54aLlvjBtvlIRgCkoTd6xHZa46MtRtY3F8jwdM
-        uUDCviJzqYNuI/rH96flv/cvB89zC7XW+3nso=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZEhnCR0xQdwki3VcSILqY9vW69rSYfHq
-        o9fk0LS7cZIP/UMe0ToglC3mYa9W4TTuFG5dM+Z3HjIqFsaNsLuiuRqVMV/QMUkB
-        0EIz0kCAETqq/bvBEN68B7J4ZVcSEtQi1JAVu+cKuqE8XgFBfqqW07e/gklGs1PH
-        KOMgxB5ifV8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFD9D82EDE;
-        Fri, 16 Oct 2020 19:14:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3A76682EDD;
-        Fri, 16 Oct 2020 19:14:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
-References: <20200809060810.31370-1-sunshine@sunshineco.com>
-        <20200809174209.15466-1-sunshine@sunshineco.com>
-        <20201016001704.GA2937048@coredump.intra.peff.net>
-        <CAPig+cSU=1GcQuqZab+0Vff_A-JmD59wEc3RMr3wDojpgRYUuw@mail.gmail.com>
-        <xmqqzh4maugq.fsf@gitster.c.googlers.com>
-        <xmqqv9f9ao0v.fsf@gitster.c.googlers.com>
-Date:   Fri, 16 Oct 2020 16:14:31 -0700
-In-Reply-To: <xmqqv9f9ao0v.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 16 Oct 2020 13:56:00 -0700")
-Message-ID: <xmqqy2k5931k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2411398AbgJPXZp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 19:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52794 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2410982AbgJPXZp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 19:25:45 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A282DC061755
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 16:26:00 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id a3so5601131ejy.11
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 16:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yNtxsaN8IqRsJ+DiQvo+8hXUv6k2gReFiL21Oj8j+fY=;
+        b=Wl+aMKPhZ0mg60Jwqgru2g/o0yDIqOE3dUPK97aH6kYyevzCvgkoKVBz2iWzmdcNkF
+         uE1oG5SreFtMaI0sLSKyWfaaRXOJ9ybJhSfxojgNS2IQ3nldQoBB+u5xijf8bf/XtplW
+         mwkgrxMdIrPoyXQibEAdUMn0ruX08ROiQv2MTAz9mCcHC7+qWHXITyKpZEj5Ees9ixXS
+         xL3RijxTQTdqpNdXE7RAaDY8V3sno4b8CZqUttgRJpojhD2O5867TEWRswqL5NNbkA1c
+         7mHLsSlEN8BzU0P4qpKBtvs1uiNzTqXpUai3c0WRIDDTe1+OrK4viQPwRfNoeyUIXNZh
+         lDog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yNtxsaN8IqRsJ+DiQvo+8hXUv6k2gReFiL21Oj8j+fY=;
+        b=DAkj+pbfCL7lFm/+120l+ldZtd8ad5oEEMXXfS7qd798m7cX0rQdAkTp5j+7w6s2U6
+         /ZIWLmz702n/ry6OmTXgsCNC5+Y8YcR0rE+CzJEQycoWxx/6omLjFXuGh2mfVFriVKjE
+         lIfMYoFSpxZeVig2KG/L+fdh+pF+GG0C+z4EJT0JwUrch3cXoEGsHbebN5s3+/qgTGjT
+         a//2NPKk4isfXVf8m6gDvNypD+kXrjlC6/IoB4af33ayqo6O0dJOwMZP3PcAhRbie3TD
+         IU3noecT9BSBsjGIUlZHzwEIKdSJL1pwzwPh4amdyNr4ZozjDUXHzM73ZesBqAi0d2nT
+         7cgw==
+X-Gm-Message-State: AOAM531mWwGSQtdCOKAfAkEWxMWb7U0iv+1IBh5Playe9k/N6JAZ2yYO
+        Qtb9oAf9pXN3mNbw8gN7goY=
+X-Google-Smtp-Source: ABdhPJxdiG4JW7Y1PxKe4orPQpOsfJxWJRS2xUiLncMziRlflHiIABRn7FdIGAIdc4Vi7d/Q71LWEw==
+X-Received: by 2002:a17:906:814:: with SMTP id e20mr6498125ejd.367.1602890759339;
+        Fri, 16 Oct 2020 16:25:59 -0700 (PDT)
+Received: from ?IPv6:2001:a61:2564:4101:c0b9:cdea:ccc4:8ee5? ([2001:a61:2564:4101:c0b9:cdea:ccc4:8ee5])
+        by smtp.gmail.com with ESMTPSA id k23sm3098034ejs.100.2020.10.16.16.25.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2020 16:25:58 -0700 (PDT)
+Subject: Re: [PATCH v5 1/3] test-lib: allow selecting tests by substring/glob
+ with --run
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.878.v4.git.git.1602876532.gitgitgadget@gmail.com>
+ <pull.878.v5.git.git.1602888652.gitgitgadget@gmail.com>
+ <389c2c171a07b156fe956ac535033a8b67af51a9.1602888652.git.gitgitgadget@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <89279674-a1b5-930a-e682-b47aafeb11b7@gmail.com>
+Date:   Sat, 17 Oct 2020 01:25:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 59369F4C-1005-11EB-9027-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <389c2c171a07b156fe956ac535033a8b67af51a9.1602888652.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2020-10-17 00:50, Elijah Newren via GitGitGadget wrote:
 
->  test_cmp() {
-> -	test $# -eq 2 || BUG "test_cmp requires two arguments"
-> -	if ! eval "$GIT_TEST_CMP" '"$@"'
-> -	then
-> -		test "x$1" = x- || test -e "$1" || BUG "test_cmp '$1' missing"
-> -		test "x$2" = x- || test -e "$2" || BUG "test_cmp '$2' missing"
-> -		return 1
-> -	fi
-> +	eval "$GIT_TEST_CMP" '"$@"'
+[trim]
+
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index ef31f40037..debfd73fd6 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -769,6 +769,8 @@ match_pattern_list () {
 >  }
 >  
->  # Check that the given config key has the expected value.
-> @@ -940,13 +934,7 @@ test_cmp_config() {
->  # test_cmp_bin - helper to compare binary files
+>  match_test_selector_list () {
+> +	operation="$1"
+> +	shift
+>  	title="$1"
+>  	shift
+>  	arg="$1"
+> @@ -777,7 +779,7 @@ match_test_selector_list () {
 >  
->  test_cmp_bin() {
-> -	test $# -eq 2 || BUG "test_cmp_bin requires two arguments"
-> -	if ! cmp "$@"
-> -	then
-> -		test "x$1" = x- || test -e "$1" || BUG "test_cmp_bin '$1' missing"
-> -		test "x$2" = x- || test -e "$2" || BUG "test_cmp_bin '$2' missing"
-> -		return 1
-> -	fi
-> +	cmp "$@"
->  }
+>  	# Both commas and whitespace are accepted as separators.
 
-Looking at this again, I think we could keep the "we should have two
-arguments, no more than, no less than, but exactly two".  But I think
-those who write new tests are working to eventually make them pass,
-so hopefully they'll notice and investigate test_cmp that yields false
-anyway, I guess.
+This comment becomes outdated with the change below.
+
+>  	OLDIFS=$IFS
+> -	IFS=' 	,'
+> +	IFS=','
+>  	set -- $1
+>  	IFS=$OLDIFS
+>  
+> @@ -805,13 +807,13 @@ match_test_selector_list () {
 
