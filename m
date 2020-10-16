@@ -7,154 +7,145 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4352C433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AB1EC433DF
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:53:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75DE820848
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:40:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0E8720866
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 13:53:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mNTi9ZvK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hO0ahCEZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407391AbgJPNkW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 09:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46730 "EHLO
+        id S2408432AbgJPNxB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 09:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407330AbgJPNkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 09:40:21 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C46C061755
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:40:20 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id s9so2964676wro.8
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:40:20 -0700 (PDT)
+        with ESMTP id S2408423AbgJPNxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 09:53:01 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE433C061755
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:53:00 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id l4so2449436ota.7
+        for <git@vger.kernel.org>; Fri, 16 Oct 2020 06:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9b3oPIyf+FMMjtm6h2Yi85E10zpSlWoJqoge7jC57OE=;
-        b=mNTi9ZvKnMz3d5D9JtyQTdS66W2TTOcU7chWOVOv2ZX7ANaSS/TDae3crMaZHGfwbB
-         ftSS6ZE5khfPuean10PuseWVwQGqNwoTjFwKlXRPU0hKLC6vt5mLFkzgfp6o3QqAH+Ys
-         bbIs2dSRg9kJa07hbrEBU+sgRi9iSJqWRs/uaa9nM9miQWDukStqbw7ywzIZKHQJITMR
-         1eOej0aUGpEmQU1ea7jOqRiglV0vL00RvUwlq7OabZTTCrGPWfz0Sy+mns+LRWi4LahO
-         RulWCDqcnNtljC4lf6e9wJdICjk9VRBRKeJ518Qp45Mq/RxH052F+hl7v8WY4s41fFa5
-         H1Gw==
+        bh=9aoFep+fkfu3Qf/YtYWcSvTAb6BPjk+DHStle+pePIs=;
+        b=hO0ahCEZD7z36ynHMRjW0Zknf6yUlCxBgg825ede0XI4eaXOGYt2QGMy1NdB2jEjO/
+         Yw3+qwttEyEsCmsfFs+wRNDUBqyiJssrBkm31QRMJFt0ZU9fOH+nphI4V0tdCNLDy8Mm
+         2Z8rlCSnzBu5t5iSV6DUkcTogBxuqJM7dqffjD0nSwEcXGNJuwGgDDUwLo/wJq10phxH
+         7eFZ3YzOtc9l3E5JbDjiniwE6KTpopNDFIv3q0VRG4SY/6xGl+3JDIo89v9tdWExE0ba
+         SfT5VBp3kxbrvZ3EGA9RiD0eFAt++Uw5F+5mxJWVxt8W6XarhW95JGACl2w4zW+TX2cP
+         OPgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=9b3oPIyf+FMMjtm6h2Yi85E10zpSlWoJqoge7jC57OE=;
-        b=QrQiokQwco91SYSCzUmXr5m+/EMPJrLte71qtQZnvlQazhp3gZ9JcDc7N23ZPm7iIF
-         VdE0eJuCd2MijyY8ALBG8XU8CAPf87iV+CEq/TzQhLnFi50C9ecwPkwtE0HOP80EORJE
-         9QrKBSj4l65bMkHKx7xqLZgjRkTSTTcVETXOlrC9LLEHrM/rW+1K6x7M/EHeh4HUFT9K
-         CtjeRCRM/VuYE+1ptFLakYplIY2GVemAUliPLJtI5igFBr004Ucs5cEJDldg18BUO6oI
-         tdmHcsw2R3IYgFacfmU5z4UFCfN3RQRl//yhVFdqm3wTj/WlnLzGEUrxuIqZtErCy38v
-         BkBg==
-X-Gm-Message-State: AOAM531NgwdanweW3RHEAKcxVTW3aUY4dgomoYHii2Tps1P/G9J+EnRk
-        Fnpd9t3quTHCHIx0mLWz1xA=
-X-Google-Smtp-Source: ABdhPJyNKxy+7Npf1CVPY/bgQ1xcxXMxbr2F1/Lja2IsEiOVqKeFhyE0dDUXXa6xhhj5TR2MIOwszA==
-X-Received: by 2002:adf:ecc1:: with SMTP id s1mr3882450wro.120.1602855601578;
-        Fri, 16 Oct 2020 06:40:01 -0700 (PDT)
-Received: from [192.168.1.201] (48.45.90.146.dyn.plus.net. [146.90.45.48])
-        by smtp.googlemail.com with ESMTPSA id j7sm2795787wmc.7.2020.10.16.06.40.00
+        bh=9aoFep+fkfu3Qf/YtYWcSvTAb6BPjk+DHStle+pePIs=;
+        b=aQzSA7j6w+5hCh7kU9/ubsbGv2DTup/uC4jOIOD4ZPSt2C5yB2NvVfDVDRvXdvGoBU
+         wPfpvEpdjMRA46E0QGLe1p3V0TBCLhAk6AeVibxY40QfjPPzSHuXc+8U/sQXI6IXP5Lg
+         /QcJODcb6SuK25Yuqt4LWh2TE55IyZLRIsB8r7sscHvEiEC3l08h4/9m96Nqr08v7bEY
+         Yz5xZjfD8zv06rgVeOTEm7SFf5hapisYX0sB21m5uvuH3Vk0qO/3cdLtaoJsN6aEvHaj
+         qBiqx1m1MHS+elo/gY0eVOCxNG12vkjFsa9TzbQcKBSXxB5CphiOsYjbxJiBFIvAoPcd
+         Ejhw==
+X-Gm-Message-State: AOAM5305mUJ5Wq9rNeKQQHeFZpCXxmaIzD9hAO5nX2zL9sZEGW7kZeGS
+        vF1gvMD16mibwrOPwg4txoMydS7fgW4WDQ==
+X-Google-Smtp-Source: ABdhPJyKE58DhFM9unZUgLlBvLmaa8tkv1medQhJIUxvn2LeGUZQvUOrggAlHx/2TlSkR2TViw+ypg==
+X-Received: by 2002:a05:6830:30a8:: with SMTP id g8mr2716527ots.370.1602856379792;
+        Fri, 16 Oct 2020 06:52:59 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:45e2:f3c8:7158:823d? ([2600:1700:e72:80a0:45e2:f3c8:7158:823d])
+        by smtp.gmail.com with UTF8SMTPSA id y13sm1036142ote.45.2020.10.16.06.52.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Oct 2020 06:40:01 -0700 (PDT)
-Subject: Re: [PATCH v2 1/2] sequencer: fix gpg option passed to merge
- subcommand
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Samuel_=c4=8cavoj?= <samuel@cavoj.net>,
-        git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20201012234901.1356948-1-samuel@cavoj.net>
- <d2491759-e761-647b-7e76-3515b8eeaf3f@gmail.com>
- <xmqqy2k9ixvz.fsf@gitster.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <31ce457b-e71c-0ca0-e5be-a9aebb9cf785@gmail.com>
-Date:   Fri, 16 Oct 2020 14:40:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        Fri, 16 Oct 2020 06:52:58 -0700 (PDT)
+Subject: Re: [PATCH v4 04/10] commit-graph: persist existence of changed-paths
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, l.s.r@web.de,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
+ <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
+ <f1e3a8516ebd58b283166a5374843f5cb3332d08.1593610050.git.gitgitgadget@gmail.com>
+ <20201015132147.GB24954@szeder.dev> <20201015214111.GA2176154@nand.local>
+ <103404f0-a164-2550-4730-6b8773d3ca1f@gmail.com>
+ <20201016031844.GA2181783@nand.local>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6fe5de28-01f3-fc48-6bc3-aec0777ad889@gmail.com>
+Date:   Fri, 16 Oct 2020 09:52:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101
+ Thunderbird/82.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqy2k9ixvz.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20201016031844.GA2181783@nand.local>
+Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
-
-It seems to be that the config handling here is another example an 
-interdependence between tests that makes life harder for contributors 
-and reviewers.
-
-On 13/10/2020 23:06, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->>>    +test_expect_success 'rebase -r, GPG and merge strategies' '
->>> +	git reset --hard merged &&
->>> +	git rebase -fr --gpg-sign -s resolve --root &&
->>> +	git verify-commit HEAD
->>> +'
+On 10/15/2020 11:18 PM, Taylor Blau wrote:
+> On Thu, Oct 15, 2020 at 10:18:47PM -0400, Derrick Stolee wrote:
+>> On 10/15/2020 5:41 PM, Taylor Blau wrote:
+>>> So, we need to be more aggressively checking the Bloom filter settings
+>>> in any layer we want to reuse a Bloom filter out of before reusing it
+>>> verbatim in the current layer. The patch below the scissors line is
+>>> sufficient to do that, and it causes the third test to start passing.
 >>
->> Unfortunately I've just noticed that the test above runs
+>> I think there are three things we should keep in mind:
 >>
->> 	git config commit.gpgsign true
->>
->> So this test would pass anyway if merge picks up that config
->> setting. The previous test needs to be changed to
->>
->> 	test_config commit.gpgsign true
->>
->> so that the config setting is cleared when that test finishes.
+>> 1. Incompatible Bloom filter settings between layers should be seen
+>>    as _inconsistent data_ as Git should not be writing incremental
+>>    commit-graph files with inconsistent Bloom filter settings. Thus,
+>>    when reading the commit-graph chain we should prevent incompatible
+>>    filters from being used. One way to do this is to notice different
+>>    settings and completely disable Bloom filters. The other way would
+>>    be to take the settings from the first layer with filters and then
+>>    clear the chunk_bloom_indexes and chunk_bloom_data fields for the
+>>    layers that don't agree. This fits with an expectation that lower
+>>    layers are larger, so more filters can be used in that situation.
 > 
-> Thanks for a review, but I do not think that is a right way to go.
+> Sure; I'd be fine with only allowing filters computed with the settings
+> present in the lowest or largest layer in the event that multiple layers
+> exist with incompatible settings.
 > 
-> test_config has an inherent assumption that not having the config at
-> all is somehow the "natural" state, and if that holds true, that
-> would be OK.  But what is "natural" is subjective X-<.
+> I'm trying to point us towards a direction of not optimizing too far
+> along a direction that we're unlikely to take, while also trying to do
+> something relatively non-invasive to make it possible for a version of
+> Git to change the default Bloom settings. That is, if a user is writing
+> split commit-graphs, and we change the default Bloom settings, they
+> shouldn't have to recompute or merge down all of their Bloom filters.
 
-What is "natural" is subjective but what is the default config is not. 
-If test scripts set random config variables and assumes that they will 
-be cleared in later tests if they don't want them it makes it very hard 
-for contributors and reviewers to check that new tests are sound as they 
-have to analyze each existing test in the script. In this example I 
-believe the new test was contributed by dscho who is an experienced 
-contributor with an interest in the test suite. However the test did not 
-clear the relevant config variable - if an experienced contributor did 
-not realize that the variable needed to be cleared how are new 
-contributors supposed to figure it out? If each test starts with the 
-default config it is much easier to reason about it.
+They would need to recompute when they merge layers, which introduces
+a big question about how we should handle such a case.
 
-> The way each test is run by calling test_rebase_gpg_sign repeatedly
-> uses a different and more robust approach to ensure that previous
-> test does not affect the current one.  Each invocation of test
-> explicitly sets the configuration to the state the test wants to,
-> cancelling what the previous test did.
+> If that's something that we never think is going to happen, I'm fine
+> with not thinking too hard about it. But, I also don't want to paint
+> ourselves into a corner, so I think something like the patch I wrote in
+> the email that you're replying to actually may be worth pursuing
+> further. I dunno. Definitely after 2.29, though.
 
-It is only robust if contributors and reviewers realize that is what is 
-expected. Reviewers that only read the patch without loading up the test 
-file in their editor have no indication that the test should be clearing 
-the config variable.
+I think the proposed "react properly to this unlikely situation"
+is a good way to prevent getting locked into our choices now. It
+makes it possible for "old" Git versions (2.30 until we decide to
+allow this mix) to interact with the inconsistent settings without
+failure.
 
-Best Wishes
+We don't need to do the 100% "optimal" case of using all filters
+in order to enable this choice in the future.
+ 
+[...]
 
-Phillip
+> For what it's worth, I was mainly talking about it to say that it would
+> be more effort than it's probably worth to do. There's also nothing that
+> we're currently discussing that would prevent us from taking that same
+> direction up in six months from now.
 
-> To blend in better with existing tests and match their robustness
-> expectations, the right fix is for this new test to explicitly use
-> "git config --set" or "git config --unset" to make the variable into
-> the desired state, regardless of what the previous tests did.
-> 
-> If the test quoted at the beginning of this message wants to make
-> sure that --gpg-sign from the command line takes effect without
-> commit.gpgsign set, it should unset the variable explicitly.
-> Another combination worth testing is to ensure that --gpg-sign takes
-> effect when commit.gpgsign is explicitly set to false (not "left
-> unset").
-> 
-> Thanks.
-> 
-> 
-> 
+Yes, I just want to make sure that everyone agrees there is a
+middle ground without saying that inconsistent filter settings
+across layers is a "fully supported" feature. If someone wants
+to tackle the work to make it a desirable state, then they can
+try that (with great care).
 
+Thanks,
+-Stolee
