@@ -2,129 +2,107 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CAD0C433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92928C433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:14:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16A6320874
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:08:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B72120878
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 23:14:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UIg3yvAa"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qe6EeDvL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407447AbgJPXIE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 19:08:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407396AbgJPXIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 19:08:04 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5D9C061755
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 16:08:04 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id b23so2297602pgb.3
-        for <git@vger.kernel.org>; Fri, 16 Oct 2020 16:08:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2/9PBQjQ9QljlVKtrL82C6g7dkwkQRlE3kpJYwa5CI8=;
-        b=UIg3yvAaUAH2J4TCeebaOnwiiWrOeHp31zABjBQo3WDsy8CPF1+PLqjSgk7/Pgr8yh
-         yjXIbPptvG6rycHlHdee0k21VQvemoYXRKM9w2wsJIO0ANJx100/IBWQ75oOaqZ+QKeJ
-         j/8mM00FXZ91bq1klHCq41inEo0cjphaKS/R77XHJ2GhNG4grO1Krhn5M0aMrpE3RP1x
-         jIPnTOURQgNYraUd7QN4xeEToYFEPHbLnYxfb//VYlorFviFovjA6S+S3rs1MrSljALv
-         VTG60Blr0HUgYYHoaOZrTGOhO1iXGQvVDtyNd4FYmOTs52f5o9rkoDb/n8g7Mb0YIApf
-         6i/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2/9PBQjQ9QljlVKtrL82C6g7dkwkQRlE3kpJYwa5CI8=;
-        b=b90D8+wovE/Q8PJJ9fgl75uln2Ftuq6izO0RdKHqkAX5JR6v+OkXc3ZE2aDXb0Wxtm
-         BxQ3BRR7rtHHn8cgCMMHh2MnDLJCQKCbCUPCkO4nCvD3AEIkW18dJMVsJ/vaSQPbwbOd
-         s0gBIXDjihbJ6oM8kvHU1jNMgIiet1sdnpTO95bDT/iYBzjmuGXYTf/NSxPpLaScBB72
-         RxIvOuJxyoFrkjLg+ke8n5r501g1XHAhqPZZVWR8g8ofnd+9BE4YgASRWJ4Vre6jCGeh
-         YdzC9phCFJuyQWcAIQeBpvkB+IhXa58s5TCCF1sY5Kw9tJwBRhG5a5Rn7KMYu08WYS3T
-         ijPg==
-X-Gm-Message-State: AOAM532L+n//LErv25AYEQ5KsTpBt+vuQBhRBQ9lhup8a/PdYlpggQBM
-        fBlQzZxgf79vL0ZaTtAr0CVxfjYPES8=
-X-Google-Smtp-Source: ABdhPJxjL7z/YL5J5lvuLKdo5ogoJzApIYCraZ/x53dVHkK+V0xaVT2H6k8WUix8iN3MQOvNNp/UoA==
-X-Received: by 2002:a62:77c4:0:b029:155:6332:e1bd with SMTP id s187-20020a6277c40000b02901556332e1bdmr5913750pfc.35.1602889683742;
-        Fri, 16 Oct 2020 16:08:03 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id b6sm4100732pjq.42.2020.10.16.16.08.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Oct 2020 16:08:03 -0700 (PDT)
-Date:   Fri, 16 Oct 2020 16:08:01 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Joey S <jgsal@protonmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        wireshark-dev@wireshark.org
-Subject: Re: [Outreachy] Introduction
-Message-ID: <20201016230801.GA945741@google.com>
-References: <HiG3ctHji8hdGWXWEwWgeoa6eDDHkUbhfa0x0xYr9EHWD7FqXqZsQt3fHMZ4Vle0jo2QPCW8rjRviw_aGKqxUIFtvX2igp1aUnx9p6YCL0Y=@protonmail.com>
+        id S2407447AbgJPXOg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 19:14:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61314 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2409430AbgJPXOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 19:14:35 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B860282EDF;
+        Fri, 16 Oct 2020 19:14:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=avbvziTz7K7ej9aaG0uwdsvwgTw=; b=qe6EeD
+        vLnlczKm+W2TwAc56106yyeLNTXRv7u7Y1o6Xq0+4zDLSt/+sMSGsFFRGky7VHL2
+        qXVoQTL8b3wtrfbc/xXoswHmIz54aLlvjBtvlIRgCkoTd6xHZa46MtRtY3F8jwdM
+        uUDCviJzqYNuI/rH96flv/cvB89zC7XW+3nso=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZEhnCR0xQdwki3VcSILqY9vW69rSYfHq
+        o9fk0LS7cZIP/UMe0ToglC3mYa9W4TTuFG5dM+Z3HjIqFsaNsLuiuRqVMV/QMUkB
+        0EIz0kCAETqq/bvBEN68B7J4ZVcSEtQi1JAVu+cKuqE8XgFBfqqW07e/gklGs1PH
+        KOMgxB5ifV8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFD9D82EDE;
+        Fri, 16 Oct 2020 19:14:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3A76682EDD;
+        Fri, 16 Oct 2020 19:14:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
+References: <20200809060810.31370-1-sunshine@sunshineco.com>
+        <20200809174209.15466-1-sunshine@sunshineco.com>
+        <20201016001704.GA2937048@coredump.intra.peff.net>
+        <CAPig+cSU=1GcQuqZab+0Vff_A-JmD59wEc3RMr3wDojpgRYUuw@mail.gmail.com>
+        <xmqqzh4maugq.fsf@gitster.c.googlers.com>
+        <xmqqv9f9ao0v.fsf@gitster.c.googlers.com>
+Date:   Fri, 16 Oct 2020 16:14:31 -0700
+In-Reply-To: <xmqqv9f9ao0v.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 16 Oct 2020 13:56:00 -0700")
+Message-ID: <xmqqy2k5931k.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <HiG3ctHji8hdGWXWEwWgeoa6eDDHkUbhfa0x0xYr9EHWD7FqXqZsQt3fHMZ4Vle0jo2QPCW8rjRviw_aGKqxUIFtvX2igp1aUnx9p6YCL0Y=@protonmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 59369F4C-1005-11EB-9027-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Joey,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Joey S wrote:
+>  test_cmp() {
+> -	test $# -eq 2 || BUG "test_cmp requires two arguments"
+> -	if ! eval "$GIT_TEST_CMP" '"$@"'
+> -	then
+> -		test "x$1" = x- || test -e "$1" || BUG "test_cmp '$1' missing"
+> -		test "x$2" = x- || test -e "$2" || BUG "test_cmp '$2' missing"
+> -		return 1
+> -	fi
+> +	eval "$GIT_TEST_CMP" '"$@"'
+>  }
+>  
+>  # Check that the given config key has the expected value.
+> @@ -940,13 +934,7 @@ test_cmp_config() {
+>  # test_cmp_bin - helper to compare binary files
+>  
+>  test_cmp_bin() {
+> -	test $# -eq 2 || BUG "test_cmp_bin requires two arguments"
+> -	if ! cmp "$@"
+> -	then
+> -		test "x$1" = x- || test -e "$1" || BUG "test_cmp_bin '$1' missing"
+> -		test "x$2" = x- || test -e "$2" || BUG "test_cmp_bin '$2' missing"
+> -		return 1
+> -	fi
+> +	cmp "$@"
+>  }
 
-> Hi everyone,
->
-> I'm Joey Salazar, an Outreachy 2020 applicant certified in CCNA and
-> Linux+, with some experience in C for both private and open source
-> repositories (BIND at gitlab.isc.org/Joey), community code reviews,
-> and automated tests in bash. I'd like to contribute to the "Add Git
-> protocol support to Wireshark" project and improve my skills, yet
-> remain open to a different project if that'd be preferable.
+Looking at this again, I think we could keep the "we should have two
+arguments, no more than, no less than, but exactly two".  But I think
+those who write new tests are working to eventually make them pass,
+so hopefully they'll notice and investigate test_cmp that yields false
+anyway, I guess.
 
-Welcome!
-
-> I have installed and built git, followed
-> git.github.io/General-Microproject-Information and checked the
-> sample email thread [1], as well as the tutorial
-> git-scm.com/docs/MyFirstContribution and created the psuh command
-> files here [2].
->
-> After following the git.github.io/Outreachy-21-Microprojects page
-> I'd like to work on the 'Use test_path_is_* functions in test
-> scripts', and given that Charvi Mendiratta might be working on tests
-> t7101,t7102 and t7201 as per this ml thread [3], I'd like to check
-> with the group if working on tests t7006 and t7300 would be ok.
-
-I'd recommend just doing a single file.  t7006 is a good one.
-
-> In parallel, I'm following
-> gitlab.com/wireshark/wireshark/-/wikis/Development as suggested
-> through the #git-devel IRC channel
-
-Yes, building wireshark and making your first modification to it would
-be a good next step.
-
-One possible first modification would be to teach
-epan/dissectors/packet-git.c about sideband.  See "Packfile Data" in
-git's Documentation/technical/pack-protocol.txt for how sideband
-works.
-
-Alternatively you can run wireshark and see if anything you see
-bothers you and make a first contribution that improves on that. :)
-
-Happy developing.
-
-Thanks,
-Jonathan
-
-> [1] public-inbox.org/git/1386590745-4412-1-git-send-email-t.gummerer@gmail.com/T/#u
-> [2] github.com/j-sal/git/tree/psuh
-> [3] public-inbox.org/git/CAP8UFD1m2zXUm1PXmJKW2MxA9XZVUOkBFA62jLP7jx6_DCYZGw@mail.gmail.com
-> [4] git-scm.com/book/en/v2/Git-Internals-Transfer-Protocols
-[5] https://www.wireshark.org/lists/wireshark-dev/202010/msg00042.html
