@@ -2,50 +2,50 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D768C433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 21:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC62DC433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 21:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBA4E214DB
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 21:53:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37427214DB
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 21:59:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EOJ8IU7P"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NkCaxV1y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731447AbgJPVxl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Oct 2020 17:53:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57487 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731309AbgJPVxk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Oct 2020 17:53:40 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 164D282634;
-        Fri, 16 Oct 2020 17:53:35 -0400 (EDT)
+        id S1732523AbgJPV74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 17:59:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55202 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732262AbgJPV74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 17:59:56 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CDC793671;
+        Fri, 16 Oct 2020 17:59:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g8iKXJHg9+4Eg53tWmj8hTQ+ISw=; b=EOJ8IU
-        7PaxOPT1SHKc1IFcHy1SCeHeV1XHXSFj/40L30YWR/SKm2UQjfVtEtI0Wna/krjY
-        ywinV1ED8RXmhL5EBBs7WMVbJKGCVgmHBUEQFuyHvueSUVZmqQ9gszvZmBZQnWBt
-        m/j34oNORdUqW/IjTClRHC3s6Ds/Tm7eXjNBc=
+        :content-type; s=sasl; bh=ZOcu5DfQTQ8mkw0EJovgLFy3hKY=; b=NkCaxV
+        1y9S6PI3QL7+PH3Q4LGN/nkdouZDAraYdyVyNjs36H83FBwQFM+Wfqw1aLm5q9K6
+        BYfv8jmXPGTyFesXP60UvWIXg9nqv9Fx8p9QeRgKPh8sfTS/QBeitq5XCCiL69Qz
+        s7FTzEf6lpvllpO4OQoIAPntxwbeuvZUkEAmE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qvKw0WPsUg4dwpxMx2O60wF14+Ak48CS
-        F0Er5LWhGuj9E432coKuGTtpVb1EbV7U70bw227iOCnbZNeTHplywtk/e69rgL0s
-        yH/toZA2qOInge8NIo2G6xl4iud3JyZfxhS5N85F+t09wzASG/ZVmC0clYYiEdue
-        et6eJQQHNu0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F3E382631;
-        Fri, 16 Oct 2020 17:53:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ZgElnFOgyWT6G8aEnz/BAB6Y6XL0qINe
+        8iFXow9mpdA8dQ7TGHN6qlmTa1n7D+t3HH8cwzrcXVttlKn7P3ajnvNX4unGD1sp
+        wkcAkMuPSNbSM0YYIgwCn80vamzHsWXo0yMRibD0OTFyci10gKAEfosl5Cx8y7P+
+        PrR1XrgGszk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 52FB193670;
+        Fri, 16 Oct 2020 17:59:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8D46E82630;
-        Fri, 16 Oct 2020 17:53:34 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C33599366F;
+        Fri, 16 Oct 2020 17:59:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
@@ -53,209 +53,43 @@ Cc:     git@vger.kernel.org
 Subject: Re: [PATCH 2/2] docs: demonstrate difference between 'am' and 'apply'
 References: <20201016205232.2546562-1-emilyshaffer@google.com>
         <20201016205232.2546562-3-emilyshaffer@google.com>
-Date:   Fri, 16 Oct 2020 14:53:33 -0700
-In-Reply-To: <20201016205232.2546562-3-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Fri, 16 Oct 2020 13:52:32 -0700")
-Message-ID: <xmqqk0vpalcy.fsf@gitster.c.googlers.com>
+        <xmqqk0vpalcy.fsf@gitster.c.googlers.com>
+Date:   Fri, 16 Oct 2020 14:59:53 -0700
+In-Reply-To: <xmqqk0vpalcy.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 16 Oct 2020 14:53:33 -0700")
+Message-ID: <xmqqft6dal2e.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 09D21540-0FFA-11EB-8DDD-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: EBDA6708-0FFA-11EB-B3CD-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 38c0852139..e64f3f10e3 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -24,6 +24,64 @@ Splits mail messages in a mailbox into commit log message,
->  authorship information and patches, and applies them to the
->  current branch.
->  
-> +This command applies patches as commits. Use linkgit:git-apply[1] to apply
-> +patches to the worktree without creating commits.
+> So, I am moderately against everything under 'use git apply' line of
+> the patch.  However, I do think it is a good idea to add a note
+> somewhere in the manual of "am" to say something along the lines of
+> the following (placed around here, or even immediately before we
+> give the sample patch we used in the above example):
+>
+>     While an output of "diff format-patch" (see above/below for an
 
-I am not sure if "applies patches as commits" is acceptable,
-understandable and not misleading to normal readers.  It takes a
-mailbox with mailed patches, and for each message, applies the patch
-in it on top of the current commit and records the result as a child
-commit using the log message in it.
+Gaah, too many cycles of wordsmithing and copyediting without the
+final proofreading.  The above should read "git format-patch", of
+course.
 
-As "git apply" is primarily meant to work on "git diff" output, and
-it does not necessarily work on an arbitrary mbox (think: MIME), I
-do not think "if you do not want to make commit, use apply" is a
-good suggestion to begin with.  They serve completely different
-purposes and take different form of inputs.
+>     example) is meant to be made into a commit with "git am",
+>     what you have may only be an output of "git diff" without log
+>     message and is not meant to be directly made into a commit.  In
+>     such a case, you may want to refer to git-apply[1] to learn how
+>     to apply such a change to your working tree (and optionally to
+>     the index).
+>    
+> It would be a good idea to redirect those readers who are looking at
+> "git am" when (perhaps realizing) they should rather be looking at
+> "git apply" earlier rather than later, so perhaps taking "see below"
+> side and giving it as a side-note before the example starts might be
+> better.
 
-> +
-> +EXAMPLE
-> +-------
-> +....
-> +# our sample patch, generated with 'git format-patch'
-> +$ cat ~/0001-README-add-more-text.patch
-> +From f9e01d7538c9d58b48500732b4f98f40f6ad845e Mon Sep 17 00:00:00 2001
-> +From: A U Thor <author@example.com>
-> +Date: Fri, 16 Oct 2020 13:14:42 -0700
-> +Subject: [PATCH] README: add more text
-> +
-> +Some additional context.
-> +
-> +Signed-off-by: A U Thor <author@example.com>
-> +---
-> + README | 2 +-
-> + 1 file changed, 1 insertion(+), 1 deletion(-)
-> +
-> +diff --git a/README b/README
-> +index cd08755..cfdf4e7 100644
-> +--- a/README
-> ++++ b/README
-> +@@ -1 +1 @@
-> +-Hello world!
-> ++Hello world! This is an example.
-> +--
-> +2.29.0.rc1.297.gfa9743e501
-> +
-> +# use 'git am' to create a new commit with details from the patch
-> +$ git status
-> +On branch main
-> +nothing to commit, working tree clean
-> +$ git am ~/0001-README-add-more-text.patch
-> +Applying: README: add more text
-> +$ git status
-> +On branch main
-> +nothing to commit, working tree clean
-> +$ git log --oneline
-> +dd6a400 (HEAD -> main) README: add more text
-> +90b59fb base commit
-
-It is good to show "log" output after you injested the patch, but
-without knowing that we used to have only one commit in the history,
-the gravity of what they are seeing here may not sink in to readers'
-minds.
-
-As I said already, I do not agree with the general idea to pretend
-that input to am is always a safe input to apply like the
-following.  However what we see above as an example session of "am"
-is an excellent thing to have, I would think.
-
-> +# use 'git apply' to apply to the worktree without creating a commit.
-> +$ git status
-> +On branch main
-> +nothing to commit, working tree clean
-> +$ git apply ~/0001-README-add-more-text.patch
-
-IOW, this step may even fail or produce garbage (think: MIME).
-
-> +$ git status
-> +On branch main
-> +Changes not staged for commit:
-> +  (use "git add <file>..." to update what will be committed)
-> +  (use "git restore <file>..." to discard changes in working directory)
-> +	modified:   README
-> +
-> +no changes added to commit (use "git add" and/or "git commit -a")
-
-
-So, I am moderately against everything under 'use git apply' line of
-the patch.  However, I do think it is a good idea to add a note
-somewhere in the manual of "am" to say something along the lines of
-the following (placed around here, or even immediately before we
-give the sample patch we used in the above example):
-
-    While an output of "diff format-patch" (see above/below for an
-    example) is meant to be made into a commit with "git am",
-    what you have may only be an output of "git diff" without log
-    message and is not meant to be directly made into a commit.  In
-    such a case, you may want to refer to git-apply[1] to learn how
-    to apply such a change to your working tree (and optionally to
-    the index).
-   
-It would be a good idea to redirect those readers who are looking at
-"git am" when (perhaps realizing) they should rather be looking at
-"git apply" earlier rather than later, so perhaps taking "see below"
-side and giving it as a side-note before the example starts might be
-better.
-
-> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> index 91d9a8601c..38e9d8f713 100644
-> --- a/Documentation/git-apply.txt
-> +++ b/Documentation/git-apply.txt
-> @@ -32,6 +32,61 @@ This command applies the patch but does not create a commit.  Use
->  linkgit:git-am[1] to create commits from patches generated by
->  linkgit:git-format-patch[1] and/or received by email.
->  
-> +EXAMPLE
-> +-------
-> +....
-> +# our sample patch, generated with 'git format-patch'
-
-s/format-patch/diff/
-
-I would not prepare the diff to be fed to apply with format-patch
-and use it verbatim.  This description is sewing seed to confuse
-newbies by doing so.  The "apply to the working tree, think while
-staring at the resulting 'git diff' output and decide the next move,
-which may include typing 'git commit -a -e'" workflow starts with a
-"git diff" output.
-
-If you have format-patch output, you are still better off running
-"am [-3]" on a throw-away branch if you want to take the "think
-while staring at the diff and decide the next move" approach.  That
-may better be added to "git am" documentation, though.
-
-> +$ cat ~/0001-README-add-more-text.patch
-> +From f9e01d7538c9d58b48500732b4f98f40f6ad845e Mon Sep 17 00:00:00 2001
-> +From: A U Thor <author@example.com>
-> +Date: Fri, 16 Oct 2020 13:14:42 -0700
-> +Subject: [PATCH] README: add more text
-> +
-> +Some additional context.
-> +
-> +Signed-off-by: A U Thor <author@example.com>
-> +---
-> + README | 2 +-
-> + 1 file changed, 1 insertion(+), 1 deletion(-)
-> +
-> +diff --git a/README b/README
-> +index cd08755..cfdf4e7 100644
-> +--- a/README
-> ++++ b/README
-> +@@ -1 +1 @@
-> +-Hello world!
-> ++Hello world! This is an example.
-> +--
-> +2.29.0.rc1.297.gfa9743e501
-
-So, the above sample input needs to be fixed, without e-mail headers
-or potential MIME.
-
-> +# use 'git apply' to apply to the worktree without creating a commit.
-> +$ git status
-> +On branch main
-> +nothing to commit, working tree clean
-> +$ git apply ~/0001-README-add-more-text.patch
-> +$ git status
-> +On branch main
-> +Changes not staged for commit:
-> +  (use "git add <file>..." to update what will be committed)
-> +  (use "git restore <file>..." to discard changes in working directory)
-> +	modified:   README
-> +
-> +no changes added to commit (use "git add" and/or "git commit -a")
-
-Or "apply --index" to affect both.  If we are helping people to
-learn the command by examples, we should add it (you may only be
-interested in teaching the difference between am and apply with this
-patch, but readers' interests are not limited by yours).
-
-> +# use 'git am' to create a new commit with details from the patch
-
-Again, I do not think this belongs here, especially given that the
-expected input is not necessarily out of format-patch.  Instead, a
-similar and opposite referral is needed to help readers who are here
-by mistake and should instead be over there.
-
-Thanks.
