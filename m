@@ -2,95 +2,91 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 634A4C433E7
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 01:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F999C433DF
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:18:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0C402083B
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 01:59:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2579D20878
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 02:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390164AbgJPB7j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 21:59:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33958 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729810AbgJPB7i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 21:59:38 -0400
-Received: (qmail 26324 invoked by uid 109); 16 Oct 2020 01:59:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 Oct 2020 01:59:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4334 invoked by uid 111); 16 Oct 2020 01:59:38 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Oct 2020 21:59:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 15 Oct 2020 21:59:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 0/1] Clarify and expand description of --signoff
-Message-ID: <20201016015937.GA3335046@coredump.intra.peff.net>
-References: <20201015215933.96425-1-bkuhn@sfconservancy.org>
- <59E3B060-63E3-41C2-A7C4-5B2C888F8D68@gmail.com>
- <CAPc5daWenXds=0BW0CXa=4MOF2UxDeQ8DF2+7V9-WkKwCFCDBw@mail.gmail.com>
+        id S2393648AbgJPCSQ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 15 Oct 2020 22:18:16 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:46032 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393644AbgJPCSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Oct 2020 22:18:16 -0400
+Received: by mail-ed1-f65.google.com with SMTP id dg9so667888edb.12
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 19:18:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lRq17MZ3XYahhddkO3K1goQHSIGYDntBHqpdLOzQ66c=;
+        b=LCgVSdrrUrM1PmqSWEmNktdgGDnjyGkUKR0k427zFBGyCLR0248G2Y7/7wFvVSCnuc
+         ZJiFvi0J/hwU+6Ag4RtVbYgZtcyvPLp7rpNpe9GSshosCtgIW7bKbpyR+0kivuSnpfF0
+         Te+rxZbO/aiGHPlmXen5y48tYehOdPFp1WyrCeQczQLKRCkblBZJK1HoxivOZ+pwfSxX
+         WrzYkrLZ+atqBLmgFqehZvq181YiWSciHc3yZqEWFDIF8LLto+SReGelB+IeTsaYJjXo
+         /XGJyG1+CnTPTU0Lk10MBChlihDrkvqQCNQL5Pgv5blDzygx24UbeADvnVjn6QGhJNzG
+         Awww==
+X-Gm-Message-State: AOAM532VRur4hlqnmAh+dI4D5voLPo4RLQpEFRiG3ONFHU42hGgiWdWP
+        u/eoz00rgoGPVUup3MS++6RRX9PXPRRFVWZb4aU=
+X-Google-Smtp-Source: ABdhPJyRWgxEXm7CTRWIgRMROdccQ3B8VrFWkgT/E4hSzEVAP+XxShpRrKyFRMcpKbkNoynaXKbmto89vu64hvGHpZo=
+X-Received: by 2002:a05:6402:13da:: with SMTP id a26mr1346960edx.291.1602814694091;
+ Thu, 15 Oct 2020 19:18:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPc5daWenXds=0BW0CXa=4MOF2UxDeQ8DF2+7V9-WkKwCFCDBw@mail.gmail.com>
+References: <20200809060810.31370-1-sunshine@sunshineco.com>
+ <20200809174209.15466-1-sunshine@sunshineco.com> <20201016001704.GA2937048@coredump.intra.peff.net>
+In-Reply-To: <20201016001704.GA2937048@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 15 Oct 2020 22:18:03 -0400
+Message-ID: <CAPig+cSU=1GcQuqZab+0Vff_A-JmD59wEc3RMr3wDojpgRYUuw@mail.gmail.com>
+Subject: Re: [PATCH v2] test_cmp: diagnose incorrect arguments
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 15, 2020 at 06:54:30PM -0700, Junio C Hamano wrote:
+On Thu, Oct 15, 2020 at 8:17 PM Jeff King <peff@peff.net> wrote:
+> On Sun, Aug 09, 2020 at 01:42:09PM -0400, Eric Sunshine wrote:
+> > [...] Make it easier for test authors to discover such problems early
+> > by sanity-checking the arguments to test_cmp(). [...]
+>
+> This patch caused some interesting confusion for me today.
+>   error: bug in the test script: test_cmp 'r2/.git/HEAD' missing
+> which was somewhat unhelpful (or at least less helpful than a regular
+> test failure). The test in question does this:
+>         test_cmp r0/.git/HEAD r2/.git/HEAD &&
+> and expects to fail if an earlier step didn't correctly create r2. Is it
+> a bug or misuse of test_cmp for it to do so? I could see an argument
+> that it is, but I'm also not sure if there's a convenient alternative.
 
-> > > Documentation/git-commit.txt    | 13 ++++++++-----
-> > > Documentation/merge-options.txt | 13 ++++++++-----
-> > > 2 files changed, 16 insertions(+), 10 deletions(-)
-> >
-> > Since the changes are exactly the same in the two files, maybe
-> > a preparatory patch that creates 'signoff.txt' and includes it
-> > in 'git-commit.txt' and 'merge-options.txt' would be a good idea ?
-> 
-> I actually think we are OK with two duplicated and leave that for
-> later clean-up. The more important would be to polish the text into
-> a good enough state quickly.
-> 
-> Another thing we should not forget is to update our SubmittingPatches
-> document. Since we are placing extra stress on that there is NO
-> inherent meaning in "sign off" and it is largely up to each project,
-> we should set a good example explaining what it means to THIS
-> project to sign your patches off, and SubmittingPatches is the
-> document to do so. Without such an update, I think the update
-> to these two files we see in this patch is incomplete.
+I can see the argument going both ways as to whether it's a misuse of
+'test_cmp'.
 
-I agree we should be leading by example here.
+> The best I could come up with is:
+>
+>   test_path_is_file r2/.git/HEAD &&
+>   test_cmp r0/.git/HEAD r2/.git/HEAD
+>
+> which isn't that great.
 
-We do already say pretty clearly what signed-off-by means in the
-project:
+Ævar ran into the same issue recently[1] and came up with the same
+workaround. Despite its good intention (trying to catch bugs in
+'test_expect_failure' tests), this change[2] doesn't seem to have
+caught any genuine bugs (it wouldn't even have caught the bug which
+served as its inspiration[3]), but has nevertheless caused a couple
+hiccups already. As such, I would not be opposed to seeing the change
+reverted.
 
-  $ grep -A14 '\[\[sign-off]]' Documentation/SubmittingPatches 
-  [[sign-off]]
-  === Certify your work by adding your "Signed-off-by: " line
-  
-  To improve tracking of who did what, we've borrowed the
-  "sign-off" procedure from the Linux kernel project on patches
-  that are being emailed around.  Although core Git is a lot
-  smaller project it is a good discipline to follow it.
-  
-  The sign-off is a simple line at the end of the explanation for
-  the patch, which certifies that you wrote it or otherwise have
-  the right to pass it on as an open-source patch.  The rules are
-  pretty simple: if you can certify the below D-C-O:
-  
-  [[dco]]
-  .Developer's Certificate of Origin 1.1
-
-What should we change there? We could perhaps bring up signoffs earlier
-or more prominently. Or tie it in to the git-commit docs by saying
-explicitly: these are _our_ project rules for signoffs.
-
--Peff
+[1]: https://lore.kernel.org/git/20200921104000.2304-15-avarab@gmail.com/
+[2]: https://lore.kernel.org/git/20200809060810.31370-1-sunshine@sunshineco.com/
+[3]: https://lore.kernel.org/git/7f408b7d4069403b969d334f4940ebf87f1dc797.1596906081.git.gitgitgadget@gmail.com/
