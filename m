@@ -2,149 +2,145 @@ Return-Path: <SRS0=w+PN=DX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E792BC433DF
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 03:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1C9DC433E7
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 05:29:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 838712078A
-	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 03:18:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 524092076A
+	for <git@archiver.kernel.org>; Fri, 16 Oct 2020 05:29:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="1WuFg5Zk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0Dx6rgo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394015AbgJPDSt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Oct 2020 23:18:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35192 "EHLO
+        id S2388441AbgJPF1j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Oct 2020 01:27:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394007AbgJPDSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Oct 2020 23:18:49 -0400
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com [IPv6:2607:f8b0:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2780C061755
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 20:18:48 -0700 (PDT)
-Received: by mail-il1-x144.google.com with SMTP id t12so1113154ilh.3
-        for <git@vger.kernel.org>; Thu, 15 Oct 2020 20:18:48 -0700 (PDT)
+        with ESMTP id S2388360AbgJPF1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Oct 2020 01:27:39 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0B04C061755
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 22:27:38 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id o4so2239203iov.13
+        for <git@vger.kernel.org>; Thu, 15 Oct 2020 22:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=A8zYVkPWY8ZVue6hcR7zikCL3fOu5uJBxyGupuuTGoE=;
-        b=1WuFg5ZkIp7JLZAOYhBHjG3bEgvUU7F2oyKVjoKrQeFbDFXyl9NPE4gSm/Hk1LHiSP
-         huKfJI9K1n8OBgbYuRJ64jTMDKOPHFDXDw58kK3O06z/2LSnruKvhC2mTbRp/1i8FX+r
-         /9UrDVuedhCRxJqHu5I+dxSzP+hVsFcub4t4JUD4eHBV88RCF6T905IIwBJS5pylx+OS
-         vC3bntCUn0mrOaB0LtDT4TReRf4p+aJ574a6d/YeSB1KEui2KsHpxzjl6qL+m89orlia
-         1tivV3iHnlia3SdenKAGSLOjaJkgNnd2ebXTxHtY68niR1MmyHom7A3QN0phf7dFn5/r
-         viag==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gXJev+sGATh8jc5fbjKzFODu6h9/7F1L4LLpy4Udhlw=;
+        b=N0Dx6rgoKAuEVZpYNU++SEV/TvGPSr1FnXmSpAktkzgDUogxYmoNqG3WxMGWioL89c
+         MPnyTueV59JggrJI5zOvsJhXQDZUhgqNu7DO1S+wut1wLB9112W8WFEIyqG6/PUOqt66
+         m4XpyUWHaVtw1V0nDk0ebrIHZ9LxvRDn9dEdbZr+v3fLNEA9Dt7hPFwjezSuNyg5z2GU
+         uYsR/phjwrSLB0ZjSU+5FypFzWjqD494fZnQ/Np+ll4ZX/N2jlFjjZ85iS/pRc1UiKF3
+         zx61AjFQQVViNKMlnUvFYnvLaeBcDcsrl1kxiKHiOxQuvJTGYXvqqUI6xoj+CmWdFR8V
+         aSfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=A8zYVkPWY8ZVue6hcR7zikCL3fOu5uJBxyGupuuTGoE=;
-        b=cHAOvxy+JjpgfMXV0BpSGQr9wz7ipMn13l7yTKyoi5zlbpOqOtsde3XwPK7hBW200g
-         QAF/usALy/f1mKjs0AdT3xH/QmdqGO3PFHDgKbiqfIYdhYb3eUQJfvnEynF9gXvdyZUC
-         YhBj2JPY+VUR0/w5S5ham/uvawxnCES8NKYqfCRHp0J/9h7Q0ktwtarRoLNHvYPArP5s
-         P21Qud2KP+cL3eOTaXdPQXCpZ7Pjn0QzCexn4rtnqOjrf6sN6NUDY01H/jD8wiZyA/ZN
-         pdXywPzrV7ultlAk3OAAo+0KpysL5LSZLtKwhWjTSjyQVslpjDh0oxqT99a4fp6X0Ngt
-         O8LQ==
-X-Gm-Message-State: AOAM532IM2yJfArxJPrH5NkY7bcN0OXnus3SIW/Vkdn6k5ltZVDGGvrz
-        vM35cWmbOj6CxNkf1PSLAlXz9g==
-X-Google-Smtp-Source: ABdhPJw25iuGgaVrhAYF2IZAVQCNV1+IXr8R1WzuxuLm4T6QEOIPwQsmuYa9MTCrtiiyI3FiKdxrGg==
-X-Received: by 2002:a05:6e02:1392:: with SMTP id d18mr1224526ilo.196.1602818328068;
-        Thu, 15 Oct 2020 20:18:48 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:f8a1:4f77:4a56:23a7])
-        by smtp.gmail.com with ESMTPSA id p4sm886538ilg.79.2020.10.15.20.18.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2020 20:18:46 -0700 (PDT)
-Date:   Thu, 15 Oct 2020 23:18:44 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, l.s.r@web.de,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 04/10] commit-graph: persist existence of changed-paths
-Message-ID: <20201016031844.GA2181783@nand.local>
-References: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
- <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
- <f1e3a8516ebd58b283166a5374843f5cb3332d08.1593610050.git.gitgitgadget@gmail.com>
- <20201015132147.GB24954@szeder.dev>
- <20201015214111.GA2176154@nand.local>
- <103404f0-a164-2550-4730-6b8773d3ca1f@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gXJev+sGATh8jc5fbjKzFODu6h9/7F1L4LLpy4Udhlw=;
+        b=A2H0Fy81H+KEE6QCrHUK2gKZZygG3pWS/PzhcqwAl61MrFoNhS60h7A7bYPBMk7bca
+         Bu1vCORcEb1j6PUrXSD7PCYFy0KdebEy/QLzPi52kGBHIQ20Piralz+6ZTCnWJe1ocnX
+         Hs3psT8uO6oZ0DWmGXC/ki8Bl8+DT72Zd3fXop3iI7WD6TEwPo5FwWqjxkNEnzZwXZMb
+         4maKqGbyTMwLoFbvY7gC6+6U6yu1pByN3kfYoN60BcP5bgD55VXYtrZtQl5E7sHLubyx
+         UxMmRtkHdFQJBZlAmFR9kYUbAJ7EmIn5c9a0FJyuqVGG6BJdjPYu4RDTGcnxWPsBMc+f
+         ZFMw==
+X-Gm-Message-State: AOAM530gD5k32LWIqxFNiV2rsja2+5Kx7ev9LoXviT5G09BG7DtGM/o4
+        jNDL7X2/FN3Ek25Gc20U2rlSZzcRzdSkFOWabQY=
+X-Google-Smtp-Source: ABdhPJzSPm+JpFffdQUagzrdelL7lwrEopv+lIWFls3bjrMlUIlaHmqXxVIFxKOY05UFRifgDWoP3RKCH/T0nsepnu0=
+X-Received: by 2002:a6b:dc15:: with SMTP id s21mr1192970ioc.162.1602826058159;
+ Thu, 15 Oct 2020 22:27:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <103404f0-a164-2550-4730-6b8773d3ca1f@gmail.com>
+References: <CAHjREB4gsyOrdnhp0_9rs0wv5q5H47-3RcB3fm5NY+L=3SYnMA@mail.gmail.com>
+ <22e3d737-8621-9f20-307e-fc4c2a47ec0c@gmail.com> <CAHjREB59HjZAs98wMPtMANcHUaXGou7CYg9vAacc3m4uz1yUug@mail.gmail.com>
+ <7d691f37-b8b7-510d-ba46-51a4a7587226@gmail.com> <CAHjREB6j6BqZ49wX5uqEOiysTAm8Oo7N=EFpcoovWKkBghBjxQ@mail.gmail.com>
+ <xmqq362jsahk.fsf@gitster.c.googlers.com> <CAHjREB4Qw78xS-T=LA80yVf_u3=Hbpxg5tqBnP1QK44FRkBFOQ@mail.gmail.com>
+ <3c0bf417-b3d5-b615-c605-49a5d8be4e06@gmail.com> <CAHjREB7xhBWHUCJ+T78i6dDGQr055sMAaYzG4gaQSr0T88cseg@mail.gmail.com>
+ <95c90e7a-8f4c-32b9-2b0e-9efce2acfb8e@gmail.com> <CAHjREB6i7ZSSXk10OAOXcL-Av3WzesCkMKL2ES_aBRsrynT9DA@mail.gmail.com>
+ <8c9b409b-4e44-ca8a-9075-36a7332f9765@gmail.com>
+In-Reply-To: <8c9b409b-4e44-ca8a-9075-36a7332f9765@gmail.com>
+From:   Sangeeta NB <sangunb09@gmail.com>
+Date:   Fri, 16 Oct 2020 10:57:26 +0530
+Message-ID: <CAHjREB44_bjPF86fF3EToD6mVqeLbmtzsN8NPYu1QLes7kpwHg@mail.gmail.com>
+Subject: Re: [Outreachy] Introduction
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, kaartic.sivaraam@gmail.com,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 15, 2020 at 10:18:47PM -0400, Derrick Stolee wrote:
-> On 10/15/2020 5:41 PM, Taylor Blau wrote:
-> > So, we need to be more aggressively checking the Bloom filter settings
-> > in any layer we want to reuse a Bloom filter out of before reusing it
-> > verbatim in the current layer. The patch below the scissors line is
-> > sufficient to do that, and it causes the third test to start passing.
+Hey everyone,
+
+On Thu, Oct 15, 2020 at 8:15 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+
+> diff --git a/submodule.c b/submodule.c
+> index 8f6227c993..c4182be633 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1679,6 +1679,8 @@ unsigned is_submodule_modified(const char *path,
+> int ignore_untracked)
+>          strvec_pushl(&cp.args, "status", "--porcelain=2", NULL);
+>          if (ignore_untracked)
+>                  strvec_push(&cp.args, "-uno");
+> +       else
+> +               strvec_push (&cp.args, "--ignore-submodules=none");
 >
-> I think there are three things we should keep in mind:
+>          prepare_submodule_repo_env(&cp.env_array);
+>          cp.git_cmd = 1;
 >
-> 1. Incompatible Bloom filter settings between layers should be seen
->    as _inconsistent data_ as Git should not be writing incremental
->    commit-graph files with inconsistent Bloom filter settings. Thus,
->    when reading the commit-graph chain we should prevent incompatible
->    filters from being used. One way to do this is to notice different
->    settings and completely disable Bloom filters. The other way would
->    be to take the settings from the first layer with filters and then
->    clear the chunk_bloom_indexes and chunk_bloom_data fields for the
->    layers that don't agree. This fits with an expectation that lower
->    layers are larger, so more filters can be used in that situation.
+> fixes it, I'm unsure at the moment if we should be adding the extra flag
+> here or setting the appropriate option in status when -uno and
+> --ignore-submodules=<option> are both omitted though
 
-Sure; I'd be fine with only allowing filters computed with the settings
-present in the lowest or largest layer in the event that multiple layers
-exist with incompatible settings.
+Ya, that does work and the PR passed all the tests after this correction.
+I have submitted the patch[1] for it and would be glad to have reviews
+on it from the git community.
 
-I'm trying to point us towards a direction of not optimizing too far
-along a direction that we're unlikely to take, while also trying to do
-something relatively non-invasive to make it possible for a version of
-Git to change the default Bloom settings. That is, if a user is writing
-split commit-graphs, and we change the default Bloom settings, they
-shouldn't have to recompute or merge down all of their Bloom filters.
+[1] https://public-inbox.org/git/pull.751.git.1602781723670.gitgitgadget@gmail.com/T/#u
 
-If that's something that we never think is going to happen, I'm fine
-with not thinking too hard about it. But, I also don't want to paint
-ourselves into a corner, so I think something like the patch I wrote in
-the email that you're replying to actually may be worth pursuing
-further. I dunno. Definitely after 2.29, though.
+>
+> Have you setup a config.mak file? Mine looks like
+>
+> DEVELOPER = 1
+> SANITIZE = address,leak
+> CFLAGS += -ggdb3
+> CFLAGS += -fvar-tracking-assignments
+> CFLAGS += -fno-omit-frame-pointer
+>
+> Which will build git with warnings enabled, debugging information and
+> enables the address sanitizer. Then you can run the git you have built
+> under gdb with
+>
+>         GIT_DEBUGGER=1 bin-wrappers/git
+>
+> If you want to debug a particular test then I find adding `test_pause`
+> to the test and then running
+>
+>         GIT_DEBUGGER=1 git
+>
+> in the shell that the test opens (it sets up the path appropriately).
+> You may want to add LSAN_OPTIONS=detect_leaks=0 to the commands above or
+> set up a suppressions file
+>
+> I also use printf quite a bit but it does tend to break other tests
+> which can be awkward.
+>
 
-> 2. We should be sure that Git will not agree to write incompatible
->    settings between layers of a commit-graph chain. Even more, it
->    should definitely not re-use filters when merging layers with
->    incompatible filter values. The strategy above to ignore Bloom
->    filters in incompatible upper layers is enough of a guard against
->    the "merge layers" situation.
+No, not yet. I would set it up. Thanks again!
 
-Yeah, this would be fine with me.
+As my next step, I was looking for some #good-first-issue to work on
+where I found an issue[2]. Has someone already worked on it? If not, I
+would love to work on this.
+Or if you have anything else in mind that I could work on please do
+suggest to me.
 
-> 3. Allowing users (or future Git developers) to adjust the default
->    Bloom filter settings is one that is good to do for future-proofing,
->    but not one that I expect to be widely used (any gains here are
->    minuscule compared to the results already achieved with the defaults).
->    On top of that, including incompatible settings across layers is even
->    less likely to be a real use case. We should not be straining to make
->    the code even worse for this imaginary scenario.
+[2] https://github.com/gitgitgadget/git/issues/486[3]
 
-Right, I think we're pretty much in agreement here. Doing something easy
-to make sure that we don't run into a wall seems to make sense, but I
-think modifying the revision walk machinery to keep track of multiple
-Bloom keys computed with different settings corresponding to the set of
-Bloom filter settings in commit-graph layers is probably too far in that
-direction.
-
-For what it's worth, I was mainly talking about it to say that it would
-be more effort than it's probably worth to do. There's also nothing that
-we're currently discussing that would prevent us from taking that same
-direction up in six months from now.
-
-Thanks,
-Taylor
+Thanks and Regards,
+Sangeeta
