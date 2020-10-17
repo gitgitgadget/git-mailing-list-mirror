@@ -2,172 +2,97 @@ Return-Path: <SRS0=oQO4=DY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 028C1C43457
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 07:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E11B3C433DF
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 08:09:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A570A2072D
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 07:56:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A74672072D
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 08:09:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m513KdP8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lg2V5Q0S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437542AbgJQH4P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 03:56:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
+        id S2437627AbgJQIJv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 04:09:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437534AbgJQH4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 03:56:14 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1672CC061755
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 00:56:14 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id j8so2751227pjy.5
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 00:56:14 -0700 (PDT)
+        with ESMTP id S2437624AbgJQIJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 04:09:49 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FF04C061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 01:09:49 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id w141so5344310oia.2
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 01:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FFSD8VrsC0mgWb6PkiATTATFMdZzcAICEjAXPCadm4s=;
-        b=m513KdP8tfnGWt/T0erqKjqaV72gpSP13Isir7qde1auyMW0syH8zi76U9ZsA4Hq0l
-         PRzAcIgYE78CMMFP5hwShWpCdr7MYRMzex797E7fSyIG/bXqHWembK+O57+mJ4yTakmR
-         rC4gpcG0wP9VAO9fLcTPH85NZVWdLabGBAns/KKT4HIt9vw8GMlSGVzgdfXuBmKtBof5
-         TAjaPjxXP0FufZzp3owaDQ1zro3xPhjJlmPKdeacoyFI7j2LQTZp7dVUFAfcm6PgY4wi
-         04oeut8YZgY2bcMohtANZ5j7TcnHTURKweCqMZOY1FwozpWy4Bq7U2CgEirWcGH3K20f
-         ev0w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CXkgqtfzvEx/FFaTF9d07XmFsZBxc3mMMlWjR6UiUPA=;
+        b=lg2V5Q0Sz24q+YsoLwPeifQcJ5DRUtqbCm0v8Z79juzFiAAlHNBf73ezg8/odeO4L4
+         RX+hFPNbbhA1Oqr4yLsQPtS1XbR+kkfzOGdhR9ouh7fFI3aXP33bOXWoPJ46zTdpWvaf
+         IdZqIitvbCeXL2KbK2WsDIHiTjPrgYH8h9yE6fS9nlDPpQQOD4whgu4t4ZvugacDlmth
+         HGelRVZnYxa6PDWltRK68YpqYJPt61CHT8pMHaSPYkmVtXpeEUwI+nuxGOE5FJIkFOZ7
+         AdH7s3I7TjazlQf9+NGChvRIsfF+8yZZTSZQHCfvn0KAnLWyU4tFmRzMi457v5yLAaav
+         uklw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FFSD8VrsC0mgWb6PkiATTATFMdZzcAICEjAXPCadm4s=;
-        b=WAyeKAMqlhkHCIMRxvk2NziW39shCn6pHfIad6laq3WYwSmqlNNwptoA/sSB0A16mw
-         BRdJV9ikwMWcqTX5GW8SZuWxKMbR+FgrtQQO90361up6jGnvoGBEWnq1ciK1Gisv+r2Z
-         7jjviG5GS46Kdw7EcfiPpo7EtIJY97tkfnWLHmqQM1/Lw8XvWFcowRNqtqyH+QVdIRP5
-         rpWk5ejz1WGZtqOPOdvEcvV+NRzC2ZpiwzOUerc46B540qJL6MciM3xk0/4niNbQK+tt
-         TG59/j/PUSVmqIoLUJGc5+c8ioLwu/n2LApFMEmEmWYfUvvP0S/1a+5pECzgH/y7C1Sx
-         w+YQ==
-X-Gm-Message-State: AOAM532FEeIPyvWg8TGWTu/Ff36PTnCSlDIe0YlTiU9/OReevz8rcJZ4
-        f443oTjIOz/i1zBQD91d+I/60CTQaTfJiA==
-X-Google-Smtp-Source: ABdhPJxYdtmr8mV9+XvOJyZXIL7Z7S32p9AX4lL356B/RRGsQfpEoEGHB7pqJ5LkcJDn4S8l7w9nsA==
-X-Received: by 2002:a17:90a:aa18:: with SMTP id k24mr7799214pjq.231.1602921373428;
-        Sat, 17 Oct 2020 00:56:13 -0700 (PDT)
-Received: from localhost.localdomain ([106.201.2.128])
-        by smtp.gmail.com with ESMTPSA id t2sm4994162pji.12.2020.10.17.00.56.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2020 00:56:13 -0700 (PDT)
-From:   Charvi Mendiratta <charvi077@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com,
-        sunshine@sunshineco.com, Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v2 5/5][Outreachy] t7201: place each command in its own line
-Date:   Sat, 17 Oct 2020 13:24:55 +0530
-Message-Id: <20201017075455.9660-6-charvi077@gmail.com>
-X-Mailer: git-send-email 2.29.0.rc1
-In-Reply-To: <20201017075455.9660-1-charvi077@gmail.com>
-References: <20201015175709.20121-1-charvi077@gmail.com>
- <20201017075455.9660-1-charvi077@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CXkgqtfzvEx/FFaTF9d07XmFsZBxc3mMMlWjR6UiUPA=;
+        b=irv+MrYDaX4OrbPNGPryAFKuV832Vswab+yEpjOZEWReKbYq/EK6TrDeP6j+IFkZmW
+         y2e/cPf1gXgDvrpfeHhk14X60FkyQmbbyq8chhgrvrmnu/zJswwQy29YoXX3qV8EQg3j
+         Sb4T3uM9UB8fvPlhYoSZYM8uylssR/YrN6E0baYk8UvNpNCw3vioU8V5xt53/+H1BtXC
+         Tyg8UZ5m2eyviRSKVilQs/Gia5Ara0z8pybdQ8GcK5aduJjGKIvPjoRd058h1aRDvUSL
+         5Lj1R8/rvHcUHYXQzIYLEWVlaojg76+gCh25JD99SQcldJ1/U5jG5JlGd5vheg6pXRWg
+         62Wg==
+X-Gm-Message-State: AOAM532WffIh2QC+GA/S0M6BvXw/jGwA0i2RW+Mnsmt9k06Sl5zgPm9+
+        FjBbqfvaMo2/Gy2IwRN3RhAsYA66OGZYt5E+uk+MZ8+Cna8=
+X-Google-Smtp-Source: ABdhPJwPWVe55m8m3PeeaAigltMZ4N3veD5lGC08JKXg7vGTO+56kQp7O93OOYcKQKpE9HU+g9+MaaX+wo38HVjcaAc=
+X-Received: by 2002:aca:55c3:: with SMTP id j186mr4982492oib.98.1602922188711;
+ Sat, 17 Oct 2020 01:09:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPSFM5eK1RFTbdTbF8dHMzcRh1SnSfzqh_5re22qS=KFoVRNJg@mail.gmail.com>
+ <CAP8UFD1m2zXUm1PXmJKW2MxA9XZVUOkBFA62jLP7jx6_DCYZGw@mail.gmail.com>
+ <CAPSFM5cXN57z56Cvq-NX1H4raS7d8=qXEFDQqpypJfoYzbxcyA@mail.gmail.com>
+ <CAPSFM5dxuEsGkFNTjCF4tLE611n1zLt2z+2JU03dORHxSK1i6w@mail.gmail.com> <xmqqblh3fgg6.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqblh3fgg6.fsf@gitster.c.googlers.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Sat, 17 Oct 2020 13:39:37 +0530
+Message-ID: <CAPSFM5dnV7q6y-CuCR90U7=fyow9pZ3dnViDjx+zFdFZ_s=hBQ@mail.gmail.com>
+Subject: Re: [Outreachy] Introduction
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Multiple commands on one line should be split across multiple lines.
+On Fri, 16 Oct 2020 at 00:46, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Charvi Mendiratta <charvi077@gmail.com> writes:
+>
+> > Thank you Christian and also I apologise, since I forgot to cc the
+> > mailing list on last reply .
+> >
+> > I have submitted the patch[1] for the microproject "modernizing the
+> > test scripts" and would be glad to have reviews from the community and
+> > will work on updates required .
+>
+> Welcome.
+>
+> If "Charvi Mendiratta" is the name you go by, please correct the
+> author names and sign-offs on your patches to match it.
+>
 
-Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
----
- t/t7201-co.sh | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+Thank you Junio, I have done the changes and sent the other patch series .
 
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 5898182fd2..b36a93056f 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -157,7 +157,8 @@ test_expect_success 'checkout -m with merge conflict' '
- '
- 
- test_expect_success 'format of merge conflict from checkout -m' '
--	git checkout -f master && git clean -f &&
-+	git checkout -f master &&
-+	git clean -f &&
- 
- 	fill b d >two &&
- 	git checkout -m simple &&
-@@ -180,7 +181,9 @@ test_expect_success 'format of merge conflict from checkout -m' '
- '
- 
- test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
--	git checkout -f master && git reset --hard && git clean -f &&
-+	git checkout -f master &&
-+	git reset --hard &&
-+	git clean -f &&
- 
- 	fill b d >two &&
- 	git checkout --merge --conflict=diff3 simple &&
-@@ -205,7 +208,9 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
- '
- 
- test_expect_success 'switch to another branch while carrying a deletion' '
--	git checkout -f master && git reset --hard && git clean -f &&
-+	git checkout -f master &&
-+	git reset --hard &&
-+	git clean -f &&
- 	git rm two &&
- 
- 	test_must_fail git checkout simple 2>errs &&
-@@ -218,7 +223,8 @@ test_expect_success 'switch to another branch while carrying a deletion' '
- test_expect_success 'checkout to detach HEAD (with advice declined)' '
- 	git config advice.detachedHead false &&
- 	rev=$(git rev-parse --short renamer^) &&
--	git checkout -f renamer && git clean -f &&
-+	git checkout -f renamer &&
-+	git clean -f &&
- 	git checkout renamer^ 2>messages &&
- 	test_i18ngrep "HEAD is now at $rev" messages &&
- 	test_line_count = 1 messages &&
-@@ -237,7 +243,8 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
- test_expect_success 'checkout to detach HEAD' '
- 	git config advice.detachedHead true &&
- 	rev=$(git rev-parse --short renamer^) &&
--	git checkout -f renamer && git clean -f &&
-+	git checkout -f renamer &&
-+	git clean -f &&
- 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
- 	grep "HEAD is now at $rev" messages &&
- 	test_line_count -gt 1 messages &&
-@@ -254,7 +261,8 @@ test_expect_success 'checkout to detach HEAD' '
- '
- 
- test_expect_success 'checkout to detach HEAD with branchname^' '
--	git checkout -f master && git clean -f &&
-+	git checkout -f master &&
-+	git clean -f &&
- 	git checkout renamer^ &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
-@@ -269,7 +277,8 @@ test_expect_success 'checkout to detach HEAD with branchname^' '
- '
- 
- test_expect_success 'checkout to detach HEAD with :/message' '
--	git checkout -f master && git clean -f &&
-+	git checkout -f master &&
-+	git clean -f &&
- 	git checkout ":/Initial" &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
-@@ -284,7 +293,8 @@ test_expect_success 'checkout to detach HEAD with :/message' '
- '
- 
- test_expect_success 'checkout to detach HEAD with HEAD^0' '
--	git checkout -f master && git clean -f &&
-+	git checkout -f master &&
-+	git clean -f &&
- 	git checkout HEAD^0 &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
--- 
-2.29.0.rc1
-
+> > While working on the same , I got familiar with the mailing list ,
+> > guidelines , workflow and also learned more about the git commands.
+> > Next , I would also like to know how to proceed further and learn more
+> > about code base.
+>
+> Nice.
