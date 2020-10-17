@@ -2,128 +2,177 @@ Return-Path: <SRS0=oQO4=DY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F03F6C433E7
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 20:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21456C433E7
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 21:04:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95CD9207BB
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 20:38:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3024207BB
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 21:04:41 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LU6SJGw5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438885AbgJQUia (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 16:38:30 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51798 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2438845AbgJQUia (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 17 Oct 2020 16:38:30 -0400
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 940C66044F;
-        Sat, 17 Oct 2020 20:38:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1602967108;
-        bh=s2zYujfHSKHWymwj1siVEizDr1SKasEAqSixM8cUH/U=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=sti2QutQ3vZoPq64S/ic99MYWSTdn09ZRSErHnEZcRUnEeF4lt4Qd5/lUimOcBRvn
-         7sp08gZhl0aEZUa03xjKJPoydl+r0HmFjnhR4iROeAMcGYPX+1d40PZ6cwNu0kgFRO
-         M8I2TsOtI40N2VoNDjxaiQKE2NFgq/Rp6NDTJaUdGHbODfvNq6CG12NTlkusmVtTaS
-         GpBnd7VAXo7CmQAOCVQAtNgqVjv9kPX5u3Er9C14oiouP5hCBeoAj5lAMze9yoDgAc
-         MZk7AzWIX8N4pestQOXWEcAr/9rbyT9CLCi3ae18ckcJBRg4entW1o6ShgrLFLm4FE
-         olNVaACqyaDLwgAfSetJYxlKccDVIuUBdFnKnJr6MECAGh9+jpm/0vQE/lscf2/0Mj
-         pj7mSGCMF/HhV3LEprYqR9UiM0uZmzjaTMvdyB/NFlALD9rEX98+CS1C14MIWtvTkb
-         x1eaVxgnC560H5SUXPqSdcSTEXYsWJJHU7B87yqhu11l0/SfUgD
-Date:   Sat, 17 Oct 2020 20:38:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Sri Harsha Akavaramu <harsha.akavaram@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: about git hooks
-Message-ID: <20201017203822.GG490427@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Sri Harsha Akavaramu <harsha.akavaram@gmail.com>,
-        git@vger.kernel.org
-References: <CANZ9uZyL=+LNS-+2p3ukSPg_UXxjfcjD8QPVF4p0NF5-+eYMYA@mail.gmail.com>
+        id S2439453AbgJQVEk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 17:04:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2439450AbgJQVEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 17:04:40 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BF5BC061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 14:04:40 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id b127so8973941wmb.3
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 14:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=i1nIsUlsq85JzkWIjic8J4SiPwSM4KOitfnu5zM8bVw=;
+        b=LU6SJGw5w7JaitRwh4sQguQQFHrn5B+ZS1ezOIeHa+4KrWpNZnyeliRw+5KMtI3U4J
+         Nmy+wpwFiSgRCqmoBDKeIyI36/b/xKvKWod8iVa8ji2DL5IDksSmynwzfFtvRtOYVkGW
+         Ch29J5crBP85q+mh38IJMLAbelgIQZwQltKf/3MO8D+pY43QJ5qSjtHu5lVAqHuHfG9s
+         bSTE8njKAv+8L8wPchJ0MYOED8zYXySylOYPgGW2QjbLUCyMG/huOGoGf7MEgoA8uych
+         T8p6el3ACuRj9UQBHEEIc+IM+my3BpUyzOXHXNfeZDY+FCkjzNwdfcz0BsvV1a1PXyBA
+         eapA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=i1nIsUlsq85JzkWIjic8J4SiPwSM4KOitfnu5zM8bVw=;
+        b=MOC1NbRlAER5mYGr85Ko+c/RoUTrjuWsc89fclJX4lRKk43Sl70POhlmfS/5Ih1xkl
+         s5pHgivJM4Sj4ZWTXagMm+IOONQS7WvMI6R45+O2tag5RhxXKPiaaOUEOdqibklzJfPO
+         d9y4c2ICL7/qh8Cc77Hic+Re4haR8Ayemrxmfrud8bbMtGXTfa/VgNQrTDq1YhX87bxZ
+         Vsjml3jSBVXQAa4I5fqhrFBDl3g+viCzfvocPr1uPolP6I3aJ8J4i3fZTxGDS4uWuveV
+         ImdyKojS1Ob5/BShMWzzimKiGsBr42VUUJ+jCsfrvovPdr780YfGfQe70Dqmw5TrkAF1
+         AzJw==
+X-Gm-Message-State: AOAM532W0pG0YUr+Huuhgre+u647duLJeYhZ9SGfY+5QBCN9sn2Wt+0Y
+        fLR+5LXjp3t8l1MvOzMRwC9KR3rCyn4=
+X-Google-Smtp-Source: ABdhPJzvIjF8KyocMpRFOX4QkK03FD6D7+1ywQfFsJkQFs0uVyv5hSlHlfdN4Gd9ChP7daqPt8l+2w==
+X-Received: by 2002:a7b:cb8d:: with SMTP id m13mr9791517wmi.59.1602968678569;
+        Sat, 17 Oct 2020 14:04:38 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a199sm9443719wmd.8.2020.10.17.14.04.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Oct 2020 14:04:37 -0700 (PDT)
+Message-Id: <pull.756.git.1602968677.gitgitgadget@gmail.com>
+From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 17 Oct 2020 21:04:32 +0000
+Subject: [PATCH 0/4] use fsmonitor data in git diff eliminating O(num_files) calls to lstat
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BzCohdixPhurzSK4"
-Content-Disposition: inline
-In-Reply-To: <CANZ9uZyL=+LNS-+2p3ukSPg_UXxjfcjD8QPVF4p0NF5-+eYMYA@mail.gmail.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>, Utsav Shah <utsav@dropbox.com>,
+        Nipunn Koorapati <nipunn1313@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Credit to alexmv who made this commit back in Dec, 2017 when he was at dbx.
+I've rebased it and am submitting it now.
 
---BzCohdixPhurzSK4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+With fsmonitor enabled, git diff currently lstats every file in the repo
+This makes use of the fsmonitor extension to skip lstat() calls on files
+that fsmonitor judged as unmodified.
 
-On 2020-10-17 at 14:24:10, Sri Harsha Akavaramu wrote:
-> Hi git,
+I was able to do some testing with/without this change in a large in-house
+repo (~ 400k files)
 
-Hey,
+-----------------------------------------
+(1) With fsmonitor enabled - on master of git (2.29.0)
+-----------------------------------------
+../git/bin-wrappers/git checkout HEAD~200
+strace -c ../git/bin-wrappers/git diff
 
-> I just wanted to know something about git hooks.
->=20
-> we use GitHub enterprise and I'm the owner of the GitHub.
-> I'm trying to understand that I want to pose the pre-commit and
-> post-commit rules on all the developers by default and is there a way
-> to pose git hook restrictions on all developers on default.
->=20
-> I came to know when reading with the documentation we cant push hooks
-> to source control. Then what is the best preferred way to pose
-> pre-commit things on all developers using the repository?
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 99.64    4.358994          10    446257         3 lstat
+  0.12    0.005353           7       764       360 open
 
-This is a great question, and it's kind of answered in our FAQ[0].  The
-short answer is that you don't.
+(A subsequent call)
+strace -c ../git/bin-wrappers/git diff
 
-It's possible for any user to simply bypass pre-commit hooks with
---no-verify without being noticed, and there are a lot of good reasons
-to do so.  For example, if I need to make a large set of changes, I may
-make a large number of temporary commits, one each time I make a change
-that works.  Those commits won't meet anybody's set of standards and
-therefore won't pass the hook, and I'll need to clean them up later, but
-that helps me organize my development process in a useful way.  The hook
-here would just be an annoyance that gets in the way.
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 99.84    4.380955          10    444904         3 lstat
+  0.06    0.002564         135        19           munmap
+...
 
-You may wish to provide hooks and an install script for the benefit of
-the user who wants them, but anything that runs on a developer system
-cannot be an effective control.
+-----------------------------------------
+(2) With fsmonitor enabled - with my patch
+-----------------------------------------
+../git/bin-wrappers/git checkout HEAD~200
+strace -c ../git/bin-wrappers/git diff
 
-The right way to add checks that need to apply to all users is to use
-either a pre-receive hook or a CI system, plus code review.  That lets
-your tooling verify things like commit message formatting, code
-formatting, tests, and other things you'll want to check before merge.
-The code review, besides being a best practice for finding bugs and
-problems before merge, also prevents developers from neutering the CI
-system by disabling it from working properly.
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 50.72    0.003090         163        19           munmap
+ 19.63    0.001196         598         2           futex
+...
+  0.00    0.000000           0         4         3 lstat
 
-That's the way that most organizations handle these problems, and
-generally it works pretty well.
 
-[0] https://git-scm.com/docs/gitfaq#Documentation/gitfaq.txt-HowdoIusehooks=
-topreventusersfrommakingcertainchanges
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+-----------------------------------------
+(3) With fsmonitor disabled entirely
+-----------------------------------------
 
---BzCohdixPhurzSK4
-Content-Type: application/pgp-signature; name="signature.asc"
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 98.52    0.277085       92362         3           futex
+  0.27    0.000752           4       191        63 open
+...
+  0.14    0.000397           3       158         3 lstat
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+I encoded this into a perf test with results as follow:
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX4tWPgAKCRB8DEliiIei
-gft7AP42baLhid2QGPHuYSGDQr4bTGWZlOmfhzMSu5k/WsrhWAEA7mlOoMbUBKPc
-jWLw1TxLF3Sj16iMQbyIvDy8O7dmzwI=
-=UqyN
------END PGP SIGNATURE-----
+On master (2.29)
 
---BzCohdixPhurzSK4--
+Test                                                             this tree
+--------------------------------------------------------------------------------
+7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         2.52(1.59+1.56)
+7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.18(0.12+0.06)
+7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.36(0.73+0.62)
+7519.5: diff (fsmonitor=.git/hooks/fsmonitor-watchman)           0.85(0.30+0.54)
+7519.7: status (fsmonitor=)                                      0.69(0.52+0.90)
+7519.8: status -uno (fsmonitor=)                                 0.37(0.28+0.81)
+7519.9: status -uall (fsmonitor=)                                1.53(0.93+1.32)
+7519.10: diff (fsmonitor=)                                       0.34(0.26+0.81)
+
+With this patch
+
+Test                                                             this tree
+--------------------------------------------------------------------------------
+7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         2.84(1.70+1.76)
+7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.18(0.13+0.05)
+7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.35(0.81+0.53)
+7519.5: diff (fsmonitor=.git/hooks/fsmonitor-watchman)           0.15(0.11+0.05)
+7519.7: status (fsmonitor=)                                      0.71(0.54+0.90)
+7519.8: status -uno (fsmonitor=)                                 0.38(0.30+0.81)
+7519.9: status -uall (fsmonitor=)                                1.55(0.93+1.34)
+7519.10: diff (fsmonitor=)                                       0.35(0.32+0.76)
+
+Alex Vandiver (1):
+  fsmonitor: use fsmonitor data in `git diff`
+
+Nipunn Koorapati (3):
+  t/perf/README: elaborate on output format
+  t/perf/p7519-fsmonitor.sh: warm cache on first git status
+  t/perf: add fsmonitor perf test for git diff
+
+ diff-lib.c                | 17 +++++++++++++++--
+ t/perf/README             |  2 ++
+ t/perf/p7519-fsmonitor.sh | 19 ++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 3 deletions(-)
+
+
+base-commit: d4a392452e292ff924e79ec8458611c0f679d6d4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-756%2Fnipunn1313%2Fdiff_fsmon-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-756/nipunn1313/diff_fsmon-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/756
+-- 
+gitgitgadget
