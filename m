@@ -2,107 +2,99 @@ Return-Path: <SRS0=oQO4=DY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23472C433DF
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 20:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2AEBC433E7
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 20:18:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9D0A2075E
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 20:11:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F5A920714
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 20:18:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cZrDgNjG"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GEfM0hUd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439728AbgJQULz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 16:11:55 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51163 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439725AbgJQULz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 16:11:55 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4BABB105B6E;
-        Sat, 17 Oct 2020 16:11:53 -0400 (EDT)
+        id S2439725AbgJQUSp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 16:18:45 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57896 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729935AbgJQUSo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 16:18:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 22AB31090B9;
+        Sat, 17 Oct 2020 16:18:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LjU3VIrVplrcT0wjeutxkNZCKAA=; b=cZrDgN
-        jG3wWWvmExu3B7x2erXARtZa0kwaFxMuvOK5uBNh4mmp9K6mkuQhqXdpuVZdochG
-        e++0aYX/pH/hjDFcy8SP8gq0t7vorXDSN2Ggkj+4C/ETSAkXXEhdkhgc99g1NDyz
-        IwzmjAQlcCwrmoCxV1KZsRzRzGJ1LqwJ0MGqo=
+        :content-type; s=sasl; bh=+pQSONcS6eZU+JziIOklNXQA+jQ=; b=GEfM0h
+        Ud4pOK7nZ43A7YZtL66sQ/ZtHMKlJXgrSAIjvuqN39eFucVFEfKd3Q8KHS61x7ps
+        2m7/1IsQO5e3+Nmgpj+e9h/1DvyGra4i4YpvYF7UMUEkTsVJRoquJSfxNT3RfvIn
+        PJhxPO/RlTE+Rfgxuh1CnQjZoUcDhYuOvSSu8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OVJ2VDtzZ0fYrGvGvRgGPvat4EDxKCGc
-        8o5L7S9SW509n1m+6IgUPJ1yedMjtldc6K0q/XOrO1Jkn+xm1kD2Sou9FaTkgd/i
-        49qk6wesBdrwaPDw5P9ax7rK2VaLru7QkPhVRsOufloIdQ9+tcPJqTP1uMMSyr8X
-        2QEhazBJ0DI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 44658105B6D;
-        Sat, 17 Oct 2020 16:11:53 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=baysl2Fd8+TiqC0DsduX5o9UoBSXVU9F
+        xaHVkdaPyfLIw5E2EeS4HPPkKMYq1aOMxWSv8n61zPOpPfyeO/UDlvWUCA7BZYPx
+        zJuPO2d9YTgR6h8dnJruUxic+4vLLnuVJmhBfoqZQBS++PgqqYYcw2dY4KDBJS2R
+        sTZghQPbPf0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B0B61090B8;
+        Sat, 17 Oct 2020 16:18:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
+Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8D740105B6C;
-        Sat, 17 Oct 2020 16:11:50 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 551F31090B7;
+        Sat, 17 Oct 2020 16:18:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Pratyush Yadav <me@yadavpratyush.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [GIT PULL] git-gui changes for v2.29
-References: <20201017163411.hk7tqwzyqzvynf6c@yadavpratyush.com>
-Date:   Sat, 17 Oct 2020 13:11:48 -0700
-In-Reply-To: <20201017163411.hk7tqwzyqzvynf6c@yadavpratyush.com> (Pratyush
-        Yadav's message of "Sat, 17 Oct 2020 22:04:11 +0530")
-Message-ID: <xmqqmu0k8vej.fsf@gitster.c.googlers.com>
+Subject: Re: Why does git diff-index show intent-to-add file as "Added"?
+References: <20201017162111.gvisfz2daqvhnjmb@yadavpratyush.com>
+Date:   Sat, 17 Oct 2020 13:18:38 -0700
+In-Reply-To: <20201017162111.gvisfz2daqvhnjmb@yadavpratyush.com> (Pratyush
+        Yadav's message of "Sat, 17 Oct 2020 21:51:11 +0530")
+Message-ID: <xmqqimb88v35.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FDF725B0-10B4-11EB-B90A-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: F2357078-10B5-11EB-8935-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Pratyush Yadav <me@yadavpratyush.com> writes:
 
-> Junio,
+> In this case, running diff-files gives:
 >
-> Please pull in the changes in git-gui for v2.29. 
+>   :000000 100644 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 A	foo
 
-OK, thanks.  Pulled but not pushed out (yet).
+Yes, it says "when comparing the index and the working tree, working
+tree side has it, and the index side does not, so it is an addition".
 
-By the way, next time we might want to arrange subsystem pulls a bit
-sooner than immediately before the final---what do you think?
+Of course, if it is truly a new file that the index does not even
+know about, we'd stay silent, but a path that are marked with i-t-a
+bit is what the user told us to keey an eye on, so that is what you
+would get.
 
-> The following changes since commit 
-> 469725c1a3d44f7e1475f1d37cd13e0824d4ea41:
+> Running diff-index gives:
 >
->   Merge branch 'mt/open-worktree' (2020-06-22 20:23:28 +0530)
->
-> are available in the Git repository at:
->
->   https://github.com/prati0100/git-gui.git 
->
-> for you to fetch changes up to 38c2ac2e2ab00a8bcef528f24cb5b883b4413e5c:
->
->   Merge branch 'sh/blame-tooltip' (2020-10-17 15:05:27 +0530)
->
-> ----------------------------------------------------------------
-> Pratyush Yadav (3):
->       Merge branch 'st/spaces-tabs-cleanup' into master
->       Merge branch 'st/dark-mode' into master
->       Merge branch 'sh/blame-tooltip'
->
-> Serg Tereshchenko (2):
->       git-gui: fix mixed tabs and spaces; prefer tabs
->       git-gui: improve dark mode support
->
-> Stefan Haller (1):
->       git-gui: blame: prevent tool tips from sticking around after Command-Tab
->
->  git-gui.sh     | 103 ++++++++++++++++++++++++++++++---------------------------
->  lib/blame.tcl  |   1 +
->  lib/themed.tcl |  38 +++++++++++++++++++++
->  3 files changed, 93 insertions(+), 49 deletions(-)
+>   :000000 100644 0000000000000000000000000000000000000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 A	foo
+
+If this is "diff-index HEAD", then I think it is expected.  "when
+comparing the HEAD and the working tree, working tree side has it,
+and the tree side does not, so it is an addition."  Exactly the same
+story as "diff-files".
+
+What should happen in "diff-index --cached HEAD", I offhand do not
+know.  "diff-index --cached HEAD" is a request to compare two trees,
+i.e. the tree that _would_ be produced if you wrote the index out as
+a tree (i.e. "git write-tree") right now, and the tree of HEAD.  So
+I think it may be sensible for the command to behave as if the i-t-a
+path does not even exist in the index when it is run with "--cached";
+I may be missing some subtleties that require us to do something
+different, but that is what I would think.
+
+
