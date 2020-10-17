@@ -2,177 +2,133 @@ Return-Path: <SRS0=oQO4=DY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21456C433E7
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA080C433DF
 	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 21:04:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3024207BB
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 21:04:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F7C2207BC
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 21:04:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LU6SJGw5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MC/8UL1R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439453AbgJQVEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 17:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54316 "EHLO
+        id S2439458AbgJQVEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 17:04:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439450AbgJQVEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 17:04:40 -0400
+        with ESMTP id S2439450AbgJQVEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 17:04:41 -0400
 Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BF5BC061755
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CF0C061755
         for <git@vger.kernel.org>; Sat, 17 Oct 2020 14:04:40 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id b127so8973941wmb.3
+Received: by mail-wm1-x342.google.com with SMTP id 13so6704981wmf.0
         for <git@vger.kernel.org>; Sat, 17 Oct 2020 14:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=i1nIsUlsq85JzkWIjic8J4SiPwSM4KOitfnu5zM8bVw=;
-        b=LU6SJGw5w7JaitRwh4sQguQQFHrn5B+ZS1ezOIeHa+4KrWpNZnyeliRw+5KMtI3U4J
-         Nmy+wpwFiSgRCqmoBDKeIyI36/b/xKvKWod8iVa8ji2DL5IDksSmynwzfFtvRtOYVkGW
-         Ch29J5crBP85q+mh38IJMLAbelgIQZwQltKf/3MO8D+pY43QJ5qSjtHu5lVAqHuHfG9s
-         bSTE8njKAv+8L8wPchJ0MYOED8zYXySylOYPgGW2QjbLUCyMG/huOGoGf7MEgoA8uych
-         T8p6el3ACuRj9UQBHEEIc+IM+my3BpUyzOXHXNfeZDY+FCkjzNwdfcz0BsvV1a1PXyBA
-         eapA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7p7HYzVQTY1ynw8rjsFhzxNNXaJqnM6pIlRGWVFciSY=;
+        b=MC/8UL1RYFr00X3Pc8kKR91bu9eHhxbf9YDpDSZAmws9jkvLDwhTao9h4Ml3C5J2WL
+         xAIBB+JsQ4m0o3AcXrzlt2WVkcMAYEmZEHWkyrAj6QBbHQtJipEt8PXVOXNjGQFZoyjU
+         1+qFyC+6LHr3f82Zg1JM6V0lVpSwLMXQ2XI/SmTNpSJBYKy2q2lf7l+Xycdcv7BRHzIg
+         K2zSck5IUtEZfGAj/XTIXtw0uCkPWAXV1Dm1sdL60lOanVL1p824E9k+eC9cGk+AcyUE
+         R/g+4b3f+slF9PyFWd56lFzUJqA+XYPMRADojntkcX3ZrwBHt/qVR2gHG/Ag7E1JFYO1
+         eMmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=i1nIsUlsq85JzkWIjic8J4SiPwSM4KOitfnu5zM8bVw=;
-        b=MOC1NbRlAER5mYGr85Ko+c/RoUTrjuWsc89fclJX4lRKk43Sl70POhlmfS/5Ih1xkl
-         s5pHgivJM4Sj4ZWTXagMm+IOONQS7WvMI6R45+O2tag5RhxXKPiaaOUEOdqibklzJfPO
-         d9y4c2ICL7/qh8Cc77Hic+Re4haR8Ayemrxmfrud8bbMtGXTfa/VgNQrTDq1YhX87bxZ
-         Vsjml3jSBVXQAa4I5fqhrFBDl3g+viCzfvocPr1uPolP6I3aJ8J4i3fZTxGDS4uWuveV
-         ImdyKojS1Ob5/BShMWzzimKiGsBr42VUUJ+jCsfrvovPdr780YfGfQe70Dqmw5TrkAF1
-         AzJw==
-X-Gm-Message-State: AOAM532W0pG0YUr+Huuhgre+u647duLJeYhZ9SGfY+5QBCN9sn2Wt+0Y
-        fLR+5LXjp3t8l1MvOzMRwC9KR3rCyn4=
-X-Google-Smtp-Source: ABdhPJzvIjF8KyocMpRFOX4QkK03FD6D7+1ywQfFsJkQFs0uVyv5hSlHlfdN4Gd9ChP7daqPt8l+2w==
-X-Received: by 2002:a7b:cb8d:: with SMTP id m13mr9791517wmi.59.1602968678569;
-        Sat, 17 Oct 2020 14:04:38 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7p7HYzVQTY1ynw8rjsFhzxNNXaJqnM6pIlRGWVFciSY=;
+        b=BT2y2svYFZfvulm/WYhUtTkD4sRVfWthE0OFIpnK3thZQkPQc2bO6wvPnxP+sW+W9M
+         wnMwGDcsbjkWbBusavlxdotgdLifZKOB0YBxH7Exu3g58q8/YhP7mFYJx5uZ61H3trFc
+         JtmDn93VpjMD06K/DNGXRqtIdjvP3qjfWxqr9JyeJIhXoKV+Yp1847080iFxscQ3XtzY
+         K54+ElPHPOy8G/hn8z4MH53sr7qwOic0Lc4f3cIPIvjTom5hoCB7zwfKQnNn1DpNuwMi
+         lrAgrbIfEEWEQBEQ3unrXE5SHn0Gs3HHzyDhcC/cBy3tPS0t7ILBsozdWv92zPffSJqm
+         RS9w==
+X-Gm-Message-State: AOAM5303RHpU/C7WhOW6J6m1+gxyABbBsECdcqhdWVfunmrH2qTF7zhS
+        6al3AFARlbak3HKbeY7jtyuDY3fGGNQ=
+X-Google-Smtp-Source: ABdhPJzNcgVKH2GN1f9rWUtT5pnbSjC1qk50jQz7hfn3k17zTLdYdm3RgsErkTYFMino8M5mOkdhOQ==
+X-Received: by 2002:a1c:1f89:: with SMTP id f131mr10302542wmf.10.1602968679473;
+        Sat, 17 Oct 2020 14:04:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a199sm9443719wmd.8.2020.10.17.14.04.37
+        by smtp.gmail.com with ESMTPSA id n5sm10526035wrm.2.2020.10.17.14.04.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2020 14:04:37 -0700 (PDT)
-Message-Id: <pull.756.git.1602968677.gitgitgadget@gmail.com>
-From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Oct 2020 21:04:32 +0000
-Subject: [PATCH 0/4] use fsmonitor data in git diff eliminating O(num_files) calls to lstat
+        Sat, 17 Oct 2020 14:04:38 -0700 (PDT)
+Message-Id: <13fd992a375e30e8c7b0953a128e149951dee0ea.1602968677.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.756.git.1602968677.gitgitgadget@gmail.com>
+References: <pull.756.git.1602968677.gitgitgadget@gmail.com>
+From:   "Alex Vandiver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 17 Oct 2020 21:04:33 +0000
+Subject: [PATCH 1/4] fsmonitor: use fsmonitor data in `git diff`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>, Utsav Shah <utsav@dropbox.com>,
-        Nipunn Koorapati <nipunn1313@gmail.com>
+        Nipunn Koorapati <nipunn1313@gmail.com>,
+        Alex Vandiver <alexmv@dropbox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Credit to alexmv who made this commit back in Dec, 2017 when he was at dbx.
-I've rebased it and am submitting it now.
+From: Alex Vandiver <alexmv@dropbox.com>
 
-With fsmonitor enabled, git diff currently lstats every file in the repo
-This makes use of the fsmonitor extension to skip lstat() calls on files
+With fsmonitor enabled, the first call to match_stat_with_submodule
+calls refresh_fsmonitor, incurring the overhead of reading the list of
+updated files -- but run_diff_files does not respect the
+CE_FSMONITOR_VALID flag.
+
+Make use of the fsmonitor extension to skip lstat() calls on files
 that fsmonitor judged as unmodified.
 
-I was able to do some testing with/without this change in a large in-house
-repo (~ 400k files)
+Notably, this change improves performance of the git shell prompt when
+GIT_PS1_SHOWDIRTYSTATE is set.
 
------------------------------------------
-(1) With fsmonitor enabled - on master of git (2.29.0)
------------------------------------------
-../git/bin-wrappers/git checkout HEAD~200
-strace -c ../git/bin-wrappers/git diff
+Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
+Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
+---
+ diff-lib.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 99.64    4.358994          10    446257         3 lstat
-  0.12    0.005353           7       764       360 open
-
-(A subsequent call)
-strace -c ../git/bin-wrappers/git diff
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 99.84    4.380955          10    444904         3 lstat
-  0.06    0.002564         135        19           munmap
-...
-
------------------------------------------
-(2) With fsmonitor enabled - with my patch
------------------------------------------
-../git/bin-wrappers/git checkout HEAD~200
-strace -c ../git/bin-wrappers/git diff
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 50.72    0.003090         163        19           munmap
- 19.63    0.001196         598         2           futex
-...
-  0.00    0.000000           0         4         3 lstat
-
-
------------------------------------------
-(3) With fsmonitor disabled entirely
------------------------------------------
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 98.52    0.277085       92362         3           futex
-  0.27    0.000752           4       191        63 open
-...
-  0.14    0.000397           3       158         3 lstat
-
-I encoded this into a perf test with results as follow:
-
-On master (2.29)
-
-Test                                                             this tree
---------------------------------------------------------------------------------
-7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         2.52(1.59+1.56)
-7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.18(0.12+0.06)
-7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.36(0.73+0.62)
-7519.5: diff (fsmonitor=.git/hooks/fsmonitor-watchman)           0.85(0.30+0.54)
-7519.7: status (fsmonitor=)                                      0.69(0.52+0.90)
-7519.8: status -uno (fsmonitor=)                                 0.37(0.28+0.81)
-7519.9: status -uall (fsmonitor=)                                1.53(0.93+1.32)
-7519.10: diff (fsmonitor=)                                       0.34(0.26+0.81)
-
-With this patch
-
-Test                                                             this tree
---------------------------------------------------------------------------------
-7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         2.84(1.70+1.76)
-7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.18(0.13+0.05)
-7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.35(0.81+0.53)
-7519.5: diff (fsmonitor=.git/hooks/fsmonitor-watchman)           0.15(0.11+0.05)
-7519.7: status (fsmonitor=)                                      0.71(0.54+0.90)
-7519.8: status -uno (fsmonitor=)                                 0.38(0.30+0.81)
-7519.9: status -uall (fsmonitor=)                                1.55(0.93+1.34)
-7519.10: diff (fsmonitor=)                                       0.35(0.32+0.76)
-
-Alex Vandiver (1):
-  fsmonitor: use fsmonitor data in `git diff`
-
-Nipunn Koorapati (3):
-  t/perf/README: elaborate on output format
-  t/perf/p7519-fsmonitor.sh: warm cache on first git status
-  t/perf: add fsmonitor perf test for git diff
-
- diff-lib.c                | 17 +++++++++++++++--
- t/perf/README             |  2 ++
- t/perf/p7519-fsmonitor.sh | 19 ++++++++++++++++++-
- 3 files changed, 35 insertions(+), 3 deletions(-)
-
-
-base-commit: d4a392452e292ff924e79ec8458611c0f679d6d4
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-756%2Fnipunn1313%2Fdiff_fsmon-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-756/nipunn1313/diff_fsmon-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/756
+diff --git a/diff-lib.c b/diff-lib.c
+index f95c6de75f..b7ee1b89ef 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -97,6 +97,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+ 
++	refresh_fsmonitor(istate);
++
+ 	if (diff_unmerged_stage < 0)
+ 		diff_unmerged_stage = 2;
+ 	entries = istate->cache_nr;
+@@ -197,8 +199,19 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (ce_uptodate(ce) || ce_skip_worktree(ce))
+ 			continue;
+ 
+-		/* If CE_VALID is set, don't look at workdir for file removal */
+-		if (ce->ce_flags & CE_VALID) {
++		/*
++		 * If CE_VALID is set, the user has promised us that the workdir
++		 * hasn't changed compared to index, so don't stat workdir
++		 * for file removal
++		 *  eg - via git udpate-index --assume-unchanged
++		 *  eg - via core.ignorestat=true
++		 *
++		 * When using FSMONITOR:
++		 * If CE_FSMONITOR_VALID is set, then we know the metadata on disk
++		 * has not changed since the last refresh, and we can skip the
++		 * file-removal checks without doing the stat in check_removed.
++		 */
++		if (ce->ce_flags & CE_VALID || ce->ce_flags & CE_FSMONITOR_VALID) {
+ 			changed = 0;
+ 			newmode = ce->ce_mode;
+ 		} else {
 -- 
 gitgitgadget
+
