@@ -2,68 +2,68 @@ Return-Path: <SRS0=h2Q9=DZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
 	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B774C433E7
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 09:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA47C433E7
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 10:42:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 962562137B
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 09:44:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5DFE20897
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 10:42:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HahDl2f5"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="dq4wUF+w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726178AbgJRJo6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Oct 2020 05:44:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:43729 "EHLO mout.gmx.net"
+        id S1726512AbgJRKmT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Oct 2020 06:42:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60717 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725320AbgJRJo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Oct 2020 05:44:57 -0400
+        id S1726471AbgJRKlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Oct 2020 06:41:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1603014269;
-        bh=0PlmLhofzGlqI8j/EnbDlDO3smHNYEJeKhPztDaUEd4=;
+        s=badeba3b8450; t=1603017681;
+        bh=Lq3c+DJXtblxQFHNOVmx+VYdqJ5v7lVPga8Mk1zhs4Q=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HahDl2f5z+rsc/Pzj5DG6aSPJsxcGjTuHrlSUbCankbiH73iU2Lb6YiYUWevbrz+F
-         dNLW9BymTJinNMGkCYFgMkyVbqIb5bZdE320U0y9xCAmjoFtC9nx4RbJ8CykraiAF+
-         y3UlLyntE3mhaZN/dt9T07KnL+LrIbjvQAKNji8Q=
+        b=dq4wUF+wp+853XDAOsZ1zjWIuepJWR3hoXyZ555AmSfwQUMY+3+42HvPRZurYVy2E
+         ajQuLRWIJqOvLA1heou0wrgZdBgQKawOjwAmcn2g2xYyWbt+R6JqU5Cgc+laJJwFYn
+         XnLSVgyZeccdPjrdLUsMOTakiLbP/GBlMSYUKo5I=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([89.1.212.31]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N5mGH-1kOYb80tbf-017B4D; Sun, 18
- Oct 2020 11:44:29 +0200
-Date:   Sat, 17 Oct 2020 04:34:27 +0200 (CEST)
+Received: from [172.26.25.62] ([89.1.212.31]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKbkC-1kiSeT2rAS-00KwU9; Sun, 18
+ Oct 2020 12:41:21 +0200
+Date:   Sat, 17 Oct 2020 05:31:18 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
 Subject: Re: [PATCH] t5500.43: make the check a bit more robust
-In-Reply-To: <20201013185515.GA2994107@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2010170429200.56@tvgsbejvaqbjf.bet>
-References: <pull.753.git.1602600323973.gitgitgadget@gmail.com> <20201013185515.GA2994107@coredump.intra.peff.net>
+In-Reply-To: <20201013190913.GB2994107@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2010170434340.56@tvgsbejvaqbjf.bet>
+References: <pull.753.git.1602600323973.gitgitgadget@gmail.com> <20201013185515.GA2994107@coredump.intra.peff.net> <20201013190913.GB2994107@coredump.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pfvvKvIR4Fd7VUqjeExXf1Jxf1tPSNFoB1QJSYT3hwNuGS5bu5m
- qvK51o0Bx6mKoZmnFS+tv28o2KgQh9rjhlRfWdCLTYE/Yn+bs+P6eH9aQS+DPgaZiTwbFpw
- 7I72uScUWyvc/rEmminsF37HnD/n/8YOdEjbFhPreqsJqDsxriaBQz8cDFUaA1RWBMYXBYw
- G/T9dgf9AZr5cgoOXZ4pQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YnjLqql1+qk=:a+EbNbF4FY3K3xCZYUcxcc
- SUeyNi9Km4un4KSvnDfs6WGDMKoqxvHlCZWf2fJCqGpe1d+xR8U1A4Is+3GuunXbMFQbCebtn
- LV9QOktYV6NhKjUZSXdA/TCx0AUXWN4g4Pc0D5BDVr18gwfs3lpzOZ/lO3rFTXjg7fd85UOuT
- 4a8FFtdYSd6nR8xRNAv5Rdt6Iu9BHp2gbLC17JeyZaST6XSwoV0ExrB84L5zLroyko+lHotHS
- IRKszNIktj27ZYBjdyDDfkbUX4uKJ2o2tv0egAnvMlNZiC17yD8fcnxFvvnx1cgaQwUpzN0Na
- 0F4UFq1PZkVIePC7qX3yWDR2OwE+rxOyfcg3VzRW+3b1Ns2/fcu8ZoInbxdqV4bIt4/BR1/kZ
- iQECQVpgmvWKHZUTOFkkv5pAO1cULhwdB+hDTB6PlD4vb+Ia+bNobJOGl8KDO0y+gzlqZoiHh
- 6hx85ZS0u6359X1v9nlnx1sd7HhzRFMVg4e+3riBbCZiW4KGgTs89NchSVvjHV/BPFUlzmfuq
- kpt5oaF8ppCTHAl05jkVyQS3pnnTA9adt4kUzoAAI99AHyCvz3qT+1x0Era1/TEpjvHeVy/gw
- tDPfBOaItq2C9NnDOTyv7O2wcFYYDxvW1S17JkWPxY4lZL/TotJhPRZO0qfk3EjVKYxwYu8f/
- YCt+CnU0NA0zt2bhRk9FhI/NPm7RxMND8uqJDfV5W3sJnwoHZJl3wDstGP0TW4pXnoYu+CaY+
- 2yqXr9wQwYfj4IroVFFAxGPDnvNxRm5533ciZax6R1u7K8U/opcySbareIIklUi/DHh2OMM0L
- fhTtXicNzNuQ8UeKtYaXLP84tQ/vr7H25aq8wpGzdlr30lOZACTiWpr2L+MLI/X8EqXDhU6MP
- ma0WfxXl+ULySn5AkXzJYSsvjGNjBYC4NMrCfvO1M=
+X-Provags-ID: V03:K1:GkIQF5RNmA1Nar/IuYeDSSK4egXsMvQBukmtJ3b7BLtVF0qSubQ
+ PQgbufGdqybyElhEzgORdu8vGgAq6G+XTebQiNotPNcNiAtNRMSUnstRwDIn2uvuFJYyrbB
+ 1HDeWmx03EGdqenQ1pMZz9hPD2bGugzNw8+VO6zG0a/vy97+Zo7/covXjigoHjeK5pYza4i
+ +KVTP+sBC338taUmKERbg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TPCQT6hmcuA=:wvFt6hJkwzHCzhOntV/wFW
+ rCL8YRu/b//cuzQfyMpt2ZCzw5SNe11YteLoT3F1jLG2nP9buPEBqILaItTHUq8cQA5HxMZVD
+ nqd7w3b09cGcSsw+8KChR7tvTK76lu7jYreOMq6MSgviiqsMVgq77UmBj7zqse6U3ECOYi8+E
+ 6SvSZmcEJdRgbPpqwfoOhmHC6hMFfA2Mxaj8tk7ehpQUOX3Yj+mRXYtt1JEF9T4Zxvc/xWTok
+ ogaSO7B/HNfWl0eGynFlTC1kfrOM/ZMdkzhM/wIJ9BFbJN4y2AbobFpH/rf6Agl2MakAt0cau
+ 0CKJ+7klcYoc3EFw9KdYuzuAq9cTbnwMauP022BVJNoq8VydAm77vX4v9s4GbXhpsmE4sSey3
+ FMU8V6Rn/Oank5TkZWDjUNcUbdqItd8sKClKcEV4m4CT7RFWESWjMKtnzO4IJ7K81xukt/oD4
+ rOTx3oi+dwcZfZFvNUK2fVq/ZKN4yNoyUDqeiqbuIEx3eTnmYB/brKSut7h1YY9NRN+HMAMim
+ sRf8n+eIPFDp8UvcVMaqS+e54bVx/RUUOu7N4v4Fy7Oa8mwNCs8REjdTKrUkClAiwC285wRJP
+ jgJ8bCW5PKTWKd2YoKzfuDLxoMwzr+yeljQ/7Y95HkNcv0nK03pOL8NxX9f66rCGG1SefUukc
+ UCAuJLKVvEssIqQDVzpqFNcJyQF2/qXl9tDsmyeY6Afp1OGB1RZ0dPwc/UF5yd6sTRi8uJBRd
+ UJM8nShZwNt1M0RijSTZSM9G3h1qSMC9Z26b6sH4wN5cFPC1Xm0CUwKzPbwtIR6O1MmyY7B6L
+ X7bO+w4Pbxo6ZfwFaZ0eq/t5JDbA/kJ7tXZ9K5ilAbCwFCMZttux4hVXqkJiOPWvYi7Vl1o/T
+ cJ80Tn7gZLWN+tjX0hVryYz1bpNafj4kCnoIOBAjs=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,131 +73,116 @@ Hi Peff,
 
 On Tue, 13 Oct 2020, Jeff King wrote:
 
-> On Tue, Oct 13, 2020 at 02:45:23PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
+> On Tue, Oct 13, 2020 at 02:55:15PM -0400, Jeff King wrote:
 >
-> > Note: we have code in `demultiplex_sideband()` _specifically_ to stitc=
-h
-> > back together lines that were delivered in separate sideband packets.
-> > However, this stitching fails when a primary packet is delivered in
-> > between the two sideband packets: since a primary packet was received,
-> > `demultiplex_sideband()` has to return that (and cannot wait for other
-> > sideband packets, and therefore has to flush any incomplete line it
-> > received).
->
-> This sounds like a bug. We should accumulate multiple sideband 2
-> packets, even across data packets. And I think we _used_ to do that. The
-> original recv_sideband() looked roughly like this:
->
-> 	while (!retval) {
-> 		 packet_read();
-> 		 band =3D buf[0] & 0xff;
-> 		 switch (band) {
-> 		 case 3:
-> 		   ...stuff data into outbuf...
-> 		   retval =3D SIDEBAND_ERROR_REMOTE;
-> 		   break;
-> 		 case 2:
-> 		   ...print full lines, stuff remainder into outbuf...
-> 		   break; /* note, does _not_ set retval */
-> 		 case 1:
-> 		   write_or_die(out, buf + 1, len);
-> 		   break; /* likewise, does not set retval */
-> 		 default:
-> 		   ...complain about broken sideband...
-> 		   retval =3D SIDEBAND_PROTOCOL_ERROR;
-> 		}
-> 	}
-> 	if (outbuf.len)
-> 		...print outbuf...
->
-> So we would keep looping until we see EOF, sideband 3, or a protocol
-> error. But notably we would not break out of the loop on bands 1 or 2,
-> and we do not flush band 2 until we break out of the loop.
->
-> But then in fbd76cd450 (sideband: reverse its dependency on pkt-line,
-> 2019-01-16), the function became demultiplex_sideband(). The loop went
-> away, and we pump only a single packet on each call. When we see
-> sideband 2, we do an early return. But on sideband 1, we continue to the
-> cleanup: label, which flushes the scratch buffer.
->
-> I think we need to return from there without hitting that cleanup label,
-> like this:
->
-> diff --git a/sideband.c b/sideband.c
-> index 0a60662fa6..a5405b9aaa 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -190,7 +190,7 @@ int demultiplex_sideband(const char *me, char *buf, =
-int len,
->  		return 0;
->  	case 1:
->  		*sideband_type =3D SIDEBAND_PRIMARY;
-> -		break;
-> +		return 1;
->  	default:
->  		strbuf_addf(scratch, "%s%s: protocol error: bad band #%d",
->  			    scratch->len ? "\n" : "", me, band);
->
-> Does that make the problem go away for you?
-
-Yes. But it took a substantial amount of time for myself to convince
-myself that this oneliner is actually correct.
-
->
-> >     Work around flakiness in t5500.43
+> > But then in fbd76cd450 (sideband: reverse its dependency on pkt-line,
+> > 2019-01-16), the function became demultiplex_sideband(). The loop went
+> > away, and we pump only a single packet on each call. When we see
+> > sideband 2, we do an early return. But on sideband 1, we continue to t=
+he
+> > cleanup: label, which flushes the scratch buffer.
 > >
-> >     It seems that this test became flaky only recently, although I hav=
-e to
-> >     admit that I have no idea why: the involved code does not seem to =
-have
-> >     changed recently at all. It should have been fixed by
-> >     https://lore.kernel.org/git/20200506220741.71021-1-jonathantanmy@g=
-oogle.com/
-> >     , but apparently wasn't completely fixed, despite what I said in t=
-hat
-> >     thread.
+> > I think we need to return from there without hitting that cleanup labe=
+l,
+> > like this:
 >
-> I think this is a real bug, and we shouldn't be changing the tests to
-> accommodate. Users may actually see the broken lines, and our tests are
-> telling us that.
->
-> I suspect it's uncommon in practice because it requires the server side
-> also splitting the line across two packets. And while the server-side
-> upload-pack might get a partial write from a child pack-objects or
-> whatever, that should only happen if:
->
->   - the pipe buffer fills up. Which is hard to do since our messages
->     tend to be very small. So perhaps it implies a very tiny pipe
->     buffer, and/or slow scheduling of the receiving side to actually
->     clean it out.
->
->   - the writer is fully buffering its stderr writes instead of sending
->     them a line at a time
->
-> The latter seems a more likely candidate for switching from gcc to
-> Visual C (which presumably has a different libc / CRT).  I think the
-> client should be handling this more robustly, but it may be worth
-> digging into the buffering issue if it means progress may not be
-> delivered in quite as timely a way as we expect it to be.
+> By the way, the reason this works is that the "scratch" buffer persists
+> beyond individual calls to demultiplex_sideband(). So we can get away
+> with letting it persist between the two.
 
-FWIW I _think_ the issue at hand is that newer MSVC runtimes deliver
-`stderr` byte-by-byte. While that is totally allowed, it is different from
-how things seem to be done on Linux/Unix/Darwin.
+The thing that threw me was that I somehow expected `recv_sideband()` to
+return primary data as it is read, much like `read()` operates. And yes,
+I also found the split version of the code (`recv_sideband()` contains the
+`while` loop and lives in `pkt-line.c` while `demultiplex_sideband()`
+contains the `scratch` handling and the `switch` between packet types and
+it lives in `sideband.c`) was much harder to read than the original
+version.
 
-In my tests, I frequently saw the first two or four characters of that
-"Total 3" line be delivered in its own sideband packet, hence the
-breakage.
+> However unlike the original recv_sideband(), which broke out of the loop
+> on error and then flushed scratch, our post-fbd76cd450 does not do the
+> same. It now looks like:
+>
+> int recv_sideband(const char *me, int in_stream, int out)
+> {
+>         char buf[LARGE_PACKET_MAX + 1];
+>         int len;
+>         struct strbuf scratch =3D STRBUF_INIT;
+>         enum sideband_type sideband_type;
+>
+>         while (1) {
+>                 len =3D packet_read(in_stream, NULL, NULL, buf, LARGE_PA=
+CKET_MAX,
+>                                   0);
+>                 if (!demultiplex_sideband(me, buf, len, 0, &scratch,
+>                                           &sideband_type))
+>                         continue;
+>                 switch (sideband_type) {
+>                 case SIDEBAND_PRIMARY:
+>                         write_or_die(out, buf + 1, len - 1);
+>                         break;
+>                 default: /* errors: message already written */
+>                         return sideband_type;
+>                 }
+>         }
+> }
+>
+> I wondered if we could ever have a case where we broke out of the loop
+> with data left over in "scratch" (or its buffer left allocated). I think
+> the answer is no. We only break out of the loop if
+> demultiplex_sideband() returned non-zero _and_ its not the primary
+> sideband. So both before and after my suggested fix, we'd have hit the
+> cleanup label in demultiplex_sideband(), which flushes and frees the
+> buffer.
 
-Thank you for keeping me honest. I would much rather have avoided spending
-several hours on this investigation, but in the end, it is something that
-is better made correct than left incorrect.
+Right.
 
-Having said that it is neither a very new bug nor does it seem to matter
-on Linux/macOS (and not even in Git for Windows because it is built using
-mingw-w64-gcc, which uses an older MSVC runtime, which apparently does not
-share that issue with newer versions), therefore I plan on sending off v2
-only after v2.29.0 was published.
+It took me quite a while to convince myself of that, too.
+
+And since I am really worried that the complexity of the code makes it
+easy to introduce a regression, I spent quite a bit of time to figure out
+how to implement a good regression test for exactly this issue.
+
+Even so, the regression test will not necessarily catch problems where the
+`while` loop is abandoned without processing any unfinished sideband
+message. I introduced a `BUG()` for that case, but it is quite a bit
+unsatisfying that I could not come up with a better way to ensure that
+this does not happen.
+
+> I do have to say that the original loop before that commit was a lot
+> easier to follow, though.
+>
+> Another weirdness I noticed is that it doesn't distinguish a flush
+> packet (expected) from a zero-byte packet (an error). But neither did
+> the original. I would have guessed the zero-byte packet was meant to
+> trigger this second conditional:
+>
+>         if (len =3D=3D 0) {
+>                 *sideband_type =3D SIDEBAND_FLUSH;
+>                 goto cleanup;
+>         }
+>         if (len < 1) {
+>                 strbuf_addf(scratch,
+>                             "%s%s: protocol error: no band designator",
+>                             scratch->len ? "\n" : "", me);
+>                 *sideband_type =3D SIDEBAND_PROTOCOL_ERROR;
+>                 goto cleanup;
+>         }
+>
+> but we'd hit the first conditional before then. We would still trigger
+> the second if we saw EOF while reading the packet (because we set the
+> length to -1 then), but then it's arguably the wrong error to be
+> showing.
+>
+> So I think this could be improved a bit by using
+> packet_read_with_status() in the recv_sideband() caller.
+
+Possibly. But is it really a bug to send a zero-byte packet? It is
+inefficient, sure. But I could see how it could potentially simplify code,
+or serve e.g. as some sort of a "keep-alive" mechanism or whatever.
+
+In other words, I am not sure that  we should treat this as an error, but
+yes, we should probably not treat it as a flush (even if it is likely that
+our current sideband users simply won't ever send empty primary packets).
 
 Ciao,
 Dscho
