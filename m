@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 658D5C433E7
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 07:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 028C1C43457
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 07:56:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 218EF2072D
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 07:56:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A570A2072D
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 07:56:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljF8g+4+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m513KdP8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437537AbgJQH4M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 03:56:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46686 "EHLO
+        id S2437542AbgJQH4P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 03:56:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437534AbgJQH4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 03:56:12 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF704C0613D3
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 00:56:10 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id y1so2454918plp.6
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 00:56:10 -0700 (PDT)
+        with ESMTP id S2437534AbgJQH4O (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 03:56:14 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1672CC061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 00:56:14 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id j8so2751227pjy.5
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 00:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IrSQHAG8PqG1zbLYKHzlWEDMNNUxrGjf+XNdVL2DXSc=;
-        b=ljF8g+4+nQZnHLwFVSsagFiqyEmxsIesKP9cTvs/9QacaPcfOobp6fLoBe1SNHvE4F
-         VtSH7LTpmI3BJV3k8foI0YKm17+imDnmmd5PfBR79+Zh7+E4HmniTEq+YWv1kMTxYjF4
-         iL9pB/BCnyo4tLP/TST6nxoMYUeN4k7U5UWJzXxDrVr+4gXnQJqh9xPYi/AyaPaLGPFd
-         BKRQDa07wXXQnzoH6QKsJ/8f95kfAgOZxIkGJH0nYHtp0Zivkb3TiT4RKkM7PmKfiT9s
-         GTm5TcTERo7nvMXBtmszLMHQysFm8UVULHlNRPybbsKFHlWVdIZAZFF1oETR9ERMA8vx
-         BaYg==
+        bh=FFSD8VrsC0mgWb6PkiATTATFMdZzcAICEjAXPCadm4s=;
+        b=m513KdP8tfnGWt/T0erqKjqaV72gpSP13Isir7qde1auyMW0syH8zi76U9ZsA4Hq0l
+         PRzAcIgYE78CMMFP5hwShWpCdr7MYRMzex797E7fSyIG/bXqHWembK+O57+mJ4yTakmR
+         rC4gpcG0wP9VAO9fLcTPH85NZVWdLabGBAns/KKT4HIt9vw8GMlSGVzgdfXuBmKtBof5
+         TAjaPjxXP0FufZzp3owaDQ1zro3xPhjJlmPKdeacoyFI7j2LQTZp7dVUFAfcm6PgY4wi
+         04oeut8YZgY2bcMohtANZ5j7TcnHTURKweCqMZOY1FwozpWy4Bq7U2CgEirWcGH3K20f
+         ev0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IrSQHAG8PqG1zbLYKHzlWEDMNNUxrGjf+XNdVL2DXSc=;
-        b=uf3rvewPB1mwkQNdkPwqsDnsv2F1WLOUvVtmg5MdlCO+8DlP8qHZTSG89EihIEvDlg
-         Po4dKamnWwQ6TF5kL/am3jE3guljf0MOJMfPasdWawi2zeEmDF8e5kCjZTtouy5UHwey
-         4kzT2nwlCGXZSPLb3rt5q8FbZsTl3vS2eQNlCT5oMqotOkPxtW8+bH/KL5XXefenZCvV
-         abLYVv5uBLTiod3TFN7o3lFznIevAOKHstf1E/o8egJBB2tmojFaF7uddyuxaDCH7FLo
-         dRHWsokwtJjVErEwrT03lAMSENp/jC1SOrLnS9V5H5e13J+wrNngDTKPBqfOcNH4SCOB
-         MIlA==
-X-Gm-Message-State: AOAM530xTChPjtkSyQzgqVc/pTS94km+P3q0N9KCostusHldFDITwjGi
-        ll4vtoYZncPWDusniXb0nUGfXQMQKbOP8A==
-X-Google-Smtp-Source: ABdhPJz5/FZDXRuA+0joNifVqWU2fn9XzuPjS3d9XHw1KO/hjS1ppcXpVVOuM8EF6qW8dFBS+UtHlw==
-X-Received: by 2002:a17:902:7611:b029:d4:da66:f26c with SMTP id k17-20020a1709027611b02900d4da66f26cmr7894721pll.3.1602921370195;
-        Sat, 17 Oct 2020 00:56:10 -0700 (PDT)
+        bh=FFSD8VrsC0mgWb6PkiATTATFMdZzcAICEjAXPCadm4s=;
+        b=WAyeKAMqlhkHCIMRxvk2NziW39shCn6pHfIad6laq3WYwSmqlNNwptoA/sSB0A16mw
+         BRdJV9ikwMWcqTX5GW8SZuWxKMbR+FgrtQQO90361up6jGnvoGBEWnq1ciK1Gisv+r2Z
+         7jjviG5GS46Kdw7EcfiPpo7EtIJY97tkfnWLHmqQM1/Lw8XvWFcowRNqtqyH+QVdIRP5
+         rpWk5ejz1WGZtqOPOdvEcvV+NRzC2ZpiwzOUerc46B540qJL6MciM3xk0/4niNbQK+tt
+         TG59/j/PUSVmqIoLUJGc5+c8ioLwu/n2LApFMEmEmWYfUvvP0S/1a+5pECzgH/y7C1Sx
+         w+YQ==
+X-Gm-Message-State: AOAM532FEeIPyvWg8TGWTu/Ff36PTnCSlDIe0YlTiU9/OReevz8rcJZ4
+        f443oTjIOz/i1zBQD91d+I/60CTQaTfJiA==
+X-Google-Smtp-Source: ABdhPJxYdtmr8mV9+XvOJyZXIL7Z7S32p9AX4lL356B/RRGsQfpEoEGHB7pqJ5LkcJDn4S8l7w9nsA==
+X-Received: by 2002:a17:90a:aa18:: with SMTP id k24mr7799214pjq.231.1602921373428;
+        Sat, 17 Oct 2020 00:56:13 -0700 (PDT)
 Received: from localhost.localdomain ([106.201.2.128])
-        by smtp.gmail.com with ESMTPSA id t2sm4994162pji.12.2020.10.17.00.56.07
+        by smtp.gmail.com with ESMTPSA id t2sm4994162pji.12.2020.10.17.00.56.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2020 00:56:09 -0700 (PDT)
+        Sat, 17 Oct 2020 00:56:13 -0700 (PDT)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com,
         sunshine@sunshineco.com, Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v2 4/5][Outreachy] t7201: avoid using cd outside of subshells
-Date:   Sat, 17 Oct 2020 13:24:54 +0530
-Message-Id: <20201017075455.9660-5-charvi077@gmail.com>
+Subject: [PATCH v2 5/5][Outreachy] t7201: place each command in its own line
+Date:   Sat, 17 Oct 2020 13:24:55 +0530
+Message-Id: <20201017075455.9660-6-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20201017075455.9660-1-charvi077@gmail.com>
 References: <20201015175709.20121-1-charvi077@gmail.com>
@@ -75,41 +75,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid using `cd` outside of subshells since, if the test fails, there is no guarantee that the current working directory is the expected one, which may cause subsequent tests to run in the wrong directory.
+Multiple commands on one line should be split across multiple lines.
 
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- t/t7201-co.sh | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ t/t7201-co.sh | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 74553f991b..5898182fd2 100755
+index 5898182fd2..b36a93056f 100755
 --- a/t/t7201-co.sh
 +++ b/t/t7201-co.sh
-@@ -339,10 +339,7 @@ test_expect_success 'switch branches while in subdirectory' '
- 	git checkout master &&
- 
- 	mkdir subs &&
--	(
--		cd subs &&
--		git checkout side
--	) &&
-+	git -C subs checkout side &&
- 	! test -f subs/one &&
- 	rm -fr subs
- '
-@@ -357,10 +354,7 @@ test_expect_success 'checkout specific path while in subdirectory' '
- 
- 	git checkout master &&
- 	mkdir -p subs &&
--	(
--		cd subs &&
--		git checkout side -- bero
--	) &&
-+	git -C subs checkout side -- bero &&
- 	test -f subs/bero
+@@ -157,7 +157,8 @@ test_expect_success 'checkout -m with merge conflict' '
  '
  
+ test_expect_success 'format of merge conflict from checkout -m' '
+-	git checkout -f master && git clean -f &&
++	git checkout -f master &&
++	git clean -f &&
+ 
+ 	fill b d >two &&
+ 	git checkout -m simple &&
+@@ -180,7 +181,9 @@ test_expect_success 'format of merge conflict from checkout -m' '
+ '
+ 
+ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+-	git checkout -f master && git reset --hard && git clean -f &&
++	git checkout -f master &&
++	git reset --hard &&
++	git clean -f &&
+ 
+ 	fill b d >two &&
+ 	git checkout --merge --conflict=diff3 simple &&
+@@ -205,7 +208,9 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+ '
+ 
+ test_expect_success 'switch to another branch while carrying a deletion' '
+-	git checkout -f master && git reset --hard && git clean -f &&
++	git checkout -f master &&
++	git reset --hard &&
++	git clean -f &&
+ 	git rm two &&
+ 
+ 	test_must_fail git checkout simple 2>errs &&
+@@ -218,7 +223,8 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+ test_expect_success 'checkout to detach HEAD (with advice declined)' '
+ 	git config advice.detachedHead false &&
+ 	rev=$(git rev-parse --short renamer^) &&
+-	git checkout -f renamer && git clean -f &&
++	git checkout -f renamer &&
++	git clean -f &&
+ 	git checkout renamer^ 2>messages &&
+ 	test_i18ngrep "HEAD is now at $rev" messages &&
+ 	test_line_count = 1 messages &&
+@@ -237,7 +243,8 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
+ test_expect_success 'checkout to detach HEAD' '
+ 	git config advice.detachedHead true &&
+ 	rev=$(git rev-parse --short renamer^) &&
+-	git checkout -f renamer && git clean -f &&
++	git checkout -f renamer &&
++	git clean -f &&
+ 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
+ 	grep "HEAD is now at $rev" messages &&
+ 	test_line_count -gt 1 messages &&
+@@ -254,7 +261,8 @@ test_expect_success 'checkout to detach HEAD' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD with branchname^' '
+-	git checkout -f master && git clean -f &&
++	git checkout -f master &&
++	git clean -f &&
+ 	git checkout renamer^ &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
+@@ -269,7 +277,8 @@ test_expect_success 'checkout to detach HEAD with branchname^' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD with :/message' '
+-	git checkout -f master && git clean -f &&
++	git checkout -f master &&
++	git clean -f &&
+ 	git checkout ":/Initial" &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
+@@ -284,7 +293,8 @@ test_expect_success 'checkout to detach HEAD with :/message' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD with HEAD^0' '
+-	git checkout -f master && git clean -f &&
++	git checkout -f master &&
++	git clean -f &&
+ 	git checkout HEAD^0 &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
 -- 
 2.29.0.rc1
 
