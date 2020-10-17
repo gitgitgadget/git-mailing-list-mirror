@@ -2,132 +2,114 @@ Return-Path: <SRS0=oQO4=DY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE1A1C43457
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 23:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40738C433E7
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 23:16:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96A9B212CC
-	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 23:16:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 065C720EDD
+	for <git@archiver.kernel.org>; Sat, 17 Oct 2020 23:16:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="ZCCXG0KK";
-	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="AhnLdcFl"
+	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="Xgp3mZcM";
+	dkim=pass (1024-bit key) header.d=cavoj.net header.i=@cavoj.net header.b="Xgp3mZcM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439938AbgJQXQJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 19:16:09 -0400
-Received: from lithium.sammserver.com ([168.119.122.30]:33522 "EHLO
-        lithium.sammserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439930AbgJQXQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 19:16:07 -0400
+        id S2439824AbgJQXQY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 19:16:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46370 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388643AbgJQXQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 19:16:24 -0400
+Received: from lithium.sammserver.com (lithium.sammserver.com [IPv6:2a01:4f8:c2c:b7df::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BE0FC061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 16:16:24 -0700 (PDT)
 Received: from mail.sammserver.com (sammserver.wg [10.32.40.1])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (Client did not present a certificate)
-        by lithium.sammserver.com (Postfix) with ESMTPS id 54083312B5AD;
-        Sun, 18 Oct 2020 01:16:05 +0200 (CEST)
+        by lithium.sammserver.com (Postfix) with ESMTPS id 984E4312B5AC;
+        Sun, 18 Oct 2020 01:16:22 +0200 (CEST)
 Received: by mail.sammserver.com (Postfix, from userid 5011)
-        id 0C5161120A01; Sun, 18 Oct 2020 01:16:05 +0200 (CEST)
+        id 631F41120A14; Sun, 18 Oct 2020 01:16:22 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
-        t=1602976565; bh=QqvBo8u2Xq74KIbnT8Xajw1Dpr6aeuHc1QoaFmaZtec=;
-        h=From:To:Cc:Subject:Date:From;
-        b=ZCCXG0KKDHBko/h7Qddnx2isx514I/cGeLe9Whxo/SVIRSBYu4cH33yNVN01wiyNe
-         N3OEhMAl7Y2cskms4j6pgSMb1TxIJb/iaFCPfm+zLBIyAj4k0RWAfFQPLBulYcUHFP
-         wdTwLQhWDKcJdx2Rvlf1hFvcOD9PkR5X9q8zhW40=
+        t=1602976582; bh=8aEpWgqXyKAh+Uu3hm0rC8JqBHSl8FTvf3gR27mQJH0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Xgp3mZcMkt9vZ9Qi5lGfWMfheFI68Xt1xjUSzDmFvvz2siPyAsm+b4KqM/6ox8EcY
+         67SPQrhHadQd5CzKKqnaBnIfzKVPvsmouFqLu7/MJjy9xOY0bkCw9mLjZA2die5cmq
+         nhgagzRpAqyVzLPUaiX2op6PaJhijQPpT06aecME=
 Received: from fastboi.localdomain (fastboi.wg [10.32.40.5])
-        by mail.sammserver.com (Postfix) with ESMTP id C13CF11209F9;
-        Sun, 18 Oct 2020 01:16:04 +0200 (CEST)
+        by mail.sammserver.com (Postfix) with ESMTP id 41AB81120A11;
+        Sun, 18 Oct 2020 01:16:22 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cavoj.net; s=email;
-        t=1602976564; bh=QqvBo8u2Xq74KIbnT8Xajw1Dpr6aeuHc1QoaFmaZtec=;
-        h=From:To:Cc:Subject:Date:From;
-        b=AhnLdcFltM3C7fgZSwl2CjamiqwQjqN/kexphLtlfgueYx5OKcp/DTAqogm1xQ9Pi
-         6BR/r4ANtyO7W29y+lqAxZaVgvd1YdN8bfZjJuToFVqcBYi5CoKfxyXfcC9vSAuAgV
-         wTfeMU+pdQbERy1CMBg4jNHi4Z2teD7Jebb/A6Bg=
+        t=1602976582; bh=8aEpWgqXyKAh+Uu3hm0rC8JqBHSl8FTvf3gR27mQJH0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Xgp3mZcMkt9vZ9Qi5lGfWMfheFI68Xt1xjUSzDmFvvz2siPyAsm+b4KqM/6ox8EcY
+         67SPQrhHadQd5CzKKqnaBnIfzKVPvsmouFqLu7/MJjy9xOY0bkCw9mLjZA2die5cmq
+         nhgagzRpAqyVzLPUaiX2op6PaJhijQPpT06aecME=
 Received: by fastboi.localdomain (Postfix, from userid 1000)
-        id AEC8D1420A90; Sun, 18 Oct 2020 01:16:04 +0200 (CEST)
-From:   =?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>
-Subject: [PATCH v4 1/3] sequencer: fix gpg option passed to merge subcommand
-Date:   Sun, 18 Oct 2020 01:15:55 +0200
-Message-Id: <20201017231557.1001728-1-samuel@cavoj.net>
-X-Mailer: git-send-email 2.28.0
+        id 3CB261420A90; Sun, 18 Oct 2020 01:16:22 +0200 (CEST)
+Date:   Sun, 18 Oct 2020 01:16:22 +0200
+From:   Samuel =?utf-8?B?xIxhdm9q?= <samuel@cavoj.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 3/3] sequencer: pass explicit --no-gpg-sign to merge
+Message-ID: <20201017231622.afi73e62dp4yjvk4@fastboi.localdomain>
+References: <20201013213021.3671432-1-samuel@cavoj.net>
+ <20201013213021.3671432-3-samuel@cavoj.net>
+ <xmqqd01jh17n.fsf@gitster.c.googlers.com>
+ <20201017220224.o6fs5ukwqq7sqgrb@fastboi.localdomain>
+ <xmqq5z788osw.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5z788osw.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When performing a rebase with --rebase-merges using either a custom
-strategy specified with -s or an octopus merge, and at the same time
-having gpgsign enabled (either rebase -S or config commit.gpgsign), the
-operation would fail on making the merge commit. Instead of "-S%s" with
-the key id substituted, only the bare key id would get passed to the
-underlying merge command, which tried to interpret it as a ref.
+Hi,
 
-Fix the issue and add test cases as suggested by Johannes Schindelin and
-Junio C Hamano.
+On 17.10.2020 15:34, Junio C Hamano wrote:
+> Samuel Čavoj <samuel@cavoj.net> writes:
+> 
+> >> Now that we know that the root cause of the bug you fixed was
+> >> because rebase rebase with the default merge strategy for two-head
+> >> merges use separate codepaths from and all other rebases, I wonder
+> >> if it is prudent to also test the same cases this series adds
+> >> without giving "-s resolve".  That would exercise the other codepath
+> >
+> > I will leave that for someone else to tackle eventually.
+> 
+> We know that other codepath has been working even before this fix,
+> but tests are not about showing off what we fixed, but are about
+> making sure similar breakage won't be introduced by mistake in the
+> future.  Leaving it "for someone", when we know what the problem is
+> and how to solve it, is asking for the "evantually" not materialize
+> forever.
 
-Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
----
-changed v3 -> v4:
-    - added explicit test_unconfig to test case
-    - use git config instead of test_config
-    - added one more test case
----
- sequencer.c                |  2 +-
- t/t3435-rebase-gpg-sign.sh | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+I agree with that, don't take me wrong, but in general, people have
+other things to do, than implement test cases only marginally related to
+the inital patch they submitted.
 
-diff --git a/sequencer.c b/sequencer.c
-index 00acb12496..88ccff4838 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3677,7 +3677,7 @@ static int do_merge(struct repository *r,
- 		strvec_push(&cmd.args, "-F");
- 		strvec_push(&cmd.args, git_path_merge_msg(r));
- 		if (opts->gpg_sign)
--			strvec_push(&cmd.args, opts->gpg_sign);
-+			strvec_pushf(&cmd.args, "-S%s", opts->gpg_sign);
- 
- 		/* Add the tips to be merged */
- 		for (j = to_merge; j; j = j->next)
-diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
-index b47c59c190..a2b7625707 100755
---- a/t/t3435-rebase-gpg-sign.sh
-+++ b/t/t3435-rebase-gpg-sign.sh
-@@ -68,4 +68,25 @@ test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
- 	test_must_fail git verify-commit HEAD
- '
- 
-+test_expect_success 'rebase -r, merge strategy, --gpg-sign will sign commit' '
-+	git reset --hard merged &&
-+	test_unconfig commit.gpgsign &&
-+	git rebase -fr --gpg-sign -s resolve --root &&
-+	git verify-commit HEAD
-+'
-+
-+test_expect_success 'rebase -r, merge strategy, commit.gpgsign=true will sign commit' '
-+	git reset --hard merged &&
-+	git config commit.gpgsign true &&
-+	git rebase -fr -s resolve --root &&
-+	git verify-commit HEAD
-+'
-+
-+test_expect_success 'rebase -r, merge strategy, commit.gpgsign=false --gpg-sign will sign commit' '
-+	git reset --hard merged &&
-+	git config commit.gpgsign false &&
-+	git rebase -fr --gpg-sign -s resolve --root &&
-+	git verify-commit HEAD
-+'
-+
- test_done
--- 
-2.28.0
+Anyway, as it didn't take long in this case, I added them as patch 3/3
+in v4.
 
+> 
+> > As the number of very similar test is slowly growing, do you think it is
+> > worth copying (or making more generic) the test_rebase_gpg_sign for this
+> > situation as well? We currently have 4 almost identical tests (counting
+> > the new one you suggested for v4). Just a thought, as it is simpler to
+> > just add it at this point. Thanks for the feedback.
+> 
+> That is a tough question.  Often, a generic test helper makes it too
+> easy to do a full matrix of tests and encourages us to overdo it,
+> which we probably would want to avoid.  I think what I've suggested
+> so far is a bare minimum combination for code coverage.
+> 
+Alright, I will leave them as is.
+
+Regards,
+Samuel
