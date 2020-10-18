@@ -2,114 +2,146 @@ Return-Path: <SRS0=h2Q9=DZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E3DAC433E7
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C37BC433E7
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:55:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAECB20878
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:24:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19D6120E65
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:55:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dRhNJbZA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifcMaCLL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439997AbgJRAXz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 20:23:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56596 "EHLO
+        id S2440049AbgJRAy6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 20:54:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439985AbgJRAXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 20:23:54 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F437C061755
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:23:53 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x7so7504323wrl.3
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:23:53 -0700 (PDT)
+        with ESMTP id S2440034AbgJRAy5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 20:54:57 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2D1C061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:54:57 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id f10so6896829otb.6
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=x1mvKEZhb/jKEZ09DeJFivtpoSAi3ueZrbjVrv5jpf8=;
-        b=dRhNJbZAmWeR4F7wdCAAJ3+YsfhhRfE5HrY4ufBKcBnyiVx0fSZVCj9E9AiJXfLEUo
-         R+T8ihSub2EmDyJWlRpi+pxWn0sO+PV0rrFdhxPlB4LqWCs3smzVoR8UBu9jDAuUIleA
-         tmP3r2Kd9XaIgmcO8Fky7ZuhL0ta/gc0Ba4+tw1p8017bl7HMd/ayEgFGc8dIcWU+U8g
-         ZebgTKAAVcmYZh193DwN+rZi5W/eTz5+3OFr8+o8WNHwufEsyn70TkhN77+QNx9v1sBV
-         /mDhVg/CcyQLlsVDliV1Kj2LR7U1JkRQLzzmNjtbQB0QWIRNZZBZbUUNG7VsPpWLpmo1
-         uk9g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rK8uHET0CwThrvAnD8x8rcQD3WqAmrjjKpj2MtqsBp4=;
+        b=ifcMaCLLDu8kjxsyXf9x0MHaBOsDsFfd2MUE4bX74DS3LD0hpnl4B/TzPOf6Y5Y9g9
+         /p8nkt3qwe5B/2yf4lsuuWybSrY4KrUuVEZnWbvT2Ax0v6KBXLmWE0ab8hi4Tsu4aCvW
+         tst5twLeNt6ViljO9ImaSY46FPVHMVt7H7lsyet88dbbW0z8fMo0DfGFkih9ZROXP4kg
+         lWgDLIeVcNac8EuFmLVqc5NUUDoHLZgptgo1NYS2w+R33FqgV9J6Yz/cNywEUtQSfksp
+         nexTWZbaRW/cLAEJJkH4Z0fmBP3tVYzsszlTwMJZGm/TgMx0QFaFNjfE07wCwtHvp9Q2
+         QhNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=x1mvKEZhb/jKEZ09DeJFivtpoSAi3ueZrbjVrv5jpf8=;
-        b=gBj1EtgKDielOpVTxKJpqJ/9GQlSjXutENsHI96YXZkesEBA9Wb3dRDU2kBaCZsWpN
-         NLHN3JHTouJVo/Sh3zqylIDXrj02a35/oTuGma6mTRAEM9J6uyMeJSjasuSZNVNPfVZa
-         Gz+vBbDqGumILRfcs0QUCjsU42ydtOPQdnoLYz75/lDX1X95VEKFB2Dqb9wimIPtM59O
-         OFKJdcAmpPMep8dYPtc93UR4VIGgy0POIG354cEoyipJtzmc2Iloe2Jvreb+lig+K/ZS
-         OSAr3FzFeZusGbHJvEYqfwiRLIFsQr/Cut044SzhhM4U2PWI5nVZzDIXkL8QzC3v5++x
-         +KaQ==
-X-Gm-Message-State: AOAM530nZJLGi0Qy0M1l4uc3ywpqA5YaCFTyyH8JdVKbdSf1BYZswsy1
-        5mneL4Yv5lUnCfbhrwwGhkKyg0ORcdM=
-X-Google-Smtp-Source: ABdhPJxjDIfGLiklIvizcz9HABXf8eouWPughOnirj0yTvXKZlKZJvhHhElBescVOWQYEuMBsiUc2w==
-X-Received: by 2002:adf:f210:: with SMTP id p16mr7283511wro.40.1602980632020;
-        Sat, 17 Oct 2020 17:23:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t10sm9260335wmf.46.2020.10.17.17.23.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2020 17:23:51 -0700 (PDT)
-Message-Id: <0af783548744dc5e2a0e92040f166f80ea0500bf.1602980628.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.878.v6.git.git.1602980628.gitgitgadget@gmail.com>
-References: <pull.878.v5.git.git.1602888652.gitgitgadget@gmail.com>
-        <pull.878.v6.git.git.1602980628.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 18 Oct 2020 00:23:47 +0000
-Subject: [PATCH v6 3/3] test-lib: reduce verbosity of skipped tests
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rK8uHET0CwThrvAnD8x8rcQD3WqAmrjjKpj2MtqsBp4=;
+        b=DPGp+QRdft785YEw/LknSyQDdgm9z5JGNzvXSjP3cafLedashA1F1hvZ2XIxvLsNpE
+         /0M5FwCfm7bKH5Swxss/OWQtC1fMA7Uw/OR9rnXm4nHdbrEU06MAD8JKLd20M8qaVuOZ
+         pX0tAp6j31eal0uGQ4IlNqlAare3I4zhVSSURghI1ipkMApSUDwmwS8zl+61X0E0VMuG
+         ky3qtiQMyyY/2eOpIvQxBxuVvkLVZEtJZfVHF3HHeMEbnZhy2u5LYuG1bb4Z/PABypo+
+         X9eDyGjVfwQiEIIsbT+dSrEA/g7YxcUiFxa0eAppy0EyL8sAmkacZxQVuz1LNqJHc0v5
+         fhZg==
+X-Gm-Message-State: AOAM5304zs/CM91FVpMlOE/JM+wadcpfMEkKnTnXfdDj3Px3GM9Sh5yi
+        BkdeSEk1nyuh1MPuIf7pyW56xx++cOguTZBgEA4=
+X-Google-Smtp-Source: ABdhPJyAuQopwFox6MhHuF0VJVSdcU6Tun+v3VeFcmktfAkrtdJHmrU2u9E8+Lf0rkjVPWsCsN+Nk5/IMB7GJDCuZ4U=
+X-Received: by 2002:a9d:2c4:: with SMTP id 62mr8274827otl.102.1602982495494;
+ Sat, 17 Oct 2020 17:54:55 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <pull.756.git.1602968677.gitgitgadget@gmail.com>
+ <13fd992a375e30e8c7b0953a128e149951dee0ea.1602968677.git.gitgitgadget@gmail.com>
+ <xmqqeelw8p8i.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqeelw8p8i.fsf@gitster.c.googlers.com>
+From:   Nipunn Koorapati <nipunn1313@gmail.com>
+Date:   Sun, 18 Oct 2020 01:54:44 +0100
+Message-ID: <CAN8Z4-W=+D-P_qCYijGMnStY-EGwKFx-+AYzjACDPAXnLRAA8A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] fsmonitor: use fsmonitor data in `git diff`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Vandiver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Utsav Shah <utsav@dropbox.com>,
+        Alex Vandiver <alexmv@dropbox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+> run_diff_files() is used not just by "git diff" but other things
+> like "git add", so if we get an overall speed-up without having to
+> pay undue cost, that would be a very good news.
 
-When using the --run flag to run just two or three tests from a test
-file which contains several dozen tests, having every skipped test print
-out dozens of lines of output for the test code for that skipped test
-(in addition to the TAP output line) adds up to hundreds or thousands of
-lines of irrelevant output that make it very hard to fish out the
-relevant results you were looking for.  Simplify the output for skipped
-tests to remove this extra output, leaving only the TAP output line
-(i.e. the line reading "ok <number> # skip <test-description>", which
-already mentions that the test was "skip"ped).
+Agreed! I may be able to write perf benchmark tests to highlight
+benefits to git add as well.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/test-lib.sh | 1 -
- 1 file changed, 1 deletion(-)
+> 20% of the working tree, running refresh_fsmonitor() for the entire
+> working tree is still a win, but if we are only checking less than
+> that, we are better off without fsmonitor, or does a tradeoff like
+> that exist?
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 72b88dffa1..f68bca745a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1062,7 +1062,6 @@ test_skip () {
- 				"      <skipped message=\"$message\" />"
- 		fi
- 
--		say_color skip >&3 "skipping test: $@"
- 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
- 		: true
- 		;;
--- 
-gitgitgadget
+My understanding is that refresh_fsmonitor is
+O(delta_since_last_refresh) - so for developers
+with large repositories - this cost will amortize out over subsequent
+commands, so I don't
+think it's worth investigating this tradeoff here.
+As a user of large repositories, I expect that my major source of
+fsmonitor activity to be user
+intent (eg git pull, or intentionally copying/editing a large number
+of files). After such a command,
+I expect my next git command to be slower - that would be unsurprising.
+
+I think the tradeoff could be made for small diff requests, but I
+don't think it's worth adding complexity here -
+as that user will just have to pay the cost on their next git command.
+
+> > +              *  eg - via git udpate-index --assume-unchanged
+> > +              *  eg - via core.ignorestat=true
+>
+> ... what are these two lines doing here?
+
+Intended to indicate potential ways that CE_VALID might be set. When I
+was reading the source
+here, it was pretty difficult to determine how this would be set.
+Agree that I picked unfortunate wording.
+Thanks for the suggestions. Will update in the next iteration.
+
+>
+> would probably be what you meant bo say.
+>
+>         When CE_VALID is set (via "update-index --assume-unchanged"
+>         or via adding paths while core.ignorestat is set to true),
+>         the user has promised that the working tree file for that
+>         path will not be modified.  When CE_FSMONITOR_VALID is true,
+>         the fsmonitor knows that the path hasn't been modified since
+>         we refreshed the cached stat information.  In either case,
+>         we do not have to stat to see if the path has been removed
+>         or modified.
+>
+> or something like that, perhaps.
+
+Sounds good. Will clarify. I like your comment better as well.
+
+>
+> > +              */
+> > +             if (ce->ce_flags & CE_VALID || ce->ce_flags & CE_FSMONITOR_VALID) {
+>
+> Would it become easier to read, if written like this instead?
+>
+>                 if (ce->ce_flags & (CE_VALID | CE_FSMONITOR_VALID)) {
+
+I personally find this more confusing because it involves multiple
+bitwise ops, but this
+is potentially due to me having more mental practice thinking about
+boolean operators vs bitwise operators.
+I'm more than happy to align with the common pattern of the repo. I'll
+change this.
+
+>
+> Thanks.
+
+Thank you for the thorough review!
