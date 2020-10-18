@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E224DC433E7
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E3DAC433E7
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:24:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A28420878
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:23:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAECB20878
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 00:24:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCvqYTxo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dRhNJbZA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439991AbgJRAXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Oct 2020 20:23:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56592 "EHLO
+        id S2439997AbgJRAXz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Oct 2020 20:23:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439985AbgJRAXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Oct 2020 20:23:52 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F46C061755
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:23:51 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id x7so7504300wrl.3
-        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:23:51 -0700 (PDT)
+        with ESMTP id S2439985AbgJRAXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Oct 2020 20:23:54 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F437C061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:23:53 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id x7so7504323wrl.3
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 17:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5SDDF4kkl0tUY2U4omudXNI4oHExVY/QvPcrJprKcZE=;
-        b=CCvqYTxoOkOZN/VHLd4l9LmuQgsjw9C4E9qr5o0HxhKEOeaWFPO0CX1lZKnW3rC5nv
-         a4Ed+tBYEt8CjK2K69c0qwQ7C4dDNwZsPOXQEWmasvnZkVJ6WyU4KVHLHBjvux3TBYSw
-         1L4VupRspJkOrI/BNdr9TakAD+BLmYMaMyACl+EhMGY7395dIemaji1qvOVmDHp3iG6p
-         Btl1Od+PNiC45GYm1cepwTWzZOORgJ07vTSKDrPI85QGLUVRr/tN/RdhTQ4VsRIYo/mQ
-         5qpGYiuum5V80t5U3205AJml7rIJjkO94BjtR4CXl8mOBVGQvSzsEg2+2DtbKWN4lFxG
-         KLkg==
+        bh=x1mvKEZhb/jKEZ09DeJFivtpoSAi3ueZrbjVrv5jpf8=;
+        b=dRhNJbZAmWeR4F7wdCAAJ3+YsfhhRfE5HrY4ufBKcBnyiVx0fSZVCj9E9AiJXfLEUo
+         R+T8ihSub2EmDyJWlRpi+pxWn0sO+PV0rrFdhxPlB4LqWCs3smzVoR8UBu9jDAuUIleA
+         tmP3r2Kd9XaIgmcO8Fky7ZuhL0ta/gc0Ba4+tw1p8017bl7HMd/ayEgFGc8dIcWU+U8g
+         ZebgTKAAVcmYZh193DwN+rZi5W/eTz5+3OFr8+o8WNHwufEsyn70TkhN77+QNx9v1sBV
+         /mDhVg/CcyQLlsVDliV1Kj2LR7U1JkRQLzzmNjtbQB0QWIRNZZBZbUUNG7VsPpWLpmo1
+         uk9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5SDDF4kkl0tUY2U4omudXNI4oHExVY/QvPcrJprKcZE=;
-        b=rDAeb+H9SW3MVWlhDvdV0+zDzlAYnJN1xXQtd6ZXPPsE4Txl6Nw2rRqWsaak6NHwwN
-         6V4fReDls9WLHRUb/pNWH5wjGWNhzH3gn1BGVK6LMdAldRVoKM6IFhHS2FsllRBqVe40
-         0UL1osPHolJUWCzbYqtrn5q7zW41s955/9pRVFKlqHbkFyjDgZzurN4HpH7FoaRvuMig
-         m0nid/OemYSLxp8Sum1nJcvAseqk86H8VaAzlAxDA9VhYMhU36JEUmFoBG9vlSRhJa+t
-         WLjlMAlosz8i9FWgcjWMS0B3HRxdp6cy/uJyslv992H4PyTMMaOOSsPcUvL1wUYZR3+Z
-         I0AQ==
-X-Gm-Message-State: AOAM530JvwIpbG93WY5offBM8vYx0T+xTrbsZDpqj/PZ/VlCcpP2EfUC
-        RrxdFTaPaYatO5A9LxPjry0/eolULGo=
-X-Google-Smtp-Source: ABdhPJw0eMuUwVvnF9F7nnMGAGv60fdh8FmlXaTz5151OREGqUT3Qf/L0uzYESOWxruCHR98Ed4o9A==
-X-Received: by 2002:a5d:40cb:: with SMTP id b11mr13012058wrq.254.1602980630355;
-        Sat, 17 Oct 2020 17:23:50 -0700 (PDT)
+        bh=x1mvKEZhb/jKEZ09DeJFivtpoSAi3ueZrbjVrv5jpf8=;
+        b=gBj1EtgKDielOpVTxKJpqJ/9GQlSjXutENsHI96YXZkesEBA9Wb3dRDU2kBaCZsWpN
+         NLHN3JHTouJVo/Sh3zqylIDXrj02a35/oTuGma6mTRAEM9J6uyMeJSjasuSZNVNPfVZa
+         Gz+vBbDqGumILRfcs0QUCjsU42ydtOPQdnoLYz75/lDX1X95VEKFB2Dqb9wimIPtM59O
+         OFKJdcAmpPMep8dYPtc93UR4VIGgy0POIG354cEoyipJtzmc2Iloe2Jvreb+lig+K/ZS
+         OSAr3FzFeZusGbHJvEYqfwiRLIFsQr/Cut044SzhhM4U2PWI5nVZzDIXkL8QzC3v5++x
+         +KaQ==
+X-Gm-Message-State: AOAM530nZJLGi0Qy0M1l4uc3ywpqA5YaCFTyyH8JdVKbdSf1BYZswsy1
+        5mneL4Yv5lUnCfbhrwwGhkKyg0ORcdM=
+X-Google-Smtp-Source: ABdhPJxjDIfGLiklIvizcz9HABXf8eouWPughOnirj0yTvXKZlKZJvhHhElBescVOWQYEuMBsiUc2w==
+X-Received: by 2002:adf:f210:: with SMTP id p16mr7283511wro.40.1602980632020;
+        Sat, 17 Oct 2020 17:23:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m1sm9494704wmm.34.2020.10.17.17.23.49
+        by smtp.gmail.com with ESMTPSA id t10sm9260335wmf.46.2020.10.17.17.23.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2020 17:23:49 -0700 (PDT)
-Message-Id: <0355c888828aeec331a6b99a26d8aa04cff59859.1602980628.git.gitgitgadget@gmail.com>
+        Sat, 17 Oct 2020 17:23:51 -0700 (PDT)
+Message-Id: <0af783548744dc5e2a0e92040f166f80ea0500bf.1602980628.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.878.v6.git.git.1602980628.gitgitgadget@gmail.com>
 References: <pull.878.v5.git.git.1602888652.gitgitgadget@gmail.com>
         <pull.878.v6.git.git.1602980628.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 18 Oct 2020 00:23:45 +0000
-Subject: [PATCH v6 1/3] test-lib: allow selecting tests by substring/glob with
- --run
+Date:   Sun, 18 Oct 2020 00:23:47 +0000
+Subject: [PATCH v6 3/3] test-lib: reduce verbosity of skipped tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,308 +84,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Many of our test scripts have several "setup" tests.  It's a lot easier
-to say
-
-   ./t0050-filesystem.sh --run=setup,9
-
-in order to run all the setup tests as well as test #9, than it is to
-track down what all the setup tests are and enter all their numbers in
-the list.  Also, I often find myself wanting to run just one or a couple
-tests from the test file, but I don't know the numbering of any of the
-tests -- to get it I either have to first run the whole test file (or
-start counting by hand or figure out some other clever but non-obvious
-tricks).  It's really convenient to be able to just look at the test
-description(s) and then run
-
-   ./t6416-recursive-corner-cases.sh --run=symlink
-
-or
-
-   ./t6402-merge-rename.sh --run='setup,unnecessary update'
-
-Add such an ability to test selection which relies on merely matching
-against the test description.
+When using the --run flag to run just two or three tests from a test
+file which contains several dozen tests, having every skipped test print
+out dozens of lines of output for the test code for that skipped test
+(in addition to the TAP output line) adds up to hundreds or thousands of
+lines of irrelevant output that make it very hard to fish out the
+relevant results you were looking for.  Simplify the output for skipped
+tests to remove this extra output, leaving only the TAP output line
+(i.e. the line reading "ok <number> # skip <test-description>", which
+already mentions that the test was "skip"ped).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/README         | 48 +++++++++++++++++++++++++++----------------
- t/t0000-basic.sh | 53 ++++++++++++++++++++++++++++--------------------
- t/test-lib.sh    | 20 ++++++++++--------
- 3 files changed, 74 insertions(+), 47 deletions(-)
+ t/test-lib.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/t/README b/t/README
-index 2adaf7c2d2..c730a70770 100644
---- a/t/README
-+++ b/t/README
-@@ -258,16 +258,21 @@ For an individual test suite --run could be used to specify that
- only some tests should be run or that some tests should be
- excluded from a run.
- 
--The argument for --run is a list of individual test numbers or
--ranges with an optional negation prefix that define what tests in
--a test suite to include in the run.  A range is two numbers
--separated with a dash and matches a range of tests with both ends
--been included.  You may omit the first or the second number to
--mean "from the first test" or "up to the very last test"
--respectively.
--
--Optional prefix of '!' means that the test or a range of tests
--should be excluded from the run.
-+The argument for --run, <test-selector>, is a list of description
-+substrings or globs or individual test numbers or ranges with an
-+optional negation prefix (of '!') that define what tests in a test
-+suite to include (or exclude, if negated) in the run.  A range is two
-+numbers separated with a dash and matches a range of tests with both
-+ends been included.  You may omit the first or the second number to
-+mean "from the first test" or "up to the very last test" respectively.
-+
-+The argument to --run is split on commas into separate strings,
-+numbers, and ranges, and picks all tests that match any of the
-+individual selection criteria.  If the substring of the description
-+text that you want to match includes a comma, use the glob character
-+'?' instead.  For example --run='rebase,merge?cherry-pick' would match
-+on all tests that match either the glob *rebase* or the glob
-+*merge?cherry-pick*.
- 
- If --run starts with an unprefixed number or range the initial
- set of tests to run is empty. If the first item starts with '!'
-@@ -275,9 +280,6 @@ all the tests are added to the initial set.  After initial set is
- determined every test number or range is added or excluded from
- the set one by one, from left to right.
- 
--Individual numbers or ranges could be separated either by a space
--or a comma.
--
- For example, to run only tests up to a specific test (21), one
- could do this:
- 
-@@ -290,7 +292,7 @@ or this:
- Common case is to run several setup tests (1, 2, 3) and then a
- specific test (21) that relies on that setup:
- 
--    $ sh ./t9200-git-cvsexport-commit.sh --run='1 2 3 21'
-+    $ sh ./t9200-git-cvsexport-commit.sh --run='1,2,3,21'
- 
- or:
- 
-@@ -298,17 +300,17 @@ or:
- 
- or:
- 
--    $ sh ./t9200-git-cvsexport-commit.sh --run='-3 21'
-+    $ sh ./t9200-git-cvsexport-commit.sh --run='-3,21'
- 
- As noted above, the test set is built by going through the items
- from left to right, so this:
- 
--    $ sh ./t9200-git-cvsexport-commit.sh --run='1-4 !3'
-+    $ sh ./t9200-git-cvsexport-commit.sh --run='1-4,!3'
- 
- will run tests 1, 2, and 4.  Items that come later have higher
- precedence.  It means that this:
- 
--    $ sh ./t9200-git-cvsexport-commit.sh --run='!3 1-4'
-+    $ sh ./t9200-git-cvsexport-commit.sh --run='!3,1-4'
- 
- would just run tests from 1 to 4, including 3.
- 
-@@ -317,6 +319,18 @@ test in the test suite except from 7 up to 11:
- 
-     $ sh ./t9200-git-cvsexport-commit.sh --run='!7-11'
- 
-+Sometimes there may be multiple tests with e.g. "setup" in their name
-+that are needed and rather than figuring out the number for all of them
-+we can just use "setup" as a substring/glob to match against the test
-+description:
-+
-+    $ sh ./t0050-filesystem.sh --run=setup,9-11
-+
-+or one could select both the setup tests and the rename ones (assuming all
-+relevant tests had those words in their descriptions):
-+
-+    $ sh ./t0050-filesystem.sh --run=setup,rename
-+
- Some tests in a test suite rely on the previous tests performing
- certain actions, specifically some tests are designated as
- "setup" test, so you cannot _arbitrarily_ disable one test and
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 923281af93..62a16ed4c8 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -430,7 +430,7 @@ test_expect_success 'GIT_SKIP_TESTS does not skip unmatched suite' "
- 
- test_expect_success '--run basic' "
- 	run_sub_test_lib_test run-basic \
--		'--run basic' --run='1 3 5' <<-\\EOF &&
-+		'--run basic' --run='1,3,5' <<-\\EOF &&
- 	for i in 1 2 3 4 5 6
- 	do
- 		test_expect_success \"passing test #\$i\" 'true'
-@@ -472,7 +472,7 @@ test_expect_success '--run with a range' "
- 
- test_expect_success '--run with two ranges' "
- 	run_sub_test_lib_test run-two-ranges \
--		'--run with two ranges' --run='1-2 5-6' <<-\\EOF &&
-+		'--run with two ranges' --run='1-2,5-6' <<-\\EOF &&
- 	for i in 1 2 3 4 5 6
- 	do
- 		test_expect_success \"passing test #\$i\" 'true'
-@@ -556,7 +556,7 @@ test_expect_success '--run with basic negation' "
- 
- test_expect_success '--run with two negations' "
- 	run_sub_test_lib_test run-two-neg \
--		'--run with two negations' --run='"'!3 !6'"' <<-\\EOF &&
-+		'--run with two negations' --run='"'!3,!6'"' <<-\\EOF &&
- 	for i in 1 2 3 4 5 6
- 	do
- 		test_expect_success \"passing test #\$i\" 'true'
-@@ -577,7 +577,7 @@ test_expect_success '--run with two negations' "
- 
- test_expect_success '--run a range and negation' "
- 	run_sub_test_lib_test run-range-and-neg \
--		'--run a range and negation' --run='"'-4 !2'"' <<-\\EOF &&
-+		'--run a range and negation' --run='"'-4,!2'"' <<-\\EOF &&
- 	for i in 1 2 3 4 5 6
- 	do
- 		test_expect_success \"passing test #\$i\" 'true'
-@@ -620,7 +620,7 @@ test_expect_success '--run range negation' "
- test_expect_success '--run include, exclude and include' "
- 	run_sub_test_lib_test run-inc-neg-inc \
- 		'--run include, exclude and include' \
--		--run='"'1-5 !1-3 2'"' <<-\\EOF &&
-+		--run='"'1-5,!1-3,2'"' <<-\\EOF &&
- 	for i in 1 2 3 4 5 6
- 	do
- 		test_expect_success \"passing test #\$i\" 'true'
-@@ -664,7 +664,7 @@ test_expect_success '--run include, exclude and include, comma separated' "
- test_expect_success '--run exclude and include' "
- 	run_sub_test_lib_test run-neg-inc \
- 		'--run exclude and include' \
--		--run='"'!3- 5'"' <<-\\EOF &&
-+		--run='"'!3-,5'"' <<-\\EOF &&
- 	for i in 1 2 3 4 5 6
- 	do
- 		test_expect_success \"passing test #\$i\" 'true'
-@@ -705,7 +705,31 @@ test_expect_success '--run empty selectors' "
- 	EOF
- "
- 
--test_expect_success '--run invalid range start' "
-+test_expect_success '--run substring selector' "
-+	run_sub_test_lib_test run-substring-selector \
-+		'--run empty selectors' \
-+		--run='relevant' <<-\\EOF &&
-+	test_expect_success \"relevant test\" 'true'
-+	for i in 1 2 3 4 5 6
-+	do
-+		test_expect_success \"other test #\$i\" 'true'
-+	done
-+	test_done
-+	EOF
-+	check_sub_test_lib_test run-substring-selector <<-\\EOF
-+	> ok 1 - relevant test
-+	> ok 2 # skip other test #1 (--run)
-+	> ok 3 # skip other test #2 (--run)
-+	> ok 4 # skip other test #3 (--run)
-+	> ok 5 # skip other test #4 (--run)
-+	> ok 6 # skip other test #5 (--run)
-+	> ok 7 # skip other test #6 (--run)
-+	> # passed all 7 test(s)
-+	> 1..7
-+	EOF
-+"
-+
-+test_expect_success '--run keyword selection' "
- 	run_sub_test_lib_test_err run-inv-range-start \
- 		'--run invalid range start' \
- 		--run='a-5' <<-\\EOF &&
-@@ -735,21 +759,6 @@ test_expect_success '--run invalid range end' "
- 	EOF_ERR
- "
- 
--test_expect_success '--run invalid selector' "
--	run_sub_test_lib_test_err run-inv-selector \
--		'--run invalid selector' \
--		--run='1?' <<-\\EOF &&
--	test_expect_success \"passing test #1\" 'true'
--	test_done
--	EOF
--	check_sub_test_lib_test_err run-inv-selector \
--		<<-\\EOF_OUT 3<<-\\EOF_ERR
--	> FATAL: Unexpected exit with code 1
--	EOF_OUT
--	> error: --run: invalid non-numeric in test selector: '1?'
--	EOF_ERR
--"
--
- 
- test_set_prereq HAVEIT
- haveit=no
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ef31f40037..72b88dffa1 100644
+index 72b88dffa1..f68bca745a 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -769,15 +769,17 @@ match_pattern_list () {
- }
+@@ -1062,7 +1062,6 @@ test_skip () {
+ 				"      <skipped message=\"$message\" />"
+ 		fi
  
- match_test_selector_list () {
-+	operation="$1"
-+	shift
- 	title="$1"
- 	shift
- 	arg="$1"
- 	shift
- 	test -z "$1" && return 0
- 
--	# Both commas and whitespace are accepted as separators.
-+	# Commas are accepted as separators.
- 	OLDIFS=$IFS
--	IFS=' 	,'
-+	IFS=','
- 	set -- $1
- 	IFS=$OLDIFS
- 
-@@ -805,13 +807,13 @@ match_test_selector_list () {
- 			*-*)
- 				if expr "z${selector%%-*}" : "z[0-9]*[^0-9]" >/dev/null
- 				then
--					echo "error: $title: invalid non-numeric in range" \
-+					echo "error: $operation: invalid non-numeric in range" \
- 						"start: '$orig_selector'" >&2
- 					exit 1
- 				fi
- 				if expr "z${selector#*-}" : "z[0-9]*[^0-9]" >/dev/null
- 				then
--					echo "error: $title: invalid non-numeric in range" \
-+					echo "error: $operation: invalid non-numeric in range" \
- 						"end: '$orig_selector'" >&2
- 					exit 1
- 				fi
-@@ -819,9 +821,11 @@ match_test_selector_list () {
- 			*)
- 				if expr "z$selector" : "z[0-9]*[^0-9]" >/dev/null
- 				then
--					echo "error: $title: invalid non-numeric in test" \
--						"selector: '$orig_selector'" >&2
--					exit 1
-+					case "$title" in *${selector}*)
-+						include=$positive
-+						;;
-+					esac
-+					continue
- 				fi
- 		esac
- 
-@@ -1031,7 +1035,7 @@ test_skip () {
- 		skipped_reason="GIT_SKIP_TESTS"
- 	fi
- 	if test -z "$to_skip" && test -n "$run_list" &&
--	   ! match_test_selector_list '--run' $test_count "$run_list"
-+	   ! match_test_selector_list '--run' "$1" $test_count "$run_list"
- 	then
- 		to_skip=t
- 		skipped_reason="--run"
+-		say_color skip >&3 "skipping test: $@"
+ 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
+ 		: true
+ 		;;
 -- 
 gitgitgadget
-
