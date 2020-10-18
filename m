@@ -2,118 +2,112 @@ Return-Path: <SRS0=h2Q9=DZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C55C433DF
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 05:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9682C433DF
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 05:40:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C83BA21D47
-	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 05:03:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84E942080D
+	for <git@archiver.kernel.org>; Sun, 18 Oct 2020 05:40:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o/2R/RtY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7XbWWLv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726216AbgJRFCI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Oct 2020 01:02:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57219 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgJRFCI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Oct 2020 01:02:08 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C67348DCC8;
-        Sun, 18 Oct 2020 01:02:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0+5fPPtGZqR7TLvpC/aB9KdBnq4=; b=o/2R/R
-        tYvyYOPbHT9ditkSBSDl5x0Etohfz9FKKxy2NvMK7gsZq8nsdr+3O8mk5LBwjwy6
-        GfePDsfjExip2b7NFuwf1wt8q2gvFvkz+Bqv7YnkYpEWnz9xaPjZ4sTuipq2GeHW
-        UGsROMVKRmJmGxmRV5EQHJN3xk+UcQ/bcbmXE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qpNdEhfKDRHZ+qnrxTAQImmDPZ0u4v1w
-        0Y3lUhE0f9Bajn8bRMmqYxKHqum/dWsRurmZPgZjaikQDQ9j8RzWrY32u7v4uYJE
-        vKDPzsPmRAGnZMZXhVRVZcHEeDIr34czu3HzfUpRymQOmsw1HPJYSoOnDEmzuKz8
-        mROqVEU9Xc4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8F0C8DCC7;
-        Sun, 18 Oct 2020 01:02:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2CD858DCC5;
-        Sun, 18 Oct 2020 01:02:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Nipunn Koorapati <nipunn1313@gmail.com>,
-        Alex Vandiver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Utsav Shah <utsav@dropbox.com>,
-        Alex Vandiver <alexmv@dropbox.com>
-Subject: Re: [PATCH 1/4] fsmonitor: use fsmonitor data in `git diff`
-References: <pull.756.git.1602968677.gitgitgadget@gmail.com>
-        <13fd992a375e30e8c7b0953a128e149951dee0ea.1602968677.git.gitgitgadget@gmail.com>
-        <xmqqeelw8p8i.fsf@gitster.c.googlers.com>
-        <CAN8Z4-W=+D-P_qCYijGMnStY-EGwKFx-+AYzjACDPAXnLRAA8A@mail.gmail.com>
-        <20201018041642.GB2262492@nand.local>
-Date:   Sat, 17 Oct 2020 22:02:04 -0700
-In-Reply-To: <20201018041642.GB2262492@nand.local> (Taylor Blau's message of
-        "Sun, 18 Oct 2020 00:17:47 -0400")
-Message-ID: <xmqq1rhw86ur.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725799AbgJRFkv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Oct 2020 01:40:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725275AbgJRFkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Oct 2020 01:40:51 -0400
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22956C061755
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 22:40:51 -0700 (PDT)
+Received: by mail-oo1-xc41.google.com with SMTP id f19so2011367oot.4
+        for <git@vger.kernel.org>; Sat, 17 Oct 2020 22:40:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tB2BT6tsqxpM6Vur8tERYpCi4cwup7XB3unIEETxz/w=;
+        b=U7XbWWLvX/csksHOi14y19z9JlLEvjKbHOeHbRr1tcL1CMsnnjSo+wLV3IjRA3cd+t
+         N5kDRpSWysurWTtmQBreq8BbTXNZgU6rhS6EtksrRlISpWz1WGbaiqkz01Q8EdhoNG0Z
+         AUqRNM7jGpB7wE4U+T1bTVLa7gYyaPG6M0EW9Q2Prdb6M5pJ1OZ1dA5uVslcMohTyppb
+         xb85HVgDhRr5CJJttQt5dMZrb7FiVGVm/CEpszBG4iNFRS2a70ATklbZzQQC/aatPwn9
+         sQ8m1AkT8otvUlGvHevtD+a9bYUUXWRjl2ecLoqwqLFnAecTYAov+1pMmtxIBl+0k03J
+         emVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tB2BT6tsqxpM6Vur8tERYpCi4cwup7XB3unIEETxz/w=;
+        b=QBLxnlu+/A6t3YByqanzw53IS2uabQQW3SLj0Tnva9rDObKzx7P1NafC3JTcj6Gavp
+         iL6RBDkhqKX0YbCW1ClWxVfbUIb3u+8ca3DMg7qtMOT6SfSEiLBD2i2+6trfjdAnqW98
+         KBODOWDEoq1E4WiRmSNol24lV1GDapkChiO0hUQw/sBi1vvXoUewDUYFSHoOLA+U5d+o
+         uGSHKTBs63DzWSffNx80F/E2Mc9pi/a0vxPL6MDyDOm6241qRJ+OsQBJkubGLCpFSHVU
+         lPvnbJL3ww61zm2SyeXCHfdJb3CfbgVR+EDwfNTQ2XekNiHDH283bivbIAaI+AQFJqff
+         H5Xg==
+X-Gm-Message-State: AOAM531/C6nvaXSH7BKn5h6gP+40VW8fi3wecSjg0RuLbjLpCTNezK6o
+        H3NK9PdXPnBmhwsIHwH6AOzeSLV4IEgfa81rniQ=
+X-Google-Smtp-Source: ABdhPJxhTAXmmgn/u78zQptAmzy8eDtMVSp+sLim1zoYt579rrMvHjDVz9DDlaDC2m1MWOBpdv9x6uRfte+Y96h9qo8=
+X-Received: by 2002:a4a:ba10:: with SMTP id b16mr8404284oop.75.1602999650413;
+ Sat, 17 Oct 2020 22:40:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 10F45C56-10FF-11EB-94A7-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20201015175709.20121-1-charvi077@gmail.com> <20201017075455.9660-1-charvi077@gmail.com>
+ <20201017075455.9660-3-charvi077@gmail.com> <20201017151358.GA2837@danh.dev>
+In-Reply-To: <20201017151358.GA2837@danh.dev>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Sun, 18 Oct 2020 11:10:39 +0530
+Message-ID: <CAPSFM5cWx0c2CRVXxBO5Xq8AoTPSGmRa9x1hZom=cRqpOO4WkQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5][Outreachy] t7102,t7201: remove unnecessary blank
+ spaces in test body
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Sat, 17 Oct 2020 at 20:44, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <c=
+ongdanhqx@gmail.com> wrote:
+>
+> On 2020-10-17 13:24:52+0530, Charvi Mendiratta <charvi077@gmail.com> wrot=
+e:
+>
+> Welcome to the list.
+>
+> > Some tests use a deprecated style in which there are unnecessary blank =
+lines after the opening quote of the test body and before the closing quote=
+. So we should remove these unnecessary blank lines.
+>
+> In Git project, we wrap the commit message's body to 72 columns per
+> line (for more information, please take a look at
+> Documentation/MyFirstContribution.txt).
+>
 
-> Hmm. I do agree that I'd like to stay out of the business of trying to
-> figure out exactly what that trade-off is (although I'm sure that it
-> exists), only because it seems likely to vary to a large extent from
-> repository to repository. (That is, 20% may be a good number for some
-> repository, but a terrible choice for another).
+Thanks a lot Danh, I will fix it in my editor's settings and will
+update in the next patch series .
 
-I think both of you misunderstood me.  
+> And we rarely say "we should", if the change shouldn't be applied,
+> it won't be applied.
+> Instead, we ask the code base to fix itself. Perhaps:
+>
+>         t7102 and t7201 still follow the old style of having blank
+>         lines around test body, which is not consistence with our
+>         current practice.
+>
+>         Let's remove those unnecessary blank lines.
+>
 
-My question was a simple yes/no "does there a trade off exist?"
-question and the sentences with 20% in it were mere example of
-possible trade-off I had in mind that _could_ exist.  I wasn't even
-suggesting to figure out what the optimum cut-off heuristics would
-be (e.g. solving "when more than N% paths are subject to diff
-fsmonitor is faster" for N).
+Noted, will update this as well.
 
-I was hoping that we can show that even having to lstat just a
-single path is expensive enough---IOW, "there is no trade-off worth
-worrying about, because talking to fsmonitor is so cheap compared to
-the cost of even a single lstst" would have been a valid and happy
-answer.  With such a number, there is no risk of introducing an
-unwarranted performance regression to use cases that we did not
-anticipate by adding an unconditional call to refresh_fsmonitor().
+> Thanks,
+> --
+> Danh
 
-But without any rationale, the performance implication of adding an
-unconditional call to refresh_fsmonitor() would become much muddier.
-
-> But, I think that we can invoke watchman better here; the
-> fsmonitor-watchman hook has no notion of a "pathspec", so every query
-> just asks for everything that isn't in '$GIT_DIR'. Is there anything
-> preventing us from taking an optional pathspec and building up a more
-> targeted query?
-
-Yup, it is what I had in mind when I brought up the pathspec.  It
-may be something worth pursuing longer term, but not within the
-scope of this patch.
-
-> There is some overhead to invoke the hook and talk to watchman, but
-> I'd expect that to be dwarfed by not having to issue O(# files)
-> syscalls.
-
-"invoke the hook"---is that a pipe+fork+exec, or something else that
-is far lighter-weight?
-
-n
+Thanks and Regards,
+Charvi
