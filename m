@@ -2,89 +2,81 @@ Return-Path: <SRS0=jQhj=D2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4557FC433DF
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3523C433DF
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:25:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB2682237B
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:17:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B10A2225F
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:25:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rxElU3x2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmhZD6Ci"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387989AbgJSWRG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 18:17:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51024 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728583AbgJSWRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 18:17:05 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7176F9BA02;
-        Mon, 19 Oct 2020 18:17:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=A3EYMXLJHUZiPrdgc8vdizWs6xM=; b=rxElU3
-        x2PQ7ByLYFOkfZRM5IacWMnwly7txeAhQVhJ4MEMcjxzM84mXH5PS1Dd5/0JmCjV
-        n1N1I698WFjOnQmtcaLKgumjXAEk+Gav6a9iK2tOsOAn3cIveVoDsMSxwmryTgT3
-        tFE6/fWcHcUnfuvXF112V4QGGva9iZi1rbBj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=J6a1XRKpZXnEtQ2j0Ze7Qo5N4TtMWNmV
-        gBZpiMWgseSXZVvzA9DSx6Sg2hKCHdZDCf9Ag6N5HarctSykuReYmffZUt1mfvTg
-        whinVg+6N+NodQzRTDbrcbbaeLYHajEEakkBYbsLW7ivHy5opfeGVmHAOYp4WYsB
-        T+sQM0LD/kc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 635709BA01;
-        Mon, 19 Oct 2020 18:17:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 113B69BA00;
-        Mon, 19 Oct 2020 18:17:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] Documentation: stylistically normalize
- references to Signed-off-by:
-References: <xmqqmu0it6ls.fsf@gitster.c.googlers.com>
-        <cover.1603142543.git.bkuhn@sfconservancy.org>
-        <37a4932d48c1d36c3c512e9f8c0bcac878de6b76.1603142543.git.bkuhn@sfconservancy.org>
-        <20201019220214.GB49623@nand.local>
-Date:   Mon, 19 Oct 2020 15:17:02 -0700
-In-Reply-To: <20201019220214.GB49623@nand.local> (Taylor Blau's message of
-        "Mon, 19 Oct 2020 18:02:14 -0400")
-Message-ID: <xmqqy2k1dfoh.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1729625AbgJSWZb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Oct 2020 18:25:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59846 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729270AbgJSWZb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 18:25:31 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EF2C0613CE
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:25:31 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id m11so1329242otk.13
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:25:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Cnxc6NqSf6GVAlQ6WyUuWAI2mw6SC5tiPSmrZKdUgWU=;
+        b=dmhZD6CiiDgto/c7+qNYbfxPnFogK6yjSVDYnGnBkAOcuL4Lx00HRBCAykwJq9HggG
+         0dm+0JGtcRAHjZovRzVPTIspK1h7ZCmie9qrnvfvK3VpGiV/8+rWq9yVs/vLPiV9omqS
+         z+MksO84T50anYQf46HibUPP1HWep5Nqpt/2jq5umHYZQPI71JM7oFd/JfH5rI2lrfuD
+         6o6mDfZrBZrZZExBC7aCdBLcaRZgKwKfZBJ5GJy9u3RTaCy+pV6i+sEphrinxA63QVuN
+         I30UscE6e2KWkNHS9+2wHVpZEyNj2S4602ytl2GAhzB0/7SQHvhcxDgfQgQWqfMRNKXD
+         4LFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Cnxc6NqSf6GVAlQ6WyUuWAI2mw6SC5tiPSmrZKdUgWU=;
+        b=QaKGxq94ymn5ZiliU2HuwAqZ690K6L4Q8MLZlr7K38LIVqHKtzVs9gpdXqVHp7u16D
+         z4zEA/v/IfE5XmgRjsU3W5Xziq+7PT7yPvwYNxRwU4VyH6/5Xck35mvnEBffXbPEuMRm
+         KgGZus9FLSwOGe2WwCAe5mvGu88IRuAJpv/E5gcWxNykQOcOrnlvIK+3/qabucqojR2J
+         S5KiSAtAWBMl2crt7sXXciozVHdh3LKV7Frfo1bPxMzgl2CyEPJHqMuXmISChwwhxwjE
+         zr6YlwAfiXudhkECNhtCksUu4OYX2pftaMwrNef6JfsFeZq1blJZS+P1jWJ5k+2gdPro
+         SEWg==
+X-Gm-Message-State: AOAM5335xome9ZVUy/X4W+iw79CIzxHr4qLvSWxjSxxz3OuHfqBPoZYf
+        FD7Od1oAYAGCJPmq9Lzm/zewdaBwJAWJMLqdQQE=
+X-Google-Smtp-Source: ABdhPJzPynb8UVMfSm/IESfsbcX8g4FOY2y9xhayvghpTJUaP/z0dypSQFqNVfPK8wE9bSG7R1AtgwPkqjBR92uLx/I=
+X-Received: by 2002:a05:6830:2092:: with SMTP id y18mr1529702otq.19.1603146330568;
+ Mon, 19 Oct 2020 15:25:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D096E5A6-1258-11EB-8112-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.756.git.1602968677.gitgitgadget@gmail.com>
+ <pull.756.v2.git.1603143316.gitgitgadget@gmail.com> <f572e226bb5e4b67cc57f8d9d4732086f01190a2.1603143316.git.gitgitgadget@gmail.com>
+ <20201019215438.GA49623@nand.local>
+In-Reply-To: <20201019215438.GA49623@nand.local>
+From:   Nipunn Koorapati <nipunn1313@gmail.com>
+Date:   Mon, 19 Oct 2020 23:25:19 +0100
+Message-ID: <CAN8Z4-VVx70ZDk8_pDH7cjoOZwVTCefEP1QCYCYpqRYhAn9SXQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] t/perf: add fsmonitor perf test for git diff
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Utsav Shah <utsav@dropbox.com>,
+        Nipunn Koorapati <nipunn@dropbox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+> This reminds me; did you look at the 'git add' performance change? I
+> recall Junio mentioning that 'git add' takes the same paths in the code.
 
-> I think that the 3-patch series that Junio was talking about in [1] is
-> actually this one [2].
-> ...
-> [1]: https://lore.kernel.org/git/xmqqmu0it6ls.fsf@gitster.c.googlers.com/
-> [2]: https://lore.kernel.org/git/20201018194912.2716372-1-gitster@pobox.com/
+I did look into it and didn't see a big perf change - and didn't dig into why.
+I'll leave a perf test in the next roll of this patch series so you can see the
+numbers.
 
-True.
-
-I actually think it is a bad idea to add ":" after every mention of
-"Signed-off-by"; it only looks clarifying because we use a boring
-and generic word "line" to refer to where that three-word token
-appears.
-
-We can say "a 'Signed-off-by' trailer" and it becomes plenty clear
-that we are not talking about any random line in the log message,
-and we do not need ":" everywhere, I suspect.
-
-Thanks.
+--Nipunn
