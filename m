@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-12.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEB0EC43457
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 21:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B329CC433E7
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 21:30:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52F012231B
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 21:30:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A314223C6
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 21:30:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b="f5WJUJBo"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b="OdzH5rBf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733042AbgJSVac (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 17:30:32 -0400
-Received: from pine.sfconservancy.org ([162.242.171.33]:51772 "EHLO
+        id S1733048AbgJSVad (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Oct 2020 17:30:33 -0400
+Received: from pine.sfconservancy.org ([162.242.171.33]:51780 "EHLO
         pine.sfconservancy.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733038AbgJSVab (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 17:30:31 -0400
+        with ESMTP id S1733039AbgJSVac (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 17:30:32 -0400
 Received: from localhost (unknown [216.161.86.18])
         (Authenticated sender: bkuhn)
-        by pine.sfconservancy.org (Postfix) with ESMTPSA id 858FAE374;
-        Mon, 19 Oct 2020 21:30:30 +0000 (UTC)
+        by pine.sfconservancy.org (Postfix) with ESMTPSA id 8B534E381;
+        Mon, 19 Oct 2020 21:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sfconservancy.org;
-        s=pine; t=1603143030;
-        bh=m6NEpZ1JA3uauTiHdopQ0b87m6lXxV1ifKVLBN5Jj7U=;
+        s=pine; t=1603143031;
+        bh=7126HKzOVXoDhQeD6rcYiNiENzXxC8cujxFvFD/7yok=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=f5WJUJBopnIhhu91OcQedlKFGMDnb0p9YeqB+VJqApDS+obBvakRh0pA3pvoiqeg9
-         ODZOTh0AqZn/1zsKgW9mmJx7NIZNHD2eOumOSdrUe3Iqx5T8VINB5fhjlEwTmAtMSu
-         pNjhZ8DPbzaLqx0cORnUL3Vv9GsBw4TYlzTAyh88RJoEU+EoS70SOMNrHAnUrJ/P8J
-         zADdH2xqrN5EKSDUwfQ7w6cjRwCCVjDMOYwrgXjEI6e/CCn7rASAQP9ef0I2NrfRTn
-         vf4NaOoQNKvT/k7Bqwkm9fQk6UcWvMbmZ+c3dfohHa59oZhWZ/f2tG6UcH2Ke6pGv2
-         I65Mo8YMtbjSg==
+        b=OdzH5rBfHLJD5O5HyGxBA9ILxw1ZoZibZAM/KlPZ4++WnYE2cFc2tu8Yf6AN2MDmK
+         Mc1rmfzpCW6xxn5jTlZZFBDHTbxhYhhvr0w3koKsxUxaN2KBeJhEZbiyR5eLyVq0eJ
+         GxISSnots1VcxlFdOdv52Z0mkAuxlBkxBVXUcmGzsArsvpcOPziQIeLQUqGlwJpn9n
+         1emqbL/BZ+qlxy9Bw6AZAfLQ4HUq7LJKMbpteg24+06sGtsXyHavLjbmsS50rIqmMP
+         iQvolqWsVwjl4egR31S/wmhW8qQP8LKvtHwYC5NRbuCexFqLZbEl7QVkqHTHGmLV/I
+         0nlenejSY6ZIw==
 From:   "Bradley M. Kuhn" <bkuhn@sfconservancy.org>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/3] clarify and expand description of --signoff & related fixes
-Date:   Mon, 19 Oct 2020 14:25:41 -0700
-Message-Id: <cover.1603142543.git.bkuhn@sfconservancy.org>
+Cc:     Jeff King <peff@peff.net>
+Subject: [PATCH v2 1/3] Documentation: clarify and expand description of --signoff
+Date:   Mon, 19 Oct 2020 14:25:42 -0700
+Message-Id: <efec40f9432bfba531b4a6c9aed50d8f5e1aec13.1603142543.git.bkuhn@sfconservancy.org>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <xmqqmu0it6ls.fsf@gitster.c.googlers.com>
-References: <20201015215933.96425-1-bkuhn@sfconservancy.org> <59E3B060-63E3-41C2-A7C4-5B2C888F8D68@gmail.com> <CAPc5daWenXds=0BW0CXa=4MOF2UxDeQ8DF2+7V9-WkKwCFCDBw@mail.gmail.com> <20201016015937.GA3335046@coredump.intra.peff.net> <xmqqft6eewc5.fsf@gitster.c.googlers.com> <xmqqh7quaqwb.fsf@gitster.c.googlers.com> <20201016201119.GA3356073@coredump.intra.peff.net> <xmqqwnzn73og.fsf@gitster.c.googlers.com> <20201019155338.GK181507@mit.edu> <xmqqmu0it6ls.fsf@gitster.c.googlers.com>
+In-Reply-To: <cover.1603142543.git.bkuhn@sfconservancy.org>
+References: <xmqqmu0it6ls.fsf@gitster.c.googlers.com> <cover.1603142543.git.bkuhn@sfconservancy.org>
 MIME-Version: 1.0
 Organization: Software Freedom Conservancy, Inc.
 Content-Transfer-Encoding: 8bit
@@ -51,89 +51,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff wrote last week:
->>> You said "squashing", but I'd suggest keeping it as its own patch on top
->>> of Bradley's.
-Junio replied last week:
->> OK, let's do so.
-Theodore Ts'o wrote today at 08:53 (PDT):
->>>> I pointed out a missing article ("a") in the line *above* ... It's a
->>>> minor nit, and it's unrelated to his proposed change.
-Junio C Hamano replied today at 11:26 (PDT):
-> In any case, an updated version that ended up
-> being a 3-patch series is now on the table.  I think they are in good
-> shape to be merged down.
+Building on past documentation improvements in Commit
+b2c150d3aa (Expand documentation describing --signoff, 2016-01-05),
+further clarify that any project using Git may and often does set its
+own policy.
 
-Herein is (I believe) the three-patch series that Junio references.  The
-middle patch didn't exist yet because Ted just pointed out the typo and
-didn't have a patch, but I've done the typo fix and credited Ted on that in
-the commit.
+However, leave intact reference to the Linux DCO, which Git also
+uses.  It is reasonable for Git to advocate for its own Signed-off-by
+methodology in its documentation, as long as the documentation
+remains respectful that YMMV and other projects may well have very
+different contributor representations tied to Signed-off-by.
 
-However, the middle commit ([PATCH v2 2/3]) needs some review.  I ended up
-down the rabbit hole of "what is the consistent way in which the Git
-documentation refers to Signed-off-by?" and I found many inconsistencies.
-I've normalized around a style convention described in that patch's commit
-message.
+Signed-off-by: Bradley M. Kuhn <bkuhn@sfconservancy.org>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-commit.txt    | 13 ++++++++-----
+ Documentation/merge-options.txt | 13 ++++++++-----
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
-Meanwhile, I also note that SubmittingPatches now calls these "trailers"
-rather than "lines", so maybe we should be using the word "trailer" rather
-than "line" consistently in the other documentation?  If folks think that
-should be done, I can redo this patchset to go that route.
-
-Alternatively, if anyone has any strong opinions on the normalization to:
-  (a|the) `Signed-off-by:` line
-in documentation formatting when referring to Signed-off-by, please say so.
-
-Thanks everyone for your comments and help on this!
-
-I also added these, as Jeff King wrote about at 17:46 (PDT) on Thursday:
->>> To be clear, it's...
->>>  Signed-off-by: Jeff King <peff@peff.net>
->>> as far as any words I contributed.
-
-Added.
-
->>> I probably would've kept "clarify" in the title as lowercase.
-
-Fixed.
-
->>>>> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
->>>>> index 80d4831662..c9df9cc0f4 100644
->>>>> --- a/Documentation/merge-options.txt
->>>>> +++ b/Documentation/merge-options.txt
->>>>> [...]
->>>>> +	leadership of the project to which you're contributing to understand
->>>>> +	 how the signoffs are used in that project.
-
->>> Extra leading space on this final line.
-
-Also fixed.
-
-Bradley M. Kuhn (2):
-  Documentation: clarify and expand description of --signoff
-  Documentation: stylistically normalize references to Signed-off-by:
-
-Junio C Hamano (1):
-  SubmittingPatches: clarify DCO is our --signoff rule
-
- Documentation/MyFirstContribution.txt |  2 +-
- Documentation/SubmittingPatches       | 35 +++++++++++++++------------
- Documentation/git-cherry-pick.txt     |  2 +-
- Documentation/git-commit.txt          | 15 +++++++-----
- Documentation/git-format-patch.txt    |  2 +-
- Documentation/git-rebase.txt          |  2 +-
- Documentation/git-revert.txt          |  2 +-
- Documentation/git-send-email.txt      |  4 +--
- Documentation/githooks.txt            |  2 +-
- Documentation/merge-options.txt       | 17 +++++++------
- builtin/am.c                          |  2 +-
- builtin/commit.c                      |  2 +-
- builtin/log.c                         |  2 +-
- builtin/merge.c                       |  2 +-
- builtin/pull.c                        |  2 +-
- builtin/revert.c                      |  2 +-
- 16 files changed, 52 insertions(+), 43 deletions(-)
-
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index a3baea32ae..93bbae4ded 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -166,11 +166,14 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ -s::
+ --signoff::
+ 	Add Signed-off-by line by the committer at the end of the commit
+-	log message.  The meaning of a signoff depends on the project,
+-	but it typically certifies that committer has
+-	the rights to submit this work under the same license and
+-	agrees to a Developer Certificate of Origin
+-	(see http://developercertificate.org/ for more information).
++	log message.  The meaning of a signoff depends on the project to which
++	you're committing.  For example, it may certify that the committer has
++	the rights to submit the work under the project's license or agrees to
++	some contributor representation, such as a Developer Certificate of
++	Origin.  (See http://developercertificate.org for the one used by the
++	Linux kernel and Git projects.)  Consult the documentation or
++	leadership of the project to which you're contributing to understand
++	how the signoffs are used in that project.
+ 
+ -n::
+ --no-verify::
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 80d4831662..29e6030131 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -80,11 +80,14 @@ actual commits being merged.
+ --signoff::
+ --no-signoff::
+ 	Add Signed-off-by line by the committer at the end of the commit
+-	log message.  The meaning of a signoff depends on the project,
+-	but it typically certifies that committer has
+-	the rights to submit this work under the same license and
+-	agrees to a Developer Certificate of Origin
+-	(see http://developercertificate.org/ for more information).
++	log message.  The meaning of a signoff depends on the project to which
++	you're committing.  For example, it may certify that the committer has
++	the rights to submit the work under the project's license or agrees to
++	some contributor representation, such as a Developer Certificate of
++	Origin.  (See http://developercertificate.org for the one used by the
++	Linux kernel and Git projects.)  Consult the documentation or
++	leadership of the project to which you're contributing to understand
++	how the signoffs are used in that project.
+ +
+ With --no-signoff do not add a Signed-off-by line.
+ 
 -- 
 Bradley M. Kuhn - he/him
 Policy Fellow & Hacker-in-Residence at Software Freedom Conservancy
