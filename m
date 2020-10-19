@@ -2,68 +2,70 @@ Return-Path: <SRS0=jQhj=D2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A9FC433DF
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80154C433DF
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:47:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6B9E21D7F
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:47:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15EBA21D7F
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:47:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p/exi6OU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oof8SNT0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388619AbgJSWrk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 18:47:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35056 "EHLO
+        id S2388630AbgJSWrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Oct 2020 18:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388615AbgJSWrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 18:47:40 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BE5BC0613CE
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:40 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id k18so32969wmj.5
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:40 -0700 (PDT)
+        with ESMTP id S2388615AbgJSWrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 18:47:42 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7131BC0613D1
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:42 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id x7so1506849wrl.3
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LRkYD5sphWN3B9dZpbq2no9I8RaCONyxEeYU0a8lXqk=;
-        b=p/exi6OUafLB3NaxdCXT0PB0o32h7z9VoD1hcy6HYu7zOu/11B0VwCZ6LVYoOzcH+n
-         cyK0oodlEGOSAPyrDvVFsdJqYeV9U0EAs275zJ1etPHdgLAYWhb4jN09qxGPvVY6KqO2
-         4EAJVhOn6WhbuM/bYw5eUW5Nk4ibrbLUCNxGaK7gectRu74El15nLcXsN3Gvphrax5qU
-         cEGF2+AqyDw1hN+spjRLi0VA+LS+VPE93DbQePlq3OkcDWPf29CMeU97tMH94A8kXXY+
-         2vM7pa84+WehaqP/4756RYPi088hQRaPp1TM7xuJWgPW4wVzFTmuERqV5LdK3pv/jUTF
-         l8dA==
+        bh=Djf3TWO3UFcf03qpN2acJDVn06wf04grB536pabMBck=;
+        b=Oof8SNT0aRcUjUl+MfN0CRXQQUhSWNqOJbr36sM+mqgCOJgvCVLBKWh+H297JLRRL/
+         LYKOItQbj7NpMRKJfeB07TuHGy2mtR2kK9gUChb7IVZewB4tOmmpxVcY3WgcHFUgrepv
+         5Z2QYtsMErmF2Bwdbp98AK08SxSwIpZg/rwNv3PJyatECFdZMOdC74jHnLa72pbfvA6e
+         ouqGve3QiJk5aa4A1xPgAXlFn2bZfcFdCqLQmxv525WFUQY7ZjVWLj1EKt+iKg3pv0gs
+         8soSrKjDQQMegufMeMVvPio+lJx7atXLKDLcmSyYgSmZsNDTfgLQf541UsKBZCOJHE4M
+         B2Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LRkYD5sphWN3B9dZpbq2no9I8RaCONyxEeYU0a8lXqk=;
-        b=HZGjt6oVmawpyytvUy6DV0oWKEquTAyxIxagnnwzkUjs8xWNBlzJnaOxmCXMKKusFP
-         J0J97q7S2YPE40SBXveQPI/IcMVxVM23rUaDN+9z6lx6XPxqAODr1DcvYlU24HBXWEof
-         rdjVeBO20cbKc9KrwzXpQwZGm0OQIhKkJX5qOA5IZIhxSq6JF1btHbCEknLycbCpV4lI
-         U+ZmX9qEc5oU2lG0iu3aFXcwwdUp1SscX7LZk/A1EyvTTUCgoplWj9y1Ewyli3BiwjfS
-         r5ewV5rrwB/uITFeZMCM2AoyamvfoOrN7nvmNTIrzkFXSS6KJgEP1g3lAKK4tPCrRY0s
-         sXmg==
-X-Gm-Message-State: AOAM5305Uy2eP/cbbl36uPYE92lt+xiPgO5aM8V25G7Qo0lvGFpWzOpQ
-        mZLerX68u4Ctn5tVnjiSeOCmZre/M2o=
-X-Google-Smtp-Source: ABdhPJxBYgvDaf6zKoiL5HpEaOg2NvO7orPF1P8N8qLLEWqooG4I3juCIt7tm7t47pZ26Al8G5S95A==
-X-Received: by 2002:a1c:4b0f:: with SMTP id y15mr56956wma.165.1603147658663;
-        Mon, 19 Oct 2020 15:47:38 -0700 (PDT)
+        bh=Djf3TWO3UFcf03qpN2acJDVn06wf04grB536pabMBck=;
+        b=brnIuI954RtYJXpTf6ZuZ8TbjFbQ1uca08w3Anddauhmqhs910kRv8Iq2+CVbBM9wN
+         CXHqqXT6G8o2s9IMOYI+D2JSTNLPQx/7mA1EA6nsGKrIOhKM6MoKYb2wyK7sh5vBdmNr
+         kJTwu7b+h1s1me3/0zrkIgP+p5ZDQBUezQ//W3Mubg1ynL8KHC6v/ZPYOfXrdfPtB7Zh
+         mh8lxMQhegMbgaQnFCHqaoY9nU3D9dizUhxne+J6H/g0m6IIsnYEuBuwnLGeltxXRYHZ
+         UIA87/wvXlUW7oSPbPzR1bxN8I7vD7wzpeJCifK1ppelcvF1aIQpHSZCm0j01MNdK42y
+         QaNA==
+X-Gm-Message-State: AOAM532p294qnWY1uTO/8CgpmZJpHMa7DTqLZh9byxZOhjiXXuPn9AJM
+        mFmU7QuPTlFS6kw++n/xLYFtm5eTokY=
+X-Google-Smtp-Source: ABdhPJzqTk5Od5KURV3eNG3atIb61FxzEp0VKRY/wjGzOS0+w7HViS1bmM4IDlFExdPbTMqnqlzGPA==
+X-Received: by 2002:a05:6000:108:: with SMTP id o8mr1591166wrx.256.1603147661112;
+        Mon, 19 Oct 2020 15:47:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a82sm31899wmc.44.2020.10.19.15.47.37
+        by smtp.gmail.com with ESMTPSA id g14sm1386188wrx.22.2020.10.19.15.47.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 15:47:38 -0700 (PDT)
-Message-Id: <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
-In-Reply-To: <pull.756.v2.git.1603143316.gitgitgadget@gmail.com>
+        Mon, 19 Oct 2020 15:47:40 -0700 (PDT)
+Message-Id: <401f696c8156acafd1bf91511fde7ae099ff9052.1603147657.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
 References: <pull.756.v2.git.1603143316.gitgitgadget@gmail.com>
+        <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
 From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Oct 2020 22:47:30 +0000
-Subject: [PATCH v3 0/7] use fsmonitor data in git diff eliminating O(num_files) calls to lstat
+Date:   Mon, 19 Oct 2020 22:47:33 +0000
+Subject: [PATCH v3 3/7] t/perf/p7519-fsmonitor.sh: warm cache on first git
+ status
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,121 +75,56 @@ Cc:     Derrick Stolee <stolee@gmail.com>, Utsav Shah <utsav@dropbox.com>,
         Nipunn Koorapati <nipunn1313@gmail.com>,
         Nipunn Koorapati <nipunn@dropbox.com>,
         Taylor Blau <me@ttaylorr.com>,
-        Nipunn Koorapati <nipunn1313@gmail.com>
+        Nipunn Koorapati <nipunn1313@gmail.com>,
+        Nipunn Koorapati <nipunn@dropbox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Credit to alexmv who made this commit back in Dec, 2017 when he was at dbx.
-I've rebased it and am submitting it now.
+From: Nipunn Koorapati <nipunn@dropbox.com>
 
-With fsmonitor enabled, git diff currently lstats every file in the repo
-This makes use of the fsmonitor extension to skip lstat() calls on files
-that fsmonitor judged as unmodified.
+The first git status would be inflated due to warming of
+filesystem cache. This makes the results comparable.
 
-I was able to do some testing with/without this change in a large in-house
-repo (~ 400k files).
+Before
+Test                                                             this tree
+--------------------------------------------------------------------------------
+7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         2.52(1.59+1.56)
+7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.18(0.12+0.06)
+7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.36(0.73+0.62)
+7519.7: status (fsmonitor=)                                      0.69(0.52+0.90)
+7519.8: status -uno (fsmonitor=)                                 0.37(0.28+0.81)
+7519.9: status -uall (fsmonitor=)                                1.53(0.93+1.32)
 
------------------------------------------
-(1) With fsmonitor enabled - on master of git (2.29.0)
------------------------------------------
-../git/bin-wrappers/git checkout HEAD~200
-strace -c ../git/bin-wrappers/git diff
+After
+Test                                                             this tree
+--------------------------------------------------------------------------------
+7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         0.39(0.33+0.06)
+7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.17(0.13+0.05)
+7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.34(0.77+0.56)
+7519.7: status (fsmonitor=)                                      0.70(0.53+0.90)
+7519.8: status -uno (fsmonitor=)                                 0.37(0.32+0.78)
+7519.9: status -uall (fsmonitor=)                                1.55(1.01+1.25)
 
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 99.64    4.358994          10    446257         3 lstat
-  0.12    0.005353           7       764       360 open
+Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
+---
+ t/perf/p7519-fsmonitor.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-(A subsequent call)
-strace -c ../git/bin-wrappers/git diff
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 99.84    4.380955          10    444904         3 lstat
-  0.06    0.002564         135        19           munmap
-...
-
------------------------------------------
-(2) With fsmonitor enabled - with my patch
------------------------------------------
-../git/bin-wrappers/git checkout HEAD~200
-strace -c ../git/bin-wrappers/git diff
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 50.72    0.003090         163        19           munmap
- 19.63    0.001196         598         2           futex
-...
-  0.00    0.000000           0         4         3 lstat
-
-
------------------------------------------
-(3) With fsmonitor disabled entirely
------------------------------------------
-
-% time     seconds  usecs/call     calls    errors syscall
------- ----------- ----------- --------- --------- ----------------
- 98.52    0.277085       92362         3           futex
-  0.27    0.000752           4       191        63 open
-...
-  0.14    0.000397           3       158         3 lstat
-
-I was able to encode this into a perf test in one of the commits.
-
-Changes since Patch Series V1
-
- * Add git diff -- <pathspec> to perf tests
- * improve readability of bitwise ops
-
-Alex Vandiver (1):
-  fsmonitor: use fsmonitor data in `git diff`
-
-Nipunn Koorapati (6):
-  t/perf/README: elaborate on output format
-  t/perf/p7519-fsmonitor.sh: warm cache on first git status
-  t/perf: add fsmonitor perf test for git diff
-  perf lint: check test-lint-shell-syntax in perf tests
-  p7519-fsmonitor: refactor to avoid code duplication
-  p7519-fsmonitor: add a git add benchmark
-
- diff-lib.c                | 15 +++++-
- t/Makefile                |  3 +-
- t/perf/README             |  2 +
- t/perf/p3400-rebase.sh    |  6 +--
- t/perf/p7519-fsmonitor.sh | 96 ++++++++++++++++++++++-----------------
- 5 files changed, 75 insertions(+), 47 deletions(-)
-
-
-base-commit: d4a392452e292ff924e79ec8458611c0f679d6d4
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-756%2Fnipunn1313%2Fdiff_fsmon-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-756/nipunn1313/diff_fsmon-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/756
-
-Range-diff vs v2:
-
- 1:  cba03dd40b = 1:  cba03dd40b fsmonitor: use fsmonitor data in `git diff`
- 2:  1c7876166f = 2:  1c7876166f t/perf/README: elaborate on output format
- 3:  401f696c81 = 3:  401f696c81 t/perf/p7519-fsmonitor.sh: warm cache on first git status
- 4:  f572e226bb ! 4:  b3ad8faac4 t/perf: add fsmonitor perf test for git diff
-     @@ t/perf/p7519-fsmonitor.sh: test_expect_success "setup for fsmonitor" '
-       	git config core.fsmonitor "$INTEGRATION_SCRIPT" &&
-       	git update-index --fsmonitor &&
-      +	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
-     -+	for i in `seq 1 10`; do touch 10_files/$i; done &&
-     -+	for i in `seq 1 100`; do touch 100_files/$i; done &&
-     -+	for i in `seq 1 1000`; do touch 1000_files/$i; done &&
-     -+	for i in `seq 1 10000`; do touch 10000_files/$i; done &&
-     ++	for i in $(test_seq 1 10); do touch 10_files/$i; done &&
-     ++	for i in $(test_seq 1 100); do touch 100_files/$i; done &&
-     ++	for i in $(test_seq 1 1000); do touch 1000_files/$i; done &&
-     ++	for i in $(test_seq 1 10000); do touch 10000_files/$i; done &&
-      +	git add 1_file 10_files 100_files 1000_files 10000_files &&
-      +	git commit -m "Add files" &&
-       	git status  # Warm caches
- -:  ---------- > 5:  28c1e488bf perf lint: check test-lint-shell-syntax in perf tests
- -:  ---------- > 6:  b38f2984f9 p7519-fsmonitor: refactor to avoid code duplication
- -:  ---------- > 7:  d392a523f2 p7519-fsmonitor: add a git add benchmark
-
+diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+index def7ecdbc7..9313d4a51d 100755
+--- a/t/perf/p7519-fsmonitor.sh
++++ b/t/perf/p7519-fsmonitor.sh
+@@ -114,7 +114,8 @@ test_expect_success "setup for fsmonitor" '
+ 	fi &&
+ 
+ 	git config core.fsmonitor "$INTEGRATION_SCRIPT" &&
+-	git update-index --fsmonitor
++	git update-index --fsmonitor &&
++	git status  # Warm caches
+ '
+ 
+ if test -n "$GIT_PERF_7519_DROP_CACHE"; then
 -- 
 gitgitgadget
+
