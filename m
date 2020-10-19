@@ -2,85 +2,77 @@ Return-Path: <SRS0=jQhj=D2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E94C8C433E7
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 15:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A48D7C433DF
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 16:00:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 993B0222C2
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 15:53:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A26322284
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 16:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730259AbgJSPxr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 11:53:47 -0400
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:53981 "EHLO
-        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1730025AbgJSPxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 11:53:47 -0400
-Received: from callcc.thunk.org (pool-72-74-133-215.bstnma.fios.verizon.net [72.74.133.215])
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 09JFrcch024645
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 19 Oct 2020 11:53:39 -0400
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 6A319420107; Mon, 19 Oct 2020 11:53:38 -0400 (EDT)
-Date:   Mon, 19 Oct 2020 11:53:38 -0400
-From:   "Theodore Y. Ts'o" <tytso@mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 0/1] Clarify and expand description of --signoff
-Message-ID: <20201019155338.GK181507@mit.edu>
-References: <20201015215933.96425-1-bkuhn@sfconservancy.org>
- <59E3B060-63E3-41C2-A7C4-5B2C888F8D68@gmail.com>
- <CAPc5daWenXds=0BW0CXa=4MOF2UxDeQ8DF2+7V9-WkKwCFCDBw@mail.gmail.com>
- <20201016015937.GA3335046@coredump.intra.peff.net>
- <xmqqft6eewc5.fsf@gitster.c.googlers.com>
- <xmqqh7quaqwb.fsf@gitster.c.googlers.com>
- <20201016201119.GA3356073@coredump.intra.peff.net>
- <xmqqwnzn73og.fsf@gitster.c.googlers.com>
+        id S1730526AbgJSQAJ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 19 Oct 2020 12:00:09 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:43880 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730513AbgJSQAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 12:00:08 -0400
+Received: by mail-ed1-f44.google.com with SMTP id dn5so10786055edb.10
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 09:00:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=No5bxocKqQ7TtVmIPK2TBqLtR+IF8LDiklvJ8cj5/fM=;
+        b=a1ckl9XqQTh8xgOVMjRCco70ctigwTYx2DDrof6qM7+kFSh1i3cLasVrtm8kylgN6O
+         ZuvT5ZcL/+ShYfBQCG04TIXDqnl/+ZPjF1N3GVzb/bE9uv7lbts4oLes+JXF2K3FfnLZ
+         XwUZ2SSn40IQOEYsbeYpDWa6lX6yPFRUswHWJxe7c/VhkR/lgCQckAGDXrlcFkdpH99J
+         3J0+w0Eyh0yAqshQssgzQ4yayaB3JDS3XcesLs6MyRGYNtk2sJ4uKgvXVuAkwm2vScj3
+         I+jMRjMCn2kaC73n6BBBL72twH4VROTR7lEEuZ23YydcxoUQOubfl+rKIDA+mntl5qe8
+         LZ+w==
+X-Gm-Message-State: AOAM532wMGrNRY9tvHRudJ6Lh3GhzwVCfN9qkqGltghnKXbkBXNSrnGh
+        DtUJcYpMs0bcCFwa/zEF6AkBFO5zXEVb2BkBmHP3JbVgRNAGXQ==
+X-Google-Smtp-Source: ABdhPJyemzgkP3FFepu9I+vqAsMbOnZ89tGOnQlMUTDnrmV4GtutI/9OyJY+Sdr4/GlOkh5IeAEH+/HRC99Yn448Quw=
+X-Received: by 2002:a05:6402:143a:: with SMTP id c26mr524917edx.150.1603123205023;
+ Mon, 19 Oct 2020 09:00:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwnzn73og.fsf@gitster.c.googlers.com>
+From:   Sami Boukortt <sami@boukortt.com>
+Date:   Mon, 19 Oct 2020 17:59:54 +0200
+Message-ID: <CAAb+AL_xObsexRXL_fZdhj2FNQsOLzEz3_mZqd1Yz7F0=-havA@mail.gmail.com>
+Subject: =?UTF-8?Q?French_translation=3A_incorrect_translation_for_error_?=
+        =?UTF-8?Q?message_in_=E2=80=9Cgit_push_=3Cremote=3E=E2=80=9D?=
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 18, 2020 at 12:08:15PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Oct 16, 2020 at 12:53:56PM -0700, Junio C Hamano wrote:
-> >
-> >> > Jeff King <peff@peff.net> writes:
-> >> >
-> >> >> What should we change there? We could perhaps bring up signoffs earlier
-> >> >> or more prominently. Or tie it in to the git-commit docs by saying
-> >> >> explicitly: these are _our_ project rules for signoffs.
-> >> 
-> >> Let's tie this loose end.  How about squashing in something like
-> >> this?
-> >
-> > Thanks for writing this up. I agree it makes the text much better (not
-> > only in emphasizing the point we've been discussing, but also in general
-> > clarity).
-> >
-> > You said "squashing", but I'd suggest keeping it as its own patch on top
-> > of Bradley's.
-> 
-> OK, let's do so.
-> 
-> I recall I read that Bradley's patch needs a bit of word/grammo
-> polishing?
+Hi,
 
-Well, I pointed out a missing article ("a") in the line *above*
-Bradley's change in two man pages.  It's a minor nit, and it's
-unrelated to his proposed change.  I have no opinion about whether
-it's better to do it separately from his change or as a separate
-commit.
+I just noticed a misleading translation. When running `git push foo`,
+one can get an error message that looks like this:
 
-						- Ted
+> fatal: You are pushing to remote 'foo', which is not the upstream of
+> your current branch 'the-branch', without telling me what to push
+> to update which remote branch.
+
+In French, that message is:
+
+> fatal: Vous êtes en train de pousser vers la branche distante 'foo', qui n'est
+> pas une branche amont de votre branche courante 'the-branch', sans me dire
+> quoi pousser pour mettre à jour quelle branche amont.
+
+which incorrectly refers to foo as a remote *branch*, as opposed to
+just a remote.
+
+In the error message for `git remote rename a b`, remotes are called «
+serveur remote » (« fatal: Pas de serveur remote : 'a' »), so this
+could be what to change the message to. « qui n'est pas une branche
+amont » would also have to be changed.
+
+Thanks.
+
+Best,
+Sami
