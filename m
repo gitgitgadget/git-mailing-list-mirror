@@ -2,90 +2,193 @@ Return-Path: <SRS0=jQhj=D2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6573EC433DF
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0610C433E7
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:26:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E256C22314
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:23:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 570E122282
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:26:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="H9ouX+vl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ilz70xuc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730616AbgJSRXc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 13:23:32 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50134 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730336AbgJSRXc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 13:23:32 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CDD8EEF480;
-        Mon, 19 Oct 2020 13:23:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ro/hv+Z2bzFYFouKkdIHZT9XdN8=; b=H9ouX+
-        vlozdTGGwBVK4jNSfSaPBfHnxw+MpqaMLslzmMx6VjWAo7ZJZU9VHpV6d3GXTfTI
-        6l3uuIO0iunsxOuZYExPo3dz3NOJz2OmTPAXLcn00Oq+Ilo5vQgsMmxSMKWz2G4m
-        R5POR/WuiU4gRGEpFa76YfsWiJjYdFzMiPVvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kKyr8h6IBVUuCAah4xvMUWCSEQLvvkeg
-        IwLfamWzlW72zkOYch/90A0caY3ZeGvpyKJoAA0TeY3fu4cpFJz/SxYVg+Yj6V6d
-        0WGYM8g3AI0CUYiqfIuUc4Aup5GBRB0toWp5TA2YNPj01Jl70mKCxw4S2wy4JlNX
-        tKIuPLkrvpY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C77B8EF47F;
-        Mon, 19 Oct 2020 13:23:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 193D2EF47E;
-        Mon, 19 Oct 2020 13:23:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Nipunn Koorapati <nipunn1313@gmail.com>,
-        Alex Vandiver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Utsav Shah <utsav@dropbox.com>,
-        Alex Vandiver <alexmv@dropbox.com>
-Subject: Re: [PATCH 1/4] fsmonitor: use fsmonitor data in `git diff`
-References: <pull.756.git.1602968677.gitgitgadget@gmail.com>
-        <13fd992a375e30e8c7b0953a128e149951dee0ea.1602968677.git.gitgitgadget@gmail.com>
-        <xmqqeelw8p8i.fsf@gitster.c.googlers.com>
-        <CAN8Z4-W=+D-P_qCYijGMnStY-EGwKFx-+AYzjACDPAXnLRAA8A@mail.gmail.com>
-        <20201018041642.GB2262492@nand.local>
-        <xmqq1rhw86ur.fsf@gitster.c.googlers.com>
-        <20201018234344.GC4204@nand.local>
-Date:   Mon, 19 Oct 2020 10:23:26 -0700
-In-Reply-To: <20201018234344.GC4204@nand.local> (Taylor Blau's message of
-        "Sun, 18 Oct 2020 19:43:44 -0400")
-Message-ID: <xmqqr1puuo35.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731189AbgJSR0l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Oct 2020 13:26:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41302 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729932AbgJSRZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 13:25:09 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38236C0613CE
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 10:25:09 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id k68so313622otk.10
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 10:25:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HET41klFw3Z6q4E6EROf5cNuPK+x5ZkIRPnLDlX4aEU=;
+        b=ilz70xucBV9ChEG6J0cr7qC3ddG/ABs1/o3SFUzs623ksCD9y2AZi/a4HURvQfMwS9
+         Sj8/khMe47rRaUc58YV8laNxTakiE0UZD28E52iqKWLlgDFd9MtpWCyWTYr6PBwQNEuN
+         YlVKzwmDc+xgM781QTlGmlFNd4GJPB7c6Ev1eiZJOpYSAZMwjVwZncumO7UAnL0PZP1A
+         W6ouS5O28x1hyRmau3KDGAPhMkjP+KBNPyCNvaiClhEDX5WZ0Fh/0k1KhIpTULb1ngmt
+         UdGpMx5N6dzzi2Nc54shxfXVFDlH+Hy3l/ObVI1tEaIuessCS7Enz7TkDpXJThr9vZQ+
+         Hckw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HET41klFw3Z6q4E6EROf5cNuPK+x5ZkIRPnLDlX4aEU=;
+        b=t3f9cN9+iTxAF+0nJ7jmuNk/0Ro3mHfPozI2jEHZElYE6Yc5DTEOzjN07OFM+WmGNg
+         Dmkihr3C3Xe/ueXJqoKQv8quW1Mw2JasiNR1HZR/xIyW3ZKWizqJUjgbLHDXxrIiqAVN
+         mBa4wXKc15cQCq0LMADWfcZJCL0MI9vLbxHUaAEadNBJNnhcHqG8/y03qsZR7DrgjA1s
+         1HaeHhL6k3LzfbmKAUpBqoTkNaNciCFhLrSn/GJ7ROIvTJFd32iaOZDplILENCnhJxr7
+         BZKKPM5JhpsR9aZnltDyR19gTRo3UBdAg0hBhx1zNisZD4rAjOk0pjbmLFzmsBJmJou/
+         1NmA==
+X-Gm-Message-State: AOAM533juYAE0Acrrfi4k8+m6AbPJZQOBeI3jOLiFh8euZ9x4DKkQ7MT
+        f/HrbPnN+5AF0o9f9pu148b2C5YVr63S6uAgNR4=
+X-Google-Smtp-Source: ABdhPJxFSFhMsLvsJqbn8Uofzm7cB6EAg098nm4sTmi/oThXmchkfQD+TLH+eN3WcP9eDOg1nLDlYZ1p3F0s4Ta27Ig=
+X-Received: by 2002:a9d:22a3:: with SMTP id y32mr738948ota.210.1603128308544;
+ Mon, 19 Oct 2020 10:25:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CD3FBCD0-122F-11EB-BB02-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <20201015175709.20121-1-charvi077@gmail.com> <20201017075455.9660-1-charvi077@gmail.com>
+ <20201017075455.9660-5-charvi077@gmail.com> <cf26c039-0870-ced6-5347-ab3f24343105@gmail.com>
+ <CAPSFM5ejRWUc2mCtqTPH4a6Q-WWUC4mQHU=bsHkjJOdG4kwW0g@mail.gmail.com> <3b501a3a-b675-3eb7-975a-cc9206f15057@gmail.com>
+In-Reply-To: <3b501a3a-b675-3eb7-975a-cc9206f15057@gmail.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Mon, 19 Oct 2020 22:54:57 +0530
+Message-ID: <CAPSFM5fvBt+x840XOwzwPBvXK7_1qB-sb+_M3LoPuKv_P=VvDA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5][Outreachy] t7201: avoid using cd outside of subshells
+To:     phillip.wood@dunelm.org.uk
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
->> > There is some overhead to invoke the hook and talk to watchman, but
->> > I'd expect that to be dwarfed by not having to issue O(# files)
->> > syscalls.
->>
->> "invoke the hook"---is that a pipe+fork+exec, or something else that
->> is far lighter-weight?
+On Mon, 19 Oct 2020 at 19:16, Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> The former; see 'fsmonitor.c:query_fsmonitor()'.
+> Hi Charvi
+>
+> On 19/10/2020 13:55, Charvi Mendiratta wrote:
+> > On Sun, 18 Oct 2020 at 21:09, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> >>
+> >> Hi Charvi
+> >>
+> >> Congratulations on posting your first patch series.
+> >>
+> >> On 17/10/2020 08:54, Charvi Mendiratta wrote:
+> >>> Avoid using `cd` outside of subshells since, if the test fails, there is no guarantee that the current working directory is the expected one, which may cause subsequent tests to run in the wrong directory.
+> >>
+> >> That is an accurate description of why we want to avoid using `cd`
+> >> outside of subshells. However this conversion is converting `cd` inside
+> >> a subshell to use `git -C`. I think that is worthwhile as it avoids
+> >> having to use a subshell but the description should say explain that the
+> >> conversion is desirable to avoid the cost of starting a subshell as the
+> >> original test does not suffer from the problem described in your commit
+> >> message.
+> >>
+> >
+> > Thank you Philip, for corrections . I somewhat able to understand that
+> > commit message
+> > should be " avoid using cd inside the subshells " because running a
+> > shell script itselfs starts
+> > a new subshell, please correct me if I am wrong . But still I am
+> > unable to get that why you
+> > mentioned the description as "cost of starting a new subshell " . Will
+> > this not be the same subshell ?
+>
+> The original test looks something like
+> (
+>         cd sub &&
+>         git something
+> ) &&
+>
+> The commands between the ( and ) are executed in a subshell, any changes
+> made to the current directory or shell variables in the subshell do not
+> affect the rest of the test script. This is because the subshell starts
+> a separate shell process, but creating this separate process has a cost
+> associated with it.
+>
+> The modified test looks like
+>         git -C sub something
+>
+> Here we tell git to change directory before it runs the 'something'
+> command, this is more efficient as we don't need to start any extra
+> processes - there are no subshells.
+>
+> So the purpose of this change is not to "avoid using cd inside a
+> subshell" but to avoid having to use a subshell at all.
+>
+> I hope that helps explain what a subshell is and why we want to avoid
+> using it if we can, do let me know if you want me to clarify anything.
+>
 
-It brings us back to the "overhead of how many lstat(2) takes us
-closer to the overhead of a single pipe+fork+exec plus reading from
-the pipe", doesn't it?
+Yes, thanks a lot Philip I understood the reason. I will do the corrections in
+commit message and commit body as below :
+t7201: using 'git -C' to avoid subshell
 
+Using 'git-C' instead of 'cd' inside of subshell, to avoid the extra process
+of starting a new subshell
+
+Please confirm, if any other changes are required .
+
+> Best Wishes
+>
+> Phillip
+>
+Thanks and Regards,
+Charvi
+>
+> >> Best Wishes
+> >>
+> >> Phillip
+> >>
+> >>>
+> >>> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
+> >>> ---
+> >>>    t/t7201-co.sh | 10 ++--------
+> >>>    1 file changed, 2 insertions(+), 8 deletions(-)
+> >>>
+> >>> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+> >>> index 74553f991b..5898182fd2 100755
+> >>> --- a/t/t7201-co.sh
+> >>> +++ b/t/t7201-co.sh
+> >>> @@ -339,10 +339,7 @@ test_expect_success 'switch branches while in subdirectory' '
+> >>>        git checkout master &&
+> >>>
+> >>>        mkdir subs &&
+> >>> -     (
+> >>> -             cd subs &&
+> >>> -             git checkout side
+> >>> -     ) &&
+> >
+> > Is there any specific meaning of writing these above two commands in
+> > parentheses . Will this not work the same without it ?
+> >
+> >>> +     git -C subs checkout side &&
+> >>>        ! test -f subs/one &&
+> >>>        rm -fr subs
+> >>>    '
+> >>> @@ -357,10 +354,7 @@ test_expect_success 'checkout specific path while in subdirectory' '
+> >>>
+> >>>        git checkout master &&
+> >>>        mkdir -p subs &&
+> >>> -     (
+> >>> -             cd subs &&
+> >>> -             git checkout side -- bero
+> >>> -     ) &&
+> >>> +     git -C subs checkout side -- bero &&
+> >>>        test -f subs/bero
+> >>>    '
+> >>>
+> >>>
+> > Thanks and Regards ,
+> > Charvi
+> >
