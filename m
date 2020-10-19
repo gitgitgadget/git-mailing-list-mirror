@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22FBDC43457
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D18BC43467
 	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 19:32:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAD11223FB
+	by mail.kernel.org (Postfix) with ESMTP id 1145F223EA
 	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 19:32:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmYzUECV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Og5lDO98"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731256AbgJSTb6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1731263AbgJSTb6 (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 19 Oct 2020 15:31:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60982 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731238AbgJSTbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 15:31:55 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 430E8C0613CE
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 12:31:55 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id j136so671527wmj.2
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 12:31:55 -0700 (PDT)
+        with ESMTP id S1731223AbgJSTb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 15:31:57 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF34CC0613D0
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 12:31:56 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id t9so970788wrq.11
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 12:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WacbeA7HEoF6yYPhnvR0GMDR3Bko+fpf0Jw246MFhU0=;
-        b=nmYzUECVLdypJQt9lxDfj7izua41LYf4vOA4DSeDT39+fh0czZLvBpSyvYR1u5V/H3
-         DMwkNNDzpYhWF2pqXf78ejxb9sO33dQpBOSBZFjQaKHN+1A21l5wyxAcssvltBXHLrJR
-         lXJBnI4ynSKYDq9/VQVQKjnd9iLPPPqJUFI782Q6xqVivpMoeNnc0kG6b0V/zte3UYm8
-         fEflh/A93z9UGSjipyZOeqgTpCIUP/nH21aUQQ2Lyi80xmGbndaZ+s/m3SlGhHVibl88
-         2dbl8+kK5k2SPXD44TexMX62EaMpanQ4Foq/5IvJhR77C6eU6eBzj8IjfuNezKz5KEab
-         Nzlg==
+        bh=+G9Ybvk3PdGH/bvSc2WcFyK357mlVRLtv839GOt1vvE=;
+        b=Og5lDO98ev/sMASUJEL0oSAtYzz1SNhUv5R2kOIV7ZmMPXFckIkt26STzyLUAa79QX
+         Rv38jbeOfufLsQMg4U5pFrtgPRWrOZV5T+ak47/VFCLEZcHiQlLnfDR1e3OqpQKH/b3C
+         hF+WEU0F3MVhcMAc/pCdY5iZRho1aJwJZ/WK7maMk+jx8Q/tOJONVehi213uVt7Lq8vR
+         cCCw+ErfXrwC1MJNc3cG547mZUz07HjoBcEec/GjmHKzCuU9bFNoOdKxpIjhNCjt8Bqh
+         6cM23Cx3NELW3K+0ijUrEccanaW6XXF7CRS8Ef+h5g1F29NB3zCtObSNWsYrGH2TvVop
+         7ORg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WacbeA7HEoF6yYPhnvR0GMDR3Bko+fpf0Jw246MFhU0=;
-        b=jQ45Xbse0+dUq6bFRmjNcJCwINzuoiBCA3msVIBS7fH1Ln22pYwAhZeCSvsuo96Ub6
-         Ev59jf+V52oaF+M2cQm42IYifenh6yPrqat8+gdYBViqQlfVcIA+KIXHWLHGOLutY9pZ
-         09HjlYkdx1O6dEKU+/JGN5Q1Rfwzncern46IQasR/OlaYVJzcg+G4MOqhpuk4URKVWMh
-         QoY6QPY89qqdr1bA9F3iTk0hln+kd8UIrcd9uZJ7wU75fVhYU5wwBwsUkOHN57kQ4DOY
-         ccCtmXT6x/vMrQ6ot1L0Su8A4YXiAprkfdfgFrA9j5izAV5Zi8CRBcyvcTrUummMQD87
-         o/DQ==
-X-Gm-Message-State: AOAM5339f6zqiUaSQbziKtN0mUn3mEOdQapcrow5KkIKTGRuBLYI8fG+
-        RuGOyA+VSgSPPnDH42MJa0ugFE+SC9s=
-X-Google-Smtp-Source: ABdhPJybKnXgjn2kCmnaXy4+rr02rGLI4WA3VjjyNJoyMX6+HptcJ7suElfyNPDPF7DBg2v91jl8Lg==
-X-Received: by 2002:a1c:9ed8:: with SMTP id h207mr744596wme.75.1603135913893;
-        Mon, 19 Oct 2020 12:31:53 -0700 (PDT)
+        bh=+G9Ybvk3PdGH/bvSc2WcFyK357mlVRLtv839GOt1vvE=;
+        b=Oj3S8XhQTso/1COOoQkDvTphu0cgjjndCLL0aN6nVJNSBbfUvEpiX1cqw6J/vCnDjk
+         9JUruTBWH900rglEHK/zNbeHG1YcKLl+XimKEHsoWLd+y35d5410uZ1defMziGnEky5o
+         UNqdW5Q72dDP3vUTN+fJIanFzB7ZyzjBZyBxwNQ52g5ReZBVZAW506RFIqlnjYZhnWAk
+         3GOp7DaCCBFaNI9Uq71WvN2McvGfOVB3PBRxmwZdbB4dREVhqdF5tsNkXQ0pj85nJC/J
+         8vtPjuqQpY6k9cqG8p2MRxJfODB6ENecmFbYSGJ3SjEMMAVZHUuOFCXZyALtUtpRMn3s
+         BS5g==
+X-Gm-Message-State: AOAM533Vt+2DeqLgwJ/jB0Bfli3tWihlxEZavX+rUVmEhM1nsDqov4YQ
+        t3hJZ10idYydELFbHWtNF1wgyBbsCgY=
+X-Google-Smtp-Source: ABdhPJyyxGBVw/KCtkcjK7Iu1uEH/aHbdAJz9l9gLGqAh5KE0unTVKDLXo/GI6yeS8E28d9GwWVNYQ==
+X-Received: by 2002:a5d:4c4f:: with SMTP id n15mr805640wrt.137.1603135915374;
+        Mon, 19 Oct 2020 12:31:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a82sm665000wmc.44.2020.10.19.12.31.53
+        by smtp.gmail.com with ESMTPSA id e5sm832307wrw.93.2020.10.19.12.31.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 12:31:53 -0700 (PDT)
-Message-Id: <1641d1950d01cc565ee54c9d642bd7079056b5c0.1603135903.git.gitgitgadget@gmail.com>
+        Mon, 19 Oct 2020 12:31:55 -0700 (PDT)
+Message-Id: <66365bce55d6d64d1a67851955a302fcc899d12c.1603135903.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.758.git.1603135902.gitgitgadget@gmail.com>
 References: <pull.758.git.1603135902.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Oct 2020 19:31:39 +0000
-Subject: [PATCH 08/10] t9902: prepare a test for the upcoming default branch
- name
+Date:   Mon, 19 Oct 2020 19:31:41 +0000
+Subject: [PATCH 10/10] t1400: prepare for `main` being default branch name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,35 +77,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We need to adjust a test that uses a prefix of the default branch name,
-to accommodate for `main` being used soon.
+In addition to the trivial search-and-replace, there are three
+non-trivial adjustments necessary.
+
+Mark the respective test cases with the transitional prereq and make
+those non-trivial adjustments early, to make this change easier to
+review.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9902-completion.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t1400-update-ref.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7b7bc6e4bd..0badcf829b 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1055,13 +1055,13 @@ test_expect_success 'teardown after filtering matching refs' '
- 	git -C otherrepo branch -D matching/branch-in-other
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 770e7be363..4c01e08551 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -585,10 +585,10 @@ test_expect_success 'stdin fails on unbalanced quotes' '
+ 	grep "fatal: badly quoted argument: \\\"master" err
  '
  
--test_expect_success '__git_refs - for-each-ref format specifiers in prefix' '
-+test_expect_success PREPARE_FOR_MAIN_BRANCH '__git_refs - for-each-ref format specifiers in prefix' '
- 	cat >expected <<-EOF &&
- 	evil-%%-%42-%(refname)..master
- 	EOF
- 	(
--		cur="evil-%%-%42-%(refname)..mas" &&
--		__git_refs "" "" "evil-%%-%42-%(refname).." mas >"$actual"
-+		cur="evil-%%-%42-%(refname)..mai" &&
-+		__git_refs "" "" "evil-%%-%42-%(refname).." mai >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
+-test_expect_success 'stdin fails on invalid escape' '
+-	echo "create $a \"ma\zter\"" >stdin &&
++test_expect_success PREPARE_FOR_MAIN_BRANCH 'stdin fails on invalid escape' '
++	echo "create $a \"ma\zn\"" >stdin &&
+ 	test_must_fail git update-ref --stdin <stdin 2>err &&
+-	grep "fatal: badly quoted argument: \\\"ma\\\\zter\\\"" err
++	grep "fatal: badly quoted argument: \\\"ma\\\\zn\\\"" err
  '
+ 
+ test_expect_success 'stdin fails on junk after quoted argument' '
+@@ -704,9 +704,9 @@ test_expect_success 'stdin succeeds with quoted argument' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'stdin succeeds with escaped character' '
++test_expect_success PREPARE_FOR_MAIN_BRANCH 'stdin succeeds with escaped character' '
+ 	git update-ref -d $a &&
+-	echo "create $a \"ma\\163ter\"" >stdin &&
++	echo "create $a \"ma\\151n\"" >stdin &&
+ 	git update-ref --stdin <stdin &&
+ 	git rev-parse $m >expect &&
+ 	git rev-parse $a >actual &&
 -- 
 gitgitgadget
-
