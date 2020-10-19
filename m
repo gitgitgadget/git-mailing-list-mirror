@@ -2,94 +2,108 @@ Return-Path: <SRS0=jQhj=D2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89446C433DF
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 183C7C433E7
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:37:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30DA62224D
-	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:30:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A63F52224D
+	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 17:37:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gPJ7QlyA"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="adpOKnUz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727727AbgJSRaG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 13:30:06 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60420 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbgJSRaE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 13:30:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E820EF505;
-        Mon, 19 Oct 2020 13:30:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/mH2C37AAeC8
-        whNV8EwuVeHICzU=; b=gPJ7QlyAYxV1RjZxk/NnNupiy0xHbt6yNuGZVTyi1tik
-        5RTu7O88BR47HhPw/z38EaUmZlL+ww/J+7LT+BgKjcXa6ThE2WsfqzME04zBPsWq
-        kzqEgwPyeFUT3UwOZyY82aqlcduxtkffU8v+3F1+Ukhpn4hctqDqjMLARvbZ90g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H0HdR5
-        9rQZHFLRnFXnDmmwS4rda9CYdVjMCRCXh3rSG2yYtleXe6/pn1GByEy1IrXlt/xz
-        9QRVgvJWHtrYhf4FMk0e3JdLP8CP8KAhJwLO+DMZkPgh7WFgOfRjmw++QJDGK9gf
-        bWxBQWDvJ6LOVpCTeM2SxhH2lipDLYVdy+J3s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 778C1EF504;
-        Mon, 19 Oct 2020 13:30:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 49A19EF500;
-        Mon, 19 Oct 2020 13:29:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] diff: add -I<regex> that ignores matching changes
-References: <20201012091751.19594-1-michal@isc.org>
-        <20201015072406.4506-1-michal@isc.org>
-        <20201015072406.4506-3-michal@isc.org>
-        <xmqqa6wmc9yo.fsf@gitster.c.googlers.com>
-        <20201019095554.GC3717@larwa.hq.kempniu.pl>
-Date:   Mon, 19 Oct 2020 10:29:56 -0700
-In-Reply-To: <20201019095554.GC3717@larwa.hq.kempniu.pl> (=?utf-8?B?Ik1p?=
- =?utf-8?B?Y2hhxYIgS8SZcGllxYQiJ3M=?=
-        message of "Mon, 19 Oct 2020 11:55:54 +0200")
-Message-ID: <xmqqimb6unsb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728182AbgJSRh2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Oct 2020 13:37:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbgJSRh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 13:37:28 -0400
+Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C365C0613CE
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 10:37:28 -0700 (PDT)
+Received: by mail-io1-xd43.google.com with SMTP id u19so645720ion.3
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 10:37:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Pj0LQpwbJjf9NhbxiWfVBC4ffssGazuyB6A5fHKcqSo=;
+        b=adpOKnUzfx8Gahr0ImNRSq5Xc7VXah0IrElECvJlel8uFyMvb3dKBdJskiVdLKgJDc
+         XlmkQPoQZVTpxGg8LSOnAYbN4dTMcEgRJH/Gl+Ym/zd6LMc/14EU5Y91wG7xhmhWHD/r
+         6+eGb7vOZtcVPgSiX7VC5KCAyBNK4Ah5wC2dr90l3OZHEG35IfgBT6efU19zfK24Oc5L
+         ZNuFt84sWT4RW3XcnUlKHQzUWZmw7x4h6ji6BXPz5+YaAHrOuneK9HhgLQL716jZb3LK
+         4xfezpRUeC31NL8lip80Du25vavpSkC/ma9Q2hxPGy4R8IHQtwrqS6uG/6N4xAhoQKaE
+         +jeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Pj0LQpwbJjf9NhbxiWfVBC4ffssGazuyB6A5fHKcqSo=;
+        b=XFARaNG4Fk2Rv7OzOSFzKTJdUXHOADjljR5YMTadQPqGt++lmvXw5DP+mVXHT6gkJ5
+         jSa3c8uekUYk2rjc2KgM9Dtq1Vo2vTObOF81fHtVe9qH4yJgdq4tqBB8I+kNITNv53Im
+         elBcumTSVXw497qQ957maA0z5WWLjwXk9dq0/TK7Wqy784qCmuYn+zJ4+RgQ52UDUyPe
+         1f/Nm8oTY4AHjobkFMHGU/qoE1mp08k32Mw7sYhcWZJEEaIuWRO4VC87MaTh2esXd7d3
+         gwsmT4c72+he0sAjGpMeGlU9Ge95679PNsD69gPTQKjvFxuY7L8kY9iDDIVG/SguVsi1
+         mQ9A==
+X-Gm-Message-State: AOAM531OvTj/wzBUD5yHxXVAdli4lXpa3vYyPSpYvwT1ivDqK6x0aE/B
+        u2DBg0wOAvyBNaLH1K9FDRgeYQ==
+X-Google-Smtp-Source: ABdhPJxh3e3L2vN8OdV6xCUHvMTX26BqBaw/w3oUxr6sFZzSDNFwMXZrQNma6zGZJOoYAKakX3Xqcg==
+X-Received: by 2002:a02:6242:: with SMTP id d63mr895689jac.19.1603129047393;
+        Mon, 19 Oct 2020 10:37:27 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:c096:f5e9:cd72:773e])
+        by smtp.gmail.com with ESMTPSA id 128sm386844iow.50.2020.10.19.10.37.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2020 10:37:26 -0700 (PDT)
+Date:   Mon, 19 Oct 2020 13:37:24 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Nipunn Koorapati <nipunn1313@gmail.com>,
+        Alex Vandiver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Utsav Shah <utsav@dropbox.com>,
+        Alex Vandiver <alexmv@dropbox.com>
+Subject: Re: [PATCH 1/4] fsmonitor: use fsmonitor data in `git diff`
+Message-ID: <20201019173724.GA42706@nand.local>
+References: <pull.756.git.1602968677.gitgitgadget@gmail.com>
+ <13fd992a375e30e8c7b0953a128e149951dee0ea.1602968677.git.gitgitgadget@gmail.com>
+ <xmqqeelw8p8i.fsf@gitster.c.googlers.com>
+ <CAN8Z4-W=+D-P_qCYijGMnStY-EGwKFx-+AYzjACDPAXnLRAA8A@mail.gmail.com>
+ <20201018041642.GB2262492@nand.local>
+ <xmqq1rhw86ur.fsf@gitster.c.googlers.com>
+ <20201018234344.GC4204@nand.local>
+ <xmqqr1puuo35.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B66BAD9C-1230-11EB-BD30-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqr1puuo35.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Micha=C5=82 K=C4=99pie=C5=84 <michal@isc.org> writes:
+On Mon, Oct 19, 2020 at 10:23:26AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> >> > There is some overhead to invoke the hook and talk to watchman, but
+> >> > I'd expect that to be dwarfed by not having to issue O(# files)
+> >> > syscalls.
+> >>
+> >> "invoke the hook"---is that a pipe+fork+exec, or something else that
+> >> is far lighter-weight?
+> >
+> > The former; see 'fsmonitor.c:query_fsmonitor()'.
+>
+> It brings us back to the "overhead of how many lstat(2) takes us
+> closer to the overhead of a single pipe+fork+exec plus reading from
+> the pipe", doesn't it?
 
->> Cramming unrelated tests into a single one made me puzzled, staring
->> at this line for longer than necessary before realizing that this is
->> an attempt to catch a malformed regexp.  If this were in a separate
->> test with its own title, e.g.
->> 	=09
->> It would have been much easier to follow.
-> ... I will try
-> to come up with something more balanced in v4.
+Somewhat unfortunately, yes. Hopefully any user that cares to use
+fsmonitor has enough files in their repository that a pipe+fork+exec is
+still faster than however many lstats they would have needed otherwise.
 
-We want to avoid going overboard and doing a full test matrix. =20
+Of course, finding out what that number is is still interesting...
 
-But having it tested fully with one variant while testing just the
-basic for other variants may give us a good balance, e.g. "git log
--p -I<regex>" is tested but we do not bother testing interactions
-with other options", while we try different combinations when
-testing "git diff --no-index -I<regex>", like multiple -I options
-etc.
-
-Thanks.
-
-
+Thanks,
+Taylor
