@@ -5,67 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80154C433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE69AC433E7
 	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:47:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15EBA21D7F
+	by mail.kernel.org (Postfix) with ESMTP id A144921D7F
 	for <git@archiver.kernel.org>; Mon, 19 Oct 2020 22:47:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oof8SNT0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fGqxr7Vc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388630AbgJSWrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2388626AbgJSWrn (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 19 Oct 2020 18:47:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35066 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388615AbgJSWrm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2388622AbgJSWrm (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Oct 2020 18:47:42 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7131BC0613D1
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:42 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x7so1506849wrl.3
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:42 -0700 (PDT)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC10FC0613CE
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:40 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id s9so1468111wro.8
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 15:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Djf3TWO3UFcf03qpN2acJDVn06wf04grB536pabMBck=;
-        b=Oof8SNT0aRcUjUl+MfN0CRXQQUhSWNqOJbr36sM+mqgCOJgvCVLBKWh+H297JLRRL/
-         LYKOItQbj7NpMRKJfeB07TuHGy2mtR2kK9gUChb7IVZewB4tOmmpxVcY3WgcHFUgrepv
-         5Z2QYtsMErmF2Bwdbp98AK08SxSwIpZg/rwNv3PJyatECFdZMOdC74jHnLa72pbfvA6e
-         ouqGve3QiJk5aa4A1xPgAXlFn2bZfcFdCqLQmxv525WFUQY7ZjVWLj1EKt+iKg3pv0gs
-         8soSrKjDQQMegufMeMVvPio+lJx7atXLKDLcmSyYgSmZsNDTfgLQf541UsKBZCOJHE4M
-         B2Fw==
+        bh=0cKnq3ai3qJJvReanp+IwPBsXPj7SOWushngrvWxycE=;
+        b=fGqxr7Vc3U9+ww1Q3udBdiQORK/LflUHzMOJSxXxZnBMcP2/hdFQYg/bkZJ2LTj8c/
+         oI0+rCN7qrrff2/V9trceP6evYBPNSDc245u9CaCYcQ0Vf7SNTAITaoX3g2sGtOlPg1I
+         M9LsZ1/WcE7cB/sN8HOlm+bFlvEfqdlhJOcdFmCQxXGZMNeWVASE3unfz3sCQNavpQsP
+         mDpMHtglbU3BP8IS5N34dH4bQK+IvUhyEbjKQoj+2ruDwO38mUIMZDXf54rbg6VC63v9
+         Rh0xENkv9pxT75Y1qHKPYLXzaCdkTmPF4oYSx4COSnx597kadzXb49clMPhy/l8LqMpO
+         swJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Djf3TWO3UFcf03qpN2acJDVn06wf04grB536pabMBck=;
-        b=brnIuI954RtYJXpTf6ZuZ8TbjFbQ1uca08w3Anddauhmqhs910kRv8Iq2+CVbBM9wN
-         CXHqqXT6G8o2s9IMOYI+D2JSTNLPQx/7mA1EA6nsGKrIOhKM6MoKYb2wyK7sh5vBdmNr
-         kJTwu7b+h1s1me3/0zrkIgP+p5ZDQBUezQ//W3Mubg1ynL8KHC6v/ZPYOfXrdfPtB7Zh
-         mh8lxMQhegMbgaQnFCHqaoY9nU3D9dizUhxne+J6H/g0m6IIsnYEuBuwnLGeltxXRYHZ
-         UIA87/wvXlUW7oSPbPzR1bxN8I7vD7wzpeJCifK1ppelcvF1aIQpHSZCm0j01MNdK42y
-         QaNA==
-X-Gm-Message-State: AOAM532p294qnWY1uTO/8CgpmZJpHMa7DTqLZh9byxZOhjiXXuPn9AJM
-        mFmU7QuPTlFS6kw++n/xLYFtm5eTokY=
-X-Google-Smtp-Source: ABdhPJzqTk5Od5KURV3eNG3atIb61FxzEp0VKRY/wjGzOS0+w7HViS1bmM4IDlFExdPbTMqnqlzGPA==
-X-Received: by 2002:a05:6000:108:: with SMTP id o8mr1591166wrx.256.1603147661112;
-        Mon, 19 Oct 2020 15:47:41 -0700 (PDT)
+        bh=0cKnq3ai3qJJvReanp+IwPBsXPj7SOWushngrvWxycE=;
+        b=Hhe/EZny4BYian+f3NKreycNZOFNAV2gNlwv+TZXqBr9cu/t0yd2cTWBagpI0TFJF3
+         +BBwSnV4B98L/72z0n35HjdVxXbo4ET9+62zJ54SPVqZHwb0ijJbKUpMbmMaml8cqXj+
+         mtYNnDPLMSCGnQgSd2j011LYzzxoqTo6bZfmB42WfY+4GHpaf4xsXEkpZYSrAqa0wRZG
+         t3C++Uo5ngUoH5qJC2CfMf7kLevMNOWzx3RxayKh6Mb2BtVkrbfZ7PZdjzEnHinItb3B
+         f7npbrXshp98us5lhnM8vzen5GzevKl1UYWgQ1R5DmhvNTnRuH/5kPD0jRUQ8NI4CG8F
+         jvBg==
+X-Gm-Message-State: AOAM530u86EIGJhVAZMMnH0Q9AZ6+v6L89uo5vnlbgAW6SjXdQXfRcLh
+        NPwJy/uuGtRcjG5mNRbT6WsifMAf5ZE=
+X-Google-Smtp-Source: ABdhPJwJZxGodtYNVCahb4j/79z7Yf8qrfOcfYHp2jPKnVW17qeCSiqK14W3UNESWlTQFcUNrdSvDg==
+X-Received: by 2002:a05:6000:10c6:: with SMTP id b6mr1673639wrx.10.1603147659575;
+        Mon, 19 Oct 2020 15:47:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g14sm1386188wrx.22.2020.10.19.15.47.40
+        by smtp.gmail.com with ESMTPSA id t5sm1531412wrb.21.2020.10.19.15.47.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 15:47:40 -0700 (PDT)
-Message-Id: <401f696c8156acafd1bf91511fde7ae099ff9052.1603147657.git.gitgitgadget@gmail.com>
+        Mon, 19 Oct 2020 15:47:39 -0700 (PDT)
+Message-Id: <cba03dd40bc6af965eb33eba87ea490588dc6bcc.1603147657.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
 References: <pull.756.v2.git.1603143316.gitgitgadget@gmail.com>
         <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
-From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Oct 2020 22:47:33 +0000
-Subject: [PATCH v3 3/7] t/perf/p7519-fsmonitor.sh: warm cache on first git
- status
+From:   "Alex Vandiver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Oct 2020 22:47:31 +0000
+Subject: [PATCH v3 1/7] fsmonitor: use fsmonitor data in `git diff`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,55 +74,63 @@ Cc:     Derrick Stolee <stolee@gmail.com>, Utsav Shah <utsav@dropbox.com>,
         Nipunn Koorapati <nipunn@dropbox.com>,
         Taylor Blau <me@ttaylorr.com>,
         Nipunn Koorapati <nipunn1313@gmail.com>,
-        Nipunn Koorapati <nipunn@dropbox.com>
+        Alex Vandiver <alexmv@dropbox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nipunn Koorapati <nipunn@dropbox.com>
+From: Alex Vandiver <alexmv@dropbox.com>
 
-The first git status would be inflated due to warming of
-filesystem cache. This makes the results comparable.
+With fsmonitor enabled, the first call to match_stat_with_submodule
+calls refresh_fsmonitor, incurring the overhead of reading the list of
+updated files -- but run_diff_files does not respect the
+CE_FSMONITOR_VALID flag.
 
-Before
-Test                                                             this tree
---------------------------------------------------------------------------------
-7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         2.52(1.59+1.56)
-7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.18(0.12+0.06)
-7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.36(0.73+0.62)
-7519.7: status (fsmonitor=)                                      0.69(0.52+0.90)
-7519.8: status -uno (fsmonitor=)                                 0.37(0.28+0.81)
-7519.9: status -uall (fsmonitor=)                                1.53(0.93+1.32)
+Make use of the fsmonitor extension to skip lstat() calls on files
+that fsmonitor judged as unmodified.
 
-After
-Test                                                             this tree
---------------------------------------------------------------------------------
-7519.2: status (fsmonitor=.git/hooks/fsmonitor-watchman)         0.39(0.33+0.06)
-7519.3: status -uno (fsmonitor=.git/hooks/fsmonitor-watchman)    0.17(0.13+0.05)
-7519.4: status -uall (fsmonitor=.git/hooks/fsmonitor-watchman)   1.34(0.77+0.56)
-7519.7: status (fsmonitor=)                                      0.70(0.53+0.90)
-7519.8: status -uno (fsmonitor=)                                 0.37(0.32+0.78)
-7519.9: status -uall (fsmonitor=)                                1.55(1.01+1.25)
+Notably, this change improves performance of the git shell prompt when
+GIT_PS1_SHOWDIRTYSTATE is set.
 
+Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
 ---
- t/perf/p7519-fsmonitor.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ diff-lib.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index def7ecdbc7..9313d4a51d 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -114,7 +114,8 @@ test_expect_success "setup for fsmonitor" '
- 	fi &&
+diff --git a/diff-lib.c b/diff-lib.c
+index f95c6de75f..d2d31b9f82 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -97,6 +97,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
  
- 	git config core.fsmonitor "$INTEGRATION_SCRIPT" &&
--	git update-index --fsmonitor
-+	git update-index --fsmonitor &&
-+	git status  # Warm caches
- '
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
  
- if test -n "$GIT_PERF_7519_DROP_CACHE"; then
++	refresh_fsmonitor(istate);
++
+ 	if (diff_unmerged_stage < 0)
+ 		diff_unmerged_stage = 2;
+ 	entries = istate->cache_nr;
+@@ -197,8 +199,17 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (ce_uptodate(ce) || ce_skip_worktree(ce))
+ 			continue;
+ 
+-		/* If CE_VALID is set, don't look at workdir for file removal */
+-		if (ce->ce_flags & CE_VALID) {
++		/*
++		 * When CE_VALID is set (via "update-index --assume-unchanged"
++		 * or via adding paths while core.ignorestat is set to true),
++		 * the user has promised that the working tree file for that
++		 * path will not be modified.  When CE_FSMONITOR_VALID is true,
++		 * the fsmonitor knows that the path hasn't been modified since
++		 * we refreshed the cached stat information.  In either case,
++		 * we do not have to stat to see if the path has been removed
++		 * or modified.
++		 */
++		if (ce->ce_flags & (CE_VALID | CE_FSMONITOR_VALID)) {
+ 			changed = 0;
+ 			newmode = ce->ce_mode;
+ 		} else {
 -- 
 gitgitgadget
 
