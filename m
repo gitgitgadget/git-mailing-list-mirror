@@ -2,105 +2,210 @@ Return-Path: <SRS0=RnkD=D3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7AF3C433DF
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 03:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBB4EC43457
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 03:18:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D287222E9
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 03:15:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B7C5222E9
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 03:18:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Fs8friso"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="Mppn7Uxl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391027AbgJTDPR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Oct 2020 23:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48672 "EHLO
+        id S2391109AbgJTDSi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Oct 2020 23:18:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391024AbgJTDPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Oct 2020 23:15:17 -0400
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86EBDC0613CE
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 20:15:15 -0700 (PDT)
-Received: by mail-io1-xd42.google.com with SMTP id 67so864339iob.8
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 20:15:15 -0700 (PDT)
+        with ESMTP id S2391125AbgJTDSf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Oct 2020 23:18:35 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DA4BC0613CE
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 20:18:34 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id a9so249802lfc.7
+        for <git@vger.kernel.org>; Mon, 19 Oct 2020 20:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Vn8IJfLfhXVaN89Ue1g40faFtqaJKUlnFLzzCN5U7zk=;
-        b=Fs8frisoVKtY+q9XfxUEGoh6NyzjZAkjZv4EokjGHLtkHrhSXKezAju4+r4iDpXPEi
-         BANkWjSJWhduF1//hCEsbwYEAiL7p/Jds5BVSJAVk5Tn7fjwmv53zujVSop7D4xhiLSr
-         kJsQWF5peqDFajMWRyH822mVX5KK1WeXAPI2TLeEnUMsucicTueymbSwnuEJEIS6TeP/
-         j2kvXMhy2lek1zVo06RKix9DuF6BbEQJuI0zNFl0NoTzb15BpvJsNVKkp5l2FiCJd40Y
-         HLoJ7WPu/I6p+WWef7HaMyHm7CwKJzymIBh4aG+KdLIh00jEuXYrirwQlN8FoF/GMoRi
-         7JpA==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sw2Y7Pe9CCoL6+GfjDv3zv9bxLxP5zepCRZNztIucA4=;
+        b=Mppn7Uxlbfac2lUNneniGiXI5iKN/kmy8o3FbW0owORS2mgEax2a2WtzDLemsXkeAG
+         Tr0+zhv9CrkxpX5fRsKV1h3wUh14wcE4f+BIRebvRIsgIwXF/7LhT7VwsqzbQaThBljZ
+         Q4gaMcr+3vlnaRb0CIjEMntpoxhICB4xeXHKLTPHjwe9dAG4iXNELQCwXc5ROUnccVdC
+         jCSixIGvdBVAG1ZvwsDLRQ6eeL251Zmil0ceJFzMklTLT/SofUl2fHSIUco5lrVJLMJi
+         v6kIDpPZqvXf0f/GlXSSOcySeWmb26c7HU7WbiJkeyMxVNkJ5xUHZdbGrr0z72hCP/Df
+         rECw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Vn8IJfLfhXVaN89Ue1g40faFtqaJKUlnFLzzCN5U7zk=;
-        b=Yfm7NH/vkQDj5KltsiSe/tXip8G/slVUyXUKVMwwXD/H8uUKw6OmVXDwScUvNnTeEm
-         1TrGwR2/7ioiJNvY+44hklgeEueJilyRsMkm1NtiXIfJc1+kmrDk5gjEvM00D0OgNLOP
-         Ed5iaKOPf93blyAX+5bbcZSWyfZg02I9Z9D4ZeVsITCXlVCKdzh3n5O/+JLcdmwPW3qa
-         lPKQhWO+f7T87rfpLDfuVLe0skMspMeB3i+cbTpDQFv9qTwigEJsssnb2QHmzFx/J6sN
-         PBXoT5tGKj21FFCnxErh5J1IZym7kddm5sDHhszQ5FtJFkVtbLP12QI9tZ9t9Kh8f6fY
-         4NNA==
-X-Gm-Message-State: AOAM533DO4FwGhcNaKQikYItphum3axh9+wE+g+OkOE+9OBfrwyHZsBf
-        Cr3HPzWToUHx9h7fgiBL3rg8eA==
-X-Google-Smtp-Source: ABdhPJyFWvZfkEee9Jemo7LG5GVDZcJifB1dO+sxq3WT724Ei1h6I8Yu5JJIIzh6MLbCOqiWzApZ+Q==
-X-Received: by 2002:a5d:84c6:: with SMTP id z6mr712984ior.0.1603163714832;
-        Mon, 19 Oct 2020 20:15:14 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:943f:d0f4:e8b9:b8f9])
-        by smtp.gmail.com with ESMTPSA id q23sm466687iob.19.2020.10.19.20.15.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2020 20:15:14 -0700 (PDT)
-Date:   Mon, 19 Oct 2020 23:15:09 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Utsav Shah <utsav@dropbox.com>,
-        Nipunn Koorapati <nipunn1313@gmail.com>,
-        Nipunn Koorapati <nipunn@dropbox.com>
-Subject: Re: [PATCH v3 5/7] perf lint: check test-lint-shell-syntax in perf
- tests
-Message-ID: <20201020031509.GA56322@nand.local>
-References: <pull.756.v2.git.1603143316.gitgitgadget@gmail.com>
- <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
- <28c1e488bf644786af071e66b73450baa47ccc44.1603147657.git.gitgitgadget@gmail.com>
- <20201020023857.GC54484@nand.local>
- <xmqqlfg1d22n.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sw2Y7Pe9CCoL6+GfjDv3zv9bxLxP5zepCRZNztIucA4=;
+        b=ByTUrhvjk8WGm4cp3FRVhrCQvSzSY0dzpZFe2Pd4xI7cTRPgwEqLp78u7+wywsHI7N
+         r1m79hAikLVwpD8vCHR7YWmZmrIAknpb09v3Smn47RMNQdSiXVF4REg/k6R6UmtP1iSZ
+         /yJixcGiaL4n3OUcn9u0NPppNOn4CmFTvKO/sullpTsf/Z3Sh7u/jZiuptX3Nw2QHMhT
+         JPzM0fNJ6Qu9u1Ff3Iq3Ny+UQVhY74tHd+nE93qu5zYW1/Kmt+E0H3rf+0l8obi6cz31
+         ftm9P7RkbM9I6kL40b3STrDYb1IFpGsYalKVTr004215RgjmBij3zm+ZVSSzv9kNmKYg
+         cS7w==
+X-Gm-Message-State: AOAM532BzhtuH3fNx/XuPJ7PZwPJc17+a1LDttmO5NwYWtlepQ9J30FX
+        3CENWmYGFanFdnI8pKuaX5JcfLqQ1vgGbpwoQweRZQ==
+X-Google-Smtp-Source: ABdhPJzEDoa8uVa1Lm3yvlM2XJmqGnQB7elcjNIsra1Eaxnb0nD14MpGpJ/T9qKKcnlmsxJmzEmxOm5fawRU5SHojfA=
+X-Received: by 2002:ac2:465a:: with SMTP id s26mr209157lfo.125.1603163912726;
+ Mon, 19 Oct 2020 20:18:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlfg1d22n.fsf@gitster.c.googlers.com>
+References: <cover.1600814153.git.matheus.bernardino@usp.br>
+ <64b41d537e68a45f2bb0a0c3078f2cd314b5a57d.1600814153.git.matheus.bernardino@usp.br>
+ <20201020013558.GA15198@google.com>
+In-Reply-To: <20201020013558.GA15198@google.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 20 Oct 2020 00:18:21 -0300
+Message-ID: <CAHd-oW7=Bd+StX_t+6iuaas0SWzEdbQCj5aWgasoOYT2kfVw7g@mail.gmail.com>
+Subject: Re: [PATCH v2 16/19] parallel-checkout: add tests for basic operations
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff Hostetler <jeffhost@microsoft.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 19, 2020 at 08:10:56PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >>  		echo change$i >unrelated-file$i &&
-> >> -		seq 1000 | tac >>unrelated-file$i &&
-> >> +		test_seq 1000 | tac >>unrelated-file$i &&
-> >
-> > Makes sense. I wouldn't be opposed to breaking this out into an earlier
-> > change (e.g., "it's about to become not OK to use seq in t/perf, so
-> > prepare for that by replacing any invocations with test_seq()"), but I
-> > think it's probably not worth it, since this patch is small as it is.
->
-> test_seq is fine, but I do not think tac is portable (only saved by
-> the fact that not many people, especially on exotic platforms, run
-> perf scripts).
+Hi, Jonathan
 
-Serves me right for reading while I'm tired! I glazed right over 'tac'.
-If you need a truly unrelated file, you could write random data into it
-(there are some examples in t/test-lib-functions.sh), but I'd just write
-'test_seq 1001'.
+On Mon, Oct 19, 2020 at 10:36 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Hi,
+>
+> Matheus Tavares wrote:
+>
+> > Add tests to populate the working tree during clone and checkout using
+> > the sequential and parallel modes, to confirm that they produce
+> > identical results. Also test basic checkout mechanics, such as checking
+> > for symlinks in the leading directories and the abidance to --force.
+>
+> Thanks for implementing parallel checkout!  I'm excited about the
+> feature.  And thanks for including these tests.
 
-Thanks,
-Taylor
+Thanks for the comments and feedback :)
+
+> [...]
+> > --- /dev/null
+> > +++ b/t/lib-parallel-checkout.sh
+> > @@ -0,0 +1,39 @@
+> [...]
+> > +# Runs `git -c checkout.workers=$1 -c checkout.thesholdForParallelism=$2 ${@:4}`
+> > +# and checks that the number of workers spawned is equal to $3.
+> > +git_pc()
+>
+> nit: what does git_pc mean?
+
+The idea was "git w/ parallel-checkout". But I realize it may have
+gotten too abbreviated...
+
+> Can this spell it out more verbosely, or
+> could callers take on more of the burden?  (Perhaps it would make sense
+> to use a helper that uses test_config to set the relevant configuration,
+> and then the caller can use plain "git clone"?)
+
+Hmm, it's possible, but I think we might end up with quite a lot of
+repetition (to always check that checkout spawned the right number of
+workers).
+
+> [...]
+> > +     GIT_TRACE2="$(pwd)/trace" git \
+> > +             -c checkout.workers=$workers \
+> > +             -c checkout.thresholdForParallelism=$threshold \
+> > +             -c advice.detachedHead=0 \
+> > +             $@ &&
+>
+> $@ needs to be quoted, or else it will act like $* (and in particular it
+> won't handle parameters with embedded spaces).
+
+Nice catch, thanks! I will send a patch for this tomorrow.
+
+> > +
+> > +     # Check that the expected number of workers has been used. Note that it
+> > +     # can be different than the requested number in two cases: when the
+> > +     # quantity of entries to be checked out is less than the number of
+> > +     # workers; and when the threshold has not been reached.
+> > +     #
+> > +     local workers_in_trace=$(grep "child_start\[.\+\] git checkout--helper" trace | wc -l) &&
+>
+> Do we use grep's \+ operator in other tests?  I thought we preferred to
+> use the more portable *, but it may be that I'm out of date.
+
+Oh, I didn't know about the portability issue with \+. This is already
+in `next`, but I guess it's worth sending a follow-up patch to fix it,
+right? (I see we have a second \+ occurrence in t7508, which could be
+changed in the same patch.)
+
+> [...]
+> > +# Verify that both the working tree and the index were created correctly
+> > +verify_checkout()
+> > +{
+> > +     git -C $1 diff-index --quiet HEAD -- &&
+> > +     git -C $1 diff-index --quiet --cached HEAD -- &&
+> > +     git -C $1 status --porcelain >$1.status &&
+> > +     test_must_be_empty $1.status
+> > +}
+>
+> Like git_pc, this is not easy to take in at a glance.
+>
+> "$1" needs to be quoted if we are to handle paths with spaces.
+
+Thanks, again :) Currently, this function doesn't get paths with
+spaces, but I agree that it's better to be cautious here.
+
+> [...]
+> > --- /dev/null
+> > +++ b/t/t2080-parallel-checkout-basics.sh
+> > @@ -0,0 +1,197 @@
+> > +#!/bin/sh
+> > +
+> > +test_description='parallel-checkout basics
+> > +
+> > +Ensure that parallel-checkout basically works on clone and checkout, spawning
+> > +the required number of workers and correctly populating both the index and
+> > +working tree.
+> > +'
+> > +
+> > +TEST_NO_CREATE_REPO=1
+> > +. ./test-lib.sh
+> > +. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
+> > +
+> > +# NEEDSWORK: cloning a SHA1 repo with GIT_TEST_DEFAULT_HASH set to "sha256"
+> > +# currently produces a wrong result (See
+> > +# https://lore.kernel.org/git/20200911151717.43475-1-matheus.bernardino@usp.br/).
+> > +# So we skip the "parallel-checkout during clone" tests when this test flag is
+> > +# set to "sha256". Remove this when the bug is fixed.
+> > +#
+> > +if test "$GIT_TEST_DEFAULT_HASH" = "sha256"
+> > +then
+> > +     skip_all="t2080 currently don't work with GIT_TEST_DEFAULT_HASH=sha256"
+> > +     test_done
+> > +fi
+> > +
+> > +R_BASE=$GIT_BUILD_DIR
+> > +
+> > +test_expect_success 'sequential clone' '
+> > +     git_pc 1 0 0 clone --quiet -- $R_BASE r_sequential &&
+>
+> This fails when I run it when building from a tarball, which is
+> presenting me from releasing this patch series to Debian experimental.
+
+Sorry for the trouble :( It didn't occur to me, while writing the
+test, that it could also be run from the tarball.
+
+> Can we use an artificial repo instead of git.git?  Using git.git as
+> test data seems like a recipe for hard-to-reproduce test failures.
+
+I think we could maybe drop these tests. There are already some
+similar tests below these, which use an artificial repository. The
+goal of using git.git in this section was to test parallel-checkout
+with a real-world repo, and hopefully catch errors that we might not
+see with small artificial ones.  But you have a very valid concern, as
+well. Hmm, I'm not sure what is the best solution to this case. What
+do you think?
