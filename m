@@ -2,188 +2,139 @@ Return-Path: <SRS0=RnkD=D3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48233C4363A
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5149C4363A
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:06:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6CC222256
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:04:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CAF122256
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:06:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XcdXy0js"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vn8WmEIM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410304AbgJTWEz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Oct 2020 18:04:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54410 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393572AbgJTWEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Oct 2020 18:04:55 -0400
-Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91CBCC0613CE
-        for <git@vger.kernel.org>; Tue, 20 Oct 2020 15:04:55 -0700 (PDT)
-Received: by mail-qt1-x84a.google.com with SMTP id i39so131011qtb.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2020 15:04:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=UDLWUKzqaDl8oVuTTUmAnUWHSdq4KI6bs093vuWnQnY=;
-        b=XcdXy0jsEOJLaDtQXVyVePKFoS+/RJIskpdNhxuowM0EKj+X11FhEAmKMy09Ee04e9
-         7mIk/Z4hCHcadC4RJiX9ae9kkAVd9Ud6YaXi80vw2kjrQQ+WiwWP/zDccqptXnJQ7GR5
-         F5TVmEb65IBz2jplaBOGXIodWqs0k0f5YIFQ//T6F9YBumUQZgFeOHaRxUbgPdOfDR6Y
-         hJEflO7toKNz2c2+3GIaN1GDxqh2F3dvHqSZtjEF20iSAwLSdE9puvHyL07JLHisq+Cz
-         2+BKI/l5Ssw20ofLUGanwh4iv89mC4nbxeB8ErbvsusBgZeSmccAG5h6pXxGufZXqkZh
-         6UBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=UDLWUKzqaDl8oVuTTUmAnUWHSdq4KI6bs093vuWnQnY=;
-        b=d4wQ86vayTTrrkBph9Kbf9UzCY6mpOdYAd2bQZpMfIKuCmeOYfx/DbiFsMHTjfCbW+
-         p0zXsE4a0i0LpIILDoYwI55LmJYvl4EOel0O5gZz24ESF6LlSVl0P2GS0dg01lEt0KhU
-         hdv0dn0ivBPEEqJmxDYxFakibr/Kdz4BCYK7WLx6Pbomi7UUAEFJtTxCjuF6vNYcdgN5
-         Ku8r5O6eFY0w2C5BDRyUTzrqMRpU+ui40D/ZxavHYhkrDoRWPy6McICc4l5keZ4f1W/T
-         UCzRxNRMO1nyudIHF4sOG9nL49jxyQJVv/n2XS2N2XGs61ZhypzO3Uiq1PoS448bAruT
-         HUEQ==
-X-Gm-Message-State: AOAM531HTAmOnK5AXc4T1qriEoHcvFZ9v1o8hFDID48PyiiyfPSlVAMt
-        gk7a5ol3YzR23KfA+qsVZf1H+Nvlg6WlEk1U1mqd0U188HCVvH7NITO91SN3X5QKnKmae1BQhjO
-        YZxW8Vq2DcTF0uK9aGOqtmiBjsfzMG9x56YuO+YZ3Taf5nHnbQN6AAttpJ4wmnu70KS8W2kFBMn
-        0G
-X-Google-Smtp-Source: ABdhPJyMNRkk5fODCuPzevqBLmyYdIflkDfqTeS8xhXC8nUfMr7pdqSU1sr1KZ+3nIBidAqy0BdUikbCxxtTa9lwPWFi
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:ad4:48c6:: with SMTP id
- v6mr5713955qvx.11.1603231494655; Tue, 20 Oct 2020 15:04:54 -0700 (PDT)
-Date:   Tue, 20 Oct 2020 15:04:52 -0700
-In-Reply-To: <xmqqblgwa7s5.fsf@gitster.c.googlers.com>
-Message-Id: <20201020220452.697760-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqblgwa7s5.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.29.0.rc1.297.gfa9743e501-goog
-Subject: [PATCH v2] apply: when -R, also reverse list of sections
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S2410315AbgJTWGN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Oct 2020 18:06:13 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54091 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391762AbgJTWGM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Oct 2020 18:06:12 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91B3AFB253;
+        Tue, 20 Oct 2020 18:06:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zua2OM/PkjB+EQPChkUbkIFNxaE=; b=Vn8WmE
+        IM19QzeDQ9N5raVEKC99y7oaAG2iSxFAGtN3po6doJTCD1rTGrEXy2RLWhltjlNV
+        +D5/ITpNCc4aXKPSZf/FDmQjkiLDk/twc8cM3i1gf6enLmqmLdziTzFseAb6JILn
+        mOka2CU8WJM4WG6DbF/+CbNVImaGr3k/+O48I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YsJ80X1AfnEVLdHoEIjVWVPSsil8eqZc
+        fqVUoW6+6330d4JISTsXV/LvHusNvmy8jCwNy220pcYgw2eF+KWqJ9b29FFIPN0j
+        Zk+sxPsAT2ZC1YLGZm4doNlMs55HnpNLC6mJ7vIQHW0MVrJtsQmLzm2eYIBX/ycm
+        BLHVClA9+LM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A7ADFB252;
+        Tue, 20 Oct 2020 18:06:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2915FB251;
+        Tue, 20 Oct 2020 18:06:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] clarify meaning of --signoff & related doc
+ improvements in describing Signed-off-by
+References: <xmqqy2k1dfoh.fsf@gitster.c.googlers.com>
+        <20201018233136.GA4204@nand.local>
+        <20201018194912.2716372-1-gitster@pobox.com>
+        <xmqqmu0it6ls.fsf@gitster.c.googlers.com>
+        <cover.1603142543.git.bkuhn@sfconservancy.org>
+        <37a4932d48c1d36c3c512e9f8c0bcac878de6b76.1603142543.git.bkuhn@sfconservancy.org>
+        <20201019220214.GB49623@nand.local>
+        <cover.1603155607.git.bkuhn@sfconservancy.org>
+        <20201020023407.GB54484@nand.local> <20201020212820.GA1368742@ebb.org>
+Date:   Tue, 20 Oct 2020 15:06:05 -0700
+In-Reply-To: <20201020212820.GA1368742@ebb.org> (Bradley M. Kuhn's message of
+        "Tue, 20 Oct 2020 14:28:20 -0700")
+Message-ID: <xmqq7drka6ya.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73DE5F4C-1320-11EB-8869-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A patch changing a symlink into a file is written with 2 sections (in
-the code, represented as "struct patch"): firstly, the deletion of the
-symlink, and secondly, the creation of the file. When applying that
-patch with -R, the sections are reversed, so we get:
+"Bradley M. Kuhn" <bkuhn@sfconservancy.org> writes:
 
- (1) creation of a symlink, then
- (2) deletion of a file.
+> I wasn't sure what I should be doing with the patch set once it was already
+> in 'seen'.  The only two references in SubmittingPatches I could find were:
 
-This causes an issue when the "deletion of a file" section is checked,
-because Git observes that the so-called file is not a file but a
-symlink, resulting in a "wrong type" error message.
+Being 'seen' is an indication that it has been seen and does not
+mean anything more than that.  It is appreciated that a topic in
+such a state is improved by replacing.
 
-What we want is:
+> From Documentation/SubmittingPatches:
+>>> In any time between the (2)-(3) cycle, the maintainer may pick it up from
+>>> the list and queue it to `seen`, in order to make it easier for people
+>>> play with it without having to pick up and apply the patch to their trees
+>>> themselves.
 
- (1) deletion of a file, then
- (2) creation of a symlink.
+Yes.  Other people then can "git fetch" from me and follow the first
+parent chain "git log --first-parent origin/master..origin/seen" to
+find the tip of your topic, instead of finding your message in the
+list archive and running "git am" themselves.
 
-In the code, this is reflected in the behavior of previous_patch() when
-invoked from check_preimage() when the deletion is checked. Creation
-then deletion means that when the deletion is checked, previous_patch()
-returns the creation section, triggering a mode conflict resulting in
-the "wrong type" error message. But deletion then creation means that
-when the deletion is checked, previous_patch() returns NULL, so the
-deletion mode is checked against lstat, which is what we want.
+The original submitter/owner of the topic can also find the tip of
+the topic _in_ my tree the same way as others and reset their branch
+to what is queued in 'seen' if they wanted to keep minor fixes I
+made based on review comments while applying the e-mailed patches.
 
-There are also other ways a patch can contain 2 sections referencing the
-same file, for example, in 7a07841c0b ("git-apply: handle a patch that
-touches the same path more than once better", 2008-06-27). "git apply
--R" fails in the same way, and this commit makes this case succeed.
+Then they can further work on polishing the topic with the usual
+means, e.g. using "rebase -i", and finally "format-patch" to send
+out a new round.  Being or not being in 'seen' does not change the
+workflow that much.
 
-Therefore, when building the list of sections, build them in reverse
-order (by adding to the front of the list instead of the back) when -R
-is passed.
+>>> `git pull --rebase` will automatically skip already-applied patches, and
+>>> will let you know. This works only if you rebase on top of the branch in
+>>> which your patch has been merged (i.e. it will not tell you if your patch
+>>> is merged in `seen` if you rebase on top of master).
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-OK - updated the commit message and added a test for the use case Junio
-described.
----
- apply.c                     | 9 +++++++--
- t/t4114-apply-typechange.sh | 7 +++++++
- t/t4127-apply-same-fn.sh    | 9 +++++++++
- 3 files changed, 23 insertions(+), 2 deletions(-)
+This is talking about a fairly mature topic that has already been in
+'next' and was on the course to graduate to 'master'.  The topic
+would eventually be in 'master', and at that point "pull --rebase"
+would notice that the patches are no longer needed (or were merged
+in a different form).  But that does not apply to topics that are
+not in 'master' yet.
 
-diff --git a/apply.c b/apply.c
-index 76dba93c97..359ceb632c 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4699,8 +4699,13 @@ static int apply_patch(struct apply_state *state,
- 			reverse_patches(patch);
- 		if (use_patch(state, patch)) {
- 			patch_stats(state, patch);
--			*listp = patch;
--			listp = &patch->next;
-+			if (!list || !state->apply_in_reverse) {
-+				*listp = patch;
-+				listp = &patch->next;
-+			} else {
-+				patch->next = list;
-+				list = patch;
-+			}
- 
- 			if ((patch->new_name &&
- 			     ends_with_path_components(patch->new_name,
-diff --git a/t/t4114-apply-typechange.sh b/t/t4114-apply-typechange.sh
-index ebadbc347f..da3e64f811 100755
---- a/t/t4114-apply-typechange.sh
-+++ b/t/t4114-apply-typechange.sh
-@@ -88,6 +88,13 @@ test_expect_success 'symlink becomes file' '
- 	'
- test_debug 'cat patch'
- 
-+test_expect_success 'symlink becomes file, in reverse' '
-+	git checkout -f foo-symlinked-to-bar &&
-+	git diff-tree -p HEAD foo-back-to-file > patch &&
-+	git checkout foo-back-to-file &&
-+	git apply -R --index < patch
-+	'
-+
- test_expect_success 'binary file becomes symlink' '
- 	git checkout -f foo-becomes-binary &&
- 	git diff-tree -p --binary HEAD foo-symlinked-to-bar > patch &&
-diff --git a/t/t4127-apply-same-fn.sh b/t/t4127-apply-same-fn.sh
-index 972946c174..305b7e649e 100755
---- a/t/t4127-apply-same-fn.sh
-+++ b/t/t4127-apply-same-fn.sh
-@@ -32,6 +32,10 @@ test_expect_success 'apply same filename with independent changes' '
- 
- test_expect_success 'apply same filename with overlapping changes' '
- 	git reset --hard &&
-+
-+	# Store same_fn so that we can check apply -R in next test
-+	cp same_fn same_fn1 &&
-+
- 	modify "s/^d/z/" same_fn &&
- 	git diff > patch0 &&
- 	git add same_fn &&
-@@ -43,6 +47,11 @@ test_expect_success 'apply same filename with overlapping changes' '
- 	test_cmp same_fn same_fn2
- '
- 
-+test_expect_success 'apply same filename with overlapping changes, in reverse' '
-+	git apply -R patch0 &&
-+	test_cmp same_fn same_fn1
-+'
-+
- test_expect_success 'apply same new filename after rename' '
- 	git reset --hard &&
- 	git mv same_fn new_fn &&
--- 
-2.29.0.rc1.297.gfa9743e501-goog
+Where the workflow changes is when the topic hits 'next'.  After
+that, we request you to give incremental updates to refine what is
+queued already.  
 
+The reasoning behind this is simple and arbitrary.  It often is the
+case that keeping mistakes in early iterations, and fixes to these
+mistakes, recorded in history is not worth the attention of future
+readers of "git log" who need to study the history, assuming that
+trivial mistakes are caught early.  Once earlier rounds of review is
+done and everybody is more or less happy, the topic gets merged to
+'next', and after that point, a new issue that gets noticed and
+fixed _are_ worth recording in history, because both the original
+contributor and reviewers failed to catch such glitches.
+
+> I'm curious to know if I went wrong somewhere and the workflow and would be
+> glad to propose another patch to improve SubmittingPatches with a section of
+> what to do when patches show up in `seen`, but since I'm a n00b (at least as
+> an upstream Git contributor :), I'd need to know how to DTRT in this case to
+> do that.
+
+I thought your v3 did things perfectly.
+
+Thanks.
