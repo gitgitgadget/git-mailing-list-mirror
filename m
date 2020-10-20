@@ -2,85 +2,92 @@ Return-Path: <SRS0=RnkD=D3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A173DC4363A
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 19:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4008AC4363A
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 19:17:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2502D2224A
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 19:15:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4B2C2076A
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 19:17:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vZgwhzjR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iQbVZ2Ls"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438021AbgJTTPC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Oct 2020 15:15:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62067 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438018AbgJTTPC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Oct 2020 15:15:02 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 504DB85EC4;
-        Tue, 20 Oct 2020 15:15:00 -0400 (EDT)
+        id S2391105AbgJTTRW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Oct 2020 15:17:22 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63472 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729588AbgJTTRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Oct 2020 15:17:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A273F9D2E;
+        Tue, 20 Oct 2020 15:17:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uX1tCSBmzQo4VyeluuEHjBl2Wsk=; b=vZgwhz
-        jRJRIlm5mpVCZbRyc3T4oeqomGJq8bHYOb+K7cmHERtR69lbR7njzB1vdCTK4gUX
-        ruL0CiFmNPQYw2viR4nrYH0WLrS8OLPNOgKEF2d0LTgO4aAzXWQFX7MwQ1Fgk1lr
-        jNjQLXAJmfGpoW6re7Ymt2UZKhQSuIpPXq0BA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=m3ecRpOm7PaP3JS685It3VC3faTAunG3
-        nPsH40mspk8on6fZBzECDePj/gjAM9CcoPMqJueQvYH/3zolAUL1fhQyIl0IcpDL
-        XpoiWnFzRzyNXCiDb911ArEFGdSk/E0KApR+RjAm6swPGqJNBS/UsvUjUemSvCsl
-        esUYKeJnZCM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4373A85EC2;
-        Tue, 20 Oct 2020 15:15:00 -0400 (EDT)
+        :content-type; s=sasl; bh=hJLdEcmQqH3moVhG1XDm2yzxOFQ=; b=iQbVZ2
+        Lsbkn5Z5+Xxn3Bs8Qeg5NixgIOdJKv/umoAcTsVkYYBSJCSkOKG7BRe2LDDIOGHa
+        inwfqTVXd31+L1GiS2fwwl9PDXgJNjQ/vjWpWQSCMcA9a0VQtA1KTgzxYlGLfxII
+        dtpuvMXPhoGm3bmsgufOr0QHUf3JwmDQNrOcY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yUWqTS2VShpltFEWhsO6rEv2fEKomZZf
+        6qgA/rtkzbWsapEQkPQR3z0BP1Ns162EnsQUN5T6JvjORJNukeCNnA/IWLzJZvUs
+        JcfuItMwOcOElyB74CETvKczCizaB755bfDxY0PM3HkjJEh/IsjD9IZCTJ6Ky9bq
+        YKv7cVLTYP8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 405CCF9D2D;
+        Tue, 20 Oct 2020 15:17:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BCF5885EC1;
-        Tue, 20 Oct 2020 15:14:59 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5CEEFF9D2A;
+        Tue, 20 Oct 2020 15:17:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 16/19] parallel-checkout: add tests for basic operations
-References: <cover.1600814153.git.matheus.bernardino@usp.br>
-        <64b41d537e68a45f2bb0a0c3078f2cd314b5a57d.1600814153.git.matheus.bernardino@usp.br>
-        <20201020013558.GA15198@google.com>
-        <CAHd-oW7=Bd+StX_t+6iuaas0SWzEdbQCj5aWgasoOYT2kfVw7g@mail.gmail.com>
-Date:   Tue, 20 Oct 2020 12:14:59 -0700
-In-Reply-To: <CAHd-oW7=Bd+StX_t+6iuaas0SWzEdbQCj5aWgasoOYT2kfVw7g@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Tue, 20 Oct 2020 00:18:21
-        -0300")
-Message-ID: <xmqqy2k0btfw.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Subject: Preparing to rewind 'next'
+References: <xmqqr1put77h.fsf@gitster.c.googlers.com>
+Date:   Tue, 20 Oct 2020 12:17:15 -0700
+In-Reply-To: <xmqqr1put77h.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 19 Oct 2020 11:13:22 -0700")
+Message-ID: <xmqqtuuobtc4.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8C35930C-1308-11EB-9D4C-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DE3A17B8-1308-11EB-AB4B-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+Now 2.29 is out, it's time to clean the desk and to prepare for the
+next cycle.  Typically a week after a release, we rebuild the tip of
+'next' and it is an opportunity to kick some topics out of 'next'.
 
-> Oh, I didn't know about the portability issue with \+. This is already
-> in `next`, but I guess it's worth sending a follow-up patch to fix it,
-> right? (I see we have a second \+ occurrence in t7508, which could be
-> changed in the same patch.)
+Here are the topics that are in next and have been marked as "Will
+cook in 'next'" during the pre-release freeze period.  
 
-Note that soon, typically a week, after a release, the tip of the
-next branch is rewound and all the topics that did not graduate to
-master has a chance to get a clean start.  This may be a good use
-case for that chance.
+Please nominate topics that should be kicked out of 'next', either
+tentatively to give them a fresh chance to apply minor clean-ups (or
+permanently because they are fundamentally wrong---but hopefully
+there is no topic in the latter category).
+
+Thanks.
+
+ + ds/maintenance-part-2                                        09-25/10-04    #8
+ + sk/force-if-includes                                         10-03/10-04    #4
+ + mt/parallel-checkout-part-1                                  10-05/10-05   #20
+ + sb/clone-origin                                              09-30/10-06    #7
+ + jk/symlinked-dotgitx-files                                   10-06/10-08    #8
+ + dl/checkout-p-merge-base                                     10-07/10-08    #4
+ + js/userdiff-php                                              10-07/10-08    #1
+ + kb/userdiff-rust-macro-rules                                 10-07/10-08    #1
+ + rk/completion-stash                                          10-07/10-08    #2
+ + dl/checkout-guess                                            10-08/10-08    #2
+ + sd/userdiff-css-update                                       10-08/10-08    #1
+ + cw/ci-ghwf-check-ws-errors                                   10-09/10-15    #1
+ + rs/dist-doc-with-git-archive                                 10-12/10-15    #2
+ + rs/tighten-callers-of-deref-tag                              10-12/10-15    #3
+ + rs/worktree-list-show-locked                                 10-12/10-15    #1
