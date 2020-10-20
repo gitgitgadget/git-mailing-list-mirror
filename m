@@ -2,139 +2,136 @@ Return-Path: <SRS0=RnkD=D3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5149C4363A
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88E02C4363A
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:06:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CAF122256
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:06:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BA432225C
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 22:06:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vn8WmEIM"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="MzPEOmRB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2410315AbgJTWGN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Oct 2020 18:06:13 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54091 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391762AbgJTWGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Oct 2020 18:06:12 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91B3AFB253;
-        Tue, 20 Oct 2020 18:06:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zua2OM/PkjB+EQPChkUbkIFNxaE=; b=Vn8WmE
-        IM19QzeDQ9N5raVEKC99y7oaAG2iSxFAGtN3po6doJTCD1rTGrEXy2RLWhltjlNV
-        +D5/ITpNCc4aXKPSZf/FDmQjkiLDk/twc8cM3i1gf6enLmqmLdziTzFseAb6JILn
-        mOka2CU8WJM4WG6DbF/+CbNVImaGr3k/+O48I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YsJ80X1AfnEVLdHoEIjVWVPSsil8eqZc
-        fqVUoW6+6330d4JISTsXV/LvHusNvmy8jCwNy220pcYgw2eF+KWqJ9b29FFIPN0j
-        Zk+sxPsAT2ZC1YLGZm4doNlMs55HnpNLC6mJ7vIQHW0MVrJtsQmLzm2eYIBX/ycm
-        BLHVClA9+LM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A7ADFB252;
-        Tue, 20 Oct 2020 18:06:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2915FB251;
-        Tue, 20 Oct 2020 18:06:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] clarify meaning of --signoff & related doc
- improvements in describing Signed-off-by
-References: <xmqqy2k1dfoh.fsf@gitster.c.googlers.com>
-        <20201018233136.GA4204@nand.local>
-        <20201018194912.2716372-1-gitster@pobox.com>
-        <xmqqmu0it6ls.fsf@gitster.c.googlers.com>
-        <cover.1603142543.git.bkuhn@sfconservancy.org>
-        <37a4932d48c1d36c3c512e9f8c0bcac878de6b76.1603142543.git.bkuhn@sfconservancy.org>
-        <20201019220214.GB49623@nand.local>
-        <cover.1603155607.git.bkuhn@sfconservancy.org>
-        <20201020023407.GB54484@nand.local> <20201020212820.GA1368742@ebb.org>
-Date:   Tue, 20 Oct 2020 15:06:05 -0700
-In-Reply-To: <20201020212820.GA1368742@ebb.org> (Bradley M. Kuhn's message of
-        "Tue, 20 Oct 2020 14:28:20 -0700")
-Message-ID: <xmqq7drka6ya.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2410337AbgJTWGe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Oct 2020 18:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2410333AbgJTWGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Oct 2020 18:06:34 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 232C8C0613CE
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 15:06:33 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id w9so64665qvj.0
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 15:06:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VHG3v8nZgVf7w0HEb9X9r8TFEUjgDSQ5fGOUQ+bT820=;
+        b=MzPEOmRB1XLDYtUUgTJtW31thQF6WsZ4b0JrIMguYpq64/4+TN6YE1YEiYx4WMyza/
+         bLNgukiWvp7o7qerkjGWE9aj7JZPYbVwnHB/W0gxwK4qyS9S1lRsx4xpGd1Z+u+uvx9D
+         q8E1/KVa/97Y1H/ccfh5W6603R9vZy1a8UUlGb1zGpUSh0tToAEVfcmoAG6X7yMOmbqf
+         3t48XP8cfGNF6Zvp5wrLGqqZ2MVgVPECpBh7IHlvPPc14lLyaOgLkyXgLIV3uzP/FcvD
+         IxthjC5BzkXHvTTjmjpZE9w9kFZiplHMShKjaUwK8g93sRKzu34eEfsO2Ptx8ZwuBR0c
+         arNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VHG3v8nZgVf7w0HEb9X9r8TFEUjgDSQ5fGOUQ+bT820=;
+        b=om/RctMbfRLq6hRSBwaezWVy+954PtbTvKTTn1EIpfkaADkGmXtHdRl959mD5lwJ8m
+         bVT8tbLDu7WmL9U+0hyRyVdBzaDPxRc/SmuwLHNmkePFnzjsFqI0fwAFo0pIVgrOVu2H
+         ouWJBR7W4UMh1gj+bmoDDN6XU5C1BBZwW1SU3Qa/wJDYDS9iMv+6qUMQZzJiY/P7AvKd
+         w8bxRsiULjBSjcK5u3XRmrRV7TDXsI1FBEVxPP9pOnb5aKy9kRKOHtIXJoNo3+UVpAXW
+         b65LyeJZYg2zigSvrs4nGAhWTSX4OlTmcLEtJSvT4XjOVAEftTLsMtpWWZfclB9VTPjh
+         HUwQ==
+X-Gm-Message-State: AOAM532OfxjWqhrRkz7LC5K/N/WfEb9fEORaDjVTNQs4/YMipoKIfzlj
+        tYIjO6pqAzKNcz2LF/n4acp6sg==
+X-Google-Smtp-Source: ABdhPJxPSS2QSPezNDs/MfEKfsBhk2pPNLfdP95BmImzYZ+zmD1mNyH0N6Wb6KBCmSGQ8ezQnLG5Kg==
+X-Received: by 2002:ad4:4249:: with SMTP id l9mr5637930qvq.52.1603231592275;
+        Tue, 20 Oct 2020 15:06:32 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:5440:c3ba:60f:b745])
+        by smtp.gmail.com with ESMTPSA id w6sm191158qkb.6.2020.10.20.15.06.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2020 15:06:31 -0700 (PDT)
+Date:   Tue, 20 Oct 2020 18:06:29 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Utsav Shah <utsav@dropbox.com>,
+        Nipunn Koorapati <nipunn1313@gmail.com>,
+        Nipunn Koorapati <nipunn@dropbox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4 5/7] perf lint: add make test-lint to perf tests
+Message-ID: <20201020220629.GF75186@nand.local>
+References: <pull.756.v3.git.1603147657.gitgitgadget@gmail.com>
+ <pull.756.v4.git.1603201264.gitgitgadget@gmail.com>
+ <b534cd137a833de802d6d95c1affb8d2d8f7de85.1603201265.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 73DE5F4C-1320-11EB-8869-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b534cd137a833de802d6d95c1affb8d2d8f7de85.1603201265.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Bradley M. Kuhn" <bkuhn@sfconservancy.org> writes:
+On Tue, Oct 20, 2020 at 01:41:02PM +0000, Nipunn Koorapati via GitGitGadget wrote:
+> diff --git a/t/perf/Makefile b/t/perf/Makefile
+> index 8c47155a7c..fcb0e8865e 100644
+> --- a/t/perf/Makefile
+> +++ b/t/perf/Makefile
+> @@ -1,7 +1,7 @@
+>  -include ../../config.mak
+>  export GIT_TEST_OPTIONS
+>
+> -all: perf
+> +all: test-lint perf
+>
+>  perf: pre-clean
+>  	./run
+> @@ -12,4 +12,7 @@ pre-clean:
+>  clean:
+>  	rm -rf build "trash directory".* test-results
+>
+> +test-lint:
+> +	$(MAKE) -C .. test-lint
+> +
 
-> I wasn't sure what I should be doing with the patch set once it was already
-> in 'seen'.  The only two references in SubmittingPatches I could find were:
+Great; it sounds like adding a complete definition here was too much
+effort to be worth it, but that adding a '$(MAKE) -C ..' is just right.
+We can still run 'make test-lint' from within 't/perf', but there isn't
+a bunch of clutter in this series to make that happen. Thanks.
 
-Being 'seen' is an indication that it has been seen and does not
-mean anything more than that.  It is appreciated that a topic in
-such a state is improved by replacing.
+>  .PHONY: all perf pre-clean clean
+> diff --git a/t/perf/p3400-rebase.sh b/t/perf/p3400-rebase.sh
+> index d202aaed06..7a0bb29448 100755
+> --- a/t/perf/p3400-rebase.sh
+> +++ b/t/perf/p3400-rebase.sh
+> @@ -9,16 +9,16 @@ test_expect_success 'setup rebasing on top of a lot of changes' '
+>  	git checkout -f -B base &&
+>  	git checkout -B to-rebase &&
+>  	git checkout -B upstream &&
+> -	for i in $(seq 100)
+> +	for i in $(test_seq 100)
+>  	do
+>  		# simulate huge diffs
+>  		echo change$i >unrelated-file$i &&
+> -		seq 1000 >>unrelated-file$i &&
+> +		test_seq 1000 >>unrelated-file$i &&
+>  		git add unrelated-file$i &&
+>  		test_tick &&
+>  		git commit -m commit$i unrelated-file$i &&
+>  		echo change$i >unrelated-file$i &&
+> -		seq 1000 | tac >>unrelated-file$i &&
+> +		test_seq 1000 | tac >>unrelated-file$i &&
 
-> From Documentation/SubmittingPatches:
->>> In any time between the (2)-(3) cycle, the maintainer may pick it up from
->>> the list and queue it to `seen`, in order to make it easier for people
->>> play with it without having to pick up and apply the patch to their trees
->>> themselves.
+The rest of this all looks good, but I think adding 'tac' here is still
+wrong; this isn't available everywhere, so we would want to find an
+alternative before going further. Is there a reason that you couldn't
+use a different 'N' in 'test_seq N' here?
 
-Yes.  Other people then can "git fetch" from me and follow the first
-parent chain "git log --first-parent origin/master..origin/seen" to
-find the tip of your topic, instead of finding your message in the
-list archive and running "git am" themselves.
-
-The original submitter/owner of the topic can also find the tip of
-the topic _in_ my tree the same way as others and reset their branch
-to what is queued in 'seen' if they wanted to keep minor fixes I
-made based on review comments while applying the e-mailed patches.
-
-Then they can further work on polishing the topic with the usual
-means, e.g. using "rebase -i", and finally "format-patch" to send
-out a new round.  Being or not being in 'seen' does not change the
-workflow that much.
-
->>> `git pull --rebase` will automatically skip already-applied patches, and
->>> will let you know. This works only if you rebase on top of the branch in
->>> which your patch has been merged (i.e. it will not tell you if your patch
->>> is merged in `seen` if you rebase on top of master).
-
-This is talking about a fairly mature topic that has already been in
-'next' and was on the course to graduate to 'master'.  The topic
-would eventually be in 'master', and at that point "pull --rebase"
-would notice that the patches are no longer needed (or were merged
-in a different form).  But that does not apply to topics that are
-not in 'master' yet.
-
-Where the workflow changes is when the topic hits 'next'.  After
-that, we request you to give incremental updates to refine what is
-queued already.  
-
-The reasoning behind this is simple and arbitrary.  It often is the
-case that keeping mistakes in early iterations, and fixes to these
-mistakes, recorded in history is not worth the attention of future
-readers of "git log" who need to study the history, assuming that
-trivial mistakes are caught early.  Once earlier rounds of review is
-done and everybody is more or less happy, the topic gets merged to
-'next', and after that point, a new issue that gets noticed and
-fixed _are_ worth recording in history, because both the original
-contributor and reviewers failed to catch such glitches.
-
-> I'm curious to know if I went wrong somewhere and the workflow and would be
-> glad to propose another patch to improve SubmittingPatches with a section of
-> what to do when patches show up in `seen`, but since I'm a n00b (at least as
-> an upstream Git contributor :), I'd need to know how to DTRT in this case to
-> do that.
-
-I thought your v3 did things perfectly.
-
-Thanks.
+Thanks,
+Taylor
