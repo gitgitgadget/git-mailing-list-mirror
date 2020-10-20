@@ -2,124 +2,150 @@ Return-Path: <SRS0=RnkD=D3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62AD4C433DF
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 05:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE152C433E7
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 06:48:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB81F22282
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 05:39:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RN0AH/uU"
+	by mail.kernel.org (Postfix) with ESMTP id 594532237B
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 06:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391703AbgJTFjI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Oct 2020 01:39:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42418 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730259AbgJTFjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Oct 2020 01:39:08 -0400
-Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39197C0613CE
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 22:39:07 -0700 (PDT)
-Received: by mail-oo1-xc41.google.com with SMTP id v123so174191ooa.5
-        for <git@vger.kernel.org>; Mon, 19 Oct 2020 22:39:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hFirvvto5D/0h3aeYO5/1wszmJe7+vxB2ru/94va2zw=;
-        b=RN0AH/uUJ3bbZNNNXfb2l9eVoN/8k2jgz3A7fVLfKNYoBxeW9TLJRAgkGWq06vWPG+
-         E/BRusnE+9NFgSO4+WzFZyn+FFh8WJNKw2oEE98PdWcns+/kK35jIhqeYNGtGG3gDjzN
-         9Rig7Vyx79UOSpKaguS/cKEpYCPMyxn4pQipsfelUDyLNwyAnrNSVLFFOiW4o6UV+QqY
-         4k5ZNGZgJ67j6t4+amrw5qluu67pJ24LXmv9qTf6IWi+a5VP57Sb1MDWHK24WTKLvbCT
-         6ZLizApM4z0lmL0jczxUjoQbyzHXe+HLV5Wr8c9r9oXLBIZVBfwYcn+ccTL33VpcIHcy
-         I+Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hFirvvto5D/0h3aeYO5/1wszmJe7+vxB2ru/94va2zw=;
-        b=tRGljMJD7c09kvO07OA6Ggfs9hPM5ww8rIvmms22PkMYFGD01gEw3DZGCDvo2jcSRJ
-         LnG+7p0c6qQgniozXlPNrk7lGBWM+OIKmpR54FrYb+p7SN04g+dFMBU4DQ1YNNaiO3WJ
-         /xXiSqczoDuOKsYPGOmhK0nvNr2NqFyCuVL7f063MLLsJk+w1DmH1s92Z9i3E16XfQuk
-         LpcVOR9FWeRZz7sA/2jNKqE+tts8oaGL3E4prUYcpgdZx2fzd+H13A1n1YWtDwDXBVTn
-         aAyXdHO27HPcB1Ytxzrsrz3JNew2Tl3gGFxj+2vSwwJfiFwZQxrBHHSMPwLSduoGhIpe
-         Q4xg==
-X-Gm-Message-State: AOAM530U6NSfd8cOOKx2OJzdq2ME1B9RxtY5Sd2OdVk7ytuoyRMw/YTE
-        l8zkx+ildGDRgrKTtvCY4I8ASir27BULmSEzwJBTEWnOBLY=
-X-Google-Smtp-Source: ABdhPJwJlxIMoYID+C3O9AYrO/Gz0fvUs+YqPxmrisUHFTgF4wnHY1untALTZ1T5Ydl2wMsqWWN5P1wmOiAPsOGonHs=
-X-Received: by 2002:a4a:e09a:: with SMTP id w26mr689249oos.18.1603172346597;
- Mon, 19 Oct 2020 22:39:06 -0700 (PDT)
+        id S2404558AbgJTGsS convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 20 Oct 2020 02:48:18 -0400
+Received: from mx.pao1.isc.org ([149.20.64.53]:19232 "EHLO mx.pao1.isc.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2404550AbgJTGsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Oct 2020 02:48:16 -0400
+Received: from zmx1.isc.org (zmx1.isc.org [149.20.0.20])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.pao1.isc.org (Postfix) with ESMTPS id D278B3AB0AA
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 06:48:14 +0000 (UTC)
+Received: from zmx1.isc.org (localhost [127.0.0.1])
+        by zmx1.isc.org (Postfix) with ESMTPS id AA29F160038
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 06:48:14 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+        by zmx1.isc.org (Postfix) with ESMTP id 99552160072
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 06:48:14 +0000 (UTC)
+Received: from zmx1.isc.org ([127.0.0.1])
+        by localhost (zmx1.isc.org [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id AlMBSxHUF_1H for <git@vger.kernel.org>;
+        Tue, 20 Oct 2020 06:48:14 +0000 (UTC)
+Received: from larwa.hq.kempniu.pl (unknown [212.180.223.213])
+        by zmx1.isc.org (Postfix) with ESMTPSA id EF738160042
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 06:48:13 +0000 (UTC)
+From:   =?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <michal@isc.org>
+To:     git@vger.kernel.org
+Subject: [PATCH v4 0/2] diff: add -I<regex> that ignores matching changes
+Date:   Tue, 20 Oct 2020 08:48:07 +0200
+Message-Id: <20201020064809.14297-1-michal@isc.org>
+X-Mailer: git-send-email 2.28.0
+In-Reply-To: <20201015072406.4506-1-michal@isc.org>
+References: <20201015072406.4506-1-michal@isc.org>
 MIME-Version: 1.0
-References: <20201015175709.20121-1-charvi077@gmail.com> <20201017075455.9660-1-charvi077@gmail.com>
- <20201017075455.9660-5-charvi077@gmail.com> <cf26c039-0870-ced6-5347-ab3f24343105@gmail.com>
- <CAPSFM5ejRWUc2mCtqTPH4a6Q-WWUC4mQHU=bsHkjJOdG4kwW0g@mail.gmail.com>
- <3b501a3a-b675-3eb7-975a-cc9206f15057@gmail.com> <CAPSFM5fvBt+x840XOwzwPBvXK7_1qB-sb+_M3LoPuKv_P=VvDA@mail.gmail.com>
- <20201019202456.GC42778@nand.local>
-In-Reply-To: <20201019202456.GC42778@nand.local>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Tue, 20 Oct 2020 11:08:55 +0530
-Message-ID: <CAPSFM5fr4dY0tNdUrxdjhBQohX_sH0X-5m1VGHF-GAtpx0rQXA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5][Outreachy] t7201: avoid using cd outside of subshells
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     phillip.wood@dunelm.org.uk, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 20 Oct 2020 at 01:55, Taylor Blau <me@ttaylorr.com> wrote:
->
-> Hi Charvi,
->
-> On Mon, Oct 19, 2020 at 10:54:57PM +0530, Charvi Mendiratta wrote:
-> > Yes, thanks a lot Philip I understood the reason. I will do the corrections in
-> > commit message and commit body as below :
-> > t7201: using 'git -C' to avoid subshell
-> >
-> > Using 'git-C' instead of 'cd' inside of subshell, to avoid the extra process
-> > of starting a new subshell
-> >
-> > Please confirm, if any other changes are required .
->
-> Usually it never hurts to just send the patch, since any feedback that a
-> reviewer has now is equally good even after you have sent a patch. Plus,
-> it's easier to review the concrete patch you want applied, instead of a
-> hypothetical of what you might send.
->
+This patch series adds a new diff option that enables ignoring changes
+whose all lines (changed, removed, and added) match a given regular
+expression.  This is similar to the -I/--ignore-matching-lines option in
+standalone diff utilities and can be used e.g. to ignore changes which
+only affect code comments or to look for unrelated changes in commits
+containing a large number of automatically applied modifications (e.g. a
+tree-wide string replacement).  The difference between -G/-S and the new
+-I option is that the latter filters output on a per-change basis.
 
-Yes, I completely agree with you . Its my fault, I will send it in the
-patch and will
-take care of not repeating this again .
+Changes from v3:
 
-> That said, a couple of notes:
->
->   - Your subject message is good. It is concise, to-the-point, and
->     accurately describes the change. Good.
->
->   - The body is similarly short, but could be rewritten to use the
->     imperative mood. But, it is redundant with the subject. The subject
->     says "we are using 'git -C' to avoid creating a subshell", and the
->     patch says exactly the same.
->
-> ...So, you can do one of two things. Either you can abbreviate the
-> subject, adding the additional detail in the patch message, or you could
-> leave the subject as-is and delete the patch message entirely.
->
-Thanks Taylor, I will do the changes as you mentioned and send it in the
-next patch .
+  - Do not release the memory allocated in diff_opt_ignore_regex() after
+    all as the free() calls added in v2 were triggering use-after-free
+    errors when the diff machinery was invoked multiple times throughout
+    the lifetime of a single Git command (e.g. by "git log -p").
 
-> Either would be fine with me, but certainly Phillip or others could
-> chime in, too.
->
-> Thanks,
-> Taylor
+  - Further test improvements: split various -I<regex> checks into
+    multiple tests; add a check for "git log -p -I<regex>" to trigger
+    the issue mentioned above; avoid using --no-index.
 
-Thanks and Regards,
-Charvi
+Changes from v2:
+
+  - Add a long option for -I (--ignore-matching-lines) as it is
+    commonplace in standalone diff utilities.  Update documentation and
+    commit log messages accordingly.
+
+  - Use xmalloc() instead of xcalloc() for allocating regex_t
+    structures in diff_opt_ignore_regex().
+
+  - Ensure the memory allocated in diff_opt_ignore_regex() gets
+    released.
+
+  - Use "return error(...)" instead of die() in the -I option callback.
+    Make sure the error message is localizable.
+
+  - Drastically reduce the number of -I<regex> tests due to excessive
+    run time of t/t4069-diff-ignore-regex.sh from v1/v2 on some
+    platforms (notably Windows).  Use a tweaked version of a test
+    suggested by Johannes Schindelin (thanks!).  Squash patch 3 into
+    patch 2.
+
+  - Replace "see Documentation/diff-options.txt" with "-I<regex>" in the
+    comments for the added structure fields, in order to make these
+    comments more useful.
+
+Changes from v1:
+
+  - Add a new preliminary cleanup patch which ensures xpparam_t
+    structures are always zero-initialized.  (This was a prerequisite
+    for the next change below.)
+
+  - Do not add a new 'xdl_opts' flag to check whether -I was used;
+    instead, just check whether the array of regular expressions to
+    match against is non-NULL.
+
+  - Enable the -I option to be used multiple times.  As a consequence of
+    this, regular expressions are now "pre-compiled" in the option's
+    callback (and passed around as an array of regex_t structures)
+    rather than deep down in xdiff code.  Add test cases exercising use
+    of multiple -I options in the same git invocation.  Update
+    documentation accordingly.
+
+  - Rename xdl_mark_ignorable() to xdl_mark_ignorable_lines(), to
+    indicate that it is logically a "sibling" of
+    xdl_mark_ignorable_regex() rather than its "parent".
+
+  - Optimize xdl_mark_ignorable_regex() by making it immediately skip
+    changes already marked as ignored by xdl_mark_ignorable_lines().
+
+  - Fix coding style issue in the prototype part of the definition of
+    xdl_mark_ignorable_regex().
+
+  - Add "/* see Documentation/diff-options.txt */" comments for the
+    fields added to struct diff_options and xpparam_t, mimicking the
+    comments used for 'anchors', 'anchors_nr', and 'anchors_alloc'.
+
+  - Revise commit log messages to reflect all of the above.
+
+Michał Kępień (2):
+  merge-base, xdiff: zero out xpparam_t structures
+  diff: add -I<regex> that ignores matching changes
+
+ Documentation/diff-options.txt             |  5 ++
+ builtin/merge-tree.c                       |  1 +
+ diff.c                                     | 23 +++++
+ diff.h                                     |  4 +
+ t/t4013-diff-various.sh                    | 41 +++++++++
+ t/t4013/diff.log_-IA_-IB_-I1_-I2_-p_master | 99 ++++++++++++++++++++++
+ xdiff/xdiff.h                              |  4 +
+ xdiff/xdiffi.c                             | 47 +++++++++-
+ xdiff/xhistogram.c                         |  2 +
+ xdiff/xpatience.c                          |  2 +
+ 10 files changed, 226 insertions(+), 2 deletions(-)
+ create mode 100644 t/t4013/diff.log_-IA_-IB_-I1_-I2_-p_master
+
+-- 
+2.28.0
+
