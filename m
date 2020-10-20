@@ -2,109 +2,177 @@ Return-Path: <SRS0=RnkD=D3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94A02C4363A
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 20:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 358A8C4363A
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 20:13:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32BBA2225D
-	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 20:09:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADDD6221FC
+	for <git@archiver.kernel.org>; Tue, 20 Oct 2020 20:13:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="WM0mD19m"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MEAJZYfR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409369AbgJTUJM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Oct 2020 16:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2409366AbgJTUJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Oct 2020 16:09:12 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1CF1C0613CE
-        for <git@vger.kernel.org>; Tue, 20 Oct 2020 13:09:10 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id f21so2977191qko.5
-        for <git@vger.kernel.org>; Tue, 20 Oct 2020 13:09:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RvRzkv+4fdhpdfhgCl0uYmn1fPy60LId7Y5Wv2a+Odc=;
-        b=WM0mD19mmtcyo32TZJV+cKsOk63LHen6H8x450sX8pz/YRDzs+L4Rjpc9J7rd48iLY
-         G/yvFHEIxClZISIxfQFm0FWWqDgXfMkBEHv1dCY2FmKBnXitDY30BmIAHK5S0152EjuH
-         lbm87e/6QlH6YwaqRpUvReac9ShLr0p95P1yAmN3EySLW1ZA5q4rGRPOUlFS9TDxKT7X
-         qYHPF7P9JojgkbZs2bqjXbPEToc1mtC3vvFYfc/u/wAZOEQhmN9oj3x4Ne18NuGV29fk
-         4s7fHuH8MHB8bR1CHnbT9iLaaIvrpWigJBa8uIFp87qQXemn1GnRWF1sjMaNvbQQGGlb
-         ToCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RvRzkv+4fdhpdfhgCl0uYmn1fPy60LId7Y5Wv2a+Odc=;
-        b=boInxxNyt8cyZuZZ9+/FfhwcoewgCwNR+vAtqNE6RaihzVeOC+Q9kqNZweTVKdw1uS
-         wB+3yXix0y5wVOtGzNg26MOAGzVHcVPvqS7ZkHKPHQqtGNLvMWr7CCJTGLM3nTI0NJP7
-         66BpQg56QqRBIXcotI7PXAHQbd5kKjzUoAdI0udyRtclCqHRF01TXHMS+xppIfZGls5u
-         3RBPF2tysbOSWUB/PzR221re/ksEc2EHZ83tX/aRjIZk2msb0zBClOZKw/lxCD7f+A+P
-         plCkLmR9vLMDBR+CA7lvn4cDwsr3kbRBoNKbK27pMW8oZIFAebeMD+Tz1Nc062t95GoS
-         fCfw==
-X-Gm-Message-State: AOAM533LeDnjUmab4HNEg3QLTAatRJDVsIV+LWQunpWnz6HsHpgnGcGN
-        OrZdCmzQab4V6X6Hv8Gzy0p/iQ==
-X-Google-Smtp-Source: ABdhPJzI3SB8K01QHE63Ygv/Ljg5hWuAMuwusQoBUAqQioCXs5iMfxUZacRresm+dtz5FzdbNTGuCg==
-X-Received: by 2002:a05:620a:62b:: with SMTP id 11mr2626811qkv.229.1603224549838;
-        Tue, 20 Oct 2020 13:09:09 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:943f:d0f4:e8b9:b8f9])
-        by smtp.gmail.com with ESMTPSA id i90sm1269518qtd.92.2020.10.20.13.09.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2020 13:09:09 -0700 (PDT)
-Date:   Tue, 20 Oct 2020 16:09:07 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        id S2391606AbgJTUN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Oct 2020 16:13:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62227 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391350AbgJTUN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Oct 2020 16:13:57 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 487E4FA3D5;
+        Tue, 20 Oct 2020 16:13:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qXvgu1TMTBm9I+raeJHSkC6hV5Y=; b=MEAJZY
+        fRkcrL7+2wWM7+29rh4/6c/87uJcn98nJMlrlxFq9nAL+ZNkNqR6l0Gi2nazNSQI
+        Qy4Bf3K6XIPg4M21x6u4zV0tUXIq/cqqlXR7rbCmf/JhpUMdLJfH3q5q9sThZ8eO
+        Pnd9PMO2DmB/1ywOsYFbqhseJCHn+jFqugpAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JHz7/MCOF9gCZgG605N2OsMsGqTh5ZXW
+        vHCP6WsQG1l98AUVQtoKoSsFdzhTjaJUqW/sZWzFaX9BqEKjpMA1WKP7F4bGIG9V
+        YAaZ2QDwP5TvQJkzJuQhsu++vHVzjNAKAlfqTUVYWOkvAdlW9e1Lqwj5gg5u1VQZ
+        rEKX1AIMQ5Q=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4092BFA3D3;
+        Tue, 20 Oct 2020 16:13:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 890E1FA3D2;
+        Tue, 20 Oct 2020 16:13:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 4/5][Outreachy] t7201: avoid using cd outside of
- subshells
-Message-ID: <20201020200907.GA75186@nand.local>
-References: <20201015175709.20121-1-charvi077@gmail.com>
- <20201017075455.9660-1-charvi077@gmail.com>
- <20201017075455.9660-5-charvi077@gmail.com>
- <cf26c039-0870-ced6-5347-ab3f24343105@gmail.com>
- <CAPSFM5ejRWUc2mCtqTPH4a6Q-WWUC4mQHU=bsHkjJOdG4kwW0g@mail.gmail.com>
- <3b501a3a-b675-3eb7-975a-cc9206f15057@gmail.com>
- <CAPSFM5fvBt+x840XOwzwPBvXK7_1qB-sb+_M3LoPuKv_P=VvDA@mail.gmail.com>
- <20201019202456.GC42778@nand.local>
- <CAPSFM5fr4dY0tNdUrxdjhBQohX_sH0X-5m1VGHF-GAtpx0rQXA@mail.gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        phillip.wood123@gmail.com, congdanhqx@gmail.com, me@ttaylorr.com
+Subject: Re: [PATCH v4] t7201: put each command on a separate line
+References: <20201017075455.9660-1-charvi077@gmail.com>
+        <20201020121152.21645-1-charvi077@gmail.com>
+Date:   Tue, 20 Oct 2020 13:13:53 -0700
+In-Reply-To: <20201020121152.21645-1-charvi077@gmail.com> (Charvi Mendiratta's
+        message of "Tue, 20 Oct 2020 17:41:52 +0530")
+Message-ID: <xmqqa6wgbqpq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPSFM5fr4dY0tNdUrxdjhBQohX_sH0X-5m1VGHF-GAtpx0rQXA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C71AFB08-1310-11EB-B0F6-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Charvi,
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-On Tue, Oct 20, 2020 at 11:08:55AM +0530, Charvi Mendiratta wrote:
-> > Usually it never hurts to just send the patch, since any feedback that a
-> > reviewer has now is equally good even after you have sent a patch. Plus,
-> > it's easier to review the concrete patch you want applied, instead of a
-> > hypothetical of what you might send.
+> Modern practice is to avoid multiple commands per line,
+> and instead place each command on its own line.
 >
-> Yes, I completely agree with you . Its my fault, I will send it in the
-> patch and will
-> take care of not repeating this again .
+> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
+> ---
 
-It's not your fault: there's no fault to be assigned when submitting
-your first few patches to the list. You're doing much better than I did
-;-).
+This looks good, but I am wondering what happened between v3 and
+v4.  
 
-> > That said, a couple of notes:
-> >
-> > [...]
-> >
-> Thanks Taylor, I will do the changes as you mentioned and send it in the
-> next patch .
+As you've demonstrated through the microproject that you can now
+comfortably be involved in the review discussion, I am tempted to
+suggest that we declare victory at this point and move on, but I
+don't know what the plans are for the other 4 patches (I guess we
+won't miss them that much---the micros are meant to be practice
+targets).
 
-Thanks!
-Taylor
+Thanks.
+
+
+>  t/t7201-co.sh | 26 ++++++++++++++++++--------
+>  1 file changed, 18 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+> index 5898182fd2..b36a93056f 100755
+> --- a/t/t7201-co.sh
+> +++ b/t/t7201-co.sh
+> @@ -157,7 +157,8 @@ test_expect_success 'checkout -m with merge conflict' '
+>  '
+>  
+>  test_expect_success 'format of merge conflict from checkout -m' '
+> -	git checkout -f master && git clean -f &&
+> +	git checkout -f master &&
+> +	git clean -f &&
+>  
+>  	fill b d >two &&
+>  	git checkout -m simple &&
+> @@ -180,7 +181,9 @@ test_expect_success 'format of merge conflict from checkout -m' '
+>  '
+>  
+>  test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+> -	git checkout -f master && git reset --hard && git clean -f &&
+> +	git checkout -f master &&
+> +	git reset --hard &&
+> +	git clean -f &&
+>  
+>  	fill b d >two &&
+>  	git checkout --merge --conflict=diff3 simple &&
+> @@ -205,7 +208,9 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+>  '
+>  
+>  test_expect_success 'switch to another branch while carrying a deletion' '
+> -	git checkout -f master && git reset --hard && git clean -f &&
+> +	git checkout -f master &&
+> +	git reset --hard &&
+> +	git clean -f &&
+>  	git rm two &&
+>  
+>  	test_must_fail git checkout simple 2>errs &&
+> @@ -218,7 +223,8 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+>  test_expect_success 'checkout to detach HEAD (with advice declined)' '
+>  	git config advice.detachedHead false &&
+>  	rev=$(git rev-parse --short renamer^) &&
+> -	git checkout -f renamer && git clean -f &&
+> +	git checkout -f renamer &&
+> +	git clean -f &&
+>  	git checkout renamer^ 2>messages &&
+>  	test_i18ngrep "HEAD is now at $rev" messages &&
+>  	test_line_count = 1 messages &&
+> @@ -237,7 +243,8 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
+>  test_expect_success 'checkout to detach HEAD' '
+>  	git config advice.detachedHead true &&
+>  	rev=$(git rev-parse --short renamer^) &&
+> -	git checkout -f renamer && git clean -f &&
+> +	git checkout -f renamer &&
+> +	git clean -f &&
+>  	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
+>  	grep "HEAD is now at $rev" messages &&
+>  	test_line_count -gt 1 messages &&
+> @@ -254,7 +261,8 @@ test_expect_success 'checkout to detach HEAD' '
+>  '
+>  
+>  test_expect_success 'checkout to detach HEAD with branchname^' '
+> -	git checkout -f master && git clean -f &&
+> +	git checkout -f master &&
+> +	git clean -f &&
+>  	git checkout renamer^ &&
+>  	H=$(git rev-parse --verify HEAD) &&
+>  	M=$(git show-ref -s --verify refs/heads/master) &&
+> @@ -269,7 +277,8 @@ test_expect_success 'checkout to detach HEAD with branchname^' '
+>  '
+>  
+>  test_expect_success 'checkout to detach HEAD with :/message' '
+> -	git checkout -f master && git clean -f &&
+> +	git checkout -f master &&
+> +	git clean -f &&
+>  	git checkout ":/Initial" &&
+>  	H=$(git rev-parse --verify HEAD) &&
+>  	M=$(git show-ref -s --verify refs/heads/master) &&
+> @@ -284,7 +293,8 @@ test_expect_success 'checkout to detach HEAD with :/message' '
+>  '
+>  
+>  test_expect_success 'checkout to detach HEAD with HEAD^0' '
+> -	git checkout -f master && git clean -f &&
+> +	git checkout -f master &&
+> +	git clean -f &&
+>  	git checkout HEAD^0 &&
+>  	H=$(git rev-parse --verify HEAD) &&
+>  	M=$(git show-ref -s --verify refs/heads/master) &&
