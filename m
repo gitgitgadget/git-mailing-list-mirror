@@ -2,77 +2,91 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2659FC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B3EFC4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93BB3241A6
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCE4D241A6
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="RiV+4vIn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FmBU2ree"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506636AbgJUWWN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 18:22:13 -0400
-Received: from mail-03.mail-europe.com ([91.134.188.129]:38864 "EHLO
-        mail-03.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2506629AbgJUWWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 18:22:13 -0400
-Date:   Wed, 21 Oct 2020 22:21:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1603318929;
-        bh=tXTp1lyzz3whaxVJBQG1cioau88e/4YZzpbTv0Wq2as=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=RiV+4vIn2Rbs6vQk13i594PWJk9kU/2pVASHCkRq69vWEkU9e6CMl1IEJ7r6+AgQJ
-         dj6ZINHTmSA/1Zy7xDhZJtmx1bgNb7XWNqTyQ/rdWLjLwHNZltSQXAIf6OFtSL2Ov4
-         gSvvBXTcaGiSfgIjikRE8Xwe3CcD7H17JwgYt4oI=
-To:     Junio C Hamano <gitster@pobox.com>
-From:   Joey Salazar <jgsal@protonmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Reply-To: Joey Salazar <jgsal@protonmail.com>
-Subject: Re: [OUTREACHY][PATCH v2] t7006: Use test_path_is_* functions in test script
-Message-ID: <-fqjNpjuA1NlG29AeRtBDgTHlHbtljRImPvtORqdjK7QXE7fOn8GyzCWlgYj-eZvfj_sNPuCjHoh70xUyfusx1myQYR9HzfiM14M-96cBL0=@protonmail.com>
-In-Reply-To: <xmqqft675jjv.fsf@gitster.c.googlers.com>
-References: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com> <fc5fecec-1a77-871d-d1f9-dad1bae8920c@gmail.com> <xmqq4kmn8lpp.fsf@gitster.c.googlers.com> <CEI_CVj6T-VEnw0cl0U6E5BSJ3Z6ZdYXAwnV96r8u0qbLK3EgS3b0Sqan1D_AgNqPm22FGPSL_easRZyLukEAIbbVCvxsiC9QVawVJBiTbI=@protonmail.com> <xmqqft675jjv.fsf@gitster.c.googlers.com>
+        id S2506651AbgJUWWd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 18:22:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65362 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2506647AbgJUWWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 18:22:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1614804D7;
+        Wed, 21 Oct 2020 18:22:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=O1E1Xbu9BOnpum1aXJnBqvm++28=; b=FmBU2r
+        eeVnKigS9vhbeqF6rpMsBs2jhZDDfZfl8mZ9J4KWWntlDbP81jXUE24a4cOQiWw2
+        qlzFbj/IiS/KQrP3hsN3OfhcqiBjDJSXnODWbgvPyX/lPc0FL7yFdywdj3tKLTOQ
+        Iu2Rz1O4XQBoI0SJGAh2r/IcMMfH4rAwh4l8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VBbe8sic6Z512hBF+2aSJ+Qrn4V0wb0V
+        kejLxW9cNvVFbKwYguZwo7vV7cnINp48yDcW2Lod8DKm5hGUUlX9uEvfCBxDp7b9
+        caT3bCvP737SoXPRKyj6r0rkztFQUY1a+Q3fRSSG4szVF5HMfW/mtyyIHZVr3n6h
+        Sg7NHAI/Sj4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C6781804D5;
+        Wed, 21 Oct 2020 18:22:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 58D5D804D4;
+        Wed, 21 Oct 2020 18:22:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 03/10] tests: start moving to a different default main
+ branch name
+References: <pull.758.git.1603135902.gitgitgadget@gmail.com>
+        <d9469202c2dda238882150452fac1aa7fc7fbfec.1603135902.git.gitgitgadget@gmail.com>
+Date:   Wed, 21 Oct 2020 15:22:29 -0700
+In-Reply-To: <d9469202c2dda238882150452fac1aa7fc7fbfec.1603135902.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 19 Oct 2020
+        19:31:34 +0000")
+Message-ID: <xmqqy2jz43tm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E87F31A2-13EB-11EB-9395-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Will do, thank you.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-
-
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Wednesday, October 21, 2020 3:57 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
-
-> Joey Salazar jgsal@protonmail.com writes:
+> Note: the `GIT_TEST_DEFAULT_MAIN_BRANCH_NAME` is _not_ intended to be
+> used manually; many tests require a specific main branch name and cannot
+> simply work with another one. This `GIT_TEST_*` variable is meant purely
+> for the transitional period while the entire test suite is converted to
+> use `main` as the initial branch name by default.
 >
-> > Hi Phillip, Junio,
-> > Thank you for your reviews and support, they're much appreciated and I'=
-m happy the patch looks ok.
-> >
-> > > I'll probably have to hand-edit the authorship before applying
-> > > (check the From: of the e-mail) so that the identity on the
-> > > signed-off-by trailer matches the author, but other than that the
-> > > patch looks quite good to me, too.
-> >
-> > My big apologies Junio, I mistook "authorship" to mean my `git config -=
--global user.name` and `git config --global user.email` settings.
-> > Should I resend the patch email?
->
-> No need to apologize and no need to resend. You may want to send a
-> patch to yourself to prepare your procedure, but that is something
-> you can do without sending patches to the list.
->
-> Thanks.
+> We also introduce the `PREPARE_FOR_MAIN_BRANCH` prereq that determines
+> whether the default main branch name is `main`, and adjust a couple of
+> test functions to use it. This prereq will be used to temporarily
+> disable a couple test cases to allow for adjusting the test script
+> incrementally. Once an entire test is adjusted, we will adjust the test
+> so that it is run with `GIT_TEST_DEFAULT_MAIN_BRANCH_NAME=main`.
 
+Good transition plan.  The name of the environment variable itself
+serves as markers that remind us where we need to update once the
+conversion is done, so there is no need to leave NEEDSWORK comment,
+either.
+
+Nicely done.
 
