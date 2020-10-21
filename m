@@ -2,83 +2,131 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E448C4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 21:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DF91C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 21:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F36BD20848
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 21:24:25 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KJKwijWR"
+	by mail.kernel.org (Postfix) with ESMTP id 37ED1223C7
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 21:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506075AbgJUVYZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 17:24:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58622 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440933AbgJUVYY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 17:24:24 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2FC190832;
-        Wed, 21 Oct 2020 17:24:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YxDjAxPF4fWtgEBD/6eHDXVf+hg=; b=KJKwij
-        WRzYMIQgHm8292WqPxKVBKrTb6s+agZA5N7SYsDGrM8BsUNRmfvtfVxjSElBKXNZ
-        IH4rEIm9VJa2RGkX3fNFa+HJMp8bYpNNzUUPDzEZPaGRRcChuXYvs6sj20BmGX/2
-        WrS0oTahBhvu9yTvBuz2Jxm7zEZk2F5oo02to=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NN4BH13r6cxVgEwZYdN0/YYaLrZ7ZZHa
-        5sYVZWNA1wRJBcgBIGmRwnmaxNFYzQr8ES49YU2ai5vQsPakhNg+zO+tbaBVj3R6
-        pSapCAe9qYRZOoKvxbbJYDm4OC6sNEotZm+0Sa3GVuQfJkQyA74t03YDo4QOA+FD
-        xqs22mJlJFY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 992D490831;
-        Wed, 21 Oct 2020 17:24:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B46390830;
-        Wed, 21 Oct 2020 17:24:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Alex Vandiver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nipunn Koorapati <nipunn1313@gmail.com>,
-        Alex Vandiver <alexmv@dropbox.com>
-Subject: Re: [PATCH 1/2] fsmonitor: stop inline'ing mark_fsmonitor_valid /
- _invalid
-References: <pull.767.git.1603303474.gitgitgadget@gmail.com>
-        <049989652cefb90304e711dbfe354b55a5a71f41.1603303474.git.gitgitgadget@gmail.com>
-        <20201021205537.GB1270359@nand.local>
-Date:   Wed, 21 Oct 2020 14:24:22 -0700
-In-Reply-To: <20201021205537.GB1270359@nand.local> (Taylor Blau's message of
-        "Wed, 21 Oct 2020 16:55:37 -0400")
-Message-ID: <xmqqo8kv5l2x.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2506136AbgJUV3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 17:29:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38722 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2411695AbgJUV3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 17:29:19 -0400
+Received: (qmail 4551 invoked by uid 109); 21 Oct 2020 21:29:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Oct 2020 21:29:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21254 invoked by uid 111); 21 Oct 2020 21:29:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Oct 2020 17:29:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 21 Oct 2020 17:29:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Nikos Chantziaras <realnc@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: git svn log: Use of uninitialized value $sha1_short
+Message-ID: <20201021212917.GA62005@coredump.intra.peff.net>
+References: <rmpve5$q2s$1@ciao.gmane.io>
+ <20201021202642.GA60606@coredump.intra.peff.net>
+ <xmqqwnzj5mq5.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C9F82386-13E3-11EB-BE4A-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwnzj5mq5.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Oct 21, 2020 at 01:48:50PM -0700, Junio C Hamano wrote:
 
->> +extern void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce);
-> ...
-> Any reason that these need to be externed explicitly? Note that these
-> functions are already externed by default since you haven't said
-> otherwise (and for no other reason than this'd be the only explicitly
-> externed function in fsmonitor.h).
+> > Looks like it got renamed, and this reference was somehow missed?
+> >
+> >   $ git log -1 -Ssha1_short perl
+> >   commit 9ab33150a0d14089d0496dd8354d4a969e849571
+> >   Author: brian m. carlson <sandals@crustytoothpaste.net>
+> >   Date:   Mon Jun 22 18:04:12 2020 +0000
+> >   
+> >       perl: create and switch variables for hash constants
+> >       
+> >       git-svn has several variables for SHA-1 constants, including short hash
+> >       values and full length hash values.  Since these are no longer SHA-1
+> >       specific, let's start them with "oid" instead of "sha1".  Add a
+> >       constant, oid_length, which is the length of the hash algorithm in use
+> >       in hex.  We use the hex version because overwhelmingly that's what's
+> >       used by git-svn.
+> >   [...]
+> 
+> Looks that way.  '$::' as opposed to plain '$' threw the replacement
+> off the track?
 
-Possibly due to the recent discussion?
+That was my guess, too, but that commit does convert some other
+references of that form. <shrug>
 
-https://lore.kernel.org/git/xmqqtuv3ryhr.fsf_-_@gitster.c.googlers.com/
+>  perl/Git/SVN/Log.pm | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git i/perl/Git/SVN/Log.pm w/perl/Git/SVN/Log.pm
+> index 3858fcf27d..9c819188ea 100644
+> --- i/perl/Git/SVN/Log.pm
+> +++ w/perl/Git/SVN/Log.pm
+> @@ -298,7 +298,7 @@ sub cmd_show_log {
+>  			get_author_info($c, $1, $2, $3);
+>  		} elsif (/^${esc_color}(?:tree|parent|committer) /o) {
+>  			# ignore
+> -		} elsif (/^${esc_color}:\d{6} \d{6} $::sha1_short/o) {
+> +		} elsif (/^${esc_color}:\d{6} \d{6} $::oid_short/o) {
+>  			push @{$c->{raw}}, $_;
+>  		} elsif (/^${esc_color}[ACRMDT]\t/) {
+>  			# we could add $SVN->{svn_path} here, but that requires
 
+Yeah, I'm almost certain this is the solution, but it was a little
+disturbing that no tests catch it. Besides the warning, it probably is a
+functional problem (I guess that regex is now overly broad since its
+last half is blank). But maybe it doesn't matter much. It looks like
+we're parsing raw diff output from git-log. Short of a really bizarre
+--format parameter, those are the only lines that would match /^:/
+anyway.
+
+The tests do catch it if we do:
+
+diff --git a/perl/Git/SVN/Log.pm b/perl/Git/SVN/Log.pm
+index 3858fcf27d..92e223caed 100644
+--- a/perl/Git/SVN/Log.pm
++++ b/perl/Git/SVN/Log.pm
+@@ -1,6 +1,6 @@
+ package Git::SVN::Log;
+ use strict;
+-use warnings;
++use warnings FATAL => qw(all);
+ use Git::SVN::Utils qw(fatal);
+ use Git qw(command
+            command_oneline
+
+but:
+
+  - we'd need to do that in each .pm file, as well as git-svn.perl
+
+  - I wonder if it's suitable for production use (i.e., would it become
+    annoying when a newer version of perl issues a harmless warning;
+    right now that's a minor inconvenience, but aborting the whole
+    program might be a show-stopper).
+
+It would be nice if we could crank up the severity just while running
+the tests, but I don't think there's an easy built-in way to do that.
+This seems to work:
+
+  use warnings ($ENV{GIT_PERL_STRICT} ? qw(FATAL all) : ());
+
+though I'm honestly surprised it does (because "use" is generally
+resolved at read/compile time. I guess perl is smart enough to run
+that code snippet at that point.
+
+-Peff
