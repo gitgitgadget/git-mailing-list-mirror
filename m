@@ -2,130 +2,84 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02372C4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 20:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C767C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 21:20:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82D9A24196
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 20:55:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA71D2419A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 21:20:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="B50i9RSX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n2N++/QI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2411415AbgJUUzm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 16:55:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2411285AbgJUUzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 16:55:42 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CE7C0613CE
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 13:55:41 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id s1so1862293qvm.13
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 13:55:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Hh7yTY0BECb7AjkZPHlG6UBQBLPC85OcDgVZh70i/kc=;
-        b=B50i9RSXJQtX/8EZehItx5+/gqyPjEVYAqnfKwowuzjwKRlpS/eys/Cmc+f6VJkgLS
-         CSkWzGQAPDJlw3E81bgDKbHSbJwR1Mf3PEdpiU5FSpYHoTv1Wxbm7pHr4qJR361/JJ0l
-         cvXh/L7MmM0r6czzN+hX4yfUG53KBC+ujr6ZtN8+p5jfRO7gV+ZbFJTrhNZClvmNo37Y
-         fUI17mdPgM4bzDlmgTO3Lb/wVZ6/pZ1a+OGJP/2cmjvwe9xG5UlWBlvYpPIvKhjP85aM
-         C3P0YSzYSL7C3yIMY1j09nBrLLE7RkYOJh2UXFMSWyzCRDqEkDB75Nzfb2vBy/sPMYeP
-         GXHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Hh7yTY0BECb7AjkZPHlG6UBQBLPC85OcDgVZh70i/kc=;
-        b=h9ftO1eVeh1mw+pw+XnlG8jEyfzivRsUOnIhn992R9sXzeqRZlKSxyNPZ5bMzviTRz
-         pNkrCTltTZcjruID9qMSlhuE4vI2ymkODrVffKbvG6IZ/aYWJJM1LJFd/6AtSWONmPRC
-         Vwcm922RgGU1zm3ewWKybPqRVshwGvF5lhj9Ro3NOZ7y++4jO/hxODBtD5kCCNgUP13B
-         29V1l6x1+1y28eYLu1Z1fKcg1a42su1P8uHqD+LFfEXOKPELdjg3Au2/jCaTYTqx6BdR
-         pOdFxaUi/+sYkNBR7e2wcd6qT+R2p3gzK6iGTroCLXxwxyauThQxS/0ejterkfnNf5UP
-         sIOg==
-X-Gm-Message-State: AOAM533kAjSBkydaeWiOgjxJXj+0qU30e7+F8JnxkYQFYU8An/D65rDg
-        k6G/CHqamvbs2FhqWJ1OlbAwMA==
-X-Google-Smtp-Source: ABdhPJzL/WfXxK2HLSBiImSX/fZxv2CsoOPvAnWbHctiD46BjM0fb9O9qFJFFGPugluKMktAAumM1w==
-X-Received: by 2002:a0c:b207:: with SMTP id x7mr2840024qvd.39.1603313740462;
-        Wed, 21 Oct 2020 13:55:40 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:5440:c3ba:60f:b745])
-        by smtp.gmail.com with ESMTPSA id h4sm1965118qtq.41.2020.10.21.13.55.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 13:55:39 -0700 (PDT)
-Date:   Wed, 21 Oct 2020 16:55:37 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Alex Vandiver via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Nipunn Koorapati <nipunn1313@gmail.com>,
-        Alex Vandiver <alexmv@dropbox.com>
-Subject: Re: [PATCH 1/2] fsmonitor: stop inline'ing mark_fsmonitor_valid /
- _invalid
-Message-ID: <20201021205537.GB1270359@nand.local>
-References: <pull.767.git.1603303474.gitgitgadget@gmail.com>
- <049989652cefb90304e711dbfe354b55a5a71f41.1603303474.git.gitgitgadget@gmail.com>
+        id S2506071AbgJUVUa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 17:20:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51707 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2506068AbgJUVUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 17:20:30 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 479C97FB46;
+        Wed, 21 Oct 2020 17:20:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=I6T8mAkrZGEZFh4UDtBGyM2mrkQ=; b=n2N++/
+        QIW+0mftMgC5qkTP2l/0T8aBp1opp19+9PfpsWmdwg2urJn/u3smcG5/vB4qYZ3V
+        FY8o/9NzFlzexp3bd6KAVW+dwnJMUdte2OBKIwDvGERohBJwCqWij6jJBOAN6KN2
+        i8WeLekTqitpQ/7+nWNMt43vUlmPTq9xtYTnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bfBmYL7U8DmNaegFAm78AFdxW2XSYbXG
+        LYHEx3x8Pg6GmeHixCEPUFqADb/EDwNlGgD4PMhE+esil8z5NKfXF2UvHynVXX7g
+        F5YnvQZ8yDrxztUuFuN8AY6MPYjS6HufjwIz/WURHj50zBTKmjg2UIw2bVT4Iox4
+        buUkLNV/tVQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E5BC7FB45;
+        Wed, 21 Oct 2020 17:20:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BCC947FB40;
+        Wed, 21 Oct 2020 17:20:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 02/11] merge-one-file: rewrite in C
+References: <20200901105705.6059-1-alban.gruin@gmail.com>
+        <20201005122646.27994-1-alban.gruin@gmail.com>
+        <20201005122646.27994-3-alban.gruin@gmail.com>
+        <xmqqmu0z3tge.fsf@gitster.c.googlers.com>
+        <e407ce78-8f93-3fb1-4ef2-ce8213f39df2@gmail.com>
+        <xmqqimb3728g.fsf@gitster.c.googlers.com>
+Date:   Wed, 21 Oct 2020 14:20:27 -0700
+In-Reply-To: <xmqqimb3728g.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 21 Oct 2020 13:28:31 -0700")
+Message-ID: <xmqqsga75l9g.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <049989652cefb90304e711dbfe354b55a5a71f41.1603303474.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3DA85BA8-13E3-11EB-9D7C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 21, 2020 at 06:04:33PM +0000, Alex Vandiver via GitGitGadget wrote:
-> From: Alex Vandiver <alexmv@dropbox.com>
->
-> These were inline'd when they were first introduced, presumably as an
-> optimization for cases when they were called in tight loops.  This
-> complicates using these functions, as untracked_cache_invalidate_path
-> is defined in dir.h.
->
-> Leave the inline'ing up to the compiler's decision, for ease of use.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Letting the compiler inline these is fine, but...
+>>> This open(..., ce->ce_mode) call is way insufficient.
+>>> ...
+> But all that is unnecessary once you port this to C.  So the comment
+> does not apply to the code you wrote, I think, and should just be
+> dropped.
 
-> diff --git a/fsmonitor.h b/fsmonitor.h
-> index 739318ab6d..6249020692 100644
-> --- a/fsmonitor.h
-> +++ b/fsmonitor.h
-> @@ -49,14 +49,7 @@ void refresh_fsmonitor(struct index_state *istate);
->   * called any time the cache entry has been updated to reflect the
->   * current state of the file on disk.
->   */
-> -static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
-> -{
-> -	if (core_fsmonitor && !(ce->ce_flags & CE_FSMONITOR_VALID)) {
-> -		istate->cache_changed = 1;
-> -		ce->ce_flags |= CE_FSMONITOR_VALID;
-> -		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
-> -	}
-> -}
-> +extern void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce);
->
->  /*
->   * Clear the given cache entry's CE_FSMONITOR_VALID bit and invalidate
-> @@ -65,13 +58,6 @@ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache
->   * trigger an lstat() or invalidate the untracked cache for the
->   * corresponding directory
->   */
-> -static inline void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce)
-> -{
-> -	if (core_fsmonitor) {
-> -		ce->ce_flags &= ~CE_FSMONITOR_VALID;
-> -		untracked_cache_invalidate_path(istate, ce->name, 1);
-> -		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
-> -	}
-> -}
-> +extern void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce);
->
->  #endif
+Sorry, forgot to mention one thing.  Using ce->ce_mode to create the
+output file is the way how helpers in entry.c check out paths from
+the index to the working tree, so the code is OK.  It's just the
+copied comment was about the issue that your code did not even have
+to worry about.
 
-Any reason that these need to be externed explicitly? Note that these
-functions are already externed by default since you haven't said
-otherwise (and for no other reason than this'd be the only explicitly
-externed function in fsmonitor.h).
-
-Thanks,
-Taylor
+Thanks.
