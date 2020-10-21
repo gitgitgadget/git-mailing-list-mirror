@@ -2,388 +2,335 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B54FBC4363D
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 03:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DC0EC5517A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 05:01:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5181D22249
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 03:00:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA13522200
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 05:01:51 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UJ3EU/t3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406508AbgJUDAe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Oct 2020 23:00:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43286 "EHLO
+        id S2440302AbgJUFBv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 01:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406454AbgJUDAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Oct 2020 23:00:34 -0400
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [IPv6:2a01:5b40:0:3005::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D078C0613CE
-        for <git@vger.kernel.org>; Tue, 20 Oct 2020 20:00:34 -0700 (PDT)
-Received: from [2404:440c:1348:1500:2c8c:773:5acb:4adc] (port=44526 helo=default-rdns.vocus.co.nz)
-        by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <victor@engmark.name>)
-        id 1kV4MY-00043z-My; Wed, 21 Oct 2020 05:00:31 +0200
-Message-ID: <1442e85cfbe70665890a79a5054ee07c9c16b7c6.camel@engmark.name>
-Subject: [PATCH v2] userdiff: support Bash
-From:   Victor Engmark <victor@engmark.name>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 21 Oct 2020 16:00:24 +1300
-In-Reply-To: <xmqqk0vk8o20.fsf@gitster.c.googlers.com>
-References: <373640ea4d95f3b279b9d460d9a8889b4030b4e9.camel@engmark.name>
-         <xmqqk0vk8o20.fsf@gitster.c.googlers.com>
+        with ESMTP id S2407064AbgJUFBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 01:01:50 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FEBCC0613CE
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 22:01:50 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id v186so765176qkb.11
+        for <git@vger.kernel.org>; Tue, 20 Oct 2020 22:01:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=87SZL+0fyKZYC/ykpHeojkeq9lP88W4PbTdjGwpLN0g=;
+        b=UJ3EU/t3TNOPib5LFIpmWvSJ5BtBzVxPWUX0K1TuXbiFLt8o+k94MI5wgqmXWfLDW3
+         836ch+Y/AUDNb7V1ph4ZiXByzRcGtxwWl9GbgLd2FHe3HYvehUtJ0xmANgH5Hq2JEdvN
+         FG6gdKInqcPYoPTOHvTOngSwA9ClCwkWN5eXayRjlPUVRPpl7Q9OE+GTemlLZE5+Ld7O
+         ZPeaI9fXdbjt7eyj+uVVg3qbzvkji9voPzPaufCsmC5mKP/3efsSBGygHYVivVauNYxX
+         uXCuPaoyeIrEBuofcqcEK9tQOohY5tFz4HsaQ9DcciiPl6uwoV+9P8kdark7XHZjeJZh
+         +Lkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=87SZL+0fyKZYC/ykpHeojkeq9lP88W4PbTdjGwpLN0g=;
+        b=svDeIFoRypUmNbcEr6Yh2Nc/uahtE+/QMwonnPZ6iwzmuvYr+egcyujC/01/Trnslm
+         uBqav4oa1sI2qUqZSjvArIBXFxiWHQHNDeaKh5PYn9pAH/yRnICbEi5tZy2KeuDrqW4p
+         myoqlI0wIcZ6NB5IILK898Oht+08BVD1zFUfJsvvD7hqvY6Y3KnD3XORbE+dP9TS+es3
+         e+flaYK+mUyz/hjGR92f/16GTQUivpdnXLQrBqw98CESdsaT2vUi3Sdn5fVs6l3QaIPp
+         eiaI4cKC0XKpFj5Pcr7HuiIeAEfyEAuTQ/pdwg3w8nHp4rjjnjaKd9FlJxoRrpAPrnkP
+         99+w==
+X-Gm-Message-State: AOAM532f7ujMtZ1CLp6CDu0wKRXywgvaP1PcO6Rf7dk4HCCO7Mbzn02j
+        +JpSRLfTxmQltQvDKi6WobT+FT3fc1au
+X-Google-Smtp-Source: ABdhPJw33Po5nHhJgg2k6aYDOCiSUVCqQkL2S48rizIxDIp02r1+nWeGnLD0vU7XdEmYeHCuVqnprmew3uzA
+Sender: "shengfa via sendgmr" <shengfa@lins.c.googlers.com>
+X-Received: from lins.c.googlers.com ([fda3:e722:ac3:10:2b:ff92:c0a8:cb])
+ (user=shengfa job=sendgmr) by 2002:ad4:4f8f:: with SMTP id
+ em15mr1196711qvb.9.1603256509444; Tue, 20 Oct 2020 22:01:49 -0700 (PDT)
+Date:   Wed, 21 Oct 2020 05:01:46 +0000
+In-Reply-To: <xmqqk0vtki66.fsf@gitster.c.googlers.com>
+Message-Id: <20201021050146.3001222-1-shengfa@google.com>
+Mime-Version: 1.0
+References: <xmqqk0vtki66.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.29.0.rc1.297.gfa9743e501-goog
+Subject: Re: [WIP v2 1/2] Adding a record-time-zone command option for commit
+From:   Shengfa Lin <shengfa@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, nathaniel@google.com,
+        rsbecker@nexbridge.com, sandals@crustytoothpaste.net,
+        santiago@nyu.edu, shengfa@google.com
 Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4-0ubuntu1 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Supports POSIX, bashism and mixed function declarations, all four compound
-command types, trailing comments and mixed whitespace.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Uses the POSIX.1-2017 definition of allowed characters in names
-<https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235>
-since actual allowed characters in Bash function names are locale
-dependent <https://unix.stackexchange.com/a/245336/3645>.
+>> Many places in Git record the timezone of actor when a
+>> timestamp is recorded, including the commiter and author
+>> timestamps in a commit object and the tagger timestamp in a tag
+>> object. Some people however prefer not to share where they
+>> actually are.
+>>
+>> They _could_ just say "export TZ=UTC" and be done with it,
+>> but the method would not easily allow them to pretend to be
+>> in the UTC timezone only with Git, while revealing their true
+>> timezone to other activities (e.g. sending e-emails?).
+>>
+>> Introduce --[no-]record-time-zone for commit command, which can be
+>> specified to disallow Git to record time zone. Timezone will be
+>> recorded by default.
+>>
+>> Note that this is a WIP and the test is failing.
+>
+> And there is no outline of the design decision made so far, so it is
+> hard to give useful review comments.
 
-Uses the default `IFS` characters to define words.
+Thanks for the comments and sorry for not describing the design.
+I will add it here.
 
-Adds testing functionality to verify non-matches by including the
-literal string "non-match" somewhere in the test file. To verify that
-only the matching files are syntactically valid:
+First, I would like to use a "global" variable to keep track of whether
+record-time-zone is set and default to true. Then in various places such
+as commit, pull, merge and rebase; we can add command option that can
+modify this value.
 
-for file in t/t4018/bash*
-do
-    echo "$file"
-    if grep non-match "$file"
-    then
-        . "$file" && echo FAILED
-    else
-        . "$file" || echo FAILED
-    fi
-done 2>/dev/null | grep FAILED
+Then in datestamp in date.c, we can check this value; offset would be
+initialized to 0 and only be set if record_time_zone is true. Additionally,
+date_string from the same file would take an extra argument to indicate if
+we want to use nagative sign for zero offset. Then the timestamp along with
+sign and 4 digits offset would be stored in "git_default_date" as buf
+"1603255519 -0000". I think of this as the "encoding" step.
 
-Signed-off-by: Victor Engmark <victor@engmark.name>
----
-Fixes issues found by Junio C Hamano.
+Initially, I thought this would be sufficient to show "-0000" in commit log
+message. However, I found that the show_date function is used for "decoding";
+converting timestamp and tz to more readable format. Then I realize the
+function won't distinguish between +0 and -0 as it only takes in a tz as
+argument. As a result, I added the sign pointer as an argument; the reason for
+pointer being there are many call sites for the show_date function but I am not sure
+if they all need to display in the new format(-0000). I used NULL to denote
+not sure and just do whatever they were doing before. For show_ident_date in
+pretty.c, I have extracted the sign in ident tz and pass it into show_date.
+Then added helper functions in date.c to print either %+05d or -%04d depending
+on tz and sign pointer.
 
-Supports more valid function declaration formats.
+In fmt_ident(ident.c), we are calling parse_date which calls parse_date_basic
+and used the parameters it parsed to call date_string again, so I modified
+parse_date_basic to parse the sign as well.
 
-Verifies non-matching code which looks similar to function
-declarations.
+> It does not help that the patch is distracting by turning tabs to
+> spaces and breaking alingment X-<.
 
-Does *not* include the following suggested test:
+I was assuming 1 HT is 8 spaces. Then after doing :set list in vim, I think
+1 HT is actually ctrl + I. Is this correct?
 
-> 	RIGHT () {
-> 		: ChangeMe
-> 	}
+>> diff --git a/builtin/am.c b/builtin/am.c
+>> index 2c7673f74e..059cc5fce7 100644
+>> --- a/builtin/am.c
+>> +++ b/builtin/am.c
+>> @@ -884,7 +884,7 @@ static int hg_patch_to_mail(FILE *out, FILE *in, int keep_cr)
+>>  			if (tz > 0)
+>>  				tz2 = -tz2;
+>>  
+>> -			fprintf(out, "Date: %s\n", show_date(timestamp, tz2, DATE_MODE(RFC2822)));
+>> +			fprintf(out, "Date: %s\n", show_date(timestamp, tz2, NULL, DATE_MODE(RFC2822)));
+>
+> For example, it appears that tweaking "show_date()" API function
+> seems to be a central part of the design, as there are so many
+> instances like this change in the patch.  If the proposed log
+> message mentioned, even briefly, what the extra parameter added to
+> the API function meant (especially what NULL means there) upfront,
+> then readers can coast the part that added NULL there, like these
+> ones, and concentrate on the parts of this patch that matter, which
+> presumably uses something more interesting than NULL instead.
 
-Quoting t/t4018/README:
+Added above, the extra parameter is the decoded sign if not NULL.
 
-    Insert the word "ChangeMe" (exactly this form) at a distance of
-    at least two lines from the line that must appear in the hunk
-    header.
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 1dfd799ec5..ee3ca2c7ac 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -1547,7 +1547,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>>  				N_("ok to record an empty change")),
+>>  		OPT_HIDDEN_BOOL(0, "allow-empty-message", &allow_empty_message,
+>>  				N_("ok to record a change with an empty message")),
+>> -
+>> +                OPT_BOOL(0, "record-time-zone", &record_time_zone, N_("record user timezone")),
+>
+> Our code indents with HT; get used to the style early and your
+> patches won't distract reviewers as much, leading to more quality
+> reviews and suggestions.
 
-t/t4018-diff-funcname.sh verifies the hunk header as part of `git diff
--U1`, so there's one line of context. In your example "RIGHT" is on the
-line directly above "ChangeMe", so it's part of the context. I assume
-it is intentional that no part of the context is duplicated in the hunk
-header. The other tests, for example t/t4018/python-def, are
-implemented in the same way, with at least one line of content between
-"RIGHT" and "ChangeMe".
+My bad, I didn't realize I was doing it wrong all along, I was thinking that I was
+sometimes missing spaces.
+I use vim, is there any easy way to ensure that indent is with HT?
+I was using 4 tabs since each tab is 2 spaces. Should I type in ctrl + I
+instead?
 
-> > diff --git a/t/t4018/bash-trailing-comment b/t/t4018/bash-trailing-
-> > comment
-> > new file mode 100644
-> > index 0000000000..f1edbeda31
-> > --- /dev/null
-> > +++ b/t/t4018/bash-trailing-comment
-> > @@ -0,0 +1,4 @@
-> > +RIGHT() { # Comment
-> > +
-> > +    ChangeMe
-> > +}
+> Likewise.  The record_time_zone global variable seems to play a
+> crucial role in this change, but without preparing readers by
+> mentioning where it is defined, what normal/default value it takes,
+> and who potentially touches it, in the proposed log message, it
+> makes reading the change harder than necessary.
 > 
-> This is the closest, but it tests "# with comment" at the same time.
+> A system-wide global like this is usually defined in environment.c,
+> by the way.  Look for say trust_executable_bit and mimic where it 
+> is defined and declared.
 
-It's meant to test only the comment part, so that is intentional.
-t/t4018/bash-trailing-comment is identical to t/t4018/bash-posix-style-
-function except for the comment.
----
- Documentation/gitattributes.txt       |  2 ++
- t/t4018-diff-funcname.sh              | 18 ++++++++++++++----
- t/t4018/README                        |  3 +++
- t/t4018/bash-arithmetic-function      |  4 ++++
- t/t4018/bash-bashism-style-compact    |  4 ++++
- t/t4018/bash-bashism-style-function   |  4 ++++
- t/t4018/bash-bashism-style-whitespace |  4 ++++
- t/t4018/bash-conditional-function     |  4 ++++
- t/t4018/bash-missing-parentheses      |  4 ++++
- t/t4018/bash-mixed-style-compact      |  4 ++++
- t/t4018/bash-mixed-style-function     |  4 ++++
- t/t4018/bash-other-characters         |  4 ++++
- t/t4018/bash-posix-style-compact      |  4 ++++
- t/t4018/bash-posix-style-function     |  4 ++++
- t/t4018/bash-posix-style-whitespace   |  4 ++++
- t/t4018/bash-subshell-function        |  4 ++++
- t/t4018/bash-trailing-comment         |  4 ++++
- userdiff.c                            | 22 ++++++++++++++++++++++
- 18 files changed, 97 insertions(+), 4 deletions(-)
- create mode 100644 t/t4018/bash-arithmetic-function
- create mode 100644 t/t4018/bash-bashism-style-compact
- create mode 100644 t/t4018/bash-bashism-style-function
- create mode 100644 t/t4018/bash-bashism-style-whitespace
- create mode 100644 t/t4018/bash-conditional-function
- create mode 100644 t/t4018/bash-missing-parentheses
- create mode 100644 t/t4018/bash-mixed-style-compact
- create mode 100644 t/t4018/bash-mixed-style-function
- create mode 100644 t/t4018/bash-other-characters
- create mode 100644 t/t4018/bash-posix-style-compact
- create mode 100644 t/t4018/bash-posix-style-function
- create mode 100644 t/t4018/bash-posix-style-whitespace
- create mode 100644 t/t4018/bash-subshell-function
- create mode 100644 t/t4018/bash-trailing-comment
+Will move to environment.c.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 2d0a03715b..8a15ff6bdf 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -802,6 +802,8 @@ patterns are available:
- 
- - `ada` suitable for source code in the Ada language.
- 
-+- `bash` suitable for source code in the Bourne-Again SHell language.
-+
- - `bibtex` suitable for files with BibTeX coded references.
- 
- - `cpp` suitable for source code in the C and C++ languages.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 9d07797579..d18c4669d2 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -27,6 +27,7 @@ test_expect_success 'setup' '
- 
- diffpatterns="
- 	ada
-+	bash
- 	bibtex
- 	cpp
- 	csharp
-@@ -106,10 +107,19 @@ do
- 	else
- 		result=success
- 	fi
--	test_expect_$result "hunk header: $i" "
--		git diff -U1 $i >actual &&
--		grep '@@ .* @@.*RIGHT' actual
--	"
-+
-+	if grep non-match "$i" >/dev/null 2>&1
-+	then
-+		test_expect_$result "hunk header non-match: $i" "
-+			git diff -U1 $i >actual &&
-+			! grep '@@ .* @@.*RIGHT' actual
-+		"
-+	else
-+		test_expect_$result "hunk header: $i" "
-+			git diff -U1 $i >actual &&
-+			grep '@@ .* @@.*RIGHT' actual
-+		"
-+	fi
- done
- 
- test_done
-diff --git a/t/t4018/README b/t/t4018/README
-index 283e01cca1..cfe2b86ee7 100644
---- a/t/t4018/README
-+++ b/t/t4018/README
-@@ -10,6 +10,9 @@ The text that must appear in the hunk header must contain the word
- To mark a test case that highlights a malfunction, insert the word
- BROKEN in all lower-case somewhere in the file.
- 
-+To mark a test case that verifies some text is not matched, insert the
-+word NON-MATCH in all lower-case somewhere in the file.
-+
- This text is a bit twisted and out of order, but it is itself a
- test case for the default hunk header pattern. Know what you are doing
- if you change it.
-diff --git a/t/t4018/bash-arithmetic-function b/t/t4018/bash-arithmetic-function
-new file mode 100644
-index 0000000000..c0b276cb50
---- /dev/null
-+++ b/t/t4018/bash-arithmetic-function
-@@ -0,0 +1,4 @@
-+RIGHT() ((
-+
-+    ChangeMe = "$x" + "$y"
-+))
-diff --git a/t/t4018/bash-bashism-style-compact b/t/t4018/bash-bashism-style-compact
-new file mode 100644
-index 0000000000..9a06bb08fd
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-compact
-@@ -0,0 +1,4 @@
-+function RIGHT{ # non-match
-+    :
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-bashism-style-function b/t/t4018/bash-bashism-style-function
-new file mode 100644
-index 0000000000..f1de4fa831
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-function
-@@ -0,0 +1,4 @@
-+function RIGHT {
-+    :
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-bashism-style-whitespace b/t/t4018/bash-bashism-style-whitespace
-new file mode 100644
-index 0000000000..ade85dd3a5
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-whitespace
-@@ -0,0 +1,4 @@
-+	 function 	RIGHT 	( 	) 	{
-+
-+	    ChangeMe
-+	 }
-diff --git a/t/t4018/bash-conditional-function b/t/t4018/bash-conditional-function
-new file mode 100644
-index 0000000000..c5949e829b
---- /dev/null
-+++ b/t/t4018/bash-conditional-function
-@@ -0,0 +1,4 @@
-+RIGHT() [[ \
-+
-+    "$a" > "$ChangeMe"
-+]]
-diff --git a/t/t4018/bash-missing-parentheses b/t/t4018/bash-missing-parentheses
-new file mode 100644
-index 0000000000..d112761300
---- /dev/null
-+++ b/t/t4018/bash-missing-parentheses
-@@ -0,0 +1,4 @@
-+functionRIGHT { # non-match
-+    :
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-mixed-style-compact b/t/t4018/bash-mixed-style-compact
-new file mode 100644
-index 0000000000..d9364cba67
---- /dev/null
-+++ b/t/t4018/bash-mixed-style-compact
-@@ -0,0 +1,4 @@
-+function RIGHT(){
-+    :
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-mixed-style-function b/t/t4018/bash-mixed-style-function
-new file mode 100644
-index 0000000000..555f9b2466
---- /dev/null
-+++ b/t/t4018/bash-mixed-style-function
-@@ -0,0 +1,4 @@
-+function RIGHT() {
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-other-characters b/t/t4018/bash-other-characters
-new file mode 100644
-index 0000000000..a3f390d525
---- /dev/null
-+++ b/t/t4018/bash-other-characters
-@@ -0,0 +1,4 @@
-+_RIGHT_0n() {
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-compact b/t/t4018/bash-posix-style-compact
-new file mode 100644
-index 0000000000..045bd2029b
---- /dev/null
-+++ b/t/t4018/bash-posix-style-compact
-@@ -0,0 +1,4 @@
-+RIGHT(){
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-function b/t/t4018/bash-posix-style-function
-new file mode 100644
-index 0000000000..a4d144856e
---- /dev/null
-+++ b/t/t4018/bash-posix-style-function
-@@ -0,0 +1,4 @@
-+RIGHT() {
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-whitespace b/t/t4018/bash-posix-style-whitespace
-new file mode 100644
-index 0000000000..4d984f0aa4
---- /dev/null
-+++ b/t/t4018/bash-posix-style-whitespace
-@@ -0,0 +1,4 @@
-+	 RIGHT 	( 	) 	{
-+
-+	    ChangeMe
-+	 }
-diff --git a/t/t4018/bash-subshell-function b/t/t4018/bash-subshell-function
-new file mode 100644
-index 0000000000..80baa09484
---- /dev/null
-+++ b/t/t4018/bash-subshell-function
-@@ -0,0 +1,4 @@
-+RIGHT() (
-+
-+    ChangeMe=2
-+)
-diff --git a/t/t4018/bash-trailing-comment b/t/t4018/bash-trailing-comment
-new file mode 100644
-index 0000000000..f1edbeda31
---- /dev/null
-+++ b/t/t4018/bash-trailing-comment
-@@ -0,0 +1,4 @@
-+RIGHT() { # Comment
-+
-+    ChangeMe
-+}
-diff --git a/userdiff.c b/userdiff.c
-index fde02f225b..8830019f05 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -23,6 +23,28 @@ IPATTERN("ada",
- 	 "[a-zA-Z][a-zA-Z0-9_]*"
- 	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
- 	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
-+PATTERNS("bash",
-+	 /* Optional leading indentation */
-+	 "^[ \t]*"
-+	 /* Start of function definition */
-+	 "("
-+	 /* Start of POSIX/Bashism grouping */
-+	 "("
-+	 /* POSIX identifier with mandatory parentheses */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
-+	 /* Bashism identifier with optional parentheses */
-+	 "|(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
-+	 /* End of POSIX/Bashism grouping */
-+	 ")"
-+	 /* Optional whitespace */
-+	 "[ \t]*"
-+	 /* Compound command starting with `{`, `(`, `((` or `[[` */
-+	 "(\\{|\\(\\(?|\\[\\[)"
-+	 /* End of function definition */
-+	 ")",
-+	 /* -- */
-+	 /* Characters not in the default $IFS value */
-+	 "[^ \t]+"),
- PATTERNS("dts",
- 	 "!;\n"
- 	 "!=\n"
+>>  		OPT_END()
+>>  	};
+>>  
+>> @@ -1580,6 +1580,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>>  	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
+>>  					  builtin_commit_usage,
+>>  					  prefix, current_head, &s);
+>> +
+>>  	if (verbose == -1)
+>>  		verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
+>>  
+>
+> Distraction.
+
+Will remove.
+
+>> +static int negative_zero(int tz, int *sign)
+>> +{
+>> +        return !tz && sign && (*sign) == '-';
+>> +}
+>> +
+>> +static const char *tz_fmt(int tz, int *sign)
+>> +{
+>> +        if (!negative_zero(tz, sign))
+>> +                return " %+05d";
+>> +        else
+>> +                return " -%04d";
+>> +}
+>> +
+>> +
+>> +static void show_date_normal(struct strbuf *buf, timestamp_t time, struct tm *tm, int tz, int *sign, struct tm *human_tm, int human_tz, int local)
+>>  {
+>>  	struct {
+>>  		unsigned int	year:1,
+>> @@ -277,10 +293,10 @@ static void show_date_normal(struct strbuf *buf, timestamp_t time, struct tm *tm
+>>  		strbuf_addf(buf, " %d", tm->tm_year + 1900);
+>>  
+>>  	if (!hide.tz)
+>> -		strbuf_addf(buf, " %+05d", tz);
+>> +                strbuf_addf(buf, tz_fmt(tz, sign), tz);
+>>  }
+>>  
+>> -const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+>> +const char *show_date(timestamp_t time, int tz, int *signp, const struct date_mode *mode)
+>
+> With its type, we can tell easily that sign is a pointer, so no need
+> for 'p' (we do not have modep, either, next door).  More important
+> is if 'sign' is a good name that conveys what the parameter (which
+> is almost always NULL) means.  Without any introductory text, it is
+> hard to tell and offer recommendations.
+
+The reason I used signp instead of sign here is because there is a variable with
+name sign used in the function. Regarding "good name", maybe sign_hint is more appropriate.
+
+>> @@ -826,17 +849,21 @@ static int match_object_header_date(const char *date, timestamp_t *timestamp, in
+>>  
+>>  /* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
+>>     (i.e. English) day/month names, and it doesn't work correctly with %z. */
+>> -int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
+>> +int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset, int *zero_offset_negative_sign)
+>>  {
+>>  	struct tm tm;
+>>  	int tm_gmt;
+>>  	timestamp_t dummy_timestamp;
+>>  	int dummy_offset;
+>> +        int dummy_zero_offset_negative_sign;
+>> +        int negative_sign;
+>>  	if (!timestamp)
+>>  		timestamp = &dummy_timestamp;
+>>  	if (!offset)
+>>  		offset = &dummy_offset;
+>
+> I see no need for the extra dummy_zero_offset_negative_sign variable.
+> I can guess this mimics "if (!offset) offset = &dummy_offset" without
+> much thought---a big difference is that after calling match_tz() to
+> fill *offset, the code needs to obtain the value match_tz() parsed
+> to decide if it needs to do the mktime() dance to guess the current
+> zone offset, and also needs to read *offset to adjust *timestamp
+> the function returns.
+> 
+> The zero_offset_negative_sign pointer that specifies the location to
+> optionally return a bit of info is *ONLY* used once at the very end
+> of the function, so 
+>> +        if (!zero_offset_negative_sign)
+>> +                zero_offset_negative_sign = &dummy_zero_offset_negative_sign;
+>
+> there is absolutely no need for the dummy variable or this
+> assignment, especially since the patch adds negative_sign variable
+> that always exists, and ...
+>
+>>  	memset(&tm, 0, sizeof(tm));
+>>  	tm.tm_year = -1;
+>> @@ -848,6 +875,7 @@ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
+>>  	tm.tm_sec = -1;
+>>  	*offset = -1;
+>>  	tm_gmt = 0;
+>> +        negative_sign = 0;
+>>  
+>>  	if (*date == '@' &&
+>>  	    !match_object_header_date(date + 1, timestamp, offset))
+>> @@ -864,9 +892,11 @@ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
+>>  			match = match_alpha(date, &tm, offset);
+>>  		else if (isdigit(c))
+>>  			match = match_digit(date, &tm, offset, &tm_gmt);
+>> -		else if ((c == '-' || c == '+') && isdigit(date[1]))
+>> +		else if ((c == '-' || c == '+') && isdigit(date[1])) {
+>>  			match = match_tz(date, offset);
+>> -
+>> +                        if (c == '-')
+>> +                                negative_sign = 1;
+>> +                }
+>
+>... is usable.
+
+Got it, thanks for pointing out.
+
+>>  		if (!match) {
+>>  			/* BAD CRAP */
+>>  			match = 1;
+>> @@ -895,6 +925,9 @@ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset)
+>>  
+>>  	if (!tm_gmt)
+>>  		*timestamp -= *offset * 60;
+>> +
+>> +        *zero_offset_negative_sign = (!(*offset) && negative_sign);
+>> +
+>
+> The only change needed for this optional extra bit return is to
+> make sure that the assignment happens only when it was requested by
+> the caller, i.e.
+>
+> 	if (zero_offset_negative_sign)
+> 		*zero_offset_negative_sign = ...
+>
+> Having said all that, quite honestly, I do not know if this is going
+> in the right direction.  Specifically, I do not offhand see why we
+> need such a huge surgery to date.c just to touch datestamp() and
+> date_string().
+> 
+> I may be totally off, partly due to lack of explanation of how the
+> patch attempts to achieve its goal, but wouldn't it be just the
+> matter of touching the single callsite of datestamp() in ident.c, so
+> that after it gets git_default_date string filled, null out the last
+> 5 bytes in it with "-0000" if record_tz is off?
+>
+
+Changing parse_date_basic because it's called by parse_date in fmt_ident(ident.c).
 
