@@ -2,109 +2,77 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5253DC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2659FC4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3264241A4
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93BB3241A6
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:14 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="RiV+4vIn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506633AbgJUWWG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 18:22:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54300 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2506629AbgJUWWF (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 21 Oct 2020 18:22:05 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E02D46042C;
-        Wed, 21 Oct 2020 22:22:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1603318924;
-        bh=utZ1Y2rj+7og/VHdBgddxa4o2GCuWxheyrH7wFGPOS8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tlJAldtA9Rz8CqM4d81YPzIcIJQOwdfKLFE5/186ftssPHwo1P9Uy3mPfq7+PNiEJ
-         /W8G7+44qSojSvol+dQhh9O7gJTfsebHK1U9h8ODqDLupZphJgM3T4zD1qFer0sozz
-         yIXFnxbqbFYhMbAsktTuALlB6Pz0EIz1L/ibQpz63A4G6L+y2U5KH3Ak4eA6+o1LLU
-         4slZ8gcIDZAl4fHArKS3F1gOb0/OWj5mUUCMAuNRq+lLy+RN9IR5xUN9FPhb9P96V0
-         05i8Xqc+MbWR47na66r615ZX7JSMaH5CJnwy+x4402bim9S6RIMcfV2t38nZUn+fHQ
-         4rEAqFujvCOAxV4uv+8PZlj89UXNxuZZWJE1J3i8SwgNqfelPKBAd5tn3BNf5YRtxz
-         2KeDqJNoyCi/a4AjQVYBHF29B0LyPzVdGyzsUEwW18cKvt+2J+dECjslBy4bcJ8I68
-         TcpeV+8HyAC6eDwZqJ8ioa9nmdhu0X9t7iaBP2rZfqWEWltkpwL
-Date:   Wed, 21 Oct 2020 22:21:58 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S2506636AbgJUWWN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 18:22:13 -0400
+Received: from mail-03.mail-europe.com ([91.134.188.129]:38864 "EHLO
+        mail-03.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2506629AbgJUWWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 18:22:13 -0400
+Date:   Wed, 21 Oct 2020 22:21:59 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1603318929;
+        bh=tXTp1lyzz3whaxVJBQG1cioau88e/4YZzpbTv0Wq2as=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=RiV+4vIn2Rbs6vQk13i594PWJk9kU/2pVASHCkRq69vWEkU9e6CMl1IEJ7r6+AgQJ
+         dj6ZINHTmSA/1Zy7xDhZJtmx1bgNb7XWNqTyQ/rdWLjLwHNZltSQXAIf6OFtSL2Ov4
+         gSvvBXTcaGiSfgIjikRE8Xwe3CcD7H17JwgYt4oI=
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Nikos Chantziaras <realnc@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: git svn log: Use of uninitialized value $sha1_short
-Message-ID: <20201021222158.GJ490427@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Nikos Chantziaras <realnc@gmail.com>, git@vger.kernel.org
-References: <rmpve5$q2s$1@ciao.gmane.io>
- <20201021202642.GA60606@coredump.intra.peff.net>
- <xmqqwnzj5mq5.fsf@gitster.c.googlers.com>
+From:   Joey Salazar <jgsal@protonmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Reply-To: Joey Salazar <jgsal@protonmail.com>
+Subject: Re: [OUTREACHY][PATCH v2] t7006: Use test_path_is_* functions in test script
+Message-ID: <-fqjNpjuA1NlG29AeRtBDgTHlHbtljRImPvtORqdjK7QXE7fOn8GyzCWlgYj-eZvfj_sNPuCjHoh70xUyfusx1myQYR9HzfiM14M-96cBL0=@protonmail.com>
+In-Reply-To: <xmqqft675jjv.fsf@gitster.c.googlers.com>
+References: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com> <fc5fecec-1a77-871d-d1f9-dad1bae8920c@gmail.com> <xmqq4kmn8lpp.fsf@gitster.c.googlers.com> <CEI_CVj6T-VEnw0cl0U6E5BSJ3Z6ZdYXAwnV96r8u0qbLK3EgS3b0Sqan1D_AgNqPm22FGPSL_easRZyLukEAIbbVCvxsiC9QVawVJBiTbI=@protonmail.com> <xmqqft675jjv.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="I/5syFLg1Ed7r+1G"
-Content-Disposition: inline
-In-Reply-To: <xmqqwnzj5mq5.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Will do, thank you.
 
---I/5syFLg1Ed7r+1G
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 2020-10-21 at 20:48:50, Junio C Hamano wrote:
-> Looks that way.  '$::' as opposed to plain '$' threw the replacement
-> off the track?
->=20
->  perl/Git/SVN/Log.pm | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git i/perl/Git/SVN/Log.pm w/perl/Git/SVN/Log.pm
-> index 3858fcf27d..9c819188ea 100644
-> --- i/perl/Git/SVN/Log.pm
-> +++ w/perl/Git/SVN/Log.pm
-> @@ -298,7 +298,7 @@ sub cmd_show_log {
->  			get_author_info($c, $1, $2, $3);
->  		} elsif (/^${esc_color}(?:tree|parent|committer) /o) {
->  			# ignore
-> -		} elsif (/^${esc_color}:\d{6} \d{6} $::sha1_short/o) {
-> +		} elsif (/^${esc_color}:\d{6} \d{6} $::oid_short/o) {
->  			push @{$c->{raw}}, $_;
->  		} elsif (/^${esc_color}[ACRMDT]\t/) {
->  			# we could add $SVN->{svn_path} here, but that requires
 
-Yeah, this is correct.  I'll try to get a format patch written up
-tonight with this if nobody gets to it before me.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Wednesday, October 21, 2020 3:57 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
 
---I/5syFLg1Ed7r+1G
-Content-Type: application/pgp-signature; name="signature.asc"
+> Joey Salazar jgsal@protonmail.com writes:
+>
+> > Hi Phillip, Junio,
+> > Thank you for your reviews and support, they're much appreciated and I'=
+m happy the patch looks ok.
+> >
+> > > I'll probably have to hand-edit the authorship before applying
+> > > (check the From: of the e-mail) so that the identity on the
+> > > signed-off-by trailer matches the author, but other than that the
+> > > patch looks quite good to me, too.
+> >
+> > My big apologies Junio, I mistook "authorship" to mean my `git config -=
+-global user.name` and `git config --global user.email` settings.
+> > Should I resend the patch email?
+>
+> No need to apologize and no need to resend. You may want to send a
+> patch to yourself to prepare your procedure, but that is something
+> you can do without sending patches to the list.
+>
+> Thanks.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5C0hgAKCRB8DEliiIei
-ge/AAP9M3kNyJrIHNwjg8hVmcA7urzjpfcuzYrqc+XiDkVAOgAEA9Yiyv7/Vb6/X
-RMhnux1pK5+Pr5tOFiSC9Y1jfY3U0QI=
-=tckR
------END PGP SIGNATURE-----
-
---I/5syFLg1Ed7r+1G--
