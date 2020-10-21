@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A049EC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C874C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:04:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 394AC2237B
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:04:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BB2E2237B
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:04:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XoMtlAz6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JASoWkci"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503605AbgJUSEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 14:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42118 "EHLO
+        id S2503767AbgJUSEm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 14:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405153AbgJUSEj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 14:04:39 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72AA3C0613CF
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 11:04:39 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 13so3065581wmf.0
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 11:04:39 -0700 (PDT)
+        with ESMTP id S2405153AbgJUSEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 14:04:40 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE50C0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 11:04:38 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id e2so3558408wme.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 11:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ai9JYqlJh47JBTVfqyQu0+EgkRZlNcwR2sfJrzvRFSQ=;
-        b=XoMtlAz6ZSALkvIAw+r6lMP9FdX56gwb1pumwedjLv7IwlFwhz5Yx/JqcIQ31zUFFJ
-         NibtU8Y6d4G7MlaHRjkLxppzRguMkMiGhZVgu+uGV5bGRRjDbPqIB3KWKIqdV2FJWeKO
-         WkDaLzX1wnIcRAKIa8hoIR86jRgzyGDxMB4q/cMV7BI1ksGynMkT77uxp7x0KRiPTLUt
-         PB3nsJifUgF2S58kIouul6k7IagsApxVDacEnSZvNdnYYAARR0ViC47CHp67ADtVFmIL
-         1XI1/BX7QD7ZDyGrKYrCqPaGHYrabF/2svmlxJPd1M0iXLLqd7NBCkRabvFUvJ6yKVpD
-         SRAg==
+        bh=dA3t47iFl5ZaLrmDO5U3zkECvJQytQsZ6khQMZudOns=;
+        b=JASoWkciagPDc8PaXgNpHq8j1bJZqy6KbvQlRKnfEqNp+suf2VJy22/JBZC/AFyiAT
+         GHWpg6uY/6e61LwAW3v2146yT1fppSy4xVzZlIPhaiv4RcNRjGjwh44waXManylilO0e
+         rf+lsmGCOH1wcCSzGvc7h5jco0l5Rm17rRxLVDsC/68DM6pvciQT2xbj39JTduwzMG6t
+         DigVAJYagQkWjd+EnLjNJCpB9XVBrX9zj01hFiegnJ2l7pzytZ3UXh7vmvpDgVjBOT8m
+         +3OpO/vP918pkAhlEfMktMXAOBUdOnST97ZuUYhT0nqZQ3iabC4zFbcVC0kkovbtMH3J
+         Ujpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ai9JYqlJh47JBTVfqyQu0+EgkRZlNcwR2sfJrzvRFSQ=;
-        b=Tx9+NWMwZHMSXzPJ8iILOIvjriaAqx7g+ZNKMnydW6ibKoJGiCP/wwCVctNDpMS3Hg
-         YQC9l7MdpsdWoTvr4CeYpIGWwxX6WSoaexpEpsBaIQEPTm5MB+EQ4GitjLJfVdvJmT+j
-         dA99PwIgSUKSKnuMOV+ZmnZaONeu4zneiIU3f0CQLC8aZ7e3pfGHdvDzitLKvazgxcDv
-         IUVXjNDfUUrqtek00ByuZK/7uRY2gGzTemM8cSjxwEBE8yIFxz/CoK1ZMkmZh/nuDEaH
-         bZFIbFxcuIhUJrr7rL9gU9qvaofo6Q1g6Oxc2Rlfd42ZUX/jjhnub3MDYOPGNRff1Lc6
-         RcZQ==
-X-Gm-Message-State: AOAM532oV7vZUFj1OXUPkfzqGE7SoW6zzcDPIpzDJNwF9iWIJ1h6gihe
-        aDW+97EcobXeoRVd779pxhspo8ML/xQ=
-X-Google-Smtp-Source: ABdhPJw6MlY4AmYXEZm/UT06Ng3lkPEIGk8PmL9ZlMWj+jQWZslez7nyrXEe6OvRvFt+sHN7QYLZfw==
-X-Received: by 2002:a1c:2cc2:: with SMTP id s185mr4926421wms.77.1603303478061;
-        Wed, 21 Oct 2020 11:04:38 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a15sm5221104wro.3.2020.10.21.11.04.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=dA3t47iFl5ZaLrmDO5U3zkECvJQytQsZ6khQMZudOns=;
+        b=caZ5cQouspcSoU/xyj/UVgtknyTU9wmHeKmF08h/wy1C7AhhV8Ofbg8RMVfVMcr4UM
+         CI5Xhf2B7fULBFPSWq+UZlCxPgqPdplKiMYxNN4JkWx2OBETw4tYsdT8S34S2OeZdWiV
+         dmHtpEiIpyLLqcE7wwGU09bF3BcpVq+XBrqWjxcdeUtHWmxtAeij0cQMQlJMa1YPq4IL
+         +If9sh95TK9CT1VkBOf7DP/SgMdlTU8hmD8lS9incH1S8pOltTCGsJEZ+vvejQCdpoW6
+         +pB04M2RtyxNY4kmPNz6QTy40/K1wTlr4ja+RC2A0Dg55PHW18VkqIEN2GytKQp5HOE/
+         5MoA==
+X-Gm-Message-State: AOAM5312Xzs3up2YOw+NXsRpsXp+bYxKBvKSW5Ns1dcTbjXs9U69N+t/
+        1Yek/SBnH8eF3x+eM+hztnldIvyktUY=
+X-Google-Smtp-Source: ABdhPJwHtE+9QIiYiW+xdWUy5tkIHHtTAeaiNyDdN1fkCY6nte1FjC8b46dWYglioPi2zaYiqO7pvg==
+X-Received: by 2002:a7b:cb98:: with SMTP id m24mr2100913wmi.133.1603303477206;
         Wed, 21 Oct 2020 11:04:37 -0700 (PDT)
-Message-Id: <598521091a54caa73556b8bc9caf552d3216ba63.1603303474.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s5sm4433661wmc.3.2020.10.21.11.04.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2020 11:04:36 -0700 (PDT)
+Message-Id: <049989652cefb90304e711dbfe354b55a5a71f41.1603303474.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.767.git.1603303474.gitgitgadget@gmail.com>
 References: <pull.767.git.1603303474.gitgitgadget@gmail.com>
 From:   "Alex Vandiver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 21 Oct 2020 18:04:34 +0000
-Subject: [PATCH 2/2] fsmonitor: make output of test-dump-fsmonitor more
- concise
+Date:   Wed, 21 Oct 2020 18:04:33 +0000
+Subject: [PATCH 1/2] fsmonitor: stop inline'ing mark_fsmonitor_valid /
+ _invalid
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,48 +77,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alex Vandiver <alexmv@dropbox.com>
 
-After displaying one very long line, summarize the contents of that
-line.  The tests do not currently rely on any content except the first
-line ("no fsmonitor" / "fsmonitor last update").
+These were inline'd when they were first introduced, presumably as an
+optimization for cases when they were called in tight loops.  This
+complicates using these functions, as untracked_cache_invalidate_path
+is defined in dir.h.
+
+Leave the inline'ing up to the compiler's decision, for ease of use.
 
 Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
 ---
- t/helper/test-dump-fsmonitor.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fsmonitor.c | 19 +++++++++++++++++++
+ fsmonitor.h | 18 ++----------------
+ 2 files changed, 21 insertions(+), 16 deletions(-)
 
-diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
-index 975f0ac890..a42e402bf8 100644
---- a/t/helper/test-dump-fsmonitor.c
-+++ b/t/helper/test-dump-fsmonitor.c
-@@ -4,7 +4,7 @@
- int cmd__dump_fsmonitor(int ac, const char **av)
- {
- 	struct index_state *istate = the_repository->index;
--	int i;
-+	int i, valid = 0;
- 
- 	setup_git_directory();
- 	if (do_read_index(istate, the_repository->index_file, 0) < 0)
-@@ -15,8 +15,18 @@ int cmd__dump_fsmonitor(int ac, const char **av)
- 	}
- 	printf("fsmonitor last update %s\n", istate->fsmonitor_last_update);
- 
--	for (i = 0; i < istate->cache_nr; i++)
-+	for (i = 0; i < istate->cache_nr; i++) {
- 		printf((istate->cache[i]->ce_flags & CE_FSMONITOR_VALID) ? "+" : "-");
-+		if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID)
-+			valid++;
-+	}
-+
-+	printf("\n  valid:   %d\n", valid);
-+	printf("  invalid: %d\n", istate->cache_nr - valid);
-+
-+	for (i = 0; i < istate->cache_nr; i++)
-+		if (!(istate->cache[i]->ce_flags & CE_FSMONITOR_VALID))
-+			printf("   - %s\n", istate->cache[i]->name);
- 
- 	return 0;
+diff --git a/fsmonitor.c b/fsmonitor.c
+index ca031c3abb..e120b3c5a9 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -287,6 +287,25 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	istate->fsmonitor_last_update = strbuf_detach(&last_update_token, NULL);
  }
+ 
++void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
++{
++	if (core_fsmonitor && !(ce->ce_flags & CE_FSMONITOR_VALID)) {
++		istate->cache_changed = 1;
++		ce->ce_flags |= CE_FSMONITOR_VALID;
++		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
++	}
++}
++
++void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce)
++{
++	if (core_fsmonitor) {
++		ce->ce_flags &= ~CE_FSMONITOR_VALID;
++		untracked_cache_invalidate_path(istate, ce->name, 1);
++		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
++	}
++}
++
++
+ void add_fsmonitor(struct index_state *istate)
+ {
+ 	unsigned int i;
+diff --git a/fsmonitor.h b/fsmonitor.h
+index 739318ab6d..6249020692 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -49,14 +49,7 @@ void refresh_fsmonitor(struct index_state *istate);
+  * called any time the cache entry has been updated to reflect the
+  * current state of the file on disk.
+  */
+-static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
+-{
+-	if (core_fsmonitor && !(ce->ce_flags & CE_FSMONITOR_VALID)) {
+-		istate->cache_changed = 1;
+-		ce->ce_flags |= CE_FSMONITOR_VALID;
+-		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
+-	}
+-}
++extern void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce);
+ 
+ /*
+  * Clear the given cache entry's CE_FSMONITOR_VALID bit and invalidate
+@@ -65,13 +58,6 @@ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache
+  * trigger an lstat() or invalidate the untracked cache for the
+  * corresponding directory
+  */
+-static inline void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce)
+-{
+-	if (core_fsmonitor) {
+-		ce->ce_flags &= ~CE_FSMONITOR_VALID;
+-		untracked_cache_invalidate_path(istate, ce->name, 1);
+-		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
+-	}
+-}
++extern void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce);
+ 
+ #endif
 -- 
 gitgitgadget
+
