@@ -7,96 +7,91 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B03EC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 20:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37335C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 20:44:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A56832415A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 20:41:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C68E02415A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 20:44:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sFd/nAk/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cKn0FzTE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2505483AbgJUUlb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 16:41:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56978 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439419AbgJUUlb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 16:41:31 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC5BF903C9;
-        Wed, 21 Oct 2020 16:41:29 -0400 (EDT)
+        id S2440761AbgJUUo1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 16:44:27 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50322 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2440724AbgJUUo1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 16:44:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A94FFFE3B2;
+        Wed, 21 Oct 2020 16:44:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=q/BU3O+A5x+fDNmSUr15xf0BdK0=; b=sFd/nA
-        k/L/l/tP6m5uqqInOY/zyfVRr3+SkJO/bdIt6bVgFfXRFXhfAj1echt9/WOym8HJ
-        673m3JE7/D4LnPo4HpVewtjj+OJx+yfB5IFOfE4NwrmHgG0ogbxAuYsY5Ro/fKiy
-        zycVS//Dw22iph8j1GYjqasLeAkJDZ7v2bPng=
+        :content-type; s=sasl; bh=qIyydt/UdbhA30qzn5n75wSHvVk=; b=cKn0Fz
+        TEa3vN9Da/+8Y67dkLE/u206D1hsN1I8FbLhfhSYi79XujvB4aI+4lzF83XgkDRP
+        BOp8SqzNW1dK8mN/sQ9hyBa8/C2FhIuQd2znEt47ZjyWWXX0OU2jwbwbOzLJE56p
+        NiWtKdkzV85Asabuj5ovsHIV/CdxyzZimBvqI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j8sB4RG5xtvFQDZMeLYPoQeORV768Wkj
-        GnrHO6ddgMfk1ZNdoEZGSVw/24J+SwtzhCsh5QmK31KUMcX5NWOkcZf1KSIdDtaS
-        9btHIMwlH7mx0VgxI7/iZgm63bV4SlMwx0lIgSBA0bL1Q3fA5+22+8zqeAmoxkrB
-        D2PB41aRnQI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CF3E1903C8;
-        Wed, 21 Oct 2020 16:41:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=XELCfaL5EAzSHojVCAvxrHrL4/WyqjBm
+        GjmCXwCJqaS5CrR5BvlShaqIEzB3CoKFzI1yR9RpTFmtITdsnhoW9kskNHZMqW3D
+        Z/DxgdZTmFCi15ZTNN2RDi1sPgeTg3maIKuPCCict/8rHmtCvDB30xkwncwLCeOC
+        NtFNiq/JaOg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1A1AFE3B1;
+        Wed, 21 Oct 2020 16:44:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6570F903C7;
-        Wed, 21 Oct 2020 16:41:29 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E885BFE3AF;
+        Wed, 21 Oct 2020 16:44:22 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Edmundo Carmona Antoranz <eantoranz@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC] sequencer: allow metadata to be saved if using
- cherry-pick --no-commit
-References: <20201021062430.2029566-1-eantoranz@gmail.com>
-        <xmqqv9f37476.fsf@gitster.c.googlers.com>
-Date:   Wed, 21 Oct 2020 13:41:28 -0700
-In-Reply-To: <xmqqv9f37476.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 21 Oct 2020 12:46:05 -0700")
-Message-ID: <xmqqa6wf71mv.fsf@gitster.c.googlers.com>
+Subject: Re: mr/bisect-in-c-3, was Re: What's cooking in git.git (Oct 2020,
+ #03; Mon, 19)
+References: <xmqqr1put77h.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2010211647050.56@tvgsbejvaqbjf.bet>
+Date:   Wed, 21 Oct 2020 13:44:21 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2010211647050.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 21 Oct 2020 16:48:03 +0200 (CEST)")
+Message-ID: <xmqq5z7371i2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CBE35E8C-13DD-11EB-AD15-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3352D05C-13DE-11EB-9EAC-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Before dismissing the idea totally, let's see what potential use
-> cases this change _could_ benefit, and see if there are already ways
-> to satisfy these use cases without making this change.  For example,
-> if the user wants to examine the result before actually "committing"
-> to move the target branch forward with this change, keeping it an
-> option to back out if the result of cherry-picking turns out to be
-> bad, the "--no-commit first, examine, and --continue or --abort"
-> sequence may help such a workflow.
+> Hi Junio,
 >
-> But the user can already do so without this change:
+> On Mon, 19 Oct 2020, Junio C Hamano wrote:
 >
->     $ git checkout target_branch^0 ;#detach
->     $ git cherry-pick source_branch
->     ... examine the result ...
->     ... and if it is satisfactory ...
->     $ git checkout -B target_branch
->     ... or if it is not, then discard ...
->     $ git checkout target_branch
+>> * mr/bisect-in-c-3 (2020-10-16) 7 commits
+>>  - bisect--helper: retire `--bisect-autostart` subcommand
+>>  - bisect--helper: retire `--write-terms` subcommand
+>>  - bisect--helper: retire `--check-expected-revs` subcommand
+>>  - bisect--helper: reimplement `bisect_state` & `bisect_head` shell functions in C
+>>  - bisect--helper: retire `--next-all` subcommand
+>>  - bisect--helper: retire `--bisect-clean-state` subcommand
+>>  - bisect--helper: finish porting `bisect_start()` to C
+>>
+>>  Rewriting "git bisect" in C continues.
+>>
+>>  How ready is this one?
 >
->> With this patch, we allow sequencer to save the metadata from the original
->> cherry-pick operation so that 'git cherry-pick --continue' can be called.
+> It has been reviewed _quite_ a couple of times over the course of 9
+> iterations, and I think it is ready now.
 
-And if the user wants to do the inspection while on the target
-branch, "commit -c/-C" is the perfect choice.
+Oh, numbers I can count.  I wanted to hear "yes, all previously
+known issues have been addressed" from those who did read everything
+in it and gave their feedback.
 
-    $ git cherry-pick --no-commit source_branch
-    ... examine the result ...
-    ... and if it is satisfactory ...
-    $ git commit -c source_branch
-    ... or if it is not, then discard ...
-    $ git reset --hard
+Do you want to give your "reviewed-by" now?
 
+Thanks.
