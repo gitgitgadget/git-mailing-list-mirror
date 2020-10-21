@@ -2,112 +2,96 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA4AC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00CDDC4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:41:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAFAC2145D
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:39:22 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OhQQeoIa"
+	by mail.kernel.org (Postfix) with ESMTP id 8CD402145D
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:41:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506837AbgJUWjV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 18:39:21 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55689 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2506826AbgJUWjV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 18:39:21 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 90E6CFF3D5;
-        Wed, 21 Oct 2020 18:39:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jcYALU1V6r42qWt8kBo4GSxp7Vg=; b=OhQQeo
-        IahTXleFM0fqxPfs/b5ffN/mhGcQwfjRiqhklWOcYFyY0fq1D76Kxvv8A5vGC4Tp
-        GmepGDsBVLVG6BB5h2+Bsph+ntry3eaamVegIcYMw4kMeK5fTBSdtXnyYy+7TBMS
-        4Le9gYZXZvdQHL9rSEGeXCx6Phnt6mzJxEJ7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xEu68wWpM0T20nuzZ1lARV1FZOQFoOf4
-        UDeFPKTDw4+Zbr7ZXFTUsiszzPTzo5eW6lGFDJgUMdVtEXv3LZPG9bO/LWLjULu/
-        oIlv0hKErGQlnCOl4t/0I4DyufqfxmW8WJUXDZUecd6F8ZMrqlJz7nAItcRLyKRp
-        b1Bc+05VzEg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 892CDFF3D4;
-        Wed, 21 Oct 2020 18:39:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2506854AbgJUWlC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 18:41:02 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54330 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2506722AbgJUWlC (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Oct 2020 18:41:02 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B1E57FF3D2;
-        Wed, 21 Oct 2020 18:39:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 07/10] t3200: prepare for `main` being shorter than
- `master`
-References: <pull.758.git.1603135902.gitgitgadget@gmail.com>
-        <e1740bb7d7d8c90db68ffff443b69894177e36f3.1603135903.git.gitgitgadget@gmail.com>
-Date:   Wed, 21 Oct 2020 15:39:14 -0700
-In-Reply-To: <e1740bb7d7d8c90db68ffff443b69894177e36f3.1603135903.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 19 Oct 2020
-        19:31:38 +0000")
-Message-ID: <xmqqh7qn431p.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8D7116044F;
+        Wed, 21 Oct 2020 22:41:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1603320060;
+        bh=n5Vdgrqb5fSMXgGf+fIuHMbb5ewRaTJo05JYSa8dTWk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=0o6jjb263/B5DjHe+mk/98wtc3SqjrfM71nObyMupvv/tFEkPlOE0Lq0l2nZloBRj
+         FHJd8tXNhtCsMjEKA+o5xLIvIa8DasCwVrjHFdWR4JLpLfraUhS2Xlz+1214Qyz+Ko
+         ZDXewjvwZhuLTcijFjvcAuu+AV3DFDLHRETCyJxLTLQYnIKs73UNnEInUkzzueCcBw
+         sfrHe2hzT27GPV/nOZMvgRRRJmGTXayAcQU95/FDVk9vKQWHbLlH+48Duy93gir6ud
+         OTNwO7d52aE7cdnDrmtDN+WQvYeGxDyY31QwTE04Xl0Y2gfF4TsBKYzkjIu5GRSBmz
+         14RWmFhvxUbVrfEHoXSbvMr2uFgd0Ka6/4wF+RPL6w8abW3tpJd8dNMjy96ecWbxnm
+         cFxvsrm4IrbnRxorQDvmg97IFX9hcbxzNnopwfoMEWExG6cQ0cAN6AxL68JN7XfR7g
+         0gISnEqdITJcJcEggpXufTj8Vy4nmOV4olObW4nZQMNni7g//Yj
+Date:   Wed, 21 Oct 2020 22:40:55 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeremiah Rose <jrose0323@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Launchpad Stable Release Archive not updated
+Message-ID: <20201021224055.GL490427@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeremiah Rose <jrose0323@gmail.com>, git@vger.kernel.org
+References: <00ef01d6a7b4$87ad1ef0$97075cd0$@gmail.com>
+ <00f601d6a7b4$a8c03910$fa40ab30$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3FBD4646-13EE-11EB-A1F4-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="E6lVPAHcXg6biC3t"
+Content-Disposition: inline
+In-Reply-To: <00f601d6a7b4$a8c03910$fa40ab30$@gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In the test case adjusted by this patch, we want to cut just after the
-> longest shown ref name. Since `main` is shorter than `master`, we need
-> to decrease the number of characters. Since `main2` is shown, too, and
-> since that is only one character shorter than `master`, we decrement the
-> length by one.
+--E6lVPAHcXg6biC3t
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Confused.  I do not see 'main2' (or 'master2' for that matter) in
-the test script.
+On 2020-10-21 at 14:15:41, Jeremiah Rose wrote:
+> Good morning,
 
-If we rename 'topic' to 'topico', then we'd still show branches, the
-longest among which has 6 characters (the same as 'master'), so we
-won't have to wonder where 'main2' came from; I guess that is another
-way to solve this.
+Hey,
 
+> Git 2.29 does not seem to be updated on the Launchpad ppa for stable rele=
+ase
+> for Ubuntu, but still shows under the RC archive. Is this intended?
 
+The Git project doesn't maintain any binary releases of Git whatever;
+those are all maintained by separate and independent parties.  If you
+have a question about the PPA releases, you should contact the folks
+responsible for the PPA.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t3200-branch.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 6efe7a44bc..55b24b76ce 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -375,9 +375,9 @@ test_expect_success 'git branch --column -v should fail' '
->  	test_must_fail git branch --column -v
->  '
->  
-> -test_expect_success 'git branch -v with column.ui ignored' '
-> +test_expect_success PREPARE_FOR_MAIN_BRANCH 'git branch -v with column.ui ignored' '
->  	git config column.ui column &&
-> -	COLUMNS=80 git branch -v | cut -c -9 | sed "s/ *$//" >actual &&
-> +	COLUMNS=80 git branch -v | cut -c -8 | sed "s/ *$//" >actual &&
->  	git config --unset column.ui &&
->  	cat >expect <<\EOF &&
->    a/b/c
+--E6lVPAHcXg6biC3t
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5C49gAKCRB8DEliiIei
+gWSGAQDgLZwweR+QRdzNl8O1VQgoVBHr8ej6lgh78pThpJEt8QD/aHMdT22JIsMR
+n4zLdx3ShsLl3eO1aIrCyPxTrhVkbwo=
+=KI3y
+-----END PGP SIGNATURE-----
+
+--E6lVPAHcXg6biC3t--
