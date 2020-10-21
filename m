@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 624AEC388F9
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D7A6C55178
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:22:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE06422249
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:22:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E385D21D7B
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:22:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j8Ebmsth"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BqIypbEQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437708AbgJUNWn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 09:22:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54786 "EHLO
+        id S2438090AbgJUNWr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 09:22:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437452AbgJUNWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 09:22:43 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB945C0613CE
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:22:42 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id d3so2527821wma.4
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:22:42 -0700 (PDT)
+        with ESMTP id S2437860AbgJUNWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 09:22:44 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD69C0613CF
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:22:44 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id q5so2513723wmq.0
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=v+YPpewhWqpkOyvySZBdBaJAzALEezMP6S2PQTseFs0=;
-        b=j8Ebmsth/Cs3+oKu8cR1FOKSIpjYJFIzke1MUjuq3MHCdOflC2i+uil59KMBtMk9zM
-         CcMbP77HqiDPRdsAha+Gq/oCaVREKJWor5NCGHMB6Z5IRF81/2Cik0TpsvVEDaLoj3BS
-         kNSzu9PGs21XpVfofJnGutKP5mkJVxRCpZke7M+VrSIkoh+lGEXlEPY6RznRCxiZ+s9N
-         Ft4/s0fpkQ+CTsk/U078+TE32TSFM0UTPntF1SzWLkGUBOyxoS0rsDGyZFqm3DHNBGK2
-         K1RgB3YWkrzt/hU22e1wYAfQGNBy0W+qC1QkdlLmU33GXbU16kFEFh5g5Imlnv13addE
-         oeug==
+        bh=lGrfOgvC7SqnKZIYbMOQeVni7I6tk/+NJI+xaLB4+PU=;
+        b=BqIypbEQPT66lOK+8U8+q0asZXs7ria8m/bWa4ggZ1ERlAqG6tWMmo99/qzp7ziPy+
+         oINxEKxqQMJ1RKDi3mK47tjnszCWCvr/ikCzbRa2Pn8Ls1R9qLY6089Oo4HVaKwx8TRM
+         wR1VpqzOfmsWIO+GSXARyuPqWH2psX1J2uS9zxgGeCqxm8EXt3zUnBOcSzKzHjDgfBir
+         lpdDupmI8mMjRdMGzbZ6s6IidLfQLjn6LAKc8+i3VCgJ7LF/reD8VH9lZH2BLb0wR00x
+         I9EbTRfnmasLc47ATbJEi6koXn3kTQOSuV6D/RsToXxecVNFqzuJV14zakRUPbKZRBXf
+         8rgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=v+YPpewhWqpkOyvySZBdBaJAzALEezMP6S2PQTseFs0=;
-        b=mI5eel21vUrjTohR7QELPGrNwj47o74xrq6jCd1gGW5AbECxAnwFOJeq3iylSpDt22
-         hO0n/B+abluyg1P+xOFfPq5jJHwa4T6fhqzWzKSTNeHduCGf5t+7YcITGKMJ3UnQgTq3
-         k4LpB9Ysfubu/dTy69e0zjl6fZVZZrFWBhlFoG7kVva6k0k6TP7F/yXE+wFtSTUdU1gh
-         gPGuTjzSLge+mcLBHGJslnS1+fkHXO6HtZL8soPvTwXxmxKjdVcybFmmsBA9EV381ujA
-         a4x2v44qL/k2Ma1eVjhqD3EOyA/EByXB/PAOuteNGRjyM7KjsLBJwKrny7RqN+m+NxsC
-         U9uw==
-X-Gm-Message-State: AOAM5316w0GkhAapr/7HP6YfwwfK9li/YpjyXlLn6xXIi5S7TPoTk285
-        p4p8LozK43nMgkdFHnEtfn06LBA0ETY=
-X-Google-Smtp-Source: ABdhPJzwSrOlw7HfaLpfUWjmMkqPEOlOHeOzazAHRbZQEZGXtzssHOt21vfapKdGhZWCHgjjyUvhLg==
-X-Received: by 2002:a1c:f417:: with SMTP id z23mr3433162wma.57.1603286560584;
-        Wed, 21 Oct 2020 06:22:40 -0700 (PDT)
+        bh=lGrfOgvC7SqnKZIYbMOQeVni7I6tk/+NJI+xaLB4+PU=;
+        b=L9I658qN/tRCmUirwRVA7WqhIcaaTAgVYcv9mnpQ+o1eNM02t/PDI8Hwn9a1/pTIYQ
+         r6QQKa8o7CljjaK51fYyTUcdsldXnC1esGu1MEKEDmsEAS7spnDFbOkeoPP2jTOZIt9r
+         /EWt0titavJE6oTPtxJdAvCJJYK2oJ5vQxj20aEjYqS/qRRxwsuS+U+o/cVbo5GRzOSB
+         cTStpJ1EHIRsL6O5aF+1QH7nFJN5p6jJ5AiNzIU2VahCcQsWnu/62eGs3DnhEUFXuqWT
+         aVLP2n8mc6dp9ZYyKptnPGKtCZ+ToBA8e8TvU2fWe285d0kAq+wzzuuhxdmxiE33gITM
+         vl4A==
+X-Gm-Message-State: AOAM5307Z8FtHqseLAN1XNetjftqGg4Wxrzy8W/cM8rCFNABcBfQZGDF
+        0HVElb8WWe1dNH8zsaxGX3MEvLkOtLE=
+X-Google-Smtp-Source: ABdhPJxy1nDS2qM7yaNhAtK3QWX5EtcGs0Fs6xSmBm0TybBdm0RuGqDs09LFwQDOSM0qo4hi/ZgaHQ==
+X-Received: by 2002:a1c:5f85:: with SMTP id t127mr3159724wmb.31.1603286559722;
+        Wed, 21 Oct 2020 06:22:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x6sm3932174wmb.17.2020.10.21.06.22.39
+        by smtp.gmail.com with ESMTPSA id d20sm4247036wra.38.2020.10.21.06.22.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2020 06:22:40 -0700 (PDT)
-Message-Id: <f597609b8872fc2bb4f32c439ab6f74c3e41ce24.1603286556.git.gitgitgadget@gmail.com>
+        Wed, 21 Oct 2020 06:22:38 -0700 (PDT)
+Message-Id: <54ef18182cf3a4b5d02889c139e495fa68588652.1603286555.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.895.git.git.1603286555.gitgitgadget@gmail.com>
 References: <pull.895.git.git.1603286555.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 21 Oct 2020 13:22:33 +0000
-Subject: [PATCH 2/4] merge-ort-wrappers: new convience wrappers to mimic the
- old merge API
+Date:   Wed, 21 Oct 2020 13:22:32 +0000
+Subject: [PATCH 1/4] merge-ort: barebones API of new merge strategy with empty
+ implementation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,132 +76,156 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-There are a few differences between the new API in merge-ort and the old
-API in merge-recursive.  While the new API is more flexible, it might
-feel like more work at times than the old API.  merge-ort-wrappers
-creates two convenience wrappers taking the exact same arguments as the
-old merge_trees() and merge_recursive() functions and implements them
-via the new API.  This makes converting existing callsites easier, and
-serves to highlight some of the differences in the API.
+This is the beginning of a new merge strategy.  While there are some API
+differences, and the implementation has some differences in behavior, it
+is essentially meant as an eventual drop-in replacement for
+merge-recursive.c.  However, it is being built to exist side-by-side
+with merge-recursive so that we have plenty of time to find out how
+those differences pan out in the real world while people can still fall
+back to merge-recursive.  (Also, I intend to avoid modifying
+merge-recursive during this process, to keep it stable.)
+
+The primary difference noticable here is that the updating of the
+working tree and index is not done simultaneously with the merge
+algorithm, but is a separate post-processing step.  The new API is
+designed so that one can do repeated merges (e.g. during a rebase or
+cherry-pick) and only update the index and working tree one time at the
+end instead of updating it with every intermediate result.  Also, one
+can perform a merge between two branches, neither of which match the
+index or the working tree, without clobbering the index or working tree.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Makefile             |  1 +
- merge-ort-wrappers.c | 62 ++++++++++++++++++++++++++++++++++++++++++++
- merge-ort-wrappers.h | 25 ++++++++++++++++++
- 3 files changed, 88 insertions(+)
- create mode 100644 merge-ort-wrappers.c
- create mode 100644 merge-ort-wrappers.h
+ Makefile    |  1 +
+ merge-ort.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ merge-ort.h | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 102 insertions(+)
+ create mode 100644 merge-ort.c
+ create mode 100644 merge-ort.h
 
 diff --git a/Makefile b/Makefile
-index 088770c2ae..382fe73c76 100644
+index 95571ee3fc..088770c2ae 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -922,6 +922,7 @@ LIB_OBJS += match-trees.o
+@@ -921,6 +921,7 @@ LIB_OBJS += mailmap.o
+ LIB_OBJS += match-trees.o
  LIB_OBJS += mem-pool.o
  LIB_OBJS += merge-blobs.o
- LIB_OBJS += merge-ort.o
-+LIB_OBJS += merge-ort-wrappers.o
++LIB_OBJS += merge-ort.o
  LIB_OBJS += merge-recursive.o
  LIB_OBJS += merge.o
  LIB_OBJS += mergesort.o
-diff --git a/merge-ort-wrappers.c b/merge-ort-wrappers.c
+diff --git a/merge-ort.c b/merge-ort.c
 new file mode 100644
-index 0000000000..e96c1a71be
+index 0000000000..5230364a8d
 --- /dev/null
-+++ b/merge-ort-wrappers.c
-@@ -0,0 +1,62 @@
++++ b/merge-ort.c
+@@ -0,0 +1,52 @@
++/*
++ * "Ostensibly Recursive's Twin" merge strategy, or "ort" for short.  Meant
++ * as a drop-in replacement for the "recursive" merge strategy, allowing one
++ * to replace
++ *
++ *   git merge [-s recursive]
++ *
++ * with
++ *
++ *   git merge -s ort
++ *
++ * Note: git's parser allows the space between '-s' and its argument to be
++ * missing.  (Should I have backronymed "ham", "alsa", "kip", "nap, "alvo",
++ * "cale", "peedy", or "ins" instead of "ort"?)
++ */
++
 +#include "cache.h"
 +#include "merge-ort.h"
-+#include "merge-ort-wrappers.h"
 +
-+#include "commit.h"
-+
-+static int unclean(struct merge_options *opt, struct tree *head)
++void merge_switch_to_result(struct merge_options *opt,
++			    struct tree *head,
++			    struct merge_result *result,
++			    int update_worktree_and_index,
++			    int display_update_msgs)
 +{
-+	/* Sanity check on repo state; index must match head */
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	if (head && repo_index_has_changes(opt->repo, head, &sb)) {
-+		fprintf(stderr, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
-+		    sb.buf);
-+		strbuf_release(&sb);
-+		return -1;
-+	}
-+
-+	return 0;
++	die("Not yet implemented");
++	merge_finalize(opt, result);
 +}
 +
-+int merge_ort_nonrecursive(struct merge_options *opt,
-+			   struct tree *head,
-+			   struct tree *merge,
-+			   struct tree *merge_base)
++void merge_finalize(struct merge_options *opt,
++		    struct merge_result *result)
 +{
-+	struct merge_result result;
-+
-+	if (unclean(opt, head))
-+		return -1;
-+
-+	if (oideq(&merge_base->object.oid, &merge->object.oid)) {
-+		printf(_("Already up to date!"));
-+		return 1;
-+	}
-+
-+	memset(&result, 0, sizeof(result));
-+	merge_inmemory_nonrecursive(opt, merge_base, head, merge, &result);
-+	merge_switch_to_result(opt, head, &result, 1, 1);
-+
-+	return result.clean;
++	die("Not yet implemented");
 +}
 +
-+int merge_ort_recursive(struct merge_options *opt,
-+			struct commit *side1,
-+			struct commit *side2,
-+			struct commit_list *merge_bases,
-+			struct commit **result)
++void merge_inmemory_nonrecursive(struct merge_options *opt,
++				 struct tree *merge_base,
++				 struct tree *side1,
++				 struct tree *side2,
++				 struct merge_result *result)
 +{
-+	struct tree *head = repo_get_commit_tree(opt->repo, side1);
-+	struct merge_result tmp;
-+
-+	if (unclean(opt, head))
-+		return -1;
-+
-+	memset(&tmp, 0, sizeof(tmp));
-+	merge_inmemory_recursive(opt, merge_bases, side1, side2, &tmp);
-+	merge_switch_to_result(opt, head, &tmp, 1, 1);
-+	*result = NULL;
-+
-+	return tmp.clean;
++	die("Not yet implemented");
 +}
-diff --git a/merge-ort-wrappers.h b/merge-ort-wrappers.h
++
++void merge_inmemory_recursive(struct merge_options *opt,
++			      struct commit_list *merge_bases,
++			      struct commit *side1,
++			      struct commit *side2,
++			      struct merge_result *result)
++{
++	die("Not yet implemented");
++}
+diff --git a/merge-ort.h b/merge-ort.h
 new file mode 100644
-index 0000000000..0c4c57adbb
+index 0000000000..9c655cd3ad
 --- /dev/null
-+++ b/merge-ort-wrappers.h
-@@ -0,0 +1,25 @@
-+#ifndef MERGE_ORT_WRAPPERS_H
-+#define MERGE_ORT_WRAPPERS_H
++++ b/merge-ort.h
+@@ -0,0 +1,49 @@
++#ifndef MERGE_ORT_H
++#define MERGE_ORT_H
 +
 +#include "merge-recursive.h"
 +
-+/*
-+ * rename-detecting three-way merge, no recursion.
-+ * Wrapper mimicking the old merge_trees() function.
-+ */
-+int merge_ort_nonrecursive(struct merge_options *opt,
-+			   struct tree *head,
-+			   struct tree *merge,
-+			   struct tree *common);
++struct commit;
++struct tree;
 +
-+/*
-+ * rename-detecting three-way merge with recursive ancestor consolidation.
-+ * Wrapper mimicking the old merge_recursive() function.
-+ */
-+int merge_ort_recursive(struct merge_options *opt,
-+			struct commit *h1,
-+			struct commit *h2,
-+			struct commit_list *ancestors,
-+			struct commit **result);
++struct merge_result {
++	/* whether the merge is clean */
++	int clean;
++
++	/* Result of merge.  If !clean, represents what would go in worktree */
++	struct tree *tree;
++
++	/*
++	 * Additional metadata used by merge_switch_to_result() or future calls
++	 * to merge_inmemory_*().
++	 */
++	unsigned _;
++	void *priv;
++};
++
++/* rename-detecting three-way merge, no recursion. */
++void merge_inmemory_recursive(struct merge_options *opt,
++			      struct commit_list *merge_bases,
++			      struct commit *side1,
++			      struct commit *side2,
++			      struct merge_result *result);
++
++/* rename-detecting three-way merge with recursive ancestor consolidation. */
++void merge_inmemory_nonrecursive(struct merge_options *opt,
++				 struct tree *merge_base,
++				 struct tree *side1,
++				 struct tree *side2,
++				 struct merge_result *result);
++
++/* Update the working tree and index from head to result after inmemory merge */
++void merge_switch_to_result(struct merge_options *opt,
++			    struct tree *head,
++			    struct merge_result *result,
++			    int update_worktree_and_index,
++			    int display_update_msgs);
++
++/* Do needed cleanup when not calling merge_switch_to_result() */
++void merge_finalize(struct merge_options *opt,
++		    struct merge_result *result);
 +
 +#endif
 -- 
