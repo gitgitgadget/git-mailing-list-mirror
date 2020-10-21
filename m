@@ -2,78 +2,152 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45FF2C4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59E17C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:39:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0FCA21531
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:34:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF44C21D24
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:39:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="joB5oR8U"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WWH4eLve"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504186AbgJUSeq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 14:34:46 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61421 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439031AbgJUSeq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 14:34:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 756A6102DC4;
-        Wed, 21 Oct 2020 14:34:44 -0400 (EDT)
+        id S2405621AbgJUSjJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 14:39:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57462 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbgJUSjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 14:39:09 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B2DD77E531;
+        Wed, 21 Oct 2020 14:39:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZAzwyFuxz63q66D7DZdwIxFV7LI=; b=joB5oR
-        8UNETfSLiknQOXGmTuOR1BQglLbqHtVak3zpTjRNuiLythimVNB3e61oLNehuttz
-        PJSg0wSfb9jr6p7HaBxb+hNQV1ss4oFOgjBuar7Pl7HHRl580FRMZQ475Qy3v6qd
-        9cX1DUEptQ/nn8utmH3gJsBTVpt8nsRiJqX3E=
+        :content-type; s=sasl; bh=iDBWu7KJxQqkrcRxYnVq/PCde24=; b=WWH4eL
+        ve7Pe+kG4bw4F+ksoJdRgv+2aqegU2VR4XL8WO+LFzOEBbr1N+uocgIb/7HQparg
+        Y+xRc8WP7RMwikx4H7yDH0tQmgjCuFpmIh96PB2RsRWDqmzdAK3/dzE0UMKeu7H/
+        aBnfMs5A7fZC7rD/XiUQTtdYECFeigBDDWfLI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EdYjLocFthjAcVhYUAJ7GW7P5S0ORRlk
-        mBXUyEDfenkoUEaDaWdAqLMe1fkidcJasF5qJN7LLTMdJ4hGyd95O6kqoK6JVh6t
-        m9nihKJTjSrZJa4Ezam4ueCvW7+7CSavCHpjrXIdnMUeFiH8krcMLRUc+WVSkm+O
-        1UhCBoJ883Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6DDE2102DC3;
-        Wed, 21 Oct 2020 14:34:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=G9oNnI/vCJXQyLLI7UgCWYycNCfBM3q9
+        ujbK43WJ3c72jalTxf7FUQrRoPl+7EUWOOo2Ae1leuAgAffteLU1G49v3TUYvMcC
+        alIhwGB60nodniR2Ok75/wo8CoJjiM6AIAHxGA8uTRfGkYID/EsPbFK0QxHgukbk
+        DEcctIqrUHQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9AFC7E530;
+        Wed, 21 Oct 2020 14:39:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 44F21102DC2;
-        Wed, 21 Oct 2020 14:34:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 071C17E52E;
+        Wed, 21 Oct 2020 14:39:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael Forney <mforney@mforney.org>, git@vger.kernel.org
-Subject: Re: SKIP_DASHED_BUILT_INS does not install git-*-pack
-References: <CAGw6cBsEjOnh-ZqXCPfFha=NYEdy7JDddha=UzAau0Z1tBrWKg@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2010211626430.56@tvgsbejvaqbjf.bet>
-Date:   Wed, 21 Oct 2020 11:34:37 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2010211626430.56@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 21 Oct 2020 16:27:35 +0200 (CEST)")
-Message-ID: <xmqqd01b8m2q.fsf@gitster.c.googlers.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Victor Engmark <victor@engmark.name>, git@vger.kernel.org
+Subject: Re: [PATCH v2] userdiff: support Bash
+References: <373640ea4d95f3b279b9d460d9a8889b4030b4e9.camel@engmark.name>
+        <xmqqk0vk8o20.fsf@gitster.c.googlers.com>
+        <1442e85cfbe70665890a79a5054ee07c9c16b7c6.camel@engmark.name>
+        <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
+Date:   Wed, 21 Oct 2020 11:39:04 -0700
+In-Reply-To: <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org> (Johannes Sixt's
+        message of "Wed, 21 Oct 2020 09:07:12 +0200")
+Message-ID: <xmqq8sbz8lvb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 147D6406-13CC-11EB-92B0-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B24C21A4-13CC-11EB-9923-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->> Reverting that hunk restores git-receive-pack, git-upload-archive, and
->> git-upload-pack (and only those).
+>> diff --git a/t/t4018/bash-missing-parentheses b/t/t4018/bash-missing-parentheses
+>> new file mode 100644
+>> index 0000000000..d112761300
+>> --- /dev/null
+>> +++ b/t/t4018/bash-missing-parentheses
+>> @@ -0,0 +1,4 @@
+>> +functionRIGHT { # non-match
+>> +    :
+>> +    echo 'ChangeMe'
+>> +}
 >
-> Indeed. I purposefully investigated without having a look at what you
-> linked at, and came to the exact same conclusion.
+> To check for a non-match, you write the test like this:
+>
+> 	function RIGHT () {
+> 	}
+> 	# the following must not be picked up:
+> 	functionWrong {
+> 		:
+> 		ChangeMe
+> 	}
+>
+> That is, you present a positive match, and then expect that the
+> subsequent negative match is not picked up.
 
-Good---that's sort-of "independent verification" ;-)
+All good suggestions, but I especially appreciate this one ;-).
 
-Thanks, let's fast-track the fix for 2.29.1.
+>> diff --git a/userdiff.c b/userdiff.c
+>> index fde02f225b..8830019f05 100644
+>> --- a/userdiff.c
+>> +++ b/userdiff.c
+>> @@ -23,6 +23,28 @@ IPATTERN("ada",
+>>  	 "[a-zA-Z][a-zA-Z0-9_]*"
+>>  	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+>>  	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
+>> +PATTERNS("bash",
+>> +	 /* Optional leading indentation */
+>> +	 "^[ \t]*"
+>> +	 /* Start of function definition */
+>> +	 "("
+>
+> The purpose of this outer-most pair of parentheses is actually to mark
+> the captured text, not so much "the function definition".
 
+This, too (I called it "here comes the whole thing" in my suggested
+version ).
+
+>> +	 /* Start of POSIX/Bashism grouping */
+>> +	 "("
+>
+> You could omit the comment if you indent the parts that are inside the
+> parentheses:
+>
+> 	"("
+> 		"..."
+> 	"|"
+> 		"..."
+> 	")"
+>
+
+An excellent readability suggestion.
+
+Thanks for a review.  Especially the parts that mine didn't touch
+(i.e. the proposed log message).
+
+> (But perhaps don't indent between the outer-most parentheses; it would
+> get us too far to the right. But judge yourself.)
+>
+>> +	 /* POSIX identifier with mandatory parentheses */
+>> +	 "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+>> +	 /* Bashism identifier with optional parentheses */
+>> +	 "|(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+>> +	 /* End of POSIX/Bashism grouping */
+>> +	 ")"
+>> +	 /* Optional whitespace */
+>> +	 "[ \t]*"
+>> +	 /* Compound command starting with `{`, `(`, `((` or `[[` */
+>> +	 "(\\{|\\(\\(?|\\[\\[)"
+>> +	 /* End of function definition */
+>> +	 ")",
+>> +	 /* -- */
+>> +	 /* Characters not in the default $IFS value */
+>> +	 "[^ \t]+"),
