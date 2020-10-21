@@ -2,96 +2,67 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00CDDC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5268C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:48:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CD402145D
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:41:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F73F218AC
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506854AbgJUWlC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 18:41:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54330 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2506722AbgJUWlC (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 21 Oct 2020 18:41:02 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8D7116044F;
-        Wed, 21 Oct 2020 22:41:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1603320060;
-        bh=n5Vdgrqb5fSMXgGf+fIuHMbb5ewRaTJo05JYSa8dTWk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=0o6jjb263/B5DjHe+mk/98wtc3SqjrfM71nObyMupvv/tFEkPlOE0Lq0l2nZloBRj
-         FHJd8tXNhtCsMjEKA+o5xLIvIa8DasCwVrjHFdWR4JLpLfraUhS2Xlz+1214Qyz+Ko
-         ZDXewjvwZhuLTcijFjvcAuu+AV3DFDLHRETCyJxLTLQYnIKs73UNnEInUkzzueCcBw
-         sfrHe2hzT27GPV/nOZMvgRRRJmGTXayAcQU95/FDVk9vKQWHbLlH+48Duy93gir6ud
-         OTNwO7d52aE7cdnDrmtDN+WQvYeGxDyY31QwTE04Xl0Y2gfF4TsBKYzkjIu5GRSBmz
-         14RWmFhvxUbVrfEHoXSbvMr2uFgd0Ka6/4wF+RPL6w8abW3tpJd8dNMjy96ecWbxnm
-         cFxvsrm4IrbnRxorQDvmg97IFX9hcbxzNnopwfoMEWExG6cQ0cAN6AxL68JN7XfR7g
-         0gISnEqdITJcJcEggpXufTj8Vy4nmOV4olObW4nZQMNni7g//Yj
-Date:   Wed, 21 Oct 2020 22:40:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeremiah Rose <jrose0323@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Launchpad Stable Release Archive not updated
-Message-ID: <20201021224055.GL490427@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeremiah Rose <jrose0323@gmail.com>, git@vger.kernel.org
-References: <00ef01d6a7b4$87ad1ef0$97075cd0$@gmail.com>
- <00f601d6a7b4$a8c03910$fa40ab30$@gmail.com>
+        id S2506915AbgJUWsU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 18:48:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57660 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2506751AbgJUWsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 18:48:20 -0400
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [IPv6:2a01:5b40:0:3005::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35A7C0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 15:48:19 -0700 (PDT)
+Received: from [2404:440c:1348:1500:30ae:2589:119b:7ae9] (port=33710 helo=default-rdns.vocus.co.nz)
+        by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <victor@engmark.name>)
+        id 1kVMtz-000390-IB; Thu, 22 Oct 2020 00:48:16 +0200
+Message-ID: <f56cff1c617de3fa0ce6ebff106dab629565e1fa.camel@engmark.name>
+Subject: Re: [PATCH v2] userdiff: support Bash
+From:   Victor Engmark <victor@engmark.name>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Date:   Thu, 22 Oct 2020 11:48:09 +1300
+In-Reply-To: <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
+References: <373640ea4d95f3b279b9d460d9a8889b4030b4e9.camel@engmark.name>
+         <xmqqk0vk8o20.fsf@gitster.c.googlers.com>
+         <1442e85cfbe70665890a79a5054ee07c9c16b7c6.camel@engmark.name>
+         <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.4-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="E6lVPAHcXg6biC3t"
-Content-Disposition: inline
-In-Reply-To: <00f601d6a7b4$a8c03910$fa40ab30$@gmail.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 2020-10-21 at 09:07 +0200, Johannes Sixt wrote:
+> Am 21.10.20 um 05:00 schrieb Victor Engmark:
+> > Uses the default `IFS` characters to define words.
+> 
+> We could do better than this, I think. At a minimum, the equal sign,
+> single quote, double quote, parentheses, and braces should also
+> delineate words. $(, ${, $((, ((, )), [[, ]], should be words. I
+> would
+> exclude single brackets because they could only occur in globs, IIRC,
+> and they need not be broken into words at brackets. $var should be a
+> single word, IMO.
+> 
+> That said, this can be presented as a patch on top of this one.
 
---E6lVPAHcXg6biC3t
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I can't tell where this word definition is used, and I can't seem to
+find any tests for the word regexes for the other languages. Is it used
+for word diffs somehow? I'll leave it for now, but if you have some
+pointers I could look into that later.
 
-On 2020-10-21 at 14:15:41, Jeremiah Rose wrote:
-> Good morning,
+Thank you very much for the comments!
 
-Hey,
-
-> Git 2.29 does not seem to be updated on the Launchpad ppa for stable rele=
-ase
-> for Ubuntu, but still shows under the RC archive. Is this intended?
-
-The Git project doesn't maintain any binary releases of Git whatever;
-those are all maintained by separate and independent parties.  If you
-have a question about the PPA releases, you should contact the folks
-responsible for the PPA.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---E6lVPAHcXg6biC3t
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5C49gAKCRB8DEliiIei
-gWSGAQDgLZwweR+QRdzNl8O1VQgoVBHr8ej6lgh78pThpJEt8QD/aHMdT22JIsMR
-n4zLdx3ShsLl3eO1aIrCyPxTrhVkbwo=
-=KI3y
------END PGP SIGNATURE-----
-
---E6lVPAHcXg6biC3t--
