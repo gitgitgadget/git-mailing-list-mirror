@@ -2,93 +2,137 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F8CDC388F9
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 14:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 688E6C388F9
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 15:13:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8E3E2224E
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 14:48:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D55CF2177B
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 15:13:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="A5F678Xu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fgotc6M+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2443456AbgJUOsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 10:48:07 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55135 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2443437AbgJUOsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 10:48:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1603291683;
-        bh=g/rRzevHVy4H9YgMoHu2VoHBgwxtDakEVTn+9EkLQdY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=A5F678XuHtwOzWF4KnJGL9gZMMKgfyUDHGdjhaSDst4GXsJ/+9XzMyisDDGqb6gt1
-         RNiQ2Ma3xNwab9UFOxNG2wv8YOcDCg3FTpJ0oQSHxPoioWI1AOfrnPINf+CO7fEvtf
-         Zf3t7rra0JCHCEolQHM2ruHj5ZU2lVtaA0DDnUxE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.235]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw7V-1k5qTI37hr-00j4Gr; Wed, 21
- Oct 2020 16:48:03 +0200
-Date:   Wed, 21 Oct 2020 16:48:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: mr/bisect-in-c-3, was Re: What's cooking in git.git (Oct 2020, #03;
- Mon, 19)
-In-Reply-To: <xmqqr1put77h.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2010211647050.56@tvgsbejvaqbjf.bet>
-References: <xmqqr1put77h.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2444103AbgJUPNe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 11:13:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43792 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2443906AbgJUPNe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 11:13:34 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 147AEC0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 08:13:34 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id h7so3553142wre.4
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 08:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=gkaXtwAugwBlsqioiSg1yhqDxAJkAyuEK+Tct3v81pw=;
+        b=Fgotc6M++2+NGYSueNwsDSpguhLQgMocl19jcncUS6CGC9qfdJC7tWbKDQ8eAbg8XI
+         ifHnPpARugp4DiVarrSYJIlBKYfHU/+5nS+hrnLJCKaRd056dDKPv5pV4YlIdgq7pbHF
+         nrfyMjdtaU+Gj+plAd6MMLJNzFj32BcGx6IiZrooMbIUFrqpu2d7ReFlJ1v9Qaof2ppQ
+         n8tvRVWkQFnlBu30g2O8XkQDESx8UTMawoFa3JJPc/Z1+2TsokQVnlVc2HBXmK1WQkSC
+         +rF6d7/EpCblUBkwWDAtcwcoo8wRMPknsHeUc3lE8NI7snYsQqBGO4UivbeNvQwjTyHo
+         o1Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gkaXtwAugwBlsqioiSg1yhqDxAJkAyuEK+Tct3v81pw=;
+        b=mUixW8CFlWHFJPPs6iVa+Qt6+g5mtHYRBnrKud/t9gixa5rZga5192mnq8S/HhKb1k
+         cq3hHoY1qNQsv3mIkl36OhokF/tvejrifzBPyNQK1U4P8t73lZVCHTq+R3mqaUztEBop
+         Ez4bWituAW4BHEFPzt1VREBZyHCxUVVH8Iq5XKqggAUzviKjwWADTYyQsxIh3rNUyQme
+         8HmMeL9LDBRnwAPMAVn4Ws9h9zr01A4eyrkIWSqtcg/nyF8ib4cQ3xFxvuC+mw1fVfL3
+         6SZ1Xrez65i6OdixaL8NWzTAlpOdY+tvfId9pj8FqZQEH1MmUfpiPP6c2KFdlcyHnHlV
+         8Odw==
+X-Gm-Message-State: AOAM530xvNMNedJKSM3A/RbTn3ggr0DxQ9AWd+l5c2f0Z2rEcisXGS3N
+        qWqEFUM2s3FGCbsOeh7uh/8wKjEd6Mk=
+X-Google-Smtp-Source: ABdhPJwQxW0lWcE0Qj3HXVgemAyXVujfrrSKgJPHN5xVXTGP93+UmjkMk7bHEQ/7BNobZxzuCqt2QQ==
+X-Received: by 2002:adf:dd46:: with SMTP id u6mr5371331wrm.295.1603293212606;
+        Wed, 21 Oct 2020 08:13:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q8sm4382745wro.32.2020.10.21.08.13.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2020 08:13:32 -0700 (PDT)
+Message-Id: <pull.768.git.1603293211428.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 21 Oct 2020 15:13:31 +0000
+Subject: [PATCH] SKIP_DASHED_BUILT_INS: do not skip the bin/ programs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:53dLl+vkE3acuGKS6ShntiNHQRAVABs+VCubcBSgjASmfWRJs5x
- 0ryR/6RYbfA7GOg6eAcNZD5iigCHLP5EKeTdrEWHgY0lZR6T9lHa8G96mX51NCCnMsBak40
- fioqqDxpdddRzHzTzLCt4R879sbHkQ5IgR3aRfGONfVJn88EzzwxGPob2gxIY6smNj9xc03
- gePtyDywxnTslNmdwPZ6A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xtqPWudE6hY=:2HPw3uf8EhcE6T6b3fYelW
- OOanSIOur2yAzzN3rCIxLMbOUZaqhyqip9QAhKa9iEtxMQUJbyCGRW/ZNgKcn0XHbKNIcvEDp
- /zgDZ0xAc/JLSYdh25Ix8w03bjP+FOSyeZBRauFv0F/wvgbHB4NcoaH+ZmbpaYlIrgLt/+zaA
- /XF7dXBR2Rg6khPGRPyUyJr3taNk9lGzecKmbfqkoS83Tghodz94e+PNJDPKg5obRGCKykzsq
- l5CDhK7e/Di4BMq6+Cdn6kEM/VQ70XARlt/KypEa/+vPwhfbJp/etxpuQ/kdaOXUVsQdpwWlM
- ImuGZlQOk51oC45fD32i+55cpY1KC7aseF/pcI36vGI/nBrIuCWesr3Cs6ru3krJpLMGLpTEM
- mLvkJ7q8dk6Kx1se+wmRIZVrr2kVnemlQr9NI/CtlWQYck1cwhuKyCadUJlZvPUhlRrcU/mvN
- 3UjFTabQEL/mERNONdSQQKvAbJNLCHPJiZ+CRPStHGrCWKi0d2E1wfeZQP5nUyiWesrX1AKrU
- c1b8kkWwzv1BqGTMajxnDghLcCbT8c82y23QyEdJAlVsC3G962F7PQFFAELSpKk+qLjMaJkDU
- hpOvtS75CtZxHpRF0aLblR3mPJKNxTlgQpm1IxE0LJOIvFZ//Q9i4WRrTc4opmkeoyNaPsiyC
- Xe4nNFu+T6PAZWuOuN/1UTgSPTW65BVdlA3yoGm9h0cOXQEWNDFgn0QbpKpcp211YWaPFJnLx
- sk2kbOQhi/X9uahJqIUeEeADpVh5B6dVWMX8lJYPIzRlaqQMIHpQlbWyAOpP7Oalf6psT7iaf
- IyD7Ok7pIC2HWzEYTYd92KkgIup3zndBVshgEh2KzSd6bVjJQaTN6DRN+bnUE+1lMoqPA2qbU
- V4gbNkZGgMD4uHzHmpujwi/zjg0BOD3+sTd8BseXA=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Michael Forney <mforney@mforney.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Mon, 19 Oct 2020, Junio C Hamano wrote:
+The idea of the `SKIP_DASHED_BUILT_INS` option is to stop hard-linking
+the built-in commands as separate executables. The patches to do that
+specifically excluded the three commands `receive-pack`,
+`upload-archive` and `upload-pack`, though: these commands are expected
+to be present in the `PATH` in their dashed form on the server side of
+any fetch/push.
 
-> * mr/bisect-in-c-3 (2020-10-16) 7 commits
->  - bisect--helper: retire `--bisect-autostart` subcommand
->  - bisect--helper: retire `--write-terms` subcommand
->  - bisect--helper: retire `--check-expected-revs` subcommand
->  - bisect--helper: reimplement `bisect_state` & `bisect_head` shell func=
-tions in C
->  - bisect--helper: retire `--next-all` subcommand
->  - bisect--helper: retire `--bisect-clean-state` subcommand
->  - bisect--helper: finish porting `bisect_start()` to C
->
->  Rewriting "git bisect" in C continues.
->
->  How ready is this one?
+However, due to an oversight by myself, even if those commands were
+still hard-linked, they were not installed into `bin/`.
 
-It has been reviewed _quite_ a couple of times over the course of 9
-iterations, and I think it is ready now.
+Noticed-by: Michael Forney <mforney@mforney.org>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    SKIP_DASHED_BUILT_INS: do not skip the bin/ programs
+    
+    As reported by Michael in 
+    https://lore.kernel.org/git/CAGw6cBsEjOnh-ZqXCPfFha=NYEdy7JDddha=UzAau0Z1tBrWKg@mail.gmail.com
+    , the SKIP_DASHED_BUILT_INS feature had a bug I wish we had caught in
+    the -rc cycle. But at least SKIP_DASHED_BUILT_INS is still strictly
+    opt-in, so the damage is somewhat contained.
 
-Thanks,
-Dscho
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-768%2Fdscho%2Fskip-dashed-built-ins-still-must-install-install_bindir_programs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-768/dscho/skip-dashed-built-ins-still-must-install-install_bindir_programs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/768
+
+ Makefile | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 95571ee3fc..1fb0ec1705 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2981,15 +2981,12 @@ endif
+ 	} && \
+ 	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
+ 		$(RM) "$$bindir/$$p" && \
+-		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
+-		then \
+-			test -n "$(INSTALL_SYMLINKS)" && \
+-			ln -s "git$X" "$$bindir/$$p" || \
+-			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+-			  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+-			  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
+-			  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
+-		fi \
++		test -n "$(INSTALL_SYMLINKS)" && \
++		ln -s "git$X" "$$bindir/$$p" || \
++		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
++		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
++		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
++		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
+ 	done && \
+ 	for p in $(BUILT_INS); do \
+ 		$(RM) "$$execdir/$$p" && \
+
+base-commit: a5fa49ff0a8f3252c6bff49f92b85e7683868f8a
+-- 
+gitgitgadget
