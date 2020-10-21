@@ -2,124 +2,93 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A115C4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 264D1C4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 19:40:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2A9D221F9
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 18:55:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 917B324171
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 19:40:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t4++PFma"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JK5GtofE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502241AbgJUSzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 14:55:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63304 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2502103AbgJUSzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 14:55:23 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 680327E7F5;
-        Wed, 21 Oct 2020 14:55:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jDuZkMelPt3CITRkxy6tSm8TuyY=; b=t4++PF
-        maL00KtO6RNmialaOMn/sHbGUaHnDPvhoY6OgK8sOfVP7LARXUxdHyXREm5vBuBP
-        kTnHCnSkiUpTI5s61G2xCgbfblwzlI3bJA7mnungJA7KzAH6EjjoLYe7QMb3rCMX
-        UKuO0Zt3qFfQtCuuv+zlx0JlMlBwiH43aaYJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mdTpucYCeLPNAmKGZUJgAbJURY2OSnc3
-        m/fvR+3ovM9+jM8BIImwl3LJQU07R9kHt/uM2ZfRJuZnMZx1XzSZiyKrZYd3UrPY
-        lZ+5y7Zx6HxX2HgEY3VDX8tUdnTmic3Xwcoi1qs+eN9ElED9mONsM4V7qvWQxoaW
-        7QXJcW9tE4I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EB567E7F4;
-        Wed, 21 Oct 2020 14:55:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D4BC47E7F1;
-        Wed, 21 Oct 2020 14:55:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shengfa Lin <shengfa@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, nathaniel@google.com,
-        rsbecker@nexbridge.com, sandals@crustytoothpaste.net,
-        santiago@nyu.edu
-Subject: Re: [WIP v2 1/2] Adding a record-time-zone command option for commit
-References: <xmqqk0vtki66.fsf@gitster.c.googlers.com>
-        <20201021050146.3001222-1-shengfa@google.com>
-Date:   Wed, 21 Oct 2020 11:55:20 -0700
-In-Reply-To: <20201021050146.3001222-1-shengfa@google.com> (Shengfa Lin's
-        message of "Wed, 21 Oct 2020 05:01:46 +0000")
-Message-ID: <xmqqzh4f76jr.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2405190AbgJUTkd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 15:40:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56988 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731447AbgJUTkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 15:40:33 -0400
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AD4CC0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 12:40:33 -0700 (PDT)
+Received: by mail-io1-xd44.google.com with SMTP id r9so4435411ioo.7
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 12:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QRD5gcKGR+pssMmpx+l49FgFne3swD03w9M6NBZ2vqU=;
+        b=JK5GtofETVSBSNugQuVM6MdOUpGHdllkeG9zsM9uD5R0OG72z8g5xsz3ulVbkYjXJW
+         iLZB8P8pO5qC5DEIAAL5I+qiXskf36qga3Y8mzc37a+z+C01CpMnm2HXSaBofj38ytup
+         2FS0dvsNOinON1qXMY1St5HAsPfS89SJzdLkcylcMuDQDXl5ykULHnUoxyW7aYDsoWJJ
+         FpiGJuj8l5lKFPCb8g1xF0Gw5rl9+IyW09n1lzSGgJDetOPcX2srPyinfR/+bBunXTPo
+         Zd+mW/JwS55N1rmarL17vFs6Dw7BDwC9/MyiYPbDpEqTAG+TpjG1Hlc7P5Nfo7S9GSGU
+         rBkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QRD5gcKGR+pssMmpx+l49FgFne3swD03w9M6NBZ2vqU=;
+        b=ef7rLaawMW3QGEzwKH9jtf5OQoosq/szaowJFn8X67PXQ7X2KBItpT2DQe6qRZSdIX
+         X/HYpFLEtzqwf6g6IXL6VlDxKlDh1SnxAgQdb3zzhzPRHu2PUnQFXbCohziqIi+psVRZ
+         enpThLNarl1GBe59Pgh9eVCYUg99bUtt42qR/Fv3lHX1HWS5KhohOAksOMSZDOZOz6lu
+         jY7f9dDUmQgswgk5nLuntiWb3gMI4ugVNZFcCDcnMqWyhGN9p7G/Aok1nofp7h7qSYaB
+         7p8GhCWwEagwILhQGBl9AnUc7HbZYzS8RWD71X0Vg4IjI8qLc4EEQALXdPJa0PXFOc5r
+         Aicw==
+X-Gm-Message-State: AOAM532BJDAtCqTv1VTNJ5K1+W2kxGY+7ldk/zRVowARvwesjPeaQmYc
+        dfL6APKtQ+h9k0u2c7dg/Se09MWp+fB9rAekn1l4TBBCBCs=
+X-Google-Smtp-Source: ABdhPJwI0GuHtRRRZb7ld94LxVHeHrbmqkBwuYqDolGYRVNVWSBSjarV/doCmjy9ronrFnQyexHnihVd3U2+j/rI5I0=
+X-Received: by 2002:a5d:815a:: with SMTP id f26mr4122213ioo.111.1603309232357;
+ Wed, 21 Oct 2020 12:40:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F7F10286-13CE-11EB-94C6-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
+ <20201021131012.20703-1-sangunb09@gmail.com> <CAPig+cSi1SSZTS86-6_0gDCeDqPCEvT+Lh3gLXe--Y1PDJSDfw@mail.gmail.com>
+In-Reply-To: <CAPig+cSi1SSZTS86-6_0gDCeDqPCEvT+Lh3gLXe--Y1PDJSDfw@mail.gmail.com>
+From:   Sangeeta NB <sangunb09@gmail.com>
+Date:   Thu, 22 Oct 2020 01:10:21 +0530
+Message-ID: <CAHjREB6Agm9Nia2+e4=1zAJ6Y3NXgPQLmN_he1353ScaznK5hQ@mail.gmail.com>
+Subject: Re: [Outreachy] [PATCH v2] diff: do not show submodule with untracked
+ files as "-dirty"
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shengfa Lin <shengfa@google.com> writes:
+Hey,
 
-> Thanks for the comments and sorry for not describing the design.
-> I will add it here.
-
-Thanks.  Please do not forget to add it to the updated patch, too.
-That's where it matters most---you do not necessarily have to
-explain things to _me_, but you should, to everybody who will read
-"git log" in the future in order to understand what we did and why.
-
-> First, I would like to use a "global" variable to keep track of whether
-> record-time-zone is set and default to true. Then in various places such
-> as commit, pull, merge and rebase; we can add command option that can
-> modify this value.
+> Again, it's a judgment call whether to go with modern style or follow
+> existing style of the file.
 >
-> Then in datestamp in date.c, we can check this value; offset would be
-> initialized to 0 and only be set if record_time_zone is true. Additionally,
-> date_string from the same file would take an extra argument to indicate if
-> we want to use nagative sign for zero offset. Then the timestamp along with
-> sign and 4 digits offset would be stored in "git_default_date" as buf
-> "1603255519 -0000". I think of this as the "encoding" step.
+> Another option is to have a preparatory patch which first modernizes
+> the script, and then your new tests would follow modern style. But,
+> that may be outside of scope of your submission.
+>
+> To summarize: The only really actionable review comments are the minor
+> style nits in the C code. The nits about style issues in the tests are
+> judgement calls, and could be handled (by someone) at a later date.
 
-Yes, we could check it in datestamp(), but ... 
+Thanks for the feedback, Eric. I would add the style nits in the
+upcoming patch.
 
-> Initially, I thought this would be sufficient to show "-0000" in commit log
-> message. However, I found that the show_date function is used for "decoding";
-> converting timestamp and tz to more readable format. Then I realize the
-> function won't distinguish between +0 and -0 as it only takes in a tz as
-> argument. As a result,...
-
-... I would have imagined that you do not have to deal with all
-those complications if you don't hook this to such a low level of
-the call graph.  That is why I wondered:
-
->> I may be totally off, ... but wouldn't it be just the
->> matter of touching the single callsite of datestamp() in ident.c, so
->> that after it gets git_default_date string filled, null out the last
->> 5 bytes in it with "-0000" if record_tz is off?
-
-Without any change to datestamp() you made in the patch, the call to
-the function from ident.c may give us back a string that ends with
-the integer that is the number of seconds since epoch, and sign plus
-4 digits, e.g. +0900 or -0800, that would reveal the true timezone.
-I would have thought that these five bytes can be replaced with
--0000 under some condition (including "the global is set" which is a
-sign that the feature is being used, but not limited to that one---
-we may need to make sure the call to ident_default_date() to fill
-git_default_date.buf is done on behalf of the user to get a new
-timestamp to record the user's activity, not doing something like
-"git commit -C <existing commit>").  I do not immediately see a
-reason why such a change near the surface level, which does not
-disrupt the workings of the code at lower levels, would not work.
-
-Thanks.
-
-
-
+For the style issues in the tests maybe what I can do is I can submit
+another patch with this patch to modernize the test scripts of these
+files? I am expecting some feedback from the community on how to
+handle this.
