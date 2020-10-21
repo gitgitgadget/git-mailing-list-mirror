@@ -2,93 +2,109 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF21C4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5253DC4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03AA2241A3
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:19:33 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fcLOyQXq"
+	by mail.kernel.org (Postfix) with ESMTP id D3264241A4
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 22:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506607AbgJUWTd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 18:19:33 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54883 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2506551AbgJUWTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 18:19:32 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBC461048EB;
-        Wed, 21 Oct 2020 18:19:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rQLp9uYpeAOuxFmmcyOZlgGfoLA=; b=fcLOyQ
-        XqqhyMa4hY+W86tkOhYawEjtTo2WTtgQ7fKx0QMDjy6KX2T5aEIK+ZtzW7Vhu739
-        fMc7KtjngZUmNrADaF6SjDIYaI0ikV9usKZTUxe8UjXtEjB/ER5XaY5/kXKlUhia
-        tRTULqPeZylwije6QPZ6n3CSYysCUCoGWXwbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gc/r1GdTMAKXme9X52HBkf0wadNNCnry
-        YuUydj+sAEqI4y6zpqsJELr9Cq6goDQJoOOuzXljkcomek7oLdJQKajDB1sK+v3K
-        B1QibDLQlYUodvtVzV5pLLb8KKodF4mXaLMt9SnyS6CakHnn3AXKYPfUvP1XidwP
-        zspVDuHlnGw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D48941048EA;
-        Wed, 21 Oct 2020 18:19:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2506633AbgJUWWG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 18:22:06 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54300 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2506629AbgJUWWF (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Oct 2020 18:22:05 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 282591048E6;
-        Wed, 21 Oct 2020 18:19:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 02/10] t9801: use `--` in preparation for default branch
- rename
-References: <pull.758.git.1603135902.gitgitgadget@gmail.com>
-        <5849eda331e09732026f0432cf1040a4e973a702.1603135902.git.gitgitgadget@gmail.com>
-Date:   Wed, 21 Oct 2020 15:19:26 -0700
-In-Reply-To: <5849eda331e09732026f0432cf1040a4e973a702.1603135902.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 19 Oct 2020
-        19:31:33 +0000")
-Message-ID: <xmqq36275ij5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E02D46042C;
+        Wed, 21 Oct 2020 22:22:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1603318924;
+        bh=utZ1Y2rj+7og/VHdBgddxa4o2GCuWxheyrH7wFGPOS8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=tlJAldtA9Rz8CqM4d81YPzIcIJQOwdfKLFE5/186ftssPHwo1P9Uy3mPfq7+PNiEJ
+         /W8G7+44qSojSvol+dQhh9O7gJTfsebHK1U9h8ODqDLupZphJgM3T4zD1qFer0sozz
+         yIXFnxbqbFYhMbAsktTuALlB6Pz0EIz1L/ibQpz63A4G6L+y2U5KH3Ak4eA6+o1LLU
+         4slZ8gcIDZAl4fHArKS3F1gOb0/OWj5mUUCMAuNRq+lLy+RN9IR5xUN9FPhb9P96V0
+         05i8Xqc+MbWR47na66r615ZX7JSMaH5CJnwy+x4402bim9S6RIMcfV2t38nZUn+fHQ
+         4rEAqFujvCOAxV4uv+8PZlj89UXNxuZZWJE1J3i8SwgNqfelPKBAd5tn3BNf5YRtxz
+         2KeDqJNoyCi/a4AjQVYBHF29B0LyPzVdGyzsUEwW18cKvt+2J+dECjslBy4bcJ8I68
+         TcpeV+8HyAC6eDwZqJ8ioa9nmdhu0X9t7iaBP2rZfqWEWltkpwL
+Date:   Wed, 21 Oct 2020 22:21:58 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Nikos Chantziaras <realnc@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: git svn log: Use of uninitialized value $sha1_short
+Message-ID: <20201021222158.GJ490427@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Nikos Chantziaras <realnc@gmail.com>, git@vger.kernel.org
+References: <rmpve5$q2s$1@ciao.gmane.io>
+ <20201021202642.GA60606@coredump.intra.peff.net>
+ <xmqqwnzj5mq5.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7BE5236C-13EB-11EB-A71A-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="I/5syFLg1Ed7r+1G"
+Content-Disposition: inline
+In-Reply-To: <xmqqwnzj5mq5.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Seeing as we want to use `main` as the new default branch name used by
-> `git init`, and that `main` is used as directory name in t9801, let's
-> tighten the rev-list arguments to make it explicit when we are referring
-> to a ref instead of a directory.
+--I/5syFLg1Ed7r+1G
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Interesting.  s/master/main/g would introduce "that name is both a
-revision and a path" ambiguity?  An obvious alternative would be to
-use a word that is not 'main' or 'master' for the path and that way
-we will keep the current property that tests do not have to worry
-about the rev/path ambiguity.  But given that even "git p4" should
-be safe against rev/path ambiguity, I think this is good in the long
-run---if "git p4" is not prepared to handle the ambiguity correctly,
-then this approach may reveal such an existing breakage when the
-branch name 'master' is replaced with 'main', and at that point, we
-have to scramble and fix it (or rename the path from 'main' to
-something else as a workaround).
+On 2020-10-21 at 20:48:50, Junio C Hamano wrote:
+> Looks that way.  '$::' as opposed to plain '$' threw the replacement
+> off the track?
+>=20
+>  perl/Git/SVN/Log.pm | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git i/perl/Git/SVN/Log.pm w/perl/Git/SVN/Log.pm
+> index 3858fcf27d..9c819188ea 100644
+> --- i/perl/Git/SVN/Log.pm
+> +++ w/perl/Git/SVN/Log.pm
+> @@ -298,7 +298,7 @@ sub cmd_show_log {
+>  			get_author_info($c, $1, $2, $3);
+>  		} elsif (/^${esc_color}(?:tree|parent|committer) /o) {
+>  			# ignore
+> -		} elsif (/^${esc_color}:\d{6} \d{6} $::sha1_short/o) {
+> +		} elsif (/^${esc_color}:\d{6} \d{6} $::oid_short/o) {
+>  			push @{$c->{raw}}, $_;
+>  		} elsif (/^${esc_color}[ACRMDT]\t/) {
+>  			# we could add $SVN->{svn_path} here, but that requires
 
-Looking good.
+Yeah, this is correct.  I'll try to get a format patch written up
+tonight with this if nobody gets to it before me.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
+--I/5syFLg1Ed7r+1G
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5C0hgAKCRB8DEliiIei
+ge/AAP9M3kNyJrIHNwjg8hVmcA7urzjpfcuzYrqc+XiDkVAOgAEA9Yiyv7/Vb6/X
+RMhnux1pK5+Pr5tOFiSC9Y1jfY3U0QI=
+=tckR
+-----END PGP SIGNATURE-----
+
+--I/5syFLg1Ed7r+1G--
