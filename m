@@ -2,76 +2,78 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74E2EC388F9
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D25C388F9
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:41:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09880221FC
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:25:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 222D220BED
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 13:41:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sqirJkRV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grFR9p1d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2441551AbgJUNZa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 09:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55220 "EHLO
+        id S2439134AbgJUNln (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 09:41:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405683AbgJUNZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 09:25:30 -0400
+        with ESMTP id S2410476AbgJUNlm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 09:41:42 -0400
 Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9332FC0613CE
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:25:29 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id e17so3010144wru.12
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:25:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A779DC0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:41:42 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id g12so3096360wrp.10
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 06:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2Vqj3Q575IJt4JhJhctogfnkXljLKLK214hCyNLPDDY=;
-        b=sqirJkRVezotf3DvW+gmvMotvAXZE7WoqfMkND2ODgqVwnKpxok0/1DyErvXO9fZY1
-         C3o3tqazvzaFEBEXm3CFBVeJsIoUknTn+sinr1gygR+B6gP9Kv+qEde8Hmmtd/qkRpLK
-         wNA09q9jCRXEQ0G8axE+LD0NkFQEkke5QFYb6Q+CRZ5DJ0X/yI+nLlYZ3E+davh2aSaS
-         zCl3S08Lz0K7h2F07xotSVTvNgd3R1fYvxL6GSTykOE43mNLOW7wxUFk+4M086VMWmZK
-         sui0jGVJI06DPsgjBjcNFL1H/NdSOb7kwxCxBvi26eeBf+sMwNuquumPHOSnkYBOtdsD
-         VWag==
+        bh=Q38srXjvVRm/NTpV8i0Y218ni3OvL/d+AYbsgHQgt3g=;
+        b=grFR9p1dgnGEl4DzM2KvtKnARJlNKnvo9n1EWQ3Yt00yIKK0bGaTEV8M9MZxTIkfL+
+         I9iimo+FMXfi3hOTE6haAXbEN6iylsK8xjwZW3B5FIFAthqkxY5PRBW5aOM+FM0KNY/z
+         iTcej7Wp3bPZIv0PcPKV5W8SDykJvLZYZDbSy5BrXznxk7lB1+0AOdRsPnwBQy9dOHZz
+         wt6YU1/7Mp8y2RSdCCGNqW8IuzcFPm64XyO2HeH+9rwKtLUiGvWkIeIYGfQ0IOncZM13
+         ECsPDDUL7WqZK0QMPP2jpVlgZGdVkimyTXWXFRwAFZNYVTUnBjMgDTh59eauJ2QK+11z
+         WwBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2Vqj3Q575IJt4JhJhctogfnkXljLKLK214hCyNLPDDY=;
-        b=V5IQx5rMTledaxYcbht/pLFAQux9fRe/cZiDUguW/J0RJ/0DJ0BTWMfbHoJ2psBx9M
-         ARckzK+2D84PKrAQ9YFr9zYg5L14ACvJ0JTEZDJdjgaogoNhXhmSuFOq0TWgfAr64PtV
-         q1CgoTeVDCHmm02cz2/7YhGNU9Cz1A84B0jRI4QNdxoHKdXuSSFWLCSxEPQozNqAx1Y+
-         dRyPZO+xcpp6mFOiRkUGfZmi+IlhZ5OMQgtCbHmTfRso7T3EI/LuRXvmpfVT4wsyZ7Rd
-         CX0FGRgSPNCnmUJx0nx2OzEKpJyiLWWdxljhtq24Ierwwk+7/fWm93h4crseS8q/oMIm
-         UMoQ==
-X-Gm-Message-State: AOAM530Q2Oyh3nxUrU0klYi8Z2wW6eIpOShFBOSmXVkNK3Ib2CuItd+z
-        1jyA05bXn1cmrGUrj8DSdvNeeqTjDWk=
-X-Google-Smtp-Source: ABdhPJylXEUAEJ3Q7LGceuXcBgG/bi3J8pmEgDyWodVqBzwwZF3eRXBweRl8/J9mw3Kqi2A0tkx9cg==
-X-Received: by 2002:a5d:4c8d:: with SMTP id z13mr4820778wrs.412.1603286727964;
-        Wed, 21 Oct 2020 06:25:27 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Q38srXjvVRm/NTpV8i0Y218ni3OvL/d+AYbsgHQgt3g=;
+        b=GfYg+vSx9Tgb0VRy7Jfgf2TuHiUu0eUxKbFobAOts9t0AC5Y9RQmrcRHT9OHg4CZ5Q
+         b03iWOmHCpBDljt/U+TOWUwR6iKwKIQfASs52XLT1XpFsRSvTrgoLc+VjUgV13Cfn51L
+         xMm2AxhkFB2/YTAfVeJKcJf4kHxoVjHusImGqOnhwU33vPDzabtp53x1Quc/ckpmGdRa
+         3myUGeYaT4YT32IRsbVokgdzGE0R2J8Iw+KEwa9phHjMrIaRS9w711cDLM9fvNfrqqDz
+         +jjZqYFHO/uETOLvTc7+a7dURRGr16Z9forr4vJCXkrkIzClPBOcWU4rza2UPkteV7GE
+         6OTg==
+X-Gm-Message-State: AOAM53388Vo0m0pZbN/hOYPXChb4QAVzxFklKW8aM9yZM+oLMv95XDME
+        FwnfsnEWD3g1VuHMGtCioXk=
+X-Google-Smtp-Source: ABdhPJyyTCOMsQ1t7NoqhWtlfYgr5d3qF2hDrySui3fDbL3YdzXYh3OssNTtIH8SnR4o7Nnou91PAw==
+X-Received: by 2002:adf:f2d1:: with SMTP id d17mr4880187wrp.122.1603287701293;
+        Wed, 21 Oct 2020 06:41:41 -0700 (PDT)
 Received: from [192.168.1.240] (13.45.90.146.dyn.plus.net. [146.90.45.13])
-        by smtp.gmail.com with ESMTPSA id u195sm3681331wmu.18.2020.10.21.06.25.26
+        by smtp.gmail.com with ESMTPSA id a3sm4431289wrh.94.2020.10.21.06.41.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2020 06:25:27 -0700 (PDT)
+        Wed, 21 Oct 2020 06:41:40 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [OUTREACHY][PATCH v2] t7006: Use test_path_is_* functions in test
- script
-To:     Joey S <jgsal@protonmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com>
+Subject: Re: [PATCH][OUTREACHY] bisect: allow `git bisect` to run from
+ subdirectory
+To:     Sangeeta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Sangeeta <sangunb09@gmail.com>
+References: <pull.765.git.1603271344522.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <fc5fecec-1a77-871d-d1f9-dad1bae8920c@gmail.com>
-Date:   Wed, 21 Oct 2020 14:25:25 +0100
+Message-ID: <2f71d0c4-a5de-c22b-9cbe-a9efcb3cd21d@gmail.com>
+Date:   Wed, 21 Oct 2020 14:41:39 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com>
+In-Reply-To: <pull.765.git.1603271344522.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -79,345 +81,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Joey
+Hi Sangeeta
 
-On 20/10/2020 20:53, Joey S wrote:
-> Modernize the test by replacing `test -e` instances with
-> `test_path_is_file` helper functions, and `! test -e` with
-> `test_path_is_missing`, for better readability and diagnostic messages.
+It's great to see you tackling another patch
 
-This is a good summary of the changes and importantly explains why we're 
-making the changes
+On 21/10/2020 10:09, Sangeeta via GitGitGadget wrote:
+> From: Sangeeta Jain <sangunb09@gmail.com>
+> 
+> As `git rebase` was never prevented to run from subdirectory we shouldn't
+> prevent `git bisect` to run from subdirectories.
 
-> Signed-off-by: Joey Salazar <jgsal@protonmail.com>
+I'm not sure it's relevant to bisect whether or not rebase can be run 
+from a subdirectory. What is important is that we want all commands to 
+be able to be run from a subdirectory unless there is a good reason not 
+to (and there isn't for bisect)
 
-The patch looks fine to me now
+I'd recommend adding [Outreachy] to the beginning of the first line of 
+the commit message as well.
 
-Thanks
+> This commit removes the
+> restriction on git bisect to run only from top level directory thereby
+> allowing it to run from any subdirectory.
+> 
+> Signed-off-by: Sangeeta Jain <sangunb09@gmail.com>
+> ---
+>      [Outreachy] bisect: allow git bisect to run from subdirectory
+>      
+>      As git rebase was never prevented to run from subdirectory we shouldn't
+>      prevent git bisect to run from subdirectories. This commit removes the
+>      restriction on git bisect to run only from top level directory thereby
+>      allowing it to run from any subdirectory.
+>      
+>      Signed-off-by: Sangeeta Jain sangunb09@gmail.com [sangunb09@gmail.com]
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-765%2Fsangu09%2Fbisect_fix-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-765/sangu09/bisect_fix-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/765
+> 
+>   git-bisect.sh               | 1 +
+>   t/t6030-bisect-porcelain.sh | 7 +++++++
+>   2 files changed, 8 insertions(+)
+> 
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index ea7e684ebb..9cd0fa0483 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -32,6 +32,7 @@ git bisect run <cmd>...
+>   Please use "git help bisect" to get the full man page.'
+>   
+>   OPTIONS_SPEC=
+> +SUBDIRECTORY_OK=Yes
+>   . git-sh-setup
+
+`git bisect run` takes an optional script that is run to determine if 
+the current commit is good or bad. If the script is given with a 
+relative path then we need to make sure it is invoked from the 
+subdirectory that `git bisect run` was started from. As far as I can see 
+git-bisect.sh does not change directory but it would be good to have a 
+test for `git bisect run <cmd>` from a subdirectory.
+
+Best Wishes
 
 Phillip
 
-> ---
->   t/t7006-pager.sh | 84 ++++++++++++++++++++++++------------------------
->   1 file changed, 42 insertions(+), 42 deletions(-)
-> 
-> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-> index 00e09a375c..fdb450e446 100755
-> --- a/t/t7006-pager.sh
-> +++ b/t/t7006-pager.sh
-> @@ -19,7 +19,7 @@ test_expect_success 'setup' '
->   test_expect_success TTY 'some commands use a pager' '
->   	rm -f paginated.out &&
->   	test_terminal git log &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
+>   _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+> index aa226381be..6b68cc01d0 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -49,6 +49,13 @@ test_expect_success 'bisect starts with only one bad' '
+>   	git bisect next
 >   '
+>   
+> +test_expect_success 'bisect runs in a subdirectory' '
+> +    mkdir -p subdir &&
+> +    git -C subdir bisect start &&
+> +    git -C subdir bisect good &&
+> +    git -C subdir bisect reset
+> +'
+> +
+>   test_expect_success 'bisect does not start with only one good' '
+>   	git bisect reset &&
+>   	git bisect start &&
 > 
->   test_expect_failure TTY 'pager runs from subdir' '
-> @@ -65,49 +65,49 @@ test_expect_success !MINGW,TTY 'LESS and LV envvars set by git-sh-setup' '
->   test_expect_success TTY 'some commands do not use a pager' '
->   	rm -f paginated.out &&
->   	test_terminal git rev-list HEAD &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success 'no pager when stdout is a pipe' '
->   	rm -f paginated.out &&
->   	git log | cat &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success 'no pager when stdout is a regular file' '
->   	rm -f paginated.out &&
->   	git log >file &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git --paginate rev-list uses a pager' '
->   	rm -f paginated.out &&
->   	test_terminal git --paginate rev-list HEAD &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success 'no pager even with --paginate when stdout is a pipe' '
->   	rm -f file paginated.out &&
->   	git --paginate log | cat &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'no pager with --no-pager' '
->   	rm -f paginated.out &&
->   	test_terminal git --no-pager log &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'configuration can disable pager' '
->   	rm -f paginated.out &&
->   	test_unconfig pager.grep &&
->   	test_terminal git grep initial &&
-> -	test -e paginated.out &&
-> +	test_path_is_file paginated.out &&
-> 
->   	rm -f paginated.out &&
->   	test_config pager.grep false &&
->   	test_terminal git grep initial &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'configuration can enable pager (from subdir)' '
-> @@ -122,107 +122,107 @@ test_expect_success TTY 'configuration can enable pager (from subdir)' '
->   		test_terminal git bundle unbundle ../test.bundle
->   	) &&
->   	{
-> -		test -e paginated.out ||
-> -		test -e subdir/paginated.out
-> +		test_path_is_file paginated.out ||
-> +		test_path_is_file subdir/paginated.out
->   	}
->   '
-> 
->   test_expect_success TTY 'git tag -l defaults to paging' '
->   	rm -f paginated.out &&
->   	test_terminal git tag -l &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag -l respects pager.tag' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag=false tag -l &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag -l respects --no-pager' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag --no-pager tag -l &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag with no args defaults to paging' '
->   	# no args implies -l so this should page like -l
->   	rm -f paginated.out &&
->   	test_terminal git tag &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag with no args respects pager.tag' '
->   	# no args implies -l so this should page like -l
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag=false tag &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag --contains defaults to paging' '
->   	# --contains implies -l so this should page like -l
->   	rm -f paginated.out &&
->   	test_terminal git tag --contains &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag --contains respects pager.tag' '
->   	# --contains implies -l so this should page like -l
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag=false tag --contains &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag -a defaults to not paging' '
->   	test_when_finished "git tag -d newtag" &&
->   	rm -f paginated.out &&
->   	test_terminal git tag -am message newtag &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag -a ignores pager.tag' '
->   	test_when_finished "git tag -d newtag" &&
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag tag -am message newtag &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag -a respects --paginate' '
->   	test_when_finished "git tag -d newtag" &&
->   	rm -f paginated.out &&
->   	test_terminal git --paginate tag -am message newtag &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag as alias ignores pager.tag with -a' '
->   	test_when_finished "git tag -d newtag" &&
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag -c alias.t=tag t -am message newtag &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git tag as alias respects pager.tag with -l' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.tag=false -c alias.t=tag t -l &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git branch defaults to paging' '
->   	rm -f paginated.out &&
->   	test_terminal git branch &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success TTY 'git branch respects pager.branch' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.branch=false branch &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git branch respects --no-pager' '
->   	rm -f paginated.out &&
->   	test_terminal git --no-pager branch &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git branch --edit-description ignores pager.branch' '
-> @@ -232,8 +232,8 @@ test_expect_success TTY 'git branch --edit-description ignores pager.branch' '
->   		touch editor.used
->   	EOF
->   	EDITOR=./editor test_terminal git -c pager.branch branch --edit-description &&
-> -	! test -e paginated.out &&
-> -	test -e editor.used
-> +	test_path_is_missing paginated.out &&
-> +	test_path_is_file editor.used
->   '
-> 
->   test_expect_success TTY 'git branch --set-upstream-to ignores pager.branch' '
-> @@ -242,13 +242,13 @@ test_expect_success TTY 'git branch --set-upstream-to ignores pager.branch' '
->   	test_when_finished "git branch -D other" &&
->   	test_terminal git -c pager.branch branch --set-upstream-to=other &&
->   	test_when_finished "git branch --unset-upstream" &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git config ignores pager.config when setting' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.config config foo.bar bar &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git config --edit ignores pager.config' '
-> @@ -257,33 +257,33 @@ test_expect_success TTY 'git config --edit ignores pager.config' '
->   		touch editor.used
->   	EOF
->   	EDITOR=./editor test_terminal git -c pager.config config --edit &&
-> -	! test -e paginated.out &&
-> -	test -e editor.used
-> +	test_path_is_missing paginated.out &&
-> +	test_path_is_file editor.used
->   '
-> 
->   test_expect_success TTY 'git config --get ignores pager.config' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.config config --get foo.bar &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git config --get-urlmatch defaults to paging' '
->   	rm -f paginated.out &&
->   	test_terminal git -c http."https://foo.com/".bar=foo \
->   			  config --get-urlmatch http https://foo.com &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
->   test_expect_success TTY 'git config --get-all respects pager.config' '
->   	rm -f paginated.out &&
->   	test_terminal git -c pager.config=false config --get-all foo.bar &&
-> -	! test -e paginated.out
-> +	test_path_is_missing paginated.out
->   '
-> 
->   test_expect_success TTY 'git config --list defaults to paging' '
->   	rm -f paginated.out &&
->   	test_terminal git config --list &&
-> -	test -e paginated.out
-> +	test_path_is_file paginated.out
->   '
-> 
-> 
-> @@ -392,7 +392,7 @@ test_default_pager() {
->   			export PATH &&
->   			$full_command
->   		) &&
-> -		test -e default_pager_used
-> +		test_path_is_file default_pager_used
->   	"
->   }
-> 
-> @@ -406,7 +406,7 @@ test_PAGER_overrides() {
->   		PAGER='wc >PAGER_used' &&
->   		export PAGER &&
->   		$full_command &&
-> -		test -e PAGER_used
-> +		test_path_is_file PAGER_used
->   	"
->   }
-> 
-> @@ -432,7 +432,7 @@ test_core_pager() {
->   		export PAGER &&
->   		test_config core.pager 'wc >core.pager_used' &&
->   		$full_command &&
-> -		${if_local_config}test -e core.pager_used
-> +		${if_local_config}test_path_is_file core.pager_used
->   	"
->   }
-> 
-> @@ -464,7 +464,7 @@ test_pager_subdir_helper() {
->   			cd sub &&
->   			$full_command
->   		) &&
-> -		${if_local_config}test -e core.pager_used
-> +		${if_local_config}test_path_is_file core.pager_used
->   	"
->   }
-> 
-> @@ -477,7 +477,7 @@ test_GIT_PAGER_overrides() {
->   		GIT_PAGER='wc >GIT_PAGER_used' &&
->   		export GIT_PAGER &&
->   		$full_command &&
-> -		test -e GIT_PAGER_used
-> +		test_path_is_file GIT_PAGER_used
->   	"
->   }
-> 
-> @@ -489,7 +489,7 @@ test_doesnt_paginate() {
->   		GIT_PAGER='wc >GIT_PAGER_used' &&
->   		export GIT_PAGER &&
->   		$full_command &&
-> -		! test -e GIT_PAGER_used
-> +		test_path_is_missing GIT_PAGER_used
->   	"
->   }
-> 
-> --
-> 2.29.0.rc2
+> base-commit: 69986e19ffcfb9af674ae5180689ab7bbf92ed28
 > 
