@@ -2,231 +2,130 @@ Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C500C4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 07:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F92FC4363A
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 07:15:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC8EC221FC
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 07:07:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A7DE2225F
+	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 07:15:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RJjljm98"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436982AbgJUHHT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 03:07:19 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:49909 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391394AbgJUHHT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 03:07:19 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4CGM4f5jk2z5tlC;
-        Wed, 21 Oct 2020 09:07:14 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 2042720FA;
-        Wed, 21 Oct 2020 09:07:12 +0200 (CEST)
-Subject: Re: [PATCH v2] userdiff: support Bash
-To:     Victor Engmark <victor@engmark.name>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <373640ea4d95f3b279b9d460d9a8889b4030b4e9.camel@engmark.name>
- <xmqqk0vk8o20.fsf@gitster.c.googlers.com>
- <1442e85cfbe70665890a79a5054ee07c9c16b7c6.camel@engmark.name>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
-Date:   Wed, 21 Oct 2020 09:07:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S2440881AbgJUHPA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 03:15:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53976 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2440878AbgJUHPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 03:15:00 -0400
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED48EC0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 00:14:59 -0700 (PDT)
+Received: by mail-oo1-xc41.google.com with SMTP id w25so301416oos.10
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 00:14:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=83IXP6+cWQEsavCgo3Cqw8wP16z8m+/o4ydXWPqYILU=;
+        b=RJjljm98ez7X6LVQXjG0YEhwPmPKoHuZD/qmNoczwJUbBMtBMZ0rQDjcNqpTZHelxX
+         i6hi9P32uCpwYfZK+fGANzLCGNrs75Wo4H4AAYHPC/m5sHgtHahiBXY0oN4KkjXZ8yN/
+         aiHGtMKU6GflegoCebF2pt9rooBn5aLuF5UucDQR9JjMER6AcndHJkLSskyYo/hdhCmg
+         yeVG3qBdjdAeV6JSisqNpgKuNT+Fnl6PhTV8inK3TFhs63rhH8z/k1wZARl+OEnDtMOI
+         SoVJu3GbMjqS8Jfg1Vu2koPnAPM3Cwhq7cDL69o/9eK+wtN9ODKQ+1gFxJrEcIaEy0Vt
+         W+6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=83IXP6+cWQEsavCgo3Cqw8wP16z8m+/o4ydXWPqYILU=;
+        b=jBDCpsygR1PILFfKdiC67fwzXkciEQoKA6ObGObrSwqZdU2ycv5b6aD0cRr7NgGGAF
+         aa2WcWuKZeb4lSHqUDO+HXuyNnRUx0M7lfL5ER94awIMBishueRTG6+HTF1JoImlB3th
+         r7Gh2u81ZElSZ30duzi69rsJdQ9gkvCqjiox3Lf2OMaFEqyJkPkwQSNvMzkuV1kF10/d
+         IuxuJoPcpg0q+a/PHGfnCDcFz0mI08Tof7s5/CztrkiPru2/n9vA0DdiZV4SErQeX6fy
+         L8cN3NoalBQwwEsPoEMPvfwIsFGsyXGhiNBaMo7gTab/aSx/t4TGSPGFWLlPXSm1mHRN
+         VMjA==
+X-Gm-Message-State: AOAM531Eoyek5EvlVYqH/6tofHTuTkXXmGeiDrpcGbi+t1O7ssFbFkxK
+        icXHXUMpgdmRPufMpq4yG4x2f2Rl7b2q1BeZ6ac=
+X-Google-Smtp-Source: ABdhPJz7YcFbGKiMIRoVBKUyls5AtKZFnqDm7CkLg9ePeKCGFnRZYyJbuVm5EByZRJSgbF3Lz7WQJLkIObe6W9e8SA4=
+X-Received: by 2002:a4a:ba10:: with SMTP id b16mr1414723oop.75.1603264499102;
+ Wed, 21 Oct 2020 00:14:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1442e85cfbe70665890a79a5054ee07c9c16b7c6.camel@engmark.name>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20201017075455.9660-1-charvi077@gmail.com> <20201020121152.21645-1-charvi077@gmail.com>
+ <xmqqa6wgbqpq.fsf@gitster.c.googlers.com> <20201020201535.GB75186@nand.local>
+ <xmqq1rhsbq6a.fsf@gitster.c.googlers.com> <20201020203024.GC75186@nand.local>
+In-Reply-To: <20201020203024.GC75186@nand.local>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Wed, 21 Oct 2020 12:44:47 +0530
+Message-ID: <CAPSFM5fQJWk5kqgaCytTZMOQDbKzCDArq0ano9ovAWVpToQAHQ@mail.gmail.com>
+Subject: Re: [PATCH v4] t7201: put each command on a separate line
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        phillip.wood123@gmail.com,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.10.20 um 05:00 schrieb Victor Engmark:
-> Supports POSIX, bashism and mixed function declarations, all four compound
-> command types, trailing comments and mixed whitespace.
-> 
-> Uses the POSIX.1-2017 definition of allowed characters in names
-> <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235>
-> since actual allowed characters in Bash function names are locale
-> dependent <https://unix.stackexchange.com/a/245336/3645>.
+On Wed, 21 Oct 2020 at 02:00, Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Tue, Oct 20, 2020 at 01:25:33PM -0700, Junio C Hamano wrote:
+> > Taylor Blau <me@ttaylorr.com> writes:
+> > > When I applied this locally, I used this patch as a replacement for the
+> > > last patch of v3 [1]. That kept everything passing after each patch.
+> >
+> > Oh, so this is a replacement for 5/5 and 1-4/5 of v4 are supposed to
+> > be identical to those from v3?  The difference between [v3 5/5] and
+> > this one is a single typofix on the subject line, it seems, though.
+>
+> Yes, at least that's what I interpreted it as (and how I applied it when
+> testing). I'd like to hear from the author to make sure.
+>
 
-So, this is more like
+I think I messed up the versions. Its correct that v4 patch was only
+replacement for 5/5 (5th patch) of v3, since I need  to fix the typo
+error of subject line. Also, other 4 patches (1-4/5) of v3 need to be
+remain same in v4.
 
-   Even though bash allows locale-dependet characters in function names,
-   only the allowed characters per the POSIX.1-2017 definition are
-   implemented for simplicity. We can expect that this catches the vast
-   majority of use-cases.
+> (As an aside to the author, I often fall into the trap of thinking that
+> it will be easier to send a single replacement patch which will generate
+> less email, but--as you can see--it is often more complicated for
+> reviewers and the maintainer to decipher what's going on. It's often
+> just easier to re-submit the entire series and include in your cover
+> letter "this is unchanged from v(n-1) except for ...").
+>
 
-> 
-> Uses the default `IFS` characters to define words.
+Yes I realized this, actually earlier I was doubtful about whether to include
+the previous version's correct patches in the new version or not. I might
+have confirmed this before sending. But now I will strictly follow this .
 
-We could do better than this, I think. At a minimum, the equal sign,
-single quote, double quote, parentheses, and braces should also
-delineate words. $(, ${, $((, ((, )), [[, ]], should be words. I would
-exclude single brackets because they could only occur in globs, IIRC,
-and they need not be broken into words at brackets. $var should be a
-single word, IMO.
+Thanks a lot to Junio and Taylor for pointing this out. And in order to
+correct this, I will send the new patch series having (v3 1-4/5]+[v4]).
 
-That said, this can be presented as a patch on top of this one.
+Please correct me, if I missed out anything else.
 
-> 
-> Adds testing functionality to verify non-matches by including the
-> literal string "non-match" somewhere in the test file. To verify that
-> only the matching files are syntactically valid:
-> 
-> for file in t/t4018/bash*
-> do
->     echo "$file"
->     if grep non-match "$file"
->     then
->         . "$file" && echo FAILED
->     else
->         . "$file" || echo FAILED
->     fi
-> done 2>/dev/null | grep FAILED
+> > >> As you've demonstrated through the microproject that you can now
+> > >> comfortably be involved in the review discussion, I am tempted to
+> > >> suggest that we declare victory at this point and move on, but I
+> > >> don't know what the plans are for the other 4 patches (I guess we
+> > >> won't miss them that much---the micros are meant to be practice
+> > >> targets).
+> > >
+> > > Yup, ditto.
+> >
+> > As [v4] single patch won't apply standalone, we cannot quite declare
+> > the victory yet.  Are [v3 1-5/5] (or [v3 1-4/5] + [v4]) good to the
+> > reviewers of the past rounds?
+>
+> For what it's worth, I'm happy with [v3 1-4/5] + [v4].
+>
+> Thanks,
+> Taylor
 
-This complication is not necessary. See below for an example how to do
-negative tests.
-
-While speaking of that: it is very refreshing to see negative tests!
-
-> 
-> Signed-off-by: Victor Engmark <victor@engmark.name>
-> ---
-
-When you write a commit message, please always answer the question WHY
-the change should be made. For example, the notice "use IFS characters"
-alone does not add value; that much can be seen in the patch text. How
-about:
-
-   Since a word pattern has to be specified, but there is no easy way
-   to request the default word pattern, use the standard IFS characters
-   for a starter. A later patch can improve this.
-
-In general, a justification of why something should be added, should
-also be answered. But in the case of "bash pattern for userdiff" the
-answer is too obvious and trivial, that an exception is warranted.
-
-Please write the commit message in imperative mood. "Support" instead of
-"Supports", etc.
-
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index 2d0a03715b..8a15ff6bdf 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -802,6 +802,8 @@ patterns are available:
->  
->  - `ada` suitable for source code in the Ada language.
->  
-> +- `bash` suitable for source code in the Bourne-Again SHell language.
-
-Can we mention POSIX shell language as well?
-
-> diff --git a/t/t4018/bash-missing-parentheses b/t/t4018/bash-missing-parentheses
-> new file mode 100644
-> index 0000000000..d112761300
-> --- /dev/null
-> +++ b/t/t4018/bash-missing-parentheses
-> @@ -0,0 +1,4 @@
-> +functionRIGHT { # non-match
-> +    :
-> +    echo 'ChangeMe'
-> +}
-
-To check for a non-match, you write the test like this:
-
-	function RIGHT () {
-	}
-	# the following must not be picked up:
-	functionWrong {
-		:
-		ChangeMe
-	}
-
-That is, you present a positive match, and then expect that the
-subsequent negative match is not picked up.
-
-> diff --git a/t/t4018/bash-posix-style-compact b/t/t4018/bash-posix-style-compact
-> new file mode 100644
-> index 0000000000..045bd2029b
-> --- /dev/null
-> +++ b/t/t4018/bash-posix-style-compact
-> @@ -0,0 +1,4 @@
-> +RIGHT(){
-> +
-> +    ChangeMe
-> +}
-> diff --git a/t/t4018/bash-posix-style-function b/t/t4018/bash-posix-style-function
-> new file mode 100644
-> index 0000000000..a4d144856e
-> --- /dev/null
-> +++ b/t/t4018/bash-posix-style-function
-> @@ -0,0 +1,4 @@
-> +RIGHT() {
-> +
-> +    ChangeMe
-> +}
-> diff --git a/t/t4018/bash-posix-style-whitespace b/t/t4018/bash-posix-style-whitespace
-> new file mode 100644
-> index 0000000000..4d984f0aa4
-> --- /dev/null
-> +++ b/t/t4018/bash-posix-style-whitespace
-> @@ -0,0 +1,4 @@
-> +	 RIGHT 	( 	) 	{
-> +
-> +	    ChangeMe
-> +	 }
-
-Good to see POSIX-style function tests.
-
-> diff --git a/userdiff.c b/userdiff.c
-> index fde02f225b..8830019f05 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -23,6 +23,28 @@ IPATTERN("ada",
->  	 "[a-zA-Z][a-zA-Z0-9_]*"
->  	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
->  	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
-> +PATTERNS("bash",
-> +	 /* Optional leading indentation */
-> +	 "^[ \t]*"
-> +	 /* Start of function definition */
-> +	 "("
-
-The purpose of this outer-most pair of parentheses is actually to mark
-the captured text, not so much "the function definition".
-
-> +	 /* Start of POSIX/Bashism grouping */
-> +	 "("
-
-You could omit the comment if you indent the parts that are inside the
-parentheses:
-
-	"("
-		"..."
-	"|"
-		"..."
-	")"
-
-(But perhaps don't indent between the outer-most parentheses; it would
-get us too far to the right. But judge yourself.)
-
-> +	 /* POSIX identifier with mandatory parentheses */
-> +	 "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
-> +	 /* Bashism identifier with optional parentheses */
-> +	 "|(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
-> +	 /* End of POSIX/Bashism grouping */
-> +	 ")"
-> +	 /* Optional whitespace */
-> +	 "[ \t]*"
-> +	 /* Compound command starting with `{`, `(`, `((` or `[[` */
-> +	 "(\\{|\\(\\(?|\\[\\[)"
-> +	 /* End of function definition */
-> +	 ")",
-> +	 /* -- */
-> +	 /* Characters not in the default $IFS value */
-> +	 "[^ \t]+"),
+Thanks and Regards,
+Charvi
