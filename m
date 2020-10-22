@@ -2,174 +2,183 @@ Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB053C4363A
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 09:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6217C4363A
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 09:47:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78DD1222E9
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 09:30:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64AB0223BF
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 09:47:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="CIzZHCD8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mol9kVxr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2895984AbgJVJ37 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 05:29:59 -0400
-Received: from mout.gmx.net ([212.227.15.15]:38609 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2509089AbgJVJ36 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 05:29:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1603358991;
-        bh=oWgPKRKEDiU5YVcmqKBks6efBA0hwdgxRrMedQBSOwE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CIzZHCD8lg+jfVrxgpMqWmFskKQBkpqqSaLgdhU8EHJ3qBRQp+azFYSXu1flyEhPh
-         7qWUyYhvzqfQSfxnyCJs58m2fCDjjXLeGvJglbuJT0alfmMeo3Qhj58PF/lwdS7rwb
-         j4Io7r0y0fyfnqPyi9Nx6FjWqYhemd/HuZfRsaSg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.45]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mq2nA-1k1RIz13Ra-00nAmp; Thu, 22
- Oct 2020 11:29:51 +0200
-Date:   Thu, 22 Oct 2020 11:29:50 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Taylor Blau <me@ttaylorr.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Michael Forney <mforney@mforney.org>,
+        id S2896074AbgJVJrB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 05:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2509987AbgJVJrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 05:47:00 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D17EC0613CE
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 02:47:00 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id n15so1417379wrq.2
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 02:47:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=H5E8lpc5frEA30qgWP1LfhjrLVpr2sWegkJQ6TCSG7Q=;
+        b=mol9kVxrCzJpgHap38tHkL9eOWjl3YjKablvFbRnz3PBpNwRfC0VL+kRunZiA61CR9
+         B+Or1Uk9fK+4TbDtVDm8R6ezOKYkne4Km+AvvtW5rEWHOkmBAtPOa6vfPaARyXboO/Kj
+         RhLnefOSfXwGG01tcxliiUhpE/shzeGcgOlw899AhDkA9iTrVxq/bSyZI+u7FaRut4y8
+         Z5N+DxnESOJ6+FuxTDfZc3dkr5tm4q1M2ElznWM9CKPT0MBTNqLuwgVsWVHCPaCWMCkh
+         yQCNKaE4ZwWG+2VH0DjxKBUu9rKi+P4py0dr5IBhaCC4eKAz7+fCmGFmZ8dKZJTqHgdG
+         oG7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=H5E8lpc5frEA30qgWP1LfhjrLVpr2sWegkJQ6TCSG7Q=;
+        b=ttCGcljM9OdMfin9VX2ha7VMqHrZ/TXbZCtCeM/BhrSW+IDUn8P8EbDV4Ls4inIiUr
+         CqYqn08oPmeOki2eaOOr6Smw9C/kHym9QmL0pyG0NPg9+a0YBjZurJmPadGyFTMFTPK/
+         fUbInIhoyfJTd8fwb8dP2xBAumPTiKJRCeIjNOGky9hIbY1gboECGkTH+ZcJf479Hv5/
+         a/hct6249E3JD6Kvvi3YPc6gDq3HkfVnLr2nI2J6xSBJUqelPO6QdjkPl69KQLjmlSsw
+         GTl+cpCF1gH54T9oX9NIukAJsdwa7krlHPWn5NvF8UF/ueodQbCFY7/JZtJotr8gKU22
+         8aKQ==
+X-Gm-Message-State: AOAM5301bYg1hNvfLoKbRB1SR2tV/JdxImc0ktPg92mtJCVydA3kc2z3
+        76DXEt3dTnuAswyEwJt98l8=
+X-Google-Smtp-Source: ABdhPJy2L9X507+m0IK5F615eoBglSvk4yoiFeYl2c2T7lnx1J/i/lBEspslw/ZqR2hjQGkqkM0SeQ==
+X-Received: by 2002:a5d:4e48:: with SMTP id r8mr1685170wrt.141.1603360018261;
+        Thu, 22 Oct 2020 02:46:58 -0700 (PDT)
+Received: from [192.168.1.240] (13.45.90.146.dyn.plus.net. [146.90.45.13])
+        by smtp.gmail.com with ESMTPSA id e20sm2602480wme.35.2020.10.22.02.46.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Oct 2020 02:46:57 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH][OUTREACHY] bisect: allow `git bisect` to run from
+ subdirectory
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] SKIP_DASHED_BUILT_INS: do not skip the bin/ programs
-In-Reply-To: <20201021172516.GB1237181@nand.local>
-Message-ID: <nycvar.QRO.7.76.6.2010221126240.56@tvgsbejvaqbjf.bet>
-References: <pull.768.git.1603293211428.gitgitgadget@gmail.com> <20201021172516.GB1237181@nand.local>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
+        Sangeeta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Sangeeta <sangunb09@gmail.com>
+References: <pull.765.git.1603271344522.gitgitgadget@gmail.com>
+ <2f71d0c4-a5de-c22b-9cbe-a9efcb3cd21d@gmail.com>
+ <20201021162044.GB111581@nand.local>
+ <xmqqr1pr73ve.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2010221047550.56@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <cfe33eef-974d-8ff9-ebb4-d1153abd497c@gmail.com>
+Date:   Thu, 22 Oct 2020 10:46:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3q0XLPL2XSf2Syrag65neYrEd26BRN2qvUvRJlN50dzYrw1sZff
- 9TQid7+lDzqqyA/db1+AYXza9NZnhLHQ/5vQ+0X1bUKuuCXsbJ/+F4fgVvicXiz9LpfU4IK
- l39h9tH0TM9KnOodMr1y9das23wAHt0VT1Q3iCpaVvg94MuKBvSjp+clINEHXf7RksiO76c
- sy3yeCWYC1985+ps2cgDw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lYuxD0t2z1g=:xMn4hntDgc2FUXg71iho39
- nZlBMDgQSDm9KxD6y8j+7TeM3KgHkHarx8y2JcbrjvvBlCjgmNWm5VMiXCeKYyOoUGElMmivj
- Lml2UmXTzilL3GdHQ7PdqrwNsVMingXfO+X6pKc605Gkgp5Hz+yvEmz5yBEGobfU/KOEuTGum
- XITaHGjtYI4Rg55S8UeHegfPtFx47GQAIYY4zFyuTN1nLnTmiPsHKWUh1hib21Va0VchDcI64
- 0Ua4WZ5j4mZSspM8UW7icFs7RddLgGyKPAHhLfaSUyZi1PflHNOpnGXdug7PqObUUX2mirpvc
- b8KGkC1m3POCnRSuUnsB3Ha11WWGt1/34R6wEOYWdLb7PrCRpxyyy487oJO/SElqkuvgCiPUk
- xye+1HafycOCAPBVIuOboP1XOGLQ1ZaAava8ECUW4AO6d74u+Y8TZm6C2EhfyqjAxcs0zcgGa
- rCJ03M0XiWtCBdkMeiH4241f9R8SdrQEWZEpGaVIznvJW/VZs9KBBJrnZQE7zEccLPh+mt8VK
- qXWP81RHlnwOvYHYyLsBDKMHQCQEDFFoZRB1d34rBnajpxkbH+l+nHFffC/xh92wjnZCQ/Fue
- Cxt1KI2kMytV23egckjD2n6d+PoiBAwQyYNt1rdTVmiGukefDfU17ux1U+Dgy6FKqcrBdi7bt
- k+jFhnQuDd+8SyRAf/yhGLS9NflnTot/Vv/KcQP0EX2VASw16x2h+eb+IGpoj85twr4U1CH2p
- c51RJfPMXPF17qIivQzWayKJGI1dLlYLKyzyhUaNoGqxj2YHOALi5cTmGJNU9BJ8noMDI+0eG
- WwZiIt4jS2eUKJg/4sZ3sFm16MQmtszBe+0gHRFpWWm7ssUNfaNc2z5Q9hWJAHYqsUbFjOaEB
- kMg+EEjJOO55R7M1MN89v1PpmYCWzAtshRDWjhT44=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.2010221047550.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
+On 22/10/2020 09:52, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Wed, 21 Oct 2020, Junio C Hamano wrote:
+> 
+>> Taylor Blau <me@ttaylorr.com> writes:
+>>
+>>> I'm not sure that that's the case: Junio pointed out a while[1] ago that
+>>> we'd have to answer the question of "what happens if I'm in a
+>>> subdirectory that goes away during some point of the bisection?". I
+>>> think that you could probably find an answer to that question, but the
+>>> fact that there isn't an obvious one seems to indicate that we're going
+>>> down the wrong path.
+>>>
+>>> I agree that it would be nice to run bisect from any directory, but it
+>>> may not be as easy as I'd hope.
+>>
+>> True.
+>>
+>> I would not mind all that much a single "git checkout ancient" that
+>> makes the $cwd go away and confuse the user.  But a bisect session
+>> would jump around versions randomly (eh, logarithmically?) and you'd
+>> end up switching out of a version in a non-existing $cwd to another
+>> version that has the directory (created internally by mkdir(2)), and
+>> I'm fairly certain that your phantom $cwd that is not connected to
+>> any other filesystem entity and the directory that should be at the
+>> same path in the newly checked-out version are different filesystem
+>> entities.  I'd rather not have to think about the interaction
+>> between git and the system after that point.
+> 
+> By that token, we should also prevent `git rebase` from running in a
+> subdirectory, but we don't.
+> 
+> Besides, this only becomes an issue when the directory becomes _empty_
+> (including untracked files) because we don't remove it otherwise.
+> 
+> I am actually more worried about bisecting between revisions that replace
+> the current subdirectory by a symlink or something.
+> 
+> But again, this is pretty much precisely the kind of scenario that we
+> _already_ allow running into with `git rebase`. So I see little point
+> refusing `git bisect` users to run in a subdirectory.
 
-On Wed, 21 Oct 2020, Taylor Blau wrote:
+Except rebase always runs exec commands from the repository root and 
+assumes that any relative paths are relative to that directory rather 
+than the one it was started in.
 
-> On Wed, Oct 21, 2020 at 03:13:31PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The idea of the `SKIP_DASHED_BUILT_INS` option is to stop hard-linking
-> > the built-in commands as separate executables. The patches to do that
-> > specifically excluded the three commands `receive-pack`,
-> > `upload-archive` and `upload-pack`, though: these commands are expecte=
-d
-> > to be present in the `PATH` in their dashed form on the server side of
-> > any fetch/push.
-> >
-> > However, due to an oversight by myself, even if those commands were
-> > still hard-linked, they were not installed into `bin/`.
-> >
-> > Noticed-by: Michael Forney <mforney@mforney.org>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     SKIP_DASHED_BUILT_INS: do not skip the bin/ programs
-> >
-> >     As reported by Michael in
-> >     https://lore.kernel.org/git/CAGw6cBsEjOnh-ZqXCPfFha=3DNYEdy7JDddha=
-=3DUzAau0Z1tBrWKg@mail.gmail.com
-> >     , the SKIP_DASHED_BUILT_INS feature had a bug I wish we had caught=
- in
-> >     the -rc cycle. But at least SKIP_DASHED_BUILT_INS is still strictl=
-y
-> >     opt-in, so the damage is somewhat contained.
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-768%=
-2Fdscho%2Fskip-dashed-built-ins-still-must-install-install_bindir_programs=
--v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-768/dsc=
-ho/skip-dashed-built-ins-still-must-install-install_bindir_programs-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/768
-> >
-> >  Makefile | 15 ++++++---------
-> >  1 file changed, 6 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/Makefile b/Makefile
-> > index 95571ee3fc..1fb0ec1705 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -2981,15 +2981,12 @@ endif
-> >  	} && \
-> >  	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
->
-> This does still install 'git-shell' into my installation's 'bin'
-> directory. I'm not up-to-date whether or not we mean to still be
-> installing that, but, doing the same 'SKIP_DASHED_BUILT_INS=3D1 make
-> install' on 'master' also installs git-shell, so I'm fine with that.
+cd t &&
+cat >script <<\EOF &&
+#!/bin/sh
+exec pwd
+EOF
+chmod u+x script &&
+git rebase -x ./script HEAD^
 
-Yes, `git-shell` is not a built-in, that's why.
+gives
 
-It is added as `PROGRAM_OBJS` in the `Makefile`, and it has its own small
-`cmd_main()`. On purpose: the idea for `git-shell` is to serve as a pseudo
-login shell for `git fetch`/`git push` to do the minimum amount of work to
-ensure that only `git receive-pack`, `git upload-pack` and `git
-upload-archive` commands are allowed. Everything else is blocked.
+Executing: ./script
+fatal: cannot run ./script: No such file or directory
+warning: execution failed: ./script
+You can fix the problem, and then run
 
-So yes, it is installed into `bin/`, expressly so, and it is not a
-hard-linked copy of `bin/git`.
+   git rebase --continue
 
-> >  		$(RM) "$$bindir/$$p" && \
-> > -		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
-> > -		then \
-> > -			test -n "$(INSTALL_SYMLINKS)" && \
-> > -			ln -s "git$X" "$$bindir/$$p" || \
-> > -			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
-> > -			  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
-> > -			  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
-> > -			  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
-> > -		fi \
-> > +		test -n "$(INSTALL_SYMLINKS)" && \
-> > +		ln -s "git$X" "$$bindir/$$p" || \
-> > +		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
-> > +		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
-> > +		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
-> > +		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
->
-> OK. $(install_bindir_programs) is the set of programs that we want to
-> install; that makes sense. And for those, we definitely don't want to
-> skip them because SKIP_DASHED_BUILT_INS was set. So removing that test
-> makes sense to me.
->
-> >  	done && \
-> >  	for p in $(BUILT_INS); do \
-> >  		$(RM) "$$execdir/$$p" && \
-> >
-> > base-commit: a5fa49ff0a8f3252c6bff49f92b85e7683868f8a
-> > --
-> > gitgitgadget
->
-> Looks great, thanks for turning my thoughts into a real patch.
->
->   Reviewed-by: Taylor Blau <me@ttaylorr.com>
+git rebase -x pwd HEAD^
 
-Awesome, thanks!
-Dscho
+shows
+
+/home/phil/src/git
+
+when run from /home/phil/src/git/t
+
+I think both bisect and rebase should be documented as running commands 
+from the repository root as this is what rebase does and it gets around 
+the missing directory problem.
+
+I'm not sure rebase is doing the right thing with a relative path 
+though. My feeling is it would be less suprising to resolve relative 
+paths to the directory where the bisect/rebase is started and store the 
+absolute path. The script may disappear while rebasing but that can 
+happen now if the user points us to a script in a directory that 
+disappears while we're rebasing
+
+Best wishes
+
+Phillip
+
+> I know that _I_ often grumble after `git bisect start` fails, then try to
+> pull out the last remains of my patience and insert `-C ..` or `-C ../..`
+> between `git` and `bisect` and _still_ get what I want, all while shaking
+> my imaginary fist at `git bisect` for forcing me to type those extra
+> keystrokes.
+> 
+> Ciao,
+> Dscho
+> 
