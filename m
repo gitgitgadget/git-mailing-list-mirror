@@ -5,121 +5,83 @@ X-Spam-Level:
 X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A13C4363A
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 08:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17344C4363A
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 09:12:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5FCF223FB
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 08:52:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8AC6B2225F
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 09:12:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ascnt5MQ"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="X2DgRC9R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2508667AbgJVIwx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 04:52:53 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39429 "EHLO mout.gmx.net"
+        id S2509430AbgJVJMb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 05:12:31 -0400
+Received: from mout.gmx.net ([212.227.15.18]:39995 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2506699AbgJVIww (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 04:52:52 -0400
+        id S2509411AbgJVJMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 05:12:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1603356765;
-        bh=vEyVg8ItLguNjR0chfWm7hFOKnInb3f9ILDzjEdSFWc=;
+        s=badeba3b8450; t=1603357949;
+        bh=PqVtpuTvwSMotH1wkRq9OpW1vC6TcGNXnwtgnsKf/VM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ascnt5MQpJjFoJrgXMn9chuYf+o9+g7uU0sXl604IDni9E8Lp7lmdkMbFLRA9QPLr
-         zk+5uZ2FmzUaF7P6k+39CWHhpPo/dMekEdpRjzAR/OQaEV2Hpt5Y64+naY9B4xNOUm
-         XkbVWwxRyOC/T53L1ZI8HPboj6yRAPuftaRyGXBE=
+        b=X2DgRC9Rck7ZO/JZLwQi4mrO+SuM7i9fva29WGIKVcg9yKfOgHW+3FuqgpmZQylyu
+         8ofGepWPkxYdRHBt41KW1Ftm6UUgLID1FjCaZ1zq9bzN3HJdkUvcXEdHuFm/NM6wgp
+         D3DCskjJE3q37qvHUaQhtrG9PgEa9SQ8EMCNe4Fo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.45]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKKYx-1kqcks2BHL-00LqMg; Thu, 22
- Oct 2020 10:52:45 +0200
-Date:   Thu, 22 Oct 2020 10:52:45 +0200 (CEST)
+Received: from [172.26.25.62] ([213.196.212.45]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDywo-1kfSGH0scO-009ytM; Thu, 22
+ Oct 2020 11:12:29 +0200
+Date:   Thu, 22 Oct 2020 11:12:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
-        Sangeeta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Sangeeta <sangunb09@gmail.com>
-Subject: Re: [PATCH][OUTREACHY] bisect: allow `git bisect` to run from
- subdirectory
-In-Reply-To: <xmqqr1pr73ve.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2010221047550.56@tvgsbejvaqbjf.bet>
-References: <pull.765.git.1603271344522.gitgitgadget@gmail.com> <2f71d0c4-a5de-c22b-9cbe-a9efcb3cd21d@gmail.com> <20201021162044.GB111581@nand.local> <xmqqr1pr73ve.fsf@gitster.c.googlers.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] sequencer: remove duplicate rollback_lock_file() call
+In-Reply-To: <pull.894.git.git.1603286675709.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2010221111320.56@tvgsbejvaqbjf.bet>
+References: <pull.894.git.git.1603286675709.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lvYVIJdoc2GbSzrp4cQnbKSnlsmw7psMirdIqHGVcjbIMTYJJSb
- SVg24DNLxxQUPDVkEagT6TJb2774V0meAuIAMsvjZI/AyyuRzxum1Bf7Zqf1a1QTXf6lH9q
- F02y50gQJZfs4KBD2aLW3Kas7UJ+OI3TrSsE/d9Bn67c7QuRZae5ngxEtvLwPbECpf9/yPA
- bP1f4A+HDwiPAzUnAjDTA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZEkKDDu9y1U=:bAp1l0KR1Ie8vzCpNBdEFx
- UZmaP8X15ucBPQpPXqBwj8/vzEfXrgpVOZvS7wEIrUFIfvKZJ184fhyp5I6vJB4sC6dM1MpPe
- t3U8ozRNAlXKN0NtZZ6OVOT4sSUb/ZUJqOgUj9AqItrfgbFpdU9pomFQ8R8WIvSmJfhnGhRyW
- AOvEDFOSyvfcDIYmCAGb6loOvds3OHP+89kPFGvZ3aurVaCMjZ+akeTxDhnNYD23wEK+kp2+C
- SqxDhj1RRgTooEOsABGjjISolnodcxQgzIjC2ekbV9T1ni6EIg/nG0q+cLSMGIUZhk8X8gmPJ
- 3MXy37xrdEgtGRImc3mRBqGn5chCc49V6xxl6MecgYKbHKm4XNXahS5mXcejFF5b+U2EBMHJ0
- 1o5kLu9gjyEOWXxGv9gcbEXBez9RKz2QW3y+HwbYLc0S0JI3oUDg8TLIR50EGNQikSkROR/ig
- 7F7u6mcb5Y2JHAL/maOspkOY50LsNrxVIU4md8GSbIfBdYG6B+/xg9EyfDjXwtCX/8344/dhF
- woCg74Kjvio/5ZJUmrq7Fhv4Jo1f2/66dmLtf2WBR/mQTeJPcO8JL0ljvoB9+U9UkrbkPzplg
- SBQlWTEvCIPHsTGKI8t+GrQ4WikBTzOdt/9pP4M8LHyp6zZqRehf6ua8m2jrQcYvyQK4l8wHe
- qJqQJ7iMiUxm128ubmTgfMFbvf3r7IvUK9UdC75V1ipswunQNUzjrcIIDvFonyjL+uYlo1uZk
- kEpXAUpfIG9F6RizSg/mmlk2h42ODNDrzRba0wax6yWxrsZR2gVXQ+aNYA0i3g+6RQCno6Bd3
- J/ILm6uQXcnJO9Eg5W8NX8DH4p6XID2TyT3e4DWKi++sN6X/QR2BGBJ2pqPPU2QoorR87MxaB
- bxxQp6MDGlH0KtaMehAaOwRx0RFNH4CuShrak6WZs=
+X-Provags-ID: V03:K1:RXHJ+uU5kzMQ2os9toL0/Urrj22DsJhlhO3WHieg9UkRLZxfgTT
+ rZwJO43S3v4eOp8yl3JCsJbrrcpKs9K3tzVe6dWLHXPzp+5Wl4xe+rO9YucNYUwO604+Kbj
+ JFwZLTfAwyNO9ntNQY5BkC9IgdNRE7xR+8/exoehgSa0kWNdLPOOxssUto1XD32VhlXwu4i
+ V7D2Pw9qlHH70pX9ceeGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SF1M3DDuTUM=:CPfTaw7ipPnMbDil1HcjtL
+ uT4i3vkXpL8Qbe0sHTq1/XyBaMZB6J0sMu4d/SDeMs7xdSF8a7dBE9ldtDgRA1hRLTdp+eQN1
+ V+TMHHNSGXM5GTe/GBvwUvA3kNqUDbRR2srQKiQ7swvRt3k+pyoVf11OgbuDOrNPZazmZF9L/
+ EmAZyEKZFUodeqEd0cbpTOQi3ymujDrGgAaD4FCcMPAVSNU+x9rRCoDC5iLlC6P4P58FYOg/K
+ xaJXzwf5IpwpK2STpARsm5soqk3LwCfDdikrAeGdB9rxeR54IyDDcV+/KZu+WLL8JA28LgDuU
+ y/RO4xc8LUIzvLF0iDdV8lPNkWBgb8gYhloBt5dOqSv4uwDhW57YMnyC5xZmPClfC3ajXy3bo
+ YB5bdNQlzje4S7u3FntleE7C9EoWI19QdxUjfmlW0qiaKRkAmXpEDrUQmn/kNkKjsflrAZ7Ik
+ OQsISzcFrN1tQANGTuTc/zJPiUXn9Ebg09fy9QoC980/d/2/Itw7GWEM/1s6QshpDAG11al1W
+ jEAJRbD+TOjNkCi5/KbzwPpck45LFtUtQVTQ622SGzvL0BF4JDHC6vpFtytIj2xpamy5F8YlI
+ ukb+vXjbsryvjjTGtT02XAyEE+qcRk7F9akuDD/gLkbDwlAmEXBJn+72RD2z6VV8UUwbWPkLJ
+ 544iqw+JqyVs/q4bXmWnCR6f6Aigzv+YqK8F0bcxjNePbnaPXOzwq6H8IK0AjQBEV+9GdpK+2
+ py1gQVzg0UqJYeVqzIHtX3+0Fan0eydsz00NDhGDxFsCvvl2cHZ6u+OID2t56lILQ4q878dpu
+ wo+5QO1NWAq+2LkmncMUzMaHRxNSwMc0jkW6HP6OiQo0a+AiTByblQziEESbjsyKs+i6aIj6b
+ y+XCdNdC5vcWn/VxBWjfN87jIvTVx9mc0UGvsL0dA=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Elijah,
 
-On Wed, 21 Oct 2020, Junio C Hamano wrote:
+On Wed, 21 Oct 2020, Elijah Newren via GitGitGadget wrote:
 
-> Taylor Blau <me@ttaylorr.com> writes:
+> From: Elijah Newren <newren@gmail.com>
 >
-> > I'm not sure that that's the case: Junio pointed out a while[1] ago th=
-at
-> > we'd have to answer the question of "what happens if I'm in a
-> > subdirectory that goes away during some point of the bisection?". I
-> > think that you could probably find an answer to that question, but the
-> > fact that there isn't an obvious one seems to indicate that we're goin=
-g
-> > down the wrong path.
-> >
-> > I agree that it would be nice to run bisect from any directory, but it
-> > may not be as easy as I'd hope.
->
-> True.
->
-> I would not mind all that much a single "git checkout ancient" that
-> makes the $cwd go away and confuse the user.  But a bisect session
-> would jump around versions randomly (eh, logarithmically?) and you'd
-> end up switching out of a version in a non-existing $cwd to another
-> version that has the directory (created internally by mkdir(2)), and
-> I'm fairly certain that your phantom $cwd that is not connected to
-> any other filesystem entity and the directory that should be at the
-> same path in the newly checked-out version are different filesystem
-> entities.  I'd rather not have to think about the interaction
-> between git and the system after that point.
+> Commit 2b6ad0f4bc ("rebase --rebase-merges: add support for octopus
+> merges", 2017-12-21) introduced a case where rollback_lock_file() was
+> unconditionally called twice in a row with no intervening commands.
+> Remove the duplicate.
 
-By that token, we should also prevent `git rebase` from running in a
-subdirectory, but we don't.
+Thank you for cleaning up after me. I _know_ that this slipped in a couple
+times during my rebasing, and still, this last time it slipped through.
 
-Besides, this only becomes an issue when the directory becomes _empty_
-(including untracked files) because we don't remove it otherwise.
-
-I am actually more worried about bisecting between revisions that replace
-the current subdirectory by a symlink or something.
-
-But again, this is pretty much precisely the kind of scenario that we
-_already_ allow running into with `git rebase`. So I see little point
-refusing `git bisect` users to run in a subdirectory.
-
-I know that _I_ often grumble after `git bisect start` fails, then try to
-pull out the last remains of my patience and insert `-C ..` or `-C ../..`
-between `git` and `bisect` and _still_ get what I want, all while shaking
-my imaginary fist at `git bisect` for forcing me to type those extra
-keystrokes.
-
-Ciao,
+ACK,
 Dscho
