@@ -2,123 +2,150 @@ Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCADDC388F7
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 16:27:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCDB1C388F7
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 16:52:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FE282463D
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 16:27:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B3CA24630
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 16:52:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hMCeg/LD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FMAIbobK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2901743AbgJVQ1T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 12:27:19 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65332 "EHLO
+        id S2898268AbgJVQwx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 12:52:53 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65313 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2901741AbgJVQ1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 12:27:18 -0400
+        with ESMTP id S2898098AbgJVQwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 12:52:53 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5DEE6ECEBC;
-        Thu, 22 Oct 2020 12:27:15 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 98AFFED447;
+        Thu, 22 Oct 2020 12:52:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/qPJkzt7+IHJmTGKobyNGU8z2AA=; b=hMCeg/
-        LDchzVWY7ASG8Gs6YVGFNakwEUB1nfsUKixLC/Sj4z2wVy6OKrUmv8Q7jFLa3uJU
-        bv1s2moodq8NmWNivwZtr3ES5I7kliYjjzBC8LPSmhFR4Rxce4kOTMTNj0pH40ts
-        HJH5/AmujcfpfTd5a66eBbF6STKQjnmGt6U6E=
+        :content-type; s=sasl; bh=okyGUoF/qZGLnfU2sWGLtDrJsxE=; b=FMAIbo
+        bK2Tc71vWgR8d9Uc1jySYCY6diGwO8lNAMLI5yCgLRKbSYa2WRpZLvRbP4gtssAU
+        owbgWZWjUaSn1oZSz+tyEYILAAg3cMR810A8Lt5tHIJeeUOMl168pSVYSeHzR5tq
+        gsE6vg0Kbh6uaBj3agayVRfxu194bZd6mW1nw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xjEAoa/NOhcm/LaNry9CqfIv30MsXoZY
-        jWedzFuE5r3yYUbIeYerp29Yfezyk8UakAPXUYHkgc7T04if4hjUZQRRjPfrtaj1
-        tL7xRXD++YDcqboirdkmMn5jG9josAMTAQpix0fACa22a9+lJ4zrTTp6chplIdvY
-        GKwC5JdS3y8=
+        :content-type; q=dns; s=sasl; b=p+CJ2KJNpdQiM1Tycw4LThqLNQCNUUsf
+        Q5CJXcMbA9dZdmPBt3klqqQJxqp6JC/a03QFnK6q5bNhbfX3ZfzZqbJBtwEQr+rU
+        /drFRia5/fupcjfzufskocJabX2xuKZUH7P8bxHQbuZ1n3yHdGQhxMCziNI7+rJP
+        ObRT/v+lF1o=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 55623ECEBB;
-        Thu, 22 Oct 2020 12:27:15 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91E57ED445;
+        Thu, 22 Oct 2020 12:52:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 96A85ECEB6;
-        Thu, 22 Oct 2020 12:27:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B5FCBED444;
+        Thu, 22 Oct 2020 12:52:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shengfa Lin <shengfa@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, nathaniel@google.com,
-        rsbecker@nexbridge.com, sandals@crustytoothpaste.net,
-        santiago@nyu.edu
-Subject: Re: [WIP v2 1/2] Adding a record-time-zone command option for commit
-References: <xmqqk0vtki66.fsf@gitster.c.googlers.com>
-        <20201021050146.3001222-1-shengfa@google.com>
-        <xmqqzh4f76jr.fsf@gitster.c.googlers.com>
-Date:   Thu, 22 Oct 2020 09:27:10 -0700
-In-Reply-To: <xmqqzh4f76jr.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 21 Oct 2020 11:55:20 -0700")
-Message-ID: <xmqqd01ans4h.fsf@gitster.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
+        Sangeeta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Sangeeta <sangunb09@gmail.com>
+Subject: Re: [PATCH][OUTREACHY] bisect: allow `git bisect` to run from
+ subdirectory
+References: <pull.765.git.1603271344522.gitgitgadget@gmail.com>
+        <2f71d0c4-a5de-c22b-9cbe-a9efcb3cd21d@gmail.com>
+        <20201021162044.GB111581@nand.local>
+        <xmqqr1pr73ve.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2010221047550.56@tvgsbejvaqbjf.bet>
+        <cfe33eef-974d-8ff9-ebb4-d1153abd497c@gmail.com>
+Date:   Thu, 22 Oct 2020 09:52:44 -0700
+In-Reply-To: <cfe33eef-974d-8ff9-ebb4-d1153abd497c@gmail.com> (Phillip Wood's
+        message of "Thu, 22 Oct 2020 10:46:56 +0100")
+Message-ID: <xmqq7drinqxv.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7089FF5E-1483-11EB-BAB6-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 025B6690-1487-11EB-A0BD-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Yes, we could check it in datestamp(), but ... 
+> I think both bisect and rebase should be documented as running
+> commands from the repository root as this is what rebase does and it
+> gets around the missing directory problem.
 >
->> Initially, I thought this would be sufficient to show "-0000" in commit log
->> message. However, I found that the show_date function is used for "decoding";
->> converting timestamp and tz to more readable format. Then I realize the
->> function won't distinguish between +0 and -0 as it only takes in a tz as
->> argument. As a result,...
->
-> ... I would have imagined that you do not have to deal with all
-> those complications if you don't hook this to such a low level of
-> the call graph.  That is why I wondered:
-> ...
+> I'm not sure rebase is doing the right thing with a relative path
+> though. My feeling is it would be less suprising to resolve relative 
+> paths to the directory where the bisect/rebase is started and store
+> the absolute path. The script may disappear while rebasing but that
+> can happen now if the user points us to a script in a directory that 
+> disappears while we're rebasing
 
-Let me answer some of my puzzlement myself; that is, I would have
-understood the change well if it were explained to me this way, and
-if that explanation matched what the patches did ;-)
+If a step in the rebase sequence makes a directory disappear (or
+turns a directory into a file), and the command given by -x is in
+the directory (it is immaterial if it is given as relative or full
+pathname from the command line), hopefully the step of the rebase
+sequence that would lose the directory would error out, in order to
+prevent an untracked but not ignored file from getting clobbered.
 
-The topic has two major parts.
+Even before speculating such an "advanced" mode of operation, do we
+know that rebasing a history that makes a directory disappear and
+reappear work?
 
-The code that prepares the timestamp to be recorded for the current
-user, who wants to record an anonymous timezone "-0000", is one (and
-the easier) part.  And this part could be done all inside
-ident_default_date() without touching anything in date.c; when we
-need to call datestamp(), we are getting the current time for the
-current user, so we can mask the timezone.
+For example, if there is a history like this:
 
-The other part is that we need to read the timestamp from existing
-records, and if we choose to distinguish between timestamp in UTC
-and timestamp with anonymous timezone, we'd need to devise a way to
-encode the anonymous timezone differently.  It is where the extra
-bit that says "this bit does not usually mean anything but only when
-the offset (which is a signed integer whose valid range is set to
-between -2400 to +2400 by date.c::match_tz()) is zero, and this bit
-is set, the zone is anonymous" comes in.
+    - commit #0: an empty tree
+    - commit #1: adds a file D/F
+    - commit #2: moves the file D/F to F (i.e. the toplevel)
+    - commit #3: moves the file F to D (i.e. D becomes a file)
+    - commit #4: moves the file D to E
+    - commit #5: moves the file E to D/E (i.e. D becomes a directory again)
 
-	Side note.  I suspect the damage to the callchain can be
-	limited much narrower if we didn't add this bit throughout
-	the API.  What if we instead pick a number outside the valid
-	range of offsets, say -10000, as a sentinel value and passed
-	that throughout the code when we want an anonymous zone?
+does it do what expect it to do if we replay the history c0..c5 on
+top of a comit that records an empty tree if we start the rebase
+in an empty directory D?
 
-	The functions in the callchain that care about the timezone
-	must understand how anonymous zone is encoded anyway, so to
-	them it's a matter of using an int plus one bit or using an
-	int that can have a special value.  But other functions in
-	the callchain whose sole purpose (with respect to the
-	timezone information) is to pass it between their caller and
-	their callee as an opaque piece of data, using just a single
-	integer is much less error prone---the patch does not have
-	to touch them at all.
+Here is what I tried in an empty directory, and the last "ls -la"
+shows an empty directory, even if you try "ls -la D" from a separate
+shell after everything is done, you'd see a file D/E there.  If a
+platform exists that does not allow removing a directory that is the
+$cwd of any process, I would not be surprised if the whole thing
+failed in a mysterious (to the end user) way.
 
-Thanks.
+#!/bin/sh
+test -d .git && exit ;# safety
+rm -fr D E F
+git init
+
+git commit --allow-empty -m 'an empty tree'
+git tag commit0
+
+mkdir D && >D/F && git add D/F
+git commit -m 'add a file D/F'
+
+git mv D/F F && git commit -m 'move D/F to F'
+rm -rf D
+
+git mv F D && git commit -m 'move F to D'
+
+git mv D E && git commit -m 'move D to E'
+
+mkdir D && git mv E D/E && git commit -m 'move E to D/E'
+
+git tag commit5
+
+echo history made
+
+git checkout --orphan rebuilt
+git rm -r -f .
+git commit --allow-empty -m 'another empty tree'
+
+mkdir D
+cd D
+
+git rebase --onto HEAD commit0 commit5^0
+ls -la
