@@ -1,313 +1,89 @@
-Return-Path: <SRS0=jwDG=D4=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36EEDC4363A
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 23:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E824EC2D0A3
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 00:16:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDEEE24170
-	for <git@archiver.kernel.org>; Wed, 21 Oct 2020 23:45:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79C602417D
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 00:16:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZNQMxhND"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2507273AbgJUXpS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Oct 2020 19:45:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38176 "EHLO
+        id S2507410AbgJVAQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Oct 2020 20:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2507162AbgJUXpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Oct 2020 19:45:18 -0400
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [IPv6:2a01:5b40:0:3005::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6BF7C0613CE
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 16:45:17 -0700 (PDT)
-Received: from [2404:440c:1348:1500:30ae:2589:119b:7ae9] (port=48296 helo=default-rdns.vocus.co.nz)
-        by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <victor@engmark.name>)
-        id 1kVNn9-0006gF-5y; Thu, 22 Oct 2020 01:45:15 +0200
-Message-ID: <6c6b5ed2166ec2c308c53bf87c78b422fdc5084f.camel@engmark.name>
-Subject: [PATCH v3] userdiff: support Bash
-From:   Victor Engmark <victor@engmark.name>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Date:   Thu, 22 Oct 2020 12:45:08 +1300
-In-Reply-To: <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
-References: <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4-0ubuntu1 
+        with ESMTP id S2507399AbgJVAQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Oct 2020 20:16:19 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96EB0C0613CE
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 17:16:17 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id n15so3546441otl.8
+        for <git@vger.kernel.org>; Wed, 21 Oct 2020 17:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1KyL58V5ze2yaYHTupjLkNTI7CwsvF6tPK7m80L7nx0=;
+        b=ZNQMxhNDkJ+4YZxo8H9GZo7A7Ip1AhJ90KoOEZMmEX3y9Zfkew9KfAK9F/jGwO94Fx
+         X3Go4DvgyGIGIHbYpCfiXiE3ee0cpmrT0zuYuMC8bh11ZjPnStkdMcOdggD9tH/lxB8M
+         3OaLRBBz8OoNrUcyysrduZnwosesBElYCaQzMoPfYmHQOGNvarmkcoqZWFkvW2pi2e+0
+         4Ch6oSIWfyRZ+tPt9gQF5pjmRQHNTn2KcvfSn8SM4yrac4NHOElXyFlshpZcAyfM7Dxo
+         jf3fiUc4vPi+0CjxeOMX66Ns4trWCyIPQkV3d6EvNR8719SSUSpjs3naLOuagK08lW2/
+         pu3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1KyL58V5ze2yaYHTupjLkNTI7CwsvF6tPK7m80L7nx0=;
+        b=rmLkLxxZTcu/+nON5vz/DZ2LRgHbDM3MMlWFpXDFD50nPEufPPxTDf9MA1k/WcrGva
+         YjM2FCTmGWXIuzLzNTlsy/DqxUCUHrQm2okZCTHxyg0czWm1851o+WeGHVsoEmo8dZB2
+         uePKbzt0KOC4N4arOb0X0RruZFTOCqV3fbG4prLDl8D+RF/0CoBh/pq8za2OU3VFIzIH
+         MHz8UGEKoHORwZVzXvbNMOS+Ss0yx0RpoRrPhRVKvWcs1S8kmdScqp4d0q/sgsrueWyb
+         fJl86lkYli7ES2uBI0WXiHKrIFOU7jIbnOVSygWhECD7FScsSv/0KhmzKjmYSb87wiBp
+         uxGw==
+X-Gm-Message-State: AOAM531BALD23ZGY/JYxQdpw7ys8xKqiLX/CvrX/91fXDYCrgqe1lspf
+        8zNHipNpk7JtCO9mh1C+FJz5TPmaMUAP0cF0AEk=
+X-Google-Smtp-Source: ABdhPJw3wKQ9eiwP3p5nvwU64A6eXq3qnss2KfiivYeffCLJm9X/Mr6I0JZXD7OpHM6hNKMqtP37pFrT4DM0BPLB6H0=
+X-Received: by 2002:a9d:6e96:: with SMTP id a22mr81038otr.345.1603325776731;
+ Wed, 21 Oct 2020 17:16:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <pull.895.git.git.1603286555.gitgitgadget@gmail.com>
+In-Reply-To: <pull.895.git.git.1603286555.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 21 Oct 2020 17:16:05 -0700
+Message-ID: <CABPp-BEGo8qfaoz6vUs+ktvmNUZdiHjwda468Qkh5uaD-wAd4w@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Beginning of new merge strategy: New API, empty implementation
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Support POSIX, bashism and mixed function declarations, all four
-compound command types, trailing comments and mixed whitespace.
+Hi,
 
-Even though Bash allows locale-dependent characters in function names
-<https://unix.stackexchange.com/a/245336/3645>, only detect function
-names with characters allowed by POSIX.1-2017
-<https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235>
-for simplicity. This should cover the vast majority of use cases, and
-produces system-agnostic results.
+On Wed, Oct 21, 2020 at 6:22 AM Elijah Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> In this series, I try to show the new merge API I have developed in
+> merge-ort and show how it differs from that provided by merge-recursive. I
+> do this in four steps, each corresponding to a patch:
 
-Since a word pattern has to be specified, but there is no easy way to
-know the default word pattern, use the default `IFS` characters for a
-starter. A later patch can improve this.
+I should probably call out that even if folks don't have time to
+review patches, I'm particularly interested in opinions on the
+following two questions:
+  * Are the "pull.twohead" and "GIT_TEST_MERGE_ALGORITHM" names in
+patch 4 good/bad/ugly?  (especially the mapping from "pull" to revert,
+cherry-pick, rebase, and merge?)
+  * Is it too weird to have a temporary/hidden builtin, in patch 3?
+If so, what is a good alternative?
 
-Signed-off-by: Victor Engmark <victor@engmark.name>
----
-Includes suggestions by Johannes Sixt <j6t@kdbg.org>.
----
- Documentation/gitattributes.txt       |  3 +++
- t/t4018-diff-funcname.sh              |  1 +
- t/t4018/bash-arithmetic-function      |  4 ++++
- t/t4018/bash-bashism-style-compact    |  6 ++++++
- t/t4018/bash-bashism-style-function   |  4 ++++
- t/t4018/bash-bashism-style-whitespace |  4 ++++
- t/t4018/bash-conditional-function     |  4 ++++
- t/t4018/bash-missing-parentheses      |  6 ++++++
- t/t4018/bash-mixed-style-compact      |  4 ++++
- t/t4018/bash-mixed-style-function     |  4 ++++
- t/t4018/bash-nested-functions         |  6 ++++++
- t/t4018/bash-other-characters         |  4 ++++
- t/t4018/bash-posix-style-compact      |  4 ++++
- t/t4018/bash-posix-style-function     |  4 ++++
- t/t4018/bash-posix-style-whitespace   |  4 ++++
- t/t4018/bash-subshell-function        |  4 ++++
- t/t4018/bash-trailing-comment         |  4 ++++
- userdiff.c                            | 21 +++++++++++++++++++++
- 18 files changed, 91 insertions(+)
- create mode 100644 t/t4018/bash-arithmetic-function
- create mode 100644 t/t4018/bash-bashism-style-compact
- create mode 100644 t/t4018/bash-bashism-style-function
- create mode 100644 t/t4018/bash-bashism-style-whitespace
- create mode 100644 t/t4018/bash-conditional-function
- create mode 100644 t/t4018/bash-missing-parentheses
- create mode 100644 t/t4018/bash-mixed-style-compact
- create mode 100644 t/t4018/bash-mixed-style-function
- create mode 100644 t/t4018/bash-nested-functions
- create mode 100644 t/t4018/bash-other-characters
- create mode 100644 t/t4018/bash-posix-style-compact
- create mode 100644 t/t4018/bash-posix-style-function
- create mode 100644 t/t4018/bash-posix-style-whitespace
- create mode 100644 t/t4018/bash-subshell-function
- create mode 100644 t/t4018/bash-trailing-comment
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 2d0a03715b..5e8a973449 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -802,6 +802,9 @@ patterns are available:
- 
- - `ada` suitable for source code in the Ada language.
- 
-+- `bash` suitable for source code in the Bourne-Again SHell language.
-+  Covers a superset of POSIX function definitions.
-+
- - `bibtex` suitable for files with BibTeX coded references.
- 
- - `cpp` suitable for source code in the C and C++ languages.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 9d07797579..9675bc17db 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -27,6 +27,7 @@ test_expect_success 'setup' '
- 
- diffpatterns="
- 	ada
-+	bash
- 	bibtex
- 	cpp
- 	csharp
-diff --git a/t/t4018/bash-arithmetic-function b/t/t4018/bash-arithmetic-function
-new file mode 100644
-index 0000000000..c0b276cb50
---- /dev/null
-+++ b/t/t4018/bash-arithmetic-function
-@@ -0,0 +1,4 @@
-+RIGHT() ((
-+
-+    ChangeMe = "$x" + "$y"
-+))
-diff --git a/t/t4018/bash-bashism-style-compact b/t/t4018/bash-bashism-style-compact
-new file mode 100644
-index 0000000000..1ca3126f61
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-compact
-@@ -0,0 +1,6 @@
-+function RIGHT {
-+    function InvalidSyntax{
-+        :
-+        echo 'ChangeMe'
-+    }
-+}
-diff --git a/t/t4018/bash-bashism-style-function b/t/t4018/bash-bashism-style-function
-new file mode 100644
-index 0000000000..f1de4fa831
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-function
-@@ -0,0 +1,4 @@
-+function RIGHT {
-+    :
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-bashism-style-whitespace b/t/t4018/bash-bashism-style-whitespace
-new file mode 100644
-index 0000000000..ade85dd3a5
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-whitespace
-@@ -0,0 +1,4 @@
-+	 function 	RIGHT 	( 	) 	{
-+
-+	    ChangeMe
-+	 }
-diff --git a/t/t4018/bash-conditional-function b/t/t4018/bash-conditional-function
-new file mode 100644
-index 0000000000..c5949e829b
---- /dev/null
-+++ b/t/t4018/bash-conditional-function
-@@ -0,0 +1,4 @@
-+RIGHT() [[ \
-+
-+    "$a" > "$ChangeMe"
-+]]
-diff --git a/t/t4018/bash-missing-parentheses b/t/t4018/bash-missing-parentheses
-new file mode 100644
-index 0000000000..8c8a05dd7a
---- /dev/null
-+++ b/t/t4018/bash-missing-parentheses
-@@ -0,0 +1,6 @@
-+function RIGHT {
-+    functionInvalidSyntax {
-+        :
-+        echo 'ChangeMe'
-+    }
-+}
-diff --git a/t/t4018/bash-mixed-style-compact b/t/t4018/bash-mixed-style-compact
-new file mode 100644
-index 0000000000..d9364cba67
---- /dev/null
-+++ b/t/t4018/bash-mixed-style-compact
-@@ -0,0 +1,4 @@
-+function RIGHT(){
-+    :
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-mixed-style-function b/t/t4018/bash-mixed-style-function
-new file mode 100644
-index 0000000000..555f9b2466
---- /dev/null
-+++ b/t/t4018/bash-mixed-style-function
-@@ -0,0 +1,4 @@
-+function RIGHT() {
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-nested-functions b/t/t4018/bash-nested-functions
-new file mode 100644
-index 0000000000..2c9237ead4
---- /dev/null
-+++ b/t/t4018/bash-nested-functions
-@@ -0,0 +1,6 @@
-+outer() {
-+    RIGHT() {
-+        :
-+        echo 'ChangeMe'
-+    }
-+}
-diff --git a/t/t4018/bash-other-characters b/t/t4018/bash-other-characters
-new file mode 100644
-index 0000000000..a3f390d525
---- /dev/null
-+++ b/t/t4018/bash-other-characters
-@@ -0,0 +1,4 @@
-+_RIGHT_0n() {
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-compact b/t/t4018/bash-posix-style-compact
-new file mode 100644
-index 0000000000..045bd2029b
---- /dev/null
-+++ b/t/t4018/bash-posix-style-compact
-@@ -0,0 +1,4 @@
-+RIGHT(){
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-function b/t/t4018/bash-posix-style-function
-new file mode 100644
-index 0000000000..a4d144856e
---- /dev/null
-+++ b/t/t4018/bash-posix-style-function
-@@ -0,0 +1,4 @@
-+RIGHT() {
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-whitespace b/t/t4018/bash-posix-style-whitespace
-new file mode 100644
-index 0000000000..4d984f0aa4
---- /dev/null
-+++ b/t/t4018/bash-posix-style-whitespace
-@@ -0,0 +1,4 @@
-+	 RIGHT 	( 	) 	{
-+
-+	    ChangeMe
-+	 }
-diff --git a/t/t4018/bash-subshell-function b/t/t4018/bash-subshell-function
-new file mode 100644
-index 0000000000..80baa09484
---- /dev/null
-+++ b/t/t4018/bash-subshell-function
-@@ -0,0 +1,4 @@
-+RIGHT() (
-+
-+    ChangeMe=2
-+)
-diff --git a/t/t4018/bash-trailing-comment b/t/t4018/bash-trailing-comment
-new file mode 100644
-index 0000000000..f1edbeda31
---- /dev/null
-+++ b/t/t4018/bash-trailing-comment
-@@ -0,0 +1,4 @@
-+RIGHT() { # Comment
-+
-+    ChangeMe
-+}
-diff --git a/userdiff.c b/userdiff.c
-index fde02f225b..eb698eaca7 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -23,6 +23,27 @@ IPATTERN("ada",
- 	 "[a-zA-Z][a-zA-Z0-9_]*"
- 	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
- 	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
-+PATTERNS("bash",
-+	 /* Optional leading indentation */
-+	 "^[ \t]*"
-+	 /* Start of captured text */
-+	 "("
-+	 "("
-+	     /* POSIX identifier with mandatory parentheses */
-+	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
-+	 "|"
-+	     /* Bashism identifier with optional parentheses */
-+	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
-+	 ")"
-+	 /* Optional whitespace */
-+	 "[ \t]*"
-+	 /* Compound command starting with `{`, `(`, `((` or `[[` */
-+	 "(\\{|\\(\\(?|\\[\\[)"
-+	 /* End of captured text */
-+	 ")",
-+	 /* -- */
-+	 /* Characters not in the default $IFS value */
-+	 "[^ \t]+"),
- PATTERNS("dts",
- 	 "!;\n"
- 	 "!=\n"
-
+Thanks,
+Elijah
