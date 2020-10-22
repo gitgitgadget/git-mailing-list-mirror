@@ -2,91 +2,130 @@ Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 292F5C388F2
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 06:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D31C388F2
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 06:08:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C84602245F
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 06:04:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7A402245F
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 06:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503256AbgJVGEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 02:04:16 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:44248 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2503237AbgJVGEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 02:04:16 -0400
-Received: by mail-lf1-f68.google.com with SMTP id b1so712886lfp.11
-        for <git@vger.kernel.org>; Wed, 21 Oct 2020 23:04:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Eg2++a/rHZ2208Yt8ORKvbr554rKmbipE4DX73/zRpE=;
-        b=LenkVRzH3ZP1GACUxSsK1XLtoJrIJDlHgPg3opfaVfqT655N70UHnHXQCedo7r6JNF
-         1q3DBegPuYld6g+TJZ4EKf9u8PQwTv3CsK0PX16KMM4l9kAGEhkS3MzrvP3BT3roMoEG
-         c3wP32NN4SNJY/k569XcsV+2y/dYiXSWvkStQZSBx+l3T0Gh5fjMxcJbH/LbiCOW/Fvd
-         WFLcbPfmSHgTVV8KABUMXoz1bCugddfI3An0n9/GoJlahhbmDABylvNw+6R6j9veGfjr
-         N7F6QTVIhImMJooe2sS+DPDJij2QyqCqKWaQA4OllEamB2X+MzopWxyNxsv/sjugP/lO
-         jiig==
-X-Gm-Message-State: AOAM5313/JVUFAI9QP5BOe9z6zSt6IWfDVESv3rkBYMUqp5j94uIGIFL
-        cEGB9nwe0EQf8cmQGJxOQCrk4AXLgwlQEjlxpSQ=
-X-Google-Smtp-Source: ABdhPJxBhDCXu+uHD1lr1HqdH648ZzHa1jQiMAqnmSPH4Y26eHmmEEt2/hqs1pBfVBbBITrNb4JkHYU6zH8oILAbg5Q=
-X-Received: by 2002:a05:6512:3455:: with SMTP id j21mr316459lfr.135.1603346652969;
- Wed, 21 Oct 2020 23:04:12 -0700 (PDT)
+        id S2503275AbgJVGIe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 02:08:34 -0400
+Received: from bsmtp2.bon.at ([213.33.87.16]:2777 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390174AbgJVGIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 02:08:34 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4CGxkR08Rhz5tlF;
+        Thu, 22 Oct 2020 08:08:30 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 082002100;
+        Thu, 22 Oct 2020 08:08:30 +0200 (CEST)
+Subject: Re: [PATCH v3] userdiff: support Bash
+To:     Victor Engmark <victor@engmark.name>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <a07042af-d16c-1975-c0d1-f22f4fec5827@kdbg.org>
+ <6c6b5ed2166ec2c308c53bf87c78b422fdc5084f.camel@engmark.name>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <0d9f9ad1-2ba7-567e-97a1-a96f0b7cd4be@kdbg.org>
+Date:   Thu, 22 Oct 2020 08:08:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <20201020121152.21645-1-charvi077@gmail.com> <20201021124823.2217-1-charvi077@gmail.com>
- <20201021124823.2217-4-charvi077@gmail.com> <CAPig+cRzLpY4Pe11SQ0uux-_+x_CSVYM1FvRvDebH3TNi-bVow@mail.gmail.com>
- <xmqq36264xx5.fsf@gitster.c.googlers.com> <xmqqh7qmolch.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqh7qmolch.fsf@gitster.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Oct 2020 02:04:01 -0400
-Message-ID: <CAPig+cSL-9o=c=iYtvHNDZmtRVoy2=EED1RdoX2Tsjnm3ioevQ@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5][Outreachy] t7102,t7201: remove whitespace after
- redirect operator
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Charvi Mendiratta <charvi077@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <6c6b5ed2166ec2c308c53bf87c78b422fdc5084f.camel@engmark.name>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 22, 2020 at 1:56 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Subject: t7102: prepare expected output inside test_expect_* block
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git c/t/t7102-reset.sh w/t/t7102-reset.sh
-> @@ -82,15 +82,15 @@ test_expect_success 'reset --hard message (ISO8859-1 logoutputencoding)' '
-> ->.diff_expect
-> ->.cached_expect
-> -cat >.cat_expect <<EOF
-> -secondfile:
-> -EOF
-> -
->  test_expect_success 'giving a non existing revision should fail' '
-> +       >.diff_expect &&
-> +       >.cached_expect &&
-> +       cat >.cat_expect <<-\EOF &&
-> +       secondfile:
-> +       EOF
+Am 22.10.20 um 01:45 schrieb Victor Engmark:
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 2d0a03715b..5e8a973449 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -802,6 +802,9 @@ patterns are available:
+>  
+>  - `ada` suitable for source code in the Ada language.
+>  
+> +- `bash` suitable for source code in the Bourne-Again SHell language.
+> +  Covers a superset of POSIX function definitions.
 
-You used <<-\EOF rather than plain <<-EOF when possible. Good.
+OK. POSIX *shell* function definitions would have been even better, but
+I think I can live with this version.
 
-(Might be worth mention in the commit message, but perhaps too minor?)
+> diff --git a/t/t4018/bash-bashism-style-compact b/t/t4018/bash-bashism-style-compact
+> new file mode 100644
+> index 0000000000..1ca3126f61
+> --- /dev/null
+> +++ b/t/t4018/bash-bashism-style-compact
+> @@ -0,0 +1,6 @@
+> +function RIGHT {
+> +    function InvalidSyntax{
 
-> @@ -191,38 +191,38 @@ test_expect_success 'resetting to HEAD with no changes should succeed and do not
->  test_expect_success '--soft reset only should show changes in diff --cached' '
-> +       >.diff_expect &&
-> +       cat >.cached_expect <<-EOF &&
-> +       diff --git a/secondfile b/secondfile
-> +       index $head5p1s..$head5s 100644
+Nicely done!
 
-And used plain <<-EOF when necessary. Fine.
+> +        :
+> +        echo 'ChangeMe'
+> +    }
+> +}
+
+> diff --git a/t/t4018/bash-nested-functions b/t/t4018/bash-nested-functions
+> new file mode 100644
+> index 0000000000..2c9237ead4
+> --- /dev/null
+> +++ b/t/t4018/bash-nested-functions
+> @@ -0,0 +1,6 @@
+> +outer() {
+> +    RIGHT() {
+> +        :
+> +        echo 'ChangeMe'
+> +    }
+> +}
+
+That's another very good addition!
+
+> diff --git a/userdiff.c b/userdiff.c
+> index fde02f225b..eb698eaca7 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -23,6 +23,27 @@ IPATTERN("ada",
+>  	 "[a-zA-Z][a-zA-Z0-9_]*"
+>  	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+>  	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
+> +PATTERNS("bash",
+> +	 /* Optional leading indentation */
+> +	 "^[ \t]*"
+> +	 /* Start of captured text */
+> +	 "("
+> +	 "("
+> +	     /* POSIX identifier with mandatory parentheses */
+> +	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+> +	 "|"
+> +	     /* Bashism identifier with optional parentheses */
+> +	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+> +	 ")"
+> +	 /* Optional whitespace */
+> +	 "[ \t]*"
+> +	 /* Compound command starting with `{`, `(`, `((` or `[[` */
+> +	 "(\\{|\\(\\(?|\\[\\[)"
+> +	 /* End of captured text */
+> +	 ")",
+> +	 /* -- */
+> +	 /* Characters not in the default $IFS value */
+> +	 "[^ \t]+"),
+>  PATTERNS("dts",
+>  	 "!;\n"
+>  	 "!=\n"
+> 
+
+This is very well done. Thank you!
+
+Acked-by: Johannes Sixt <j6t@kdbg.org>
+
+-- Hannes
