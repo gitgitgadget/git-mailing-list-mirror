@@ -2,114 +2,142 @@ Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6583C388F9
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E5B3C388F7
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:25:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 642912465A
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:14:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6F2F24656
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:25:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yYN8Dgxf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LsyR7ajp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S370003AbgJVTOw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 15:14:52 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54902 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S370000AbgJVTOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 15:14:51 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99D061079C4;
-        Thu, 22 Oct 2020 15:14:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pDQ/YWeO/6Rb8lZiQEBWJrjr2Jk=; b=yYN8Dg
-        xfhiBxqVMDqgqKERAPtQefVbm7fhpDYuAsxfmwAhsOcYuHTXdVdgAA+0r+hkzmgB
-        JKc45lwWYEyiVZZNlsM2sPPuVnjUR9kHtUgOz9zhSWqr6ViBeinhVisnuHMhTQHF
-        lAfoWkp1DrIicF8POfLdApsWpMXUjVnSekXHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BAJj1Dm/jeG1ZMIJOhWRfIesF+3JL9FO
-        hMbW1ulZEma3phmrHX6VtYw9eqaAlqR5oVjc6SwVi8UYHkmUxB648k6VGHnubXgc
-        MBB+jGw0VjYTHLp80G50V0BToyOvHmgBP0dvJkaEc8hY4+W3htDdouf/KmKok1Zb
-        eITGBKYsf0s=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 92BFB1079C3;
-        Thu, 22 Oct 2020 15:14:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B9291079C1;
-        Thu, 22 Oct 2020 15:14:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nipunn Koorapati <nipunn1313@gmail.com>
-Subject: Re: [PATCH v2 0/2] fsmonitor inline / testing cleanup
-References: <pull.767.git.1603303474.gitgitgadget@gmail.com>
-        <pull.767.v2.git.1603326066.gitgitgadget@gmail.com>
-        <20201022174043.GA775513@nand.local>
-        <xmqqblgum7qk.fsf@gitster.c.googlers.com>
-        <20201022183822.GA781760@nand.local>
-Date:   Thu, 22 Oct 2020 12:14:42 -0700
-In-Reply-To: <20201022183822.GA781760@nand.local> (Taylor Blau's message of
-        "Thu, 22 Oct 2020 14:38:22 -0400")
-Message-ID: <xmqq7drim5st.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D7EF2982-149A-11EB-A934-E43E2BB96649-77302942!pb-smtp20.pobox.com
+        id S370158AbgJVTZD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 15:25:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S370155AbgJVTZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 15:25:03 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4718C0613CE
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 12:25:02 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id h140so2926785qke.7
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 12:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=x8sNaAqzyNZ4gPUwIcGjQ2VDqUbrsSJGEK8M1UCpvi0=;
+        b=LsyR7ajpdceChZYH+UWc4pQNC8msb8AinI/nWfNJ/Tf0AapV+3EMJdxrb0HG8tSTqy
+         wTPYDwBjxrv+FxoOlISjMZrEf9uVcp5MlEUwb6sDGiDAz1UWI0vkHoLpLdC/qm3QxIHi
+         1yjJJuFznAqsxrnCosakfha8onI/pMr9sbA3sr+3MxV9wzwzldEDxDAL8qJLDkNPm+hR
+         YL0lbBbBWBQMCRG9KVnmrtbakQEtCYnC7fIdn3v+qSI0FEYlf0XZBofKxFNzHYSszw0c
+         eDKotv2EZ2hzIB3/2wcfWa1jf8BAAd3z3MBj/ne9N6F5lmo/lOREJTsMuyT4kol1t+lS
+         Fggw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=x8sNaAqzyNZ4gPUwIcGjQ2VDqUbrsSJGEK8M1UCpvi0=;
+        b=UruhrY9JTsJkGj4ddR3uYmnqxHr52uS2Nyg0Z/3PDltJpM2lkiDiUf+0w50/LiL+OQ
+         MYJQD0hXk44YlzGl49uaE4XjJN35JIN8Xd2lBpuRd9fIlfvsDFWyK5/+1BPafUu3VFbC
+         nsQ5FTN/cXAu16GC3vf0CmICRskecKtNZnjAkcwihePu+EkOG5FmJZCUuFoJSpYbnHUL
+         AxhYHLPNQOn00rOCl+n0kNkOufleVbt/578UmS+qLfZRrJiTyZbmg0ROjE2JPpnQL07A
+         +xTrt8zxwiceK9fMM37SVP8ku17vKnWWIciZboFn1wdefPVO9AxHIeakVxrAX2UNAH5t
+         03ow==
+X-Gm-Message-State: AOAM531w1c+Z4Q2iXA9OHcPe8IkmFogQc9ABGHmhk2RbpQ/4sc2y8jla
+        RF7Ogp6NkcWUPLif1b3t70E=
+X-Google-Smtp-Source: ABdhPJzAABXpwiprwxFm0pEvgk+x0/wKMR9vEsOGUMuBru4vccjD+5quIw7Ycuuy+P/Z3d+WjgmWfg==
+X-Received: by 2002:a37:d8b:: with SMTP id 133mr3931341qkn.131.1603394701867;
+        Thu, 22 Oct 2020 12:25:01 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id t65sm1793191qkc.52.2020.10.22.12.24.59
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Thu, 22 Oct 2020 12:25:01 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v4 2/2] log, show: add tests for messages containing CRLF
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <75a87887be5d8364b37655f0588ed98a52de92bc.1603335680.git.gitgitgadget@gmail.com>
+Date:   Thu, 22 Oct 2020 15:24:54 -0400
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Michael J Gruber <git@grubix.eu>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        John Keeping <john@keeping.me.uk>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <ED48F9A2-A8F6-4332-BB5E-C767D0C23AC0@gmail.com>
+References: <pull.576.v3.git.1602526169.gitgitgadget@gmail.com> <pull.576.v4.git.1603335680.gitgitgadget@gmail.com> <75a87887be5d8364b37655f0588ed98a52de92bc.1603335680.git.gitgitgadget@gmail.com>
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> Sorry for the confusion. I mean the following:
->
->   - These functions have existing callers that Nipunn claims do not need
->     to be explicitly inlined.
+> Le 21 oct. 2020 =C3=A0 23:01, Philippe Blain via GitGitGadget =
+<gitgitgadget@gmail.com> a =C3=A9crit :
+>=20
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>=20
+> A previous commit fixed a bug in ref-filter.c causing messages
+> containing CRLF to be incorrectly parsed and displayed.
+>=20
+> Add tests to also check that `git log` and `git show` correctly handle
+> such messages, to prevent futur regressions if these commands are
+> refactored to use the ref-filter API.
+>=20
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+> t/t3920-crlf-messages.sh | 18 ++++++++++++++++++
+> 1 file changed, 18 insertions(+)
+>=20
+> diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+> index 3f0ce02c3f..b6e09be412 100755
+> --- a/t/t3920-crlf-messages.sh
+> +++ b/t/t3920-crlf-messages.sh
+> @@ -105,4 +105,22 @@ test_crlf_subject_body_and_contents tag --list =
+tag-crlf*
+>=20
+> test_crlf_subject_body_and_contents for-each-ref refs/heads/crlf*
+>=20
+> +test_expect_success 'log: --oneline works with messages using CRLF' '
+> +	for branch in $LIB_CRLF_BRANCHES
+> +	do
+> +		cat .crlf-subject-${branch}.txt >expect &&
+> +		printf "\n" >>expect &&
+> +		git log --oneline -1 ${branch} >tmp-branch &&
+> +		git log --oneline -1 tag-${branch} >tmp-tag &&
+> +		cut -d" " -f2- <tmp-branch >actual-branch &&
+> +		cut -d" " -f2- <tmp-tag >actual-tag &&
+> +		test_cmp expect actual-branch &&
+> +		test_cmp expect actual-tag
+> +	done
 
-I guess "claims" is the key phrase in your responsehere.  Do you
-feel that the claim is not sufficiently substantiated?
+I just realized that I'm missing this in this patch :
 
-Those without fsmonitor would pay the call/return cost for no good
-reason if core_fsmonitor is not set, and checking that on the caller
-side may make a big difference.  How big?  That needs measurement.
+diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+index b6e09be412..70ddce3a2e 100755
+--- a/t/t3920-crlf-messages.sh
++++ b/t/t3920-crlf-messages.sh
+@@ -115,7 +115,7 @@ test_expect_success 'log: --oneline works with =
+messages using CRLF' '
+ 		cut -d" " -f2- <tmp-branch >actual-branch &&
+ 		cut -d" " -f2- <tmp-tag >actual-tag &&
+ 		test_cmp expect actual-branch &&
+-		test_cmp expect actual-tag
++		test_cmp expect actual-tag || return 1
+ 	done
+ '
 
-This is a tangent, but with or without inlining, I find it iffy to
-see that untracked_cache_invalidate_path() is called only when
-fsmonitor is in use.  Does untracked_cache depend on fsmonitor for
-its correct operation?  Why is it OK not to invlidate when the
-caller would tell fsmonitor that a path is invalid if fsmonitor were
-in use?  The call is a statement of fact that the path is no longer
-valid, and that bit of information would be useful to the parts of
-the system outside fsmonitor, no?  Puzzled....
+I'll wait a few days for any further comments and re-send with this =
+tweak.
 
->   - These functions are being moved to be part of the fsmonitor public
->     interface (presumably so that new callers can be added).
-
-They used to be implemented as static inline functions in the
-fsmonitor.h header file, so they have been part of the public
-interface anyway.  Anybody that includes fsmonitor.h can use it,
-with or without the patch.  So I think this one would not be
-a problem.
-
-> ...And I was wondering whether you wanted to wait for new callers
-> before applying these to your tree.
-
-Thanks.
-
-I still do not know about the "should the inline be kept" question.
-The proposed log message for the commit does not explain (let alone
-justify) why "optimization" is unneeded for the fuctions in the
-first place, which does not help.
-
-
-
+Philippe.=
