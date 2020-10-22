@@ -2,65 +2,114 @@ Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9784BC388F7
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6583C388F9
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:14:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3EA1D24658
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:06:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 642912465A
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 19:14:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yYN8Dgxf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S369888AbgJVTGx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 15:06:53 -0400
-Received: from mail-ej1-f67.google.com ([209.85.218.67]:45208 "EHLO
-        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S369851AbgJVTGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 15:06:52 -0400
-Received: by mail-ej1-f67.google.com with SMTP id dt13so3884778ejb.12
-        for <git@vger.kernel.org>; Thu, 22 Oct 2020 12:06:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TCQlW6dA/FrUBV6YFUPh5RJe/QOZJEySErR83ynxGFE=;
-        b=uBrv/nX1DvXSPkQsPZ/uHOA+909vXJB7Gc1coRBQK7FJcvK0myazkzCP8yn54gPDMP
-         zG0Ypnb3owAIIW0QF+ATw6gldXF0VPaj34gn775AIHCzgbvIAu0BWTMhiV4UXjmJ4gT9
-         6VOdOqXlDJv8kbRu6uaKgOj8YCJK9CBbxhZzhG4pflkKz5cLW7RmoWK0P94oUNgu2vH0
-         vboSeAB3ezFXBLih0b3cNodusX5/99uyJUmE4J/VyNv8G2ril4xtMUMYVk9z99ICKg1I
-         WNUhD/o4eC+ZccXyqWs9zQH84XcCxTVaAdu3jEnq86zKARu/+i/xhCOiGLy9b+h5G+lL
-         Sqog==
-X-Gm-Message-State: AOAM531AYgt485XHp9y3n1ym89VyuyIM516QF5gHeZsYaM7xSipX5UWv
-        yI4ilmdttYC8xVK1spQAbmv/PdcBo/hp34Vs1aVE4U5YMvs=
-X-Google-Smtp-Source: ABdhPJyarWqzyqbVGU5V0JSfZ8Vung1nybD38nfuog/m0+Tb/B2ilSu4BBFyr9OdlrWMwWivz63/1m0BINZYEBTW36Y=
-X-Received: by 2002:a17:906:c7d9:: with SMTP id dc25mr3725678ejb.482.1603393610354;
- Thu, 22 Oct 2020 12:06:50 -0700 (PDT)
+        id S370003AbgJVTOw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 15:14:52 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54902 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S370000AbgJVTOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 15:14:51 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99D061079C4;
+        Thu, 22 Oct 2020 15:14:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pDQ/YWeO/6Rb8lZiQEBWJrjr2Jk=; b=yYN8Dg
+        xfhiBxqVMDqgqKERAPtQefVbm7fhpDYuAsxfmwAhsOcYuHTXdVdgAA+0r+hkzmgB
+        JKc45lwWYEyiVZZNlsM2sPPuVnjUR9kHtUgOz9zhSWqr6ViBeinhVisnuHMhTQHF
+        lAfoWkp1DrIicF8POfLdApsWpMXUjVnSekXHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BAJj1Dm/jeG1ZMIJOhWRfIesF+3JL9FO
+        hMbW1ulZEma3phmrHX6VtYw9eqaAlqR5oVjc6SwVi8UYHkmUxB648k6VGHnubXgc
+        MBB+jGw0VjYTHLp80G50V0BToyOvHmgBP0dvJkaEc8hY4+W3htDdouf/KmKok1Zb
+        eITGBKYsf0s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 92BFB1079C3;
+        Thu, 22 Oct 2020 15:14:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B9291079C1;
+        Thu, 22 Oct 2020 15:14:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nipunn Koorapati <nipunn1313@gmail.com>
+Subject: Re: [PATCH v2 0/2] fsmonitor inline / testing cleanup
+References: <pull.767.git.1603303474.gitgitgadget@gmail.com>
+        <pull.767.v2.git.1603326066.gitgitgadget@gmail.com>
+        <20201022174043.GA775513@nand.local>
+        <xmqqblgum7qk.fsf@gitster.c.googlers.com>
+        <20201022183822.GA781760@nand.local>
+Date:   Thu, 22 Oct 2020 12:14:42 -0700
+In-Reply-To: <20201022183822.GA781760@nand.local> (Taylor Blau's message of
+        "Thu, 22 Oct 2020 14:38:22 -0400")
+Message-ID: <xmqq7drim5st.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <DM5PR03MB2826A616AC30710E169B7237B5360@DM5PR03MB2826.namprd03.prod.outlook.com>
- <DM5PR03MB2826C04CC5AAF3B61BDDAFE2B5360@DM5PR03MB2826.namprd03.prod.outlook.com>
- <20200925222801.GC1392312@camp.crustytoothpaste.net> <DM5PR03MB28262362A9D3B0EDECBE6106B50A0@DM5PR03MB2826.namprd03.prod.outlook.com>
- <DM5PR03MB2826382CD1A5AA8F3ED60FD9B51D0@DM5PR03MB2826.namprd03.prod.outlook.com>
-In-Reply-To: <DM5PR03MB2826382CD1A5AA8F3ED60FD9B51D0@DM5PR03MB2826.namprd03.prod.outlook.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Oct 2020 15:06:39 -0400
-Message-ID: <CAPig+cSbUjb0=TRGdpdTV9XyVbRad-f-_Ypw72wVE0OBR6TaQg@mail.gmail.com>
-Subject: Re: Git Alias not working in worktree
-To:     Frank Illenseer <illenseer@altair.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7EF2982-149A-11EB-A934-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 22, 2020 at 8:06 AM Frank Illenseer <illenseer@altair.de> wrote:
-> Does anyone have any idea as to why the alias definitions from the
-> config of a worktree is not working? - I would still be interested
-> in a solution to get this working.
+Taylor Blau <me@ttaylorr.com> writes:
 
-For reference, the original question was posted in[1], and brian
-mentioned[2] that he would take a look at it. brian, did happen to
-investigate this at all?
+> Sorry for the confusion. I mean the following:
+>
+>   - These functions have existing callers that Nipunn claims do not need
+>     to be explicitly inlined.
 
-[1]: https://lore.kernel.org/git/DM5PR03MB2826C04CC5AAF3B61BDDAFE2B5360@DM5PR03MB2826.namprd03.prod.outlook.com/
-[2]: https://lore.kernel.org/git/20200925222801.GC1392312@camp.crustytoothpaste.net/
+I guess "claims" is the key phrase in your responsehere.  Do you
+feel that the claim is not sufficiently substantiated?
+
+Those without fsmonitor would pay the call/return cost for no good
+reason if core_fsmonitor is not set, and checking that on the caller
+side may make a big difference.  How big?  That needs measurement.
+
+This is a tangent, but with or without inlining, I find it iffy to
+see that untracked_cache_invalidate_path() is called only when
+fsmonitor is in use.  Does untracked_cache depend on fsmonitor for
+its correct operation?  Why is it OK not to invlidate when the
+caller would tell fsmonitor that a path is invalid if fsmonitor were
+in use?  The call is a statement of fact that the path is no longer
+valid, and that bit of information would be useful to the parts of
+the system outside fsmonitor, no?  Puzzled....
+
+>   - These functions are being moved to be part of the fsmonitor public
+>     interface (presumably so that new callers can be added).
+
+They used to be implemented as static inline functions in the
+fsmonitor.h header file, so they have been part of the public
+interface anyway.  Anybody that includes fsmonitor.h can use it,
+with or without the patch.  So I think this one would not be
+a problem.
+
+> ...And I was wondering whether you wanted to wait for new callers
+> before applying these to your tree.
+
+Thanks.
+
+I still do not know about the "should the inline be kept" question.
+The proposed log message for the commit does not explain (let alone
+justify) why "optimization" is unneeded for the fuctions in the
+first place, which does not help.
+
+
+
