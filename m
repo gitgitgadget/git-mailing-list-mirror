@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43651C4363A
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 07:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F2CAC4363A
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 07:19:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0F9D22248
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 07:19:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1056D22248
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 07:19:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="quhLuOIs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hdP9+zsJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2506073AbgJVHTq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 03:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51566 "EHLO
+        id S2506109AbgJVHTx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 03:19:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2506030AbgJVHTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 03:19:46 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF23C0613CE
-        for <git@vger.kernel.org>; Thu, 22 Oct 2020 00:19:46 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id p21so531287pju.0
-        for <git@vger.kernel.org>; Thu, 22 Oct 2020 00:19:46 -0700 (PDT)
+        with ESMTP id S2506099AbgJVHTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 03:19:53 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED803C0613CE
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 00:19:52 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id e7so569663pfn.12
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 00:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s8vVoXiXZzh0fLZS99sdzB1AzmUqV0PIa/JAkir7jYo=;
-        b=quhLuOIstOBcKGLgExYa/DTcApjtWiTJ84j7UHQfDuissY0vWAu2kchHf26gj3WPTL
-         iNIwsTWp6sFeZbEwyZSYXJIUUxvukfA6Sia2U7CGJ/ljLiQjC5kKoYqLTvrKKdrLgrxk
-         FSykNuLEVuevpS3UZUby8PRkNW+QJeyOGj8efgnj4ah6RCl1b1INspdjp4EDK2d1AXSW
-         /Q77JsQQ7ZTSwzgyLeNV54gvYbW9H1FsT6BkGMuBQx7MGXKFII7Lqwv9+2bmzCAYKbmM
-         Jo8MktWh3ul1Ko4X7876z1/nQN9GOIu4X/Wd1OiOuIZu52lCH4zCpHcbXLjZCPPyr3yD
-         SwMg==
+        bh=t3Nz13CDPOpDfLJl00FTEqcUcfeuYsIkYRTXx35epXA=;
+        b=hdP9+zsJ7iqbnhaq9ZCSTJxMtozOUyGLYFjnRP316/d8yI/nDHlaWpj8cjIdsrmL2X
+         oo0L2kr5wWZF6BlgN+IcDL1w5cVBRjF4e/UsTGuAv80Mk14FzS9sSBND30YT27seiRK6
+         FLROP1Aikwih+gdMEkJzpPbjFoyhL68nOi4stGbCihXitVCQ7CfDqbnsQjAqC6JvJdVD
+         vbsIiljNODfJO1Mx1MhYFOTsgxsVO/EQHiosxmY1G7rWhYf9kLTQ9J/oOI+pK0jBkBiL
+         6SttrJ4nli2Yp+gLNXtCRSQzsjye0AF46nn8zUmqsfSc9esU/TzbIwaduvlivKsTBB5a
+         P0wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s8vVoXiXZzh0fLZS99sdzB1AzmUqV0PIa/JAkir7jYo=;
-        b=sozmAsZjQnLvHi0Xx1CrxFc43zuKwCs4RVgA9N3OXc/hcGZibra7BTGT8PjaSJ71uL
-         gHNOXlOmQhaaoBUYTrgXF0LmGDw1HIqo3LUmGQoqidTon3wiijcNS70v1KraESRtjHk2
-         KZXL4+5lqvRRlm+NAufxRb8QAR1kgnuYInL3nREwy5fY7yEr2/d+apJ5G2wcwqNhNqgj
-         vUhMbMFfRntZcot4Z2ERd7yzhDpEEmkonHKS7MmBOX7CQgGdDIUtY8/AOKZVhqVAs6MD
-         INTJfqC7LO7aQuPx3luVELIQFrL4b6H/tc0FNL3GBL9YlAW9HeW4dihE116IvLuLUvdq
-         sMdw==
-X-Gm-Message-State: AOAM530Fz38o52x1UNBmCUGfRIogUxfcrU8/45YxiykUgmRry4Ew3LLO
-        zLy0lXdVQ6VlD3G0CcgvYkcxdtBThSzijA==
-X-Google-Smtp-Source: ABdhPJyuo7vfSokxEzcFOSb8Zo1QlfLWkFYD4Cd5R5esKZVS6BE2bz36USVaDdMIU+0BQi08hAEA2w==
-X-Received: by 2002:a17:90b:4d0d:: with SMTP id mw13mr1106568pjb.36.1603351185229;
-        Thu, 22 Oct 2020 00:19:45 -0700 (PDT)
+        bh=t3Nz13CDPOpDfLJl00FTEqcUcfeuYsIkYRTXx35epXA=;
+        b=UTTjIR7LHHtnsm56rlhtxbqmidrYCjKfW6LJU0LbF2LhCzDCnwk3BDXHc26sfUady8
+         5Z5TBvWm56t8K/TJQKeZgVEZzZ1WM+IHEwkWTRiCNnJ5aw561JgiGvg7cTgIVZgLxm6N
+         7Zt6z3Pj7Ab+Oa8YkG6dmjAb/l4f/OLkq2wnGUL4o7EBndugZLYxNeVokmDPoA19a7nC
+         oXzcJhrStgCNMOILtNKWho2I5EQnVMuxtpaGWou2oRNOHjpMH3bMrsf3TIn3t3w2oG2r
+         MNMIYWb6z8Mthrm+cG5mBtmRhKpNrn3z0UezPBJ3v4HZDUFDyLqLJaIWUV+/isUBP07H
+         8bxQ==
+X-Gm-Message-State: AOAM533L7ZEGIt+Gz/yCFRM055djfx/XXHRicauxD4ucos1GgDTbpsjq
+        n/2fBzdxhzVwei+oApVPrMjYI753ZKEBIg==
+X-Google-Smtp-Source: ABdhPJxIhLFI2j0OrgXX4zgv34H1lRQ684BPPKvZed1FG2AZZRvHWQO4/3Ms066nAH5nWuqeZiJOSg==
+X-Received: by 2002:a63:105e:: with SMTP id 30mr1158646pgq.33.1603351192202;
+        Thu, 22 Oct 2020 00:19:52 -0700 (PDT)
 Received: from localhost.localdomain ([2409:4050:2e84:4e7a:290b:4332:f03e:69aa])
-        by smtp.googlemail.com with ESMTPSA id 78sm1030004pfz.211.2020.10.22.00.19.41
+        by smtp.googlemail.com with ESMTPSA id 78sm1030004pfz.211.2020.10.22.00.19.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2020 00:19:44 -0700 (PDT)
+        Thu, 22 Oct 2020 00:19:51 -0700 (PDT)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com, me@ttaylorr.com,
         phillip.wood123@gmail.com, sunshine@sunshineco.com,
         Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v6 1/5][Outreachy] t7101,t7102,t7201: modernize test formatting
-Date:   Thu, 22 Oct 2020 12:46:46 +0530
-Message-Id: <20201022071649.24284-2-charvi077@gmail.com>
+Subject: [PATCH v6 2/5][Outreachy] t7102,t7201: remove unnecessary blank spaces in test body
+Date:   Thu, 22 Oct 2020 12:46:47 +0530
+Message-Id: <20201022071649.24284-3-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20201021124823.2217-1-charvi077@gmail.com>
 References: <20201021124823.2217-1-charvi077@gmail.com>
@@ -75,304 +75,266 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some tests in these scripts are formatted using a very old style:
-        test_expect_success \
-            'title' \
-            'body line 1 &&
-             body line 2'
+t7102 and t7201 still follow the old style of having blank
+lines around test body, which is not consistence with our
+current practice.
 
-Updating the formatting to the modern style:
-        test_expect_success 'title' '
-            body line 1 &&
-            body line 2
-        '
+Let's remove those unnecessary blank lines.
 
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- t/t7101-reset-empty-subdirs.sh | 66 +++++++++++++++++-----------------
- t/t7102-reset.sh               | 24 +++++--------
- t/t7201-co.sh                  | 31 ++++++++--------
- 3 files changed, 56 insertions(+), 65 deletions(-)
+ t/t7102-reset.sh |  9 ---------
+ t/t7201-co.sh    | 25 -------------------------
+ 2 files changed, 34 deletions(-)
 
-diff --git a/t/t7101-reset-empty-subdirs.sh b/t/t7101-reset-empty-subdirs.sh
-index 96e163f084..bfce05ac5d 100755
---- a/t/t7101-reset-empty-subdirs.sh
-+++ b/t/t7101-reset-empty-subdirs.sh
-@@ -6,16 +6,15 @@
- test_description='git reset should cull empty subdirs'
- . ./test-lib.sh
- 
--test_expect_success \
--    'creating initial files' \
--    'mkdir path0 &&
-+test_expect_success 'creating initial files' '
-+     mkdir path0 &&
-      cp "$TEST_DIRECTORY"/../COPYING path0/COPYING &&
-      git add path0/COPYING &&
--     git commit -m add -a'
-+     git commit -m add -a
-+'
- 
--test_expect_success \
--    'creating second files' \
--    'mkdir path1 &&
-+test_expect_success 'creating second files' '
-+     mkdir path1 &&
-      mkdir path1/path2 &&
-      cp "$TEST_DIRECTORY"/../COPYING path1/path2/COPYING &&
-      cp "$TEST_DIRECTORY"/../COPYING path1/COPYING &&
-@@ -25,39 +24,40 @@ test_expect_success \
-      git add path1/COPYING &&
-      git add COPYING &&
-      git add path0/COPYING-TOO &&
--     git commit -m change -a'
-+     git commit -m change -a
-+'
- 
--test_expect_success \
--    'resetting tree HEAD^' \
--    'git reset --hard HEAD^'
-+test_expect_success 'resetting tree HEAD^' '
-+     git reset --hard HEAD^
-+'
- 
--test_expect_success \
--    'checking initial files exist after rewind' \
--    'test -d path0 &&
--     test -f path0/COPYING'
-+test_expect_success 'checking initial files exist after rewind' '
-+     test -d path0 &&
-+     test -f path0/COPYING
-+'
- 
--test_expect_success \
--    'checking lack of path1/path2/COPYING' \
--    '! test -f path1/path2/COPYING'
-+test_expect_success 'checking lack of path1/path2/COPYING' '
-+    ! test -f path1/path2/COPYING
-+'
- 
--test_expect_success \
--    'checking lack of path1/COPYING' \
--    '! test -f path1/COPYING'
-+test_expect_success 'checking lack of path1/COPYING' '
-+    ! test -f path1/COPYING
-+'
- 
--test_expect_success \
--    'checking lack of COPYING' \
--    '! test -f COPYING'
-+test_expect_success 'checking lack of COPYING' '
-+     ! test -f COPYING
-+'
- 
--test_expect_success \
--    'checking checking lack of path1/COPYING-TOO' \
--    '! test -f path0/COPYING-TOO'
-+test_expect_success 'checking checking lack of path1/COPYING-TOO' '
-+     ! test -f path0/COPYING-TOO
-+'
- 
--test_expect_success \
--    'checking lack of path1/path2' \
--    '! test -d path1/path2'
-+test_expect_success 'checking lack of path1/path2' '
-+     ! test -d path1/path2
-+'
- 
--test_expect_success \
--    'checking lack of path1' \
--    '! test -d path1'
-+test_expect_success 'checking lack of path1' '
-+     ! test -d path1
-+'
- 
- test_done
 diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 22161b3b2d..fe43f77513 100755
+index fe43f77513..2b4cfb2c83 100755
 --- a/t/t7102-reset.sh
 +++ b/t/t7102-reset.sh
-@@ -107,8 +107,7 @@ test_expect_success 'reset --soft with unmerged index should fail' '
- 	git rm --cached -- un
+@@ -439,7 +439,6 @@ test_expect_success 'test --mixed <paths>' '
  '
  
--test_expect_success \
--	'giving paths with options different than --mixed should fail' '
-+test_expect_success 'giving paths with options different than --mixed should fail' '
- 	test_must_fail git reset --soft -- first &&
- 	test_must_fail git reset --hard -- first &&
- 	test_must_fail git reset --soft HEAD^ -- first &&
-@@ -128,8 +127,7 @@ test_expect_success 'giving unrecognized options should fail' '
- 	check_changes $head5
+ test_expect_success 'test resetting the index at give paths' '
+-
+ 	mkdir sub &&
+ 	>sub/file1 &&
+ 	>sub/file2 &&
+@@ -452,7 +451,6 @@ test_expect_success 'test resetting the index at give paths' '
+ 	echo "$U" &&
+ 	test_must_fail git diff-index --cached --exit-code "$T" &&
+ 	test "$T" != "$U"
+-
  '
  
--test_expect_success \
--	'trying to do reset --soft with pending merge should fail' '
-+test_expect_success 'trying to do reset --soft with pending merge should fail' '
- 	git branch branch1 &&
- 	git branch branch2 &&
- 
-@@ -152,8 +150,7 @@ test_expect_success \
- 	check_changes $head5
+ test_expect_success 'resetting an unmodified path is a no-op' '
+@@ -490,7 +488,6 @@ test_expect_success 'resetting specific path that is unmerged' '
  '
  
--test_expect_success \
--	'trying to do reset --soft with pending checkout merge should fail' '
-+test_expect_success 'trying to do reset --soft with pending checkout merge should fail' '
- 	git branch branch3 &&
- 	git branch branch4 &&
- 
-@@ -175,8 +172,7 @@ test_expect_success \
- 	check_changes $head5
- '
- 
--test_expect_success \
--	'resetting to HEAD with no changes should succeed and do nothing' '
-+test_expect_success 'resetting to HEAD with no changes should succeed and do nothing' '
+ test_expect_success 'disambiguation (1)' '
+-
  	git reset --hard &&
- 		check_changes $head5 &&
- 	git reset --hard HEAD &&
-@@ -226,8 +222,7 @@ secondfile:
- 2nd line 2nd file
- 3rd line 2nd file
- EOF
--test_expect_success \
--	'changing files and redo the last commit should succeed' '
-+test_expect_success 'changing files and redo the last commit should succeed' '
- 	echo "3rd line 2nd file" >>secondfile &&
- 	git commit -a -C ORIG_HEAD &&
- 	head4=$(git rev-parse --verify HEAD) &&
-@@ -245,8 +240,7 @@ first:
- second:
- 2nd file
- EOF
--test_expect_success \
--	'--hard reset should change the files and undo commits permanently' '
-+test_expect_success '--hard reset should change the files and undo commits permanently' '
- 	git reset --hard HEAD~2 &&
- 	check_changes $head5p2 &&
- 	test "$(git rev-parse ORIG_HEAD)" = \
-@@ -284,8 +278,7 @@ secondfile:
- 1st line 2nd file
- 2nd line 2nd file
- EOF
--test_expect_success \
--	'redoing changes adding them without commit them should succeed' '
-+test_expect_success 'redoing changes adding them without commit them should succeed' '
- 	git rm first &&
- 	git mv second secondfile &&
+ 	>secondfile &&
+ 	git add secondfile &&
+@@ -499,11 +496,9 @@ test_expect_success 'disambiguation (1)' '
+ 	test -z "$(git diff --cached --name-only)" &&
+ 	test -f secondfile &&
+ 	test_must_be_empty secondfile
+-
+ '
  
-@@ -380,8 +373,7 @@ secondfile:
- 1st line 2nd file
- 2nd line 2nd file
- EOF
--test_expect_success \
--	'--hard reset to ORIG_HEAD should clear a fast-forward merge' '
-+test_expect_success '--hard reset to ORIG_HEAD should clear a fast-forward merge' '
- 	git reset --hard HEAD^ &&
- 	check_changes $head5 &&
+ test_expect_success 'disambiguation (2)' '
+-
+ 	git reset --hard &&
+ 	>secondfile &&
+ 	git add secondfile &&
+@@ -511,11 +506,9 @@ test_expect_success 'disambiguation (2)' '
+ 	test_must_fail git reset secondfile &&
+ 	test -n "$(git diff --cached --name-only -- secondfile)" &&
+ 	test ! -f secondfile
+-
+ '
  
+ test_expect_success 'disambiguation (3)' '
+-
+ 	git reset --hard &&
+ 	>secondfile &&
+ 	git add secondfile &&
+@@ -524,11 +517,9 @@ test_expect_success 'disambiguation (3)' '
+ 	test_must_fail git diff --quiet &&
+ 	test -z "$(git diff --cached --name-only)" &&
+ 	test ! -f secondfile
+-
+ '
+ 
+ test_expect_success 'disambiguation (4)' '
+-
+ 	git reset --hard &&
+ 	>secondfile &&
+ 	git add secondfile &&
 diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 4d62b9b00f..a800bda5e3 100755
+index a800bda5e3..b527f8009c 100755
 --- a/t/t7201-co.sh
 +++ b/t/t7201-co.sh
-@@ -62,7 +62,7 @@ test_expect_success setup '
- 	git checkout master
+@@ -33,7 +33,6 @@ fill () {
+ 
+ 
+ test_expect_success setup '
+-
+ 	fill x y z > same &&
+ 	fill 1 2 3 4 5 6 7 8 >one &&
+ 	fill a b c d e >two &&
+@@ -63,7 +62,6 @@ test_expect_success setup '
  '
  
--test_expect_success "checkout from non-existing branch" '
-+test_expect_success 'checkout from non-existing branch' '
- 
+ test_expect_success 'checkout from non-existing branch' '
+-
  	git checkout -b delete-me master &&
  	git update-ref -d --no-deref refs/heads/delete-me &&
-@@ -71,7 +71,7 @@ test_expect_success "checkout from non-existing branch" '
- 	test refs/heads/master = "$(git symbolic-ref HEAD)"
+ 	test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
+@@ -72,7 +70,6 @@ test_expect_success 'checkout from non-existing branch' '
  '
  
--test_expect_success "checkout with dirty tree without -m" '
-+test_expect_success 'checkout with dirty tree without -m' '
- 
+ test_expect_success 'checkout with dirty tree without -m' '
+-
  	fill 0 1 2 3 4 5 6 7 8 >one &&
  	if git checkout side
-@@ -84,7 +84,7 @@ test_expect_success "checkout with dirty tree without -m" '
- 
+ 	then
+@@ -81,11 +78,9 @@ test_expect_success 'checkout with dirty tree without -m' '
+ 	else
+ 		echo "happy - failed correctly"
+ 	fi
+-
  '
  
--test_expect_success "checkout with unrelated dirty tree without -m" '
-+test_expect_success 'checkout with unrelated dirty tree without -m' '
- 
+ test_expect_success 'checkout with unrelated dirty tree without -m' '
+-
  	git checkout -f master &&
  	fill 0 1 2 3 4 5 6 7 8 >same &&
-@@ -95,7 +95,7 @@ test_expect_success "checkout with unrelated dirty tree without -m" '
- 	test_cmp messages.expect messages
+ 	cp same kept &&
+@@ -96,7 +91,6 @@ test_expect_success 'checkout with unrelated dirty tree without -m' '
  '
  
--test_expect_success "checkout -m with dirty tree" '
-+test_expect_success 'checkout -m with dirty tree' '
- 
+ test_expect_success 'checkout -m with dirty tree' '
+-
  	git checkout -f master &&
  	git clean -f &&
-@@ -120,7 +120,7 @@ test_expect_success "checkout -m with dirty tree" '
- 	test_must_be_empty current.index
+ 
+@@ -121,7 +115,6 @@ test_expect_success 'checkout -m with dirty tree' '
  '
  
--test_expect_success "checkout -m with dirty tree, renamed" '
-+test_expect_success 'checkout -m with dirty tree, renamed' '
- 
+ test_expect_success 'checkout -m with dirty tree, renamed' '
+-
  	git checkout -f master && git clean -f &&
  
-@@ -388,22 +388,22 @@ test_expect_success 'checkout specific path while in subdirectory' '
- 
+ 	fill 1 2 3 4 5 7 8 >one &&
+@@ -139,11 +132,9 @@ test_expect_success 'checkout -m with dirty tree, renamed' '
+ 	! test -f one &&
+ 	git diff --cached >current &&
+ 	test_must_be_empty current
+-
  '
  
--test_expect_success \
--    'checkout w/--track sets up tracking' '
-+test_expect_success 'checkout w/--track sets up tracking' '
-     git config branch.autosetupmerge false &&
-     git checkout master &&
-     git checkout --track -b track1 &&
-     test "$(git config branch.track1.remote)" &&
--    test "$(git config branch.track1.merge)"'
-+    test "$(git config branch.track1.merge)"
-+'
+ test_expect_success 'checkout -m with merge conflict' '
+-
+ 	git checkout -f master && git clean -f &&
  
--test_expect_success \
--    'checkout w/autosetupmerge=always sets up tracking' '
-+test_expect_success 'checkout w/autosetupmerge=always sets up tracking' '
-     test_when_finished git config branch.autosetupmerge false &&
-     git config branch.autosetupmerge always &&
-     git checkout master &&
-     git checkout -b track2 &&
-     test "$(git config branch.track2.remote)" &&
--    test "$(git config branch.track2.merge)"'
-+    test "$(git config branch.track2.merge)"
-+'
- 
- test_expect_success 'checkout w/--track from non-branch HEAD fails' '
-     git checkout master^0 &&
-@@ -435,8 +435,7 @@ test_expect_success 'detach a symbolic link HEAD' '
-     test "z$(git rev-parse --verify refs/heads/master)" = "z$here"
+ 	fill 1 T 3 4 5 6 S 8 >one &&
+@@ -166,7 +157,6 @@ test_expect_success 'checkout -m with merge conflict' '
  '
  
--test_expect_success \
--    'checkout with --track fakes a sensible -b <name>' '
-+test_expect_success 'checkout with --track fakes a sensible -b <name>' '
-     git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" &&
-     git update-ref refs/remotes/origin/koala/bear renamer &&
+ test_expect_success 'format of merge conflict from checkout -m' '
+-
+ 	git checkout -f master && git clean -f &&
  
-@@ -457,9 +456,9 @@ test_expect_success \
-     test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)"
+ 	fill b d > two &&
+@@ -190,7 +180,6 @@ test_expect_success 'format of merge conflict from checkout -m' '
  '
  
--test_expect_success \
--    'checkout with --track, but without -b, fails with too short tracked name' '
--    test_must_fail git checkout --track renamer'
-+test_expect_success 'checkout with --track, but without -b, fails with too short tracked name' '
-+    test_must_fail git checkout --track renamer
-+'
+ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+-
+ 	git checkout -f master && git reset --hard && git clean -f &&
  
- setup_conflicting_index () {
- 	rm -f .git/index &&
+ 	fill b d > two &&
+@@ -216,7 +205,6 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+ '
+ 
+ test_expect_success 'switch to another branch while carrying a deletion' '
+-
+ 	git checkout -f master && git reset --hard && git clean -f &&
+ 	git rm two &&
+ 
+@@ -228,7 +216,6 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD (with advice declined)' '
+-
+ 	git config advice.detachedHead false &&
+ 	rev=$(git rev-parse --short renamer^) &&
+ 	git checkout -f renamer && git clean -f &&
+@@ -267,7 +254,6 @@ test_expect_success 'checkout to detach HEAD' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD with branchname^' '
+-
+ 	git checkout -f master && git clean -f &&
+ 	git checkout renamer^ &&
+ 	H=$(git rev-parse --verify HEAD) &&
+@@ -283,7 +269,6 @@ test_expect_success 'checkout to detach HEAD with branchname^' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD with :/message' '
+-
+ 	git checkout -f master && git clean -f &&
+ 	git checkout ":/Initial" &&
+ 	H=$(git rev-parse --verify HEAD) &&
+@@ -299,7 +284,6 @@ test_expect_success 'checkout to detach HEAD with :/message' '
+ '
+ 
+ test_expect_success 'checkout to detach HEAD with HEAD^0' '
+-
+ 	git checkout -f master && git clean -f &&
+ 	git checkout HEAD^0 &&
+ 	H=$(git rev-parse --verify HEAD) &&
+@@ -315,7 +299,6 @@ test_expect_success 'checkout to detach HEAD with HEAD^0' '
+ '
+ 
+ test_expect_success 'checkout with ambiguous tag/branch names' '
+-
+ 	git tag both side &&
+ 	git branch both master &&
+ 	git reset --hard &&
+@@ -327,11 +310,9 @@ test_expect_success 'checkout with ambiguous tag/branch names' '
+ 	test "z$H" = "z$M" &&
+ 	name=$(git symbolic-ref HEAD 2>/dev/null) &&
+ 	test "z$name" = zrefs/heads/both
+-
+ '
+ 
+ test_expect_success 'checkout with ambiguous tag/branch names' '
+-
+ 	git reset --hard &&
+ 	git checkout master &&
+ 
+@@ -351,11 +332,9 @@ test_expect_success 'checkout with ambiguous tag/branch names' '
+ 	else
+ 		: happy
+ 	fi
+-
+ '
+ 
+ test_expect_success 'switch branches while in subdirectory' '
+-
+ 	git reset --hard &&
+ 	git checkout master &&
+ 
+@@ -366,11 +345,9 @@ test_expect_success 'switch branches while in subdirectory' '
+ 	) &&
+ 	! test -f subs/one &&
+ 	rm -fr subs
+-
+ '
+ 
+ test_expect_success 'checkout specific path while in subdirectory' '
+-
+ 	git reset --hard &&
+ 	git checkout side &&
+ 	mkdir subs &&
+@@ -385,7 +362,6 @@ test_expect_success 'checkout specific path while in subdirectory' '
+ 		git checkout side -- bero
+ 	) &&
+ 	test -f subs/bero
+-
+ '
+ 
+ test_expect_success 'checkout w/--track sets up tracking' '
+@@ -608,7 +584,6 @@ test_expect_success 'failing checkout -b should not break working tree' '
+ 	test $(git symbolic-ref HEAD) = refs/heads/master &&
+ 	git diff --exit-code &&
+ 	git diff --cached --exit-code
+-
+ '
+ 
+ test_expect_success 'switch out of non-branch' '
 -- 
 2.29.0.rc1
 
